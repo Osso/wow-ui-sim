@@ -12,8 +12,7 @@ use super::sources::{
 };
 use super::spell::{
     append_action_binding_line, lookup_player_aura, lookup_player_aura_by_instance_id,
-    spell_id_for_talent_id, tooltip_for_mount_spell_id, tooltip_for_spell_id,
-    tooltip_for_toy_item_id, tooltip_for_unit_aura,
+    spell_id_for_talent_id, tooltip_for_spell_id, tooltip_for_toy_item_id, tooltip_for_unit_aura,
 };
 use super::unit::{tooltip_for_unit, tooltip_for_unit_guid, tooltip_for_world_loot};
 use crate::lua_api::globals::currency_data;
@@ -201,9 +200,10 @@ pub(super) fn c_tooltip_get_talent(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn c_tooltip_get_mount_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = u32::from_stack(state, 1)?;
-    let tooltip = tooltip_for_mount_spell_id(state, spell_id);
+    let tooltip = super::spell::tooltip_for_mount_spell_id(state, spell_id);
     state.push(tooltip);
     Ok(1)
 }
@@ -357,6 +357,7 @@ pub(super) fn c_tooltip_get_spell_book_item(state: &mut LuaState) -> LuaResult<u
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn c_tooltip_get_spell_by_id(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = u32::from_stack(state, 1)?;
     let tooltip = tooltip_for_spell_id(state, spell_id);

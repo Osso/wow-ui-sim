@@ -30,7 +30,7 @@ mod recruit_a_friend;
 mod scenario_info;
 mod small_namespaces;
 mod small_probes;
-mod tooltip_info;
+pub(crate) mod tooltip_info;
 mod traits;
 mod transmog;
 mod transmog_collection;

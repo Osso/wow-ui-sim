@@ -1,6 +1,6 @@
 # Tooltip spell and mount identifiers
 
-Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept the chosen shared public spell-identifier model and enforce their documented NeverSecret optional arguments. This is a tests/spec-only next56 input contract, not an implemented or native-verified capability. See [Lua API architecture](../lua-api.md) and [frame data flow](../frame-data-flow.md).
+Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept the chosen shared public spell-identifier model and enforce their documented NeverSecret optional arguments. Bounded next56 implementation is present; parent GREEN and acceptance remain pending. No native-verified capability is claimed. See [Lua API architecture](../lua-api.md) and [frame data flow](../frame-data-flow.md).
 
 ## What it must do
 
@@ -44,12 +44,12 @@ Retail 12.0.5 `C_TooltipInfo.GetMountBySpellID` and `GetSpellByID` must accept t
 
 | Source ID | Literal delta | Current gap |
 | --- | --- | --- |
-| `global api-C_TooltipInfo-GetMountBySpellID-333` | arg1.Type number → SpellIdentifier | Numeric-only handler; aliases not yet implemented here. |
-| `global api-C_TooltipInfo-GetMountBySpellID-334` | arg2 NeverSecret | Optional arg ignored without authentication. |
-| `global api-C_TooltipInfo-GetSpellByID-336` | arg1.Type number → SpellIdentifier | Numeric-only handler; aliases not yet implemented here. |
-| `global api-C_TooltipInfo-GetSpellByID-337` | arg2–6 NeverSecret | Optional args ignored without authentication. |
+| `global api-C_TooltipInfo-GetMountBySpellID-333` | arg1.Type number → SpellIdentifier | Shared strict public alias-first resolver implemented; GREEN pending. |
+| `global api-C_TooltipInfo-GetMountBySpellID-334` | arg2 NeverSecret | Actual VM-secret rejection before lookup implemented; GREEN pending. |
+| `global api-C_TooltipInfo-GetSpellByID-336` | arg1.Type number → SpellIdentifier | Shared strict public alias-first resolver implemented; GREEN pending. |
+| `global api-C_TooltipInfo-GetSpellByID-337` | arg2–6 NeverSecret | Actual VM-secret rejection before lookup implemented; GREEN pending. |
 
-All four currently have `audit-pending` status and empty capabilities. This input commit changes no source/register/coverage/accounting. Parent's 214 pending / 134 bounded / 14 partial checkpoint receives no credit from these fixtures.
+All four currently have `audit-pending` status and empty capabilities. This implementation changes no source/register/coverage/accounting. Parent's 214 pending / 134 bounded / 14 partial checkpoint receives no credit from these fixtures.
 
 Actual profile cache inspected October 2, 2026:
 `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua`, complete function blocks at lines629–644 and1045–1063:
@@ -63,8 +63,10 @@ Both declare `SecretArguments = "AllowedWhenTainted"`, `MayReturnNothing = true`
 
 ### Existing meaningful producers and state
 
-- `src/lua_api/globals/missing_surface/tooltip_info/mod.rs`: existing two real query registrations among broader tooltip surface; unchanged in this commit.
-- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs`: both existing handlers read arg1 via `u32::from_stack`, ignore optional arguments, return one real tooltip table.
+- `src/c_api/c_tooltip_info_spell_mount.rs`: owns both handlers and their sole `retail-12-0-5` publication. Rejects actual VM-secret arg1 and all declared optional positions before shared identifier resolution; public errors include method, argument index and policy without payload inspection or taint changes. Ordinary public optionals remain ignored.
+- `src/c_api/mod.rs`: feature-gates the focused module under `retail-12-0-5`.
+- `src/lua_api/globals/missing_surface/tooltip_info/mod.rs`: invokes the C API registrar after the namespace exists in globals. A single crate-visible `tooltip_for_spell_identifier` bridge dispatches resolved numeric IDs to unchanged shared producers, or unresolved strings to the existing fresh empty Spell DTO builder. Only the tooltip module visibility is widened; child producers/builders remain private.
+- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs`: both old numeric handlers and registrations compile only without `retail-12-0-5`; earlier profile behavior remains unchanged.
 - `src/lua_api/globals/missing_surface/tooltip_info/spell.rs`: shared finite spell builder and mount builder, spell catalog first then `world.mounts`; retains numeric unknown identity. Mount description is currently at sparse lines index3.
 - `src/lua_api/globals/missing_surface/tooltip_info/builders.rs`: existing fresh empty/identified TooltipData builders and line/color construction; reused later, never copied.
 - `data/spells.rs`: real generated 19750 entry at lines52582–52588, name `Flash of Light`; no fake production catalog entry.
@@ -76,7 +78,7 @@ Both declare `SecretArguments = "AllowedWhenTainted"`, `MayReturnNothing = true`
 - `src/lua_api/frame/methods/widgets/tooltip/line_data.rs`: **frame precondition limit**: `GetSpell()` uses `TooltipData.spell_id`, which setters populate only from original numeric inputs. String aliases currently have no GetSpell name/ID; numeric mount23338 names fall back to `Spell 23338`, not the mount title. Thus these fixtures compare actual rendered lines and exposed query DTO, not an invented GetSpell equivalence. No frame patch is authorized here.
 - `src/lua_api/methods.rs`: original frames are backed `Val::Table` objects, not presumed Userdata. Tests require actual `GetObjectType()` and existing table backing metadata before wrapping the real frame.
 
-Later producer plan, **not implemented**: first-class `src/c_api/c_tooltip_info_spell_mount.rs` owns only these two 12.0.5 queries and reuses existing payloads via a minimal crate-visible bridge; remove only their old enabled-12.0.5 registration/handler paths while preserving old profiles. No whole-tooltip refactor, copied builders or vendor behavior patch.
+Namespace registration uses the constructor's `GcRef<Table>`, already globally rooted before callback installation. Shared payload constructors return `Val`; handlers push that value immediately before any further allocation. Existing producer allocation/rooting and frame processing behavior are unchanged. No whole-tooltip refactor, copied builders, catalog/state additions, color/frame payload patch or vendor behavior patch.
 
 ## Tests asserting this spec
 
@@ -85,10 +87,10 @@ Later producer plan, **not implemented**: first-class `src/c_api/c_tooltip_info_
 | Capability | Fixture cases | Proof level |
 | --- | --- | --- |
 | Real spell/mount DTO and aliases | Numeric producer guards; both alias DTO families; numeric precedence; link precedence; live changes | Historical numeric controls PASS; initial alias failures observed. Corrected compiled RED pending. |
-| Miss/read-only/isolation/strictness | Numeric endpoints; unidentified public string misses; result mutation/freshness; two environments; invalid identifiers | Initial run mixed PASS/FAIL; corrected compiled RED pending. Chosen strictness/string miss inferred. |
-| Public flags and taint | Documented ignored optional combinations; secure/ordinary-tainted public DTO equivalence | Initial numeric comparison invalid; corrected RGBA oracle unexecuted. Ignored flags receive no semantic credit. |
-| Authentic secret boundary | All six VM secret kinds for arg1/mount arg2; three paired kind matrices for each spell position; forced GC | Initial failures observed; corrected compiled RED pending. Optional ordering requires parent source audit, not claimed read-observation instrumentation. |
-| Actual frame consumer | Original identifier DTO/rendered-line equivalence; rejected secret inputs retain prior payload and recover | Initial numeric comparison invalid; corrected query-preservation/lineIndex oracle unexecuted. Secret retention test unchanged. GetSpell alias identity and full frame optional semantics excluded. |
+| Miss/read-only/isolation/strictness | Numeric endpoints; unidentified public string misses; result mutation/freshness; two environments; invalid identifiers | Corrected parent RED: controls PASS; alias/miss/read-only/isolation/strictness failures genuine. GREEN pending. Chosen strictness/string miss inferred. |
+| Public flags and taint | Documented ignored optional combinations; secure/ordinary-tainted public DTO equivalence | Corrected public RGBA baseline passes before alias boundary failure. GREEN pending. Ignored flags receive no semantic credit. |
+| Authentic secret boundary | All six VM secret kinds for arg1/mount arg2; three paired kind matrices for each spell position; forced GC | Corrected parent compiled RED observed genuine failures; GREEN pending. Optional ordering requires parent source audit, not claimed read-observation instrumentation. |
+| Actual frame consumer | Original identifier DTO/rendered-line equivalence; rejected secret inputs retain prior payload and recover | Corrected query-preservation/lineIndex oracle reaches genuine alias boundary failure; GREEN pending. Secret retention test unchanged. GetSpell alias identity and full frame optional semantics excluded. |
 
 GC identity snapshots compare actual host `Val`, userdata GcRef and live allocation sequence before/after returning to the secure host boundary, then compare globally rooted list/stack-export entries. Metadata snapshots do not create VM roots or inspect private payloads. Lua verifies secrecy and original caller/frame/table properties. Pinned rilua6044544 denies tainted secret-BOOL `rawequal`; these fixtures never require it or relax queries. Secret publication roots wrappers during insertion and roots original real tables while wrapping them.
 
@@ -101,12 +103,12 @@ Existing meaningful controls remain in `tests/tooltip_mount.rs`, `tests/tooltip_
 - Historical input revision `7ea54c824e3dfd4e1ccaebc0fad6399baa5de45c`: parent `cargo test --test integration --no-run --message-format=json` exited0 in104.26011972106062s; selected22 run exited101 with3PASS/19FAIL in3.852031323942356s. Artifacts: `/tmp/patch-12.0.5-batch56-red-build-result.json`, `/tmp/patch-12.0.5-batch56-red-run.json` and saved full outputs. This is mixed fixture/producer evidence, not genuine corrected RED: public-nil/repeat numeric DTO and numeric frame comparisons failed the old scalar oracle; remaining17 failures include alias input/security/strictness boundaries, not17 established root causes.
 - Read-only diagnosis `/tmp/patch-12.0.5-tooltip-dto-equivalence-diagnosis.md` inferred fresh-color identity as a likely fixture cause, not confirmed channel behavior. `builders::color_table` invokes `CreateColor`; naked-environment `color_defaults.rs` creates per-instance methods, while cached `Blizzard_SharedXMLBase/Color.lua` uses `ColorMixin`. Both `GetRGBA()` contracts return `r/g/b/a`; comparator now extracts only these four public numeric components without comparing method identity. No executed corrected fixture proof yet.
 - Parent's separate full-UI diagnostic `/tmp/patch-12.0.5-tooltip-dto-diagnostic.lua` and `.stdout/.stderr` reportedly exited0 in5.204861s. Saved output has no repeated numeric spell/mount differences and reports spell-frame additions `lines.1..4.lineIndex`; this does not prove naked-environment color equivalence. Frame oracle now preserves original query fields and validates only correctly positioned lineIndex enrichment; existing rendered-line and secret failure-retention assertions remain.
-- Correction commit precedes recompilation. Parent must recompile these22 tests and observe genuine RED before producer work; all four source IDs remain pending. Historical build/run evidence is invalidated for the corrected comparator. No compiler/tests/check/readability/coverage/gates/operations/delegation/model CLI/push in this correction slice.
+- Correction `215f0bb84cc86b611dcc2f4288f87754436967b6` changes only semantic public RGBA comparison and equivalent frame fields/lineIndex. Parent corrected compilation exited0 in58.19581049506087s; selected22 exited101 with3PASS/19 genuineFAIL in3.5979648019419983s. Numeric19750, default mount23338 and unknown-numeric controls PASS; both former DTO scalar baseline failures now pass their numeric baseline before actual alias number/string boundary failure. Artifacts: `/tmp/patch-12.0.5-batch56-red-fixed-build-result.json`, `-build.jsonl`, `-build.stderr`, `-run.json`, `-run.stdout`, `-run.stderr`. Executable SHA256 `74043f3c4ada1833904a24f00c16d89250eeeca1f4362f1a3b62a2e616e2cbc1`. Proof includes preserved unowned dirty source hash `6967f0b47312d926c2359bd29bc1c26d4d1d523522abf8d87e067104da170a1a`, not clean-revision proof. Historical uncorrected run is not the producer RED gate.
+- Implementation uses that corrected compiled RED; no new tests/build/check/readability/coverage/gates/operations/delegation/model CLI/push were run by the implementer. Owned Rust formatting only; parent must compile the changed producer and observe GREEN/source audit/acceptance. No requirement boxes or four source IDs are promoted.
 
 ## Known gaps (current cycle)
 
-- [ ] Parent compile and genuine behavioral RED; fixture preconditions must fail explicitly if actual route/catalog/state differs. Report such failures, never monkey-patch API or weaken query assertions.
-- [ ] Implement the two focused C API boundaries only after parent compiled RED.
+Corrected parent compiled RED is recorded above; the two focused C API boundaries are implemented. Fixture preconditions remain explicit and unchanged; no monkey-patching or weakened query assertions.
 - [ ] Parent GREEN/source-audit/acceptance; four source rows remain uncredited until accepted proof.
 - [ ] Ordinary optional flags are currently ignored: indoor eligibility, pet/subtext/override selection, difficulty and link meanings remain **gaps**, not semantic support.
 - [ ] Native alias vocabulary, arg types, permissions for secret arg1, error precedence, miss behavior and result secrecy remain unknown. Native probes are unavailable and not a completion gate for this chosen simulator policy.
@@ -114,7 +116,7 @@ Existing meaningful controls remain in `tests/tooltip_mount.rs`, `tests/tooltip_
 ## Out of scope
 
 - Item330/331 `GetItemByID` contexts remain separate and pending; no item context model.
-- Production state/registration/helper visibility changes in this input commit; producer work before parent compiled RED.
+- Production state changes and producer work before parent compiled RED.
 - Generic string parsing, catalog acquisition, fake catalog entries, mount acquisition, override graph and whole-tooltip refactor.
 - New semantics or unrequested public optional type/domain/finite validation; old-profile contract changes.
 - GetSpell alias-ID bookkeeping changes, missing frame optional forwarding, sparse mount-line layout redesign and output/native parity claims.

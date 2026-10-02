@@ -101,6 +101,8 @@ pub mod c_string_util;
 mod c_string_util_decimal;
 pub mod c_summon_info;
 pub mod c_texture;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_tooltip_info_spell_mount;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_transmog_collection;
 #[cfg(feature = "retail-12-0-0")]

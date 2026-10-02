@@ -49,7 +49,23 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_TooltipInfo")?;
     register_item_spell_aura_methods(state, table_ref)?;
     register_spell_aura_unit_methods(state, table_ref)?;
+    #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::c_tooltip_info_spell_mount::register(state, table_ref)?;
     Ok(())
+}
+
+/// Bounded bridge to the existing payload model; no identifier parsing here.
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) fn tooltip_for_spell_identifier(
+    state: &mut LuaState,
+    spell_id: Option<u32>,
+    is_mount: bool,
+) -> rilua::Val {
+    match spell_id {
+        Some(id) if is_mount => spell::tooltip_for_mount_spell_id(state, id),
+        Some(id) => spell::tooltip_for_spell_id(state, id),
+        None => builders::empty_tooltip(state, super::TOOLTIP_TYPE_SPELL),
+    }
 }
 
 type TooltipScriptFn = fn(&mut LuaState) -> LuaResult<u32>;
@@ -155,6 +171,7 @@ fn register_misc_content_methods(state: &mut LuaState, table_ref: GcRef<Table>) 
             ("GetLFGDungeon", c_tooltip_get_lfg_dungeon),
             ("GetPetAction", c_tooltip_get_pet_action),
             ("GetShapeshift", c_tooltip_get_shapeshift),
+            #[cfg(not(feature = "retail-12-0-5"))]
             ("GetMountBySpellID", c_tooltip_get_mount_by_spell_id),
             ("GetCompanionPet", c_tooltip_get_companion_pet),
             ("GetTalent", c_tooltip_get_talent),
@@ -174,6 +191,7 @@ fn register_spell_aura_unit_methods(
         table_ref,
         &[
             ("GetSpellBookItem", c_tooltip_get_spell_book_item),
+            #[cfg(not(feature = "retail-12-0-5"))]
             ("GetSpellByID", c_tooltip_get_spell_by_id),
             ("GetUnitBuff", c_tooltip_get_unit_buff),
             (
