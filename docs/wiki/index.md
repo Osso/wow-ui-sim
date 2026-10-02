@@ -1,3 +1,7 @@
+## [2026-10-02] implementation | Bound tooltip aura-instance argument security
+
+[[lua-api#Retail 12.0.5 tooltip aura-instance argument security]] links [contract and RED SSOT](../specs/tooltip-aura-instance-security.md): `6edbe3533` registers the three literal epoch125 namespace functions, authenticating positions1–3 through the VM before type/model access. Existing player-only instance lookup gains inferred polarity selection; ignored filter and unchanged hardcoded `1 hr` builder remain limited. Inverse old-entry gates preserve earlier epochs without execution proof. Saved pre-producer RED3PASS/21FAIL does not prove downstream authentication/recovery/GC past earliest failures. No producer GREEN, acceptance, native/profile claim or six-row credit; batch60 acceptance `448689a26` and accounting remain untouched.
+
 ## [2026-10-02] evidence | Accept exact pending-cost modifier return
 
 [Exact357 acceptance SSOT](../specs/pending-transmog-cost.md#independent-bounded-acceptance--2026-10-02) records independent477+481+483: ten refreshed focused PASS plus88 reusable controls/startup0 `[]`, scopedfmt/check/security/wiring and equivalent assertion readability fixes. Only357 promotes;361 unrelated rows/66 prior capabilities preserved. Snapshot-only inferred absence/precision, dirty/globalfmt/native/profile/pricing/lifecycle limits remain; broader goal open.

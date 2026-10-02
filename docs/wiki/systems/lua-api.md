@@ -3,6 +3,14 @@
 The Lua API layer bridges Lua addon code with the Rust simulation engine. It provides WoW-compatible globals, 300+ frame methods, C_* namespaces, and a timer system — all backed by `WowLuaEnv` and `SimState`.
 
 
+## Retail 12.0.5 tooltip aura-instance argument security
+
+Producer `6edbe3533` implements literal epoch125 (`retail-12-0-5`) registration of `C_TooltipInfo.GetUnitAuraByAuraInstanceID`, `C_TooltipInfo.GetUnitBuffByAuraInstanceID`, and `C_TooltipInfo.GetUnitDebuffByAuraInstanceID` into the existing rooted namespace. All three documented argument positions pass pinned rilua `unwrap_secret` AllowedWhenUntainted authentication before any type validation or model lookup. Ordinary public arguments remain usable by tainted callers; optional arg3 stays ignored after authentication. Unit parsing uses UTF-8 strings; IDs require finite exact integral i32 values. Inverse-gated old entries preserve earlier epochs, without an active fallback or an earlier-profile execution claim.
+
+The minimal bridge reads existing `SimState.player.buffs:Vec<AuraInfo>` by instance ID for exact `player` only: Aura accepts either polarity, Buff helpful only, Debuff harmful only. Unsupported units, missing IDs and wrong polarity yield fresh line-empty UnitAura DTOs under an **inferred**, not native-verified policy. The lookup snapshot releases the model borrow before VM allocation and the returned value is pushed immediately. The shared builder is unchanged, including its hardcoded `1 hr` limitation; no dynamic duration, filter, unit expansion or acquisition credit.
+
+[Contract, implementation inventory and saved RED SSOT](../../specs/tooltip-aura-instance-security.md) records pre-producer **3 PASS / 21 FAIL** with dirty-combined provenance. Earliest wrapper-conversion, missing-context and provider failures do not prove downstream authentication, recovery or GC assertions past those failures. Implementation is unverified: no producer GREEN, acceptance, native or profile proof. `RequiresUnitAuraAccess` enforcement and restricted-result secrecy remain excluded; all six requested aura rows remain uncredited. Batch60 acceptance `448689a26` remains separate and untouched; no accounting change follows from this implementation.
+
 ## Retail 12.0.5 illusion category queries
 
 Implementation `cd6eb9a2f` adds the epoch125 (`retail-12-0-5`) `C_TransmogCollection.GetIllusions(category)` producer. Its literal backing input is an environment-local, empty-default explicit `Vec<IllusionInfo>`: each host row carries `category` plus `visualID`, `sourceID`, `icon`, `isCollected`, `isUsable`, and `isHideVisual`. No production catalog, appearance-derived records or hidden-flag filtering is introduced.
@@ -263,6 +271,8 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 `CreateAnimationGroup()` returns a group supporting `Play()`, `Stop()`, `Pause()`, `SetLooping()`, and `SetScript("OnFinished")`. Animation types: Alpha, Translation, Scale, Rotation, FlipBook, VertexColor, Path. `fire_on_update()` ticks animation groups after OnUpdate handlers.
 
 ## Sources
+
+- [Tooltip aura-instance argument security](../../specs/tooltip-aura-instance-security.md) — three epoch125 namespace producers, all-position VM authentication, narrow host lookup, unchanged builder and pre-producer RED limits; contract/proof SSOT
 
 - [Illusion category queries](../../specs/illusion-category-queries.md) — exact352/353 explicit-input implementation, inferred policies, corrected RED and pending proof
 
