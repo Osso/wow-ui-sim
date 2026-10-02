@@ -63,10 +63,18 @@ All public/security probes run secure and addon-tainted contexts. Security fixtu
 - The shared Cargo feature changes whole-tree compilation scope: prior497 whole-tree check is invalidated outside its item-context owned scope; exact `23ef` item-context proof remains unaffected. This is the supplied scope classification, not a check performed here.
 - Accounting unchanged: **199 pending / 148 bounded / 14 partial / 1 metadata = 362 IDs; 68 capabilities**. Row295 remains pending. Rows330/331 remain independently pending, not part of the prior63 capability set; no tooltip/context work here.
 
+## Saved parent Retail GREEN — 2026-10-02
+
+Producer `815456e844fbb8e4cbfa5eb39e1d199733616101` compiled default integration successfully in157.61813914496452s with **zero compiler-message diagnostics**; the five scaffold unused-helper warnings disappear through actual registration, without suppressions. Full compiler JSON/stderr and executable hashes: `/tmp/patch-12.0.5-batch63-green-build.stdout.jsonl`, `.stderr`, `-result.json`. Integration SHA256 `15c62c858697dd81cab48ec5b770c88c4441bf7aa87d4fcd24b64724990f7c05` binds saved runs.
+
+`batch63-green-runs.json` records **81 distinct PASS**:20 focused,8 glyph-security,22 tooltip spell/mount,17 action-slot identifier and14 existing spell/flyout controls. Six commands exit0; `c_spell::` matched zero and gives no proof. Actual14 controls ran under `c_spell_flyout_probes::`. Runtime17.516695430967957s is separate from compilation, below60s bounded-development target, not padded whole-goal acceptance. Startup separately returned `[]`, exit0; `green-startup-run.json` records exact cost/hash/full outputs.
+
+Evidence remains dirty-combined. Independent502 source/security/wiring/readability/scoped formatting/default check and separate Forever compile/three existing tests are pending; no current Forever runtime or exact295 credit claimed. Native arg1 permissions/relationship acquisition/other profiles/UI remain unproved. Separate batch62 acceptance now197 pending/150 bounded/14 partial/1 metadata,362 IDs/69 capabilities; row295 stays pending. Do not rerun applicable Retail build/tests/startup solely for docs/accounting.
+
 ## Known gaps (current cycle)
 
 - [x] Main-owned actual compiled RED classified and warning root cause recorded; bounded producer implemented afterward.
-- [ ] Main-owned producer GREEN and warning-free compilation.
+- [x] Parent observed focused Retail GREEN, controls/startup and warning-free default compilation as recorded above.
 - [ ] Main-owned startup, check, Forever/profile regression proof, readability and independent verification.
 - [ ] Requirement acceptance and exact source295 accounting; requirements above remain unchecked pending proof.
 - [ ] Native Retail publication/profile permissions, explicit specialization interpretation, result secrecy and live relationship acquisition remain unknown. No retained-surface/native availability certification.
