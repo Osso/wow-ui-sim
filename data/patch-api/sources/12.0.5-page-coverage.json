@@ -595,7 +595,7 @@
         "HousingCatalogEntryInfo.totalNumStored",
         "HousingCatalogEntryInfo.totalNumPlaced"
       ],
-      "scope": "Explicit optional base inputs through three selectors only; None→nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
+      "scope": "Explicit optional base inputs through three selectors only; None\u2192nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
       "spec": "docs/specs/housing-catalog-aggregates.md",
       "tests": [
         "tests/housing_catalog_aggregates.rs"
@@ -934,6 +934,38 @@
       "tests": [
         "tests/private_aura_anchors.rs"
       ]
+    },
+    {
+      "id": "private-aura-sound-removal",
+      "symbols": [
+        "C_UnitAuras.RemovePrivateAuraAppliedSound"
+      ],
+      "scope": "Exact403 HasRestrictions removal only: host-seeded live public-u32 IDs delete immediately with zero results; unknown/repeat no-op, isolation/replacement and actual tainted modeled-combat deletion preserve state and taint. Actual cached full Deprecated file/default CVar and modern1210 alias durability pass. HashSet/domain/miss/public errors/conservative VM-secret rejection before type/key access are INFERRED; native Add/acquisition/playback/permissions/error/context remain unknown.",
+      "spec": "docs/specs/private-aura-sound-removal.md",
+      "tests": [
+        "tests/private_aura_sound_removal.rs"
+      ],
+      "implementation": "100b4d5bb6b5d30cfa5f6ea1dca15ad15c10f387",
+      "compiled_revision": "5ee8e7327b7ebf4f6827cb9e4e7f0b9b3e04b58c",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-private-sound-space-limit-independent-proof.md",
+      "gate_scope": "Parent accepted independent389 exact403/328 only. Combined evidence SSOT in sound spec: 13 sound +8 limit +248 controls =269 unique PASS, all19 filters exit0, startup0 []. Scoped7-filefmt0/0.152571s; dirty combined check0/90.67012s without warnings; globalfmt1/140.992647s preserved unowned, not fixed. Runtime40.32936095423065s plus startup4.870177653s below60 target; compile196.389966775s separate. Bounded development, not clean revision, whole-page/goal/native acceptance. Numeric-guard/helper-length advisories deferred without behavioral counterexample; no Rust/test rewrite."
+    },
+    {
+      "id": "string-util-space-limit-never-secret",
+      "symbols": [
+        "C_StringUtil.RemoveContiguousSpaces"
+      ],
+      "scope": "Exact328 arg2 NeverSecret only: unchanged raw Val::Num validation rejects opaque VM-secret limits even securely, including empty/space-free text and huge valid public counterpart. Rooted GC identity/state/taint/public recovery and ASCII-byte matrix pass. No authentication/payload decoding, native arg1 acceptance, secret-result or AllowedWhenTainted credit; native coercion/range/error/byte parity unknown.",
+      "spec": "docs/specs/string-util-space-limit-security.md",
+      "tests": [
+        "tests/string_util_space_limit_security.rs"
+      ],
+      "implementation": "5ee8e7327b7ebf4f6827cb9e4e7f0b9b3e04b58c",
+      "compiled_revision": "5ee8e7327b7ebf4f6827cb9e4e7f0b9b3e04b58c",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-private-sound-space-limit-independent-proof.md",
+      "gate_scope": "Parent accepted independent389 exact403/328 only. Combined evidence SSOT in sound spec: 13 sound +8 limit +248 controls =269 unique PASS, all19 filters exit0, startup0 []. Scoped7-filefmt0/0.152571s; dirty combined check0/90.67012s without warnings; globalfmt1/140.992647s preserved unowned, not fixed. Runtime40.32936095423065s plus startup4.870177653s below60 target; compile196.389966775s separate. Bounded development, not clean revision, whole-page/goal/native acceptance. Numeric-guard/helper-length advisories deferred without behavioral counterexample; no Rust/test rewrite."
     }
   ],
   "source_rows": [
@@ -980,7 +1012,7 @@
       "source_id": "prose-2026-03-12-023",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65–76), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
+      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65\u201376), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
     },
     {
       "source_id": "prose-2026-03-12-026",
@@ -2039,9 +2071,11 @@
     },
     {
       "source_id": "global api-C_StringUtil-RemoveContiguousSpaces-328",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "string-util-space-limit-never-secret"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent389 exact source axis only; linked spec owns combined evidence and inferred policies/native exclusions. No whole-page/goal/native acceptance."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetItemByID-330",
@@ -2347,9 +2381,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-RemovePrivateAuraAppliedSound-403",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "private-aura-sound-removal"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent accepted independent389 exact source axis only; linked spec owns combined evidence and inferred policies/native exclusions. No whole-page/goal/native acceptance."
     },
     {
       "source_id": "global api-C_UnitAuras-SetPrivateWarningTextAnchor-405",
@@ -3193,7 +3229,7 @@
         "housing-catalog-categories"
       ],
       "status": "bounded-coverage",
-      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries→anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
     },
     {
       "source_id": "structures-HousingCatalogEntryID-645",
@@ -3229,7 +3265,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-651",
@@ -3237,7 +3273,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-652",
@@ -3293,7 +3329,7 @@
         "housing-catalog-categories"
       ],
       "status": "bounded-coverage",
-      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries→anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
     },
     {
       "source_id": "structures-HousingCategorySearchInfo-661",

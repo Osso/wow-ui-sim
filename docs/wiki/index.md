@@ -1,5 +1,10 @@
 ## [2026-10-02] evidence | Accept exact batch48 classification and Add restriction rows
 
+## [2026-10-02] evidence | Accept exact sound-removal and space-limit rows
+
+[Independent389 bounded acceptance](../specs/private-aura-sound-removal.md#independent-bounded-acceptance--2026-10-02) owns combined evidence, accounting and limits; [space scope](../specs/string-util-space-limit-security.md) links there. Only403/328 promote; native gaps and historical checkpoints retained. Parent owns postcommit validation.
+
+
 [Classification acceptance SSOT](../specs/aura-spell-classification-identifiers.md#independent-bounded-acceptance--2026-10-02) and [exact Add359 SSOT](../specs/private-aura-anchors.md#exact-add359-bounded-acceptance--2026-10-02) record parent-accepted independent381. Only359/361/363 promote;387 regression unchanged. Inferred classification/identifier/security policies and ordinary-public tainted live Add only; native gaps stay open. Parent owns postcommit validation; earlier pending checkpoints historical.
 
 ## [2026-10-02] evidence | Reconcile batch48 saved parent GREEN

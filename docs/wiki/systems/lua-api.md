@@ -331,3 +331,5 @@ C_Timer (After, NewTimer, NewTicker), C_Map (stub), C_Item (`IsConsumableItem`, 
 - [[widget-system]] — `WidgetRegistry` hierarchy storage and public Button/SetParent boundaries
 - [[texture-atlas]] — texture path resolution, atlas identity, and rendering consumers
 - [[client-profiles]] — cumulative `retail-12-1-5` feature selection for PTR
+
+Exact403/328 bounded acceptance: [combined evidence SSOT](../../specs/private-aura-sound-removal.md#independent-bounded-acceptance--2026-10-02), with [arg2-only space scope](../../specs/string-util-space-limit-security.md). Native and whole-page/goal acceptance excluded.

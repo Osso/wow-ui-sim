@@ -400,3 +400,5 @@ The [restriction contract](../../specs/cooldown-restriction.md#tests-asserting-t
 ## Current-Retail enums — bounded independent PASS
 
 [Enum contract/proof](../../specs/patch-12-0-5-enum-additions.md#reconciled-bounded-proof--2026-10-01) owns exact 30-row reconciliation and unchanged-source, saved batch7 **20/20 PASS** binding. Publication/removal/rename and actual-member metadata are the external contract; downstream domains are not value-publication requirements. Only the specified 30 pending enum rows gain bounded coverage. Current accounting: **278 audit-pending + 70 bounded-coverage + 14 partial-development-green = 362**; all IDs/source hash and unrelated housing accounting preserved. Historical 12.0.5 numbering, PTR/native/all-profile/current-binary runtime and downstream behavior remain unproved; audit stays **IN PROGRESS**. No new execution.
+
+Exact403/328 bounded acceptance: [combined evidence SSOT](../../specs/private-aura-sound-removal.md#independent-bounded-acceptance--2026-10-02), with [arg2-only space scope](../../specs/string-util-space-limit-security.md). Native and whole-page/goal acceptance excluded.

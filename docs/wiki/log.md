@@ -1,5 +1,10 @@
 ## [2026-10-02] evidence | Reconcile combined batch49/50 saved GREEN
 
+## [2026-10-02] evidence | Accept exact sound-removal and space-limit rows
+
+[Independent389 bounded acceptance](../specs/private-aura-sound-removal.md#independent-bounded-acceptance--2026-10-02) owns combined evidence, accounting and limits; [space scope](../specs/string-util-space-limit-security.md) links there. Only403/328 promote; native gaps and historical checkpoints retained. Parent owns postcommit validation.
+
+
 Updated [sound proof SSOT](../specs/private-aura-sound-removal.md#reconciled-combined-batch4950-parent-green--2026-10-02), [space-limit scope](../specs/string-util-space-limit-security.md) and [[lua-api#Retail 12.0.5 private aura sound removal]] links from full saved artifacts. Genuine sound RED and inferred/native gaps retained; unchanged space provider validates/rejects opaque secret limits, not authenticates payloads. Independent389 pending; no acceptance, checked requirements or accounting promotion. Docs-only, no source access or new execution proof.
 
 ## [2026-10-02] implementation | Add bounded batch49 sound removal callback

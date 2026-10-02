@@ -14,23 +14,23 @@ The representation (`HashSet<u32>`), inclusive ID domain, missing/repeated-ID be
 
 ### Inputs and transition — INFERRED
 
-- [ ] Start each environment with an empty host-declared live ID set; never fabricate acquired IDs.
-- [ ] Accept only an actual public finite integral `u32` NUMBER, including `0` and `4294967295`; no string coercion or spell-alias lookup.
-- [ ] Remove an existing host-seeded ID immediately and return exactly zero Lua values; preserve all other IDs.
-- [ ] Treat unknown and repeatedly removed valid IDs as zero-result no-ops.
-- [ ] Observe host replacement immediately; isolate environments and preserve caller tables, spell aliases, cooldown associations and classification flags.
-- [ ] Reject missing, nil, STRING (including `'101'`), bool, plain table, actual FrameTable, function, thread, NaN, infinities, negative, fractional and out-of-range inputs with contextual public errors, no ID mutation and successful subsequent public recovery.
+- [x] Start each environment with an empty host-declared live ID set; never fabricate acquired IDs.
+- [x] Accept only an actual public finite integral `u32` NUMBER, including `0` and `4294967295`; no string coercion or spell-alias lookup.
+- [x] Remove an existing host-seeded ID immediately and return exactly zero Lua values; preserve all other IDs.
+- [x] Treat unknown and repeatedly removed valid IDs as zero-result no-ops.
+- [x] Observe host replacement immediately; isolate environments and preserve caller tables, spell aliases, cooldown associations and classification flags.
+- [x] Reject missing, nil, STRING (including `'101'`), bool, plain table, actual FrameTable, function, thread, NaN, infinities, negative, fractional and out-of-range inputs with contextual public errors, no ID mutation and successful subsequent public recovery.
 
 ### Security — bounded policy, not native permission parity
 
-- [ ] Ordinary public tainted calls remove live IDs, preserve caller taint and require no caller/combat gate, reflecting the literal restriction-removal row.
-- [ ] **INFERRED:** Authenticate secret arguments through actual VM security before type/key access; reject them even in secure context without unwrapping or declassifying their payloads.
-- [ ] **INFERRED:** Rooted actual secret NUMBERs (known/unknown), STRINGs (numeric hit/unknown), and a wrapped real frame remain secret and identity-stable through GC and rejection in secure and stamped tainted closures; errors remain public, state unchanged, taint preserved and public recovery works.
+- [x] Ordinary public tainted calls remove live IDs, preserve caller taint and require no caller/combat gate, reflecting the literal restriction-removal row.
+- [x] **INFERRED:** Authenticate secret arguments through actual VM security before type/key access; reject them even in secure context without unwrapping or declassifying their payloads.
+- [x] **INFERRED:** Rooted actual secret NUMBERs (known/unknown), STRINGs (numeric hit/unknown), and a wrapped real frame remain secret and identity-stable through GC and rejection in secure and stamped tainted closures; errors remain public, state unchanged, taint preserved and public recovery works.
 
 ### Publication durability
 
-- [ ] Producer publishes legacy at `retail-12-0-5`; modern exists only from `retail-12-1-0`. Both remove from the same ID set with zero results.
-- [ ] Under `retail-12-1-0`, executing the complete actual unmodified cached Shared deprecated file after bootstrap with default CVar `1` leaves legacy removal functional, including actual public tainted removal and host-observed state transition.
+- [x] Producer publishes legacy at `retail-12-0-5`; modern exists only from `retail-12-1-0`. Both remove from the same ID set with zero results.
+- [x] Under `retail-12-1-0`, executing the complete actual unmodified cached Shared deprecated file after bootstrap with default CVar `1` leaves legacy removal functional, including actual public tainted removal and host-observed state transition.
 
 ## How it works
 
@@ -86,13 +86,21 @@ Saved artifacts (read in full, not rerun): `/tmp/patch-12.0.5-batch49-50-green-b
 | Exact row328 arg2 NeverSecret, opaque secret rejection, GC/state/recovery, byte-preserving ASCII matrix | 8 existing-provider PASS | Raw-NUMBER validation/rejection, not payload authentication or native arg1/result/AllowedWhenTainted permission proof |
 | Adjacent controls/startup | 248 unique control PASS; startup0 `[]` | Bounded development partition only |
 
-Independent389 remains pending. No checked requirements, row acceptance, source coverage/accounting, final whole-page/goal or native acceptance follows. No new executions or temporary ledger were produced.
+Independent389 is parent-accepted for exact403/328 bounded development only; the following acceptance checkpoint supersedes pending checkpoints without erasing their history. No new executions or temporary ledger were produced.
 
 ## Known gaps (current cycle)
 
-- [ ] Independent389 verification and parent-owned acceptance of the minimal producer and existing space-limit behavior; saved GREEN is bounded development evidence only.
+- [x] Parent accepted independent389 for the minimal producer and existing space-limit behavior; bounded development only, not native or whole-page/goal acceptance.
 - [ ] Add acquisition remains unmodeled; host-seeded removal does not establish Add-to-Remove lifecycle.
 
 ## Out of scope
 
 Add providers, audio/playback, catalog, listeners, counters, sound records, native encounter matrices, native secret permissions/error parity, CVar0 coverage, other API rows, coverage accounting and full-page acceptance. None are needed for this host-seeded remover or required later alias durability.
+
+## Independent bounded acceptance — 2026-10-02
+
+Parent FULL-read accepted [independent389](/tmp/patch-12.0.5-private-sound-space-limit-independent-proof.md), exact403/328 only. Combined saved GREEN above remains the evidence SSOT; docs-only reconciliation `788acc3af` did not invalidate Rust proof. Thirteen genuine sound RED failures precede GREEN; eight space fixtures were already GREEN on the unchanged provider.
+
+Seven-file scoped format exit0 (`0.152571s`), dirty-combined check exit0 (`90.67012s`, no warnings); global format exit1 (`140.992647s`) remains an overall repository formatting failure on preserved unowned duration changes, not fixed. Proof covers dirty combined state, not a clean revision. Runtime plus startup totals `45.19953860726673s`, below60 target; compilation remains separate. Numeric-guard/helper-length advisories deferred without behavioral counterexample. Space arg2 validates/rejects opaque secrets; it does not authenticate payloads.
+
+Only the two exact rows promote and two capabilities append: **235 pending/113 bounded/14 partial →233 pending/115 bounded/14 partial =362;56 →58 capabilities**. All362 ordered unique IDs,360 unrelated rows,56 prior capabilities, source SHA/register/plaintext remain unchanged. Checked requirements credit tested INFERRED simulator policies only; native gaps stay unchecked. Parent owns postcommit validation and readiness claims.
