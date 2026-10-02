@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Accept glyph boundary and classify return-label metadata
+
+[Exact311 acceptance](../specs/spell-link-glyph-security.md#independent-bounded-acceptance--2026-10-02) retains69PASS/1 unrelated charge-controlFAIL/startup0 `[]`; [exact355 classification](../specs/outfit-catalog-lookups.md#exact355-metadata-only-classification--2026-10-02) is source-only, empty capabilities/no runtime credit. Independent463 scoped gates/readability/security pass; dirty/globalfmt/native/profile limits remain.360 unrelated rows/64 prior capabilities preserved; broader goal open.
+
 ## [2026-10-02] audit | Bound row311 spell-link glyph security
 
 [[lua-api#Retail 12.0.5 spell-link glyph argument security]] links [row311 contract/proof SSOT](../specs/spell-link-glyph-security.md): `da2ec8cb8` adds epoch125 authentic secret arg2 rejection before unchanged numeric dispatch; public ignored glyph behavior remains unchanged. Saved genuine RED3PASS/5FAIL, compile149.032s/run1.0117s; no GREEN/check/acceptance/native claim or arg1/glyph-catalog credit. Accounting stays210 pending/138 bounded/14 partial;64 capabilities; row311 pending.

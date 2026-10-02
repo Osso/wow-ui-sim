@@ -7,6 +7,21 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "spell-link-glyph-security",
+      "symbols": [
+        "C_Spell.GetSpellLink"
+      ],
+      "scope": "Exact311 NeverSecret arg2 only: epoch125 authentic secret glyph values reject even secure before unchanged identifier/link dispatch; existing real generated19750 link/unknown nil and ignored public optionals retained. Six authentic wrapper kinds, secure/tainted caller state/GC/live-root identity/public recovery; no arg1 policy/glyph semantics/native permissions/output secrecy/profile execution credit.",
+      "spec": "docs/specs/spell-link-glyph-security.md",
+      "tests": [
+        "tests/spell_link_glyph_security.rs"
+      ],
+      "implementation": "da2ec8cb8b2718b02df604bb7fe8669cacd77f95",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-spell-link-glyph-independent-proof.md",
+      "gate_scope": "Parent accepted independent463: saved69 distinctPASS/1FAIL (unseeded charge-table control), startup0[]. GenuineRED3PASS5FAIL precedes producer. Ownedfmt0/default dirtycheck0/readability no blocker; fixture-length advisories deferred. Charge failure source/contract cause independent of311; no old-runtime proof or fix claimed. Dirty-combined; globalfmt1 previously known unowned failure retained. Tests12.993897s/startup5.628440s/compile38.389090s. Check scope predates subsequent illusion input edits; no whole-current-tree/native/final page claim."
+    },
+    {
       "id": "tooltip-spell-mount-identifiers",
       "symbols": [
         "C_TooltipInfo.GetMountBySpellID",
@@ -2125,9 +2140,11 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellLink-311",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-link-glyph-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact311 accepted independent463 arg2-only boundary:69PASS/1 unrelated charge controlFAIL/startup0[]. Ownedfmt/check/readability scoped pass; dirty-combined, known globalfmt1 and native/profile/glyph gaps retained. No arg1 credit or full-green control claim."
     },
     {
       "source_id": "global api-C_Spell-GetSpellLossOfControlCooldownInfo-313",
@@ -2296,8 +2313,8 @@
     {
       "source_id": "global api-C_TransmogOutfitInfo-GetOutfitInfo-355",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Exact ret1.Name outfitsInfo->outfitInfo is documentation positional return-label spelling only, not a returned DTO field. Parent accepted independent463 source-only audit; cached structure/unchanged serializer retain name and six other keys. Source accounted; no runtime capability/test/producer/native credit. See docs/specs/outfit-catalog-lookups.md metadata classification and /tmp/patch-12.0.5-outfit-return-label-boundary.md."
     },
     {
       "source_id": "global api-C_TransmogOutfitInfo-GetPendingTransmogCost-357",

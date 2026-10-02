@@ -8,17 +8,17 @@ Cached retail `Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:408–4
 
 ### Existing public controls
 
-- [ ] Preserve the actual generated19750 output: `|cff71d5ff|Hspell:19750|h[Flash of Light]|h|r`, in secure and ordinary addon-tainted contexts.
-- [ ] Preserve nil for unknown4294967295 in both contexts.
-- [ ] Preserve current ignored public arg2 behavior for omitted/nil, numeric values, booleans, strings, a real Frame and a table; no new optional type validation or glyph semantics.
+- [x] Preserve the actual generated19750 output: `|cff71d5ff|Hspell:19750|h[Flash of Light]|h|r`, in secure and ordinary addon-tainted contexts.
+- [x] Preserve nil for unknown4294967295 in both contexts.
+- [x] Preserve current ignored public arg2 behavior for omitted/nil, numeric values, booleans, strings, a real Frame and a table; no new optional type validation or glyph semantics.
 
 ### Chosen arg2 boundary
 
-- [ ] Reject authentic host-wrapped secret BOOL true/false, NUMBER, STRING, real Frame and table in arg2, even when caller is secure; ordinary addon taint does not permit them either.
-- [ ] Reject secret arg2 for known19750, unknown4294967295 and invalid public arg1 (nil, false, unrecognized string, real Frame, table), rather than returning a provider link or nil. The intended boundary is before any identifier/provider lookup; tests observe rejection across those outcomes without replacing APIs or instrumenting private lookups.
-- [ ] Emit a nonempty error without exposing private string or number fixture payloads; do not prescribe exact error text.
-- [ ] Preserve caller taint through rejection and subsequent public recovery, restoring secure caller after addon return. Preserve wrapper secrecy, host wrapper/list identity and live allocation sequence, public Frame/table contents and identity, and spell alias state.
-- [ ] After forced collection in both contexts, retain authentic secret roots, reject them again and recover exact known link/unknown nil without taint or state changes.
+- [x] Reject authentic host-wrapped secret BOOL true/false, NUMBER, STRING, real Frame and table in arg2, even when caller is secure; ordinary addon taint does not permit them either.
+- [x] Reject secret arg2 for known19750, unknown4294967295 and invalid public arg1 (nil, false, unrecognized string, real Frame, table), rather than returning a provider link or nil. The intended boundary is before any identifier/provider lookup; tests observe rejection across those outcomes without replacing APIs or instrumenting private lookups.
+- [x] Emit a nonempty error without exposing private string or number fixture payloads; do not prescribe exact error text.
+- [x] Preserve caller taint through rejection and subsequent public recovery, restoring secure caller after addon return. Preserve wrapper secrecy, host wrapper/list identity and live allocation sequence, public Frame/table contents and identity, and spell alias state.
+- [x] After forced collection in both contexts, retain authentic secret roots, reject them again and recover exact known link/unknown nil without taint or state changes.
 
 ## How it works
 
@@ -48,6 +48,12 @@ Cached retail `Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:408–4
 | `forced_gc_preserves_wrappers_and_public_recovery` | All six wrappers survive forced GC, rejection and recovery in both contexts |
 
 Host metadata compares wrapper references/allocation sequences and rooted list entries without reading private payloads or adding GC roots. No Lua secret BOOL equality is used, especially no tainted `rawequal` on secret BOOLs. Public object identity assertions use only unwrapped public Frame/table values.
+
+## Independent bounded acceptance — 2026-10-02
+
+Parent accepted [independent463 proof](/tmp/patch-12.0.5-spell-link-glyph-independent-proof.md): exact311 arg2 boundary only,69 distinctPASS/1 unrelated charge-controlFAIL and startup0 `[]`; ownedfmt0, default dirty-combined check0, production readability/security/wiring audit without blocker. Fixture-length advisories deferred; no adjacent extraction needed. Check snapshot precedes later illusion scaffolding, not a whole-current-tree gate. Known globalfmt1 unowned failure remains unresolved.
+
+Charge failure is a stale unseeded100 table expectation against the preexisting explicit-input model; `docs/specs/spell-charge-state.md` requires nil without charge state. No specific preproducer runtime failure or fix is claimed. Selection remains failed. Only311 receives bounded coverage; no arg1/glyph/native credit. Separate355 is metadata-only, with no runtime capability. Combined accounting:208 pending/139 bounded/14 partial/1 metadata-only =362;65 capabilities. Parent owns postcommit identity validation; broader goal open.
 
 ## Known gaps (current cycle)
 

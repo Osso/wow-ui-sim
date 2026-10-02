@@ -53,6 +53,12 @@ Only `structures-TransmogOutfitEntryInfo-673` promotes **audit-pending → bound
 
 `/tmp/patch-12.0.5-outfit-index-accounting-before-after.json` stores exact before/after row, totals and identity comparisons. Register/source SHA256 `eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed`; plaintext SHA256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329`. Local ledger and ignored PLAN updated, never staged. Earlier aura acceptance's unaccepted315 checkpoint is historical and superseded here.
 
+## Exact355 metadata-only classification — 2026-10-02
+
+Parent accepted [independent463 source audit](/tmp/patch-12.0.5-outfit-return-label-boundary.md). Retained delta `ret1.Name outfitsInfo -> outfitInfo` changes only the API documentation label for positional return1. Cached `TransmogOutfitInfoDocumentation.lua:295–308` names that value `outfitInfo`; its `TransmogOutfitEntryInfo` fields at886–898 remain the seven fields above. Unchanged serializer publishes `name`, not either return label. No runtime/DTO-field/producer change follows from this delta.
+
+Row355 becomes `metadata-only`, with empty capabilities: source-accounted, no new behavior/test/runtime credit or native parity claim. Existing catalog proof is not reused as proof of a label transition. [Accounting dispositions](../wiki/systems/patch-api-audit-manifest.md#retail-1205-source-accounting-dispositions) distinguish metadata from behavior. Other GetOutfitInfo gaps remain open.
+
 ## Out of scope
 
 Active/pending outfit lifecycle, catalog mutation APIs, fabricated runtime fixtures, persistence, events, UI behavior, full startup validation and non-default-profile verification. Existing lifecycle state remains untouched; catalog ownership does not reinterpret active or pending IDs.
