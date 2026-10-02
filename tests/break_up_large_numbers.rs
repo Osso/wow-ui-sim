@@ -55,6 +55,36 @@ fn fixture_env() -> WowLuaEnv {
             assert(issecretvalue(value), 'no declassification')
             BURecovery()
         end
+        -- Only GetLocale is replaced: callback input to the real formatter.
+        function BUProviderContexts(provider, expected, error_fragment)
+            local known = GetLocale
+            local frame, inputs = BUFrame, BUInputs
+            BUContexts(function()
+                local before = debug.getstacktaint()
+                GetLocale = provider
+                if expected then
+                    BUResult(expected, BreakUpLargeNumbers(inputs.number, inputs.natural))
+                else
+                    local ok, err = pcall(BreakUpLargeNumbers, inputs.number, inputs.natural)
+                    assert(not ok and type(err) == 'string' and #err > 0)
+                    if error_fragment then
+                        assert(string.find(err, error_fragment, 1, true), 'callback error propagated')
+                    end
+                end
+                assert(debug.getstacktaint() == before, 'callback preserves caller taint')
+                assert(rawequal(GetLocale, provider), 'formatter leaves provider unchanged')
+                assert(rawequal(frame, BUFrame) and rawequal(inputs, BUInputs))
+                BUState()
+                GetLocale = known
+                BURecovery()
+                BUResult('1,234', BreakUpLargeNumbers(1234.75, true))
+                BUResult('-1,234.5', BreakUpLargeNumbers(-1234.5, false))
+                assert(debug.getstacktaint() == before, 'multiple recovery queries preserve taint')
+                assert(rawequal(known, GetLocale))
+                assert(rawequal(frame, BUFrame) and rawequal(inputs, BUInputs))
+                BUState()
+            end)
+        end
         function BUContexts(probe)
             assert(issecure(), 'secure control')
             probe()
@@ -351,6 +381,89 @@ fn secure_and_stamped_tainted_calls_keep_taint_across_rejection_and_recovery() {
     "#,
         )
         .expect("public formatting and all secret natural rejections preserve caller context");
+}
+
+#[test]
+fn locale_provider_lua_error_preserves_callers_and_multiple_query_recovery() {
+    fixture_env()
+        .exec(
+            r#"
+        BUProviderContexts(function()
+            error('BU locale callback failure')
+        end, nil, 'BU locale callback failure')
+    "#,
+        )
+        .expect("actual Lua callback failure restores observable caller context and state");
+}
+
+#[test]
+fn locale_provider_wrong_missing_and_non_utf8_results_reject_then_recover() {
+    fixture_env()
+        .exec(
+            r#"
+        for _, provider in ipairs({
+            function() end,
+            function() return nil end,
+            function() return false end,
+            function() return 1234 end,
+            function() return BUInputs end,
+            function() return BUFrame end,
+            function() return function() end end,
+            function() return 'enUS' .. string.char(255) end,
+        }) do
+            BUProviderContexts(provider)
+        end
+    "#,
+        )
+        .expect("local public UTF-8 locale input policy rejects bad callback results and recovers");
+}
+
+#[test]
+fn authentic_secret_locale_result_rejects_under_local_public_input_policy() {
+    let env = secret_env();
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    let locale = wrap_host_secret_string(lua.state_mut(), "enUS");
+    lua.state_mut().push(locale);
+    let inserted = lua.set_global_val("BUSecretLocale", locale);
+    lua.state_mut().pop();
+    inserted.expect("root authentic secret locale during publication");
+    drop(lua);
+    env.exec(
+        r#"
+        local held = BUSecretLocale
+        assert(issecretvalue(held), 'authentic VM secret locale')
+        BUProviderContexts(function() return held end)
+        assert(issecretvalue(held) and issecretvalue(BUSecretLocale))
+        assert(rawequal(held, BUSecretLocale), 'locale wrapper identity preserved')
+        BUSecretRoots()
+        BURecovery()
+    "#,
+    )
+    .expect("valid locale payload remains secret and rejected by explicit local input policy");
+}
+
+#[test]
+fn locale_provider_collects_before_returning_public_locale_with_live_roots() {
+    secret_env()
+        .exec(
+            r#"
+        local held = BUSecretTrue
+        BUProviderContexts(function()
+            local locale = table.concat({'de', 'DE'})
+            collectgarbage('collect')
+            assert(not issecretvalue(locale))
+            assert(issecretvalue(held) and rawequal(held, BUSecretTrue))
+            BUSecretRoots()
+            return locale
+        end, '1.234,5')
+        collectgarbage('collect')
+        assert(issecretvalue(held) and rawequal(held, BUSecretTrue))
+        BUSecretRoots()
+        BURecovery()
+    "#,
+        )
+        .expect("GC inside actual locale callback preserves live locale, objects and secret roots");
 }
 
 #[test]
