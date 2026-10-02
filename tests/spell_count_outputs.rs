@@ -34,13 +34,20 @@ const ASSERTIONS: &str = r#"
         assert(string.find(err, tostring(position), 1, true))
         assert(not string.find(err, 'PRIVATE-Count', 1, true))
         local guard = string.find(err, 'requires an untainted caller', 1, true)
-        if denial then assert(guard) else assert(not guard) end
+        if denial then
+            assert(guard)
+        else
+            assert(not guard)
+        end
         assert(debug.getstacktaint() == before)
     end
     SCFrame = CreateFrame('Frame')
     SCFrame:SetAlpha(0.625)
     SCFrame.marker = 67
-    SCTable = {marker='PRIVATE-Count', count=37}
+    SCTable = {
+        marker = 'PRIVATE-Count',
+        count = 37,
+    }
 "#;
 
 fn fixture(restricted: bool) -> WowLuaEnv {
@@ -57,30 +64,34 @@ fn fixture(restricted: bool) -> WowLuaEnv {
             ("19750".into(), 19750),
             ("642".into(), 642),
         ]);
-        state.action_bars.clear();
-        state.action_bars.extend([(17, 19750), (19, 19750)]);
-        state.action_use_counts.clear();
-        state.action_use_counts.extend([
-            (
-                17,
-                ActionUseCountInfo {
-                    spell_id: 19750,
-                    count: 99,
-                },
-            ),
-            (
-                19,
-                ActionUseCountInfo {
-                    spell_id: 19750,
-                    count: 3,
-                },
-            ),
-        ]);
+        populate_action_slots(&mut state);
         state.spell_charges.clear();
         state.cooldowns_restricted = restricted;
     }
     env.exec(ASSERTIONS).unwrap();
     env
+}
+
+fn populate_action_slots(state: &mut wow_ui_sim::lua_api::SimState) {
+    state.action_bars.clear();
+    state.action_bars.extend([(17, 19750), (19, 19750)]);
+    state.action_use_counts.clear();
+    state.action_use_counts.extend([
+        (
+            17,
+            ActionUseCountInfo {
+                spell_id: 19750,
+                count: 99,
+            },
+        ),
+        (
+            19,
+            ActionUseCountInfo {
+                spell_id: 19750,
+                count: 3,
+            },
+        ),
+    ]);
 }
 
 fn set_count(env: &WowLuaEnv, spell_id: u32, count: u32) {
@@ -105,19 +116,25 @@ fn set_charge(env: &WowLuaEnv, current: u32, max: u32) {
 
 fn capture(env: &WowLuaEnv, api: &str, arguments: &str) {
     env.exec(&format!(
-        "assert(select('#', C_Spell.{api}({arguments})) == 1); \
+        "assert(select('#', C_Spell.{api}({arguments})) == 1)\n\
          SCResult = C_Spell.{api}({arguments})"
     ))
     .expect("one actual scalar rooted before host inspection");
 }
 
-fn assert_result(env: &WowLuaEnv, number: Option<u32>, text: &str, restricted: bool) {
+fn assert_lua_result_domain(env: &WowLuaEnv, number: Option<u32>, restricted: bool) {
     env.exec(&format!(
-        "assert(issecretvalue(SCResult) == {restricted}); \
-         if not {restricted} then assert(type(SCResult) == '{}') end",
+        "assert(issecretvalue(SCResult) == {restricted})\n\
+         if not {restricted} then\n\
+             assert(type(SCResult) == '{}')\n\
+         end",
         if number.is_some() { "number" } else { "string" }
     ))
     .unwrap();
+}
+
+fn assert_result(env: &WowLuaEnv, number: Option<u32>, text: &str, restricted: bool) {
+    assert_lua_result_domain(env, number, restricted);
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
     assert!(rilua::api::state_is_secure(lua.state_mut()));
@@ -181,13 +198,44 @@ fn secret_fixture() -> WowLuaEnv {
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
     rilua::table_security::register_table_security(&mut lua).unwrap();
+    publish_secret_scalars(&mut *lua);
+    publish_secret_tables(&mut *lua);
+    drop(lua);
+    publish_secret_metadata(&env);
+    env
+}
+
+fn publish_secret_metadata(env: &WowLuaEnv) {
+    env.exec(
+        r#"
+        SCSecrets = {
+            SCIdentifier,
+            SCMax,
+            SCReplacement,
+            SCNil,
+            SCBool,
+            SCString,
+            SCSecretTable,
+            SCSecretFrame,
+            SCUnknown,
+            SCAlias,
+        }
+        for _,v in ipairs(SCSecrets) do
+            assert(issecretvalue(v))
+        end
+        "#,
+    )
+    .unwrap();
+}
+
+fn publish_secret_scalars(lua: &mut impl LuaApiMut) {
     for (name, number) in [
         ("SCIdentifier", 19750.0),
         ("SCMax", 6.5),
         ("SCUnknown", 880001.0),
     ] {
         let value = wrap_host_secret_number(lua.state_mut(), number);
-        publish(&mut *lua, name, value);
+        publish(lua, name, value);
     }
     for (name, text) in [
         ("SCReplacement", "é雪"),
@@ -195,12 +243,15 @@ fn secret_fixture() -> WowLuaEnv {
         ("SCAlias", "fixtureheal"),
     ] {
         let value = wrap_host_secret_string(lua.state_mut(), text);
-        publish(&mut *lua, name, value);
+        publish(lua, name, value);
     }
     let value = wrap_secret(lua.state_mut(), Val::Nil).unwrap();
-    publish(&mut *lua, "SCNil", value);
+    publish(lua, "SCNil", value);
     let value = wrap_host_secret_bool(lua.state_mut(), false);
-    publish(&mut *lua, "SCBool", value);
+    publish(lua, "SCBool", value);
+}
+
+fn publish_secret_tables(lua: &mut impl LuaApiMut) {
     for (source, name) in [("SCTable", "SCSecretTable"), ("SCFrame", "SCSecretFrame")] {
         let value = lua.get_global_val(source);
         let Val::Table(reference) = value else {
@@ -219,12 +270,9 @@ fn secret_fixture() -> WowLuaEnv {
         }
         lua.state_mut().push(value);
         let wrapped = wrap_secret(lua.state_mut(), value).unwrap();
-        publish(&mut *lua, name, wrapped);
+        publish(lua, name, wrapped);
         lua.state_mut().pop();
     }
-    drop(lua);
-    env.exec("SCSecrets = {SCIdentifier,SCMax,SCReplacement,SCNil,SCBool,SCString,SCSecretTable,SCSecretFrame,SCUnknown,SCAlias}; for _,v in ipairs(SCSecrets) do assert(issecretvalue(v)) end").unwrap();
-    env
 }
 
 fn metadata(env: &WowLuaEnv, names: &[&str]) -> Vec<(Val, u64)> {
@@ -466,7 +514,19 @@ fn queries_are_read_only_and_environments_and_result_replacements_isolated() {
             state.action_use_counts.clone(),
         )
     };
-    env.exec("local c=C_Spell.GetSpellCastCount; local d=C_Spell.GetSpellDisplayCount; for i=1,8 do assert(c('fixtureheal')==7); assert(d('fixtureheal')=='3') end; SCResult='replaced'; assert(d(19750)=='3')").unwrap();
+    env.exec(
+        r#"
+        local c = C_Spell.GetSpellCastCount
+        local d = C_Spell.GetSpellDisplayCount
+        for i=1,8 do
+            assert(c('fixtureheal')==7)
+            assert(d('fixtureheal')=='3')
+        end
+        SCResult = 'replaced'
+        assert(d(19750)=='3')
+    "#,
+    )
+    .unwrap();
     {
         let state = env.state().borrow();
         assert_eq!(state.spell_cast_counts, counts);
@@ -483,18 +543,36 @@ fn queries_are_read_only_and_environments_and_result_replacements_isolated() {
 fn strict_public_identifier_utf8_u32_domain_in_secure_and_tainted_frames() {
     let env = fixture(false);
     positive(&env);
-    env.exec(r#"
+    env.exec(
+        r#"
         local function probe()
-            for _,api in ipairs({'GetSpellCastCount','GetSpellDisplayCount'}) do
+            for _,api in ipairs({
+                'GetSpellCastCount',
+                'GetSpellDisplayCount',
+            }) do
                 SCReject(api,1,false)
                 SCReject(api,1,false,nil)
-                for _,v in ipairs({false,{},SCFrame,-1,19750.5,0/0,math.huge,-math.huge,4294967296,string.char(255)}) do
+                for _,v in ipairs({
+                    false,
+                    {},
+                    SCFrame,
+                    -1,
+                    19750.5,
+                    0/0,
+                    math.huge,
+                    -math.huge,
+                    4294967296,
+                    string.char(255),
+                }) do
                     SCReject(api,1,false,v)
                 end
             end
         end
-        probe(); SCTainted(probe)
-    "#).unwrap();
+        probe()
+        SCTainted(probe)
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
@@ -504,16 +582,36 @@ fn finite_threshold_and_utf8_nul_free_cstring_validate_without_source() {
     env.exec(
         r#"
         local function probe()
-            for _,id in ipairs({19750,880001,'unknown-spell'}) do
-                for _,v in ipairs({false,'6',{},SCFrame,0/0,math.huge,-math.huge}) do
+            for _,id in ipairs({
+                19750,
+                880001,
+                'unknown-spell',
+            }) do
+                for _,v in ipairs({
+                    false,
+                    '6',
+                    {},
+                    SCFrame,
+                    0/0,
+                    math.huge,
+                    -math.huge,
+                }) do
                     SCReject('GetSpellDisplayCount',2,false,id,v)
                 end
-                for _,v in ipairs({false,7,{},SCFrame,'a\000b',string.char(255)}) do
+                for _,v in ipairs({
+                    false,
+                    7,
+                    {},
+                    SCFrame,
+                    'a\000b',
+                    string.char(255),
+                }) do
                     SCReject('GetSpellDisplayCount',3,false,id,6,v)
                 end
             end
         end
-        probe(); SCTainted(probe)
+        probe()
+        SCTainted(probe)
     "#,
     )
     .unwrap();
@@ -523,7 +621,16 @@ fn finite_threshold_and_utf8_nul_free_cstring_validate_without_source() {
 fn public_tainted_callers_are_not_blanket_denied_and_recover_trust() {
     let env = fixture(false);
     positive(&env);
-    env.exec("SCTainted(function() assert(C_Spell.GetSpellCastCount('fixtureheal')==7); assert(C_Spell.GetSpellDisplayCount(19750,6,'é雪')=='é雪'); assert(C_Spell.GetSpellDisplayCount(642)=='2') end)").unwrap();
+    env.exec(
+        r#"
+        SCTainted(function()
+            assert(C_Spell.GetSpellCastCount('fixtureheal')==7)
+            assert(C_Spell.GetSpellDisplayCount(19750,6,'é雪')=='é雪')
+            assert(C_Spell.GetSpellDisplayCount(642)=='2')
+        end)
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
@@ -542,13 +649,28 @@ fn secure_display_wrong_authenticated_types_report_positions_without_payload() {
     env.exec(
         r#"
         SCReject('GetSpellDisplayCount',1,false,SCMax)
-        for _,v in ipairs({SCNil,SCBool,SCSecretTable,SCSecretFrame}) do
+        for _,v in ipairs({
+            SCNil,
+            SCBool,
+            SCSecretTable,
+            SCSecretFrame,
+        }) do
             SCReject('GetSpellDisplayCount',1,false,v)
         end
-        for _,v in ipairs({SCBool,SCString,SCSecretTable,SCSecretFrame}) do
+        for _,v in ipairs({
+            SCBool,
+            SCString,
+            SCSecretTable,
+            SCSecretFrame,
+        }) do
             SCReject('GetSpellDisplayCount',2,false,19750,v)
         end
-        for _,v in ipairs({SCBool,SCIdentifier,SCSecretTable,SCSecretFrame}) do
+        for _,v in ipairs({
+            SCBool,
+            SCIdentifier,
+            SCSecretTable,
+            SCSecretFrame,
+        }) do
             SCReject('GetSpellDisplayCount',3,false,19750,6,v)
         end
     "#,
@@ -566,14 +688,16 @@ fn cast_conservatively_rejects_all_six_authentic_secret_kinds_in_both_frames() {
             for _,v in ipairs(SCSecrets) do
                 local taint=debug.getstacktaint()
                 local ok,err=pcall(C_Spell.GetSpellCastCount,v)
-                assert(not ok); assert(type(err)=='string')
+                assert(not ok)
+                assert(type(err)=='string')
                 assert(string.find(err,'C_Spell.GetSpellCastCount',1,true))
                 assert(string.find(err,'secret spell identifier access is not modeled',1,true))
                 assert(not string.find(err,'PRIVATE-Count',1,true))
                 assert(debug.getstacktaint()==taint)
             end
         end
-        probe(); SCTainted(probe)
+        probe()
+        SCTainted(probe)
     "#,
     )
     .unwrap();
@@ -589,7 +713,12 @@ fn display_authenticates_all_original_args_before_types_lookup_or_no_source() {
         SCTainted(function()
             for _,v in ipairs(SCSecrets) do
                 SCReject('GetSpellDisplayCount',1,true,v)
-                for _,id in ipairs({19750,880001,'unknown-spell',false}) do
+                for _,id in ipairs({
+                    19750,
+                    880001,
+                    'unknown-spell',
+                    false,
+                }) do
                     SCReject('GetSpellDisplayCount',2,true,id,v)
                     SCReject('GetSpellDisplayCount',3,true,id,nil,v)
                     SCReject('GetSpellDisplayCount',3,true,id,'bad',v)
@@ -616,13 +745,16 @@ fn rooted_input_copies_and_gc_preserve_allocation_secrecy_and_frame_state() {
             SCInputCopy={}
             for i,v in ipairs(SCSecrets) do
                 SCInputCopy[i]=v
-                assert(issecretvalue(v)); assert(not canaccessvalue(v))
+                assert(issecretvalue(v))
+                assert(not canaccessvalue(v))
                 SCReject('GetSpellDisplayCount',1,true,v)
             end
         end)
         collectgarbage('collect')
-        assert(SCFrame:GetAlpha()==0.625); assert(SCFrame.marker==67)
-        assert(SCTable.marker=='PRIVATE-Count'); assert(SCTable.count==37)
+        assert(SCFrame:GetAlpha()==0.625)
+        assert(SCFrame.marker==67)
+        assert(SCTable.marker=='PRIVATE-Count')
+        assert(SCTable.count==37)
     "#,
     )
     .unwrap();
@@ -687,14 +819,28 @@ fn tainted_restricted_outputs_deny_math_concat_len_and_opaque_payload_leaks() {
         SCTainted(function()
             SCCast=C_Spell.GetSpellCastCount(19750)
             SCDisplay=C_Spell.GetSpellDisplayCount(19750,6,'PRIVATE-Count')
-            for _,v in ipairs({SCCast,SCDisplay}) do
-                assert(issecretvalue(v)); assert(not canaccessvalue(v))
+            for _,v in ipairs({
+                SCCast,
+                SCDisplay,
+            }) do
+                assert(issecretvalue(v))
+                assert(not canaccessvalue(v))
             end
-            for _,op in ipairs({function() return SCCast+1 end,
-                function() return SCDisplay..'x' end,
-                function() return string.len(SCDisplay) end}) do
+            for _,op in ipairs({
+                function()
+                    return SCCast+1
+                end,
+                function()
+                    return SCDisplay..'x'
+                end,
+                function()
+                    return string.len(SCDisplay)
+                end,
+            }) do
                 local ok,err=pcall(op)
-                assert(not ok); assert(type(err)=='string'); assert(#err>0)
+                assert(not ok)
+                assert(type(err)=='string')
+                assert(#err>0)
                 assert(not string.find(err,'PRIVATE-Count',1,true))
                 assert(debug.getstacktaint()=='SpellCountProbe')
             end
@@ -715,17 +861,26 @@ fn output_copy_gc_and_flag_off_keep_old_wrappers_private_and_new_public() {
     let env = fixture(false);
     restrict_after_positive(&env);
     env.exec(
-        "SCCast=C_Spell.GetSpellCastCount(19750); SCDisplay=C_Spell.GetSpellDisplayCount(19750)",
+        r#"
+        SCCast = C_Spell.GetSpellCastCount(19750)
+        SCDisplay = C_Spell.GetSpellDisplayCount(19750)
+        "#,
     )
     .unwrap();
     let before = metadata(&env, &["SCCast", "SCDisplay"]);
     env.exec(
         r#"
-        SCTainted(function() SCOutputCopy={SCCast,SCDisplay} end)
+        SCTainted(function()
+            SCOutputCopy = {
+                SCCast,
+                SCDisplay,
+            }
+        end)
         for i=1,40 do
             SCFreshCast=C_Spell.GetSpellCastCount(19750)
             SCFreshDisplay=C_Spell.GetSpellDisplayCount(19750)
-            assert(issecretvalue(SCFreshCast)); assert(issecretvalue(SCFreshDisplay))
+            assert(issecretvalue(SCFreshCast))
+            assert(issecretvalue(SCFreshDisplay))
             collectgarbage('collect')
         end
     "#,
@@ -739,12 +894,18 @@ fn output_copy_gc_and_flag_off_keep_old_wrappers_private_and_new_public() {
     assert_result(&env, None, "7", true);
     env.state().borrow_mut().cooldowns_restricted = false;
     positive(&env);
-    env.exec(r#"
+    env.exec(
+        r#"
         SCTainted(function()
-            for _,v in ipairs(SCOutputCopy) do assert(issecretvalue(v)); assert(not canaccessvalue(v)) end
+            for _,v in ipairs(SCOutputCopy) do
+                assert(issecretvalue(v))
+                assert(not canaccessvalue(v))
+            end
             assert(C_Spell.GetSpellCastCount(19750)==7)
             assert(C_Spell.GetSpellDisplayCount(19750)=='7')
         end)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     assert_eq!(metadata(&env, &["SCCast", "SCDisplay"]), before);
 }

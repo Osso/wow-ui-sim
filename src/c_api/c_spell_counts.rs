@@ -2,7 +2,7 @@
 //! Charge priority, formatting domains and empty/zero policies are inferred.
 //! Cast secret-input permissions remain unmodeled; output restriction is separate.
 
-use super::c_action_bar_counts::format_display_count;
+use super::c_action_bar_counts::{format_display_count, parse_maximum, parse_replacement};
 use super::c_spell::{read_public_spell_identifier_at, read_spell_identifier_value};
 use super::charge_state::{cooldowns_are_restricted, read_charge_input};
 use crate::lua_api::methods::{borrow_state, create_string, val_to_string};
@@ -39,8 +39,8 @@ pub(crate) fn get_spell_display_count(state: &mut LuaState) -> LuaResult<u32> {
     let maximum_value = authenticate_argument(state, 2)?;
     let replacement_value = authenticate_argument(state, 3)?;
     validate_identifier(state, identifier)?;
-    let maximum = parse_maximum(maximum_value)?;
-    let replacement = parse_replacement(state, replacement_value)?;
+    let maximum = parse_maximum(maximum_value, DISPLAY_API)?;
+    let replacement = parse_replacement(state, replacement_value, DISPLAY_API)?;
     let spell_id = read_spell_identifier_value(state, identifier)?;
     let (quantity, restricted) = read_display_snapshot(state, spell_id)?;
     let display = format_display_count(quantity, maximum, &replacement);
@@ -73,29 +73,6 @@ fn validate_identifier(state: &LuaState, value: Val) -> LuaResult<()> {
 
 fn is_unsigned_u32(number: f64) -> bool {
     number.is_finite() && f64::from(number as u32) == number
-}
-
-fn parse_maximum(value: Val) -> LuaResult<f64> {
-    match value {
-        Val::Nil => Ok(9999.0),
-        Val::Num(number) if number.is_finite() => Ok(number),
-        _ => Err(runtime_error(format!(
-            "{DISPLAY_API}: argument 2 requires a finite number or nil"
-        ))),
-    }
-}
-
-fn parse_replacement(state: &LuaState, value: Val) -> LuaResult<String> {
-    if value == Val::Nil {
-        return Ok("*".to_owned());
-    }
-    val_to_string(state, value)
-        .filter(|text| !text.contains('\0'))
-        .ok_or_else(|| {
-            runtime_error(format!(
-                "{DISPLAY_API}: argument 3 requires a UTF-8 NUL-free string or nil"
-            ))
-        })
 }
 
 fn read_display_snapshot(

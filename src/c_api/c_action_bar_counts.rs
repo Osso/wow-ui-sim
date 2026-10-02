@@ -32,8 +32,8 @@ pub(crate) fn get_action_display_count(state: &mut LuaState) -> LuaResult<u32> {
     let maximum_value = authenticate_argument(state, DISPLAY_API, 2)?;
     let replacement_value = authenticate_argument(state, DISPLAY_API, 3)?;
     let slot = parse_slot(slot_value, DISPLAY_API)?;
-    let maximum = parse_maximum(maximum_value)?;
-    let replacement = parse_replacement(state, replacement_value)?;
+    let maximum = parse_maximum(maximum_value, DISPLAY_API)?;
+    let replacement = parse_replacement(state, replacement_value, DISPLAY_API)?;
     let (_, quantity, restricted) = read_count_snapshot(state, slot)?;
     let display = format_display_count(quantity, maximum, &replacement);
     let result = if restricted {
@@ -68,17 +68,17 @@ fn is_positive_u32(number: f64) -> bool {
     number.is_finite() && number > 0.0 && f64::from(number as u32) == number
 }
 
-fn parse_maximum(value: Val) -> LuaResult<f64> {
+pub(crate) fn parse_maximum(value: Val, api: &str) -> LuaResult<f64> {
     match value {
         Val::Nil => Ok(9999.0),
         Val::Num(number) if number.is_finite() => Ok(number),
         _ => Err(runtime_error(format!(
-            "{DISPLAY_API}: argument 2 requires a finite number or nil"
+            "{api}: argument 2 requires a finite number or nil"
         ))),
     }
 }
 
-fn parse_replacement(state: &LuaState, value: Val) -> LuaResult<String> {
+pub(crate) fn parse_replacement(state: &LuaState, value: Val, api: &str) -> LuaResult<String> {
     if value == Val::Nil {
         return Ok("*".to_owned());
     }
@@ -86,7 +86,7 @@ fn parse_replacement(state: &LuaState, value: Val) -> LuaResult<String> {
         .filter(|text| !text.contains('\0'))
         .ok_or_else(|| {
             runtime_error(format!(
-                "{DISPLAY_API}: argument 3 requires a UTF-8 NUL-free string or nil"
+                "{api}: argument 3 requires a UTF-8 NUL-free string or nil"
             ))
         })
 }
