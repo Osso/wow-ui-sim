@@ -1,3 +1,7 @@
+## [2026-10-02] audit | Bound row311 spell-link glyph security
+
+[[lua-api#Retail 12.0.5 spell-link glyph argument security]] links [row311 contract/proof SSOT](../specs/spell-link-glyph-security.md): `da2ec8cb8` adds epoch125 authentic secret arg2 rejection before unchanged numeric dispatch; public ignored glyph behavior remains unchanged. Saved genuine RED3PASS/5FAIL, compile149.032s/run1.0117s; no GREEN/check/acceptance/native claim or arg1/glyph-catalog credit. Accounting stays210 pending/138 bounded/14 partial;64 capabilities; row311 pending.
+
 ## [2026-10-02] evidence | Accept exact tooltip spell/mount boundaries
 
 [Batch56 acceptance SSOT](../specs/tooltip-spell-mount-identifiers.md#independent-bounded-acceptance--2026-10-02) records independent457:155 distinctPASS/startup0 `[]`, scopedfmt/check/security/readability pass; globalfmt fails on preserved unowned source. Only333/334/336/337 promote;358 unrelated rows/63 prior capabilities retained. Inferred misses/security, dirty-combined/native/profile/frame/flags limits remain; broader goal open.
