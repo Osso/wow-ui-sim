@@ -50,7 +50,7 @@ Cached evidence (declarations/consumer, not native execution):
 
 ## Tests asserting this spec
 
-`tests/action_spell_slot_identifiers.rs`: **18 focused tests**, grouped by `retail-12-0-5` feature; no new Cargo target. Source inspected and exact-file formatted only; compilation/RED belong to parent.
+`tests/action_spell_slot_identifiers.rs`: **17 focused tests**, grouped by `retail-12-0-5` feature; no new Cargo target. Source inspected and exact-file formatted only; compilation/RED belong to parent.
 
 Fixtures clear/replace the default Protection Paladin bar before all query assertions. Seed slots 3/101 → 7001, 5 → 7002, macro-only 8 → 77, plus explicit name and full-link aliases. `GetActionInfo` verifies seeded kinds/IDs before paired calls. Shadow fixtures verify effective macro/outfit kinds before querying; real UI Frame verifies `GetObjectType() == 'Frame'` and actual registered tuple before the non-assignment query. Public move follows actual source/target order 101 → 12. Invalid/secret fixtures use real runtime values, never Lua marker secrets, API replacements or presumed userdata variants.
 
