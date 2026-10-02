@@ -1,5 +1,10 @@
 # Patch 12.0.5 API Audit
 
+### Combined aura color/enumeration — bounded independent acceptance
+
+[Combined acceptance SSOT](../../specs/aura-dispel-color-arguments.md#independent-bounded-acceptance--2026-10-02) and [enumeration scope](../../specs/unit-aura-slot-enumeration-arguments.md#independent-bounded-acceptance--2026-10-02) record parent-accepted independent365 plus367 supplement. Only378/382 promote: **241/107/14 →239 pending/109 bounded/14 partial =362**; ordered IDs,360 unrelated rows, prior51 capabilities and provenance preserved. Reused196 uniquePASS/startup0[]/dirtycheck0/VM-security-wiring-readability; fresh eight-filefmt0 after admin formatting-only c436649ad. Original365 overallFAIL/globalfmt1 unowned duration historical, not fixed; dirty combined not clean revision. Runtime31.527s below60 target, bounded DEVELOPMENT not final whole-goal/page/native acceptance. Inferred policies/native permissions/secret POINTS/secrecy/pagination/consumer/profile/full setters gaps retained; advisories deferred. Parent owns postcommit validation; earlier pending checkpoints historical.
+
+
 ### Aura slot arguments — bounded independent acceptance
 
 [Independent353 acceptance](../../specs/unit-aura-slot-secret-arguments.md#independent-bounded-acceptance--2026-10-02) owns150 unique PASS (12 slot +138 controls), startup0[], full hashes/commands and limits. Only376 promotes; unit retains NeverSecret. **242/106/14 →241 pending/107 bounded/14 partial =362**; ordered IDs,361 unrelated rows, prior50 capabilities and provenance preserved. Dirty-combined check0/scopedfmt0, globalfmt1 preserved unowned; later batch45 control bytes excluded. Two old plain CreateColor successes are invalid curve-contract inputs, not378 evidence. Partition55.283s misses60 target, retained without padding; bounded development acceptance, not final whole-goal acceptance. Four readability suggestions deferred; native access/output/profile gaps excluded. Historical pending checkpoints superseded; parent owns postcommit validation.

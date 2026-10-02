@@ -8,24 +8,24 @@ Actual Retail runtime cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizz
 
 ### Argument authentication
 
-- [ ] Accept authentic host-secret STRING units for untainted callers using their actual payload, including player, seeded party, empty and unknown units. Authenticate unknown units before absence handling. This is the literal row382 removal axis.
-- [ ] Apply unchanged AllowedWhenUntainted to all four supplied arguments: secret STRING filter, secret NUMBER maxSlots and continuationToken, individually and mixed with secret unit. Do not bypass authentication because maxSlots is unused or a token would terminate.
-- [ ] Authenticate all four arguments before type/representation checks, store lookup or token termination. A tainted call with a malformed public earlier argument and secret later argument must fail at the VM caller guard. Tests match the simulator VM's `untainted caller` diagnostic, not native error wording.
-- [ ] Preserve original secret identity/secrecy and caller taint through secure success, tainted denial, same-closure public recovery, and forced GC. Root actual host STRING/NUMBER wrappers before global insertion; do not emulate secrets with Lua tables.
+- [x] Accept authentic host-secret STRING units for untainted callers using their actual payload, including player, seeded party, empty and unknown units. Authenticate unknown units before absence handling. This is the literal row382 removal axis.
+- [x] Apply unchanged AllowedWhenUntainted to all four supplied arguments: secret STRING filter, secret NUMBER maxSlots and continuationToken, individually and mixed with secret unit. Do not bypass authentication because maxSlots is unused or a token would terminate.
+- [x] Authenticate all four arguments before type/representation checks, store lookup or token termination. A tainted call with a malformed public earlier argument and secret later argument must fail at the VM caller guard. Tests match the simulator VM's `untainted caller` diagnostic, not native error wording.
+- [x] Preserve original secret identity/secrecy and caller taint through secure success, tainted denial, same-closure public recovery, and forced GC. Root actual host STRING/NUMBER wrappers before global insertion; do not emulate secrets with Lua tables.
 
 ### Inferred representation policy — not native-verified
 
-- [ ] **INFERRED:** unit must be a required actual UTF-8 STRING; no nil default or numeric coercion. Unknown/empty valid strings are lookup misses, not vocabulary errors.
-- [ ] **INFERRED:** nullable filter defaults to empty; nonnil filter must be an actual UTF-8 STRING. Do not redesign accepted filter vocabulary.
-- [ ] **INFERRED:** nullable maxSlots/token must be actual finite f64 NUMBERs; reject numeric strings, booleans, tables, functions, NaN and infinities even for unknown units or supplied terminating tokens. Accept zero, negative, fractional and large finite values without an integral/positive cap. Securely authenticated NaN still fails validation.
+- [x] **INFERRED:** unit must be a required actual UTF-8 STRING; no nil default or numeric coercion. Unknown/empty valid strings are lookup misses, not vocabulary errors.
+- [x] **INFERRED:** nullable filter defaults to empty; nonnil filter must be an actual UTF-8 STRING. Do not redesign accepted filter vocabulary.
+- [x] **INFERRED:** nullable maxSlots/token must be actual finite f64 NUMBERs; reject numeric strings, booleans, tables, functions, NaN and infinities even for unknown units or supplied terminating tokens. Accept zero, negative, fractional and large finite values without an integral/positive cap. Securely authenticated NaN still fails validation.
 
 ### Retained enumeration, not native pagination
 
-- [ ] Return exactly nil continuation plus every visible stored aura instance ID in stored order, including maxSlots=1. IDs are nonordinal; duplicate names do not merge records. Unknown/empty units or empty visible selection return exactly **one nil**, not zero values.
-- [ ] Any nonnil valid finite token returns exactly **zero values**, including zero, negative, fractional and large tokens. No new pagination requirement is introduced by row382; maxSlots remains unused after authentication/validation.
-- [ ] Preserve the actual existing filter collector: uppercase substring precedence MAW → EXTERNAL_DEFENSIVE → HARMFUL → otherwise Helpful. MAW/external select nothing; `PLAYER` and `RAID` do not add source/raid filtering on this path. Player uses polarity within its buff store; seeded party uses the buff/debuff stores. This is narrower than [instance enumeration](unit-aura-instance-enumeration.md), whose additional filtering is not imported here.
-- [ ] Blocked IDs disappear and compact the visible tuple; returned IDs round-trip through real C slot getter DTOs. Blocked records remain C-slot-retrievable. Preserve complete DTO fields, source normalization, flags and nullable dispel value.
-- [ ] Preserve C enumeration/getter independence from the AuraUtil provider switch. Query success, denial, miss and token termination must not alter block-table identity/content, provider flag, stored AuraInfo records or returned tuple/DTO ownership. Two environments isolate block/provider/secret globals; mutating a captured tuple or DTO does not change subsequent results.
+- [x] Return exactly nil continuation plus every visible stored aura instance ID in stored order, including maxSlots=1. IDs are nonordinal; duplicate names do not merge records. Unknown/empty units or empty visible selection return exactly **one nil**, not zero values.
+- [x] Any nonnil valid finite token returns exactly **zero values**, including zero, negative, fractional and large tokens. No new pagination requirement is introduced by row382; maxSlots remains unused after authentication/validation.
+- [x] Preserve the actual existing filter collector: uppercase substring precedence MAW → EXTERNAL_DEFENSIVE → HARMFUL → otherwise Helpful. MAW/external select nothing; `PLAYER` and `RAID` do not add source/raid filtering on this path. Player uses polarity within its buff store; seeded party uses the buff/debuff stores. This is narrower than [instance enumeration](unit-aura-instance-enumeration.md), whose additional filtering is not imported here.
+- [x] Blocked IDs disappear and compact the visible tuple; returned IDs round-trip through real C slot getter DTOs. Blocked records remain C-slot-retrievable. Preserve complete DTO fields, source normalization, flags and nullable dispel value.
+- [x] Preserve C enumeration/getter independence from the AuraUtil provider switch. Query success, denial, miss and token termination must not alter block-table identity/content, provider flag, stored AuraInfo records or returned tuple/DTO ownership. Two environments isolate block/provider/secret globals; mutating a captured tuple or DTO does not change subsequent results.
 
 ## How it works
 
@@ -71,8 +71,8 @@ Exact command: `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/
 ## Known gaps (current cycle)
 
 - [x] Saved combined GREEN: all12 enumeration fixtures PASS; see linked reconciliation.
-- [ ] Parent owns combined independent Rust/security/readability/acceptance gate; no gate execution in this docs slice.
-- [ ] Exact row382 accounting remains unchanged; fixture existence is not behavioral completion or clean-revision proof.
+- [x] Parent accepts independent365 plus367 supplement for exact382 bounded DEVELOPMENT; no gate execution in this docs slice.
+- [x] Exact row382 receives bounded capability credit only; dirty-source provenance and native gaps remain.
 
 ## Out of scope
 
@@ -81,9 +81,9 @@ Exact command: `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/
 - Native cached AuraUtil consumer closure: inspected Lua forwards four arguments through a data provider and retrieves DTOs by slots; current Rust AuraUtil.ForEachAura directly visits the store and does not establish that handshake. No consumer closure claim or optional consumer fixture.
 - Other source rows, indexed/display/duration APIs, Cargo/new targets, audit accounting/PLAN, dispel-color producer/spec/corrected tests and independently owned slot-acceptance work. Only this contract, minimal Lua API wiki inventory/index/log and enumeration producer wiring change.
 
-## Reconciled combined batch45/46 parent GREEN — 2026-10-01
+## Reconciled combined batch45/46 parent GREEN — 2026-10-02
 
-[Combined evidence ledger](aura-dispel-color-arguments.md#reconciled-combined-batch4546-parent-green--2026-10-01) owns exact commands, fixture/producer revisions, binary/source hashes, thirteen selections, full artifacts and actual runtime. All12 enumeration fixtures saved PASS, alongside16 corrected color fixtures and168 controls:196 unique PASS/all13 exits0, startup0 `[]`. Dirty-source-bound proof is not clean revision or independent acceptance.
+[Combined evidence ledger](aura-dispel-color-arguments.md#reconciled-combined-batch4546-parent-green--2026-10-02) owns exact commands, fixture/producer revisions, binary/source hashes, thirteen selections, full artifacts and actual runtime. All12 enumeration fixtures saved PASS, alongside16 corrected color fixtures and168 controls:196 unique PASS/all13 exits0, startup0 `[]`. Dirty-source-bound proof is not clean revision or independent acceptance.
 
 | Capability | Saved proof | Limit |
 | --- | --- | --- |
@@ -93,3 +93,9 @@ Exact command: `timeout 90 /syncthing/Sync/Projects/wow/wow-ui-sim/target/debug/
 | Rooted GC identity/taint, immutable records/DTO/block/provider, two environments | Two lifecycle/isolation fixtures PASS | No restricted-output secrecy or all-profile proof |
 
 Saved RED4PASS/8FAIL used first-attempt batch45 compilation, not an extra RED build. Independent verifier active; Rust/security/readability/acceptance pending. Rows378/382 uncredited;241 pending/107 bounded/14 partial unchanged. Parent owns accounting/gates.
+
+## Independent bounded acceptance — 2026-10-02
+
+[Combined acceptance SSOT](aura-dispel-color-arguments.md#independent-bounded-acceptance--2026-10-02) owns parent acceptance of independent365 plus367 format supplement, full commands/hashes/revisions/gate provenance and exact378/382 accounting. Earlier pending checkpoints are historical. All12 chosen-behavior fixtures independently accepted within the matrix above, not native-verified semantics. Primary runtime cache declaration `UnitAuraDocumentation.lua:287–288` says `RequiresUnitAuraAccess = true` and `SecretArguments = "AllowedWhenUntainted"`; annotations are not permission enforcement proof.
+
+Retain inferred strict representation/miss policy, unused max and zero-return finite-token termination, native permissions/output-secrecy/pagination/full-consumer/profile gaps. Reused196 unique PASS/startup0[]/dirtycheck0; fresh eight-file scopedfmt0 after admin formatting-only c436649ad. Original365 overallFAIL and globalfmt1 unowned duration remain historical; no fresh compiled revision or final whole-goal/page/native acceptance. Runtime31.527934460435063s below60 target; advisories deferred, no functional counterexample or authorized adjacent refactor. Only382's exact row promotes here; no other enumeration/content contract credited.

@@ -580,7 +580,7 @@
         "HousingCatalogEntryInfo.totalNumStored",
         "HousingCatalogEntryInfo.totalNumPlaced"
       ],
-      "scope": "Explicit optional base inputs through three selectors only; None→nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
+      "scope": "Explicit optional base inputs through three selectors only; None\u2192nil is simulator missing-data gap against cached required numbers, not native default. No synchronization, variant derivation, full DTO, nonempty wrapper, native/all-profile or whole-row closure.",
       "spec": "docs/specs/housing-catalog-aggregates.md",
       "tests": [
         "tests/housing_catalog_aggregates.rs"
@@ -852,6 +852,40 @@
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-aura-display-count-independent-proof.md",
       "gate_scope": "Parent accepts independent345 full report on 2026-10-02. Dirty combined saved source and fresh check0, not clean revision. Scopedfmt0 only; globalfmt1 solely unowned aura_duration.rs preserved. Three nonblocking readability suggestions deferred. No native/full-page/all-profile/consumer parity. Exact source and gate hashes/commands in spec acceptance SSOT."
+    },
+    {
+      "id": "aura-dispel-color-arguments",
+      "symbols": [
+        "C_UnitAuras.GetAuraDispelTypeColor"
+      ],
+      "scope": "16 color fixtures: real step/linear native curves, typed blocked-inclusive lookup, strict inputs/identity, all-three VM authentication before validation/miss, wrapped output/GC/recovery and immutable results/records/provider/environment. Mapping, representation, miss and wrapper-output policies INFERRED. Secret POINTS, native permissions/restricted secrecy and full ColorMixin unmodeled.",
+      "spec": "docs/specs/aura-dispel-color-arguments.md",
+      "tests": [
+        "tests/aura_dispel_color_arguments.rs"
+      ],
+      "implementation": "2c7cbdc1c37ea71653cfd06c68dda844c9df10c5",
+      "compiled_revision": "f11e8d151cc638227e8a85083d5ceac329d02c6b",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-aura-color-enumeration-independent-proof.md",
+      "format_supplement": "/tmp/patch-12.0.5-aura-color-enumeration-format-followup.md",
+      "gate_scope": "Parent accepts independent365 plus367 formatting supplement for exact378/382 only. Reused196 unique PASS/startup0[]/dirty cargo check0 and actual VM/security/wiring/readability; original365 overallFAIL historical. Fresh eight-file scopedfmt0 at c436649ad; seven other files unchanged, admin formatting-only. Globalfmt1 unowned duration NOT fixed. Dirty combined, not clean revision or fresh c436649ad build. Runtime31.527934460435063s below60 target, bounded DEVELOPMENT not final whole-goal/page/native acceptance. Readability advisories deferred: no functional counterexample, adjacent refactors unauthorized."
+    },
+    {
+      "id": "unit-aura-slot-enumeration-arguments",
+      "symbols": [
+        "C_UnitAuras.GetAuraSlots"
+      ],
+      "scope": "12 enumeration fixtures: all-four VM authentication before validation/store/token, strict UTF-8 and nullable finite f64 inputs, retained nil-plus-nonordinal stored IDs, filter/block/DTO/provider and GC/state/environment isolation. Representation/miss policy INFERRED; max unused and any finite supplied token returns zero values. Native permissions/secrecy/pagination/full-consumer/profile gaps retained.",
+      "spec": "docs/specs/unit-aura-slot-enumeration-arguments.md",
+      "tests": [
+        "tests/unit_aura_slot_enumeration_arguments.rs"
+      ],
+      "implementation": "f11e8d151cc638227e8a85083d5ceac329d02c6b",
+      "compiled_revision": "f11e8d151cc638227e8a85083d5ceac329d02c6b",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-aura-color-enumeration-independent-proof.md",
+      "format_supplement": "/tmp/patch-12.0.5-aura-color-enumeration-format-followup.md",
+      "gate_scope": "Parent accepts independent365 plus367 formatting supplement for exact378/382 only. Reused196 unique PASS/startup0[]/dirty cargo check0 and actual VM/security/wiring/readability; original365 overallFAIL historical. Fresh eight-file scopedfmt0 at c436649ad; seven other files unchanged, admin formatting-only. Globalfmt1 unowned duration NOT fixed. Dirty combined, not clean revision or fresh c436649ad build. Runtime31.527934460435063s below60 target, bounded DEVELOPMENT not final whole-goal/page/native acceptance. Readability advisories deferred: no functional counterexample, adjacent refactors unauthorized."
     }
   ],
   "source_rows": [
@@ -898,7 +932,7 @@
       "source_id": "prose-2026-03-12-023",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65–76), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
+      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65\u201376), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
     },
     {
       "source_id": "prose-2026-03-12-026",
@@ -2149,9 +2183,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraDispelTypeColor-378",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "aura-dispel-color-arguments"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent-accepted exact378 bounded DEVELOPMENT only; 16 color fixtures: real step/linear native curves, typed blocked-inclusive lookup, strict inputs/identity, all-three VM authentication before validation/miss, wrapped output/GC/recovery and immutable results/records/provider/environment. Mapping, representation, miss and wrapper-output policies INFERRED. Secret POINTS, native permissions/restricted secrecy and full ColorMixin unmodeled. Combined independent365 ledger plus367 format supplement; see spec acceptance SSOT for commands/hashes/provenance. Not whole-page/native/final-goal acceptance."
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraDuration-380",
@@ -2161,9 +2197,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraSlots-382",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-aura-slot-enumeration-arguments"
+      ],
+      "status": "bounded-coverage",
+      "note": "Parent-accepted exact382 bounded DEVELOPMENT only; 12 enumeration fixtures: all-four VM authentication before validation/store/token, strict UTF-8 and nullable finite f64 inputs, retained nil-plus-nonordinal stored IDs, filter/block/DTO/provider and GC/state/environment isolation. Representation/miss policy INFERRED; max unused and any finite supplied token returns zero values. Native permissions/secrecy/pagination/full-consumer/profile gaps retained. Combined independent365 ledger plus367 format supplement; see spec acceptance SSOT for commands/hashes/provenance. Not whole-page/native/final-goal acceptance."
     },
     {
       "source_id": "global api-C_UnitAuras-GetBuffDataByIndex-384",
@@ -3099,7 +3137,7 @@
         "housing-catalog-categories"
       ],
       "status": "bounded-coverage",
-      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries→anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
     },
     {
       "source_id": "structures-HousingCatalogEntryID-645",
@@ -3135,7 +3173,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-651",
@@ -3143,7 +3181,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-652",
@@ -3199,7 +3237,7 @@
         "housing-catalog-categories"
       ],
       "status": "bounded-coverage",
-      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries→anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
+      "note": "Batch25 independently accepted explicit DTO anyOwnedEntries\u2192anyStoredEntries rename at bbbacf8f0; linked category spec owns proof/limits. No native AllowedWhenUntainted, ownership derivation, search row661, full catalog/UI or all-profile closure; search proof is separate: docs/specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01; later search inputs excluded from batch25."
     },
     {
       "source_id": "structures-HousingCategorySearchInfo-661",
