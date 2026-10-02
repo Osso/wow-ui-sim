@@ -7,6 +7,22 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "pending-transmog-cost",
+      "symbols": [
+        "C_TransmogOutfitInfo.GetPendingTransmogCost"
+      ],
+      "scope": "Exact357 ret2 modifierFlags only: optional environment-local host cost:u64/flags:u32 snapshot; None zero results inferred, Some exactly two public scalar numbers preserving zero and all u32 bits. Reject cost above9007199254740991 before pushes, retain state/recover; local precision policy not native cap. Read-only/live replacement/clear/isolation, secure and tainted public caller context. No pricing/transaction lifecycle/catalog synthesis/output secrecy/native width/flag chronology/profile runtime/UI parity.",
+      "spec": "docs/specs/pending-transmog-cost.md",
+      "tests": [
+        "tests/pending_transmog_cost.rs"
+      ],
+      "implementation": "84088ea57dd54c247084d516cd293aa62fd8dba7",
+      "compiled_revision": "6864b23eeed557b29b27c69fc14e2b1371c40999",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-pending-cost-final-artifact-proof.md",
+      "gate_scope": "Parent accepts independent477 security/wiring/check/productionfmt +481 equivalent test readability/fmt +483 refreshed10PASS artifact audit. Ten refreshedfocused +88 source-valid inherited controls =98 distinct, not fresh98 or108; startup0[] reused unchanged wow-sim hash. GenuineRED0PASS10FAIL. Three test findings fixed29cb; defaultcheck0/27.168454s/no warnings reused. Dirty-combined/globalfmt1 preserved unowned; no native/profile/final-page claim. Original compile152.698579s; shared batch61 refresh compile114.387500s/runtime2.681088s; exact hashes/full outputs retained."
+    },
+    {
       "id": "illusion-category-queries",
       "symbols": [
         "C_TransmogCollection.GetIllusions"
@@ -2338,9 +2354,11 @@
     },
     {
       "source_id": "global api-C_TransmogOutfitInfo-GetPendingTransmogCost-357",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "pending-transmog-cost"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact357 only accepted independent477+481+483: ten refreshedfocusedPASS plus88 reusable controls/startup0[]; scopedfmt/check/security/wiring and equivalent three-assert readability fixes. Explicit snapshot only; absence/local precision inferred, retained cost:number versus later BigUInteger conflict explicit. Dirty-combined/globalfmt1/native/profile/pricing/lifecycle gaps retained; no transaction/UI ecosystem claim."
     },
     {
       "source_id": "global api-C_UnitAuras-AddPrivateAuraAnchor-359",

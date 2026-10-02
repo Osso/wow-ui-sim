@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Batch60 — exact pending-cost modifier acceptance
+
+[Exact357 contract/proof SSOT](../../specs/pending-transmog-cost.md#independent-bounded-acceptance--2026-10-02) records parent acceptance of independent477+481+483: ten refreshed focused PASS plus88 reusable controls/startup0 `[]`, scopedfmt/check/security/wiring and three equivalent assertion splits. Only357 promotes: **205 pending/142 bounded/14 partial/1 metadata =362;67 capabilities**. Ordered IDs,361 unrelated rows,66 prior capabilities and source hashes preserved. Explicit optional scalar snapshot only; absent-zero arity/local precision inferred, later BigUInteger evidence not projected backward. Dirty/globalfmt/native/profile/pricing/lifecycle/UI limits remain; broader goal open.
+
 ### Batch48 — exact bounded independent acceptance
 
 [Classification acceptance SSOT](../../specs/aura-spell-classification-identifiers.md#independent-bounded-acceptance--2026-10-02) and [exact Add359 SSOT](../../specs/private-aura-anchors.md#exact-add359-bounded-acceptance--2026-10-02) own parent-accepted independent381 scopes, proof and limits. Only359/361/363 promote: **235 pending/113 bounded/14 partial =362;56 capabilities**. Prior54 capabilities/provenance and359 unrelated ordered rows retained;387 regression only. Native gaps remain unchecked; dirty combined proof is not clean revision. Parent owns postcommit validation; prior pending milestones historical.

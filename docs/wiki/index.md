@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Accept exact pending-cost modifier return
+
+[Exact357 acceptance SSOT](../specs/pending-transmog-cost.md#independent-bounded-acceptance--2026-10-02) records independent477+481+483: ten refreshed focused PASS plus88 reusable controls/startup0 `[]`, scopedfmt/check/security/wiring and equivalent assertion readability fixes. Only357 promotes;361 unrelated rows/66 prior capabilities preserved. Snapshot-only inferred absence/precision, dirty/globalfmt/native/profile/pricing/lifecycle limits remain; broader goal open.
+
 ## [2026-10-02] evidence | Accept exact illusion category queries
 
 [Batch59 acceptance SSOT](../specs/illusion-category-queries.md#independent-bounded-acceptance--2026-10-02) records independent470+471:16 refreshedPASS plus72 reusable controls/startup0 `[]`, scopedfmt/check/security/wiring and three readability fixes. Only352/353 promote;360 unrelated rows/65 prior capabilities preserved. Dirty/globalfmt/native/profile/catalog/inferred-policy limits remain; broader goal open.
