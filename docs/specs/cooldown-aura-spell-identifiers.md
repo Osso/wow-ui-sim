@@ -212,4 +212,3 @@ Compiler JSONL 738 records read/decoded; 0 compiler diagnostics. Derived exhaust
 - `/tmp/patch-12.0.5-batch47-green-startup-run.json` (651 bytes): `82a28d05fd9177066f02d87651d0457dfff5872a5dddc5ff08575c1b36b44f32`.
 - `/tmp/patch-12.0.5-batch47-green-startup.stderr` (14785 bytes): `d0b5d914bce9925319109fa020b109d385c5e36ef1df7024c32dde445f10edf6`.
 - `/tmp/patch-12.0.5-batch47-green-startup.stdout` (3 bytes): `37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`.
-
