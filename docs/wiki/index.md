@@ -1,3 +1,7 @@
+## [2026-10-02] evidence | Accept exact batch47 cooldown association row
+
+[Independent373 bounded acceptance](../specs/cooldown-aura-spell-identifiers.md#independent-bounded-acceptance--2026-10-02) owns210 uniquePASS/startup0[], commands/hashes and dirty provenance. Only387 promotes: **238 pending/110 bounded/14 partial =362;54 capabilities**. Ordered IDs,361 unrelated rows,53 prior capabilities and source provenance retained. Scopedfmt0/dirtycheck0; globalfmt1 unowned retained. Four advisories deferred; inferred map/aliases/public result/taint/conservative rejection only, native permissions/access/secrecy/catalog/acquisition/direction unknown. Bounded development, not final page/goal/native acceptance; parent owns postcommit validation.
+
 ## [2026-10-02] evidence | Reconcile batch47 saved parent GREEN
 
 [Cooldown association proof SSOT](../specs/cooldown-aura-spell-identifiers.md#reconciled-batch47-parent-green--2026-10-02) records14 new +196 controls =210 uniquePASS/all14 exits0, startup0 `[]`, exact commands/timings/hashes and dirty provenance, not clean-revision proof. Warm runtime46.811717730015516s below60 target: bounded development, not final whole-page/goal/native acceptance. Original invalid-FrameShape RED and corrected11 genuineFAIL retained; inferred association/alias/strict-boundary/conservative rejection and native permissions/access/secrecy/acquisition gaps retained. Independent verifier pending; row387/source accounting/unchecked requirements unchanged.
