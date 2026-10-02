@@ -103,6 +103,8 @@ pub mod c_social;
 pub mod c_spec;
 pub mod c_spell;
 pub mod c_spell_book;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_spell_counts;
 pub mod c_spell_diminish;
 pub mod c_stable_info;
 pub mod c_string_util;

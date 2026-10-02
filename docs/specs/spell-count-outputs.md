@@ -1,6 +1,6 @@
 # Spell count outputs
 
-Authored 2026-10-01. Batch67 covers only Retail12.0.5 exact source301 `C_Spell.GetSpellCastCount` and source309 `C_Spell.GetSpellDisplayCount` output-predicate deltas. Public C_* backing inputs are a C API model, not miscellaneous Lua glue; the literal host input is `SimState.spell_cast_counts: HashMap<u32,u32>`. Future producers belong in `src/c_api/c_spell_counts.rs`. No wrapper type is needed. Architecture: [Lua API](../lua-api.md).
+Authored 2026-10-01. Batch67 covers only Retail12.0.5 exact source301 `C_Spell.GetSpellCastCount` and source309 `C_Spell.GetSpellDisplayCount` output-predicate deltas. Public C_* backing inputs are a C API model, not miscellaneous Lua glue; the literal host input is `SimState.spell_cast_counts: HashMap<u32,u32>`. Producers live in `src/c_api/c_spell_counts.rs`. No wrapper type is needed. Architecture: [Lua API](../lua-api.md).
 
 Primary evidence: profile cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua`, lines216–230 and339–355. Cast: `SecretArguments = "AllowedWhenTainted"`, non-nil `SpellIdentifier` → non-nil number; docs say “Returns 0 if spell is not found”. Display: `SecretArguments = "AllowedWhenUntainted"`, identifier, number default9999, cstring default`*` → non-nil string. Both declare `SecretWhenCooldownsRestricted = true`. Display docs say “either the use count or number of charges” and “beyond the display count parameter”. These do not establish native priority, formatting, missing-source, coercion, width, or VM opaque-type behavior.
 
@@ -49,20 +49,23 @@ Primary evidence: profile cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/B
 - `src/lua_api/state/sim_state.rs`: literal C API spell-keyed input field, Retail125 gated.
 - `src/lua_api/state.rs`: matching empty initialization, same gate.
 - `tests/spell_count_outputs.rs`: grouped autodiscovery scaffold, Retail125 plus Retail/PTR only; no additional Cargo test binary.
-- `src/c_api/c_spell_counts.rs`: future C API producer destination, **not implemented by this scaffold**.
-- `src/c_api/c_spell.rs`: existing alias/public identifier helpers and future publication point, unchanged before compiled RED.
-- `src/lua_api/workarounds/temporary/spell_metadata_defaults.rs`: existing numeric0 defaults, unchanged before compiled RED.
+- `src/c_api/c_spell_counts.rs`: Retail125-only real producers. Cast conservatively validates public identifiers, copies explicit quantity/restriction without charge reads, then immediately pushes ordinary or typed host-secret NUM. Display authenticates all three original arguments before validation/model access, resolves the authenticated value, copies quantity/restriction under one immutable snapshot borrow, then immediately pushes ordinary or typed host-secret STR. Original wrappers remain rooted and untouched. No new state or acquisition.
+- `src/c_api/mod.rs`: only the Retail125 module declaration.
+- `src/c_api/c_spell.rs`: Retail125 entries in the existing `SPELL_QUERY_METHODS`, published once through the existing root namespace. `read_spell_identifier_at` delegates to extracted `read_spell_identifier_value`; the existing `alias_key_from_input`, alias-first body and numeric passthrough are unchanged. Authentication/strict validation belongs to the new display caller; other callers retain their policies.
+- `src/c_api/c_action_bar_counts.rs`: only `format_display_count` visibility becomes `pub(crate)`; body and action-count decisions unchanged. Display reuses the exact Source66 pure formatter without duplicated formatting policy. Current Source66-scope Forever/control proof remains applicable to that unchanged body, not proof of these spell producers.
+- `src/lua_api/workarounds/temporary/spell_metadata_defaults.rs`: count-only Lua defaults execute through a Rust inverse-Retail125 helper; earlier epochs/Forever deliberately retain numeric0 for both counts. Passive/Ranged/Press/PriorityAura defaults and the existing custom-provider guard remain unchanged. No second C_Spell publication or new global policy flag.
 
 ## Tests asserting this spec
 
-`tests/spell_count_outputs.rs`: 30 authored behavioral cases for both scalar outputs, explicit identity/state, formatting, display authentication, conservative cast rejection and authentic secret outputs/lifetimes. No tests executed or compiled in this scaffold. All requirements remain unchecked.
+`tests/spell_count_outputs.rs`: 30 unchanged behavioral cases for both scalar outputs, explicit identity/state, formatting, display authentication, conservative cast rejection and authentic secret outputs/lifetimes. Main-owned compiled RED is recorded below; no producer GREEN or gates run by this implementer. All requirements remain unchecked pending independent proof.
 
-Existing `tests/c_spell_probes.rs::test_spell_count_shims_return_zero` still expects `(numeric0,numeric0)`. Do not change until observed producer GREEN establishes its display assertion obsolete against the documented string result. Parent owns compiled RED, producer GREEN and that decision.
+Existing `tests/c_spell_probes.rs::test_spell_count_shims_return_zero` and the `spell_metadata_defaults.rs` unit tuple still expect display numeric0. Expected Retail125 control mismatch: documented display result is STRING, so the new producer returns empty STR without a source. Both tests remain untouched; main must first demonstrate actual producer GREEN/control failure before deciding corrections. Earlier/Forever numeric0 defaults remain deliberate.
 
 ## Known gaps (current cycle)
 
-- [ ] Compile and observe main-owned RED before changing any getter, resolver, registration or shim callback. Authored tests are not proof; earliest failure may prevent downstream privacy/GC assertions from executing.
-- [ ] Implement C API producers and Value-based display resolution without VM bypass, generic declassification, callback swaps, stack clearing, secret cast payload host reads, new rilua pin or publication.
+- [ ] Independently demonstrate producer GREEN after the main-owned compiled RED below. Earliest RED failures prevented downstream privacy/GC assertions from executing; authored coverage is not completed proof.
+- [ ] Verify C API producers and Value-based display resolution without VM bypass, generic declassification, callback swaps, stack clearing, secret cast payload host reads, new rilua pin or publication.
+- [ ] Run main-owned startup, check, security, readability, current-profile/control and acceptance gates; no library suites or gates executed by this implementer.
 - [ ] Independently prove output deltas before any retained-row301/309 credit. Inventory remains requester checkpoint194pending/153bounded/14partial/1metadata,362IDs/72capabilities; rows301/309 remain pending, as do separately verified237/241 until parent acceptance. No Maw/base295/action237/241 credit from this batch.
 - [ ] Keep cast AllowedWhenTainted permission gap separate and open; it does not block meaningful bounded output work or authorize expanded VM changes.
 - [ ] Native probes deferred: real reagent/charge counts;9999/10000/equality; coercion/nil; opaque type, root copies and tainted cast permission versus display permission; width, priority, no-source, profile/UI/global privacy. These remain unknown, not native claims.
@@ -73,4 +76,12 @@ No casting/consumption transitions, reagent inventory, acquisition, arithmetic p
 
 ## Proof ledger
 
-Scaffold-only scope: authored state inputs, 30 tests and this spec. Required compiled RED/GREEN/checks remain parent-owned and unexecuted here by explicit instruction. Owned Rust formatting uses `rustfmt --config skip_children=true`; no module traversal. No coverage or native-parity credit.
+Main-reported pre-producer proof at `23ac1c89d`, integration artifact `a65bdce18f20fe0e23dfeedeb5939c1f672ae9a55b660151f66f6144437ab7db`:
+
+- Compile exit0, 420.46007691998966s, zero diagnostics.
+- `/tmp/patch-12.0.5-batch67-red-run` FULL: 30 tests, 0PASS/30FAIL, exit101, 6.516457385965623s.
+- Earliest failures include old cast0 versus explicit7 and old display NUM0 versus required STR. Many authentication/GC cases stopped at the positive-provider baseline; these are not 30 genuine authentication/GC failures or downstream proof.
+
+Producer scope is only source301/309 output deltas. Existing empty map remains the only cast quantity provider, including explicit valid numeric IDs absent from the catalog; this is host-model coverage, not live acquisition. Charge priority, default/no-source, threshold and strict-domain policies remain inferred from the bounded simulator contract, not native quantity limits. Cast secret argument1 is rejected before aliases/model even for secure callers: no native AllowedWhenTainted input-permission credit, NeverSecret metadata claim, or full input/output privacy parity.
+
+Required GREEN/startup/check/security/readability/current-profile/gates/accounting remain unchecked and main-owned. No tests, build, check, lint, readability gate, library suite, operations or push run here. Owned Rust formatting uses `rustfmt --config skip_children=true`; no module traversal. Existing observed host Git/build timestamps remain distinct from the authored 2026-10-01 header; no RED timestamp is inferred or rewritten. No retained-row credit or native-parity claim.

@@ -1,8 +1,8 @@
 //! Temporary `C_Spell` metadata/count defaults.
 //!
 //! Local spell names, icons, targeting, and cooldowns are backed elsewhere.
-//! Passive/ranged/press-hold metadata, display counts, and priority-aura
-//! ordering are still unmodeled, so their inert defaults stay explicit here.
+//! Passive/ranged/press-hold metadata and priority-aura ordering remain unmodeled.
+//! Earlier epochs and Forever deliberately retain numeric zero count defaults.
 
 const SPELL_METADATA_DEFAULTS_LUA: &str = r#"
 C_Spell = C_Spell or __wow_namespace()
@@ -21,6 +21,17 @@ installSpellDefault("IsSpellPassive", returnFalse)
 installSpellDefault("IsRangedAutoAttackSpell", returnFalse)
 installSpellDefault("IsPressHoldReleaseSpell", returnFalse)
 
+installSpellDefault("IsPriorityAura", returnFalse)
+"#;
+
+#[cfg(not(feature = "retail-12-0-5"))]
+const SPELL_COUNT_DEFAULTS_LUA: &str = r#"
+local function installSpellDefault(name, fn)
+    if rawget(C_Spell, name) == nil then
+        C_Spell[name] = fn
+    end
+end
+
 installSpellDefault("GetSpellCastCount", function(_spellID)
     return 0
 end)
@@ -28,12 +39,17 @@ end)
 installSpellDefault("GetSpellDisplayCount", function(_spellID, _maxDisplayCount)
     return 0
 end)
-
-installSpellDefault("IsPriorityAura", returnFalse)
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(SPELL_METADATA_DEFAULTS_LUA)?;
+    apply_count_defaults(lua)?;
+    Ok(())
+}
+
+fn apply_count_defaults(_lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(feature = "retail-12-0-5"))]
+    _lua.exec(SPELL_COUNT_DEFAULTS_LUA)?;
     Ok(())
 }
 

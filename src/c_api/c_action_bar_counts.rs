@@ -115,7 +115,11 @@ fn read_count_snapshot(state: &LuaState, slot: u32) -> LuaResult<(Option<u32>, O
     ))
 }
 
-fn format_display_count(quantity: Option<u32>, maximum: f64, replacement: &str) -> String {
+pub(crate) fn format_display_count(
+    quantity: Option<u32>,
+    maximum: f64,
+    replacement: &str,
+) -> String {
     let Some(quantity) = quantity else {
         return String::new();
     };

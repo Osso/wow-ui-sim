@@ -77,6 +77,16 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
     ("GetSpellCooldown", get_spell_cooldown),
     ("GetSpellCharges", get_spell_charges),
     #[cfg(feature = "retail-12-0-5")]
+    (
+        "GetSpellCastCount",
+        super::c_spell_counts::get_spell_cast_count,
+    ),
+    #[cfg(feature = "retail-12-0-5")]
+    (
+        "GetSpellDisplayCount",
+        super::c_spell_counts::get_spell_display_count,
+    ),
+    #[cfg(feature = "retail-12-0-5")]
     ("GetSpellChargeDuration", get_spell_charge_duration),
     #[cfg(feature = "retail-12-0-0")]
     ("GetSpellCooldownDuration", get_spell_cooldown_duration),
@@ -657,7 +667,11 @@ pub(crate) fn read_public_spell_identifier_at(
 
 /// Shared alias-first resolution; callers own argument and secret validation.
 pub(crate) fn read_spell_identifier_at(state: &LuaState, arg_index: i32) -> LuaResult<Option<u32>> {
-    let raw = stack_val(state, arg_index);
+    read_spell_identifier_value(state, stack_val(state, arg_index))
+}
+
+/// Alias-first resolution of a value; callers own authentication and validation.
+pub(crate) fn read_spell_identifier_value(state: &LuaState, raw: Val) -> LuaResult<Option<u32>> {
     let Some(key) = alias_key_from_input(state, raw) else {
         return Ok(None);
     };
