@@ -654,15 +654,17 @@
     },
     {
       "id": "unit-comparison-permissions",
-      "symbols": [],
-      "scope": "Six cases PASS for final permission matrix including nil denials. Earlier PTR proposals unchanged; no native parity.",
+      "symbols": ["UnitIsUnit"],
+      "scope": "B80 existing Retail12.0.5 base/group permission and residual denial matrices plus modeled GUID aliases; exact142/143/144 bounded, introductory141 partial. Canonical group bounds and nameplate-prefix/target-suffix classification are inferred lexical policy. Native token grammar/arity/errors/auth and older-profile parity remain unverified; unsupported identities not invented.",
       "spec": "docs/specs/unit-identity-equality.md",
       "tests": [
-        "tests/unit_comparison_permissions.rs"
+        "tests/unit_comparison_permissions.rs",
+        "tests/unit_api.rs"
       ],
-      "proof": "partial-development-green",
-      "compiled_revision": "e0a46d691",
-      "ledger": "/tmp/patch-12.0.5-batch5-runs.json"
+      "proof": "bounded-independent-pass",
+      "compiled_revision": "ad18218054f28794bfb86964dd95a1d8112c85f8",
+      "ledger": "/tmp/patch-12.0.5-unit-comparison-existing-independent-proof.md",
+      "gate_scope": "Main accepts698:12 refreshed pinned cases (6 permission +6 identity), ELF SHA256394140f9fce66683dabf9f1c727fc4eb18a2b3b5fd114d057580ff52b5cb5065; source/dependency/feature equality qualified, not clean whole-tree provenance. Saved690 check/startup inherited within unchanged production scope, not refreshed; globalfmt1 unowned aura remains. Historical B5 e0a46d691 ledger /tmp/patch-12.0.5-batch5-runs.json retained, original RED retained. Agent695 unpinned synchronous runs excluded. No new production/test edits, build, fullsuite, GUI, native or profile proof."
     },
     {
       "id": "cooldown-ignore-gcd",
@@ -1826,31 +1828,31 @@
         "unit-comparison-permissions"
       ],
       "status": "partial-development-green",
-      "note": "Six cases PASS for final permission matrix including nil denials. Earlier PTR proposals unchanged; no native parity."
+      "note": "B80 introductory umbrella remains partial; distinct clauses142/143/144 receive bounded698 acceptance. Twelve refreshed Retail cases do not establish whole UnitIsUnit/native identity, token grammar, arity/auth/errors or older-profile parity; earlier PTR proposals unchanged."
     },
     {
       "source_id": "prose-2026-03-31-142",
       "capabilities": [
         "unit-comparison-permissions"
       ],
-      "status": "partial-development-green",
-      "note": "Six cases PASS for final permission matrix including nil denials. Earlier PTR proposals unchanged; no native parity."
+      "status": "bounded-coverage",
+      "note": "B80 accepted698: all12 listed bases permit four restricted counterparts symmetrically (96 directed comparisons), with real player/target/focus GUID aliases and unsupported permitted identities returning one false. Six permission plus six identity cases refreshed PASS on pinned ad182 ELF. Simulator permission credit only; native/full identity/profile parity unverified."
     },
     {
       "source_id": "prose-2026-03-31-143",
       "capabilities": [
         "unit-comparison-permissions"
       ],
-      "status": "partial-development-green",
-      "note": "Six cases PASS for final permission matrix including nil denials. Earlier PTR proposals unchanged; no native parity."
+      "status": "bounded-coverage",
+      "note": "B80 accepted698: eight canonical group endpoints against seven simple counterparts symmetrically (112 directed allowances), four group tokens against ten restricted counterparts (80 directed denials), real party aliases. Base precedence preserved. Canonical bounds/no leading zeros and nameplate-prefix/target-suffix classification inferred; no exhaustive/native token grammar or unsupported pet/raid identity credit."
     },
     {
       "source_id": "prose-2026-03-31-144",
       "capabilities": [
         "unit-comparison-permissions"
       ],
-      "status": "partial-development-green",
-      "note": "Six cases PASS for final permission matrix including nil denials. Earlier PTR proposals unchanged; no native parity."
+      "status": "bounded-coverage",
+      "note": "B80 accepted698: nonbase6x6 symmetric matrix plus eight invalid-group controls deny regardless of identical spelling; Lua sees nil and public/secure-secret select arity is zero. Bounded valid string-token/current inferred lexical domain only. Source nil does not prove native zero arity; missing/nil false and authentication/type policies separately inferred, not clause credit. No native/profile/full-contract acceptance."
     },
     {
       "source_id": "prose-2026-03-31-147",
