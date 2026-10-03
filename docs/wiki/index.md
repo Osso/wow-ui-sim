@@ -1,10 +1,14 @@
+## [2026-10-03] evidence | B76 acceptance and B77 pending producer
+
+[B76 SSOT](../specs/unit-stat-output-restriction.md#b76-existing-model-bounded-acceptance--2026-10-03) owns exact430/432/458/460 saved-proof acceptance642 and accounting64731/31 PASS:167/174/14/7,362 IDs/81 capabilities. [B77 inventory/proof](../specs/mount-spell-identifier.md#implementation-inventory) owns actual callable generic-nil RED and producer22ea15a23 pending gates; no API-absence or desktop-execution claim. [Audit](investigations/patch-12-0-5-api-audit.md#batch76--existing-model-output-annotations-accepted) preserves native/process/profile/input/full-suite limits and B74 docs646 pending main commit.
+
 ## [2026-10-03] evidence | B75 existing-model annotations accepted
 
 [B75 acceptance SSOT](../specs/retail-missing-stat-inputs.md#b75-existing-model-bounded-acceptance--2026-10-03) owns exact466/468/496 output-only acceptance, six saved PASS and named-body equivalence limits, accounting verified640 PASS39/39. [Audit checkpoint](investigations/patch-12-0-5-api-audit.md#batch75--existing-model-output-annotations-accepted) retains broader/native/B74/full-suite exclusions.
 
 ## [2026-10-03] docs | B74 producer and fixture-repair checkpoint
 
-[B74 proof SSOT](../specs/ambiguate-context.md#b74-producer-checkpoint--2026-10-03) and [audit checkpoint](investigations/patch-12-0-5-api-audit.md#batch74--ambiguate-inputs-only-checkpoint) supersede inputs-only status: actual RED `d11`, build0/zero diagnostics828.602250s;22 cases4 PASS/18 FAIL21.161436s. Earlier E0277 is not RED. Producer `9441f7c7c`: real public transform/old fallback removed, private-epoch context-secret rejection before arg1, old Lua exact body/inverse boolfalse retained. GREEN/check/Forever independent acceptance PENDING; boxes unchecked, separate default/Forever async roots and revision-scoped source proof. [Repair checkpoint](investigations/patch-12-0-5-api-audit.md#test-only-fixture-repairs--pending-proof-checkpoint) retains independent609 exterior acceptance; two LoC cases observed fresh PASS from fixed RED operations, new independent gate PENDING. No native/416/count promotion/full-suite or whole-HEAD clearance; historical dirty-combined/check-interruption limits retained.
+[B74 acceptance SSOT](../specs/ambiguate-context.md#b74-independent-bounded-acceptance--2026-10-03) owns main-accepted625 bounded behavior/gates, exact415 accounting accepted644, and historical RED/compile/check-launch/provenance limits. [Audit](investigations/patch-12-0-5-api-audit.md#batch74--ambiguate-inputs-only-checkpoint) links separate [two saved LoC fixture acceptances](../specs/spell-book-loss-of-control-outputs.md#test-only-loc-fixture-repair--2026-10-03) and retained exterior609 proof. B75 older-checkpoint accounting/equivalence remains valid; current whole-tree equivalence is false. Row416/native/all-profile and warning-free/full-suite GREEN remain uncredited.
 
 ## [2026-10-03] evidence | B73 bounded removal acceptance
 

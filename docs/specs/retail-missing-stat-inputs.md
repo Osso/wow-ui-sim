@@ -56,7 +56,7 @@ Saved partition0079: exit0,100 PASS/0 FAIL/0 ignored/0 unobserved,60.44s; only t
 
 Main-supplied accounting `88362f9a6` promotes **exactly these three rows**, adds one capability: **172 audit-pending / 169 bounded-coverage / 14 partial-development-green / 7 metadata-only = 362 ordered IDs; 79 capabilities**. The report's175/166/14/7 ledger and proposed172/169 were pre-accounting snapshots. Independent accounting640 PASS39/39 verifies this exact checkpoint ([proof](../../../../../../../../tmp/patch-12.0.5-batch75-accounting-validation.md)); no extra row/API credit.
 
-Native restriction activation, zero/absence defaults, formulas, nominal numeric type/domain parity and all-profile behavior remain unverified; guesses above remain guesses. Full-suite goal remains OPEN/red: report's saved run12021 PASS/60 FAIL/18 ignored/4 unobserved, two custom harness exit1 and three pending doctests is historical, not new suite acceptance; later summary remains separately recorded in the audit. B74 independent GREEN/check/Forever acceptance remains PENDING; no B74 scope or source-row credit.
+Native restriction activation, zero/absence defaults, formulas, nominal numeric type/domain parity and all-profile behavior remain unverified; guesses above remain guesses. Full-suite goal remains OPEN/red: report's saved run12021 PASS/60 FAIL/18 ignored/4 unobserved, two custom harness exit1 and three pending doctests is historical, not new suite acceptance; later summary remains separately recorded in the audit. B74's later [bounded acceptance](ambiguate-context.md#b74-independent-bounded-acceptance--2026-10-03) supersedes its pending gates separately; no B74 scope or source-row credit belongs to B75.
 
 ## Batch7 observed proof — 2026-10-01
 
