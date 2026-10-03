@@ -162,6 +162,7 @@ pub mod intl_native;
 pub mod item_spell;
 #[cfg(feature = "client-mists")]
 pub mod legacy_spell_book;
+pub(crate) mod loss_of_control;
 #[cfg(feature = "client-mists")]
 mod mists_talents;
 #[cfg(feature = "native-duration-formatting")]

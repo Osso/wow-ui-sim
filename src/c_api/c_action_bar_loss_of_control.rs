@@ -2,8 +2,9 @@
 //! Strict slots, inactive misses and verbatim flags are inferred policies.
 
 use super::charge_state::cooldowns_are_restricted;
+use super::loss_of_control::push_loss_of_control_info;
 use crate::lua_api::LossOfControlInfo;
-use crate::lua_api::methods::{borrow_state, create_table_with_capacity, table_set_static};
+use crate::lua_api::methods::borrow_state;
 use crate::lua_bridge::stack_val;
 use rilua::table_security::unwrap_secret;
 use rilua::vm::state::LuaState;
@@ -14,29 +15,7 @@ const API_NAME: &str = "C_ActionBar.GetActionLossOfControlCooldownInfo";
 pub(crate) fn get_action_loss_of_control_cooldown_info(state: &mut LuaState) -> LuaResult<u32> {
     let slot = read_action_slot(state)?;
     let (info, restricted) = read_snapshot(state, slot)?;
-    let table = create_table_with_capacity(state, 5);
-    // Root the ordinary result before keys or host-secret wrappers allocate.
-    state.push(table);
-    for (key, number) in [
-        ("startTime", info.start_time),
-        ("duration", info.duration),
-        ("modRate", f64::from(info.mod_rate)),
-    ] {
-        let value = if restricted {
-            rilua::table_security::wrap_host_secret_number(state, number)
-        } else {
-            Val::Num(number)
-        };
-        table_set_static(state, table, key, value);
-    }
-    table_set_static(state, table, "isActive", Val::Bool(info.is_active));
-    table_set_static(
-        state,
-        table,
-        "shouldReplaceNormalCooldown",
-        Val::Bool(info.should_replace_normal_cooldown),
-    );
-    Ok(1)
+    push_loss_of_control_info(state, &info, restricted)
 }
 
 fn read_snapshot(state: &LuaState, slot: u32) -> LuaResult<(LossOfControlInfo, bool)> {
