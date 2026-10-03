@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B79 bounded acceptance reconciled
+
+Linked [acceptance SSOT](../specs/tooltip-unit-buff-security.md#independent-bounded-acceptance--2026-10-03), committed `1e042a289`, in index and [audit](investigations/patch-12-0-5-api-audit.md#batch79--exact342-inputs-only-checkpoint): main-accepted690+694,18 refreshed `ad1821805` +38 inherited =56 distinct, not56 new runs. Direct root identity/readability accepted; scoped check/startup reused. Original690 STATE/root-only source qualifications and RED history retained; globalfmt1 only unowned `aura_duration.rs:44`, no clearance. Capability83→84;362 IDs/statuses167 pending/174 bounded/14 partial/7 metadata unchanged. Independent accounting pending a new agent; exact342/access/output/general-unit/native/old-profile gaps remain open. Separate qualified mount/headless/CASC acceptance unchanged.
+
 ## [2026-10-03] docs | B79 producer inventory pending proof
 
 Linked producer `a28293ee0` [inventory SSOT](../specs/tooltip-unit-buff-security.md#implementation-inventory) in [B79 audit checkpoint](investigations/patch-12-0-5-api-audit.md#batch79--exact342-inputs-only-checkpoint) and index. Main supplies actual compiled RED at inputs `a23adf150`:compile0/88.098727s/zero diagnostics,0 PASS/18 FAIL in2.161859s; identity/miss/from-stack/auth-context failures do not prove all downstream GC branches. GREEN3821573 and independent verification active; no GREEN/acceptance. Three wiki paths only, supplied evidence, no execution/delegation/commit.

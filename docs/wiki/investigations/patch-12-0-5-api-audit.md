@@ -8,9 +8,9 @@ Main now supplies actual compiled RED at inputs `a23adf150`: compile exit0 in **
 
 Producer `a28293ee0` links [implementation inventory SSOT](../../specs/tooltip-unit-buff-security.md#implementation-inventory): C API unit-indexed lookup over existing visible helpful player/party state plus PLAYER filtering; all three original arguments authenticated before parsing via `unwrap_secret` (internal authorized read, not generic declassification). Modern old provider retired; older-profile body retained. Builder bridge unchanged, including hardcoded `1 hr`. No detailed inventory duplicated here.
 
-Main asynchronous GREEN3821573 and independent verification are active; **no GREEN or acceptance claimed**. Unit-aura access and restricted outputs remain **UNMODELED**; exact342 remains **PENDING**, with native/general-unit/target-identity gaps and no full-suite credit.
+At the historical producer checkpoint, GREEN and independent acceptance were pending. Current [bounded acceptance SSOT](../../specs/tooltip-unit-buff-security.md#independent-bounded-acceptance--2026-10-03), committed `1e042a289`, records main-accepted690+694: **18 refreshed at `ad1821805` +38 inherited =56 distinct cases, not56 new runs**. Direct root-table identity test fixed; changed-helper readability clean. Default check and pinned startup reuse remain producer-scoped. Original690 minor STATE/root-only source qualification, root-list identity limitation and RED history remain historical, not retroactively upgraded. Globalfmt1 reports only unowned `aura_duration.rs:44`; no whole-tree clearance.
 
-Latest supplied accounting `5ec536a36`, accepted independent687 **37/37**: **83 capabilities,362 rows;167 pending / 174 bounded / 14 partial / 7 metadata**. Neither this historical inputs checkpoint nor the pending producer inventory changes counts; mount291 remains pending. Prior accounting/proof checkpoints remain historical.
+Capability `tooltip-unit-buff-security` raises **83→84 capabilities**; **362 ordered IDs;167 pending / 174 bounded / 14 partial / 7 metadata** unchanged. Independent accounting is **PENDING a new agent**, not accepted. Prior `5ec536a36`/independent68737/37 remains the historical83-capability checkpoint. Exact342 stays **AUDIT-PENDING**: unit-aura access/restricted outputs **UNMODELED**, general-unit/target-identity/native/old-profile gaps retained. No GUI/CASC/full-suite credit; separate qualified mount/headless/CASC acceptance below remains distinct. Audit **IN PROGRESS**.
 
 ### Mount capability — qualified desktop saved acceptance
 
@@ -458,7 +458,7 @@ MAIN published rilua `host-secret-bool` revision `6044544b960cd68b4b0c58bb337341
 
 ## Sources
 
-- [GetUnitBuff security inputs](../../specs/tooltip-unit-buff-security.md) — B79 exact342 bounded contract and authored-test inventory; not acceptance evidence.
+- [GetUnitBuff bounded acceptance SSOT](../../specs/tooltip-unit-buff-security.md#independent-bounded-acceptance--2026-10-03) — B79 accepted690+694 proof and historical qualifications; exact342 and independent accounting remain pending.
 
 - [Unit-stat output restriction](../../specs/unit-stat-output-restriction.md) — exact supported/pending matrix, proof and future native probes.
 - [Retained full plaintext patch page](../../../data/patch-api/sources/12.0.5-api-changes.txt) and [provenance](../../../data/patch-api/sources/12.0.5-api-changes.provenance.json) — expanded source audit, not behavior proof.
