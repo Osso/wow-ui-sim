@@ -14,11 +14,12 @@ const SLOT: i32 = 5;
 /// Environment with a cast count for the spell in player book slot 5 and a decoy keyed by the slot number.
 fn fixture_env(count: Option<u32>) -> (WowLuaEnv, u32) {
     let env = WowLuaEnv::new().expect("create spell book environment");
-    let spell_id: u32 = env
+    let spell_id: f64 = env
         .eval(&format!(
             "return C_SpellBook.GetSpellBookItemInfo({SLOT}, Enum.SpellBookSpellBank.Player).spellID"
         ))
         .expect("player book slot resolves to a spell");
+    let spell_id = spell_id as u32;
     assert_ne!(spell_id, SLOT as u32, "slot and spell ID must differ");
     {
         let mut state = env.state().borrow_mut();
