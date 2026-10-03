@@ -7,6 +7,18 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "ambiguate-context-neversecret",
+      "symbols": ["Ambiguate"],
+      "scope": "Exact415 arg2 NeverSecret only: real public-name transform classifies original context identity without payload decoding before any fullname access. Genuine host-secret NUM/BOOL/STR contexts reject in secure and addon callers; caller taint, wrapper secrecy/identity/liveness and public recovery survive GC. Existing none/other-context name mapping retained; earlier epochs short-circuit rejection and retain old public body. Error/order and name/context semantics remain simulator policy. Row416 secret-fullName permission and output secrecy unmodeled; no native/all-profile/global privacy credit.",
+      "spec": "docs/specs/ambiguate-context.md",
+      "tests": ["tests/ambiguate_context.rs"],
+      "implementation": "9441f7c7c665142d022540329b5b1f9addcbbf6e",
+      "compiled_revision": "9441f7c7c665142d022540329b5b1f9addcbbf6e",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-b74-independent-proof.md",
+      "gate_scope": "Independent625 PASS exact415:22 new Retail PASS+2 inert controls, separate Forever2 public controls; pinned Retail startup0[], exactfmt/check0 zero diagnostics. REDd11 build828.602250s zero diagnostics/4PASS18FAIL21.161436s; earlierE0277 notRED. GREENbuild567.778806s zero diagnostics/22run8.058839s; startup25.001060s; check580.000887s includes lock waits. Foreverbuild492.975528s retains8 unrelated warnings/0errors. Default runtime jobs run in parallel from private pinned artifacts before profile rebuild; no canonical-path runtime. Owned-file hashes/equivalence qualified only; external build-host commits and dirty-combined/globalfmt/native limitations retained. Two LoC repairs accepted separately, not extra B74 cases; full-suite RED remains."
+    },
+    {
       "id": "house-exterior-fixture-removal",
       "symbols": ["C_HouseExterior.RemoveFixtureFromSelectedPoint"],
       "scope": "Exact267/268 attachedDecorAction and AllowedWhenUntainted over explicit owned ExteriorCustomization host state. Original argument VM authentication precedes domains and model access; secure genuine secrets accepted, addon secrets denied, public taint retained. Store returns only selected-owner attached decor through the existing full-key catalog with checked variant/known-base deltas; Detach retains identity/position/storage. Fixture clears only after atomic commit; selected point/options/raw host flag remain, public removability derives from current fixture presence. Rooted synchronous storage then response callbacks support GC/reentry. Nil/default/domain/error/eligibility/event ordering are inferred simulator policy, not native semantics. No core/SelectCore, acquisition/UI/3D/global privacy/all-profile credit.",
@@ -2828,9 +2840,9 @@
     },
     {
       "source_id": "global api-PlayerScript Ambiguate-415",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["ambiguate-context-neversecret"],
+      "status": "bounded-coverage",
+      "note": "Exact415 accepted625 at9441f7c7c: secret arg2 identity rejects before fullname processing, no payload decoding;22 new Retail+2 inert PASS, separate Forever2 public controls/startup0[]/scopedfmt/check0. Old public mapping retained, inferred error/order/native context limits explicit. Row416 secret-fullName and output secrecy remain unmodeled; Forever8 warnings and original full-suite failures retained, no all-profile/current-whole-tree clearance."
     },
     {
       "source_id": "global api-PlayerScript Ambiguate-416",
