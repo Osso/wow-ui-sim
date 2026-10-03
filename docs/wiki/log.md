@@ -1,6 +1,10 @@
+## [2026-10-03] docs | Reconcile B70 bounded acceptance
+
+[Batch70 audit](investigations/patch-12-0-5-api-audit.md#batch70--exterior-attached-decor-bounded-acceptance) links [acceptance SSOT](../specs/house-exterior-attached-decor.md#independent-bounded-acceptance--2026-10-03): independent566 accepted for exact272/274/276; accounting `0cf868024`, verification568 pending. Checked requirements mean bounded simulator proof only; native/inferred and historical failure/protected-path limits remain. Prior counters remain historical; broader audit open. Four owned docs only; no execution gates/source operations.
+
 ## [2026-10-02] implementation | Document B70 pending exterior acceptance
 
-Updated only the [B70 spec/proof SSOT](../specs/house-exterior-attached-decor.md#proof-ledger), [audit](investigations/patch-12-0-5-api-audit.md#batch70--exterior-attached-decor-implementation-awaiting-acceptance) and index/log. Recorded supplied pre-runtime RED and main-authored runtime/query commits as implementation awaiting acceptance; cached declarations, inferred policies and native gaps remain distinct. No accepted capability/core/remove/enum credit or accounting edits; prior B69 checkpoints/gaps preserved. Docs-only inspection; no builds/tests/checks, delegation or protected-file inspection.
+Updated only the [B70 spec/proof SSOT](../specs/house-exterior-attached-decor.md#proof-ledger), [audit](investigations/patch-12-0-5-api-audit.md#batch70--exterior-attached-decor-bounded-acceptance) and index/log. Recorded supplied pre-runtime RED and main-authored runtime/query commits as implementation awaiting acceptance; cached declarations, inferred policies and native gaps remain distinct. No accepted capability/core/remove/enum credit or accounting edits; prior B69 checkpoints/gaps preserved. Docs-only inspection; no builds/tests/checks, delegation or protected-file inspection.
 
 ## [2026-10-03] source accounting | Record accepted six-row classification
 

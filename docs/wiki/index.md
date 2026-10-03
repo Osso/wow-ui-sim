@@ -1,6 +1,6 @@
-## [2026-10-02] implementation | B70 exterior actions await acceptance
+## [2026-10-03] docs | Reconcile B70 bounded acceptance
 
-[Batch70 audit](investigations/patch-12-0-5-api-audit.md#batch70--exterior-attached-decor-implementation-awaiting-acceptance) links [contract/inventory/proof SSOT](../specs/house-exterior-attached-decor.md#proof-ledger): runtime and queries implemented, acceptance pending. Cached declarations are not native mutation proof; inferred policies and open acquisition/UI/permissions/pet gaps remain explicit. No capability or core/remove/enum row credit; current accounting and B69 checkpoints below remain unchanged.
+[Batch70 audit](investigations/patch-12-0-5-api-audit.md#batch70--exterior-attached-decor-bounded-acceptance) links [acceptance SSOT](../specs/house-exterior-attached-decor.md#independent-bounded-acceptance--2026-10-03): independent566 accepted for exact272/274/276; accounting `0cf868024`, verification568 pending. Checked requirements mean bounded simulator proof only; native/inferred and historical failure/protected-path limits remain. Prior counters remain historical; broader audit open. Four owned docs only; no execution gates/source operations.
 
 ## [2026-10-03] source accounting | Accept six metadata classifications
 
