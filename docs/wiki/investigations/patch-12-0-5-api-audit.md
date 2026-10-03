@@ -1,12 +1,20 @@
 # Patch 12.0.5 API Audit
 
+### Batch82 — producer checkpoint, proof pending
+
+After producer `d21d4a208`, [spell bonus stat security SSOT](../../specs/spell-bonus-stat-security.md) owns requirements, case inventory and full proof. Supplied grouped RED at `17211be121`: compile exit0/zero diagnostics **90.716985s**; run exit101/**1.115939s**, **4 PASS /3 FAIL**. Tainted NUM, malformed secret payload and GC schedules fail the required denial-before-output boundary; downstream root/GC completion is **not proved**. This supersedes only the compiling state of historical wiki checkpoint `71c384eec` below, not its then-pending truth.
+
+Supplied producer changes **one callback/eight lines**: authenticate original school through existing VM `unwrap_secret` before spell-power read/output, gated `retail-12-0-5`, with API/argument error context. Public shape, ignored-school intellect proxy, healing and existing wrapping model remain unchanged. No new type/range/formula/nil policy or native claim. Main GREEN worker3892114 is **compiling/pending** seven new +four stat +one proxy cases, startup and loaded-runtime probe; independent verifier **pending**. No polling, inferred GREEN, startup, runtime-probe or acceptance credit.
+
+[Prior real-runtime failure](../../specs/spell-bonus-stat-security.md#qualified-prior-full-runtime-failure) remains STDERR marker plus assertion failure; exit0 is **not PASS**. Exact482/484 `SecretWhenUnitStatsRestricted` deltas remain **OUTPUT only**, no argument-removal credit. B81 accepted707/durable corrective71364/64 and missing-artifact71148/48 unaccepted remain unchanged. **85 capabilities,362 ordered IDs;167 pending /177 bounded /11 partial /7 metadata** unchanged; audit **IN PROGRESS**.
+
 ### Batch82 — spell bonus inputs-only checkpoint
 
 Committed `17211be121` contains **seven authored cases/test+spec inputs**. [Spell bonus stat security SSOT](../../specs/spell-bonus-stat-security.md) owns requirements, case inventory and qualified prior probe details; all new requirements remain unchecked, authored only. At the last supplied stage, main asynchronous compiled-RED worker3886715 at `/tmp/patch-12.0.5-spell-bonus-stat-red-ops/` was **compiling**: no completed compiled RED, GREEN or B82 producer yet. This historical checkpoint does not infer RED from expectations or later worker state; no logs polled.
 
 The [qualified prior pinned full-runtime probe](../../specs/spell-bonus-stat-security.md#qualified-prior-full-runtime-failure) at `d7d7b41fc` recorded STDERR public/secure/tainted-secret acceptance followed by an `AllowedWhenUntainted` assertion error. CLI exit0 is **not API PASS**. Original stdout-only marker query falsely reported nonexecution; corrected both-stream query required no rerun. This is simulator defect evidence, not grouped RED or native proof.
 
-Existing intellect proxy and explicit restriction-output model remain unchanged: no new wrapping or formulas. Original-school authentication is planned; school type/nil/range/native policy, automatic restriction activation and older-profile execution remain unverified. Exact482/484 retained deltas concern **output secret flags only**: no argument removal, extra output credit, capability or status change. B81 main-accepted707 and durable corrective713 PASS64/64 remain accepted; original711 missing-artifact48/48 claim remains unaccepted, as recorded below. **85 capabilities,362 ordered IDs;167 pending /177 bounded /11 partial /7 metadata** remain unchanged. Audit **IN PROGRESS**.
+Existing intellect proxy and explicit restriction-output model remain unchanged: no new wrapping or formulas. At that historical checkpoint, original-school authentication was planned; school type/nil/range/native policy, automatic restriction activation and older-profile execution remain unverified. Exact482/484 retained deltas concern **output secret flags only**: no argument removal, extra output credit, capability or status change. B81 main-accepted707 and durable corrective713 PASS64/64 remain accepted; original711 missing-artifact48/48 claim remains unaccepted, as recorded below. **85 capabilities,362 ordered IDs;167 pending /177 bounded /11 partial /7 metadata** remain unchanged. Audit **IN PROGRESS**.
 
 ### Batch81 — independent bounded acceptance
 
