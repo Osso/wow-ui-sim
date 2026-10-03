@@ -1,8 +1,14 @@
 # Patch 12.0.5 API Audit
 
+### Mount capability — qualified desktop saved acceptance
+
+[Mount acceptance SSOT](../../specs/mount-spell-identifier.md#independent-qualified-saved-acceptance--2026-10-03) owns main-accepted independent674 and retained654/653 proof: bounded mount model, separate headless startup (`casc=false`) and three-texture native CASC decode. No headless CASC integration or GUI/frame/font/all-asset/native API/protected/globalfmt/profile/full-suite readiness credit. Original wrapper failure and missing immutable input/binary/source/content provenance remain disclosed there; no reruns.
+
+Main adds bounded `mount-spell-identifier` from `22ea15a23`: **83 capabilities** (prior82), unchanged **167 pending / 174 bounded / 14 partial / 7 metadata,362 IDs**. Source291 remains **AUDIT-PENDING** for native grammar/AllowedWhenTainted/remaining overall contract; source245/B78 unchanged. Original broad-suite red history remains uncleared. Audit **IN PROGRESS**.
+
 ### Batch78 — public direct-spell membership bounded acceptance
 
-After `04586ffe2`, [B78 acceptance SSOT](../../specs/action-bar-membership.md#independent-bounded-acceptance--2026-10-03) owns independent670 acceptance:11 new public membership PASS plus17 existing slot-query controls, local startup `[]`, defaultcheck0/scopedfmt0; globalfmt1 is unowned, not clearance. Credit covers the public direct-spell model only. Source245 remains **PENDING**: special-bar semantics and native AllowedWhenTainted access remain unmodeled. Current accounting: **167 pending / 174 bounded / 14 partial / 7 metadata,362 IDs/82 capabilities**; statuses unchanged, one bounded capability added. Source291 remains pending; ongoing desktop end-to-end startup/CASC probe is not accepted evidence. Audit **IN PROGRESS**.
+After `04586ffe2`, [B78 acceptance SSOT](../../specs/action-bar-membership.md#independent-bounded-acceptance--2026-10-03) owns independent670 acceptance:11 new public membership PASS plus17 existing slot-query controls, local startup `[]`, defaultcheck0/scopedfmt0; globalfmt1 is unowned, not clearance. Credit covers the public direct-spell model only. Source245 remains **PENDING**: special-bar semantics and native AllowedWhenTainted access remain unmodeled. Current accounting: **167 pending / 174 bounded / 14 partial / 7 metadata,362 IDs/82 capabilities**; statuses unchanged, one bounded capability added. Source291 remains pending; desktop probe was unaccepted at this historical82-capability checkpoint. Current separate qualified acceptance is linked above. Audit **IN PROGRESS**.
 
 ### Batch76 — existing-model output annotations accepted
 
@@ -10,7 +16,7 @@ After `04586ffe2`, [B78 acceptance SSOT](../../specs/action-bar-membership.md#in
 
 ### Batch77 — bounded mount proof; desktop startup pending
 
-After `e49ec0626` and `8dc686e96`, [mount inventory/proof SSOT](../../specs/mount-spell-identifier.md#implementation-inventory) owns actual callable generic-nil RED, producer `22ea15a23`, local16/16 PASS accepted by independent654, and desktop16/16 PASS plus check exit0. These establish bounded identifier/model proof, not desktop startup or Blizzard UI/CASC readiness: both remain **PENDING**. Ongoing main-worker activity is not accepted evidence. Exact291 accounting remains pending; no row promotion or count change. Dirty-combined/transferred-tree provenance limits and native AllowedWhenTainted gap remain in the spec.
+After `e49ec0626` and `8dc686e96`, [mount inventory/proof SSOT](../../specs/mount-spell-identifier.md#implementation-inventory) owns actual callable generic-nil RED, producer `22ea15a23`, local16/16 PASS accepted by independent654, and desktop16/16 PASS plus check exit0. These established bounded identifier/model proof; desktop startup/Blizzard UI/CASC readiness were **PENDING** at that checkpoint. Current separate qualified startup/texture acceptance is linked above, not GUI/access or headless CASC integration credit. Exact291 overall contract remains pending; no row promotion. Dirty-combined/transferred-tree provenance limits and native AllowedWhenTainted gap remain in the spec.
 
 ### UnitHasPowerType — independent saved-proof acceptance
 

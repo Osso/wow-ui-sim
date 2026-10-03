@@ -7,6 +7,18 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "mount-spell-identifier",
+      "symbols": ["C_MountJournal.GetMountFromSpell"],
+      "scope": "B77 bounded public alias-first SpellIdentifier lookup into existing world.mounts; live relation/alias updates, removals, read-only and environment isolation. Validation and secret rejection are inferred simulator policy; native AllowedWhenTainted and alias grammar remain unmodeled. Exact291 stays pending.",
+      "spec": "docs/specs/mount-spell-identifier.md",
+      "tests": ["tests/mount_spell_identifier.rs"],
+      "implementation": "22ea15a235a855aa6a5e1e737e168b0b3a76db7e",
+      "compiled_revision": "22ea15a235a855aa6a5e1e737e168b0b3a76db7e",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-mount-independent-proof.md",
+      "gate_scope": "Independent654 accepted local16PASS/check0/scopedfmt0/readability; desktop helper cc2b16PASS/check0 retained. Independent674 qualified saved native headless startup ea7b6cc41 exit0/290addons/[] and separate native e405 existing CASC smoke3texture decodes. No headless-CASC integration, GUI, font decode, content-version, native API, clean transferred-tree/binary provenance, profile or full-suite credit. Original missing-rustup pre-Cargo probe failure retained; direct resolver misses not asserted texture failures. Globalfmt1 unowned aura remains uncleared. No reruns/source-row promotion."
+    },
+    {
       "id": "action-bar-direct-membership",
       "symbols": ["C_ActionBar.IsOnBarOrSpecialBar"],
       "scope": "Bounded PUBLIC effective direct-spell membership only: positive existing assignments exclude macro/outfit overrides; explicit alias-first registry, duplicate removal/replacement, read-only queries and environment isolation. Special-bar semantics and native AllowedWhenTainted access remain unmodeled; exact245 stays pending.",
@@ -2357,9 +2369,9 @@
     },
     {
       "source_id": "global api-C_MountJournal-GetMountFromSpell-291",
-      "capabilities": [],
+      "capabilities": ["mount-spell-identifier"],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "B77 bounded public journal lookup accepted654:16local/16desktop PASS and check; independent674 accepts separate headless startup and3CASCtexture decodes with provenance/GUI/content-version limits. Native AllowedWhenTainted and alias grammar remain unmodeled; exact291 stays pending. No whole-row/native/profile/full-suite credit."
     },
     {
       "source_id": "global api-C_QuestInfoSystem-GetQuestLogRewardFavor-293",
