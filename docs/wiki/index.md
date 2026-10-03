@@ -1,6 +1,10 @@
+## [2026-10-03] source accounting | Accept six metadata classifications
+
+[Six-occurrence accounting](investigations/patch-12-0-5-api-audit.md#six-source-occurrences--metadata-only-accounting-accepted) links coverage/proof SSOT after `c7f9635cf`, accepted independent556:180 pending/161 bounded/14 partial/7 metadata,362 IDs/76 unchanged capabilities. Zero runtime/implementation credit; concrete adjacent contracts remain separately pending. Earlier B69 counts are historical checkpoints; audit IN PROGRESS.
+
 ## [2026-10-03] evidence | Accept exact313/326 LoC outputs
 
-[Bounded acceptance SSOT](../specs/spell-book-loss-of-control-outputs.md#independent-bounded-acceptance--2026-10-03) records549+551:76 distinct Retail PASS, current startup `[]`, clean scoped format/check and two separate Forever inverse controls. Only313/326 promote:186 pending/161 bounded/14 partial/1 metadata,362 ordered IDs/76 capabilities. Historical import warning, pre-launch shared-binary collision, Forever failed filter, dirty/globalfmt/process limits and native/input/type/acquisition/pet/future/UI gaps remain explicit. Broader goal open.
+[Bounded acceptance SSOT](../specs/spell-book-loss-of-control-outputs.md#independent-bounded-acceptance--2026-10-03) records549+551:76 distinct Retail PASS, current startup `[]`, clean scoped format/check and two separate Forever inverse controls. At the historical B69 acceptance checkpoint, only313/326 promote:186 pending/161 bounded/14 partial/1 metadata,362 ordered IDs/76 capabilities. Historical import warning, pre-launch shared-binary collision, Forever failed filter, dirty/globalfmt/process limits and native/input/type/acquisition/pet/future/UI gaps remain explicit. Broader goal open.
 
 ## [2026-10-02] implementation | Record EXACT313/326 LoC outputs pending proof
 

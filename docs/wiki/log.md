@@ -1,3 +1,7 @@
+## [2026-10-03] source accounting | Record accepted six-row classification
+
+After `c7f9635cf`, [accounting SSOT links](investigations/patch-12-0-5-api-audit.md#six-source-occurrences--metadata-only-accounting-accepted) record accepted independent556 metadata-only classifications, preserved IDs/capabilities/source integrity and separately pending adjacent contracts. Zero runtime/implementation credit. B69 `fae926860`/`c22c5d5a5` counts retained as historical checkpoints; broader audit open. Three owned wiki files only.
+
 ## [2026-10-03] docs | Reconcile B69 bounded acceptance
 
 After `fae926860`, reconcile exact313/326 current claims and checked requirements with [acceptance SSOT](../specs/spell-book-loss-of-control-outputs.md#independent-bounded-acceptance--2026-10-03). Checked behavior is bounded simulator proof, not native parity; dated RED, B68/B67 accounting and all limitations retained. Five owned docs only; no runtime/source operations.
