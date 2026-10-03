@@ -244,6 +244,7 @@ def install_export(common, output, destination):
             else:
                 os.replace(staged_libraries, installed)
         os.replace(executable, destination)
+    return destination.parent / directory if libraries else None
 
 
 def build(
@@ -294,7 +295,9 @@ def build(
                 arguments,
                 host,
             )
-            install_export(common, output, destination)
+            libraries = install_export(common, output, destination)
+    if libraries is not None:
+        print(f"Runtime libraries: {libraries}", flush=True)
     print(destination, flush=True)
     return destination
 
@@ -343,7 +346,7 @@ def resolve_runtime_libraries(executable, profile_dir):
     for line in result.stdout.splitlines():
         if "not found" in line:
             raise ValueError(f"unresolved runtime dependency: {line.strip()}")
-        match = re.match(r"\s*(\S+)\s+=>\s+(/\S+)\s+\(", line)
+        match = re.match(r"\s*(\S+)\s+=>\s+(/.+?)\s+\(", line)
         if match and match[1] not in SYSTEM_LIBRARIES:
             libraries[match[1]] = Path(match[2])
     return libraries
@@ -390,7 +393,7 @@ def export_binary(executable, profile_dir, output):
     )
 
 
-def container_build():
+def container_build(output=Path("/out")):
     root = Path(os.environ["BUILD_ROOT"])
     binary = os.environ["BIN"]
     release = os.environ["RELEASE"] == "1"
@@ -406,7 +409,7 @@ def container_build():
         check=True,
     )
     profile_dir = root / "target" / ("release" if release else "debug")
-    export_binary(profile_dir / binary, profile_dir, Path("/out"))
+    export_binary(profile_dir / binary, profile_dir, output)
 
 
 def main(argv=None):

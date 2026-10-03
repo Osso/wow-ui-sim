@@ -1,5 +1,7 @@
 """Behavioral source/export contract; fake transport never runs Docker or a client."""
 
+import gzip
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -8,6 +10,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 HELPER = Path(__file__).resolve().parents[1] / "build-host.py"
 COMMON = Path("/syncthing/Sync/Projects/world-of-osso/game-engine/scripts")
@@ -35,6 +38,8 @@ manifest = {"directory": binary + ".libs/fixture" if libs else None, "libraries"
 for name in [binary, *libs]:
     with gzip.open(output / (name + ".gz"), "wb") as stream:
         stream.write(("new " + name).encode())
+if os.environ.get("FAKE_BAD_EXPORT"):
+    (output / (libs[-1] + ".gz")).write_bytes(b"not gzip")
 """
 
 
@@ -242,8 +247,9 @@ class BuildHostTests(unittest.TestCase):
         self,
     ):
         self.env["FAKE_LIBS"] = "1"
-        self.invoke("--build-host", "local", "--features", "fast-build")
+        result = self.invoke("--build-host", "local", "--features", "fast-build")
         libraries = self.root / "target/debug/wow-sim.libs/fixture"
+        self.assertIn(f"Runtime libraries: {libraries}", result.stdout)
         self.assertEqual(
             (libraries / "libiced_dynamic.so").read_text(), "new libiced_dynamic.so"
         )
@@ -253,6 +259,24 @@ class BuildHostTests(unittest.TestCase):
         self.env.pop("FAKE_LIBS")
         self.invoke("--build-host", "desktop", "--bin", "wow-cli")
         self.assertTrue((libraries / "libiced_dynamic.so").is_file())
+
+    def test_incomplete_library_export_preserves_previous_binary_and_libraries(self):
+        self.env["FAKE_LIBS"] = "1"
+        self.invoke("--build-host", "desktop", "--features", "fast-build")
+        self.put("target/debug/wow-sim", "last good executable")
+        self.env["FAKE_BAD_EXPORT"] = "1"
+        self.invoke(
+            "--build-host", "desktop", "--features", "fast-build", success=False
+        )
+        self.assertEqual(
+            (self.root / "target/debug/wow-sim").read_text(), "last good executable"
+        )
+        self.assertEqual(
+            (
+                self.root / "target/debug/wow-sim.libs/fixture/libstd-fixture.so"
+            ).read_text(),
+            "new libstd-fixture.so",
+        )
 
     def test_compile_include_missing_or_secret_and_source_symlink_fail_before_transport(
         self,
@@ -265,6 +289,136 @@ class BuildHostTests(unittest.TestCase):
         (self.root / "src/link.rs").symlink_to(self.root / "src/lib.rs")
         self.invoke("--build-host", "local", success=False)
         self.assertFalse(self.record.exists())
+
+
+FAKE_NATIVE = r"""#!/usr/bin/env python3
+import json, os
+from pathlib import Path
+import sys
+name = Path(sys.argv[0]).name
+root = Path(os.environ["BUILD_ROOT"])
+if name == "cargo":
+    args = sys.argv[1:]
+    profile = "release" if "--release" in args else "debug"
+    binary = args[args.index("--bin") + 1]
+    features = args[args.index("--features") + 1].split(",") if "--features" in args else []
+    if "--no-default-features" not in args:
+        features += ["sound", "gui", "casc", "client-retail"]
+    artifact = root / "target" / profile / binary
+    artifact.parent.mkdir(parents=True, exist_ok=True)
+    payload = dict(manifest=str(Path.cwd()), features=sorted(set(features)), profile=profile,
+                   mtimes={str(p.relative_to(root)): p.stat().st_mtime_ns for p in root.rglob("*") if p.is_file() and "target" not in p.relative_to(root).parts})
+    artifact.write_text(json.dumps(payload))
+elif name == "rustc":
+    print(root / "toolchain")
+elif name == "ldd":
+    for library in ["libc.so.6", "libicui18n.so.72", "libicuuc.so.72", "libicudata.so.72", "libiced_dynamic.so", "libstd-matching.so"]:
+        if os.environ.get("FAKE_UNRESOLVED") and library == "libstd-matching.so":
+            print(library + " => not found")
+        else:
+            print(library + " => " + str(root / "deps" / library) + " (0x123)")
+elif name == "patchelf":
+    path = Path(sys.argv[-1])
+    path.write_text(path.read_text() + "\nRUNPATH=" + sys.argv[2])
+else:
+    sys.exit(2)
+"""
+
+
+class ContainerExportTests(unittest.TestCase):
+    def setUp(self):
+        self.work = tempfile.TemporaryDirectory()
+        self.addCleanup(self.work.cleanup)
+        self.root = Path(self.work.name) / "origin with spaces"
+        self.root.mkdir()
+        self.output = self.root.parent / "output"
+        self.commands = self.root.parent / "commands"
+        self.commands.mkdir()
+        for name in ("cargo", "rustc", "ldd", "patchelf"):
+            path = self.commands / name
+            path.write_text(FAKE_NATIVE)
+            path.chmod(0o755)
+        self.libraries = [
+            "libc.so.6",
+            "libicui18n.so.72",
+            "libicuuc.so.72",
+            "libicudata.so.72",
+            "libiced_dynamic.so",
+            "libstd-matching.so",
+        ]
+        for name in self.libraries:
+            path = self.root / "deps" / name
+            path.parent.mkdir(exist_ok=True)
+            path.write_text("original " + name)
+        for relative in (
+            "src/lib.rs",
+            "data/owned.csv",
+            ".cargo/config.toml",
+            "target/cached",
+        ):
+            path = self.root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("input")
+            os.utime(path, ns=(1_000_000_000, 1_000_000_000))
+        spec = importlib.util.spec_from_file_location("wow_build", HELPER)
+        self.helper = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.helper)
+        self.environment = {
+            "PATH": str(self.commands) + os.pathsep + os.environ["PATH"],
+            "BUILD_ROOT": str(self.root),
+            "BIN": "wow-cli",
+            "RELEASE": "1",
+            "NO_DEFAULT_FEATURES": "1",
+            "FEATURES": "gui,client-mists,fast-build",
+        }
+
+    def test_container_compile_and_export_features_embedded_paths_and_only_needed_libraries(
+        self,
+    ):
+        with patch.dict(os.environ, self.environment):
+            self.helper.container_build(self.output)
+        manifest = json.loads((self.output / "runtime-libs.json").read_text())
+        expected = set(self.libraries) - {"libc.so.6"}
+        self.assertEqual(set(manifest["libraries"]), expected)
+        binary = gzip.decompress((self.output / "wow-cli.gz").read_bytes()).decode()
+        payload, runpath = binary.split("\nRUNPATH=")
+        payload = json.loads(payload)
+        self.assertEqual(payload["manifest"], str(self.root))
+        self.assertEqual(payload["features"], ["client-mists", "fast-build", "gui"])
+        self.assertEqual(payload["profile"], "release")
+        for relative in ("src/lib.rs", "data/owned.csv", ".cargo/config.toml"):
+            self.assertGreater(payload["mtimes"][relative], 1_000_000_000)
+        self.assertEqual(
+            (self.root / "target/cached").stat().st_mtime_ns, 1_000_000_000
+        )
+        self.assertEqual(runpath, "$ORIGIN/" + manifest["directory"])
+        for name in expected:
+            self.assertEqual(
+                gzip.decompress((self.output / (name + ".gz")).read_bytes()).decode(),
+                "original " + name + "\nRUNPATH=$ORIGIN",
+            )
+            self.assertEqual(
+                (self.root / "deps" / name).read_text(), "original " + name
+            )
+        original = json.loads((self.root / "target/release/wow-cli").read_text())
+        self.assertEqual(original["features"], payload["features"])
+
+    def test_container_default_features_and_missing_runtime_dependency_fail_explicitly(
+        self,
+    ):
+        self.environment.update(RELEASE="0", NO_DEFAULT_FEATURES="0", FEATURES="")
+        with patch.dict(os.environ, self.environment):
+            self.helper.container_build(self.output)
+        binary = gzip.decompress((self.output / "wow-cli.gz").read_bytes()).decode()
+        payload = json.loads(binary.split("\nRUNPATH=")[0])
+        self.assertEqual(payload["features"], ["casc", "client-retail", "gui", "sound"])
+        self.assertEqual(payload["profile"], "debug")
+        self.environment["FAKE_UNRESOLVED"] = "1"
+        previous = (self.output / "wow-cli.gz").read_bytes()
+        with patch.dict(os.environ, self.environment):
+            with self.assertRaisesRegex(ValueError, "libstd-matching.so.*not found"):
+                self.helper.container_build(self.output)
+        self.assertEqual((self.output / "wow-cli.gz").read_bytes(), previous)
 
 
 if __name__ == "__main__":
