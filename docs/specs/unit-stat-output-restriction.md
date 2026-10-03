@@ -213,6 +213,16 @@ Proof reuse is identical to [B83](#b83-independent-bounded-acceptance--2026-10-0
 
 - Both values are the melee getters reused: no ranged-specific crit or haste model, no native formula; base5 and divisors 180/170 are simulator choices. Shared getters are local annotation backing, not native equivalence with accepted rows428/438/450.
 - Under `client-wowforever`, `get_ranged_haste` returns two **plain** values (haste, quiver) and bypasses `push_stat_number`. Not a 12.0.5 claim; older-profile behavior is unverified here.
-- No-argument plain calls elsewhere appear only in a `tests/character_stats.rs` smoke check (number, nonnegative). Activation, native/GUI parity and full suites remain unverified.
+- Outside `client-wowforever`, other calls appear only in a `tests/character_stats.rs` smoke check (number, nonnegative). `tests/forever_character_remaining_stats.rs` asserts the Forever two-plain-value `GetRangedHaste` shape; that profile cannot be combined with a retail epoch and adds no 12.0.5 credit. Activation, native/GUI parity and full suites remain unverified.
 
-Rows474/476 remain `audit-pending` with no capability until independent validation and main accounting.
+At supplement time rows474/476 were `audit-pending`; the acceptance below supersedes that for these two boundaries.
+
+## B84 independent bounded acceptance — 2026-10-03
+
+Main accepts an independent GPT-6.1-sol read-only audit of the supplement at `092b6efab`: **ACCEPT WITH QUALIFICATIONS for each row**, **exact474/476 output annotations only**. It confirmed both literal deltas and register records, both no-argument declarations, the registered providers and single wrapped results, computed `360/180 + 5 = 7` and `510/170 = 3`, the assertions of the two exercising tests (value within `1e-10`), the empty `d21d4a208..HEAD` diff over `src tests Cargo.toml Cargo.lock`, and the unowned aura diff lying outside both chains. From `Cargo.toml` and `src/client_profile.rs` it derived that default builds and `profile-retail,retail-12-0-5` compile the one-result haste branch and that Forever cannot combine with a retail epoch; that is source-derived, not compiled.
+
+Its one failed sub-item was the supplement's repository-wide "only" claim about other `GetRangedHaste` callers, falsified by the Forever tests; corrected in the limits above. No behavioral claim changed.
+
+Evidence class: fresh source inspection plus the committed B82 aggregate record, as for [B83](#b83-independent-bounded-acceptance--2026-10-03). No test, build, check, formatter or startup ran for B84; raw `/tmp/patch-12.0.5-*` artifacts absent. The audit report (SHA256 `0775c67b49eb6e3a491795fc65e046fa96afeac62b506d07eb0d973a28c11d7f`) lives in a session scratchpad and is not durable; this section is the retained record.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): rows474/476 `bounded-coverage` under new capability `ranged-crit-haste-restricted-outputs`; **88 capabilities/362 ordered IDs; 162 pending/182 bounded/11 partial/7 metadata**. Other 360 rows and prior 87 capabilities unchanged. No ranged-specific model, native, older-profile or full-suite credit; audit remains in progress.

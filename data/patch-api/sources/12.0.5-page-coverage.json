@@ -1438,6 +1438,24 @@
       "proof": "bounded-independent-pass-reused-record",
       "ledger": "docs/specs/unit-stat-output-restriction.md#b83-independent-bounded-acceptance--2026-10-03",
       "gate_scope": "Main accepts independent Sol source audit ACCEPT WITH QUALIFICATIONS, 8/8 items PASS, report SHA256 d82dd28128ae506dc3cbcd74e43a07a368f6150711e3eb72ee2894b869551517 (session scratchpad, not durable). No new tests/build/check/startup: reuse of B82 committed record of four restriction tests refreshed PASS at d21d4a208 with empty src/tests/Cargo diff to 49c667ad4; committed record is aggregate (4 stat controls), not four named raw result lines, and raw /tmp artifacts were unreadable on the accounting host. B82 qualified check protocol carries over; unowned dirty aura_duration.rs outside provider chain. Native/GUI/CASC/fullsuite/globalfmt gaps open."
+    },
+    {
+      "id": "ranged-crit-haste-restricted-outputs",
+      "symbols": [
+        "GetRangedCritChance",
+        "GetRangedHaste"
+      ],
+      "scope": "B84 exact474/476 output annotations only: existing registered providers reuse the melee getters, computing crit_rating360/180+5=7 and haste_rating510/170=3, one wrapped result each under the explicit restriction flag. Seeded no-argument fixtures: arity1/value/secrecy/access plain-restricted-plain, tainted opacity, denied unwrap/arithmetic, retained caller taint. Declarations have no Arguments/SecretArguments. No ranged-specific model, native formula, activation or neighboring-row credit; client-wowforever GetRangedHaste returns two plain values and is excluded.",
+      "spec": "docs/specs/unit-stat-output-restriction.md",
+      "tests": [
+        "tests/character_stats/stat_restriction.rs",
+        "tests/character_stats/stat_restriction_fixtures.lua"
+      ],
+      "compiled_revision": "d21d4a208da4b911f003181e5ca33163f42b92be",
+      "source_view_revision": "092b6efab9fa238b9f3443c9e7a8c4cc6c5b2880",
+      "proof": "bounded-independent-pass-reused-record",
+      "ledger": "docs/specs/unit-stat-output-restriction.md#b84-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Main accepts independent Sol source audit ACCEPT WITH QUALIFICATIONS per row, report SHA256 0775c67b49eb6e3a491795fc65e046fa96afeac62b506d07eb0d973a28c11d7f (session scratchpad, not durable); its one failed sub-item was a supplement wording claim about other GetRangedHaste callers, corrected. No new tests/build/check/startup: reuse of B82 committed aggregate record of four restriction tests PASS at d21d4a208 with empty src/tests/Cargo diff to 092b6efab; raw /tmp artifacts unreadable on the accounting host. Feature-branch conclusions source-derived, not compiled. B82 qualified check protocol carries over; unowned dirty aura_duration.rs outside provider chains. Native/GUI/CASC/fullsuite/globalfmt gaps open."
     }
   ],
   "source_rows": [
@@ -3143,15 +3161,19 @@
     },
     {
       "source_id": "global api-PlayerScript GetRangedCritChance-474",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "ranged-crit-haste-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B84 accepted independent Sol audit: existing crit-rating-backed simulator value7 via the shared melee getter and single-result privacy/arity/caller-opacity on the seeded fixture, not a constant shim. Proof is the committed B82 record of four restriction tests at d21d4a208 with unchanged src/tests; no rerun. No ranged-specific/native formula, activation, older-profile or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetRangedHaste-476",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "ranged-crit-haste-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B84 accepted independent Sol audit: existing haste-rating-backed simulator value3 via the shared haste getter outside client-wowforever and single-result privacy/arity/caller-opacity on the seeded fixture. Proof is the committed B82 record of four restriction tests at d21d4a208 with unchanged src/tests; no rerun. Forever two-plain-value branch excluded; no ranged-specific/native formula, activation, older-profile or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetShieldBlock-478",
