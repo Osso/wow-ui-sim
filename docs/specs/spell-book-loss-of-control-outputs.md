@@ -4,32 +4,34 @@ Batch69 covers EXACT rows 313 (`C_Spell.GetSpellLossOfControlCooldownInfo`) and 
 
 ## What it must do
 
+Checked items assert bounded simulator behavior through the named passing tests below, not native parity.
+
 ### Records and snapshots
 
-- [ ] Both namespaces return one fresh ordinary five-field table for an explicit record: `startTime`, `duration`, `modRate`, `isActive`, `shouldReplaceNormalCooldown`. INFERRED snapshot, ordinary-table/header validation and rooting contract; GC survival is the observable rooting assertion.
-- [ ] Copy the existing typed record verbatim: spell 19750 `(312,237,1.25,true,true)`, spell 642 `(11,27,0.5,true,false)`, and explicit inactive `(0,0,1,false,false)`. These are simulator fixtures, not native captures. Do not recompute from intervals, GCD, charges, time, or flags.
-- [ ] Preserve spell absent-map one-nil behavior. INFERRED book policy: known valid identity with absent map also returns one nil, not the action namespace's inactive default.
-- [ ] Reads observe replacements/removals without mutating records, action mappings, charges, GCD, or clock. DTO mutation/replacement leaves independent snapshots intact; environments isolate records and policy.
+- [x] Both namespaces return one fresh ordinary five-field table for an explicit record: `startTime`, `duration`, `modRate`, `isActive`, `shouldReplaceNormalCooldown`. INFERRED snapshot, ordinary-table/header validation and rooting contract; GC survival is the observable rooting assertion.
+- [x] Copy the existing typed record verbatim: spell 19750 `(312,237,1.25,true,true)`, spell 642 `(11,27,0.5,true,false)`, and explicit inactive `(0,0,1,false,false)`. These are simulator fixtures, not native captures. Do not recompute from intervals, GCD, charges, time, or flags.
+- [x] Preserve spell absent-map one-nil behavior. INFERRED book policy: known valid identity with absent map also returns one nil, not the action namespace's inactive default.
+- [x] Reads observe tested replacements (removal behavior remains unproved) without mutating records, action mappings, charges, GCD, or clock. DTO mutation/replacement leaves independent snapshots intact; environments isolate records and policy.
 
 ### Output secrecy
 
-- [ ] `cooldowns_restricted` alone wraps the three numeric fields with authentic VM secret-number payloads, unchanged values. INFERRED per-field numeric interpretation of the function-level annotation; combat and stat restriction do not substitute for this flag.
-- [ ] Both boolean fields remain public `NeverSecret`, including explicit flags inconsistent with interval-derived activity. The container remains ordinary.
-- [ ] Addon public calls retain caller taint. Restricted-field arithmetic fails without exposing payloads; subsequent secure calls recover.
-- [ ] Copies and forced GC retain actual userdata identity/allocation sequence, authenticated numeric payloads, and privacy. Trusted-host unwrap inspects payloads without declassifying or clearing taint. Opaque Lua nominal numeric-type parity remains UNPROVED.
-- [ ] Flag-off returns a fresh public DTO without making previously rooted secrets public.
+- [x] `cooldowns_restricted` alone wraps the three numeric fields with authentic VM secret-number payloads, unchanged values. INFERRED per-field numeric interpretation of the function-level annotation; combat and stat restriction do not substitute for this flag.
+- [x] Both boolean fields remain public `NeverSecret`, including explicit flags inconsistent with interval-derived activity. The container remains ordinary.
+- [x] Addon public calls retain caller taint. Restricted-field arithmetic fails without exposing payloads; subsequent secure calls recover.
+- [x] Copies and forced GC retain actual userdata identity/allocation sequence, authenticated numeric payloads, and privacy. Trusted-host unwrap inspects payloads without declassifying or clearing taint. Opaque Lua nominal numeric-type parity remains UNPROVED.
+- [x] Flag-off returns a fresh public DTO without making previously rooted secrets public.
 
 ### Selector boundary
 
-- [ ] Preserve existing spell `numeric_spell_id`: nonnegative finite numbers cast to u32 (including fractional truncation/saturation), numeric strings and case-insensitive database names resolve; unsupported types and absent map return nil. Do not replace it with strict cooldown parsing or alias parsing.
-- [ ] Preserve secure/addon genuine secret spell userdata returning nil. This is a conservative existing-behavior control, NOT secret-input parity credit: cached spell documentation advertises `AllowedWhenTainted`.
-- [ ] Book player bank 0 slot 5 resolves actual API-reported spell 19750. Discover spell 642's slot through `FindSpellBookSlotForSpell` and verify its actual item DTO; never fabricate a catalog.
-- [ ] Authenticate both original book selectors through actual VM unwrap before public type/domain or identity checks. Secure genuine numeric slot/bank inputs resolve; addon public selectors are accepted. Addon genuine secrets in either position fail before another invalid/unresolved selector, even when the secret payload itself is invalid. INFERRED API-labelled, untainted-caller error contract and validation precedence.
-- [ ] INFERRED book misses return one nil for invalid/nonintegral/nonfinite/out-of-range slots, unresolved slots, nonplayer/missing banks, and wrong public types. Typed actual offspec 20473 remains a miss even with a map record, grounded in cached offspec documentation.
+- [x] Preserve existing spell `numeric_spell_id`: nonnegative finite numbers cast to u32 (including fractional truncation/saturation), numeric strings and case-insensitive database names resolve; unsupported types and absent map return nil. Do not replace it with strict cooldown parsing or alias parsing.
+- [x] Preserve secure/addon genuine secret spell userdata returning nil. This is a conservative existing-behavior control, NOT secret-input parity credit: cached spell documentation advertises `AllowedWhenTainted`.
+- [x] Book player bank 0 slot 5 resolves actual API-reported spell 19750. Discover spell 642's slot through `FindSpellBookSlotForSpell` and verify its actual item DTO; never fabricate a catalog.
+- [x] Authenticate both original book selectors through actual VM unwrap before public type/domain or identity checks. Secure genuine numeric slot/bank inputs resolve; addon public selectors are accepted. Addon genuine secrets in either position fail before another invalid/unresolved selector, even when the secret payload itself is invalid. INFERRED API-labelled, untainted-caller error contract and validation precedence.
+- [x] INFERRED book misses return one nil for invalid/nonintegral/nonfinite/out-of-range slots, unresolved slots, nonplayer/missing banks, and wrong public types. Typed actual offspec 20473 remains a miss even with a map record, grounded in cached offspec documentation.
 
 ### Epoch/profile control
 
-- [ ] INFERRED placement: modern assertions run only under `retail-12-0-5` plus (`profile-retail` or `client-ptr`). The inverse control keeps the previous public spell record and disabled inactive five-field book DTO. Batch68 inverse group remains untouched pending main RED; no production placement is established by these inputs.
+- [x] INFERRED placement: modern assertions run only under `retail-12-0-5` plus (`profile-retail` or `client-ptr`). The inverse control keeps the previous public spell record and disabled inactive five-field book DTO. Both inverse controls passed separately under Forever; placement remains inferred, not native-verified.
 
 ## How it works
 
