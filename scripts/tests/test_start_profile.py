@@ -2,11 +2,11 @@
 
 import json
 import os
-from pathlib import Path
 import subprocess
 import tempfile
 import time
 import unittest
+from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[1] / "start-profile.sh"
 
@@ -34,6 +34,7 @@ class StartProfileTests(unittest.TestCase):
             capture_output=True,
             text=True,
             timeout=10,
+            check=False,
         )
 
     def records(self, count=1):

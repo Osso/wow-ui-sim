@@ -10,12 +10,12 @@ The saved default is shared with game-engine. Desktop artifacts stay on desktop.
 import argparse
 import importlib.util
 import os
-from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 
 COMMON_SCRIPTS = Path("/syncthing/Sync/Projects/world-of-osso/game-engine/scripts")
 PROJECT_NAME = "wow-ui-sim"

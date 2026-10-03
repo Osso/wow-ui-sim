@@ -8,9 +8,9 @@ profile in foreground; WOW_SIM_START_NO_BUILD=1 uses its existing host binary.
 
 import argparse
 import os
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
 PROFILES = {
     "live": "client-retail",

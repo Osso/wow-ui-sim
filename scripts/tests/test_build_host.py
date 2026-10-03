@@ -3,7 +3,6 @@
 import importlib.util
 import json
 import os
-from pathlib import Path
 import shutil
 import signal
 import subprocess
@@ -11,6 +10,7 @@ import sys
 import tempfile
 import time
 import unittest
+from pathlib import Path
 
 HELPER = Path(__file__).resolve().parents[1] / "build-host.py"
 COMMON = Path("/syncthing/Sync/Projects/world-of-osso/game-engine/scripts")
@@ -176,6 +176,7 @@ class BuildHostTests(unittest.TestCase):
             env=self.env,
             text=True,
             capture_output=True,
+            check=False,
         )
         self.assertEqual(result.returncode, status, result.stdout + result.stderr)
         return result
@@ -213,6 +214,7 @@ class BuildHostTests(unittest.TestCase):
                     capture_output=True,
                     text=True,
                     timeout=3,
+                    check=False,
                 )
             except subprocess.TimeoutExpired:
                 self.fail("check blocked behind a running app's caller lock")
