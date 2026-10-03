@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Batch68 — exact spell and spellbook cooldown outputs accepted
+
+[EXACT305/322 acceptance SSOT](../../specs/spell-book-cooldown-outputs.md#independent-bounded-acceptance--2026-10-02) records independent537+541 and `758cdf49c`: bounded meaningful intervals, book selector/offspec boundaries, trusted-host NUM payloads and Lua opacity/copy/root/GC accepted. Modern/legacy grouping equivalence proved; scopedfmt/check0, 27 refreshed+135 inherited=162 unique Retail PASS/one ignored, startup `[]` inherited. Post-grouping Forever compile0/legacy1 PASS counts one refreshed identity within original64 PASS/1 FAIL/1 ignored, not duplicate credit. Mask-quad test makes no cooldown call: applicability rejected, causal preexistence UNRESOLVED; whole filter not green. Only305/322 promote:188 pending/159 bounded/14 partial/1 metadata,362 ordered IDs/75 capabilities. Inferred policies explicit; nominal/native types, SpellIdentifier input, future fixture, pet/full banks/UI unproved. Dirty-combined/globalfmt1/historical502 failure retained. Dated producer checkpoints remain historical; broader goal open.
+
 ### Batch67 — exact spell count outputs accepted
 
 [EXACT301/309 acceptance SSOT](../../specs/spell-count-outputs.md#independent-bounded-acceptance--2026-10-02) owns current accounting, refreshed/reused proof and retained limits. Trusted-host private payload and bounded Lua opacity/copy/root/GC behavior are proved, not pending; cast AllowedWhenTainted secret-input parity remains UNMODELED with conservative rejection, no NeverSecret/input credit. Nominal scalar type, native acquisition, global privacy and UI/full-profile parity remain unproved. Dated checkpoints below remain historical; broader goal open.

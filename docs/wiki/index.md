@@ -4,7 +4,7 @@
 
 ## [2026-10-02] evidence | Accept exact305/322 cooldown outputs
 
-[Bounded acceptance SSOT](../specs/spell-book-cooldown-outputs.md#independent-bounded-acceptance--2026-10-02) records537+541:27 refreshed plus135 inherited Retail PASS, startup inherited; post-grouping format/check and Forever legacy1 PASS. Only305/322 promote:188 pending/159 bounded/14 partial/1 metadata,362 IDs/75 capabilities. Original Forever64 PASS/1 FAIL/1 ignored retained; mask-quad applicability rejected, causal preexistence unresolved. Native/input/type/future/pet/UI and dirty/globalfmt/process limits remain. Broader goal open.
+[Bounded acceptance SSOT](../specs/spell-book-cooldown-outputs.md#independent-bounded-acceptance--2026-10-02) records537+541, accepted by `758cdf49c`:27 refreshed plus135 inherited=162 unique Retail PASS/one ignored, startup `[]` inherited; grouping equivalence, scopedfmt/check0 and post-grouping Forever compile0/legacy1 PASS without duplicate credit. [B68 audit summary](investigations/patch-12-0-5-api-audit.md#batch68--exact-spell-and-spellbook-cooldown-outputs-accepted) reconciles historical pending claims. Only305/322 promote:188 pending/159 bounded/14 partial/1 metadata,362 IDs/75 capabilities. Original Forever64 PASS/1 FAIL/1 ignored retained; mask-quad applicability rejected, causal preexistence unresolved. Native/input/type/future/pet/UI and dirty/globalfmt/process limits remain. Broader goal open.
 
 ## [2026-10-02] implementation | Bound EXACT305/322 spell and spellbook cooldown outputs
 
