@@ -1,9 +1,9 @@
-## [2026-10-03] evidence | B76 acceptance and B77 pending producer
+## [2026-10-03] evidence | B76 retained accounting, B77 bounded proof and power acceptance
 
 [Native desktop/local development](../remote-builds.md) — normal build/run/check/test workflow, host-local runtime state, and pending runtime proof; [contract](../specs/build-host.md).
 
 
-[B76 SSOT](../specs/unit-stat-output-restriction.md#b76-existing-model-bounded-acceptance--2026-10-03) owns exact430/432/458/460 saved-proof acceptance642 and accounting64731/31 PASS:167/174/14/7,362 IDs/81 capabilities. [B77 inventory/proof](../specs/mount-spell-identifier.md#implementation-inventory) owns actual callable generic-nil RED and producer22ea15a23 pending gates; no API-absence or desktop-execution claim. [Audit](investigations/patch-12-0-5-api-audit.md#batch76--existing-model-output-annotations-accepted) preserves native/process/profile/input/full-suite limits and B74 docs646 pending main commit.
+[B76 SSOT](../specs/unit-stat-output-restriction.md#b76-existing-model-bounded-acceptance--2026-10-03) retains647 report31/31 PASS with raw-artifact unavailability disclosed. [B77 SSOT](../specs/mount-spell-identifier.md#implementation-inventory) owns local16/desktop16 PASS plus check; desktop startup/CASC remain **PENDING**, ongoing main worker unaccepted. [UnitHasPowerType SSOT](../specs/unit-has-power-type.md#independent-bounded-acceptance--2026-10-03) owns independent662 accepted five saved PASS; source157 already bounded, no new row/count or fmt/native/older-profile credit. [Audit](investigations/patch-12-0-5-api-audit.md#batch77--bounded-mount-proof-desktop-startup-pending) reconciles `e49ec0626`/`8dc686e96`; coverage unchanged167 pending/174 bounded/14 partial/7 metadata,362 IDs/81 capabilities.
 
 ## [2026-10-03] evidence | B75 existing-model annotations accepted
 

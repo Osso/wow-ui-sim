@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B76/B77 and UnitHasPowerType checkpoint
+
+Reconciled existing [audit](investigations/patch-12-0-5-api-audit.md#batch77--bounded-mount-proof-desktop-startup-pending) and index after `e49ec0626`/`8dc686e96`. [Mount SSOT](../specs/mount-spell-identifier.md#implementation-inventory) owns local16/desktop16 PASS plus check; desktop startup/CASC remain PENDING, ongoing main worker unaccepted. [B76 SSOT](../specs/unit-stat-output-restriction.md#b76-existing-model-bounded-acceptance--2026-10-03) retains647 report31/31 with unavailable raw artifacts disclosed. [Power acceptance SSOT](../specs/unit-has-power-type.md#independent-bounded-acceptance--2026-10-03) owns independent662 five saved PASS; source157 already bounded, no row/count or fmt/native/older-profile credit. Coverage remains167 pending/174 bounded/14 partial/7 metadata,362 IDs/81 capabilities.
+
 ## [2026-10-03] evidence | B75 existing-model annotations accepted
 
 Updated [B75 acceptance SSOT](../specs/retail-missing-stat-inputs.md#b75-existing-model-bounded-acceptance--2026-10-03), [audit](investigations/patch-12-0-5-api-audit.md#batch75--existing-model-output-annotations-accepted) and index from supplied632 evidence/accounting88362f9a6. Output annotations only; saved-proof equivalence limits, accounting640 PASS39/39 and native/B74/OPEN full-suite gates retained. Four-doc diff only; no code, execution gates, delegation or commit.
