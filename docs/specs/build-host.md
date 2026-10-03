@@ -31,9 +31,10 @@ Tests are inventoried, not rerun by this documentation audit; requirements remai
 ## Known gaps (current cycle)
 
 - [x] Bounded native desktop acceptance: actual build and headless CLI startup `lua-errors []`, exit 0 observed by main; see guide.
-- [ ] Normal visible Windows GUI proof: log artifact and process alive for 25 seconds are insufficient.
-- [ ] Actual local native acceptance after installed Cargo/rustc selection fix.
-- [ ] Lint fixes remain pending; 93 existing shared workflow fixtures passing does not complete workflow acceptance.
+- [ ] Normal desktop GUI unresolved: connection reset (101) creating the Wayland event loop, first frame absent. Host compositor crash observed; crash root cause and session causality unproved. See guide for boundary artifacts; not a Lua/CASC/font stall.
+- [x] Bounded actual local CLI proof: `wow-cli` helper built and printed `--help` in 0.35 seconds; not GUI or local server acceptance.
+- [ ] Actual local runtime acceptance deferred, not required now for the current gate; local capability preserved. Local server proof also deferred by user, with no-local-compile guard preserved.
+- [ ] Bounded corrected source gate pending agent 36 after seven I001 findings and two stale rustup fixtures were fixed; see guide for commits. Existing 93 fixture passes and source-gate success do not complete whole-workflow acceptance.
 
 ## Out of scope
 

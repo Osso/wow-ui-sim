@@ -28,7 +28,7 @@ The Python profile launcher preserves `live`/`retail`, `ptr`, `mists`, and `all`
 
 `python3 scripts/build-host.py --save-build-host desktop` saves the shared default in `~/.config/game-engine/build-host`; use `local` to change it. The configured default is desktop. Explicit `--build-host` overrides it for one invocation. Host failure is an error, never a host fallback.
 
-Shared snapshot, selection, and native execution helpers live in `/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/`. Set `BUILD_HOST_SCRIPTS` to override that dependency. Desktop uses pinned Rust 1.98.1 through rustup and same-ABI native runtime dependencies; the in-progress local native-tool fix uses installed Arch Cargo/rustc 1.98.1 without rustup, not fallback; there is no Docker runtime or bundled ICU substitution. Existing CI/release Docker pipelines remain separate and unchanged, including the [standalone PTR ICU workflow](ptr-icu-build.md).
+Shared snapshot, selection, and native execution helpers live in `/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/`. Set `BUILD_HOST_SCRIPTS` to override that dependency. Desktop uses pinned Rust 1.98.1 through rustup and same-ABI native runtime dependencies; local uses installed Arch Cargo/rustc 1.98.1 without rustup, not fallback; there is no Docker runtime or bundled ICU substitution. Existing CI/release Docker pipelines remain separate and unchanged, including the [standalone PTR ICU workflow](ptr-icu-build.md).
 
 ## Source, cache, and lifetime
 
@@ -40,7 +40,9 @@ Runtime Blizzard caches remain host-local and profile-scoped under `~/.cache/wow
 
 Main-observed evidence on October 3, 2026: actual native desktop GUI binary build passed (4m9s); headless CLI startup `--no-addons --no-saved-vars lua-errors` returned `[]`, exit 0 (`target/native-desktop-lua-errors.log`). These are bounded build/CLI observations, not full parity or warning-free acceptance.
 
-Normal visible Windows GUI launch is NOT proven: the normal GUI probe produced only a log artifact and a process alive for 25 seconds. Earlier SSH/WSLg Session 0 trouble does not establish the outcome of this later probe. Existing 93 shared workflow fixtures passed; lint fixes and actual local native acceptance remain pending. Historical focused-test/check reports are not a fresh current-tree gate; the whole workflow remains incomplete.
+Normal desktop GUI failed before its first frame: `target/native-desktop-gui-long.log` ends with connection reset (101) while creating the Wayland event loop. Engine `target/native-wslg-boundary.log` records the correct `/run/user/1000/wayland-0` symlink to `/mnt/wslg/runtime-dir/wayland-0`, repeated Weston SIG11 in `stderr.log`, and repeated approximately 102-second RDP peer disconnect/restart cycles. Windows msrdc ran in Session 0 while the active console was Session 1. Host compositor crash is observed; crash root cause and session causality are not established. This is not a simulator Lua/CASC/font stall. No WSL, service, or process restart was performed.
+
+The actual local `wow-cli` helper built and printed `--help` in 0.35 seconds: bounded local CLI proof, not GUI acceptance or a local server pass. Local capability remains supported; actual local runtime acceptance is deferred, not required now for the current gate. User rejected local server build attempts; actual local server proof is deferred and its no-local-compile guard remains. Existing 93 shared workflow fixtures passed. Seven I001 lint findings and two stale rustup fixtures were fixed in `97deca8d` (engine), `43e9141` (server), and `2705913` (simulator); the bounded corrected source gate remains pending agent 36. Historical focused-test/check reports are not a fresh current-tree gate. Normal desktop GUI remains unresolved; source-gate success would not complete the whole workflow.
 
 ## Related
 
