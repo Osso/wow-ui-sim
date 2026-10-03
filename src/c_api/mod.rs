@@ -116,11 +116,11 @@ pub mod c_texture;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_aura_instance;
 #[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_tooltip_info_indexed_aura;
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_item_context;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
-#[cfg(feature = "retail-12-0-5")]
-pub(crate) mod c_tooltip_info_unit_buff;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_transmog_collection;
 #[cfg(feature = "retail-12-0-5")]

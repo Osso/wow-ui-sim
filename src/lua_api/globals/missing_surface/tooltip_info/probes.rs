@@ -392,6 +392,7 @@ pub(super) fn c_tooltip_get_unit_buff_by_aura_instance_id(state: &mut LuaState) 
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn c_tooltip_get_unit_debuff(state: &mut LuaState) -> LuaResult<u32> {
     let _unit = String::from_stack(state, 1)?;
     let _index = i32::from_stack(state, 2)?;

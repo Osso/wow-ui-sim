@@ -55,7 +55,7 @@ fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     {
         crate::c_api::c_tooltip_info_spell_mount::register(state, table_ref)?;
         crate::c_api::c_tooltip_info_aura_instance::register(state, table_ref)?;
-        crate::c_api::c_tooltip_info_unit_buff::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_indexed_aura::register(state, table_ref)?;
     }
     Ok(())
 }
@@ -106,7 +106,7 @@ pub(crate) fn tooltip_for_aura_instance(
 
 /// Dispatch the selected clone through the unchanged aura payload builder.
 #[cfg(feature = "retail-12-0-5")]
-pub(crate) fn tooltip_for_selected_unit_buff(
+pub(crate) fn tooltip_for_selected_indexed_aura(
     state: &mut LuaState,
     aura: Option<crate::lua_api::state::AuraInfo>,
 ) -> rilua::Val {
@@ -246,6 +246,7 @@ fn register_spell_aura_unit_methods(
                 "GetUnitBuffByAuraInstanceID",
                 c_tooltip_get_unit_buff_by_aura_instance_id,
             ),
+            #[cfg(not(feature = "retail-12-0-5"))]
             ("GetUnitDebuff", c_tooltip_get_unit_debuff),
             #[cfg(not(feature = "retail-12-0-5"))]
             (

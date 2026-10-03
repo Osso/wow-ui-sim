@@ -1,6 +1,6 @@
 # Indexed unit-debuff tooltip inputs — B81 exact347
 
-Bounded Retail 12.0.5 contract for `C_TooltipInfo.GetUnitDebuff`, source347's argument1 `NeverSecret` removal. Current provider lives in `src/lua_api/globals/missing_surface/tooltip_info/probes.rs`: it parses but discards unit/index and returns an empty UnitAura DTO. B79's modern Buff provider is separately modeled in `src/c_api/c_tooltip_info_unit_buff.rs`. These are **test/spec inputs only**, authored 2026-10-03; main owns asynchronous compiled RED, implementation and acceptance. No source-row completion or native parity credit.
+Bounded Retail 12.0.5 contract for `C_TooltipInfo.GetUnitDebuff`, source347's argument1 `NeverSecret` removal. The modern producer now shares B79's indexed Buff boundary in `src/c_api/c_tooltip_info_indexed_aura.rs`. The older `probes.rs` provider still parses/discards unit/index and returns an empty UnitAura DTO below the modern feature boundary. Inputs authored 2026-10-03; compiled behavioral RED inspected before production edits. Producer implementation is not GREEN or acceptance proof; main owns asynchronous GREEN and integration. Source347 remains pending, with no requirement-completion or native parity credit.
 
 ## What it must do
 
@@ -48,15 +48,15 @@ Shared instance201 across units and distinct names distinguish requested state f
 ## Implementation inventory
 
 - `tests/tooltip_unit_debuff_security.rs`: new Retail12.0.5-gated public API fixtures/authentic VM roots; existing grouped integration automatic discovery, no Cargo target.
-- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs`: existing empty indexed Debuff provider; unchanged by these inputs.
-- `src/lua_api/globals/missing_surface/tooltip_info/mod.rs`: existing registration surface; older-profile wiring unchanged.
+- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs`: existing empty indexed Debuff provider/body preserved below `retail-12-0-5`, excluded from modern builds.
+- `src/lua_api/globals/missing_surface/tooltip_info/mod.rs`: modern indexed provider registration and renamed `tooltip_for_selected_indexed_aura` bridge to the unchanged builder; old Debuff registration retired only at `retail-12-0-5`, not overridden or used as fallback. Older-profile registration/provider unchanged.
 - `src/lua_api/globals/missing_surface/tooltip_info/spell.rs`: unchanged selected-aura DTO builder, no icon output and hardcoded duration line.
 - `src/lua_api/globals/auras.rs`: existing visibility/filter/source helpers, unchanged.
-- `src/c_api/c_tooltip_info_unit_buff.rs`: B79 modern Buff boundary reference, not Debuff's current provider.
+- `src/c_api/c_tooltip_info_indexed_aura.rs` (renamed from B79's `c_tooltip_info_unit_buff.rs`) and `src/c_api/mod.rs`: shared modern Buff/Debuff authentication, strict parsers and filtered positive 1-based selection, parameterized only by API name and existing `AuraFilter`. All original arguments authenticate before any parsing; all validation precedes lookup/domain misses. Debuff defaults nil to HARMFUL, reads harmful `player.buffs`/requested party `debuffs`, enforces polarity and existing blocked/source filters, and excludes fabricated target records. Other unsupported tokens miss via existing helpers. Buff's helpful default/polarity, lookup, validation/error context and builder are preserved; refreshed preservation proof is pending.
 
 ## Tests asserting this spec
 
-`tests/tooltip_unit_debuff_security.rs`: **15 authored, uncompiled, unexecuted cases**. All new requirements remain unchecked until main acceptance; no RED/GREEN/check/readability/coverage/acceptance execution here.
+`tests/tooltip_unit_debuff_security.rs`: **15 compiled behavioral RED cases** at `6aa7a391bf2ec40f1ff6f2924518a8a0bcd2d353`. Saved artifacts `/tmp/patch-12.0.5-debuff-indexed-red-ops/`: build exit0/89.594915484s/zero diagnostics; main-reported run exit101/1.898831219s, stdout reports1.86s, **15 FAIL / 0 PASS**. Full stdout and tests inspected before production edits. All new requirements remain unchecked until main acceptance; no producer-owned execution of GREEN/check/readability/coverage/startup/acceptance.
 
 | Exact case | Observable contract | Proof |
 |---|---|---|
@@ -78,16 +78,16 @@ Shared instance201 across units and distinct names distinguish requested state f
 
 Read-only probes compare all AuraInfo fields before/after, including icons and both party stores; secret probes also compare permanent global/list host identities and allocation sequences. Fixture mutation case intentionally changes only host records between public queries.
 
-Expected failure boundary: current probes provider's empty DTO fails selected-name/three-line assertions; ignored filter and missing all-original authentication/strict parsing fail selection or API-context/authorization assertions. Some miss controls may already pass. Main must distinguish compiled behavioral RED from compilation/runtime fixture defects; no failure count is claimed here.
+Observed RED boundaries: old probes provider's empty DTO fails `name/duration/description payload`; original secrets fail `expected string, got userdata at argument 1`; rejection/numeric probes fail `API error context`. RED proves these reached boundaries, not every downstream assertion in15 tests: GC/root preservation was not reached, and unsupported-target probe later failed selected recovery payload rather than an independently isolated target assertion. Target exclusion is an inferred chosen real-player/party domain policy. Test-table 'Authored only' entries retain no per-requirement PASS claim; compiled failure evidence does not upgrade them.
 
 ## Known gaps (current cycle)
 
-- [ ] Main compiled RED with actual revision/artifact provenance.
-- [ ] Bounded modern producer and GREEN/independent acceptance; no producer edits in this slice.
+- [x] Main compiled behavioral RED inspected at `6aa7a391b`; artifacts/reached-boundary qualifications above.
+- [ ] Bounded modern producer GREEN/independent acceptance. Producer implemented here; all execution/acceptance remains main-owned and pending.
 - [ ] Exact347 argument1 accounting after main acceptance; arg2/arg3 constraints are not additional source-row removals.
 
 ## Out of scope
 
 - `RequiresUnitAuraAccess` and `SecretWhenUnitAuraRestricted` remain **UNMODELED**; public DTO checks confer no access/restricted-output parity.
 - Native lookup/filter/error/miss/payload verification, aura acquisition, general unit resolution, broader filter grammar and dynamic duration are unverified.
-- Old-profile implementation/verification, instance-API fallback, Buff changes, aura helper/model changes, vendor changes, Cargo targets, audit/wiki accounting and execution gates are excluded from this inputs-only slice.
+- Old-profile behavior changes/verification, instance-API fallback, Buff behavior changes, aura helper/model changes, vendor changes, Cargo targets and audit/wiki accounting are excluded. Only shared provider/bridge extraction and modern Debuff wiring are authorized production changes; execution gates remain main-owned.
