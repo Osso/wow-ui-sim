@@ -1583,6 +1583,54 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/wiki/investigations/patch-12-0-5-api-audit.md#batch90--four-already-implemented-rows-accepted",
       "gate_scope": "B90 independent Sol verification SHA256 34555a5fc753f0f79859ea084d6619800c6b4ade4482df795a24a03844a8ed98 (scratchpad): existing implementation and tests assert the row; main and verifier each ran the filters on integration binary SHA256 3be3c80b6a6725542a2d7ceb73326701d06fc0275fa7848815b582c44405b481 at 62d0ce70f source, exit0. No new code; no cargo check or broad suite. Native/GUI/older-profile gaps open. Run: aura_table_shape:: 7/7."
+    },
+    {
+      "id": "fontstring-setfont-shape",
+      "symbols": [
+        "FontString:SetFont"
+      ],
+      "scope": "B91 exact547/548/549, tests only on existing behavior: SetFont stores fractional and integral numeric heights that GetFont returns as plain numbers; omitted and explicit-nil flags are accepted and keep the current outline, empty string clears it; SetFont returns exactly one boolean, true for a string path and false with no state change for nil or non-string paths. The boolean is not asset validity: unresolvable paths and non-numeric heights still return true, so 549 is partial. No full numeric domain, height validation, flag grammar or native nil policy. FontAsset rows 544/546 excluded: the cached documentation defines no FontAsset type.",
+      "spec": "docs/wiki/investigations/patch-12-0-5-api-audit.md",
+      "tests": [
+        "tests/font_api.rs"
+      ],
+      "compiled_revision": "ca7e6778e6a0b564241f5326cad7de6b01e23cfc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/wiki/investigations/patch-12-0-5-api-audit.md#batch91--fontstring-setfont-shape-and-removed-housing-id-fields",
+      "gate_scope": "Independent Sol review SHA256 2cabc6228fb5a7e2e38a927aafd79e666e86177648414afe1804f75c194cd3fb (scratchpad); its own prebuilt runs font_api:: 45/45, housing_catalog_base_lookups:: 15/15, unit_attack_speed:: 4/4 at ca7e6778e. No cargo check or broad suite; native/GUI/older-profile gaps open. Tests commit cbfe0ad8e, already green, no producer change, no RED."
+    },
+    {
+      "id": "housing-entry-id-field-removal",
+      "symbols": [
+        "HousingCatalogEntryID.entrySubtype",
+        "HousingCatalogEntryID.subtypeIdentifier"
+      ],
+      "scope": "B91 exact645/646, tests only on existing behavior: populated base entry info carries neither removed field, variant IDs have exactly recordID/entryType/variantIdentifier, and a two-field selector carrying the obsolete extras selects the same three variants. No occurrence of either field name remains in src. Sampled catalog APIs only; native rejection versus ignoring of obsolete extras unverified.",
+      "spec": "docs/wiki/investigations/patch-12-0-5-api-audit.md",
+      "tests": [
+        "tests/housing_catalog_base_lookups.rs"
+      ],
+      "compiled_revision": "ca7e6778e6a0b564241f5326cad7de6b01e23cfc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/wiki/investigations/patch-12-0-5-api-audit.md#batch91--fontstring-setfont-shape-and-removed-housing-id-fields",
+      "gate_scope": "Independent Sol review SHA256 2cabc6228fb5a7e2e38a927aafd79e666e86177648414afe1804f75c194cd3fb (scratchpad); its own prebuilt runs font_api:: 45/45, housing_catalog_base_lookups:: 15/15, unit_attack_speed:: 4/4 at ca7e6778e. No cargo check or broad suite; native/GUI/older-profile gaps open. Tests commit cbfe0ad8e, already green, no producer change, no RED."
+    },
+    {
+      "id": "unit-attack-speed-inputs",
+      "symbols": [
+        "UnitAttackSpeed"
+      ],
+      "scope": "B92 exact504: former constant pair replaced by explicit player swing-time inputs (base snapshot 2.0 and Some(2.0)), plain nil for an absent off-hand as the second of two results, synthetic 2.0/nil for party snapshots, 0/nil for unknown units, restriction toggle and tainted opacity on numeric results. Target/focus by inspection only; party snapshot returned even when UnitExists is false for an inactive group (pre-existing resolver behavior); unit-token fallback and AllowedWhenUntainted selector policy unmodeled; no native formula, older-profile execution or panel interaction.",
+      "spec": "docs/specs/explicit-stat-inputs.md",
+      "tests": [
+        "tests/unit_attack_speed.rs"
+      ],
+      "inputs": "cb1fc14ab207ad3c9d1db3c912529e92c31a825c",
+      "implementation": "ca7e6778e6a0b564241f5326cad7de6b01e23cfc",
+      "compiled_revision": "ca7e6778e6a0b564241f5326cad7de6b01e23cfc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/explicit-stat-inputs.md#b92-unitattackspeed-swing-time-inputs--row-504",
+      "gate_scope": "Independent Sol review SHA256 2cabc6228fb5a7e2e38a927aafd79e666e86177648414afe1804f75c194cd3fb (scratchpad); its own prebuilt runs font_api:: 45/45, housing_catalog_base_lookups:: 15/15, unit_attack_speed:: 4/4 at ca7e6778e. No cargo check or broad suite; native/GUI/older-profile gaps open. RED cb1fc14ab 0/4 (one on a test-side existence assertion, removed); GREEN 73/73, cargo exit0, cargo fmt --check exit0, startup lua-errors []."
     }
   ],
   "source_rows": [
@@ -3453,9 +3501,11 @@
     },
     {
       "source_id": "global api-Unit UnitAttackSpeed-504",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-attack-speed-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B92 accepted with qualifications: constant pair replaced by explicit player swing-time inputs, plain nil off-hand, party synthetic and unknown zero results, every numeric result wrapped. Target/focus inspection-only; inactive-group party snapshot discrepancy pre-existing; no native formula, selector policy or older-profile execution."
     },
     {
       "source_id": "global api-Unit UnitDamage-506",
@@ -3593,21 +3643,27 @@
     },
     {
       "source_id": "widgets-FontString-SetFont-547",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "fontstring-setfont-shape"
+      ],
+      "status": "bounded-coverage",
+      "note": "B91 accepted with qualifications: SetFont heights 13.2, 0.5 and 40 round-trip through GetFont as plain numbers. Sampled; full numeric domain, range validation and the later uiFontHeight contract unverified."
     },
     {
       "source_id": "widgets-FontString-SetFont-548",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "fontstring-setfont-shape"
+      ],
+      "status": "bounded-coverage",
+      "note": "B91 accepted: omitted and explicit-nil flags are accepted and keep the current outline; empty string clears it. Outline retention is simulator policy, not a native nil rule."
     },
     {
       "source_id": "widgets-FontString-SetFont-549",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "fontstring-setfont-shape"
+      ],
+      "status": "partial-development-green",
+      "note": "B91 partial only: SetFont returns exactly one boolean, true for a string path and false with unchanged state for nil or non-string paths. The value means 'path was a string', not a resolvable font or valid height; semantic success is unmodeled."
     },
     {
       "source_id": "events-HOUSING_STORAGE_ENTRY_UPDATED-555",
@@ -4005,15 +4061,19 @@
     },
     {
       "source_id": "structures-HousingCatalogEntryID-645",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-entry-id-field-removal"
+      ],
+      "status": "bounded-coverage",
+      "note": "B91 accepted: populated entry info and variant IDs carry no entrySubtype, and a selector carrying it selects the same variants; no src occurrence. Sampled APIs; native handling of obsolete extras unverified."
     },
     {
       "source_id": "structures-HousingCatalogEntryID-646",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-entry-id-field-removal"
+      ],
+      "status": "bounded-coverage",
+      "note": "B91 accepted: populated entry info and variant IDs carry no subtypeIdentifier, and a selector carrying it selects the same variants; no src occurrence. Sampled APIs; native handling of obsolete extras unverified."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-648",

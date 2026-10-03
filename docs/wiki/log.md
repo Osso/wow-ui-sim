@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B91/B92 accepted
+
+Linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch91--fontstring-setfont-shape-and-removed-housing-id-fields): SetFont shape tests (547/548 bounded, 549 partial), housing entry-ID field removals (645/646), `UnitAttackSpeed` inputs (504) after RED/GREEN and independent review. 97 capabilities/362 IDs; 99 pending /218 bounded /12 partial /33 metadata.
+
 ## [2026-10-03] docs | B90 four already-implemented rows accepted
 
 Linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch90--four-already-implemented-rows-accepted): row371 joins `aura-refresh-duration`; prose `023/026` under new `zero-span-charge-durations`; prose `029` under new `aura-classification-public-flags`. Independent verification plus fresh 18/27/10/7 runs. 94 capabilities/362 IDs; 105 pending /213 bounded /11 partial /33 metadata.

@@ -1,5 +1,22 @@
 # Patch 12.0.5 API Audit
 
+### Batch92 — `UnitAttackSpeed` swing-time inputs
+
+**Exact504** was the last constant stat producer. [Contract SSOT](../../specs/explicit-stat-inputs.md#b92-unitattackspeed-swing-time-inputs--row-504): player main and optional off-hand speeds are explicit inputs, a missing off-hand is a plain nil, party snapshots get a synthetic main-hand time, unknown units return `0, nil`. Inputs `cb1fc14ab` RED 0/4, producer `ca7e6778e` GREEN 73/73, startup `[]`; independent review accepted with qualifications. All 50 `SecretWhenUnitStatsRestricted` rows are now bounded.
+
+### Batch91 — FontString SetFont shape and removed housing ID fields
+
+Tests only (`cbfe0ad8e`), already green, no producer change; independent GPT-6.1-sol review (report SHA256 `2cabc6228fb5a7e2e38a927aafd79e666e86177648414afe1804f75c194cd3fb`, scratchpad-only) reran 45/45 and 15/15.
+
+| Row | Status | What is asserted |
+|---|---|---|
+| 547 `SetFont` arg2 `uiUnit -> number` | bounded | Heights 13.2, 0.5, 40 round-trip as plain numbers. |
+| 548 `SetFont` arg3 nilable | bounded | Omitted and nil flags accepted, outline kept; empty string clears. |
+| 549 `SetFont` `+ ret1 = success` | **partial** | Exactly one boolean. It means "path was a string": unresolvable paths and non-numeric heights still return true. |
+| 645/646 `HousingCatalogEntryID` field removals | bounded | No removed field on populated results or variant IDs; obsolete extras ignored as input; no `src` occurrence. |
+
+Rows 544/546 (`FontAsset`) stay pending: the cached documentation references the type without defining it. Rows 534/542 are 3D model methods, an intentional gap. **97 capabilities/362 IDs; 99 pending /218 bounded /12 partial /33 metadata**; audit **IN PROGRESS**.
+
 ### Batch90 — four already-implemented rows accepted
 
 The scouts found rows whose behavior and tests already existed but were never credited. An independent GPT-6.1-sol verification (report SHA256 `34555a5fc753f0f79859ea084d6619800c6b4ade4482df795a24a03844a8ed98`, scratchpad-only) quoted the asserting lines, checked they cannot pass vacuously and reran the filters; main ran the same filters at `62d0ce70f` source. No code changed.

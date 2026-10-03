@@ -60,16 +60,17 @@ Checked requirements are bounded simulator proof. Independence and environment i
 
 Source ID `global api-Unit UnitAttackSpeed-504`, delta `+ SecretWhenUnitStatsRestricted`. Cached `UnitDocumentation.lua` declares nonnil `unit: UnitToken`, returns nonnil `attackSpeed: number` and nilable `offhandAttackSpeed: number`. The provider returned the literal pair `2.0, 2.0` for every unit.
 
-- [ ] Player results read `player.stats.attack_speed` and `player.stats.offhand_attack_speed` live. The base snapshot seeds `2.0` and `Some(2.0)`, keeping the previous player output; both are simulator defaults.
-- [ ] A `None` off-hand returns a plain, non-secret nil as the second of exactly two results.
-- [ ] Target, focus and party snapshots get a synthetic `2.0` main-hand time and no off-hand; unknown units return `0` and nil. Neither reads player inputs.
-- [ ] Under explicit `unit_stats_restricted` each numeric result is a secret host number with its value preserved, plain again when the flag clears, and opaque to tainted callers without changing their taint.
+- [x] Player results read `player.stats.attack_speed` and `player.stats.offhand_attack_speed` live. The base snapshot seeds `2.0` and `Some(2.0)`, keeping the previous player output; both are simulator defaults.
+- [x] A `None` off-hand returns a plain, non-secret nil as the second of exactly two results.
+- [x] Party snapshots get a synthetic `2.0` main-hand time and no off-hand; unknown units return `0` and nil. Neither reads player inputs. Target and focus share the same snapshot code by inspection but are not asserted. The party snapshot is returned even when `UnitExists` reports false for an inactive group, as for every other unit-stat query; that pre-existing discrepancy is unchanged.
+- [x] Under explicit `unit_stats_restricted` each numeric result is a secret host number with its value preserved, plain again when the flag clears, and opaque to tainted callers without changing their taint.
 
 Tests: `tests/unit_attack_speed.rs`, four cases. Unit-token handling is unchanged: a missing or non-string argument still falls back to `"player"`, and the cached `AllowedWhenUntainted` selector policy is not modeled.
 
+B92 proof: inputs `cb1fc14ab` RED 0 PASS / 4 FAIL (one of those four failed on a test-side `UnitExists('party1')` assertion rather than on speeds; removed); producer `ca7e6778e` GREEN 73/73 across `unit_attack_speed::`, `character_stats::`, `unit_stats::`, startup `lua-errors` `[]`. Independent GPT-6.1-sol review **ACCEPT WITH QUALIFICATIONS** (report SHA256 `2cabc6228fb5a7e2e38a927aafd79e666e86177648414afe1804f75c194cd3fb`, scratchpad-only), own rerun `unit_attack_speed::` 4/4. Retail `PaperDollFrame.lua` guards every off-hand use and never divides by attack speed. Nonplayer and unknown results changed from `2, 2` to `2, nil` and `0, nil`; older-profile execution was not run, though the seeded player keeps `2, 2`.
+
 ## Known gaps (current cycle)
 
-- [ ] B92 development proof: inputs `cb1fc14ab` RED 0 PASS / 4 FAIL; producer GREEN 73/73 across `unit_attack_speed::`, `character_stats::`, `unit_stats::`. The first GREEN attempt failed one case on a test-side `UnitExists('party1')` assertion, removed because party stat lookup does not depend on it. Independent verification and accounting pending.
 - [ ] Default shield block is now zero instead of armor, which changes the block-mitigation number the paper doll shows until a host configures the input.
 
 ## Out of scope
