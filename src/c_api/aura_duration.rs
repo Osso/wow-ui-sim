@@ -4,11 +4,9 @@
 use crate::lua_api::game_data::AuraInfo;
 use crate::lua_api::globals::auras::collect_filtered_unit_auras;
 use crate::lua_api::methods::borrow_state;
-#[cfg(feature = "retail-12-0-5")]
 use crate::lua_api::methods::val_to_string;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::table_security::is_secret_value;
-#[cfg(feature = "retail-12-0-5")]
 use rilua::table_security::unwrap_secret;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -73,28 +71,25 @@ fn does_aura_have_expiration_time(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// 12.0.5 `AllowedWhenUntainted`: the VM unwraps secrets for untainted callers
-/// and denies tainted ones before validation. Aura access is unmodeled.
-#[cfg(feature = "retail-12-0-5")]
+/// and denies tainted ones. Both arguments are authenticated before either is
+/// validated. Aura access is unmodeled.
 fn read_expiration_arguments(state: &LuaState) -> LuaResult<(Option<String>, f64)> {
-    let unit = match unwrap_secret(state, stack_val(state, 1))? {
+    let unit = unwrap_secret(state, stack_val(state, 1))?;
+    let instance_id = unwrap_secret(state, stack_val(state, 2))?;
+    let unit = match unit {
         Val::Nil => None,
-        value @ Val::Str(_) => Some(
-            val_to_string(state, value)
+        Val::Str(_) => Some(
+            val_to_string(state, unit)
                 .ok_or_else(|| runtime_error("C_UnitAuras: unit must be a UTF-8 string or nil"))?,
         ),
         _ => return Err(runtime_error("C_UnitAuras: unit must be a string or nil")),
     };
-    match unwrap_secret(state, stack_val(state, 2))? {
+    match instance_id {
         Val::Num(instance_id) if instance_id.is_finite() => Ok((unit, instance_id)),
         _ => Err(runtime_error(
             "C_UnitAuras: aura instance must be a finite number",
         )),
     }
-}
-
-#[cfg(not(feature = "retail-12-0-5"))]
-fn read_expiration_arguments(state: &LuaState) -> LuaResult<(Option<String>, f64)> {
-    read_public_arguments(state)
 }
 
 fn get_aura_base_duration(state: &mut LuaState) -> LuaResult<u32> {
