@@ -62,7 +62,23 @@ A minimal end-to-end example is at
 [Osso/test-wow-addon](https://github.com/Osso/test-wow-addon) — a TOC,
 one Lua file, a `tests/` folder, and a workflow that calls this action.
 
+## Native development
+
+Normal builds and runs use the shared desktop/local host selection:
+
+```sh
+python3 scripts/build-host.py --run
+python3 scripts/build-host.py --build-host local --run
+python3 scripts/build-host.py --check
+python3 scripts/build-host.py --test --test integration FILTER -- --nocapture
+scripts/start-profile.sh live
+```
+
+Use local while gaming on desktop. Raw Cargo stays local. See [native workflow, profile flags, and runtime proof limits](docs/remote-builds.md).
+
 ## Docker
+
+Published addon-test images and CI/release workflows remain separate from native development.
 
 ```bash
 # Run addon tests

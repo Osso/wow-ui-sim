@@ -1,5 +1,8 @@
 ## [2026-10-03] evidence | B76 acceptance and B77 pending producer
 
+[Native desktop/local development](../remote-builds.md) — normal build/run/check/test workflow, host-local runtime state, and pending runtime proof; [contract](../specs/build-host.md).
+
+
 [B76 SSOT](../specs/unit-stat-output-restriction.md#b76-existing-model-bounded-acceptance--2026-10-03) owns exact430/432/458/460 saved-proof acceptance642 and accounting64731/31 PASS:167/174/14/7,362 IDs/81 capabilities. [B77 inventory/proof](../specs/mount-spell-identifier.md#implementation-inventory) owns actual callable generic-nil RED and producer22ea15a23 pending gates; no API-absence or desktop-execution claim. [Audit](investigations/patch-12-0-5-api-audit.md#batch76--existing-model-output-annotations-accepted) preserves native/process/profile/input/full-suite limits and B74 docs646 pending main commit.
 
 ## [2026-10-03] evidence | B75 existing-model annotations accepted

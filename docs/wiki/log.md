@@ -5822,3 +5822,8 @@ Reconciled [B74 acceptance SSOT](../specs/ambiguate-context.md#b74-independent-b
 ## [2026-10-03] docs | B76 accepted annotations and B77 pending producer
 
 Updated [B76 SSOT](../specs/unit-stat-output-restriction.md#b76-existing-model-bounded-acceptance--2026-10-03), mount [inventory/proof only](../specs/mount-spell-identifier.md#implementation-inventory), [audit](investigations/patch-12-0-5-api-audit.md#batch76--existing-model-output-annotations-accepted) and index from supplied evidence. Accepted642 four saved stat PASS/exact430432458460; dataec7386f86/accounting64731/31 PASS,167/174/14/7,362 IDs/81 capabilities. B77 inputs23e38bee4 compiled actual callable generic-nil RED16=1 PASS/15 FAIL; producer22ea15a23 GREEN/check/desktop startup/independent PENDING. No real provider does not mean absent API. Native AllowedWhenTainted UNMODELED; same-host Ubuntu WSL/no-bundle workflow and asynchronous local existing-target tests recorded without desktop execution. B74 acceptance docs646 pending main commit and existing shared-wiki WIP preserved. Five owned docs only; no code/aura/source scans, builds/tests, delegation or commit.
+
+
+## [2026-10-03] docs | Native desktop/local workflow
+
+[Workflow SSOT](../remote-builds.md) and [build-host contract](../specs/build-host.md) document selected-host normal runs, filtered checks/tests, native dependencies, lifetime and state boundaries. Reported build evidence remains separate from pending runtime acceptance; no new tests or runtime proof.

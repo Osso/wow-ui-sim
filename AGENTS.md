@@ -8,6 +8,15 @@
 - **NEVER modify files in `Interface/BlizzardUI/`** — this legacy symlink tree is no longer the runtime source. Run `./scripts/setup-blizzard-ui.sh` or `./scripts/init-worktree.sh` to sync the active profile cache.
 - **NEVER override, monkey-patch, or otherwise change Blizzard/vendor Lua behavior as a performance optimization.** Blizzard Lua is the compatibility target. For perf work, optimize simulator-side primitive/method/dirty/dispatch costs (`SetAlpha`, `SetFormattedText`, `SetPoint`, `SetFontObject`, etc.) instead. Only patch Blizzard/vendor behavior when matching real WoW semantics/correctness, never as a performance shortcut.
 
+## Development build/run
+
+- `python3 scripts/build-host.py --build-host desktop --run -- <args>` builds and runs in desktop WSL; `--build-host local` does both here. Bare Cargo remains local.
+- `--bin wow-cli`, `--release`, `--features`, and `--no-default-features` preserve their Cargo meanings. Alternate client profiles require `--no-default-features`.
+- `python3 scripts/build-host.py --test --test integration FILTER -- --nocapture` runs targeted Rust tests; `--test` must be the last helper option. `python3 scripts/build-host.py --check` checks without launching.
+- PTR: `python3 scripts/build-host.py --no-default-features --features sound,gui,casc,client-ptr --test --test integration FILTER -- --nocapture`; replace the test tail with `--check` to check that profile.
+- `--save-build-host desktop|local` changes the shared default at `~/.config/game-engine/build-host`. Host failures never select another host.
+- Shared runner: `/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/`; `BUILD_HOST_SCRIPTS` overrides its location. Runtime caches/assets belong to the selected host; see [native workflow](docs/remote-builds.md).
+
 ## Debugging Priorities
 
 - Before treating missing CASC mappings as a blocker, follow [the mapping refresh workflow](docs/updating-blizzard-ui-to-a-new-patch.md): refresh and regenerate the listfile, rebuild, then investigate residual misses.
