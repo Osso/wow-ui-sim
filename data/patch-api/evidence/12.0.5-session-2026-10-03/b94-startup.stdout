@@ -1,0 +1,3 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+native artifact=/home/osso-test/Projects/wow/wow-ui-sim/target/debug/wow-sim
+[]
