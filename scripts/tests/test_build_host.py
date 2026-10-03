@@ -5,9 +5,11 @@ import json
 import os
 from pathlib import Path
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 
 HELPER = Path(__file__).resolve().parents[1] / "build-host.py"
@@ -45,6 +47,28 @@ if request["runtime_args"] is not None:
     print("native runtime", flush=True)
     sys.exit(int(os.environ.get("FAKE_RUN_STATUS", "0")))
 """
+
+
+CONCURRENT_NATIVE = '''import json, os, subprocess, sys
+from pathlib import Path
+
+CHILD = """
+import json, os, sys, time
+from pathlib import Path
+context, marker, release = map(Path, sys.argv[1:])
+marker.write_text(json.dumps(dict(context=str(context), pid=os.getpid())))
+while not release.exists():
+    time.sleep(0.02)
+"""
+
+def execute(context, checkout_key, project_name, cargo_args, host, **kwargs):
+    marker = Path(os.environ['CONCURRENT_MARKER'])
+    if kwargs.get('runtime_args') is None:
+        marker.write_text(json.dumps(dict(context=str(context))))
+        return 0
+    return subprocess.run([sys.executable, '-c', CHILD, str(context),
+                           str(marker), os.environ['CONCURRENT_RELEASE']]).returncode
+'''
 
 
 class BuildHostTests(unittest.TestCase):
@@ -158,6 +182,96 @@ class BuildHostTests(unittest.TestCase):
 
     def request(self):
         return json.loads(self.record.read_text())
+
+    def test_running_app_does_not_block_check_or_delete_another_context(self):
+        (self.common / "native_build_hosts.py").write_text(CONCURRENT_NATIVE)
+        for host in ("desktop", "local"):
+            with self.subTest(host=host):
+                self.exercise_concurrent_helpers(host)
+
+    def exercise_concurrent_helpers(self, host):
+        command = [
+            sys.executable,
+            str(HELPER),
+            "--root",
+            str(self.root),
+            "--build-host",
+            host,
+        ]
+        processes = []
+        releases = []
+        try:
+            first, first_marker, first_release = self.start_running_helper(
+                command, host + "-first", processes, releases
+            )
+            first_request = self.wait_for_runtime(first, first_marker)
+            check_marker = self.base / (host + "-check.json")
+            try:
+                check = subprocess.run(
+                    command + ["--check"],
+                    env=dict(self.env, CONCURRENT_MARKER=str(check_marker)),
+                    capture_output=True,
+                    text=True,
+                    timeout=3,
+                )
+            except subprocess.TimeoutExpired:
+                self.fail("check blocked behind a running app's caller lock")
+            self.assertEqual(check.returncode, 0, check.stdout + check.stderr)
+            self.assertIsNone(first.poll())
+            os.kill(first_request["pid"], 0)
+            second, second_marker, _ = self.start_running_helper(
+                command, host + "-second", processes, releases
+            )
+            second_request = self.wait_for_runtime(second, second_marker)
+            first_context = Path(first_request["context"])
+            second_context = Path(second_request["context"])
+            self.assertNotEqual(first_context, second_context)
+            sentinel = second_context / "runtime-sentinel"
+            sentinel.write_bytes(b"second context still owned")
+            first_release.touch()
+            stdout, stderr = first.communicate(timeout=3)
+            self.assertEqual(first.returncode, 0, stdout + stderr)
+            self.assertFalse(first_context.exists())
+            self.assertEqual(sentinel.read_bytes(), b"second context still owned")
+            self.assertIsNone(second.poll())
+            os.kill(second_request["pid"], 0)
+        finally:
+            for release in releases:
+                release.touch()
+            for process in processes:
+                try:
+                    process.communicate(timeout=3)
+                except subprocess.TimeoutExpired:
+                    os.killpg(process.pid, signal.SIGKILL)
+                    process.communicate(timeout=3)
+
+    def start_running_helper(self, command, name, processes, releases):
+        marker = self.base / (name + ".json")
+        release = self.base / (name + ".release")
+        releases.append(release)
+        process = subprocess.Popen(
+            command + ["--run"],
+            env=dict(
+                self.env, CONCURRENT_MARKER=str(marker), CONCURRENT_RELEASE=str(release)
+            ),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            start_new_session=True,
+        )
+        processes.append(process)
+        return process, marker, release
+
+    def wait_for_runtime(self, process, marker):
+        deadline = time.monotonic() + 3
+        while not marker.exists():
+            if process.poll() is not None:
+                stdout, stderr = process.communicate()
+                self.fail("helper exited before runtime: " + stdout + stderr)
+            if time.monotonic() >= deadline:
+                self.fail("runtime did not start within bounded timeout")
+            time.sleep(0.02)
+        return json.loads(marker.read_text())
 
     def test_snapshot_compile_and_runtime_inputs_preserve_bytes_without_exports(self):
         external = self.base / "external"

@@ -15,6 +15,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 
 COMMON_SCRIPTS = Path("/syncthing/Sync/Projects/world-of-osso/game-engine/scripts")
 PROJECT_NAME = "wow-ui-sim"
@@ -243,8 +244,9 @@ def build(
 ):
     common, native = load_common()
     host = common.select_build_host(host)
-    lock, cache, checkout_key = common.locked_checkout(root)
-    with lock, common.stable_context(cache, "wow-native", checkout_key) as context:
+    cache, checkout_key = common.prepare_checkout_cache(root)
+    with tempfile.TemporaryDirectory(prefix="wow-native-", dir=cache) as work:
+        context = Path(work)
         snapshot(root, context)
         return native.execute(
             context,
