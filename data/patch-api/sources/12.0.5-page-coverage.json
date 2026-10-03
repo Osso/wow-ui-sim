@@ -565,6 +565,19 @@
       "ledger": "/tmp/patch-12.0.5-batch7-integration-runs.json"
     },
     {
+      "id": "power-regen-effective-ap-restricted-outputs",
+      "symbols": ["GetPowerRegen", "GetPowerRegenForPowerType", "PlayerEffectiveAttackPower"],
+      "scope": "Exact466/468/496 output annotations only over existing explicit player inputs. Active/selected power-pool maps return distinct base/casting values and track updates; optional effective AP publishes five distinct stored fields in order. Every output follows unit_stats_restricted through public/restricted/public transitions; tainted callers receive opaque actual host secrets without unwrap/arithmetic access, caller taint retained. Missing-pool zeros, absent-AP no-results and numeric domains are simulator policy. No native formulas/activation/defaults/nominal scalar type/all-profile or neighboring API credit.",
+      "spec": "docs/specs/retail-missing-stat-inputs.md",
+      "tests": ["tests/character_stats/missing_apis.rs"],
+      "implementation": "89b72ff67894f9e5baa130407e49a55b61d215af",
+      "compiled_revision": "71973af4b71a8768d2c447472b40196ac9f645c4",
+      "source_view_revision": "9441f7c7c665142d022540329b5b1f9addcbbf6e",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-b75-existing-model-proof.md",
+      "gate_scope": "Independent632 SCOPED PASS: six relevant saved PASS identities in partition0079, no new runtime/build/check. Nine output slots checked across restriction toggles; concrete pool selection/update and five-field AP/absence, secure selector and tainted opacity audited. Named source/test bodies equal71973 through9441; B74 adds unrelated Ambiguate registration, so not whole-tree/current-process equivalence. Original compiled build295.416736s exit0 zero diagnostics; partition100PASS only six scoped cases credited. Corrected596 full-suite ledger12022PASS60FAIL18ignored plus11custom failures and doctests0PASS3ignored remains RED; no blanket clearance or new all-profile claim."
+    },
+    {
       "id": "unit-stat-output-secrecy",
       "symbols": [],
       "scope": "Existing 40-API restriction matrix 4 PASS; ten additional explicit stat input APIs 13 PASS in separate fixtures. Values/arity/updates/selectors and bounded security only; no automatic aura activation or native numeric parity.",
@@ -2989,15 +3002,15 @@
     },
     {
       "source_id": "global api-PlayerScript GetPowerRegen-466",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["power-regen-effective-ap-restricted-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact466 accepted632: existing explicit active-pool model preserves both base/casting values, updates and arity under unit_stats_restricted; genuine host secrets stay opaque to tainted callers. Six relevant saved71973 PASS with named-body equivalence through9441, no rerun or whole-current-tree claim. Defaults/activation/native formulas/nominal type/all-profile gaps and full-suite failures remain open."
     },
     {
       "source_id": "global api-PlayerScript GetPowerRegenForPowerType-468",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["power-regen-effective-ap-restricted-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact468 accepted632: existing selected-pool model preserves both outputs/order/arity through public/restricted/public flags and live updates; public selectors under taint and secure actual secret selector exercised. Output annotation only; no new input-delta/domain/native credit. Saved71973 PASS reused with named-body equivalence through9441; full-suite failures, inferred defaults/type/activation/all-profile gaps retained."
     },
     {
       "source_id": "global api-PlayerScript GetPvpPowerDamage-470",
@@ -3083,9 +3096,9 @@
     },
     {
       "source_id": "global api-PlayerScript PlayerEffectiveAttackPower-496",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["power-regen-effective-ap-restricted-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact496 accepted632: five distinct explicit effective-AP fields retain order/arity/value, offhand-only update and inferred absent/no-results shape; all five outputs obey restriction flags and tainted-caller opacity. Six relevant saved71973 PASS with named-body equivalence through9441; no native formula/activation/type/default/all-profile or whole-current-runtime credit, full-suite RED retained."
     },
     {
       "source_id": "global api-Unit GetUnitSpeed-498",
