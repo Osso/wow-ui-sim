@@ -125,7 +125,7 @@ fn update_stored_count(
     Ok(true)
 }
 
-pub(super) fn publish_storage_update(
+pub(in crate::c_api::c_housing) fn publish_storage_update(
     state: &mut LuaState,
     id: &HousingCatalogEntryVariantID,
 ) -> LuaResult<()> {
