@@ -590,6 +590,19 @@
       "gate_scope": "Independent632 SCOPED PASS: six relevant saved PASS identities in partition0079, no new runtime/build/check. Nine output slots checked across restriction toggles; concrete pool selection/update and five-field AP/absence, secure selector and tainted opacity audited. Named source/test bodies equal71973 through9441; B74 adds unrelated Ambiguate registration, so not whole-tree/current-process equivalence. Original compiled build295.416736s exit0 zero diagnostics; partition100PASS only six scoped cases credited. Corrected596 full-suite ledger12022PASS60FAIL18ignored plus11custom failures and doctests0PASS3ignored remains RED; no blanket clearance or new all-profile claim."
     },
     {
+      "id": "dodge-parry-restricted-outputs",
+      "symbols": ["GetDodgeChance", "GetDodgeChanceFromAttribute", "GetParryChance", "GetParryChanceFromAttribute"],
+      "scope": "Exact430/432/458/460 output annotations only: existing modeled agility200/strength300 compute7/2/8/3 through explicit simulator coefficients. All four single outputs preserve value and arity across public/restricted/public flags, with genuine host-secret opacity and retained caller taint for addon calls. Base5/divisor100/clamping are simulator guesses, not native formulas. No block chance, input-secret/domain, automatic activation, all-profile or neighboring API credit.",
+      "spec": "docs/specs/unit-stat-output-restriction.md",
+      "tests": ["tests/character_stats/stat_restriction.rs", "tests/character_stats/stat_restriction_fixtures.lua"],
+      "implementation": "89b72ff67894f9e5baa130407e49a55b61d215af",
+      "compiled_revision": "71973af4b71a8768d2c447472b40196ac9f645c4",
+      "source_view_revision": "49d558661104b1b1c2c21c4b2ccaa02ac5979554",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-avoidance-existing-model-proof.md",
+      "gate_scope": "Independent642 SCOPED PASS: four saved stat-restriction cases PASS in partition0079, full embedded Lua/read-only model/primary declaration audit. Toggle and tainted-caller cases cover all four computed outputs; other two cases not extra formula proof. Named source/test files equal71973 at49d; no fresh current-runtime or whole-tree/dependency equivalence. No new tests/build/check or inflated100-case credit. Original596 full-suite RED and native/formula/type/activation/profile/provenance gaps retained."
+    },
+    {
       "id": "unit-stat-output-secrecy",
       "symbols": [],
       "scope": "Existing 40-API restriction matrix 4 PASS; ten additional explicit stat input APIs 13 PASS in separate fixtures. Values/arity/updates/selectors and bounded security only; no automatic aura activation or native numeric parity.",
@@ -2896,15 +2909,15 @@
     },
     {
       "source_id": "global api-PlayerScript GetDodgeChance-430",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["dodge-parry-restricted-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact430 accepted642: existing agility-backed simulator value7 and single-result privacy/arity/caller-opacity proof, not a constant shim. Four saved71973 stat cases PASS with named-body equivalence at49d; base5/divisor100 and activation remain inferred, no native/all-profile/input-secret or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetDodgeChanceFromAttribute-432",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["dodge-parry-restricted-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact432 accepted642: existing agility-derived contribution2 obeys explicit restriction flag with retained numeric value/single arity and tainted opacity. Saved71973 source-scoped reuse at49d; coefficients/clamping/native activation/type/all-profile/input-domain gaps and original suite RED remain."
     },
     {
       "source_id": "global api-PlayerScript GetExpertise-434",
@@ -2990,15 +3003,15 @@
     },
     {
       "source_id": "global api-PlayerScript GetParryChance-458",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["dodge-parry-restricted-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact458 accepted642: existing strength-backed simulator value8 and single-result privacy/arity/caller-opacity proof, not a constant shim. Four saved71973 stat cases PASS with named-body equivalence at49d; base5/divisor100 and activation remain inferred, no native/all-profile/input-secret or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetParryChanceFromAttribute-460",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["dodge-parry-restricted-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact460 accepted642: existing strength-derived contribution3 obeys explicit restriction flag with retained numeric value/single arity and tainted opacity. Saved71973 source-scoped reuse at49d; coefficients/clamping/native activation/type/all-profile/input-domain gaps and original suite RED remain."
     },
     {
       "source_id": "global api-PlayerScript GetPetMeleeHaste-462",
