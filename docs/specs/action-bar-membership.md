@@ -1,12 +1,14 @@
-# Action-bar membership — row245 inputs-only
+# Action-bar membership — row245 bounded public producer
 
-`C_ActionBar.IsOnBarOrSpecialBar(SpellIdentifier)` is exact Retail12.0.5 audit row245. This slice proposes **INFERRED simulator direct-spell membership only**, using existing assignments and explicit alias registry policy. The registered provider in `src/lua_api/globals/action_bar_api.rs` currently returns constant false. See [Lua API architecture](../lua-api.md) and [existing slot-query contract](action-spell-slot-identifiers.md).
+`C_ActionBar.IsOnBarOrSpecialBar(SpellIdentifier)` is exact Retail12.0.5 audit row245. This slice implements **INFERRED simulator public direct-spell membership only**, using existing assignments and explicit alias registry policy in `src/c_api/c_action_bar_spell_slots.rs`. Earlier epochs retain the constant-false provider. Producer GREEN remains pending; source245 stays **PENDING**. See [Lua API architecture](../lua-api.md) and [existing slot-query contract](action-spell-slot-identifiers.md).
 
 Cached declaration: `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ActionBarFrameDocumentation.lua`, lines826–837, declares `SpellIdentifier`, `SecretArguments = "AllowedWhenTainted"`, and one non-nil bool. It does not define special-bar membership, native alias grammar, or result secrecy. Declaration metadata is not native behavioral proof.
 
 ## What it must do
 
-All requirements below are **unverified inferred policy**, not native parity. Only public identifier fixtures are authored; no authentication policy is prescribed.
+All requirements below remain **unchecked inferred policy** pending Main GREEN, not native parity. Existing fixtures exercise public identifiers only; they prescribe neither native result secrecy nor special-bar semantics.
+
+The producer reuses the existing public `SpellIdentifier` boundary: public UTF-8 strings or finite integral numbers in `0..=u32::MAX`, validated before existing alias-first resolution. Wrong types/domain values error with this API's context. Secret identifiers are conservatively rejected as **UNMODELED native AllowedWhenTainted access**, not native permission credit. No secret payload unwrapping, caller-taint change, output masking, additional normalization, or link/numeric-string parsing is introduced.
 
 ### Effective direct assignments
 
@@ -36,42 +38,43 @@ All requirements below are **unverified inferred policy**, not native parity. On
 
 ## Implementation inventory
 
-- `src/lua_api/globals/action_bar_api.rs`: existing constant-false membership provider; unchanged by this slice.
-- `src/lua_api/globals/action_bar_api/registration.rs`: existing registered namespace entry; unchanged.
-- `src/c_api/c_action_bar_spell_slots.rs`: existing positive direct-slot predicate excluding macro/outfit overrides; semantic reference, not a new producer in this slice.
-- `src/c_api/c_spell.rs`: existing shared public identifier/alias policy used as the public fixture reference; authentication scope for row245 remains Main-owned.
+- `src/lua_api/globals/action_bar_api.rs`: constant-false membership provider gated to epochs before `retail-12-0-5`, matching adjacent `FindSpellActionButtons`.
+- `src/lua_api/globals/action_bar_api/registration.rs`: old membership entry gated identically; modern namespace receives only the owned modeled registration.
+- `src/c_api/c_action_bar_spell_slots.rs`: modern membership provider; named shared public read/query helper with per-API error context for membership and `HasSpellActionButtons`, reusing the positive effective-slot predicate excluding macro/outfit overrides. Existing `HasSpellActionButtons` results/errors and `FindSpellActionButtons` remain unchanged.
+- `src/c_api/c_spell.rs`: untouched existing shared public validator and explicit alias registry resolution; no C_Spell companion changes.
 - `src/lua_api/state/sim_state.rs`: existing typed assignments and alias registry; tests mutate these actual fields, not new production records.
 - `src/lua_api/globals/inventory_verbs.rs`: existing `GetActionInfo` effective-kind priority used for fixture preconditions.
 
 ## Tests asserting this spec
 
-`tests/action_bar_membership.rs`: eleven proposed tests under `retail-12-0-5`, auto-discovered by the existing grouped integration runner; no Cargo target added. Assertion helper calls the actual registered API, checks one boolean and expected membership, and never replaces the API. No secrecy assertion is made. Existing C_Spell/C_ActionBar slot-query files and contracts remain unchanged.
+`tests/action_bar_membership.rs`: eleven existing public tests under `retail-12-0-5`, auto-discovered by the existing grouped integration runner; no Cargo target added. Assertion helper calls the actual registered API, checks one boolean and expected membership, and never replaces the API. No secrecy assertion is made. Fixtures and C_Spell companion remain untouched.
 
-| Proposed case | Observable assertion | Proof level |
+Historical input RED at `7af22f643ef1ba1584aadf59c1faf0bc14a8efbd`, saved under `/tmp/patch-12.0.5-action-membership-red-ops/`: grouped integration compile exit0 in81.829544s with zero diagnostics (`build.json`); actual API run exit101 in1.578094s (`red.json`), eleven tests **2PASS/9FAIL**, all failures at `effective direct-spell membership`, no fixture errors (`red.stdout`). This is actual behavioral RED against the old provider, not producer proof. No producer tests/build/check/readability gates run here; Main owns commit and async targeted GREEN.
+
+| Case | Observable assertion | Historical input proof; producer GREEN pending |
 |---|---|---|
-| `effective_direct_spell_assignment_matches` | Assigned7001/7002 true | Authored; not compiled/run |
-| `unassigned_spell_and_empty_bar_miss` | Unassigned7003 and cleared assignments false | Authored; not compiled/run |
-| `duplicate_membership_survives_one_removal_then_disappears_after_last` | True → true → false;7002 remains true | Authored; not compiled/run |
-| `slot_zero_alone_does_not_create_effective_membership` | Slot0-only false | Authored; not compiled/run |
-| `registered_lowercase_name_resolves_case_normalized_public_input` | Registered lower/uppercase true; unknown false | Authored; not compiled/run |
-| `name_registry_replace_and_remove_are_live` | Assigned → unassigned → assigned → unresolved | Authored; not compiled/run |
-| `registered_numeric_key_overrides_identity_and_string_requires_registry` | Numeric alias precedence and live removal; unregistered string misses | Authored; not compiled/run |
-| `full_link_is_only_an_explicit_registry_alias_not_embedded_id_grammar` | Embedded assigned ID insufficient; explicit registry controls result | Authored; not compiled/run |
-| `macro_and_outfit_overrides_exclude_direct_spell_until_removed` | Both shadows exclude; outfit removal exposes macro, macro removal exposes spell | Authored; not compiled/run |
-| `membership_queries_leave_existing_inputs_unchanged` | Populated bars/overrides/aliases snapshot unchanged | Authored; not compiled/run |
-| `membership_and_alias_mutations_are_environment_local` | First changes; second membership and snapshot unchanged | Authored; not compiled/run |
+| `effective_direct_spell_assignment_matches` | Assigned7001/7002 true | RED: membership assertion |
+| `unassigned_spell_and_empty_bar_miss` | Unassigned7003 and cleared assignments false | PASS against old constant-false provider |
+| `duplicate_membership_survives_one_removal_then_disappears_after_last` | True → true → false;7002 remains true | RED: membership assertion |
+| `slot_zero_alone_does_not_create_effective_membership` | Slot0-only false | PASS against old constant-false provider |
+| `registered_lowercase_name_resolves_case_normalized_public_input` | Registered lower/uppercase true; unknown false | RED: membership assertion |
+| `name_registry_replace_and_remove_are_live` | Assigned → unassigned → assigned → unresolved | RED: membership assertion |
+| `registered_numeric_key_overrides_identity_and_string_requires_registry` | Numeric alias precedence and live removal; unregistered string misses | RED: membership assertion |
+| `full_link_is_only_an_explicit_registry_alias_not_embedded_id_grammar` | Embedded assigned ID insufficient; explicit registry controls result | RED: membership assertion |
+| `macro_and_outfit_overrides_exclude_direct_spell_until_removed` | Both shadows exclude; outfit removal exposes macro, macro removal exposes spell | RED: membership assertion |
+| `membership_queries_leave_existing_inputs_unchanged` | Populated bars/overrides/aliases snapshot unchanged | RED: membership assertion |
+| `membership_and_alias_mutations_are_environment_local` | First changes; second membership and snapshot unchanged | RED: membership assertion |
 
 ## Known gaps (current cycle)
 
-- [ ] Main must commit inputs and asynchronously observe compiled RED before producer work. No local test/build/check execution, compiled RED, GREEN, or acceptance is claimed.
-- [ ] Producer remains constant false; true assertions are proposed failure boundaries, not observed RED evidence.
-- [ ] Main chooses producer authentication scope later; public-only fixtures establish no native secret-input permission, rejection, taint propagation, or result secrecy.
+- [ ] Main must commit formatted producer and asynchronously observe targeted GREEN; all requirements stay unchecked until that proof. Historical input RED does not establish producer acceptance.
+- [ ] Public validation and conservative secret rejection reuse existing helper policy; native `AllowedWhenTainted` semantics remain UNMODELED. Public-only fixtures establish no native permission, rejection, taint propagation, or result secrecy.
 - [ ] Special-bar membership has no defined contract/model in this slice. Direct assignment coverage cannot close row245 or establish special-bar behavior.
 
 ## Out of scope
 
-- Production edits, new state records, Cargo targets, commits, delegation, desktop operations, and local execution gates: inputs-only authorization.
+- New state/fixtures/datasets, Cargo targets, delegation, vendor overrides, desktop operations, and local execution gates: outside bounded producer authorization; commit and GREEN are Main-owned.
 - Special bars, active page/visibility, vehicle/possess/pet/stance/bonus/override/temporary-bar membership: no bounded model or native definition supplied.
 - Native alias grammar, base/override normalization, assignment acquisition, full catalog and profile parity: public simulator fixtures provide no such evidence.
 - Native secret-input permissions and result secrecy: `AllowedWhenTainted` metadata alone is insufficient; no native security credit.
-- Wrong-type/domain validation and producer authentication decisions: deliberately deferred to Main, without altering existing shared identifier or slot-query contracts.
+- Native wrong-type/domain validation parity: reused public validator is inferred simulator policy, not native evidence; shared identifier and slot-query contracts remain unchanged.

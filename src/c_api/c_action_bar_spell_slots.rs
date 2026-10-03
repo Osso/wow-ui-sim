@@ -18,6 +18,12 @@ pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         namespace,
         "HasSpellActionButtons",
         has_spell_action_buttons,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsOnBarOrSpecialBar",
+        is_on_bar_or_special_bar,
     )
 }
 
@@ -58,19 +64,27 @@ fn find_spell_action_buttons(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn has_spell_action_buttons(state: &mut LuaState) -> LuaResult<u32> {
-    let spell_id = super::c_spell::read_public_spell_identifier_at(
-        state,
-        1,
-        "C_ActionBar.HasSpellActionButtons",
-    )?;
-    let has_slots = match spell_id {
+    let has_slots =
+        query_public_direct_spell_membership(state, "C_ActionBar.HasSpellActionButtons")?;
+    state.push(Val::Bool(has_slots));
+    Ok(1)
+}
+
+fn is_on_bar_or_special_bar(state: &mut LuaState) -> LuaResult<u32> {
+    // Special-bar membership and native AllowedWhenTainted access remain unmodeled.
+    let has_slots = query_public_direct_spell_membership(state, "C_ActionBar.IsOnBarOrSpecialBar")?;
+    state.push(Val::Bool(has_slots));
+    Ok(1)
+}
+
+fn query_public_direct_spell_membership(state: &LuaState, api_name: &str) -> LuaResult<bool> {
+    let spell_id = super::c_spell::read_public_spell_identifier_at(state, 1, api_name)?;
+    match spell_id {
         Some(id) => {
             let sim = borrow_state(state)?;
             let has_slots = effective_spell_slots(&sim, id).next().is_some();
-            has_slots
+            Ok(has_slots)
         }
-        None => false,
-    };
-    state.push(Val::Bool(has_slots));
-    Ok(1)
+        None => Ok(false),
+    }
 }

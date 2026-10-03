@@ -82,6 +82,7 @@ fn get_bonus_bar_index_for_slot(state: &mut LuaState) -> LuaResult<u32> {
     push_i32(state, 0)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn is_on_bar_or_special_bar(state: &mut LuaState) -> LuaResult<u32> {
     let _ = stack_val(state, 1);
     push_bool(state, false)

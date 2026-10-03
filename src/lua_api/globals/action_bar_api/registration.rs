@@ -8,6 +8,7 @@ type ActionBarMethod = (&'static str, RustFn);
 
 const GENERAL_METHODS: &[ActionBarMethod] = &[
     ("GetBonusBarIndexForSlot", get_bonus_bar_index_for_slot),
+    #[cfg(not(feature = "retail-12-0-5"))]
     ("IsOnBarOrSpecialBar", is_on_bar_or_special_bar),
     #[cfg(not(feature = "retail-12-0-5"))]
     ("FindSpellActionButtons", find_spell_action_buttons),
