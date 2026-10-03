@@ -1,5 +1,5 @@
 //! Host-seeded quest favor inputs for Retail 12.0.5 row 293.
-//! INFERRED context selection, false default clamp, strict u32 IDs, miss errors
+//! INFERRED context selection, false default clamp, strict u32 IDs, zero on a miss
 //! and public outputs; cached declarations alone do not establish native parity.
 
 use std::collections::HashMap;

@@ -24,6 +24,14 @@ Bounded retail 12.0.5 host-input producer for `prose-2026-04-10-193`, sourced fr
 
 - `tests/cast_events_identity.rs`: eight-policy-combination matrix, player alias, pet negative control, all listener families, payload and host-input transition.
 
+## Development proof and independent bounded acceptance — 2026-10-03
+
+Commit `a4cce2db1`. RED: 0 PASS / 4 FAIL cast cases. GREEN: 4/4 cast cases inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md) SHA256 `72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3`. Helper-level only: nothing in the runtime produces a non-player cast through it. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-04-10-193 partial-development-green under capability `secret-instant-cast-events`; **119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 - [ ] Staged only; compilation, RED/GREEN and independent verification remain unrun.

@@ -1,0 +1,486 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 317 tests
+test admin_party_api::set_party_size_defaults_to_player_leader ... ok
+test admin_party_api::test_get_num_group_members_includes_player ... ok
+test admin_party_api::test_get_num_group_members_zero_when_no_party ... ok
+test admin_party_api::test_get_num_party_members_matches_subgroup_count ... ok
+test admin_party_api::test_get_num_raid_members_counts_raid_including_player ... ok
+test admin_party_api::test_get_num_raid_members_zero_for_party_size_under_six ... ok
+test admin_party_api::test_get_num_subgroup_members_matches_party_size ... ok
+test admin_party_api::test_get_raid_roster_info_covers_forced_party_raid_frames ... ok
+test admin_party_api::test_get_raid_roster_info_covers_player_and_all_party_members ... ok
+test admin_party_api::test_group_has_offline_member_defaults_false ... ok
+test admin_party_api::test_group_queries_switch_between_solo_and_grouped_states ... ok
+test admin_party_api::test_party_category_queries_only_model_home_party ... ok
+test admin_party_api::test_raid_roster_info_has_row_for_every_group_member ... ok
+test admin_party_api::test_raid_roster_info_includes_player_and_party_members ... ok
+test admin_party_api::test_set_party_leader_to_party_member_updates_group_leader_queries ... ok
+test admin_party_api::test_set_party_leader_zero_restores_player_leadership ... ok
+test admin_party_api::test_set_party_member_class_readable_via_unit_class ... ok
+test admin_party_api::test_set_party_member_does_not_affect_other_slots ... ok
+test admin_party_api::test_set_party_member_health_current ... ok
+test admin_party_api::test_set_party_member_health_does_not_affect_other_member ... ok
+test admin_party_api::test_set_party_member_health_max ... ok
+test admin_party_api::test_set_party_member_health_second_member ... ok
+test admin_party_api::test_set_party_member_level_readable_via_unit_level ... ok
+test admin_party_api::test_set_party_member_name_readable_via_unit_name ... ok
+test admin_party_api::test_set_party_member_second_slot ... ok
+test admin_party_api::test_set_party_size_defaults_leadership_to_player ... ok
+test admin_party_api::test_set_party_size_nonzero_means_in_group ... ok
+test admin_party_api::test_set_party_size_zero_means_not_in_group ... ok
+test admin_zone_api::test_set_in_instance_false_overrides_instance_info ... ok
+test admin_zone_api::test_set_in_instance_true ... ok
+test admin_zone_api::test_set_instance_info_difficulty_id ... ok
+test admin_zone_api::test_set_instance_info_get_instance_info_name ... ok
+test admin_zone_api::test_set_instance_info_get_instance_info_type ... ok
+test admin_zone_api::test_set_instance_info_sets_in_instance_true ... ok
+test admin_zone_api::test_set_sub_zone_independent_of_zone ... ok
+test admin_zone_api::test_set_sub_zone_updates_get_sub_zone_text ... ok
+test admin_zone_api::test_set_zone_both_zone_functions_agree ... ok
+test admin_zone_api::test_set_zone_updates_get_real_zone_text ... ok
+test admin_zone_api::test_set_zone_updates_get_zone_text ... ok
+test cast_events_identity::cast_success_all_three_policy_axes_and_player_alias ... ok
+test cast_events_identity::cast_success_payload_and_host_policy_transition_are_observable ... ok
+test cast_events_identity::cast_success_pet_is_not_player_exception_and_inputs_are_isolated ... ok
+test cast_events_identity::cast_success_secret_instant_nonplayer_reaches_no_listener ... ok
+test cast_events_identity::model_identity::model_actor_denial_returns_one_nil_and_preserves_prior_binding ... ok
+test cast_events_identity::model_identity::model_set_unit_denial_returns_one_nil_and_preserves_prior_binding ... FAILED
+test cast_events_identity::model_identity::model_unit_binding_classification_is_identity_based_not_token_spelling ... FAILED
+test cast_events_identity::model_identity::model_unit_binding_denial_preserves_real_addon_taint_and_env_isolation ... FAILED
+test cast_events_identity::model_identity::model_unit_binding_missing_identity_does_not_fabricate_success ... FAILED
+test combat_probes::all_probes_false_by_default ... ok
+test combat_probes::in_combat_lockdown_reads_player_in_combat ... ok
+test combat_probes::in_combat_lockdown_tracks_combat_exit ... ok
+test combat_probes::instance_encounter_progress_reads_the_legacy_encounter_state ... ok
+test combat_probes::is_battlefield_arena_reads_world_flag ... ok
+test combat_probes::is_encounter_in_progress_reads_world_flag ... ok
+test combat_probes::is_flyable_area_reads_world_flag ... ok
+test combat_probes::is_in_instance_defaults_to_false_none ... ok
+test combat_probes::is_in_instance_returns_instance_kind_when_active ... ok
+test combat_probes::is_resting_reads_player_is_resting ... ok
+test delve_instance_state::active_delve_entry_and_exit_drive_instance_flag_without_legacy_flag_changes ... ok
+test delve_instance_state::active_delve_instance_state_is_environment_local ... ok
+test delve_instance_state::delve_query_ignores_extra_arguments_and_preserves_secret_wrappers_and_taint ... ok
+test delve_instance_state::delve_query_preserves_live_host_type_and_does_not_repair_host_state ... ok
+test delve_instance_state::ending_delve_preserves_independently_active_dungeon ... ok
+test delves_api_inputs::active_delve_does_not_access_secret_extras_for_either_caller ... ok
+test delves_api_inputs::active_delve_reads_live_host_boolean_and_ignores_all_extras ... ok
+test delves_api_inputs::curio_link_rejects_invalid_public_arguments ... ok
+test delves_api_inputs::curio_link_uses_aliases_rarity_and_live_host_records_without_mutation ... ok
+test delves_api_inputs::curio_rarity_is_never_secret_even_after_gc_and_for_tainted_callers ... ok
+test delves_api_inputs::delve_inputs_are_isolated_between_environments ... ok
+test delves_api_inputs::eligibility_authenticates_secret_map_before_validation_or_mutation ... ok
+test delves_api_inputs::eligibility_invalid_inputs_preserve_last_request ... ok
+test delves_api_inputs::eligibility_request_records_map_and_returns_zero_values ... ok
+test equipment_set_command::equipset_command_uses_live_catalog_and_existing_swap_events ... ok
+test equipment_set_command::equipset_invalid_names_do_not_error_or_mutate_and_valid_command_recovers ... ok
+test instanced_identity::instanced_identity_control_alone_does_not_exempt_a_visitor ... ok
+test instanced_identity::instanced_identity_explicit_secret_override_is_independent_of_map_exemption ... ok
+test instanced_identity::instanced_identity_friendly_and_attackable_visitors_share_current_policy ... ok
+test instanced_identity::instanced_identity_group_exemption_follows_guid_alias_and_mind_control ... ok
+test instanced_identity::instanced_identity_map_exit_changes_new_outputs_not_retained_values ... ok
+test instanced_identity::instanced_identity_tainted_caller_observes_context_without_losing_taint ... ok
+test mouse_tm_commands::tm_condition_uses_current_combat_state_and_dispatches_marker_events ... ok
+test mouse_tm_commands::tm_invalid_or_unselected_input_preserves_state_and_valid_command_recovers ... ok
+test mouse_tm_commands::tm_reuses_conjunctions_modifiers_and_first_matching_clause ... ok
+test mouse_tm_commands::tm_selected_unit_is_used_for_conditions_and_marker_destination ... ok
+test mouse_tm_commands::tm_unconditional_assignment_and_zero_clear_are_observable ... FAILED
+test outfit_action_command::active_outfit_reads_host_snapshot_and_is_environment_local ... ok
+test outfit_action_command::conditional_outfit_macro_executes_selected_branch_not_ignored_command ... ok
+test outfit_action_command::invalid_outfit_index_does_not_fabricate_or_clear_selection ... ok
+test outfit_action_command::outfit_change_authenticates_both_secret_arguments_before_mutation ... ok
+test outfit_action_command::outfit_change_resolves_sparse_index_and_toggles_only_same_selection ... ok
+test outfit_action_command::outfit_macro_toggle_bang_clear_and_invalid_inputs_share_selection ... ok
+test outfit_action_command::unchanged_vendor_secure_outfit_handler_changes_toggles_and_clears ... ok
+test patch_12_0_5_outfit_catalog::catalog_queries_share_records_and_complete_schema ... ok
+test patch_12_0_5_outfit_catalog::empty_catalog_has_no_fabricated_outfits ... ok
+test patch_12_0_5_outfit_catalog::invalid_lookup_inputs_do_not_select_an_outfit ... ok
+test patch_12_0_5_outfit_catalog::lookup_arguments_use_secret_caller_validation ... ok
+test patch_12_0_5_outfit_catalog::returned_catalog_tables_never_alias_state_or_each_other ... ok
+test pending_transmog_cost::pending_transmog_cost_default_has_zero_returns ... ok
+test pending_transmog_cost::pending_transmog_cost_environments_do_not_share_snapshots ... ok
+test pending_transmog_cost::pending_transmog_cost_live_replacement_and_clear_have_no_sticky_result ... ok
+test pending_transmog_cost::pending_transmog_cost_out_of_domain_errors_without_rounding_and_recovers ... ok
+test pending_transmog_cost::pending_transmog_cost_positive_cost_and_combined_flags_are_public_numbers ... ok
+test pending_transmog_cost::pending_transmog_cost_preserves_full_u32_flags_and_unknown_bits ... ok
+test pending_transmog_cost::pending_transmog_cost_repeated_reads_do_not_derive_or_mutate_owned_state ... FAILED
+test pending_transmog_cost::pending_transmog_cost_safe_integer_upper_boundary_is_exact ... ok
+test pending_transmog_cost::pending_transmog_cost_secure_and_tainted_public_reads_preserve_context ... ok
+test pending_transmog_cost::pending_transmog_cost_zero_values_never_mean_absence ... ok
+test quest_reward_favor::favor_distinct_records_clamp_values_and_live_replacement_are_exact ... ok
+test quest_reward_favor::favor_empty_defaults_return_zero_without_context_or_records ... ok
+test quest_reward_favor::favor_nil_quest_uses_only_explicit_context_and_default_clamp_is_false ... ok
+test quest_reward_favor::favor_queries_are_read_only_and_environment_inputs_are_isolated ... ok
+test quest_reward_favor::favor_tainted_secret_rejection_precedes_validation_and_lookup ... ok
+test quest_reward_favor::favor_untainted_secrets_are_authenticated_without_declassifying_inputs ... ok
+test quest_reward_favor::favor_wrong_public_inputs_error_before_state_lookup ... ok
+test quest_reward_favor::favor_zero_and_u32_endpoint_keys_are_explicit_hits ... ok
+test raid_roster_unknown_name::cache_arrival_is_live_and_does_not_change_other_members ... ok
+test raid_roster_unknown_name::cached_name_keeps_existing_roster_tuple ... ok
+test raid_roster_unknown_name::missing_indices_and_inactive_group_still_return_twelve_nils ... ok
+test raid_roster_unknown_name::uncached_name_is_public_unknown_with_unchanged_tuple ... ok
+test retail_12_0_5_addon_table_freeze::retail_12_0_5_addon_can_freeze_its_own_table_without_freezing_children ... ok
+test security_api::addon_tainted_global_helper_taints_blizzard_call_path ... ok
+test security_api::addon_tainted_table_slot_does_not_make_table_secret ... ok
+test security_api::native_secret_contents_remain_inaccessible_in_public_table ... ok
+test security_api::test_admin_can_mark_frame_protected_for_internal_setup ... ok
+test security_api::test_can_change_protected_state_allows_secure_and_out_of_combat_calls ... ok
+test security_api::test_can_change_protected_state_matches_lockdown_rules ... ok
+test security_api::test_canaccessallvalues_all_clean ... ok
+test security_api::test_canaccessallvalues_one_tainted ... ok
+test security_api::test_canaccesstable_clean ... ok
+test security_api::test_canaccessvalue_tainted ... ok
+test security_api::test_canaccessvalue_untainted ... ok
+test security_api::test_execute_attribute_calls_function_attribute_and_returns_success_tuple ... ok
+test security_api::test_execute_attribute_rejects_unprotected_string_body ... ok
+test security_api::test_execute_attribute_runs_protected_string_body_with_frame_refs ... ok
+test security_api::test_forceinsecure ... ok
+test security_api::test_frame_identity_slot_can_redirect_method_receiver ... ok
+test security_api::test_frame_identity_slots_dispatch_surrogate_methods ... ok
+test security_api::test_hooksecurefunc_global ... ok
+test security_api::test_hooksecurefunc_table ... ok
+test security_api::test_issecretvalue_tainted ... ok
+test security_api::test_issecretvalue_untainted ... ok
+test security_api::test_issecure_returns_true ... ok
+test security_api::test_issecurevariable_detects_taint ... ok
+test security_api::test_issecurevariable_returns_true ... ok
+test security_api::test_loadstring_taints ... ok
+test security_api::test_party_full_name_marks_name_and_realm_secret ... ok
+test security_api::test_party_roster_name_is_secret_value ... ok
+test security_api::test_protect_methods_are_not_public_addon_surface ... ok
+test security_api::test_scrub_helpers_are_passthrough ... ok
+test security_api::test_secure_handler_stubs_exist ... ok
+test security_api::test_secure_handler_unwrap_script_restores_original_handler ... ok
+test security_api::test_secure_handlers_store_frame_refs_and_execute_snippets ... ok
+test security_api::test_secure_map_rejects_secret_keys_and_values ... ok
+test security_api::test_securecall ... ok
+test security_api::test_securecall_accepts_global_function_name ... ok
+test security_api::test_securecall_clears_taint_for_nested_closures ... ok
+test security_api::test_securecall_restores_taint ... ok
+test security_api::test_securecallfunction ... ok
+test security_api::test_securecallfunction_passes_table_self_to_unbound_method ... ok
+test security_api::test_securecmdoptionparse_matches_modifier_and_comma_conditions ... ok
+test security_api::test_securecmdoptionparse_returns_nil_when_no_clause_matches ... ok
+test security_api::test_securecmdoptionparse_single_option ... ok
+test security_api::test_securecmdoptionparse_supports_harm_and_unit_override ... ok
+test security_api::test_securecmdoptionparse_uses_fallback_when_condition_is_false ... ok
+test security_api::test_securecmdoptionparse_uses_first_matching_combat_clause ... ok
+test security_api::test_secureexecuterange ... ok
+test security_api::test_table_containing_party_identity_is_not_accessible ... ok
+test table_util::frozen_addon_namespace_does_not_freeze_callback_state_or_later_addons ... ok
+test table_util::table_count_counts_all_non_nil_entries ... ok
+test table_util::table_count_errors_for_missing_argument ... ok
+test table_util::table_count_errors_for_nil ... ok
+test table_util::table_count_returns_nothing_for_non_tables ... ok
+test table_util::table_util_find_indexed_mismatch_detects_length_difference ... ok
+test table_util::table_util_find_indexed_mismatch_returns_first_mismatch_index ... ok
+test table_util::table_util_find_indexed_mismatch_returns_nil_for_equal_arrays ... ok
+test table_util::table_util_find_indexed_mismatch_returns_nil_for_non_tables ... ok
+test table_util::table_util_find_indexed_mismatch_supports_comparator_function ... ok
+test targeting_verbs::clear_target_removes_current_target ... ok
+test targeting_verbs::clear_target_returns_false_when_no_target_exists ... ok
+test targeting_verbs::clear_target_returns_true_when_existing_target_is_cleared ... ok
+test targeting_verbs::focus_unit_focus_token_round_trips_via_unit_exists ... ok
+test targeting_verbs::focus_unit_player_token_sets_player_as_focus ... ok
+test targeting_verbs::focus_unit_unknown_token_leaves_focus_empty ... ok
+test targeting_verbs::panel_addons_initialize_target_frame_private_aura_groups ... ok
+test targeting_verbs::panel_addons_load_narration_before_shared_xml_consumes_its_slider_mixin ... ok
+test targeting_verbs::raid_target_icons_assign_move_replace_and_clear ... ok
+test targeting_verbs::raid_target_icons_follow_guid_aliases_not_target_slots ... ok
+test targeting_verbs::raid_target_icons_record_and_notify_after_mutation ... ok
+test targeting_verbs::raid_target_icons_reject_invalid_indices_without_side_effects ... ok
+test targeting_verbs::raid_target_icons_update_real_blizzard_target_frame_consumer ... ok
+test targeting_verbs::target_last_target_no_previous_is_noop ... ok
+test targeting_verbs::target_last_target_swaps_after_clear_target ... ok
+test targeting_verbs::target_nearest_enemy_enemy_pool_is_replaceable ... ok
+test targeting_verbs::target_nearest_enemy_noop_on_empty_pool ... ok
+test targeting_verbs::target_nearest_enemy_picks_first_after_admin_seeding ... ok
+test targeting_verbs::target_nearest_friend_noop_when_no_party ... ok
+test targeting_verbs::target_nearest_friend_picks_first_party_member ... ok
+test targeting_verbs::target_unit_does_not_crash_and_target_exists ... ok
+test targeting_verbs::target_unit_enemy1_falls_back_to_default_enemy ... ok
+test targeting_verbs::target_unit_player_token_sets_player_as_target ... ok
+test targeting_verbs::target_unit_snapshots_previous_target ... ok
+test targeting_verbs::target_unit_target_token_round_trips_via_unit_exists ... ok
+test targeting_verbs::target_unit_unknown_token_is_silent_noop ... ok
+test tooltip::tooltip_item_spell::inventory::test_set_bag_item_populates_tooltip ... ok
+test tooltip::tooltip_item_spell::inventory::test_set_inventory_item_empty_slot ... ok
+test tooltip::tooltip_item_spell::inventory::test_set_inventory_item_shows_tooltip ... ok
+test tooltip::tooltip_item_spell::inventory::test_set_inventory_item_tooltip_content ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_add_line_does_not_invent_processing_info_value_color_segments ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_add_line_preserves_explicit_processing_info_inline_color_segments ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_clear_lines_clears_spell_id ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_get_spell_returns_nil_when_no_spell ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_get_spell_returns_spell_data_after_set ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_applies_full_line_inline_color_markup ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_applies_named_inline_color_markup ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_fires_on_tooltip_set_spell ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_get_left_line_does_not_invent_value_color_segments ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_get_left_line_uses_tooltip_line_color ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_makes_tooltip_visible ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_preserves_partial_inline_color_segments ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_unknown_spell_is_noop ... ok
+test tooltip::tooltip_item_spell::test_get_action_adds_colored_binding_line ... ok
+test tooltip::tooltip_item_spell::test_get_num_lines_returns_actual_count ... ok
+test tooltip::tooltip_item_spell::test_set_hyperlink_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_hyperlink_short_format ... ok
+test tooltip::tooltip_item_spell::test_set_hyperlink_spell_link_populates_spell_tooltip ... ok
+test tooltip::tooltip_item_spell::test_set_item_by_id_6948_contains_hearthstone_line ... ok
+test tooltip::tooltip_item_spell::test_set_item_by_id_makes_tooltip_visible ... ok
+test tooltip::tooltip_item_spell::test_set_item_by_id_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_colors_title_and_metadata_lines ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_instant_cast ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_replaces_armor_placeholder_for_shield_of_the_righteous ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_replaces_damage_placeholders_in_description ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_replaces_shield_placeholders_from_player_health ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_shows_cast_time ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_uses_wrapped_description_for_tooltip_width ... ok
+test tooltip::tooltip_item_spell::test_set_unit_aura_by_aura_instance_id_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_unit_aura_colors_like_spell_tooltip ... ok
+test tooltip::tooltip_item_spell::test_set_unit_aura_invalid_index_no_crash ... ok
+test tooltip::tooltip_item_spell::test_set_unit_aura_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_unit_buff_by_aura_instance_id_respects_unit ... ok
+test tooltip::tooltip_item_spell::test_set_unit_buff_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_unit_debuff_by_aura_instance_id_does_not_show_helpful_buffs ... ok
+test tooltip::tooltip_item_spell::test_set_unit_invalid_returns_false ... ok
+test tooltip::tooltip_item_spell::test_set_unit_party_member_populates_tooltip_and_fires_event ... ok
+test tooltip::tooltip_item_spell::test_set_unit_player_populates_tooltip ... ok
+test tooltip_item_spell::inventory::test_set_bag_item_populates_tooltip ... ok
+test tooltip_item_spell::inventory::test_set_inventory_item_empty_slot ... ok
+test tooltip_item_spell::inventory::test_set_inventory_item_shows_tooltip ... ok
+test tooltip_item_spell::inventory::test_set_inventory_item_tooltip_content ... ok
+test tooltip_item_spell::spell_lines::test_add_line_does_not_invent_processing_info_value_color_segments ... ok
+test tooltip_item_spell::spell_lines::test_add_line_preserves_explicit_processing_info_inline_color_segments ... ok
+test tooltip_item_spell::spell_lines::test_clear_lines_clears_spell_id ... ok
+test tooltip_item_spell::spell_lines::test_get_spell_returns_nil_when_no_spell ... ok
+test tooltip_item_spell::spell_lines::test_get_spell_returns_spell_data_after_set ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_applies_full_line_inline_color_markup ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_applies_named_inline_color_markup ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_fires_on_tooltip_set_spell ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_get_left_line_does_not_invent_value_color_segments ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_get_left_line_uses_tooltip_line_color ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_makes_tooltip_visible ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_preserves_partial_inline_color_segments ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_unknown_spell_is_noop ... ok
+test tooltip_item_spell::test_get_action_adds_colored_binding_line ... ok
+test tooltip_item_spell::test_get_num_lines_returns_actual_count ... ok
+test tooltip_item_spell::test_set_hyperlink_populates_lines ... ok
+test tooltip_item_spell::test_set_hyperlink_short_format ... ok
+test tooltip_item_spell::test_set_hyperlink_spell_link_populates_spell_tooltip ... ok
+test tooltip_item_spell::test_set_item_by_id_6948_contains_hearthstone_line ... ok
+test tooltip_item_spell::test_set_item_by_id_makes_tooltip_visible ... ok
+test tooltip_item_spell::test_set_item_by_id_populates_lines ... ok
+test tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line ... ok
+test tooltip_item_spell::test_set_spell_by_id_colors_title_and_metadata_lines ... ok
+test tooltip_item_spell::test_set_spell_by_id_instant_cast ... ok
+test tooltip_item_spell::test_set_spell_by_id_populates_lines ... ok
+test tooltip_item_spell::test_set_spell_by_id_replaces_armor_placeholder_for_shield_of_the_righteous ... ok
+test tooltip_item_spell::test_set_spell_by_id_replaces_damage_placeholders_in_description ... ok
+test tooltip_item_spell::test_set_spell_by_id_replaces_shield_placeholders_from_player_health ... ok
+test tooltip_item_spell::test_set_spell_by_id_shows_cast_time ... ok
+test tooltip_item_spell::test_set_spell_by_id_uses_wrapped_description_for_tooltip_width ... ok
+test tooltip_item_spell::test_set_unit_aura_by_aura_instance_id_populates_lines ... ok
+test tooltip_item_spell::test_set_unit_aura_colors_like_spell_tooltip ... ok
+test tooltip_item_spell::test_set_unit_aura_invalid_index_no_crash ... ok
+test tooltip_item_spell::test_set_unit_aura_populates_lines ... ok
+test tooltip_item_spell::test_set_unit_buff_by_aura_instance_id_respects_unit ... ok
+test tooltip_item_spell::test_set_unit_buff_populates_lines ... ok
+test tooltip_item_spell::test_set_unit_debuff_by_aura_instance_id_does_not_show_helpful_buffs ... ok
+test tooltip_item_spell::test_set_unit_invalid_returns_false ... ok
+test tooltip_item_spell::test_set_unit_party_member_populates_tooltip_and_fires_event ... ok
+test tooltip_item_spell::test_set_unit_player_populates_tooltip ... ok
+test transmog_outfit_info::transmog_outfit_info_methods_track_outfit_and_sheathe_state ... FAILED
+test unit_name_secret_tokens::unit_name_secret_tokens_public_names_and_provider_arity ... ok
+test unit_name_secret_tokens::unit_name_secret_tokens_rejected_from_secure_top_level ... ok
+test unit_name_secret_tokens::unit_name_secret_tokens_rejected_from_tainted_caller_with_public_control ... ok
+test unit_token_identity_secrecy::identity_lookup_classification_does_not_create_missing_units ... ok
+test unit_token_identity_secrecy::identity_lookup_host_classification_is_environment_local ... ok
+test unit_token_identity_secrecy::identity_lookup_player_token_remains_outside_party_suppression ... FAILED
+test unit_token_identity_secrecy::identity_lookup_secret_party_suppression_recovers_after_host_clear ... ok
+test unit_token_identity_secrecy::identity_lookup_suppression_preserves_secure_and_addon_callers ... ok
+test widget_methods_model::model_storage_counts_player_model_owned_strings ... ok
+test widget_methods_model::model_storage_counts_scene_actor_tags ... ok
+test widget_methods_model::model_storage_defaults_do_not_allocate_until_non_default_mutation ... ok
+test widget_methods_model::test_model_and_model_scene_clear_fog_methods_absorb_visual_reset ... ok
+test widget_methods_model::test_model_scene_actor_accepts_model_loaded_script ... ok
+test widget_methods_model::test_model_scene_actor_management_tracks_created_indexed_and_taken_actors ... ok
+test widget_methods_model::test_model_scene_camera_light_and_fog_methods_persist_state ... ok
+test widget_methods_model::test_model_scene_get_player_actor_returns_reusable_stub_actor ... ok
+test widget_methods_model::test_model_scene_mixin_transition_resolves_collectionator_player_actor ... ok
+test widget_methods_model::test_model_scene_overlap_flag_persists_state ... ok
+test widget_methods_model::test_model_scene_project_3d_point_uses_camera_projection ... ok
+test widget_methods_model::test_player_model_appearance_and_state_methods_persist_and_clear_state ... ok
+test widget_methods_model::test_player_model_methods_still_resolve ... ok
+test widget_methods_model::test_player_model_rendering_flag_methods_persist_state ... ok
+test widget_methods_model::test_player_model_set_model_persists_path_and_clears_file_id ... ok
+test widget_methods_model::test_player_model_specific_methods_persist_state ... ok
+test widget_methods_model::test_player_model_transform_and_camera_methods_persist_state ... ok
+
+failures:
+
+---- cast_events_identity::model_identity::model_set_unit_denial_returns_one_nil_and_preserves_prior_binding stdout ----
+[ 14.583s] [Startup] WowLuaEnv::new begin
+[ 14.593s] [Startup] SimState::default complete in 9.86ms
+[ 14.593s] [Startup] rilua VM created in 150.94µs
+[ 14.593s] [Startup] builtin frames initialized in 100.88µs
+[ 14.593s] [Startup] template registry cleared in 9.29µs
+[ 14.593s] [Startup] intrinsic templates registered in 12.30µs
+[ 14.593s] [Startup] initial app_data lua handle installed in 1.22µs
+[ 14.831s] [Startup] init_lua_state complete in 237.57ms
+[ 14.831s] [Startup] final app_data lua handle installed in 163.00ns
+[ 14.831s] [Startup] initial screen globals installed in 169.10µs
+[ 14.831s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::model_identity::model_set_unit_denial_returns_one_nil_and_preserves_prior_binding' (748495) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:207:10:
+secret identity is denied without throwing, with exactly one nil: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- cast_events_identity::model_identity::model_unit_binding_classification_is_identity_based_not_token_spelling stdout ----
+[ 14.848s] [Startup] WowLuaEnv::new begin
+[ 14.850s] [Startup] SimState::default complete in 2.18ms
+[ 14.850s] [Startup] rilua VM created in 185.67µs
+[ 14.851s] [Startup] builtin frames initialized in 64.28µs
+[ 14.851s] [Startup] template registry cleared in 7.97µs
+[ 14.851s] [Startup] intrinsic templates registered in 10.14µs
+[ 14.851s] [Startup] initial app_data lua handle installed in 1.28µs
+[ 15.089s] [Startup] init_lua_state complete in 238.14ms
+[ 15.089s] [Startup] final app_data lua handle installed in 246.00ns
+[ 15.089s] [Startup] initial screen globals installed in 148.52µs
+[ 15.089s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::model_identity::model_unit_binding_classification_is_identity_based_not_token_spelling' (748499) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:239:10:
+denial follows existing GUID mapping, not party token spelling: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- cast_events_identity::model_identity::model_unit_binding_denial_preserves_real_addon_taint_and_env_isolation stdout ----
+[ 15.105s] [Startup] WowLuaEnv::new begin
+[ 15.107s] [Startup] SimState::default complete in 2.28ms
+[ 15.107s] [Startup] rilua VM created in 166.32µs
+[ 15.107s] [Startup] builtin frames initialized in 78.53µs
+[ 15.107s] [Startup] template registry cleared in 22.59µs
+[ 15.107s] [Startup] intrinsic templates registered in 9.17µs
+[ 15.107s] [Startup] initial app_data lua handle installed in 802.00ns
+[ 15.340s] [Startup] init_lua_state complete in 232.47ms
+[ 15.340s] [Startup] final app_data lua handle installed in 139.00ns
+[ 15.340s] [Startup] initial screen globals installed in 155.08µs
+[ 15.340s] [Startup] WowLuaEnv::new complete
+[ 15.341s] [Startup] WowLuaEnv::new begin
+[ 15.343s] [Startup] SimState::default complete in 2.88ms
+[ 15.344s] [Startup] rilua VM created in 214.39µs
+[ 15.344s] [Startup] builtin frames initialized in 92.72µs
+[ 15.344s] [Startup] template registry cleared in 57.66µs
+[ 15.344s] [Startup] intrinsic templates registered in 122.84µs
+[ 15.344s] [Startup] initial app_data lua handle installed in 1.94µs
+[ 15.586s] [Startup] init_lua_state complete in 242.49ms
+[ 15.586s] [Startup] final app_data lua handle installed in 561.00ns
+[ 15.587s] [Startup] initial screen globals installed in 290.56µs
+[ 15.587s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::model_identity::model_unit_binding_denial_preserves_real_addon_taint_and_env_isolation' (748501) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:266:14:
+ordinary token with secret identity returns nil even for actual addon caller: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- cast_events_identity::model_identity::model_unit_binding_missing_identity_does_not_fabricate_success stdout ----
+[ 15.622s] [Startup] WowLuaEnv::new begin
+[ 15.626s] [Startup] SimState::default complete in 4.28ms
+[ 15.626s] [Startup] rilua VM created in 144.89µs
+[ 15.626s] [Startup] builtin frames initialized in 73.49µs
+[ 15.626s] [Startup] template registry cleared in 7.66µs
+[ 15.626s] [Startup] intrinsic templates registered in 9.10µs
+[ 15.626s] [Startup] initial app_data lua handle installed in 871.00ns
+[ 15.958s] [Startup] init_lua_state complete in 331.45ms
+[ 15.958s] [Startup] final app_data lua handle installed in 321.00ns
+[ 15.958s] [Startup] initial screen globals installed in 162.61µs
+[ 15.958s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::model_identity::model_unit_binding_missing_identity_does_not_fabricate_success' (748505) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:300:9:
+assertion `left == right` failed
+  left: None
+ right: Some("party2")
+
+---- mouse_tm_commands::tm_unconditional_assignment_and_zero_clear_are_observable stdout ----
+[ 29.172s] [Startup] WowLuaEnv::new begin
+[ 29.174s] [Startup] SimState::default complete in 2.00ms
+[ 29.174s] [Startup] rilua VM created in 137.24µs
+[ 29.174s] [Startup] builtin frames initialized in 72.28µs
+[ 29.174s] [Startup] template registry cleared in 10.74µs
+[ 29.174s] [Startup] intrinsic templates registered in 12.03µs
+[ 29.174s] [Startup] initial app_data lua handle installed in 1.89µs
+[ 29.572s] [Startup] init_lua_state complete in 397.35ms
+[ 29.572s] [Startup] final app_data lua handle installed in 287.00ns
+[ 29.572s] [Startup] initial screen globals installed in 202.76µs
+[ 29.572s] [Startup] WowLuaEnv::new complete
+
+thread 'mouse_tm_commands::tm_unconditional_assignment_and_zero_clear_are_observable' (748918) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/mouse_tm_commands.rs:59:54:
+called `Result::unwrap()` on an `Err` value: Lua(Syntax(SyntaxError { message: "unfinished string near '<string>'", source: "=(string)", line: 1, raw_message: None }))
+
+---- pending_transmog_cost::pending_transmog_cost_repeated_reads_do_not_derive_or_mutate_owned_state stdout ----
+[ 36.208s] [Startup] WowLuaEnv::new begin
+[ 36.211s] [Startup] SimState::default complete in 2.71ms
+[ 36.211s] [Startup] rilua VM created in 193.54µs
+[ 36.211s] [Startup] builtin frames initialized in 86.00µs
+[ 36.211s] [Startup] template registry cleared in 10.24µs
+[ 36.211s] [Startup] intrinsic templates registered in 10.80µs
+[ 36.211s] [Startup] initial app_data lua handle installed in 1.48µs
+[ 36.457s] [Startup] init_lua_state complete in 245.37ms
+[ 36.457s] [Startup] final app_data lua handle installed in 580.00ns
+[ 36.457s] [Startup] initial screen globals installed in 434.57µs
+[ 36.457s] [Startup] WowLuaEnv::new complete
+
+thread 'pending_transmog_cost::pending_transmog_cost_repeated_reads_do_not_derive_or_mutate_owned_state' (748971) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/pending_transmog_cost.rs:126:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- transmog_outfit_info::transmog_outfit_info_methods_track_outfit_and_sheathe_state stdout ----
+[108.981s] [Startup] WowLuaEnv::new begin
+[108.984s] [Startup] SimState::default complete in 3.11ms
+[108.984s] [Startup] rilua VM created in 225.12µs
+[108.984s] [Startup] builtin frames initialized in 130.09µs
+[108.984s] [Startup] template registry cleared in 12.93µs
+[108.984s] [Startup] intrinsic templates registered in 15.15µs
+[108.984s] [Startup] initial app_data lua handle installed in 2.04µs
+[109.273s] [Startup] init_lua_state complete in 288.47ms
+[109.273s] [Startup] final app_data lua handle installed in 363.00ns
+[109.273s] [Startup] initial screen globals installed in 232.50µs
+[109.273s] [Startup] WowLuaEnv::new complete
+
+thread 'transmog_outfit_info::transmog_outfit_info_methods_track_outfit_and_sheathe_state' (750530) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/transmog_outfit_info.rs:65:5:
+assertion `left == right` failed
+  left: "change_to_outfit_failed"
+ right: "ok"
+
+---- unit_token_identity_secrecy::identity_lookup_player_token_remains_outside_party_suppression stdout ----
+[110.923s] [Startup] WowLuaEnv::new begin
+[110.928s] [Startup] SimState::default complete in 4.63ms
+[110.928s] [Startup] rilua VM created in 417.14µs
+[110.928s] [Startup] builtin frames initialized in 205.87µs
+[110.929s] [Startup] template registry cleared in 15.50µs
+[110.929s] [Startup] intrinsic templates registered in 18.98µs
+[110.929s] [Startup] initial app_data lua handle installed in 2.13µs
+[111.210s] [Startup] init_lua_state complete in 281.82ms
+[111.210s] [Startup] final app_data lua handle installed in 885.00ns
+[111.211s] [Startup] initial screen globals installed in 334.68µs
+[111.211s] [Startup] WowLuaEnv::new complete
+
+thread 'unit_token_identity_secrecy::identity_lookup_player_token_remains_outside_party_suppression' (750545) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/unit_token_identity_secrecy.rs:121:6:
+inferred bounded policy leaves player resolution unchanged: Lua(Runtime(RuntimeError { message: "expected string, got userdata at argument 1", level: 1, traceback: [] }))
+
+
+failures:
+    cast_events_identity::model_identity::model_set_unit_denial_returns_one_nil_and_preserves_prior_binding
+    cast_events_identity::model_identity::model_unit_binding_classification_is_identity_based_not_token_spelling
+    cast_events_identity::model_identity::model_unit_binding_denial_preserves_real_addon_taint_and_env_isolation
+    cast_events_identity::model_identity::model_unit_binding_missing_identity_does_not_fabricate_success
+    mouse_tm_commands::tm_unconditional_assignment_and_zero_clear_are_observable
+    pending_transmog_cost::pending_transmog_cost_repeated_reads_do_not_derive_or_mutate_owned_state
+    transmog_outfit_info::transmog_outfit_info_methods_track_outfit_and_sheathe_state
+    unit_token_identity_secrecy::identity_lookup_player_token_remains_outside_party_suppression
+
+test result: FAILED. 309 passed; 8 failed; 0 ignored; 0 measured; 9898 filtered out; finished in 116.76s
+
+
+---STDERR---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 4m 56s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+error: test failed, to rerun pass `--test integration`

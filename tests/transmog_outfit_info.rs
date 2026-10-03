@@ -30,7 +30,7 @@ const TRANSMOG_OUTFIT_INFO_SCRIPT: &str = r#"
         return "change_to_outfit_failed"
     end
 
-    -- Viewed metadata has no setter API; seed its existing compatibility storage.
+    -- ChangeViewedOutfit is declared but unimplemented here; seed the viewed-outfit storage directly.
     rawset(C_TransmogOutfitInfo, "__currentlyViewedOutfitID", 7)
     assert(C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID() == 7, "viewed metadata fixture should be queryable")
 

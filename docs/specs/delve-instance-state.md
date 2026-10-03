@@ -34,6 +34,14 @@ Cached retail `Blizzard_APIDocumentationGenerated/InstanceDocumentation.lua:170�
 - `delve_query_ignores_extra_arguments_and_preserves_secret_wrappers_and_taint` — public types/arity, malformed extras, authentic secret number/string extras, GC, actual tainted closure, secure-context recovery.
 - `active_delve_instance_state_is_environment_local` — two independent environments and opposite transitions.
 
+## Development proof and independent bounded acceptance — 2026-10-03
+
+Commit `a4cce2db1`. RED: 1 PASS / 4 FAIL. GREEN: 5/5 inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md) SHA256 `72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3`. Composition with the world flag and the unchanged type string are inferred. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-03-31-181 bounded-coverage under capability `delve-instance-state`; **119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 - [ ] Staging-only authoring: tests, formatting, compilation, RED/GREEN and acceptance not run. All requirements remain unchecked.

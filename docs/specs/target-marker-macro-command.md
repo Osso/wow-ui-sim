@@ -26,6 +26,14 @@
 
 `tests/mouse_tm_commands.rs` — one auto-included `integration` module, feature-gated for `retail-12-0-5`. Assertions cover marker queries, actual stored unit icons, queued events and synchronous Lua event callbacks.
 
+## Development proof and independent bounded acceptance — 2026-10-03
+
+Commit `a4cce2db1`. RED: 0 PASS / 5 FAIL. GREEN: 5/5 inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md) SHA256 `72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3`. Macro-runner path only; vendor slash handler compatibility not earned. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-03-25-098 bounded-coverage under capability `target-marker-macro-command`; **119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 - [ ] Main must apply tests alone and record RED, then apply producers and record GREEN. Authoring task forbids test execution.

@@ -21,7 +21,7 @@ Bounded non-3D observable behavior for retail 12.0.5 `prose-2026-04-10-194` and 
 
 - `src/lua_api/globals/unit_misc.rs`: shared state-backed predicate used by name/GUID getters and the model guard, delegating to `src/lua_api/globals/real/instanced_identity.rs`. Explicit GUID classification and host instance context follow the same [instanced identity policy](instanced-identity.md); token spelling does not classify secrecy.
 - `src/lua_api/frame/methods/widgets/model/model_unit.rs`: common unit-token assignment/denial implementation.
-- `src/lua_api/frame/methods/widgets/model.rs`: method selection for retail epochs; other profile methods remain unchanged at compile time.
+- `src/lua_api/frame/methods/widgets/model.rs`: method selection for retail epochs. `SetUnit` is dispatched by widget type in `widgets/mod.rs` on every profile, so on other profiles model `SetUnit` now reaches the 3D no-op instead of tooltip behavior (untested there).
 - `src/lua_api/state/sim_state.rs`: existing `identity_secret_guids` and `instance_identity` host inputs, unchanged.
 - Existing widget model state: `player_model_state.last_unit`, reused without new shadow state.
 
@@ -29,10 +29,18 @@ Bounded non-3D observable behavior for retail 12.0.5 `prose-2026-04-10-194` and 
 
 - `tests/cast_events_identity.rs`: both real methods, prior binding, exact pcall arity, GUID alias, host recovery, missing unit, genuine addon taint, environment isolation, and instance-map restriction with ownership/map-exit recovery.
 
+## Development proof and independent bounded acceptance — 2026-10-03
+
+Commit `a4cce2db1`. RED: 1 PASS / 5 FAIL model cases. GREEN: 6/6 model cases inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-identity.md) SHA256 `70f728554b59a734ba418b08dbe1c668e3fd38c851f8ca831e4f915357516b36`. Row 534 partial (PlayerModel itself untested); success/missing-unit returns inferred; other-profile SetUnit routing changed and untested. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): widgets-PlayerModel-SetUnit-534 partial-development-green, widgets-ModelSceneActorBase-SetModelByUnit-542 bounded-coverage, prose-2026-04-10-194 bounded-coverage, prose-2026-04-10-195 bounded-coverage under capability `model-unit-identity-guard`; **119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
-- [ ] Model `SetUnit` registration is overwritten by later GameTooltip `SetUnit` registration on the shared frame metatable. Model calls currently execute tooltip behavior instead of the model guard; widget-aware dispatch is required.
-- [ ] Post-fix compilation and test execution remain unrun; predicate unification alone does not resolve the `SetUnit` dispatch collision.
+- [x] Model `SetUnit` was overwritten by the later GameTooltip registration on the shared frame metatable; fixed by a widget-type dispatcher in `widgets/mod.rs`.
+- [ ] No test drives a PlayerModel/DressUpModel frame through `SetUnit`; row 534 stays partial.
 
 ## Out of scope
 

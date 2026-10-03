@@ -1860,6 +1860,174 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/unit-token-identity-secrecy.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
       "gate_scope": "Inputs and producers share commit 92e4ea045. RED (producers withheld) 1 PASS / 4 FAIL; GREEN 5/5 within a 62/62 narrow run, cargo fmt --check exit0, startup lua-errors []. Broad run 1189 PASS / 3 FAIL: a parked bundle slice since removed, and two tooltip tests that fail identically with this change reverted. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 c3581b79231718590e04709f79e717ba21d56434b8e1040ebcf9170098af6dab, report in data/patch-api/evidence/12.0.5-session-2026-10-03/b97-verify-tooltip-identity.md. No cargo check, broad suite on the final tree or older-profile run."
+    },
+    {
+      "id": "instanced-identity",
+      "symbols": [
+        "UnitName",
+        "GetUnitName",
+        "UnitFullName",
+        "UnitPVPName",
+        "UnitGUID"
+      ],
+      "scope": "B98 prose 04-10-197/198/199, PARTIAL: identity secrecy of resolved player/party/target/focus identities comes from explicit host state (instance map flag, roster and declared ownership exemptions, explicit secret GUID set) through one predicate shared by the name/GUID getters; mind control does not decide secrecy; outputs use trusted host-secret wrappers and no longer mark interned literals. Party names are public by default (the old party-token rule is gone on retail 12.0.5; older profiles keep it). Raid, pet, vehicle and nameplate identities are unmodeled; GetRaidRosterInfo still marks interned names; exemption precedence is inferred.",
+      "spec": "docs/specs/instanced-identity.md",
+      "tests": [
+        "tests/instanced_identity.rs",
+        "tests/security_api.rs"
+      ],
+      "inputs": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "implementation": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "compiled_revision": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/instanced-identity.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commit a4cce2db1. RED 0 PASS / 6 FAIL; GREEN 6/6 within a 404/404 run that included control suites, cargo fmt --check exit0, startup lua-errors []. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 70f728554b59a734ba418b08dbe1c668e3fd38c851f8ca831e4f915357516b36, report data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-identity.md. No cargo check, broad suite, strict-epoch or older-profile run."
+    },
+    {
+      "id": "model-unit-identity-guard",
+      "symbols": [
+        "PlayerModel:SetUnit",
+        "ModelSceneActor:SetModelByUnit"
+      ],
+      "scope": "B98 rows 534/542 RequiresDeclassifiedUnitIdentity and prose 04-10-194/195, non-3D behavior only: Model SetUnit and scene-actor SetModelByUnit return exactly one public nil and keep the prior binding when the unit's identity is secret under the shared host predicate, false for a missing identity, true after storing the token otherwise. SetUnit is dispatched by widget type (model types to the guard, every other type to the tooltip handler). Row 534 partial: no test drives a PlayerModel/DressUpModel frame. On other profiles model SetUnit now reaches the 3D no-op instead of tooltip code, untested. No model loading or rendering.",
+      "spec": "docs/specs/model-unit-identity-guard.md",
+      "tests": [
+        "tests/cast_events_identity.rs"
+      ],
+      "inputs": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "implementation": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "compiled_revision": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/model-unit-identity-guard.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commit a4cce2db1. RED 1 PASS / 5 FAIL model cases; GREEN 6/6 model cases within a 404/404 run that included control suites, cargo fmt --check exit0, startup lua-errors []. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 70f728554b59a734ba418b08dbe1c668e3fd38c851f8ca831e4f915357516b36, report data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-identity.md. No cargo check, broad suite, strict-epoch or older-profile run."
+    },
+    {
+      "id": "secret-instant-cast-events",
+      "symbols": [
+        "UNIT_SPELLCAST_SUCCEEDED"
+      ],
+      "scope": "B98 prose 04-10-193, PARTIAL: a host cast-completion entry point suppresses UNIT_SPELLCAST_SUCCEEDED for non-player, instant, secret-spell casts and delivers it otherwise through the real event dispatcher. Only tests call it: the simulator's runtime cast path is the player's own cast (never suppressed) and no non-player cast producer exists. No automatic classification or payload secrecy.",
+      "spec": "docs/specs/secret-instant-cast-events.md",
+      "tests": [
+        "tests/cast_events_identity.rs"
+      ],
+      "inputs": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "implementation": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "compiled_revision": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/secret-instant-cast-events.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commit a4cce2db1. RED 0 PASS / 4 FAIL cast cases; GREEN 4/4 cast cases within a 404/404 run that included control suites, cargo fmt --check exit0, startup lua-errors []. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3, report data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md. No cargo check, broad suite, strict-epoch or older-profile run."
+    },
+    {
+      "id": "target-marker-macro-command",
+      "symbols": [
+        "/tm"
+      ],
+      "scope": "B98 prose 03-25-098: numeric /tm through the macro runner resolves the shared secure-command condition grammar (combat, modifiers, conjunctions, semicolon clauses, unit selectors) and calls the existing SetRaidTarget on the selected unit; zero clears; invalid input is an atomic no-op (inferred). No !/~ prefixes or Lua tonumber coercion; SecureCmdOptionParse still returns one value, so the cached vendor /tm handler would not honor a selected unit.",
+      "spec": "docs/specs/target-marker-macro-command.md",
+      "tests": [
+        "tests/mouse_tm_commands.rs"
+      ],
+      "inputs": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "implementation": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "compiled_revision": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/target-marker-macro-command.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commit a4cce2db1. RED 0 PASS / 5 FAIL; GREEN 5/5 within a 404/404 run that included control suites, cargo fmt --check exit0, startup lua-errors []. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3, report data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md. No cargo check, broad suite, strict-epoch or older-profile run."
+    },
+    {
+      "id": "delve-instance-state",
+      "symbols": [
+        "IsInInstance"
+      ],
+      "scope": "B98 prose 03-31-181: IsInInstance returns true while the explicit host active-delve flag is set, in addition to the world instance flag, with the live host instance type as second result; leaving a delve does not clear an independent instance. No automatic delve entry or native type; (true, 'none') is possible and inferred.",
+      "spec": "docs/specs/delve-instance-state.md",
+      "tests": [
+        "tests/delve_instance_state.rs"
+      ],
+      "inputs": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "implementation": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "compiled_revision": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/delve-instance-state.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commit a4cce2db1. RED 1 PASS / 4 FAIL; GREEN 5/5 within a 404/404 run that included control suites, cargo fmt --check exit0, startup lua-errors []. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3, report data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md. No cargo check, broad suite, strict-epoch or older-profile run."
+    },
+    {
+      "id": "table-freeze-addon-read-only",
+      "symbols": [
+        "table.freeze",
+        "table.isfrozen"
+      ],
+      "scope": "B98 prose 03-25-094, PARTIAL: table.freeze/table.isfrozen registration moved from retail-12-1-0 to retail-12-0-5; a tainted addon freezes its own table, six mutation forms are rejected, children stay mutable. No strict 12.0.5 build was run, so historical publication is unproven by execution; no 12.1.0-only dependency found by inspection.",
+      "spec": "docs/specs/table-freeze.md",
+      "tests": [
+        "tests/retail_12_0_5_addon_table_freeze.rs",
+        "tests/table_util.rs"
+      ],
+      "inputs": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "implementation": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "compiled_revision": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/table-freeze.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commit a4cce2db1. RED not observed: default retail includes retail-12-1-0, where the old gate already registered it; GREEN 1/1 within a 404/404 run that included control suites, cargo fmt --check exit0, startup lua-errors []. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3, report data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md. No cargo check, broad suite, strict-epoch or older-profile run."
+    },
+    {
+      "id": "quest-reward-favor",
+      "symbols": [
+        "C_QuestInfoSystem.GetQuestLogRewardFavor"
+      ],
+      "scope": "B97/B98 exact293 nilable questID on a newly registered query: explicit quest-keyed raw and cycle-capped amounts, nil quest reads an explicit host context, clamp flag selects the capped amount, a miss returns one public zero; every argument authenticated before validation, tainted secrets denied. Context selection, clamp default, zero-on-miss and u32 domain are inferred; cached reward-tooltip callers inspected, not executed.",
+      "spec": "docs/specs/quest-reward-favor.md",
+      "tests": [
+        "tests/quest_reward_favor.rs"
+      ],
+      "inputs": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "implementation": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "compiled_revision": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/quest-reward-favor.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commit a4cce2db1. RED 0 PASS / 8 FAIL at 92e4ea045's parent; the miss policy changed in a4cce2db1 after a first review rejected raising; GREEN 8/8 within a 404/404 run that included control suites, cargo fmt --check exit0, startup lua-errors []. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3, report data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-events-commands.md. No cargo check, broad suite, strict-epoch or older-profile run."
+    },
+    {
+      "id": "outfit-action-command",
+      "symbols": [
+        "C_TransmogOutfitInfo.ChangeToOutfit",
+        "C_TransmogOutfitInfo.ClearOutfit",
+        "C_TransmogOutfitInfo.GetActiveOutfitID",
+        "/outfit"
+      ],
+      "scope": "B98 prose 03-25-111/122 and 03-31-165/179: active outfit selection is host state resolved against the outfit catalog by player-facing index; change, toggle and clear through the API, the unchanged vendor SecureActionButton outfit handler and a conditional /outfit macro command (sparse indices, semicolon branches, bang, bare clear). Selection no longer sets the viewed outfit or clears pending edits, matching cached consumers that call ChangeViewedOutfit separately. No appearance, eligibility, events, persistence or protected-click authority; ChangeViewedOutfit is declared but unimplemented; conditional-only empty clear unsupported.",
+      "spec": "docs/specs/outfit-action-command.md",
+      "tests": [
+        "tests/outfit_action_command.rs",
+        "tests/transmog_outfit_info.rs",
+        "tests/pending_transmog_cost.rs"
+      ],
+      "inputs": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "implementation": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "compiled_revision": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/outfit-action-command.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commit a4cce2db1. RED 0 PASS / 7 FAIL; GREEN 7/7 within a 404/404 run that included control suites, cargo fmt --check exit0, startup lua-errors []. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 b4386140882065dcdb77c094ae3f83ef204f4f74d76aee06633e0f01d657b870, report data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-outfit-formatter.md. No cargo check, broad suite, strict-epoch or older-profile run."
+    },
+    {
+      "id": "cooldown-countdown-formatter",
+      "symbols": [
+        "Cooldown:SetCountdownFormatter",
+        "Cooldown:GetCountdownFormatter"
+      ],
+      "scope": "Retail 12.0.5+ Cooldown frames retain authenticated, live abbreviated-number and native Seconds NumericFormatter attachments through SetCountdownFormatter/GetCountdownFormatter; real engine ticks consume those objects into the library countdown text path, observing configuration changes, GC lifetime, nil clearing/default restoration, countdown suppression gates and tested secret-input/taint preservation. NumericRuleFormatter attachment/output is additionally supported only when numeric-rule-formatters is enabled. Coverage excludes Lua child FontString GetText consistency, GPU glyph/pixel output, native-client parity, arbitrary Lua formatter objects, complete failure/reentrancy coverage and all-profile parity.",
+      "spec": "docs/specs/cooldown-countdown-formatter.md",
+      "tests": [
+        "tests/cooldown_countdown_formatter.rs",
+        "src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs"
+      ],
+      "inputs": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "implementation": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "compiled_revision": "a4cce2db1639d7d88752925d06facc78f4ee5746",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/cooldown-countdown-formatter.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commit a4cce2db1. RED none: existing implementation, no code change; GREEN 8/8 public (rerun by the auditor on a prebuilt binary); 8 renderer cases from saved batch36 evidence, not rerun within a 404/404 run that included control suites, cargo fmt --check exit0, startup lua-errors []. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 b4386140882065dcdb77c094ae3f83ef204f4f74d76aee06633e0f01d657b870, report data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-outfit-formatter.md. No cargo check, broad suite, strict-epoch or older-profile run."
     }
   ],
   "source_rows": [
@@ -1988,13 +2156,13 @@
       "source_id": "prose-2026-03-12-049",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:49: \"UnitTokenNamePlate APIs will no longer accept party, raid, or target-of-target unit tokens.\" Checked NamePlate and NamePlateManager declarations: UnitTokenNamePlate is an argument type, not a callable API. GetNamePlateForUnit currently returns zero values unconditionally from a permanent shim, with no live token-to-plate association; this cannot prove category rejection or allowed-token success. Missing exhaustive affected-consumer inventory, accepted token grammar/alias policy and native rejection shape. Unblock with authoritative declarations/native category probes and a bounded real plate association/consumer model, then test allowed and rejected inputs, original secret authentication and unchanged state. No shim or input-secrecy credit for this category restriction. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-03-12-050",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:50: \"Addon execution throttles will no longer apply while the PLAYER_LOGOUT and ADDONS_UNLOADING events are being processed.\" Same exemption requirement as the other occurrence. Checked event registration/dispatch, ReloadUI and pinned rilua hooks: teardown names are recognized, but no actual teardown producer or trusted addon execution meter was found; debug count hooks and zero throttle-limit mocks are not enforcement. User reports script-execution-limits exists only on another machine; GitHub ls-remote returned no matching branch, and Cargo.lock still pins 6044544. Unblock by making that VM capability available, integrating trusted metering and real lifecycle-scoped exemption, specifying attribution/reset/failure policy, and proving normal-budget denial, both exemptions and restoration after errors. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-03-12-054",
@@ -2005,14 +2173,14 @@
     {
       "source_id": "prose-2026-03-12-055",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "12.0.5-api-changes.txt:55: \"we had hoped (planned even) to be able to essentially retire the Private Aura system and replace it with just secrets.\" Checked the adjacent line56, which explicitly describes going in the opposite direction, and the scout chronology: this paragraph records historical origin, motivation and abandoned design intent, not a promised finalized 12.0.5 API delta. Explicit historical/narrative classification satisfies proof_policy; no missing runtime capability or probe is required for this sentence. Metadata-only retains source chronology and grants no runtime/implementation credit. Actual private-aura API restrictions and line56 content/display claims remain separately pending; reopen only if authoritative evidence turns this abandoned intention into a concrete applicable contract. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-03-12-056",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:56 says \"we made MOST encounter debuffs private auras rather than just a select few\" and \"Our own private aura displays don't currently have full parity with normal auras\"; it also states nameplates are unsupported. Checked cached AuraIsPrivate declaration, private-aura binding/callback plumbing and empty nameplate providers. These do not specify the encounter/debuff population, which display features differ, or an observable acceptance boundary. Mixed historical context and concrete content/display claims are not wholly metadata-only. Unblock with epoch-specific encounter fixtures and explicit display/nameplate behavior scope or native captures. A host private-spell set or anchor test alone cannot establish MOST or unspecified parity; retain pending without full private-aura coverage. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-03-12-057",
@@ -2092,7 +2260,7 @@
       "source_id": "prose-2026-03-25-076",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:76: \"Fixing a bug where some players randomly become unable to set raid markers until they restart their client.\" Checked SetRaidTarget live GUID-keyed assignment/removal and RaidMarkersDocumentation.lua restrictions; these contain no random sticky-denial trigger or native permission/context transition sequence. Missing reproduced process-lifetime failure boundary and recovery without restart. Unblock with a native/recorded failing sequence, then exercise the same ordering against the real marker producer and prove recovery. Repeated happy-path calls, fresh environments or an invented can_set_markers latch would not reproduce this bug; no regression or metadata-only credit. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-03-25-081",
@@ -2114,7 +2282,7 @@
       "source_id": "prose-2026-03-25-085",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:85: \"UnitTokenNamePlate APIs no longer accept party, raid, or target-of-target unit tokens.\" Checked NamePlate and NamePlateManager declarations: UnitTokenNamePlate is an argument type, not a callable API. GetNamePlateForUnit currently returns zero values unconditionally from a permanent shim, with no live token-to-plate association; this cannot prove category rejection or allowed-token success. Missing exhaustive affected-consumer inventory, accepted token grammar/alias policy and native rejection shape. Unblock with authoritative declarations/native category probes and a bounded real plate association/consumer model, then test allowed and rejected inputs, original secret authentication and unchanged state. No shim or input-secrecy credit for this category restriction. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-03-25-088",
@@ -2142,31 +2310,35 @@
       "source_id": "prose-2026-03-25-093",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:93: \"Added improved error messaging for various security-related errors involving tables.\" Checked pinned rilua table-security guard messages, simulator freeze diagnostics and registration gates; real rejection exists but no named changed operation, native replacement text or error-shape baseline is supplied. Current table.freeze is registered for retail-12-0-5, contrary to the older handoff epoch caveat; native settablesecurity registration remains Forever-only. Unblock with operation-specific pre/post native diagnostics or authoritative wording/shape and applicable epoch, then prove actual failure boundaries. Rewording current errors or asserting inferred categories would not establish this delta. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-03-25-094",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "table-freeze-addon-read-only"
+      ],
+      "status": "partial-development-green",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 1/1). Partial until a strict 12.0.5 build executes the test. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-095",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:95: \"Addon execution throttles will no longer be applied while processing PLAYER_LOGOUT and ADDONS_UNLOADING events.\" Same exemption requirement as the other occurrence. Checked event registration/dispatch, ReloadUI and pinned rilua hooks: teardown names are recognized, but no actual teardown producer or trusted addon execution meter was found; debug count hooks and zero throttle-limit mocks are not enforcement. User reports script-execution-limits exists only on another machine; GitHub ls-remote returned no matching branch, and Cargo.lock still pins 6044544. Unblock by making that VM capability available, integrating trusted metering and real lifecycle-scoped exemption, specifying attribution/reset/failure policy, and proving normal-budget denial, both exemptions and restoration after errors. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-03-25-098",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "target-marker-macro-command"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 5/5). Macro-runner path only; vendor slash handler compatibility not earned. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-099",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:99: \"Fixed an issue with the IsUnderMouse] API where it would incorrectly return false for parent frames that were actually under the mouse.\" Recheck disproves the handoff blanket absence claim: cached RestrictedFrames.lua:360 defines HANDLE:IsUnderMouse(recursive), using rectangle checks and protected-visible child recursion at 324-370. Simulator IsMouseOver separately uses frame bounds and visibility/mouse-enabled flags; it is not an established alias. Missing an identified failing parent/restricted-handle fixture and native pre/post result, not generic rendering capability. Unblock by identifying the source API boundary and reproducing parent/child, recursive, scale and visibility cases through unchanged restricted Lua; do not invent an IsUnderMouse frame-method alias. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-03-25-104",
@@ -2208,9 +2380,11 @@
     },
     {
       "source_id": "prose-2026-03-25-111",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "outfit-action-command"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-112",
@@ -2234,9 +2408,11 @@
     },
     {
       "source_id": "prose-2026-03-25-115",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-countdown-formatter"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 8/8 public (rerun by the auditor on a prebuilt binary); 8 renderer cases from saved batch36 evidence, not rerun). Credit from existing tests; the renderer cases were not re-executed on the current tree. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-116",
@@ -2269,9 +2445,11 @@
     },
     {
       "source_id": "prose-2026-03-25-122",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "outfit-action-command"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-123",
@@ -2403,9 +2581,11 @@
     },
     {
       "source_id": "prose-2026-03-31-161",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-countdown-formatter"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 8/8 public (rerun by the auditor on a prebuilt binary); 8 renderer cases from saved batch36 evidence, not rerun). Credit from existing tests; the renderer cases were not re-executed on the current tree. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-164",
@@ -2417,9 +2597,11 @@
     },
     {
       "source_id": "prose-2026-03-31-165",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "outfit-action-command"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-168",
@@ -2458,7 +2640,7 @@
       "source_id": "prose-2026-03-31-172",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:172: \"Added a secure delegate for ClearSelectedSystem in EditMode, so addons can call it without taint concerns while not in combat.\" Checked unchanged EditModeManager.lua:697-717 and CreateSecureDelegate declarations/options: vendor delegates secure or out-of-combat calls, but directly runs cleanup for insecure combat calls. Simulator delegate is still function identity. Missing protected secure execution, creation restriction policy, untrusted callback wrapping and caller-taint/error restoration; a securecall wrapper alone does not meet the documented boundary. Unblock with a real delegate primitive and loaded vendor highlighted-frame/dialog tests plus native creation-policy evidence. Do not invent combat denial/preserved selection or patch vendor cleanup. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-03-31-173",
@@ -2490,9 +2672,11 @@
     },
     {
       "source_id": "prose-2026-03-31-179",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "outfit-action-command"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-180",
@@ -2504,9 +2688,11 @@
     },
     {
       "source_id": "prose-2026-03-31-181",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "delve-instance-state"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 5/5). Composition with the world flag and the unchanged type string are inferred. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-182",
@@ -2542,45 +2728,57 @@
     },
     {
       "source_id": "prose-2026-04-10-193",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "secret-instant-cast-events"
+      ],
+      "status": "partial-development-green",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 4/4 cast cases). Helper-level only: nothing in the runtime produces a non-player cast through it. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-04-10-194",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "model-unit-identity-guard"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6 model cases). Row 534 partial (PlayerModel itself untested); success/missing-unit returns inferred; other-profile SetUnit routing changed and untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-04-10-195",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "model-unit-identity-guard"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6 model cases). Row 534 partial (PlayerModel itself untested); success/missing-unit returns inferred; other-profile SetUnit routing changed and untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-04-10-196",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:196: \"Various chat channel APIs are no longer usable while chat lockdown is in effect, or from within macros.\" Checked real channel mutations, explicit lockdown state, macro dispatch and cached ChatInfo declarations: none identifies the affected legacy mutator set. RunMacro records a persistent slot; RunMacroText has no dynamic /run or /script channel-call route. Missing API inventory, actual macro provenance and native denial convention; SendChatMessage annotations do not establish channel membership/moderation restrictions. Unblock with an authoritative per-API list or native probes, scoped executable macro entry/restoration, and denial-before-mutation/recovery proof. No guessed all-channel or combat-equivalence credit. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-04-10-197",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "instanced-identity"
+      ],
+      "status": "partial-development-green",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6). Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-04-10-198",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "instanced-identity"
+      ],
+      "status": "partial-development-green",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6). Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-04-10-199",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "instanced-identity"
+      ],
+      "status": "partial-development-green",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6). Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-04-10-200",
@@ -2598,7 +2796,7 @@
       "source_id": "prose-2026-04-10-202",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:202: \"Fixed a bug that could cause some auras showing in the cooldown manager to have incorrect tooltips if they were active when an encounter begins.\" Checked cached CooldownViewer.lua:1779-1810 UNIT_AURA cache/layout refresh and ItemData.lua:1012-1015 tooltip lookup by cached aura instance ID. The handoff stages rekeying but explicitly supplies no loaded viewer refresh/tooltip proof; current src has no aura_entry producer. Missing pre-existing live aura encounter-entry rekey/notification ordering and resulting tooltip identity at the real consumer. Unblock with host-backed aura entry transitions and an unchanged loaded cooldown-viewer fixture proving old-ID invalidation, new binding and correct tooltip payload. Query authentication or isolated rekey tests do not close this row. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-04-17-205",
@@ -2640,7 +2838,7 @@
       "source_id": "prose-2026-04-17-214",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:214 says \"The new chat restrictions will also be inactive in Classic\" and \"The existing pre-Midnight security systems (taint, restricted actions, etc.) will still be active of course.\" It also requires unchanged Classic combat logs, inactive Midnight guild/API restrictions and available duration/curve objects. Checked client-profile selection, security registration and scout accounting: individual constructors or chat tests do not establish this conjunction. Missing named guild/other API inventory, combat-log payload scope and per-profile epoch matrix. Unblock with that authoritative matrix and real allowed/denied/event/object fixtures across its profiles. Not metadata-only; neither Classic secret-disablement nor blanket removal of protected-action checks closes it. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-04-17-215",
@@ -2730,13 +2928,13 @@
       "source_id": "global api-C_CatalogShop-GetProductInfo-247",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:247: \"+ HasRestrictions\" on C_CatalogShop.GetProductInfo. Checked cached CatalogShopDocumentation.lua:226-238/421-433 and current providers: GetProductInfo reads live product records. HasRestrictions and AllowedWhenUntainted are separate annotations; neither defines which caller/context triggers the new execution restriction or its denial result. Missing native restriction predicate and observable denial convention, not commerce/payment simulation. Unblock with authoritative policy or native per-context probes, then implement the evidenced guard before reads/mutations and prove allowed, denied and recovery cases. Presence, public DTOs or a host can-purchase boolean do not establish this exact delta; no metadata-only credit. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "global api-C_CatalogShop-PurchaseProduct-249",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:249: \"+ HasRestrictions\" on C_CatalogShop.PurchaseProduct. Checked cached CatalogShopDocumentation.lua:226-238/421-433 and current providers: PurchaseProduct remains __wow_noop in housing_catalog_state.lua. HasRestrictions and AllowedWhenUntainted are separate annotations; neither defines which caller/context triggers the new execution restriction or its denial result. Missing native restriction predicate and observable denial convention, not commerce/payment simulation. Unblock with authoritative policy or native per-context probes, then implement the evidenced guard before reads/mutations and prove allowed, denied and recovery cases. Presence, public DTOs or a host can-purchase boolean do not establish this exact delta; no metadata-only credit. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "global api-C_ChatInfo-InChatMessagingLockdown-251",
@@ -2912,9 +3110,11 @@
     },
     {
       "source_id": "global api-C_QuestInfoSystem-GetQuestLogRewardFavor-293",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "quest-reward-favor"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 8/8). First review (b97-verify-quest-equipset.md) rejected the raising miss; zero-on-miss is inferred policy. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_Spell-GetBaseSpell-295",
@@ -3434,7 +3634,7 @@
       "source_id": "global api-Localization CreateAbbreviateConfig-413",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:413: \"+ RequiresRestrictedAbbreviationBreakpoints\" on CreateAbbreviateConfig. Checked cached Localization/AbbreviateConfig declarations and LocalizationSharedDocumentation.lua:33-38: restriction failure mode is Error, but allowed breakpoint/divisor rules are unspecified. Current proxy factory copies arbitrary initial state and setter stores arbitrary data; round-trip tests do not validate the declared breakpoint-array contract. Missing native restricted predicate, not error-versus-return shape. Unblock with authoritative numeric rules or native accepted/rejected triples, then shared owned-data validation at constructor/setter boundaries with atomic rejection and isolation. Do not replace the unknown rule with a host allow-set or infer metadata-only from the annotation. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "global api-PlayerScript Ambiguate-415",
@@ -3838,7 +4038,7 @@
       "source_id": "scriptobjects-AbbreviateConfig-SetAbbreviateNumberData-522",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:522: \"+ RequiresRestrictedAbbreviationBreakpoints\" on AbbreviateConfig:SetAbbreviateNumberData. Checked cached Localization/AbbreviateConfig declarations and LocalizationSharedDocumentation.lua:33-38: restriction failure mode is Error, but allowed breakpoint/divisor rules are unspecified. Current proxy factory copies arbitrary initial state and setter stores arbitrary data; round-trip tests do not validate the declared breakpoint-array contract. Missing native restricted predicate, not error-versus-return shape. Unblock with authoritative numeric rules or native accepted/rejected triples, then shared owned-data validation at constructor/setter boundaries with atomic rejection and isolation. Do not replace the unknown rule with a host allow-set or infer metadata-only from the annotation. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "scriptobjects-HousingCatalogSearcher-GetAllSearchItems-524",
@@ -3874,9 +4074,11 @@
     },
     {
       "source_id": "widgets-PlayerModel-SetUnit-534",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "model-unit-identity-guard"
+      ],
+      "status": "partial-development-green",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6 model cases). Row 534 partial (PlayerModel itself untested); success/missing-unit returns inferred; other-profile SetUnit routing changed and untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "widgets-Cooldown-GetMinimumCountdownDuration-536",
@@ -3904,21 +4106,23 @@
     },
     {
       "source_id": "widgets-ModelSceneActorBase-SetModelByUnit-542",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "model-unit-identity-guard"
+      ],
+      "status": "bounded-coverage",
+      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6 model cases). Row 534 partial (PlayerModel itself untested); success/missing-unit returns inferred; other-profile SetUnit routing changed and untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "widgets-FontString-GetFont-544",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:544: \"# ret1.Type cstring -> FontAsset\". Checked SimpleFontStringAPIDocumentation.lua:121-132/500-515 and current formatting.rs:330-419: setter converts/stores String paths; getter returns a path string/default. Generated declarations name FontAsset and validation flags but do not define its Lua runtime representations, accepted conversions or GetFont preservation/canonicalization. Existing path round trips prove old cstring behavior, not equivalence of the changed domain. Unblock with authoritative FontAsset definition or native representation/invalid-asset/return probes, then model each evidenced representation and atomic validation. Do not guess numeric IDs or mark metadata-only without demonstrated runtime equivalence. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "widgets-FontString-SetFont-546",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:546: \"# arg1.Type cstring -> FontAsset\". Checked SimpleFontStringAPIDocumentation.lua:121-132/500-515 and current formatting.rs:330-419: setter converts/stores String paths; getter returns a path string/default. Generated declarations name FontAsset and validation flags but do not define its Lua runtime representations, accepted conversions or GetFont preservation/canonicalization. Existing path round trips prove old cstring behavior, not equivalence of the changed domain. Unblock with authoritative FontAsset definition or native representation/invalid-asset/return probes, then model each evidenced representation and atomic validation. Do not guess numeric IDs or mark metadata-only without demonstrated runtime equivalence. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "widgets-FontString-SetFont-547",

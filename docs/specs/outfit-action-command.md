@@ -28,6 +28,14 @@ Retail 12.0.5 outfit selection uses the existing [outfit catalog](outfit-catalog
 
 `tests/outfit_action_command.rs`, auto-included in the grouped integration target: host snapshot/environment isolation, sparse-index transitions, missing/invalid inputs, secret authentication, conditional branches, macro toggles/clear, and the complete unchanged cached vendor SecureTemplates file followed by its real click-handler dispatch. No test invokes a copied/extracted handler or fabricated secure action.
 
+## Development proof and independent bounded acceptance — 2026-10-03
+
+Commit `a4cce2db1`. RED: 0 PASS / 7 FAIL. GREEN: 7/7 inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-outfit-formatter.md) SHA256 `b4386140882065dcdb77c094ae3f83ef204f4f74d76aee06633e0f01d657b870`. Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-03-25-111 bounded-coverage, prose-2026-03-25-122 bounded-coverage, prose-2026-03-31-165 bounded-coverage, prose-2026-03-31-179 bounded-coverage under capability `outfit-action-command`; **119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 - [ ] Main must run targeted RED with state/tests only, then GREEN after producers; no test/build was run during scratch authoring.

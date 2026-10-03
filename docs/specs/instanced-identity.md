@@ -32,6 +32,14 @@ INFERRED policies: false/empty default map/player-owned/control context; existin
 - `tests/security_api.rs`: three existing secrecy tests explicitly classify their fixture GUID instead of assuming every party token is secret.
 - `tests/unit_name_secret_tokens.rs`: accepted input-authentication precedent; no changes proposed.
 
+## Development proof and independent bounded acceptance — 2026-10-03
+
+Commit `a4cce2db1`. RED: 0 PASS / 6 FAIL. GREEN: 6/6 inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-identity.md) SHA256 `70f728554b59a734ba418b08dbe1c668e3fd38c851f8ca831e4f915357516b36`. Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-04-10-197 partial-development-green, prose-2026-04-10-198 partial-development-green, prose-2026-04-10-199 partial-development-green under capability `instanced-identity`; **119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 - [ ] Apply staged edits and run behavioral RED with only state/type/test changes, then GREEN with producers. No compilation or runtime evidence obtained by this authoring task.

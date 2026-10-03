@@ -105,7 +105,7 @@ fn pending_transmog_cost_repeated_reads_do_not_derive_or_mutate_owned_state() {
         C_TransmogOutfitInfo.ChangeToOutfit(7, false)
         assert(C_TransmogOutfitInfo.GetActiveOutfitID() == 91, 'catalog index 7 should select outfit 91')
         assert(C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID() == 0, 'selection should not set viewed metadata')
-        -- Viewed metadata has no setter API; seed its existing compatibility storage.
+        -- ChangeViewedOutfit is declared but unimplemented here; seed the viewed-outfit storage directly.
         rawset(C_TransmogOutfitInfo, '__currentlyViewedOutfitID', 91)
         C_TransmogOutfitInfo.SetPendingTransmogSheatheCategory(16, 2, 2)
         "#,

@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B98 nine capabilities accounted, blocked rows annotated
+
+Twelve rows bounded, six partial, one metadata-only; nineteen blocked rows carry specific notes. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch98--instanced-identity-model-guard-cast-events-tm-outfit-delve-instance-tablefreeze-quest-favor); 119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata.
+
 ## [2026-10-03] docs | Ten held 12.0.5 rows reconciled
 
 Exact278/279/281/282/291/342/347 bounded, structures 650/651 partial, prose 03-25-088 metadata-only, all under existing capabilities. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#held-rows-reconciled-against-existing-capabilities); 110 capabilities/362 IDs; 61 pending /250 bounded /17 partial /34 metadata.

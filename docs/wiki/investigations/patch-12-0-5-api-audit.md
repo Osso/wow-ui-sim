@@ -1,5 +1,16 @@
 # Patch 12.0.5 API Audit
 
+### Batch98 — instanced identity, model guard, cast events, /tm, /outfit, delve instance, table.freeze, quest favor
+
+Commit `a4cce2db1`; RED 49 PASS / 31 FAIL, GREEN 404/404 with control suites, startup `[]`; three independent source reviews, all accept with qualifications.
+
+- Bounded: [/tm](../../specs/target-marker-macro-command.md) (03-25-098), [delve instance state](../../specs/delve-instance-state.md) (03-31-181), [outfit action and /outfit](../../specs/outfit-action-command.md) (03-25-111/122, 03-31-165/179), [quest favor](../../specs/quest-reward-favor.md) (exact293, a miss now returns zero), model guard row 542 and prose 04-10-194/195, and [cooldown countdown formatter](../../specs/cooldown-countdown-formatter.md) (03-25-115, 03-31-161) from existing tests with no code change.
+- Partial: [instanced identity](../../specs/instanced-identity.md) (04-10-197/198/199; raid/pet/vehicle unmodeled), [model guard](../../specs/model-unit-identity-guard.md) row 534 (PlayerModel untested), [secret instant-cast events](../../specs/secret-instant-cast-events.md) (04-10-193; helper only, no runtime non-player cast), [table.freeze](../../specs/table-freeze.md) (03-25-094; strict 12.0.5 build not run).
+- Behavior changes: on retail 12.0.5 party names are public by default (secrecy now needs explicit host state); selecting an outfit no longer sets the viewed outfit; model `SetUnit` no longer runs tooltip code on any profile.
+- Blocked rows now carry specific notes instead of the generic one: [ledger](../../../data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md); prose 03-12-055 metadata-only.
+
+**119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata**; audit **IN PROGRESS**.
+
 ### Held rows reconciled against existing capabilities
 
 Ten rows an earlier session held were reassessed against capabilities that already had independent bounded proof: exact342/347 (tooltip unit buff/debuff arg1 `NeverSecret` removal), exact278/279 (pending decor variant selector), exact281/282 (destroy-entry variant selector), exact291 (mount `SpellIdentifier`) become bounded; structures 650/651 (housing aggregates) partial, because an absent input omits a field the declaration requires; prose 03-25-088 metadata-only, superseded by the 03-31 comparison rules at source lines 141–144. One auditor reread sources, declarations and producers and reran 118 existing tests on a prebuilt binary; no separate verifier and no new tests. [Report](../../../data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md). Each row keeps its prior hold note. **110 capabilities/362 IDs; 61 pending /250 bounded /17 partial /34 metadata**; audit **IN PROGRESS**.
