@@ -2118,9 +2118,11 @@
     },
     {
       "source_id": "prose-2026-03-25-088",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-comparison-permissions"
+      ],
+      "status": "metadata-only",
+      "note": "Historical March25 targettarget/focustarget blanket secret-return proposal is superseded by March31 source141-144 (register already marks superseded-or-pre-release-proposal); not a current API requirement or runtime success claim. Final policy reuses unit-comparison-permissions: 6 permission plus 6 live identity existing prebuilt cases PASS. Denial gives nil in expressions but zero results; native arity and token grammar remain unproved. Preserve original prose verbatim. Prior note: Source retained; behavioral applicability audit not completed. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "prose-2026-03-25-091",
@@ -2845,32 +2847,32 @@
       "capabilities": [
         "housing-pending-decor"
       ],
-      "status": "audit-pending",
-      "note": "Batch71 independent574 bounded PASS at d83666b13: original-selector/all-field AllowedWhenUntainted VM authentication, secure actual NUM/TABLE full-key pending requests, addon denial/taint, guarded-table/root/GC and model isolation. Compiled RED13PASS7FAIL; current-equivalent20pending+69catalog=89distinctRetailPASS/startup0[], final scopedfmt/defaultcheck0zeroDiagnostics. Inferred eligibility/cancel/parser policy and unmodeled finish/instance/stock/events do not establish real placement delta; exact278/279 retain audit-pending. Native/full-placement/all-profile and historical dirty/globalfmt/process limits remain."
+      "status": "bounded-coverage",
+      "note": "Held-live reassessment: exact278 name/type delta proved by full-key live pending-request replacement and secure-secret/tainted-denial tests; 20 existing prebuilt cases PASS. This credits the variant selector, not full placement. Native eligibility, parsing, finish/stock/instance/events and profile parity remain unproved; historical B71 ledger retained. Prior note: Batch71 independent574 bounded PASS at d83666b13: original-selector/all-field AllowedWhenUntainted VM authentication, secure actual NUM/TABLE full-key pending requests, addon denial/taint, guarded-table/root/GC and model isolation. Compiled RED13PASS7FAIL; current-equivalent20pending+69catalog=89distinctRetailPASS/startup0[], final scopedfmt/defaultcheck0zeroDiagnostics. Inferred eligibility/cancel/parser policy and unmodeled finish/instance/stock/events do not establish real placement delta; exact278/279 retain audit-pending. Native/full-placement/all-profile and historical dirty/globalfmt/process limits remain. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "global api-C_HousingBasicMode-StartPlacingNewDecor-279",
       "capabilities": [
         "housing-pending-decor"
       ],
-      "status": "audit-pending",
-      "note": "Batch71 independent574 bounded PASS at d83666b13: original-selector/all-field AllowedWhenUntainted VM authentication, secure actual NUM/TABLE full-key pending requests, addon denial/taint, guarded-table/root/GC and model isolation. Compiled RED13PASS7FAIL; current-equivalent20pending+69catalog=89distinctRetailPASS/startup0[], final scopedfmt/defaultcheck0zeroDiagnostics. Inferred eligibility/cancel/parser policy and unmodeled finish/instance/stock/events do not establish real placement delta; exact278/279 retain audit-pending. Native/full-placement/all-profile and historical dirty/globalfmt/process limits remain."
+      "status": "bounded-coverage",
+      "note": "Held-live reassessment: exact279 name/type delta proved by full-key live pending-request replacement and secure-secret/tainted-denial tests; 20 existing prebuilt cases PASS. This credits the variant selector, not full placement. Native eligibility, parsing, finish/stock/instance/events and profile parity remain unproved; historical B71 ledger retained. Prior note: Batch71 independent574 bounded PASS at d83666b13: original-selector/all-field AllowedWhenUntainted VM authentication, secure actual NUM/TABLE full-key pending requests, addon denial/taint, guarded-table/root/GC and model isolation. Compiled RED13PASS7FAIL; current-equivalent20pending+69catalog=89distinctRetailPASS/startup0[], final scopedfmt/defaultcheck0zeroDiagnostics. Inferred eligibility/cancel/parser policy and unmodeled finish/instance/stock/events do not establish real placement delta; exact278/279 retain audit-pending. Native/full-placement/all-profile and historical dirty/globalfmt/process limits remain. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "global api-C_HousingCatalog-DestroyEntry-281",
       "capabilities": [
         "housing-destroy-entry"
       ],
-      "status": "audit-pending",
-      "note": "Batch72 independent582 bounded PASS at ffb1845bc: DestroyEntry-only original selector/destroyAll and all-field VM authentication, secure actual NUM/BOOL/TABLE full-key deletion, addon denial/taint, guard/root/GC and existing eligible-count/event isolation. Compiled RED14PASS10FAIL;35freshRetailPASS=24destruction+11Admin/storage,startup0[],scopedfmt/defaultcheck0zeroDiagnostics. Mixed eligible subset/noop/consistency/synchronous timing remain inferred, not native all-stack proof;281/282 retain audit-pending. No broader/catalog/native/all-profile/source-row closure."
+      "status": "bounded-coverage",
+      "note": "Held-live reassessment: exact281 name/type delta proved by isolated record/type/variant deletion plus authenticated secret selectors and atomic rejection; 24 existing prebuilt cases PASS. Mixed eligible-subset destruction, no-op/consistency and synchronous timing are inferred, not cached all-stack/native or whole-function parity; historical B72 ledger retained. Prior note: Batch72 independent582 bounded PASS at ffb1845bc: DestroyEntry-only original selector/destroyAll and all-field VM authentication, secure actual NUM/BOOL/TABLE full-key deletion, addon denial/taint, guard/root/GC and existing eligible-count/event isolation. Compiled RED14PASS10FAIL;35freshRetailPASS=24destruction+11Admin/storage,startup0[],scopedfmt/defaultcheck0zeroDiagnostics. Mixed eligible subset/noop/consistency/synchronous timing remain inferred, not native all-stack proof;281/282 retain audit-pending. No broader/catalog/native/all-profile/source-row closure. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "global api-C_HousingCatalog-DestroyEntry-282",
       "capabilities": [
         "housing-destroy-entry"
       ],
-      "status": "audit-pending",
-      "note": "Batch72 independent582 bounded PASS at ffb1845bc: DestroyEntry-only original selector/destroyAll and all-field VM authentication, secure actual NUM/BOOL/TABLE full-key deletion, addon denial/taint, guard/root/GC and existing eligible-count/event isolation. Compiled RED14PASS10FAIL;35freshRetailPASS=24destruction+11Admin/storage,startup0[],scopedfmt/defaultcheck0zeroDiagnostics. Mixed eligible subset/noop/consistency/synchronous timing remain inferred, not native all-stack proof;281/282 retain audit-pending. No broader/catalog/native/all-profile/source-row closure."
+      "status": "bounded-coverage",
+      "note": "Held-live reassessment: exact282 name/type delta proved by isolated record/type/variant deletion plus authenticated secret selectors and atomic rejection; 24 existing prebuilt cases PASS. Mixed eligible-subset destruction, no-op/consistency and synchronous timing are inferred, not cached all-stack/native or whole-function parity; historical B72 ledger retained. Prior note: Batch72 independent582 bounded PASS at ffb1845bc: DestroyEntry-only original selector/destroyAll and all-field VM authentication, secure actual NUM/BOOL/TABLE full-key deletion, addon denial/taint, guard/root/GC and existing eligible-count/event isolation. Compiled RED14PASS10FAIL;35freshRetailPASS=24destruction+11Admin/storage,startup0[],scopedfmt/defaultcheck0zeroDiagnostics. Mixed eligible subset/noop/consistency/synchronous timing remain inferred, not native all-stack proof;281/282 retain audit-pending. No broader/catalog/native/all-profile/source-row closure. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284",
@@ -2902,9 +2904,11 @@
     },
     {
       "source_id": "global api-C_MountJournal-GetMountFromSpell-291",
-      "capabilities": ["mount-spell-identifier"],
-      "status": "audit-pending",
-      "note": "B77 bounded public journal lookup accepted654:16local/16desktop PASS and check; independent674 accepts separate headless startup and3CASCtexture decodes with provenance/GUI/content-version limits. Native AllowedWhenTainted and alias grammar remain unmodeled; exact291 stays pending. No whole-row/native/profile/full-suite credit."
+      "capabilities": [
+        "mount-spell-identifier"
+      ],
+      "status": "bounded-coverage",
+      "note": "Held-live reassessment: exact291 bounded public SpellIdentifier producer proved through numeric/name/link-shaped explicit aliases, relation mutation/removal and isolation; 16 existing prebuilt cases PASS. Actual secret inputs remain conservatively rejected even for secure callers: no AllowedWhenTainted or native identifier-grammar/whole-function credit; historical B77 ledger retained. Prior note: B77 bounded public journal lookup accepted654:16local/16desktop PASS and check; independent674 accepts separate headless startup and3CASCtexture decodes with provenance/GUI/content-version limits. Native AllowedWhenTainted and alias grammar remain unmodeled; exact291 stays pending. No whole-row/native/profile/full-suite credit. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "global api-C_QuestInfoSystem-GetQuestLogRewardFavor-293",
@@ -3110,9 +3114,11 @@
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitBuff-342",
-      "capabilities": ["tooltip-unit-buff-security"],
-      "status": "audit-pending",
-      "note": "B79 bounded input/indexed-model acceptance690+694:18 refreshed+38 inherited controls PASS, startup[], scopedfmt/check and currentrootidentity assertion. Secure secret selector now queries actual live player/party state, not ignored-unit/player fallback; tainted auth precedes parse/lookup. Unit-aura access/restricted output and native/general-unit/profile parity remain unmodeled; exact342 stays pending. No whole-row/native/fullsuite credit."
+      "capabilities": [
+        "tooltip-unit-buff-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "Held-live reassessment: exact342 removed arg1 NeverSecret is bounded-proved: authenticated secure secret party token reaches concrete helpful aura data, tainted secrets are denied before validation/lookup and caller taint is preserved; 18 existing prebuilt cases PASS. No RequiresUnitAuraAccess, SecretWhenUnitAuraRestricted, general-unit/native/older-profile or whole-function credit; historical B79 ledger retained. Prior note: B79 bounded input/indexed-model acceptance690+694:18 refreshed+38 inherited controls PASS, startup[], scopedfmt/check and currentrootidentity assertion. Secure secret selector now queries actual live player/party state, not ignored-unit/player fallback; tainted auth precedes parse/lookup. Unit-aura access/restricted output and native/general-unit/profile parity remain unmodeled; exact342 stays pending. No whole-row/native/fullsuite credit. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitBuffByAuraInstanceID-344",
@@ -3135,8 +3141,8 @@
       "capabilities": [
         "tooltip-unit-debuff-security"
       ],
-      "status": "audit-pending",
-      "note": "B81 main-accepted707 bounded input/live harmful-model proof:15 new+56 refreshed controls=71 distinct PASS, startup[], scopedfmt/defaultcheck. All3 original secure selectors drive player/party harmful filtered state; tainted auth precedes parse/lookup, not secret-to-empty masking. Unit-aura access/restricted output unmodeled; target/general-unit/native/profile parity unverified and inferred parser/filter/miss policies explicit. Exact347 remains pending; arg2/arg3 are no additional retained removals, no whole-row/fullsuite credit."
+      "status": "bounded-coverage",
+      "note": "Held-live reassessment: exact347 removed arg1 NeverSecret is bounded-proved: authenticated secure secret party token reaches concrete harmful aura data, tainted secrets are denied before validation/lookup and caller taint is preserved; 15 existing prebuilt cases PASS. No RequiresUnitAuraAccess, SecretWhenUnitAuraRestricted, target/general-unit/native/older-profile or whole-function credit; historical B81 ledger retained. Prior note: B81 main-accepted707 bounded input/live harmful-model proof:15 new+56 refreshed controls=71 distinct PASS, startup[], scopedfmt/defaultcheck. All3 original secure selectors drive player/party harmful filtered state; tainted auth precedes parse/lookup, not secret-to-empty masking. Unit-aura access/restricted output unmodeled; target/general-unit/native/profile parity unverified and inferred parser/filter/miss policies explicit. Exact347 remains pending; arg2/arg3 are no additional retained removals, no whole-row/fullsuite credit. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitDebuffByAuraInstanceID-349",
@@ -4381,16 +4387,16 @@
       "capabilities": [
         "housing-catalog-aggregates"
       ],
-      "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "status": "partial-development-green",
+      "note": "Held-live reassessment: exact650 totalNumStored has live explicit-field publication proof across three getters, zero/large values, mutation and snapshot isolation; 13 existing prebuilt cases PASS. NOT full required-field conformance: None omits the cached nonnil number, independently for each total. No aggregate derivation/synchronization, native defaults, full DTO/profile parity; historical B24 ledger retained. Prior note: Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-651",
       "capabilities": [
         "housing-catalog-aggregates"
       ],
-      "status": "audit-pending",
-      "note": "Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion."
+      "status": "partial-development-green",
+      "note": "Held-live reassessment: exact651 totalNumPlaced has live explicit-field publication proof across three getters, zero/large values, mutation and snapshot isolation; 13 existing prebuilt cases PASS. NOT full required-field conformance: None omits the cached nonnil number, independently for each total. No aggregate derivation/synchronization, native defaults, full DTO/profile parity; historical B24 ledger retained. Prior note: Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-652",

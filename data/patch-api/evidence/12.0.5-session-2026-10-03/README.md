@@ -52,10 +52,19 @@ Copies of the independent review reports, RED/GREEN run logs and startup outputs
 | `b97-startup.stdout` | 289 | `a7b01b9749c080025a59c622dd46d1ea01c822fad064f9d788a9747a5f2aad76` |
 | `b97-verify-quest-equipset.md` | 7755 | `bc83a97ae035ad51aef209367c4fb540040549f7710865e75e2d521d77470a01` |
 | `b97-verify-tooltip-identity.md` | 9291 | `c3581b79231718590e04709f79e717ba21d56434b8e1040ebcf9170098af6dab` |
+| `b98-red.log.txt` | 50358 | `e3c79a94625cdc5b8074165af163d36c206e208e33aea49212f7c92e31c38b5d` |
+| `failing-tests-root-cause.md` | 11480 | `02772dc33ce07a22e7b22c7a51c37945b71fac9e829f9e7eafce9f2834e89342` |
 | `handoff-channel-lockdown.md` | 7401 | `340a6593ca0284eef0631deb8e157526926711f0cf6ee8a28aaca422552a4a4d` |
 | `handoff-diag-throttle.md` | 8313 | `546d57016b8ca6c082107886e5897dea1f75be44a317745d4ddaed144f9ba2cd` |
 | `handoff-existing-impl.md` | 14448 | `cb2c498610afc3d67426a6d069f4a42255c1d2b367d9ed84bf6f037d6aaac386` |
+| `handoff-held-live.md` | 21902 | `103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3` |
 | `handoff-taint-log.md` | 7804 | `5a512f92c96516579c8742e04a189785dd7b56b676dafddfbd6ba61e301a1bde` |
+| `rilua-secret-transform-review.md` | 5427 | `b65e61da9ecdf863aacaeacdeed8259f9c35822a0a9730a326d961cf96eaf823` |
+| `rilua-secret-transform.md` | 10712 | `289f7f75954834bedae4c91fc8b48d42e437f7e52520a3c46cef72eaac44aa33` |
+| `rilua-tainted-read-hook-review.md` | 8895 | `de67b44e1184aba0d88d92f099241968e7eeb552250d8fa9865629fbe2d6b256` |
+| `rilua-tainted-read-hook.md` | 6333 | `fa2ee5318e2e8d69751e7e3f6d3e9f378f1f6de195c49363115aad85753271b0` |
+| `scout-held-rows.md` | 139435 | `39dd16c7198ba78d44ed3d56d05a0da6923012d964a79ad64776bcebc9e63310` |
+| `scout-other-patches.md` | 71527 | `66ab636e121f69291a629477958235b1b70a4b4e67fccfa0f3a0d940c882b055` |
 | `scout-remaining.md` | 156781 | `3d92e49f5de89af865cf28ea158634166fca82946dd44c53dedfc2500934df76` |
 
 Run logs carry a `.txt` suffix because the repository ignores `*.log`.

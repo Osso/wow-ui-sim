@@ -1,0 +1,775 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 80 tests
+test cast_events_identity::cast_success_all_three_policy_axes_and_player_alias ... FAILED
+test cast_events_identity::cast_success_payload_and_host_policy_transition_are_observable ... FAILED
+test cast_events_identity::cast_success_pet_is_not_player_exception_and_inputs_are_isolated ... FAILED
+test cast_events_identity::cast_success_secret_instant_nonplayer_reaches_no_listener ... FAILED
+test cast_events_identity::model_identity::model_actor_denial_returns_one_nil_and_preserves_prior_binding ... FAILED
+test cast_events_identity::model_identity::model_set_unit_denial_returns_one_nil_and_preserves_prior_binding ... FAILED
+test cast_events_identity::model_identity::model_unit_binding_classification_is_identity_based_not_token_spelling ... FAILED
+test cast_events_identity::model_identity::model_unit_binding_denial_preserves_real_addon_taint_and_env_isolation ... FAILED
+test cast_events_identity::model_identity::model_unit_binding_missing_identity_does_not_fabricate_success ... FAILED
+test delve_instance_state::active_delve_entry_and_exit_drive_instance_flag_without_legacy_flag_changes ... FAILED
+test delve_instance_state::active_delve_instance_state_is_environment_local ... FAILED
+test delve_instance_state::delve_query_ignores_extra_arguments_and_preserves_secret_wrappers_and_taint ... FAILED
+test delve_instance_state::delve_query_preserves_live_host_type_and_does_not_repair_host_state ... FAILED
+test delve_instance_state::ending_delve_preserves_independently_active_dungeon ... ok
+test instanced_identity::instanced_identity_control_alone_does_not_exempt_a_visitor ... FAILED
+test instanced_identity::instanced_identity_explicit_secret_override_is_independent_of_map_exemption ... FAILED
+test instanced_identity::instanced_identity_friendly_and_attackable_visitors_share_current_policy ... FAILED
+test instanced_identity::instanced_identity_group_exemption_follows_guid_alias_and_mind_control ... FAILED
+test instanced_identity::instanced_identity_map_exit_changes_new_outputs_not_retained_values ... FAILED
+test instanced_identity::instanced_identity_tainted_caller_observes_context_without_losing_taint ... FAILED
+test mouse_tm_commands::tm_condition_uses_current_combat_state_and_dispatches_marker_events ... FAILED
+test mouse_tm_commands::tm_invalid_or_unselected_input_preserves_state_and_valid_command_recovers ... FAILED
+test mouse_tm_commands::tm_reuses_conjunctions_modifiers_and_first_matching_clause ... FAILED
+test mouse_tm_commands::tm_selected_unit_is_used_for_conditions_and_marker_destination ... FAILED
+test mouse_tm_commands::tm_unconditional_assignment_and_zero_clear_are_observable ... FAILED
+test outfit_action_command::active_outfit_reads_host_snapshot_and_is_environment_local ... FAILED
+test outfit_action_command::conditional_outfit_macro_executes_selected_branch_not_ignored_command ... FAILED
+test outfit_action_command::invalid_outfit_index_does_not_fabricate_or_clear_selection ... FAILED
+test outfit_action_command::outfit_change_authenticates_both_secret_arguments_before_mutation ... FAILED
+test outfit_action_command::outfit_change_resolves_sparse_index_and_toggles_only_same_selection ... FAILED
+test outfit_action_command::outfit_macro_toggle_bang_clear_and_invalid_inputs_share_selection ... FAILED
+test outfit_action_command::unchanged_vendor_secure_outfit_handler_changes_toggles_and_clears ... FAILED
+test retail_12_0_5_addon_table_freeze::retail_12_0_5_addon_can_freeze_its_own_table_without_freezing_children ... ok
+test security_api::addon_tainted_global_helper_taints_blizzard_call_path ... ok
+test security_api::addon_tainted_table_slot_does_not_make_table_secret ... ok
+test security_api::native_secret_contents_remain_inaccessible_in_public_table ... ok
+test security_api::test_admin_can_mark_frame_protected_for_internal_setup ... ok
+test security_api::test_can_change_protected_state_allows_secure_and_out_of_combat_calls ... ok
+test security_api::test_can_change_protected_state_matches_lockdown_rules ... ok
+test security_api::test_canaccessallvalues_all_clean ... ok
+test security_api::test_canaccessallvalues_one_tainted ... ok
+test security_api::test_canaccesstable_clean ... ok
+test security_api::test_canaccessvalue_tainted ... ok
+test security_api::test_canaccessvalue_untainted ... ok
+test security_api::test_execute_attribute_calls_function_attribute_and_returns_success_tuple ... ok
+test security_api::test_execute_attribute_rejects_unprotected_string_body ... ok
+test security_api::test_execute_attribute_runs_protected_string_body_with_frame_refs ... ok
+test security_api::test_forceinsecure ... ok
+test security_api::test_frame_identity_slot_can_redirect_method_receiver ... ok
+test security_api::test_frame_identity_slots_dispatch_surrogate_methods ... ok
+test security_api::test_hooksecurefunc_global ... ok
+test security_api::test_hooksecurefunc_table ... ok
+test security_api::test_issecretvalue_tainted ... ok
+test security_api::test_issecretvalue_untainted ... ok
+test security_api::test_issecure_returns_true ... ok
+test security_api::test_issecurevariable_detects_taint ... ok
+test security_api::test_issecurevariable_returns_true ... ok
+test security_api::test_loadstring_taints ... ok
+test security_api::test_party_full_name_marks_name_and_realm_secret ... ok
+test security_api::test_party_roster_name_is_secret_value ... ok
+test security_api::test_protect_methods_are_not_public_addon_surface ... ok
+test security_api::test_scrub_helpers_are_passthrough ... ok
+test security_api::test_secure_handler_stubs_exist ... ok
+test security_api::test_secure_handler_unwrap_script_restores_original_handler ... ok
+test security_api::test_secure_handlers_store_frame_refs_and_execute_snippets ... ok
+test security_api::test_secure_map_rejects_secret_keys_and_values ... ok
+test security_api::test_securecall ... ok
+test security_api::test_securecall_accepts_global_function_name ... ok
+test security_api::test_securecall_clears_taint_for_nested_closures ... ok
+test security_api::test_securecall_restores_taint ... ok
+test security_api::test_securecallfunction ... ok
+test security_api::test_securecallfunction_passes_table_self_to_unbound_method ... ok
+test security_api::test_securecmdoptionparse_matches_modifier_and_comma_conditions ... ok
+test security_api::test_securecmdoptionparse_returns_nil_when_no_clause_matches ... ok
+test security_api::test_securecmdoptionparse_single_option ... ok
+test security_api::test_securecmdoptionparse_supports_harm_and_unit_override ... ok
+test security_api::test_securecmdoptionparse_uses_fallback_when_condition_is_false ... ok
+test security_api::test_securecmdoptionparse_uses_first_matching_combat_clause ... ok
+test security_api::test_secureexecuterange ... ok
+test security_api::test_table_containing_party_identity_is_not_accessible ... ok
+
+failures:
+
+---- cast_events_identity::cast_success_all_three_policy_axes_and_player_alias stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.010s] [Startup] SimState::default complete in 10.17ms
+[  0.011s] [Startup] rilua VM created in 255.03µs
+[  0.011s] [Startup] builtin frames initialized in 204.62µs
+[  0.011s] [Startup] template registry cleared in 23.16µs
+[  0.011s] [Startup] intrinsic templates registered in 13.84µs
+[  0.011s] [Startup] initial app_data lua handle installed in 1.15µs
+[  0.366s] [Startup] init_lua_state complete in 354.94ms
+[  0.366s] [Startup] final app_data lua handle installed in 180.00ns
+[  0.366s] [Startup] initial screen globals installed in 150.58µs
+[  0.366s] [Startup] WowLuaEnv::new complete
+[  0.375s] [Startup] WowLuaEnv::new begin
+[  0.383s] [Startup] SimState::default complete in 7.01ms
+[  0.383s] [Startup] rilua VM created in 161.79µs
+[  0.383s] [Startup] builtin frames initialized in 87.64µs
+[  0.383s] [Startup] template registry cleared in 15.34µs
+[  0.383s] [Startup] intrinsic templates registered in 8.74µs
+[  0.383s] [Startup] initial app_data lua handle installed in 1.68µs
+[  0.585s] [Startup] init_lua_state complete in 202.20ms
+[  0.585s] [Startup] final app_data lua handle installed in 276.00ns
+[  0.585s] [Startup] initial screen globals installed in 253.00µs
+[  0.585s] [Startup] WowLuaEnv::new complete
+[  0.602s] [Startup] WowLuaEnv::new begin
+[  0.606s] [Startup] SimState::default complete in 3.21ms
+[  0.606s] [Startup] rilua VM created in 158.06µs
+[  0.606s] [Startup] builtin frames initialized in 109.07µs
+[  0.606s] [Startup] template registry cleared in 17.89µs
+[  0.606s] [Startup] intrinsic templates registered in 10.47µs
+[  0.606s] [Startup] initial app_data lua handle installed in 1.45µs
+[  0.839s] [Startup] init_lua_state complete in 232.71ms
+[  0.839s] [Startup] final app_data lua handle installed in 378.00ns
+[  0.839s] [Startup] initial screen globals installed in 171.32µs
+[  0.839s] [Startup] WowLuaEnv::new complete
+[  0.846s] [Startup] WowLuaEnv::new begin
+[  0.851s] [Startup] SimState::default complete in 4.92ms
+[  0.851s] [Startup] rilua VM created in 146.47µs
+[  0.851s] [Startup] builtin frames initialized in 98.38µs
+[  0.851s] [Startup] template registry cleared in 15.09µs
+[  0.851s] [Startup] intrinsic templates registered in 11.08µs
+[  0.851s] [Startup] initial app_data lua handle installed in 1.91µs
+[  1.070s] [Startup] init_lua_state complete in 219.07ms
+[  1.070s] [Startup] final app_data lua handle installed in 672.00ns
+[  1.071s] [Startup] initial screen globals installed in 346.22µs
+[  1.071s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::cast_success_all_three_policy_axes_and_player_alias' (720992) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:75:17:
+assertion `left == right` failed: player=false instant=true secret=true
+  left: 1.0
+ right: 0.0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- cast_events_identity::cast_success_payload_and_host_policy_transition_are_observable stdout ----
+[  1.100s] [Startup] WowLuaEnv::new begin
+[  1.102s] [Startup] SimState::default complete in 1.86ms
+[  1.102s] [Startup] rilua VM created in 105.62µs
+[  1.102s] [Startup] builtin frames initialized in 51.94µs
+[  1.102s] [Startup] template registry cleared in 5.94µs
+[  1.102s] [Startup] intrinsic templates registered in 8.06µs
+[  1.102s] [Startup] initial app_data lua handle installed in 795.00ns
+[  1.408s] [Startup] init_lua_state complete in 305.97ms
+[  1.408s] [Startup] final app_data lua handle installed in 171.00ns
+[  1.408s] [Startup] initial screen globals installed in 274.90µs
+[  1.408s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::cast_success_payload_and_host_policy_transition_are_observable' (721016) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:105:6:
+actual dispatch retains input payload: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- cast_events_identity::cast_success_pet_is_not_player_exception_and_inputs_are_isolated stdout ----
+[  1.428s] [Startup] WowLuaEnv::new begin
+[  1.432s] [Startup] SimState::default complete in 4.44ms
+[  1.433s] [Startup] rilua VM created in 190.18µs
+[  1.433s] [Startup] builtin frames initialized in 101.97µs
+[  1.433s] [Startup] template registry cleared in 13.18µs
+[  1.433s] [Startup] intrinsic templates registered in 15.81µs
+[  1.433s] [Startup] initial app_data lua handle installed in 1.71µs
+[  1.657s] [Startup] init_lua_state complete in 224.05ms
+[  1.657s] [Startup] final app_data lua handle installed in 229.00ns
+[  1.657s] [Startup] initial screen globals installed in 132.12µs
+[  1.657s] [Startup] WowLuaEnv::new complete
+[  1.657s] [Startup] WowLuaEnv::new begin
+[  1.659s] [Startup] SimState::default complete in 1.74ms
+[  1.659s] [Startup] rilua VM created in 95.93µs
+[  1.659s] [Startup] builtin frames initialized in 47.78µs
+[  1.659s] [Startup] template registry cleared in 9.23µs
+[  1.659s] [Startup] intrinsic templates registered in 5.54µs
+[  1.659s] [Startup] initial app_data lua handle installed in 610.00ns
+[  1.874s] [Startup] init_lua_state complete in 215.32ms
+[  1.874s] [Startup] final app_data lua handle installed in 234.00ns
+[  1.874s] [Startup] initial screen globals installed in 145.47µs
+[  1.874s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::cast_success_pet_is_not_player_exception_and_inputs_are_isolated' (721017) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:129:5:
+assertion `left == right` failed
+  left: 1.0
+ right: 0.0
+
+---- cast_events_identity::cast_success_secret_instant_nonplayer_reaches_no_listener stdout ----
+[  1.900s] [Startup] WowLuaEnv::new begin
+[  1.904s] [Startup] SimState::default complete in 4.43ms
+[  1.905s] [Startup] rilua VM created in 186.74µs
+[  1.905s] [Startup] builtin frames initialized in 112.33µs
+[  1.905s] [Startup] template registry cleared in 18.88µs
+[  1.905s] [Startup] intrinsic templates registered in 16.31µs
+[  1.905s] [Startup] initial app_data lua handle installed in 1.03µs
+[  2.146s] [Startup] init_lua_state complete in 241.05ms
+[  2.146s] [Startup] final app_data lua handle installed in 1.23µs
+[  2.146s] [Startup] initial screen globals installed in 424.40µs
+[  2.146s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::cast_success_secret_instant_nonplayer_reaches_no_listener' (721026) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:59:6:
+suppress before all listener families: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- cast_events_identity::model_identity::model_actor_denial_returns_one_nil_and_preserves_prior_binding stdout ----
+[  2.164s] [Startup] WowLuaEnv::new begin
+[  2.168s] [Startup] SimState::default complete in 4.10ms
+[  2.168s] [Startup] rilua VM created in 146.86µs
+[  2.169s] [Startup] builtin frames initialized in 95.63µs
+[  2.169s] [Startup] template registry cleared in 11.17µs
+[  2.169s] [Startup] intrinsic templates registered in 12.56µs
+[  2.169s] [Startup] initial app_data lua handle installed in 1.36µs
+[  2.397s] [Startup] init_lua_state complete in 228.33ms
+[  2.397s] [Startup] final app_data lua handle installed in 194.00ns
+[  2.397s] [Startup] initial screen globals installed in 311.13µs
+[  2.397s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::model_identity::model_actor_denial_returns_one_nil_and_preserves_prior_binding' (721033) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:207:10:
+secret identity is denied without throwing, with exactly one nil: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- cast_events_identity::model_identity::model_set_unit_denial_returns_one_nil_and_preserves_prior_binding stdout ----
+[  2.412s] [Startup] WowLuaEnv::new begin
+[  2.416s] [Startup] SimState::default complete in 3.89ms
+[  2.416s] [Startup] rilua VM created in 457.89µs
+[  2.416s] [Startup] builtin frames initialized in 127.85µs
+[  2.416s] [Startup] template registry cleared in 19.32µs
+[  2.416s] [Startup] intrinsic templates registered in 23.34µs
+[  2.416s] [Startup] initial app_data lua handle installed in 2.03µs
+[  2.678s] [Startup] init_lua_state complete in 261.78ms
+[  2.678s] [Startup] final app_data lua handle installed in 544.00ns
+[  2.679s] [Startup] initial screen globals installed in 462.81µs
+[  2.679s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::model_identity::model_set_unit_denial_returns_one_nil_and_preserves_prior_binding' (721040) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:207:10:
+secret identity is denied without throwing, with exactly one nil: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- cast_events_identity::model_identity::model_unit_binding_classification_is_identity_based_not_token_spelling stdout ----
+[  2.696s] [Startup] WowLuaEnv::new begin
+[  2.698s] [Startup] SimState::default complete in 2.08ms
+[  2.698s] [Startup] rilua VM created in 98.91µs
+[  2.698s] [Startup] builtin frames initialized in 66.71µs
+[  2.699s] [Startup] template registry cleared in 590.85µs
+[  2.699s] [Startup] intrinsic templates registered in 21.73µs
+[  2.699s] [Startup] initial app_data lua handle installed in 2.74µs
+[  2.919s] [Startup] init_lua_state complete in 220.20ms
+[  2.919s] [Startup] final app_data lua handle installed in 599.00ns
+[  2.920s] [Startup] initial screen globals installed in 353.47µs
+[  2.920s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::model_identity::model_unit_binding_classification_is_identity_based_not_token_spelling' (721044) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:239:10:
+denial follows existing GUID mapping, not party token spelling: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- cast_events_identity::model_identity::model_unit_binding_denial_preserves_real_addon_taint_and_env_isolation stdout ----
+[  2.940s] [Startup] WowLuaEnv::new begin
+[  2.944s] [Startup] SimState::default complete in 3.96ms
+[  2.944s] [Startup] rilua VM created in 101.13µs
+[  2.944s] [Startup] builtin frames initialized in 58.87µs
+[  2.944s] [Startup] template registry cleared in 9.20µs
+[  2.944s] [Startup] intrinsic templates registered in 9.04µs
+[  2.944s] [Startup] initial app_data lua handle installed in 829.00ns
+[  3.223s] [Startup] init_lua_state complete in 278.57ms
+[  3.223s] [Startup] final app_data lua handle installed in 573.00ns
+[  3.223s] [Startup] initial screen globals installed in 273.24µs
+[  3.223s] [Startup] WowLuaEnv::new complete
+[  3.224s] [Startup] WowLuaEnv::new begin
+[  3.229s] [Startup] SimState::default complete in 4.55ms
+[  3.229s] [Startup] rilua VM created in 193.06µs
+[  3.229s] [Startup] builtin frames initialized in 93.48µs
+[  3.229s] [Startup] template registry cleared in 15.92µs
+[  3.229s] [Startup] intrinsic templates registered in 8.21µs
+[  3.229s] [Startup] initial app_data lua handle installed in 1.46µs
+[  3.484s] [Startup] init_lua_state complete in 254.75ms
+[  3.484s] [Startup] final app_data lua handle installed in 542.00ns
+[  3.485s] [Startup] initial screen globals installed in 617.20µs
+[  3.485s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::model_identity::model_unit_binding_denial_preserves_real_addon_taint_and_env_isolation' (721048) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:266:14:
+ordinary token with secret identity returns nil even for actual addon caller: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- cast_events_identity::model_identity::model_unit_binding_missing_identity_does_not_fabricate_success stdout ----
+[  3.516s] [Startup] WowLuaEnv::new begin
+[  3.519s] [Startup] SimState::default complete in 2.80ms
+[  3.519s] [Startup] rilua VM created in 101.62µs
+[  3.519s] [Startup] builtin frames initialized in 89.86µs
+[  3.519s] [Startup] template registry cleared in 8.75µs
+[  3.519s] [Startup] intrinsic templates registered in 8.09µs
+[  3.519s] [Startup] initial app_data lua handle installed in 952.00ns
+[  3.751s] [Startup] init_lua_state complete in 231.71ms
+[  3.751s] [Startup] final app_data lua handle installed in 696.00ns
+[  3.753s] [Startup] initial screen globals installed in 1.99ms
+[  3.753s] [Startup] WowLuaEnv::new complete
+
+thread 'cast_events_identity::model_identity::model_unit_binding_missing_identity_does_not_fabricate_success' (721066) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/cast_events_identity.rs:298:10:
+INFERRED failure policy requires an existing identity: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- delve_instance_state::active_delve_entry_and_exit_drive_instance_flag_without_legacy_flag_changes stdout ----
+[  3.768s] [Startup] WowLuaEnv::new begin
+[  3.770s] [Startup] SimState::default complete in 1.80ms
+[  3.770s] [Startup] rilua VM created in 91.24µs
+[  3.770s] [Startup] builtin frames initialized in 54.71µs
+[  3.770s] [Startup] template registry cleared in 4.86µs
+[  3.770s] [Startup] intrinsic templates registered in 7.66µs
+[  3.770s] [Startup] initial app_data lua handle installed in 716.00ns
+[  4.014s] [Startup] init_lua_state complete in 243.29ms
+[  4.014s] [Startup] final app_data lua handle installed in 226.00ns
+[  4.014s] [Startup] initial screen globals installed in 260.49µs
+[  4.014s] [Startup] WowLuaEnv::new complete
+
+thread 'delve_instance_state::active_delve_entry_and_exit_drive_instance_flag_without_legacy_flag_changes' (721097) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delve_instance_state.rs:41:10:
+Delve host entry is an instance even with false legacy flag: Lua(Runtime(RuntimeError { message: "instance flag mismatch", level: 0, traceback: [] }))
+
+---- delve_instance_state::active_delve_instance_state_is_environment_local stdout ----
+[  4.029s] [Startup] WowLuaEnv::new begin
+[  4.034s] [Startup] SimState::default complete in 4.25ms
+[  4.034s] [Startup] rilua VM created in 105.05µs
+[  4.034s] [Startup] builtin frames initialized in 69.35µs
+[  4.034s] [Startup] template registry cleared in 10.75µs
+[  4.034s] [Startup] intrinsic templates registered in 10.78µs
+[  4.034s] [Startup] initial app_data lua handle installed in 10.68µs
+[  4.321s] [Startup] init_lua_state complete in 287.44ms
+[  4.321s] [Startup] final app_data lua handle installed in 662.00ns
+[  4.322s] [Startup] initial screen globals installed in 311.47µs
+[  4.322s] [Startup] WowLuaEnv::new complete
+[  4.322s] [Startup] WowLuaEnv::new begin
+[  4.324s] [Startup] SimState::default complete in 2.49ms
+[  4.324s] [Startup] rilua VM created in 181.92µs
+[  4.324s] [Startup] builtin frames initialized in 78.98µs
+[  4.324s] [Startup] template registry cleared in 16.88µs
+[  4.324s] [Startup] intrinsic templates registered in 9.75µs
+[  4.324s] [Startup] initial app_data lua handle installed in 784.00ns
+[  4.597s] [Startup] init_lua_state complete in 272.26ms
+[  4.597s] [Startup] final app_data lua handle installed in 283.00ns
+[  4.597s] [Startup] initial screen globals installed in 174.02µs
+[  4.597s] [Startup] WowLuaEnv::new complete
+
+thread 'delve_instance_state::active_delve_instance_state_is_environment_local' (721211) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delve_instance_state.rs:138:10:
+first environment active: Lua(Runtime(RuntimeError { message: "instance flag mismatch", level: 0, traceback: [] }))
+
+---- delve_instance_state::delve_query_ignores_extra_arguments_and_preserves_secret_wrappers_and_taint stdout ----
+[  4.629s] [Startup] WowLuaEnv::new begin
+[  4.632s] [Startup] SimState::default complete in 3.13ms
+[  4.632s] [Startup] rilua VM created in 180.87µs
+[  4.632s] [Startup] builtin frames initialized in 85.31µs
+[  4.632s] [Startup] template registry cleared in 9.99µs
+[  4.632s] [Startup] intrinsic templates registered in 13.46µs
+[  4.632s] [Startup] initial app_data lua handle installed in 1.79µs
+[  4.862s] [Startup] init_lua_state complete in 230.04ms
+[  4.862s] [Startup] final app_data lua handle installed in 263.00ns
+[  4.862s] [Startup] initial screen globals installed in 197.28µs
+[  4.862s] [Startup] WowLuaEnv::new complete
+
+thread 'delve_instance_state::delve_query_ignores_extra_arguments_and_preserves_secret_wrappers_and_taint' (721358) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delve_instance_state.rs:126:6:
+no declared arguments to authenticate; retain caller and wrapper security: Lua(Runtime(RuntimeError { message: "instance flag mismatch", level: 0, traceback: [] }))
+
+---- delve_instance_state::delve_query_preserves_live_host_type_and_does_not_repair_host_state stdout ----
+[  4.877s] [Startup] WowLuaEnv::new begin
+[  4.880s] [Startup] SimState::default complete in 2.89ms
+[  4.880s] [Startup] rilua VM created in 102.23µs
+[  4.880s] [Startup] builtin frames initialized in 58.73µs
+[  4.880s] [Startup] template registry cleared in 8.46µs
+[  4.880s] [Startup] intrinsic templates registered in 9.41µs
+[  4.880s] [Startup] initial app_data lua handle installed in 985.00ns
+[  5.126s] [Startup] init_lua_state complete in 246.25ms
+[  5.126s] [Startup] final app_data lua handle installed in 425.00ns
+[  5.127s] [Startup] initial screen globals installed in 225.95µs
+[  5.127s] [Startup] WowLuaEnv::new complete
+
+thread 'delve_instance_state::delve_query_preserves_live_host_type_and_does_not_repair_host_state' (721362) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delve_instance_state.rs:76:10:
+no invented Delve instance type for inconsistent host input: Lua(Runtime(RuntimeError { message: "instance flag mismatch", level: 0, traceback: [] }))
+
+---- instanced_identity::instanced_identity_control_alone_does_not_exempt_a_visitor stdout ----
+[  5.408s] [Startup] WowLuaEnv::new begin
+[  5.410s] [Startup] SimState::default complete in 2.03ms
+[  5.410s] [Startup] rilua VM created in 106.07µs
+[  5.410s] [Startup] builtin frames initialized in 56.60µs
+[  5.410s] [Startup] template registry cleared in 9.29µs
+[  5.410s] [Startup] intrinsic templates registered in 7.81µs
+[  5.410s] [Startup] initial app_data lua handle installed in 823.00ns
+[  5.724s] [Startup] init_lua_state complete in 313.60ms
+[  5.724s] [Startup] final app_data lua handle installed in 333.00ns
+[  5.724s] [Startup] initial screen globals installed in 204.60µs
+[  5.724s] [Startup] WowLuaEnv::new complete
+
+thread 'instanced_identity::instanced_identity_control_alone_does_not_exempt_a_visitor' (721370) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/instanced_identity.rs:40:22:
+observe real name/GUID getters: Lua(Runtime(RuntimeError { message: "identity output classification", level: 0, traceback: [] }))
+
+---- instanced_identity::instanced_identity_explicit_secret_override_is_independent_of_map_exemption stdout ----
+[  5.738s] [Startup] WowLuaEnv::new begin
+[  5.743s] [Startup] SimState::default complete in 4.39ms
+[  5.743s] [Startup] rilua VM created in 111.82µs
+[  5.743s] [Startup] builtin frames initialized in 67.05µs
+[  5.743s] [Startup] template registry cleared in 8.04µs
+[  5.743s] [Startup] intrinsic templates registered in 10.01µs
+[  5.743s] [Startup] initial app_data lua handle installed in 822.00ns
+[  5.979s] [Startup] init_lua_state complete in 236.20ms
+[  5.979s] [Startup] final app_data lua handle installed in 299.00ns
+[  5.979s] [Startup] initial screen globals installed in 202.40µs
+[  5.979s] [Startup] WowLuaEnv::new complete
+
+thread 'instanced_identity::instanced_identity_explicit_secret_override_is_independent_of_map_exemption' (721376) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/instanced_identity.rs:40:22:
+observe real name/GUID getters: Lua(Runtime(RuntimeError { message: "identity output classification", level: 0, traceback: [] }))
+
+---- instanced_identity::instanced_identity_friendly_and_attackable_visitors_share_current_policy stdout ----
+[  5.996s] [Startup] WowLuaEnv::new begin
+[  5.998s] [Startup] SimState::default complete in 1.93ms
+[  5.998s] [Startup] rilua VM created in 206.32µs
+[  5.998s] [Startup] builtin frames initialized in 100.97µs
+[  5.998s] [Startup] template registry cleared in 14.98µs
+[  5.998s] [Startup] intrinsic templates registered in 15.77µs
+[  5.998s] [Startup] initial app_data lua handle installed in 2.54µs
+[  6.236s] [Startup] init_lua_state complete in 237.44ms
+[  6.236s] [Startup] final app_data lua handle installed in 130.00ns
+[  6.236s] [Startup] initial screen globals installed in 176.07µs
+[  6.236s] [Startup] WowLuaEnv::new complete
+
+thread 'instanced_identity::instanced_identity_friendly_and_attackable_visitors_share_current_policy' (721382) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/instanced_identity.rs:40:22:
+observe real name/GUID getters: Lua(Runtime(RuntimeError { message: "identity output classification", level: 0, traceback: [] }))
+
+---- instanced_identity::instanced_identity_group_exemption_follows_guid_alias_and_mind_control stdout ----
+[  6.258s] [Startup] WowLuaEnv::new begin
+[  6.289s] [Startup] SimState::default complete in 30.55ms
+[  6.290s] [Startup] rilua VM created in 95.80µs
+[  6.290s] [Startup] builtin frames initialized in 59.00µs
+[  6.290s] [Startup] template registry cleared in 5.94µs
+[  6.290s] [Startup] intrinsic templates registered in 7.34µs
+[  6.290s] [Startup] initial app_data lua handle installed in 649.00ns
+[  6.641s] [Startup] init_lua_state complete in 351.01ms
+[  6.641s] [Startup] final app_data lua handle installed in 608.00ns
+[  6.641s] [Startup] initial screen globals installed in 366.40µs
+[  6.641s] [Startup] WowLuaEnv::new complete
+
+thread 'instanced_identity::instanced_identity_group_exemption_follows_guid_alias_and_mind_control' (721392) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/instanced_identity.rs:40:22:
+observe real name/GUID getters: Lua(Runtime(RuntimeError { message: "identity output classification", level: 0, traceback: [] }))
+
+---- instanced_identity::instanced_identity_map_exit_changes_new_outputs_not_retained_values stdout ----
+[  6.664s] [Startup] WowLuaEnv::new begin
+[  6.666s] [Startup] SimState::default complete in 1.96ms
+[  6.666s] [Startup] rilua VM created in 110.57µs
+[  6.666s] [Startup] builtin frames initialized in 70.61µs
+[  6.666s] [Startup] template registry cleared in 30.37µs
+[  6.666s] [Startup] intrinsic templates registered in 7.29µs
+[  6.666s] [Startup] initial app_data lua handle installed in 986.00ns
+[  6.998s] [Startup] init_lua_state complete in 332.13ms
+[  6.998s] [Startup] final app_data lua handle installed in 163.00ns
+[  6.999s] [Startup] initial screen globals installed in 208.45µs
+[  6.999s] [Startup] WowLuaEnv::new complete
+
+thread 'instanced_identity::instanced_identity_map_exit_changes_new_outputs_not_retained_values' (721405) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/instanced_identity.rs:40:22:
+observe real name/GUID getters: Lua(Runtime(RuntimeError { message: "identity output classification", level: 0, traceback: [] }))
+
+---- instanced_identity::instanced_identity_tainted_caller_observes_context_without_losing_taint stdout ----
+[  7.020s] [Startup] WowLuaEnv::new begin
+[  7.024s] [Startup] SimState::default complete in 4.21ms
+[  7.024s] [Startup] rilua VM created in 239.00µs
+[  7.025s] [Startup] builtin frames initialized in 128.80µs
+[  7.025s] [Startup] template registry cleared in 16.99µs
+[  7.025s] [Startup] intrinsic templates registered in 16.69µs
+[  7.025s] [Startup] initial app_data lua handle installed in 1.86µs
+[  7.286s] [Startup] init_lua_state complete in 261.84ms
+[  7.286s] [Startup] final app_data lua handle installed in 634.00ns
+[  7.287s] [Startup] initial screen globals installed in 533.13µs
+[  7.287s] [Startup] WowLuaEnv::new complete
+
+thread 'instanced_identity::instanced_identity_tainted_caller_observes_context_without_losing_taint' (721428) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/instanced_identity.rs:187:6:
+getter producers preserve secure and tainted caller contexts: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- mouse_tm_commands::tm_condition_uses_current_combat_state_and_dispatches_marker_events stdout ----
+[  7.304s] [Startup] WowLuaEnv::new begin
+[  7.310s] [Startup] SimState::default complete in 5.44ms
+[  7.310s] [Startup] rilua VM created in 355.70µs
+[  7.310s] [Startup] builtin frames initialized in 98.90µs
+[  7.310s] [Startup] template registry cleared in 27.25µs
+[  7.311s] [Startup] intrinsic templates registered in 16.27µs
+[  7.311s] [Startup] initial app_data lua handle installed in 1.93µs
+[  7.551s] [Startup] init_lua_state complete in 240.97ms
+[  7.552s] [Startup] final app_data lua handle installed in 881.00ns
+[  7.552s] [Startup] initial screen globals installed in 410.03µs
+[  7.552s] [Startup] WowLuaEnv::new complete
+
+thread 'mouse_tm_commands::tm_condition_uses_current_combat_state_and_dispatches_marker_events' (721441) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/mouse_tm_commands.rs:31:14:
+called `Result::unwrap()` on an `Err` value: Other("expected numeric result, got nil")
+
+---- mouse_tm_commands::tm_invalid_or_unselected_input_preserves_state_and_valid_command_recovers stdout ----
+[  7.568s] [Startup] WowLuaEnv::new begin
+[  7.571s] [Startup] SimState::default complete in 2.65ms
+[  7.571s] [Startup] rilua VM created in 467.07µs
+[  7.571s] [Startup] builtin frames initialized in 217.78µs
+[  7.571s] [Startup] template registry cleared in 12.60µs
+[  7.571s] [Startup] intrinsic templates registered in 15.21µs
+[  7.571s] [Startup] initial app_data lua handle installed in 1.28µs
+[  7.779s] [Startup] init_lua_state complete in 207.43ms
+[  7.779s] [Startup] final app_data lua handle installed in 186.00ns
+[  7.779s] [Startup] initial screen globals installed in 175.19µs
+[  7.779s] [Startup] WowLuaEnv::new complete
+
+thread 'mouse_tm_commands::tm_invalid_or_unselected_input_preserves_state_and_valid_command_recovers' (721460) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/mouse_tm_commands.rs:160:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- mouse_tm_commands::tm_reuses_conjunctions_modifiers_and_first_matching_clause stdout ----
+[  7.800s] [Startup] WowLuaEnv::new begin
+[  7.803s] [Startup] SimState::default complete in 3.34ms
+[  7.804s] [Startup] rilua VM created in 162.57µs
+[  7.804s] [Startup] builtin frames initialized in 111.47µs
+[  7.804s] [Startup] template registry cleared in 858.79µs
+[  7.805s] [Startup] intrinsic templates registered in 17.92µs
+[  7.805s] [Startup] initial app_data lua handle installed in 2.48µs
+[  8.082s] [Startup] init_lua_state complete in 277.39ms
+[  8.082s] [Startup] final app_data lua handle installed in 259.00ns
+[  8.082s] [Startup] initial screen globals installed in 202.85µs
+[  8.082s] [Startup] WowLuaEnv::new complete
+
+thread 'mouse_tm_commands::tm_reuses_conjunctions_modifiers_and_first_matching_clause' (721468) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/mouse_tm_commands.rs:82:14:
+called `Result::unwrap()` on an `Err` value: Other("expected numeric result, got nil")
+
+---- mouse_tm_commands::tm_selected_unit_is_used_for_conditions_and_marker_destination stdout ----
+[  8.095s] [Startup] WowLuaEnv::new begin
+[  8.102s] [Startup] SimState::default complete in 7.32ms
+[  8.102s] [Startup] rilua VM created in 128.10µs
+[  8.102s] [Startup] builtin frames initialized in 79.25µs
+[  8.102s] [Startup] template registry cleared in 16.16µs
+[  8.102s] [Startup] intrinsic templates registered in 12.49µs
+[  8.102s] [Startup] initial app_data lua handle installed in 984.00ns
+[  8.367s] [Startup] init_lua_state complete in 264.57ms
+[  8.367s] [Startup] final app_data lua handle installed in 358.00ns
+[  8.367s] [Startup] initial screen globals installed in 166.94µs
+[  8.367s] [Startup] WowLuaEnv::new complete
+
+thread 'mouse_tm_commands::tm_selected_unit_is_used_for_conditions_and_marker_destination' (721477) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/mouse_tm_commands.rs:119:14:
+called `Result::unwrap()` on an `Err` value: Other("expected numeric result, got nil")
+
+---- mouse_tm_commands::tm_unconditional_assignment_and_zero_clear_are_observable stdout ----
+[  8.384s] [Startup] WowLuaEnv::new begin
+[  8.386s] [Startup] SimState::default complete in 1.86ms
+[  8.386s] [Startup] rilua VM created in 92.72µs
+[  8.386s] [Startup] builtin frames initialized in 56.21µs
+[  8.386s] [Startup] template registry cleared in 6.94µs
+[  8.386s] [Startup] intrinsic templates registered in 7.57µs
+[  8.386s] [Startup] initial app_data lua handle installed in 854.00ns
+[  8.666s] [Startup] init_lua_state complete in 280.26ms
+[  8.666s] [Startup] final app_data lua handle installed in 123.00ns
+[  8.666s] [Startup] initial screen globals installed in 144.84µs
+[  8.666s] [Startup] WowLuaEnv::new complete
+
+thread 'mouse_tm_commands::tm_unconditional_assignment_and_zero_clear_are_observable' (721495) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/mouse_tm_commands.rs:59:54:
+called `Result::unwrap()` on an `Err` value: Lua(Syntax(SyntaxError { message: "unfinished string near '<string>'", source: "=(string)", line: 1, raw_message: None }))
+
+---- outfit_action_command::active_outfit_reads_host_snapshot_and_is_environment_local stdout ----
+[  8.679s] [Startup] WowLuaEnv::new begin
+[  8.682s] [Startup] SimState::default complete in 3.19ms
+[  8.682s] [Startup] rilua VM created in 120.00µs
+[  8.682s] [Startup] builtin frames initialized in 66.90µs
+[  8.682s] [Startup] template registry cleared in 10.45µs
+[  8.682s] [Startup] intrinsic templates registered in 10.36µs
+[  8.682s] [Startup] initial app_data lua handle installed in 843.00ns
+[  8.935s] [Startup] init_lua_state complete in 252.55ms
+[  8.935s] [Startup] final app_data lua handle installed in 131.00ns
+[  8.935s] [Startup] initial screen globals installed in 139.85µs
+[  8.935s] [Startup] WowLuaEnv::new complete
+[  8.935s] [Startup] WowLuaEnv::new begin
+[  9.002s] [Startup] SimState::default complete in 66.92ms
+[  9.002s] [Startup] rilua VM created in 326.99µs
+[  9.002s] [Startup] builtin frames initialized in 113.60µs
+[  9.002s] [Startup] template registry cleared in 16.41µs
+[  9.002s] [Startup] intrinsic templates registered in 8.50µs
+[  9.002s] [Startup] initial app_data lua handle installed in 1.67µs
+[  9.279s] [Startup] init_lua_state complete in 276.17ms
+[  9.279s] [Startup] final app_data lua handle installed in 253.00ns
+[  9.279s] [Startup] initial screen globals installed in 250.72µs
+[  9.279s] [Startup] WowLuaEnv::new complete
+
+thread 'outfit_action_command::active_outfit_reads_host_snapshot_and_is_environment_local' (721499) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/outfit_action_command.rs:40:5:
+assertion `left == right` failed
+  left: 0.0
+ right: 305.0
+
+---- outfit_action_command::conditional_outfit_macro_executes_selected_branch_not_ignored_command stdout ----
+[  9.320s] [Startup] WowLuaEnv::new begin
+[  9.323s] [Startup] SimState::default complete in 3.33ms
+[  9.323s] [Startup] rilua VM created in 226.44µs
+[  9.324s] [Startup] builtin frames initialized in 211.80µs
+[  9.324s] [Startup] template registry cleared in 11.12µs
+[  9.324s] [Startup] intrinsic templates registered in 72.78µs
+[  9.324s] [Startup] initial app_data lua handle installed in 1.30µs
+[  9.550s] [Startup] init_lua_state complete in 226.40ms
+[  9.550s] [Startup] final app_data lua handle installed in 162.00ns
+[  9.550s] [Startup] initial screen globals installed in 222.81µs
+[  9.550s] [Startup] WowLuaEnv::new complete
+
+thread 'outfit_action_command::conditional_outfit_macro_executes_selected_branch_not_ignored_command' (721517) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/outfit_action_command.rs:155:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- outfit_action_command::invalid_outfit_index_does_not_fabricate_or_clear_selection stdout ----
+[  9.568s] [Startup] WowLuaEnv::new begin
+[  9.573s] [Startup] SimState::default complete in 5.15ms
+[  9.573s] [Startup] rilua VM created in 126.17µs
+[  9.573s] [Startup] builtin frames initialized in 74.50µs
+[  9.573s] [Startup] template registry cleared in 7.90µs
+[  9.573s] [Startup] intrinsic templates registered in 8.90µs
+[  9.573s] [Startup] initial app_data lua handle installed in 974.00ns
+[  9.821s] [Startup] init_lua_state complete in 247.54ms
+[  9.821s] [Startup] final app_data lua handle installed in 420.00ns
+[  9.821s] [Startup] initial screen globals installed in 201.20µs
+[  9.821s] [Startup] WowLuaEnv::new complete
+
+thread 'outfit_action_command::invalid_outfit_index_does_not_fabricate_or_clear_selection' (721526) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/outfit_action_command.rs:97:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- outfit_action_command::outfit_change_authenticates_both_secret_arguments_before_mutation stdout ----
+[  9.836s] [Startup] WowLuaEnv::new begin
+[  9.837s] [Startup] SimState::default complete in 1.48ms
+[  9.837s] [Startup] rilua VM created in 96.49µs
+[  9.838s] [Startup] builtin frames initialized in 49.30µs
+[  9.838s] [Startup] template registry cleared in 5.67µs
+[  9.838s] [Startup] intrinsic templates registered in 7.09µs
+[  9.838s] [Startup] initial app_data lua handle installed in 673.00ns
+[ 10.180s] [Startup] init_lua_state complete in 342.53ms
+[ 10.180s] [Startup] final app_data lua handle installed in 292.00ns
+[ 10.181s] [Startup] initial screen globals installed in 400.09µs
+[ 10.181s] [Startup] WowLuaEnv::new complete
+
+thread 'outfit_action_command::outfit_change_authenticates_both_secret_arguments_before_mutation' (721534) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/outfit_action_command.rs:135:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- outfit_action_command::outfit_change_resolves_sparse_index_and_toggles_only_same_selection stdout ----
+[ 10.200s] [Startup] WowLuaEnv::new begin
+[ 10.205s] [Startup] SimState::default complete in 4.23ms
+[ 10.205s] [Startup] rilua VM created in 144.48µs
+[ 10.205s] [Startup] builtin frames initialized in 84.94µs
+[ 10.205s] [Startup] template registry cleared in 9.73µs
+[ 10.205s] [Startup] intrinsic templates registered in 12.53µs
+[ 10.205s] [Startup] initial app_data lua handle installed in 1.33µs
+[ 10.457s] [Startup] init_lua_state complete in 252.27ms
+[ 10.457s] [Startup] final app_data lua handle installed in 680.00ns
+[ 10.457s] [Startup] initial screen globals installed in 237.85µs
+[ 10.457s] [Startup] WowLuaEnv::new complete
+
+thread 'outfit_action_command::outfit_change_resolves_sparse_index_and_toggles_only_same_selection' (721541) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/outfit_action_command.rs:36:5:
+assertion `left == right` failed
+  left: None
+ right: Some(91)
+
+---- outfit_action_command::outfit_macro_toggle_bang_clear_and_invalid_inputs_share_selection stdout ----
+[ 10.480s] [Startup] WowLuaEnv::new begin
+[ 10.483s] [Startup] SimState::default complete in 2.63ms
+[ 10.483s] [Startup] rilua VM created in 172.27µs
+[ 10.483s] [Startup] builtin frames initialized in 81.86µs
+[ 10.483s] [Startup] template registry cleared in 16.83µs
+[ 10.483s] [Startup] intrinsic templates registered in 19.94µs
+[ 10.483s] [Startup] initial app_data lua handle installed in 2.22µs
+[ 10.789s] [Startup] init_lua_state complete in 305.21ms
+[ 10.789s] [Startup] final app_data lua handle installed in 271.00ns
+[ 10.789s] [Startup] initial screen globals installed in 150.15µs
+[ 10.789s] [Startup] WowLuaEnv::new complete
+
+thread 'outfit_action_command::outfit_macro_toggle_bang_clear_and_invalid_inputs_share_selection' (721550) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/outfit_action_command.rs:36:5:
+assertion `left == right` failed
+  left: None
+ right: Some(91)
+
+---- outfit_action_command::unchanged_vendor_secure_outfit_handler_changes_toggles_and_clears stdout ----
+[ 10.808s] [Startup] WowLuaEnv::new begin
+[ 10.810s] [Startup] SimState::default complete in 2.45ms
+[ 10.811s] [Startup] rilua VM created in 155.30µs
+[ 10.811s] [Startup] builtin frames initialized in 72.33µs
+[ 10.811s] [Startup] template registry cleared in 5.93µs
+[ 10.811s] [Startup] intrinsic templates registered in 10.61µs
+[ 10.811s] [Startup] initial app_data lua handle installed in 989.00ns
+[ 11.067s] [Startup] init_lua_state complete in 256.14ms
+[ 11.067s] [Startup] final app_data lua handle installed in 1.21µs
+[ 11.067s] [Startup] initial screen globals installed in 567.26µs
+[ 11.067s] [Startup] WowLuaEnv::new complete
+
+thread 'outfit_action_command::unchanged_vendor_secure_outfit_handler_changes_toggles_and_clears' (721571) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/outfit_action_command.rs:227:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+
+failures:
+    cast_events_identity::cast_success_all_three_policy_axes_and_player_alias
+    cast_events_identity::cast_success_payload_and_host_policy_transition_are_observable
+    cast_events_identity::cast_success_pet_is_not_player_exception_and_inputs_are_isolated
+    cast_events_identity::cast_success_secret_instant_nonplayer_reaches_no_listener
+    cast_events_identity::model_identity::model_actor_denial_returns_one_nil_and_preserves_prior_binding
+    cast_events_identity::model_identity::model_set_unit_denial_returns_one_nil_and_preserves_prior_binding
+    cast_events_identity::model_identity::model_unit_binding_classification_is_identity_based_not_token_spelling
+    cast_events_identity::model_identity::model_unit_binding_denial_preserves_real_addon_taint_and_env_isolation
+    cast_events_identity::model_identity::model_unit_binding_missing_identity_does_not_fabricate_success
+    delve_instance_state::active_delve_entry_and_exit_drive_instance_flag_without_legacy_flag_changes
+    delve_instance_state::active_delve_instance_state_is_environment_local
+    delve_instance_state::delve_query_ignores_extra_arguments_and_preserves_secret_wrappers_and_taint
+    delve_instance_state::delve_query_preserves_live_host_type_and_does_not_repair_host_state
+    instanced_identity::instanced_identity_control_alone_does_not_exempt_a_visitor
+    instanced_identity::instanced_identity_explicit_secret_override_is_independent_of_map_exemption
+    instanced_identity::instanced_identity_friendly_and_attackable_visitors_share_current_policy
+    instanced_identity::instanced_identity_group_exemption_follows_guid_alias_and_mind_control
+    instanced_identity::instanced_identity_map_exit_changes_new_outputs_not_retained_values
+    instanced_identity::instanced_identity_tainted_caller_observes_context_without_losing_taint
+    mouse_tm_commands::tm_condition_uses_current_combat_state_and_dispatches_marker_events
+    mouse_tm_commands::tm_invalid_or_unselected_input_preserves_state_and_valid_command_recovers
+    mouse_tm_commands::tm_reuses_conjunctions_modifiers_and_first_matching_clause
+    mouse_tm_commands::tm_selected_unit_is_used_for_conditions_and_marker_destination
+    mouse_tm_commands::tm_unconditional_assignment_and_zero_clear_are_observable
+    outfit_action_command::active_outfit_reads_host_snapshot_and_is_environment_local
+    outfit_action_command::conditional_outfit_macro_executes_selected_branch_not_ignored_command
+    outfit_action_command::invalid_outfit_index_does_not_fabricate_or_clear_selection
+    outfit_action_command::outfit_change_authenticates_both_secret_arguments_before_mutation
+    outfit_action_command::outfit_change_resolves_sparse_index_and_toggles_only_same_selection
+    outfit_action_command::outfit_macro_toggle_bang_clear_and_invalid_inputs_share_selection
+    outfit_action_command::unchanged_vendor_secure_outfit_handler_changes_toggles_and_clears
+
+test result: FAILED. 49 passed; 31 failed; 0 ignored; 0 measured; 10135 filtered out; finished in 24.84s
+
+
+---STDERR---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+warning: function `register` is never used
+ --> src/c_api/c_transmog_outfit_info/actions.rs:9:15
+  |
+9 | pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+  |               ^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `get_active_outfit_id` is never used
+  --> src/c_api/c_transmog_outfit_info/actions.rs:23:4
+   |
+23 | fn get_active_outfit_id(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `change_to_outfit` is never used
+  --> src/c_api/c_transmog_outfit_info/actions.rs:30:4
+   |
+30 | fn change_to_outfit(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^
+
+warning: function `apply_outfit_index` is never used
+  --> src/c_api/c_transmog_outfit_info/actions.rs:47:4
+   |
+47 | fn apply_outfit_index(state: &mut LuaState, index: f64, allow_remove: bool) -> LuaResult<()> {
+   |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `clear_outfit` is never used
+  --> src/c_api/c_transmog_outfit_info/actions.rs:63:4
+   |
+63 | fn clear_outfit(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^
+
+warning: function `clear_active_outfit` is never used
+  --> src/c_api/c_transmog_outfit_info/actions.rs:68:4
+   |
+68 | fn clear_active_outfit(state: &mut LuaState) -> LuaResult<()> {
+   |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_outfit_command` is never used
+  --> src/c_api/c_transmog_outfit_info/actions.rs:73:15
+   |
+73 | pub(crate) fn run_outfit_command(state: &mut LuaState, argument: &str) -> LuaResult<()> {
+   |               ^^^^^^^^^^^^^^^^^^
+
+warning: function `read_unit_token` is never used
+  --> src/lua_api/frame/methods/widgets/model/model_unit.rs:12:4
+   |
+12 | fn read_unit_token(state: &LuaState) -> LuaResult<String> {
+   |    ^^^^^^^^^^^^^^^
+
+warning: function `assign_unit` is never used
+  --> src/lua_api/frame/methods/widgets/model/model_unit.rs:23:15
+   |
+23 | pub(super) fn assign_unit(state: &mut LuaState) -> LuaResult<u32> {
+   |               ^^^^^^^^^^^
+
+warning: function `unit_identity_is_secret_in_state` is never used
+   --> src/lua_api/globals/unit_misc.rs:147:15
+    |
+147 | pub(crate) fn unit_identity_is_secret_in_state(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 10 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 50s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+error: test failed, to rerun pass `--test integration`

@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | Ten held 12.0.5 rows reconciled
+
+Exact278/279/281/282/291/342/347 bounded, structures 650/651 partial, prose 03-25-088 metadata-only, all under existing capabilities. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#held-rows-reconciled-against-existing-capabilities); 110 capabilities/362 IDs; 61 pending /250 bounded /17 partial /34 metadata.
+
 ## [2026-10-03] evidence | B97 equipset, tooltip line secrecy, identity GUID suppression
 
 Three slice specs own prose 03-25-121/03-31-178 and 03-31-136/03-25-075 as bounded, 03-12-048/03-25-084 as partial. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch97--equipset-command-tooltip-line-secrecy-identity-guid-suppression); 110 capabilities/362 IDs; 71 pending /243 bounded /15 partial /33 metadata.
