@@ -1281,26 +1281,26 @@
     {
       "source_id": "prose-2026-03-12-010",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Dated post heading (2026-03-12), not an API behavior delta. Retained chronology only; no runtime, applicability or implementation credit."
     },
     {
       "source_id": "prose-2026-03-12-011",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Blue-post title (Episode 1: The Secret Menace), not a standalone API behavior delta. Retained source identity only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-12-013",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Post introduction distinguishes upcoming PTR builds from longer-term aura discussion; contextual chronology, not a concrete API delta. Concrete following statements remain individually accounted; no runtime credit."
     },
     {
       "source_id": "prose-2026-03-12-014",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Author scope disclaimer: addon-security notes omit other game/UI changes. Describes the source post, not a simulator exclusion or API behavior requirement; no runtime credit."
     },
     {
       "source_id": "prose-2026-03-12-019",
@@ -1314,8 +1314,8 @@
     {
       "source_id": "prose-2026-03-12-020",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Tentative proposal to consider formatter-object arguments for display-count APIs, explicitly a possible breaking change soliciting feedback. Not evidence that finalized 12.0.5 adopted it; no formatter-input or runtime credit. Existing count requirements remain separate."
     },
     {
       "source_id": "prose-2026-03-12-023",
@@ -1344,8 +1344,8 @@
     {
       "source_id": "prose-2026-03-12-035",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Announcement of a Predicates table in Lua API documentation describing restrictions. Documentation metadata, not a callable runtime API or proof that any restriction is implemented. Concrete security predicates remain separately audited; no runtime credit."
     },
     {
       "source_id": "prose-2026-03-12-038",
