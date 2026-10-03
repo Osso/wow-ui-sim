@@ -12,6 +12,7 @@ mod storage;
 
 pub(super) use input::{read_selector, read_variant_id};
 pub(super) use queries::register;
+pub(super) use storage::publish_storage_update;
 pub(crate) use storage::set_variant_stored_count;
 
 /// Base catalog identity; never synthesize a variant identifier for this key.

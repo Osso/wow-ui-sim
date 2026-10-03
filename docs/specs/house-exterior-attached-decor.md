@@ -1,6 +1,6 @@
 # House exterior attached-decor actions
 
-Batch70 bounds EXACT272/274/276: `C_HouseExterior.SelectFixtureOption`, `SetHouseExteriorSize`, and `SetHouseExteriorType` with `attachedDecorAction`. Inputs live in `src/c_api/c_housing/exterior.rs`; behavior is pending main-owned compiled RED and production implementation. The [existing housing catalog](housing-catalog-variants.md) remains storage identity/count SSOT. No behavioral or profile acceptance is claimed by this inputs commit.
+Batch70 bounds EXACT272/274/276: `C_HouseExterior.SelectFixtureOption`, `SetHouseExteriorSize`, and `SetHouseExteriorType` with `attachedDecorAction`. Explicit inputs live in `src/c_api/c_housing/exterior.rs`; runtime transitions and read snapshots live under `src/c_api/c_housing/exterior/`. The [existing housing catalog](housing-catalog-variants.md) remains storage identity/count SSOT. Compiled RED observed 38 failures and one pass before runtime implementation; GREEN and profile acceptance remain pending.
 
 ## What it must do
 
@@ -48,9 +48,10 @@ Cached sources under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_API
 
 ## Implementation inventory
 
-- `src/c_api/c_housing/exterior.rs`: data structs only, empty-default `HouseExteriorState`, explicit selection/options/placements; no callbacks or mutation helpers.
-- `src/c_api/c_housing.rs`: `pub mod exterior` declaration only.
-- `src/lua_api/state/support_types.rs`: empty-default `HousingState.exterior` field only.
+- `src/c_api/c_housing/exterior.rs`: empty-default data structs and single modern availability decision.
+- `src/c_api/c_housing/exterior/`: authenticated callbacks, live rooted read snapshots, atomic selection/placement changes, and prevalidated catalog storage deltas.
+- `src/c_api/c_housing.rs`: registers exterior alongside catalog; `src/lua_api/state/support_types.rs` holds `HousingState.exterior`.
+- Legacy bootstrap returns its original seeded exterior initializer; only inverse profiles invoke it. Modern registration never falls back to missing Lua methods.
 - `tests/house_exterior_attached_decor.rs`: 39 modern behavioral inputs and one inverse legacy control, automatically discovered by existing grouped `integration` target; no Cargo target added.
 - This spec: contract and inference/native-evidence limits; all behavioral boxes remain unverified.
 
@@ -73,12 +74,13 @@ Fixtures explicitly supply types101/102, fixtures301/302, owner hashes11/22, siz
 
 ### Proof ledger
 
-- Inputs only: no build, test, check, readability or integration gates run by this owner. No compiled RED/GREEN/native parity claim.
+- Input owner ran no builds, tests, checks or verification gates. Main recorded compiled RED in `/tmp/patch-12.0.5-batch70-red-build-result.json` and `-red-run.json`. No native parity claim.
 - `rustfmt --edition 2024 --config skip_children=true` on the four owned Rust files exited0 before inputs commit. Formatting evidence only; main must establish compiled RED before callback implementation.
 
 ## Known gaps (current cycle)
 
-- [ ] Main-owned compiled RED, then callback/query implementation and bounded integration acceptance.
+- [x] Main-owned compiled RED at `5ad54e578`: default build exit0, zero compiler diagnostics; 38 failures / one pass in 8.7s.
+- [ ] GREEN, scoped Rust/security/readability gates, startup and inverse-profile acceptance.
 - [ ] Native failure/coercion/event mapping, storage-event ordering, nil/same-value policies and trusted-host invalid inventory handling remain unproved/inferred.
 - [ ] Native UI, acquisition, pet behavior, global permissions/privacy and declaration dating remain unproved; they are evidence gaps, not waived requirements or completed coverage.
 

@@ -905,6 +905,39 @@ C_HousingNeighborhood = __wow_merge_namespace(C_HousingNeighborhood, {
   TryMoveHouse = __wow_noop,
   TryPurchasePlot = __wow_noop,
 })
+local function install_legacy_exterior()
+  C_HouseExterior = __wow_merge_namespace(C_HouseExterior, {
+    GetCurrentHouseExteriorSize = function() return __wow_housing_exterior_state.selectedSize end,
+    GetCurrentHouseExteriorType = function() return __wow_housing_exterior_state.selectedExteriorType, __wow_housing_exterior_state.selectedExteriorTypeName end,
+    GetHouseExteriorSizeOptions = function()
+      return {
+        selectedSize = __wow_housing_exterior_state.selectedSize,
+        options = {
+          { size = Enum.HousingFixtureSize and Enum.HousingFixtureSize.Medium or 3, name = "Medium" },
+          { size = Enum.HousingFixtureSize and Enum.HousingFixtureSize.Large or 4, name = "Large" },
+        },
+      }
+    end,
+    GetHouseExteriorTypeOptions = function()
+      return {
+        selectedExteriorType = __wow_housing_exterior_state.selectedExteriorType,
+        options = {
+          { houseExteriorTypeID = 1, name = "Sunspire Cottage" },
+          { houseExteriorTypeID = 2, name = "Sunspire Manor" },
+        },
+      }
+    end,
+    GetSelectedFixturePointInfo = function()
+      return __wow_housing_exterior_state.selectedFixturePoint and __wow_housing_clone_table(__wow_housing_exterior_state.selectedFixturePoint) or nil
+    end,
+    HasSelectedFixturePoint = function() return true end,
+    IsAnyDecorAttachedToHouseExterior = function() return true end,
+    IsAnyDecorAttachedToSelectedFixturePoint = function() return true end,
+    SelectFixtureOption = __wow_noop,
+    SetHouseExteriorSize = __wow_noop,
+    SetHouseExteriorType = __wow_noop,
+  })
+end
 C_HouseExterior = __wow_merge_namespace(C_HouseExterior, {
   CancelActiveExteriorEditing = __wow_noop,
   GetCoreFixtureOptionsInfo = function(coreFixtureType)
@@ -915,47 +948,18 @@ C_HouseExterior = __wow_merge_namespace(C_HouseExterior, {
     end
     return nil
   end,
-  GetCurrentHouseExteriorSize = function() return __wow_housing_exterior_state.selectedSize end,
-  GetCurrentHouseExteriorType = function() return __wow_housing_exterior_state.selectedExteriorType, __wow_housing_exterior_state.selectedExteriorTypeName end,
-  GetHouseExteriorSizeOptions = function()
-    return {
-      selectedSize = __wow_housing_exterior_state.selectedSize,
-      options = {
-        { size = Enum.HousingFixtureSize and Enum.HousingFixtureSize.Medium or 3, name = "Medium" },
-        { size = Enum.HousingFixtureSize and Enum.HousingFixtureSize.Large or 4, name = "Large" },
-      },
-    }
-  end,
-  GetHouseExteriorTypeOptions = function()
-    return {
-      selectedExteriorType = __wow_housing_exterior_state.selectedExteriorType,
-      options = {
-        { houseExteriorTypeID = 1, name = "Sunspire Cottage" },
-        { houseExteriorTypeID = 2, name = "Sunspire Manor" },
-      },
-    }
-  end,
-  GetSelectedFixturePointInfo = function()
-    return __wow_housing_exterior_state.selectedFixturePoint and __wow_housing_clone_table(__wow_housing_exterior_state.selectedFixturePoint) or nil
-  end,
   GetHoveredFixtureDebugInfo = function() return nil end,
   HasHoveredFixture = function() return false end,
-  HasSelectedFixturePoint = function() return true end,
   IsAnyDecorAttachedToCoreFixture = function(coreFixtureType)
     return coreFixtureType == Enum.HousingFixtureType.Base
   end,
   IsAnyDecorAttachedToDoor = function() return true end,
-  IsAnyDecorAttachedToHouseExterior = function() return true end,
-  IsAnyDecorAttachedToSelectedFixturePoint = function() return true end,
   IsExteriorDecorHidden = function() return __wow_housing_exterior_state.decorHidden end,
   RemoveFixtureFromSelectedPoint = __wow_noop,
   SelectCoreFixtureOption = __wow_noop,
-  SelectFixtureOption = __wow_noop,
   SetExteriorDecorHidden = function(decorHidden)
     __wow_housing_exterior_state.decorHidden = not not decorHidden
   end,
-  SetHouseExteriorSize = __wow_noop,
-  SetHouseExteriorType = __wow_noop,
 })
 C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
   DeletePreviewCartDecor = __wow_noop,
@@ -1032,3 +1036,4 @@ C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
   end,
   GetProductAvailabilityTimeRemainingSecs = function() return 1 end,
 })
+return install_legacy_exterior

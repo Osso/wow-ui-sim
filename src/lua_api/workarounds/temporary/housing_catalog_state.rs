@@ -7,7 +7,17 @@
 const HOUSING_CATALOG_STATE_LUA: &str = include_str!("housing_catalog_state.lua");
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(HOUSING_CATALOG_STATE_LUA)?;
+    // Only inverse profiles publish the original seeded exterior members.
+    // Modern profiles install real state-backed APIs; no missing-method fallback.
+    let install_legacy = if crate::c_api::c_housing::exterior::MODELED {
+        ""
+    } else {
+        "install()"
+    };
+    let source = format!(
+        "local install = (function()\n{HOUSING_CATALOG_STATE_LUA}\nend)()\n{install_legacy}"
+    );
+    lua.exec(&source)?;
     Ok(())
 }
 

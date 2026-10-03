@@ -125,7 +125,7 @@ fn update_stored_count(
     Ok(true)
 }
 
-fn publish_storage_update(
+pub(super) fn publish_storage_update(
     state: &mut LuaState,
     id: &HousingCatalogEntryVariantID,
 ) -> LuaResult<()> {

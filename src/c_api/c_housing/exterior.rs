@@ -1,4 +1,20 @@
-//! Explicit exterior selections and placements; no native acquisition or mutation behavior.
+//! Explicit exterior selections and placements; native acquisition remains unmodeled.
+
+#[path = "exterior/runtime.rs"]
+mod runtime;
+
+pub(crate) const MODELED: bool = cfg!(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+));
+
+pub(super) fn register(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<()> {
+    if MODELED {
+        runtime::register(state)
+    } else {
+        Ok(())
+    }
+}
 
 use std::collections::BTreeMap;
 
