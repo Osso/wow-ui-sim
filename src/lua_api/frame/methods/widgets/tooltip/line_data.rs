@@ -19,16 +19,35 @@ use rilua::{LuaResult, Val};
 pub(super) fn clear_lines(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let mut sim = borrow_state_mut(state)?;
-    let td = sim.tooltips.entry(id).or_default();
-    td.lines.clear();
-    td.spell_id = None;
-    td.unit_token = None;
-    td.unit_name = None;
-    td.unit_guid = None;
+    let line_ids = {
+        let td = sim.tooltips.entry(id).or_default();
+        td.lines.clear();
+        td.spell_id = None;
+        td.unit_token = None;
+        td.unit_name = None;
+        td.unit_guid = None;
+        td.left_line_ids
+            .iter()
+            .chain(&td.right_line_ids)
+            .copied()
+            .collect::<Vec<_>>()
+    };
+    clear_cached_tooltip_line_text(&mut sim, &line_ids);
     refresh_tooltip_geometry(&mut sim, id);
     drop(sim);
     fire_tooltip_script(state, id, "OnTooltipCleared");
     Ok(0)
+}
+
+fn clear_cached_tooltip_line_text(sim: &mut crate::lua_api::state::SimState, line_ids: &[u64]) {
+    for &line_id in line_ids {
+        if let Some(frame) = sim.widgets.get_mut_visual(line_id) {
+            frame.text = None;
+            frame.text_stripped = None;
+            frame.text_segments.clear();
+            frame.secret_text = false;
+        }
+    }
 }
 
 pub(super) fn add_line(state: &mut LuaState) -> LuaResult<u32> {

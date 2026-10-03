@@ -172,6 +172,10 @@ fn run_macro_text_line(state: &mut LuaState, line: &str) -> LuaResult<()> {
         "/target" | "/tar" => call_named_global(state, "TargetUnit", argument),
         "/focus" => call_named_global(state, "FocusUnit", argument),
         "/cast" | "/spell" => call_named_global(state, "CastSpellByName", argument),
+        #[cfg(feature = "retail-12-0-5")]
+        "/equipset" => {
+            crate::c_api::equipment_set_command::run_equipment_set_command(state, argument)
+        }
         _ => Ok(()),
     }
 }

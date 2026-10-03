@@ -213,6 +213,11 @@ macro_rules! build_empty_sim_state {
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
+            #[cfg(all(
+                feature = "retail-12-0-5",
+                any(feature = "profile-retail", feature = "client-ptr")
+            ))]
+            identity_secret_guids: HashSet::new(),
             current_target: $runtime.current_target,
             previous_target: None,
             current_focus: $runtime.current_focus,
@@ -294,7 +299,6 @@ macro_rules! build_empty_sim_state {
             player_choice: PlayerChoiceState::default(),
             housing_service_enabled: true,
             housing: HousingState::default(),
-            #[cfg(feature = "retail-12-0-5")]
             catalog_shop_products: Default::default(),
             pet_battles: PetBattleState::default(),
             pet: PetState::default(),
@@ -337,6 +341,8 @@ macro_rules! build_empty_sim_state {
             quest_choice_response_id: None,
             quest_poi_map_id: None,
             selected_quest_log_id: None,
+            #[cfg(feature = "retail-12-0-5")]
+            quest_favor: Default::default(),
             abandon_quest_id: None,
             tracked_achievements: ::std::collections::HashSet::new(),
             bank_frame_open: false,

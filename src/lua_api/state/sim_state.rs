@@ -231,6 +231,12 @@ pub struct SimState {
     pub next_report_token: i64,
     pub party_members: Vec<PartyMember>,
     pub party_group_active: bool,
+    /// INFERRED: host-owned identity classification; no automatic context inference.
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    pub identity_secret_guids: HashSet<String>,
     pub current_target: Option<TargetInfo>,
     pub previous_target: Option<TargetInfo>,
     pub current_focus: Option<TargetInfo>,
@@ -326,7 +332,6 @@ pub struct SimState {
     pub housing_service_enabled: bool,
     pub housing: HousingState,
     /// Explicit catalog shop product/display records; empty until host-seeded.
-    #[cfg(feature = "retail-12-0-5")]
     pub catalog_shop_products: crate::c_api::c_catalog_shop_products::CatalogShopProducts,
     pub pet_battles: PetBattleState,
     pub pet: PetState,
@@ -365,6 +370,9 @@ pub struct SimState {
     pub quest_choice_response_id: Option<u32>,
     pub quest_poi_map_id: Option<i32>,
     pub selected_quest_log_id: Option<u32>,
+    /// Explicit host quest favor records and nil-query context; empty by default.
+    #[cfg(feature = "retail-12-0-5")]
+    pub quest_favor: crate::c_api::c_quest_info_system::QuestFavorState,
     pub abandon_quest_id: Option<u32>,
     pub tracked_achievements: HashSet<i32>,
     pub bank_frame_open: bool,

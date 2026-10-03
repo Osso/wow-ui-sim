@@ -40,7 +40,6 @@ pub mod c_azerite_item;
 pub mod c_barber_shop;
 pub mod c_battle_net;
 pub mod c_catalog_shop;
-#[cfg(feature = "retail-12-0-5")]
 pub mod c_catalog_shop_products;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
@@ -95,6 +94,8 @@ pub mod c_player_choice;
 pub mod c_player_interaction_manager;
 pub mod c_pvp;
 pub mod c_quest_hub;
+#[cfg(feature = "retail-12-0-5")]
+pub mod c_quest_info_system;
 #[cfg(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
@@ -127,6 +128,8 @@ pub(crate) mod c_tooltip_info_item_context;
 pub(crate) mod c_tooltip_info_spell_mount;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_transmog_collection;
+#[cfg(feature = "retail-12-0-5")]
+pub mod equipment_set_command;
 #[cfg(feature = "retail-12-0-5")]
 pub use c_transmog_collection::IllusionInfo;
 #[cfg(feature = "retail-12-0-5")]

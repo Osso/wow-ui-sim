@@ -204,6 +204,13 @@ fn party_token_from_guid(sim: &crate::lua_api::state::SimState, guid: &str) -> O
     if !sim.party_group_active {
         return None;
     }
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    if sim.identity_secret_guids.contains(guid) {
+        return None;
+    }
     sim.party_members.iter().enumerate().find_map(|(idx, _)| {
         let party_guid = format!("Player-0000-000000{:02}", idx + 2);
         (party_guid == guid).then(|| format!("party{}", idx + 1))

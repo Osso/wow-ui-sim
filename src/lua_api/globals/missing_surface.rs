@@ -246,7 +246,6 @@ fn register_map_and_encounter_surfaces(state: &mut LuaState) -> LuaResult<()> {
 
 fn register_world_activity_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_catalog_shop::register_c_catalog_shop_surface(state)?;
-    #[cfg(feature = "retail-12-0-5")]
     c_api::c_catalog_shop_products::register_c_catalog_shop_products(state)?;
     c_api::c_chromie_time::register_c_chromie_time_surface(state)?;
     mythic_plus::register_mythic_plus_surface(state)?;

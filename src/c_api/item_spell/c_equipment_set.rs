@@ -274,6 +274,12 @@ fn c_save_equipment_set(state: &mut LuaState) -> LuaResult<u32> {
 
 fn c_use_equipment_set(state: &mut LuaState) -> LuaResult<u32> {
     let set_id = i32::from_stack(state, 1)?;
+    let exists = use_equipment_set_by_id(state, set_id)?;
+    state.push(Val::Bool(exists));
+    Ok(1)
+}
+
+pub(crate) fn use_equipment_set_by_id(state: &mut LuaState, set_id: i32) -> LuaResult<bool> {
     let exists = apply_equipment_set(state, set_id)?;
     if exists {
         fire_event(state, EQUIPMENT_SWAP_PENDING, Vec::new())?;
@@ -284,8 +290,7 @@ fn c_use_equipment_set(state: &mut LuaState) -> LuaResult<u32> {
         )?;
         fire_event(state, EQUIPMENT_SETS_CHANGED, Vec::new())?;
     }
-    state.push(Val::Bool(exists));
-    Ok(1)
+    Ok(exists)
 }
 
 fn c_pickup_equipment_set(state: &mut LuaState) -> LuaResult<u32> {

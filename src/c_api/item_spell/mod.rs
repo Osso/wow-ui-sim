@@ -1,6 +1,8 @@
 mod c_container;
 mod c_currency;
 mod c_equipment_set;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) use c_equipment_set::use_equipment_set_by_id;
 mod c_item;
 pub(crate) mod helpers;
 
