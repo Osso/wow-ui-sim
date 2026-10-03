@@ -1,5 +1,13 @@
 # Patch 12.0.5 API Audit
 
+### Batch83 — spell crit output annotation accepted
+
+After `e8a6b7527`, main accepts an independent GPT-6.1-sol source audit (**ACCEPT WITH QUALIFICATIONS**, eight items PASS) for **exact486 `GetSpellCritChance` output annotation only**. [Acceptance SSOT](../../specs/unit-stat-output-restriction.md#b83-independent-bounded-acceptance--2026-10-03) owns evidence and limits. Existing provider and fixtures unchanged: computed crit rating360/180 +5 =7, one wrapped result, seeded `(2)` fixture exercised by two of the four restriction tests. Cached declaration has no arguments or `SecretArguments`; B82's school guard is not copied.
+
+**No new execution.** Proof is the committed B82 aggregate record of four restriction controls at `d21d4a208` with an empty `src`/`tests`/Cargo diff since. Raw `/tmp/patch-12.0.5-*` artifacts were unreadable on this host; B82's check-protocol qualification carries over. [Coverage SSOT](../../../data/patch-api/sources/12.0.5-page-coverage.json): **87 capabilities/362 IDs; 164 pending /180 bounded /11 partial /7 metadata**.
+
+**Still open from B82:** agent719 metadata audit of the 86-capability accounting was not inspected — its `/tmp/patch-12.0.5-spell-bonus-stat-accounting-proof.{md,json}` reports are absent on this host; no acceptance is inferred. Spell-specific/native formulas, restricted no-argument and extra-argument behavior, activation, older profiles and full suites remain unverified; audit **IN PROGRESS**.
+
 ### Batch82 — independent bounded acceptance
 
 After `7f53f4648`, main accepts716 **12 distinct refreshed PASS** (7 new school/output cases +4 stat controls +1 proxy control). [Acceptance SSOT](../../specs/spell-bonus-stat-security.md#independent-bounded-acceptance--2026-10-03) owns full proof, case inventory and provenance. Current local startup `[]` and loaded probe STDERR `public-accepted secure-accepted tainted-denied`, with no exec-Lua error, establish bounded simulator behavior. Scoped format0, source and readability accepted.
