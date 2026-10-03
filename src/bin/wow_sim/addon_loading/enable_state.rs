@@ -223,6 +223,7 @@ mod tests {
 
     fn metadata(default_enabled: bool) -> super::super::AddonMetadata {
         super::super::AddonMetadata {
+            addon_dir: None,
             title: "TestAddon".to_string(),
             notes: String::new(),
             metadata: HashMap::new(),
