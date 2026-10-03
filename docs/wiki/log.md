@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B79 exact342 inputs checkpoint
+
+Linked committed `a23adf150` [inputs SSOT](../specs/tooltip-unit-buff-security.md) in [B79 audit checkpoint](investigations/patch-12-0-5-api-audit.md#batch79--exact342-inputs-only-checkpoint) and index:18 authored tests, main precommit formatting; worker3815774 asynchronous compiled RED active, no completed RED/GREEN/acceptance. Preserved exact342 pending, UNMODELED access/restricted outputs and historical evidence limits. Latest supplied `5ec536a36` accounting accepted68737/37 unchanged83 capabilities/362 rows,167/174/14/7; mount291 pending. Only three wiki paths edited; no execution, delegation, tests, checks or commit.
+
 ## [2026-10-03] evidence | Mount capability and qualified desktop saved proof accepted
 
 [Mount acceptance SSOT](../specs/mount-spell-identifier.md#independent-qualified-saved-acceptance--2026-10-03) owns main-accepted independent674 and retained654/653 acceptance without reruns. Separate headless startup and three-texture CASC decode do not prove headless CASC integration or GUI/access readiness. Main adds bounded mount capability:83, unchanged167 pending/174 bounded/14 partial/7 metadata,362 IDs; source291 AUDIT-PENDING, source245/B78 unchanged. Historical failure/provenance/broad-suite limits retained. Four authorized docs only; no execution, delegation or commit.

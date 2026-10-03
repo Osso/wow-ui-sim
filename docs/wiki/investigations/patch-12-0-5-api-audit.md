@@ -1,5 +1,13 @@
 # Patch 12.0.5 API Audit
 
+### Batch79 — exact342 inputs-only checkpoint
+
+Committed inputs `a23adf150`: [GetUnitBuff contract SSOT](../../specs/tooltip-unit-buff-security.md) owns the bounded domain, chosen policies and 18 authored tests. Main performed formatting precommit. At this historical checkpoint, asynchronous compiled-RED worker3815774 is active at `/tmp/patch-12.0.5-buff-indexed-red-ops/`; no finished RED, GREEN or acceptance is claimed. Later production does not retroactively change this checkpoint.
+
+The contract uses existing `player.buffs` / `party_members[].buffs` keyed-unit state; old GetUnitBuff discards unit. Input authentication chooses existing rilua AllowedWhenUntainted reads, not generic declassification. Unit-aura access and restricted outputs remain **UNMODELED**; exact342 remains **PENDING**. No native, all-unit, target-identity or full-suite credit.
+
+Latest supplied accounting `5ec536a36`, accepted independent687 **37/37**: **83 capabilities,362 rows;167 pending / 174 bounded / 14 partial / 7 metadata**. This inputs checkpoint changes no counts; mount291 remains pending. Prior accounting/proof checkpoints remain historical.
+
 ### Mount capability — qualified desktop saved acceptance
 
 [Mount acceptance SSOT](../../specs/mount-spell-identifier.md#independent-qualified-saved-acceptance--2026-10-03) owns main-accepted independent674 and retained654/653 proof: bounded mount model, separate headless startup (`casc=false`) and three-texture native CASC decode. No headless CASC integration or GUI/frame/font/all-asset/native API/protected/globalfmt/profile/full-suite readiness credit. Original wrapper failure and missing immutable input/binary/source/content provenance remain disclosed there; no reruns.
@@ -445,6 +453,8 @@ The expanded source audit remains **IN PROGRESS**, with no completed full-page b
 MAIN published rilua `host-secret-bool` revision `6044544b960cd68b4b0c58bb3373412757c2caee` after explicit user approval and remote verification; simulator pin commit `c5ba89ae3` changes only Cargo/lock pin. Independent runtime report `/tmp/rilua-secret-format-independent-proof.md` records 6 formatter PASS, 2 host-guard PASS, fmt/check PASS with pre-existing `strlen` warning—not warning-free. Actual simulator old-pin RED at `eac08bda3` is 1 public PASS / 5 secret FAIL (`/tmp/patch-12.0.5-batch6-secret-format-red.log`). New-pin batch7 compiled successfully and simulator secret-formatting integration PASS 6/6; independent final acceptance and native proof remain unclaimed. Concrete future probe and remaining guard/display boundaries live in the spec. Full page remains IN PROGRESS; 38-row probe classifications are unchanged.
 
 ## Sources
+
+- [GetUnitBuff security inputs](../../specs/tooltip-unit-buff-security.md) — B79 exact342 bounded contract and authored-test inventory; not acceptance evidence.
 
 - [Unit-stat output restriction](../../specs/unit-stat-output-restriction.md) — exact supported/pending matrix, proof and future native probes.
 - [Retained full plaintext patch page](../../../data/patch-api/sources/12.0.5-api-changes.txt) and [provenance](../../../data/patch-api/sources/12.0.5-api-changes.provenance.json) — expanded source audit, not behavior proof.

@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B79 exact342 historical inputs checkpoint
+
+[GetUnitBuff inputs SSOT](../specs/tooltip-unit-buff-security.md) and [B79 checkpoint](investigations/patch-12-0-5-api-audit.md#batch79--exact342-inputs-only-checkpoint) link `a23adf150`:18 authored tests, main precommit formatting, asynchronous compiled RED active—not finished RED/GREEN/acceptance. Exact342 pending; access/restricted outputs UNMODELED. Latest supplied accounting `5ec536a36`, accepted68737/37, remains83 capabilities/362 rows,167/174/14/7; mount291 pending. Checkpoint remains historical after later production.
+
 ## [2026-10-03] evidence | Mount capability and qualified desktop saved proof accepted
 
 [Acceptance SSOT](../specs/mount-spell-identifier.md#independent-qualified-saved-acceptance--2026-10-03) owns main-accepted independent674: separate headless startup (`casc=false`) and three-texture CASC decode, not headless CASC integration or GUI/access readiness. Main adds bounded `mount-spell-identifier` from `22ea15a23`:83 capabilities, unchanged167 pending/174 bounded/14 partial/7 metadata,362 IDs. Source291 overall contract remains AUDIT-PENDING; source245/B78 unchanged. Provenance gaps, original wrapper failure and red broad-suite history remain in SSOT. No reruns.
