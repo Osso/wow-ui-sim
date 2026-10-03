@@ -27,7 +27,7 @@ Cached retail `SpellBookDocumentation.lua` lines 160–176 declare nonnil `spell
 
 ## Known gaps (current cycle)
 
-- [ ] Inputs only: the function is not registered; no compiled RED or GREEN recorded yet.
+- [ ] Development proof: inputs `ffd50c5d1` did not compile (test fixture read the spell ID as `u32`); fixed fixture `96994beaf` RED 0 PASS / 5 FAIL; producer GREEN 35/35 across `spell_book_cast_count::` and `spell_count_outputs::`, cargo exit0, no warnings, `cargo fmt --check` exit0. Independent verification and accounting pending.
 
 ## Out of scope
 

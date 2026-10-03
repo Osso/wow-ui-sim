@@ -124,6 +124,13 @@ fn register_spell_book_item_visual_queries(
         "GetSpellBookItemChargeDuration",
         c_spell_book_get_spell_book_item_charge_duration,
     )?;
+    #[cfg(feature = "retail-12-0-5")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetSpellBookItemCastCount",
+        c_spell_book_get_spell_book_item_cast_count,
+    )?;
     #[cfg(all(
         feature = "retail-12-0-5",
         any(feature = "profile-retail", feature = "client-ptr")
@@ -392,6 +399,34 @@ fn read_duration_spellbook_entry(state: &LuaState) -> Option<u32> {
     use crate::lua_bridge::stack_val;
 
     resolve_player_spellbook_entry(stack_val(state, 1), stack_val(state, 2))
+}
+
+/// Explicit cast count of the book entry's spell; zero when the entry or its count is
+/// missing. Both selectors are VM-authenticated before resolution (`AllowedWhenUntainted`).
+#[cfg(feature = "retail-12-0-5")]
+fn c_spell_book_get_spell_book_item_cast_count(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::stack_val;
+    use rilua::table_security::{unwrap_secret, wrap_host_secret_number};
+
+    let slot = unwrap_secret(state, stack_val(state, 1))?;
+    let bank = unwrap_secret(state, stack_val(state, 2))?;
+    let (count, restricted) = {
+        let sim = borrow_state(state)?;
+        let count = resolve_player_spellbook_entry(slot, bank)
+            .and_then(|spell_id| sim.spell_cast_counts.get(&spell_id).copied())
+            .unwrap_or(0);
+        (
+            f64::from(count),
+            super::charge_state::cooldowns_are_restricted(&sim),
+        )
+    };
+    let result = if restricted {
+        wrap_host_secret_number(state, count)
+    } else {
+        Val::Num(count)
+    };
+    state.push(result);
+    Ok(1)
 }
 
 #[cfg(feature = "retail-12-0-0")]
