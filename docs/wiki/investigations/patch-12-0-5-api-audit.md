@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Batch78 — public direct-spell membership bounded acceptance
+
+After `04586ffe2`, [B78 acceptance SSOT](../../specs/action-bar-membership.md#independent-bounded-acceptance--2026-10-03) owns independent670 acceptance:11 new public membership PASS plus17 existing slot-query controls, local startup `[]`, defaultcheck0/scopedfmt0; globalfmt1 is unowned, not clearance. Credit covers the public direct-spell model only. Source245 remains **PENDING**: special-bar semantics and native AllowedWhenTainted access remain unmodeled. Current accounting: **167 pending / 174 bounded / 14 partial / 7 metadata,362 IDs/82 capabilities**; statuses unchanged, one bounded capability added. Source291 remains pending; ongoing desktop end-to-end startup/CASC probe is not accepted evidence. Audit **IN PROGRESS**.
+
 ### Batch76 — existing-model output annotations accepted
 
 [B76 acceptance SSOT](../../specs/unit-stat-output-restriction.md#b76-existing-model-bounded-acceptance--2026-10-03) owns exact430/432/458/460 bounded output-annotation acceptance642 and accounting `ec7386f86`. Retained verifier647 terminal report records31/31 PASS; named raw artifacts were unavailable, as disclosed in the spec. No raw-artifact revalidation is claimed. Current coverage remains **167 pending / 174 bounded / 14 partial / 7 metadata,362 IDs/81 capabilities**; prior counts are historical. No current-process/native-formula/all-profile/input-secret/full-suite GREEN credit; audit IN PROGRESS.

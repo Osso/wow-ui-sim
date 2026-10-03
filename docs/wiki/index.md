@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B78 public direct-spell membership accepted
+
+[B78 acceptance SSOT](../specs/action-bar-membership.md#independent-bounded-acceptance--2026-10-03) and [audit checkpoint](investigations/patch-12-0-5-api-audit.md#batch78--public-direct-spell-membership-bounded-acceptance) record independent670 after `04586ffe2`:11 new+17 controls PASS, local startup `[]`, defaultcheck0/scopedfmt0; unowned globalfmt1 gives no clearance. Public direct-model credit only; source245 special-bar/native AllowedWhenTainted gaps remain pending. Accounting362 IDs/82 capabilities, unchanged167 pending/174 bounded/14 partial/7 metadata. Mount291 pending; ongoing desktop end-to-end/CASC probe unaccepted.
+
 ## [2026-10-03] evidence | B76 retained accounting, B77 bounded proof and power acceptance
 
 [Native desktop/local development](../remote-builds.md) — normal build/run/check/test workflow, host-local runtime state, and pending runtime proof; [contract](../specs/build-host.md).
