@@ -432,17 +432,22 @@ fn get_spell_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     push_spell_cooldown_info(state, spell_id)
 }
 
+fn read_spell_cooldown_snapshot(
+    state: &mut LuaState,
+    spell_id: u32,
+) -> LuaResult<(f64, f64, bool)> {
+    let sim = borrow_state(state)?;
+    let now = sim.start_time.elapsed().as_secs_f64();
+    let (start, duration) = spell_cooldown_times(&sim, spell_id, now);
+    Ok((
+        start,
+        duration,
+        super::charge_state::cooldowns_are_restricted(&sim),
+    ))
+}
+
 pub(crate) fn push_spell_cooldown_info(state: &mut LuaState, spell_id: u32) -> LuaResult<u32> {
-    let (start, duration, restricted) = {
-        let sim = borrow_state(state)?;
-        let now = sim.start_time.elapsed().as_secs_f64();
-        let (start, duration) = spell_cooldown_times(&sim, spell_id, now);
-        (
-            start,
-            duration,
-            super::charge_state::cooldowns_are_restricted(&sim),
-        )
-    };
+    let (start, duration, restricted) = read_spell_cooldown_snapshot(state, spell_id)?;
     let info = create_table_with_capacity(state, SPELL_COOLDOWN_HASH_FIELDS);
     // Root the public DTO before keys or secret numeric wrappers allocate.
     state.push(info);
