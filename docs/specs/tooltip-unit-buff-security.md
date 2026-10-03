@@ -91,6 +91,12 @@ Names deliberately differ despite shared spell IDs and reused cross-unit instanc
 | `secure_wrong_types_and_public_wrong_types_reject_with_recovery` | Ordinary type errors and concrete recovery controls |
 | `rooted_host_secret_gc_preserves_identity_secrecy_trust_and_fixture_state` | Rooted GC, host wrapper identity/secrecy, original properties and trust |
 
+## Independent verification checkpoint — 2026-10-03
+
+Independent690 accepted bounded functional proof at `a28293ee0`:18 new +24 instance controls +14 filter controls PASS, pinned startup `[]`, default check0/zero diagnostics and scoped format0. Global format1 remains confined to unowned `aura_duration.rs:44`; no whole-tree clearance. Proof: `/tmp/patch-12.0.5-buff-indexed-independent-proof.{md,json}`.
+
+Its root-list identity qualification was valid: the original snapshot returned wrapper tuples, not the root table itself. The test-only followup now includes that table's `Val` in before/after equality, asserting root-list identity directly along with wrapper identity/secrecy. Aura snapshots retain the same ordered records using iterator collection instead of accumulation. Production and control-test sources are unchanged; refreshed new-test execution/independent followup remains pending. Original690 evidence and limitation remain historical, not retroactively upgraded.
+
 ## Known gaps (current cycle)
 
 - Historical prerequisite: main supplied genuine compiled RED before producer implementation; authoring alone was not failing-test evidence.

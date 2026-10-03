@@ -240,13 +240,13 @@ fn secret_env() -> WowLuaEnv {
     env
 }
 
-fn snapshot_roots(env: &WowLuaEnv) -> Vec<(Val, u64)> {
+fn snapshot_roots(env: &WowLuaEnv) -> (Val, Vec<(Val, u64)>) {
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
     let Val::Table(list) = lua.get_global_val("UBSecrets") else {
         panic!("root list")
     };
-    SECRET_NAMES
+    let roots = SECRET_NAMES
         .iter()
         .enumerate()
         .map(|(index, name)| {
@@ -277,17 +277,20 @@ fn snapshot_roots(env: &WowLuaEnv) -> Vec<(Val, u64)> {
                 .alloc_seq();
             (value, sequence)
         })
-        .collect()
+        .collect();
+    (Val::Table(list), roots)
 }
 
 fn snapshot_auras(env: &WowLuaEnv) -> Vec<Vec<AuraInfo>> {
     let state = env.state().borrow();
-    let mut rows = vec![state.player.buffs.clone()];
-    for member in &state.party_members {
-        rows.push(member.buffs.clone());
-        rows.push(member.debuffs.clone());
-    }
-    rows
+    std::iter::once(state.player.buffs.clone())
+        .chain(
+            state
+                .party_members
+                .iter()
+                .flat_map(|member| [member.buffs.clone(), member.debuffs.clone()]),
+        )
+        .collect()
 }
 
 fn assert_auras_unchanged(actual: &[Vec<AuraInfo>], expected: &[Vec<AuraInfo>]) {
@@ -353,7 +356,11 @@ fn secret_probe(script: &str) {
     let roots = snapshot_roots(&env);
     let rows = snapshot_auras(&env);
     env.exec(script).expect("real GetUnitBuff security probe");
-    assert_eq!(snapshot_roots(&env), roots, "wrapper identity/secrecy");
+    assert_eq!(
+        snapshot_roots(&env),
+        roots,
+        "root-list and wrapper identity/secrecy"
+    );
     assert_auras_unchanged(&snapshot_auras(&env), &rows);
 }
 
