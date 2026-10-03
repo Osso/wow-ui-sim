@@ -1,5 +1,13 @@
 # Patch 12.0.5 API Audit
 
+### Batch82 — spell bonus inputs-only checkpoint
+
+Committed `17211be121` contains **seven authored cases/test+spec inputs**. [Spell bonus stat security SSOT](../../specs/spell-bonus-stat-security.md) owns requirements, case inventory and qualified prior probe details; all new requirements remain unchecked, authored only. At the last supplied stage, main asynchronous compiled-RED worker3886715 at `/tmp/patch-12.0.5-spell-bonus-stat-red-ops/` was **compiling**: no completed compiled RED, GREEN or B82 producer yet. This historical checkpoint does not infer RED from expectations or later worker state; no logs polled.
+
+The [qualified prior pinned full-runtime probe](../../specs/spell-bonus-stat-security.md#qualified-prior-full-runtime-failure) at `d7d7b41fc` recorded STDERR public/secure/tainted-secret acceptance followed by an `AllowedWhenUntainted` assertion error. CLI exit0 is **not API PASS**. Original stdout-only marker query falsely reported nonexecution; corrected both-stream query required no rerun. This is simulator defect evidence, not grouped RED or native proof.
+
+Existing intellect proxy and explicit restriction-output model remain unchanged: no new wrapping or formulas. Original-school authentication is planned; school type/nil/range/native policy, automatic restriction activation and older-profile execution remain unverified. Exact482/484 retained deltas concern **output secret flags only**: no argument removal, extra output credit, capability or status change. B81 main-accepted707 and durable corrective713 PASS64/64 remain accepted; original711 missing-artifact48/48 claim remains unaccepted, as recorded below. **85 capabilities,362 ordered IDs;167 pending /177 bounded /11 partial /7 metadata** remain unchanged. Audit **IN PROGRESS**.
+
 ### Batch81 — independent bounded acceptance
 
 After `33e444bad`, [acceptance SSOT](../../specs/tooltip-unit-debuff-security.md#independent-bounded-acceptance--2026-10-03) owns main-accepted707: **71 distinct, all refreshed PASS** (15 Debuff +18 Buff +24 instance +14 filter), current local startup `[]` with `casc=false`, current scoped formatting/default check. Producer `d7d7b41fc` shares `c_tooltip_info_indexed_aura`; Buff preservation is accepted. Older-profile body/wiring preservation is source-proven, **not older-profile execution**. Full proof remains in SSOT, not duplicated here.
