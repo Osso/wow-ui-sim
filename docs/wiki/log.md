@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B97 equipset, tooltip line secrecy, identity GUID suppression
+
+Three slice specs own prose 03-25-121/03-31-178 and 03-31-136/03-25-075 as bounded, 03-12-048/03-25-084 as partial. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch97--equipset-command-tooltip-line-secrecy-identity-guid-suppression); 110 capabilities/362 IDs; 71 pending /243 bounded /15 partial /33 metadata.
+
 ## [2026-10-03] docs | B95/B96 eight explicit-state slices accepted
 
 Linked eight slice specs and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch9596--eight-explicit-state-slices-accepted): twenty source IDs accounted after commit `a0e23199d` and four independent reviews. 107 capabilities/362 IDs; 77 pending /239 bounded /13 partial /33 metadata.

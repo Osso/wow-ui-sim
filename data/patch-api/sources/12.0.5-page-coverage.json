@@ -1807,6 +1807,59 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/catalog-shop-product-structures.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
       "gate_scope": "Inputs and producers share one commit a0e23199d. RED (producers withheld from the working tree) 0 PASS / 16 FAIL; GREEN 16/16, combined run 396 PASS / 1 FAIL (c_system_api::test_c_console_get_all_commands_empty, untouched console command count), cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 caf669b3a28143b86dd45ae1f8eeca25e4b0a66992b5ce70640e3520ee1432bf (scratchpad), own rerun 16/16 exit0. No cargo check or broad suite; older profiles, native and GUI gaps open."
+    },
+    {
+      "id": "equipment-set-command",
+      "symbols": [
+        "/equipset"
+      ],
+      "scope": "B97 prose 03-25-121/03-31-178: /equipset resolves the name against the live equipment-set catalog; unknown, empty and whitespace names neither error nor mutate; a known name runs the existing equipment transition with its three swap events; rename and delete change later lookups. Exact case-sensitive names after parser trimming (inferred); no quoted-name or conditional syntax; C_EquipmentSet.UseEquipmentSet preserved by source comparison only.",
+      "spec": "docs/specs/equipment-set-command.md",
+      "tests": [
+        "tests/equipment_set_command.rs"
+      ],
+      "inputs": "92e4ea045224cd41e1d5deff92afc5488932acb3",
+      "implementation": "92e4ea045224cd41e1d5deff92afc5488932acb3",
+      "compiled_revision": "92e4ea045224cd41e1d5deff92afc5488932acb3",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/equipment-set-command.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share commit 92e4ea045. RED (producers withheld) 0 PASS / 2 FAIL; GREEN 2/2 within a 62/62 narrow run, cargo fmt --check exit0, startup lua-errors []. Broad run 1189 PASS / 3 FAIL: a parked bundle slice since removed, and two tooltip tests that fail identically with this change reverted. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 bc83a97ae035ad51aef209367c4fb540040549f7710865e75e2d521d77470a01, report in data/patch-api/evidence/12.0.5-session-2026-10-03/b97-verify-quest-equipset.md. No cargo check, broad suite on the final tree or older-profile run."
+    },
+    {
+      "id": "tooltip-texture-secrecy",
+      "symbols": [
+        "GameTooltip:AddTexture",
+        "GameTooltip:AddAtlas",
+        "GameTooltip:ClearLines"
+      ],
+      "scope": "B97 prose 03-31-136 and 03-25-075: texture and atlas insertion leave per-line secret-origin state unchanged (existing model, tests only); ClearLines now clears cached line FontString text and secret origin before OnTooltipCleared, so a reused line that receives public text is readable. Requires forbidden-aspects, so no strict historical 12.0.5 acceptance; aggregate tooltip secrecy and general AddLine/DTO secret ingestion unmodeled; cached line references return nil right after ClearLines.",
+      "spec": "docs/specs/tooltip-texture-secrecy.md",
+      "tests": [
+        "tests/tooltip_texture_secrecy.rs"
+      ],
+      "inputs": "92e4ea045224cd41e1d5deff92afc5488932acb3",
+      "implementation": "92e4ea045224cd41e1d5deff92afc5488932acb3",
+      "compiled_revision": "92e4ea045224cd41e1d5deff92afc5488932acb3",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/tooltip-texture-secrecy.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share commit 92e4ea045. RED (producers withheld) 5 PASS / 1 FAIL (the five texture cases pass on the existing model; cached-line reuse fails); GREEN 6/6 within a 62/62 narrow run, cargo fmt --check exit0, startup lua-errors []. Broad run 1189 PASS / 3 FAIL: a parked bundle slice since removed, and two tooltip tests that fail identically with this change reverted. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 c3581b79231718590e04709f79e717ba21d56434b8e1040ebcf9170098af6dab, report in data/patch-api/evidence/12.0.5-session-2026-10-03/b97-verify-tooltip-identity.md. No cargo check, broad suite on the final tree or older-profile run."
+    },
+    {
+      "id": "unit-token-identity-secrecy",
+      "symbols": [
+        "UnitTokenFromGUID"
+      ],
+      "scope": "B97 prose 03-12-048/03-25-084, PARTIAL: UnitTokenFromGUID returns one public nil for party GUIDs in an explicit host identity-secret set, for secure and tainted callers alike, and resolves again once removed. One of the six named token categories (party) and one API; arena, nameplate, boss, raid, target-of-target and the unnamed others are unmodeled; a classified GUID still resolves through player/target/focus aliases.",
+      "spec": "docs/specs/unit-token-identity-secrecy.md",
+      "tests": [
+        "tests/unit_token_identity_secrecy.rs"
+      ],
+      "inputs": "92e4ea045224cd41e1d5deff92afc5488932acb3",
+      "implementation": "92e4ea045224cd41e1d5deff92afc5488932acb3",
+      "compiled_revision": "92e4ea045224cd41e1d5deff92afc5488932acb3",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/unit-token-identity-secrecy.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share commit 92e4ea045. RED (producers withheld) 1 PASS / 4 FAIL; GREEN 5/5 within a 62/62 narrow run, cargo fmt --check exit0, startup lua-errors []. Broad run 1189 PASS / 3 FAIL: a parked bundle slice since removed, and two tooltip tests that fail identically with this change reverted. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 c3581b79231718590e04709f79e717ba21d56434b8e1040ebcf9170098af6dab, report in data/patch-api/evidence/12.0.5-session-2026-10-03/b97-verify-tooltip-identity.md. No cargo check, broad suite on the final tree or older-profile run."
     }
   ],
   "source_rows": [
@@ -1925,9 +1978,11 @@
     },
     {
       "source_id": "prose-2026-03-12-048",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-token-identity-secrecy"
+      ],
+      "status": "partial-development-green",
+      "note": "B97 accepted independent Sol source review of 92e4ea045 (main ran 5/5). Partial by construction: party tokens only; target/focus overlap is unchanged by inspection and untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-12-049",
@@ -2027,9 +2082,11 @@
     },
     {
       "source_id": "prose-2026-03-25-075",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-texture-secrecy"
+      ],
+      "status": "bounded-coverage",
+      "note": "B97 accepted independent Sol source review of 92e4ea045 (main ran 6/6). Row 136 is credited on an existing model with no producer change; immediate post-clear reads, right-side line reuse and geometry are untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-076",
@@ -2047,9 +2104,11 @@
     },
     {
       "source_id": "prose-2026-03-25-084",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-token-identity-secrecy"
+      ],
+      "status": "partial-development-green",
+      "note": "B97 accepted independent Sol source review of 92e4ea045 (main ran 5/5). Partial by construction: party tokens only; target/focus overlap is unchanged by inspection and untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-085",
@@ -2200,9 +2259,11 @@
     },
     {
       "source_id": "prose-2026-03-25-121",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "equipment-set-command"
+      ],
+      "status": "bounded-coverage",
+      "note": "B97 accepted independent Sol source review of 92e4ea045 (main ran 2/2). Name-resolution policy is inferred and only partly tested (casing, names with spaces). Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-122",
@@ -2250,9 +2311,11 @@
     },
     {
       "source_id": "prose-2026-03-31-136",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-texture-secrecy"
+      ],
+      "status": "bounded-coverage",
+      "note": "B97 accepted independent Sol source review of 92e4ea045 (main ran 6/6). Row 136 is credited on an existing model with no producer change; immediate post-clear reads, right-side line reuse and geometry are untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-138",
@@ -2417,9 +2480,11 @@
     },
     {
       "source_id": "prose-2026-03-31-178",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "equipment-set-command"
+      ],
+      "status": "bounded-coverage",
+      "note": "B97 accepted independent Sol source review of 92e4ea045 (main ran 2/2). Name-resolution policy is inferred and only partly tested (casing, names with spaces). Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-179",

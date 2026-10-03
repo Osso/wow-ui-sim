@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B97 equipset, tooltip line secrecy, identity GUID suppression
+
+Three slice specs own prose 03-25-121/03-31-178 and 03-31-136/03-25-075 as bounded, 03-12-048/03-25-084 as partial. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch97--equipset-command-tooltip-line-secrecy-identity-guid-suppression); 110 capabilities/362 IDs; 71 pending /243 bounded /15 partial /33 metadata.
+
 ## [2026-10-03] evidence | B95/B96 eight explicit-state slices accepted
 
 Eight per-slice specs own exact255/257/258/262/263/265/299/315/316/409, structures 631/632/634–637, prose 03-12-043, 03-25-123 and 03-31-180 as bounded, exact297 as partial. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch9596--eight-explicit-state-slices-accepted); 107 capabilities/362 IDs; 77 pending /239 bounded /13 partial /33 metadata.

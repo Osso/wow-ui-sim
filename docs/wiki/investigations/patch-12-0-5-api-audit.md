@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Batch97 — equipset command, tooltip line secrecy, identity GUID suppression
+
+Commit `92e4ea045`. [/equipset](../../specs/equipment-set-command.md) (prose 03-25-121, 03-31-178) and [tooltip secrecy](../../specs/tooltip-texture-secrecy.md) (prose 03-31-136, 03-25-075) are bounded; [identity-secret reverse GUID lookup](../../specs/unit-token-identity-secrecy.md) (prose 03-12-048, 03-25-084) is **partial**: party tokens only. RED 6 PASS / 20 FAIL, GREEN 62/62, startup `[]`; two independent source reviews accepted with qualifications. The same commit restored both catalog shop getters on profiles without `retail-12-0-5`. Quest favor (exact293) was **rejected**: a miss raises while cached reward tooltips call it unconditionally; fix pending. HousingBundleInfo (641) parked: the Lua market action mutates the seeded bundle the new getter no longer reads. Review reports and run logs now live in [evidence](../../../data/patch-api/evidence/12.0.5-session-2026-10-03/README.md). **110 capabilities/362 IDs; 71 pending /243 bounded /15 partial /33 metadata**; audit **IN PROGRESS**.
+
 ### Batch95/96 — eight explicit-state slices accepted
 
 One commit, `a0e23199d`, replaced placeholders with explicit host state for twenty source IDs. Each slice owns its contract and acceptance:

@@ -6,17 +6,17 @@ Bounded contracts for Retail audit rows `prose-2026-03-31-136` (texture insertio
 
 ### Texture insertion — March 31
 
-- [ ] An ordinary file-data-ID texture added through the registered `AddTexture` appends a line without making existing public tooltip text unreadable to an addon.
-- [ ] An ordinary named atlas added through the registered `AddAtlas` appends a line without making existing public tooltip text unreadable to an addon.
-- [ ] Texture and atlas insertion preserve an existing secret-origin text read restriction; neither operation declassifies private content or loses its secure-readable text.
-- [ ] After texture lines are cleared, public text replacement and subsequent texture insertion remain readable; old texture history does not poison replacement content.
-- [ ] Operations on one tooltip do not change another tooltip's text readability or secrecy.
+- [x] An ordinary file-data-ID texture added through the registered `AddTexture` appends a line without making existing public tooltip text unreadable to an addon.
+- [x] An ordinary named atlas added through the registered `AddAtlas` appends a line without making existing public tooltip text unreadable to an addon.
+- [x] Texture and atlas insertion preserve an existing secret-origin text read restriction; neither operation declassifies private content or loses its secure-readable text.
+- [x] After texture lines are cleared, public text replacement and subsequent texture insertion remain readable; old texture history does not poison replacement content.
+- [x] Operations on one tooltip do not change another tooltip's text readability or secrecy.
 
 ### Text-line lifetime — March 25
 
-- [ ] Replacing a cached tooltip FontString's authentic secret text with public text restores addon readability without declassifying a different still-secret line.
-- [ ] Hiding/re-showing a tooltip or adding textures does not declassify unchanged secret text in cached line FontStrings.
-- [ ] Clearing and repopulating a tooltip reuses its cached FontString with readable new public text, not the historical secret-origin denial.
+- [x] Replacing a cached tooltip FontString's authentic secret text with public text restores addon readability without declassifying a different still-secret line.
+- [x] Hiding/re-showing a tooltip or adding textures does not declassify unchanged secret text in cached line FontStrings.
+- [x] Clearing and repopulating a tooltip reuses its cached FontString with readable new public text, not the historical secret-origin denial.
 
 The oracle is actual `GetText` success/content or secret-origin rejection under a genuinely tainted closure, with secure content and authentic VM-wrapper positive controls. `HasSecretValues`, a manually toggled prevention flag, and secret-wrapping the tooltip object are not substitutes for content secrecy.
 
@@ -41,10 +41,18 @@ The oracle is actual `GetText` success/content or secret-origin rejection under 
 
 `tests/tooltip_texture_secrecy.rs` contains six behavioral tests using registered methods, authenticated host-secret strings, concrete text, insertion line counts, pooled FontString identity, and actual caller taint. Gated by both `retail-12-0-5` and `forbidden-aspects` to avoid testing undecoded secret placeholders. Current `client-retail` enables both; historical 12.0.5-only builds do not.
 
+## Development proof and independent bounded acceptance — 2026-10-03
+
+Inputs and producer landed together in `92e4ea045`. RED with producers withheld: 5 PASS / 1 FAIL (the five texture cases pass on the existing model; cached-line reuse fails). GREEN: 6/6 inside a 62/62 narrow run; `cargo fmt --check` exit0; startup `lua-errors` `[]`. A broad run gave 1189 PASS / 3 FAIL: a parked bundle slice (since removed) and two tooltip tests that fail identically with this commit's tooltip change reverted.
+
+Main accepts an independent GPT-6.1-sol source review (it did not rerun tests): **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b97-verify-tooltip-identity.md) SHA256 `c3581b79231718590e04709f79e717ba21d56434b8e1040ebcf9170098af6dab`. Row 136 is credited on an existing model with no producer change; immediate post-clear reads, right-side line reuse and geometry are untested. Checked requirements are bounded simulator proof on the tested fixtures, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): rows prose-2026-03-31-136, prose-2026-03-25-075 under new capability `tooltip-texture-secrecy`; **110 capabilities/362 IDs; 71 pending /243 bounded /15 partial /33 metadata**.
+
 ## Known gaps (current cycle)
 
-- [ ] Compile and run authored tests; execution is forbidden in this authoring task. No RED/GREEN or compile-success claim.
-- [ ] Resolve the source-observed cached-line reuse bug: ClearLines does not clear cached child secret origins; later public synchronization retains the stale flag. Proposed bounded replacement is in the task handoff, not applied.
+- [x] Compiled and executed by the main session; see the proof section.
+- [x] Cached-line reuse: `ClearLines` clears cached child text and secret origin (`line_data.rs`).
 - [ ] Historical Retail 12.0.5-only secret-origin text ingestion is unmodeled because wrapper decoding requires the later forbidden-aspects capability. These tests cannot grant exact historical-epoch acceptance.
 - [ ] General TooltipLine/AddLine/DTO secret-text ingestion and aggregate tooltip-content secrecy remain unmodeled. Passing public-only flag tests would not close these gaps.
 
