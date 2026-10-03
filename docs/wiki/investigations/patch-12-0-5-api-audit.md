@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Batch81 — independent bounded acceptance
+
+After `33e444bad`, [acceptance SSOT](../../specs/tooltip-unit-debuff-security.md#independent-bounded-acceptance--2026-10-03) owns main-accepted707: **71 distinct, all refreshed PASS** (15 Debuff +18 Buff +24 instance +14 filter), current local startup `[]` with `casc=false`, current scoped formatting/default check. Producer `d7d7b41fc` shares `c_tooltip_info_indexed_aura`; Buff preservation is accepted. Older-profile body/wiring preservation is source-proven, **not older-profile execution**. Full proof remains in SSOT, not duplicated here.
+
+[Current page coverage](../../../data/patch-api/sources/12.0.5-page-coverage.json) records **85 capabilities,362 ordered IDs;167 pending /177 bounded /11 partial /7 metadata**, with order/statuses unchanged. Exact347 remains **AUDIT-PENDING**; access/restricted outputs **UNMODELED**. Independent metadata audit remains pending a new agent. General-unit/native/GUI/CASC/all-profile/full-suite gaps and unowned globalfmt1 remain open. Main rejects helper-length findings classified as test code below200 lines; neutral callback naming is deferred, nonblocking. Historical RED, inputs `d860ea62b` and producer wiki `b07e860c8` retain their then-pending states below; B79/B80 terminal corrective proofs unchanged. Audit **IN PROGRESS**.
+
 ### Batch81 — producer checkpoint, proof pending
 
 After producer `d7d7b41fc`, [GetUnitDebuff SSOT](../../specs/tooltip-unit-debuff-security.md) owns implementation inventory, inferred policies and proof requirements. Main supplies RED at `6aa7a391b`: compile exit0/zero diagnostics **89.594915s**; **15 FAIL / 0 PASS**, **1.898831s**, stdout hash `1dc876e2559e10a0df345d37f926900af05e3f5994ba9a2ee3c40729bf2cbccc`. Reached boundaries were empty selected payload, original userdata parsing and API error context; this does **not** prove all downstream GC branches. Supplied evidence only; no logs inspected or workers polled here.
