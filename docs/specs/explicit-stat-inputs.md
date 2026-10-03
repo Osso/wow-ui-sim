@@ -56,14 +56,24 @@ Checked requirements are bounded simulator proof. Independence and environment i
 
 [Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): rows422/434/436/440/452/464/470/472/478/488 `bounded-coverage` under new capability `explicit-stat-inputs`; **92 capabilities/362 IDs; 109 pending /209 bounded /11 partial /33 metadata**.
 
+## B92 `UnitAttackSpeed` swing-time inputs — row 504
+
+Source ID `global api-Unit UnitAttackSpeed-504`, delta `+ SecretWhenUnitStatsRestricted`. Cached `UnitDocumentation.lua` declares nonnil `unit: UnitToken`, returns nonnil `attackSpeed: number` and nilable `offhandAttackSpeed: number`. The provider returned the literal pair `2.0, 2.0` for every unit.
+
+- [ ] Player results read `player.stats.attack_speed` and `player.stats.offhand_attack_speed` live. The base snapshot seeds `2.0` and `Some(2.0)`, keeping the previous player output; both are simulator defaults.
+- [ ] A `None` off-hand returns a plain, non-secret nil as the second of exactly two results.
+- [ ] Target, focus and party snapshots get a synthetic `2.0` main-hand time and no off-hand; unknown units return `0` and nil. Neither reads player inputs.
+- [ ] Under explicit `unit_stats_restricted` each numeric result is a secret host number with its value preserved, plain again when the flag clears, and opaque to tainted callers without changing their taint.
+
+Tests: `tests/unit_attack_speed.rs`, four cases. Unit-token handling is unchanged: a missing or non-string argument still falls back to `"player"`, and the cached `AllowedWhenUntainted` selector policy is not modeled.
+
 ## Known gaps (current cycle)
 
-- [ ] `UnitAttackSpeed` (row 504) still returns a constant pair.
+- [ ] B92 inputs only: `UnitAttackSpeed` producer still returns the constant pair; no compiled RED or GREEN recorded yet.
 - [ ] Default shield block is now zero instead of armor, which changes the block-mitigation number the paper doll shows until a host configures the input.
 
 ## Out of scope
 
 - Native formulas, rating conversions, gear or talent derivation: none exists; these are host-configured snapshot values. `CharacterStats::compute` builds a fresh snapshot, so configured inputs do not survive a recompute.
 - Automatic restriction activation, secret-argument policy, native parity.
-- `UnitAttackSpeed` (row 504): still a constant pair; it needs a per-unit input with a nullable off-hand and is handled separately.
 - Older profiles share these producers and inputs but no older-profile execution or parity is claimed.

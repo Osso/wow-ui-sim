@@ -49,6 +49,10 @@ pub struct CharacterStats {
     pub mod_resilience_damage_reduction: f64,
     pub pvp_power_damage: f64,
     pub pvp_power_healing: f64,
+    /// Main-hand swing time in seconds.
+    pub attack_speed: f64,
+    /// Off-hand swing time; None when no off-hand weapon is modeled.
+    pub offhand_attack_speed: Option<f64>,
     pub armor: i32,
     pub crit_rating: i32,
     pub haste_rating: i32,
@@ -76,6 +80,8 @@ impl CharacterStats {
             agility: 100.0,
             stamina: 350.0,
             intellect: 100.0,
+            attack_speed: 2.0,
+            offhand_attack_speed: Some(2.0),
             armor: 1200,
             ..Self::default()
         }
