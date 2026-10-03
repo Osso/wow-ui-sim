@@ -4,34 +4,36 @@ Bounded 12.0.5 destruction slice for `C_HousingCatalog.DestroyEntry(entryVariant
 
 ## What it must do
 
+Checked requirements mean main-accepted B72 bounded simulator proof, not native semantics or full source-row closure. GC proof covers collection before calls/during dispatch and caller/event nonaliasing only; input-allocation forced GC, direct VM-top/dispatch-error measurement and queued-payload equality remain unproved.
+
 ### Selection and inferred eligibility
 
-- [ ] Accept an accessible full `(recordID, entryType, variantIdentifier)` table and a required bool `destroyAll`, including authenticated actual secrets for untainted callers under the method-local boundary below. Successful calls return zero Lua values. Select only the exact existing variant; never use numeric, base-entry, alternate-variant or legacy-seed lookup.
-- [ ] **Explicit simulator inference:** `destroyable_instance_count` identifies the eligible subset of `num_stored`, independently supplied, not derived from storage. False removes one eligible instance; true removes all eligible instances. Reduce both counts by the same amount. For a mixed stack stored=5/eligible=3, false produces 4/2 and true on a fresh fixture produces 2/0. False followed by true also ends at 2/0, preserving the two exempt/protected instances.
-- [ ] Preserve other variants, other record IDs and other entry types even when identity components overlap. Preserve every dye field and all base-entry metadata. Retain the variant record when both counts reach zero.
-- [ ] **Inferred no-op policy:** missing full keys or zero eligible count succeed with zero returns, no mutation/insertion and no event. Stored instances alone do not grant deletion permission. Default environments contain no catalog records; never invent eligibility/default data.
-- [ ] **Explicit simulator consistency policy:** negative `num_stored`, negative `destroyable_instance_count`, or eligible greater than stored fail before mutation, including stored=0/eligible=1. Do not clamp or repair inputs. One/all produce the same nonempty diagnostic for the same inconsistency, naming `numStored` or the destroyable count as applicable; preserve the original invalid input and all other records, and emit nothing.
+- [x] Accept an accessible full `(recordID, entryType, variantIdentifier)` table and a required bool `destroyAll`, including authenticated actual secrets for untainted callers under the method-local boundary below. Successful calls return zero Lua values. Select only the exact existing variant; never use numeric, base-entry, alternate-variant or legacy-seed lookup.
+- [x] **Explicit simulator inference:** `destroyable_instance_count` identifies the eligible subset of `num_stored`, independently supplied, not derived from storage. False removes one eligible instance; true removes all eligible instances. Reduce both counts by the same amount. For a mixed stack stored=5/eligible=3, false produces 4/2 and true on a fresh fixture produces 2/0. False followed by true also ends at 2/0, preserving the two exempt/protected instances.
+- [x] Preserve other variants, other record IDs and other entry types even when identity components overlap. Preserve every dye field and all base-entry metadata. Retain the variant record when both counts reach zero.
+- [x] **Inferred no-op policy:** missing full keys or zero eligible count succeed with zero returns, no mutation/insertion and no event. Stored instances alone do not grant deletion permission. Default environments contain no catalog records; never invent eligibility/default data.
+- [x] **Explicit simulator consistency policy:** negative `num_stored`, negative `destroyable_instance_count`, or eligible greater than stored fail before mutation, including stored=0/eligible=1. Do not clamp or repair inputs. One/all produce the same nonempty diagnostic for the same inconsistency, naming `numStored` or the destroyable count as applicable; preserve the original invalid input and all other records, and emit nothing.
 
 ### Events and errors
 
-- [ ] Successful nonzero deletion dispatches exactly one real `HOUSING_STORAGE_ENTRY_UPDATED` callback with exactly one full variant-ID argument after both counts change and the model borrow is released. Listener queries see changed storage/eligibility and unchanged dye data. No queued duplicate event.
-- [ ] **Inferred simulator timing, not native claim:** callback completes before `DestroyEntry` returns, following the existing [admin storage producer](housing-storage-entry-updated.md), implementation `5afd73d49`. Reentrant reads and same/other-variant deletions complete inside the listener; nested callbacks see each transition. Outer completion must not overwrite nested state.
-- [ ] Malformed public selectors and missing/non-bool `destroyAll` fail explicitly and atomically, even when a well-formed selector would be missing. Authenticated selector fields must be finite nonnegative integers representable by the existing `i32` fields. Reject missing fields, non-table selectors, strings, fractions, nonfinite values and out-of-range values; no coercion or truncation. Error messages are nonempty; rejected calls do not mutate, insert or emit.
-- [ ] Ordinary tainted addon calls succeed without clearing taint. `DestroyEntry` alone accepts actual secret inputs for untainted callers; addon callers reject with `requires an untainted caller` without clearing taint. This replaces the historical conservative-secret requirement, not the shared catalog/Admin guards.
-- [ ] Authenticate both original top-level arguments before any selector/table or boolean type error. In particular, `(false, secretBool)` denies under addon taint but reaches the table-type error securely; a secret NUM selector authenticates before the table-type error even with a malformed second argument.
-- [ ] Authenticate all three original identity fields and original `destroyAll` before field integer/range/domain checks or model lookup/consistency validation. Missing, malformed, public negative or out-of-range fields cannot mask another field's or arg2's secret denial; malformed/missing arg2 cannot mask any secret field. Authenticated secure inputs still undergo ordinary validation, unknown-key no-op and consistency errors.
-- [ ] Secured tables retain underlying host VM access policy: public tainted indexing/destruction rejects, secret-wrapped tables deny addon callers at authentication, and secure wrapped-table destruction remains allowed. Do not bypass `check_table_access` by accepting a wrapper.
-- [ ] Root underlying table selectors before secret-wrapper allocation; survive GC before calls and during event dispatch. Event IDs are independent of caller tables: later caller-table mutation/GC must not alter event identity or model keys.
-- [ ] Mutation and callbacks remain local to the owning `WowLuaEnv`.
+- [x] Successful nonzero deletion dispatches exactly one real `HOUSING_STORAGE_ENTRY_UPDATED` callback with exactly one full variant-ID argument after both counts change and the model borrow is released. Listener queries see changed storage/eligibility and unchanged dye data. No queued duplicate event.
+- [x] **Inferred simulator timing, not native claim:** callback completes before `DestroyEntry` returns, following the existing [admin storage producer](housing-storage-entry-updated.md), implementation `5afd73d49`. Reentrant reads and same/other-variant deletions complete inside the listener; nested callbacks see each transition. Outer completion must not overwrite nested state.
+- [x] Malformed public selectors and missing/non-bool `destroyAll` fail explicitly and atomically, even when a well-formed selector would be missing. Authenticated selector fields must be finite nonnegative integers representable by the existing `i32` fields. Reject missing fields, non-table selectors, strings, fractions, nonfinite values and out-of-range values; no coercion or truncation. Error messages are nonempty; rejected calls do not mutate, insert or emit.
+- [x] Ordinary tainted addon calls succeed without clearing taint. `DestroyEntry` alone accepts actual secret inputs for untainted callers; addon callers reject with `requires an untainted caller` without clearing taint. This replaces the historical conservative-secret requirement, not the shared catalog/Admin guards.
+- [x] Authenticate both original top-level arguments before any selector/table or boolean type error. In particular, `(false, secretBool)` denies under addon taint but reaches the table-type error securely; a secret NUM selector authenticates before the table-type error even with a malformed second argument.
+- [x] Authenticate all three original identity fields and original `destroyAll` before field integer/range/domain checks or model lookup/consistency validation. Missing, malformed, public negative or out-of-range fields cannot mask another field's or arg2's secret denial; malformed/missing arg2 cannot mask any secret field. Authenticated secure inputs still undergo ordinary validation, unknown-key no-op and consistency errors.
+- [x] Secured tables retain underlying host VM access policy: public tainted indexing/destruction rejects, secret-wrapped tables deny addon callers at authentication, and secure wrapped-table destruction remains allowed. Do not bypass `check_table_access` by accepting a wrapper.
+- [x] Root underlying table selectors before secret-wrapper allocation; survive GC before calls and during event dispatch. Event IDs are independent of caller tables: later caller-table mutation/GC must not alter event identity or model keys.
+- [x] Mutation and callbacks remain local to the owning `WowLuaEnv`.
 
 ### B72 authored security requirements — 2026-10-03
 
-- [ ] Genuine host secret NUM in each identity field independently and all three together accepts securely for one/all; actual secret BOOL false and true select one/all, including combined numeric/table secrets; actual secret TABLE selects the exact full key.
-- [ ] Secure success returns zero values, preserves secure state, changes only the selected variant and emits exactly one full-ID synchronous event. Unrelated variants/environment, dye/base metadata, existing pending request and event queues remain unchanged.
-- [ ] Paired addon calls deny each/all secret fields, each secret bool and secret tables with the host authentication diagnostic. Rejections preserve counts, every dye/base field, pending request, dispatch count, event queue and caller taint.
-- [ ] Top-argument and all-original-fields/arg2 precedence matrices cover type, missing, finite/integer/range/domain, unknown-key and inconsistent-model boundaries before mutation.
+- [x] Genuine host secret NUM in each identity field independently and all three together accepts securely for one/all; actual secret BOOL false and true select one/all, including combined numeric/table secrets; actual secret TABLE selects the exact full key.
+- [x] Secure success returns zero values, preserves secure state, changes only the selected variant and emits exactly one full-ID synchronous event. Unrelated variants/environment, dye/base metadata, existing pending request and event queues remain unchanged.
+- [x] Paired addon calls deny each/all secret fields, each secret bool and secret tables with the host authentication diagnostic. Rejections preserve counts, every dye/base field, pending request, dispatch count, event queue and caller taint.
+- [x] Top-argument and all-original-fields/arg2 precedence matrices cover type, missing, finite/integer/range/domain, unknown-key and inconsistent-model boundaries before mutation.
 
-B72 actual compiled RED is accepted; producer `7f7d0fe8a` follows it. GREEN and independent verifier acceptance remain pending. Scope is `DestroyEntry` alone: shared catalog selectors, Admin and conservative guards remain unchanged. These tests assert simulator host-secret behavior, not mixed-stack native policy, full placement or security-global parity.
+B72 actual compiled RED and independent582 scoped PASS are main-accepted; producer `7f7d0fe8a` plus `ffb1845bc` pure validation extraction have bounded GREEN acceptance below. Scope is `DestroyEntry` alone: shared catalog selectors, Admin and conservative guards remain unchanged. These tests assert simulator host-secret behavior, not mixed-stack native policy, full placement or security-global parity.
 
 ### Cached grounding and consumer evidence — 2026-10-01
 
@@ -74,7 +76,7 @@ All cases require a callable API before exercising it, so invalid-input rejectio
 | `malformed_public_selectors_fail_atomically`, `destroy_all_is_required_public_boolean_even_for_missing_keys`, `inconsistent_counts_fail_explicitly_without_clamping_mutating_or_emitting` | Explicit atomic public/model validation, consistent one/all inconsistency diagnostics |
 | `listener_reads_and_reenters_same_and_other_variant_before_outer_return`, `public_addon_call_preserves_taint`, `guarded_selector_retains_vm_access_policy_without_mutation_on_rejection`, `destruction_and_events_are_environment_local` | Reentrant timing, ordinary addon calls, public VM guard behavior, environment isolation |
 
-### B72 exact tests — compiled RED, GREEN pending
+### B72 exact tests — compiled RED and bounded GREEN accepted
 
 | Exact test | Authored boundary |
 |---|---|
@@ -106,9 +108,24 @@ Historical B72 inputs-only checkpoint (`1b0e7ab99` plus `0f7f47297`): producer-s
 
 Producer `7f7d0fe8a` follows accepted actual RED at `0f7f47297aa9309cb1ae220c4e33b7f5660916a7`, with inputs `1b0e7ab99` + `0f7f47297`: **24 tests, 14 retained PASS / 10 new FAIL**, harness time **7.33s**. Saved build result records **261.349678s**, exit **0**, zero compiler diagnostics; run wrapper records exit **101**, **7.364796727s** elapsed. Artifacts: `/tmp/patch-12.0.5-batch72-red-build-result.json` and `/tmp/patch-12.0.5-batch72-red-run.{json,stdout,stderr}`. Build/run JSON identify the same integration executable hash. Provenance is dirty-combined; protected unowned source was neither touched nor inspected in this audit.
 
-The ten new cases fail at conservative secret rejection or authentication-precedence boundaries. They do not demonstrate ten downstream GC/event/atomicity failures: secure secret calls fail before those later assertions. Source inspection of only `storage.rs` and `destroy_input.rs` establishes the narrow producer wiring/order, not successful execution. **GREEN and independent verifier remain pending.** Existing storage/event/count/cancel-equivalence behavior is retained, not newly accepted by this producer.
+The ten new cases fail at conservative secret rejection or authentication-precedence boundaries. They do not demonstrate ten downstream GC/event/atomicity failures: secure secret calls fail before those later assertions. Source inspection of only `storage.rs` and `destroy_input.rs` establishes the narrow producer wiring/order, not successful execution. At this historical producer checkpoint GREEN and independent verifier were pending; main-accepted independent582 below supersedes that status. Existing storage/event/count/cancel-equivalence bodies remain unchanged.
 
-Exact rows **281/282 remain audit-pending**; current **177 pending / 164 bounded / 14 partial / 7 metadata**, 362 IDs and 77 capabilities remain unchanged. No approval for broad-row, native, all-profile, full-placement, whole-domain or whole-goal credit. Cached full-variant declaration and BOOL true-all/false-one wording ground the call shape; eligible mixed-stack, defaults/no-op, errors and synchronous events remain explicit simulator inferences. Historical 15-case old-fixture/conservative secure-secret rejection proof remains historical and is superseded only after later GREEN acceptance, not by producer presence.
+Exact rows **281/282 remain audit-pending**; current **177 pending / 164 bounded / 14 partial / 7 metadata**, 362 IDs and 77 capabilities remain unchanged. No approval for broad-row, native, all-profile, full-placement, whole-domain or whole-goal credit. Cached full-variant declaration and BOOL true-all/false-one wording ground the call shape; eligible mixed-stack, defaults/no-op, errors and synchronous events remain explicit simulator inferences. Historical 15-case old-fixture proof remains separate; its conservative secure-secret rejection is superseded for DestroyEntry by accepted B72 GREEN, not by producer presence.
+
+### B72 independent bounded acceptance — 2026-10-03
+
+Main accepts **independent582 scoped PASS** at `ffb1845bc`, after producer `7f7d0fe8a` and pure nonnegative-validation extraction. Evidence: `/tmp/patch-12.0.5-destroy-entry-secret-independent-proof.{md,json}`. Model, publication, Admin and shared input bodies unchanged. No **B71 89-case reuse**: full body/test/wiring equivalence was not established in this scope.
+
+| Evidence | Result / boundary |
+|---|---|
+| Saved GREEN integration compilation | 160.637006766s, exit0, zero diagnostics |
+| Fresh distinct saved GREEN behavior | **35 PASS = 24 DestroyEntry + 11 Admin/storage**, runner 9.64s + 2.00s; independently inspected, not rerun |
+| Saved startup | exit0, `[]`, zero errors, 5.546410418s; saved main run, not native UI proof |
+| Independent exact scoped format/default check | exit0, zero diagnostics; check143.492908539s includes build-lock wait, separate duration unmeasured; dirty-combined checkout, not integration compilation |
+
+Actual input RED `0f7f47297` remains **14 PASS / 10 FAIL**, compiled261.349678s/zero diagnostics, runner7.33s. Ten secret-boundary failures do not prove ten downstream failures. All modeled requirements above are checked only at the report's bounded behavioral boundaries. GC covers before-call/during-dispatch collection and nonaliasing, not forced input-allocation GC; cleanup has source/indirect survival proof, not direct VM-top or dispatch-error measurement. Queue names/order are observed, not queued-payload equality. Helper-length and embedded-Lua matrix-nesting advisories are nonblocking; no unrequested refactor or new scope.
+
+Accounting `c6b23304c` updates only existing capability and notes281/282; new accounting validation remains pending with a separate agent. **STATUS remains audit-pending**, not native all-stack/literal-row closure: **177 pending / 164 bounded / 14 partial / 7 metadata**, **362 IDs / 77 capabilities unchanged**. Native semantics, mixed eligible policy, UI/all-profile/global privacy, cumulative epoch, dirty/globalfmt and historical limits remain. Broader audit stays open.
 
 ### Historical reconciled bounded proof — 2026-10-01
 
@@ -119,7 +136,7 @@ Exact rows **281/282 remain audit-pending**; current **177 pending / 164 bounded
 | Full variant selector and required boolean | Behavioral PASS: exact record/type/variant isolation, zero returns, atomic malformed/public/model rejection |
 | Eligible one/all mutation and missing/zero no-op | Behavioral PASS: mixed 5/3 stack to 4/2 or 2/0, exempt instances and metadata retained; subset/no-op/consistency policies inferred, not native all-stack proof |
 | Mutation before synchronous callback and nested deletion | Behavioral PASS: one full-ID event per change, reentrant reads/deletions, no queued duplicate or outer overwrite; native timing/coalescing unknown |
-| Taint, secret inputs and secured tables | Historical Behavioral PASS for ordinary addon taint and real host guards; historical conservative secure/tainted secret rejection belongs to the old fixture; supersession awaits later B72 GREEN acceptance and grants no current secret-acceptance credit |
+| Taint, secret inputs and secured tables | Historical Behavioral PASS for ordinary addon taint and real host guards; historical conservative secure/tainted secret rejection belongs to the old fixture; superseded only for DestroyEntry by B72 bounded GREEN above, without native secret-semantics credit |
 | Publisher rooting and error cleanup | Source inspection only; no forced-GC or dispatch-error behavioral proof |
 
 Parent `batch21-green-startup-run.json` records exit **0**, stdout **[]**, 4.2461s; saved parent evidence, **not independent startup proof**. Exact [coverage](../../data/patch-api/sources/12.0.5-page-coverage.json) rows `global api-C_HousingCatalog-DestroyEntry-281`/`-282` alone link bounded selector rename/full variant-argument coverage. Their audit-pending classification is retained; all **362 IDs**, source hash and unrelated rows/counts remain **308 pending / 40 bounded / 14 partial**. No native/all-profile or whole-row/page closure.
@@ -127,7 +144,7 @@ Parent `batch21-green-startup-run.json` records exit **0**, stdout **[]**, 4.246
 ## Known gaps (current cycle)
 
 - [x] B72 actual compiled RED before the method-local producer change accepted: 14 PASS / 10 FAIL; not GREEN acceptance.
-- [ ] B72 GREEN secure secret acceptance/addon denial, ordering, atomicity and rooting proof (main-owned).
+- [x] B72 bounded GREEN secure secret acceptance/addon denial, ordering, atomicity and limited rooting proof; main accepts independent582. Accounting validation remains separately pending.
 - [ ] Native mixed-stack eligibility, fixed-five UI/batch meaning, invalid-input errors, secret access and event timing remain unknown.
 
 Historical 15-case RED and GREEN above remain explicit historical evidence, not B72 completion.
