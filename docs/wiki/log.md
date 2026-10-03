@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B94 GetSpellBookItemCastCount accepted
+
+Linked [acceptance SSOT](../specs/spell-book-cast-count.md#development-proof-and-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch94--getspellbookitemcastcount-registered-and-accepted): row318 bounded after RED `96994beaf`, producer `a881a1729` and independent review. 99 capabilities/362 IDs; 97 pending /220 bounded /12 partial /33 metadata.
+
 ## [2026-10-03] docs | B93 GetAuraDuration accepted
 
 Linked [acceptance SSOT](../specs/aura-duration-object.md#development-proof-and-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch93--getauraduration-registered-and-accepted): row380 bounded after inputs `b9b9eeec8`, producer `012cf889a` and independent review. 98 capabilities/362 IDs; 98 pending /219 bounded /12 partial /33 metadata.

@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B94 GetSpellBookItemCastCount registered and accepted
+
+[Contract and acceptance SSOT](../specs/spell-book-cast-count.md#development-proof-and-independent-bounded-acceptance--2026-10-03) owns exact318: newly registered spell-book cast count with cooldown-restricted output and authenticated selectors. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch94--getspellbookitemcastcount-registered-and-accepted); 99 capabilities/362 IDs; 97 pending /220 bounded /12 partial /33 metadata.
+
 ## [2026-10-03] evidence | B93 GetAuraDuration registered and accepted
 
 [Contract and acceptance SSOT](../specs/aura-duration-object.md#development-proof-and-independent-bounded-acceptance--2026-10-03) owns exact380: newly registered duration-object query with `AllowedWhenUntainted` argument authentication, RED/GREEN and independent Sol acceptance. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch93--getauraduration-registered-and-accepted); 98 capabilities/362 IDs; 98 pending /219 bounded /12 partial /33 metadata.

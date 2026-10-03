@@ -1648,6 +1648,23 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/aura-duration-object.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
       "gate_scope": "RED b9b9eeec8 0/6; GREEN 012cf889a 33/33 (6 new + 9 expiration + 18 refresh controls), cargo exit0 zero warnings, cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 ea0231986538c8cac01c3a77c2e486ede9bde3c5520b17d962757ea8bb4be963 (scratchpad), own reruns 6/9/18 exit0. No cargo check or broad suite; native/GUI/older-profile gaps open."
+    },
+    {
+      "id": "spell-book-cast-count",
+      "symbols": [
+        "C_SpellBook.GetSpellBookItemCastCount"
+      ],
+      "scope": "B94 exact318 SecretWhenCooldownsRestricted on a newly registered query: player-bank slot resolved to its spell through existing spell book data, explicit spell-keyed cast count read live, one zero for missing count/slot/bank or non-integral slot, secret host number (including zero) only under the explicit cooldown restriction in retail/PTR 12.0.5 builds, unrelated to unit-stat restriction; both selectors VM-authenticated before resolution, untainted secret selectors accepted, tainted denied with taint and secrecy retained. Host-input count shared with C_Spell.GetSpellCastCount; no pet bank, non-spell entries, reagent derivation, passive castability, wrong-type policy, automatic activation or native parity.",
+      "spec": "docs/specs/spell-book-cast-count.md",
+      "tests": [
+        "tests/spell_book_cast_count.rs"
+      ],
+      "inputs": "96994beaff36544068448db279e4832288448896",
+      "implementation": "a881a17291bf6cde1105e40b92cdd8c588d090cd",
+      "compiled_revision": "a881a17291bf6cde1105e40b92cdd8c588d090cd",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/spell-book-cast-count.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "First inputs ffd50c5d1 failed to compile (test fixture type); RED 96994beaf 0/5; GREEN a881a1729 35/35 (5 new + 30 spell_count_outputs controls), cargo exit0 zero warnings, cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 b549a8d5f36a10ae8ff94da33458a912c76fbd7e2cbb4b8f24251b79a8bf46c2 (scratchpad), own reruns 5/5 and 30/30 exit0. Feature matrix inspected not built; no cargo check or broad suite; native/GUI/older-profile gaps open."
     }
   ],
   "source_rows": [
@@ -2752,9 +2769,11 @@
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemCastCount-318",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-book-cast-count"
+      ],
+      "status": "bounded-coverage",
+      "note": "B94 accepted independent Sol review of a881a1729: function newly registered; spell-keyed explicit cast count through the player book slot, zero on a miss, secret only under the cooldown restriction, selectors authenticated before resolution. 5 new + 30 controls rerun independently. Non-spell/flyout entries, passive castability, reagent derivation, feature-matrix builds and native parity excluded."
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemCharges-320",

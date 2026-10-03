@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Batch94 — GetSpellBookItemCastCount registered and accepted
+
+**Exact318 `C_SpellBook.GetSpellBookItemCastCount`** (`SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted`) was not registered. [Contract and acceptance SSOT](../../specs/spell-book-cast-count.md#development-proof-and-independent-bounded-acceptance--2026-10-03). It resolves the player book slot to its spell, returns the explicit cast count shared with `C_Spell.GetSpellCastCount`, zero on a miss, secret only under the cooldown restriction, with both selectors authenticated first. RED `96994beaf` 0/5 after a non-compiling first fixture; producer `a881a1729` GREEN 35/35, startup `[]`; independent review accepted with qualifications and reran 35/35. Non-spell entries and passive castability have no model. **99 capabilities/362 IDs; 97 pending /220 bounded /12 partial /33 metadata**; audit **IN PROGRESS**.
+
 ### Batch93 — GetAuraDuration registered and accepted
 
 **Exact380 `C_UnitAuras.GetAuraDuration`** (`AllowedWhenTainted -> AllowedWhenUntainted`) was not registered at all: the name resolved to a nil-returning placeholder. [Contract and acceptance SSOT](../../specs/aura-duration-object.md#development-proof-and-independent-bounded-acceptance--2026-10-03). It now returns a duration object built from the stored aura times, errors for an invalid instance, and authenticates both arguments before validation through the Batch86 reader. Inputs `b9b9eeec8` RED 0/6; producer `012cf889a` GREEN 33/33, startup `[]`; independent review accepted with qualifications and reran 33/33. Mixed zero duration/expiration records are not rejected and aura access is unmodeled. **98 capabilities/362 IDs; 98 pending /219 bounded /12 partial /33 metadata**; audit **IN PROGRESS**.
