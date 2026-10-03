@@ -226,7 +226,7 @@ fn push_fixture_point(state: &mut LuaState, point: &ExteriorFixturePoint) -> Val
         state,
         row,
         "canSelectionBeRemoved",
-        Val::Bool(point.can_remove),
+        Val::Bool(point.can_remove && point.selected_fixture_id.is_some()),
     );
     let options = push_sequence(state, &point.options, push_fixture_option);
     attach_child(state, row, "fixtureOptions", options);

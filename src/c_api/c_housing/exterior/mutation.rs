@@ -4,6 +4,7 @@ use crate::c_api::c_housing::catalog::HousingCatalogEntryVariantID;
 use crate::c_api::c_housing::exterior::{EXTERIOR_CUSTOMIZATION_MODE, HouseExteriorState};
 use crate::lua_api::state::HousingState;
 
+const REMOVE_FIXTURE_API: &str = "C_HouseExterior.RemoveFixtureFromSelectedPoint";
 const SUCCESS: i32 = 0;
 const ALREADY_SIZE: i32 = 42;
 const ALREADY_TYPE: i32 = 43;
@@ -72,6 +73,51 @@ pub(super) fn update_exterior(
     };
     update_selection(housing, change, target);
     Ok((SUCCESS, stored))
+}
+
+pub(super) fn remove_fixture(
+    housing: &mut HousingState,
+    action: AttachedDecorAction,
+) -> LuaResult<(i32, Vec<HousingCatalogEntryVariantID>)> {
+    let owner = validate_removal(housing)?;
+    let affected = find_affected_placements(housing, Some(owner));
+    let stored = if action == AttachedDecorAction::Store {
+        storage::store_placements(housing, &affected, REMOVE_FIXTURE_API)?
+    } else {
+        detach_placements(housing, &affected);
+        Vec::new()
+    };
+    housing
+        .exterior
+        .selected_fixture_point
+        .as_mut()
+        .expect("validated selected fixture point")
+        .selected_fixture_id = None;
+    Ok((SUCCESS, stored))
+}
+
+fn validate_removal(housing: &HousingState) -> LuaResult<u32> {
+    if !housing.inside_owned_plot || housing.active_house_editor_mode != EXTERIOR_CUSTOMIZATION_MODE
+    {
+        return Err(runtime_error(format!(
+            "{REMOVE_FIXTURE_API}: requires an owned plot in ExteriorCustomization mode"
+        )));
+    }
+    let point = housing
+        .exterior
+        .selected_fixture_point
+        .as_ref()
+        .ok_or_else(|| {
+            runtime_error(format!(
+                "{REMOVE_FIXTURE_API}: requires a selected fixture point"
+            ))
+        })?;
+    if point.selected_fixture_id.is_none() || !point.can_remove {
+        return Err(runtime_error(format!(
+            "{REMOVE_FIXTURE_API}: requires a removable current fixture"
+        )));
+    }
+    Ok(point.owner_hash)
 }
 
 fn validate_host(housing: &HousingState, change: ExteriorChange) -> LuaResult<()> {
