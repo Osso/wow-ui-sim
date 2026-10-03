@@ -73,6 +73,10 @@ Current Forever integration compile exits0 with zero diagnostics in192.543488s. 
 
 Only313/326 promote: **186 pending/161 bounded/14 partial/1 metadata,362 ordered IDs/76 capabilities**. Preserved secret-spell nil behavior earns no AllowedWhenTainted or NeverSecret input credit. Inferred policies, native capture/acquisition, nominal scalar type, global privacy, pet/future and UI parity remain unproved. Evidence is dirty-combined; protected source remains uninspected/unhashed; historical globalfmt1 and502 process failure remain unresolved. Authored October2 CDT, observed host/Git timestamps and this October3 UTC acceptance header remain separate provenance.
 
+### Test-only LoC fixture repair — 2026-10-03
+
+Main-supplied `c896ffe77` repairs two cases with explicit real player-book slot5/spell19750, an inactive host record and public bank. Prior attempts failed on implicit defaults. No production change; new targeted **GREEN PENDING**. Combined B74/LoC compilation failed E0277 because fixtures used unsupported `eval::<u32>`; no tests ran. Main changed only the result type to `i32` plus checked key conversion; corrected compilation/execution proof is pending, not behavioral RED. Historical bounded acceptance above remains revision-scoped, not proof for these repaired cases or current whole HEAD; no new acceptance or native parity credit.
+
 ## Known gaps (current cycle)
 
 - [x] Main compiled inputs and observed RED before production.

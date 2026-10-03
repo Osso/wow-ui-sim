@@ -1,5 +1,13 @@
 # Patch 12.0.5 API Audit
 
+### Batch74 — Ambiguate inputs-only checkpoint
+
+Main-supplied inputs `2a4f34570`: **22 cases = 18 new secret-context boundaries + 4 public controls**, described in the read-only [Ambiguate contract](../../specs/ambiguate-context.md). Compiled behavioral **RED PENDING**; producer **UNIMPLEMENTED**. Combined B74/LoC compilation failed E0277 on unsupported fixture `eval::<u32>`; no tests ran, so this is not RED. Main changed only the result type to `i32` plus checked key conversion; corrected proof remains pending. Row415 remains pending; row416 AllowedWhenTainted remains separately pending. No authored secret argument1 or output-secrecy credit; no native parity or acceptance. Accounting checkpoint remains **175 pending / 166 bounded / 14 partial / 7 metadata**, 362 ordered IDs/78 capabilities; no promotion. Audit **IN PROGRESS**.
+
+### Test-only fixture repairs — pending proof checkpoint
+
+[Exterior repair SSOT](../../specs/house-exterior-attached-decor.md#test-only-exterior-fixture-repair--2026-10-03) records `365643a96`, four all-profile assertions with explicit modern host state and saved async64-case exit0; main now accepts independent609 scoped64 exterior +4 pinned-child CLI passes, not new B73 contract acceptance; check interruption and dirty-combined limits remain. [LoC repair SSOT](../../specs/spell-book-loss-of-control-outputs.md#test-only-loc-fixture-repair--2026-10-03) records `c896ffe77`, two explicit book/host fixtures after failed implicit defaults; new targeted **GREEN PENDING**. Neither changes production or clears historical full-suite failures, current whole HEAD or native parity.
+
 ### Batch72 — DestroyEntry bounded acceptance
 
 [DestroyEntry contract/proof SSOT](../../specs/housing-destroy-entry.md#b72-implementation-and-accepted-compiled-red--2026-10-03) records producer `7f7d0fe8a` after accepted compiled RED `0f7f47297`, inputs `1b0e7ab99` + `0f7f47297`: **24 tests, 14 retained PASS / 10 new FAIL**, harness 7.33s; compile 261.349678s, exit0/zero diagnostics. Saved run wrapper elapsed 7.364796727s, exit101. Ten secret/authentication failures do not prove downstream GC/event assertions. Artifact provenance and exact test boundaries live in the linked SSOT; historical GREEN/verifier pending status is superseded by **main-accepted independent582 scoped PASS** at `ffb1845bc`, after `7f7d0fe8a` plus pure validation extraction. [Acceptance SSOT](../../specs/housing-destroy-entry.md#b72-independent-bounded-acceptance--2026-10-03) owns fresh **35 PASS = 24 DestroyEntry + 11 Admin/storage**, saved startup0 `[]`, scopedfmt/check0 zero diagnostics. No B71 89-case reuse: full body/test/wiring equivalence not established here.

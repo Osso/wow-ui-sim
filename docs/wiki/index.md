@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B74 inputs and fixture-repair checkpoint
+
+[B74 checkpoint SSOT](investigations/patch-12-0-5-api-audit.md#batch74--ambiguate-inputs-only-checkpoint) records inputs-only status: combined compilation failed, no tests ran, no behavioral RED or producer. [Repair checkpoint](investigations/patch-12-0-5-api-audit.md#test-only-fixture-repairs--pending-proof-checkpoint) links independent609 scoped exterior acceptance and LoC targeted GREEN PENDING. Historical suite ledger remains red; dirty-combined/check-interruption limits retained. No accounting promotion, whole-HEAD or native parity credit. Ambiguate spec unchanged.
+
 ## [2026-10-03] evidence | B73 bounded removal acceptance
 
 [Removal acceptance SSOT](../specs/house-exterior-attached-decor.md#b73-independent-bounded-acceptance--2026-10-03) and [Batch73 audit](investigations/patch-12-0-5-api-audit.md#batch73--fixture-removal-bounded-acceptance) record60 modern PASS, separate Forever inverse1, startup `[]`, scopedfmt/check0. Accounting `cbf001ba5`, independent603 PASS33/33: exact267/268 only;175 pending/166 bounded/14 partial/7 metadata,362 IDs/78 capabilities. Full suite remains red:60 ordinary and11 custom failures; doctests0 PASS/3 ignored. Inferred/native limits and historical evidence remain; broader audit open.
