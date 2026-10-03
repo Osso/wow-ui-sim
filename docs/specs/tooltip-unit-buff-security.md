@@ -1,35 +1,35 @@
 # Tooltip unit-buff input security
 
-B79 **exact342** removes arg1 `NeverSecret` from `C_TooltipInfo.GetUnitBuff` in [the Retail12.0.5 source](../../data/patch-api/sources/12.0.5-api-changes.txt). This bounded producer slice requires meaningful existing-model lookup and the pinned VM's secure secret-input boundary. Modern input/lookup ownership lives in `src/c_api/c_tooltip_info_unit_buff.rs`; [Lua API architecture](../lua-api.md) describes the runtime boundary. **Exact342 stays pending.** Main supplied actual compiled RED before this implementation; integration commit, asynchronous GREEN and independent acceptance remain main-owned.
+B79 **exact342** removes arg1 `NeverSecret` from `C_TooltipInfo.GetUnitBuff` in [the Retail12.0.5 source](../../data/patch-api/sources/12.0.5-api-changes.txt). This bounded producer slice requires meaningful existing-model lookup and the pinned VM's secure secret-input boundary. Modern input/lookup ownership lives in `src/c_api/c_tooltip_info_unit_buff.rs`; [Lua API architecture](../lua-api.md) describes the runtime boundary. **Exact342 stays pending.** Main supplied actual compiled RED before implementation and accepts [bounded independent evidence](#independent-bounded-acceptance--2026-10-03). Native access/output and whole-source acceptance remain open.
 
 ## What it must do
 
 ### Registered API and bounded live lookup
 
-- [ ] Call the real registered `C_TooltipInfo.GetUnitBuff(unitToken, index, filter?)`; no function replacement, fake namespace, or new production fixture.
-- [ ] Resolve exact `player`, `party1`, and `party2` against current `player.buffs` and `party_members[idx].buffs`. Use an explicit host fixture, not seeded roster/catalog assumptions. A party query must not return player content.
-- [ ] Select a positive **1-based filtered index**, not a raw-vector offset or aura instance ID. Helpful selection must skip a harmful record interleaved in `player.buffs`.
-- [ ] Omitted or public nil filter defaults to helpful. `HELPFUL|PLAYER` excludes records whose existing `is_from_player_or_player_pet` is false before indexing; public and secret filters must affect meaningful results, not remain ignored.
-- [ ] Honor the existing per-unit blocked-aura state before indexing. Blocking party1 instance201 shifts its remaining record to index1; party2 instance201 remains visible. Blocking all eligible records yields a true miss.
-- [ ] Missing selected records, out-of-range indices, and nonpositive indices return exactly one fresh line-empty UnitAura DTO with only `type` and `lines`, preserving current `emptyTooltip` shape.
-- [ ] Unsupported `target`, `pet`, `focus`, `raid1`, `party3` in this two-member fixture, unknown and empty tokens must not fall back to player. General unit resolution and target identity are not credited.
-- [ ] Subsequent queries observe live host mutation, removal and clear. Player/party stores and separate environments stay isolated; previously returned DTOs remain snapshots. Calls do not mutate any fixture aura field. DTO, lines and line tables are fresh; caller mutation cannot affect other results or host records.
+- [x] Call the real registered `C_TooltipInfo.GetUnitBuff(unitToken, index, filter?)`; no function replacement, fake namespace, or new production fixture.
+- [x] Resolve exact `player`, `party1`, and `party2` against current `player.buffs` and `party_members[idx].buffs`. Use an explicit host fixture, not seeded roster/catalog assumptions. A party query must not return player content.
+- [x] Select a positive **1-based filtered index**, not a raw-vector offset or aura instance ID. Helpful selection must skip a harmful record interleaved in `player.buffs`.
+- [x] Omitted or public nil filter defaults to helpful. `HELPFUL|PLAYER` excludes records whose existing `is_from_player_or_player_pet` is false before indexing; public and secret filters must affect meaningful results, not remain ignored.
+- [x] Honor the existing per-unit blocked-aura state before indexing. Blocking party1 instance201 shifts its remaining record to index1; party2 instance201 remains visible. Blocking all eligible records yields a true miss.
+- [x] Missing selected records, out-of-range indices, and nonpositive indices return exactly one fresh line-empty UnitAura DTO with only `type` and `lines`, preserving current `emptyTooltip` shape.
+- [x] Unsupported `target`, `pet`, `focus`, `raid1`, `party3` in this two-member fixture, unknown and empty tokens must not fall back to player. General unit resolution and target identity are not credited.
+- [x] Subsequent queries observe live host mutation, removal and clear. Player/party stores and separate environments stay isolated; previously returned DTOs remain snapshots. Calls do not mutate any fixture aura field. DTO, lines and line tables are fresh; caller mutation cannot affect other results or host records.
 
 ### Secret-input boundary — chosen simulator contract
 
 Cached retail `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua`, full `GetUnitBuff` block (lines1238–1257), declares `MayReturnNothing`, `RequiresUnitAuraAccess`, `SecretWhenUnitAuraRestricted`, and `SecretArguments="AllowedWhenUntainted"`. Arguments are required `unitToken:UnitTokenRestrictedForAddOns`, required `index:luaIndex`, and nullable `filter:AuraFilters`; return is `TooltipData`. These declarations do not establish native lookup, miss/error policy, output secrecy, or payload parity.
 
-- [ ] Authenticate genuine host-secret values at **all three original positions before parsing or state lookup**, using existing `unwrap_secret` authorization. A secure secret unit must select party1's concrete content, a secure secret index must select the concrete filtered row, and a secure secret filter must enforce PLAYER selection. Secure secret NIL filter defaults to helpful. Combined secrets must support both meaningful matches and actual filtered misses.
-- [ ] Tainted secret use is denied at every position, even with invalid public arguments, unsupported units, missing indices, or malformed secret payloads. Never silently declassify or permit a lookup miss to short-circuit authentication. Ordinary public calls from tainted callers continue to work.
-- [ ] Secure malformed secret BOOL/table/actual Frame inputs and public wrong-type inputs receive ordinary type errors, not VM authorization denial. Required index secret STRING is invalid. Error messages identify `C_TooltipInfo.GetUnitBuff`, do not expose private payloads, and preserve caller taint. Tests distinguish the existing rilua `requires an untainted caller` diagnostic from type errors; no native error-wording claim.
-- [ ] After secure acceptance, tainted denial, ordinary errors, public recovery and forced GC, rooted input wrappers retain secrecy, host userdata identity/allocation sequence and rooted-list identity. Original table/Frame properties, all host aura fields, caller taint and outer secure context remain unchanged. No authentic secret BOOL identity comparison from tainted Lua.
+- [x] Authenticate genuine host-secret values at **all three original positions before parsing or state lookup**, using existing `unwrap_secret` authorization. A secure secret unit must select party1's concrete content, a secure secret index must select the concrete filtered row, and a secure secret filter must enforce PLAYER selection. Secure secret NIL filter defaults to helpful. Combined secrets must support both meaningful matches and actual filtered misses.
+- [x] Tainted secret use is denied at every position, even with invalid public arguments, unsupported units, missing indices, or malformed secret payloads. Never silently declassify or permit a lookup miss to short-circuit authentication. Ordinary public calls from tainted callers continue to work.
+- [x] Secure malformed secret BOOL/table/actual Frame inputs and public wrong-type inputs receive ordinary type errors, not VM authorization denial. Required index secret STRING is invalid. Error messages identify `C_TooltipInfo.GetUnitBuff`, do not expose private payloads, and preserve caller taint. Tests distinguish the existing rilua `requires an untainted caller` diagnostic from type errors; no native error-wording claim.
+- [x] After secure acceptance, tainted denial, ordinary errors, public recovery and forced GC, rooted input wrappers retain secrecy, host userdata identity/allocation sequence and rooted-list identity. Original table/Frame properties, all host aura fields, caller taint and outer secure context remain unchanged. No authentic secret BOOL identity comparison from tainted Lua.
 
 Exact342 can receive only arg1 NeverSecret-removal credit after acceptance. Arg2/arg3 and pre-parse denial tests constrain the chosen existing AllowedWhenUntainted boundary; they are not additional source-row removals or a new SecretArguments-transition claim.
 
 ### Current public payload convention — not secrecy proof
 
-- [ ] A hit returns three existing builder lines: SpellName with the selected host name, SpellName `1 hr`, and wrapped nonempty SpellDescription. Public numeric RGBA channels are checked semantically, not by color-object identity. The fixture's duration/expiration3600 agrees with the retained **hardcoded `1 hr` builder limitation**; dynamic duration is not modeled by this slice.
-- [ ] DTO fields/keys are public under the **current simulator model convention only**. `RequiresUnitAuraAccess` and `SecretWhenUnitAuraRestricted` output behavior remain **UNMODELED**, not native secrecy or parity credit.
+- [x] A hit returns three existing builder lines: SpellName with the selected host name, SpellName `1 hr`, and wrapped nonempty SpellDescription. Public numeric RGBA channels are checked semantically, not by color-object identity. The fixture's duration/expiration3600 agrees with the retained **hardcoded `1 hr` builder limitation**; dynamic duration is not modeled by this slice.
+- [x] DTO fields/keys are public under the **current simulator model convention only**. `RequiresUnitAuraAccess` and `SecretWhenUnitAuraRestricted` output behavior remain **UNMODELED**, not native secrecy or parity credit.
 
 ### Inferred domain, polarity and miss policies
 
@@ -68,7 +68,7 @@ Names deliberately differ despite shared spell IDs and reused cross-unit instanc
 
 ## Tests asserting this spec
 
-`tests/tooltip_unit_buff_security.rs` defines **18 actual `#[test]` cases**. **AUTHORED / UNCOMPILED / UNEXECUTED** describes the historical inputs-only checkpoint, not current RED status. Main supplied actual RED at inputs revision `a23adf150`, artifacts `/tmp/patch-12.0.5-buff-indexed-red-ops/`: compile exit0 in88.098727s, zero diagnostics; run **0 PASS / 18 FAIL** in2.161859s. Reported failures include wrong selected name, ignored filter, secret-from-stack handling and rejection context. This producer slice did not rerun or independently inspect those artifacts. Producer GREEN, check, native parity and acceptance remain unclaimed.
+`tests/tooltip_unit_buff_security.rs` defines **18 actual `#[test]` cases**. **AUTHORED / UNCOMPILED / UNEXECUTED** describes the historical inputs-only checkpoint, not current RED status. Main supplied actual RED at inputs revision `a23adf150`, artifacts `/tmp/patch-12.0.5-buff-indexed-red-ops/`: compile exit0 in88.098727s, zero diagnostics; run **0 PASS / 18 FAIL** in2.161859s. Reported failures include wrong selected name, ignored filter, secret-from-stack handling and rejection context. At the historical producer checkpoint, GREEN/check/acceptance were unclaimed. Current bounded proof is recorded below; native parity remains unclaimed.
 
 | Case | Observable requirement |
 |---|---|
@@ -95,13 +95,21 @@ Names deliberately differ despite shared spell IDs and reused cross-unit instanc
 
 Independent690 accepted bounded functional proof at `a28293ee0`:18 new +24 instance controls +14 filter controls PASS, pinned startup `[]`, default check0/zero diagnostics and scoped format0. Global format1 remains confined to unowned `aura_duration.rs:44`; no whole-tree clearance. Proof: `/tmp/patch-12.0.5-buff-indexed-independent-proof.{md,json}`.
 
-Its root-list identity qualification was valid: the original snapshot returned wrapper tuples, not the root table itself. The test-only followup now includes that table's `Val` in before/after equality, asserting root-list identity directly along with wrapper identity/secrecy. Aura snapshots retain the same ordered records using iterator collection instead of accumulation. Production and control-test sources are unchanged; refreshed new-test execution/independent followup remains pending. Original690 evidence and limitation remain historical, not retroactively upgraded.
+Its root-list identity qualification was valid: the original snapshot returned wrapper tuples, not the root table itself. The test-only followup now includes that table's `Val` in before/after equality, asserting root-list identity directly along with wrapper identity/secrecy. Aura snapshots retain the same ordered records using iterator collection instead of accumulation. Production and control-test sources are unchanged. At that test-followup checkpoint, refreshed execution/independent followup was pending; current accepted evidence follows. Original690 evidence and limitation remain historical, not retroactively upgraded.
+
+## Independent bounded acceptance — 2026-10-03
+
+Main accepts independent690 plus test-only followup694. At `ad1821805`,18 refreshed GetUnitBuff cases PASS after direct root-table identity assertions;38 inherited controls (24 instance +14 filter) remain qualified through unchanged inputs. **56 distinct cases, not56 new executions.** Refreshed compilation exit0/73.775549s/zero diagnostics, runtime exit0/1.644692s; scoped format0 and changed-helper readability accepted. The unchanged producer retains690 default check0/zero diagnostics and pinned local startup0 `[]`; no duplicate check, controls or runtime runs.
+
+Proof SSOT: `/tmp/patch-12.0.5-buff-indexed-test-followup-proof.{md,json}`. Original690 proof, minor STATE/root-identity limitations and original18-failure RED remain historical. Actual producer parent `78e5e9865`, inputs parent `2705913bf`, followup parent `8b4f17f15` reflect interleaved peer commits. Source equality is scoped, builds dirty-combined; not clean whole-tree provenance. Global format1 still reports only unowned `aura_duration.rs:44`, with no clearance. Followup metadata inherited the filename `red.json`; its argv/revision/exit and `followup.stdout` establish current GREEN, not original RED.
+
+Bounded capability `tooltip-unit-buff-security` adds one entry:84 capabilities,362 ordered rows;167 pending/174 bounded/14 partial/7 metadata unchanged. Exact342 stays audit-pending for unmodeled access/restricted output/native/general-unit semantics. Arg2/3 tests constrain the existing chosen permission boundary, not new source deltas. No native secrecy, old-profile execution, GUI/CASC, full-suite or whole-page credit.
 
 ## Known gaps (current cycle)
 
-- Historical prerequisite: main supplied genuine compiled RED before producer implementation; authoring alone was not failing-test evidence.
-- [ ] New modern GetUnitBuff input/filtered-selection implementation awaits asynchronous GREEN and independent bounded verification. Retained older-profile provider still discards unit; older-profile behavior receives no new credit.
-- [ ] Exact342 acceptance/accounting remain pending. Requirements above stay unchecked until verified GREEN. This slice changes no accounting, wiki, test cases, Cargo target, shared builder or aura producer.
+- [x] Compiled behavioral RED before producer, current18-case GREEN, inherited38 controls and independent bounded acceptance.
+- [ ] Unit-aura access and restricted-output secrecy remain unmodeled; exact342 overall contract remains audit-pending.
+- [ ] General-unit/target identity and older-profile parity remain unverified. Retained older provider still discards unit; no new credit.
 
 ## Out of scope
 

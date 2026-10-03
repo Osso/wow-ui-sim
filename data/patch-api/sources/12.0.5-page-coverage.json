@@ -7,6 +7,18 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "tooltip-unit-buff-security",
+      "symbols": ["C_TooltipInfo.GetUnitBuff"],
+      "scope": "B79 bounded live player/party helpful indexed tooltip lookup, blocked/source filtering and three-position AllowedWhenUntainted VM authentication. Actual rooted secret identity/GC, caller preservation, read-only/live state and fresh DTO behavior. Public output is current model convention; unit-aura access/restricted output, native/general-unit/target identity remain unmodeled. Exact342 stays pending.",
+      "spec": "docs/specs/tooltip-unit-buff-security.md",
+      "tests": ["tests/tooltip_unit_buff_security.rs"],
+      "implementation": "a28293ee0fee1bd6a4192fc17c98bf49b0b87f5c",
+      "compiled_revision": "ad18218054f28794bfb86964dd95a1d8112c85f8",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-buff-indexed-test-followup-proof.md",
+      "gate_scope": "Main accepts690+694 bounded evidence:18 refreshed at test-only ad182 plus38 inherited controls (24instance/14filter)=56distinct, not56new executions. Current compile0/73.775548s zeroDiag; original GREEN a282 compile0/113.309320s, startup0[]5.617763s/check0zeroDiag16.881922s inherited via unchanged production/control inputs. Fresh scopedfmt0/readability; root-list identity now directly asserted. Original690 root/source-only and minorSTATE finding preserved historically. Globalfmt1 only unowned aura_duration.rs:44, no clearance. Original RED a23 compile0/88.098727s/18FAIL0PASS/2.161860s retained, no downstreamGC RED claim. Dirty-combined/scoped source equivalence not clean whole-tree/native/profile/fullsuite proof; no row promotion."
+    },
+    {
       "id": "mount-spell-identifier",
       "symbols": ["C_MountJournal.GetMountFromSpell"],
       "scope": "B77 bounded public alias-first SpellIdentifier lookup into existing world.mounts; live relation/alias updates, removals, read-only and environment isolation. Validation and secret rejection are inferred simulator policy; native AllowedWhenTainted and alias grammar remain unmodeled. Exact291 stays pending.",
@@ -2567,9 +2579,9 @@
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitBuff-342",
-      "capabilities": [],
+      "capabilities": ["tooltip-unit-buff-security"],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "B79 bounded input/indexed-model acceptance690+694:18 refreshed+38 inherited controls PASS, startup[], scopedfmt/check and currentrootidentity assertion. Secure secret selector now queries actual live player/party state, not ignored-unit/player fallback; tainted auth precedes parse/lookup. Unit-aura access/restricted output and native/general-unit/profile parity remain unmodeled; exact342 stays pending. No whole-row/native/fullsuite credit."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitBuffByAuraInstanceID-344",
