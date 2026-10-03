@@ -184,6 +184,8 @@ fn assert_base_entries(env: &WowLuaEnv, decor: i32, room: i32) {
         assert_eq!(record.item_id, Some(record_id));
         assert_eq!(record.name, format!("Fixture entry {record_id}"));
         assert!(!record.is_unique_trophy);
+        assert_eq!(record.total_num_stored, None);
+        assert_eq!(record.total_num_placed, None);
     }
 }
 
@@ -573,6 +575,7 @@ fn secret_fixture_env() -> WowLuaEnv {
             local message = assertRejected(id, all)
             assert(string.find(message, 'requires an untainted caller', 1, true), message)
             assert(not issecure(), 'denial must preserve addon taint')
+            assert(debug.getstacktaint() == 'HousingDestroyFixture', 'denial must retain exact addon taint')
         end
         function assertSecureValidationError(id, all)
             local message = assertRejected(id, all)
