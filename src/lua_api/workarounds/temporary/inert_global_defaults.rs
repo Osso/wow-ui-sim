@@ -123,14 +123,6 @@ end
 if BNGetFriendInfo == nil then
     function BNGetFriendInfo() return nil end
 end
-if Ambiguate == nil then
-    function Ambiguate(fullName, context)
-        if context == "none" then
-            return fullName
-        end
-        return string.match(fullName, "^(.-)%-.+$") or fullName
-    end
-end
 if AreTalentsLocked == nil then
     function AreTalentsLocked() return false end
 end

@@ -106,6 +106,7 @@ fn register_frame_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
 }
 
 fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
+    super::real::ambiguate::register_all(lua)?;
     super::create_frame::register_all(lua)?;
     super::font_strings_collection::register_all(lua)?;
     super::utility_system_spell::register_all(lua)?;
