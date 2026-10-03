@@ -47,9 +47,25 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(
         state,
         namespace,
+        "DoesAuraHaveExpirationTime",
+        does_aura_have_expiration_time,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
         "GetRefreshExtendedDuration",
         get_refresh_extended_duration,
     )
+}
+
+fn does_aura_have_expiration_time(state: &mut LuaState) -> LuaResult<u32> {
+    let (unit, instance_id) = read_public_arguments(state)?;
+    let expires = unit
+        .as_deref()
+        .and_then(|unit| find_public_aura(state, unit, instance_id))
+        .is_some_and(|aura| aura.expiration_time != 0.0);
+    state.push(Val::Bool(expires));
+    Ok(1)
 }
 
 fn get_aura_base_duration(state: &mut LuaState) -> LuaResult<u32> {
