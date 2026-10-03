@@ -4,7 +4,7 @@ use crate::c_api::ensure_namespace;
 use crate::lua_api::globals::spellbook_data;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_string_static, create_table,
-    create_table_with_capacity, frame_ref, table_set, table_set_num, table_set_static,
+    create_table_with_capacity, frame_ref, table_set_num, table_set_static,
 };
 use crate::lua_api::script_helpers::{
     call_error_handler_state, get_event_listeners, get_script, protected_lua_pcall_state,
@@ -505,9 +505,9 @@ mod cooldown_query {
 )))]
 mod cooldown_query {
     use super::{
-        FromStack, LuaResult, LuaState, Val, create_table, spellbook_data, table_set,
-        table_set_static,
+        FromStack, LuaResult, LuaState, Val, create_table, spellbook_data, table_set_static,
     };
+    use crate::lua_api::methods::table_set;
 
     pub(super) fn get(state: &mut LuaState) -> LuaResult<u32> {
         let slot = i32::from_stack(state, 1)?;
