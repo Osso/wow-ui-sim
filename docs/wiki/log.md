@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B84 ranged crit and haste output annotations accepted
+
+After `64a19cb63`, linked [acceptance SSOT](../specs/unit-stat-output-restriction.md#b84-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch84--ranged-crit-and-haste-output-annotations-accepted): exact474/476 bounded output-only from an independent Sol source audit; one supplement wording claim corrected; committed B82 restriction record reused, no tests/builds run. 88 capabilities/362 IDs, 162/182/11/7. B82 agent719 metadata audit still uninspected. Only audit/index/log updated.
+
 ## [2026-10-03] docs | B83 spell crit output annotation accepted
 
 After `e8a6b7527`, linked [acceptance SSOT](../specs/unit-stat-output-restriction.md#b83-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch83--spell-crit-output-annotation-accepted): exact486 bounded output-only from an independent Sol source audit; committed B82 restriction record reused, no tests/builds run, raw `/tmp` artifacts unreadable on this host. 87 capabilities/362 IDs, 164/180/11/7. B82 agent719 metadata audit not inspected (reports absent here); no acceptance inferred. Only audit/index/log updated.

@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Batch84 — ranged crit and haste output annotations accepted
+
+After `64a19cb63`, main accepts an independent GPT-6.1-sol source audit (**ACCEPT WITH QUALIFICATIONS** per row) for **exact474 `GetRangedCritChance` and exact476 `GetRangedHaste` output annotations only**. [Acceptance SSOT](../../specs/unit-stat-output-restriction.md#b84-independent-bounded-acceptance--2026-10-03) owns evidence and limits. Existing providers reuse the melee getters: computed 360/180 +5 =7 and 510/170 =3, one wrapped result each; no ranged-specific model. `client-wowforever` `GetRangedHaste` returns two plain values and is excluded; that profile cannot combine with a retail epoch (source-derived, not compiled).
+
+**No new execution**, same reused committed B82 record and unreadable raw artifacts as [Batch83](#batch83--spell-crit-output-annotation-accepted). [Coverage SSOT](../../../data/patch-api/sources/12.0.5-page-coverage.json): **88 capabilities/362 IDs; 162 pending /182 bounded /11 partial /7 metadata**. B82 agent719 metadata audit still uninspected; audit **IN PROGRESS**.
+
 ### Batch83 — spell crit output annotation accepted
 
 After `e8a6b7527`, main accepts an independent GPT-6.1-sol source audit (**ACCEPT WITH QUALIFICATIONS**, eight items PASS) for **exact486 `GetSpellCritChance` output annotation only**. [Acceptance SSOT](../../specs/unit-stat-output-restriction.md#b83-independent-bounded-acceptance--2026-10-03) owns evidence and limits. Existing provider and fixtures unchanged: computed crit rating360/180 +5 =7, one wrapped result, seeded `(2)` fixture exercised by two of the four restriction tests. Cached declaration has no arguments or `SecretArguments`; B82's school guard is not copied.
