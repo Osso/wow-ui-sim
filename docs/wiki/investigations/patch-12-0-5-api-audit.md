@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Batch81 — exact347 inputs-only checkpoint
+
+Committed `6aa7a391b` contains test/spec inputs for exact347: **15 authored cases**. [GetUnitDebuff contract SSOT](../../specs/tooltip-unit-debuff-security.md) owns the case inventory, chosen policies and proof requirements. At the supplied checkpoint, main asynchronous RED worker3857761 at `/tmp/patch-12.0.5-debuff-indexed-red-ops/` was **compiling, NOT executed or accepted**. No completed behavioral RED, producer, PASS or acceptance is claimed; main supplies next evidence after the worker finishes.
+
+Existing GetUnitDebuff discards unit/index and returns an empty DTO; real harmful player/party lookup is planned, not implemented by these inputs. Source347 remains **AUDIT-PENDING**; unit-aura access/restricted outputs remain **UNMODELED**. No accounting or capability credit. Prior wiki `31d7340c5` correctly records B80 terminal independent701 **PASS32/32 accepted after `7a9ce5d37`**; B79/B80 historical proofs and gaps below remain unchanged. Audit **IN PROGRESS**.
+
 ### Batch80 — bounded unit comparison acceptance
 
 After `7a9ce5d37`, [B80 acceptance SSOT](../../specs/unit-identity-equality.md#b80-independent-bounded-acceptance--2026-10-03) owns main-accepted independent698: **12 refreshed PASS at pinned `ad1821805`**, six permission cases and six identity controls. Exact142/143/144 receive bounded credit; introductory141 remains partial. Current accounting: **84 capabilities,362 ordered IDs;167 pending / 177 bounded / 11 partial / 7 metadata**. Independent701 metadata audit **PASS32/32** accepted: actual parent `0c37c90e1`,83 other capabilities and358 other rows unchanged, declared register/hash/policy preserved. Report `/tmp/patch-12.0.5-unit-comparison-accounting-proof.{md,json}`; no execution-gate reruns. Earlier in-flight query failures were corrected before terminal PASS, not repository defects.
