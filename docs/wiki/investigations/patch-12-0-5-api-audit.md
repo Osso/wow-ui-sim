@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Batch75 — existing-model output annotations accepted
+
+[Acceptance SSOT](../../specs/retail-missing-stat-inputs.md#b75-existing-model-bounded-acceptance--2026-10-03) records main-accepted independent632: **EXACT466/468/496 output annotations only**, six saved71973 PASS with five named-body equivalence through9441. B74 registration/module declarations changed; no current-process or whole-tree equivalence. Broad13 plus adjacent4 are not new PASS or additional API credit. Native activation/defaults/formulas/nominal type/all-profile limits and OPEN/red full suite retained; B74 independent/Forever gates remain PENDING.
+
+Main-supplied accounting `88362f9a6` promotes exactly three rows/adds one capability: **172 pending / 169 bounded / 14 partial / 7 metadata,362 ordered IDs/79 capabilities**. Independent accounting640 PASS39/39 validates this checkpoint. Earlier175/166/14/7 and78-capability counts below are historical checkpoints, not this accounting state. Audit **IN PROGRESS**; no neighboring input/formula/row credit.
+
 ### Batch74 — Ambiguate inputs-only checkpoint
 
 [Ambiguate producer/proof SSOT](../../specs/ambiguate-context.md#b74-producer-checkpoint--2026-10-03) supersedes historical inputs-only status: supplied actual RED `d11` build exit0/zero diagnostics **828.602250s**, **22 cases = 4 PASS / 18 FAIL**, **21.161436s**. Inputs `2a4f34570` cover18 secret-context boundaries/four public controls. Earlier combined E0277 (`eval::<u32>`, repaired to `i32` plus checked conversion) ran no tests and remains not RED.
