@@ -108,7 +108,7 @@ fn register_spell_book_item_visual_queries(
         state,
         table_ref,
         "GetSpellBookItemCooldown",
-        c_spell_book_get_spell_book_item_cooldown,
+        cooldown_query::get,
     )?;
     #[cfg(feature = "retail-12-0-0")]
     table_set_rust_fn_static(
@@ -450,64 +450,66 @@ fn c_spell_book_get_spell_book_item_cooldown_duration(state: &mut LuaState) -> L
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
-fn authenticate_cooldown_book_selector(state: &LuaState, position: i32) -> LuaResult<Val> {
-    rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, position))
+mod cooldown_query {
+    use super::{LuaResult, LuaState, Val, resolve_player_spellbook_entry, spellbook_data};
+
+    fn authenticate_cooldown_book_selector(state: &LuaState, position: i32) -> LuaResult<Val> {
+        rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, position))
         .map_err(|_| {
             rilua::runtime_error(format!(
                 "C_SpellBook.GetSpellBookItemCooldown: argument {position} requires an untainted caller"
             ))
         })
-}
-
-#[cfg(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
-))]
-fn resolve_cooldown_spellbook_entry(slot: Val, bank: Val) -> Option<u32> {
-    let spell_id = resolve_player_spellbook_entry(slot, bank)?;
-    let Val::Num(slot) = slot else {
-        return None;
-    };
-    let (_, _, skill_line) = spellbook_data::get_spell_at_slot(slot as i32)?;
-    if skill_line.off_spec_id.is_some() {
-        return None;
     }
-    Some(spell_id)
-}
 
-#[cfg(all(
-    feature = "retail-12-0-5",
-    any(feature = "profile-retail", feature = "client-ptr")
-))]
-fn c_spell_book_get_spell_book_item_cooldown(state: &mut LuaState) -> LuaResult<u32> {
-    // Authenticate both original arguments before type, identity or model access.
-    let slot = authenticate_cooldown_book_selector(state, 1)?;
-    let bank = authenticate_cooldown_book_selector(state, 2)?;
-    let Some(spell_id) = resolve_cooldown_spellbook_entry(slot, bank) else {
-        state.push(Val::Nil);
-        return Ok(1);
-    };
-    super::c_spell::push_spell_cooldown_info(state, spell_id)
+    fn resolve_cooldown_spellbook_entry(slot: Val, bank: Val) -> Option<u32> {
+        let spell_id = resolve_player_spellbook_entry(slot, bank)?;
+        let Val::Num(slot) = slot else {
+            return None;
+        };
+        let (_, _, skill_line) = spellbook_data::get_spell_at_slot(slot as i32)?;
+        if skill_line.off_spec_id.is_some() {
+            return None;
+        }
+        Some(spell_id)
+    }
+
+    pub(super) fn get(state: &mut LuaState) -> LuaResult<u32> {
+        // Authenticate both original arguments before type, identity or model access.
+        let slot = authenticate_cooldown_book_selector(state, 1)?;
+        let bank = authenticate_cooldown_book_selector(state, 2)?;
+        let Some(spell_id) = resolve_cooldown_spellbook_entry(slot, bank) else {
+            state.push(Val::Nil);
+            return Ok(1);
+        };
+        crate::c_api::c_spell::push_spell_cooldown_info(state, spell_id)
+    }
 }
 
 #[cfg(not(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
 )))]
-fn c_spell_book_get_spell_book_item_cooldown(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = i32::from_stack(state, 1)?;
-    if spellbook_data::get_spell_at_slot(slot).is_none() {
-        state.push(Val::Nil);
-        return Ok(1);
-    }
+mod cooldown_query {
+    use super::{
+        FromStack, LuaResult, LuaState, Val, create_table, spellbook_data, table_set_static,
+    };
 
-    let cooldown = create_table(state);
-    table_set_static(state, cooldown, "startTime", Val::Num(0.0));
-    table_set_static(state, cooldown, "duration", Val::Num(0.0));
-    table_set_static(state, cooldown, "isEnabled", Val::Bool(false));
-    table_set_static(state, cooldown, "modRate", Val::Num(1.0));
-    state.push(cooldown);
-    Ok(1)
+    pub(super) fn get(state: &mut LuaState) -> LuaResult<u32> {
+        let slot = i32::from_stack(state, 1)?;
+        if spellbook_data::get_spell_at_slot(slot).is_none() {
+            state.push(Val::Nil);
+            return Ok(1);
+        }
+
+        let cooldown = create_table(state);
+        table_set_static(state, cooldown, "startTime", Val::Num(0.0));
+        table_set_static(state, cooldown, "duration", Val::Num(0.0));
+        table_set_static(state, cooldown, "isEnabled", Val::Bool(false));
+        table_set_static(state, cooldown, "modRate", Val::Num(1.0));
+        state.push(cooldown);
+        Ok(1)
+    }
 }
 
 fn c_spell_book_get_spell_book_item_texture(state: &mut LuaState) -> LuaResult<u32> {
