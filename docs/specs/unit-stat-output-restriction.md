@@ -148,3 +148,11 @@ Prior40 partial capability, accepted514/500/424/438/498 and broad unchecked requ
 ## Tertiary annotation extension — 2026-10-02
 
 [Exact420/442/480 acceptance SSOT](tertiary-stat-inputs.md#independent-bounded-acceptance--2026-10-02) records meaningful existing rating fields and inferred conversion after the omitted shared lookup/bonus arms were repaired. Independent450 accepts14 focused cases plus105 controls; no zero-placeholder-only credit or new state. Prior40 partial and exact-five/eight annotation scopes remain unchanged; supporting raw/bonus indices receive no additional row credit. Native conversion/acquisition/profile/activation and remaining model gaps stay explicit.
+
+## B76 existing-model bounded acceptance — 2026-10-03
+
+Main accepts independent642 for **exact430/432/458/460 output annotations only**, backed by four saved existing stat-restriction tests PASS. Concrete computed outputs are **7 / 2 / 8 / 3**, respectively. These are existing simulator-model values; privacy behavior and guessed coefficients do not establish native formulas or activation. No new provider/model, fabricated RED, duplicate execution, current-process proof, input-secret parity or all-profile credit follows.
+
+Main-supplied data commit `ec7386f86` promotes these four rows/adds one capability: **167 pending / 174 bounded / 14 partial / 7 metadata, 362 ordered IDs / 81 capabilities**. Verifier647's retained terminal report records **31/31 PASS**, including unchanged 358 other rows, 80 prior capabilities and source hashes. Its named `/tmp/patch-12.0.5-batch76-accounting-validation.{md,json}` artifacts were unavailable during checkpoint reconciliation; no raw-artifact revalidation or rerun is claimed. Earlier accounting remains historical; prior annotation acceptances and partial-model limits remain intact. Full-suite GREEN is not claimed; broader audit remains open.
+
+[Audit checkpoint](../wiki/investigations/patch-12-0-5-api-audit.md#batch76--existing-model-output-annotations-accepted) links this bounded acceptance. Evidence is supplied by main, not newly executed here.

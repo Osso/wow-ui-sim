@@ -1,27 +1,27 @@
 # Mount spell identifier inputs
 
-Exact291 changes `C_MountJournal.GetMountFromSpell` argument 1 from `number` to `SpellIdentifier` for retail 12.0.5. Tests in `tests/mount_spell_identifier.rs` require the actual journal API and existing `world.mounts` records. See [Lua API architecture](../lua-api.md) for runtime context. This inputs-only slice adds no provider, model state, or production seed data.
+Exact291 changes `C_MountJournal.GetMountFromSpell` argument 1 from `number` to `SpellIdentifier` for retail 12.0.5. Tests in `tests/mount_spell_identifier.rs` require the actual journal API and existing `world.mounts` records. See [Lua API architecture](../lua-api.md) for runtime context. The journal provider queries existing mount state; no new model state or production seed data is added.
 
 ## What it must do
 
 ### Public identifiers — bounded simulator policy
 
-- [ ] Resolve public numeric spell 458 to existing mount 6; return nil for unknown spell 999999.
-- [ ] Resolve explicit same-ID aliases without changing the mount relation.
-- [ ] Prefer an explicit numeric-key alias over numeric identity: alias key `"458"` to existing spell 40192 returns mount 107 for numeric 458 and string `"458"`.
-- [ ] Resolve explicit name aliases through lowercase registry keys. An explicitly registered numeric string or link-shaped string may resolve to spell 458. The link fixture embeds 40192 but maps to 458; its registered value wins.
-- [ ] Return nil for unregistered strings, including a mount name, numeric string, empty string, or link-shaped string; return nil for an alias whose spell has no mount relation.
-- [ ] Reflect updates to an existing mount's `mount_id` and `spell_id`, and removal of that actual record, without stale lookup results.
-- [ ] Reflect alias replacement/removal immediately, restoring numeric identity after numeric alias removal; keep alias registries environment-local.
-- [ ] Leave existing spell-to-mount relations and alias entries unchanged during successful, missing, or rejected queries.
+- [x] Resolve public numeric spell 458 to existing mount 6; return nil for unknown spell 999999.
+- [x] Resolve explicit same-ID aliases without changing the mount relation.
+- [x] Prefer an explicit numeric-key alias over numeric identity: alias key `"458"` to existing spell 40192 returns mount 107 for numeric 458 and string `"458"`.
+- [x] Resolve explicit name aliases through lowercase registry keys. An explicitly registered numeric string or link-shaped string may resolve to spell 458. The link fixture embeds 40192 but maps to 458; its registered value wins.
+- [x] Return nil for unregistered strings, including a mount name, numeric string, empty string, or link-shaped string; return nil for an alias whose spell has no mount relation.
+- [x] Reflect updates to an existing mount's `mount_id` and `spell_id`, and removal of that actual record, without stale lookup results.
+- [x] Reflect alias replacement/removal immediately, restoring numeric identity after numeric alias removal; keep alias registries environment-local.
+- [x] Leave existing spell-to-mount relations and alias entries unchanged during successful, missing, or rejected queries.
 
 ### Inferred conservative validation — not native parity
 
-- [ ] Reject omitted/nil arguments, booleans, tables, functions, threads, and actual frame userdata with a nonempty error.
-- [ ] Before alias resolution, reject nonfinite, negative, fractional, or out-of-u32 public numbers and invalid UTF-8 strings. Accept numeric endpoints 0 and 4294967295, including explicit endpoint aliases.
-- [ ] Reject actual VM secret NUMBER and STRING values without declassification, replacement, or caller-taint changes. Preserve public recovery in secure and tainted callers after GC. **`AllowedWhenTainted` remains UNMODELED; this rejection earns no native credit.**
+- [x] Reject omitted/nil arguments, booleans, tables, functions, threads, and actual frame userdata with a nonempty error.
+- [x] Before alias resolution, reject nonfinite, negative, fractional, or out-of-u32 public numbers and invalid UTF-8 strings. Accept numeric endpoints 0 and 4294967295, including explicit endpoint aliases.
+- [x] Reject actual VM secret NUMBER and STRING values without declassification, replacement, or caller-taint changes. Preserve public recovery in secure and tainted callers after GC. **`AllowedWhenTainted` remains UNMODELED; this rejection earns no native credit.**
 
-All requirements remain unchecked: tests are authored but neither compiled nor executed in this inputs-only task.
+These bounded simulator requirements passed all 16 focused cases locally and on desktop. Independent verifier654 accepted local model/check/readability evidence. Exact291 accounting and desktop startup remain pending; native alias grammar and secret-input permissions are not established.
 
 ## How it works
 
@@ -36,7 +36,11 @@ All requirements remain unchecked: tests are authored but neither compiled nor e
 - `src/lua_api/state.rs` — existing `spell_id_aliases` registry, explicitly populated only by these tests.
 - `src/c_api/c_spell.rs` — existing alias-first identifier helper and inferred public validator; existing `C_Spell.GetMountFromSpell` companion remains unchanged. No native intent or removal claim.
 
-The scoped namespace map found no journal provider. Registering/implementing the journal API is a separate producer step, only after main-owned compiled behavioral RED.
+B77 supplied inventory: producer `22ea15a23` adds `src/c_api/c_mount_spell_lookup.rs`, module wiring and journal registration. Alias-first validated identifiers query existing `world.mounts` read-only, returning one numeric mount ID or nil. The `C_Spell` companion remains unchanged; native `AllowedWhenTainted` is **UNMODELED**. Earlier “no provider” meant no real modeled provider, not absence of the API: compiled RED called the actual callable generic-nil API.
+
+B77 inputs `23e38bee4`: compilation exit0 in **120.163340s**, zero diagnostics; **16 cases = 1 PASS / 15 FAIL**, run **2.210321s**, against the actual generic-nil API. Producer `22ea15a23`: compilation exit0 in **120.005424s**, zero diagnostics; **16/16 PASS**. Independent verifier654 accepted bounded model, local check and scoped formatting/readability evidence; builds were dirty-combined, not whole-tree frozen.
+
+Desktop helper execution recorded revision `cc2b0a68d`: **16/16 PASS**, helper exit0, **212.064s**; native `--check` exit0, **359.037s**, in Ubuntu WSL `OssoBuild` as `osso-test`. Transferred-tree cleanliness/revision was not independently established. A separate build upload stalled before Cargo and main cancelled its owned process group (exit -15); this is not compile proof. Desktop `--run`, startup and Blizzard UI/CASC readiness remain **UNVERIFIED**. All tests were asynchronous. Proofs: `/tmp/patch-12.0.5-mount-independent-proof.{md,json}` and `/tmp/patch-12.0.5-remote-helper-real-proof.{md,json}`.
 
 ## Tests asserting this spec
 
@@ -54,13 +58,13 @@ Primary source: `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard
 
 ## Known gaps (current cycle)
 
-- [ ] Main must commit this tests/spec slice, then obtain asynchronous compiled RED against the actual journal API before producer work. A compile error is not behavioral RED; a missing provider is a separate surface gap, not proof of alias semantics.
-- [ ] Journal provider implementation and subsequent focused GREEN/independent acceptance remain pending.
+- [x] Committed inputs, compiled behavioral RED against the actual journal API, implemented provider, and obtained focused GREEN plus independent bounded verification.
+- [ ] Desktop startup/CASC readiness and exact291 accounting acceptance remain pending.
 - [ ] Native `AllowedWhenTainted` secret-input permissions remain unmodeled and unverified.
 
 ## Out of scope
 
-- Production edits, new model state, new production fixtures, and changes to the `C_Spell` companion.
+- New model state, new production fixtures, and changes to the `C_Spell` companion.
 - Native alias grammar/parity, special link parsing, native intent claims, duplicate-spell mount selection policy, and other mount APIs.
 - Protected aura paths, additional Cargo targets, broader audit accounting, legacy profile parity, and native probes.
-- Builds, test/check execution, delegation, and commits in this inputs-only task; main owns compiled RED and subsequent producer work.
+- Whole-suite acceptance and desktop readiness inferred solely from focused tests/checks.
