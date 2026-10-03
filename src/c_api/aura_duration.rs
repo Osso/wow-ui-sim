@@ -3,6 +3,7 @@
 
 use crate::lua_api::game_data::AuraInfo;
 use crate::lua_api::globals::auras::collect_filtered_unit_auras;
+use crate::lua_api::globals::lua_duration_object::push_timed_duration_object;
 use crate::lua_api::methods::borrow_state;
 use crate::lua_api::methods::val_to_string;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
@@ -52,12 +53,24 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "DoesAuraHaveExpirationTime",
         does_aura_have_expiration_time,
     )?;
+    table_set_rust_fn_static(state, namespace, "GetAuraDuration", get_aura_duration)?;
     table_set_rust_fn_static(
         state,
         namespace,
         "GetRefreshExtendedDuration",
         get_refresh_extended_duration,
     )
+}
+
+/// Timed snapshot of a stored aura. INFERRED: an unknown unit or instance errors
+/// (`RequiresValidUnitAuraInstance`); a permanent aura yields a zero-span object.
+fn get_aura_duration(state: &mut LuaState) -> LuaResult<u32> {
+    let (unit, instance_id) = read_expiration_arguments(state)?;
+    let aura = unit
+        .as_deref()
+        .and_then(|unit| find_public_aura(state, unit, instance_id))
+        .ok_or_else(|| runtime_error("C_UnitAuras.GetAuraDuration: no such aura instance"))?;
+    push_timed_duration_object(state, aura.expiration_time - aura.duration, aura.duration)
 }
 
 fn does_aura_have_expiration_time(state: &mut LuaState) -> LuaResult<u32> {

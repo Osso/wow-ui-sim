@@ -34,7 +34,7 @@ Cached retail `UnitAuraDocumentation.lua` lines 265–282 declare nonnil `auraIn
 
 ## Known gaps (current cycle)
 
-- [ ] Inputs only: the function is not registered; no compiled RED or GREEN recorded yet.
+- [ ] Development proof: inputs `b9b9eeec8` RED 0 PASS / 6 FAIL (the name resolved to a nil-returning placeholder); producer GREEN 33/33 across `aura_duration_object::`, `aura_expiration_time::`, `aura_refresh_duration::`, cargo exit0, no warnings, `cargo fmt --check` exit0. Independent verification and accounting pending.
 
 ## Out of scope
 
