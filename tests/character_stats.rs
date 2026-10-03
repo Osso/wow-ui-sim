@@ -3,6 +3,10 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[cfg(feature = "retail-12-0-5")]
+#[path = "character_stats/explicit_inputs.rs"]
+mod explicit_inputs;
+
+#[cfg(feature = "retail-12-0-5")]
 #[path = "character_stats/missing_apis.rs"]
 mod missing_apis;
 

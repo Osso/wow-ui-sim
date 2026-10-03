@@ -24,7 +24,7 @@ statFixtures = {
     {'GetPvpPowerHealing', {}, {0}},
     {'GetRangedCritChance', {}, {7}},
     {'GetRangedHaste', {}, {3}},
-    {'GetShieldBlock', {}, {1234}},
+    {'GetShieldBlock', {}, {0}},
     {'GetSpeed', {}, {0}},
     {'GetSpellBonusDamage', {2}, {500}},
     {'GetSpellBonusHealing', {}, {500}},

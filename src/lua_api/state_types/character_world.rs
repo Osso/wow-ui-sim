@@ -36,6 +36,19 @@ pub struct CharacterStats {
     pub sturdiness_pct: f64,
     #[cfg(feature = "client-wowforever")]
     pub quiver_haste_pct: f64,
+    /// Explicit percentages and amounts below: independent host inputs, zero when
+    /// unconfigured. Units are simulator policy, not derived from ratings or armor.
+    pub block_chance: f64,
+    pub shield_block: f64,
+    pub hit_modifier: f64,
+    pub spell_hit_modifier: f64,
+    /// Main-hand, off-hand, ranged.
+    pub expertise: [f64; 3],
+    /// Main-hand, off-hand, ranged; not converted from `expertise`.
+    pub expertise_percent: [f64; 3],
+    pub mod_resilience_damage_reduction: f64,
+    pub pvp_power_damage: f64,
+    pub pvp_power_healing: f64,
     pub armor: i32,
     pub crit_rating: i32,
     pub haste_rating: i32,
