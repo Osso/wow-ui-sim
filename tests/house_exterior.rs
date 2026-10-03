@@ -120,7 +120,82 @@ const HOUSE_EXTERIOR_SCRIPT: &str = r#"
 "#;
 
 fn env() -> WowLuaEnv {
-    WowLuaEnv::new().expect("Failed to create Lua environment")
+    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    modern_fixture::seed(&env);
+    env
+}
+
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+mod modern_fixture {
+    use super::WowLuaEnv;
+    use wow_ui_sim::c_api::c_housing::catalog::HousingCatalogEntryVariantID;
+    use wow_ui_sim::c_api::c_housing::exterior::{
+        ExteriorDecorPlacement, ExteriorFixturePoint, ExteriorSizeOption, ExteriorTypeOption,
+        HouseExteriorState,
+    };
+
+    fn size_option(size: i32, name: &str) -> ExteriorSizeOption {
+        ExteriorSizeOption {
+            size,
+            name: name.into(),
+            is_locked: false,
+        }
+    }
+
+    fn type_option(id: u32, name: &str) -> ExteriorTypeOption {
+        ExteriorTypeOption {
+            id,
+            name: name.into(),
+            is_locked: false,
+            is_invalid: false,
+            reason: String::new(),
+        }
+    }
+
+    fn attached_placement() -> ExteriorDecorPlacement {
+        ExteriorDecorPlacement {
+            variant_id: HousingCatalogEntryVariantID {
+                record_id: 7101,
+                entry_type: 1,
+                variant_identifier: 0,
+            },
+            position: [1.0, 2.0, 3.0],
+            fixture_point_owner_hash: Some(11),
+        }
+    }
+
+    fn exterior_fixture() -> HouseExteriorState {
+        HouseExteriorState {
+            selected_size: Some(3),
+            selected_type_id: Some(1),
+            size_options: vec![size_option(3, "Medium"), size_option(4, "Large")],
+            type_options: vec![
+                type_option(1, "Sunspire Cottage"),
+                type_option(2, "Sunspire Manor"),
+            ],
+            selected_fixture_point: Some(ExteriorFixturePoint {
+                owner_hash: 11,
+                selected_fixture_id: Some(301),
+                options: Vec::new(),
+                can_remove: false,
+            }),
+            decor: [("point11".into(), attached_placement())].into(),
+        }
+    }
+
+    pub(super) fn seed(env: &WowLuaEnv) {
+        let mut state = env.state().borrow_mut();
+        state.housing.inside_owned_plot = true;
+        state.housing.active_house_editor_mode = 6;
+        state.housing.exterior = exterior_fixture();
+    }
 }
 
 #[test]
