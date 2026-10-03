@@ -209,6 +209,14 @@ fn tainted_query_denies_each_secret_even_before_unknown_unit_lookup() {
             RejectExpires(SecretExpirationUnit, SecretTimedID)
             RejectExpires(SecretUnknownExpirationUnit, 301)
             RejectExpires('missing-unit', SecretTimedID)
+            -- A malformed public unit must not move the denial of a secret ID.
+            local _, denial = pcall(C_UnitAuras.DoesAuraHaveExpirationTime, 'player', SecretTimedID)
+            for _, unit in ipairs({12, true, {}}) do
+                local ok, err = pcall(C_UnitAuras.DoesAuraHaveExpirationTime, unit, SecretTimedID)
+                assert(not ok and err == denial, 'secret denial precedes unit validation')
+            end
+            local _, malformed = pcall(C_UnitAuras.DoesAuraHaveExpirationTime, 12, 301)
+            assert(malformed ~= denial, 'public malformed unit keeps its own error')
             assert(debug.getstacktaint() == before)
             for _, value in ipairs({SecretExpirationUnit, SecretTimedID}) do
                 assert(issecretvalue(value) and not pcall(secretunwrap, value))
@@ -236,7 +244,7 @@ fn secret_arguments_survive_gc_without_declassification() {
         local unit, id = SecretExpirationUnit, SecretTimedID
         collectgarbage('collect')
         collectgarbage('collect')
-        assert(rawequal(unit, SecretExpirationUnit))
+        assert(rawequal(unit, SecretExpirationUnit) and rawequal(id, SecretTimedID))
         assert(issecretvalue(unit) and secretunwrap(unit) == 'player')
         assert(issecretvalue(id) and secretunwrap(id) == 301)
         AssertExpires(unit, id, true)
