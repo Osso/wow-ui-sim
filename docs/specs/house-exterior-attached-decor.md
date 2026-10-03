@@ -1,6 +1,6 @@
 # House exterior attached-decor actions
 
-Batch70 bounds EXACT272/274/276: `C_HouseExterior.SelectFixtureOption`, `SetHouseExteriorSize`, and `SetHouseExteriorType` with `attachedDecorAction`. Explicit inputs live in `src/c_api/c_housing/exterior.rs`; runtime transitions and read snapshots live under `src/c_api/c_housing/exterior/`. The [existing housing catalog](housing-catalog-variants.md) remains storage identity/count SSOT. Compiled RED observed 38 failures and one pass before runtime implementation; independent566 accepts bounded simulator behavior, not native parity.
+Batch70 bounds EXACT272/274/276: `C_HouseExterior.SelectFixtureOption`, `SetHouseExteriorSize`, and `SetHouseExteriorType` with `attachedDecorAction`. Explicit inputs live in `src/c_api/c_housing/exterior.rs`; runtime transitions and read snapshots live under `src/c_api/c_housing/exterior/`. The [existing housing catalog](housing-catalog-variants.md) remains storage identity/count SSOT. Compiled RED observed 38 failures and one pass before runtime implementation; independent566 accepts bounded simulator behavior, not native parity. B73 adds unchecked removal inputs for EXACT267/268; B70 acceptance does not establish removal behavior.
 
 ## What it must do
 
@@ -33,6 +33,20 @@ Checked requirement boxes record bounded simulator proof under explicit inferred
 - [x] Store publishes existing `HOUSING_STORAGE_ENTRY_UPDATED` once per affected full variant before response; callbacks observe all committed counts and attachment queries. Storage synchrony/order is **inferred**, not established by its UniqueEvent declaration. No queued duplicate.
 - [x] Response handlers can synchronously query and reenter real mutators. No retained borrow, post-callback overwrite, or callback bypass. Environments keep independent state/listeners.
 
+### B73 removal requirements — inputs only, 2026-10-03
+
+Scope: `RemoveFixtureFromSelectedPoint(attachedDecorAction)` only, EXACT267/268. All policy, validation order/domain, mutation boundaries, live eligibility, failure handling and event ordering below are **inferred simulator requirements**, not native-verified semantics. The declaration grounds AllowedWhenUntainted and omitted Store; explicit nil is inferred despite `Nilable = false`.
+
+- [ ] Authenticate the original arg1 before type/domain/model access: secure actual secret NUM0/1 work; addon secret NUMs, BOOLs and strings reject without private payload disclosure, mutation or events. Public addon0/1 retains taint. Numeric0/1 only; wrong types, strings, fractions, nonfinite and unknown enum values reject atomically. Omitted/nil select Store0 (nil inferred).
+- [ ] Require owned plot, exterior customization mode6, selected point, current fixture and raw host `can_remove`. Missing/nonremovable/ineligible state and repeated removal after the fixture is absent produce explicit atomic errors and no events; no native error/result-code mapping claimed. Clear **only** `selected_fixture_id`; retain point owner/options and raw `can_remove`. Public `canSelectionBeRemoved` becomes false while the fixture is absent and automatically returns to the raw eligibility on existing `SelectFixtureOption` reselection (inferred dynamic eligibility). Selected point remains present; attachment query becomes false. Size/type/options and other exterior state remain unchanged.
+- [ ] Store only matching-owner attached placements into existing full-key inventory, updating known base counts atomically before clearing/publishing. Preserve variant/base identity, destroyability, all dye metadata, unrelated-owner and floating placements; unknown aggregates remain unknown. Prevalidate mixed valid/invalid variants (missing, negative, overflow) and known aggregate overflow/underflow, including combined deltas: no partial inventory/placement/selection mutation or event.
+- [ ] Detach only matching-owner placements, preserving positions, full-key IDs and storage even with missing catalog records; reselection never reattaches them. No attachments still clears the fixture and emits one Success0 response. Success returns zero Lua values. After full commit, publish one rooted storage event per affected full variant, then synchronous `HOUSING_SET_FIXTURE_RESPONSE` with exactly one HousingResult0 payload. Storage order and Success0 policy inferred. GC and storage/response reentry must observe committed counts/selection, preserve original payload, and allow existing fixture reselection without outer overwrite or queued duplicates.
+- [ ] Preserve optional pending request and environment isolation. Retain all41 historical B70 modern tests; extend only the existing inverse control to call Remove and retain seeded/no-op behavior. No SelectCore/3D/new no-ops, production data structures or Cargo targets.
+
+Grounding read for B73: patch source EXACT267/268 adds arg1 and AllowedWhenUntainted; cached `HouseExteriorUIDocumentation.lua:150–157` declares `attachedDecorAction`, `Default = "Store"`, `Nilable = false`; `HouseExteriorConstantsDocumentation.lua:77–79` declares nullable `selectedFixtureID`, fixture options and public removal flag. Existing enum documentation at `PlayerHousingConstantsDocumentation.lua:141–150` grounds Store0/Detach1 meanings; exterior documentation324–330 grounds synchronous response/one-result shape, not per-call success/failure mapping.
+
+Baseline correction: `/tmp/patch-12.0.5-remove-fixture-boundary.md`/580's “method missing” claim is wrong. `housing_catalog_state.lua:958` currently publishes Remove as `__wow_noop` in the main namespace; the legacy initializer does **not** capture Remove. Modern Rust runtime currently has no modeled removal callback. RED must exercise the real published API before post-query assertions, not fail at shared query setup. No producer edits in B73 inputs.
+
 ### Grounding inspected 2026-10-02
 
 Cached sources under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/`:
@@ -54,7 +68,7 @@ Cached sources under `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_API
 - `src/c_api/c_housing/exterior/`: authenticated callbacks, live rooted read snapshots, atomic selection/placement changes, and prevalidated catalog storage deltas.
 - `src/c_api/c_housing.rs`: registers exterior alongside catalog; `src/lua_api/state/support_types.rs` holds `HousingState.exterior`.
 - Legacy bootstrap returns its original seeded exterior initializer; only inverse profiles invoke it. Modern registration never falls back to missing Lua methods.
-- `tests/house_exterior_attached_decor.rs`: 41 modern behavioral tests and one inverse legacy control, automatically discovered by existing grouped `integration` target; no Cargo target added.
+- `tests/house_exterior_attached_decor.rs`: 41 retained B70 modern tests plus19 B73 removal inputs and one extended inverse legacy control, automatically discovered by existing grouped `integration` target; no Cargo target added. B73 execution proof pending.
 - This spec: contract and inference/native-evidence limits; bounded simulator acceptance is recorded below; native gaps remain.
 
 ## Tests asserting this spec
@@ -76,7 +90,23 @@ All in `tests/house_exterior_attached_decor.rs`:
 
 Fixtures explicitly supply types101/102, fixtures301/302, owner hashes11/22, sizes3/4, variant(7101,1,0) stored2, known base stored2/placed3, three attachments across two points and one floating placement at distinct coordinates. Multiple-variant case explicitly adds variant1 stored6 and corresponding known base stored8. Callback observations are asserted outside handlers so swallowed callback errors cannot count as success.
 
+### B73 tests asserting unchecked removal requirements
+
+All19 new tests are in the existing modern module of `tests/house_exterior_attached_decor.rs`; helpers reuse `fixture_env`, `placements`, full-key records and existing fixture selection. API calls precede post-removal query assertions. Callback results are asserted outside handlers.
+
+| Exact test names | Requirement |
+|---|---|
+| `remove_store_clears_only_fixture_and_returns_selected_owner_attachments`; `remove_detach_preserves_full_identity_position_and_inventory`; `remove_omitted_action_defaults_to_store`; `remove_nil_action_is_inferred_store` | Exact state delta, preservation, declared/default and inferred nil behavior |
+| `remove_secure_actual_secret_store_and_detach_are_accepted`; `remove_public_addon_actions_retain_taint`; `remove_addon_secret_authentication_precedes_domain_and_model`; `remove_actual_secret_wrong_types_authenticate_before_type_validation`; `remove_wrong_types_and_malformed_enum_reject_atomically` | Real rooted secrets, secure acceptance/addon denial, validation order, domains and atomic rejection |
+| `remove_missing_fixture_point_and_ineligible_host_fail_without_events`; `remove_no_attachments_clears_fixture_with_one_success_response`; `remove_detach_needs_no_catalog_and_never_reattaches_after_selection`; `remove_live_eligibility_restores_on_selection_and_repeat_remove_errors` | State failure matrix, empty attachments, missing catalog, raw flag retention/live eligibility and repeat rejection |
+| `remove_store_unknown_aggregate_totals_remain_unknown`; `remove_store_mixed_valid_invalid_variants_and_aggregates_are_atomic`; `remove_store_combined_known_aggregate_limits_reject_before_any_commit` | Unknown totals, valid+invalid full-key matrix, combined aggregate overflow/underflow atomicity |
+| `remove_store_full_variant_events_follow_complete_commit_and_survive_gc`; `remove_storage_and_response_gc_reentry_keep_new_fixture_and_original_payload`; `remove_preserves_pending_request_and_environment_isolation` | Committed variant/base counts, rooted payloads, exact response shape, storage/response GC reentry, no queued duplicates, pending/isolation |
+
 ### Proof ledger
+
+#### B73 input checkpoint — 2026-10-03
+
+Tests/spec only. Owned test formatting with `rustfmt --edition 2024 --config skip_children=true`; no delegation, builds, runtime, tests, checks or verification gates. Main must establish compiled RED **before** producers, then GREEN and producer proof gates. Authored inputs are not behavioral evidence. B70 acceptance below remains historical and intact; B73 requirements remain unchecked. EXACT267/268 stay pending; **177 pending/164 bounded/14 partial/7 metadata,362 ordered IDs/77 capabilities** unchanged. No new/native/profile/UI/acquisition/core credit.
 
 #### Independent bounded acceptance — 2026-10-03
 
@@ -102,7 +132,9 @@ Native coercion/failure mapping, nil/same-value/storage-order policies remain in
 
 ## Known gaps (current cycle)
 
-Current bounded acceptance supersedes historical pending gates below; native gaps remain open.
+B70 bounded acceptance supersedes its historical pending gates below; native gaps and current B73 gates remain open.
+
+- [ ] B73 main-owned compiled RED before producers, followed by GREEN and independent producer proof gates; all19 authored removal tests currently unexecuted by input owner.
 
 - [x] Main-owned compiled RED at `5ad54e578`: default build exit0, zero compiler diagnostics; 38 failures / one pass in 8.7s.
 - [x] Bounded GREEN, scoped Rust/security/readability gates, startup and separate Forever inverse acceptance.
@@ -111,5 +143,5 @@ Current bounded acceptance supersedes historical pending gates below; native gap
 
 ## Out of scope
 
-- No semantics or credit for RemoveFixtureFromSelectedPoint, SelectCoreFixtureOption, door/core/hover/remove APIs in this exact-row slice.
+- B70 acceptance excludes RemoveFixtureFromSelectedPoint; B73 authors removal inputs only, without behavior/row credit. SelectCoreFixtureOption, door/core/hover APIs, 3D and native parity remain excluded.
 - Historical inputs ownership excluded runtime/integration gates; main implementation and acceptance are recorded above.

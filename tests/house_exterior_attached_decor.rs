@@ -1,4 +1,4 @@
-//! Batch70 inputs only. Main must compile and observe RED before installing callbacks.
+//! Batch70 controls plus Batch73 removal inputs. Main owns compiled RED/GREEN gates.
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[cfg(all(
@@ -8,7 +8,9 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 mod modern {
     use super::*;
     use rilua::LuaApiMut;
-    use rilua::table_security::wrap_host_secret_number;
+    use rilua::table_security::{
+        wrap_host_secret_bool, wrap_host_secret_number, wrap_host_secret_string,
+    };
     use wow_ui_sim::c_api::c_housing::catalog::{
         HousingCatalogEntryID, HousingCatalogEntryRecord, HousingCatalogEntryVariantID,
         HousingCatalogVariantRecord, HousingDecorDyeSlot,
@@ -288,6 +290,712 @@ mod modern {
             lua.state_mut().pop();
             result.unwrap();
         }
+    }
+
+    // B73 inputs: all removal policy beyond declarations is inferred, not native proof.
+    fn remove_fixture(env: &WowLuaEnv, action: &str) {
+        env.exec(&format!(
+            "assert(select('#', C_HouseExterior.RemoveFixtureFromSelectedPoint({action})) == 0)"
+        ))
+        .unwrap();
+        assert!(env.state().borrow().events.pending().iter().all(|event| {
+            event.name != "HOUSING_STORAGE_ENTRY_UPDATED"
+                && event.name != "HOUSING_SET_FIXTURE_RESPONSE"
+        }));
+    }
+
+    fn assert_removal_state(env: &WowLuaEnv, expected: &wow_ui_sim::lua_api::state::HousingState) {
+        let state = env.state().borrow();
+        let housing = &state.housing;
+        assert_eq!(housing.exterior, expected.exterior);
+        assert_eq!(housing.pending_new_decor, expected.pending_new_decor);
+        assert_eq!(housing.inside_owned_plot, expected.inside_owned_plot);
+        assert_eq!(
+            housing.active_house_editor_mode,
+            expected.active_house_editor_mode
+        );
+        assert_eq!(
+            housing.catalog.variants.len(),
+            expected.catalog.variants.len()
+        );
+        assert_eq!(
+            housing.catalog.entries.len(),
+            expected.catalog.entries.len()
+        );
+        for (id, record) in &expected.catalog.variants {
+            // Compare every record field, including dye metadata and destroyability.
+            assert_eq!(
+                format!("{:?}", housing.catalog.variants[id]),
+                format!("{record:?}")
+            );
+        }
+        for (id, record) in &expected.catalog.entries {
+            assert_eq!(
+                format!("{:?}", housing.catalog.entries[id]),
+                format!("{record:?}")
+            );
+        }
+    }
+
+    fn assert_removed_fixture(
+        env: &WowLuaEnv,
+        before: &wow_ui_sim::lua_api::state::HousingState,
+        store: bool,
+    ) {
+        let mut expected = before.clone();
+        expected
+            .exterior
+            .selected_fixture_point
+            .as_mut()
+            .unwrap()
+            .selected_fixture_id = None;
+        for (id, owner, _) in placements() {
+            if owner != Some(11) {
+                continue;
+            }
+            if store {
+                expected.exterior.decor.remove(id);
+            } else {
+                expected
+                    .exterior
+                    .decor
+                    .get_mut(id)
+                    .unwrap()
+                    .fixture_point_owner_hash = None;
+            }
+        }
+        if store {
+            expected
+                .catalog
+                .variants
+                .get_mut(&variant())
+                .unwrap()
+                .num_stored += 2;
+            let base = expected.catalog.entries.get_mut(&entry()).unwrap();
+            base.total_num_stored = base.total_num_stored.map(|count| count + 2);
+            base.total_num_placed = base.total_num_placed.map(|count| count - 2);
+        }
+        assert_removal_state(env, &expected);
+        env.exec(
+            r#"
+            local point = C_HouseExterior.GetSelectedFixturePointInfo()
+            assert(point.selectedFixtureID == nil and point.ownerHash == 11)
+            assert(point.canSelectionBeRemoved == false)
+            assert(#point.fixtureOptions == 2 and point.fixtureOptions[2].fixtureID == 302)
+            assert(C_HouseExterior.HasSelectedFixturePoint())
+            assert(not C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint())
+            assert(C_HouseExterior.IsAnyDecorAttachedToHouseExterior())
+            assert(C_HouseExterior.GetCurrentHouseExteriorSize() == 3)
+            assert(C_HouseExterior.GetCurrentHouseExteriorType() == 101)
+        "#,
+        )
+        .unwrap();
+    }
+
+    fn reject_remove_fixture(env: &WowLuaEnv, action: &str) {
+        let before = env.state().borrow().housing.clone();
+        let pending = env.state().borrow().events.pending().len();
+        env.exec(&format!(
+            r#"
+            local ok, message = pcall(C_HouseExterior.RemoveFixtureFromSelectedPoint, {action})
+            assert(not ok and type(message) == 'string' and #message > 0)
+            assert(string.find(message, 'RemoveFixtureFromSelectedPoint', 1, true))
+            assert(#events == 0)
+        "#
+        ))
+        .unwrap();
+        assert_removal_state(env, &before);
+        assert_eq!(env.state().borrow().events.pending().len(), pending);
+    }
+
+    fn install_remove_secret(env: &WowLuaEnv, number: f64) {
+        let loader = env.loader();
+        let mut lua = loader.rilua_mut();
+        let secret = wrap_host_secret_number(lua.state_mut(), number);
+        lua.state_mut().push(secret);
+        let result = lua.set_global_val("RemoveSecret", secret);
+        lua.state_mut().pop();
+        result.unwrap();
+    }
+
+    #[test]
+    fn remove_store_clears_only_fixture_and_returns_selected_owner_attachments() {
+        let env = fixture_env();
+        let before = env.state().borrow().housing.clone();
+        remove_fixture(&env, "0");
+        assert_removed_fixture(&env, &before, true);
+    }
+
+    #[test]
+    fn remove_detach_preserves_full_identity_position_and_inventory() {
+        let env = fixture_env();
+        let before = env.state().borrow().housing.clone();
+        remove_fixture(&env, "1");
+        assert_removed_fixture(&env, &before, false);
+        env.exec("assert(#events == 1 and events[1].name == 'HOUSING_SET_FIXTURE_RESPONSE' and events[1].arity == 1 and events[1].payload == 0)").unwrap();
+    }
+
+    #[test]
+    fn remove_omitted_action_defaults_to_store() {
+        let env = fixture_env();
+        let before = env.state().borrow().housing.clone();
+        remove_fixture(&env, "");
+        assert_removed_fixture(&env, &before, true);
+    }
+
+    #[test]
+    fn remove_nil_action_is_inferred_store() {
+        let env = fixture_env();
+        let before = env.state().borrow().housing.clone();
+        remove_fixture(&env, "nil");
+        assert_removed_fixture(&env, &before, true);
+    }
+
+    #[test]
+    fn remove_secure_actual_secret_store_and_detach_are_accepted() {
+        for action in [0, 1] {
+            let env = fixture_env();
+            install_remove_secret(&env, f64::from(action));
+            let before = env.state().borrow().housing.clone();
+            env.exec("collectgarbage('collect'); assert(issecure())")
+                .unwrap();
+            remove_fixture(&env, "RemoveSecret");
+            assert_removed_fixture(&env, &before, action == 0);
+        }
+    }
+
+    #[test]
+    fn remove_public_addon_actions_retain_taint() {
+        for action in [0, 1] {
+            let env = fixture_env();
+            let before = env.state().borrow().housing.clone();
+            env.exec(&format!(r#"
+                local function addon()
+                    assert(select('#', C_HouseExterior.RemoveFixtureFromSelectedPoint({action})) == 0)
+                    assert(not issecure())
+                end
+                debug.setobjecttaint(addon, 'RemoveInputs')
+                addon()
+            "#)).unwrap();
+            assert_removed_fixture(&env, &before, action == 0);
+        }
+    }
+
+    #[test]
+    fn remove_addon_secret_authentication_precedes_domain_and_model() {
+        for secret in [0.0, 1.0, 872364.0, f64::NAN] {
+            let env = fixture_env();
+            install_remove_secret(&env, secret);
+            let before = env.state().borrow().housing.clone();
+            env.exec(r#"
+                local function addon()
+                    local ok, message = pcall(C_HouseExterior.RemoveFixtureFromSelectedPoint, RemoveSecret)
+                    assert(not ok and type(message) == 'string')
+                    assert(string.find(string.lower(message), 'secret', 1, true))
+                    assert(not string.find(message, '872364', 1, true))
+                    assert(not issecure())
+                    denial = message
+                end
+                debug.setobjecttaint(addon, 'RemoveInputs')
+                removeAddon = addon
+                addon()
+                assert(#events == 0)
+            "#).unwrap();
+            assert_removal_state(&env, &before);
+            env.state()
+                .borrow_mut()
+                .housing
+                .exterior
+                .selected_fixture_point = None;
+            let absent = env.state().borrow().housing.clone();
+            env.exec(
+                "local original=denial; removeAddon(); assert(denial==original and #events==0)",
+            )
+            .unwrap();
+            assert_removal_state(&env, &absent);
+        }
+    }
+
+    #[test]
+    fn remove_actual_secret_wrong_types_authenticate_before_type_validation() {
+        for text_secret in [false, true] {
+            let env = fixture_env();
+            {
+                let loader = env.loader();
+                let mut lua = loader.rilua_mut();
+                let secret = if text_secret {
+                    wrap_host_secret_string(lua.state_mut(), "private-remove-action-78423")
+                } else {
+                    wrap_host_secret_bool(lua.state_mut(), false)
+                };
+                lua.state_mut().push(secret);
+                let result = lua.set_global_val("RemoveSecret", secret);
+                lua.state_mut().pop();
+                result.unwrap();
+            }
+            let before = env.state().borrow().housing.clone();
+            env.exec(r#"
+                collectgarbage('collect')
+                local ok, message = pcall(C_HouseExterior.RemoveFixtureFromSelectedPoint, RemoveSecret)
+                assert(not ok and type(message) == 'string')
+                assert(not string.find(message, 'private-remove-action-78423', 1, true))
+                assert(not string.find(string.lower(message), 'secret access denied', 1, true))
+                local function addon()
+                    local accepted, denial = pcall(C_HouseExterior.RemoveFixtureFromSelectedPoint, RemoveSecret)
+                    assert(not accepted and type(denial) == 'string')
+                    assert(string.find(string.lower(denial), 'secret', 1, true))
+                    assert(not string.find(denial, 'private-remove-action-78423', 1, true))
+                    assert(not issecure())
+                    secretTypeDenial = denial
+                end
+                debug.setobjecttaint(addon, 'RemoveInputs')
+                removeTypeAddon = addon
+                addon()
+                assert(#events == 0)
+            "#).unwrap();
+            assert_removal_state(&env, &before);
+            env.state()
+                .borrow_mut()
+                .housing
+                .exterior
+                .selected_fixture_point = None;
+            let absent = env.state().borrow().housing.clone();
+            env.exec("local original=secretTypeDenial; removeTypeAddon(); assert(secretTypeDenial==original and #events==0)").unwrap();
+            assert_removal_state(&env, &absent);
+        }
+    }
+
+    #[test]
+    fn remove_wrong_types_and_malformed_enum_reject_atomically() {
+        let env = fixture_env();
+        for action in [
+            "false",
+            "true",
+            "'0'",
+            "'1'",
+            "{}",
+            "function() end",
+            "-1",
+            "2",
+            "0.5",
+            "0/0",
+            "math.huge",
+            "-math.huge",
+            "4294967296",
+        ] {
+            reject_remove_fixture(&env, action);
+        }
+        install_remove_secret(&env, 872364.0);
+        reject_remove_fixture(&env, "RemoveSecret");
+    }
+
+    #[test]
+    fn remove_missing_fixture_point_and_ineligible_host_fail_without_events() {
+        for failure in 0..5 {
+            for action in ["0", "1"] {
+                let env = fixture_env();
+                {
+                    let mut state = env.state().borrow_mut();
+                    let housing = &mut state.housing;
+                    match failure {
+                        0 => housing.exterior.selected_fixture_point = None,
+                        1 => {
+                            housing
+                                .exterior
+                                .selected_fixture_point
+                                .as_mut()
+                                .unwrap()
+                                .selected_fixture_id = None
+                        }
+                        2 => {
+                            housing
+                                .exterior
+                                .selected_fixture_point
+                                .as_mut()
+                                .unwrap()
+                                .can_remove = false
+                        }
+                        3 => housing.inside_owned_plot = false,
+                        _ => housing.active_house_editor_mode = 0,
+                    }
+                }
+                reject_remove_fixture(&env, action);
+            }
+        }
+    }
+
+    #[test]
+    fn remove_no_attachments_clears_fixture_with_one_success_response() {
+        for action in ["0", "1"] {
+            let env = fixture_env();
+            env.state()
+                .borrow_mut()
+                .housing
+                .exterior
+                .decor
+                .retain(|_, decor| decor.fixture_point_owner_hash != Some(11));
+            let mut expected = env.state().borrow().housing.clone();
+            expected
+                .exterior
+                .selected_fixture_point
+                .as_mut()
+                .unwrap()
+                .selected_fixture_id = None;
+            remove_fixture(&env, action);
+            assert_removal_state(&env, &expected);
+            env.exec(
+                r#"
+                assert(#events == 1 and events[1].name == 'HOUSING_SET_FIXTURE_RESPONSE')
+                assert(events[1].arity == 1 and events[1].payload == 0)
+                assert(C_HouseExterior.HasSelectedFixturePoint())
+                assert(C_HouseExterior.GetSelectedFixturePointInfo().selectedFixtureID == nil)
+                assert(not C_HouseExterior.GetSelectedFixturePointInfo().canSelectionBeRemoved)
+            "#,
+            )
+            .unwrap();
+        }
+    }
+
+    #[test]
+    fn remove_detach_needs_no_catalog_and_never_reattaches_after_selection() {
+        let env = fixture_env();
+        env.state().borrow_mut().housing.catalog.variants.clear();
+        env.state().borrow_mut().housing.catalog.entries.clear();
+        let before = env.state().borrow().housing.clone();
+        remove_fixture(&env, "1");
+        assert_removed_fixture(&env, &before, false);
+        invoke(&env, 0, ", 1");
+        let mut expected = before;
+        expected
+            .exterior
+            .selected_fixture_point
+            .as_mut()
+            .unwrap()
+            .selected_fixture_id = Some(302);
+        for id in ["point11a", "point11b"] {
+            expected
+                .exterior
+                .decor
+                .get_mut(id)
+                .unwrap()
+                .fixture_point_owner_hash = None;
+        }
+        assert_removal_state(&env, &expected);
+        env.exec("assert(not C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint())")
+            .unwrap();
+    }
+
+    #[test]
+    fn remove_live_eligibility_restores_on_selection_and_repeat_remove_errors() {
+        let env = fixture_env();
+        remove_fixture(&env, "1");
+        env.exec("assert(not C_HouseExterior.GetSelectedFixturePointInfo().canSelectionBeRemoved); events={}").unwrap();
+        reject_remove_fixture(&env, "0");
+        assert!(
+            env.state()
+                .borrow()
+                .housing
+                .exterior
+                .selected_fixture_point
+                .as_ref()
+                .unwrap()
+                .can_remove
+        );
+        invoke(&env, 0, ", 1");
+        env.exec("assert(C_HouseExterior.GetSelectedFixturePointInfo().canSelectionBeRemoved)")
+            .unwrap();
+        remove_fixture(&env, "0");
+        env.exec("assert(not C_HouseExterior.GetSelectedFixturePointInfo().canSelectionBeRemoved)")
+            .unwrap();
+    }
+
+    #[test]
+    fn remove_store_unknown_aggregate_totals_remain_unknown() {
+        let env = fixture_env();
+        {
+            let mut state = env.state().borrow_mut();
+            let base = state.housing.catalog.entries.get_mut(&entry()).unwrap();
+            base.total_num_stored = None;
+            base.total_num_placed = None;
+        }
+        let before = env.state().borrow().housing.clone();
+        remove_fixture(&env, "0");
+        assert_removed_fixture(&env, &before, true);
+    }
+
+    #[test]
+    fn remove_store_mixed_valid_invalid_variants_and_aggregates_are_atomic() {
+        for failure in 0..5 {
+            let env = fixture_env();
+            let second = HousingCatalogEntryVariantID {
+                record_id: 7102,
+                entry_type: 1,
+                variant_identifier: 9,
+            };
+            let second_entry = HousingCatalogEntryID {
+                record_id: 7102,
+                entry_type: 1,
+            };
+            {
+                let mut state = env.state().borrow_mut();
+                let housing = &mut state.housing;
+                let mut record = housing.catalog.variants[&variant()].clone();
+                record.num_stored = 6;
+                housing.catalog.variants.insert(second, record);
+                let mut base = housing.catalog.entries[&entry()].clone();
+                base.total_num_stored = Some(6);
+                base.total_num_placed = Some(1);
+                housing.catalog.entries.insert(second_entry, base);
+                housing
+                    .exterior
+                    .decor
+                    .get_mut("point11b")
+                    .unwrap()
+                    .variant_id = second;
+                match failure {
+                    0 => {
+                        housing.catalog.variants.remove(&second);
+                    }
+                    1 => {
+                        housing
+                            .catalog
+                            .variants
+                            .get_mut(&second)
+                            .unwrap()
+                            .num_stored = -1
+                    }
+                    2 => {
+                        housing
+                            .catalog
+                            .variants
+                            .get_mut(&second)
+                            .unwrap()
+                            .num_stored = i32::MAX
+                    }
+                    3 => {
+                        housing
+                            .catalog
+                            .entries
+                            .get_mut(&second_entry)
+                            .unwrap()
+                            .total_num_stored = Some(u32::MAX)
+                    }
+                    _ => {
+                        housing
+                            .catalog
+                            .entries
+                            .get_mut(&second_entry)
+                            .unwrap()
+                            .total_num_placed = Some(0)
+                    }
+                }
+            }
+            reject_remove_fixture(&env, "0");
+        }
+    }
+
+    #[test]
+    fn remove_store_combined_known_aggregate_limits_reject_before_any_commit() {
+        for (stored, placed) in [(u32::MAX - 1, 3), (2, 1)] {
+            let env = fixture_env();
+            {
+                let mut state = env.state().borrow_mut();
+                let base = state.housing.catalog.entries.get_mut(&entry()).unwrap();
+                base.total_num_stored = Some(stored);
+                base.total_num_placed = Some(placed);
+            }
+            reject_remove_fixture(&env, "0");
+        }
+    }
+
+    #[test]
+    fn remove_store_full_variant_events_follow_complete_commit_and_survive_gc() {
+        let env = fixture_env();
+        let second = HousingCatalogEntryVariantID {
+            variant_identifier: 1,
+            ..variant()
+        };
+        {
+            let mut state = env.state().borrow_mut();
+            let housing = &mut state.housing;
+            let mut record = housing.catalog.variants[&variant()].clone();
+            record.num_stored = 6;
+            housing.catalog.variants.insert(second, record);
+            housing
+                .catalog
+                .entries
+                .get_mut(&entry())
+                .unwrap()
+                .total_num_stored = Some(8);
+            housing
+                .exterior
+                .decor
+                .get_mut("point11b")
+                .unwrap()
+                .variant_id = second;
+        }
+        let mut expected = env.state().borrow().housing.clone();
+        expected
+            .exterior
+            .selected_fixture_point
+            .as_mut()
+            .unwrap()
+            .selected_fixture_id = None;
+        expected.exterior.decor.remove("point11a");
+        expected.exterior.decor.remove("point11b");
+        expected
+            .catalog
+            .variants
+            .get_mut(&variant())
+            .unwrap()
+            .num_stored = 3;
+        expected
+            .catalog
+            .variants
+            .get_mut(&second)
+            .unwrap()
+            .num_stored = 7;
+        expected
+            .catalog
+            .entries
+            .get_mut(&entry())
+            .unwrap()
+            .total_num_stored = Some(10);
+        expected
+            .catalog
+            .entries
+            .get_mut(&entry())
+            .unwrap()
+            .total_num_placed = Some(1);
+        env.exec(r#"
+            listener:SetScript('OnEvent', function(_, event, ...)
+                local payload = ...
+                collectgarbage('collect')
+                local point = C_HouseExterior.GetSelectedFixturePointInfo()
+                local base = C_HousingCatalog.GetCatalogEntryInfo({recordID=7101,entryType=1})
+                events[#events+1] = {name=event, payload=payload, arity=select('#', ...),
+                    baseStored=base.totalNumStored, basePlaced=base.totalNumPlaced,
+                    first=C_HousingCatalog.GetCatalogEntryVariantInfo({recordID=7101,entryType=1,variantIdentifier=0}).numStored,
+                    second=C_HousingCatalog.GetCatalogEntryVariantInfo({recordID=7101,entryType=1,variantIdentifier=1}).numStored,
+                    fixture=point.selectedFixtureID, removable=point.canSelectionBeRemoved,
+                    hasPoint=C_HouseExterior.HasSelectedFixturePoint(),
+                    selected=C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint()}
+            end)
+        "#).unwrap();
+        remove_fixture(&env, "0");
+        assert_removal_state(&env, &expected);
+        env.exec(r#"
+            collectgarbage('collect')
+            assert(#events == 3 and events[3].name == 'HOUSING_SET_FIXTURE_RESPONSE' and events[3].payload == 0)
+            local seen = {}
+            for index,row in ipairs(events) do
+                assert(row.arity == 1 and row.first == 3 and row.second == 7)
+                assert(row.baseStored == 10 and row.basePlaced == 1)
+                assert(row.fixture == nil and row.hasPoint and not row.removable and not row.selected)
+                if index < 3 then
+                    assert(row.name == 'HOUSING_STORAGE_ENTRY_UPDATED')
+                    local id = row.payload
+                    assert(id.recordID == 7101 and id.entryType == 1)
+                    seen[id.variantIdentifier] = (seen[id.variantIdentifier] or 0) + 1
+                    assert(C_HousingCatalog.GetCatalogEntryVariantInfo(id).numStored == (id.variantIdentifier == 0 and 3 or 7))
+                end
+            end
+            assert(seen[0] == 1 and seen[1] == 1)
+        "#).unwrap();
+    }
+
+    #[test]
+    fn remove_storage_and_response_gc_reentry_keep_new_fixture_and_original_payload() {
+        for reenter_on in [
+            "HOUSING_STORAGE_ENTRY_UPDATED",
+            "HOUSING_SET_FIXTURE_RESPONSE",
+        ] {
+            let env = fixture_env();
+            let before = env.state().borrow().housing.clone();
+            env.exec(&format!(r#"
+                reentered = false
+                listener:SetScript('OnEvent', function(_, event, ...)
+                    local payload = ...
+                    collectgarbage('collect')
+                    local point = C_HouseExterior.GetSelectedFixturePointInfo()
+                    events[#events+1] = {{name=event, payload=payload, arity=select('#', ...),
+                        fixture=point.selectedFixtureID, removable=point.canSelectionBeRemoved,
+                        stored=C_HousingCatalog.GetCatalogEntryVariantInfo({{recordID=7101,entryType=1,variantIdentifier=0}}).numStored}}
+                    if event == '{reenter_on}' and not reentered then
+                        reentered = true
+                        originalPayload = payload
+                        C_HouseExterior.SelectFixtureOption(302, 1)
+                        collectgarbage('collect')
+                        afterFixture = C_HouseExterior.GetSelectedFixturePointInfo().selectedFixtureID
+                        afterRemovable = C_HouseExterior.GetSelectedFixturePointInfo().canSelectionBeRemoved
+                    end
+                end)
+            "#)).unwrap();
+            remove_fixture(&env, "0");
+            let mut expected = before;
+            expected
+                .exterior
+                .selected_fixture_point
+                .as_mut()
+                .unwrap()
+                .selected_fixture_id = Some(302);
+            expected.exterior.decor.remove("point11a");
+            expected.exterior.decor.remove("point11b");
+            expected
+                .catalog
+                .variants
+                .get_mut(&variant())
+                .unwrap()
+                .num_stored = 4;
+            expected
+                .catalog
+                .entries
+                .get_mut(&entry())
+                .unwrap()
+                .total_num_stored = Some(4);
+            expected
+                .catalog
+                .entries
+                .get_mut(&entry())
+                .unwrap()
+                .total_num_placed = Some(1);
+            assert_removal_state(&env, &expected);
+            env.exec(&format!(r#"
+                collectgarbage('collect')
+                assert(reentered and afterFixture == 302 and afterRemovable and #events == 3)
+                assert(events[1].name == 'HOUSING_STORAGE_ENTRY_UPDATED')
+                assert(events[1].fixture == nil and not events[1].removable)
+                assert(events[1].payload.recordID == 7101 and events[1].payload.entryType == 1 and events[1].payload.variantIdentifier == 0)
+                for _,row in ipairs(events) do assert(row.arity == 1 and row.stored == 4) end
+                assert(events[2].name == 'HOUSING_SET_FIXTURE_RESPONSE' and events[2].payload == 0)
+                assert(events[3].name == 'HOUSING_SET_FIXTURE_RESPONSE' and events[3].payload == 0)
+                if '{reenter_on}' == 'HOUSING_STORAGE_ENTRY_UPDATED' then
+                    assert(originalPayload == events[1].payload)
+                    assert(C_HousingCatalog.GetCatalogEntryVariantInfo(originalPayload).numStored == 4)
+                    assert(events[2].fixture == 302 and events[3].fixture == 302)
+                else
+                    assert(originalPayload == 0 and events[2].fixture == nil and events[3].fixture == 302)
+                end
+                assert(C_HouseExterior.GetSelectedFixturePointInfo().selectedFixtureID == 302)
+                assert(not C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint())
+            "#)).unwrap();
+        }
+    }
+
+    #[test]
+    fn remove_preserves_pending_request_and_environment_isolation() {
+        let first = fixture_env();
+        let second = fixture_env();
+        first.state().borrow_mut().housing.pending_new_decor = Some(variant());
+        let before_first = first.state().borrow().housing.clone();
+        let before_second = second.state().borrow().housing.clone();
+        remove_fixture(&first, "0");
+        assert_removed_fixture(&first, &before_first, true);
+        assert_removal_state(&second, &before_second);
+        second.exec("assert(#events == 0)").unwrap();
+        remove_fixture(&second, "1");
+        assert_removed_fixture(&second, &before_second, false);
+        assert_removed_fixture(&first, &before_first, true);
     }
 
     #[test]
@@ -1382,6 +2090,9 @@ fn legacy_inverse_control_preserves_seeded_queries_and_noop_mutators() {
         assert(select('#',C_HouseExterior.SelectFixtureOption(302,0))==0)
         assert(select('#',C_HouseExterior.SetHouseExteriorSize(4,1))==0)
         assert(select('#',C_HouseExterior.SetHouseExteriorType(102))==0)
+        assert(select('#',C_HouseExterior.RemoveFixtureFromSelectedPoint())==0)
+        assert(select('#',C_HouseExterior.RemoveFixtureFromSelectedPoint(0))==0)
+        assert(select('#',C_HouseExterior.RemoveFixtureFromSelectedPoint(1))==0)
         assert(C_HouseExterior.GetCurrentHouseExteriorSize()==oldSize)
         local id,name=C_HouseExterior.GetCurrentHouseExteriorType()
         assert(id==oldType and name==oldName)
