@@ -886,17 +886,19 @@
       "symbols": [
         "C_HousingCatalog.DestroyEntry"
       ],
-      "scope": "Batch21 bounded independent PASS at 67b44f2c3: exact entryVariantID rename/HousingCatalogEntryVariantID type and full compound selector contract only; saved 15 destruction + 11 storage + 24 catalog = 50 PASS, snapshot default fmt/check 0. Mixed eligible subset, missing/zero no-op, consistency errors and synchronous mutation/event timing are simulator inferences, not native all-stack proof. Conservative secret rejection leaves native secure-access parity open. Parent batch21-green startup 0 [] is saved, not independent. Status retained audit-pending; no whole-row/page or all-profile completion.",
+      "scope": "Batch72 independent582 bounded PASS at ffb1845bc: DestroyEntry-only original selector/destroyAll and all-field VM authentication, secure actual NUM/BOOL/TABLE full-key deletion, addon denial/taint, guard/root/GC and existing eligible-count/event isolation. Compiled RED14PASS10FAIL;35freshRetailPASS=24destruction+11Admin/storage,startup0[],scopedfmt/defaultcheck0zeroDiagnostics. Mixed eligible subset/noop/consistency/synchronous timing remain inferred, not native all-stack proof;281/282 retain audit-pending. No broader/catalog/native/all-profile/source-row closure.",
       "spec": "docs/specs/housing-destroy-entry.md",
       "tests": [
         "tests/housing_destroy_entry.rs"
       ],
-      "implementation": "67b44f2c36c12c86cc1e10c334d010041239e7c9",
+      "implementation": "7f7d0fe8a387c06c379a714f3f75d68902bf4e87",
       "proof": "bounded-independent-pass",
-      "ledger": "/tmp/patch-12.0.5-batch21-green-runs.json",
-      "independent_ledger": "/tmp/patch-12.0.5-housing-destruction-independent-proof.md",
-      "startup_ledger": "/tmp/patch-12.0.5-batch21-green-startup-run.json",
-      "gate_scope": "Saved runtime independently inspected, not rerun; fresh fmt/check 0 at unchanged producer snapshot. Rooting and dispatch-error cleanup source-only, no forced-GC or dispatch-error behavioral proof; default cumulative retail features, not historical 12.0.5-only/all-profile execution."
+      "ledger": "/tmp/patch-12.0.5-batch72-green-runs.json",
+      "independent_ledger": "/tmp/patch-12.0.5-destroy-entry-secret-independent-proof.md",
+      "startup_ledger": "/tmp/patch-12.0.5-batch72-startup-run.json",
+      "gate_scope": "Independent582 fullsource/testLua/security/rooting/wiring/readability/count/Admin/publisher equivalence;35freshRetailPASS/startup0[],exactscopedfmt0/check0zeroDiagnostics143.492908539s inclreportedunmeasuredlockwait. GREENcompile0zeroDiagnostics160.637006766s;24run9.658300618s/11run2.020519059s/startup5.546410418s. ProtectedunownedAURAuninspected/unhashed/dirty-combined. No89B71reusecredit; input-allocationGC/dispatch-error-top/queuedpayload equality unproved; native and all-profile limits retained.",
+      "readability_followup": "ffb1845bcfd231b05a02de1af417a27cff7e0897",
+      "compiled_revision": "ffb1845bcfd231b05a02de1af417a27cff7e0897"
     },
     {
       "id": "housing-pending-decor",
@@ -2251,7 +2253,7 @@
         "housing-destroy-entry"
       ],
       "status": "audit-pending",
-      "note": "Batch21 bounded independent PASS at 67b44f2c3: exact entryVariantID rename/HousingCatalogEntryVariantID type and full compound selector contract only; saved 15 destruction + 11 storage + 24 catalog = 50 PASS, snapshot default fmt/check 0. Mixed eligible subset, missing/zero no-op, consistency errors and synchronous mutation/event timing are simulator inferences, not native all-stack proof. Conservative secret rejection leaves native secure-access parity open. Parent batch21-green startup 0 [] is saved, not independent. Status retained audit-pending; no whole-row/page or all-profile completion."
+      "note": "Batch72 independent582 bounded PASS at ffb1845bc: DestroyEntry-only original selector/destroyAll and all-field VM authentication, secure actual NUM/BOOL/TABLE full-key deletion, addon denial/taint, guard/root/GC and existing eligible-count/event isolation. Compiled RED14PASS10FAIL;35freshRetailPASS=24destruction+11Admin/storage,startup0[],scopedfmt/defaultcheck0zeroDiagnostics. Mixed eligible subset/noop/consistency/synchronous timing remain inferred, not native all-stack proof;281/282 retain audit-pending. No broader/catalog/native/all-profile/source-row closure."
     },
     {
       "source_id": "global api-C_HousingCatalog-DestroyEntry-282",
@@ -2259,7 +2261,7 @@
         "housing-destroy-entry"
       ],
       "status": "audit-pending",
-      "note": "Batch21 bounded independent PASS at 67b44f2c3: exact entryVariantID rename/HousingCatalogEntryVariantID type and full compound selector contract only; saved 15 destruction + 11 storage + 24 catalog = 50 PASS, snapshot default fmt/check 0. Mixed eligible subset, missing/zero no-op, consistency errors and synchronous mutation/event timing are simulator inferences, not native all-stack proof. Conservative secret rejection leaves native secure-access parity open. Parent batch21-green startup 0 [] is saved, not independent. Status retained audit-pending; no whole-row/page or all-profile completion."
+      "note": "Batch72 independent582 bounded PASS at ffb1845bc: DestroyEntry-only original selector/destroyAll and all-field VM authentication, secure actual NUM/BOOL/TABLE full-key deletion, addon denial/taint, guard/root/GC and existing eligible-count/event isolation. Compiled RED14PASS10FAIL;35freshRetailPASS=24destruction+11Admin/storage,startup0[],scopedfmt/defaultcheck0zeroDiagnostics. Mixed eligible subset/noop/consistency/synchronous timing remain inferred, not native all-stack proof;281/282 retain audit-pending. No broader/catalog/native/all-profile/source-row closure."
     },
     {
       "source_id": "global api-C_HousingCatalog-GetCatalogEntryInfoByItem-284",
