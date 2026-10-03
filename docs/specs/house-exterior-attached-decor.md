@@ -86,7 +86,7 @@ Main accepted EXACT272/274/276 after independent566 final PASS, recorded in `/tm
 
 Final `361642437`: compile235.194071s exit0/zero diagnostics;41 run9.536627s; startup11.959878s exit0 `[]`; check30.825380s exit0/zero diagnostics. Scopedfmt/readability/security/rooting/atomicity/reentry/wiring/equivalence PASS. Forever compile325.970902s exit0/zero diagnostics; inverse0.411750s. Saved proof only; no execution gates in this reconciliation.
 
-Accounting `0cf868024`: **177 pending/164 bounded/14 partial/7 metadata,362 ordered IDs/77 capabilities**; verification568 pending. Only272/274/276 promote. Enum already passed RED through another publisher: no formerly-missing-enum/core/remove row credit. Prior B69 counters remain historical.
+Accounting `0cf868024`: **177 pending/164 bounded/14 partial/7 metadata,362 ordered IDs/77 capabilities**; independent568 PASS30/30, preserving359 unrelated rows/76 existing capabilities ([accounting proof](../../../../../../../../tmp/patch-12.0.5-batch70-accounting-validation.md)). Only272/274/276 promote. Enum already passed RED through another publisher: no formerly-missing-enum/core/remove row credit. Prior B69 counters remain historical.
 
 Native coercion/failure mapping, nil/same-value/storage-order policies remain inferred. UI/acquisition/pets/global permissions/privacy/nominal types/declaration dating/full-profile parity unproved. Original globalfmt1, Forever mask-quad FAIL and historical502 process FAIL remain explicit; protected source never inspected/searched/hashed, no blanket clearance.
 

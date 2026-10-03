@@ -8,7 +8,7 @@ Source post2026-03-12; classification commit2026-10-02 23:02:13−05:00 /2026-10
 
 ### Batch70 — exterior attached-decor bounded acceptance
 
-[Acceptance SSOT](../../specs/house-exterior-attached-decor.md#independent-bounded-acceptance--2026-10-03) records main acceptance of independent566 for EXACT272/274/276, new boundary tests and retained historical RED. Accounting `0cf868024`: **177 pending/164 bounded/14 partial/7 metadata,362 ordered IDs/77 capabilities**; verification568 pending. Only these three rows promote; no enum/core/remove credit. Prior metadata/B69 counters remain historical. Linked SSOT owns runtime proof/native-inference limits; original globalfmt1, Forever mask-quad FAIL, historical502 process FAIL and protected-path limits remain explicit, no blanket clearance. Broader audit **IN PROGRESS**.
+[Acceptance SSOT](../../specs/house-exterior-attached-decor.md#independent-bounded-acceptance--2026-10-03) records main acceptance of independent566 for EXACT272/274/276, new boundary tests and retained historical RED. Accounting `0cf868024`: **177 pending/164 bounded/14 partial/7 metadata,362 ordered IDs/77 capabilities**; independent568 accounting PASS30/30; acceptance SSOT links exact proof. Only these three rows promote; no enum/core/remove credit. Prior metadata/B69 counters remain historical. Linked SSOT owns runtime proof/native-inference limits; original globalfmt1, Forever mask-quad FAIL, historical502 process FAIL and protected-path limits remain explicit, no blanket clearance. Broader audit **IN PROGRESS**.
 
 ### Batch69 — EXACT313/326 LoC outputs accepted
 
