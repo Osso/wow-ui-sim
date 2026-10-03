@@ -31,7 +31,7 @@ Bounded 12.0.5 destruction slice for `C_HousingCatalog.DestroyEntry(entryVariant
 - [ ] Paired addon calls deny each/all secret fields, each secret bool and secret tables with the host authentication diagnostic. Rejections preserve counts, every dye/base field, pending request, dispatch count, event queue and caller taint.
 - [ ] Top-argument and all-original-fields/arg2 precedence matrices cover type, missing, finite/integer/range/domain, unknown-key and inconsistent-model boundaries before mutation.
 
-Authored requirements only; all B72 compiled RED/GREEN pending. Main owns compiled RED before producer. Scope is `DestroyEntry` alone: shared catalog selectors, Admin and conservative guards remain unchanged. These tests assert simulator host-secret behavior, not mixed-stack native policy, full placement or security-global parity.
+B72 actual compiled RED is accepted; producer `7f7d0fe8a` follows it. GREEN and independent verifier acceptance remain pending. Scope is `DestroyEntry` alone: shared catalog selectors, Admin and conservative guards remain unchanged. These tests assert simulator host-secret behavior, not mixed-stack native policy, full placement or security-global parity.
 
 ### Cached grounding and consumer evidence — 2026-10-01
 
@@ -58,7 +58,8 @@ Actual consumer `Blizzard_HousingTemplates/Blizzard_HousingCatalogEntry.lua:728�
 - `src/c_api/c_housing/catalog.rs`: unchanged existing record inputs; sufficient for this slice.
 - `src/c_api/c_housing/catalog/queries.rs`: unconditional Rust `DestroyEntry` registration alongside existing full-ID queries.
 - `src/c_api/c_housing/catalog/{input,snapshot}.rs`: unchanged shared selector/VM access guards and rooted serializers.
-- `src/c_api/c_housing/catalog/storage.rs`: historical producer validates public arguments using the shared conservative selector parser and consistent counts, decrements only the exact variant's stored/eligible counts, then uses the existing admin event publisher after releasing the model borrow. B72 method-local secret authentication is required but not yet implemented/proved by this inputs-only change. Both producers retain the payload root across nested callbacks; destruction performs no post-dispatch write and never clears taint.
+- `src/c_api/c_housing/catalog/destroy_input.rs`: B72 producer `7f7d0fe8a` authenticates both original top-level arguments before selector/boolean type errors, and all three original identity fields before field type, integer/range/domain or model validation. The underlying selector and original fields are stack-rooted across allocations; `check_table_access` retains underlying table policy. Stack top is restored on success/error. This is a DestroyEntry-only AllowedWhenUntainted boundary, awaiting GREEN/verifier proof.
+- `src/c_api/c_housing/catalog/storage.rs`: DestroyEntry now uses that method-local reader. Existing exact-variant count validation, eligible-subset mutation and admin event publication after releasing the model borrow remain unchanged. Shared catalog/Admin/pending inputs, cancellation equivalence, payload rooting and no post-dispatch write remain unchanged; no taint clearing.
 - `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: exact `DestroyEntry` no-op removed; unrelated seeded policies unchanged. No fallback.
 
 ## Tests asserting this spec
@@ -73,7 +74,7 @@ All cases require a callable API before exercising it, so invalid-input rejectio
 | `malformed_public_selectors_fail_atomically`, `destroy_all_is_required_public_boolean_even_for_missing_keys`, `inconsistent_counts_fail_explicitly_without_clamping_mutating_or_emitting` | Explicit atomic public/model validation, consistent one/all inconsistency diagnostics |
 | `listener_reads_and_reenters_same_and_other_variant_before_outer_return`, `public_addon_call_preserves_taint`, `guarded_selector_retains_vm_access_policy_without_mutation_on_rejection`, `destruction_and_events_are_environment_local` | Reentrant timing, ordinary addon calls, public VM guard behavior, environment isolation |
 
-### B72 exact authored tests (not executed)
+### B72 exact tests — compiled RED, GREEN pending
 
 | Exact test | Authored boundary |
 |---|---|
@@ -99,7 +100,15 @@ Shared real fixture helpers inject host wrappers, verify actual secret payloads 
 - `rustfmt --edition 2024 --config skip_children=true tests/housing_destroy_entry.rs`: exit 0 on the new test file; formatting only, not compilation or behavioral proof. Later test edits invalidate formatting scope.
 - Producer slice authorizes formatting and commit only; no builds, checks, delegation or push. Existing tests, source accounting, other specs and vendor/cache definitions unchanged.
 
-B72 inputs-only checkpoint: no build, test, check, runtime or delegation performed. Owned-file formatting is not compilation. Main must record actual compiled RED before production and fresh GREEN afterward; historical 15-case proof does not cover these new requirements.
+Historical B72 inputs-only checkpoint (`1b0e7ab99` plus `0f7f47297`): producer-side formatting was not compilation; historical 15-case proof did not cover the new requirements.
+
+### B72 implementation and accepted compiled RED — 2026-10-03
+
+Producer `7f7d0fe8a` follows accepted actual RED at `0f7f47297aa9309cb1ae220c4e33b7f5660916a7`, with inputs `1b0e7ab99` + `0f7f47297`: **24 tests, 14 retained PASS / 10 new FAIL**, harness time **7.33s**. Saved build result records **261.349678s**, exit **0**, zero compiler diagnostics; run wrapper records exit **101**, **7.364796727s** elapsed. Artifacts: `/tmp/patch-12.0.5-batch72-red-build-result.json` and `/tmp/patch-12.0.5-batch72-red-run.{json,stdout,stderr}`. Build/run JSON identify the same integration executable hash. Provenance is dirty-combined; protected unowned source was neither touched nor inspected in this audit.
+
+The ten new cases fail at conservative secret rejection or authentication-precedence boundaries. They do not demonstrate ten downstream GC/event/atomicity failures: secure secret calls fail before those later assertions. Source inspection of only `storage.rs` and `destroy_input.rs` establishes the narrow producer wiring/order, not successful execution. **GREEN and independent verifier remain pending.** Existing storage/event/count/cancel-equivalence behavior is retained, not newly accepted by this producer.
+
+Exact rows **281/282 remain audit-pending**; current **177 pending / 164 bounded / 14 partial / 7 metadata**, 362 IDs and 77 capabilities remain unchanged. No approval for broad-row, native, all-profile, full-placement, whole-domain or whole-goal credit. Cached full-variant declaration and BOOL true-all/false-one wording ground the call shape; eligible mixed-stack, defaults/no-op, errors and synchronous events remain explicit simulator inferences. Historical 15-case old-fixture/conservative secure-secret rejection proof remains historical and is superseded only after later GREEN acceptance, not by producer presence.
 
 ### Historical reconciled bounded proof — 2026-10-01
 
@@ -110,14 +119,14 @@ B72 inputs-only checkpoint: no build, test, check, runtime or delegation perform
 | Full variant selector and required boolean | Behavioral PASS: exact record/type/variant isolation, zero returns, atomic malformed/public/model rejection |
 | Eligible one/all mutation and missing/zero no-op | Behavioral PASS: mixed 5/3 stack to 4/2 or 2/0, exempt instances and metadata retained; subset/no-op/consistency policies inferred, not native all-stack proof |
 | Mutation before synchronous callback and nested deletion | Behavioral PASS: one full-ID event per change, reentrant reads/deletions, no queued duplicate or outer overwrite; native timing/coalescing unknown |
-| Taint, secret inputs and secured tables | Historical Behavioral PASS for ordinary addon taint and real host guards; historical conservative secure/tainted secret rejection is superseded by B72 requirements and grants no current secret-acceptance credit |
+| Taint, secret inputs and secured tables | Historical Behavioral PASS for ordinary addon taint and real host guards; historical conservative secure/tainted secret rejection belongs to the old fixture; supersession awaits later B72 GREEN acceptance and grants no current secret-acceptance credit |
 | Publisher rooting and error cleanup | Source inspection only; no forced-GC or dispatch-error behavioral proof |
 
 Parent `batch21-green-startup-run.json` records exit **0**, stdout **[]**, 4.2461s; saved parent evidence, **not independent startup proof**. Exact [coverage](../../data/patch-api/sources/12.0.5-page-coverage.json) rows `global api-C_HousingCatalog-DestroyEntry-281`/`-282` alone link bounded selector rename/full variant-argument coverage. Their audit-pending classification is retained; all **362 IDs**, source hash and unrelated rows/counts remain **308 pending / 40 bounded / 14 partial**. No native/all-profile or whole-row/page closure.
 
 ## Known gaps (current cycle)
 
-- [ ] B72 actual compiled RED before the method-local producer change (main-owned).
+- [x] B72 actual compiled RED before the method-local producer change accepted: 14 PASS / 10 FAIL; not GREEN acceptance.
 - [ ] B72 GREEN secure secret acceptance/addon denial, ordering, atomicity and rooting proof (main-owned).
 - [ ] Native mixed-stack eligibility, fixed-five UI/batch meaning, invalid-input errors, secret access and event timing remain unknown.
 
@@ -125,4 +134,4 @@ Historical 15-case RED and GREEN above remain explicit historical evidence, not 
 
 ## Out of scope
 
-Native instance policy/probes, storage-limit aggregates, search refresh/filtering, placement, full entry DTOs, `CanDestroyEntry`, legacy argument compatibility, popup behavior, asynchronous/coalesced native events and whole source-row/page or all-profile completion. Those require separate evidence. B72 authors only `tests/housing_destroy_entry.rs` and this contract; future security production scope is `DestroyEntry` alone, not shared catalog/Admin/conservative guards or security-global behavior.
+Native instance policy/probes, storage-limit aggregates, search refresh/filtering, placement, full entry DTOs, `CanDestroyEntry`, legacy argument compatibility, popup behavior, asynchronous/coalesced native events and whole source-row/page or all-profile completion. Those require separate evidence. B72 security production scope is `DestroyEntry` alone, not shared catalog/Admin/pending inputs, conservative guards or security-global behavior. This audit changes only the four authorized documentation files.
