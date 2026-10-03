@@ -6,6 +6,10 @@ After `c7f9635cf`, accepted independent556 [classification proof](../../../../..
 
 Source post2026-03-12; classification commit2026-10-02 23:02:13−05:00 /2026-10-03 04:02:13Z. B69 `fae926860`/`c22c5d5a5` counts below are historical acceptance checkpoints, not current mutable accounting.
 
+### Batch70 — exterior attached-decor implementation awaiting acceptance
+
+Main-authored runtime `41904efbf` and supporting queries `c3f0c7f4c` are recorded in the [B70 contract/inventory/proof SSOT](../../specs/house-exterior-attached-decor.md#proof-ledger). EXACT272/274/276 implementation is **awaiting acceptance**, not accepted capabilities. The SSOT preserves pre-runtime compiled RED at `5ad54e578`, pending GREEN/inverse/check/readability/startup gates, and precise cached-declaration versus inferred-policy/native-evidence limits. World acquisition/UI/global permissions/pets remain open; no core/remove/enum row credit. Current classification remains the accounting checkpoint above; B69 acceptance and historical gaps below are unchanged.
+
 ### Batch69 — EXACT313/326 LoC outputs accepted
 
 Producer `cc69ac3c4`; [contract/inventory/proof SSOT](../../specs/spell-book-loss-of-control-outputs.md) and [[lua-api#Retail 12.0.5 spell and spellbook loss-of-control outputs]] describe existing typed LoC-map reads, actual player-book bank0 resolution, original book-selector authentication before model and shared rooted five-field writer. Explicit flag restricts three private NUM fields; two NeverSecret BOOLs stay public. Existing permissive spell parser remains; native AllowedWhenTainted secret-input parity is not credited.

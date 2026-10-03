@@ -74,6 +74,11 @@ Fixtures explicitly supply types101/102, fixtures301/302, owner hashes11/22, siz
 
 ### Proof ledger
 
+- B70 implementation awaiting acceptance: main-authored runtime `41904efbf0fc6ea9ac4294847ea4dc2cd7255bdb`; supporting queries `c3f0c7f4c73b901a3c8ea2045db8219472bbb30e`. Commit existence/subjects inspected in this docs-only audit; runtime behavior has not been independently accepted.
+- Supplied pre-runtime RED at `5ad54e5782d28b752a621d7fb7a3e915aa2f9d96`: default integration compile exit0, zero diagnostics, 264.585871s; modern39 cases, 38 FAIL/1 PASS, run8.704321s. This proves the pre-runtime failure boundary, not producer GREEN or downstream acceptance.
+- GREEN, inverse-profile acceptance, check, readability/security gates and startup remain pending. All behavioral boxes remain unchecked; no accepted capability or core/remove/enum row credit. Current classification stays at the [accounting SSOT checkpoint](../wiki/investigations/patch-12-0-5-api-audit.md#six-source-occurrences--metadata-only-accounting-accepted).
+- Cached declarations ground signatures, Store/Detach meanings, DTOs and synchronous response declarations only. Native failure/coercion/event mapping is unproved; nil/same-value handling, storage synchrony/order and invalid trusted-host inventory policies remain inferred. World acquisition, UI, global permissions/privacy and pets remain open. Implementation does not promote these policies to native evidence.
+
 - Input owner ran no builds, tests, checks or verification gates. Main recorded compiled RED in `/tmp/patch-12.0.5-batch70-red-build-result.json` and `-red-run.json`. No native parity claim.
 - `rustfmt --edition 2024 --config skip_children=true` on the four owned Rust files exited0 before inputs commit. Formatting evidence only; main must establish compiled RED before callback implementation.
 

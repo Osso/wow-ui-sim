@@ -1,3 +1,7 @@
+## [2026-10-02] implementation | B70 exterior actions await acceptance
+
+[Batch70 audit](investigations/patch-12-0-5-api-audit.md#batch70--exterior-attached-decor-implementation-awaiting-acceptance) links [contract/inventory/proof SSOT](../specs/house-exterior-attached-decor.md#proof-ledger): runtime and queries implemented, acceptance pending. Cached declarations are not native mutation proof; inferred policies and open acquisition/UI/permissions/pet gaps remain explicit. No capability or core/remove/enum row credit; current accounting and B69 checkpoints below remain unchanged.
+
 ## [2026-10-03] source accounting | Accept six metadata classifications
 
 [Six-occurrence accounting](investigations/patch-12-0-5-api-audit.md#six-source-occurrences--metadata-only-accounting-accepted) links coverage/proof SSOT after `c7f9635cf`, accepted independent556:180 pending/161 bounded/14 partial/7 metadata,362 IDs/76 unchanged capabilities. Zero runtime/implementation credit; concrete adjacent contracts remain separately pending. Earlier B69 counts are historical checkpoints; audit IN PROGRESS.

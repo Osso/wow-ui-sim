@@ -1,3 +1,7 @@
+## [2026-10-02] implementation | Document B70 pending exterior acceptance
+
+Updated only the [B70 spec/proof SSOT](../specs/house-exterior-attached-decor.md#proof-ledger), [audit](investigations/patch-12-0-5-api-audit.md#batch70--exterior-attached-decor-implementation-awaiting-acceptance) and index/log. Recorded supplied pre-runtime RED and main-authored runtime/query commits as implementation awaiting acceptance; cached declarations, inferred policies and native gaps remain distinct. No accepted capability/core/remove/enum credit or accounting edits; prior B69 checkpoints/gaps preserved. Docs-only inspection; no builds/tests/checks, delegation or protected-file inspection.
+
 ## [2026-10-03] source accounting | Record accepted six-row classification
 
 After `c7f9635cf`, [accounting SSOT links](investigations/patch-12-0-5-api-audit.md#six-source-occurrences--metadata-only-accounting-accepted) record accepted independent556 metadata-only classifications, preserved IDs/capabilities/source integrity and separately pending adjacent contracts. Zero runtime/implementation credit. B69 `fae926860`/`c22c5d5a5` counts retained as historical checkpoints; broader audit open. Three owned wiki files only.
