@@ -7,6 +7,7 @@ use crate::c_api::c_secrets::push_stat_number;
 #[cfg(feature = "client-wowforever")]
 use crate::lua_api::globals::targeting_verbs::resolve_unit_snapshot;
 use crate::lua_api::methods::borrow_state;
+use crate::lua_api::state_types::CharacterStats;
 use crate::lua_bridge::FromStack;
 use rilua::vm::closure::RustFn;
 use rilua::vm::state::LuaState;
@@ -254,25 +255,50 @@ fn unit_has_relic_slot(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn get_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
-    push_stat_number(state, 0.0)?;
+/// Wraps one explicit `CharacterStats` input; see docs/specs/explicit-stat-inputs.md.
+fn push_player_stat(state: &mut LuaState, read: fn(&CharacterStats) -> f64) -> LuaResult<u32> {
+    let value = read(&borrow_state(state)?.player.stats);
+    push_stat_number(state, value)?;
     Ok(1)
 }
 
-fn get_spell_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
-    push_stat_number(state, 0.0)?;
-    Ok(1)
-}
-
-fn get_expertise(state: &mut LuaState) -> LuaResult<u32> {
-    push_stat_number(state, 0.0)?;
-    push_stat_number(state, 0.0)?;
-    push_stat_number(state, 0.0)?;
+fn push_player_stat_triple(
+    state: &mut LuaState,
+    read: fn(&CharacterStats) -> [f64; 3],
+) -> LuaResult<u32> {
+    let values = read(&borrow_state(state)?.player.stats);
+    for value in values {
+        push_stat_number(state, value)?;
+    }
     Ok(3)
 }
 
+fn get_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
+    push_player_stat(state, |stats| stats.hit_modifier)
+}
+
+fn get_spell_hit_modifier(state: &mut LuaState) -> LuaResult<u32> {
+    push_player_stat(state, |stats| stats.spell_hit_modifier)
+}
+
+fn get_expertise(state: &mut LuaState) -> LuaResult<u32> {
+    push_player_stat_triple(state, |stats| stats.expertise)
+}
+
 fn get_expertise_percent(state: &mut LuaState) -> LuaResult<u32> {
-    get_expertise(state)
+    push_player_stat_triple(state, |stats| stats.expertise_percent)
+}
+
+fn get_mod_resilience_damage_reduction(state: &mut LuaState) -> LuaResult<u32> {
+    push_player_stat(state, |stats| stats.mod_resilience_damage_reduction)
+}
+
+fn get_pvp_power_damage(state: &mut LuaState) -> LuaResult<u32> {
+    push_player_stat(state, |stats| stats.pvp_power_damage)
+}
+
+fn get_pvp_power_healing(state: &mut LuaState) -> LuaResult<u32> {
+    push_player_stat(state, |stats| stats.pvp_power_healing)
 }
 
 fn get_mastery_effect(state: &mut LuaState) -> LuaResult<u32> {
@@ -285,11 +311,6 @@ fn get_mastery_effect(state: &mut LuaState) -> LuaResult<u32> {
 fn get_versatility_bonus(state: &mut LuaState) -> LuaResult<u32> {
     let vers = borrow_state(state)?.player.stats.versatility_pct();
     push_stat_number(state, vers)?;
-    Ok(1)
-}
-
-fn get_restricted_zero_percent(state: &mut LuaState) -> LuaResult<u32> {
-    push_stat_number(state, 0.0)?;
     Ok(1)
 }
 
@@ -391,10 +412,10 @@ const COMBAT_STAT_GLOBALS: &[(&str, RustFn)] = &[
     ("GetVersatilityBonus", get_versatility_bonus),
     (
         "GetModResilienceDamageReduction",
-        get_restricted_zero_percent,
+        get_mod_resilience_damage_reduction,
     ),
-    ("GetPvpPowerDamage", get_restricted_zero_percent),
-    ("GetPvpPowerHealing", get_restricted_zero_percent),
+    ("GetPvpPowerDamage", get_pvp_power_damage),
+    ("GetPvpPowerHealing", get_pvp_power_healing),
     ("GetMeleeMissChance", get_zero_percent),
     ("GetRangedMissChance", get_zero_percent),
     ("GetSpellMissChance", get_zero_percent),

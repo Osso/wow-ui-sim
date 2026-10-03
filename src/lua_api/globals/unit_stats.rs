@@ -510,13 +510,14 @@ fn get_parry_chance(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_block_chance(state: &mut LuaState) -> LuaResult<u32> {
-    push_stat_number(state, 0.0)?;
+    let block_chance = borrow_state(state)?.player.stats.block_chance;
+    push_stat_number(state, block_chance)?;
     Ok(1)
 }
 
 fn get_shield_block(state: &mut LuaState) -> LuaResult<u32> {
-    let stats = stats_for(state);
-    push_stat_number(state, stats.armor as f64)?;
+    let shield_block = borrow_state(state)?.player.stats.shield_block;
+    push_stat_number(state, shield_block)?;
     Ok(1)
 }
 

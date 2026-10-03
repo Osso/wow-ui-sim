@@ -8,8 +8,7 @@
 //! - `GetPetLoyalty()`       → `pet.loyalty_label` (string, or nil
 //!   when empty)
 //! - `GetPetTimeInCombat()`  → `pet.time_in_combat`
-//! - `GetPetSpellBonusDamage()` → 0 unless a fuller pet caster stat model is
-//!   added.
+//! - `GetPetSpellBonusDamage()` → explicit `pet.spell_bonus_damage`, 0 when unset.
 //!
 //! The happiness / loyalty APIs were removed from retail in Cataclysm
 //! and addons that still probe them expect zeros or nil. The default
@@ -54,7 +53,8 @@ fn get_pet_time_in_combat(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_pet_spell_bonus_damage(state: &mut LuaState) -> LuaResult<u32> {
-    push_stat_number(state, 0.0)?;
+    let bonus = borrow_state(state)?.pet.spell_bonus_damage.unwrap_or(0.0);
+    push_stat_number(state, bonus)?;
     Ok(1)
 }
 
