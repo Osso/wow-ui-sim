@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Batch87 — eight existing stat models accepted
+
+An independent GPT-6.1-sol scout classified the 19 remaining `SecretWhenUnitStatsRestricted` rows. Main accepts its eight **state-backed and wrapped** rows as output annotations only: **418, 446, 454, 456, 462, 490, 492, 516**. [Acceptance SSOT](../../specs/retail-missing-stat-inputs.md#b87-existing-model-output-annotations-accepted--2026-10-03) owns the per-row state, assertions and limits. Fresh `character_stats::` run: **35 PASS/0 FAIL** on the binary built at `d1bbdc8e8`.
+
+The other eleven are constants or proxies and earn nothing by audit: **422, 434, 436, 440, 452, 464, 470, 472, 478, 488, 504**. They need explicit inputs (seven player scalars, two expertise triples, an optional pet spell bonus, a per-GUID attack-speed pair) before any credit. Batch86 (row365) is implemented and awaiting re-verification. [Coverage SSOT](../../../data/patch-api/sources/12.0.5-page-coverage.json): **90 capabilities/362 IDs; 151 pending /193 bounded /11 partial /7 metadata**; audit **IN PROGRESS**.
+
 ### Batch85 — attack power and spell haste output annotations accepted
 
 Main accepts an independent GPT-6.1-sol source audit (**ACCEPT WITH QUALIFICATIONS** per row) for **exact502 `UnitAttackPower`, 508 `UnitRangedAttackPower` and 512 `UnitSpellHaste` output annotations only**. [Acceptance SSOT](../../specs/unit-stat-output-restriction.md#b85-independent-bounded-acceptance-and-refreshed-restriction-proof--2026-10-03) owns evidence and limits. **478 `GetShieldBlock`** (returns armor) and **504 `UnitAttackSpeed`** (constant 2.0, 2.0) are deferred without credit: wrapping a proxy or constant is not modeled behavior.

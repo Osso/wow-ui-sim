@@ -1475,6 +1475,32 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/unit-stat-output-restriction.md#b85-independent-bounded-acceptance-and-refreshed-restriction-proof--2026-10-03",
       "gate_scope": "Main accepts independent Sol source audit ACCEPT WITH QUALIFICATIONS per row, report SHA256 6c08fc4a4a6ddfe9bb80c8aaa2a2ac15db2c69d2eb82bb3af789c9232c7bb41e (session scratchpad, not durable). Fresh direct run of four stat-restriction tests 4 PASS/0 FAIL exit0 at clean 0d2a98596, integration binary SHA256 d34c088672d4d310b47b714ff0b7740a36f718beaa47feef9faf0ade96f5ae75, compiled zero warnings; cargo fmt --check exit0 whole tree. Same run refreshes B83/B84 fixtures. No cargo check, startup or broad suite claimed for this capability. Native/GUI/CASC/older-profile gaps open."
+    },
+    {
+      "id": "existing-stat-models-restricted-outputs",
+      "symbols": [
+        "GetAttackPowerForStat",
+        "GetMastery",
+        "GetOverrideAPBySpellPower",
+        "GetOverrideSpellPowerByAP",
+        "GetPetMeleeHaste",
+        "GetSpellPenetration",
+        "GetSturdiness",
+        "UnitWeaponAttackPower"
+      ],
+      "scope": "B87 exact418/446/454/456/462/490/492/516 output annotations only: existing state-backed providers (active-spec primary stat, mastery rating/130, two explicit conversion scalars, optional pet haste, explicit penetration and sturdiness, weapon attack power by existing GUID) wrap every numeric result. One seeded value per row: arity/value/secrecy/access plain-restricted-plain, tainted opacity, denied unwrap/arithmetic, retained caller taint. Simulator divisors/units/defaults are policy, not native formulas; seven producers are client-retail only; Forever variants plain. No selector-policy, activation, PTR/older-profile or native credit. Eleven constant/proxy stat rows remain pending.",
+      "spec": "docs/specs/retail-missing-stat-inputs.md",
+      "tests": [
+        "tests/character_stats/missing_apis.rs",
+        "tests/character_stats/stat_restriction.rs",
+        "tests/character_stats/stat_restriction_fixtures.lua",
+        "tests/unit_stats.rs"
+      ],
+      "compiled_revision": "d1bbdc8e8c25dc55c4fdeb3239018e5e63ceb476",
+      "source_view_revision": "0d2a98596d6bd6c78d20e3d5f39ce89d7bd5b6c6",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/retail-missing-stat-inputs.md#b87-existing-model-output-annotations-accepted--2026-10-03",
+      "gate_scope": "Independent Sol scout classification of 19 pending stat rows, report SHA256 a674425f23fc9f9a87810b83db68120aa120811c7cd7aaf7cfc45e4b5b5dad7d (scratchpad, not durable); main accepts its eight state-backed-and-wrapped rows. Fresh direct run character_stats:: 35 PASS/0 FAIL exit0, integration binary SHA256 3fbfdbb32a96056c14a13ea4e16f1dc8247a9a31ec65668df90a0fedacc790d9 built at d1bbdc8e8, source unchanged to c9940ece9; cargo fmt --check exit0. tests/unit_stats.rs value cases not rerun in this batch. No cargo check, startup or broad suite claimed. Native/GUI/CASC/older-profile gaps open."
     }
   ],
   "source_rows": [
@@ -2994,9 +3020,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetAttackPowerForStat-418",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "existing-stat-models-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B87 accepted independent Sol scout plus fresh 35/35 character_stats run at d1bbdc8e8 source: existing state-backed output, active-spec primary stat contribution (1,37)->37, every numeric result wrapped; value/arity/privacy/caller-opacity on one seeded case. Simulator policy values, not native formulas; no selector, activation, PTR/older-profile or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetAvoidance-420",
@@ -3092,9 +3120,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetMastery-446",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "existing-stat-models-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B87 accepted independent Sol scout plus fresh 35/35 character_stats run at d1bbdc8e8 source: existing state-backed output, mastery rating520/130=4, every numeric result wrapped; value/arity/privacy/caller-opacity on one seeded case. Simulator policy values, not native formulas; no selector, activation, PTR/older-profile or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetMasteryEffect-448",
@@ -3120,15 +3150,19 @@
     },
     {
       "source_id": "global api-PlayerScript GetOverrideAPBySpellPower-454",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "existing-stat-models-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B87 accepted independent Sol scout plus fresh 35/35 character_stats run at d1bbdc8e8 source: existing state-backed output, explicit conversion scalar135, every numeric result wrapped; value/arity/privacy/caller-opacity on one seeded case. Simulator policy values, not native formulas; no selector, activation, PTR/older-profile or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetOverrideSpellPowerByAP-456",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "existing-stat-models-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B87 accepted independent Sol scout plus fresh 35/35 character_stats run at d1bbdc8e8 source: existing state-backed output, explicit conversion scalar42, every numeric result wrapped; value/arity/privacy/caller-opacity on one seeded case. Simulator policy values, not native formulas; no selector, activation, PTR/older-profile or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetParryChance-458",
@@ -3144,9 +3178,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetPetMeleeHaste-462",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "existing-stat-models-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B87 accepted independent Sol scout plus fresh 35/35 character_stats run at d1bbdc8e8 source: existing state-backed output, explicit optional pet haste23.5, every numeric result wrapped; value/arity/privacy/caller-opacity on one seeded case. Simulator policy values, not native formulas; no selector, activation, PTR/older-profile or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetPetSpellBonusDamage-464",
@@ -3240,15 +3276,19 @@
     },
     {
       "source_id": "global api-PlayerScript GetSpellPenetration-490",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "existing-stat-models-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B87 accepted independent Sol scout plus fresh 35/35 character_stats run at d1bbdc8e8 source: existing state-backed output, explicit penetration77, every numeric result wrapped; value/arity/privacy/caller-opacity on one seeded case. Simulator policy values, not native formulas; no selector, activation, PTR/older-profile or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetSturdiness-492",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "existing-stat-models-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B87 accepted independent Sol scout plus fresh 35/35 character_stats run at d1bbdc8e8 source: existing state-backed output, explicit sturdiness12.5, every numeric result wrapped; value/arity/privacy/caller-opacity on one seeded case. Simulator policy values, not native formulas; no selector, activation, PTR/older-profile or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetVersatilityBonus-494",
@@ -3336,9 +3376,11 @@
     },
     {
       "source_id": "global api-Unit UnitWeaponAttackPower-516",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "existing-stat-models-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B87 accepted independent Sol scout plus fresh 35/35 character_stats run at d1bbdc8e8 source: existing state-backed output, weapon attack power (31,47,59) by existing GUID, every numeric result wrapped; value/arity/privacy/caller-opacity on one seeded case. Simulator policy values, not native formulas; no selector, activation, PTR/older-profile or full-suite clearance."
     },
     {
       "source_id": "scriptobjects-AbbreviateConfig-SetAbbreviateNumberData-522",

@@ -63,3 +63,28 @@ Native restriction activation, zero/absence defaults, formulas, nominal numeric 
 Observed batch7 default build snapshot `c5ba89ae3d35a951cd77ca8b773b4bfc56ad9ebd`, rilua `6044544b960cd68b4b0c58bb3373412757c2caee`, compiled successfully in 34m51s. Exact argv, artifact SHA256 and referenced outputs: `/tmp/patch-12.0.5-batch7-integration-runs.json` and `/tmp/patch-12.0.5-batch7-lib-runs.json`. Independent verifier 104 report `/tmp/patch-12.0.5-batch7-independent-proof.md` was not yet available when recording these logs; no independently validated final acceptance, native parity or whole-page completion is claimed.
 
 `character_stats::missing_apis::` PASS 13/13 (`/tmp/patch-12.0.5-batch7-integration-0.log`): explicit scalar/pet/regen/AP inputs and bounded selector/secrecy fixtures. No automatic producers or native formulas.
+
+## B87 existing-model output annotations accepted — 2026-10-03
+
+Scope: **exact446 `GetMastery`, 454 `GetOverrideAPBySpellPower`, 456 `GetOverrideSpellPowerByAP`, 462 `GetPetMeleeHaste`, 490 `GetSpellPenetration`, 492 `GetSturdiness`, 516 `UnitWeaponAttackPower`**, plus **418 `GetAttackPowerForStat`** from the [original restriction matrix](unit-stat-output-restriction.md). Each retained row is the single delta `+ SecretWhenUnitStatsRestricted`: output annotations only.
+
+An independent GPT-6.1-sol read-only scout at `0d2a98596` classified all 19 then-pending stat rows from the retained deltas, cached function declarations, provider bodies and tests. It found these eight **state-backed and wrapped**: every numeric result goes through `push_stat_number`, and each provider reads explicit state rather than a constant.
+
+| Row | State read | Value assertions | Restriction fixture |
+|---|---|---|---|
+| 418 | active spec primary stat from `class_index`/`active_spec_index` | `tests/unit_stats.rs` Protection, Feral and Holy cases | `(1, 37)` → `37` |
+| 446 | `mastery_pct()` = `mastery_rating / 130` | rating520 → 4, 1040 → 8 | 4 |
+| 454 | `spell_power_to_attack_power` | 135, update175; unchanged by the reverse input | 135 |
+| 456 | `attack_power_to_spell_power` | 42, update67 | 42 |
+| 462 | `pet.melee_haste_pct`, `None` → 0 | 23.5 independent of player haste, 31, `None` → 0 | 23.5 |
+| 490 | `spell_penetration` | 77, update91 | 77 |
+| 492 | `sturdiness_pct` | 12.5; 18 with avoidance999 | 12.5 |
+| 516 | `weapon_attack_power` by existing unit GUID | player `(31,47,59)`, shared target/focus GUID, live update, missing → `(0,0,0)` | `(31,47,59)` |
+
+Restriction behavior is asserted by `character_stats::missing_apis::missing_stats_toggle_preserves_all_values_and_arities` and `missing_stats_tainted_callers_receive_opaque_host_outputs` for the seven, and by the `stat_restriction` pair for 418: exact arity and values plain → restricted → plain, opaque results, denied unwrap and arithmetic, retained caller taint.
+
+**Fresh execution:** at `c9940ece9` (source identical to `d1bbdc8e8`) the integration binary (SHA256 `3fbfdbb32a96056c14a13ea4e16f1dc8247a9a31ec65668df90a0fedacc790d9`) ran `character_stats:: --test-threads=1` directly: **35 passed, 0 failed, exit0**, including all 13 `missing_apis` and 4 `stat_restriction` tests. The scout report (SHA256 `a674425f23fc9f9a87810b83db68120aa120811c7cd7aaf7cfc45e4b5b5dad7d`) and run log are scratchpad-only; this section is the retained record.
+
+Limits: one seeded value per row under restriction. Divisor130, percentage and flat-amount interpretations, `None` → 0 and missing-row zeros are simulator policy, not native formulas. R1–R5, pet haste and weapon attack power register only under `client-retail`; PTR and older profiles get no credit, and the Forever variants of 454/456/490 push plain numbers. Cached `AllowedWhenUntainted` selector policy for 418 and 516 is not a delta in these rows. Activation and native parity unverified. The unchecked requirements above keep their own status.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): eight rows `bounded-coverage` under new capability `existing-stat-models-restricted-outputs`; **90 capabilities/362 ordered IDs; 151 pending/193 bounded/11 partial/7 metadata**. The other eleven scouted rows (422, 434, 436, 440, 452, 464, 470, 472, 478, 488, 504) are constants or proxies and stay pending until real inputs exist.

@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B87 eight existing stat models accepted
+
+[Acceptance SSOT](../specs/retail-missing-stat-inputs.md#b87-existing-model-output-annotations-accepted--2026-10-03) owns exact418/446/454/456/462/490/492/516 output annotations from an independent Sol scout plus a fresh 35/35 `character_stats::` run. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch87--eight-existing-stat-models-accepted) lists the eleven constant/proxy stat rows still pending; 90 capabilities/362 IDs, 151 pending/193 bounded/11 partial/7 metadata.
+
 ## [2026-10-03] evidence | B85 attack power and spell haste output annotations accepted
 
 [Acceptance SSOT](../specs/unit-stat-output-restriction.md#b85-independent-bounded-acceptance-and-refreshed-restriction-proof--2026-10-03) owns the independent Sol source audit for exact502/508/512 and the fresh 4/4 stat-restriction run at `0d2a98596`, which also refreshes B83/B84; 478/504 deferred as proxy/constant. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch85--attack-power-and-spell-haste-output-annotations-accepted) records 89 capabilities/362 IDs, 159 pending/185 bounded/11 partial/7 metadata, and whole-tree `cargo fmt --check` exit0.

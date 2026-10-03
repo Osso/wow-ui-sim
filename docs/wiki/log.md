@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B87 eight existing stat models accepted
+
+Linked [acceptance SSOT](../specs/retail-missing-stat-inputs.md#b87-existing-model-output-annotations-accepted--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch87--eight-existing-stat-models-accepted): eight state-backed stat rows bounded output-only; eleven constant/proxy rows left pending with required inputs named. Fresh 35/35 `character_stats::` run. 90 capabilities/362 IDs, 151/193/11/7.
+
 ## [2026-10-03] docs | B85 attack power and spell haste output annotations accepted
 
 Linked [acceptance SSOT](../specs/unit-stat-output-restriction.md#b85-independent-bounded-acceptance-and-refreshed-restriction-proof--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch85--attack-power-and-spell-haste-output-annotations-accepted): exact502/508/512 bounded output-only from an independent Sol source audit; fresh 4/4 stat-restriction run at clean `0d2a98596` replaces B82 record reuse for B83–B85; 478/504 deferred. `aura_duration.rs` committed `608d52558`; rustfmt installed, whole-tree fmt check exit0. 89 capabilities/362 IDs, 159/185/11/7.
