@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B85 attack power and spell haste output annotations accepted
+
+[Acceptance SSOT](../specs/unit-stat-output-restriction.md#b85-independent-bounded-acceptance-and-refreshed-restriction-proof--2026-10-03) owns the independent Sol source audit for exact502/508/512 and the fresh 4/4 stat-restriction run at `0d2a98596`, which also refreshes B83/B84; 478/504 deferred as proxy/constant. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch85--attack-power-and-spell-haste-output-annotations-accepted) records 89 capabilities/362 IDs, 159 pending/185 bounded/11 partial/7 metadata, and whole-tree `cargo fmt --check` exit0.
+
 ## [2026-10-03] evidence | B84 ranged crit and haste output annotations accepted
 
 [Acceptance SSOT](../specs/unit-stat-output-restriction.md#b84-independent-bounded-acceptance--2026-10-03) owns the independent Sol source audit for exact474/476: existing melee-getter providers and fixtures, committed B82 record reused, no new execution, Forever branch excluded. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch84--ranged-crit-and-haste-output-annotations-accepted) records 88 capabilities/362 IDs, 162 pending/182 bounded/11 partial/7 metadata.

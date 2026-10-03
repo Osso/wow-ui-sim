@@ -1456,6 +1456,25 @@
       "proof": "bounded-independent-pass-reused-record",
       "ledger": "docs/specs/unit-stat-output-restriction.md#b84-independent-bounded-acceptance--2026-10-03",
       "gate_scope": "Main accepts independent Sol source audit ACCEPT WITH QUALIFICATIONS per row, report SHA256 0775c67b49eb6e3a491795fc65e046fa96afeac62b506d07eb0d973a28c11d7f (session scratchpad, not durable); its one failed sub-item was a supplement wording claim about other GetRangedHaste callers, corrected. No new tests/build/check/startup: reuse of B82 committed aggregate record of four restriction tests PASS at d21d4a208 with empty src/tests/Cargo diff to 092b6efab; raw /tmp artifacts unreadable on the accounting host. Feature-branch conclusions source-derived, not compiled. B82 qualified check protocol carries over; unowned dirty aura_duration.rs outside provider chains. Native/GUI/CASC/fullsuite/globalfmt gaps open."
+    },
+    {
+      "id": "attack-power-spell-haste-restricted-outputs",
+      "symbols": [
+        "UnitAttackPower",
+        "UnitRangedAttackPower",
+        "UnitSpellHaste"
+      ],
+      "scope": "B85 exact502/508/512 output annotations only: registered providers resolve the unit snapshot; seeded player attack power strength300+agility200+level10*10=600 with two literal-zero buff positions, ranged reusing the melee provider, spell haste rating510/180. Seven wrapped positions: arity/value/secrecy/access plain-restricted-plain, tainted opacity, denied unwrap/arithmetic, retained caller taint; absent-unit zeroes for UnitAttackPower only. Synthetic sum and zero components, 170-vs-180 haste divisor disagreement, unit-token fallback to player, nonplayer snapshots, selector policy, activation and native formulas unverified. 478 GetShieldBlock (armor proxy) and 504 UnitAttackSpeed (constant) deferred without credit.",
+      "spec": "docs/specs/unit-stat-output-restriction.md",
+      "tests": [
+        "tests/character_stats/stat_restriction.rs",
+        "tests/character_stats/stat_restriction_fixtures.lua"
+      ],
+      "compiled_revision": "0d2a98596d6bd6c78d20e3d5f39ce89d7bd5b6c6",
+      "source_view_revision": "68e76142a23b6f98aec68e40e7b6b5bdd95236a1",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/unit-stat-output-restriction.md#b85-independent-bounded-acceptance-and-refreshed-restriction-proof--2026-10-03",
+      "gate_scope": "Main accepts independent Sol source audit ACCEPT WITH QUALIFICATIONS per row, report SHA256 6c08fc4a4a6ddfe9bb80c8aaa2a2ac15db2c69d2eb82bb3af789c9232c7bb41e (session scratchpad, not durable). Fresh direct run of four stat-restriction tests 4 PASS/0 FAIL exit0 at clean 0d2a98596, integration binary SHA256 d34c088672d4d310b47b714ff0b7740a36f718beaa47feef9faf0ade96f5ae75, compiled zero warnings; cargo fmt --check exit0 whole tree. Same run refreshes B83/B84 fixtures. No cargo check, startup or broad suite claimed for this capability. Native/GUI/CASC/older-profile gaps open."
     }
   ],
   "source_rows": [
@@ -3263,9 +3282,11 @@
     },
     {
       "source_id": "global api-Unit UnitAttackPower-502",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "attack-power-spell-haste-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B85 accepted independent Sol audit plus fresh 4/4 restriction run at 0d2a98596: seeded player {600,0,0}, three wrapped positions, absent-unit secret zeroes. Synthetic attack power and literal-zero buff components; no native decomposition, selector, nonplayer or older-profile clearance."
     },
     {
       "source_id": "global api-Unit UnitAttackSpeed-504",
@@ -3283,9 +3304,11 @@
     },
     {
       "source_id": "global api-Unit UnitRangedAttackPower-508",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "attack-power-spell-haste-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B85 accepted independent Sol audit plus fresh 4/4 restriction run at 0d2a98596: seeded player {600,0,0} through the reused melee provider, three wrapped positions. No separate ranged model, absent-unit case, native formula, selector or older-profile clearance."
     },
     {
       "source_id": "global api-Unit UnitRangedDamage-510",
@@ -3297,9 +3320,11 @@
     },
     {
       "source_id": "global api-Unit UnitSpellHaste-512",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "attack-power-spell-haste-restricted-outputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B85 accepted independent Sol audit plus fresh 4/4 restriction run at 0d2a98596: seeded player 510/180, one wrapped position. Divisor180 disagrees with the 170 used by GetHaste; neither native-verified. No nonplayer, absent-unit, selector or older-profile clearance."
     },
     {
       "source_id": "global api-Unit UnitStat-514",

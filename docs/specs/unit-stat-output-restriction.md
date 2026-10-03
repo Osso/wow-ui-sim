@@ -252,4 +252,14 @@ All three fixtures run in `stat_restriction_all_supported_outputs_preserve_value
 - **478 `GetShieldBlock`**: provider returns `stats.armor` (fixture1234) and reads stack slot 1 as a unit token although the cached declaration takes no arguments. Armor is not a shield-block model; wrapping alone does not make this meaningful behavior.
 - **504 `UnitAttackSpeed`**: provider pushes literal `2.0, 2.0` regardless of unit or state; constant shim.
 
-Rows502/508/512 remain `audit-pending` with no capability until independent validation and main accounting.
+At supplement time rows502/508/512 were `audit-pending`; the acceptance below supersedes that for these three boundaries.
+
+## B85 independent bounded acceptance and refreshed restriction proof — 2026-10-03
+
+Main accepts an independent GPT-6.1-sol read-only audit of the supplement at `68e76142a`: **ACCEPT WITH QUALIFICATIONS for each row**, **exact502/508/512 output annotations only**, seven wrapped result positions across the three seeded `'player'` fixtures. It confirmed the deltas, function declarations (not the same-named events), provider chains and registration, computed `300 + 200 + 10*10 = 600` and `510/180`, the 170-versus-180 haste divisor disagreement, the assertions of the exercising tests, and that deferring 478 and 504 with no credit is consistent with the evidence. Crediting wrapped literal-zero buff positions beside a state-backed primary value matches the earlier exact-eight acceptance of all21 positions. Added limits: omitted, nil and wrong-type unit arguments fall back to `"player"` in `unit_token_at` and are unverified against the nonnil declaration; other values, live mutation and truncation boundaries have no restriction-case proof.
+
+It also established that the reused B82 record cannot prove compiled-source equivalence once `608d52558` changed `src`. That gap is closed by a fresh run instead: at clean `0d2a98596`, the integration binary (SHA256 `d34c088672d4d310b47b714ff0b7740a36f718beaa47feef9faf0ade96f5ae75`, built by the B86 GREEN compile with zero warnings) ran `character_stats::stat_restriction:: --test-threads=1` directly: **4 passed, 0 failed, exit0, 0.61s**. Those four tests carry the B83, B84 and B85 fixtures, so rows486/474/476/502/508/512 now rest on a current execution rather than on the committed B82 record alone. `cargo fmt --check` exits0 on the whole tree at the same revision.
+
+The audit report (SHA256 `6c08fc4a4a6ddfe9bb80c8aaa2a2ac15db2c69d2eb82bb3af789c9232c7bb41e`) and run log live in a session scratchpad and are not durable; this section is the retained record.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): rows502/508/512 `bounded-coverage` under new capability `attack-power-spell-haste-restricted-outputs`; **89 capabilities/362 ordered IDs; 159 pending/185 bounded/11 partial/7 metadata**. Rows478/504 stay `audit-pending`. No native formula, selector, nonplayer, older-profile or full-suite credit; audit remains in progress.

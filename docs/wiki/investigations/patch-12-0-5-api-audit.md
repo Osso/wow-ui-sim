@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Batch85 — attack power and spell haste output annotations accepted
+
+Main accepts an independent GPT-6.1-sol source audit (**ACCEPT WITH QUALIFICATIONS** per row) for **exact502 `UnitAttackPower`, 508 `UnitRangedAttackPower` and 512 `UnitSpellHaste` output annotations only**. [Acceptance SSOT](../../specs/unit-stat-output-restriction.md#b85-independent-bounded-acceptance-and-refreshed-restriction-proof--2026-10-03) owns evidence and limits. **478 `GetShieldBlock`** (returns armor) and **504 `UnitAttackSpeed`** (constant 2.0, 2.0) are deferred without credit: wrapping a proxy or constant is not modeled behavior.
+
+**Fresh execution replaces record reuse:** at clean `0d2a98596` the four stat-restriction tests ran 4 PASS/0 FAIL, exit0, on the integration binary built by the B86 GREEN compile. That run also covers the B83 and B84 fixtures. `rustfmt` is now installed for toolchain 1.98.1 and `cargo fmt --check` exits0 on the whole tree, retiring the historical global-format failure in `aura_duration.rs` (committed as `608d52558`). [Coverage SSOT](../../../data/patch-api/sources/12.0.5-page-coverage.json): **89 capabilities/362 IDs; 159 pending /185 bounded /11 partial /7 metadata**. B82 agent719 metadata audit still uninspected; audit **IN PROGRESS**.
+
 ### Batch84 — ranged crit and haste output annotations accepted
 
 After `64a19cb63`, main accepts an independent GPT-6.1-sol source audit (**ACCEPT WITH QUALIFICATIONS** per row) for **exact474 `GetRangedCritChance` and exact476 `GetRangedHaste` output annotations only**. [Acceptance SSOT](../../specs/unit-stat-output-restriction.md#b84-independent-bounded-acceptance--2026-10-03) owns evidence and limits. Existing providers reuse the melee getters: computed 360/180 +5 =7 and 510/170 =3, one wrapped result each; no ranged-specific model. `client-wowforever` `GetRangedHaste` returns two plain values and is excluded; that profile cannot combine with a retail epoch (source-derived, not compiled).

@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B85 attack power and spell haste output annotations accepted
+
+Linked [acceptance SSOT](../specs/unit-stat-output-restriction.md#b85-independent-bounded-acceptance-and-refreshed-restriction-proof--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch85--attack-power-and-spell-haste-output-annotations-accepted): exact502/508/512 bounded output-only from an independent Sol source audit; fresh 4/4 stat-restriction run at clean `0d2a98596` replaces B82 record reuse for B83–B85; 478/504 deferred. `aura_duration.rs` committed `608d52558`; rustfmt installed, whole-tree fmt check exit0. 89 capabilities/362 IDs, 159/185/11/7.
+
 ## [2026-10-03] docs | B84 ranged crit and haste output annotations accepted
 
 After `64a19cb63`, linked [acceptance SSOT](../specs/unit-stat-output-restriction.md#b84-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch84--ranged-crit-and-haste-output-annotations-accepted): exact474/476 bounded output-only from an independent Sol source audit; one supplement wording claim corrected; committed B82 restriction record reused, no tests/builds run. 88 capabilities/362 IDs, 162/182/11/7. B82 agent719 metadata audit still uninspected. Only audit/index/log updated.
