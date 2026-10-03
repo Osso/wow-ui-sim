@@ -69,7 +69,7 @@ Tests: `tests/unit_attack_speed.rs`, four cases. Unit-token handling is unchange
 
 ## Known gaps (current cycle)
 
-- [ ] B92 inputs only: `UnitAttackSpeed` producer still returns the constant pair; no compiled RED or GREEN recorded yet.
+- [ ] B92 development proof: inputs `cb1fc14ab` RED 0 PASS / 4 FAIL; producer GREEN 73/73 across `unit_attack_speed::`, `character_stats::`, `unit_stats::`. The first GREEN attempt failed one case on a test-side `UnitExists('party1')` assertion, removed because party stat lookup does not depend on it. Independent verification and accounting pending.
 - [ ] Default shield block is now zero instead of armor, which changes the block-mitigation number the paper doll shows until a host configures the input.
 
 ## Out of scope

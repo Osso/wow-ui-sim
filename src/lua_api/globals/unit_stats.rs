@@ -49,6 +49,8 @@ struct UnitStats {
     intellect: f64,
     damage_min: f64,
     damage_max: f64,
+    attack_speed: f64,
+    offhand_attack_speed: Option<f64>,
     reaction: i32,
     xp: i64,
     xp_max: i64,
@@ -72,12 +74,17 @@ impl Default for UnitStats {
             intellect: 0.0,
             damage_min: 0.0,
             damage_max: 0.0,
+            attack_speed: 0.0,
+            offhand_attack_speed: None,
             reaction: 4, // neutral
             xp: 0,
             xp_max: 0,
         }
     }
 }
+
+/// Main-hand swing time for units with no stat model of their own.
+const SYNTHETIC_ATTACK_SPEED: f64 = 2.0;
 
 fn player_stats(player: &PlayerState) -> UnitStats {
     let level_f = player.level as f64;
@@ -97,6 +104,8 @@ fn player_stats(player: &PlayerState) -> UnitStats {
         intellect: player.stats.intellect,
         damage_min: weapon_low + ap * 0.1,
         damage_max: weapon_high + ap * 0.1,
+        attack_speed: player.stats.attack_speed,
+        offhand_attack_speed: player.stats.offhand_attack_speed,
         reaction: 5, // friendly to self
         xp: player.xp,
         xp_max: player.xp_max,
@@ -119,6 +128,8 @@ fn target_stats(target: &TargetInfo) -> UnitStats {
         intellect: level_f * 8.0,
         damage_min: level_f * 20.0,
         damage_max: level_f * 35.0,
+        attack_speed: SYNTHETIC_ATTACK_SPEED,
+        offhand_attack_speed: None,
         reaction: target.reaction,
         xp: 0,
         xp_max: 0,
@@ -141,6 +152,8 @@ fn party_stats(member: &PartyMember) -> UnitStats {
         intellect: level_f * 10.0,
         damage_min: level_f * 25.0,
         damage_max: level_f * 45.0,
+        attack_speed: SYNTHETIC_ATTACK_SPEED,
+        offhand_attack_speed: None,
         reaction: 5, // friendly
         xp: 0,
         xp_max: 0,
@@ -367,8 +380,12 @@ fn unit_ranged_damage(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `UnitAttackSpeed(unit)` — `(mainHandSpeed, offHandSpeed)`.
 fn unit_attack_speed(state: &mut LuaState) -> LuaResult<u32> {
-    push_stat_number(state, 2.0)?;
-    push_stat_number(state, 2.0)?;
+    let stats = stats_for(state);
+    push_stat_number(state, stats.attack_speed)?;
+    match stats.offhand_attack_speed {
+        Some(speed) => push_stat_number(state, speed)?,
+        None => state.push(Val::Nil),
+    }
     Ok(2)
 }
 

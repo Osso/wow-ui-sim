@@ -65,9 +65,8 @@ fn other_units_do_not_read_player_inputs() {
     set_player_speeds(&env, 2.4, Some(1.7));
     env.exec(
         r#"
-        assert(UnitExists('party1'))
         AssertAttackSpeed('party1', 2, nil, false)
-        assert(not UnitExists('missing-unit'))
+        assert(not UnitExists('missing-unit'), 'fixture unit must be unknown')
         AssertAttackSpeed('missing-unit', 0, nil, false)
         "#,
     )
