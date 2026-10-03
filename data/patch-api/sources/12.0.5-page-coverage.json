@@ -7,6 +7,18 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "house-exterior-fixture-removal",
+      "symbols": ["C_HouseExterior.RemoveFixtureFromSelectedPoint"],
+      "scope": "Exact267/268 attachedDecorAction and AllowedWhenUntainted over explicit owned ExteriorCustomization host state. Original argument VM authentication precedes domains and model access; secure genuine secrets accepted, addon secrets denied, public taint retained. Store returns only selected-owner attached decor through the existing full-key catalog with checked variant/known-base deltas; Detach retains identity/position/storage. Fixture clears only after atomic commit; selected point/options/raw host flag remain, public removability derives from current fixture presence. Rooted synchronous storage then response callbacks support GC/reentry. Nil/default/domain/error/eligibility/event ordering are inferred simulator policy, not native semantics. No core/SelectCore, acquisition/UI/3D/global privacy/all-profile credit.",
+      "spec": "docs/specs/house-exterior-attached-decor.md",
+      "tests": ["tests/house_exterior_attached_decor.rs"],
+      "implementation": "71973af4b71a8768d2c447472b40196ac9f645c4",
+      "compiled_revision": "71973af4b71a8768d2c447472b40196ac9f645c4",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-remove-fixture-final-proof.md",
+      "gate_scope": "Accepted592+595 scoped PASS:60 distinct modern PASS (19 removal +41 retained), separate Forever inverse1 PASS, Retail startup0[], scopedfmt/defaultcheck0 zero diagnostics. Saved compilation295.416736s; Forever303.844169s, startup7.334024s. Full-suite596 identity reconciliation separately records12022PASS60FAIL18ignored plus11custom failures; doctests0PASS3ignored. Four old seeded exterior failures remain unresolved, not preexisting or green. Dirty-combined provenance, historical globalfmt/process failures and native/inferred limitations retained; no whole-suite clearance."
+    },
+    {
       "id": "house-exterior-attached-decor",
       "symbols": [
         "C_HouseExterior.SelectFixtureOption",
@@ -2197,15 +2209,15 @@
     },
     {
       "source_id": "global api-C_HouseExterior-RemoveFixtureFromSelectedPoint-267",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["house-exterior-fixture-removal"],
+      "status": "bounded-coverage",
+      "note": "Exact267 accepted592+595 at71973af4b: attachedDecorAction Store/Detach/default drives selected-owner atomic catalog/placement removal and fixture clearing.60 distinct modern PASS, separate Forever inverse1/startup0[]. Domain/nil/error/eligibility/event ordering inferred; native/UI/acquisition/globalprivacy/core gaps and full-suite failures remain open."
     },
     {
       "source_id": "global api-C_HouseExterior-RemoveFixtureFromSelectedPoint-268",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["house-exterior-fixture-removal"],
+      "status": "bounded-coverage",
+      "note": "Exact268 accepted592+595 at71973af4b: method-local AllowedWhenUntainted authenticates original attachedDecorAction before type/domain/model; genuine secure NUM/BOOL/string secrets evaluated normally, addon secrets denied atomically, public addon taint retained. Bounded security/rooting/GC/reentry tests only; no global privacy/native/all-profile or full-suite clearance."
     },
     {
       "source_id": "global api-C_HouseExterior-SelectCoreFixtureOption-270",
