@@ -388,6 +388,7 @@ fn resize_party_members(state: &mut SimState, size: usize) {
 fn default_party_member() -> PartyMember {
     PartyMember {
         name: "Unknown".to_string(),
+        name_cached: true,
         connected: true,
         class_index: 1,
         level: 80,

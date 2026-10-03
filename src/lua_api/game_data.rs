@@ -50,6 +50,9 @@ pub struct TargetInfo {
 #[derive(Clone)]
 pub struct PartyMember {
     pub name: String,
+    /// Whether the member's name is available in the name cache.
+    /// INFERRED initialization: existing named fixtures start cached (true).
+    pub name_cached: bool,
     pub connected: bool,
     /// 1-based class index into CLASS_DATA.
     pub class_index: i32,
@@ -487,6 +490,7 @@ pub fn default_party() -> Vec<PartyMember> {
                 let (buffs, debuffs) = default_party_auras(i);
                 PartyMember {
                     name: name.to_string(),
+                    name_cached: true,
                     connected: true,
                     class_index,
                     level: 80,

@@ -183,6 +183,13 @@ macro_rules! build_empty_sim_state {
             spell_trade_skill_links: HashMap::new(),
             spell_id_aliases: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
+            maw_powers: Default::default(),
+            has_active_delve: false,
+            last_delve_eligibility_map_id: None,
+            curio_links: HashMap::new(),
+            #[cfg(feature = "retail-12-0-5")]
+            click_bindable_spells: HashSet::new(),
+            #[cfg(feature = "retail-12-0-5")]
             cooldown_aura_associations: Default::default(),
             #[cfg(feature = "retail-12-0-5")]
             aura_spell_classifications: Default::default(),
@@ -238,6 +245,9 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             spell_cast_counts: ::std::collections::HashMap::new(),
             cooldowns_restricted: false,
+            #[cfg(feature = "retail-12-0-5")]
+            spell_max_cumulative_aura_applications: ::std::collections::HashMap::new(),
+            unit_auras_restricted: false,
             inventory_item_cooldowns: ::std::collections::HashMap::new(),
             action_ui_buttons: $collections.action_ui_buttons,
             cursor_item: $runtime.cursor_item,
@@ -284,6 +294,8 @@ macro_rules! build_empty_sim_state {
             player_choice: PlayerChoiceState::default(),
             housing_service_enabled: true,
             housing: HousingState::default(),
+            #[cfg(feature = "retail-12-0-5")]
+            catalog_shop_products: Default::default(),
             pet_battles: PetBattleState::default(),
             pet: PetState::default(),
             lfg_list_counts: LfgListCounts::default(),
@@ -427,6 +439,8 @@ macro_rules! build_empty_sim_state {
             party_leader_index: None,
             ready_check: ReadyCheckState::default(),
             voice_chat: VoiceChatState::default(),
+            #[cfg(feature = "retail-12-0-5")]
+            voice_chat_speak_requests: Vec::new(),
             known_spells: ::std::collections::HashSet::new(),
             harmful_spells: ::std::collections::HashSet::new(),
             helpful_spells: ::std::collections::HashSet::new(),

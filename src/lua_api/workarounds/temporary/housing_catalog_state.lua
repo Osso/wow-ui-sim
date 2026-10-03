@@ -551,64 +551,6 @@ local function __wow_housing_copy_market_info(decor_id)
   return info
 end
 
-local function __wow_housing_copy_product_info(product_id)
-  local product = __wow_housing_seeded_product_infos[product_id]
-  if not product then
-    return nil
-  end
-  local copy = __wow_housing_clone_table(product)
-  copy.subItems = __wow_housing_clone_table(product.subItems)
-  copy.virtualCurrencies = __wow_housing_clone_table(product.virtualCurrencies)
-  copy.creatureDisplayInfoIDs = __wow_housing_clone_table(product.creatureDisplayInfoIDs)
-  copy.spellVisualIDs = __wow_housing_clone_table(product.spellVisualIDs)
-  copy.itemModifiedAppearanceIDs = __wow_housing_clone_table(product.itemModifiedAppearanceIDs)
-  copy.productIDList = __wow_housing_clone_table(product.productIDList)
-  return copy
-end
-
-local function __wow_housing_copy_product_display_info(product_id)
-  local product = __wow_housing_seeded_product_infos[product_id]
-  if not product then
-    return nil
-  end
-  return {
-    defaultPreviewModelSceneID = 0,
-    defaultCardModelSceneID = 0,
-    defaultWideCardModelSceneID = 0,
-    itemID = product.itemID or 0,
-    overridePreviewModelSceneID = nil,
-    overrideCardModelSceneID = nil,
-    overrideWideCardModelSceneID = nil,
-    creatureDisplayInfoIDs = __wow_housing_clone_table(product.creatureDisplayInfoIDs),
-    spellVisualIDs = __wow_housing_clone_table(product.spellVisualIDs),
-    mainHandItemModifiedAppearanceID = product.mainHandItemModifiedAppearanceID,
-    offHandItemModifiedAppearanceID = product.offHandItemModifiedAppearanceID,
-    itemModifiedAppearanceIDs = __wow_housing_clone_table(product.itemModifiedAppearanceIDs),
-    iconFileDataID = nil,
-    iconTextureKit = nil,
-    productType = product.productType,
-    itemDescription = product.description,
-    hasUnknownLicense = false,
-    productPMTURL = nil,
-    additionalProductPMTURLs = {},
-    otherProductImageAtlasName = nil,
-    otherProductGameTitleBaseTag = nil,
-    otherProductGameType = nil,
-    customLoopingSoundStart = nil,
-    customLoopingSoundMiddle = nil,
-    customLoopingSoundEnd = nil,
-    specialActorID_1 = nil,
-    specialActorID_2 = nil,
-    specialActorID_3 = nil,
-    specialActorID_4 = nil,
-    specialActorID_5 = nil,
-    gameFlavorID = nil,
-    decorFileDataID = product.decorFileDataID,
-    quantity = product.decorQuantity,
-    houseTextureAtlas = product.houseTextureAtlas,
-  }
-end
-
 C_CatalogShop = __wow_merge_namespace(C_CatalogShop, {
   IsShop2Enabled = function() return false end,
   HasNewProducts = function() return false end,
@@ -683,8 +625,6 @@ C_CatalogShop = __wow_merge_namespace(C_CatalogShop, {
     return nil
   end,
   ShouldShowHousingWarning = function() return false end,
-  GetProductInfo = function(productID) return __wow_housing_copy_product_info(productID) end,
-  GetCatalogShopProductDisplayInfo = function(productID) return __wow_housing_copy_product_display_info(productID) end,
   GetRefundableDecors = function()
     return {}, 0
   end,

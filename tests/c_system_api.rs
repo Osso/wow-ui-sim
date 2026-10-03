@@ -106,7 +106,7 @@ fn test_console_font_height_globals_round_trip() {
 #[test]
 fn test_c_voice_chat_speak_text_noop() {
     let env = env();
-    env.eval::<()>("C_VoiceChat.SpeakText(0, 'hello', 0, 0, 100)")
+    env.eval::<()>("C_VoiceChat.SpeakText(0, 'hello', 0, 0, false)")
         .unwrap();
 }
 

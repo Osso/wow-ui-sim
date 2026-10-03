@@ -304,6 +304,8 @@ fn group_has_offline_member(state: &mut LuaState) -> LuaResult<u32> {
 fn player_as_raid_member(st: &crate::lua_api::state::SimState) -> PartyMember {
     PartyMember {
         name: st.player.name.clone(),
+        // INFERRED: the local player's name is already cached.
+        name_cached: true,
         connected: true,
         class_index: st.player.class_index,
         level: st.player.level,
@@ -326,9 +328,20 @@ fn push_empty_raid_roster_info(state: &mut LuaState) {
     }
 }
 
+fn read_raid_roster_name(state: &mut LuaState, member: &PartyMember) -> Val {
+    if member.name_cached {
+        let name = create_string(state, &member.name);
+        mark_secret_value(state, name);
+        name
+    } else {
+        // INFERRED: the post's "Unknown" uses the existing localized UNKNOWN global.
+        let global = Val::Table(state.global);
+        table_get(state, global, "UNKNOWN")
+    }
+}
+
 fn push_raid_roster_info(state: &mut LuaState, index: usize, member: &PartyMember) {
-    let name = create_string(state, &member.name);
-    mark_secret_value(state, name);
+    let name = read_raid_roster_name(state, member);
     let rank = if member.is_leader { 2.0 } else { 0.0 };
     let subgroup = ((index - 1) / 5 + 1) as f64;
     let (class_name, class_file, _) = class_info(member.class_index);

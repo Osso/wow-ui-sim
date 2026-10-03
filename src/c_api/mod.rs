@@ -40,12 +40,16 @@ pub mod c_azerite_item;
 pub mod c_barber_shop;
 pub mod c_battle_net;
 pub mod c_catalog_shop;
+#[cfg(feature = "retail-12-0-5")]
+pub mod c_catalog_shop_products;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_chat_info;
 pub mod c_chromie_time;
 pub(crate) mod c_click_bindings;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_click_bindings_spell;
 #[cfg(feature = "retail-12-0-0")]
 mod c_combat_audio_alert;
 #[cfg(feature = "client-wowforever")]
@@ -125,6 +129,8 @@ pub(crate) mod c_tooltip_info_spell_mount;
 pub(crate) mod c_transmog_collection;
 #[cfg(feature = "retail-12-0-5")]
 pub use c_transmog_collection::IllusionInfo;
+#[cfg(feature = "retail-12-0-5")]
+pub mod c_spell_maw_powers;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_transmog_outfit_info;
 #[cfg(feature = "retail-12-0-0")]
@@ -152,6 +158,8 @@ pub(crate) mod c_unit_aura_slot_query;
 pub(crate) mod c_unit_aura_spell_queries;
 #[cfg(feature = "aura-instance-enumeration")]
 pub mod c_unit_auras;
+#[cfg(feature = "retail-12-0-5")]
+pub mod c_voice_chat_speak;
 pub(crate) mod c_weather;
 pub mod c_widget;
 pub mod c_wow_token_public;

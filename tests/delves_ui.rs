@@ -21,8 +21,8 @@ const DELVES_UI_SCRIPT: &str = r#"
         return "wrong_default_active_delve"
     end
 
-    if C_DelvesUI.HasActiveDelve(2339) ~= true then
-        return "wrong_seeded_active_delve"
+    if C_DelvesUI.HasActiveDelve(2339) ~= false then
+        return "former_map_argument_changed_active_delve"
     end
 
     if C_DelvesUI.GetTieredEntranceOptionalAffixTraitTreeID() ~= 77001 then

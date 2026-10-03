@@ -132,9 +132,43 @@ fn get_creature_display_info_for_companion(state: &mut LuaState) -> LuaResult<u3
 }
 
 fn get_curio_link(state: &mut LuaState) -> LuaResult<u32> {
-    let spell_id = i32::from_stack(state, 1).unwrap_or(0);
-    let rarity = i32::from_stack(state, 2).unwrap_or(1);
-    let link = create_string(state, &format!("|Hspell:{spell_id}:{rarity}|h[Curio]|h"));
+    let rarity = crate::lua_bridge::stack_val(state, 2);
+    if rilua::table_security::is_secret_value(state, rarity) {
+        return Err(rilua::runtime_error(
+            "C_DelvesUI.GetCurioLink: argument 2 is NeverSecret",
+        ));
+    }
+    // INFERRED strict u32 rarity representation; no native enum membership claim.
+    let rarity = match rarity {
+        Val::Num(number)
+            if number.is_finite()
+                && number.fract() == 0.0
+                && number >= 0.0
+                && number <= u32::MAX as f64 =>
+        {
+            number as u32
+        }
+        _ => {
+            return Err(rilua::runtime_error(
+                "C_DelvesUI.GetCurioLink: rarity must be a finite integral u32 number",
+            ));
+        }
+    };
+    // INFERRED public-only identifier permissions inherited from the shared reader.
+    let spell_id = crate::c_api::c_spell::read_public_spell_identifier_at(
+        state,
+        1,
+        "C_DelvesUI.GetCurioLink",
+    )?;
+    let link = {
+        let sim = crate::lua_api::methods::borrow_state(state)?;
+        spell_id.and_then(|id| sim.curio_links.get(&(id, rarity)).cloned())
+    };
+    // INFERRED miss error: the cached declaration requires a nonnil link.
+    let link = link.ok_or_else(|| {
+        rilua::runtime_error("C_DelvesUI.GetCurioLink: no host-declared curio link")
+    })?;
+    let link = create_string(state, &link);
     state.push(link);
     Ok(1)
 }
@@ -273,8 +307,8 @@ fn get_world_tier_difficulty_for_active_player(state: &mut LuaState) -> LuaResul
 }
 
 fn has_active_delve(state: &mut LuaState) -> LuaResult<u32> {
-    let map_id = Option::<i32>::from_stack(state, 1)?.unwrap_or_default();
-    state.push(Val::Bool(map_id == DELVE_ENTRANCE_MAP_ID));
+    let active = crate::lua_api::methods::borrow_state(state)?.has_active_delve;
+    state.push(Val::Bool(active));
     Ok(1)
 }
 
@@ -296,7 +330,26 @@ fn is_delve_entrance_tier_enabled(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
-fn request_party_eligibility_for_delve_tiers(_state: &mut LuaState) -> LuaResult<u32> {
+fn request_party_eligibility_for_delve_tiers(state: &mut LuaState) -> LuaResult<u32> {
+    let map_id =
+        rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, 1))?;
+    // INFERRED i32 storage range; authenticate before validating or mutating.
+    let map_id = match map_id {
+        Val::Num(number)
+            if number.is_finite()
+                && number.fract() == 0.0
+                && number >= i32::MIN as f64
+                && number <= i32::MAX as f64 =>
+        {
+            number as i32
+        }
+        _ => {
+            return Err(rilua::runtime_error(
+                "C_DelvesUI.RequestPartyEligibilityForDelveTiers: mapID must be a finite integral i32 number",
+            ));
+        }
+    };
+    crate::lua_api::methods::borrow_state_mut(state)?.last_delve_eligibility_map_id = Some(map_id);
     Ok(0)
 }
 

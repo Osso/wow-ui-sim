@@ -33,6 +33,28 @@ pub(crate) fn get_spell_cast_count(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+const MAX_APPLICATIONS_API: &str = "C_Spell.GetSpellMaxCumulativeAuraApplications";
+
+/// Explicit spell-keyed maximum aura stacks; zero for an undeclared spell (INFERRED).
+/// Secret only under the explicit unit-aura restriction input.
+pub(crate) fn get_spell_max_cumulative_aura_applications(state: &mut LuaState) -> LuaResult<u32> {
+    let spell_id = read_public_spell_identifier_at(state, 1, MAX_APPLICATIONS_API)?;
+    let (maximum, restricted) = {
+        let sim = borrow_state(state)?;
+        let maximum = spell_id
+            .and_then(|id| sim.spell_max_cumulative_aura_applications.get(&id).copied())
+            .unwrap_or(0);
+        (f64::from(maximum), sim.unit_auras_restricted)
+    };
+    let result = if restricted {
+        wrap_host_secret_number(state, maximum)
+    } else {
+        Val::Num(maximum)
+    };
+    state.push(result);
+    Ok(1)
+}
+
 pub(crate) fn get_spell_display_count(state: &mut LuaState) -> LuaResult<u32> {
     // Authenticate every original stack root before parsing or model access.
     let identifier = authenticate_argument(state, 1)?;

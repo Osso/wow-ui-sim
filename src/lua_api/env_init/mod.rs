@@ -57,6 +57,8 @@ pub(super) fn init_lua_state(
     crate::lua_api::workarounds::apply_permanent_bootstrap(lua)?;
     crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
     crate::c_api::c_click_bindings::register(lua)?;
+    #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::c_click_bindings_spell::register(lua.state_mut())?;
     crate::c_api::c_curve_util::register(lua)?;
     crate::c_api::seconds_formatter::register(lua)?;
     crate::c_api::duration_text_binding::register(lua)?;

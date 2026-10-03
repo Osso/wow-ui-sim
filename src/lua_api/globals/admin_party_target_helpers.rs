@@ -59,6 +59,7 @@ pub(super) fn make_target_info(
 pub(super) fn default_party_member() -> PartyMember {
     PartyMember {
         name: "Unknown".to_string(),
+        name_cached: true,
         connected: true,
         class_index: 1,
         level: 80,

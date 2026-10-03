@@ -188,6 +188,19 @@ pub struct SimState {
     pub is_active_battlefield: bool,
     pub spell_trade_skill_links: HashMap<u32, String>,
     pub spell_id_aliases: HashMap<String, u32>,
+    /// Host-declared Maw power atlas/link strings by resolved spell ID; empty by default.
+    #[cfg(feature = "retail-12-0-5")]
+    pub maw_powers: crate::c_api::c_spell_maw_powers::MawPowers,
+    /// Explicit host active-delve state, independent of undeclared query arguments.
+    pub has_active_delve: bool,
+    /// INFERRED observable request input only; no eligibility response or event model.
+    pub last_delve_eligibility_map_id: Option<i32>,
+    /// Explicit host links keyed by resolved spell ID and rarity; no fabricated links.
+    pub curio_links: HashMap<(u32, u32), String>,
+    /// INFERRED host-declared click-bindable resolved spell IDs; empty by default.
+    /// Selected interaction/spell bindings do not establish eligibility.
+    #[cfg(feature = "retail-12-0-5")]
+    pub click_bindable_spells: HashSet<u32>,
     #[cfg(feature = "retail-12-0-5")]
     pub cooldown_aura_associations:
         crate::c_api::c_unit_aura_cooldown_spells::CooldownAuraAssociations,
@@ -260,6 +273,11 @@ pub struct SimState {
     pub spell_cast_counts: HashMap<u32, u32>,
     /// Explicit cooldown-output policy input, independent of combat and unit stats.
     pub cooldowns_restricted: bool,
+    /// Explicit spell-keyed maximum aura stack input; empty means undeclared, never applied stacks.
+    #[cfg(feature = "retail-12-0-5")]
+    pub spell_max_cumulative_aura_applications: HashMap<u32, u32>,
+    /// Explicit unit-aura output policy input, independent of cooldowns and unit stats.
+    pub unit_auras_restricted: bool,
     pub inventory_item_cooldowns: HashMap<i32, SpellCooldownState>,
     pub action_ui_buttons: Vec<(u64, u32)>,
     pub cursor_item: Option<CursorInfo>,
@@ -307,6 +325,9 @@ pub struct SimState {
     pub player_choice: PlayerChoiceState,
     pub housing_service_enabled: bool,
     pub housing: HousingState,
+    /// Explicit catalog shop product/display records; empty until host-seeded.
+    #[cfg(feature = "retail-12-0-5")]
+    pub catalog_shop_products: crate::c_api::c_catalog_shop_products::CatalogShopProducts,
     pub pet_battles: PetBattleState,
     pub pet: PetState,
     pub lfg_list_counts: LfgListCounts,
@@ -444,6 +465,9 @@ pub struct SimState {
     pub party_leader_index: Option<usize>,
     pub ready_check: ReadyCheckState,
     pub voice_chat: VoiceChatState,
+    /// Accepted public SpeakText requests in call order; no audio playback.
+    #[cfg(feature = "retail-12-0-5")]
+    pub voice_chat_speak_requests: Vec<crate::c_api::c_voice_chat_speak::SpeakTextRequest>,
     pub known_spells: ::std::collections::HashSet<u32>,
     pub harmful_spells: ::std::collections::HashSet<u32>,
     pub helpful_spells: ::std::collections::HashSet<u32>,

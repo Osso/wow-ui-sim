@@ -180,6 +180,7 @@ fn classification_env() -> WowLuaEnv {
 fn classification_party(helpful: AuraInfo, harmful: AuraInfo) -> PartyMember {
     PartyMember {
         name: "Aura fixture party member".into(),
+        name_cached: true,
         connected: true,
         class_index: 2,
         level: 80,

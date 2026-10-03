@@ -44,6 +44,7 @@ fn aura(id: i32, name: &str, helpful: bool, player_source: bool) -> AuraInfo {
 fn member(name: &str, debuffs: Vec<AuraInfo>) -> PartyMember {
     PartyMember {
         name: name.into(),
+        name_cached: true,
         connected: true,
         class_index: 2,
         level: 80,

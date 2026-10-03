@@ -87,6 +87,11 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
         super::c_spell_counts::get_spell_display_count,
     ),
     #[cfg(feature = "retail-12-0-5")]
+    (
+        "GetSpellMaxCumulativeAuraApplications",
+        super::c_spell_counts::get_spell_max_cumulative_aura_applications,
+    ),
+    #[cfg(feature = "retail-12-0-5")]
     ("GetSpellChargeDuration", get_spell_charge_duration),
     #[cfg(feature = "retail-12-0-0")]
     ("GetSpellCooldownDuration", get_spell_cooldown_duration),
@@ -657,7 +662,6 @@ fn read_spell_identifier(state: &LuaState) -> LuaResult<Option<u32>> {
 }
 
 /// Strict public boundary shared by cooldown associations and spell classifications.
-#[cfg(feature = "retail-12-0-5")]
 pub(crate) fn read_public_spell_identifier_at(
     state: &LuaState,
     arg_index: i32,

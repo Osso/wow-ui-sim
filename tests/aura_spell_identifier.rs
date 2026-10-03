@@ -30,6 +30,7 @@ fn fixture_aura(spell_id: i32, instance_id: i32, helpful: bool) -> AuraInfo {
 fn fixture_party() -> PartyMember {
     PartyMember {
         name: "Aura lookup fixture member".into(),
+        name_cached: true,
         connected: true,
         class_index: 2,
         level: 80,
