@@ -432,8 +432,10 @@
         "tests/unit_has_power_type.rs"
       ],
       "implementation": "5bfca2e16",
-      "proof": "development-green",
-      "ledger": "/tmp/patch-12.0.5-unit-power-ledger.md"
+      "compiled_revision": "72220958bafda80e91b65c63f708414c40da55c1",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-unit-power-existing-independent-proof.md",
+      "gate_scope": "Independent662 qualified saved5PASS: unchanged provider and sixteen lookup/parser/registration functions; sole connected:true fixture addition has no inspected lookup effect. Corrected RED0PASS5FAIL; shared GREEN compile739events zero diagnostics. Historical mount654 default check reused only for identical library provider; zero UnitHasPowerType format-check credit, no current execution or whole-tree freeze. Prose157 already bounded: no row/counter/capability promotion. Native secret inputs, inferred capability/absence/error policies and older-profile publication remain unverified."
     },
     {
       "id": "outfit-lookups",

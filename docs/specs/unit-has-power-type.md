@@ -22,7 +22,13 @@
 ## Tests asserting this spec
 
 - `tests/unit_has_power_type.rs`: five focused current-retail tests with concrete primary/secondary, target and group state; real Lua capability, arity, secrecy and error queries. Generated grouping in existing `integration` target adds no Cargo target. A feature-off publication test is available but not run in this slice.
-- Corrected RED: five API-missing failures before production changes. Implementation `5bfca2e16` passes targeted GREEN 5/5 with the shared default-retail integration binary compiled at `72220958b`; `timeout 90` direct filtered execution exits 0 in 0.23 seconds. Checked requirements describe tested simulator behavior, not native verification. Commands, source hashes, results and logs: `/tmp/patch-12.0.5-unit-power-ledger.md` and `/tmp/patch-12.0.5-unit-power-green.log`. Final readability/check verifier belongs to main.
+- Corrected RED: five API-missing failures before production changes. Implementation `5bfca2e16` passes targeted GREEN 5/5 with the shared default-retail integration binary compiled at `72220958b`; `timeout 90` direct filtered execution exits 0 in 0.23 seconds. Checked requirements describe tested simulator behavior, not native verification. Commands, source hashes, results and logs: `/tmp/patch-12.0.5-unit-power-ledger.md` and `/tmp/patch-12.0.5-unit-power-green.log`. Independent662 subsequently accepted qualified saved behavior; verification limits below remain explicit.
+
+## Independent bounded acceptance — 2026-10-03
+
+Independent662 accepted the existing **5/5 saved PASS**, not a new execution. Provider and sixteen inspected lookup/parser/registration functions match the implementation and saved compile/runtime snapshots. Current tests differ only by `connected: true` on an explicit party fixture; inspected capability/presence lookups do not read that field. This is bounded source-supported equivalence, not whole-tree or current-process proof.
+
+The saved default library check from mount verifier654 contains the byte-identical provider. Its scoped formatter did **not** cover UnitHasPowerType: no current-test/global format-check credit is inferred. Native secret-input policy and older-profile publication remain unverified. Prose157 was already bounded; acceptance upgrades only capability proof metadata, not coverage counts. Evidence: `/tmp/patch-12.0.5-unit-power-existing-independent-proof.{md,json}`.
 
 ## Known gaps (current cycle)
 
