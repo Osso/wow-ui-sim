@@ -1647,8 +1647,8 @@
     {
       "source_id": "prose-2026-03-12-054",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Future-patch introduction about aura planning, not a concrete 12.0.5 behavior delta. Retained chronology only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-12-055",
@@ -1665,62 +1665,62 @@
     {
       "source_id": "prose-2026-03-12-057",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Explicitly excludes the undecided aura rework from 12.0.5 and 12.0.7. Retained future-plan chronology only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-12-059",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Security and designer-upkeep goal for the expressly deferred aura rework, not a specified 12.0.5 behavior. No runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-12-060",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Addon customization/display goal for the expressly deferred aura rework, not a specified 12.0.5 behavior. Existing aura APIs remain separately audited; no runtime credit here."
     },
     {
       "source_id": "prose-2026-03-12-061",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Addon-performance aspiration for the expressly deferred aura rework, with no metric or 12.0.5 behavior requirement. No runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-12-062",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Developer-consultation and communication plans for the future aura system, not an API behavior delta. No runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-12-063",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Humorous closing promising later news, not an API behavior delta. No runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-25-066",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Dated post heading (2026-03-25), not an API behavior delta. Retained chronology only; no runtime, applicability or implementation credit."
     },
     {
       "source_id": "prose-2026-03-25-067",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Blue-post title (Episode 2: Attack of the Secrets), not a standalone API behavior delta. Retained source identity only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-25-069",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Post greeting and introduction describing PTR and hotfix chronology, not a concrete API delta. Following behavioral statements remain separately accounted; no runtime credit."
     },
     {
       "source_id": "prose-2026-03-25-070",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Author scope disclaimer limiting the notes to addon-security changes, not simulator scope or API behavior. Other requirements remain separately accountable; no runtime credit."
     },
     {
       "source_id": "prose-2026-03-25-074",
@@ -1818,21 +1818,27 @@
     },
     {
       "source_id": "prose-2026-03-25-105",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-comparison-permissions"
+      ],
+      "status": "bounded-coverage",
+      "note": "B89 verbatim restatement of bounded prose-2026-03-31-142 (identical register text); credited to the same B80 capability and limits, no additional behavior, test or native credit."
     },
     {
       "source_id": "prose-2026-03-25-106",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-comparison-permissions"
+      ],
+      "status": "bounded-coverage",
+      "note": "B89 verbatim restatement of bounded prose-2026-03-31-143 (identical register text); credited to the same B80 capability and limits, no additional behavior, test or native credit."
     },
     {
       "source_id": "prose-2026-03-25-107",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-comparison-permissions"
+      ],
+      "status": "bounded-coverage",
+      "note": "B89 verbatim restatement of bounded prose-2026-03-31-144 (identical register text); credited to the same B80 capability and limits, no additional behavior, test or native credit."
     },
     {
       "source_id": "prose-2026-03-25-110",
@@ -1876,9 +1882,12 @@
     },
     {
       "source_id": "prose-2026-03-25-116",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "private-aura-add-restriction-removal",
+        "private-aura-restriction-removal"
+      ],
+      "status": "bounded-coverage",
+      "note": "B89 prose announcement of the restriction removals already bounded as exact359 AddPrivateAuraAnchor, 401 RemovePrivateAuraAnchor and 405 SetPrivateWarningTextAnchor HasRestrictions deltas; same capabilities and limits, no additional behavior, test or native credit."
     },
     {
       "source_id": "prose-2026-03-25-117",
@@ -1913,32 +1922,32 @@
     {
       "source_id": "prose-2026-03-25-125",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Birthday greeting in a joke, no API behavior delta. Retained source text only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-31-128",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Dated post heading (2026-03-31), not an API behavior delta. Retained chronology only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-31-129",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Blue-post title (Episode 3: Revenge of the Secrets), not a standalone API behavior delta. Retained source identity only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-31-131",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Greeting and PTR/live-hotfix introduction supplying chronology, not a concrete API delta. Following behavioral statements remain individually accounted; no runtime credit."
     },
     {
       "source_id": "prose-2026-03-31-132",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Author scope disclaimer describing omitted game/UI notes, not a simulator exclusion or API requirement. No runtime credit."
     },
     {
       "source_id": "prose-2026-03-31-136",
@@ -1949,8 +1958,8 @@
     {
       "source_id": "prose-2026-03-31-138",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "PTR build section heading identifying chronology, not an API behavior delta. No runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-03-31-141",
@@ -2075,9 +2084,11 @@
     },
     {
       "source_id": "prose-2026-03-31-171",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "quest-accept-confirmation"
+      ],
+      "status": "bounded-coverage",
+      "note": "B89 prose statement of the questID addition already bounded as the exact QuestAcceptConfirm event payload row; same capability and limits (explicit simulator input, inferred absent-offer policy), no additional behavior, test or native credit."
     },
     {
       "source_id": "prose-2026-03-31-172",
@@ -2140,26 +2151,26 @@
     {
       "source_id": "prose-2026-04-10-185",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Dated post heading (2026-04-10), not an API behavior delta. Retained chronology only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-04-10-186",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Blue-post title (Upcoming Restriction Changes), not a standalone API behavior delta. Retained source identity only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-04-10-188",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Greeting and tentative PTR/live publication timing, not a concrete API delta. Adjacent behavioral statements remain separately audited; no runtime credit."
     },
     {
       "source_id": "prose-2026-04-10-189",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Author scope disclaimer describing omitted game/UI notes, not a simulator exclusion or API requirement. No runtime credit."
     },
     {
       "source_id": "prose-2026-04-10-193",
@@ -2224,32 +2235,32 @@
     {
       "source_id": "prose-2026-04-17-205",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Dated post heading (2026-04-17), not an API behavior delta. Retained chronology only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-04-17-206",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Blue-post title (12.0.5 and Classic PTR Update), not a standalone API behavior delta. Retained source identity only; no runtime or implementation credit."
     },
     {
       "source_id": "prose-2026-04-17-208",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Greeting and upcoming-change introduction providing chronology, not a concrete API delta. Following behavioral statements remain individually accounted; no runtime credit."
     },
     {
       "source_id": "prose-2026-04-17-209",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Transition announcing an upcoming Classic security discussion without specifying behavior. Concrete Classic claims remain separately audited; no runtime credit."
     },
     {
       "source_id": "prose-2026-04-17-210",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "status": "metadata-only",
+      "note": "Author scope disclaimer describing omitted game/UI notes, not a simulator exclusion or API requirement. No runtime credit."
     },
     {
       "source_id": "prose-2026-04-17-213",

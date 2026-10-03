@@ -1,5 +1,15 @@
 # Patch 12.0.5 API Audit
 
+### Batch89 — prose classification: 26 metadata-only, 6 restatements credited
+
+Three independent GPT-6.1-sol scouts classified all 90 pending blue-post prose rows (reports scratchpad-only, SHA256 prefixes `7edf1210a531ed93`, `ccdbd95ed858eceb`, `c95f657beddc03cc`). Main checked every promoted row's register text before accounting.
+
+- **26 rows → `metadata-only`**: post date headings, titles, greetings, author disclaimers, section headings, jokes, and March 12 sentences about the aura rework that the post itself defers beyond 12.0.5 and 12.0.7. Zero runtime or implementation credit, following the [six-occurrence precedent](#six-source-occurrences--metadata-only-accounting-accepted). IDs: 03-12 `054 057 059 060 061 062 063`; 03-25 `066 067 069 070 125`; 03-31 `128 129 131 132 138`; 04-10 `185 186 188 189`; 04-17 `205 206 208 209 210`.
+- **5 rows → `bounded-coverage` under existing capabilities, no new behavior**: 03-25 `105/106/107` are byte-identical to bounded 03-31 `142/143/144` (`unit-comparison-permissions`); 03-25 `116` announces the removals already bounded as exact359/401/405; 03-31 `171` states the questID payload already bounded as the event row (`quest-accept-confirmation`).
+- **1 row → `partial-development-green`**: 03-25 `104` is byte-identical to partial 03-31 `141`.
+
+Not promoted: `prose-2026-03-12-055` (history of the private aura system; needs an explicit out-of-simulator accounting decision), partially covered `114` and `168`, and about 55 sentences describing behavior with no accepted coverage. Three of those already have implementations and development tests and need only bounded acceptance: 03-12 `023` (zero-span charge durations), `026` (zero-span objects fully elapsed), `029` (five public aura flags). [Coverage SSOT](../../../data/patch-api/sources/12.0.5-page-coverage.json): **91 capabilities/362 IDs; 119 pending /199 bounded /11 partial /33 metadata**; audit **IN PROGRESS**.
+
 ### Batch86 — aura expiration query argument policy accepted
 
 **Exact365 `C_UnitAuras.DoesAuraHaveExpirationTime`** (`AllowedWhenTainted -> AllowedWhenUntainted`) is the first row in this continuation needing a producer change. [Acceptance SSOT](../../specs/aura-expiration-time.md#independent-bounded-acceptance--2026-10-03) owns the contract, proof table and limits. The function, previously an uncommitted change, was committed as `608d52558`; inputs `a342c6eec` gave RED 6 PASS/3 FAIL.

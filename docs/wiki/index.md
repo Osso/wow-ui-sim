@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B89 prose classification
+
+[Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch89--prose-classification-26-metadata-only-6-restatements-credited) owns the classification of 90 pending prose rows by three independent Sol scouts: 26 metadata-only, five verbatim or direct restatements credited to existing capabilities, one partial; the rest remain pending with three ready for bounded acceptance. 91 capabilities/362 IDs; 119 pending /199 bounded /11 partial /33 metadata.
+
 ## [2026-10-03] evidence | B86 aura expiration query argument policy accepted
 
 [Acceptance SSOT](../specs/aura-expiration-time.md#independent-bounded-acceptance--2026-10-03) owns exact365 `DoesAuraHaveExpirationTime` `AllowedWhenUntainted`: RED, an independently rejected first producer, ordering RED, corrected producer `d1bbdc8e8` and independent re-verification. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch86--aura-expiration-query-argument-policy-accepted) records 91 capabilities/362 IDs, 150 pending/194 bounded/11 partial/7 metadata.

@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B89 prose classification
+
+Linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch89--prose-classification-26-metadata-only-6-restatements-credited): 26 narrative prose rows metadata-only, 03-25 `105/106/107/116` and 03-31 `171` bounded under existing capabilities, 03-25 `104` partial; no new behavior or capability. 91 capabilities/362 IDs; 119 pending /199 bounded /11 partial /33 metadata.
+
 ## [2026-10-03] docs | B86 aura expiration query argument policy accepted
 
 Linked [acceptance SSOT](../specs/aura-expiration-time.md#independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch86--aura-expiration-query-argument-policy-accepted): row365 bounded after an independent rejection (unit validated before instance ID authenticated), ordering RED and corrected producer `d1bbdc8e8`; independent rerun 9/9 + 18/18. 91 capabilities/362 IDs, 150/194/11/7.
