@@ -163,7 +163,7 @@ fn register_spell_book_item_status_queries(
         state,
         table_ref,
         "GetSpellBookItemLossOfControlCooldownInfo",
-        c_spell_book_get_spell_book_item_loss_of_control_cooldown_info,
+        cooldown_query::get_loss_of_control,
     )?;
     Ok(())
 }
@@ -453,16 +453,19 @@ fn c_spell_book_get_spell_book_item_cooldown_duration(state: &mut LuaState) -> L
 mod cooldown_query {
     use super::{LuaResult, LuaState, Val, resolve_player_spellbook_entry, spellbook_data};
 
-    fn authenticate_cooldown_book_selector(state: &LuaState, position: i32) -> LuaResult<Val> {
+    const COOLDOWN_API: &str = "C_SpellBook.GetSpellBookItemCooldown";
+    const LOSS_OF_CONTROL_API: &str = "C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo";
+
+    fn authenticate_book_selector(state: &LuaState, position: i32, api: &str) -> LuaResult<Val> {
         rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, position))
-        .map_err(|_| {
-            rilua::runtime_error(format!(
-                "C_SpellBook.GetSpellBookItemCooldown: argument {position} requires an untainted caller"
-            ))
-        })
+            .map_err(|_| {
+                rilua::runtime_error(format!(
+                    "{api}: argument {position} requires an untainted caller"
+                ))
+            })
     }
 
-    fn resolve_cooldown_spellbook_entry(slot: Val, bank: Val) -> Option<u32> {
+    fn resolve_displayable_spellbook_entry(slot: Val, bank: Val) -> Option<u32> {
         let spell_id = resolve_player_spellbook_entry(slot, bank)?;
         let Val::Num(slot) = slot else {
             return None;
@@ -476,13 +479,23 @@ mod cooldown_query {
 
     pub(super) fn get(state: &mut LuaState) -> LuaResult<u32> {
         // Authenticate both original arguments before type, identity or model access.
-        let slot = authenticate_cooldown_book_selector(state, 1)?;
-        let bank = authenticate_cooldown_book_selector(state, 2)?;
-        let Some(spell_id) = resolve_cooldown_spellbook_entry(slot, bank) else {
+        let slot = authenticate_book_selector(state, 1, COOLDOWN_API)?;
+        let bank = authenticate_book_selector(state, 2, COOLDOWN_API)?;
+        let Some(spell_id) = resolve_displayable_spellbook_entry(slot, bank) else {
             state.push(Val::Nil);
             return Ok(1);
         };
         crate::c_api::c_spell::push_spell_cooldown_info(state, spell_id)
+    }
+
+    pub(super) fn get_loss_of_control(state: &mut LuaState) -> LuaResult<u32> {
+        let slot = authenticate_book_selector(state, 1, LOSS_OF_CONTROL_API)?;
+        let bank = authenticate_book_selector(state, 2, LOSS_OF_CONTROL_API)?;
+        let Some(spell_id) = resolve_displayable_spellbook_entry(slot, bank) else {
+            state.push(Val::Nil);
+            return Ok(1);
+        };
+        crate::c_api::c_spell::push_spell_loss_of_control_snapshot(state, spell_id)
     }
 }
 
@@ -492,7 +505,8 @@ mod cooldown_query {
 )))]
 mod cooldown_query {
     use super::{
-        FromStack, LuaResult, LuaState, Val, create_table, spellbook_data, table_set_static,
+        FromStack, LuaResult, LuaState, Val, create_table, spellbook_data, table_set,
+        table_set_static,
     };
 
     pub(super) fn get(state: &mut LuaState) -> LuaResult<u32> {
@@ -508,6 +522,22 @@ mod cooldown_query {
         table_set_static(state, cooldown, "isEnabled", Val::Bool(false));
         table_set_static(state, cooldown, "modRate", Val::Num(1.0));
         state.push(cooldown);
+        Ok(1)
+    }
+
+    pub(super) fn get_loss_of_control(state: &mut LuaState) -> LuaResult<u32> {
+        let slot = i32::from_stack(state, 1)?;
+        if spellbook_data::get_spell_at_slot(slot).is_none() {
+            state.push(Val::Nil);
+            return Ok(1);
+        }
+        let info = create_table(state);
+        table_set(state, info, "isActive", Val::Bool(false));
+        table_set(state, info, "startTime", Val::Num(0.0));
+        table_set(state, info, "duration", Val::Num(0.0));
+        table_set(state, info, "modRate", Val::Num(1.0));
+        table_set(state, info, "shouldReplaceNormalCooldown", Val::Bool(false));
+        state.push(info);
         Ok(1)
     }
 }
@@ -547,24 +577,6 @@ fn c_spell_book_get_spell_book_item_power_cost(state: &mut LuaState) -> LuaResul
         Some(power_costs) => state.push(power_costs),
         None => state.push(Val::Nil),
     }
-    Ok(1)
-}
-
-fn c_spell_book_get_spell_book_item_loss_of_control_cooldown_info(
-    state: &mut LuaState,
-) -> LuaResult<u32> {
-    let slot = i32::from_stack(state, 1)?;
-    if spellbook_data::get_spell_at_slot(slot).is_none() {
-        state.push(Val::Nil);
-        return Ok(1);
-    }
-    let info = create_table(state);
-    table_set(state, info, "isActive", Val::Bool(false));
-    table_set(state, info, "startTime", Val::Num(0.0));
-    table_set(state, info, "duration", Val::Num(0.0));
-    table_set(state, info, "modRate", Val::Num(1.0));
-    table_set(state, info, "shouldReplaceNormalCooldown", Val::Bool(false));
-    state.push(info);
     Ok(1)
 }
 

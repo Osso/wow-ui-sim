@@ -1,6 +1,6 @@
 # Spell and spellbook loss-of-control output restriction
 
-Batch69 covers EXACT rows 313 (`C_Spell.GetSpellLossOfControlCooldownInfo`) and 326 (`C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo`) only. Providers live in `src/c_api/c_spell.rs` and `src/c_api/c_spell_book.rs`; the existing `LossOfControlInfo` records are inputs. [Lua API architecture](../lua-api.md) describes the runtime boundary. Authored October 2, 2026 CDT; tests are inputs awaiting main-owned compiled RED, not passing evidence.
+Batch69 covers EXACT rows 313 (`C_Spell.GetSpellLossOfControlCooldownInfo`) and 326 (`C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo`) only. Providers live in `src/c_api/c_spell.rs` and `src/c_api/c_spell_book.rs`; the existing `LossOfControlInfo` records are inputs. [Lua API architecture](../lua-api.md) describes the runtime boundary. Authored October 2, 2026 CDT; compiled RED is recorded below. Production implementation awaits relevant GREEN and independent acceptance; no native-parity claim.
 
 ## What it must do
 
@@ -39,10 +39,11 @@ Batch69 covers EXACT rows 313 (`C_Spell.GetSpellLossOfControlCooldownInfo`) and 
 
 ## Implementation inventory
 
-- `src/c_api/c_spell.rs` — existing permissive identifier parser and optional LoC map provider; unchanged by this slice.
-- `src/c_api/c_spell_book.rs` — existing book provider, player resolver and gated normal `cooldown_query`; unchanged by this slice.
-- `src/c_api/c_action_bar_loss_of_control.rs` — existing typed-map rooted DTO precedent; its inactive absence default is not the book contract.
-- `tests/spell_book_loss_of_control_outputs.rs` — 27 modern cases and one inverse legacy control; compilation/RED pending.
+- `src/c_api/c_spell.rs` — unchanged permissive identifier parser; shared optional LoC snapshot reads the existing map and explicit restriction flag, then publishes or returns nil.
+- `src/c_api/c_spell_book.rs` — modern `cooldown_query` authenticates both selectors with API-specific context before shared displayable-entry resolution; LoC reads the actual resolved spell record. Exact inverse module retains the legacy disabled provider. Normal cooldown selector behavior remains unchanged.
+- `src/c_api/loss_of_control.rs` — shared rooted five-field numeric/boolean publisher; existing Action writer extracted without policy changes.
+- `src/c_api/c_action_bar_loss_of_control.rs` — existing slot resolution, inactive default and authentication unchanged; delegates only serialization to shared publisher. Action absence default is not the spell/book contract.
+- `tests/spell_book_loss_of_control_outputs.rs` — 27 modern cases and one inverse legacy control; main-owned compiled RED below.
 
 ## Tests asserting this spec
 
@@ -62,10 +63,17 @@ Batch69 covers EXACT rows 313 (`C_Spell.GetSpellLossOfControlCooldownInfo`) and 
 
 ## Known gaps (current cycle)
 
-- [ ] Main must compile and observe RED before production; no build, test, check or gate ran in this authoring slice.
+- [x] Main compiled inputs and observed RED before production.
+- [ ] Compile production and demonstrate relevant GREEN, Action/normal-book controls, startup and independent Rust/security/readability/profile gates. Implementation alone earns no retained-row credit.
 - [ ] Native LoC captures, input parity, per-field numeric secrecy, missing-map semantics, validation/header precedence and epoch placement remain UNPROVED or INFERRED as labelled, not native-verified facts.
 - [ ] Future-item fixtures and pet-bank behavior remain UNPROVED; no invented catalog or claim of pet support.
 - [ ] Authentic wrapper metadata/payload proof does not establish native Lua nominal numeric-type parity.
+
+### Compiled RED — 2026-10-02 CDT
+
+At `b324f2159289327cc4b8bd74f6793e7e0422824c`, `cargo test --test integration --no-run --message-format=json` exits0 with zero diagnostics in103.959996s. Emitted integration SHA256 `62630e59d1274183fcbf86d951ed37264798888493a0c544dfd5fda08d4961de`; finite `spell_book_loss_of_control_outputs::` execution selects27: **5 PASS/22 FAIL**, exit101,4.086695s. Full compiler/runtime streams and exact argv: `/tmp/patch-12.0.5-batch69-red-build-result.json` and `/tmp/patch-12.0.5-batch69-red-run.json`.
+
+Five spell public-record/parser/absence controls pass. Book fails meaningful positive payload, bank/domain/offspec/missing-map handling and authentic selector conversion. Restricted spell numbers remain public; downstream opacity/root/copy/GC tests stop at the first missing secrecy assertion, not22 independently established GC failures. Secret-spell nil assertions already succeed; that test fails its later public-query restricted-output check, not the preserved input boundary. Evidence is dirty-combined, not clean revision proof; protected source remains uninspected/unhashed and historical globalfmt/process failures remain unresolved. Current accounting remains188 pending/159 bounded/14 partial/1 metadata,362 ordered IDs/75 capabilities;313/326 uncredited.
 
 ### Evidence provenance
 
@@ -79,4 +87,4 @@ Local docs describe annotations, not observed native execution. Existing source 
 
 ## Out of scope
 
-Only rows313/326 test/spec inputs are authorized here. Production changes, other tests/data/wiki/PLAN, and builds/verification belong to main's next step. Future, pet, native and input-parity gaps above are evidence gaps, not exclusions from the underlying API contract.
+This slice changes only313/326 outputs and the meaningful existing-map book provider, with shared Action serialization and unchanged normal-book authentication as integration dependencies. No new state/catalog/activation/time model, vendor behavior, callbacks, generic declassification, VM pin/publication, operations or push. Future, pet, native and input-parity gaps above are evidence gaps, not exclusions from the underlying API contract.

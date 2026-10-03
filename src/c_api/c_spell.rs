@@ -734,25 +734,21 @@ fn get_spell_loss_of_control_cooldown_info(state: &mut LuaState) -> LuaResult<u3
         state.push(Val::Nil);
         return Ok(1);
     };
-    let info = borrow_state(state)?
-        .spell_loss_of_control
-        .get(&spell_id)
-        .cloned();
+    push_spell_loss_of_control_snapshot(state, spell_id)
+}
+
+pub(crate) fn push_spell_loss_of_control_snapshot(
+    state: &mut LuaState,
+    spell_id: u32,
+) -> LuaResult<u32> {
+    let (info, restricted) = {
+        let sim = borrow_state(state)?;
+        let info = sim.spell_loss_of_control.get(&spell_id).cloned();
+        (info, super::charge_state::cooldowns_are_restricted(&sim))
+    };
     let Some(info) = info else {
         state.push(Val::Nil);
         return Ok(1);
     };
-    let table = create_table(state);
-    table_set_static(state, table, "startTime", Val::Num(info.start_time));
-    table_set_static(state, table, "duration", Val::Num(info.duration));
-    table_set_static(state, table, "modRate", Val::Num(info.mod_rate as f64));
-    table_set_static(state, table, "isActive", Val::Bool(info.is_active));
-    table_set_static(
-        state,
-        table,
-        "shouldReplaceNormalCooldown",
-        Val::Bool(info.should_replace_normal_cooldown),
-    );
-    state.push(table);
-    Ok(1)
+    super::loss_of_control::push_loss_of_control_info(state, &info, restricted)
 }
