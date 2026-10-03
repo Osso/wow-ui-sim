@@ -1404,6 +1404,23 @@
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-debuff-indexed-independent-proof.md",
       "gate_scope": "Main accepts707:71 distinct ALL refreshed PASS=15Debuff+18Buff+24instance+14filter; compile0/113.603004s zeroDiag, startup0[]4.696931s localheadlesscascfalse, scopedfmt0/check0zeroDiag14.715721s. Shared Buff behavior, older-profile provider/body and unchanged DTO builder independently preserved; older profiles not executed. Real root-list/wrapper identities and caller trust asserted through accepted/denied/error/GC paths. Original6aa RED15FAIL0PASS/1.898831s compile0/89.594915s zeroDiag retained; RED did not reach all downstreamGC/miss assertions. Naming observation deferred/nonblocking, testhelper lengths below200 classifiedtestcode. Historicalglobalfmt1 unowned aura_duration.rs:44 remains; dirty-combined not clean whole-tree/native/GUI/CASC/allprofile/fullsuite proof. Exact347 status unchanged; no generic declassification or access/output credit."
+    },
+    {
+      "id": "spell-bonus-stat-security",
+      "symbols": [
+        "GetSpellBonusDamage",
+        "GetSpellBonusHealing"
+      ],
+      "scope": "B82 bounded original-school AllowedWhenUntainted authentication for damage plus existing explicit-state output restriction for damage482/healing484. Genuine intellect proxy values/arity/live state/flag toggles and secure values/addon opacity; actual input roots/GC/caller trust. No per-school/native formula, activation, ordinary type/nil/range or older-profile parity; source credit is output annotations only, not argument removals.",
+      "spec": "docs/specs/spell-bonus-stat-security.md",
+      "tests": [
+        "tests/spell_bonus_stat_security.rs"
+      ],
+      "implementation": "d21d4a208da4b911f003181e5ca33163f42b92be",
+      "compiled_revision": "d21d4a208da4b911f003181e5ca33163f42b92be",
+      "proof": "bounded-independent-pass-qualified-check",
+      "ledger": "/tmp/patch-12.0.5-spell-bonus-stat-independent-proof.md",
+      "gate_scope": "Main accepts716 bounded behavior:12 ALL refreshed PASS=7new+4stat+1proxy, compile0/108.741957s zeroDiag, startup0[]4.739207s localcascfalse; loaded probe0/3.507810s asserts publicaccepted/secureaccepted/taintedDENIED without execerror. Scopedfmt0/readability/source/wiring; single checkJSON build-finished.success true/zeroDiag but SYNCHRONOUS/direct exit NOT retained due verifier terminal stderr_to_file misuse: no exit0/async-check clearance or repeat. Original172 RED4PASS3FAIL compile0/90.716985s zeroDiag/run1011.115939s and d7 loadedruntime assertionFAIL despite CLI0 retained; original stdout-only markerfalse query corrected without rerun. Actual rooted wrapper/list identities/allocseq/caller and flag/model preservation; old-profile body source-equivalent not executed. Native/GUI/CASC/fullsuite/globalfmt1unownedaura/clean-tree gaps open."
     }
   ],
   "source_rows": [
@@ -3135,15 +3152,19 @@
     },
     {
       "source_id": "global api-PlayerScript GetSpellBonusDamage-482",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-bonus-stat-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "B82 accepted716 explicit-state OUTPUT-annotation only: actual intellect proxy/value/arity and false->true->false host restriction wrapping/opaque addons/live isolation,12 refreshed cases incl unchanged stat controls. Original-school authentication separately repaired from cached AllowedWhenUntainted contract; no argument-removal credit. Per-school/native/nil/type/range/automatic activation/oldprofile parity unverified. Qualified successful checkJSON lacks direct exit/async protocol; no blanket gate clearance."
     },
     {
       "source_id": "global api-PlayerScript GetSpellBonusHealing-484",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-bonus-stat-security"
+      ],
+      "status": "bounded-coverage",
+      "note": "B82 accepted716 unchanged real shared OUTPUT producer/control: explicit host restriction wraps actual intellect proxy with value/arity retained, opacity and live isolation across flag toggles. No new healing input policy or output reimplementation.12 refreshed focused cases/current localstartup+loaded damage probe, not whole APIs/native formulas/activation/older-profile/fullsuite/globalfmt clearance; check protocol/direct-exit qualification retained."
     },
     {
       "source_id": "global api-PlayerScript GetSpellCritChance-486",
