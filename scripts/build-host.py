@@ -1,28 +1,23 @@
 #!/usr/bin/env python3
-"""Build one Linux executable on the shared desktop/local Docker build host.
+"""Build and optionally run natively on the shared desktop/local build host.
 
 Requires game-engine scripts at
 /syncthing/Sync/Projects/world-of-osso/game-engine/scripts.
-BUILD_HOST_SCRIPTS overrides that single dependency directory; no path search or
-host fallback. The saved default is shared with game-engine. Runtime libraries
-live in target/<profile>/<bin>.libs/<content-id>, referenced by the ELF RUNPATH;
-old generations remain usable by running processes.
+BUILD_HOST_SCRIPTS overrides that dependency directory; no host fallback.
+The saved default is shared with game-engine. Desktop artifacts stay on desktop.
 """
 
 import argparse
-import gzip
-import hashlib
 import importlib.util
-import json
 import os
 from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
-import tempfile
 
 COMMON_SCRIPTS = Path("/syncthing/Sync/Projects/world-of-osso/game-engine/scripts")
+PROJECT_NAME = "wow-ui-sim"
 SOURCE_DIRS = (
     "src",
     "build",
@@ -43,6 +38,7 @@ EXCLUDED = {
     "node_modules",
 }
 SECRET_SUFFIXES = {".key", ".pem", ".p12", ".pfx"}
+ADDON_SUFFIXES = {".lua", ".xml", ".toc"}
 LITERAL_INCLUDE = re.compile(r'\binclude(?:_str|_bytes)?!\s*\(\s*"([^"\n]+)"')
 MANIFEST_INCLUDE = re.compile(
     r"\binclude(?:_str|_bytes)?!\s*\(\s*concat!\s*\(\s*"
@@ -50,49 +46,34 @@ MANIFEST_INCLUDE = re.compile(
     re.MULTILINE,
 )
 PATH_ATTRIBUTE = re.compile(r'#\[[^\]]*?\bpath\s*=\s*"([^"\n]+)"', re.MULTILINE)
-# Glibc and its loader must come from the caller, not the Debian build image.
-SYSTEM_LIBRARIES = {
-    "libc.so.6",
-    "libm.so.6",
-    "libpthread.so.0",
-    "libdl.so.2",
-    "librt.so.1",
-    "libresolv.so.2",
-    "libutil.so.1",
-    "ld-linux-x86-64.so.2",
-}
 
 
 def load_common():
     directory = Path(os.environ.get("BUILD_HOST_SCRIPTS", COMMON_SCRIPTS)).resolve()
-    for name in ("depot-build.py", "build_hosts.py"):
+    for name in ("depot-build.py", "build_hosts.py", "native_build_hosts.py"):
         if not (directory / name).is_file():
             raise FileNotFoundError(
                 f"missing shared build dependency: {directory / name}"
             )
     sys.path.insert(0, str(directory))
-    spec = importlib.util.spec_from_file_location(
-        "engine_build_helper", directory / "depot-build.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+    modules = []
+    for name, filename in (
+        ("engine_build_helper", "depot-build.py"),
+        ("engine_native_build_helper", "native_build_hosts.py"),
+    ):
+        spec = importlib.util.spec_from_file_location(name, directory / filename)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        modules.append(module)
+    return tuple(modules)
 
 
-def git_files(root, paths):
+def git_files(root, paths, tracked_only=False):
+    selection = ["--cached"]
+    if not tracked_only:
+        selection.extend(["--others", "--exclude-standard"])
     result = subprocess.run(
-        [
-            "git",
-            "-C",
-            str(root),
-            "ls-files",
-            "-z",
-            "--cached",
-            "--others",
-            "--exclude-standard",
-            "--",
-            *paths,
-        ],
+        ["git", "-C", str(root), "ls-files", "-z", *selection, "--", *paths],
         check=True,
         capture_output=True,
     )
@@ -109,13 +90,17 @@ def safe_source(relative):
     )
 
 
+def has_symlink(root, relative):
+    return (root / relative).is_symlink() or any(
+        (root / parent).is_symlink() for parent in relative.parents
+    )
+
+
 def validate_source(root, relative):
     if not safe_source(relative):
         raise ValueError(f"excluded compile input: {relative}")
     source = root / relative
-    if source.is_symlink() or any(
-        (root / parent).is_symlink() for parent in relative.parents
-    ):
+    if has_symlink(root, relative):
         raise ValueError(f"unsupported source symlink: {source}")
     if not source.is_file():
         raise FileNotFoundError(f"missing compile input: {source}")
@@ -123,19 +108,12 @@ def validate_source(root, relative):
 
 
 def compile_references(root, relative):
-    """Follow literal Rust includes/path attributes, including cfg_attr variants.
-
-    OUT_DIR includes are Cargo-generated, not snapshot inputs. No runtime path
-    strings are followed. Data/assets/Interface are admitted only through these
-    compile references, never as whole directories.
-    """
+    """Follow literal Rust includes/path attributes, not runtime path strings."""
     text = (root / relative).read_text()
-    references = []
-    references.extend(
+    references = [
         (root / relative).parent / value for value in LITERAL_INCLUDE.findall(text)
-    )
-    # Source directories are already selected in full. Inline-module #[path]
-    # resolution belongs to rustc; follow only attributes into external data.
+    ]
+    # Inline-module path resolution belongs to rustc; source dirs are copied whole.
     for value in PATH_ATTRIBUTE.findall(text):
         path = Path(os.path.abspath((root / relative).parent / value))
         if (
@@ -148,12 +126,42 @@ def compile_references(root, relative):
     )
     result = set()
     for path in references:
-        # Normalize '..' without following symlinks; validation must see them.
         normalized = Path(os.path.abspath(path))
         if not normalized.is_relative_to(root):
             raise ValueError(f"compile input escapes checkout: {relative}: {path}")
         result.add(normalized.relative_to(root))
     return result
+
+
+def runtime_sources(root):
+    tracked = git_files(
+        root, ["Interface", "data/blizzard-ui-files"], tracked_only=True
+    )
+    owned_addons = {
+        path.parts[2]
+        for path in tracked
+        if path.parts[:2] == ("Interface", "AddOns") and len(path.parts) > 3
+    }
+    candidates = set(tracked)
+    for path in git_files(root, ["Interface/AddOns"]):
+        if (
+            len(path.parts) > 3
+            and path.parts[2] in owned_addons
+            and path.suffix.lower() in ADDON_SUFFIXES
+        ):
+            candidates.add(path)
+    return {
+        path
+        for path in candidates
+        if safe_source(path)
+        and path.parts[:2] != ("Interface", "BlizzardUI")
+        and not has_symlink(root, path)
+        and (root / path).is_file()
+        and (
+            path.parts[0] == "Interface"
+            or (len(path.parts) == 3 and path.suffix == ".txt")
+        )
+    }
 
 
 def snapshot(root, context):
@@ -178,73 +186,23 @@ def snapshot(root, context):
     for required in ("Cargo.toml", "Cargo.lock", "build.rs"):
         if Path(required) not in selected:
             raise FileNotFoundError(f"missing build dependency: {root / required}")
-    source_root = context / "source"
-    for relative in sorted(selected):
+    source_root = context / PROJECT_NAME
+    for relative in sorted(selected | runtime_sources(root)):
         destination = source_root / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(validate_source(root, relative), destination)
     # build.rs reads these directories even when building a bin, not tests.
     for directory in ("tests", "tests/perf"):
         (source_root / directory).mkdir(parents=True, exist_ok=True)
-    scripts = Path(__file__).resolve().parent
-    shutil.copy2(scripts / "build-host/Dockerfile", context / "Dockerfile")
-    shutil.copy2(Path(__file__).resolve(), context / "builder.py")
 
 
-def install_export(common, output, destination):
-    manifest = json.loads((output / "runtime-libs.json").read_text())
-    libraries = manifest["libraries"]
-    directory = manifest["directory"]
-    if not isinstance(libraries, list) or len(set(libraries)) != len(libraries):
-        raise ValueError("invalid exported library list")
-    if any(
-        not isinstance(name, str)
-        or Path(name).name != name
-        or not re.fullmatch(r"lib[A-Za-z0-9_.+-]+", name)
-        for name in libraries
-    ):
-        raise ValueError("unsafe exported library name")
-    if libraries:
-        if not isinstance(directory, str) or not re.fullmatch(
-            re.escape(destination.name) + r"\.libs/[A-Za-z0-9_-]+", directory
-        ):
-            raise ValueError("unsafe exported runtime directory")
-    elif directory is not None:
-        raise ValueError("runtime directory without libraries")
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(
-        prefix=f".{destination.name}-", dir=destination.parent
-    ) as work:
-        staging = Path(work)
-        executable = staging / destination.name
-        common.install_artifact(
-            output / (destination.name + ".gz"), executable, executable=True
-        )
-        if libraries:
-            staged_libraries = staging / "libs"
-            staged_libraries.mkdir()
-            for name in libraries:
-                common.install_artifact(
-                    output / (name + ".gz"), staged_libraries / name
-                )
-            installed = destination.parent / directory
-            installed.parent.mkdir(parents=True, exist_ok=True)
-            if installed.exists():
-                if installed.is_symlink() or {
-                    p.name for p in installed.iterdir()
-                } != set(libraries):
-                    raise ValueError(f"runtime generation collision: {installed}")
-                for name in libraries:
-                    if (installed / name).is_symlink() or (
-                        installed / name
-                    ).read_bytes() != (staged_libraries / name).read_bytes():
-                        raise ValueError(
-                            f"runtime generation collision: {installed / name}"
-                        )
-            else:
-                os.replace(staged_libraries, installed)
-        os.replace(executable, destination)
-    return destination.parent / directory if libraries else None
+def cargo_arguments(binary, no_default_features, features):
+    arguments = ["build", "--bin", binary]
+    if no_default_features:
+        arguments.append("--no-default-features")
+    if features:
+        arguments.extend(["--features", features])
+    return arguments
 
 
 def build(
@@ -254,162 +212,24 @@ def build(
     no_default_features=False,
     features="",
     host=None,
+    runtime_args=None,
 ):
-    common = load_common()
+    common, native = load_common()
     host = common.select_build_host(host)
     lock, cache, checkout_key = common.locked_checkout(root)
-    with lock:
-        profile = "release" if release else "debug"
-        destination = root / "target" / profile / binary
-        for path in (
-            root / "target",
-            destination.parent,
-            destination.parent / (binary + ".libs"),
-        ):
-            if path.is_symlink():
-                raise ValueError(f"artifact destination must be checkout-local: {path}")
-        with (
-            tempfile.TemporaryDirectory(prefix="wow-build-", dir=cache) as work,
-            common.stable_context(cache, "wow-build", checkout_key) as context,
-        ):
-            snapshot(root, context)
-            output = Path(work) / "output"
-            output.mkdir()
-            values = {
-                "BUILD_ROOT": str(root),
-                "BIN": binary,
-                "RELEASE": str(int(release)),
-                "NO_DEFAULT_FEATURES": str(int(no_default_features)),
-                "FEATURES": features,
-            }
-            arguments = [
-                item
-                for key, value in values.items()
-                for item in ("--build-arg", f"{key}={value}")
-            ]
-            common.execute(
-                context,
-                output,
-                "wow-ui-sim-" + checkout_key,
-                "artifact",
-                arguments,
-                host,
-            )
-            libraries = install_export(common, output, destination)
-    if libraries is not None:
-        print(f"Runtime libraries: {libraries}", flush=True)
-    print(destination, flush=True)
-    return destination
-
-
-def refresh_sources(root):
-    # Called inside the BuildKit sharing=locked target mount. Touch compile data
-    # and .cargo config too, so a preserved Git timestamp cannot hide an edit.
-    for directory, dirs, files in os.walk(root):
-        dirs[:] = [name for name in dirs if name not in EXCLUDED]
-        for name in files:
-            os.utime(Path(directory) / name, None, follow_symlinks=False)
-
-
-def cargo_arguments(binary, release, no_default_features, features):
-    arguments = ["cargo", "build", "--locked", "--bin", binary, "-j", "8"]
-    if release:
-        arguments.append("--release")
-    if no_default_features:
-        arguments.append("--no-default-features")
-    if features:
-        arguments.extend(["--features", features])
-    return arguments
-
-
-def resolve_runtime_libraries(executable, profile_dir):
-    sysroot = Path(
-        subprocess.run(
-            ["rustc", "--print", "sysroot"], check=True, text=True, capture_output=True
-        ).stdout.strip()
-    )
-    rust_libs = sysroot / "lib/rustlib/x86_64-unknown-linux-gnu/lib"
-    environment = {
-        **os.environ,
-        "LD_LIBRARY_PATH": os.pathsep.join(
-            map(str, (profile_dir, profile_dir / "deps", rust_libs))
-        ),
-    }
-    result = subprocess.run(
-        ["ldd", str(executable)],
-        check=True,
-        text=True,
-        capture_output=True,
-        env=environment,
-    )
-    libraries = {}
-    for line in result.stdout.splitlines():
-        if "not found" in line:
-            raise ValueError(f"unresolved runtime dependency: {line.strip()}")
-        match = re.match(r"\s*(\S+)\s+=>\s+(/.+?)\s+\(", line)
-        if match and match[1] not in SYSTEM_LIBRARIES:
-            libraries[match[1]] = Path(match[2])
-    return libraries
-
-
-def compress_artifact(source, destination):
-    with (
-        source.open("rb") as input_file,
-        gzip.open(destination, "wb", compresslevel=1) as output,
-    ):
-        shutil.copyfileobj(input_file, output)
-
-
-def export_binary(executable, profile_dir, output):
-    libraries = resolve_runtime_libraries(executable, profile_dir)
-    output.mkdir(parents=True, exist_ok=True)
-    # Work on copies: never mutate Cargo cache artifacts or system/toolchain libs.
-    with tempfile.TemporaryDirectory(prefix="wow-export-") as work:
-        staging = Path(work)
-        copied_binary = staging / executable.name
-        shutil.copy2(executable, copied_binary)
-        digest = hashlib.sha256()
-        for name, source in sorted(libraries.items()):
-            digest.update(name.encode())
-            digest.update(source.read_bytes())
-        directory = (
-            executable.name + ".libs/" + digest.hexdigest()[:20] if libraries else None
+    with lock, common.stable_context(cache, "wow-native", checkout_key) as context:
+        snapshot(root, context)
+        return native.execute(
+            context,
+            checkout_key,
+            PROJECT_NAME,
+            cargo_arguments(binary, no_default_features, features),
+            host,
+            runtime_args=runtime_args,
+            binary=binary,
+            release=release,
+            root=root,
         )
-        if libraries:
-            subprocess.run(
-                ["patchelf", "--set-rpath", "$ORIGIN/" + directory, str(copied_binary)],
-                check=True,
-            )
-            for name, source in sorted(libraries.items()):
-                copied = staging / name
-                shutil.copy2(source, copied)
-                subprocess.run(
-                    ["patchelf", "--set-rpath", "$ORIGIN", str(copied)], check=True
-                )
-                compress_artifact(copied, output / (name + ".gz"))
-        compress_artifact(copied_binary, output / (executable.name + ".gz"))
-    (output / "runtime-libs.json").write_text(
-        json.dumps({"directory": directory, "libraries": sorted(libraries)})
-    )
-
-
-def container_build(output=Path("/out")):
-    root = Path(os.environ["BUILD_ROOT"])
-    binary = os.environ["BIN"]
-    release = os.environ["RELEASE"] == "1"
-    refresh_sources(root)
-    subprocess.run(
-        cargo_arguments(
-            binary,
-            release,
-            os.environ["NO_DEFAULT_FEATURES"] == "1",
-            os.environ["FEATURES"],
-        ),
-        cwd=root,
-        check=True,
-    )
-    profile_dir = root / "target" / ("release" if release else "debug")
-    export_binary(profile_dir / binary, profile_dir, output)
 
 
 def main(argv=None):
@@ -431,7 +251,22 @@ def main(argv=None):
         default=None,
         help="Cargo comma-separated feature list; defaults remain enabled unless explicitly disabled",
     )
-    args = parser.parse_args(argv)
+    parser.add_argument(
+        "--run",
+        action="store_true",
+        help="run on the build host after a successful build",
+    )
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    runtime_args = []
+    if "--" in arguments:
+        separator = arguments.index("--")
+        runtime_args = arguments[separator + 1 :]
+        arguments = arguments[:separator]
+        args = parser.parse_args(arguments)
+        if not args.run:
+            parser.error("runtime arguments require --run")
+    else:
+        args = parser.parse_args(arguments)
     try:
         if args.save_build_host:
             if (
@@ -440,26 +275,25 @@ def main(argv=None):
                 or args.release
                 or args.no_default_features
                 or args.features is not None
+                or args.run
             ):
                 parser.error("--save-build-host cannot combine with build options")
-            load_common().save_build_host(args.save_build_host)
-        else:
-            build(
-                args.root.resolve(),
-                args.bin or "wow-sim",
-                args.release,
-                args.no_default_features,
-                args.features or "",
-                args.build_host,
-            )
+            common, _ = load_common()
+            common.save_build_host(args.save_build_host)
+            return 0
+        return build(
+            args.root.resolve(),
+            args.bin or "wow-sim",
+            args.release,
+            args.no_default_features,
+            args.features or "",
+            args.build_host,
+            runtime_args if args.run else None,
+        )
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         print(f"Build failed: {error}", file=sys.stderr)
         return 1
-    return 0
 
 
 if __name__ == "__main__":
-    if sys.argv[1:] == ["_container-build"]:
-        container_build()
-    else:
-        sys.exit(main())
+    sys.exit(main())
