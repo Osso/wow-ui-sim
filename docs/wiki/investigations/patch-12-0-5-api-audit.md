@@ -1,5 +1,15 @@
 # Patch 12.0.5 API Audit
 
+### Batch82 — independent bounded acceptance
+
+After `7f53f4648`, main accepts716 **12 distinct refreshed PASS** (7 new school/output cases +4 stat controls +1 proxy control). [Acceptance SSOT](../../specs/spell-bonus-stat-security.md#independent-bounded-acceptance--2026-10-03) owns full proof, case inventory and provenance. Current local startup `[]` and loaded probe STDERR `public-accepted secure-accepted tainted-denied`, with no exec-Lua error, establish bounded simulator behavior. Scoped format0, source and readability accepted.
+
+**Check PROTOCOL QUALIFIED:** success JSON and zero diagnostics were retained, but `stderr_to_file` misuse made execution **synchronous; direct exit not retained**. No check exit0, asynchronous execution or all-gates-pass claim; no rerun. Actual test compile0 independently supplies compilation proof.
+
+Exact482/484 are now **bounded OUTPUT-only** annotations. Original-school authentication follows separate cached argument policy; no argument-removal credit. Existing spell-power intellect proxy/healing/output helper unchanged. [Coverage SSOT](../../../data/patch-api/sources/12.0.5-page-coverage.json): **86 capabilities/362 IDs;165 pending /179 bounded /11 partial /7 metadata**. New independent metadata audit **pending**, not inferred from behavior acceptance.
+
+Automatic activation, per-school/native formulas, ordinary type/nil/range policy, older profiles, full suites and historical unowned globalfmt1 remain unverified. [Initial loaded-probe failure](../../specs/spell-bonus-stat-security.md#qualified-prior-full-runtime-failure) retains tainted acceptance/assertion failure despite CLI0 and corrected stdout-only false marker; `17211be121` RED4 PASS/3 FAIL does not establish downstream GC completion. Historical input/producer then-pending checkpoints below remain historical. B81 main707/durable71364/64 accepted and missing-artifact71148/48 unaccepted unchanged; audit **IN PROGRESS**.
+
 ### Batch82 — producer checkpoint, proof pending
 
 After producer `d21d4a208`, [spell bonus stat security SSOT](../../specs/spell-bonus-stat-security.md) owns requirements, case inventory and full proof. Supplied grouped RED at `17211be121`: compile exit0/zero diagnostics **90.716985s**; run exit101/**1.115939s**, **4 PASS /3 FAIL**. Tainted NUM, malformed secret payload and GC schedules fail the required denial-before-output boundary; downstream root/GC completion is **not proved**. This supersedes only the compiling state of historical wiki checkpoint `71c384eec` below, not its then-pending truth.
