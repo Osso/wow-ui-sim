@@ -107,6 +107,14 @@ fn spell_power(state: &mut LuaState) -> f64 {
 /// spell-power for a given damage school. The sim models a single SP
 /// bucket, so the school arg is informational.
 fn get_spell_bonus_damage(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "retail-12-0-5")]
+    {
+        // AllowedWhenUntainted applies even while the proxy ignores school.
+        let _ =
+            rilua::table_security::unwrap_secret(state, stack_val(state, 1)).map_err(|error| {
+                rilua::runtime_error(format!("GetSpellBonusDamage: argument 1: {error}"))
+            })?;
+    }
     let sp = spell_power(state);
     push_stat_number(state, sp)?;
     Ok(1)

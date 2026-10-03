@@ -1,6 +1,6 @@
 # Spell bonus school authentication and existing stat outputs — B82
 
-Bounded Retail 12.0.5 contract for `GetSpellBonusDamage(school)` original-input authentication, preserving the existing intellect-backed stat output. `GetSpellBonusHealing()` is an unchanged shared-output control, not a new input policy. Source: `src/lua_api/globals/cooldown_probes.rs`; output model: `src/c_api/c_secrets.rs`. See [Lua API boundary](../lua-api.md) and [existing stat output contract](unit-stat-output-restriction.md). Inputs authored 2026-10-03 only; **not compiled, executed, or accepted**. Every new requirement remains unchecked. Main owns grouped compiled RED before producer edits.
+Bounded Retail 12.0.5 contract for `GetSpellBonusDamage(school)` original-input authentication, preserving the existing intellect-backed stat output. `GetSpellBonusHealing()` is an unchanged shared-output control, not a new input policy. Source: `src/lua_api/globals/cooldown_probes.rs`; output model: `src/c_api/c_secrets.rs`. See [Lua API boundary](../lua-api.md) and [existing stat output contract](unit-stat-output-restriction.md). Inputs `17211be121` compiled and executed before producer edits: **4 PASS /3 FAIL**. Main inspected expected school-auth failures; minimal producer now authenticates original argument1 before existing stat/output work. New requirements remain unchecked pending current GREEN and independent acceptance.
 
 ## What it must do
 
@@ -30,14 +30,14 @@ The simulator currently ignores school and returns a single intellect bucket thr
 ## Implementation inventory
 
 - `tests/spell_bonus_stat_security.rs`: seven authored public-API cases; actual host inputs, original VM wrappers and actual Frame backing, no query replacements or mocks. `#[cfg(feature = "retail-12-0-5")]`; existing `build.rs` automatically discovers it in grouped `tests/integration.rs`, no new Cargo target.
-- `src/lua_api/globals/cooldown_probes.rs`: unchanged registered damage/healing callbacks; school currently ignored, shared existing intellect proxy.
+- `src/lua_api/globals/cooldown_probes.rs`: damage authenticates original school with VM `unwrap_secret` before state/output work under `retail-12-0-5`, adding API/argument context to denial. Payload remains informational after authentication; no new ordinary validation or school formulas. Below that feature, callback behavior is unchanged. Healing callback and shared existing intellect proxy unchanged.
 - `src/c_api/c_secrets.rs`: unchanged `push_stat_number` and public restriction predicate; no output-wrapper reimplementation.
 - `src/lua_api/state`: existing explicit `unit_stats_restricted` and player intellect inputs, unchanged.
 - `tests/character_stats/stat_restriction_fixtures.lua`: existing damage2/healing500 output-model evidence; not duplicated as a whole stat matrix.
 
 ## Tests asserting this spec
 
-All cases below are **authored only**, with no compile/RED/GREEN claim. They invoke registered public APIs on real `WowLuaEnv` state, not stand-in callbacks.
+All seven cases compiled and executed at `17211be121`: four secure/public/output controls PASS; three tainted-auth/GC schedules FAIL at `AllowedWhenUntainted school must be denied before output`. This is expected behavioral RED, not current GREEN or downstream GC/root completion. Tests invoke registered public APIs on real `WowLuaEnv` state, not stand-in callbacks. Table remains without current acceptance credit until independent verification.
 
 | Exact case | Concrete boundary | Proof |
 |---|---|---|
@@ -59,7 +59,7 @@ Artifacts remain `/tmp/patch-12.0.5-spell-bonus-school-probe-ops/{status.json,ru
 
 ## Known gaps (current cycle)
 
-- [ ] Main must compile/run the automatically grouped seven authored cases before any producer edit; expected RED is tainted original-school acceptance at the actual callback boundary, not a missing test target. Current callback ignores school; secure/public/output controls alone are not a fix.
+- [x] Main compiled grouped RED before producer edit: `17211be121743b9261e986f96bbe3d3b36d6ccf6`, compile exit0/zero diagnostics90.716985s; run101/1.115939s, **4 PASS /3 FAIL**, SHA256 `7944d930d15983447909f49a0dc0d9be2953bde4d64ebf496f576f35caa1682d`. `/tmp/patch-12.0.5-spell-bonus-stat-red-ops/` retains exact argv/full streams/artifact feature records. Failures reach tainted-school acceptance before downstream root/GC assertions, not missing target or compile failure.
 - [ ] Before-state/output ordering is the required boundary. Contextual denial and unchanged state assert externally visible behavior; they do not instrument/count internal reads. Downstream roots/GC assertions may remain unreached when denial fails.
 - [ ] Independent acceptance and any source-accounting updates remain main-owned. No producer, broader audit, capability-count, startup or output rewrap credit in this inputs commit.
 
