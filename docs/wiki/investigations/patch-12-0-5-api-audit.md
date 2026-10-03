@@ -1,5 +1,13 @@
 # Patch 12.0.5 API Audit
 
+### Batch69 — EXACT313/326 LoC outputs pending independent acceptance
+
+Producer `cc69ac3c4`; [contract/inventory/proof SSOT](../../specs/spell-book-loss-of-control-outputs.md) and [[lua-api#Retail 12.0.5 spell and spellbook loss-of-control outputs]] describe existing typed LoC-map reads, actual player-book bank0 resolution, original book-selector authentication before model and shared rooted five-field writer. Explicit flag restricts three private NUM fields; two NeverSecret BOOLs stay public. Existing permissive spell parser remains; native AllowedWhenTainted secret-input parity is not credited.
+
+Actual pre-producer `b324f2159289327cc4b8bd74f6793e7e0422824c` RED: **27 selected, 5 PASS/22 FAIL**, compile103.959996s exit0/zero diagnostics, run4.086695s exit101. Public spell record/parser/absence controls pass; meaningful book payload/bank/domain/offspec/missing-map/authentication and restricted outputs fail. Downstream GC mostly unreached, not 22 demonstrated GC failures. Authored/inferred snapshot, field/miss/validation/epoch policies remain distinct from proof; native/type/acquisition/pet/future/UI gaps explicit. No GREEN/native/current-profile credit or independent acceptance for313/326. **188 pending/159 bounded/14 partial/1 metadata,362 IDs/75 capabilities unchanged**.
+
+Earlier B68 `758cdf49c` acceptance and docs `e895`/`72df` remain separate: original537 Gate FAIL retained while narrow541 follow-up was accepted by main. No unrelated accounting credit. Full source histories and dirty-combined/globalfmt/process limits remain; no source-code-change or globalfmt/process clearance.
+
 ### Batch68 — exact spell and spellbook cooldown outputs accepted
 
 [EXACT305/322 acceptance SSOT](../../specs/spell-book-cooldown-outputs.md#independent-bounded-acceptance--2026-10-02) records independent537+541 and `758cdf49c`: bounded meaningful intervals, book selector/offspec boundaries, trusted-host NUM payloads and Lua opacity/copy/root/GC accepted. Modern/legacy grouping equivalence proved; scopedfmt/check0, 27 refreshed+135 inherited=162 unique Retail PASS/one ignored, startup `[]` inherited. Post-grouping Forever compile0/legacy1 PASS counts one refreshed identity within original64 PASS/1 FAIL/1 ignored, not duplicate credit. Mask-quad test makes no cooldown call: applicability rejected, causal preexistence UNRESOLVED; whole filter not green. Only305/322 promote:188 pending/159 bounded/14 partial/1 metadata,362 ordered IDs/75 capabilities. Inferred policies explicit; nominal/native types, SpellIdentifier input, future fixture, pet/full banks/UI unproved. Dirty-combined/globalfmt1/historical502 failure retained. Dated producer checkpoints remain historical; broader goal open.
