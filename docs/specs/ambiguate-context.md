@@ -22,7 +22,7 @@ B74 covers only retail 12.0.5 source occurrence `global api-PlayerScript Ambigua
 
 ## Implementation inventory
 
-- `src/lua_api/workarounds/temporary/inert_global_defaults.rs` — existing public Ambiguate provider; no production change in this inputs-only slice.
+- Producer `9441f7c7c` promotes the public transform to a real module and removes the old fallback. Private-epoch context-secret rejection precedes argument 1 processing; the old Lua exact body and inverse boolean `false` are retained. Inventory is supplied producer evidence, not independent acceptance.
 - `tests/ambiguate_context.rs` — actual-provider boundary and public mapping assertions, gated by `retail-12-0-5`; no additional integration target.
 
 ## Tests asserting this spec
@@ -30,9 +30,15 @@ B74 covers only retail 12.0.5 source occurrence `global api-PlayerScript Ambigua
 - `tests/ambiguate_context.rs`: 18 secret rejection cases = three wrapper payload types × two caller contexts × valid fullname/nil/table. Each includes caller-taint assertions, collection, wrapper liveness/identity, and public short/none recovery.
 - Same file: four public-control cases, secure short/other string contexts and none, plus addon short and none. Concrete names cover no realm, multiple hyphens, and trailing hyphen.
 
+## B74 producer checkpoint — 2026-10-03
+
+Supplied actual RED `d11`: build exit0, zero diagnostics, **828.602250s**; **22 cases: 4 PASS / 18 FAIL**, **21.161436s**. Earlier combined E0277 compilation ran no tests and is not behavioral RED. This compiled RED and producer `9441f7c7c` supersede the historical inputs-only checkpoint, not the acceptance gates.
+
+**GREEN, check, and Forever independent acceptance remain PENDING.** Async default and Forever workers use separate roots; proof must identify its source revision/scope, not imply current whole-HEAD equivalence. Behavior boxes remain unchecked until independent verification. No native parity, row416 credit, count promotion, or full-suite clearance. [Audit checkpoint](../wiki/investigations/patch-12-0-5-api-audit.md#batch74--ambiguate-inputs-only-checkpoint).
+
 ## Known gaps (current cycle)
 
-- [ ] Inputs authored only. Main must inspect and commit them, then obtain compiled behavioral RED before production changes; no build, test, or passing evidence is claimed here.
+- [ ] Obtain independent scoped GREEN/check/Forever acceptance for the producer; supplied implementation and RED do not establish passing behavior.
 
 ## Out of scope
 
