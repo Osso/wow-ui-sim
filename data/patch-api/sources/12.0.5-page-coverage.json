@@ -7,6 +7,18 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "action-bar-direct-membership",
+      "symbols": ["C_ActionBar.IsOnBarOrSpecialBar"],
+      "scope": "Bounded PUBLIC effective direct-spell membership only: positive existing assignments exclude macro/outfit overrides; explicit alias-first registry, duplicate removal/replacement, read-only queries and environment isolation. Special-bar semantics and native AllowedWhenTainted access remain unmodeled; exact245 stays pending.",
+      "spec": "docs/specs/action-bar-membership.md",
+      "tests": ["tests/action_bar_membership.rs", "tests/action_spell_slot_identifiers.rs"],
+      "implementation": "2f6e575f9ef9af47668bfe2bd7077383251ab19c",
+      "compiled_revision": "2f6e575f9ef9af47668bfe2bd7077383251ab19c",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-action-membership-independent-proof.md",
+      "gate_scope": "Independent670 bounded PUBLIC PASS:11membership+17companion controls, pinned startup0[], fresh defaultcheck0/scopedfmt0, preservation/wiring/readability. RED7af compile81.829544s zeroDiag/2PASS9FAIL; GREEN2f6 compile106.715008s zeroDiag. Globalfmt1 only untouched aura_duration.rs:44; failed initial unretained check launcher receives no credit. New-API secret/wrong-type behavior is source reasoning only; companion controls are not new-API probes. Dirty-combined/pinned-source qualification, native permission/secrecy, specialbars and older-profile parity limitations retained. No source-row promotion or whole-suite GREEN."
+    },
+    {
       "id": "ambiguate-context-neversecret",
       "symbols": ["Ambiguate"],
       "scope": "Exact415 arg2 NeverSecret only: real public-name transform classifies original context identity without payload decoding before any fullname access. Genuine host-secret NUM/BOOL/STR contexts reject in secure and addon callers; caller taint, wrapper secrecy/identity/liveness and public recovery survive GC. Existing none/other-context name mapping retained; earlier epochs short-circuit rejection and retain old public body. Error/order and name/context semantics remain simulator policy. Row416 secret-fullName permission and output secrecy unmodeled; no native/all-profile/global privacy credit.",
@@ -2175,9 +2187,9 @@
     },
     {
       "source_id": "global api-C_ActionBar-IsOnBarOrSpecialBar-245",
-      "capabilities": [],
+      "capabilities": ["action-bar-direct-membership"],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "B78 bounded PUBLIC direct-spell membership accepted670:11new+17companion PASS, startup[], scopedfmt/check0. Explicit aliases/effective assignments now modeled; native AllowedWhenTainted permission/resultsecrecy and special-bar membership remain unmodeled. Exact source stays pending; no full identifier/annotation/native/all-profile credit."
     },
     {
       "source_id": "global api-C_CatalogShop-GetProductInfo-247",
