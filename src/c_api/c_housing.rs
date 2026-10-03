@@ -9,6 +9,7 @@
 
 mod basic_mode;
 pub mod catalog;
+pub mod exterior;
 
 use crate::c_api::helpers::ensure_namespace;
 #[cfg(feature = "retail-12-1-0")]
