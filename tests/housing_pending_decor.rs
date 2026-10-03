@@ -1,9 +1,9 @@
 //! B71 inputs only: AllowedWhenUntainted pending-request expectations await compiled RED.
 #![cfg(feature = "retail-12-0-5")]
 
-use rilua::LuaApiMut;
 use rilua::Val;
 use rilua::table_security::{is_secret_value, unwrap_secret, wrap_host_secret_number, wrap_secret};
+use rilua::{LuaApi, LuaApiMut};
 use wow_ui_sim::c_api::c_housing::catalog::{
     HousingCatalogEntryVariantID, HousingCatalogVariantRecord, HousingDecorDyeSlot,
 };
