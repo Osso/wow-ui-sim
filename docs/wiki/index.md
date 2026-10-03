@@ -1,6 +1,6 @@
 ## [2026-10-02] evidence | Accept exact301/309 spell count outputs
 
-[Bounded acceptance SSOT](../specs/spell-count-outputs.md#independent-bounded-acceptance--2026-10-02) records127 distinct Retail PASS:30 refreshed Spell,28 refreshed Action,69 inherited controls; startup/check/format/readability proof scoped by revision. Only301/309 promote:190 pending/157 bounded/14 partial/1 metadata,362 ordered IDs/74 capabilities. Cast AllowedWhenTainted input parity remains UNMODELED; historical Forever47 excludes validator refresh. Native/type/acquisition/UI, dirty/globalfmt and historical process limits remain. Broader goal open.
+[Bounded acceptance SSOT](../specs/spell-count-outputs.md#independent-bounded-acceptance--2026-10-02) records127 distinct Retail PASS:30 refreshed Spell,28 refreshed Action,69 inherited controls; startup/check/format/readability proof scoped by revision. Only301/309 promote:190 pending/157 bounded/14 partial/1 metadata,362 ordered IDs/74 capabilities. Bounded trusted-host payload and Lua opacity/copy/root/GC proof accepted. Cast AllowedWhenTainted input parity remains UNMODELED; historical Forever47 excludes validator refresh. Native/type/acquisition/UI, dirty/globalfmt and historical process limits remain. Broader goal open.
 
 ## [2026-10-02] implementation | Bound EXACT305/322 spell and spellbook cooldown outputs
 

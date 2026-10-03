@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Batch67 — exact spell count outputs accepted
+
+[EXACT301/309 acceptance SSOT](../../specs/spell-count-outputs.md#independent-bounded-acceptance--2026-10-02) owns current accounting, refreshed/reused proof and retained limits. Trusted-host private payload and bounded Lua opacity/copy/root/GC behavior are proved, not pending; cast AllowedWhenTainted secret-input parity remains UNMODELED with conservative rejection, no NeverSecret/input credit. Nominal scalar type, native acquisition, global privacy and UI/full-profile parity remain unproved. Dated checkpoints below remain historical; broader goal open.
+
 ### Batch66 — exact action display/use-count outputs accepted
 
 [Exact237/241 proof/model SSOT](../../specs/action-count-outputs.md#independent-bounded-acceptance--2026-10-01) records521+523+525 acceptance:145 distinct Retail PASS (28 refreshed+117 controls), source-valid startup/36 Forever controls, current typed-state check and corrected helper/literal equivalence/readability/format. Only237/241 promote: **192 pending/155 bounded/14 partial/1 metadata =362;73 capabilities**. Ordered IDs,360 unrelated rows,72 prior capabilities/source hashes preserved. Real slot-matched host counts and valid charge-display source before VM input/output privacy; no fabricated acquisition or private nominal-type claim. Native/inferred/default/global-privacy/UI/profile/dirty/globalfmt/historical process failures remain. Header follows main instructional date; observed host provenance separate. Broader goal open.

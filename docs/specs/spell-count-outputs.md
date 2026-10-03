@@ -57,9 +57,9 @@ Primary evidence: profile cache `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/B
 
 ## Tests asserting this spec
 
-`tests/spell_count_outputs.rs`: 30 unchanged behavioral cases for both scalar outputs, explicit identity/state, formatting, display authentication, conservative cast rejection and authentic secret outputs/lifetimes. Main-owned compiled RED is recorded below; no producer GREEN or gates run by this implementer. All requirements remain unchecked pending independent proof.
+`tests/spell_count_outputs.rs`: 30 unchanged behavioral cases for both scalar outputs, explicit identity/state, formatting, display authentication, conservative cast rejection and authentic secret outputs/lifetimes. Main-owned compiled RED is recorded below; no producer GREEN or gates ran in the original implementation step. Current bounded output acceptance is recorded in [independent acceptance](#independent-bounded-acceptance--2026-10-02); unchecked requirement items are not a current blanket assertion of missing proof.
 
-Existing `tests/c_spell_probes.rs::test_spell_count_shims_return_zero` and the `spell_metadata_defaults.rs` unit tuple still expect display numeric0. Expected Retail125 control mismatch: documented display result is STRING, so the new producer returns empty STR without a source. Both tests remain untouched; main must first demonstrate actual producer GREEN/control failure before deciding corrections. Earlier/Forever numeric0 defaults remain deliberate.
+At the original producer checkpoint, existing `tests/c_spell_probes.rs::test_spell_count_shims_return_zero` and the `spell_metadata_defaults.rs` unit tuple still expected display numeric0. Expected Retail125 control mismatch: documented display result is STRING, so the new producer returns empty STR without a source. Both tests were then untouched; the observed control failures and subsequent corrections are recorded below. Earlier/Forever numeric0 defaults remain deliberate.
 
 ## First producer execution and confirmed fixture corrections — 2026-10-01
 
@@ -89,7 +89,7 @@ Independent528 and follow-up533 accept **exact301/309 output behavior only**. Pr
 
 Shared validators preserve domains, defaults, API-specific errors and all-original-argument authentication order. Full focused test/embedded Lua readability and literal equivalence reviewed. Historical Forever47 controls exclude the shared-validator refresh; eight historical warnings remain explicit. No full-profile or warning-free claim. Evidence is dirty-combined, not clean revision proof; globalfmt failure and historical502 protected-scope process failure remain unresolved.
 
-Accounting promotes only301/309: **190 pending/157 bounded/14 partial/1 metadata,362 ordered IDs/74 capabilities**. Other rows, prior capabilities and source hashes remain unchanged. Cast AllowedWhenTainted secret-input parity remains **UNMODELED**, not NeverSecret credit or full API acceptance. Native acquisition, inferred policies, opaque nominal primitive type, global privacy and UI parity remain unproved. Earlier pending statements above are historical development checkpoints, superseded only within this bounded gate.
+Accounting promotes only301/309: **190 pending/157 bounded/14 partial/1 metadata,362 ordered IDs/74 capabilities**. Other rows, prior capabilities and source hashes remain unchanged. Cast AllowedWhenTainted secret-input parity remains **UNMODELED**, not NeverSecret credit or full API acceptance. Trusted-host private NUM/STR payloads and bounded Lua opacity, copy/root identity and GC behavior are proved; explorer540's contrary unproved assertion is rejected against the accepted proof SSOT. Native acquisition, native parity of inferred policies, nominal Lua scalar type, global privacy and UI/full-profile parity remain unproved. Earlier pending statements above are historical development checkpoints, superseded only within this bounded gate.
 
 ## Known gaps (current cycle)
 
