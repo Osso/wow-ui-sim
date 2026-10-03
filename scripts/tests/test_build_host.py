@@ -33,6 +33,8 @@ if output.exists():
 shutil.copytree(context, output)
 Path(os.environ["FAKE_RECORD"]).write_text(json.dumps(request))
 print("native build " + request["host"], flush=True)
+if request["cargo_args"][0] == "test":
+    print("running 1 test\\ntest addon_filter ... FAILED", flush=True)
 status = int(os.environ.get("FAKE_BUILD_STATUS", "0"))
 if status:
     sys.exit(status)
@@ -254,6 +256,161 @@ class BuildHostTests(unittest.TestCase):
         self.assertTrue(second["release"])
         self.assertEqual(first["key"], second["key"])
         self.assertEqual(second["host"], "local")
+
+    def test_native_test_preserves_cargo_separator_features_and_failure(self):
+        self.put(
+            "tests/fixture.rs",
+            'const DATA: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/data/test.json"));',
+        )
+        self.put("data/test.json", '{"fixture": true}')
+        for host in ("desktop", "local"):
+            with self.subTest(host=host):
+                self.env["FAKE_BUILD_STATUS"] = "101"
+                result = self.invoke(
+                    "--build-host",
+                    host,
+                    "--release",
+                    "--no-default-features",
+                    "--features",
+                    "client-mists",
+                    "--test",
+                    "--test",
+                    "test_addon",
+                    "addon_filter",
+                    "--",
+                    "--exact",
+                    "--nocapture",
+                    status=101,
+                )
+                request = self.request()
+                self.assertEqual(
+                    request["cargo_args"],
+                    [
+                        "test",
+                        "--no-default-features",
+                        "--features",
+                        "client-mists",
+                        "--test",
+                        "test_addon",
+                        "addon_filter",
+                        "--",
+                        "--exact",
+                        "--nocapture",
+                    ],
+                )
+                self.assertEqual(request["host"], host)
+                self.assertTrue(request["release"])
+                self.assertIsNone(request["runtime_args"])
+                self.assertFalse(self.runtime.exists())
+                self.assertIn("native build " + host, result.stdout)
+                self.assertIn(
+                    "running 1 test\ntest addon_filter ... FAILED", result.stdout
+                )
+                self.assertEqual(
+                    (self.output / "wow-ui-sim/data/test.json").read_bytes(),
+                    (self.root / "data/test.json").read_bytes(),
+                )
+
+    def test_native_test_defaults_do_not_select_one_binary(self):
+        self.invoke("--build-host", "desktop", "--test")
+        self.assertEqual(self.request()["cargo_args"], ["test"])
+        self.assertIsNone(self.request()["runtime_args"])
+
+    def test_native_check_selects_binary_and_features_without_running(self):
+        self.invoke("--build-host", "desktop", "--check")
+        self.assertEqual(self.request()["cargo_args"], ["check", "--bin", "wow-sim"])
+        self.env["FAKE_BUILD_STATUS"] = "101"
+        self.invoke(
+            "--build-host",
+            "local",
+            "--bin",
+            "wow-cli",
+            "--no-default-features",
+            "--features",
+            "client-era",
+            "--check",
+            status=101,
+        )
+        self.assertEqual(
+            self.request()["cargo_args"],
+            [
+                "check",
+                "--bin",
+                "wow-cli",
+                "--no-default-features",
+                "--features",
+                "client-era",
+            ],
+        )
+        self.assertIsNone(self.request()["runtime_args"])
+        self.assertFalse(self.runtime.exists())
+
+    def test_build_modes_and_save_only_conflicts_do_not_execute(self):
+        for args in (
+            ("--run", "--test"),
+            ("--run", "--check"),
+            ("--check", "--test"),
+            ("--save-build-host", "desktop", "--test"),
+            ("--save-build-host", "desktop", "--check"),
+            ("--check", "--", "addon_filter"),
+        ):
+            with self.subTest(args=args):
+                self.invoke("--build-host", "desktop", *args, status=2)
+                self.assertFalse(self.record.exists())
+                self.assertFalse(self.runtime.exists())
+        self.invoke("--save-build-host", "desktop", "--test", status=2)
+        self.invoke("--save-build-host", "desktop", "--check", status=2)
+
+    def test_root_addon_fixtures_snapshot_owned_working_data_only(self):
+        self.put("test_addons/TestAddon/TestAddon.lua", "tracked Lua")
+        self.put("test_addons/TestAddon/TestAddon.toc", "TestAddon.lua")
+        self.put("test_addons/TestAddon/layout.xml", "<Ui/>")
+        self.put("test_addons/TestAddon/private.pem", "SECRET")
+        self.git("add", "test_addons")
+        self.put("test_addons/TestAddon/TestAddon.lua", "modified working Lua")
+        for name in ("new.lua", "new.xml", "new.toc", "nested/test.lua"):
+            self.put("test_addons/TestAddon/" + name, "working fixture " + name)
+        for name in (
+            "SavedVariables/state.lua",
+            "cache/result.lua",
+            ".git/config.lua",
+            "private.key",
+            ".env",
+            "unknown.bin",
+        ):
+            self.put("test_addons/TestAddon/" + name, "SECRET")
+        self.put("test_addons/Private/private.lua", "unowned data")
+        external = self.put("private-outside.lua", "SECRET")
+        (self.root / "test_addons/TestAddon/link.lua").symlink_to(external)
+        self.invoke("--build-host", "desktop")
+        for name in (
+            "TestAddon.lua",
+            "TestAddon.toc",
+            "layout.xml",
+            "new.lua",
+            "new.xml",
+            "new.toc",
+            "nested/test.lua",
+        ):
+            relative = Path("test_addons/TestAddon") / name
+            self.assertEqual(
+                (self.output / "wow-ui-sim" / relative).read_bytes(),
+                (self.root / relative).read_bytes(),
+            )
+        for name in (
+            "SavedVariables/state.lua",
+            "cache/result.lua",
+            ".git/config.lua",
+            "private.key",
+            "private.pem",
+            ".env",
+            "unknown.bin",
+            "link.lua",
+        ):
+            self.assertFalse(
+                (self.output / "wow-ui-sim/test_addons/TestAddon" / name).exists(), name
+            )
+        self.assertFalse((self.output / "wow-ui-sim/test_addons/Private").exists())
 
     def test_runtime_arguments_empty_and_passthrough_and_exit_status(self):
         for host in ("desktop", "local"):

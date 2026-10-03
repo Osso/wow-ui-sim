@@ -164,6 +164,27 @@ def runtime_sources(root):
     }
 
 
+def test_addon_sources(root):
+    tracked = git_files(root, ["test_addons"], tracked_only=True)
+    owned = {
+        path.parts[1]
+        for path in tracked
+        if len(path.parts) > 2
+        and safe_source(path)
+        and path.suffix.lower() in ADDON_SUFFIXES
+    }
+    return {
+        path
+        for path in git_files(root, ["test_addons"])
+        if len(path.parts) > 2
+        and path.parts[1] in owned
+        and path.suffix.lower() in ADDON_SUFFIXES
+        and safe_source(path)
+        and not has_symlink(root, path)
+        and (root / path).is_file()
+    }
+
+
 def snapshot(root, context):
     candidates = git_files(root, [*SOURCE_DIRS, *sorted(ROOT_FILES)])
     selected = {
@@ -187,7 +208,7 @@ def snapshot(root, context):
         if Path(required) not in selected:
             raise FileNotFoundError(f"missing build dependency: {root / required}")
     source_root = context / PROJECT_NAME
-    for relative in sorted(selected | runtime_sources(root)):
+    for relative in sorted(selected | runtime_sources(root) | test_addon_sources(root)):
         destination = source_root / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(validate_source(root, relative), destination)
@@ -196,12 +217,15 @@ def snapshot(root, context):
         (source_root / directory).mkdir(parents=True, exist_ok=True)
 
 
-def cargo_arguments(binary, no_default_features, features):
-    arguments = ["build", "--bin", binary]
+def cargo_arguments(binary, no_default_features, features, mode="build", test_args=()):
+    arguments = [mode]
+    if mode != "test":
+        arguments.extend(["--bin", binary])
     if no_default_features:
         arguments.append("--no-default-features")
     if features:
         arguments.extend(["--features", features])
+    arguments.extend(test_args)
     return arguments
 
 
@@ -213,6 +237,8 @@ def build(
     features="",
     host=None,
     runtime_args=None,
+    mode="build",
+    test_args=(),
 ):
     common, native = load_common()
     host = common.select_build_host(host)
@@ -223,7 +249,7 @@ def build(
             context,
             checkout_key,
             PROJECT_NAME,
-            cargo_arguments(binary, no_default_features, features),
+            cargo_arguments(binary, no_default_features, features, mode, test_args),
             host,
             runtime_args=runtime_args,
             binary=binary,
@@ -251,14 +277,27 @@ def main(argv=None):
         default=None,
         help="Cargo comma-separated feature list; defaults remain enabled unless explicitly disabled",
     )
-    parser.add_argument(
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument(
         "--run",
         action="store_true",
         help="run on the build host after a successful build",
     )
+    modes.add_argument(
+        "--test",
+        action="store_true",
+        help="run native cargo test; last helper flag, all following Cargo arguments preserved",
+    )
+    modes.add_argument("--check", action="store_true", help="run native cargo check")
     arguments = list(sys.argv[1:] if argv is None else argv)
     runtime_args = []
-    if "--" in arguments:
+    test_args = []
+    helper_end = arguments.index("--") if "--" in arguments else len(arguments)
+    if "--test" in arguments[:helper_end]:
+        split = arguments.index("--test") + 1
+        test_args = arguments[split:]
+        args = parser.parse_args(arguments[:split])
+    elif "--" in arguments:
         separator = arguments.index("--")
         runtime_args = arguments[separator + 1 :]
         arguments = arguments[:separator]
@@ -276,6 +315,8 @@ def main(argv=None):
                 or args.no_default_features
                 or args.features is not None
                 or args.run
+                or args.test
+                or args.check
             ):
                 parser.error("--save-build-host cannot combine with build options")
             common, _ = load_common()
@@ -289,6 +330,8 @@ def main(argv=None):
             args.features or "",
             args.build_host,
             runtime_args if args.run else None,
+            "test" if args.test else "check" if args.check else "build",
+            test_args,
         )
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         print(f"Build failed: {error}", file=sys.stderr)
