@@ -62,6 +62,11 @@ fn read_authenticated_variant_id(
         entry_type: read_public_integer(entry_type, "entryType")?,
         variant_identifier: read_public_integer(variant, "variantIdentifier")?,
     };
+    validate_nonnegative(id)?;
+    Ok(id)
+}
+
+fn validate_nonnegative(id: HousingCatalogEntryVariantID) -> LuaResult<()> {
     for (field, value) in [
         ("recordID", id.record_id),
         ("entryType", id.entry_type),
@@ -73,5 +78,5 @@ fn read_authenticated_variant_id(
             )));
         }
     }
-    Ok(id)
+    Ok(())
 }
