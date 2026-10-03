@@ -1,5 +1,18 @@
 # Patch 12.0.5 API Audit
 
+### Batch90 — four already-implemented rows accepted
+
+The scouts found rows whose behavior and tests already existed but were never credited. An independent GPT-6.1-sol verification (report SHA256 `34555a5fc753f0f79859ea084d6619800c6b4ade4482df795a24a03844a8ed98`, scratchpad-only) quoted the asserting lines, checked they cannot pass vacuously and reran the filters; main ran the same filters at `62d0ce70f` source. No code changed.
+
+| Row | Verdict | Proof |
+|---|---|---|
+| exact371 `GetAuraBaseDuration` arg3 `SpellIdentifier` | accept with qualifications | [aura refresh duration](../../specs/aura-refresh-duration.md); numeric and seeded-string identifiers select base 40 versus aura-derived 20; `aura_refresh_duration::` 18/18. Joins `aura-refresh-duration`. |
+| `prose-2026-03-12-023` zero-span at maximum charges | accept | [spell charge state](../../specs/spell-charge-state.md); all three APIs return nonnil zero-span objects; `cooldown_probes::charge_duration` 10/10. |
+| `prose-2026-03-12-026` zero-span fully elapsed | accept with qualifications | [duration core](../../specs/duration-core.md); expired, elapsed fraction 1, remaining 0; `duration_core::` 27/27. `HasStarted` stays false. |
+| `prose-2026-03-12-029` five public aura flags | accept with qualifications | [aura classification flags](../../specs/aura-classification-flags.md); all five asserted non-secret from an addon-tainted caller; `aura_table_shape::` 7/7. |
+
+Limits: configured simulator state only; no native security policy, restricted transition, every-identifier-form or other-profile credit. The historical batch5 failure note on row023 and the bounded-partial hold on row029 are superseded for these scopes only. **94 capabilities/362 IDs; 105 pending /213 bounded /11 partial /33 metadata**; audit **IN PROGRESS**.
+
 ### Batch88 — explicit inputs replace ten constant stat producers
 
 Ten of the eleven constant or proxy stat rows left by Batch87 now have real inputs: **422, 434, 436, 440, 452, 464, 470, 472, 478, 488**. [Contract and acceptance SSOT](../../specs/explicit-stat-inputs.md#development-proof-and-independent-bounded-acceptance--2026-10-03) owns the input table, proof and limits. Inputs `be7c0cc2c` RED 33 PASS/11 FAIL; producers `62d0ce70f` GREEN 79/79, startup `[]`; independent GPT-6.1-sol review accepted with qualifications and reran 44/44.

@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B90 four already-implemented rows accepted
+
+Linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch90--four-already-implemented-rows-accepted): row371 joins `aura-refresh-duration`; prose `023/026` under new `zero-span-charge-durations`; prose `029` under new `aura-classification-public-flags`. Independent verification plus fresh 18/27/10/7 runs. 94 capabilities/362 IDs; 105 pending /213 bounded /11 partial /33 metadata.
+
 ## [2026-10-03] docs | B88 explicit stat inputs accepted
 
 Linked [acceptance SSOT](../specs/explicit-stat-inputs.md#development-proof-and-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch88--explicit-inputs-replace-ten-constant-stat-producers): rows 422/434/436/440/452/464/470/472/478/488 bounded after inputs `be7c0cc2c`, producers `62d0ce70f` and independent review. 92 capabilities/362 IDs; 109 pending /209 bounded /11 partial /33 metadata.

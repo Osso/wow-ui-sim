@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B90 four already-implemented rows accepted
+
+[Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch90--four-already-implemented-rows-accepted) owns the independent Sol verification and fresh runs for exact371 and prose 03-12 `023/026/029`: existing implementations and tests, no code change. 94 capabilities/362 IDs; 105 pending /213 bounded /11 partial /33 metadata.
+
 ## [2026-10-03] evidence | B88 explicit stat inputs
 
 [Contract and acceptance SSOT](../specs/explicit-stat-inputs.md#development-proof-and-independent-bounded-acceptance--2026-10-03) owns ten explicit inputs replacing constant or armor-proxy stat producers, RED/GREEN and the independent Sol acceptance. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch88--explicit-inputs-replace-ten-constant-stat-producers); 92 capabilities/362 IDs; 109 pending /209 bounded /11 partial /33 metadata.

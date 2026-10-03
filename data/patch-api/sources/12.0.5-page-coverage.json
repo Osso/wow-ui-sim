@@ -1545,6 +1545,44 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/explicit-stat-inputs.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
       "gate_scope": "RED be7c0cc2c 33 PASS/11 FAIL; GREEN 62d0ce70f source 79/79 across character_stats/unit_stats/pet_stats, cargo exit0 zero warnings, cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS, SHA256 2a7f0f1adae2b2b1aa40196fb3cc820f28d7f1edceda1b7414bb50e15d95db34 (scratchpad), own rerun character_stats:: 44/44 exit0. Test build ran on the dirty tree later committed unchanged as 62d0ce70f. No cargo check, older-profile build, panel interaction or broad suite. Native/GUI/CASC gaps open."
+    },
+    {
+      "id": "zero-span-charge-durations",
+      "symbols": [
+        "C_Spell.GetSpellChargeDuration",
+        "C_SpellBook.GetSpellBookItemChargeDuration",
+        "C_ActionBar.GetActionChargeDuration",
+        "LuaDurationObject"
+      ],
+      "scope": "B90 prose-2026-03-12-023/026: at maximum charges all three charge-duration queries return a nonnil zero-span duration object from the shared explicit charge-state producer; zero-span objects report expired, elapsed fraction1 and remaining fraction0 for default, future-start, reset and explicit zero intervals, with a below-maximum nonzero control. 'Fully elapsed' is concretized as HasExpired/fractions, HasStarted deliberately false. Configured charge state only; no automatic progression, native rate/security policy, secret-configured spans or other profiles.",
+      "spec": "docs/specs/spell-charge-state.md",
+      "tests": [
+        "tests/cooldown_probes/charge_duration.rs",
+        "tests/duration_core.rs"
+      ],
+      "compiled_revision": "62d0ce70f86dd2aa22bd08dfa0c19f90aeb92827",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/wiki/investigations/patch-12-0-5-api-audit.md#batch90--four-already-implemented-rows-accepted",
+      "gate_scope": "B90 independent Sol verification SHA256 34555a5fc753f0f79859ea084d6619800c6b4ade4482df795a24a03844a8ed98 (scratchpad): existing implementation and tests assert the row; main and verifier each ran the filters on integration binary SHA256 3be3c80b6a6725542a2d7ceb73326701d06fc0275fa7848815b582c44405b481 at 62d0ce70f source, exit0. No new code; no cargo check or broad suite. Native/GUI/older-profile gaps open. Runs: cooldown_probes::charge_duration 10/10, duration_core:: 27/27."
+    },
+    {
+      "id": "aura-classification-public-flags",
+      "symbols": [
+        "AuraData.isHelpful",
+        "AuraData.isHarmful",
+        "AuraData.isRaid",
+        "AuraData.isNameplateOnly",
+        "AuraData.isFromPlayerOrPlayerPet"
+      ],
+      "scope": "B90 prose-2026-03-12-029: the five classification booleans on aura data tables are plain non-secret booleans with expected true and false values across player/party/target fixtures on slot, index and instance queries, asserted from an addon-tainted caller with taint retained; snapshots independent of host state. Modeled plain inputs only: no previously-secret fixture, native combat/restricted transition, generic declassification, native classification rules or other query APIs.",
+      "spec": "docs/specs/aura-classification-flags.md",
+      "tests": [
+        "tests/aura_table_shape.rs"
+      ],
+      "compiled_revision": "62d0ce70f86dd2aa22bd08dfa0c19f90aeb92827",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/wiki/investigations/patch-12-0-5-api-audit.md#batch90--four-already-implemented-rows-accepted",
+      "gate_scope": "B90 independent Sol verification SHA256 34555a5fc753f0f79859ea084d6619800c6b4ade4482df795a24a03844a8ed98 (scratchpad): existing implementation and tests assert the row; main and verifier each ran the filters on integration binary SHA256 3be3c80b6a6725542a2d7ceb73326701d06fc0275fa7848815b582c44405b481 at 62d0ce70f source, exit0. No new code; no cargo check or broad suite. Native/GUI/older-profile gaps open. Run: aura_table_shape:: 7/7."
     }
   ],
   "source_rows": [
@@ -1589,21 +1627,27 @@
     },
     {
       "source_id": "prose-2026-03-12-023",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Batch5 charge-duration 1 PASS / 3 FAIL. GetSpellChargeDuration resolves through runtime_surface_bootstrap.lua __wow_namespace_mt.__index lazy nil closure (lines 65\u201376), explaining no-data PASS; C_Spell.GetSpellCharges uses a temporary zero-table default. Models/producers missing, not API-global absence; final provider behavior unresolved. Exact argv/logs: /tmp/patch-12.0.5-batch5-runs.json. Implementations pending agents 73/74/75."
+      "capabilities": [
+        "zero-span-charge-durations"
+      ],
+      "status": "bounded-coverage",
+      "note": "B90 accepted independent Sol verification: GetSpellChargeDuration, GetActionChargeDuration and GetSpellBookItemChargeDuration each return a nonnil zero-span object at maximum charges, with a below-maximum control; 10/10 rerun. Supersedes the historical batch5 failure note. Configured charge state only; no native rate/security or other-profile credit."
     },
     {
       "source_id": "prose-2026-03-12-026",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "zero-span-charge-durations"
+      ],
+      "status": "bounded-coverage",
+      "note": "B90 accepted independent Sol verification with qualifications: zero-span duration objects report expired, elapsed fraction1 and remaining fraction0 across default, future-start, reset and explicit zero intervals; 27/27 and 10/10 rerun. HasStarted stays false; native reading of every predicate and secret-configured spans unproven."
     },
     {
       "source_id": "prose-2026-03-12-029",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Bounded partial proof only: docs/specs/aura-classification-flags.md#reconciled-batch28-bounded-partial-proof--2026-10-01. Producer bff26b9c1 publishes explicit raid/nameplate/from-player plain booleans; deterministic fixture e652d9610 has saved seven PASS in shared build 7926dfdfe, independently accepted by final followup. Fresh fmt passed; source-identical prior check reused. Historical unique controls 121/123 PASS, two unresolved failures, preexisting UNPROVEN; BROAD NOT GREEN. Saved startup 0 []. Whole native five-boolean secrecy delta, native combat/secret policies, generic declassification, all profiles and public target-input model unproved. Row remains pending; no whole-row/page credit."
+      "capabilities": [
+        "aura-classification-public-flags"
+      ],
+      "status": "bounded-coverage",
+      "note": "B90 accepted independent Sol verification with qualifications: all five flags asserted plain non-secret booleans with expected values on slot/index/instance queries from an addon-tainted caller; 7/7 rerun. Supersedes the earlier bounded-partial hold whose broader control failures are not part of this scope. No previously-secret fixture, native restricted transition, generic declassification or other query APIs."
     },
     {
       "source_id": "prose-2026-03-12-032",
@@ -2881,9 +2925,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraBaseDuration-371",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "aura-refresh-duration"
+      ],
+      "status": "bounded-coverage",
+      "note": "B90 accepted independent Sol verification: arg3 accepts numeric and seeded string identifiers through the shared alias-first resolver (explicit 99002 and 'DURATION Override' select base 40 versus aura-derived 20; unresolved overrides return one nil). Joins the existing aura-refresh-duration capability; aura_refresh_duration:: 18/18 rerun. Not every native SpellIdentifier form, native AllowedWhenTainted or restricted output."
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraDataByIndex-373",
