@@ -4,13 +4,14 @@ Bounded pending-request model for 12.0.5 `C_HousingBasicMode.StartPlacingNewDeco
 
 ## What it must do
 
-All lifecycle and validation policies below are **bounded simulator inferences**, not native-verified behavior. Checkboxes describe requirements, not native or complete-placement acceptance. Bounded compiled proof is recorded below; inferred policies remain qualified.
+Pending lifecycle, eligibility, missing/malformed field and numeric-domain policies below are **bounded simulator inferences**, not native-verified behavior. The cached `AllowedWhenUntainted` declaration separately grounds the secret-input authorization boundary; it does not establish native parsing or placement semantics. Checkboxes describe requirements, not native or complete-placement acceptance. Historical bounded compiled proof is recorded below; B71 revised secret expectations are authored inputs awaiting compiled RED.
 
 - [ ] A fresh `HousingState` has no pending request. Its `pending_new_decor` is an `Option<HousingCatalogEntryVariantID>` using the existing C API-owned full `(recordID, entryType, variantIdentifier)` type. It carries no GUID, instance, transform, stock reservation or selection data.
-- [ ] `StartPlacingNewDecor(catalogEntryVariantID)` validates the entire public integer selector before mutation. An existing exact variant with positive explicitly supplied `num_stored` sets pending to that full identity. No base entry, seeded catalog or alternate selector lookup is required. Identical valid requests are repeatable; valid replacement requests replace record, type and variant identity. Changing the caller's table afterward does not change pending.
+- [ ] `StartPlacingNewDecor(catalogEntryVariantID)` authenticates the original selector and all three original fields before parsing any field, checking domains or consulting the model, then validates the entire integer selector before mutation. An existing exact variant with positive explicitly supplied `num_stored` sets pending to that full identity. No base entry, seeded catalog or alternate selector lookup is required. Identical valid requests are repeatable; valid replacement requests replace record, type and variant identity. Changing the caller's table afterward does not change pending.
 - [ ] `IsPlacingNewDecor()` returns exactly one ordinary boolean reflecting pending presence. Start and cancel return zero values. `CancelActiveEditing()` clears this pending request; repeated cancel is harmless. This bounded cancel inference does not expand or replace existing placed/customize/preview selection behavior.
 - [ ] Unknown full keys and nonpositive stored counts are inferred no-ops, preserving any existing pending request. Destroyable count is independent of eligibility: positive stock with zero destroyable count can start; zero stock with positive destroyable count cannot. No stock, destroyable count, dye or base catalog mutation occurs on start, replacement, rejection or cancel.
-- [ ] Missing/malformed selectors, noninteger fields, out-of-range numbers and secret selectors fail explicitly and atomically. Plain rejection tests require neither fixture input nor existing pending. Separate populated tests assert prior pending survives rejection. Public secure/tainted callers preserve caller taint; host-installed guarded-table restrictions remain enforced. Conservative secret rejection in secure callers is stricter than `AllowedWhenUntainted`, not native parity.
+- [ ] Missing/malformed selectors, noninteger fields and out-of-range numbers fail explicitly and atomically under the inferred parser policy. Plain rejection tests require neither fixture input nor existing pending. Separate populated tests assert prior pending survives rejection.
+- [ ] `AllowedWhenUntainted`: secure callers may supply actual secret NUM fields or a secret-wrapped TABLE carrying the full selector; authorized valid inputs must produce the same meaningful pending identity as public inputs. Tainted callers must receive authentication denial before wrong type, malformed/missing public fields, field-domain errors or model misses can hide a later denied secret. A secure secret NUM used as the top selector authenticates, then fails the TABLE type check. Authentication/acceptance/denial never clears or adds caller taint, modifies catalog state or emits events. Underlying guarded-table access checks still apply after authorized unwrap. Conservative secure-secret rejection is incompatible with this boundary, not native parity.
 - [ ] Pending requests are per environment: starting/replacing/canceling in one environment cannot alter another, including an empty catalog environment.
 - [ ] Existing `GetSelectedDecorInfo`, `IsDecorSelected`, placed list, customize info and preview state/count stay unchanged. Never synthesize `GetSelectedDecorInfo` from a catalog variant: its declared return is selected **instance** info. No new `decorGUID`, placed instance, 3D transform, selection event, storage event or placement success/failure event is fabricated.
 - [ ] `FinishPlacingNewDecor` remains the existing no-op; this input checkpoint and future bounded pending producer must not claim commit/placement completion. Pending survives finish until cancel or a valid replacement request.
@@ -35,7 +36,7 @@ Cache root: `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/`. This is c
 ## Implementation inventory
 
 - `src/lua_api/state/support_types.rs`: empty-default `pending_new_decor` slot; existing C API-owned variant ID reused.
-- `tests/housing_pending_decor.rs`: fourteen bounded behavioral expectations discovered into the existing grouped `integration` target. No new Cargo target or global fixture state.
+- `tests/housing_pending_decor.rs`: twenty authored bounded behavioral expectations in the existing grouped `integration` target: thirteen retained controls and seven B71 secret-boundary cases replacing one combined conservative rejection case. No new Cargo target or global fixture state.
 - `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: only BasicMode start/query/cancel publishers removed. Finish remains a documented no-op; selected/customize/preview owners remain separate.
 - `src/c_api/c_housing/basic_mode.rs`: unconditional `register_pending` publishes start/query/cancel; existing free-place registration retains its original feature gate. Start uses the shared catalog parser/VM table-access guard, then stores the exact ID only for an existing variant with positive stock. Query reads presence; cancel clears only pending. No events or other housing mutations.
 - `src/c_api/c_housing/catalog/input.rs`: shared selector and full-variant parsing exposed within the housing module; validation behavior unchanged.
@@ -49,10 +50,23 @@ Filter: `housing_pending_decor::` in existing target `integration`. Parent repor
 | `plain_default_and_cancel_without_input_guards`, `plain_missing_selector_errors_without_catalog_or_pending_setup`, `plain_invalid_selectors_error_without_input_guards` | Fresh environment, no seeded fixture/pending prerequisite; default, arity, malformed rejection |
 | `start_and_cancel_record_only_pending_request`, `repeated_and_replacement_requests_preserve_full_identity`, `replacement_request_changes_record_identity` | Public pending boolean plus concrete Rust pending full ID, repeat/cancel/restart, caller-table independence |
 | `unknown_and_zero_stock_noop_preserve_empty_or_existing_pending`, `nonpositive_stock_cannot_replace_pending_request`, `malformed_selector_errors_atomically_with_existing_pending` | Exact-key/no-stock no-op and error atomicity, explicit stock/destroyable/dye preservation |
-| `public_addon_requests_and_cancel_preserve_taint`, `secret_selectors_reject_atomically_in_secure_and_tainted_callers`, `guarded_selector_rejects_tainted_access_without_replacing_pending` | Public addon access; host-rooted secrets and actual VM table-access guard |
+| `public_addon_requests_and_cancel_preserve_taint`, `guarded_selector_rejects_tainted_access_without_replacing_pending` | Retained public addon access and actual VM table-access guard |
+| `secure_secret_numeric_fields_accept_actual_full_variant_request`, `addon_secret_numeric_fields_deny_atomically_without_clearing_taint` | Actual host-secret NUM fields, individually and together; secure full-identity replacement vs addon authentication denial, empty/existing pending atomicity |
+| `secure_secret_table_selector_accepts_and_copies_full_identity_across_gc`, `addon_secret_table_selector_denies_before_lookup_and_preserves_pending` | Actual TABLE wrapped by `wrap_secret`, underlying table rooted before allocation; first/second identity, caller-table independence, GC and environment isolation |
+| `secret_numeric_top_selector_authenticates_before_secure_type_error`, `all_original_fields_authenticate_before_any_public_parse_domain_or_model_lookup`, `secret_wrapped_guarded_table_retains_underlying_access_constraints` | Secure wrong-top-type vs addon auth; malformed/missing/domain/model public inputs cannot mask later secret denial; real VM guarded-table constraints |
 | `pending_requests_do_not_leak_between_environments`, `pending_lifecycle_preserves_instances_preview_and_emits_no_success` | Independent environments; complete existing public info snapshots, listeners and queued-event comparison, unresolved finish |
 
-### Proof ledger — input checkpoint
+### B71 authored inputs — compiled RED pending
+
+Scope: exact rows278/279 only; no coverage/count/source-row promotion. Main-supplied existing proof: fourteen tests pass at `361642437245548aaab32e74e6bc7faa843cef66` (ancestor `e7750b17d`); not independently rerun here. That proof includes conservative rejection of secure secrets and is **not** `AllowedWhenUntainted` parity. Historical GREEN below does not cover these revised expectations.
+
+Current input file has **20 tests**: retain13, replace1 with7. New secure NUM-field and wrapped-TABLE acceptance cases require real pending first/second identity, not registration or permissive no-op success. Real host NUM payloads and TABLE identity are inspected through existing VM helper APIs; underlying tables are stack-rooted before wrapper allocation and published wrappers remain rooted. Secret cases compare the complete catalog fixture, existing instance/preview snapshots, listeners with zero events and the queued-event names; exercise collection, caller taint and independent environments. Guarded-table tests retain host-installed VM restrictions, not native guard-policy claims.
+
+Cached primary source `HousingBasicModeUIDocumentation.lua:185–194` expressly declares `SecretArguments = "AllowedWhenUntainted"` and `catalogEntryVariantID: HousingCatalogEntryVariantID`. Cached declarations are not native historical12.0.5 probes. Pending/no-stock/no-events, missing/malformed inputs and numeric domains remain inferred; no native parsing probe, actual placement, finish/commit, UI or all-profile claim.
+
+**Authored RED pending:** current conservative producer is expected to fail actual secure-secret acceptance and addon authentication-order assertions. No B71 compile, test, check, readability or final gate ran here; main owns compiled RED before production changes. Expected narrow pending-parser work must not change the catalog's conservative shared parser contract. Input formatting only: `rustfmt --edition 2024 --config skip_children=true tests/housing_pending_decor.rs`.
+
+### Proof ledger — historical input checkpoint
 
 Base checkout `67b44f2c36c12c86cc1e10c334d010041239e7c9`, initially clean. No output producer, build, check, delegation or push authorized.
 
@@ -70,7 +84,8 @@ Actual RED log: `/tmp/housing-pending-source-plain-red.log`. Executable SHA-256 
 - [x] Parent reports grouped compiled RED at `659f79a3c`: 1 PASS / 13 FAIL; separate from the earlier plain-provider probe.
 - [x] Independent inspection accepts saved targeted GREEN for bounded C API start/query/cancel at `f59c03402`; no independent test reexecution.
 - [ ] Finish/commit/placement lifecycle unresolved: existing finish no-op must remain visible as a gap.
-- [ ] Native validation/no-op/cancel semantics, secure secret access and all-profile execution unverified.
+- [ ] B71 authored secret-boundary expectations await compiled RED and later implementation proof; no current GREEN claim.
+- [ ] Native validation/no-op/cancel semantics, native secure-secret parity and all-profile execution unverified.
 
 ## Out of scope
 

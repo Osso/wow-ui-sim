@@ -1,8 +1,9 @@
-//! Input-only 12.0.5 pending-request contract; compiled behavioral RED is still required.
+//! B71 inputs only: AllowedWhenUntainted pending-request expectations await compiled RED.
 #![cfg(feature = "retail-12-0-5")]
 
 use rilua::LuaApiMut;
-use rilua::table_security::wrap_host_secret_number;
+use rilua::Val;
+use rilua::table_security::{is_secret_value, unwrap_secret, wrap_host_secret_number, wrap_secret};
 use wow_ui_sim::c_api::c_housing::catalog::{
     HousingCatalogEntryVariantID, HousingCatalogVariantRecord, HousingDecorDyeSlot,
 };
@@ -341,6 +342,7 @@ fn install_secret_selectors(env: &WowLuaEnv) {
         ("SecretRecord", id.record_id),
         ("SecretType", id.entry_type),
         ("SecretVariant", id.variant_identifier),
+        ("SecretSecondVariant", 2),
     ] {
         let secret = wrap_host_secret_number(lua.state_mut(), f64::from(number));
         lua.state_mut().push(secret);
@@ -348,39 +350,291 @@ fn install_secret_selectors(env: &WowLuaEnv) {
         lua.state_mut().pop();
         result.unwrap();
     }
+    for (source, name) in [
+        ("firstID", "SecretFirstTable"),
+        ("secondID", "SecretSecondTable"),
+    ] {
+        let original = lua.get_global_val(source);
+        assert!(matches!(original, Val::Table(_)), "actual table selector");
+        // Keep the underlying table alive across wrapper allocation, then root both at publication.
+        lua.state_mut().push(original);
+        let secret = wrap_secret(lua.state_mut(), original).unwrap();
+        lua.state_mut().push(secret);
+        let result = lua.set_global_val(name, secret);
+        lua.state_mut().pop();
+        lua.state_mut().pop();
+        result.unwrap();
+    }
+}
+
+fn assert_secret_payloads(env: &WowLuaEnv) {
+    let id = variant_id(env, "Decor", 1);
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    for (name, expected) in [
+        ("SecretRecord", id.record_id),
+        ("SecretType", id.entry_type),
+        ("SecretVariant", id.variant_identifier),
+        ("SecretSecondVariant", 2),
+    ] {
+        let value = lua.get_global_val(name);
+        assert!(is_secret_value(lua.state(), value));
+        assert_eq!(
+            unwrap_secret(lua.state(), value).unwrap(),
+            Val::Num(f64::from(expected))
+        );
+    }
+    for (source, name) in [
+        ("firstID", "SecretFirstTable"),
+        ("secondID", "SecretSecondTable"),
+    ] {
+        let value = lua.get_global_val(name);
+        assert!(is_secret_value(lua.state(), value));
+        assert_eq!(
+            unwrap_secret(lua.state(), value).unwrap(),
+            lua.get_global_val(source)
+        );
+    }
+}
+
+fn pending_event_names(env: &WowLuaEnv) -> Vec<String> {
+    env.state()
+        .borrow()
+        .events
+        .pending()
+        .iter()
+        .map(|event| event.name.clone())
+        .collect()
+}
+
+fn secret_fixture_env() -> WowLuaEnv {
+    let env = fixture_env();
+    install_secret_selectors(&env);
+    assert_secret_payloads(&env);
+    env.exec(PRESERVE_EXISTING_OUTPUTS).unwrap();
+    env
+}
+
+fn assert_secret_request_unchanged_outputs(env: &WowLuaEnv, events_before: &[String]) {
+    env.exec("collectgarbage('collect'); assertExistingOutputs(); assert(#pendingEvents == 0)")
+        .unwrap();
+    assert_catalog_unchanged(env);
+    assert_secret_payloads(env);
+    assert_eq!(pending_event_names(env), events_before);
 }
 
 #[test]
-fn secret_selectors_reject_atomically_in_secure_and_tainted_callers() {
-    let env = fixture_env();
+fn secure_secret_numeric_fields_accept_actual_full_variant_request() {
+    let env = secret_fixture_env();
+    let isolated = fixture_env();
+    let events_before = pending_event_names(&env);
     start_first(&env);
-    install_secret_selectors(&env);
-    env.exec(
-        r#"
-        collectgarbage('collect')
-        local function rejectSecrets()
-            for _, id in ipairs({SecretRecord,
-                {recordID = SecretRecord, entryType = firstID.entryType, variantIdentifier = 2},
-                {recordID = 1001, entryType = SecretType, variantIdentifier = 2},
-                {recordID = 1001, entryType = firstID.entryType, variantIdentifier = SecretVariant},
-            }) do
-                local ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, id)
-                assert(not ok and type(message) == 'string' and #message > 0)
+    for (selector, variant) in [
+        (
+            "{recordID = SecretRecord, entryType = firstID.entryType, variantIdentifier = 2}",
+            2,
+        ),
+        (
+            "{recordID = 1001, entryType = SecretType, variantIdentifier = 2}",
+            2,
+        ),
+        (
+            "{recordID = 1001, entryType = firstID.entryType, variantIdentifier = SecretSecondVariant}",
+            2,
+        ),
+        (
+            "{recordID = SecretRecord, entryType = SecretType, variantIdentifier = SecretSecondVariant}",
+            2,
+        ),
+        (
+            "{recordID = SecretRecord, entryType = SecretType, variantIdentifier = SecretVariant}",
+            1,
+        ),
+    ] {
+        env.exec(&format!(
+            "collectgarbage('collect'); assert(issecure()); \
+             assert(select('#', C_HousingBasicMode.StartPlacingNewDecor({selector})) == 0); \
+             assert(issecure(), 'secret acceptance must preserve secure caller')"
+        ))
+        .unwrap();
+        assert_pending(&env, Some(variant_id(&env, "Decor", variant)));
+        assert_secret_request_unchanged_outputs(&env, &events_before);
+        assert_pending(&isolated, None);
+        assert_catalog_unchanged(&isolated);
+    }
+}
+
+#[test]
+fn addon_secret_numeric_fields_deny_atomically_without_clearing_taint() {
+    for pending in [false, true] {
+        let env = secret_fixture_env();
+        if pending {
+            start_first(&env);
+        }
+        let events_before = pending_event_names(&env);
+        env.exec(r#"
+            collectgarbage('collect')
+            local function addon()
+                for _, id in ipairs({
+                    {recordID = SecretRecord, entryType = firstID.entryType, variantIdentifier = 2},
+                    {recordID = 1001, entryType = SecretType, variantIdentifier = 2},
+                    {recordID = 1001, entryType = firstID.entryType, variantIdentifier = SecretSecondVariant},
+                    {recordID = SecretRecord, entryType = SecretType, variantIdentifier = SecretSecondVariant},
+                }) do
+                    local ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, id)
+                    assert(not ok and string.find(message, 'requires an untainted caller', 1, true), message)
+                    assert(not issecure(), 'secret denial must not clear addon taint')
+                end
             end
-        end
+            debug.setobjecttaint(addon, 'HousingPendingFixture')
+            addon()
+        "#).unwrap();
+        assert_pending(&env, pending.then(|| variant_id(&env, "Decor", 1)));
+        assert_secret_request_unchanged_outputs(&env, &events_before);
+    }
+}
+
+#[test]
+fn secure_secret_table_selector_accepts_and_copies_full_identity_across_gc() {
+    let env = secret_fixture_env();
+    let isolated = fixture_env();
+    let events_before = pending_event_names(&env);
+    for (selector, variant) in [("SecretFirstTable", 1), ("SecretSecondTable", 2)] {
+        env.exec(&format!(
+            "collectgarbage('collect'); assert(issecure()); \
+             assert(select('#', C_HousingBasicMode.StartPlacingNewDecor({selector})) == 0); assert(issecure())"
+        )).unwrap();
+        assert_pending(&env, Some(variant_id(&env, "Decor", variant)));
+        assert_secret_request_unchanged_outputs(&env, &events_before);
+    }
+    env.exec(
+        "secondID.recordID = 998877; secondID.variantIdentifier = 99; collectgarbage('collect')",
+    )
+    .unwrap();
+    assert_pending(&env, Some(variant_id(&env, "Decor", 2)));
+    assert_secret_request_unchanged_outputs(&env, &events_before);
+    assert_pending(&isolated, None);
+    assert_catalog_unchanged(&isolated);
+}
+
+#[test]
+fn addon_secret_table_selector_denies_before_lookup_and_preserves_pending() {
+    for pending in [false, true] {
+        let env = secret_fixture_env();
+        if pending {
+            start_first(&env);
+        }
+        let events_before = pending_event_names(&env);
+        env.exec(r#"
+            collectgarbage('collect')
+            local function addon()
+                for _, selector in ipairs({SecretFirstTable, SecretSecondTable}) do
+                    local ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, selector)
+                    assert(not ok and string.find(message, 'requires an untainted caller', 1, true), message)
+                    assert(not issecure())
+                end
+            end
+            debug.setobjecttaint(addon, 'HousingPendingFixture')
+            addon()
+        "#).unwrap();
+        assert_pending(&env, pending.then(|| variant_id(&env, "Decor", 1)));
+        assert_secret_request_unchanged_outputs(&env, &events_before);
+    }
+}
+
+#[test]
+fn secret_numeric_top_selector_authenticates_before_secure_type_error() {
+    let env = secret_fixture_env();
+    start_first(&env);
+    let events_before = pending_event_names(&env);
+    env.exec(r#"
+        collectgarbage('collect')
         assert(issecure())
-        rejectSecrets()
+        local ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, SecretRecord)
+        assert(not ok and string.find(message, 'table', 1, true), message)
+        assert(not string.find(message, 'requires an untainted caller', 1, true),
+            'authorized NUM must reach table type check')
+        assert(issecure())
         local function addon()
-            rejectSecrets()
-            assert(not issecure(), 'secret rejection must not clear caller taint')
+            local ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, SecretRecord)
+            assert(not ok and string.find(message, 'requires an untainted caller', 1, true), message)
+            assert(not issecure())
         end
         debug.setobjecttaint(addon, 'HousingPendingFixture')
         addon()
+    "#).unwrap();
+    assert_pending(&env, Some(variant_id(&env, "Decor", 1)));
+    assert_secret_request_unchanged_outputs(&env, &events_before);
+}
+
+#[test]
+fn all_original_fields_authenticate_before_any_public_parse_domain_or_model_lookup() {
+    let env = secret_fixture_env();
+    start_first(&env);
+    let events_before = pending_event_names(&env);
+    env.exec(r#"
+        collectgarbage('collect')
+        local function addon()
+            local selectors = {
+                {entryType = SecretType, variantIdentifier = 2},
+                {recordID = false, entryType = SecretType, variantIdentifier = 2},
+                {recordID = '1001', entryType = SecretType, variantIdentifier = 2},
+                {recordID = 1.5, entryType = firstID.entryType, variantIdentifier = SecretSecondVariant},
+                {recordID = 0/0, entryType = firstID.entryType, variantIdentifier = SecretSecondVariant},
+                {recordID = 2147483648, entryType = firstID.entryType, variantIdentifier = SecretSecondVariant},
+                {recordID = 1001, entryType = false, variantIdentifier = SecretSecondVariant},
+                {recordID = 1001, variantIdentifier = SecretSecondVariant},
+                {recordID = 998877, entryType = firstID.entryType, variantIdentifier = SecretSecondVariant},
+                {recordID = 1001, entryType = -91, variantIdentifier = SecretSecondVariant},
+            }
+            for _, selector in ipairs(selectors) do
+                local ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, selector)
+                assert(not ok and string.find(message, 'requires an untainted caller', 1, true), message)
+                assert(not issecure())
+            end
+        end
+        debug.setobjecttaint(addon, 'HousingPendingFixture')
+        addon()
+    "#).unwrap();
+    assert_pending(&env, Some(variant_id(&env, "Decor", 1)));
+    assert_secret_request_unchanged_outputs(&env, &events_before);
+}
+
+#[test]
+fn secret_wrapped_guarded_table_retains_underlying_access_constraints() {
+    let env = secret_fixture_env();
+    let events_before = pending_event_names(&env);
+    {
+        let loader = env.loader_env();
+        let mut lua = loader.rilua_mut();
+        rilua::table_security::register_table_security(&mut lua).unwrap();
+    }
+    env.exec(
+        r#"
+        settablesecurity(secondID, 0)
+        collectgarbage('collect')
+        assert(issecure())
+        C_HousingBasicMode.StartPlacingNewDecor(SecretSecondTable)
+        assert(issecure())
     "#,
     )
     .unwrap();
-    assert_pending(&env, Some(variant_id(&env, "Decor", 1)));
-    assert_catalog_unchanged(&env);
+    assert_pending(&env, Some(variant_id(&env, "Decor", 2)));
+    env.exec(r#"
+        local function addon()
+            local ok, message = pcall(rawget, secondID, 'recordID')
+            assert(not ok and string.find(message, 'tainted access to secured table', 1, true), message)
+            ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, secondID)
+            assert(not ok and string.find(message, 'tainted access to secured table', 1, true), message)
+            ok, message = pcall(C_HousingBasicMode.StartPlacingNewDecor, SecretSecondTable)
+            assert(not ok and string.find(message, 'requires an untainted caller', 1, true), message)
+            assert(not issecure())
+        end
+        debug.setobjecttaint(addon, 'HousingPendingFixture')
+        addon()
+    "#).unwrap();
+    assert_pending(&env, Some(variant_id(&env, "Decor", 2)));
+    assert_secret_request_unchanged_outputs(&env, &events_before);
 }
 
 #[test]
