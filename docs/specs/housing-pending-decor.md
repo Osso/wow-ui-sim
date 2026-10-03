@@ -4,7 +4,7 @@ Bounded pending-request model for 12.0.5 `C_HousingBasicMode.StartPlacingNewDeco
 
 ## What it must do
 
-Pending lifecycle, eligibility, missing/malformed field and numeric-domain policies below are **bounded simulator inferences**, not native-verified behavior. The cached `AllowedWhenUntainted` declaration separately grounds the secret-input authorization boundary; it does not establish native parsing or placement semantics. Checkboxes describe requirements, not native or complete-placement acceptance. Historical bounded compiled proof is recorded below; B71 revised secret expectations are authored inputs awaiting compiled RED.
+Pending lifecycle, eligibility, missing/malformed field and numeric-domain policies below are **bounded simulator inferences**, not native-verified behavior. The cached `AllowedWhenUntainted` declaration separately grounds the secret-input authorization boundary; it does not establish native parsing or placement semantics. Checkboxes describe requirements, not native or complete-placement acceptance. Historical bounded compiled proof is recorded separately below; B71 has main-supplied compiled RED and producer `c685f487`, with GREEN and independent verifier acceptance pending.
 
 - [ ] A fresh `HousingState` has no pending request. Its `pending_new_decor` is an `Option<HousingCatalogEntryVariantID>` using the existing C API-owned full `(recordID, entryType, variantIdentifier)` type. It carries no GUID, instance, transform, stock reservation or selection data.
 - [ ] `StartPlacingNewDecor(catalogEntryVariantID)` authenticates the original selector and all three original fields before parsing any field, checking domains or consulting the model, then validates the entire integer selector before mutation. An existing exact variant with positive explicitly supplied `num_stored` sets pending to that full identity. No base entry, seeded catalog or alternate selector lookup is required. Identical valid requests are repeatable; valid replacement requests replace record, type and variant identity. Changing the caller's table afterward does not change pending.
@@ -38,8 +38,8 @@ Cache root: `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/`. This is c
 - `src/lua_api/state/support_types.rs`: empty-default `pending_new_decor` slot; existing C API-owned variant ID reused.
 - `tests/housing_pending_decor.rs`: twenty authored bounded behavioral expectations in the existing grouped `integration` target: thirteen retained controls and seven B71 secret-boundary cases replacing one combined conservative rejection case. No new Cargo target or global fixture state.
 - `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: only BasicMode start/query/cancel publishers removed. Finish remains a documented no-op; selected/customize/preview owners remain separate.
-- `src/c_api/c_housing/basic_mode.rs`: unconditional `register_pending` publishes start/query/cancel; existing free-place registration retains its original feature gate. Start uses the shared catalog parser/VM table-access guard, then stores the exact ID only for an existing variant with positive stock. Query reads presence; cancel clears only pending. No events or other housing mutations.
-- `src/c_api/c_housing/catalog/input.rs`: shared selector and full-variant parsing exposed within the housing module; validation behavior unchanged.
+- `src/c_api/c_housing/basic_mode.rs` and `src/c_api/c_housing/pending_input.rs`: main-supplied producer `c685f487` uses a narrow `AllowedWhenUntainted` pending parser. It authenticates the original selector and all three original fields before parsing, roots the underlying table and retains `check_table_access`. Unconditional start/query/cancel publication and existing free-place feature gate remain; exact positive-stock pending identity, query and cancel retain their host-model behavior.
+- `src/c_api/c_housing/catalog/input.rs`: shared catalog parser unchanged; B71 grants no other catalog-security credit. Stock, nonplacement/finish behavior, selected/customize/preview state and no-events policy remain unchanged. Inventory is supplied by main, not independently source-inspected here.
 
 ## Tests asserting this spec
 
@@ -56,7 +56,7 @@ Filter: `housing_pending_decor::` in existing target `integration`. Parent repor
 | `secret_numeric_top_selector_authenticates_before_secure_type_error`, `all_original_fields_authenticate_before_any_public_parse_domain_or_model_lookup`, `secret_wrapped_guarded_table_retains_underlying_access_constraints` | Secure wrong-top-type vs addon auth; malformed/missing/domain/model public inputs cannot mask later secret denial; real VM guarded-table constraints |
 | `pending_requests_do_not_leak_between_environments`, `pending_lifecycle_preserves_instances_preview_and_emits_no_success` | Independent environments; complete existing public info snapshots, listeners and queued-event comparison, unresolved finish |
 
-### B71 authored inputs — compiled RED pending
+### B71 implementation — compiled RED; GREEN/verifier pending
 
 Scope: exact rows278/279 only; no coverage/count/source-row promotion. Main-supplied existing proof: fourteen tests pass at `361642437245548aaab32e74e6bc7faa843cef66` (ancestor `e7750b17d`); not independently rerun here. That proof includes conservative rejection of secure secrets and is **not** `AllowedWhenUntainted` parity. Historical GREEN below does not cover these revised expectations.
 
@@ -64,7 +64,9 @@ Current input file has **20 tests**: retain13, replace1 with7. New secure NUM-fi
 
 Cached primary source `HousingBasicModeUIDocumentation.lua:185–194` expressly declares `SecretArguments = "AllowedWhenUntainted"` and `catalogEntryVariantID: HousingCatalogEntryVariantID`. Cached declarations are not native historical12.0.5 probes. Pending/no-stock/no-events, missing/malformed inputs and numeric domains remain inferred; no native parsing probe, actual placement, finish/commit, UI or all-profile claim.
 
-**Authored RED pending:** current conservative producer is expected to fail actual secure-secret acceptance and addon authentication-order assertions. No B71 compile, test, check, readability or final gate ran here; main owns compiled RED before production changes. Expected narrow pending-parser work must not change the catalog's conservative shared parser contract. Input formatting only: `rustfmt --edition 2024 --config skip_children=true tests/housing_pending_decor.rs`.
+**Main-supplied actual compiled RED:** `4bec1394a`, after fixing the missing `LuaApi` test import, compiled in **220.479727s**, zero diagnostics; twenty selected tests produced **13 PASS / 7 FAIL** in **5.58s**. Artifacts: `/tmp/patch-12.0.5-batch71-red-fixed-build-result.json`, `/tmp/patch-12.0.5-batch71-red-run.json`, `/tmp/patch-12.0.5-batch71-red-run.stdout` and `/tmp/patch-12.0.5-batch71-red-run.stderr`. Input `df00d200` first failed compilation; that failure is **not behavioral RED**. Thirteen retained controls and seven secret-boundary expectations remain distinct; downstream assertions are not independently credited merely because a case failed.
+
+Producer `c685f487` implements the narrow pending-input boundary described in the inventory; the shared catalog contract is unchanged. **GREEN and independent verifier acceptance remain PENDING**; no B71 build/test/check/runtime or source inspection ran in this docs-only audit. Main will reconcile final proof. Exact278/279 remain pending; current accounting stays **177 pending / 164 bounded / 14 partial / 7 metadata**, 362 ordered IDs/77 capabilities. No native, full-placement, acquisition, profile-parity or other catalog-security credit.
 
 ### Proof ledger — historical input checkpoint
 
@@ -84,7 +86,8 @@ Actual RED log: `/tmp/housing-pending-source-plain-red.log`. Executable SHA-256 
 - [x] Parent reports grouped compiled RED at `659f79a3c`: 1 PASS / 13 FAIL; separate from the earlier plain-provider probe.
 - [x] Independent inspection accepts saved targeted GREEN for bounded C API start/query/cancel at `f59c03402`; no independent test reexecution.
 - [ ] Finish/commit/placement lifecycle unresolved: existing finish no-op must remain visible as a gap.
-- [ ] B71 authored secret-boundary expectations await compiled RED and later implementation proof; no current GREEN claim.
+- [x] Main reports B71 compiled RED at `4bec1394a`: 13 PASS / 7 FAIL after the missing-import fix; first compile failure is not behavioral RED.
+- [ ] B71 producer `c685f487` awaits GREEN and independent verifier acceptance; historical fourteen-test proof does not cover revised secret boundaries.
 - [ ] Native validation/no-op/cancel semantics, native secure-secret parity and all-profile execution unverified.
 
 ## Out of scope
@@ -105,6 +108,6 @@ Saved GREEN is **45/45 PASS**: 14 pending-request, 4 free-place, 2 decor, 1 cust
 | Unconditional replaced registration | Source-only outside default profile |
 | Finish/commit and real placement | Existing finish no-op; pending survives finish. Unmodeled, not accepted |
 
-Rows `global api-C_HousingBasicMode-StartPlacingNewDecor-278` (argument rename) and `-279` (variant argument type) link this bounded full-selector evidence but **remain audit-pending**, like DestroyEntry. Partial inferred pending behavior does not establish the literal delta across the real placement boundary; no whole-domain promotion. Counts remain **278 audit-pending / 70 bounded-coverage / 14 partial-development-green**, all **362** IDs and source SHA-256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329` retained. Audit **IN PROGRESS**.
+Rows `global api-C_HousingBasicMode-StartPlacingNewDecor-278` (argument rename) and `-279` (variant argument type) link this bounded full-selector evidence but **remain audit-pending**, like DestroyEntry. Partial inferred pending behavior does not establish the literal delta across the real placement boundary; no whole-domain promotion. Historical batch22 counts were **278 audit-pending / 70 bounded-coverage / 14 partial-development-green**; they are not current B71 accounting. At that checkpoint, all **362** IDs and source SHA-256 `4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329` retained. Audit **IN PROGRESS**.
 
 Native validation/cancel/eligibility, secure-secret parity, full UI readiness and all-profile execution remain unverified. Advisory helper length finding is not a reason for an unrelated refactor. No finish, instance allocation, 3D, stock mutation or event-production coverage claimed.
