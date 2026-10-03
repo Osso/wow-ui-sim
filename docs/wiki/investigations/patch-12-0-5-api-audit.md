@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Batch93 — GetAuraDuration registered and accepted
+
+**Exact380 `C_UnitAuras.GetAuraDuration`** (`AllowedWhenTainted -> AllowedWhenUntainted`) was not registered at all: the name resolved to a nil-returning placeholder. [Contract and acceptance SSOT](../../specs/aura-duration-object.md#development-proof-and-independent-bounded-acceptance--2026-10-03). It now returns a duration object built from the stored aura times, errors for an invalid instance, and authenticates both arguments before validation through the Batch86 reader. Inputs `b9b9eeec8` RED 0/6; producer `012cf889a` GREEN 33/33, startup `[]`; independent review accepted with qualifications and reran 33/33. Mixed zero duration/expiration records are not rejected and aura access is unmodeled. **98 capabilities/362 IDs; 98 pending /219 bounded /12 partial /33 metadata**; audit **IN PROGRESS**.
+
 ### Batch92 — `UnitAttackSpeed` swing-time inputs
 
 **Exact504** was the last constant stat producer. [Contract SSOT](../../specs/explicit-stat-inputs.md#b92-unitattackspeed-swing-time-inputs--row-504): player main and optional off-hand speeds are explicit inputs, a missing off-hand is a plain nil, party snapshots get a synthetic main-hand time, unknown units return `0, nil`. Inputs `cb1fc14ab` RED 0/4, producer `ca7e6778e` GREEN 73/73, startup `[]`; independent review accepted with qualifications. All 50 `SecretWhenUnitStatsRestricted` rows are now bounded.

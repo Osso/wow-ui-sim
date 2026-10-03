@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B93 GetAuraDuration registered and accepted
+
+[Contract and acceptance SSOT](../specs/aura-duration-object.md#development-proof-and-independent-bounded-acceptance--2026-10-03) owns exact380: newly registered duration-object query with `AllowedWhenUntainted` argument authentication, RED/GREEN and independent Sol acceptance. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch93--getauraduration-registered-and-accepted); 98 capabilities/362 IDs; 98 pending /219 bounded /12 partial /33 metadata.
+
 ## [2026-10-03] evidence | B91/B92 SetFont shape, housing ID fields, UnitAttackSpeed inputs
 
 [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch91--fontstring-setfont-shape-and-removed-housing-id-fields) owns rows 547/548 bounded, 549 partial, 645/646 bounded (tests only) and row 504 bounded via [explicit swing-time inputs](../specs/explicit-stat-inputs.md#b92-unitattackspeed-swing-time-inputs--row-504). 97 capabilities/362 IDs; 99 pending /218 bounded /12 partial /33 metadata.

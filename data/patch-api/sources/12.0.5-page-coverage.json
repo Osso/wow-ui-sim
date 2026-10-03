@@ -1631,6 +1631,23 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/explicit-stat-inputs.md#b92-unitattackspeed-swing-time-inputs--row-504",
       "gate_scope": "Independent Sol review SHA256 2cabc6228fb5a7e2e38a927aafd79e666e86177648414afe1804f75c194cd3fb (scratchpad); its own prebuilt runs font_api:: 45/45, housing_catalog_base_lookups:: 15/15, unit_attack_speed:: 4/4 at ca7e6778e. No cargo check or broad suite; native/GUI/older-profile gaps open. RED cb1fc14ab 0/4 (one on a test-side existence assertion, removed); GREEN 73/73, cargo exit0, cargo fmt --check exit0, startup lua-errors []."
+    },
+    {
+      "id": "aura-duration-object",
+      "symbols": [
+        "C_UnitAuras.GetAuraDuration"
+      ],
+      "scope": "B93 exact380 AllowedWhenUntainted on a newly registered query: one fresh duration object per call spanning stored expiration minus duration to expiration at rate 1 for player helpful/harmful and party records, zero span for permanent records, live reads with independent snapshots, errors (never nil) for unknown or cross-unit instances and malformed or missing arguments; both arguments VM-authenticated before validation, untainted secret acceptance, tainted denial incl. malformed public unit, taint and secrecy retained. Inferred invalid-instance and permanent policies; mixed zero fields not rejected; RequiresUnitAuraAccess, restricted output, blocked/target records, rate modifiers and native parity unmodeled or unasserted.",
+      "spec": "docs/specs/aura-duration-object.md",
+      "tests": [
+        "tests/aura_duration_object.rs"
+      ],
+      "inputs": "b9b9eeec8a82b680b87d575260955900ba42e2cf",
+      "implementation": "012cf889af792af106cdac2f2845b7988330783e",
+      "compiled_revision": "012cf889af792af106cdac2f2845b7988330783e",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/aura-duration-object.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED b9b9eeec8 0/6; GREEN 012cf889a 33/33 (6 new + 9 expiration + 18 refresh controls), cargo exit0 zero warnings, cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 ea0231986538c8cac01c3a77c2e486ede9bde3c5520b17d962757ea8bb4be963 (scratchpad), own reruns 6/9/18 exit0. No cargo check or broad suite; native/GUI/older-profile gaps open."
     }
   ],
   "source_rows": [
@@ -3013,9 +3030,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraDuration-380",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "aura-duration-object"
+      ],
+      "status": "bounded-coverage",
+      "note": "B93 accepted independent Sol review of 012cf889a: function newly registered; AllowedWhenUntainted applied to unit and instance before validation, duration object from stored aura times, errors for invalid instances, independent snapshots. 6 new + 27 controls rerun independently. Aura access, restricted output, mixed-zero records, blocked/target records and native parity excluded."
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraSlots-382",

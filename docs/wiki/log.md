@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B93 GetAuraDuration accepted
+
+Linked [acceptance SSOT](../specs/aura-duration-object.md#development-proof-and-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch93--getauraduration-registered-and-accepted): row380 bounded after inputs `b9b9eeec8`, producer `012cf889a` and independent review. 98 capabilities/362 IDs; 98 pending /219 bounded /12 partial /33 metadata.
+
 ## [2026-10-03] docs | B91/B92 accepted
 
 Linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch91--fontstring-setfont-shape-and-removed-housing-id-fields): SetFont shape tests (547/548 bounded, 549 partial), housing entry-ID field removals (645/646), `UnitAttackSpeed` inputs (504) after RED/GREEN and independent review. 97 capabilities/362 IDs; 99 pending /218 bounded /12 partial /33 metadata.
