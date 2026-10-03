@@ -33,7 +33,7 @@ Checked requirement boxes record bounded simulator proof under explicit inferred
 - [x] Store publishes existing `HOUSING_STORAGE_ENTRY_UPDATED` once per affected full variant before response; callbacks observe all committed counts and attachment queries. Storage synchrony/order is **inferred**, not established by its UniqueEvent declaration. No queued duplicate.
 - [x] Response handlers can synchronously query and reenter real mutators. No retained borrow, post-callback overwrite, or callback bypass. Environments keep independent state/listeners.
 
-### B73 removal requirements — inputs only, 2026-10-03
+### B73 removal requirements — implemented, acceptance pending, 2026-10-03
 
 Scope: `RemoveFixtureFromSelectedPoint(attachedDecorAction)` only, EXACT267/268. All policy, validation order/domain, mutation boundaries, live eligibility, failure handling and event ordering below are **inferred simulator requirements**, not native-verified semantics. The declaration grounds AllowedWhenUntainted and omitted Store; explicit nil is inferred despite `Nilable = false`.
 
@@ -45,7 +45,7 @@ Scope: `RemoveFixtureFromSelectedPoint(attachedDecorAction)` only, EXACT267/268.
 
 Grounding read for B73: patch source EXACT267/268 adds arg1 and AllowedWhenUntainted; cached `HouseExteriorUIDocumentation.lua:150–157` declares `attachedDecorAction`, `Default = "Store"`, `Nilable = false`; `HouseExteriorConstantsDocumentation.lua:77–79` declares nullable `selectedFixtureID`, fixture options and public removal flag. Existing enum documentation at `PlayerHousingConstantsDocumentation.lua:141–150` grounds Store0/Detach1 meanings; exterior documentation324–330 grounds synchronous response/one-result shape, not per-call success/failure mapping.
 
-Baseline correction: `/tmp/patch-12.0.5-remove-fixture-boundary.md`/580's “method missing” claim is wrong. `housing_catalog_state.lua:958` currently publishes Remove as `__wow_noop` in the main namespace; the legacy initializer does **not** capture Remove. Modern Rust runtime currently has no modeled removal callback. RED must exercise the real published API before post-query assertions, not fail at shared query setup. No producer edits in B73 inputs.
+Historical input baseline correction: `/tmp/patch-12.0.5-remove-fixture-boundary.md`/580's “method missing” claim was wrong. Remove was published as `__wow_noop` in the main Lua namespace, without legacy capture or a modeled modern callback. B73 producers replace that modern path; the no-op now belongs only to the legacy initializer. Compiled RED exercises the published API, not a shared query setup failure.
 
 ### Grounding inspected 2026-10-02
 
@@ -104,7 +104,17 @@ All19 new tests are in the existing modern module of `tests/house_exterior_attac
 
 ### Proof ledger
 
-#### B73 input checkpoint — 2026-10-03
+#### B73 implementation and compiled RED — 2026-10-03
+
+Main-supplied producers `036036e7c` / `8502a2ced` / `71973af4b` implement modern Remove state mutation, original-argument input authentication and public registration; the DTO removal flag is live. Lua Remove no-op moves only to legacy initialization; existing methods remain preserved. Implementation is not accepted behavior: all five removal requirement boxes remain unchecked, with GREEN, independent verifier and Forever inverse proof **pending**. Declaration-grounded signature/default/security and inferred nil/domain/eligibility/failure/Success0/storage-order policies remain distinct; no native parity claim.
+
+Actual RED at `710674128`: compile **140.106230s, zero diagnostics**; **19 FAIL / 0 PASS, 2.63s**. First `loader()` compilation failure is not behavioral RED. Saved artifacts are `batch73-red-fixed-build-result.json` and `red-run.*` under `/tmp`, as supplied by the brief. This proves the pre-producer removal boundary, not downstream GC/reentry success or producer GREEN. Existing B70 41-case and acceptance proof below remain historical, not refreshed B73 proof.
+
+Initial full-suite snapshot710 compilation failed with **E0063**, missing `addon_dir` in an old test fixture; no suite pass. User approved one-field repair `9d9015e1e`. New snapshot71973 full suite is asynchronous at `/tmp/patch-12.0.5-all-tests-async-71973`; outcome pending, **no full-suite-pass claim**. No job inspection or execution gates in this docs-only update.
+
+EXACT267/268 remain pending; **177 pending / 164 bounded / 14 partial / 7 metadata,362 ordered IDs/77 capabilities** unchanged. No accounting promotion or core/native/UI/all-profile credit.
+
+#### Historical B73 input checkpoint — 2026-10-03
 
 Tests/spec only. Owned test formatting with `rustfmt --edition 2024 --config skip_children=true`; no delegation, builds, runtime, tests, checks or verification gates. Main must establish compiled RED **before** producers, then GREEN and producer proof gates. Authored inputs are not behavioral evidence. B70 acceptance below remains historical and intact; B73 requirements remain unchecked. EXACT267/268 stay pending; **177 pending/164 bounded/14 partial/7 metadata,362 ordered IDs/77 capabilities** unchanged. No new/native/profile/UI/acquisition/core credit.
 
@@ -134,7 +144,8 @@ Native coercion/failure mapping, nil/same-value/storage-order policies remain in
 
 B70 bounded acceptance supersedes its historical pending gates below; native gaps and current B73 gates remain open.
 
-- [ ] B73 main-owned compiled RED before producers, followed by GREEN and independent producer proof gates; all19 authored removal tests currently unexecuted by input owner.
+- [x] B73 main-owned compiled RED at `710674128`: 19 FAIL/0 PASS; first loader compilation failure excluded.
+- [ ] B73 producer GREEN, independent verifier and Forever inverse proof; asynchronous full-suite outcome pending. Docs/input owner ran no execution gates.
 
 - [x] Main-owned compiled RED at `5ad54e578`: default build exit0, zero compiler diagnostics; 38 failures / one pass in 8.7s.
 - [x] Bounded GREEN, scoped Rust/security/readability gates, startup and separate Forever inverse acceptance.
@@ -143,5 +154,5 @@ B70 bounded acceptance supersedes its historical pending gates below; native gap
 
 ## Out of scope
 
-- B70 acceptance excludes RemoveFixtureFromSelectedPoint; B73 authors removal inputs only, without behavior/row credit. SelectCoreFixtureOption, door/core/hover APIs, 3D and native parity remain excluded.
+- B70 acceptance excludes RemoveFixtureFromSelectedPoint; B73 implements removal awaiting acceptance, without behavior/row credit. SelectCoreFixtureOption, door/core/hover APIs, 3D and native parity remain excluded.
 - Historical inputs ownership excluded runtime/integration gates; main implementation and acceptance are recorded above.
