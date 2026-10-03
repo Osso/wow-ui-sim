@@ -302,10 +302,24 @@ fn test_spellbook_pickup_item_fires_cursor_changed() {
 #[test]
 fn test_spellbook_get_loss_of_control_cooldown_info() {
     let env = env();
+    let spell_id: u32 = env
+        .eval("return C_SpellBook.GetSpellBookItemInfo(5, 0).spellID")
+        .expect("actual player-bank slot 5 should have a spell");
+    assert_eq!(spell_id, 19750);
+    env.state().borrow_mut().spell_loss_of_control.insert(
+        spell_id,
+        wow_ui_sim::lua_api::LossOfControlInfo {
+            start_time: 0.0,
+            duration: 0.0,
+            mod_rate: 1.0,
+            is_active: false,
+            should_replace_normal_cooldown: false,
+        },
+    );
     let result: String = env
         .eval(
             r#"
-            local info = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(1, Enum.SpellBookSpellBank.Player)
+            local info = C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo(5, Enum.SpellBookSpellBank.Player)
             if type(info) ~= "table" then
                 return "expected_loc_info_table"
             end
