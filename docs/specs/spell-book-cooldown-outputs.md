@@ -1,12 +1,12 @@
 # Spell and spellbook cooldown outputs — exact rows 305/322
 
-Batch 68 tests/spec only, authored October 2, 2026. `C_Spell.GetSpellCooldown` and `C_SpellBook.GetSpellBookItemCooldown` must implement the bounded output contract below. Source: `data/patch-api/sources/12.0.5-api-changes.txt:305,322`, each `SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted`. Exact register IDs are `global api-C_Spell-GetSpellCooldown-305` and `global api-C_SpellBook-GetSpellBookItemCooldown-322`; both register entries are consolidated-final deltas and both coverage entries remain `audit-pending`, with no capabilities. The earlier batch-map row-529 attribution was incorrect; these are the two primary rows. No coverage JSON is changed here. [Lua API architecture](../wiki/systems/lua-api.md) supplies subsystem context.
+Batch 68 tests/spec authored October 2, 2026; bounded producer implementation follows the main-reported compiled RED at `e5d11e497`. `C_Spell.GetSpellCooldown` and `C_SpellBook.GetSpellBookItemCooldown` must implement the bounded output contract below. Source: `data/patch-api/sources/12.0.5-api-changes.txt:305,322`, each `SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted`. Exact register IDs are `global api-C_Spell-GetSpellCooldown-305` and `global api-C_SpellBook-GetSpellBookItemCooldown-322`; both register entries are consolidated-final deltas and both coverage entries remain `audit-pending`, with no capabilities. The earlier batch-map row-529 attribution was incorrect; these are the two primary rows. No coverage JSON is changed here. [Lua API architecture](../wiki/systems/lua-api.md) supplies subsystem context.
 
 Cached retail documentation corroborates function-level `SecretWhenCooldownsRestricted = true`: `SpellDocumentation.lua:268–283` and `SpellBookDocumentation.lua:215–231`. The latter says `SecretArguments = "AllowedWhenUntainted"` and documents missing/future/offspec nil results; the spell function says `AllowedWhenTainted`. `SpellSharedDocumentation.lua:19–31` lists five required fields, with `NeverSecret = true` on both booleans. These are current-cache observations, not evidence of when individual fields were introduced. Five-field book placement at the bounded 12.0.5 epoch is an explicit inference needed to complete this missing provider, not a dated native introduction claim. Function metadata does not itself prove per-field secrecy.
 
 ## What it must do
 
-Every requirement remains unchecked: no compile, RED, GREEN, native probe or independent acceptance was run for this artifact.
+Every requirement remains unchecked: compiled pre-producer RED is recorded below, but producer GREEN, native probes and independent acceptance remain pending.
 
 ### Meaningful model before output-policy credit
 
@@ -46,40 +46,49 @@ Every requirement remains unchecked: no compile, RED, GREEN, native probe or ind
 ## Implementation inventory
 
 - `tests/spell_book_cooldown_outputs.rs`: 28 authored tests; 27 under Retail/PTR 12.0.5, one inverse-gated earlier/Forever preservation control. Uses existing grouped integration discovery; no Cargo/build/registration edits or new target.
-- `src/c_api/c_spell.rs::get_spell_cooldown`: unchanged strict `u32::from_stack` parser and meaningful five-field spell/GCD DTO, currently ordinary numeric fields regardless of the flag. No fake or second namespace provider is involved.
-- `src/c_api/c_spell_book.rs::c_spell_book_get_spell_book_item_cooldown`: unchanged callback currently parses slot as i32, ignores bank and returns constant zero start/duration, disabled false and modRate 1, with no isActive. Model, bank, selector-authentication and secrecy assertions are intentionally pending producer work.
-- `src/c_api/c_spell_book.rs::resolve_player_spellbook_entry`: existing player-bank-0 numeric resolver shared with charge/duration lookup; no new state. Offspec exclusion is not presently supplied by this resolver.
+- `src/c_api/c_spell.rs::get_spell_cooldown`: unchanged strict `u32::from_stack` parser delegates to shared `push_spell_cooldown_info`; immutable clock/interval/restriction snapshot, immediately rooted five-field DTO, three actual typed host-secret NUMs under the existing helper gate, two public BOOLs. No alias/input-policy credit.
+- `src/c_api/c_spell_book.rs::c_spell_book_get_spell_book_item_cooldown`: sole existing binding selects the real provider only under Retail/PTR 12.0.5; authenticates both original selectors through VM `unwrap_secret` before resolution and uses the same interval publisher. API/argument-context errors omit payloads. Inverse-gated old slot-only disabled four-field provider remains unchanged.
+- `src/c_api/c_spell_book.rs::resolve_player_spellbook_entry`: unchanged player-bank-0 validation/mapping shared with charge/duration lookup. New cooldown-only `resolve_cooldown_spellbook_entry` accepts authenticated Values and rejects the actual entry's typed `SkillLineData.off_spec_id`; no query-callback indirection, stack mutation or catalog change.
 - `src/c_api/charge_state.rs`: existing typed-selector VM authentication precedent and explicit profile-gated cooldown restriction predicate; unchanged.
 - `src/c_api/cooldown_duration.rs` and `src/lua_api/globals/action_bar_api.rs::spell_cooldown_times`: existing duration helper and latest-ending cooldown/GCD interval policy; unchanged. No ignoreGCD argument is added to the two ordinary DTO queries.
 
 ## Tests asserting this spec
 
-`tests/spell_book_cooldown_outputs.rs` directly queries both real namespaces. All cases are authored, formatted-only evidence, not observed execution results.
+`tests/spell_book_cooldown_outputs.rs` directly queries both real namespaces. Main reports compiled pre-producer execution at `e5d11e497`: 27 selected, 5 PASS / 22 FAIL. Tests and fixtures are unchanged by this producer.
 
 | Capability | Authored coverage | Proof level |
 |---|---|---|
-| Meaningful public intervals | Ten separate spell/book tests for spell-only, GCD-only, overlap, zero and expiry; alternate actual slot/642 test | Not compiled/run |
-| Restricted intervals and shape | Both namespaces across five interval states; five required fields and public booleans; flag independence | Not compiled/run |
-| Selectors and misses | Invalid/missing/offspec slots, other/nil banks, wrong types, authentic secure secret NUMs, tainted-secret denial before identity, unchanged spell u32/rejection boundary | Not compiled/run |
-| Privacy and lifetime | Caller preservation, arithmetic denial/recovery, actual wrapper metadata, tainted copy/forced GC, flag-off old-root privacy | Not compiled/run |
-| Snapshots, inputs and profiles | Mutation/replacement, read-only model, live intervals/two environments, inverse-gated legacy provider | Not compiled/run; profile execution pending |
+| Meaningful public intervals | Ten separate spell/book tests for spell-only, GCD-only, overlap, zero and expiry; alternate actual slot/642 test | Five unrestricted spell controls PASS; book real-model RED; producer GREEN pending |
+| Restricted intervals and shape | Both namespaces across five interval states; five required fields and public booleans; flag independence | Pre-producer numeric metadata false / book four-field disabled DTO RED; producer GREEN pending |
+| Selectors and misses | Invalid/missing/offspec slots, other/nil banks, wrong types, authentic secure secret NUMs, tainted-secret denial before identity, unchanged spell u32/rejection boundary | Pre-producer book bank/parse/auth/offspec RED; producer GREEN pending |
+| Privacy and lifetime | Caller preservation, arithmetic denial/recovery, actual wrapper metadata, tainted copy/forced GC, flag-off old-root privacy | Downstream opacity/root/copy/GC assertions not independently established by first failures |
+| Snapshots, inputs and profiles | Mutation/replacement, read-only model, live intervals/two environments, inverse-gated legacy provider | Producer GREEN pending; earlier/Forever test excluded from current 27 |
 
 Fixture clock is anchored at 335 seconds. Actual spell 19750 has `(312,237)`, ending 549; GCD `(330,300)` ends 630 and therefore wins overlap. Alternate 642 uses `(310,270)` with its actual dynamically discovered book slot. Expiry changes only the clock anchor to 900; no sleeps or ticks. Meaningful payload assertions precede secrecy assertions so the constant book provider cannot gain guard credit. Active margins bound the intended development run, not unlimited process lifetime. No tests require secret BOOL equality in tainted Lua or replace namespace/security functions.
 
 ### Proof ledger and ownership
 
-Only these two new files are authorized changes. Runtime/getters/registrations/state/Cargo, protected dirty source, data/wiki/PLAN and operations remain untouched. No build, test, check, lint, metrics, gate, delegation, push or native probe was executed. Main owns compilation and genuine pre-producer RED after this commit, followed by producer/GREEN and independent acceptance. An authored test is not RED evidence; downstream privacy/GC assertions remain unproved until actually reached.
+This producer owns only `src/c_api/c_spell.rs`, `src/c_api/c_spell_book.rs` and this spec. No state/Cargo/tests/other API/data/wiki/PLAN/vendor changes; protected dirty source is not read, searched, hashed, formatted, staged or reverted. Only owned Rust formatting with `skip_children` and the coherent producer/spec commit are authorized here. No delegation, build, test, check, lint, readability gate, operations, push or native probe is run by this implementer.
+
+| Command / supplied operation | Revision / scope | Result / cost | Validity |
+|---|---|---|---|
+| Main-reported default lib + integration compilation; exact argv not supplied | Pre-producer `e5d11e497`, combined main checkout | Exit 0, 511.6772441709 seconds, zero diagnostics | Compiled RED artifact only; changed producers require new GREEN compilation |
+| Main-reported current selected execution; exact argv not supplied | Same pre-producer code; integration SHA256 `109f64e6021592d84569eeca5295aaa864b136e7fb96a13f0d8cca92e3e64ba9` | 27 selected, 5 PASS / 22 FAIL, exit 101, 5.977232970 seconds | Genuine pre-producer RED, not current producer proof |
+
+Observed main-reported failures include book start 0 instead of 312/330/310, disabled four-field shape, bank/invalid/offspec/selector authentication, and unrestricted numeric metadata under restriction. These are meaningful model/policy boundaries; the 22 failures do not independently establish downstream opacity or GC failures. No fixture repair was needed. Main owns producer GREEN, check/startup/security/readability, independent acceptance and accounting. Requirements remain unchecked and no rows promote.
+
+Authored test/spec date is October 2, 2026. Local Git/build-host dates are separate provenance, not an inferred source epoch or native field-introduction date.
 
 Rows 305/322 receive no credit here. Broader coverage remains the supplied baseline of 192 pending / 155 bounded / 14 partial / 1 metadata, 362 IDs / 73 capabilities; independent batch 67 rows 301/309 are outside this artifact, and accepted batch 66 rows 237/241 are not recredited. Baseline totals are coordination context, not recomputed acceptance evidence.
 
 ## Known gaps (current cycle)
 
-- [ ] Main must compile this committed test artifact and save exact-revision RED results; no source change is authorized before that RED. Book-model failures must not be mislabeled as output-only guard failures.
-- [ ] Implement meaningful book intervals/five-field DTO, both selector authentication boundaries, offspec nil policy and then numeric-field restriction; main owns all runtime work and independent GREEN/acceptance.
+- [ ] Main must compile the committed producers and run current GREEN plus check/startup/security/readability and independent acceptance. Pre-producer compilation/RED is recorded above; book-model failures are not output-only guard failures.
+- [ ] Validate real book intervals/five-field DTO, both selector authentication boundaries, cooldown-only offspec nil and numeric restriction, including downstream root/opacity/copy/GC assertions. Implementation alone earns no credit.
 - [ ] Current-cache C_Spell `SpellIdentifier`/AllowedWhenTainted input policy is not implemented or credited here. Existing numeric-only parser and conservative actual-secret rejection remain explicit gaps, not new input-row requirements.
 - [ ] Future entries lack a concrete existing model fixture. Pet bank/catalog support, native missing/offspec/header behaviors and full selector coercion/error parity are unproved; no opaque data-source fallback is permitted.
 - [ ] Native restricted field types, zero/modRate secrecy, field-version placement, predicate conditions, access rules, exception semantics, acquisition and UI consumer behavior remain unproved. Current cached metadata is not native execution evidence.
 
 ## Out of scope
 
-Public aliases and spell input-policy expansion; new cooldown/catalog/pet/charge state; held-cooldown modeling; duration objects or ignoreGCD changes; optional fields; fake callbacks/root templates; runtime or registration edits before main RED; vendor changes; native/global-privacy/full-profile parity; coverage promotion, wiki/data/PLAN edits, deployment or push. No native field-introduction date is assigned from the cache.
+Public aliases and spell input-policy expansion; new cooldown/catalog/pet/charge state; held-cooldown modeling; duration objects or ignoreGCD changes; optional fields; fake callbacks/root templates; other runtime/registration edits; vendor changes; native/global-privacy/full-profile parity; coverage promotion, wiki/data/PLAN edits, deployment or push. No native field-introduction date is assigned from the cache.

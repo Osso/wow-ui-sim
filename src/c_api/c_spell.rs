@@ -429,19 +429,37 @@ fn get_spell_name(state: &mut LuaState) -> LuaResult<u32> {
 /// Retail fields: `startTime, duration, isEnabled, isActive, modRate`.
 fn get_spell_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = u32::from_stack(state, 1)?;
-    let (start, duration) = {
+    push_spell_cooldown_info(state, spell_id)
+}
+
+pub(crate) fn push_spell_cooldown_info(state: &mut LuaState, spell_id: u32) -> LuaResult<u32> {
+    let (start, duration, restricted) = {
         let sim = borrow_state(state)?;
         let now = sim.start_time.elapsed().as_secs_f64();
-        spell_cooldown_times(&sim, spell_id, now)
+        let (start, duration) = spell_cooldown_times(&sim, spell_id, now);
+        (
+            start,
+            duration,
+            super::charge_state::cooldowns_are_restricted(&sim),
+        )
     };
-    let is_active = duration > 0.0;
     let info = create_table_with_capacity(state, SPELL_COOLDOWN_HASH_FIELDS);
-    table_set_static(state, info, "startTime", Val::Num(start));
-    table_set_static(state, info, "duration", Val::Num(duration));
-    table_set_static(state, info, "isEnabled", Val::Bool(true));
-    table_set_static(state, info, "isActive", Val::Bool(is_active));
-    table_set_static(state, info, "modRate", Val::Num(1.0));
+    // Root the public DTO before keys or secret numeric wrappers allocate.
     state.push(info);
+    for (name, number) in [
+        ("startTime", start),
+        ("duration", duration),
+        ("modRate", 1.0),
+    ] {
+        let value = if restricted {
+            rilua::table_security::wrap_host_secret_number(state, number)
+        } else {
+            Val::Num(number)
+        };
+        table_set_static(state, info, name, value);
+    }
+    table_set_static(state, info, "isEnabled", Val::Bool(true));
+    table_set_static(state, info, "isActive", Val::Bool(duration > 0.0));
     Ok(1)
 }
 
