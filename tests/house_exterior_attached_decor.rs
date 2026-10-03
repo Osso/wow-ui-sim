@@ -409,7 +409,7 @@ mod modern {
     }
 
     fn install_remove_secret(env: &WowLuaEnv, number: f64) {
-        let loader = env.loader();
+        let loader = env.loader_env();
         let mut lua = loader.rilua_mut();
         let secret = wrap_host_secret_number(lua.state_mut(), number);
         lua.state_mut().push(secret);
@@ -521,7 +521,7 @@ mod modern {
         for text_secret in [false, true] {
             let env = fixture_env();
             {
-                let loader = env.loader();
+                let loader = env.loader_env();
                 let mut lua = loader.rilua_mut();
                 let secret = if text_secret {
                     wrap_host_secret_string(lua.state_mut(), "private-remove-action-78423")
