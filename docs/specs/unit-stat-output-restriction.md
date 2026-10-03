@@ -193,3 +193,26 @@ Main accepts an independent GPT-6.1-sol read-only audit of the supplement at `49
 Evidence class: fresh source inspection plus the **committed** B82 record, which states an aggregate "4 existing restriction controls" PASS at `d21d4a208`, not four individually named raw result lines. No test, build, check, formatter or startup ran for B83. Raw `/tmp/patch-12.0.5-*` artifacts were absent on the audit host, so historical PASS, timings and hashes are not independently re-established. The audit report (SHA256 `d82dd28128ae506dc3cbcd74e43a07a368f6150711e3eb72ee2894b869551517`) lives in a session scratchpad and is not durable; this section is the retained record.
 
 [Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): row486 `bounded-coverage` under new capability `spell-crit-restricted-output`; **87 capabilities/362 ordered IDs; 164 pending/180 bounded/11 partial/7 metadata**. Other 361 rows and prior 86 capabilities unchanged. Limits above, B82's qualified check protocol and all prior partial/annotation scopes stay as recorded. No neighboring row, native, older-profile or full-suite credit; audit remains in progress.
+
+## B84 exact474/476 annotation supplement — 2026-10-03
+
+Scope: **`global api-PlayerScript GetRangedCritChance-474` and `global api-PlayerScript GetRangedHaste-476` only**. [Retained source](../../data/patch-api/sources/12.0.5-api-changes.txt) lines 473–476 give each subject the single delta `+ SecretWhenUnitStatsRestricted`; both [register](../../data/patch-api/sources/12.0.5-register.json) records are `kind: delta` with `source_lines` `[474]` and `[476]`. Output annotations only.
+
+Cached retail `PlayerScriptDocumentation.lua` lines 745–753 and 755–763 declare `SecretWhenUnitStatsRestricted = true` and one nonnil `result: number` each, with no `Arguments` and no `SecretArguments`. Contract context, not native execution evidence.
+
+| Exact ID | Provider in [`combat_stats.rs`](../../src/lua_api/globals/real/combat_stats.rs) | Ordered fixture | Wrapping |
+|---|---|---|---|
+| 474 | `get_ranged_crit_chance` delegates to `get_crit_chance`: `player.stats.crit_pct() + 5.0`, `crit_pct = crit_rating / 180`. | `GetRangedCritChance()` → `{7}` from seeded crit rating360; arity1. | One `push_stat_number`. |
+| 476 | `get_ranged_haste` delegates to `get_haste` outside `client-wowforever`: `player.stats.haste_pct()`, `haste_pct = haste_rating / 170`. | `GetRangedHaste()` → `{3}` from seeded haste rating510; arity1. | One `push_stat_number`. |
+
+Both fixtures run in `stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle` (arity, value, secrecy, access plain → restricted → plain) and `stat_restriction_tainted_callers_receive_opaque_host_results` (arity, opacity, denied unwrap and arithmetic, retained caller taint). The other two restriction tests are controls. No annotation gap is demonstrated; no producer change, new test or fabricated RED.
+
+Proof reuse is identical to [B83](#b83-independent-bounded-acceptance--2026-10-03): the committed B82 aggregate record of four restriction controls PASS at `d21d4a208`, with `git diff d21d4a208 HEAD -- src tests Cargo.toml Cargo.lock` empty at `559d47720`. No rerun; raw `/tmp/patch-12.0.5-*` artifacts unreadable on this host; B82's qualified check protocol carries over.
+
+### Limits
+
+- Both values are the melee getters reused: no ranged-specific crit or haste model, no native formula; base5 and divisors 180/170 are simulator choices. Shared getters are local annotation backing, not native equivalence with accepted rows428/438/450.
+- Under `client-wowforever`, `get_ranged_haste` returns two **plain** values (haste, quiver) and bypasses `push_stat_number`. Not a 12.0.5 claim; older-profile behavior is unverified here.
+- No-argument plain calls elsewhere appear only in a `tests/character_stats.rs` smoke check (number, nonnegative). Activation, native/GUI parity and full suites remain unverified.
+
+Rows474/476 remain `audit-pending` with no capability until independent validation and main accounting.
