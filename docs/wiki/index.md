@@ -1,6 +1,6 @@
-## [2026-10-03] implementation | B73 removal awaiting acceptance
+## [2026-10-03] evidence | B73 bounded removal acceptance
 
-[Removal proof SSOT](../specs/house-exterior-attached-decor.md#b73-implementation-and-compiled-red--2026-10-03) and [Batch73 audit](investigations/patch-12-0-5-api-audit.md#batch73--fixture-removal-implemented-acceptance-pending) record supplied producers `036036e7c`/`8502a2ced`/`71973af4b`: modern Remove state/input/publication, live flag, legacy-only Lua no-op, existing methods preserved. Actual RED710674128:19 FAIL/0 PASS2.63s, compile140.106230s/zero diagnostics; first loader compile failure not RED. GREEN/verifier/Forever pending; inference/native gaps and B70 historical proof retained. Full-suite710 compile E0063, approved one-field repair `9d9015e1e`; new71973 asynchronous root `/tmp/patch-12.0.5-all-tests-async-71973`, no pass claim. Exact267/268 pending,177/164/14/7 unchanged. Four owned docs only; no execution gates/delegation/protected reads/broad scans.
+[Removal acceptance SSOT](../specs/house-exterior-attached-decor.md#b73-independent-bounded-acceptance--2026-10-03) and [Batch73 audit](investigations/patch-12-0-5-api-audit.md#batch73--fixture-removal-bounded-acceptance) record60 modern PASS, separate Forever inverse1, startup `[]`, scopedfmt/check0. Accounting `cbf001ba5`, independent603 PASS33/33: exact267/268 only;175 pending/166 bounded/14 partial/7 metadata,362 IDs/78 capabilities. Full suite remains red:60 ordinary and11 custom failures; doctests0 PASS/3 ignored. Inferred/native limits and historical evidence remain; broader audit open.
 
 ## [2026-10-03] evidence | Accept B71 bounded pending/input proof
 
