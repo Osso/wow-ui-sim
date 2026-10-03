@@ -1,6 +1,6 @@
 # Spell and spellbook loss-of-control output restriction
 
-Batch69 covers EXACT rows 313 (`C_Spell.GetSpellLossOfControlCooldownInfo`) and 326 (`C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo`) only. Providers live in `src/c_api/c_spell.rs` and `src/c_api/c_spell_book.rs`; the existing `LossOfControlInfo` records are inputs. [Lua API architecture](../lua-api.md) describes the runtime boundary. Authored October 2, 2026 CDT; compiled RED is recorded below. Production implementation awaits relevant GREEN and independent acceptance; no native-parity claim.
+Batch69 covers EXACT rows 313 (`C_Spell.GetSpellLossOfControlCooldownInfo`) and 326 (`C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo`) only. Providers live in `src/c_api/c_spell.rs` and `src/c_api/c_spell_book.rs`; the existing `LossOfControlInfo` records are inputs. [Lua API architecture](../lua-api.md) describes the runtime boundary. Authored October 2, 2026 CDT; compiled RED is recorded below. Bounded output behavior is independently accepted below; no native-parity claim.
 
 ## What it must do
 
@@ -61,10 +61,20 @@ Batch69 covers EXACT rows 313 (`C_Spell.GetSpellLossOfControlCooldownInfo`) and 
 | Rooted secrets | `flag_off_returns_fresh_public_dto_without_declassifying_old_roots`; `addon_arithmetic_denial_preserves_wrapper_identity_and_recovery`; `addon_copies_and_forced_gc_retain_authentic_rooted_numeric_wrappers` |
 | Inverse control | `earlier_profiles_keep_public_spell_and_disabled_book_loc_payloads` |
 
+## Independent bounded acceptance — 2026-10-03
+
+Main accepts **exact313/326 output behavior only** using independent549 source/security/rooting/readability/Rust/behavior proof plus551 final artifact proof. SSOTs: `/tmp/patch-12.0.5-spell-book-loc-independent-proof.md` and `/tmp/patch-12.0.5-spell-book-loc-final-artifact-proof.md`, with revision-scoped JSON ledgers. Retail **76 distinct PASS** =27 focused+22 refreshed Action+27 refreshed normal-book; no duplicate or inherited additional test credit. Both original namespaces and shared publisher are reached by real calls. Actual player slots, inferred map absence/offspec handling, original-selector authentication, private NUM payloads/public BOOLs, snapshot/live/read-only/isolation and tested opacity/copy/root/GC behavior pass.
+
+Initial `cc69ac3c4` integration compile exits0 in140.513577s with one owned unused import warning. `ae502fcbb100b05661234f285bfaabffce4f4c48` moves that import into the inverse legacy module without changing modern bodies or tests. Independent literal equivalence supports saved GREEN reuse. Fresh scoped rustfmt exits0; default check exits0 with zero diagnostics in15.190587s. Earlier warning/check and lock waits remain recorded, not erased. Current default binary compilation exits0 with zero diagnostics in20.732040s; actual startup exits0 with `[]` in4.277960s. Build costs include reported lock waits where present; separate wait durations unavailable.
+
+Current Forever integration compile exits0 with zero diagnostics in192.543488s. Two distinct inverse preservation controls PASS separately in0.319764s and0.333869s, not added to Retail76. Broader historical Forever64 PASS/1 FAIL/1 ignored and mask-quad attribution remain unchanged; no full-profile green or pre-existing-cause claim. Initial startup pre-launch hash checkpoint detected the shared binary being replaced by Forever compilation; exact-hash original Retail deps ELF was recovered and run without rebuild or repeat runtime. Incident is evidence/procedure, not a startup runtime failure.
+
+Only313/326 promote: **186 pending/161 bounded/14 partial/1 metadata,362 ordered IDs/76 capabilities**. Preserved secret-spell nil behavior earns no AllowedWhenTainted or NeverSecret input credit. Inferred policies, native capture/acquisition, nominal scalar type, global privacy, pet/future and UI parity remain unproved. Evidence is dirty-combined; protected source remains uninspected/unhashed; historical globalfmt1 and502 process failure remain unresolved. Authored October2 CDT, observed host/Git timestamps and this October3 UTC acceptance header remain separate provenance.
+
 ## Known gaps (current cycle)
 
 - [x] Main compiled inputs and observed RED before production.
-- [ ] Compile production and demonstrate relevant GREEN, Action/normal-book controls, startup and independent Rust/security/readability/profile gates. Implementation alone earns no retained-row credit.
+- [x] Obtain relevant GREEN, Action/normal-book controls, startup and independent Rust/security/readability/profile gates before exact-row promotion.
 - [ ] Native LoC captures, input parity, per-field numeric secrecy, missing-map semantics, validation/header precedence and epoch placement remain UNPROVED or INFERRED as labelled, not native-verified facts.
 - [ ] Future-item fixtures and pet-bank behavior remain UNPROVED; no invented catalog or claim of pet support.
 - [ ] Authentic wrapper metadata/payload proof does not establish native Lua nominal numeric-type parity.

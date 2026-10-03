@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | Accept exact313/326 LoC outputs
+
+[Bounded acceptance SSOT](../specs/spell-book-loss-of-control-outputs.md#independent-bounded-acceptance--2026-10-03) records549+551:76 distinct Retail PASS, current startup `[]`, clean scoped format/check and two separate Forever inverse controls. Only313/326 promote:186 pending/161 bounded/14 partial/1 metadata,362 ordered IDs/76 capabilities. Historical import warning, pre-launch shared-binary collision, Forever failed filter, dirty/globalfmt/process limits and native/input/type/acquisition/pet/future/UI gaps remain explicit. Broader goal open.
+
 ## [2026-10-02] implementation | Record EXACT313/326 LoC outputs pending proof
 
 - **Inventory:** After producer `cc69ac3c4`, [[lua-api#Retail 12.0.5 spell and spellbook loss-of-control outputs]] and [Batch69 audit](investigations/patch-12-0-5-api-audit.md#batch69--exact313326-loc-outputs-pending-independent-acceptance) link [contract/inventory/proof SSOT](../specs/spell-book-loss-of-control-outputs.md). Existing typed LoC map, actual book bank0 lookup, original-selector authentication before model and shared rooted writer: three flag-restricted private NUMs/two public NeverSecret BOOLs. Permissive spell parser retained; native AllowedWhenTainted secret-input credit withheld.

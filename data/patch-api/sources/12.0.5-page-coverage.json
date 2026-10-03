@@ -7,6 +7,24 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "spell-book-loss-of-control-outputs",
+      "symbols": [
+        "C_Spell.GetSpellLossOfControlCooldownInfo",
+        "C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo"
+      ],
+      "scope": "Exact313/326 output predicates and meaningful existing-map player-book provider: unchanged permissive spell parser, optional typed LoC records, real player-bank0 slot/offspec lookup. Book authenticates both original selectors before type/model; public tainted allowed, secure actual NUM accepted. Shared rooted public five-field DTO carries restricted NUM3 and public NeverSecret BOOL2 verbatim; copies/GC/caller/live/read-only/isolation tested. Book absent-map/domain/field/epoch policies inferred. No spell AllowedWhenTainted input credit, native acquisition/nominal type/globalprivacy/pet/future/UI/fullprofile parity.",
+      "spec": "docs/specs/spell-book-loss-of-control-outputs.md",
+      "tests": [
+        "tests/spell_book_loss_of_control_outputs.rs"
+      ],
+      "implementation": "cc69ac3c425cb16cc169ae1ba8e8abadb421cb30",
+      "compiled_revision": "cc69ac3c425cb16cc169ae1ba8e8abadb421cb30",
+      "readability_followup": "ae502fcbb100b05661234f285bfaabffce4f4c48",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-spell-book-loc-final-artifact-proof.md",
+      "gate_scope": "Accepted549+551:76distinctRetailPASS27new22Action27normalbook; startup0[] currentae502, freshscopedfmt/defaultcheck0zeroDiag. LiteralActionwriter extraction c5d411498, normalbookauth/resolver/legacybodyequivalence and actualregistration/security/rooting/fulltestLua readability. Historicalcc69unusedimportwarning retained; ae502importonlyfix and currentdefault/ForevercompilerzeroDiag. Two distinctForeverinversePASS separate, original537FF64PASS1FAIL1ignored retained, no fullfilter/parityclaim. Prelaunchsharedbinarycollision recoveredexacthashdepsELF withoutbuild/runtime rerun. Dirty/globalfmt1/historical502processFAIL/native/input/type/acquisition/UI limits remain; commands/hashes/costs/fullstreams in ledgers."
+    },
+    {
       "id": "spell-book-cooldown-outputs",
       "symbols": [
         "C_Spell.GetSpellCooldown",
@@ -2326,9 +2344,9 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellLossOfControlCooldownInfo-313",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["spell-book-loss-of-control-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact313 output predicate independently accepted over existing optional LoC map, preserved permissive identifiers/nil misses, authentic restricted NUM3/public BOOL2 and rooted snapshots. Conservative secret-userdata nil remains unmodeled AllowedWhenTainted input parity; no input or NeverSecret credit. Native/type/acquisition/globalprivacy/UI unproved."
     },
     {
       "source_id": "global api-C_Spell-GetSpellMaxCumulativeAuraApplications-315",
@@ -2372,9 +2390,9 @@
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemLossOfControlCooldownInfo-326",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["spell-book-loss-of-control-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact326 output predicate and meaningful actual player-bank LoC map provider independently accepted with both-selector VM authentication, typed offspec lookup, shared private numeric/public boolean DTO and root/copy/GC behavior. Absence/domain/epoch policies inferred; preserved inverse legacy provider does not prove native/full-bank/future/pet/type/UI parity."
     },
     {
       "source_id": "global api-C_StringUtil-RemoveContiguousSpaces-328",
