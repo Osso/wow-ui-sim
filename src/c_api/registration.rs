@@ -23,6 +23,8 @@ pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResul
     #[cfg(feature = "client-wowforever")]
     super::forever_finite_constants::register(state);
     c_spell::register_c_spell_surface(state)?;
+    #[cfg(feature = "retail-12-0-5")]
+    super::c_mount_spell_lookup::register(state)?;
     c_spell_diminish::register_c_spell_diminish_surface(state)?;
     c_widget::register_c_widget_surface(state)
 }
