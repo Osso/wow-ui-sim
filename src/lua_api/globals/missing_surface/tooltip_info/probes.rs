@@ -368,6 +368,7 @@ pub(super) fn c_tooltip_get_spell_by_id(state: &mut LuaState) -> LuaResult<u32> 
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 pub(super) fn c_tooltip_get_unit_buff(state: &mut LuaState) -> LuaResult<u32> {
     let _unit = String::from_stack(state, 1)?;
     let index = i32::from_stack(state, 2)?;

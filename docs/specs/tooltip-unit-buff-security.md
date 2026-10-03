@@ -1,6 +1,6 @@
 # Tooltip unit-buff input security
 
-B79 **exact342** removes arg1 `NeverSecret` from `C_TooltipInfo.GetUnitBuff` in [the Retail12.0.5 source](../../data/patch-api/sources/12.0.5-api-changes.txt). This inputs-only slice requires meaningful existing-model lookup and the pinned VM's secure secret-input boundary. Source currently lives in `src/lua_api/globals/missing_surface/tooltip_info/`; [Lua API architecture](../lua-api.md) describes the runtime boundary. **Exact342 stays pending.** Tests are authored, not compiled or executed; main owns compiled RED, producer implementation and acceptance.
+B79 **exact342** removes arg1 `NeverSecret` from `C_TooltipInfo.GetUnitBuff` in [the Retail12.0.5 source](../../data/patch-api/sources/12.0.5-api-changes.txt). This bounded producer slice requires meaningful existing-model lookup and the pinned VM's secure secret-input boundary. Modern input/lookup ownership lives in `src/c_api/c_tooltip_info_unit_buff.rs`; [Lua API architecture](../lua-api.md) describes the runtime boundary. **Exact342 stays pending.** Main supplied actual compiled RED before this implementation; integration commit, asynchronous GREEN and independent acceptance remain main-owned.
 
 ## What it must do
 
@@ -57,17 +57,18 @@ Names deliberately differ despite shared spell IDs and reused cross-unit instanc
 
 ## Implementation inventory
 
-- `src/lua_api/globals/missing_surface/tooltip_info/mod.rs`: current registered GetUnitBuff namespace entry.
-- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs`: current provider parses then discards unit and calls player lookup; this inputs slice does not edit it.
+- `src/c_api/c_tooltip_info_unit_buff.rs` and `src/c_api/mod.rs`: new `retail-12-0-5`-gated provider/declaration. All three original arguments pass `unwrap_secret` before type parsing or state lookup, with API/argument error context. Unit/filter require UTF-8 strings without coercion; index requires a finite integral i32 number. Nil filter defaults to HELPFUL; empty filter uses the existing helpful interpretation. Nonpositive indices miss before subtraction/casting. Visible helpful auras are further checked for helpful polarity and filter matches before 1-based selection; no new unit model or fixture.
+- `src/lua_api/globals/missing_surface/tooltip_info/mod.rs`: publishes the modern provider into the existing rooted namespace, groups related modern registrations, and exposes an `Option<AuraInfo>` bridge to the unchanged builder.
+- `src/lua_api/globals/missing_surface/tooltip_info/probes.rs`: old GetUnitBuff provider and its registration remain only below `retail-12-0-5`; no other old provider changed.
 - `src/lua_api/globals/missing_surface/tooltip_info/spell.rs`: shared aura DTO builder and existing hardcoded duration line.
 - `src/lua_api/globals/missing_surface/tooltip_info/builders.rs`: current line-empty UnitAura DTO shape.
-- `src/lua_api/globals/auras.rs`: existing `collect_visible_unit_auras` / `collect_filtered_unit_auras`, per-unit blocked state and PLAYER classification semantics; no aura producer changes authorized here.
+- `src/lua_api/globals/auras.rs`: unchanged `collect_visible_unit_auras` / `aura_matches_filter_string`, per-unit blocked state and PLAYER classification semantics; no aura producer changes authorized here.
 - `src/lua_api/game_data.rs`: existing `AuraInfo`, `PartyMember.buffs` and `PartyMember.debuffs` fields, re-exported through `lua_api::state`.
 - `tests/tooltip_unit_buff_security.rs`: explicit host fixtures, real API assertions and rooted authentic-wrapper probes, grouped through existing integration automatic discovery; no Cargo target added.
 
 ## Tests asserting this spec
 
-`tests/tooltip_unit_buff_security.rs` defines **18 actual `#[test]` cases**. All are **AUTHORED / UNCOMPILED / UNEXECUTED** at this inputs-only checkpoint; no RED, GREEN, formatting-command, check, native or acceptance evidence is claimed.
+`tests/tooltip_unit_buff_security.rs` defines **18 actual `#[test]` cases**. **AUTHORED / UNCOMPILED / UNEXECUTED** describes the historical inputs-only checkpoint, not current RED status. Main supplied actual RED at inputs revision `a23adf150`, artifacts `/tmp/patch-12.0.5-buff-indexed-red-ops/`: compile exit0 in88.098727s, zero diagnostics; run **0 PASS / 18 FAIL** in2.161859s. Reported failures include wrong selected name, ignored filter, secret-from-stack handling and rejection context. This producer slice did not rerun or independently inspect those artifacts. Producer GREEN, check, native parity and acceptance remain unclaimed.
 
 | Case | Observable requirement |
 |---|---|
@@ -92,13 +93,13 @@ Names deliberately differ despite shared spell IDs and reused cross-unit instanc
 
 ## Known gaps (current cycle)
 
-- [ ] Main must inspect/commit inputs and obtain genuine asynchronously compiled RED before producer implementation; authoring alone is not failing-test evidence.
-- [ ] Current GetUnitBuff discards unit and bypasses filtered live-domain selection. Secure wrapper support and pre-parse authentication await implementation/proof; no outcome predicted as saved evidence.
-- [ ] Independent bounded verification and exact342 acceptance/accounting remain pending. This slice changes no accounting, wiki, production code, Cargo target or aura producer.
+- Historical prerequisite: main supplied genuine compiled RED before producer implementation; authoring alone was not failing-test evidence.
+- [ ] New modern GetUnitBuff input/filtered-selection implementation awaits asynchronous GREEN and independent bounded verification. Retained older-profile provider still discards unit; older-profile behavior receives no new credit.
+- [ ] Exact342 acceptance/accounting remain pending. Requirements above stay unchecked until verified GREEN. This slice changes no accounting, wiki, test cases, Cargo target, shared builder or aura producer.
 
 ## Out of scope
 
 - Native client secrecy, unit-aura access/restricted output (**UNMODELED**), native payload/error/miss parity and general-unit/target-identity credit: unavailable evidence and outside this bounded model contract.
 - Dynamic aura duration, acquisition/lifecycle producers, new fixtures/stores, aura mutation APIs and other tooltip query registrations: existing state and shared builder are the test boundary.
 - HARMFUL/unknown/conflicting filter behavior, fractional/nonfinite/index-width policy, omitted required arguments and broader parser changes: not required by this slice.
-- Other source rows, client profiles, full-suite proof, producer implementation, execution gates, delegation and commits: owned by main or explicitly excluded from this inputs-only assignment.
+- Other source rows, client-profile behavior changes and full-suite proof: excluded from this bounded producer assignment. Integration commit, execution gates, asynchronous GREEN and acceptance belong to main; no delegation or commit in this slice.
