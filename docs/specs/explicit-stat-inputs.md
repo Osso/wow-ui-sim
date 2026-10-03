@@ -19,13 +19,13 @@ Cached retail `PlayerScriptDocumentation.lua` declares each as a no-argument fun
 
 ## What it must do
 
-- [ ] Each query returns exactly its declared number of results, read live from its own input. Unconfigured inputs return zero; the zero default is simulator policy.
-- [ ] Inputs are independent: changing one never moves another. Expertise and expertise percent are separate triples with no conversion between them.
-- [ ] `GetShieldBlock` no longer returns armor and no longer reads a unit argument; any argument is ignored.
-- [ ] `GetPetSpellBonusDamage` is independent of player stats and does not require or create a pet.
-- [ ] Inputs are per environment.
-- [ ] Under explicit `unit_stats_restricted`, every result is a secret host number with value and arity preserved, plain again when the flag clears.
-- [ ] Restricted results are opaque to tainted callers: unwrap and arithmetic fail, caller taint is unchanged.
+- [x] Each query returns exactly its declared number of results, read live from its own input. Unconfigured inputs return zero; the zero default is simulator policy.
+- [x] Inputs are independent: changing one never moves another. Expertise and expertise percent are separate triples with no conversion between them.
+- [x] `GetShieldBlock` no longer returns armor and no longer reads a unit argument; any argument is ignored.
+- [x] `GetPetSpellBonusDamage` is independent of player stats and reads only its optional input. That it neither requires nor creates a pet follows from the read-only producer, not from a direct assertion.
+- [x] Inputs are per environment.
+- [x] Under explicit `unit_stats_restricted`, every result is a secret host number with value and arity preserved, plain again when the flag clears.
+- [x] Restricted results are opaque to tainted callers: unwrap and arithmetic fail, caller taint is unchanged.
 
 ## How it works
 
@@ -43,9 +43,23 @@ Cached retail `PlayerScriptDocumentation.lua` declares each as a no-argument fun
 - `tests/character_stats/explicit_inputs.rs` — nine cases: zero defaults, per-input values, live independent updates, shield block versus armor and unit argument, expertise triples, optional pet input, environment isolation, restriction toggle, tainted opacity.
 - `tests/character_stats/stat_restriction_fixtures.lua` — `GetShieldBlock` fixture changes from the armor proxy `1234` to the unconfigured `0`.
 
+## Development proof and independent bounded acceptance — 2026-10-03
+
+| Stage | Revision | Result |
+|---|---|---|
+| Inputs RED | `be7c0cc2c` | `character_stats::` 33 PASS / 11 FAIL: all nine new cases plus the two restriction-matrix tests on the changed `GetShieldBlock` fixture. |
+| Producers GREEN | `62d0ce70f` | `character_stats::`, `unit_stats::`, `pet_stats::` 79/79, cargo exit0, no warnings; `cargo fmt --check` exit0; startup `lua-errors` `[]`. |
+
+Main accepts an independent GPT-6.1-sol review of both commits: **ACCEPT WITH QUALIFICATIONS** (report SHA256 `2a7f0f1adae2b2b1aa40196fb3cc820f28d7f1edceda1b7414bb50e15d95db34`, scratchpad-only). It confirmed every producer reads its own field through `push_stat_number`, no producer is still constant, the removed zero helper had only these three callers, fields and producers are ungated alike, and each new test fails against the old producers except the zero-default case, which the old shield proxy alone fails. It reran `character_stats::` itself: **44 passed, exit0**. Retail `PaperDollFrame.lua` calls `GetShieldBlock()` with no arguments and feeds the value to armor-effectiveness helpers that handle zero; no zero-specific error was found by inspection.
+
+Checked requirements are bounded simulator proof. Independence and environment isolation are sampled, not exhaustive over all ten inputs. Older-profile compilation or execution, paper-doll panel interaction and `cargo check` were not run.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): rows422/434/436/440/452/464/470/472/478/488 `bounded-coverage` under new capability `explicit-stat-inputs`; **92 capabilities/362 IDs; 109 pending /209 bounded /11 partial /33 metadata**.
+
 ## Known gaps (current cycle)
 
-- [ ] Inputs only: producers still return constants or armor; no compiled RED or GREEN recorded yet.
+- [ ] `UnitAttackSpeed` (row 504) still returns a constant pair.
+- [ ] Default shield block is now zero instead of armor, which changes the block-mitigation number the paper doll shows until a host configures the input.
 
 ## Out of scope
 

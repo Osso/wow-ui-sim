@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B88 explicit stat inputs
+
+[Contract and acceptance SSOT](../specs/explicit-stat-inputs.md#development-proof-and-independent-bounded-acceptance--2026-10-03) owns ten explicit inputs replacing constant or armor-proxy stat producers, RED/GREEN and the independent Sol acceptance. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch88--explicit-inputs-replace-ten-constant-stat-producers); 92 capabilities/362 IDs; 109 pending /209 bounded /11 partial /33 metadata.
+
 ## [2026-10-03] evidence | B89 prose classification
 
 [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch89--prose-classification-26-metadata-only-6-restatements-credited) owns the classification of 90 pending prose rows by three independent Sol scouts: 26 metadata-only, five verbatim or direct restatements credited to existing capabilities, one partial; the rest remain pending with three ready for bounded acceptance. 91 capabilities/362 IDs; 119 pending /199 bounded /11 partial /33 metadata.

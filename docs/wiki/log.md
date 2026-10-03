@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B88 explicit stat inputs accepted
+
+Linked [acceptance SSOT](../specs/explicit-stat-inputs.md#development-proof-and-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch88--explicit-inputs-replace-ten-constant-stat-producers): rows 422/434/436/440/452/464/470/472/478/488 bounded after inputs `be7c0cc2c`, producers `62d0ce70f` and independent review. 92 capabilities/362 IDs; 109 pending /209 bounded /11 partial /33 metadata.
+
 ## [2026-10-03] docs | B89 prose classification
 
 Linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch89--prose-classification-26-metadata-only-6-restatements-credited): 26 narrative prose rows metadata-only, 03-25 `105/106/107/116` and 03-31 `171` bounded under existing capabilities, 03-25 `104` partial; no new behavior or capability. 91 capabilities/362 IDs; 119 pending /199 bounded /11 partial /33 metadata.

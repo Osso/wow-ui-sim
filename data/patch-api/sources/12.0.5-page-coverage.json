@@ -1518,6 +1518,33 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/aura-expiration-time.md#independent-bounded-acceptance--2026-10-03",
       "gate_scope": "RED a342c6eec 6 PASS/3 FAIL; first producer 0d2a98596 27/27 then independently REJECTED for validating unit before authenticating instance ID (report SHA256 3d2c3a16f934ca5d81b538c98dc540432ee6e84507b766e3e35a27e7aebb50ee); ordering RED 08c9e8bc8 8 PASS/1 FAIL; corrected d1bbdc8e8 27/27 cargo exit0 zero warnings, cargo fmt --check exit0. Independent re-verification ACCEPT WITH QUALIFICATIONS (SHA256 c4e407866ef9c5d70e8e0b653cb38e2026456496db4f531c4970007a06f886f4), own direct runs 9/9 and 18/18 exit0. Startup lua-errors [] only at 0d2a98596; no cargo check or broad suite. Reports scratchpad-only. Native/GUI/CASC/older-profile gaps open."
+    },
+    {
+      "id": "explicit-stat-inputs",
+      "symbols": [
+        "GetBlockChance",
+        "GetShieldBlock",
+        "GetHitModifier",
+        "GetSpellHitModifier",
+        "GetExpertise",
+        "GetExpertisePercent",
+        "GetModResilienceDamageReduction",
+        "GetPvpPowerDamage",
+        "GetPvpPowerHealing",
+        "GetPetSpellBonusDamage"
+      ],
+      "scope": "B88 exact422/478/440/488/434/436/452/470/472/464: ten former constant or armor-proxy producers now read independent explicit host inputs (nine CharacterStats fields, optional pet spell bonus), zero when unconfigured, every result through the shared stat wrapper. Declared arity, live per-input values, independence, shield block no longer armor and ignoring arguments, ordered independent expertise triples, environment isolation, restriction toggle and tainted opacity. Inputs are host-configured snapshot values with simulator units; no native formulas, derivation, activation or selector policy; a stats recompute clears them. Independence/isolation sampled. UnitAttackSpeed504 excluded.",
+      "spec": "docs/specs/explicit-stat-inputs.md",
+      "tests": [
+        "tests/character_stats/explicit_inputs.rs",
+        "tests/character_stats/stat_restriction_fixtures.lua"
+      ],
+      "inputs": "be7c0cc2c340e3b4df64aa8e2720bf41e1632c41",
+      "implementation": "62d0ce70f86dd2aa22bd08dfa0c19f90aeb92827",
+      "compiled_revision": "62d0ce70f86dd2aa22bd08dfa0c19f90aeb92827",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/explicit-stat-inputs.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED be7c0cc2c 33 PASS/11 FAIL; GREEN 62d0ce70f source 79/79 across character_stats/unit_stats/pet_stats, cargo exit0 zero warnings, cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS, SHA256 2a7f0f1adae2b2b1aa40196fb3cc820f28d7f1edceda1b7414bb50e15d95db34 (scratchpad), own rerun character_stats:: 44/44 exit0. Test build ran on the dirty tree later committed unchanged as 62d0ce70f. No cargo check, older-profile build, panel interaction or broad suite. Native/GUI/CASC gaps open."
     }
   ],
   "source_rows": [
@@ -3066,9 +3093,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetBlockChance-422",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "explicit-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B88 accepted independent Sol review of 62d0ce70f: producer now reads explicit input block_chance instead of a constant/proxy and wraps every result; configured value, arity, restriction toggle and tainted opacity asserted. Host-configured simulator value, zero default; no native formula, activation, older-profile execution or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetCombatRating-424",
@@ -3108,15 +3137,19 @@
     },
     {
       "source_id": "global api-PlayerScript GetExpertise-434",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "explicit-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B88 accepted independent Sol review of 62d0ce70f: producer now reads explicit input expertise triple instead of a constant/proxy and wraps every result; configured value, arity, restriction toggle and tainted opacity asserted. Host-configured simulator value, zero default; no native formula, activation, older-profile execution or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetExpertisePercent-436",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "explicit-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B88 accepted independent Sol review of 62d0ce70f: producer now reads explicit input expertise_percent triple, independent of expertise instead of a constant/proxy and wraps every result; configured value, arity, restriction toggle and tainted opacity asserted. Host-configured simulator value, zero default; no native formula, activation, older-profile execution or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetHaste-438",
@@ -3128,9 +3161,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetHitModifier-440",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "explicit-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B88 accepted independent Sol review of 62d0ce70f: producer now reads explicit input hit_modifier instead of a constant/proxy and wraps every result; configured value, arity, restriction toggle and tainted opacity asserted. Host-configured simulator value, zero default; no native formula, activation, older-profile execution or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetLifesteal-442",
@@ -3174,9 +3209,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetModResilienceDamageReduction-452",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "explicit-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B88 accepted independent Sol review of 62d0ce70f: producer now reads explicit input mod_resilience_damage_reduction instead of a constant/proxy and wraps every result; configured value, arity, restriction toggle and tainted opacity asserted. Host-configured simulator value, zero default; no native formula, activation, older-profile execution or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetOverrideAPBySpellPower-454",
@@ -3216,9 +3253,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetPetSpellBonusDamage-464",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "explicit-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B88 accepted independent Sol review of 62d0ce70f: producer now reads explicit input optional pet.spell_bonus_damage instead of a constant/proxy and wraps every result; configured value, arity, restriction toggle and tainted opacity asserted. Host-configured simulator value, zero default; no native formula, activation, older-profile execution or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetPowerRegen-466",
@@ -3234,15 +3273,19 @@
     },
     {
       "source_id": "global api-PlayerScript GetPvpPowerDamage-470",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "explicit-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B88 accepted independent Sol review of 62d0ce70f: producer now reads explicit input pvp_power_damage instead of a constant/proxy and wraps every result; configured value, arity, restriction toggle and tainted opacity asserted. Host-configured simulator value, zero default; no native formula, activation, older-profile execution or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetPvpPowerHealing-472",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "explicit-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B88 accepted independent Sol review of 62d0ce70f: producer now reads explicit input pvp_power_healing instead of a constant/proxy and wraps every result; configured value, arity, restriction toggle and tainted opacity asserted. Host-configured simulator value, zero default; no native formula, activation, older-profile execution or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetRangedCritChance-474",
@@ -3262,9 +3305,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetShieldBlock-478",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "explicit-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B88 accepted independent Sol review of 62d0ce70f: producer now reads explicit input shield_block (no longer armor; arguments ignored) instead of a constant/proxy and wraps every result; configured value, arity, restriction toggle and tainted opacity asserted. Host-configured simulator value, zero default; no native formula, activation, older-profile execution or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetSpeed-480",
@@ -3300,9 +3345,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetSpellHitModifier-488",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "explicit-stat-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B88 accepted independent Sol review of 62d0ce70f: producer now reads explicit input spell_hit_modifier instead of a constant/proxy and wraps every result; configured value, arity, restriction toggle and tainted opacity asserted. Host-configured simulator value, zero default; no native formula, activation, older-profile execution or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetSpellPenetration-490",

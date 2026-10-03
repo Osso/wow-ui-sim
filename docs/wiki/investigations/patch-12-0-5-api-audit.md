@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Batch88 — explicit inputs replace ten constant stat producers
+
+Ten of the eleven constant or proxy stat rows left by Batch87 now have real inputs: **422, 434, 436, 440, 452, 464, 470, 472, 478, 488**. [Contract and acceptance SSOT](../../specs/explicit-stat-inputs.md#development-proof-and-independent-bounded-acceptance--2026-10-03) owns the input table, proof and limits. Inputs `be7c0cc2c` RED 33 PASS/11 FAIL; producers `62d0ce70f` GREEN 79/79, startup `[]`; independent GPT-6.1-sol review accepted with qualifications and reran 44/44.
+
+Behavior change worth knowing: `GetShieldBlock` returned armor and read a unit argument; it now returns an explicit shield-block input, zero by default, and ignores arguments. **504 `UnitAttackSpeed`** is the one stat row still constant. **92 capabilities/362 IDs; 109 pending /209 bounded /11 partial /33 metadata**; audit **IN PROGRESS**.
+
 ### Batch89 — prose classification: 26 metadata-only, 6 restatements credited
 
 Three independent GPT-6.1-sol scouts classified all 90 pending blue-post prose rows (reports scratchpad-only, SHA256 prefixes `7edf1210a531ed93`, `ccdbd95ed858eceb`, `c95f657beddc03cc`). Main checked every promoted row's register text before accounting.
