@@ -1,5 +1,20 @@
 # Patch 12.0.5 API Audit
 
+### Batch95/96 — eight explicit-state slices accepted
+
+One commit, `a0e23199d`, replaced placeholders with explicit host state for twenty source IDs. Each slice owns its contract and acceptance:
+
+- [Maximum cumulative aura applications](../../specs/spell-max-cumulative-aura-applications.md) — exact315/316, newly registered.
+- [Maw powers](../../specs/spell-maw-powers.md) — exact299 bounded, exact297 **partial** (no cached declaration, `Deprecated_12_0_7.lua` reassigns the border query on a full load).
+- [Delves inputs](../../specs/delves-api-inputs.md) — exact262/263/265/257/258. A curio-link miss now errors and the map is empty by default.
+- [Voice-chat speech requests](../../specs/voice-chat-speak-text.md) — exact409, newly registered.
+- [Click-binding spell identifier](../../specs/click-binding-spell-identifier.md) — exact255. Empty eligibility by default: retail click-binding UI refuses every spell until seeded.
+- [Encounter-event sound](../../specs/encounter-event-sound-no-error.md) — prose 03-12-043, tests on the existing model, no producer change.
+- [Raid roster unknown name](../../specs/raid-roster-unknown-name.md) — prose 03-25-123 and 03-31-180.
+- [Catalog shop product structures](../../specs/catalog-shop-product-structures.md) — structures 631/632/634/635/636/637; seeded Lua getters removed.
+
+RED with producers withheld 6 PASS / 63 FAIL; GREEN 396 PASS / 1 FAIL (`c_system_api::test_c_console_get_all_commands_empty`, untouched console command count); startup `[]`. Four independent reviews accepted every slice with qualifications and reran 59/59. Shared limit: secret spell identifiers and selectors are rejected for every caller, so declared `AllowedWhenTainted`/`AllowedWhenUntainted` argument permissions are unmodeled. Profiles without `retail-12-0-5` lost both catalog getters; fix follows. **107 capabilities/362 IDs; 77 pending /239 bounded /13 partial /33 metadata**; audit **IN PROGRESS**.
+
 ### Batch94 — GetSpellBookItemCastCount registered and accepted
 
 **Exact318 `C_SpellBook.GetSpellBookItemCastCount`** (`SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted`) was not registered. [Contract and acceptance SSOT](../../specs/spell-book-cast-count.md#development-proof-and-independent-bounded-acceptance--2026-10-03). It resolves the player book slot to its spell, returns the explicit cast count shared with `C_Spell.GetSpellCastCount`, zero on a miss, secret only under the cooldown restriction, with both selectors authenticated first. RED `96994beaf` 0/5 after a non-compiling first fixture; producer `a881a1729` GREEN 35/35, startup `[]`; independent review accepted with qualifications and reran 35/35. Non-spell entries and passive castability have no model. **99 capabilities/362 IDs; 97 pending /220 bounded /12 partial /33 metadata**; audit **IN PROGRESS**.

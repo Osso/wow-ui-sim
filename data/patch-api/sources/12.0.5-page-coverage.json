@@ -1665,6 +1665,148 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/spell-book-cast-count.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
       "gate_scope": "First inputs ffd50c5d1 failed to compile (test fixture type); RED 96994beaf 0/5; GREEN a881a1729 35/35 (5 new + 30 spell_count_outputs controls), cargo exit0 zero warnings, cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 b549a8d5f36a10ae8ff94da33458a912c76fbd7e2cbb4b8f24251b79a8bf46c2 (scratchpad), own reruns 5/5 and 30/30 exit0. Feature matrix inspected not built; no cargo check or broad suite; native/GUI/older-profile gaps open."
+    },
+    {
+      "id": "spell-max-cumulative-aura-applications",
+      "symbols": [
+        "C_Spell.GetSpellMaxCumulativeAuraApplications"
+      ],
+      "scope": "B95 exact315/316 on a newly registered query: public spell identifier (number, name, alias-first) resolved through the shared reader to an explicit spell-keyed maximum, zero on a miss, independent of applied stacks; secret host number only under the explicit unit_auras_restricted flag. Secret identifiers rejected for every caller (declared AllowedWhenTainted unmodeled); nothing sets the flag automatically; no native maxima or C_Secrets predicate.",
+      "spec": "docs/specs/spell-max-cumulative-aura-applications.md",
+      "tests": [
+        "tests/spell_max_cumulative_aura_applications.rs"
+      ],
+      "inputs": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "implementation": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "compiled_revision": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/spell-max-cumulative-aura-applications.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share one commit a0e23199d. RED (producers withheld from the working tree) 0 PASS / 8 FAIL; GREEN 8/8, combined run 396 PASS / 1 FAIL (c_system_api::test_c_console_get_all_commands_empty, untouched console command count), cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 c82a251027147d0fa6068c968bb8769cc466fb4634ffd683a37d2c7fe111561b (scratchpad), own rerun 8/8 exit0. No cargo check or broad suite; older profiles, native and GUI gaps open."
+    },
+    {
+      "id": "spell-maw-powers",
+      "symbols": [
+        "C_Spell.GetMawPowerBorderAtlasBySpellID",
+        "C_Spell.GetMawPowerLinkBySpellID"
+      ],
+      "scope": "B96 exact297/299: public spell identifiers resolved to independent explicit atlas and link maps; atlas miss one nil, link miss zero results, exact host strings on a hit. 297 partial: no cached declaration for the border query, cached Blizzard_Deprecated Deprecated_12_0_7.lua reassigns it on a full load, and the older-profile nil shim is retained. Secret identifiers rejected for every caller (AllowedWhenTainted unmodeled).",
+      "spec": "docs/specs/spell-maw-powers.md",
+      "tests": [
+        "tests/spell_maw_powers.rs"
+      ],
+      "inputs": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "implementation": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "compiled_revision": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/spell-maw-powers.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share one commit a0e23199d. RED (producers withheld from the working tree) 0 PASS / 10 FAIL; GREEN 10/10, combined run 396 PASS / 1 FAIL (c_system_api::test_c_console_get_all_commands_empty, untouched console command count), cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 c82a251027147d0fa6068c968bb8769cc466fb4634ffd683a37d2c7fe111561b (scratchpad), own rerun 10/10 exit0. No cargo check or broad suite; older profiles, native and GUI gaps open."
+    },
+    {
+      "id": "delves-api-inputs",
+      "symbols": [
+        "C_DelvesUI.HasActiveDelve",
+        "C_DelvesUI.RequestPartyEligibilityForDelveTiers",
+        "C_DelvesUI.GetCurioLink"
+      ],
+      "scope": "B96 exact262/263/265/257/258: HasActiveDelve reads an explicit host boolean and ignores all arguments including secret extras; RequestPartyEligibilityForDelveTiers authenticates its map argument before validation and records the last accepted map with zero returns; GetCurioLink resolves a public spell identifier plus NeverSecret rarity to explicit host links. A curio miss errors and the link map is empty by default, so cached companion-configuration chat-link callers raise until seeded. Secret spell identifier (AllowedWhenTainted) unmodeled; signed-i32 map domain inferred.",
+      "spec": "docs/specs/delves-api-inputs.md",
+      "tests": [
+        "tests/delves_api_inputs.rs",
+        "tests/delves_ui.rs"
+      ],
+      "inputs": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "implementation": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "compiled_revision": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/delves-api-inputs.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share one commit a0e23199d. RED (producers withheld from the working tree) 0 PASS / 9 FAIL plus the changed `delves_ui::` expectation; GREEN 10/10, combined run 396 PASS / 1 FAIL (c_system_api::test_c_console_get_all_commands_empty, untouched console command count), cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 05e8b7e825db92730ba365323823df0beb7f693ce661837e2e932414e00f8a19 (scratchpad), own rerun 10/10 exit0. No cargo check or broad suite; older profiles, native and GUI gaps open."
+    },
+    {
+      "id": "voice-chat-speak-text",
+      "symbols": [
+        "C_VoiceChat.SpeakText"
+      ],
+      "scope": "B96 exact409 on a newly registered function: validated requests appended to an explicit per-environment queue with exact fields and zero returns; arguments 1, 3, 4 and 5 reject authentic secrets for secure and tainted callers before conversion; rejection is atomic. Secret text rejected outright (declared AllowedWhenTainted/ConditionalSecret unmodeled); no audio, voices or completion events.",
+      "spec": "docs/specs/voice-chat-speak-text.md",
+      "tests": [
+        "tests/voice_chat_speak_text.rs",
+        "tests/c_system_api.rs"
+      ],
+      "inputs": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "implementation": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "compiled_revision": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/voice-chat-speak-text.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share one commit a0e23199d. RED (producers withheld from the working tree) 0 PASS / 8 FAIL; GREEN 8/8, combined run 396 PASS / 1 FAIL (c_system_api::test_c_console_get_all_commands_empty, untouched console command count), cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 a273fa728f03621dee89db3ef7ed675e9e1304b2ce29bcaaba88028d079800de (scratchpad), own rerun 8/8 exit0. No cargo check or broad suite; older profiles, native and GUI gaps open."
+    },
+    {
+      "id": "click-binding-spell-identifier",
+      "symbols": [
+        "C_ClickBindings.CanSpellBeClickBound"
+      ],
+      "scope": "B96 exact255: public spell identifier (number, name, alias-first) resolved against an explicit per-environment eligibility set, read live. The Rust registration overrides the retained unconditional-true Lua default under retail-12-0-5; older profiles keep that default. Set is empty by default, so the click-binding UI refuses every spell until a host declares IDs. Secret identifiers rejected for every caller (AllowedWhenTainted unmodeled); no native eligibility rules.",
+      "spec": "docs/specs/click-binding-spell-identifier.md",
+      "tests": [
+        "tests/click_binding_spell_identifier.rs"
+      ],
+      "inputs": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "implementation": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "compiled_revision": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/click-binding-spell-identifier.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share one commit a0e23199d. RED (producers withheld from the working tree) 0 PASS / 9 FAIL; GREEN 9/9, combined run 396 PASS / 1 FAIL (c_system_api::test_c_console_get_all_commands_empty, untouched console command count), cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 a273fa728f03621dee89db3ef7ed675e9e1304b2ce29bcaaba88028d079800de (scratchpad), own rerun 9/9 exit0. No cargo check or broad suite; older profiles, native and GUI gaps open."
+    },
+    {
+      "id": "encounter-event-sound-no-error",
+      "symbols": [
+        "C_EncounterEvents.GetEventSound"
+      ],
+      "scope": "B96 prose 03-12-043, tests only on the existing provider: public calls return stored mutable event/trigger sound overrides without error, distinct configured values, clearing, detached result tables, tainted public callers. No producer change and no RED. Declared AllowedWhenUntainted secret handling is not authenticated; event catalog is three fixed IDs.",
+      "spec": "docs/specs/encounter-event-sound-no-error.md",
+      "tests": [
+        "tests/encounter_event_sound_no_error.rs"
+      ],
+      "inputs": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "implementation": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "compiled_revision": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/encounter-event-sound-no-error.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share one commit a0e23199d. RED (producers withheld from the working tree) none (4/4 passed before any producer change; existing model); GREEN 4/4, combined run 396 PASS / 1 FAIL (c_system_api::test_c_console_get_all_commands_empty, untouched console command count), cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 a273fa728f03621dee89db3ef7ed675e9e1304b2ce29bcaaba88028d079800de (scratchpad), own rerun 4/4 exit0. No cargo check or broad suite; older profiles, native and GUI gaps open."
+    },
+    {
+      "id": "raid-roster-unknown-name",
+      "symbols": [
+        "GetRaidRosterInfo"
+      ],
+      "scope": "B96 prose 03-25-123/03-31-180: roster members carry an explicit name_cached flag read live; an uncached member's name is the public string Unknown with the twelve-result tuple unchanged, cached name returned once the flag is set; peers and player unaffected. Every construction site initializes cached. No automatic name-cache population or events; localized-global identity and absent-index behavior inferred; ungated.",
+      "spec": "docs/specs/raid-roster-unknown-name.md",
+      "tests": [
+        "tests/raid_roster_unknown_name.rs"
+      ],
+      "inputs": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "implementation": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "compiled_revision": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/raid-roster-unknown-name.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share one commit a0e23199d. RED (producers withheld from the working tree) 2 PASS / 2 FAIL with the producer forced to the cached branch; GREEN 4/4, combined run 396 PASS / 1 FAIL (c_system_api::test_c_console_get_all_commands_empty, untouched console command count), cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 caf669b3a28143b86dd45ae1f8eeca25e4b0a66992b5ce70640e3520ee1432bf (scratchpad), own rerun 4/4 exit0. No cargo check or broad suite; older profiles, native and GUI gaps open."
+    },
+    {
+      "id": "catalog-shop-product-structures",
+      "symbols": [
+        "C_CatalogShop.GetProductInfo",
+        "C_CatalogShop.GetCatalogShopProductDisplayInfo"
+      ],
+      "scope": "B96 structures 631/632/634/635/636/637: both getters serialize explicit typed host records with the exact cached field sets (45 product, 34 display, nested subitem/currency/decor-quantity), fresh detached snapshots, one nil on a miss, no consumableQuantity. Lua seeded getters removed; maps empty by default, so still-seeded category lists name products that now return nil. Secret selectors rejected (AllowedWhenUntainted unmodeled); HasRestrictions rows 247/249 and purchase excluded; storefront and housing panels not opened.",
+      "spec": "docs/specs/catalog-shop-product-structures.md",
+      "tests": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "inputs": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "implementation": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "compiled_revision": "a0e23199dc60d4056add5f5a15b68f23dcac38cc",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/catalog-shop-product-structures.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Inputs and producers share one commit a0e23199d. RED (producers withheld from the working tree) 0 PASS / 16 FAIL; GREEN 16/16, combined run 396 PASS / 1 FAIL (c_system_api::test_c_console_get_all_commands_empty, untouched console command count), cargo fmt --check exit0, startup lua-errors []. Independent Sol review ACCEPT WITH QUALIFICATIONS SHA256 caf669b3a28143b86dd45ae1f8eeca25e4b0a66992b5ce70640e3520ee1432bf (scratchpad), own rerun 16/16 exit0. No cargo check or broad suite; older profiles, native and GUI gaps open."
     }
   ],
   "source_rows": [
@@ -1775,9 +1917,11 @@
     },
     {
       "source_id": "prose-2026-03-12-043",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "encounter-event-sound-no-error"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (4/4 own rerun). Credit is for the existing stored-override model on public inputs; no producer changed. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-12-048",
@@ -2068,9 +2212,11 @@
     },
     {
       "source_id": "prose-2026-03-25-123",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "raid-roster-unknown-name"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (4/4 own rerun). RED was produced by forcing the cached branch, not by reverting to the parent producer. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-125",
@@ -2283,9 +2429,11 @@
     },
     {
       "source_id": "prose-2026-03-31-180",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "raid-roster-unknown-name"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (4/4 own rerun). RED was produced by forcing the cached branch, not by reverting to the parent producer. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-181",
@@ -2539,21 +2687,27 @@
     },
     {
       "source_id": "global api-C_ClickBindings-CanSpellBeClickBound-255",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "click-binding-spell-identifier"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (9/9 own rerun). Empty default is a visible retail behavior change; loaded click-binding UI was not exercised. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_DelvesUI-GetCurioLink-257",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "delves-api-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (10/10 own rerun). Row 258 earns the rarity `NeverSecret` policy only. Four requirements stay unchecked as partly untested (tainted invalid extra, initially empty map, validation order and rarity bounds, malformed UTF-8). Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_DelvesUI-GetCurioLink-258",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "delves-api-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (10/10 own rerun). Row 258 earns the rarity `NeverSecret` policy only. Four requirements stay unchecked as partly untested (tainted invalid extra, initially empty map, validation order and rarity bounds, malformed UTF-8). Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_DelvesUI-GetTieredEntrancePDEID-260",
@@ -2563,21 +2717,27 @@
     },
     {
       "source_id": "global api-C_DelvesUI-HasActiveDelve-262",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "delves-api-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (10/10 own rerun). Row 258 earns the rarity `NeverSecret` policy only. Four requirements stay unchecked as partly untested (tainted invalid extra, initially empty map, validation order and rarity bounds, malformed UTF-8). Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_DelvesUI-HasActiveDelve-263",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "delves-api-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (10/10 own rerun). Row 258 earns the rarity `NeverSecret` policy only. Four requirements stay unchecked as partly untested (tainted invalid extra, initially empty map, validation order and rarity bounds, malformed UTF-8). Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_DelvesUI-RequestPartyEligibilityForDelveTiers-265",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "delves-api-inputs"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (10/10 own rerun). Row 258 earns the rarity `NeverSecret` policy only. Four requirements stay unchecked as partly untested (tainted invalid extra, initially empty map, validation order and rarity bounds, malformed UTF-8). Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_HouseExterior-RemoveFixtureFromSelectedPoint-267",
@@ -2697,15 +2857,19 @@
     },
     {
       "source_id": "global api-C_Spell-GetMawPowerBorderAtlasBySpellID-297",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-maw-powers"
+      ],
+      "status": "partial-development-green",
+      "note": "B96 accepted independent Sol review of a0e23199d (10/10 own rerun). Row 297 is partial: no cached declaration, full-load reassignment by `Deprecated_12_0_7.lua`, retained older-profile shim. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_Spell-GetMawPowerLinkBySpellID-299",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-maw-powers"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (10/10 own rerun). Row 297 is partial: no cached declaration, full-load reassignment by `Deprecated_12_0_7.lua`, retained older-profile shim. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_Spell-GetSpellCastCount-301",
@@ -2757,15 +2921,19 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellMaxCumulativeAuraApplications-315",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-max-cumulative-aura-applications"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (8/8 own rerun). Secret identifiers are rejected for every caller; the cached declaration says `AllowedWhenTainted`. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_Spell-GetSpellMaxCumulativeAuraApplications-316",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-max-cumulative-aura-applications"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (8/8 own rerun). Secret identifiers are rejected for every caller; the cached declaration says `AllowedWhenTainted`. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemCastCount-318",
@@ -3177,9 +3345,11 @@
     },
     {
       "source_id": "global api-C_VoiceChat-SpeakText-409",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "voice-chat-speak-text"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (8/8 own rerun). Secret text is rejected outright; cached Blizzard callers were inspected, not executed. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-Localization BreakUpLargeNumbers-411",
@@ -4041,39 +4211,51 @@
     },
     {
       "source_id": "structures-CatalogShopProductDisplayInfo-631",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "catalog-shop-product-structures"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (16/16 own rerun). Secret-selector requirement stays unchecked (only malformed public selectors are tested). Panels were not opened. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "structures-CatalogShopProductDisplayInfo-632",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "catalog-shop-product-structures"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (16/16 own rerun). Secret-selector requirement stays unchecked (only malformed public selectors are tested). Panels were not opened. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "structures-CatalogShopProductInfo-634",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "catalog-shop-product-structures"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (16/16 own rerun). Secret-selector requirement stays unchecked (only malformed public selectors are tested). Panels were not opened. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "structures-CatalogShopProductInfo-635",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "catalog-shop-product-structures"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (16/16 own rerun). Secret-selector requirement stays unchecked (only malformed public selectors are tested). Panels were not opened. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "structures-CatalogShopProductInfo-636",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "catalog-shop-product-structures"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (16/16 own rerun). Secret-selector requirement stays unchecked (only malformed public selectors are tested). Panels were not opened. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "structures-CatalogShopProductInfo-637",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "catalog-shop-product-structures"
+      ],
+      "status": "bounded-coverage",
+      "note": "B96 accepted independent Sol review of a0e23199d (16/16 own rerun). Secret-selector requirement stays unchecked (only malformed public selectors are tested). Panels were not opened. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "structures-DamageMeterCombatSource-639",

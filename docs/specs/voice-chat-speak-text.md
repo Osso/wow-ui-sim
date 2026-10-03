@@ -8,17 +8,17 @@ Cached retail `Blizzard_APIDocumentationGenerated/VoiceChatDocumentation.lua` li
 
 ### Stored result
 
-- [ ] Append one request per accepted call to the environment's initially empty queue, preserving call order and all five fields exactly. No synthesis, XML parsing, volume normalization, voice catalog or fabricated records.
-- [ ] Return exactly zero values after an accepted call.
-- [ ] Omitted overlap uses the declared false default. INFERRED: explicit nil also uses false.
-- [ ] INFERRED representation policy: accept only finite Lua numbers for voice ID, rate and volume, UTF-8 Lua strings for text, and booleans for supplied nonnil overlap. No numeric/string coercion, integer restriction or numeric range policy. Empty text is accepted unchanged.
-- [ ] Validation failures leave the entire existing request queue unchanged; later ordinary requests still work. Environments own independent queues.
+- [x] Append one request per accepted call to the environment's initially empty queue, preserving call order and all five fields exactly. No synthesis, XML parsing, volume normalization, voice catalog or fabricated records.
+- [x] Return exactly zero values after an accepted call.
+- [x] Omitted overlap uses the declared false default. INFERRED: explicit nil also uses false.
+- [x] INFERRED representation policy: accept only finite Lua numbers for voice ID, rate and volume, UTF-8 Lua strings for text, and booleans for supplied nonnil overlap. No numeric/string coercion, integer restriction or numeric range policy. Empty text is accepted unchanged.
+- [x] Validation failures leave the entire existing request queue unchanged; later ordinary requests still work. Environments own independent queues.
 
 ### Argument policy under `retail-12-0-5`
 
-- [ ] Reject original secret values in positions 1, 3, 4 and 5 for secure and tainted callers before any conversion or mutation, even when another argument is malformed. Wrapper payload type does not bypass NeverSecret.
-- [ ] Preserve caller taint and the original secret wrappers on rejection; rooted secrets retain identity and secrecy across full GC. Public requests remain usable by tainted callers.
-- [ ] Conservatively reject secret text for both secure and tainted callers before conversion or mutation. This is an explicitly unmodeled policy, NOT implementation of the declared AllowedWhenTainted/ConditionalSecret behavior.
+- [x] Reject original secret values in positions 1, 3, 4 and 5 for secure and tainted callers before any conversion or mutation, even when another argument is malformed. Wrapper payload type does not bypass NeverSecret.
+- [x] Preserve caller taint and the original secret wrappers on rejection; rooted secrets retain identity and secrecy across full GC. Public requests remain usable by tainted callers.
+- [x] Conservatively reject secret text for both secure and tainted callers before conversion or mutation. This is an explicitly unmodeled policy, NOT implementation of the declared AllowedWhenTainted/ConditionalSecret behavior.
 
 ## How it works
 
@@ -39,6 +39,14 @@ The provider validates original secret wrappers, constructs a public request, th
 ## Development proof — 2026-10-03
 
 Not compiled, formatted or executed: authoring slice permits file writes only. Main session owns integration and targeted RED/GREEN evidence. All requirements remain unchecked.
+
+## Development proof and independent bounded acceptance — 2026-10-03
+
+Inputs and producer landed together in `a0e23199d`. RED with the producers withheld from the working tree: 0 PASS / 8 FAIL. GREEN: 8/8; the combined run was 396 PASS / 1 FAIL, the failure being `c_system_api::test_c_console_get_all_commands_empty` on an untouched console command count. `cargo fmt --check` exit0; startup `lua-errors` `[]`.
+
+Main accepts an independent GPT-6.1-sol review: **ACCEPT WITH QUALIFICATIONS** (report SHA256 `a273fa728f03621dee89db3ef7ed675e9e1304b2ce29bcaaba88028d079800de`, scratchpad-only), own rerun 8/8 exit0. Secret text is rejected outright; cached Blizzard callers were inspected, not executed. Checked requirements are bounded simulator proof on the tested fixtures, not native parity. No `cargo check`, broad suite or older-profile run.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): rows 409 under new capability `voice-chat-speak-text`; **107 capabilities/362 IDs; 77 pending /239 bounded /13 partial /33 metadata**.
 
 ## Known gaps (current cycle)
 

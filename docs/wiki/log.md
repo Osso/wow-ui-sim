@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B95/B96 eight explicit-state slices accepted
+
+Linked eight slice specs and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch9596--eight-explicit-state-slices-accepted): twenty source IDs accounted after commit `a0e23199d` and four independent reviews. 107 capabilities/362 IDs; 77 pending /239 bounded /13 partial /33 metadata.
+
 ## [2026-10-03] docs | B94 GetSpellBookItemCastCount accepted
 
 Linked [acceptance SSOT](../specs/spell-book-cast-count.md#development-proof-and-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch94--getspellbookitemcastcount-registered-and-accepted): row318 bounded after RED `96994beaf`, producer `a881a1729` and independent review. 99 capabilities/362 IDs; 97 pending /220 bounded /12 partial /33 metadata.

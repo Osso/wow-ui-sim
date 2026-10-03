@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B95/B96 eight explicit-state slices accepted
+
+Eight per-slice specs own exact255/257/258/262/263/265/299/315/316/409, structures 631/632/634–637, prose 03-12-043, 03-25-123 and 03-31-180 as bounded, exact297 as partial. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch9596--eight-explicit-state-slices-accepted); 107 capabilities/362 IDs; 77 pending /239 bounded /13 partial /33 metadata.
+
 ## [2026-10-03] evidence | B94 GetSpellBookItemCastCount registered and accepted
 
 [Contract and acceptance SSOT](../specs/spell-book-cast-count.md#development-proof-and-independent-bounded-acceptance--2026-10-03) owns exact318: newly registered spell-book cast count with cooldown-restricted output and authenticated selectors. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch94--getspellbookitemcastcount-registered-and-accepted); 99 capabilities/362 IDs; 97 pending /220 bounded /12 partial /33 metadata.
