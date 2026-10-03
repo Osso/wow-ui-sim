@@ -2,11 +2,15 @@
 
 ### Batch79 — exact342 inputs-only checkpoint
 
-Committed inputs `a23adf150`: [GetUnitBuff contract SSOT](../../specs/tooltip-unit-buff-security.md) owns the bounded domain, chosen policies and 18 authored tests. Main performed formatting precommit. At this historical checkpoint, asynchronous compiled-RED worker3815774 is active at `/tmp/patch-12.0.5-buff-indexed-red-ops/`; no finished RED, GREEN or acceptance is claimed. Later production does not retroactively change this checkpoint.
+Committed inputs `a23adf150`: [GetUnitBuff contract SSOT](../../specs/tooltip-unit-buff-security.md) owns the bounded domain, chosen policies and 18 authored tests. Main performed formatting precommit. At that historical inputs-only checkpoint, asynchronous compiled-RED worker3815774 was active at `/tmp/patch-12.0.5-buff-indexed-red-ops/`; no finished RED, GREEN or acceptance was then claimed. Later evidence does not retroactively change that checkpoint.
 
-The contract uses existing `player.buffs` / `party_members[].buffs` keyed-unit state; old GetUnitBuff discards unit. Input authentication chooses existing rilua AllowedWhenUntainted reads, not generic declassification. Unit-aura access and restricted outputs remain **UNMODELED**; exact342 remains **PENDING**. No native, all-unit, target-identity or full-suite credit.
+Main now supplies actual compiled RED at inputs `a23adf150`: compile exit0 in **88.098727s**, zero diagnostics; **0 PASS / 18 FAIL** in **2.161859s**. Identity/miss, secret-from-stack and authorization-context assertions failed; downstream GC branches were not all reached. Evidence is supplied, not independently inspected here.
 
-Latest supplied accounting `5ec536a36`, accepted independent687 **37/37**: **83 capabilities,362 rows;167 pending / 174 bounded / 14 partial / 7 metadata**. This inputs checkpoint changes no counts; mount291 remains pending. Prior accounting/proof checkpoints remain historical.
+Producer `a28293ee0` links [implementation inventory SSOT](../../specs/tooltip-unit-buff-security.md#implementation-inventory): C API unit-indexed lookup over existing visible helpful player/party state plus PLAYER filtering; all three original arguments authenticated before parsing via `unwrap_secret` (internal authorized read, not generic declassification). Modern old provider retired; older-profile body retained. Builder bridge unchanged, including hardcoded `1 hr`. No detailed inventory duplicated here.
+
+Main asynchronous GREEN3821573 and independent verification are active; **no GREEN or acceptance claimed**. Unit-aura access and restricted outputs remain **UNMODELED**; exact342 remains **PENDING**, with native/general-unit/target-identity gaps and no full-suite credit.
+
+Latest supplied accounting `5ec536a36`, accepted independent687 **37/37**: **83 capabilities,362 rows;167 pending / 174 bounded / 14 partial / 7 metadata**. Neither this historical inputs checkpoint nor the pending producer inventory changes counts; mount291 remains pending. Prior accounting/proof checkpoints remain historical.
 
 ### Mount capability — qualified desktop saved acceptance
 

@@ -1,6 +1,6 @@
-## [2026-10-03] docs | B79 exact342 historical inputs checkpoint
+## [2026-10-03] docs | B79 producer inventory pending proof
 
-[GetUnitBuff inputs SSOT](../specs/tooltip-unit-buff-security.md) and [B79 checkpoint](investigations/patch-12-0-5-api-audit.md#batch79--exact342-inputs-only-checkpoint) link `a23adf150`:18 authored tests, main precommit formatting, asynchronous compiled RED active—not finished RED/GREEN/acceptance. Exact342 pending; access/restricted outputs UNMODELED. Latest supplied accounting `5ec536a36`, accepted68737/37, remains83 capabilities/362 rows,167/174/14/7; mount291 pending. Checkpoint remains historical after later production.
+[GetUnitBuff inventory SSOT](../specs/tooltip-unit-buff-security.md#implementation-inventory) and [B79 checkpoint](investigations/patch-12-0-5-api-audit.md#batch79--exact342-inputs-only-checkpoint) link producer `a28293ee0` after supplied actual compiled RED at `a23adf150`:compile0/88.098727s/zero diagnostics,0 PASS/18 FAIL in2.161859s; downstream GC branches not all reached. Prior inputs-only asynchronous-RED status is historical. GREEN3821573 and independent verification active, not GREEN/acceptance. Exact342 pending; access/restricted outputs UNMODELED, native/general-unit/target-identity gaps retained. Accounting unchanged83 capabilities/362 rows,167 pending/174 bounded/14 partial/7 metadata; mount291 pending.
 
 ## [2026-10-03] evidence | Mount capability and qualified desktop saved proof accepted
 
