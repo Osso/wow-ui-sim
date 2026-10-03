@@ -1388,6 +1388,22 @@
       "proof": "bounded-independent-pass",
       "ledger": "/tmp/patch-12.0.5-private-sound-space-limit-independent-proof.md",
       "gate_scope": "Parent accepted independent389 exact403/328 only. Combined evidence SSOT in sound spec: 13 sound +8 limit +248 controls =269 unique PASS, all19 filters exit0, startup0 []. Scoped7-filefmt0/0.152571s; dirty combined check0/90.67012s without warnings; globalfmt1/140.992647s preserved unowned, not fixed. Runtime40.32936095423065s plus startup4.870177653s below60 target; compile196.389966775s separate. Bounded development, not clean revision, whole-page/goal/native acceptance. Numeric-guard/helper-length advisories deferred without behavioral counterexample; no Rust/test rewrite."
+    },
+    {
+      "id": "tooltip-unit-debuff-security",
+      "symbols": [
+        "C_TooltipInfo.GetUnitDebuff"
+      ],
+      "scope": "B81 bounded real player/party harmful indexed tooltip state and original three-position AllowedWhenUntainted authentication, shared with Buff without behavior changes. Filtered/blocked/PLAYER selection, read-only live snapshots and actual rooted secret identity/GC. Strict defaults/index/filter/miss/domain policies inferred; target fixture excluded. Unit-aura access/restricted output and native/general-unit/profile parity unmodeled; exact347 remains pending.",
+      "spec": "docs/specs/tooltip-unit-debuff-security.md",
+      "tests": [
+        "tests/tooltip_unit_debuff_security.rs"
+      ],
+      "implementation": "d7d7b41fca19b85c4beae8014b48ba1fa637d7dd",
+      "compiled_revision": "d7d7b41fca19b85c4beae8014b48ba1fa637d7dd",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-debuff-indexed-independent-proof.md",
+      "gate_scope": "Main accepts707:71 distinct ALL refreshed PASS=15Debuff+18Buff+24instance+14filter; compile0/113.603004s zeroDiag, startup0[]4.696931s localheadlesscascfalse, scopedfmt0/check0zeroDiag14.715721s. Shared Buff behavior, older-profile provider/body and unchanged DTO builder independently preserved; older profiles not executed. Real root-list/wrapper identities and caller trust asserted through accepted/denied/error/GC paths. Original6aa RED15FAIL0PASS/1.898831s compile0/89.594915s zeroDiag retained; RED did not reach all downstreamGC/miss assertions. Naming observation deferred/nonblocking, testhelper lengths below200 classifiedtestcode. Historicalglobalfmt1 unowned aura_duration.rs:44 remains; dirty-combined not clean whole-tree/native/GUI/CASC/allprofile/fullsuite proof. Exact347 status unchanged; no generic declassification or access/output credit."
     }
   ],
   "source_rows": [
@@ -2603,9 +2619,11 @@
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitDebuff-347",
-      "capabilities": [],
+      "capabilities": [
+        "tooltip-unit-debuff-security"
+      ],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "B81 main-accepted707 bounded input/live harmful-model proof:15 new+56 refreshed controls=71 distinct PASS, startup[], scopedfmt/defaultcheck. All3 original secure selectors drive player/party harmful filtered state; tainted auth precedes parse/lookup, not secret-to-empty masking. Unit-aura access/restricted output unmodeled; target/general-unit/native/profile parity unverified and inferred parser/filter/miss policies explicit. Exact347 remains pending; arg2/arg3 are no additional retained removals, no whole-row/fullsuite credit."
     },
     {
       "source_id": "global api-C_TooltipInfo-GetUnitDebuffByAuraInstanceID-349",
