@@ -1,5 +1,13 @@
 # Patch 12.0.5 API Audit
 
+### Batch86 — aura expiration query argument policy accepted
+
+**Exact365 `C_UnitAuras.DoesAuraHaveExpirationTime`** (`AllowedWhenTainted -> AllowedWhenUntainted`) is the first row in this continuation needing a producer change. [Acceptance SSOT](../../specs/aura-expiration-time.md#independent-bounded-acceptance--2026-10-03) owns the contract, proof table and limits. The function, previously an uncommitted change, was committed as `608d52558`; inputs `a342c6eec` gave RED 6 PASS/3 FAIL.
+
+The first producer `0d2a98596` passed 27/27 and was **rejected by independent review**: it validated the unit before authenticating the instance ID, so a tainted caller's malformed unit pre-empted the secret denial. No payload was exposed. A failing ordering assertion (`08c9e8bc8`, 8 PASS/1 FAIL) and the corrected producer `d1bbdc8e8` (27/27) followed; independent re-verification accepted it with qualifications and reran 9/9 and 18/18 itself. The rejection is retained history, not erased.
+
+[Coverage SSOT](../../../data/patch-api/sources/12.0.5-page-coverage.json): **91 capabilities/362 IDs; 150 pending /194 bounded /11 partial /7 metadata**. Aura access, restricted output, blocked/target records and startup after the reorder are unverified; audit **IN PROGRESS**.
+
 ### Batch87 — eight existing stat models accepted
 
 An independent GPT-6.1-sol scout classified the 19 remaining `SecretWhenUnitStatsRestricted` rows. Main accepts its eight **state-backed and wrapped** rows as output annotations only: **418, 446, 454, 456, 462, 490, 492, 516**. [Acceptance SSOT](../../specs/retail-missing-stat-inputs.md#b87-existing-model-output-annotations-accepted--2026-10-03) owns the per-row state, assertions and limits. Fresh `character_stats::` run: **35 PASS/0 FAIL** on the binary built at `d1bbdc8e8`.

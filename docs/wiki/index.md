@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B86 aura expiration query argument policy accepted
+
+[Acceptance SSOT](../specs/aura-expiration-time.md#independent-bounded-acceptance--2026-10-03) owns exact365 `DoesAuraHaveExpirationTime` `AllowedWhenUntainted`: RED, an independently rejected first producer, ordering RED, corrected producer `d1bbdc8e8` and independent re-verification. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch86--aura-expiration-query-argument-policy-accepted) records 91 capabilities/362 IDs, 150 pending/194 bounded/11 partial/7 metadata.
+
 ## [2026-10-03] evidence | B87 eight existing stat models accepted
 
 [Acceptance SSOT](../specs/retail-missing-stat-inputs.md#b87-existing-model-output-annotations-accepted--2026-10-03) owns exact418/446/454/456/462/490/492/516 output annotations from an independent Sol scout plus a fresh 35/35 `character_stats::` run. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch87--eight-existing-stat-models-accepted) lists the eleven constant/proxy stat rows still pending; 90 capabilities/362 IDs, 151 pending/193 bounded/11 partial/7 metadata.

@@ -1501,6 +1501,23 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/retail-missing-stat-inputs.md#b87-existing-model-output-annotations-accepted--2026-10-03",
       "gate_scope": "Independent Sol scout classification of 19 pending stat rows, report SHA256 a674425f23fc9f9a87810b83db68120aa120811c7cd7aaf7cfc45e4b5b5dad7d (scratchpad, not durable); main accepts its eight state-backed-and-wrapped rows. Fresh direct run character_stats:: 35 PASS/0 FAIL exit0, integration binary SHA256 3fbfdbb32a96056c14a13ea4e16f1dc8247a9a31ec65668df90a0fedacc790d9 built at d1bbdc8e8, source unchanged to c9940ece9; cargo fmt --check exit0. tests/unit_stats.rs value cases not rerun in this batch. No cargo check, startup or broad suite claimed. Native/GUI/CASC/older-profile gaps open."
+    },
+    {
+      "id": "aura-expiration-time-arguments",
+      "symbols": [
+        "C_UnitAuras.DoesAuraHaveExpirationTime"
+      ],
+      "scope": "B86 exact365 AllowedWhenUntainted: unit and aura instance are both VM-authenticated before either is validated; untainted callers may pass authentic secret unit/ID/both, tainted callers are denied before validation or lookup including with a malformed public unit; caller taint and input secrecy retained, GC-rooted unit and numeric identity. One public boolean from stored nonzero expiration over player helpful/harmful and party records, live reads, inferred false for unknown/nil unit and strict representation errors. Blocked/target records, full-record immutability, extra arguments, RequiresUnitAuraAccess/RequiresValidUnitAuraInstance/SecretWhenUnitAuraRestricted output and profiles below retail-12-0-5 unasserted or unmodeled.",
+      "spec": "docs/specs/aura-expiration-time.md",
+      "tests": [
+        "tests/aura_expiration_time.rs"
+      ],
+      "inputs": "a342c6eec1fa758487082eb8a0653353d80441df",
+      "implementation": "d1bbdc8e8c25dc55c4fdeb3239018e5e63ceb476",
+      "compiled_revision": "d1bbdc8e8c25dc55c4fdeb3239018e5e63ceb476",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/aura-expiration-time.md#independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED a342c6eec 6 PASS/3 FAIL; first producer 0d2a98596 27/27 then independently REJECTED for validating unit before authenticating instance ID (report SHA256 3d2c3a16f934ca5d81b538c98dc540432ee6e84507b766e3e35a27e7aebb50ee); ordering RED 08c9e8bc8 8 PASS/1 FAIL; corrected d1bbdc8e8 27/27 cargo exit0 zero warnings, cargo fmt --check exit0. Independent re-verification ACCEPT WITH QUALIFICATIONS (SHA256 c4e407866ef9c5d70e8e0b653cb38e2026456496db4f531c4970007a06f886f4), own direct runs 9/9 and 18/18 exit0. Startup lua-errors [] only at 0d2a98596; no cargo check or broad suite. Reports scratchpad-only. Native/GUI/CASC/older-profile gaps open."
     }
   ],
   "source_rows": [
@@ -2794,9 +2811,11 @@
     },
     {
       "source_id": "global api-C_UnitAuras-DoesAuraHaveExpirationTime-365",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "aura-expiration-time-arguments"
+      ],
+      "status": "bounded-coverage",
+      "note": "B86 accepted independent Sol re-verification of d1bbdc8e8: AllowedWhenUntainted applied to unit and instance, both authenticated before validation; secure acceptance, tainted denial incl. malformed public unit, taint/secrecy retained, GC identity. 9 new + 18 controls PASS rerun independently. First producer rejected for ordering and fixed. Aura access/restricted output, blocked/target records and native parity excluded."
     },
     {
       "source_id": "global api-C_UnitAuras-GetAuraApplicationDisplayCount-367",

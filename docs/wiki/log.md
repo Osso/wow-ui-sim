@@ -1,3 +1,7 @@
+## [2026-10-03] docs | B86 aura expiration query argument policy accepted
+
+Linked [acceptance SSOT](../specs/aura-expiration-time.md#independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch86--aura-expiration-query-argument-policy-accepted): row365 bounded after an independent rejection (unit validated before instance ID authenticated), ordering RED and corrected producer `d1bbdc8e8`; independent rerun 9/9 + 18/18. 91 capabilities/362 IDs, 150/194/11/7.
+
 ## [2026-10-03] docs | B87 eight existing stat models accepted
 
 Linked [acceptance SSOT](../specs/retail-missing-stat-inputs.md#b87-existing-model-output-annotations-accepted--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch87--eight-existing-stat-models-accepted): eight state-backed stat rows bounded output-only; eleven constant/proxy rows left pending with required inputs named. Fresh 35/35 `character_stats::` run. 90 capabilities/362 IDs, 151/193/11/7.
