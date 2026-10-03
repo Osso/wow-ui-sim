@@ -1,11 +1,13 @@
 //! Ordinary housing basic-mode state. Placement and collision effects are unmodeled.
 
-use super::catalog::{read_selector, read_variant_id};
+mod pending_input;
+
 use crate::c_api::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 #[cfg(feature = "retail-12-0-0")]
 use crate::lua_bridge::stack_val;
 use crate::lua_bridge::table_set_rust_fn_static;
+use pending_input::read_variant_id;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
@@ -24,8 +26,7 @@ pub(super) fn register_pending(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn start_placing_new_decor(state: &mut LuaState) -> LuaResult<u32> {
-    let selector = read_selector(state)?;
-    let id = read_variant_id(state, selector)?;
+    let id = read_variant_id(state)?;
     let mut sim = borrow_state_mut(state)?;
     // Inferred eligibility only: no reservation, instance, selection or event.
     if sim
