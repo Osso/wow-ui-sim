@@ -1,5 +1,13 @@
 # Patch 12.0.5 API Audit
 
+### Batch81 — producer checkpoint, proof pending
+
+After producer `d7d7b41fc`, [GetUnitDebuff SSOT](../../specs/tooltip-unit-debuff-security.md) owns implementation inventory, inferred policies and proof requirements. Main supplies RED at `6aa7a391b`: compile exit0/zero diagnostics **89.594915s**; **15 FAIL / 0 PASS**, **1.898831s**, stdout hash `1dc876e2559e10a0df345d37f926900af05e3f5994ba9a2ee3c40729bf2cbccc`. Reached boundaries were empty selected payload, original userdata parsing and API error context; this does **not** prove all downstream GC branches. Supplied evidence only; no logs inspected or workers polled here.
+
+Producer shares `c_tooltip_info_indexed_aura`: all three original positions authenticate in secure context before parsing; live harmful player/party state, visibility and PLAYER filtering precede indexing; existing builder retained. Modern old provider retired, older-profile provider retained. Buff behavior is intended unchanged, pending preservation controls. Fabricated target fixture is excluded from the chosen Debuff domain; domain/error/filter policies remain inferred, not native-verified.
+
+At this supplied checkpoint, main GREEN worker3863957 is **pending/compiling** for15 Debuff +18 Buff +24 instance +14 filter cases and startup; verifier707 proof is **pending**. No GREEN, preservation, startup or acceptance credit follows from source or peer reports. Source347 remains **AUDIT-PENDING**, access/restricted outputs **UNMODELED**. B80 accounting unchanged: **84 capabilities,362 ordered IDs;167 pending /177 bounded /11 partial /7 metadata**. Historical authored/compiling inputs checkpoint `d860ea62b` below remains true at its original time; B79/B80 proofs and gaps retained. Audit **IN PROGRESS**.
+
 ### Batch81 — exact347 inputs-only checkpoint
 
 Committed `6aa7a391b` contains test/spec inputs for exact347: **15 authored cases**. [GetUnitDebuff contract SSOT](../../specs/tooltip-unit-debuff-security.md) owns the case inventory, chosen policies and proof requirements. At the supplied checkpoint, main asynchronous RED worker3857761 at `/tmp/patch-12.0.5-debuff-indexed-red-ops/` was **compiling, NOT executed or accepted**. No completed behavioral RED, producer, PASS or acceptance is claimed; main supplies next evidence after the worker finishes.
