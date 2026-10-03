@@ -7,6 +7,24 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "spell-book-cooldown-outputs",
+      "symbols": [
+        "C_Spell.GetSpellCooldown",
+        "C_SpellBook.GetSpellBookItemCooldown"
+      ],
+      "scope": "Exact305/322 output predicates and meaningful player-bank0 book provider using existing spell/GCD intervals; strict numeric spell parser unchanged, cooldown-only typed offspec misses. Both original book selectors VM-authenticated before type/model; rooted public five-field DTO with private NUM startTime/duration/modRate under existing flag, public BOOL isEnabled/isActive. Miss/zero/fieldset/epoch policies inferred. Earlier/Forever disabled four-field provider preserved. No SpellIdentifier input-policy, nominal primitive type, native acquisition, future fixture, pet/full-bank or globalprivacy/UI parity credit.",
+      "spec": "docs/specs/spell-book-cooldown-outputs.md",
+      "tests": [
+        "tests/spell_book_cooldown_outputs.rs"
+      ],
+      "implementation": "11447717f7471d6cb6facfc8652e906387469bc6",
+      "compiled_revision": "ee1f7b6b5d7f279770f22e376e4dfb510155ece0",
+      "readability_followup": "a5d1196ce744c9d3ee93786def745d0208f86577",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-spell-book-cooldown-cfg-followup.md",
+      "gate_scope": "Accepted537+541:27currentrefreshed+135inherited=162distinctRetailPASS/1ignored; startup0[] inherited. Scopedfmt/defaultcheck0/security/wiring/fulltestLua readability; immutable snapshot and gated-module body equivalence. Fresh changed-moduleForevercompile0/legacy1PASS; original64PASS1FAIL1ignored retained separately, no duplicate refreshed count. Mask-quad control has no cooldown call, applicability rejected; causalpreexistenceUNRESOLVED, wholefilterNOTgreen. Runtime diagnostics/native/type/profile/UI/dirty/globalfmt1/historical502processFAIL remain explicit; hashes/commands/costs/full streams in ledgers."
+    },
+    {
       "id": "spell-count-outputs",
       "symbols": [
         "C_Spell.GetSpellCastCount",
@@ -2280,9 +2298,9 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellCooldown-305",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["spell-book-cooldown-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact305 output predicate independently accepted: existing spell/GCD interval/parser/shape preserved, three authentic private NUM fields and public BOOLs under explicit live restriction flag. No input-policy credit; zero/fieldset policies inferred and nominal primitive/native/UI parity unproved. See bounded capability proof and retained Forever control failure."
     },
     {
       "source_id": "global api-C_Spell-GetSpellCooldownDuration-307",
@@ -2340,9 +2358,9 @@
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemCooldown-322",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["spell-book-cooldown-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact322 output predicate and meaningful player-bank0 cooldown provider independently accepted with both-selector VM authentication, actual slot/offspec lookup, shared intervals and rooted private numeric DTO fields. Earlier/Forever disabled provider preserved. Native/future/pet/full-bank/type/UI parity unproved; retained mask-quad failure not wholefilter green."
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemCooldownDuration-324",

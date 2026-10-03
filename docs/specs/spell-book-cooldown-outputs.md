@@ -6,7 +6,7 @@ Cached retail documentation corroborates function-level `SecretWhenCooldownsRest
 
 ## What it must do
 
-Every requirement remains unchecked: compiled pre-producer RED is recorded below, but producer GREEN, native probes and independent acceptance remain pending.
+Bounded simulator output behavior is independently accepted below. Native input/type/acquisition/profile parity and future-entry fixtures remain unproved; historical unchecked producer checkpoints are retained as development evidence.
 
 ### Meaningful model before output-policy credit
 
@@ -81,10 +81,22 @@ Authored test/spec date is October 2, 2026. Local Git/build-host dates are separ
 
 Rows 305/322 receive no credit here. Broader coverage remains the supplied baseline of 192 pending / 155 bounded / 14 partial / 1 metadata, 362 IDs / 73 capabilities; independent batch 67 rows 301/309 are outside this artifact, and accepted batch 66 rows 237/241 are not recredited. Baseline totals are coordination context, not recomputed acceptance evidence.
 
+## Independent bounded acceptance — 2026-10-02
+
+Independent537 plus follow-up541 accept **exact305/322 output behavior only**. Proof SSOTs: `/tmp/patch-12.0.5-spell-book-cooldown-independent-proof.md`, `/tmp/patch-12.0.5-spell-book-cooldown-cfg-followup.md` and their JSON ledgers. After immutable snapshot extraction and cfg-module grouping, current27 focused PASS plus135 unchanged inherited controls yield **162 unique Retail PASS**, one ignored diagnostic, not189 fresh. Producer startup `[]` is inherited under source equivalence.
+
+At compiled `ee1f7b6b5d7f279770f22e376e4dfb510155ece0`, default integration compile exits0 with zero diagnostics in158.118170s; emitted SHA256 `d9c7cf25fd0063c176654a6900559ba31dac8fe87563ef088539cb7e57f8f92c` runs27 PASS in4.910952s. Scoped rustfmt exits0; fresh default Cargo check exits0 in142.174068s including a reported build-directory lock wait. Lock duration is not separately measurable from this output; do not label the total pure compilation time. Current allowlisted runtime is equivalent at doc-only `51bb5ebd7`.
+
+Fresh post-grouping Forever compilation at `51bb5ebd7f19f74b71b7351dc8c16af8bf809daf` exits0 with zero compiler diagnostics in129.192879s; inverse-gated focused control1 PASS in0.245425s. Original independent Forever controls remain **64 PASS/1 FAIL/1 ignored**, with the one refreshed identity counted once. Failed first-open mask-quad assertion makes the whole spellbook filter non-green. Read-only attribution finds no cooldown call and unchanged selected provider bodies, rejecting applicability to305/322; causal preexistence remains **UNRESOLVED**, not asserted. Original runtime diagnostics remain explicit. No broad profile/UI parity or warning-free claim.
+
+Meaningful player-bank intervals/offspec misses, original-selector authentication, private numeric payloads, public booleans, read-only snapshots and root/opacity/copy/GC behavior are tested. Modern/legacy body equivalence and registration/gates/readability reviewed; original repeated-cfg finding resolved by one modern gated module and exact inverse legacy module. Evidence is dirty-combined; globalfmt failure and historical502 protected-scope process failure remain unresolved.
+
+Only305/322 promote: **188 pending/159 bounded/14 partial/1 metadata,362 ordered IDs/75 capabilities**. Strict numeric spell input and conservative secret rejection earn no SpellIdentifier/AllowedWhenTainted credit. Inferred policies, native nominal types/conditions/acquisition, future-entry/pet/full-bank fixtures and consumer/UI parity remain open. Authored October2 and observed host/Git dates remain separate provenance.
+
 ## Known gaps (current cycle)
 
-- [ ] Main must compile the committed producers and run current GREEN plus check/startup/security/readability and independent acceptance. Pre-producer compilation/RED is recorded above; book-model failures are not output-only guard failures.
-- [ ] Validate real book intervals/five-field DTO, both selector authentication boundaries, cooldown-only offspec nil and numeric restriction, including downstream root/opacity/copy/GC assertions. Implementation alone earns no credit.
+- [x] Compile current producers; obtain relevant GREEN, scoped Rust/security/readability gates and bounded startup reuse.
+- [x] Validate real book intervals/five-field DTO, both selectors, offspec nil and downstream tested numeric payload/root/opacity/copy/GC behavior.
 - [ ] Current-cache C_Spell `SpellIdentifier`/AllowedWhenTainted input policy is not implemented or credited here. Existing numeric-only parser and conservative actual-secret rejection remain explicit gaps, not new input-row requirements.
 - [ ] Future entries lack a concrete existing model fixture. Pet bank/catalog support, native missing/offspec/header behaviors and full selector coercion/error parity are unproved; no opaque data-source fallback is permitted.
 - [ ] Native restricted field types, zero/modRate secrecy, field-version placement, predicate conditions, access rules, exception semantics, acquisition and UI consumer behavior remain unproved. Current cached metadata is not native execution evidence.
