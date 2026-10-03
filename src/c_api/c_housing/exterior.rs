@@ -3,6 +3,8 @@
 #[path = "exterior/runtime.rs"]
 mod runtime;
 
+pub(super) const EXTERIOR_CUSTOMIZATION_MODE: i32 = 6;
+
 pub(crate) const MODELED: bool = cfg!(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")

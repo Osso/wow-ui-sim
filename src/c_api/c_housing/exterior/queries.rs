@@ -1,7 +1,8 @@
 //! Read-only exterior snapshots; serializers leave one rooted result on the VM stack.
 
 use crate::c_api::c_housing::exterior::{
-    ExteriorFixtureOption, ExteriorFixturePoint, ExteriorSizeOption, ExteriorTypeOption,
+    EXTERIOR_CUSTOMIZATION_MODE, ExteriorFixtureOption, ExteriorFixturePoint, ExteriorSizeOption,
+    ExteriorTypeOption,
 };
 use crate::c_api::helpers::set_table_array;
 use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set_static};
@@ -133,7 +134,7 @@ fn exterior_has_attachments(state: &mut LuaState) -> LuaResult<u32> {
         let sim = borrow_state(state)?;
         let housing = &sim.housing;
         housing.inside_owned_plot
-            && housing.active_house_editor_mode == 6
+            && housing.active_house_editor_mode == EXTERIOR_CUSTOMIZATION_MODE
             && housing
                 .exterior
                 .decor

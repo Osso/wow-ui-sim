@@ -33,6 +33,11 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     ] {
         table_set_rust_fn_static(state, namespace, name, callback)?;
     }
+    publish_decor_action_enum(state)?;
+    Ok(())
+}
+
+fn publish_decor_action_enum(state: &mut LuaState) -> LuaResult<()> {
     let enum_namespace = ensure_namespace(state, "Enum")?;
     let action_enum = create_table(state);
     state.push(action_enum);
@@ -109,16 +114,15 @@ fn authenticate(
     })
 }
 
+fn is_positive_integral_u32(number: f64) -> bool {
+    let integral = number.is_finite() && number.fract() == 0.0;
+    let in_range = number > 0.0 && number <= f64::from(u32::MAX);
+    integral && in_range
+}
+
 fn read_target(value: Val, change: ExteriorChange) -> LuaResult<u32> {
     match value {
-        Val::Num(number)
-            if number.is_finite()
-                && number.fract() == 0.0
-                && number > 0.0
-                && number <= f64::from(u32::MAX) =>
-        {
-            Ok(number as u32)
-        }
+        Val::Num(number) if is_positive_integral_u32(number) => Ok(number as u32),
         _ => Err(runtime_error(format!(
             "{}: argument 1 must be a positive integral u32 number",
             change.api()

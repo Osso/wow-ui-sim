@@ -1,7 +1,12 @@
 //! Atomic explicit-host state transitions; rejection policies are inferred, not native codes.
 
 use crate::c_api::c_housing::catalog::HousingCatalogEntryVariantID;
+use crate::c_api::c_housing::exterior::{EXTERIOR_CUSTOMIZATION_MODE, HouseExteriorState};
 use crate::lua_api::state::HousingState;
+
+const SUCCESS: i32 = 0;
+const ALREADY_SIZE: i32 = 42;
+const ALREADY_TYPE: i32 = 43;
 use rilua::{LuaResult, runtime_error};
 
 #[path = "storage.rs"]
@@ -39,9 +44,9 @@ impl ExteriorChange {
 
     fn unchanged_response(self) -> i32 {
         match self {
-            Self::Fixture => 0,
-            Self::Size => 42,
-            Self::Type => 43,
+            Self::Fixture => SUCCESS,
+            Self::Size => ALREADY_SIZE,
+            Self::Type => ALREADY_TYPE,
         }
     }
 }
@@ -66,11 +71,12 @@ pub(super) fn update_exterior(
         Vec::new()
     };
     update_selection(housing, change, target);
-    Ok((0, stored))
+    Ok((SUCCESS, stored))
 }
 
 fn validate_host(housing: &HousingState, change: ExteriorChange) -> LuaResult<()> {
-    if !housing.inside_owned_plot || housing.active_house_editor_mode != 6 {
+    if !housing.inside_owned_plot || housing.active_house_editor_mode != EXTERIOR_CUSTOMIZATION_MODE
+    {
         return Err(runtime_error(format!(
             "{}: requires an owned plot in ExteriorCustomization mode",
             change.api()
@@ -85,7 +91,17 @@ fn validate_selection(
     target: u32,
 ) -> LuaResult<bool> {
     let exterior = &housing.exterior;
-    let valid = match change {
+    if !option_is_available(exterior, change, target) {
+        return Err(runtime_error(format!(
+            "{}: selected host target is missing, locked, or invalid",
+            change.api()
+        )));
+    }
+    Ok(current_selection(exterior, change) == Some(target))
+}
+
+fn option_is_available(exterior: &HouseExteriorState, change: ExteriorChange, target: u32) -> bool {
+    match change {
         ExteriorChange::Fixture => exterior
             .selected_fixture_point
             .as_ref()
@@ -109,14 +125,11 @@ fn validate_selection(
                     .iter()
                     .any(|option| option.id == target && !option.is_locked && !option.is_invalid)
         }
-    };
-    if !valid {
-        return Err(runtime_error(format!(
-            "{}: selected host target is missing, locked, or invalid",
-            change.api()
-        )));
     }
-    let current = match change {
+}
+
+fn current_selection(exterior: &HouseExteriorState, change: ExteriorChange) -> Option<u32> {
+    match change {
         ExteriorChange::Fixture => exterior
             .selected_fixture_point
             .as_ref()
@@ -125,8 +138,7 @@ fn validate_selection(
             .selected_size
             .and_then(|size| u32::try_from(size).ok()),
         ExteriorChange::Type => exterior.selected_type_id,
-    };
-    Ok(current == Some(target))
+    }
 }
 
 fn fixture_owner(housing: &HousingState, change: ExteriorChange) -> Option<u32> {
