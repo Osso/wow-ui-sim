@@ -727,3 +727,73 @@ fn test_accessibility_templates_set_fixed_color_pattern() {
     assert!((g - 0.8).abs() < 1e-6);
     assert!((b - 0.7).abs() < 1e-6);
 }
+
+// ============================================================================
+// FontString:SetFont 12.0.5 shape: numeric height, nilable flags, success return
+// ============================================================================
+
+#[test]
+fn font_string_set_font_returns_exactly_one_success_boolean() {
+    let env = env();
+    env.exec(
+        r#"
+        local fs = CreateFrame("Frame"):CreateFontString()
+        local path = "Fonts\\FRIZQT__.TTF"
+        local function check(...)
+            assert(select('#', ...) == 1, "one result")
+            assert((...) == true, "success")
+        end
+        check(fs:SetFont(path, 16, "OUTLINE"))
+        check(fs:SetFont(path, 16, "OUTLINE"))
+        local got, height, flags = fs:GetFont()
+        assert(got == path and height == 16 and flags == "OUTLINE")
+        local function refuse(...)
+            assert(select('#', ...) == 1 and (...) == false, "one false")
+        end
+        refuse(fs:SetFont(nil, 20, ""))
+        refuse(fs:SetFont({}, 20, ""))
+        got, height, flags = fs:GetFont()
+        assert(got == path and height == 16 and flags == "OUTLINE", "refused call changes nothing")
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn font_string_set_font_accepts_omitted_and_nil_flags() {
+    let env = env();
+    env.exec(
+        r#"
+        local fs = CreateFrame("Frame"):CreateFontString()
+        local path = "Fonts\\FRIZQT__.TTF"
+        assert(fs:SetFont(path, 16, "OUTLINE") == true)
+        assert(fs:SetFont(path, 18) == true)
+        local _, height, flags = fs:GetFont()
+        assert(height == 18 and flags == "OUTLINE", "omitted flags keep the outline")
+        assert(fs:SetFont(path, 20, nil) == true)
+        _, height, flags = fs:GetFont()
+        assert(height == 20 and flags == "OUTLINE", "nil flags keep the outline")
+        assert(fs:SetFont(path, 20, "") == true)
+        _, height, flags = fs:GetFont()
+        assert(height == 20 and flags == "", "empty flags clear the outline")
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn font_string_set_font_height_is_a_plain_number() {
+    let env = env();
+    env.exec(
+        r#"
+        local fs = CreateFrame("Frame"):CreateFontString()
+        local path = "Fonts\\FRIZQT__.TTF"
+        for _, height in ipairs({13.2, 0.5, 40}) do
+            assert(fs:SetFont(path, height, nil) == true)
+            local _, got = fs:GetFont()
+            assert(type(got) == "number" and math.abs(got - height) < 0.00001, "height " .. height)
+        end
+        "#,
+    )
+    .unwrap();
+}

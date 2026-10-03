@@ -350,3 +350,44 @@ fn secret_scalar_selectors_reject_without_unwrapping_or_taint_changes() {
         assertChair(C_HousingCatalog.GetCatalogEntryInfoByItem(6948))
     "#).unwrap();
 }
+
+/// Rows 645/646: `HousingCatalogEntryID` lost `entrySubtype` and `subtypeIdentifier`.
+#[test]
+fn entry_ids_carry_no_removed_subtype_fields_and_ignore_them_as_input() {
+    let env = chair_env();
+    env.exec(
+        r#"
+        local decor = Enum.HousingCatalogEntryType.Decor
+        local removed = {'entrySubtype', 'subtypeIdentifier'}
+        local info = C_HousingCatalog.GetCatalogEntryInfoByRecordID(decor, 81001)
+        assertChair(info)
+        for _, field in ipairs(removed) do
+            assert(rawget(info, field) == nil, 'base info ' .. field)
+        end
+        local base = {recordID = 81003, entryType = decor}
+        local variants = C_HousingCatalog.GetAllVariantInfosForEntry(base)
+        assert(#variants == 3, 'three seeded variants')
+        local seen = {}
+        for _, variant in ipairs(variants) do
+            local id = variant.entryVariantID
+            assert(id.recordID == 81003 and id.entryType == decor)
+            seen[id.variantIdentifier] = true
+            local count = 0
+            for _ in pairs(id) do count = count + 1 end
+            assert(count == 3, 'variant ID has exactly three fields')
+            for _, field in ipairs(removed) do
+                assert(rawget(id, field) == nil, 'variant ID ' .. field)
+            end
+        end
+        assert(seen[0] and seen[1] and seen[2])
+        -- Obsolete extras on the two-field selector select nothing else.
+        local legacy = {recordID = 81003, entryType = decor, entrySubtype = 999, subtypeIdentifier = 999}
+        local again = C_HousingCatalog.GetAllVariantInfosForEntry(legacy)
+        assert(#again == 3)
+        for index, variant in ipairs(again) do
+            assert(variant.entryVariantID.variantIdentifier == variants[index].entryVariantID.variantIdentifier)
+        end
+        "#,
+    )
+    .unwrap();
+}
