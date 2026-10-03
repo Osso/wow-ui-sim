@@ -1370,14 +1370,32 @@ fn legacy_inverse_control_preserves_seeded_queries_and_noop_mutators() {
         local oldPoint=C_HouseExterior.GetSelectedFixturePointInfo()
         local oldSizes=C_HouseExterior.GetHouseExteriorSizeOptions()
         local oldTypes=C_HouseExterior.GetHouseExteriorTypeOptions()
-        assert(oldSize~=nil and oldType~=nil and oldName~=nil)
-        assert(oldPoint~=nil and #oldSizes.options==2 and #oldTypes.options==2)
+        assert(oldSize==(Enum.HousingFixtureSize.Medium or 3))
+        assert(oldType==1 and oldName=='Sunspire Cottage')
+        assert(oldPoint.fixtureID==1 and oldPoint.pointID==1 and oldPoint.name=='Front Door')
+        assert(oldSizes.selectedSize==oldSize and #oldSizes.options==2)
+        assert(oldSizes.options[1].size==oldSize and oldSizes.options[1].name=='Medium')
+        assert(oldSizes.options[2].size==(Enum.HousingFixtureSize.Large or 4) and oldSizes.options[2].name=='Large')
+        assert(oldTypes.selectedExteriorType==1 and #oldTypes.options==2)
+        assert(oldTypes.options[1].houseExteriorTypeID==1 and oldTypes.options[1].name=='Sunspire Cottage')
+        assert(oldTypes.options[2].houseExteriorTypeID==2 and oldTypes.options[2].name=='Sunspire Manor')
         assert(select('#',C_HouseExterior.SelectFixtureOption(302,0))==0)
         assert(select('#',C_HouseExterior.SetHouseExteriorSize(4,1))==0)
         assert(select('#',C_HouseExterior.SetHouseExteriorType(102))==0)
         assert(C_HouseExterior.GetCurrentHouseExteriorSize()==oldSize)
         local id,name=C_HouseExterior.GetCurrentHouseExteriorType()
         assert(id==oldType and name==oldName)
-        assert(C_HouseExterior.GetSelectedFixturePointInfo().selectedFixtureID==oldPoint.selectedFixtureID)
+        local point=C_HouseExterior.GetSelectedFixturePointInfo()
+        assert(point.fixtureID==oldPoint.fixtureID and point.pointID==oldPoint.pointID and point.name==oldPoint.name)
+        local sizes=C_HouseExterior.GetHouseExteriorSizeOptions()
+        local types=C_HouseExterior.GetHouseExteriorTypeOptions()
+        assert(sizes.selectedSize==oldSizes.selectedSize and #sizes.options==#oldSizes.options)
+        assert(types.selectedExteriorType==oldTypes.selectedExteriorType and #types.options==#oldTypes.options)
+        for index,option in ipairs(oldSizes.options) do
+            assert(sizes.options[index].size==option.size and sizes.options[index].name==option.name)
+        end
+        for index,option in ipairs(oldTypes.options) do
+            assert(types.options[index].houseExteriorTypeID==option.houseExteriorTypeID and types.options[index].name==option.name)
+        end
     "#).unwrap();
 }
