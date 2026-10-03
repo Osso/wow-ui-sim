@@ -156,3 +156,32 @@ Main accepts independent642 for **exact430/432/458/460 output annotations only**
 Main-supplied data commit `ec7386f86` promotes these four rows/adds one capability: **167 pending / 174 bounded / 14 partial / 7 metadata, 362 ordered IDs / 81 capabilities**. Verifier647's retained terminal report records **31/31 PASS**, including unchanged 358 other rows, 80 prior capabilities and source hashes. Its named `/tmp/patch-12.0.5-batch76-accounting-validation.{md,json}` artifacts were unavailable during checkpoint reconciliation; no raw-artifact revalidation or rerun is claimed. Earlier accounting remains historical; prior annotation acceptances and partial-model limits remain intact. Full-suite GREEN is not claimed; broader audit remains open.
 
 [Audit checkpoint](../wiki/investigations/patch-12-0-5-api-audit.md#batch76--existing-model-output-annotations-accepted) links this bounded acceptance. Evidence is supplied by main, not newly executed here.
+
+## B83 exact486 annotation supplement — 2026-10-03
+
+Scope: **`global api-PlayerScript GetSpellCritChance-486` only**. [Retained source](../../data/patch-api/sources/12.0.5-api-changes.txt) lines 485–486 read `PlayerScript GetSpellCritChance` / `+ SecretWhenUnitStatsRestricted`; the [register](../../data/patch-api/sources/12.0.5-register.json) record is `kind: delta`, `source_lines: [486]`. The delta adds an output annotation only: no signature, argument, formula or activation change.
+
+Cached retail `Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua` lines 895–903 declare `SecretWhenUnitStatsRestricted = true` and one nonnil `result: number`. The declaration has **no `Arguments` and no `SecretArguments`**, so B82's original-school authentication guard has no counterpart here and is not copied. Cached declarations are contract context, not native execution evidence.
+
+| Provider | Ordered fixture | Wrapping |
+|---|---|---|
+| [`get_spell_crit_chance`](../../src/lua_api/globals/real/combat_stats.rs) reads an optional numeric stack slot 1, discards it, and delegates to `get_crit_chance`: `player.stats.crit_pct() + 5.0`. | `GetSpellCritChance(2)` → `{7}` from seeded crit rating360; arity1, `result`. | One `push_stat_number` position: secret host number under explicit `unit_stats_restricted`, plain otherwise. |
+
+Existing tests exercising this fixture, unchanged since the prior40 matrix:
+
+- `stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle` — exact arity, value7, secrecy and access plain → restricted → plain.
+- `stat_restriction_tainted_callers_receive_opaque_host_results` — arity, secret/inaccessible result, denied unwrap and arithmetic, retained `StatRestrictionProbe` caller taint.
+
+The other two restriction tests are controls, not spell-crit evidence. No annotation gap is demonstrated for this seeded case: no producer change, new test or fabricated RED is warranted.
+
+### Reused proof; no new execution
+
+[B82 acceptance](spell-bonus-stat-security.md#independent-bounded-acceptance--2026-10-03) records main-accepted716 with these four restriction tests refreshed PASS at `d21d4a208`. `git diff d21d4a208 HEAD -- src tests Cargo.toml Cargo.lock` is empty at `684670add`; the sole dirty file is unowned `src/c_api/aura_duration.rs`, outside this provider chain. Reuse is bound to that committed record. **The underlying `/tmp/patch-12.0.5-*` artifacts are not readable on the host where this supplement was written**; no raw-artifact revalidation, rerun or current-process proof is claimed. B82's qualified check protocol carries over unchanged.
+
+### Limits
+
+- Value7 is the melee crit model plus simulator base5; no spell-specific or per-school crit, no native formula.
+- The fixture passes a superfluous `2`; the no-argument call is asserted for plain value only in `tests/character_stats.rs`, not under restriction. Wrong-type, nil and secret extra-argument handling are unverified against the no-argument declaration.
+- Automatic restriction activation, older profiles, native/GUI parity and full-suite readiness remain unverified. `GetSpellCritChanceFromIntellect` stays plain and is not this row.
+
+Row486 remains `audit-pending` with no capability until independent validation and main accounting.
