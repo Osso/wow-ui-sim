@@ -24,6 +24,8 @@
 use rilua::{LuaApiMut, LuaResult, Val};
 
 mod cmd_option;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) use cmd_option::{resolve_cmd_option, resolve_cmd_option_with_unit};
 mod environment;
 mod loader_env;
 mod secret_values;

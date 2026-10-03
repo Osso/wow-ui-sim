@@ -861,10 +861,23 @@ fn test_canaccesstable_clean() {
     assert!(result, "engine-created table should be accessible");
 }
 
-#[test]
-fn test_party_roster_name_is_secret_value() {
+fn create_explicit_secret_party_env() -> WowLuaEnv {
     let env = env();
     env.exec("A_Admin.SetPartySize(1)").unwrap();
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    {
+        let guid: String = env.eval("return UnitGUID('party1')").unwrap();
+        env.state().borrow_mut().identity_secret_guids.insert(guid);
+    }
+    env
+}
+
+#[test]
+fn test_party_roster_name_is_secret_value() {
+    let env = create_explicit_secret_party_env();
     let (secret, accessible): (bool, bool) = env
         .eval("local name = UnitName('party1'); return issecretvalue(name), canaccessvalue(name)")
         .unwrap();
@@ -877,8 +890,7 @@ fn test_party_roster_name_is_secret_value() {
 
 #[test]
 fn test_party_full_name_marks_name_and_realm_secret() {
-    let env = env();
-    env.exec("A_Admin.SetPartySize(1)").unwrap();
+    let env = create_explicit_secret_party_env();
     let (name_secret, realm_secret, all_accessible): (bool, bool, bool) = env
         .eval(
             r#"
@@ -897,8 +909,7 @@ fn test_party_full_name_marks_name_and_realm_secret() {
 
 #[test]
 fn test_table_containing_party_identity_is_not_accessible() {
-    let env = env();
-    env.exec("A_Admin.SetPartySize(1)").unwrap();
+    let env = create_explicit_secret_party_env();
     let accessible: bool = env
         .eval("local t = { name = UnitName('party1') }; return canaccesstable(t)")
         .unwrap();

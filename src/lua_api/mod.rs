@@ -3,6 +3,8 @@
 mod addon_scan;
 pub mod animation;
 mod builtin_frames;
+#[cfg(feature = "retail-12-0-5")]
+mod cast_success;
 #[cfg(feature = "player-cast-durations")]
 pub(crate) mod channeling;
 pub mod chat_init;
@@ -37,6 +39,8 @@ pub(crate) mod script_helpers;
 mod script_object_transfer;
 pub(crate) mod sim_substates;
 pub mod simple_html;
+#[cfg(feature = "retail-12-0-5")]
+pub use cast_success::CastSuccess;
 pub(crate) mod spellcast_events;
 pub mod state;
 mod state_defaults;

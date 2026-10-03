@@ -6,8 +6,8 @@
 //! - `IsEncounterInProgress()` — `world.encounter_in_progress`
 //! - `IsResting()`           — `player.is_resting`
 //! - `IsFlyableArea()`       — `world.flyable_area`
-//! - `IsInInstance()`        — returns `(in_instance, instance_type)` —
-//!                              retail signature is `(isInstance, type)`.
+//! - `IsInInstance()`        — world instance flag plus active Delve on 12.0.5;
+//!                              returns the live host instance type.
 //! - `IsBattlefieldArena()`  — `world.battlefield_arena`
 
 use crate::c_api::c_instance_encounter::is_encounter_in_progress;
@@ -33,12 +33,17 @@ fn is_flyable_area(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// `IsInInstance()` — returns `(isInInstance, instanceType)`. When not
-/// in an instance, `instanceType` is `"none"` (matches retail).
+/// `IsInInstance()` — returns `(isInInstance, instanceType)` from host state.
+/// 12.0.5 active Delves are instances; the host supplies the type separately.
 fn is_in_instance(state: &mut LuaState) -> LuaResult<u32> {
     let (in_instance, kind) = {
         let st = borrow_state_mut(state)?;
-        (st.world.in_instance, st.world.instance_type.clone())
+        let active_delve = cfg!(feature = "retail-12-0-5") && st.has_active_delve;
+        // INFERRED composition: Delve exit does not clear an independent instance.
+        (
+            st.world.in_instance || active_delve,
+            st.world.instance_type.clone(),
+        )
     };
     state.push(Val::Bool(in_instance));
     let kind_val = create_string(state, &kind);

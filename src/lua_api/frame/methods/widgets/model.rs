@@ -2,6 +2,11 @@
 
 mod model_scene;
 mod model_scene_actors;
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+mod model_unit;
 
 use super::shared::{opt_bool, val_to_f64};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, frame_id_from_stack};
@@ -333,16 +338,47 @@ pub(super) fn can_set_unit(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-pub(super) fn set_model_by_unit(state: &mut LuaState) -> LuaResult<u32> {
-    let id = frame_id_from_stack(state, 1)?;
-    let unit = stringish_arg(state, 2);
-    let mut sim = borrow_state_mut(state)?;
-    if let Some(f) = sim.widgets.get_mut_visual(id) {
-        f.model_state_mut().player_model_state.last_unit = unit;
+/// Model side of the shared `SetUnit` name; dispatched by `widgets::set_unit`.
+pub(super) fn set_model_unit(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    {
+        model_unit::assign_unit(state)
     }
-    drop(sim);
-    state.push(Val::Bool(true));
-    Ok(1)
+    #[cfg(not(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    )))]
+    {
+        SKIP_3D_RENDERING(state)
+    }
+}
+
+pub(super) fn set_model_by_unit(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    {
+        return model_unit::assign_unit(state);
+    }
+    #[cfg(not(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    )))]
+    {
+        let id = frame_id_from_stack(state, 1)?;
+        let unit = stringish_arg(state, 2);
+        let mut sim = borrow_state_mut(state)?;
+        if let Some(f) = sim.widgets.get_mut_visual(id) {
+            f.model_state_mut().player_model_state.last_unit = unit;
+        }
+        drop(sim);
+        state.push(Val::Bool(true));
+        Ok(1)
+    }
 }
 
 fn stringish_arg(state: &LuaState, index: i32) -> Option<String> {
@@ -681,7 +717,6 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("TryOn", SKIP_3D_RENDERING),
     ("UndressSlot", SKIP_3D_RENDERING),
     ("Undress", SKIP_3D_RENDERING),
-    ("SetUnit", SKIP_3D_RENDERING),
     ("UpdateCamera", SKIP_3D_RENDERING),
     ("FreezeAnimation", SKIP_3D_RENDERING),
     // Typed return stubs

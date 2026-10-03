@@ -172,6 +172,8 @@ macro_rules! build_empty_sim_state {
             transmog_outfit_locks: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog::default(),
+            #[cfg(feature = "retail-12-0-5")]
+            active_transmog_outfit_id: None,
             // Simulator initial policy; native default is unverified.
             outfit_situations_enabled: false,
             transmog_set_filters: HashMap::new(),
@@ -218,6 +220,11 @@ macro_rules! build_empty_sim_state {
                 any(feature = "profile-retail", feature = "client-ptr")
             ))]
             identity_secret_guids: HashSet::new(),
+            #[cfg(all(
+                feature = "retail-12-0-5",
+                any(feature = "profile-retail", feature = "client-ptr")
+            ))]
+            instance_identity: Default::default(),
             current_target: $runtime.current_target,
             previous_target: None,
             current_focus: $runtime.current_focus,

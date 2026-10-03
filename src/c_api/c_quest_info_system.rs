@@ -81,19 +81,13 @@ fn validate_quest_id(value: Val) -> LuaResult<Option<u32>> {
 fn read_favor_amount(state: &LuaState, quest_id: Option<u32>, clamp: bool) -> LuaResult<f64> {
     let sim = borrow_state(state)?;
     // INFERRED nil uses only this explicit host context, not selected quest state.
-    let quest_id = quest_id
+    // INFERRED miss: a quest with no host favor record rewards no favor.
+    let reward = quest_id
         .or(sim.quest_favor.context_quest_id)
-        .ok_or_else(|| {
-            runtime_error("C_QuestInfoSystem.GetQuestLogRewardFavor: no host-seeded quest context")
-        })?;
-    let reward = sim.quest_favor.rewards.get(&quest_id).ok_or_else(|| {
-        runtime_error(format!(
-            "C_QuestInfoSystem.GetQuestLogRewardFavor: no host-seeded favor record for quest {quest_id}"
-        ))
-    })?;
-    Ok(if clamp {
-        reward.cycle_capped_amount
-    } else {
-        reward.amount
+        .and_then(|quest_id| sim.quest_favor.rewards.get(&quest_id));
+    Ok(match reward {
+        Some(reward) if clamp => reward.cycle_capped_amount,
+        Some(reward) => reward.amount,
+        None => 0.0,
     })
 }

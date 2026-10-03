@@ -18,6 +18,7 @@
 #[path = "group_queries_relationships.rs"]
 mod relationships;
 
+use super::unit_misc::identity_output;
 use crate::lua_api::game_data::CLASS_LABELS;
 use crate::lua_api::globals::security::mark_secret_value;
 use crate::lua_api::methods::{
@@ -461,10 +462,8 @@ pub(crate) fn unit_exists_in_state(st: &crate::lua_api::state::SimState, unit: &
 fn unit_name(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let name = unit_name_for(state, &unit)?;
-    let value = create_string(state, &name);
-    if unit_identity_is_secret(&unit, &name) {
-        mark_secret_value(state, value);
-    }
+    let secret = unit_identity_is_secret(state, &unit, &name)?;
+    let value = identity_output(state, &name, secret);
     state.push(value);
     Ok(1)
 }
@@ -473,10 +472,22 @@ fn unit_name_unmodified(state: &mut LuaState) -> LuaResult<u32> {
     unit_name(state)
 }
 
-fn unit_identity_is_secret(unit: &str, name: &str) -> bool {
-    name != "Unknown"
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+fn unit_identity_is_secret(state: &mut LuaState, unit: &str, _name: &str) -> LuaResult<bool> {
+    super::unit_misc::unit_identity_is_secret(state, unit)
+}
+
+#[cfg(not(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+)))]
+fn unit_identity_is_secret(_state: &mut LuaState, unit: &str, name: &str) -> LuaResult<bool> {
+    Ok(name != "Unknown"
         && (crate::lua_api::globals::unit_api::parse_party_index(unit).is_some()
-            || unit.strip_prefix("raid").is_some())
+            || unit.strip_prefix("raid").is_some()))
 }
 
 fn unit_name_for(state: &mut LuaState, unit: &str) -> LuaResult<String> {

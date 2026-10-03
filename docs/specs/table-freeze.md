@@ -4,7 +4,7 @@
 
 ## What it must do
 
-- [x] Publish both functions for the `retail-12-1-0` epoch and later; do not remove them from earlier retail when enabling PTR.
+- [x] Publish both functions for the `retail-12-0-5` epoch and later; do not remove them from earlier retail when enabling PTR.
 - [x] PTR `freeze(t)` returns exactly one result identical to `t`; earlier retail returns no results. Repeated freezing is idempotent.
 - [x] `isfrozen(t)` returns exactly one boolean reflecting the VM flag, false before freezing and true afterward.
 - [x] Preserve reads, iteration, array length, and object identity.

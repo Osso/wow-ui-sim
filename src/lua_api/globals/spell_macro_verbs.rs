@@ -173,6 +173,10 @@ fn run_macro_text_line(state: &mut LuaState, line: &str) -> LuaResult<()> {
         "/focus" => call_named_global(state, "FocusUnit", argument),
         "/cast" | "/spell" => call_named_global(state, "CastSpellByName", argument),
         #[cfg(feature = "retail-12-0-5")]
+        "/tm" => run_target_marker_command(state, argument),
+        #[cfg(feature = "retail-12-0-5")]
+        "/outfit" => crate::c_api::c_transmog_outfit_info::run_outfit_command(state, argument),
+        #[cfg(feature = "retail-12-0-5")]
         "/equipset" => {
             crate::c_api::equipment_set_command::run_equipment_set_command(state, argument)
         }
@@ -180,11 +184,37 @@ fn run_macro_text_line(state: &mut LuaState, line: &str) -> LuaResult<()> {
     }
 }
 
+/// Bounded numeric /tm dispatch; shares condition parsing and marker state.
+#[cfg(feature = "retail-12-0-5")]
+fn run_target_marker_command(state: &mut LuaState, argument: &str) -> LuaResult<()> {
+    let selected = {
+        let sim = borrow_state(state)?;
+        super::security::resolve_cmd_option_with_unit(argument, &sim)
+            .map(|(marker, unit)| (marker.to_owned(), unit.to_owned()))
+    };
+    let Some((marker, unit)) = selected else {
+        return Ok(());
+    };
+    // INFERRED: invalid/out-of-range numeric input is an atomic no-op.
+    // Native numeric coercion and !/~ marker prefixes are not modeled here.
+    let Ok(marker) = marker.parse::<u8>() else {
+        return Ok(());
+    };
+    if marker > 8 {
+        return Ok(());
+    }
+    let function = LuaApiMut::get_global_val(state, "SetRaidTarget");
+    let unit = create_string(state, &unit);
+    call_function_state(state, function, &[unit, Val::Num(f64::from(marker))])?;
+    Ok(())
+}
+
 fn split_macro_command(line: &str) -> Option<(String, &str)> {
     let mut parts = line.splitn(2, char::is_whitespace);
     let command = parts.next()?.to_ascii_lowercase();
     let argument = parts.next().unwrap_or_default().trim();
-    if argument.is_empty() {
+    let permits_empty = cfg!(feature = "retail-12-0-5") && command == "/outfit";
+    if argument.is_empty() && !permits_empty {
         return None;
     }
     Some((command, argument))

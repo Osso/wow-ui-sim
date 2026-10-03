@@ -107,14 +107,17 @@ fn identity_lookup_classification_does_not_create_missing_units() {
 #[test]
 fn identity_lookup_player_token_remains_outside_party_suppression() {
     let env = create_identity_lookup_env();
-    let player_guid: String = env.eval("return UnitGUID('player')").expect("player GUID");
+    // Capture the public GUID first: once classified, UnitGUID returns a secret.
+    let player_guid: String = env
+        .eval("IdentityLookupPlayerGUID = UnitGUID('player'); return IdentityLookupPlayerGUID")
+        .expect("player GUID");
     env.state()
         .borrow_mut()
         .identity_secret_guids
         .insert(player_guid);
     env.exec(
         r#"
-        assert(UnitTokenFromGUID(UnitGUID('player')) == 'player')
+        assert(UnitTokenFromGUID(IdentityLookupPlayerGUID) == 'player')
         assert(UnitTokenFromGUID(IdentityLookupFirstGUID) == 'party1')
         "#,
     )

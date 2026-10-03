@@ -102,7 +102,11 @@ fn pending_transmog_cost_repeated_reads_do_not_derive_or_mutate_owned_state() {
     }
     env.exec(
         r#"
-        C_TransmogOutfitInfo.ChangeToOutfit(91, false)
+        C_TransmogOutfitInfo.ChangeToOutfit(7, false)
+        assert(C_TransmogOutfitInfo.GetActiveOutfitID() == 91, 'catalog index 7 should select outfit 91')
+        assert(C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID() == 0, 'selection should not set viewed metadata')
+        -- Viewed metadata has no setter API; seed its existing compatibility storage.
+        rawset(C_TransmogOutfitInfo, '__currentlyViewedOutfitID', 91)
         C_TransmogOutfitInfo.SetPendingTransmogSheatheCategory(16, 2, 2)
         "#,
     )
@@ -115,12 +119,13 @@ fn pending_transmog_cost_repeated_reads_do_not_derive_or_mutate_owned_state() {
     }
     env.exec(
         r#"
-        assert(C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID() == 91)
+        assert(C_TransmogOutfitInfo.GetActiveOutfitID() == 91, 'cost reads should preserve active selection')
+        assert(C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID() == 91, 'cost reads should preserve explicitly seeded viewed metadata')
         local pending = rawget(C_TransmogOutfitInfo, '__pendingSheatheCategories')
-        assert(pending['16:2'] == 2)
+        assert(pending['16:2'] == 2, 'cost reads should preserve pending sheathe category')
         local count = 0
         for _ in pairs(pending) do count = count + 1 end
-        assert(count == 1)
+        assert(count == 1, 'cost reads should preserve pending sheathe entry count')
         "#,
     )
     .unwrap();

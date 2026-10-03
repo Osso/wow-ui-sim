@@ -62,6 +62,21 @@ fn clear(state: &mut LuaState) -> LuaResult<u32> {
     }
 }
 
+/// Dispatch the shared SetUnit name: model widgets bind a unit, tooltips show one.
+fn set_unit(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let widget_type = borrow_state(state)?
+        .widgets
+        .get(id)
+        .map(|frame| frame.widget_type);
+    match widget_type {
+        Some(WidgetType::Model | WidgetType::ModelScene | WidgetType::PlayerModel) => {
+            model::set_model_unit(state)
+        }
+        _ => tooltip::set_tooltip_unit(state),
+    }
+}
+
 /// Register all widget-specific methods on the frame metatable.
 ///
 /// Call this after the standard frame metatable has been created,
@@ -82,5 +97,6 @@ pub fn register_all(state: &mut LuaState, metatable: GcRef<Table>) -> LuaResult<
     movie::register_movie(state, metatable)?;
     tooltip::register_tooltip(state, metatable)?;
     message_frame::register_message_frame(state, metatable)?;
+    table_set_rust_fn_static(state, metatable, "SetUnit", set_unit)?;
     table_set_rust_fn_static(state, metatable, "Clear", clear)
 }

@@ -1,5 +1,9 @@
 //! Misc unit globals that do not fit the core group-query bucket.
 
+#[cfg(not(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+)))]
 use crate::lua_api::globals::security::mark_secret_value;
 use crate::lua_api::methods::{borrow_state, create_string, create_string_static, create_table};
 use crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID;
@@ -39,17 +43,47 @@ fn unit_name_for(state: &mut LuaState, unit: &str) -> String {
     }
 }
 
-fn unit_identity_is_secret(unit: &str) -> bool {
-    crate::lua_api::globals::unit_api::parse_party_index(unit).is_some()
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+pub(crate) fn unit_identity_is_secret(state: &mut LuaState, unit: &str) -> LuaResult<bool> {
+    let sim = borrow_state(state)?;
+    Ok(unit_identity_is_secret_in_state(&sim, unit))
+}
+
+#[cfg(not(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+)))]
+pub(crate) fn unit_identity_is_secret(_state: &mut LuaState, unit: &str) -> LuaResult<bool> {
+    Ok(crate::lua_api::globals::unit_api::parse_party_index(unit).is_some())
+}
+
+pub(crate) fn identity_output(state: &mut LuaState, text: &str, secret: bool) -> Val {
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    if secret {
+        return rilua::table_security::wrap_host_secret_string(state, text);
+    }
+    let value = create_string(state, text);
+    #[cfg(not(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    )))]
+    if secret {
+        mark_secret_value(state, value);
+    }
+    value
 }
 
 fn unit_name_string(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let name = unit_name_for(state, &unit);
-    let name = create_string(state, &name);
-    if unit_identity_is_secret(&unit) {
-        mark_secret_value(state, name);
-    }
+    let secret = unit_identity_is_secret(state, &unit)?;
+    let name = identity_output(state, &name, secret);
     state.push(name);
     Ok(1)
 }
@@ -65,13 +99,10 @@ fn unit_pvp_name(state: &mut LuaState) -> LuaResult<u32> {
 fn unit_full_name(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let name = unit_name_for(state, &unit);
-    let name = create_string(state, &name);
-    let realm = create_string_static(state, SIM_REALM);
-    if unit_identity_is_secret(&unit) {
-        mark_secret_value(state, name);
-        mark_secret_value(state, realm);
-    }
+    let secret = unit_identity_is_secret(state, &unit)?;
+    let name = identity_output(state, &name, secret);
     state.push(name);
+    let realm = identity_output(state, SIM_REALM, secret);
     state.push(realm);
     Ok(2)
 }
@@ -118,8 +149,18 @@ fn unit_guid(state: &mut LuaState) -> LuaResult<u32> {
         };
         existing_guid_for_unit(&sim, &unit)
     };
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    let secret = unit_identity_is_secret(state, &unit)?;
+    #[cfg(not(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    )))]
+    let secret = false;
     let result = guid
-        .map(|guid| create_string(state, &guid))
+        .map(|guid| identity_output(state, &guid, secret))
         .unwrap_or(Val::Nil);
     state.push(result);
     Ok(1)
@@ -138,6 +179,17 @@ fn unit_creature_id(state: &mut LuaState) -> LuaResult<u32> {
         None => state.push(Val::Nil),
     }
     Ok(1)
+}
+
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+pub(crate) fn unit_identity_is_secret_in_state(
+    sim: &crate::lua_api::state::SimState,
+    unit: &str,
+) -> bool {
+    super::real::instanced_identity::identity_is_secret(sim, unit)
 }
 
 pub(crate) fn existing_guid_for_unit(
@@ -174,9 +226,12 @@ fn focus_guid(sim: &crate::lua_api::state::SimState) -> String {
         .unwrap_or_else(|| UNKNOWN_CREATURE_GUID.to_string())
 }
 
+pub(crate) fn party_guid_for_index(index: usize) -> String {
+    format!("Player-0000-000000{:02}", index + 2)
+}
+
 fn party_guid_for_unit(unit: &str) -> Option<String> {
-    crate::lua_api::globals::unit_api::parse_party_index(unit)
-        .map(|idx| format!("Player-0000-000000{:02}", idx + 2))
+    crate::lua_api::globals::unit_api::parse_party_index(unit).map(party_guid_for_index)
 }
 
 fn target_or_focus_token_from_guid(

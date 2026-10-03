@@ -1,9 +1,14 @@
-//! Global outfit-situations setting and read-only outfit catalog.
+//! Outfit settings, catalog queries, and patch-gated applied selection.
 
 #[cfg(feature = "retail-12-0-5")]
 mod catalog;
 #[cfg(feature = "retail-12-0-5")]
 pub use catalog::{OutfitCatalog, OutfitEntry};
+
+#[cfg(feature = "retail-12-0-5")]
+mod actions;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) use actions::run_outfit_command;
 
 #[cfg(feature = "retail-12-0-5")]
 mod pending_cost;
@@ -34,6 +39,8 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     pending_cost::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
     catalog::register(state, namespace)?;
+    #[cfg(feature = "retail-12-0-5")]
+    actions::register(state, namespace)?;
     #[cfg(all(
         feature = "retail-12-0-5",
         any(feature = "profile-retail", feature = "client-ptr")

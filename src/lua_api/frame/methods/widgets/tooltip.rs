@@ -67,7 +67,6 @@ const TOOLTIP_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("SetInboxItem", set_inbox_item),
     ("SetSendMailItem", set_send_mail_item),
     ("SetTradeSkillItem", set_trade_skill_item),
-    ("SetUnit", set_unit),
     ("SetUnitBuff", set_unit_buff),
     (
         "SetUnitBuffByAuraInstanceID",
@@ -103,6 +102,11 @@ const TOOLTIP_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ),
     ("SetCompareItem", set_compare_item),
 ];
+
+/// Tooltip side of the shared `SetUnit` name; dispatched by `widgets::set_unit`.
+pub(super) fn set_tooltip_unit(state: &mut LuaState) -> LuaResult<u32> {
+    set_unit(state)
+}
 
 pub(super) fn register_tooltip(state: &mut LuaState, metatable: GcRef<Table>) -> LuaResult<()> {
     for (name, func) in TOOLTIP_METHODS {

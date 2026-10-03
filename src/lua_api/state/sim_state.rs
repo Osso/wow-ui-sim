@@ -177,6 +177,9 @@ pub struct SimState {
     pub transmog_outfit_locks: HashSet<i64>,
     #[cfg(feature = "retail-12-0-5")]
     pub transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog,
+    /// Explicit applied selection; independent of viewed/pending outfit metadata.
+    #[cfg(feature = "retail-12-0-5")]
+    pub active_transmog_outfit_id: Option<i64>,
     /// Global setting only; no per-outfit or pending-situation behavior.
     pub outfit_situations_enabled: bool,
     /// Explicit filter values only; native defaults and set filtering are unmodeled.
@@ -237,6 +240,13 @@ pub struct SimState {
         any(feature = "profile-retail", feature = "client-ptr")
     ))]
     pub identity_secret_guids: HashSet<String>,
+    /// Explicit host instance/group/control context; no token-name classification.
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    pub instance_identity:
+        crate::lua_api::globals::real::instanced_identity::InstanceIdentityContext,
     pub current_target: Option<TargetInfo>,
     pub previous_target: Option<TargetInfo>,
     pub current_focus: Option<TargetInfo>,

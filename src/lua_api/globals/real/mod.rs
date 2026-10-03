@@ -26,6 +26,11 @@ pub mod guild_invites;
 pub mod guild_logo;
 #[cfg(feature = "client-wowforever")]
 pub mod input_interface;
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
+pub mod instanced_identity;
 pub mod item_legacy;
 pub mod locale_info;
 pub mod loot_method;

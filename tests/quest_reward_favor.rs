@@ -78,16 +78,15 @@ fn install_favor_secrets(env: &WowLuaEnv) {
 }
 
 #[test]
-fn favor_empty_defaults_report_unmodeled_context_and_records() {
+fn favor_empty_defaults_return_zero_without_context_or_records() {
     let env = favor_env();
     assert!(env.state().borrow().quest_favor.rewards.is_empty());
     assert_eq!(env.state().borrow().quest_favor.context_quest_id, None);
     env.exec(
         r#"
-        RejectFavor(nil, nil, 'quest context')
-        RejectFavor(90001, false, 'favor record')
-        local ok, err = pcall(C_QuestInfoSystem.GetQuestLogRewardFavor)
-        assert(not ok and string.find(err, 'quest context', 1, true))
+        CheckFavor(nil, nil, 0)
+        CheckFavor(90001, false, 0)
+        assert(C_QuestInfoSystem.GetQuestLogRewardFavor() == 0)
     "#,
     )
     .unwrap();
@@ -106,10 +105,10 @@ fn favor_nil_quest_uses_only_explicit_context_and_default_clamp_is_false() {
     env.exec("CheckFavor(nil, nil, 40); CheckFavor(nil, true, 17)")
         .unwrap();
     env.state().borrow_mut().quest_favor.context_quest_id = None;
-    env.exec("RejectFavor(nil, false, 'quest context'); CheckFavor(90001, false, 120)")
+    env.exec("CheckFavor(nil, false, 0); CheckFavor(90001, false, 120)")
         .unwrap();
     env.state().borrow_mut().quest_favor.context_quest_id = Some(90003);
-    env.exec("RejectFavor(nil, false, 'favor record')").unwrap();
+    env.exec("CheckFavor(nil, false, 0)").unwrap();
 }
 
 #[test]
@@ -129,7 +128,7 @@ fn favor_distinct_records_clamp_values_and_live_replacement_are_exact() {
     env.exec("CheckFavor(90001, nil, 81.5); CheckFavor(90001, true, 2.5)")
         .unwrap();
     env.state().borrow_mut().quest_favor.rewards.remove(&90001);
-    env.exec("RejectFavor(90001, false, 'favor record'); RejectFavor(nil, true, 'favor record'); CheckFavor(90002, false, 40)").unwrap();
+    env.exec("CheckFavor(90001, false, 0); CheckFavor(nil, true, 0); CheckFavor(90002, false, 40)").unwrap();
 }
 
 #[test]
@@ -180,7 +179,7 @@ fn favor_queries_are_read_only_and_environment_inputs_are_isolated() {
     let first = seeded_favor_env();
     let second = seeded_favor_env();
     let before = first.state().borrow().quest_favor.clone();
-    first.exec("CheckFavor(nil, true, 50); CheckFavor(90002, false, 40); RejectFavor(90003, nil, 'favor record')").unwrap();
+    first.exec("CheckFavor(nil, true, 50); CheckFavor(90002, false, 40); CheckFavor(90003, nil, 0)").unwrap();
     assert_eq!(first.state().borrow().quest_favor, before);
     first.state().borrow_mut().quest_favor.rewards.clear();
     second

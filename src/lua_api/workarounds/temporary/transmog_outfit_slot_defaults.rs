@@ -1,13 +1,12 @@
 //! Temporary `C_TransmogOutfitInfo` slot/outfit defaults.
 //!
 //! Outfit locks are state-backed in `lua_api::globals::transmog_outfit_info`.
-//! Outfit slot metadata, sheathe categories, and active outfit selection are
-//! still compatibility defaults until a real wardrobe/outfit model owns them.
+//! Slot metadata, sheathe categories, and viewed metadata remain compatibility
+//! defaults. Retail 12.0.5 applied selection belongs to the catalog-backed C API.
 
 const TRANSMOG_OUTFIT_SLOT_DEFAULTS_LUA: &str = r#"
 C_TransmogOutfitInfo = C_TransmogOutfitInfo or __wow_namespace()
 
-local ACTIVE_OUTFIT_ID_KEY = "__activeOutfitID"
 local CURRENTLY_VIEWED_OUTFIT_ID_KEY = "__currentlyViewedOutfitID"
 local PENDING_SHEATHE_CATEGORIES_KEY = "__pendingSheatheCategories"
 local VALID_SHEATHE_SLOT_TRANSMOG_ID = 190001
@@ -30,16 +29,6 @@ local function outfitIDValue(key)
     end
 
     return 0
-end
-
-local function setOutfitIDs(outfitID)
-    C_TransmogOutfitInfo[ACTIVE_OUTFIT_ID_KEY] = outfitID
-    C_TransmogOutfitInfo[CURRENTLY_VIEWED_OUTFIT_ID_KEY] = outfitID
-end
-
-local function resetOutfitState()
-    setOutfitIDs(0)
-    C_TransmogOutfitInfo[PENDING_SHEATHE_CATEGORIES_KEY] = {}
 end
 
 local function numberOrNumericString(value)
@@ -109,12 +98,6 @@ local function buildSlotArray(specs, transmogType)
     return slots
 end
 
-if rawget(C_TransmogOutfitInfo, "GetActiveOutfitID") == nil then
-    function C_TransmogOutfitInfo.GetActiveOutfitID()
-        return outfitIDValue(ACTIVE_OUTFIT_ID_KEY)
-    end
-end
-
 if rawget(C_TransmogOutfitInfo, "GetCurrentlyViewedOutfitID") == nil then
     function C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID()
         return outfitIDValue(CURRENTLY_VIEWED_OUTFIT_ID_KEY)
@@ -139,23 +122,6 @@ end
 if rawget(C_TransmogOutfitInfo, "SetPendingTransmogSheatheCategory") == nil then
     function C_TransmogOutfitInfo.SetPendingTransmogSheatheCategory(slotID, optionID, category)
         pendingSheatheCategories()[luaKeyString(slotID) .. ":" .. luaKeyString(optionID)] = category
-    end
-end
-
-if rawget(C_TransmogOutfitInfo, "ChangeToOutfit") == nil then
-    function C_TransmogOutfitInfo.ChangeToOutfit(outfitID, clear)
-        if clear then
-            resetOutfitState()
-            return
-        end
-
-        setOutfitIDs(numberOrNumericString(outfitID) or 0)
-    end
-end
-
-if rawget(C_TransmogOutfitInfo, "ClearOutfit") == nil then
-    function C_TransmogOutfitInfo.ClearOutfit()
-        resetOutfitState()
     end
 end
 
@@ -186,8 +152,61 @@ if rawget(C_TransmogOutfitInfo, "GetAllSlotLocationInfo") == nil then
 end
 "#;
 
+// Earlier patch epochs retain their existing compatibility surface. This chunk
+// is not compiled into Retail 12.0.5; it is not a fallback for the modeled APIs.
+#[cfg(not(feature = "retail-12-0-5"))]
+const LEGACY_OUTFIT_SELECTION_LUA: &str = r#"
+local CURRENTLY_VIEWED_OUTFIT_ID_KEY = "__currentlyViewedOutfitID"
+local PENDING_SHEATHE_CATEGORIES_KEY = "__pendingSheatheCategories"
+local function outfitIDValue(key)
+    local value = rawget(C_TransmogOutfitInfo, key)
+    if type(value) == "number" then return value end
+    return 0
+end
+local function numberOrNumericString(value)
+    if type(value) == "number" then return value end
+    return tonumber(value)
+end
+local ACTIVE_OUTFIT_ID_KEY = "__activeOutfitID"
+local function setOutfitIDs(outfitID)
+    C_TransmogOutfitInfo[ACTIVE_OUTFIT_ID_KEY] = outfitID
+    C_TransmogOutfitInfo[CURRENTLY_VIEWED_OUTFIT_ID_KEY] = outfitID
+end
+
+local function resetOutfitState()
+    setOutfitIDs(0)
+    C_TransmogOutfitInfo[PENDING_SHEATHE_CATEGORIES_KEY] = {}
+end
+
+if rawget(C_TransmogOutfitInfo, "GetActiveOutfitID") == nil then
+    function C_TransmogOutfitInfo.GetActiveOutfitID()
+        return outfitIDValue(ACTIVE_OUTFIT_ID_KEY)
+    end
+end
+
+if rawget(C_TransmogOutfitInfo, "ChangeToOutfit") == nil then
+    function C_TransmogOutfitInfo.ChangeToOutfit(outfitID, clear)
+        if clear then
+            resetOutfitState()
+            return
+        end
+
+        setOutfitIDs(numberOrNumericString(outfitID) or 0)
+    end
+end
+
+if rawget(C_TransmogOutfitInfo, "ClearOutfit") == nil then
+    function C_TransmogOutfitInfo.ClearOutfit()
+        resetOutfitState()
+    end
+end
+
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(TRANSMOG_OUTFIT_SLOT_DEFAULTS_LUA)?;
+    #[cfg(not(feature = "retail-12-0-5"))]
+    lua.exec(LEGACY_OUTFIT_SELECTION_LUA)?;
     Ok(())
 }
 
@@ -240,6 +259,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(not(feature = "retail-12-0-5"))]
     fn outfit_state_methods_track_active_outfit_and_pending_sheathe_categories() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
         let result: String = env

@@ -36,13 +36,26 @@ pub(super) fn secure_cmd_option_parse(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-pub(super) fn resolve_cmd_option<'a>(
+pub(crate) fn resolve_cmd_option<'a>(
     text: &'a str,
     sim: &crate::lua_api::SimState,
 ) -> Option<&'a str> {
+    resolve_cmd_option_with_unit(text, sim).map(|(value, _)| value)
+}
+
+/// Select one clause using the existing condition grammar and unit selector.
+pub(crate) fn resolve_cmd_option_with_unit<'a>(
+    text: &'a str,
+    sim: &crate::lua_api::SimState,
+) -> Option<(&'a str, &'a str)> {
     text.split(';')
         .filter_map(parse_cmd_option_clause)
-        .find_map(|clause| clause.matches(sim).then_some(clause.value))
+        .find_map(|clause| {
+            clause.matches(sim).then(|| {
+                let unit = clause.conditions.map_or("target", condition_unit);
+                (clause.value, unit)
+            })
+        })
 }
 
 struct CmdOptionClause<'a> {
@@ -83,16 +96,19 @@ fn parse_cmd_option_clause(clause: &str) -> Option<CmdOptionClause<'_>> {
 }
 
 fn condition_list_matches(conditions: &str, sim: &crate::lua_api::SimState) -> bool {
-    let mut unit = "target";
-    for condition in conditions.split(',').map(str::trim) {
-        if let Some(unit_override) = parse_unit_override(condition) {
-            unit = unit_override;
-        }
-    }
+    let unit = condition_unit(conditions);
     conditions
         .split(',')
         .map(str::trim)
         .all(|condition| condition_matches(condition, unit, sim))
+}
+
+fn condition_unit(conditions: &str) -> &str {
+    // INFERRED: preserve the existing parser's last-selector-wins policy.
+    conditions
+        .rsplit(',')
+        .find_map(|condition| parse_unit_override(condition.trim()))
+        .unwrap_or("target")
 }
 
 fn parse_unit_override(condition: &str) -> Option<&str> {

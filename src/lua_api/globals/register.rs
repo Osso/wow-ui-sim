@@ -142,7 +142,7 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
     super::real::math_extensions::register_all(lua)?;
     #[cfg(any(feature = "retail-12-1-5", feature = "client-wowforever"))]
     super::real::table_extensions::register_all(lua)?;
-    #[cfg(feature = "retail-12-1-0")]
+    #[cfg(feature = "retail-12-0-5")]
     super::real::table_freeze::register_all(lua)?;
     #[cfg(feature = "retail-12-1-5")]
     super::real::string_extensions::register_all(lua)?;
