@@ -7,6 +7,25 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "house-exterior-attached-decor",
+      "symbols": [
+        "C_HouseExterior.SelectFixtureOption",
+        "C_HouseExterior.SetHouseExteriorSize",
+        "C_HouseExterior.SetHouseExteriorType"
+      ],
+      "scope": "Exact272/274/276 attachedDecorAction over empty-default explicit selections/options/placements. Store0 returns affected full-key variants to existing catalog with checked stored/known-base deltas; Detach1 retains identity/position, clears attachment and never reattaches. Fixture affects selected ownerhash, size/type allattachments, floating unchanged. Both original inputs authenticated before domain/model: secure actual NUM secrets accepted, addon denied, public taint preserved. Live rooted DTOs, synchronous storage/response GC/reentry, mixed-invalid atomicity and isolation tested. Strict domains/errors/nil/same-value/storage ordering inferred. Native acquisition/UI/globalpermissions/privacy/pets/type/dating/fullprofile parity unproved; no core/remove/enum row credit.",
+      "spec": "docs/specs/house-exterior-attached-decor.md",
+      "tests": [
+        "tests/house_exterior_attached_decor.rs"
+      ],
+      "implementation": "41904efbf0fc6ea9ac4294847ea4dc2cd7255bdb",
+      "compiled_revision": "361642437245548aaab32e74e6bc7faa843cef66",
+      "readability_followup": "62f3629b8",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-house-exterior-final-proof.md",
+      "gate_scope": "Independent566 PASS:104distinctRetail41fresh+63equivalenthousingregressions,currentstartup0[],scopedfmt/defaultcheck0zeroDiagnostics30.825380s. FreshForevercompile0zeroDiagnostics325.970902s/inverse1PASS separate. Finaldefaultcompile235.194071s/run9.536627s/startup11.959878s. Emitted ELF hashes verified before launch; fulltestLua/security/rooting/callbacks/atomicity/readability/wiring/equivalence audited. Originalglobalfmt1/ForevermaskquadFAIL/historical502processFAIL retained. Dirty-combined protectedAURAuninspected/unhashed; originalRED38FAIL1PASS retained."
+    },
+    {
       "id": "spell-book-loss-of-control-outputs",
       "symbols": [
         "C_Spell.GetSpellLossOfControlCooldownInfo",
@@ -2192,21 +2211,21 @@
     },
     {
       "source_id": "global api-C_HouseExterior-SelectFixtureOption-272",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["house-exterior-attached-decor"],
+      "status": "bounded-coverage",
+      "note": "Exact272 independently accepted566 at361642437:104RetailPASS+separateForeverinverse1PASS/startup0[]. AttachedDecorAction Store/Detach/default, real state/catalog transitions, original-secret authentication, live rooted DTOs and synchronous GC/reentry/atomicity accepted. Domain/error/nil/same-value/storage ordering inferred; native acquisition/UI/globalprivacy/pet/type/dating gaps remain, no core/remove/enum row credit."
     },
     {
       "source_id": "global api-C_HouseExterior-SetHouseExteriorSize-274",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["house-exterior-attached-decor"],
+      "status": "bounded-coverage",
+      "note": "Exact274 independently accepted566 at361642437:104RetailPASS+separateForeverinverse1PASS/startup0[]. AttachedDecorAction Store/Detach/default, real state/catalog transitions, original-secret authentication, live rooted DTOs and synchronous GC/reentry/atomicity accepted. Domain/error/nil/same-value/storage ordering inferred; native acquisition/UI/globalprivacy/pet/type/dating gaps remain, no core/remove/enum row credit."
     },
     {
       "source_id": "global api-C_HouseExterior-SetHouseExteriorType-276",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["house-exterior-attached-decor"],
+      "status": "bounded-coverage",
+      "note": "Exact276 independently accepted566 at361642437:104RetailPASS+separateForeverinverse1PASS/startup0[]. AttachedDecorAction Store/Detach/default, real state/catalog transitions, original-secret authentication, live rooted DTOs and synchronous GC/reentry/atomicity accepted. Domain/error/nil/same-value/storage ordering inferred; native acquisition/UI/globalprivacy/pet/type/dating gaps remain, no core/remove/enum row credit."
     },
     {
       "source_id": "global api-C_HousingBasicMode-StartPlacingNewDecor-278",
