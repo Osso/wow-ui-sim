@@ -226,3 +226,30 @@ Its one failed sub-item was the supplement's repository-wide "only" claim about 
 Evidence class: fresh source inspection plus the committed B82 aggregate record, as for [B83](#b83-independent-bounded-acceptance--2026-10-03). No test, build, check, formatter or startup ran for B84; raw `/tmp/patch-12.0.5-*` artifacts absent. The audit report (SHA256 `0775c67b49eb6e3a491795fc65e046fa96afeac62b506d07eb0d973a28c11d7f`) lives in a session scratchpad and is not durable; this section is the retained record.
 
 [Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): rows474/476 `bounded-coverage` under new capability `ranged-crit-haste-restricted-outputs`; **88 capabilities/362 ordered IDs; 162 pending/182 bounded/11 partial/7 metadata**. Other 360 rows and prior 87 capabilities unchanged. No ranged-specific model, native, older-profile or full-suite credit; audit remains in progress.
+
+## B85 exact502/508/512 annotation supplement — 2026-10-03
+
+Scope: **`global api-Unit UnitAttackPower-502`, `global api-Unit UnitRangedAttackPower-508` and `global api-Unit UnitSpellHaste-512` only**. [Retained source](../../data/patch-api/sources/12.0.5-api-changes.txt) lines 501–502, 507–508 and 511–512 give each subject the single delta `+ SecretWhenUnitStatsRestricted`. Output annotations only.
+
+Cached retail `UnitDocumentation.lua` function declarations (lines 654–670, 2855–2871, 3023–3037) carry `SecretWhenUnitStatsRestricted = true`, nonnil `unit: UnitToken` and `SecretArguments = "AllowedWhenUntainted"`. That argument policy is an existing declaration, not a delta in these rows and not proof of selector compliance. Returns: `attackPower, posBuff, negBuff` (three nonnil numbers) for both attack-power queries; one nonnil `result` for spell haste. Same-named `Type = "Event"` entries in that file are unrelated.
+
+| Exact ID | Provider in [`unit_stats.rs`](../../src/lua_api/globals/unit_stats.rs) | Ordered fixture | Wrapping |
+|---|---|---|---|
+| 502 | `unit_attack_power`: `stats_for` resolves the unit; player `attack_power = strength + agility + level*10` truncated to integer, then two literal zeros. | `UnitAttackPower('player')` → `{600, 0, 0}` from strength300, agility200, level10; arity3. | Three `push_stat_number` positions. |
+| 508 | `unit_ranged_attack_power` delegates to `unit_attack_power`. | `UnitRangedAttackPower('player')` → `{600, 0, 0}`; arity3. | Same three positions. |
+| 512 | `unit_spell_haste`: `rating_to_percent(stats.haste_rating)` = `haste_rating / 180`. | `UnitSpellHaste('player')` → `{510/180}` from haste rating510; arity1. | One `push_stat_number`. |
+
+All three fixtures run in `stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle` and `stat_restriction_tainted_callers_receive_opaque_host_results`. `stat_restriction_absent_unit_shapes_and_constant_outputs` additionally asserts three secret zeroes and arity3 for `UnitAttackPower('missing')`; it does not call the other two. Proof reuse is identical to [B83](#b83-independent-bounded-acceptance--2026-10-03): committed B82 aggregate record at `d21d4a208`; `git diff d21d4a208 HEAD -- tests Cargo.toml Cargo.lock` is empty and the only `src` change since is `608d52558` in `src/c_api/aura_duration.rs`, outside these chains. No rerun; raw artifacts unreadable on this host.
+
+### Limits
+
+- Attack power is a synthetic sum, not a native formula; `posBuff`/`negBuff` are literal zeros, wrapped but not modeled. Ranged attack power is the melee value reused.
+- Spell haste divides by 180 while `GetHaste`/`GetMeleeHaste`/`GetRangedHaste` divide by 170: the simulator's two haste conversions disagree for the same rating. Neither is native-verified.
+- Only `'player'` is fixture-covered; target/focus/party snapshots, `'pet'` aliasing to player stats, absent units for 508/512, secret or tainted unit selectors, activation, older profiles and native parity are unverified.
+
+### Deferred from this batch: no credit
+
+- **478 `GetShieldBlock`**: provider returns `stats.armor` (fixture1234) and reads stack slot 1 as a unit token although the cached declaration takes no arguments. Armor is not a shield-block model; wrapping alone does not make this meaningful behavior.
+- **504 `UnitAttackSpeed`**: provider pushes literal `2.0, 2.0` regardless of unit or state; constant shim.
+
+Rows502/508/512 remain `audit-pending` with no capability until independent validation and main accounting.
