@@ -83,12 +83,20 @@ Independent report `/tmp/patch-12.0.5-spell-count-independent-proof.md` identifi
 
 No build/test/check/lint/metrics/readability gate or native acquisition runs in this implementer. Main must refresh the focused30 Spell and28 Action tests after validator changes; later changed tests need only intersecting proof. Historical127 Retail and47 Forever results above remain historical evidence, not current validator execution proof. Unchanged control scopes retain their previous evidence; no broad rerun is implied. Source301/309 remain uncredited; requester checkpoint192 pending/155 bounded/14 partial/1 metadata,362IDs/73 capabilities is unchanged. Cast input-permission and opaque nominal-type gaps remain open; eight Forever warnings remain out of scope. Authored2026-10-01 and historical host observations remain untouched.
 
+## Independent bounded acceptance — 2026-10-02
+
+Independent528 and follow-up533 accept **exact301/309 output behavior only**. Proof SSOT: `/tmp/patch-12.0.5-spell-count-final-followup.md` and its JSON ledger. At `e5d11e497ca3c7eee51b3572866ca10185fe9199`, 30 refreshed Spell and28 refreshed Action cases pass;69 unchanged historical controls yield **127 distinct Retail PASS**, not185 fresh. Startup `[]` is inherited. Scoped rustfmt exits0; fresh default Cargo check exits0 with zero diagnostics in38.656696s. Refreshed compile511.677244s and runtime5.695362s/6.788062s remain separate costs.
+
+Shared validators preserve domains, defaults, API-specific errors and all-original-argument authentication order. Full focused test/embedded Lua readability and literal equivalence reviewed. Historical Forever47 controls exclude the shared-validator refresh; eight historical warnings remain explicit. No full-profile or warning-free claim. Evidence is dirty-combined, not clean revision proof; globalfmt failure and historical502 protected-scope process failure remain unresolved.
+
+Accounting promotes only301/309: **190 pending/157 bounded/14 partial/1 metadata,362 ordered IDs/74 capabilities**. Other rows, prior capabilities and source hashes remain unchanged. Cast AllowedWhenTainted secret-input parity remains **UNMODELED**, not NeverSecret credit or full API acceptance. Native acquisition, inferred policies, opaque nominal primitive type, global privacy and UI parity remain unproved. Earlier pending statements above are historical development checkpoints, superseded only within this bounded gate.
+
 ## Known gaps (current cycle)
 
-- [ ] Independently demonstrate producer GREEN after the main-owned compiled RED below. Earliest RED failures prevented downstream privacy/GC assertions from executing; authored coverage is not completed proof.
-- [ ] Verify C API producers and Value-based display resolution without VM bypass, generic declassification, callback swaps, stack clearing, secret cast payload host reads, new rilua pin or publication.
-- [ ] Run main-owned startup, check, security, readability, current-profile/control and acceptance gates; no library suites or gates executed by this implementer.
-- [ ] Independently prove output deltas before any retained-row301/309 credit. Inventory remains requester checkpoint194pending/153bounded/14partial/1metadata,362IDs/72capabilities; rows301/309 remain pending, as do separately verified237/241 until parent acceptance. No Maw/base295/action237/241 credit from this batch.
+- [x] Independently demonstrate meaningful producer GREEN and downstream tested privacy/root/copy/GC behavior after compiled RED.
+- [x] Verify actual C API wiring and Value-based display resolution without VM bypass, declassification, callback swaps or publication.
+- [x] Obtain scoped startup reuse, Rust checks, security, readability and relevant current-profile controls.
+- [x] Promote only exact301/309 output deltas after independent bounded acceptance.
 - [ ] Keep cast AllowedWhenTainted permission gap separate and open; it does not block meaningful bounded output work or authorize expanded VM changes.
 - [ ] Native probes deferred: real reagent/charge counts;9999/10000/equality; coercion/nil; opaque type, root copies and tainted cast permission versus display permission; width, priority, no-source, profile/UI/global privacy. These remain unknown, not native claims.
 
@@ -106,4 +114,4 @@ Main-reported pre-producer proof at `23ac1c89d`, integration artifact `a65bdce18
 
 Producer scope is only source301/309 output deltas. Existing empty map remains the only cast quantity provider, including explicit valid numeric IDs absent from the catalog; this is host-model coverage, not live acquisition. Charge priority, default/no-source, threshold and strict-domain policies remain inferred from the bounded simulator contract, not native quantity limits. Cast secret argument1 is rejected before aliases/model even for secure callers: no native AllowedWhenTainted input-permission credit, NeverSecret metadata claim, or full input/output privacy parity.
 
-Required GREEN/startup/check/security/readability/current-profile/gates/accounting remain unchecked and main-owned. No tests, build, check, lint, readability gate, library suite, operations or push run here. Owned Rust formatting uses `rustfmt --config skip_children=true`; no module traversal. Existing observed host Git/build timestamps remain distinct from the authored 2026-10-01 header; no RED timestamp is inferred or rewritten. No retained-row credit or native-parity claim.
+This RED ledger records the historical pre-producer boundary, not the current acceptance status. Current scoped GREEN/check/security/readability and retained-row credit are recorded above; native parity remains unproved. Owned formatting uses `rustfmt --config skip_children=true`; no module traversal. Observed host Git/build timestamps remain distinct from the authored 2026-10-01 header; no RED timestamp is inferred or rewritten. No operations or push authorized.

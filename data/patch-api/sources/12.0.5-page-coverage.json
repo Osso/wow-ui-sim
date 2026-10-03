@@ -7,6 +7,23 @@
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
   "capabilities": [
     {
+      "id": "spell-count-outputs",
+      "symbols": [
+        "C_Spell.GetSpellCastCount",
+        "C_Spell.GetSpellDisplayCount"
+      ],
+      "scope": "Exact301/309 output predicates and meaningful empty-default spell-keyed quantities, distinct from action-slot counts; valid charges supply display only. Decimal strict >maximum replacement/default9999/* policies inferred. Display authenticates all original VM arguments before parsing/model; restricted real host NUM/STR preserve payload, opacity, copies, roots and GC. Cast AllowedWhenTainted secret-input parity remains UNMODELED: conservative rejection earns no input-policy or NeverSecret credit. No acquisition, consumption, nominal primitive type, native/global privacy or full-profile/UI parity.",
+      "spec": "docs/specs/spell-count-outputs.md",
+      "tests": [
+        "tests/spell_count_outputs.rs"
+      ],
+      "implementation": "c939971f85b5abb793d202f6b776aa3477c26a21",
+      "compiled_revision": "e5d11e497ca3c7eee51b3572866ca10185fe9199",
+      "proof": "bounded-independent-pass",
+      "ledger": "/tmp/patch-12.0.5-spell-count-final-followup.md",
+      "gate_scope": "Accepted528+533 bounded output candidate:30refreshedSpell+28refreshedAction+69historical=127distinctRetailPASS, inheritedstartup0[]. Shared validators preserve domains/error contexts/authentication order; full embeddedLua/test equivalence/readability/scopedfmt0/defaultcheck0. Forever47 historical excludes validator refresh; eight historical warnings retained. Dirty-combined/globalfmt1/historical502processFAIL and native/type/input/acquisition/UI limits remain; not full API/page/goal completion. Exact commands/hashes/costs/full streams in ledger."
+    },
+    {
       "id": "action-count-outputs",
       "symbols": [
         "C_ActionBar.GetActionDisplayCount",
@@ -2249,9 +2266,9 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellCastCount-301",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["spell-count-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact301 output predicate accepted under spell-count-outputs independent bounded proof. Meaningful spell-keyed quantity and restricted NUM output only; AllowedWhenTainted secret-input parity remains UNMODELED, conservative rejection earns no input or NeverSecret credit. Native acquisition/type/full API parity unproved."
     },
     {
       "source_id": "global api-C_Spell-GetSpellCharges-303",
@@ -2277,9 +2294,9 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellDisplayCount-309",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": ["spell-count-outputs"],
+      "status": "bounded-coverage",
+      "note": "Exact309 output predicate accepted under spell-count-outputs independent bounded proof. Meaningful STRING quantity/charge formatting, VM display authentication and private output lifetime tested; priority/default/domain policies inferred. Native acquisition/nominal primitive type/full API parity unproved."
     },
     {
       "source_id": "global api-C_Spell-GetSpellLink-311",
