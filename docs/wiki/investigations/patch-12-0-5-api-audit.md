@@ -1,5 +1,15 @@
 # Patch 12.0.5 API Audit
 
+### Batch80 — bounded unit comparison acceptance
+
+After `7a9ce5d37`, [B80 acceptance SSOT](../../specs/unit-identity-equality.md#b80-independent-bounded-acceptance--2026-10-03) owns main-accepted independent698: **12 refreshed PASS at pinned `ad1821805`**, six permission cases and six identity controls. Exact142/143/144 receive bounded credit; introductory141 remains partial. Current accounting: **84 capabilities,362 ordered IDs;167 pending / 177 bounded / 11 partial / 7 metadata**. Independent metadata audit remains **PENDING a new agent**.
+
+Historical B5/GUID GREEN and permission RED remain separate. Saved690 check/startup are inherited unchanged-production evidence, **not refreshed gates**. Native behavior/auth/arity, inferred lexical policy, full identity coverage, older profiles, full suite and GUI/CASC gaps remain open; globalfmt1 at unowned `aura_duration.rs:44` remains uncleared. The linked spec owns detailed proof and qualifications; audit **IN PROGRESS**.
+
+### Batch79 accounting — terminal follow-up
+
+Following the historical pending checkpoint below, main reports terminal independent696 **PASS31** and corrective699 **PASS33**. Earlier FAIL reports were in-flight query defects, not final repository failures; bounded18-table/register-hash accounting is corrected. [B79 SSOT](../../specs/tooltip-unit-buff-security.md#independent-bounded-acceptance--2026-10-03) retains exact342 pending and unchanged status limits. This follow-up does not erase the original checkpoint or grant B80 metadata acceptance.
+
 ### Batch79 — exact342 inputs-only checkpoint
 
 Committed inputs `a23adf150`: [GetUnitBuff contract SSOT](../../specs/tooltip-unit-buff-security.md) owns the bounded domain, chosen policies and 18 authored tests. Main performed formatting precommit. At that historical inputs-only checkpoint, asynchronous compiled-RED worker3815774 was active at `/tmp/patch-12.0.5-buff-indexed-red-ops/`; no finished RED, GREEN or acceptance was then claimed. Later evidence does not retroactively change that checkpoint.
