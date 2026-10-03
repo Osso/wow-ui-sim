@@ -1015,6 +1015,186 @@ mod modern {
     }
 
     #[test]
+    fn storage_listener_gc_and_reentry_preserve_committed_state_and_original_payload() {
+        let env = fixture_env();
+        // Storage-before-response is inferred; the outer Store is complete before reentry.
+        env.exec(r#"
+            reentered = false
+            listener:SetScript('OnEvent', function(_, event, ...)
+                local payload = ...
+                collectgarbage('collect')
+                local row = {name=event, payload=payload, arity=select('#', ...),
+                    stored=C_HousingCatalog.GetCatalogEntryVariantInfo({recordID=7101,entryType=1,variantIdentifier=0}).numStored,
+                    size=C_HouseExterior.GetCurrentHouseExteriorSize(),
+                    exteriorType=C_HouseExterior.GetCurrentHouseExteriorType(),
+                    fixture=C_HouseExterior.GetSelectedFixturePointInfo().selectedFixtureID,
+                    all=C_HouseExterior.IsAnyDecorAttachedToHouseExterior(),
+                    selected=C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint()}
+                events[#events+1] = row
+                if event == 'HOUSING_STORAGE_ENTRY_UPDATED' and not reentered then
+                    reentered = true
+                    originalPayload = payload
+                    C_HouseExterior.SetHouseExteriorSize(4, 0)
+                    collectgarbage('collect')
+                    afterReentry = {stored=C_HousingCatalog.GetCatalogEntryVariantInfo(originalPayload).numStored,
+                        size=C_HouseExterior.GetCurrentHouseExteriorSize(),
+                        fixture=C_HouseExterior.GetSelectedFixturePointInfo().selectedFixtureID,
+                        all=C_HouseExterior.IsAnyDecorAttachedToHouseExterior()}
+                end
+            end)
+        "#).unwrap();
+        invoke(&env, 0, ", 0");
+        env.exec(r#"
+            collectgarbage('collect')
+            assert(reentered and #events == 4)
+            assert(events[1].name == 'HOUSING_STORAGE_ENTRY_UPDATED')
+            assert(events[2].name == 'HOUSING_STORAGE_ENTRY_UPDATED')
+            assert(events[3].name == 'HOUSING_SET_EXTERIOR_HOUSE_SIZE_RESPONSE')
+            assert(events[4].name == 'HOUSING_SET_FIXTURE_RESPONSE')
+            assert(events[3].payload == 0 and events[4].payload == 0)
+            assert(originalPayload.recordID == 7101 and originalPayload.entryType == 1 and originalPayload.variantIdentifier == 0)
+            assert(events[1].payload == originalPayload)
+            assert(events[2].payload.recordID == 7101 and events[2].payload.entryType == 1 and events[2].payload.variantIdentifier == 0)
+            local outer = events[1]
+            assert(outer.stored == 4 and outer.size == 3 and outer.fixture == 302)
+            assert(outer.all and not outer.selected)
+            for index, row in ipairs(events) do
+                assert(row.arity == 1 and row.exteriorType == 101 and row.fixture == 302)
+                if index > 1 then
+                    assert(row.stored == 5 and row.size == 4 and not row.all and not row.selected)
+                end
+            end
+            assert(afterReentry.stored == 5 and afterReentry.size == 4 and afterReentry.fixture == 302 and not afterReentry.all)
+            assert(C_HousingCatalog.GetCatalogEntryVariantInfo(originalPayload).numStored == 5)
+        "#).unwrap();
+        let state = env.state().borrow();
+        let housing = &state.housing;
+        assert_eq!(housing.exterior.selected_size, Some(4));
+        assert_eq!(housing.exterior.selected_type_id, Some(101));
+        assert_eq!(
+            housing
+                .exterior
+                .selected_fixture_point
+                .as_ref()
+                .unwrap()
+                .selected_fixture_id,
+            Some(302)
+        );
+        assert_eq!(housing.exterior.decor.len(), 1);
+        let floating = &housing.exterior.decor["floating"];
+        assert_eq!(floating.variant_id, variant());
+        assert_eq!(floating.position, [8.0, 9.0, 10.0]);
+        assert_eq!(floating.fixture_point_owner_hash, None);
+        assert_eq!(housing.catalog.variants[&variant()].num_stored, 5);
+        assert_eq!(housing.catalog.entries[&entry()].total_num_stored, Some(5));
+        assert_eq!(housing.catalog.entries[&entry()].total_num_placed, Some(0));
+        assert!(
+            state
+                .events
+                .pending()
+                .iter()
+                .all(|event| !event.name.starts_with("HOUSING_SET_")
+                    && event.name != "HOUSING_STORAGE_ENTRY_UPDATED")
+        );
+    }
+
+    #[test]
+    fn mixed_valid_and_invalid_affected_variants_reject_store_atomically() {
+        for method in [0, 1] {
+            for missing in [true, false] {
+                let env = fixture_env();
+                let second = HousingCatalogEntryVariantID {
+                    record_id: 7102,
+                    entry_type: 1,
+                    variant_identifier: 9,
+                };
+                let second_entry = HousingCatalogEntryID {
+                    record_id: 7102,
+                    entry_type: 1,
+                };
+                {
+                    let mut state = env.state().borrow_mut();
+                    let housing = &mut state.housing;
+                    let mut record = housing.catalog.variants[&variant()].clone();
+                    record.num_stored = i32::MAX;
+                    housing.catalog.variants.insert(second.clone(), record);
+                    let mut base = housing.catalog.entries[&entry()].clone();
+                    base.item_id = Some(7102);
+                    base.name = "Overflow exterior lamp".into();
+                    base.total_num_stored = Some(i32::MAX as u32);
+                    base.total_num_placed = Some(1);
+                    housing.catalog.entries.insert(second_entry.clone(), base);
+                    housing
+                        .exterior
+                        .decor
+                        .get_mut("point11b")
+                        .unwrap()
+                        .variant_id = second.clone();
+                    housing
+                        .catalog
+                        .entries
+                        .get_mut(&entry())
+                        .unwrap()
+                        .total_num_placed = Some(2);
+                    if missing {
+                        housing.catalog.variants.remove(&second);
+                    }
+                }
+                let snapshot = |env: &WowLuaEnv| {
+                    let state = env.state().borrow();
+                    let housing = &state.housing;
+                    let variants = [variant(), second.clone()].map(|id| {
+                        housing.catalog.variants.get(&id).map(|record| {
+                            let dyes: Vec<_> = record
+                                .dye_slots
+                                .iter()
+                                .map(|dye| {
+                                    (
+                                        dye.id,
+                                        dye.dye_color_category_id,
+                                        dye.order_index,
+                                        dye.channel,
+                                        dye.dye_color_id,
+                                        dye.dye_color_name.clone(),
+                                    )
+                                })
+                                .collect();
+                            (record.num_stored, record.destroyable_instance_count, dyes)
+                        })
+                    });
+                    let bases = [entry(), second_entry.clone()].map(|id| {
+                        let base = &housing.catalog.entries[&id];
+                        (
+                            base.item_id,
+                            base.name.clone(),
+                            base.is_unique_trophy,
+                            base.total_num_stored,
+                            base.total_num_placed,
+                        )
+                    });
+                    (
+                        housing.exterior.clone(),
+                        variants,
+                        bases,
+                        housing.catalog.variants.len(),
+                        housing.catalog.entries.len(),
+                    )
+                };
+                let before = snapshot(&env);
+                let pending_before = env.state().borrow().events.pending().len();
+                let (name, target, _) = CALLS[method];
+                env.exec(&format!(r#"
+                    local ok, message = pcall(C_HouseExterior.{name}, {target}, 0)
+                    assert(not ok and type(message) == 'string' and #message > 0)
+                    assert(#events == 0, 'invalid affected variant must reject before emitting events')
+                "#)).unwrap();
+                assert_eq!(snapshot(&env), before, "method={name}, missing={missing}");
+                assert_eq!(env.state().borrow().events.pending().len(), pending_before);
+            }
+        }
+    }
+
+    #[test]
     fn environments_do_not_share_exterior_placements_or_storage() {
         let first = fixture_env();
         let second = fixture_env();
