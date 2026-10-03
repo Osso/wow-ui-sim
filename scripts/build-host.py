@@ -248,6 +248,13 @@ def build(
     with tempfile.TemporaryDirectory(prefix="wow-native-", dir=cache) as work:
         context = Path(work)
         snapshot(root, context)
+        environment = None
+        if host == "desktop" and runtime_args is not None:
+            environment = {
+                "VK_DRIVER_FILES": "/opt/game-engine/mesa-dzn/share/vulkan/icd.d/dzn_icd.x86_64.json",
+                "LD_LIBRARY_PATH": "/usr/lib/wsl/lib",
+                "WGPU_BACKEND": "vulkan",
+            }
         return native.execute(
             context,
             checkout_key,
@@ -259,6 +266,7 @@ def build(
             release=release,
             root=root,
             build=build,
+            environment=environment,
         )
 
 
