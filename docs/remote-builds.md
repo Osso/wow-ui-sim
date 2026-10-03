@@ -28,7 +28,7 @@ The Python profile launcher preserves `live`/`retail`, `ptr`, `mists`, and `all`
 
 `python3 scripts/build-host.py --save-build-host desktop` saves the shared default in `~/.config/game-engine/build-host`; use `local` to change it. The configured default is desktop. Explicit `--build-host` overrides it for one invocation. Host failure is an error, never a host fallback.
 
-Shared snapshot, selection, and native execution helpers live in `/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/`. Set `BUILD_HOST_SCRIPTS` to override that dependency. Desktop requires native Rust 1.98.1 and same-ABI native runtime dependencies; there is no Docker runtime or bundled ICU substitution. Existing CI/release Docker pipelines remain separate and unchanged, including the [standalone PTR ICU workflow](ptr-icu-build.md).
+Shared snapshot, selection, and native execution helpers live in `/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/`. Set `BUILD_HOST_SCRIPTS` to override that dependency. Desktop uses pinned Rust 1.98.1 through rustup and same-ABI native runtime dependencies; the in-progress local native-tool fix uses installed Arch Cargo/rustc 1.98.1 without rustup, not fallback; there is no Docker runtime or bundled ICU substitution. Existing CI/release Docker pipelines remain separate and unchanged, including the [standalone PTR ICU workflow](ptr-icu-build.md).
 
 ## Source, cache, and lifetime
 
@@ -38,9 +38,9 @@ Runtime Blizzard caches remain host-local and profile-scoped under `~/.cache/wow
 
 ## Evidence and pending runtime proof
 
-Reported main-session evidence on October 3, 2026: default native GUI binary build completed in 4m9s; default CLI `--no-addons --no-saved-vars lua-errors` exited 0 with `CLEAN` and zero errors (`target/native-desktop-lua-errors.log`). These are scoped build/CLI observations, not full parity or warning-free acceptance.
+Main-observed evidence on October 3, 2026: actual native desktop GUI binary build passed (4m9s); headless CLI startup `--no-addons --no-saved-vars lua-errors` returned `[]`, exit 0 (`target/native-desktop-lua-errors.log`). These are bounded build/CLI observations, not full parity or warning-free acceptance.
 
-Normal visible Windows GUI launch remains unproven. WSLg launched through SSH encountered a Session 0 problem; investigation remains pending. Historical focused-test/check reports are not a fresh current-tree gate.
+Normal visible Windows GUI launch is NOT proven: the normal GUI probe produced only a log artifact and a process alive for 25 seconds. Earlier SSH/WSLg Session 0 trouble does not establish the outcome of this later probe. Existing 93 shared workflow fixtures passed; lint fixes and actual local native acceptance remain pending. Historical focused-test/check reports are not a fresh current-tree gate; the whole workflow remains incomplete.
 
 ## Related
 

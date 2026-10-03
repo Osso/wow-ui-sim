@@ -30,7 +30,10 @@ Tests are inventoried, not rerun by this documentation audit; requirements remai
 
 ## Known gaps (current cycle)
 
-- [ ] Normal visible Windows GUI proof: SSH/WSLg Session 0 investigation pending; see guide evidence limits.
+- [x] Bounded native desktop acceptance: actual build and headless CLI startup `lua-errors []`, exit 0 observed by main; see guide.
+- [ ] Normal visible Windows GUI proof: log artifact and process alive for 25 seconds are insufficient.
+- [ ] Actual local native acceptance after installed Cargo/rustc selection fix.
+- [ ] Lint fixes remain pending; 93 existing shared workflow fixtures passing does not complete workflow acceptance.
 
 ## Out of scope
 
