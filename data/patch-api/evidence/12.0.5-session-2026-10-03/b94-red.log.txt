@@ -1,0 +1,108 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 5 tests
+test spell_book_cast_count::cooldown_restriction_alone_makes_the_count_secret ... FAILED
+test spell_book_cast_count::count_follows_the_book_entry_spell_not_the_slot_number ... FAILED
+test spell_book_cast_count::missing_count_entry_or_bank_returns_one_zero ... FAILED
+test spell_book_cast_count::tainted_callers_are_denied_secret_selectors_before_resolution ... FAILED
+test spell_book_cast_count::untainted_callers_may_pass_secret_selectors ... FAILED
+
+failures:
+
+---- spell_book_cast_count::cooldown_restriction_alone_makes_the_count_secret stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.006s] [Startup] SimState::default complete in 5.87ms
+[  0.006s] [Startup] rilua VM created in 248.63µs
+[  0.007s] [Startup] builtin frames initialized in 391.66µs
+[  0.007s] [Startup] template registry cleared in 48.47µs
+[  0.007s] [Startup] intrinsic templates registered in 18.56µs
+[  0.007s] [Startup] initial app_data lua handle installed in 1.68µs
+[  0.489s] [Startup] init_lua_state complete in 481.88ms
+[  0.489s] [Startup] final app_data lua handle installed in 545.00ns
+[  0.489s] [Startup] initial screen globals installed in 303.55µs
+[  0.489s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_book_cast_count::cooldown_restriction_alone_makes_the_count_secret' (505361) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_book_cast_count.rs:94:10:
+unit-stat restriction is unrelated: Lua(Runtime(RuntimeError { message: "count", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- spell_book_cast_count::count_follows_the_book_entry_spell_not_the_slot_number stdout ----
+[  0.508s] [Startup] WowLuaEnv::new begin
+[  0.511s] [Startup] SimState::default complete in 2.41ms
+[  0.511s] [Startup] rilua VM created in 127.84µs
+[  0.511s] [Startup] builtin frames initialized in 82.78µs
+[  0.511s] [Startup] template registry cleared in 9.67µs
+[  0.511s] [Startup] intrinsic templates registered in 9.46µs
+[  0.511s] [Startup] initial app_data lua handle installed in 1.00µs
+[  0.805s] [Startup] init_lua_state complete in 294.57ms
+[  0.805s] [Startup] final app_data lua handle installed in 383.00ns
+[  0.806s] [Startup] initial screen globals installed in 222.89µs
+[  0.806s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_book_cast_count::count_follows_the_book_entry_spell_not_the_slot_number' (505374) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_book_cast_count.rs:65:10:
+spell-keyed count: Lua(Runtime(RuntimeError { message: "count", level: 0, traceback: [] }))
+
+---- spell_book_cast_count::missing_count_entry_or_bank_returns_one_zero stdout ----
+[  0.817s] [Startup] WowLuaEnv::new begin
+[  0.820s] [Startup] SimState::default complete in 3.20ms
+[  0.821s] [Startup] rilua VM created in 151.40µs
+[  0.821s] [Startup] builtin frames initialized in 92.47µs
+[  0.821s] [Startup] template registry cleared in 9.97µs
+[  0.821s] [Startup] intrinsic templates registered in 11.28µs
+[  0.821s] [Startup] initial app_data lua handle installed in 2.47µs
+[  1.068s] [Startup] init_lua_state complete in 247.46ms
+[  1.068s] [Startup] final app_data lua handle installed in 209.00ns
+[  1.069s] [Startup] initial screen globals installed in 462.53µs
+[  1.069s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_book_cast_count::missing_count_entry_or_bank_returns_one_zero' (505383) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_book_cast_count.rs:86:6:
+documented zero when the item is not found: Lua(Runtime(RuntimeError { message: "count", level: 0, traceback: [] }))
+
+---- spell_book_cast_count::tainted_callers_are_denied_secret_selectors_before_resolution stdout ----
+[  1.083s] [Startup] WowLuaEnv::new begin
+[  1.086s] [Startup] SimState::default complete in 3.03ms
+[  1.087s] [Startup] rilua VM created in 141.85µs
+[  1.087s] [Startup] builtin frames initialized in 85.09µs
+[  1.087s] [Startup] template registry cleared in 7.15µs
+[  1.087s] [Startup] intrinsic templates registered in 11.01µs
+[  1.087s] [Startup] initial app_data lua handle installed in 726.00ns
+[  1.310s] [Startup] init_lua_state complete in 223.44ms
+[  1.310s] [Startup] final app_data lua handle installed in 606.00ns
+[  1.310s] [Startup] initial screen globals installed in 211.53µs
+[  1.310s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_book_cast_count::tainted_callers_are_denied_secret_selectors_before_resolution' (505398) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_book_cast_count.rs:153:6:
+VM-authenticated denial, unchanged taint and public recovery: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- spell_book_cast_count::untainted_callers_may_pass_secret_selectors stdout ----
+[  1.325s] [Startup] WowLuaEnv::new begin
+[  1.326s] [Startup] SimState::default complete in 1.61ms
+[  1.326s] [Startup] rilua VM created in 94.45µs
+[  1.326s] [Startup] builtin frames initialized in 50.37µs
+[  1.327s] [Startup] template registry cleared in 6.43µs
+[  1.327s] [Startup] intrinsic templates registered in 7.74µs
+[  1.327s] [Startup] initial app_data lua handle installed in 609.00ns
+[  1.592s] [Startup] init_lua_state complete in 265.00ms
+[  1.592s] [Startup] final app_data lua handle installed in 238.00ns
+[  1.592s] [Startup] initial screen globals installed in 221.76µs
+[  1.592s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_book_cast_count::untainted_callers_may_pass_secret_selectors' (505401) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_book_cast_count.rs:123:6:
+AllowedWhenUntainted authenticates both selectors: Lua(Runtime(RuntimeError { message: "count", level: 0, traceback: [] }))
+
+
+failures:
+    spell_book_cast_count::cooldown_restriction_alone_makes_the_count_secret
+    spell_book_cast_count::count_follows_the_book_entry_spell_not_the_slot_number
+    spell_book_cast_count::missing_count_entry_or_bank_returns_one_zero
+    spell_book_cast_count::tainted_callers_are_denied_secret_selectors_before_resolution
+    spell_book_cast_count::untainted_callers_may_pass_secret_selectors
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 10088 filtered out; finished in 1.61s
+
+
+--- stderr ---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 44s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+error: test failed, to rerun pass `--test integration`

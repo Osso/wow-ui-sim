@@ -1,0 +1,71 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 6m 33s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+
+running 62 tests
+test catalog_shop_product_structures::additional_product_pmt_urls_preserve_order_and_string_type ... ok
+test catalog_shop_product_structures::all_nullable_fields_are_absent_and_required_arrays_exist ... ok
+test catalog_shop_product_structures::consumable_quantity_is_absent_from_populated_product ... ok
+test catalog_shop_product_structures::decor_quantity_round_trips_nested_numbers ... ok
+test catalog_shop_product_structures::environments_are_isolated ... ok
+test catalog_shop_product_structures::fully_populated_display_has_exact_declared_shape ... ok
+test catalog_shop_product_structures::fully_populated_product_has_exact_declared_shape ... ok
+test catalog_shop_product_structures::host_replacements_affect_new_snapshots_only ... ok
+test catalog_shop_product_structures::house_texture_atlas_round_trips ... ok
+test catalog_shop_product_structures::malformed_public_selectors_do_not_alias_stored_products ... ok
+test catalog_shop_product_structures::maps_use_exact_keys_without_product_display_cross_lookup ... ok
+test catalog_shop_product_structures::preview_bg_override_product_url_round_trips ... ok
+test catalog_shop_product_structures::preview_small_bg_override_product_url_round_trips ... ok
+test catalog_shop_product_structures::returned_tables_and_every_nested_array_are_independent ... ok
+test catalog_shop_product_structures::unknown_ids_and_legacy_seed_ids_return_nil ... ok
+test catalog_shop_product_structures::zero_decor_counts_are_present_not_nil ... ok
+test equipment_set_command::equipset_command_uses_live_catalog_and_existing_swap_events ... ok
+test equipment_set_command::equipset_invalid_names_do_not_error_or_mutate_and_valid_command_recovers ... ok
+test housing_catalog::housing_catalog_cart_size_limit_returns_seeded_limit ... ok
+test housing_catalog::housing_catalog_empty_surface_remains_registered ... ok
+test housing_catalog::housing_catalog_storefront_and_market_methods_use_seeded_state ... ok
+test housing_catalog::housing_preview_cart_state_round_trips_and_promotes ... ok
+test quest_reward_favor::favor_distinct_records_clamp_values_and_live_replacement_are_exact ... ok
+test quest_reward_favor::favor_empty_defaults_report_unmodeled_context_and_records ... ok
+test quest_reward_favor::favor_nil_quest_uses_only_explicit_context_and_default_clamp_is_false ... ok
+test quest_reward_favor::favor_queries_are_read_only_and_environment_inputs_are_isolated ... ok
+test quest_reward_favor::favor_tainted_secret_rejection_precedes_validation_and_lookup ... ok
+test quest_reward_favor::favor_untainted_secrets_are_authenticated_without_declassifying_inputs ... ok
+test quest_reward_favor::favor_wrong_public_inputs_error_before_state_lookup ... ok
+test quest_reward_favor::favor_zero_and_u32_endpoint_keys_are_explicit_hits ... ok
+test tooltip_texture_secrecy::tooltip_texture_secrecy_cleared_cached_line_reuse_is_public ... ok
+test tooltip_texture_secrecy::tooltip_texture_secrecy_cleared_textures_allow_public_repopulation ... ok
+test tooltip_texture_secrecy::tooltip_texture_secrecy_isolated_between_public_and_private_tooltips ... ok
+test tooltip_texture_secrecy::tooltip_texture_secrecy_line_replacement_preserves_other_private_line ... ok
+test tooltip_texture_secrecy::tooltip_texture_secrecy_private_texture_and_atlas_preserve_denial ... ok
+test tooltip_texture_secrecy::tooltip_texture_secrecy_public_texture_and_atlas_preserve_readability ... ok
+test tooltip_unit_buff_security::blocked_filter_reindexes_and_same_instance_on_other_unit_remains_visible ... ok
+test tooltip_unit_buff_security::distinct_player_party1_party2_content_uses_requested_live_unit ... ok
+test tooltip_unit_buff_security::fresh_payload_and_miss_tables_do_not_alias_host_or_other_results ... ok
+test tooltip_unit_buff_security::live_host_mutation_removal_and_environment_isolation ... ok
+test tooltip_unit_buff_security::missing_or_nonpositive_filtered_index_returns_current_empty_shape ... ok
+test tooltip_unit_buff_security::omitted_and_public_nil_filter_default_to_helpful ... ok
+test tooltip_unit_buff_security::player_filter_excludes_other_sources_before_indexing ... ok
+test tooltip_unit_buff_security::positive_one_based_index_addresses_filtered_not_raw_player_vector ... ok
+test tooltip_unit_buff_security::public_tainted_calls_keep_content_filters_and_caller_taint ... ok
+test tooltip_unit_buff_security::rooted_host_secret_gc_preserves_identity_secrecy_trust_and_fixture_state ... ok
+test tooltip_unit_buff_security::secure_combined_secret_selectors_return_meaningful_content_and_true_miss ... ok
+test tooltip_unit_buff_security::secure_secret_filter_and_nil_apply_filter_and_default ... ok
+test tooltip_unit_buff_security::secure_secret_index_selects_concrete_filtered_row ... ok
+test tooltip_unit_buff_security::secure_secret_unit_selects_actual_party_not_player ... ok
+test tooltip_unit_buff_security::secure_wrong_types_and_public_wrong_types_reject_with_recovery ... ok
+test tooltip_unit_buff_security::tainted_malformed_secret_payload_denied_before_type_or_state_short_circuit ... ok
+test tooltip_unit_buff_security::tainted_secret_each_position_denied_before_lookup_or_public_parse ... ok
+test tooltip_unit_buff_security::unsupported_units_never_fall_back_to_player ... ok
+test unit_name_secret_tokens::unit_name_secret_tokens_public_names_and_provider_arity ... ok
+test unit_name_secret_tokens::unit_name_secret_tokens_rejected_from_secure_top_level ... ok
+test unit_name_secret_tokens::unit_name_secret_tokens_rejected_from_tainted_caller_with_public_control ... ok
+test unit_token_identity_secrecy::identity_lookup_classification_does_not_create_missing_units ... ok
+test unit_token_identity_secrecy::identity_lookup_host_classification_is_environment_local ... ok
+test unit_token_identity_secrecy::identity_lookup_player_token_remains_outside_party_suppression ... ok
+test unit_token_identity_secrecy::identity_lookup_secret_party_suppression_recovers_after_host_clear ... ok
+test unit_token_identity_secrecy::identity_lookup_suppression_preserves_secure_and_addon_callers ... ok
+
+test result: ok. 62 passed; 0 failed; 0 ignored; 0 measured; 10120 filtered out; finished in 13.75s
+

@@ -1,0 +1,17 @@
+
+running 10 tests
+test cooldown_probes::charge_duration::charge_duration_active_recharge_uses_shared_interval_rate_and_runtime_clock ... ok
+test cooldown_probes::charge_duration::charge_duration_at_max_is_zero_span_fully_elapsed_at_query_time ... ok
+test cooldown_probes::charge_duration::charge_duration_empty_action_and_unresolved_book_have_no_recharge ... ok
+test cooldown_probes::charge_duration::charge_duration_noncharge_spell_does_not_fabricate_recharge_on_any_surface ... ok
+test cooldown_probes::charge_duration::charge_duration_snapshots_survive_changed_state_alias_mapping_and_clock ... ok
+test cooldown_probes::charge_duration::charge_duration_unknown_spell_and_alias_return_no_recharge ... ok
+test cooldown_probes::charge_duration::charge_queries_derive_all_five_fields_from_same_explicit_state ... ok
+test cooldown_probes::charge_duration::charge_query_tables_do_not_fabricate_counts_without_charge_input ... ok
+test cooldown_probes::charge_duration::charge_zero_max_input_is_not_a_configured_charge_spell ... ok
+test cooldown_probes::charge_duration::charge_zero_span_core_is_fully_elapsed_even_before_start_and_after_reset ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 10064 filtered out; finished in 1.46s
+
+
+--- stderr ---

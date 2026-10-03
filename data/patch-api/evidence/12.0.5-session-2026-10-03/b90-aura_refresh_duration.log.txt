@@ -1,0 +1,25 @@
+
+running 18 tests
+test aura_refresh_duration::actual_secret_arguments_are_rejected_without_declassification_or_taint_changes ... ok
+test aura_refresh_duration::empty_metadata_never_infers_base_from_current_aura_duration ... ok
+test aura_refresh_duration::expired_timed_aura_returns_exact_base_without_mutating_expiration ... ok
+test aura_refresh_duration::explicit_numeric_and_seeded_alias_override_duration_without_matching_aura_spell ... ok
+test aura_refresh_duration::finite_metadata_sum_overflow_never_becomes_public_infinity ... ok
+test aura_refresh_duration::getters_leave_aura_metadata_aliases_and_events_unchanged_across_gc ... ok
+test aura_refresh_duration::invalid_metadata_never_exposes_negative_or_nonfinite_public_numbers ... ok
+test aura_refresh_duration::malformed_arguments_error_before_missing_unit_short_circuit ... ok
+test aura_refresh_duration::metadata_and_alias_mutations_are_environment_local ... ok
+test aura_refresh_duration::numeric_alias_applies_only_to_explicit_identifier_not_omitted_aura_spell ... ok
+test aura_refresh_duration::omitted_and_nil_identifier_use_matched_aura_and_return_one_number ... ok
+test aura_refresh_duration::party_polarities_and_blocking_are_unit_and_instance_isolated ... ok
+test aura_refresh_duration::permanent_duration_or_expiration_returns_nil_refresh_but_known_base ... ok
+test aura_refresh_duration::saturated_refresh_uses_explicit_cap_not_thirty_percent_or_current_duration ... ok
+test aura_refresh_duration::unknown_alias_or_metadata_returns_one_nil_without_falling_back_to_aura_spell ... ok
+test aura_refresh_duration::unknown_units_and_instances_stay_nil_even_with_known_override ... ok
+test aura_refresh_duration::unsaturated_refresh_uses_environment_elapsed_clock_with_moving_time_bounds ... ok
+test aura_refresh_duration::zero_base_and_zero_cap_are_valid_explicit_metadata ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 10056 filtered out; finished in 3.40s
+
+
+--- stderr ---

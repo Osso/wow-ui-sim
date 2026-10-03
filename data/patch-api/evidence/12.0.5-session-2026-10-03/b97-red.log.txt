@@ -1,0 +1,499 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 26 tests
+test equipment_set_command::equipset_command_uses_live_catalog_and_existing_swap_events ... FAILED
+test equipment_set_command::equipset_invalid_names_do_not_error_or_mutate_and_valid_command_recovers ... FAILED
+test housing_bundle_structures::housing_bundle_empty_defaults_misses_and_environment_isolation ... FAILED
+test housing_bundle_structures::housing_bundle_exact_shape_order_and_types ... FAILED
+test housing_bundle_structures::housing_bundle_invalid_selectors_are_rejected_without_truncation ... FAILED
+test housing_bundle_structures::housing_bundle_non_decor_contents_disable_preview ... FAILED
+test housing_bundle_structures::housing_bundle_snapshots_and_featured_records_follow_host_updates ... FAILED
+test quest_reward_favor::favor_distinct_records_clamp_values_and_live_replacement_are_exact ... FAILED
+test quest_reward_favor::favor_empty_defaults_report_unmodeled_context_and_records ... FAILED
+test quest_reward_favor::favor_nil_quest_uses_only_explicit_context_and_default_clamp_is_false ... FAILED
+test quest_reward_favor::favor_queries_are_read_only_and_environment_inputs_are_isolated ... FAILED
+test quest_reward_favor::favor_tainted_secret_rejection_precedes_validation_and_lookup ... FAILED
+test quest_reward_favor::favor_untainted_secrets_are_authenticated_without_declassifying_inputs ... FAILED
+test quest_reward_favor::favor_wrong_public_inputs_error_before_state_lookup ... FAILED
+test quest_reward_favor::favor_zero_and_u32_endpoint_keys_are_explicit_hits ... FAILED
+test tooltip_texture_secrecy::tooltip_texture_secrecy_cleared_cached_line_reuse_is_public ... FAILED
+test tooltip_texture_secrecy::tooltip_texture_secrecy_cleared_textures_allow_public_repopulation ... ok
+test tooltip_texture_secrecy::tooltip_texture_secrecy_isolated_between_public_and_private_tooltips ... ok
+test tooltip_texture_secrecy::tooltip_texture_secrecy_line_replacement_preserves_other_private_line ... ok
+test tooltip_texture_secrecy::tooltip_texture_secrecy_private_texture_and_atlas_preserve_denial ... ok
+test tooltip_texture_secrecy::tooltip_texture_secrecy_public_texture_and_atlas_preserve_readability ... ok
+test unit_token_identity_secrecy::identity_lookup_classification_does_not_create_missing_units ... FAILED
+test unit_token_identity_secrecy::identity_lookup_host_classification_is_environment_local ... FAILED
+test unit_token_identity_secrecy::identity_lookup_player_token_remains_outside_party_suppression ... ok
+test unit_token_identity_secrecy::identity_lookup_secret_party_suppression_recovers_after_host_clear ... FAILED
+test unit_token_identity_secrecy::identity_lookup_suppression_preserves_secure_and_addon_callers ... FAILED
+
+failures:
+
+---- equipment_set_command::equipset_command_uses_live_catalog_and_existing_swap_events stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.010s] [Startup] SimState::default complete in 9.59ms
+[  0.010s] [Startup] rilua VM created in 151.33µs
+[  0.010s] [Startup] builtin frames initialized in 138.17µs
+[  0.010s] [Startup] template registry cleared in 13.88µs
+[  0.010s] [Startup] intrinsic templates registered in 6.60µs
+[  0.010s] [Startup] initial app_data lua handle installed in 3.38µs
+[  0.223s] [Startup] init_lua_state complete in 212.72ms
+[  0.223s] [Startup] final app_data lua handle installed in 249.00ns
+[  0.223s] [Startup] initial screen globals installed in 160.48µs
+[  0.223s] [Startup] WowLuaEnv::new complete
+
+thread 'equipment_set_command::equipset_command_uses_live_catalog_and_existing_swap_events' (605522) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/equipment_set_command.rs:115:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- equipment_set_command::equipset_invalid_names_do_not_error_or_mutate_and_valid_command_recovers stdout ----
+[  0.232s] [Startup] WowLuaEnv::new begin
+[  0.234s] [Startup] SimState::default complete in 1.74ms
+[  0.234s] [Startup] rilua VM created in 90.77µs
+[  0.234s] [Startup] builtin frames initialized in 51.19µs
+[  0.234s] [Startup] template registry cleared in 5.31µs
+[  0.234s] [Startup] intrinsic templates registered in 7.62µs
+[  0.234s] [Startup] initial app_data lua handle installed in 638.00ns
+[  0.348s] [Startup] init_lua_state complete in 114.18ms
+[  0.348s] [Startup] final app_data lua handle installed in 402.00ns
+[  0.348s] [Startup] initial screen globals installed in 173.41µs
+[  0.348s] [Startup] WowLuaEnv::new complete
+
+thread 'equipment_set_command::equipset_invalid_names_do_not_error_or_mutate_and_valid_command_recovers' (605538) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/equipment_set_command.rs:67:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_empty_defaults_misses_and_environment_isolation stdout ----
+[  0.355s] [Startup] WowLuaEnv::new begin
+[  0.357s] [Startup] SimState::default complete in 2.12ms
+[  0.357s] [Startup] rilua VM created in 93.84µs
+[  0.358s] [Startup] builtin frames initialized in 41.98µs
+[  0.358s] [Startup] template registry cleared in 5.03µs
+[  0.358s] [Startup] intrinsic templates registered in 7.20µs
+[  0.358s] [Startup] initial app_data lua handle installed in 677.00ns
+[  0.463s] [Startup] init_lua_state complete in 105.43ms
+[  0.463s] [Startup] final app_data lua handle installed in 289.00ns
+[  0.463s] [Startup] initial screen globals installed in 135.90µs
+[  0.463s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_empty_defaults_misses_and_environment_isolation' (605545) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:71:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_exact_shape_order_and_types stdout ----
+[  0.469s] [Startup] WowLuaEnv::new begin
+[  0.471s] [Startup] SimState::default complete in 1.56ms
+[  0.471s] [Startup] rilua VM created in 132.62µs
+[  0.471s] [Startup] builtin frames initialized in 70.74µs
+[  0.471s] [Startup] template registry cleared in 7.81µs
+[  0.471s] [Startup] intrinsic templates registered in 10.78µs
+[  0.471s] [Startup] initial app_data lua handle installed in 1.10µs
+[  0.575s] [Startup] init_lua_state complete in 103.76ms
+[  0.575s] [Startup] final app_data lua handle installed in 248.00ns
+[  0.575s] [Startup] initial screen globals installed in 138.37µs
+[  0.575s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_exact_shape_order_and_types' (605558) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:57:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "bad argument #1 to 'pairs' (table expected)", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_invalid_selectors_are_rejected_without_truncation stdout ----
+[  0.581s] [Startup] WowLuaEnv::new begin
+[  0.583s] [Startup] SimState::default complete in 1.39ms
+[  0.583s] [Startup] rilua VM created in 90.96µs
+[  0.583s] [Startup] builtin frames initialized in 41.68µs
+[  0.583s] [Startup] template registry cleared in 4.26µs
+[  0.583s] [Startup] intrinsic templates registered in 7.14µs
+[  0.583s] [Startup] initial app_data lua handle installed in 616.00ns
+[  0.717s] [Startup] init_lua_state complete in 133.81ms
+[  0.717s] [Startup] final app_data lua handle installed in 131.00ns
+[  0.717s] [Startup] initial screen globals installed in 133.47µs
+[  0.717s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_invalid_selectors_are_rejected_without_truncation' (605577) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:195:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_non_decor_contents_disable_preview stdout ----
+[  0.722s] [Startup] WowLuaEnv::new begin
+[  0.723s] [Startup] SimState::default complete in 1.30ms
+[  0.723s] [Startup] rilua VM created in 86.88µs
+[  0.724s] [Startup] builtin frames initialized in 40.59µs
+[  0.724s] [Startup] template registry cleared in 4.23µs
+[  0.724s] [Startup] intrinsic templates registered in 6.67µs
+[  0.724s] [Startup] initial app_data lua handle installed in 552.00ns
+[  0.821s] [Startup] init_lua_state complete in 97.57ms
+[  0.821s] [Startup] final app_data lua handle installed in 202.00ns
+[  0.821s] [Startup] initial screen globals installed in 136.60µs
+[  0.821s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_non_decor_contents_disable_preview' (605580) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:170:10:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):1: attempt to index a nil value", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_snapshots_and_featured_records_follow_host_updates stdout ----
+[  0.828s] [Startup] WowLuaEnv::new begin
+[  0.829s] [Startup] SimState::default complete in 1.57ms
+[  0.829s] [Startup] rilua VM created in 85.66µs
+[  0.829s] [Startup] builtin frames initialized in 38.90µs
+[  0.829s] [Startup] template registry cleared in 4.36µs
+[  0.830s] [Startup] intrinsic templates registered in 5.53µs
+[  0.830s] [Startup] initial app_data lua handle installed in 674.00ns
+[  0.942s] [Startup] init_lua_state complete in 112.93ms
+[  0.942s] [Startup] final app_data lua handle installed in 280.00ns
+[  0.943s] [Startup] initial screen globals installed in 133.80µs
+[  0.943s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_snapshots_and_featured_records_follow_host_updates' (605587) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:135:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- quest_reward_favor::favor_distinct_records_clamp_values_and_live_replacement_are_exact stdout ----
+[  0.950s] [Startup] WowLuaEnv::new begin
+[  0.952s] [Startup] SimState::default complete in 1.55ms
+[  0.952s] [Startup] rilua VM created in 169.24µs
+[  0.952s] [Startup] builtin frames initialized in 99.08µs
+[  0.952s] [Startup] template registry cleared in 8.41µs
+[  0.952s] [Startup] intrinsic templates registered in 11.67µs
+[  0.952s] [Startup] initial app_data lua handle installed in 1.05µs
+[  1.065s] [Startup] init_lua_state complete in 113.26ms
+[  1.065s] [Startup] final app_data lua handle installed in 303.00ns
+[  1.066s] [Startup] initial screen globals installed in 872.88µs
+[  1.066s] [Startup] WowLuaEnv::new complete
+
+thread 'quest_reward_favor::favor_distinct_records_clamp_values_and_live_replacement_are_exact' (605593) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/quest_reward_favor.rs:121:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- quest_reward_favor::favor_empty_defaults_report_unmodeled_context_and_records stdout ----
+[  1.073s] [Startup] WowLuaEnv::new begin
+[  1.081s] [Startup] SimState::default complete in 8.14ms
+[  1.081s] [Startup] rilua VM created in 94.61µs
+[  1.081s] [Startup] builtin frames initialized in 53.33µs
+[  1.081s] [Startup] template registry cleared in 6.92µs
+[  1.081s] [Startup] intrinsic templates registered in 8.57µs
+[  1.081s] [Startup] initial app_data lua handle installed in 674.00ns
+[  1.213s] [Startup] init_lua_state complete in 131.78ms
+[  1.213s] [Startup] final app_data lua handle installed in 247.00ns
+[  1.213s] [Startup] initial screen globals installed in 135.23µs
+[  1.213s] [Startup] WowLuaEnv::new complete
+
+thread 'quest_reward_favor::favor_empty_defaults_report_unmodeled_context_and_records' (605598) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/quest_reward_favor.rs:93:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- quest_reward_favor::favor_nil_quest_uses_only_explicit_context_and_default_clamp_is_false stdout ----
+[  1.219s] [Startup] WowLuaEnv::new begin
+[  1.221s] [Startup] SimState::default complete in 1.40ms
+[  1.221s] [Startup] rilua VM created in 89.83µs
+[  1.221s] [Startup] builtin frames initialized in 41.54µs
+[  1.221s] [Startup] template registry cleared in 4.58µs
+[  1.221s] [Startup] intrinsic templates registered in 5.80µs
+[  1.221s] [Startup] initial app_data lua handle installed in 432.00ns
+[  1.335s] [Startup] init_lua_state complete in 114.54ms
+[  1.335s] [Startup] final app_data lua handle installed in 144.00ns
+[  1.335s] [Startup] initial screen globals installed in 141.41µs
+[  1.335s] [Startup] WowLuaEnv::new complete
+
+thread 'quest_reward_favor::favor_nil_quest_uses_only_explicit_context_and_default_clamp_is_false' (605614) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/quest_reward_favor.rs:101:10:
+called `Result::unwrap()` on an `Err` value: Other("expected numeric result, got nil")
+
+---- quest_reward_favor::favor_queries_are_read_only_and_environment_inputs_are_isolated stdout ----
+[  1.342s] [Startup] WowLuaEnv::new begin
+[  1.349s] [Startup] SimState::default complete in 6.67ms
+[  1.349s] [Startup] rilua VM created in 94.11µs
+[  1.349s] [Startup] builtin frames initialized in 51.33µs
+[  1.349s] [Startup] template registry cleared in 5.38µs
+[  1.349s] [Startup] intrinsic templates registered in 7.32µs
+[  1.349s] [Startup] initial app_data lua handle installed in 890.00ns
+[  1.493s] [Startup] init_lua_state complete in 143.74ms
+[  1.493s] [Startup] final app_data lua handle installed in 148.00ns
+[  1.493s] [Startup] initial screen globals installed in 196.73µs
+[  1.493s] [Startup] WowLuaEnv::new complete
+[  1.493s] [Startup] WowLuaEnv::new begin
+[  1.495s] [Startup] SimState::default complete in 2.34ms
+[  1.495s] [Startup] rilua VM created in 172.52µs
+[  1.495s] [Startup] builtin frames initialized in 57.79µs
+[  1.495s] [Startup] template registry cleared in 8.22µs
+[  1.495s] [Startup] intrinsic templates registered in 6.96µs
+[  1.495s] [Startup] initial app_data lua handle installed in 657.00ns
+[  1.621s] [Startup] init_lua_state complete in 125.52ms
+[  1.621s] [Startup] final app_data lua handle installed in 117.00ns
+[  1.621s] [Startup] initial screen globals installed in 153.64µs
+[  1.621s] [Startup] WowLuaEnv::new complete
+
+thread 'quest_reward_favor::favor_queries_are_read_only_and_environment_inputs_are_isolated' (605618) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/quest_reward_favor.rs:183:116:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- quest_reward_favor::favor_tainted_secret_rejection_precedes_validation_and_lookup stdout ----
+[  1.636s] [Startup] WowLuaEnv::new begin
+[  1.637s] [Startup] SimState::default complete in 1.63ms
+[  1.637s] [Startup] rilua VM created in 86.98µs
+[  1.637s] [Startup] builtin frames initialized in 42.60µs
+[  1.637s] [Startup] template registry cleared in 4.26µs
+[  1.637s] [Startup] intrinsic templates registered in 5.95µs
+[  1.637s] [Startup] initial app_data lua handle installed in 669.00ns
+[  1.760s] [Startup] init_lua_state complete in 122.75ms
+[  1.760s] [Startup] final app_data lua handle installed in 399.00ns
+[  1.760s] [Startup] initial screen globals installed in 151.40µs
+[  1.760s] [Startup] WowLuaEnv::new complete
+
+thread 'quest_reward_favor::favor_tainted_secret_rejection_precedes_validation_and_lookup' (605641) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/quest_reward_favor.rs:247:7:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- quest_reward_favor::favor_untainted_secrets_are_authenticated_without_declassifying_inputs stdout ----
+[  1.766s] [Startup] WowLuaEnv::new begin
+[  1.768s] [Startup] SimState::default complete in 1.35ms
+[  1.768s] [Startup] rilua VM created in 129.46µs
+[  1.768s] [Startup] builtin frames initialized in 51.76µs
+[  1.768s] [Startup] template registry cleared in 6.78µs
+[  1.768s] [Startup] intrinsic templates registered in 8.52µs
+[  1.768s] [Startup] initial app_data lua handle installed in 801.00ns
+[  1.884s] [Startup] init_lua_state complete in 115.67ms
+[  1.884s] [Startup] final app_data lua handle installed in 252.00ns
+[  1.884s] [Startup] initial screen globals installed in 160.76µs
+[  1.884s] [Startup] WowLuaEnv::new complete
+
+thread 'quest_reward_favor::favor_untainted_secrets_are_authenticated_without_declassifying_inputs' (605654) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/quest_reward_favor.rs:214:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- quest_reward_favor::favor_wrong_public_inputs_error_before_state_lookup stdout ----
+[  1.896s] [Startup] WowLuaEnv::new begin
+[  1.898s] [Startup] SimState::default complete in 1.61ms
+[  1.898s] [Startup] rilua VM created in 99.52µs
+[  1.898s] [Startup] builtin frames initialized in 50.91µs
+[  1.898s] [Startup] template registry cleared in 5.45µs
+[  1.898s] [Startup] intrinsic templates registered in 8.18µs
+[  1.898s] [Startup] initial app_data lua handle installed in 632.00ns
+[  2.010s] [Startup] init_lua_state complete in 112.35ms
+[  2.010s] [Startup] final app_data lua handle installed in 161.00ns
+[  2.010s] [Startup] initial screen globals installed in 151.54µs
+[  2.010s] [Startup] WowLuaEnv::new complete
+
+thread 'quest_reward_favor::favor_wrong_public_inputs_error_before_state_lookup' (605663) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/quest_reward_favor.rs:175:10:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- quest_reward_favor::favor_zero_and_u32_endpoint_keys_are_explicit_hits stdout ----
+[  2.017s] [Startup] WowLuaEnv::new begin
+[  2.019s] [Startup] SimState::default complete in 2.03ms
+[  2.019s] [Startup] rilua VM created in 87.75µs
+[  2.020s] [Startup] builtin frames initialized in 45.96µs
+[  2.020s] [Startup] template registry cleared in 5.80µs
+[  2.020s] [Startup] intrinsic templates registered in 6.39µs
+[  2.020s] [Startup] initial app_data lua handle installed in 898.00ns
+[  2.139s] [Startup] init_lua_state complete in 119.11ms
+[  2.139s] [Startup] final app_data lua handle installed in 185.00ns
+[  2.139s] [Startup] initial screen globals installed in 135.05µs
+[  2.139s] [Startup] WowLuaEnv::new complete
+
+thread 'quest_reward_favor::favor_zero_and_u32_endpoint_keys_are_explicit_hits' (605670) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/quest_reward_favor.rs:157:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- tooltip_texture_secrecy::tooltip_texture_secrecy_cleared_cached_line_reuse_is_public stdout ----
+[  2.145s] [Startup] WowLuaEnv::new begin
+[  2.147s] [Startup] SimState::default complete in 1.96ms
+[  2.147s] [Startup] rilua VM created in 88.65µs
+[  2.147s] [Startup] builtin frames initialized in 44.42µs
+[  2.147s] [Startup] template registry cleared in 4.47µs
+[  2.147s] [Startup] intrinsic templates registered in 6.20µs
+[  2.147s] [Startup] initial app_data lua handle installed in 629.00ns
+[  2.257s] [Startup] init_lua_state complete in 109.95ms
+[  2.257s] [Startup] final app_data lua handle installed in 239.00ns
+[  2.257s] [Startup] initial screen globals installed in 144.01µs
+[  2.257s] [Startup] WowLuaEnv::new complete
+
+thread 'tooltip_texture_secrecy::tooltip_texture_secrecy_cleared_cached_line_reuse_is_public' (605678) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/tooltip_texture_secrecy.rs:200:6:
+cleared pooled line must not retain historical secret-origin denial: Lua(Runtime(RuntimeError { message: "public text readable by addon", level: 0, traceback: [] }))
+
+---- unit_token_identity_secrecy::identity_lookup_classification_does_not_create_missing_units stdout ----
+[  2.976s] [Startup] WowLuaEnv::new begin
+[  2.978s] [Startup] SimState::default complete in 2.03ms
+[  2.978s] [Startup] rilua VM created in 91.66µs
+[  2.978s] [Startup] builtin frames initialized in 48.27µs
+[  2.978s] [Startup] template registry cleared in 5.25µs
+[  2.978s] [Startup] intrinsic templates registered in 6.87µs
+[  2.978s] [Startup] initial app_data lua handle installed in 704.00ns
+[  3.106s] [Startup] init_lua_state complete in 128.10ms
+[  3.106s] [Startup] final app_data lua handle installed in 145.00ns
+[  3.106s] [Startup] initial screen globals installed in 125.36µs
+[  3.106s] [Startup] WowLuaEnv::new complete
+
+thread 'unit_token_identity_secrecy::identity_lookup_classification_does_not_create_missing_units' (605739) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/unit_token_identity_secrecy.rs:104:6:
+roster activation does not erase host classification: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- unit_token_identity_secrecy::identity_lookup_host_classification_is_environment_local stdout ----
+[  3.122s] [Startup] WowLuaEnv::new begin
+[  3.124s] [Startup] SimState::default complete in 1.36ms
+[  3.124s] [Startup] rilua VM created in 88.29µs
+[  3.124s] [Startup] builtin frames initialized in 57.52µs
+[  3.124s] [Startup] template registry cleared in 4.98µs
+[  3.124s] [Startup] intrinsic templates registered in 7.22µs
+[  3.124s] [Startup] initial app_data lua handle installed in 736.00ns
+[  3.251s] [Startup] init_lua_state complete in 127.12ms
+[  3.251s] [Startup] final app_data lua handle installed in 227.00ns
+[  3.251s] [Startup] initial screen globals installed in 126.94µs
+[  3.251s] [Startup] WowLuaEnv::new complete
+[  3.251s] [Startup] WowLuaEnv::new begin
+[  3.261s] [Startup] SimState::default complete in 10.28ms
+[  3.261s] [Startup] rilua VM created in 120.97µs
+[  3.261s] [Startup] builtin frames initialized in 50.38µs
+[  3.261s] [Startup] template registry cleared in 7.60µs
+[  3.261s] [Startup] intrinsic templates registered in 5.04µs
+[  3.261s] [Startup] initial app_data lua handle installed in 673.00ns
+[  3.404s] [Startup] init_lua_state complete in 142.56ms
+[  3.404s] [Startup] final app_data lua handle installed in 208.00ns
+[  3.404s] [Startup] initial screen globals installed in 130.52µs
+[  3.404s] [Startup] WowLuaEnv::new complete
+
+thread 'unit_token_identity_secrecy::identity_lookup_host_classification_is_environment_local' (605744) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/unit_token_identity_secrecy.rs:131:10:
+first environment suppresses classified party identity: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- unit_token_identity_secrecy::identity_lookup_secret_party_suppression_recovers_after_host_clear stdout ----
+[  3.584s] [Startup] WowLuaEnv::new begin
+[  3.586s] [Startup] SimState::default complete in 1.50ms
+[  3.586s] [Startup] rilua VM created in 87.19µs
+[  3.586s] [Startup] builtin frames initialized in 44.85µs
+[  3.586s] [Startup] template registry cleared in 4.70µs
+[  3.586s] [Startup] intrinsic templates registered in 6.43µs
+[  3.586s] [Startup] initial app_data lua handle installed in 715.00ns
+[  3.701s] [Startup] init_lua_state complete in 115.61ms
+[  3.701s] [Startup] final app_data lua handle installed in 240.00ns
+[  3.701s] [Startup] initial screen globals installed in 144.02µs
+[  3.701s] [Startup] WowLuaEnv::new complete
+
+thread 'unit_token_identity_secrecy::identity_lookup_secret_party_suppression_recovers_after_host_clear' (605779) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/unit_token_identity_secrecy.rs:54:6:
+secret first identity is suppressed, public second identity remains: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- unit_token_identity_secrecy::identity_lookup_suppression_preserves_secure_and_addon_callers stdout ----
+[  3.712s] [Startup] WowLuaEnv::new begin
+[  3.713s] [Startup] SimState::default complete in 1.34ms
+[  3.714s] [Startup] rilua VM created in 88.76µs
+[  3.714s] [Startup] builtin frames initialized in 50.21µs
+[  3.714s] [Startup] template registry cleared in 5.28µs
+[  3.714s] [Startup] intrinsic templates registered in 6.24µs
+[  3.714s] [Startup] initial app_data lua handle installed in 1.00µs
+[  3.827s] [Startup] init_lua_state complete in 113.28ms
+[  3.827s] [Startup] final app_data lua handle installed in 202.00ns
+[  3.827s] [Startup] initial screen globals installed in 163.51µs
+[  3.827s] [Startup] WowLuaEnv::new complete
+
+thread 'unit_token_identity_secrecy::identity_lookup_suppression_preserves_secure_and_addon_callers' (605789) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/unit_token_identity_secrecy.rs:80:6:
+host identity classification differs from argument secrecy and taint: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+
+failures:
+    equipment_set_command::equipset_command_uses_live_catalog_and_existing_swap_events
+    equipment_set_command::equipset_invalid_names_do_not_error_or_mutate_and_valid_command_recovers
+    housing_bundle_structures::housing_bundle_empty_defaults_misses_and_environment_isolation
+    housing_bundle_structures::housing_bundle_exact_shape_order_and_types
+    housing_bundle_structures::housing_bundle_invalid_selectors_are_rejected_without_truncation
+    housing_bundle_structures::housing_bundle_non_decor_contents_disable_preview
+    housing_bundle_structures::housing_bundle_snapshots_and_featured_records_follow_host_updates
+    quest_reward_favor::favor_distinct_records_clamp_values_and_live_replacement_are_exact
+    quest_reward_favor::favor_empty_defaults_report_unmodeled_context_and_records
+    quest_reward_favor::favor_nil_quest_uses_only_explicit_context_and_default_clamp_is_false
+    quest_reward_favor::favor_queries_are_read_only_and_environment_inputs_are_isolated
+    quest_reward_favor::favor_tainted_secret_rejection_precedes_validation_and_lookup
+    quest_reward_favor::favor_untainted_secrets_are_authenticated_without_declassifying_inputs
+    quest_reward_favor::favor_wrong_public_inputs_error_before_state_lookup
+    quest_reward_favor::favor_zero_and_u32_endpoint_keys_are_explicit_hits
+    tooltip_texture_secrecy::tooltip_texture_secrecy_cleared_cached_line_reuse_is_public
+    unit_token_identity_secrecy::identity_lookup_classification_does_not_create_missing_units
+    unit_token_identity_secrecy::identity_lookup_host_classification_is_environment_local
+    unit_token_identity_secrecy::identity_lookup_secret_party_suppression_recovers_after_host_clear
+    unit_token_identity_secrecy::identity_lookup_suppression_preserves_secure_and_addon_callers
+
+test result: FAILED. 6 passed; 20 failed; 0 ignored; 0 measured; 10161 filtered out; finished in 3.84s
+
+
+---STDERR---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+warning: function `register_c_housing_bundles` is never used
+  --> src/c_api/c_housing_bundles.rs:34:15
+   |
+34 | pub(crate) fn register_c_housing_bundles(state: &mut LuaState) -> LuaResult<()> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `read_bundle_id` is never used
+  --> src/c_api/c_housing_bundles.rs:40:4
+   |
+40 | fn read_bundle_id(state: &mut LuaState) -> LuaResult<i32> {
+   |    ^^^^^^^^^^^^^^
+
+warning: function `bundle_info` is never used
+  --> src/c_api/c_housing_bundles.rs:56:4
+   |
+56 | fn bundle_info(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^
+
+warning: function `featured_bundles` is never used
+  --> src/c_api/c_housing_bundles.rs:73:4
+   |
+73 | fn featured_bundles(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^
+
+warning: function `push_table` is never used
+  --> src/c_api/c_housing_bundles.rs:84:4
+   |
+84 | fn push_table(state: &mut LuaState) -> Val {
+   |    ^^^^^^^^^^
+
+warning: function `attach_child` is never used
+  --> src/c_api/c_housing_bundles.rs:90:4
+   |
+90 | fn attach_child(state: &mut LuaState, parent: Val, field: &'static str, child: Val) {
+   |    ^^^^^^^^^^^^
+
+warning: function `push_bundle` is never used
+  --> src/c_api/c_housing_bundles.rs:97:4
+   |
+97 | fn push_bundle(state: &mut LuaState, record: &HousingBundleInfo) -> Val {
+   |    ^^^^^^^^^^^
+
+warning: function `push_numbers` is never used
+   --> src/c_api/c_housing_bundles.rs:114:4
+    |
+114 | fn push_numbers(state: &mut LuaState, numbers: &[f64]) -> Val {
+    |    ^^^^^^^^^^^^
+
+warning: function `push_decor_entries` is never used
+   --> src/c_api/c_housing_bundles.rs:122:4
+    |
+122 | fn push_decor_entries(state: &mut LuaState, entries: &[HousingBundleDecorEntryInfo]) -> Val {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `run_equipment_set_command` is never used
+ --> src/c_api/equipment_set_command.rs:7:15
+  |
+7 | pub(crate) fn run_equipment_set_command(state: &mut LuaState, name: &str) -> LuaResult<()> {
+  |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `register` is never used
+  --> src/c_api/c_quest_info_system.rs:27:15
+   |
+27 | pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+   |               ^^^^^^^^
+
+warning: function `get_quest_log_reward_favor` is never used
+  --> src/c_api/c_quest_info_system.rs:37:4
+   |
+37 | fn get_quest_log_reward_favor(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_favor_arguments` is never used
+  --> src/c_api/c_quest_info_system.rs:45:4
+   |
+45 | fn read_favor_arguments(state: &LuaState) -> LuaResult<(Option<u32>, bool)> {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `validate_quest_id` is never used
+  --> src/c_api/c_quest_info_system.rs:65:4
+   |
+65 | fn validate_quest_id(value: Val) -> LuaResult<Option<u32>> {
+   |    ^^^^^^^^^^^^^^^^^
+
+warning: function `read_favor_amount` is never used
+  --> src/c_api/c_quest_info_system.rs:81:4
+   |
+81 | fn read_favor_amount(state: &LuaState, quest_id: Option<u32>, clamp: bool) -> LuaResult<f64> {
+   |    ^^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 15 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 08s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+error: test failed, to rerun pass `--test integration`

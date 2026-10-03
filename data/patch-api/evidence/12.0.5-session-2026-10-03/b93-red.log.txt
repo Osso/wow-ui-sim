@@ -1,0 +1,126 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 6 tests
+test aura_duration_object::permanent_aura_yields_a_zero_span_object ... FAILED
+test aura_duration_object::results_are_independent_snapshots_of_live_state ... FAILED
+test aura_duration_object::tainted_query_denies_each_secret_before_validation_or_lookup ... FAILED
+test aura_duration_object::timed_auras_return_one_duration_object_spanning_stored_times ... FAILED
+test aura_duration_object::unknown_or_malformed_arguments_error_and_recover ... FAILED
+test aura_duration_object::untainted_query_accepts_each_authentic_secret_argument_and_combination ... FAILED
+
+failures:
+
+---- aura_duration_object::permanent_aura_yields_a_zero_span_object stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.006s] [Startup] SimState::default complete in 5.68ms
+[  0.006s] [Startup] rilua VM created in 322.73µs
+[  0.006s] [Startup] builtin frames initialized in 178.97µs
+[  0.006s] [Startup] template registry cleared in 66.24µs
+[  0.006s] [Startup] intrinsic templates registered in 15.72µs
+[  0.006s] [Startup] initial app_data lua handle installed in 14.29µs
+[  0.380s] [Startup] init_lua_state complete in 373.42ms
+[  0.380s] [Startup] final app_data lua handle installed in 479.00ns
+[  0.380s] [Startup] initial screen globals installed in 233.42µs
+[  0.380s] [Startup] WowLuaEnv::new complete
+
+thread 'aura_duration_object::permanent_aura_yields_a_zero_span_object' (485334) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/aura_duration_object.rs:116:10:
+zero duration and expiration give a zero span: Lua(Runtime(RuntimeError { message: "duration object", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- aura_duration_object::results_are_independent_snapshots_of_live_state stdout ----
+[  0.397s] [Startup] WowLuaEnv::new begin
+[  0.399s] [Startup] SimState::default complete in 1.49ms
+[  0.399s] [Startup] rilua VM created in 106.71µs
+[  0.399s] [Startup] builtin frames initialized in 74.36µs
+[  0.399s] [Startup] template registry cleared in 10.30µs
+[  0.399s] [Startup] intrinsic templates registered in 9.73µs
+[  0.399s] [Startup] initial app_data lua handle installed in 2.67µs
+[  0.643s] [Startup] init_lua_state complete in 244.24ms
+[  0.643s] [Startup] final app_data lua handle installed in 937.00ns
+[  0.643s] [Startup] initial screen globals installed in 424.43µs
+[  0.643s] [Startup] WowLuaEnv::new complete
+
+thread 'aura_duration_object::results_are_independent_snapshots_of_live_state' (485337) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/aura_duration_object.rs:123:10:
+first snapshot: Lua(Runtime(RuntimeError { message: "duration object", level: 0, traceback: [] }))
+
+---- aura_duration_object::tainted_query_denies_each_secret_before_validation_or_lookup stdout ----
+[  0.662s] [Startup] WowLuaEnv::new begin
+[  0.665s] [Startup] SimState::default complete in 2.50ms
+[  0.665s] [Startup] rilua VM created in 129.57µs
+[  0.665s] [Startup] builtin frames initialized in 69.41µs
+[  0.665s] [Startup] template registry cleared in 9.54µs
+[  0.665s] [Startup] intrinsic templates registered in 11.27µs
+[  0.665s] [Startup] initial app_data lua handle installed in 1.88µs
+[  0.904s] [Startup] init_lua_state complete in 238.73ms
+[  0.904s] [Startup] final app_data lua handle installed in 319.00ns
+[  0.904s] [Startup] initial screen globals installed in 190.54µs
+[  0.904s] [Startup] WowLuaEnv::new complete
+
+thread 'aura_duration_object::tainted_query_denies_each_secret_before_validation_or_lookup' (485339) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/aura_duration_object.rs:221:6:
+VM-authenticated denial before validation, unchanged taint and public recovery: Lua(Runtime(RuntimeError { message: "denial is its own error", level: 0, traceback: [] }))
+
+---- aura_duration_object::timed_auras_return_one_duration_object_spanning_stored_times stdout ----
+[  0.924s] [Startup] WowLuaEnv::new begin
+[  0.927s] [Startup] SimState::default complete in 2.70ms
+[  0.927s] [Startup] rilua VM created in 117.03µs
+[  0.927s] [Startup] builtin frames initialized in 65.35µs
+[  0.927s] [Startup] template registry cleared in 9.92µs
+[  0.927s] [Startup] intrinsic templates registered in 9.10µs
+[  0.927s] [Startup] initial app_data lua handle installed in 1.42µs
+[  1.190s] [Startup] init_lua_state complete in 263.09ms
+[  1.190s] [Startup] final app_data lua handle installed in 613.00ns
+[  1.190s] [Startup] initial screen globals installed in 286.16µs
+[  1.191s] [Startup] WowLuaEnv::new complete
+
+thread 'aura_duration_object::timed_auras_return_one_duration_object_spanning_stored_times' (485341) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/aura_duration_object.rs:109:6:
+start is expiration minus duration for helpful, harmful and party records: Lua(Runtime(RuntimeError { message: "duration object", level: 0, traceback: [] }))
+
+---- aura_duration_object::unknown_or_malformed_arguments_error_and_recover stdout ----
+[  1.210s] [Startup] WowLuaEnv::new begin
+[  1.213s] [Startup] SimState::default complete in 3.49ms
+[  1.213s] [Startup] rilua VM created in 171.98µs
+[  1.213s] [Startup] builtin frames initialized in 155.58µs
+[  1.213s] [Startup] template registry cleared in 14.30µs
+[  1.213s] [Startup] intrinsic templates registered in 15.59µs
+[  1.213s] [Startup] initial app_data lua handle installed in 2.58µs
+[  1.447s] [Startup] init_lua_state complete in 233.06ms
+[  1.447s] [Startup] final app_data lua handle installed in 881.00ns
+[  1.447s] [Startup] initial screen globals installed in 498.58µs
+[  1.447s] [Startup] WowLuaEnv::new complete
+
+thread 'aura_duration_object::unknown_or_malformed_arguments_error_and_recover' (485345) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/aura_duration_object.rs:164:6:
+no silent nil duration for an invalid instance: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- aura_duration_object::untainted_query_accepts_each_authentic_secret_argument_and_combination stdout ----
+[  1.463s] [Startup] WowLuaEnv::new begin
+[  1.466s] [Startup] SimState::default complete in 2.28ms
+[  1.466s] [Startup] rilua VM created in 165.36µs
+[  1.466s] [Startup] builtin frames initialized in 67.56µs
+[  1.466s] [Startup] template registry cleared in 7.54µs
+[  1.466s] [Startup] intrinsic templates registered in 10.17µs
+[  1.466s] [Startup] initial app_data lua handle installed in 1.18µs
+[  1.702s] [Startup] init_lua_state complete in 236.30ms
+[  1.702s] [Startup] final app_data lua handle installed in 317.00ns
+[  1.702s] [Startup] initial screen globals installed in 174.68µs
+[  1.702s] [Startup] WowLuaEnv::new complete
+
+thread 'aura_duration_object::untainted_query_accepts_each_authentic_secret_argument_and_combination' (485347) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/aura_duration_object.rs:184:6:
+AllowedWhenUntainted authenticates secrets; does not declassify inputs: Lua(Runtime(RuntimeError { message: "duration object", level: 0, traceback: [] }))
+
+
+failures:
+    aura_duration_object::permanent_aura_yields_a_zero_span_object
+    aura_duration_object::results_are_independent_snapshots_of_live_state
+    aura_duration_object::tainted_query_denies_each_secret_before_validation_or_lookup
+    aura_duration_object::timed_auras_return_one_duration_object_spanning_stored_times
+    aura_duration_object::unknown_or_malformed_arguments_error_and_recover
+    aura_duration_object::untainted_query_accepts_each_authentic_secret_argument_and_combination
+
+test result: FAILED. 0 passed; 6 failed; 0 ignored; 0 measured; 10082 filtered out; finished in 1.72s
+
+
+--- stderr ---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 46s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+error: test failed, to rerun pass `--test integration`

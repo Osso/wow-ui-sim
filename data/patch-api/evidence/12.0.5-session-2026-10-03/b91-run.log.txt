@@ -1,0 +1,71 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 60 tests
+test font_api::create_font_string_inherits_named_font_object_properties ... ok
+test font_api::font_string_get_wrapped_width_uses_active_wrap_width ... ok
+test font_api::font_string_set_font_accepts_omitted_and_nil_flags ... ok
+test font_api::font_string_set_font_height_is_a_plain_number ... ok
+test font_api::font_string_set_font_returns_exactly_one_success_boolean ... ok
+test font_api::test_accessibility_templates_set_fixed_color_pattern ... ok
+test font_api::test_copy_font_object_accepts_xml_style_font_fields ... ok
+test font_api::test_create_font_copy_by_name ... ok
+test font_api::test_create_font_copy_font_object ... ok
+test font_api::test_create_font_default_values ... ok
+test font_api::test_create_font_family ... ok
+test font_api::test_create_font_family_registers_global ... ok
+test font_api::test_create_font_get_font_object_for_alphabet ... ok
+test font_api::test_create_font_get_name ... ok
+test font_api::test_create_font_justify ... ok
+test font_api::test_create_font_named ... ok
+test font_api::test_create_font_registers_global ... ok
+test font_api::test_create_font_set_font_object_by_name ... ok
+test font_api::test_create_font_set_get_font ... ok
+test font_api::test_create_font_shadow ... ok
+test font_api::test_create_font_spacing ... ok
+test font_api::test_create_font_text_color ... ok
+test font_api::test_editbox_get_font_object_auto_creates ... ok
+test font_api::test_font_string_shadow_methods ... ok
+test font_api::test_fontstring_set_fixed_color_accepts_non_bool_arg_as_false ... ok
+test font_api::test_fontstring_set_fixed_color_does_not_error ... ok
+test font_api::test_fontstring_set_fixed_color_is_callable ... ok
+test font_api::test_fontstring_set_fixed_color_then_set_text_color_still_applies ... ok
+test font_api::test_get_font_info_by_name ... ok
+test font_api::test_get_font_info_by_object ... ok
+test font_api::test_get_fonts_returns_table ... ok
+test font_api::test_message_frame_set_font_object_uses_chat_font_height ... ok
+test font_api::test_messageframe_get_font_object_auto_creates ... ok
+test font_api::test_named_medium_font_objects_work_with_set_font_object ... ok
+test font_api::test_set_font_nil_path_does_not_clear_existing_font ... ok
+test font_api::test_set_font_object_nil_errors ... ok
+test font_api::test_set_font_object_prefers_canonical_fields_over_legacy_aliases ... ok
+test font_api::test_standard_font_gold_color ... ok
+test font_api::test_standard_font_has_methods ... ok
+test font_api::test_standard_font_objects_expose_methods_through_metatable_index ... ok
+test font_api::test_standard_fonts_exist ... ok
+test font_api::test_xml_font_get_object_type ... ok
+test font_api::test_xml_font_is_object_type ... ok
+test font_api::test_xml_font_set_font_object_by_table ... ok
+test font_api::text_region_reports_truncation_when_text_exceeds_width ... ok
+test housing_catalog_base_lookups::ambiguous_explicit_item_ids_reject_inferred_policy ... ok
+test housing_catalog_base_lookups::cached_deprecated_wrapper_ignores_removed_args_for_missing_results ... ok
+test housing_catalog_base_lookups::empty_item_lookup_ignores_legacy_seed ... ok
+test housing_catalog_base_lookups::empty_record_lookup_ignores_legacy_seed ... ok
+test housing_catalog_base_lookups::entry_ids_carry_no_removed_subtype_fields_and_ignore_them_as_input ... ok
+test housing_catalog_base_lookups::item_links_read_explicit_base ... ok
+test housing_catalog_base_lookups::item_names_do_not_use_catalog_display_names ... ok
+test housing_catalog_base_lookups::item_scalar_reads_explicit_base_not_record_id ... ok
+test housing_catalog_base_lookups::legacy_item_tables_do_not_resolve ... ok
+test housing_catalog_base_lookups::missing_base_never_falls_back_to_variants_or_seeds ... ok
+test housing_catalog_base_lookups::ordinary_public_selectors_preserve_addon_taint ... ok
+test housing_catalog_base_lookups::record_lookup_preserves_type_collision_and_optional_item ... ok
+test housing_catalog_base_lookups::removed_trailing_arguments_do_not_change_base_selection ... ok
+test housing_catalog_base_lookups::secret_scalar_selectors_reject_without_unwrapping_or_taint_changes ... ok
+test housing_catalog_base_lookups::snapshots_are_independent_across_queries_and_model_mutation ... ok
+
+test result: ok. 60 passed; 0 failed; 0 ignored; 0 measured; 10018 filtered out; finished in 9.52s
+
+
+--- stderr ---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 20s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)

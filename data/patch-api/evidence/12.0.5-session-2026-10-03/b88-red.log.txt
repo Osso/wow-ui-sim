@@ -1,0 +1,254 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 44 tests
+test character_stats::combat_rating_value_converts_with_crit_divisor ... ok
+test character_stats::explicit_inputs::each_scalar_reads_its_own_configured_input ... FAILED
+test character_stats::explicit_inputs::environments_do_not_share_inputs ... FAILED
+test character_stats::explicit_inputs::expertise_triples_are_ordered_and_independent ... FAILED
+test character_stats::explicit_inputs::pet_spell_bonus_is_optional_and_independent_of_player_stats ... FAILED
+test character_stats::explicit_inputs::restricted_tainted_callers_receive_opaque_configured_outputs ... FAILED
+test character_stats::explicit_inputs::restriction_toggle_preserves_configured_values_and_arities ... FAILED
+test character_stats::explicit_inputs::scalar_inputs_update_live_without_moving_neighbours ... FAILED
+test character_stats::explicit_inputs::shield_block_is_not_armor_and_takes_no_unit ... FAILED
+test character_stats::explicit_inputs::unconfigured_inputs_return_public_zeros_with_declared_arity ... FAILED
+test character_stats::missing_apis::active_power_regen_selects_pool_and_tracks_updates ... ok
+test character_stats::missing_apis::effective_attack_power_preserves_five_distinct_fields_and_unavailable_shape ... ok
+test character_stats::missing_apis::mastery_tracks_existing_rating_and_effect_component ... ok
+test character_stats::missing_apis::missing_stats_tainted_callers_receive_opaque_host_outputs ... ok
+test character_stats::missing_apis::missing_stats_toggle_preserves_all_values_and_arities ... ok
+test character_stats::missing_apis::override_ap_by_spell_power_tracks_conversion_percentage ... ok
+test character_stats::missing_apis::override_spell_power_by_ap_tracks_independent_conversion_percentage ... ok
+test character_stats::missing_apis::pet_melee_haste_is_independent_and_missing_pet_is_zero_guess ... ok
+test character_stats::missing_apis::requested_power_regen_selects_input_not_active_pool ... ok
+test character_stats::missing_apis::secret_selection_inputs_are_allowed_when_untainted ... ok
+test character_stats::missing_apis::spell_penetration_tracks_explicit_amount ... ok
+test character_stats::missing_apis::sturdiness_tracks_explicit_percentage_not_avoidance ... ok
+test character_stats::missing_apis::weapon_attack_power_uses_existing_guid_and_never_creates_entities ... ok
+test character_stats::stat_restriction::stat_restriction_absent_unit_shapes_and_constant_outputs ... ok
+test character_stats::stat_restriction::stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle ... FAILED
+test character_stats::stat_restriction::stat_restriction_predicate_defaults_plain ... ok
+test character_stats::stat_restriction::stat_restriction_tainted_callers_receive_opaque_host_results ... FAILED
+test character_stats::test_combat_rating_bonus_is_percentage ... ok
+test character_stats::test_combat_rating_crit_positive ... ok
+test character_stats::test_combat_rating_haste_positive ... ok
+test character_stats::test_combat_rating_mastery_positive ... ok
+test character_stats::test_combat_rating_versatility_positive ... ok
+test character_stats::test_equip_increases_stats ... ok
+test character_stats::test_get_crit_chance_includes_base ... ok
+test character_stats::test_get_haste_positive ... ok
+test character_stats::test_get_mastery_effect_two_values ... ok
+test character_stats::test_get_versatility_bonus_positive ... ok
+test character_stats::test_paper_doll_combat_stat_helpers_return_safe_numbers ... ok
+test character_stats::test_stats_drop_to_base_with_no_gear ... ok
+test character_stats::test_unequip_reduces_stats ... ok
+test character_stats::test_unit_stat_returns_four_values ... ok
+test character_stats::test_unit_stat_stamina_high_with_gear ... ok
+test character_stats::test_unit_stat_strength_is_primary_for_paladin ... ok
+test character_stats::test_unit_stat_strength_positive_with_default_gear ... ok
+
+failures:
+
+---- character_stats::explicit_inputs::each_scalar_reads_its_own_configured_input stdout ----
+[  0.260s] [Startup] WowLuaEnv::new begin
+[  0.262s] [Startup] SimState::default complete in 1.90ms
+[  0.263s] [Startup] rilua VM created in 91.42µs
+[  0.263s] [Startup] builtin frames initialized in 42.33µs
+[  0.263s] [Startup] template registry cleared in 4.88µs
+[  0.263s] [Startup] intrinsic templates registered in 6.39µs
+[  0.263s] [Startup] initial app_data lua handle installed in 756.00ns
+[  0.392s] [Startup] init_lua_state complete in 128.92ms
+[  0.392s] [Startup] final app_data lua handle installed in 271.00ns
+[  0.392s] [Startup] initial screen globals installed in 126.84µs
+[  0.392s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::explicit_inputs::each_scalar_reads_its_own_configured_input' (452245) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/explicit_inputs.rs:28:29:
+GetBlockChance(): Lua error: GetBlockChance() value 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- character_stats::explicit_inputs::environments_do_not_share_inputs stdout ----
+[  0.401s] [Startup] WowLuaEnv::new begin
+[  0.403s] [Startup] SimState::default complete in 1.58ms
+[  0.403s] [Startup] rilua VM created in 129.10µs
+[  0.403s] [Startup] builtin frames initialized in 51.24µs
+[  0.403s] [Startup] template registry cleared in 7.98µs
+[  0.403s] [Startup] intrinsic templates registered in 9.18µs
+[  0.403s] [Startup] initial app_data lua handle installed in 1.02µs
+[  0.533s] [Startup] init_lua_state complete in 130.23ms
+[  0.533s] [Startup] final app_data lua handle installed in 800.00ns
+[  0.534s] [Startup] initial screen globals installed in 542.53µs
+[  0.534s] [Startup] WowLuaEnv::new complete
+[  0.534s] [Startup] WowLuaEnv::new begin
+[  0.536s] [Startup] SimState::default complete in 1.57ms
+[  0.536s] [Startup] rilua VM created in 89.78µs
+[  0.536s] [Startup] builtin frames initialized in 88.40µs
+[  0.536s] [Startup] template registry cleared in 38.54µs
+[  0.536s] [Startup] intrinsic templates registered in 11.06µs
+[  0.536s] [Startup] initial app_data lua handle installed in 465.00ns
+[  0.688s] [Startup] init_lua_state complete in 151.93ms
+[  0.688s] [Startup] final app_data lua handle installed in 187.00ns
+[  0.688s] [Startup] initial screen globals installed in 266.30µs
+[  0.688s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::explicit_inputs::environments_do_not_share_inputs' (452246) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/explicit_inputs.rs:28:29:
+GetBlockChance(): Lua error: GetBlockChance() value 1
+
+---- character_stats::explicit_inputs::expertise_triples_are_ordered_and_independent stdout ----
+[  0.708s] [Startup] WowLuaEnv::new begin
+[  0.709s] [Startup] SimState::default complete in 1.47ms
+[  0.709s] [Startup] rilua VM created in 129.42µs
+[  0.709s] [Startup] builtin frames initialized in 53.83µs
+[  0.709s] [Startup] template registry cleared in 4.75µs
+[  0.709s] [Startup] intrinsic templates registered in 6.76µs
+[  0.709s] [Startup] initial app_data lua handle installed in 917.00ns
+[  0.861s] [Startup] init_lua_state complete in 151.57ms
+[  0.861s] [Startup] final app_data lua handle installed in 80.00ns
+[  0.861s] [Startup] initial screen globals installed in 147.03µs
+[  0.861s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::explicit_inputs::expertise_triples_are_ordered_and_independent' (452252) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/explicit_inputs.rs:28:29:
+GetExpertise(): Lua error: GetExpertise() value 1
+
+---- character_stats::explicit_inputs::pet_spell_bonus_is_optional_and_independent_of_player_stats stdout ----
+[  0.870s] [Startup] WowLuaEnv::new begin
+[  0.872s] [Startup] SimState::default complete in 1.66ms
+[  0.872s] [Startup] rilua VM created in 89.53µs
+[  0.872s] [Startup] builtin frames initialized in 39.76µs
+[  0.872s] [Startup] template registry cleared in 4.82µs
+[  0.872s] [Startup] intrinsic templates registered in 6.04µs
+[  0.872s] [Startup] initial app_data lua handle installed in 856.00ns
+[  1.014s] [Startup] init_lua_state complete in 142.27ms
+[  1.014s] [Startup] final app_data lua handle installed in 646.00ns
+[  1.015s] [Startup] initial screen globals installed in 218.66µs
+[  1.015s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::explicit_inputs::pet_spell_bonus_is_optional_and_independent_of_player_stats' (452256) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/explicit_inputs.rs:28:29:
+GetPetSpellBonusDamage(): Lua error: GetPetSpellBonusDamage() value 1
+
+---- character_stats::explicit_inputs::restricted_tainted_callers_receive_opaque_configured_outputs stdout ----
+[  1.025s] [Startup] WowLuaEnv::new begin
+[  1.027s] [Startup] SimState::default complete in 2.35ms
+[  1.027s] [Startup] rilua VM created in 85.22µs
+[  1.027s] [Startup] builtin frames initialized in 69.43µs
+[  1.027s] [Startup] template registry cleared in 6.45µs
+[  1.027s] [Startup] intrinsic templates registered in 7.27µs
+[  1.027s] [Startup] initial app_data lua handle installed in 827.00ns
+[  1.170s] [Startup] init_lua_state complete in 142.85ms
+[  1.170s] [Startup] final app_data lua handle installed in 138.00ns
+[  1.170s] [Startup] initial screen globals installed in 125.78µs
+[  1.170s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::explicit_inputs::restricted_tainted_callers_receive_opaque_configured_outputs' (452257) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/explicit_inputs.rs:215:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "GetBlockChance value 1", level: 0, traceback: [] }))
+
+---- character_stats::explicit_inputs::restriction_toggle_preserves_configured_values_and_arities stdout ----
+[  1.179s] [Startup] WowLuaEnv::new begin
+[  1.180s] [Startup] SimState::default complete in 1.83ms
+[  1.180s] [Startup] rilua VM created in 85.03µs
+[  1.180s] [Startup] builtin frames initialized in 38.81µs
+[  1.181s] [Startup] template registry cleared in 4.47µs
+[  1.181s] [Startup] intrinsic templates registered in 6.14µs
+[  1.181s] [Startup] initial app_data lua handle installed in 776.00ns
+[  1.302s] [Startup] init_lua_state complete in 121.09ms
+[  1.302s] [Startup] final app_data lua handle installed in 1.43µs
+[  1.302s] [Startup] initial screen globals installed in 320.04µs
+[  1.302s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::explicit_inputs::restriction_toggle_preserves_configured_values_and_arities' (452260) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/explicit_inputs.rs:182:14:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "GetBlockChance value 1", level: 0, traceback: [] }))
+
+---- character_stats::explicit_inputs::scalar_inputs_update_live_without_moving_neighbours stdout ----
+[  1.311s] [Startup] WowLuaEnv::new begin
+[  1.313s] [Startup] SimState::default complete in 1.75ms
+[  1.313s] [Startup] rilua VM created in 154.41µs
+[  1.313s] [Startup] builtin frames initialized in 80.78µs
+[  1.313s] [Startup] template registry cleared in 6.87µs
+[  1.313s] [Startup] intrinsic templates registered in 8.00µs
+[  1.313s] [Startup] initial app_data lua handle installed in 1.00µs
+[  1.458s] [Startup] init_lua_state complete in 144.69ms
+[  1.458s] [Startup] final app_data lua handle installed in 281.00ns
+[  1.458s] [Startup] initial screen globals installed in 132.13µs
+[  1.458s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::explicit_inputs::scalar_inputs_update_live_without_moving_neighbours' (452261) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/explicit_inputs.rs:28:29:
+GetHitModifier(): Lua error: GetHitModifier() value 1
+
+---- character_stats::explicit_inputs::shield_block_is_not_armor_and_takes_no_unit stdout ----
+[  1.466s] [Startup] WowLuaEnv::new begin
+[  1.469s] [Startup] SimState::default complete in 2.25ms
+[  1.469s] [Startup] rilua VM created in 151.86µs
+[  1.469s] [Startup] builtin frames initialized in 43.67µs
+[  1.469s] [Startup] template registry cleared in 4.85µs
+[  1.469s] [Startup] intrinsic templates registered in 7.46µs
+[  1.469s] [Startup] initial app_data lua handle installed in 955.00ns
+[  1.610s] [Startup] init_lua_state complete in 140.68ms
+[  1.610s] [Startup] final app_data lua handle installed in 322.00ns
+[  1.610s] [Startup] initial screen globals installed in 195.58µs
+[  1.610s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::explicit_inputs::shield_block_is_not_armor_and_takes_no_unit' (452266) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/explicit_inputs.rs:28:29:
+GetShieldBlock(): Lua error: GetShieldBlock() value 1
+
+---- character_stats::explicit_inputs::unconfigured_inputs_return_public_zeros_with_declared_arity stdout ----
+[  1.619s] [Startup] WowLuaEnv::new begin
+[  1.622s] [Startup] SimState::default complete in 2.91ms
+[  1.622s] [Startup] rilua VM created in 126.23µs
+[  1.622s] [Startup] builtin frames initialized in 72.90µs
+[  1.622s] [Startup] template registry cleared in 7.12µs
+[  1.622s] [Startup] intrinsic templates registered in 10.03µs
+[  1.622s] [Startup] initial app_data lua handle installed in 1.04µs
+[  1.783s] [Startup] init_lua_state complete in 160.62ms
+[  1.783s] [Startup] final app_data lua handle installed in 222.00ns
+[  1.783s] [Startup] initial screen globals installed in 150.51µs
+[  1.783s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::explicit_inputs::unconfigured_inputs_return_public_zeros_with_declared_arity' (452281) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/explicit_inputs.rs:28:29:
+GetShieldBlock(): Lua error: GetShieldBlock() value 1
+
+---- character_stats::stat_restriction::stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle stdout ----
+[  3.886s] [Startup] WowLuaEnv::new begin
+[  3.888s] [Startup] SimState::default complete in 1.75ms
+[  3.888s] [Startup] rilua VM created in 86.64µs
+[  3.888s] [Startup] builtin frames initialized in 55.09µs
+[  3.888s] [Startup] template registry cleared in 10.50µs
+[  3.888s] [Startup] intrinsic templates registered in 15.04µs
+[  3.888s] [Startup] initial app_data lua handle installed in 1.32µs
+[  4.004s] [Startup] init_lua_state complete in 116.40ms
+[  4.004s] [Startup] final app_data lua handle installed in 198.00ns
+[  4.004s] [Startup] initial screen globals installed in 163.83µs
+[  4.004s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::stat_restriction::stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle' (452321) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/stat_restriction.rs:41:42:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "GetShieldBlock value 1", level: 0, traceback: [] }))
+
+---- character_stats::stat_restriction::stat_restriction_tainted_callers_receive_opaque_host_results stdout ----
+[  4.136s] [Startup] WowLuaEnv::new begin
+[  4.138s] [Startup] SimState::default complete in 1.63ms
+[  4.138s] [Startup] rilua VM created in 141.88µs
+[  4.138s] [Startup] builtin frames initialized in 171.30µs
+[  4.138s] [Startup] template registry cleared in 15.06µs
+[  4.138s] [Startup] intrinsic templates registered in 18.06µs
+[  4.138s] [Startup] initial app_data lua handle installed in 2.63µs
+[  4.253s] [Startup] init_lua_state complete in 114.88ms
+[  4.253s] [Startup] final app_data lua handle installed in 153.00ns
+[  4.254s] [Startup] initial screen globals installed in 130.13µs
+[  4.254s] [Startup] WowLuaEnv::new complete
+
+thread 'character_stats::stat_restriction::stat_restriction_tainted_callers_receive_opaque_host_results' (452323) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/character_stats/stat_restriction.rs:100:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "GetShieldBlock value 1", level: 0, traceback: [] }))
+
+
+failures:
+    character_stats::explicit_inputs::each_scalar_reads_its_own_configured_input
+    character_stats::explicit_inputs::environments_do_not_share_inputs
+    character_stats::explicit_inputs::expertise_triples_are_ordered_and_independent
+    character_stats::explicit_inputs::pet_spell_bonus_is_optional_and_independent_of_player_stats
+    character_stats::explicit_inputs::restricted_tainted_callers_receive_opaque_configured_outputs
+    character_stats::explicit_inputs::restriction_toggle_preserves_configured_values_and_arities
+    character_stats::explicit_inputs::scalar_inputs_update_live_without_moving_neighbours
+    character_stats::explicit_inputs::shield_block_is_not_armor_and_takes_no_unit
+    character_stats::explicit_inputs::unconfigured_inputs_return_public_zeros_with_declared_arity
+    character_stats::stat_restriction::stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle
+    character_stats::stat_restriction::stat_restriction_tainted_callers_receive_opaque_host_results
+
+test result: FAILED. 33 passed; 11 failed; 0 ignored; 0 measured; 10030 filtered out; finished in 6.54s
+

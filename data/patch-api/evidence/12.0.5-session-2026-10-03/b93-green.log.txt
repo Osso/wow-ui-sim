@@ -1,0 +1,44 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 33 tests
+test aura_duration_object::permanent_aura_yields_a_zero_span_object ... ok
+test aura_duration_object::results_are_independent_snapshots_of_live_state ... ok
+test aura_duration_object::tainted_query_denies_each_secret_before_validation_or_lookup ... ok
+test aura_duration_object::timed_auras_return_one_duration_object_spanning_stored_times ... ok
+test aura_duration_object::unknown_or_malformed_arguments_error_and_recover ... ok
+test aura_duration_object::untainted_query_accepts_each_authentic_secret_argument_and_combination ... ok
+test aura_expiration_time::malformed_arguments_error_before_lookup ... ok
+test aura_expiration_time::party_records_are_unit_and_instance_isolated ... ok
+test aura_expiration_time::queries_leave_aura_records_unchanged_and_environments_isolated ... ok
+test aura_expiration_time::secret_arguments_survive_gc_without_declassification ... ok
+test aura_expiration_time::stored_expiration_changes_are_read_live ... ok
+test aura_expiration_time::tainted_query_denies_each_secret_even_before_unknown_unit_lookup ... ok
+test aura_expiration_time::timed_and_permanent_player_auras_return_exactly_one_public_boolean ... ok
+test aura_expiration_time::unknown_units_instances_and_nil_unit_return_false ... ok
+test aura_expiration_time::untainted_query_accepts_each_authentic_secret_argument_and_combination ... ok
+test aura_refresh_duration::actual_secret_arguments_are_rejected_without_declassification_or_taint_changes ... ok
+test aura_refresh_duration::empty_metadata_never_infers_base_from_current_aura_duration ... ok
+test aura_refresh_duration::expired_timed_aura_returns_exact_base_without_mutating_expiration ... ok
+test aura_refresh_duration::explicit_numeric_and_seeded_alias_override_duration_without_matching_aura_spell ... ok
+test aura_refresh_duration::finite_metadata_sum_overflow_never_becomes_public_infinity ... ok
+test aura_refresh_duration::getters_leave_aura_metadata_aliases_and_events_unchanged_across_gc ... ok
+test aura_refresh_duration::invalid_metadata_never_exposes_negative_or_nonfinite_public_numbers ... ok
+test aura_refresh_duration::malformed_arguments_error_before_missing_unit_short_circuit ... ok
+test aura_refresh_duration::metadata_and_alias_mutations_are_environment_local ... ok
+test aura_refresh_duration::numeric_alias_applies_only_to_explicit_identifier_not_omitted_aura_spell ... ok
+test aura_refresh_duration::omitted_and_nil_identifier_use_matched_aura_and_return_one_number ... ok
+test aura_refresh_duration::party_polarities_and_blocking_are_unit_and_instance_isolated ... ok
+test aura_refresh_duration::permanent_duration_or_expiration_returns_nil_refresh_but_known_base ... ok
+test aura_refresh_duration::saturated_refresh_uses_explicit_cap_not_thirty_percent_or_current_duration ... ok
+test aura_refresh_duration::unknown_alias_or_metadata_returns_one_nil_without_falling_back_to_aura_spell ... ok
+test aura_refresh_duration::unknown_units_and_instances_stay_nil_even_with_known_override ... ok
+test aura_refresh_duration::unsaturated_refresh_uses_environment_elapsed_clock_with_moving_time_bounds ... ok
+test aura_refresh_duration::zero_base_and_zero_cap_are_valid_explicit_metadata ... ok
+
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 10055 filtered out; finished in 5.52s
+
+
+--- stderr ---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 06s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)

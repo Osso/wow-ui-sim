@@ -1,0 +1,1412 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 69 tests
+test catalog_shop_product_structures::additional_product_pmt_urls_preserve_order_and_string_type ... FAILED
+test catalog_shop_product_structures::all_nullable_fields_are_absent_and_required_arrays_exist ... FAILED
+test catalog_shop_product_structures::consumable_quantity_is_absent_from_populated_product ... FAILED
+test catalog_shop_product_structures::decor_quantity_round_trips_nested_numbers ... FAILED
+test catalog_shop_product_structures::environments_are_isolated ... FAILED
+test catalog_shop_product_structures::fully_populated_display_has_exact_declared_shape ... FAILED
+test catalog_shop_product_structures::fully_populated_product_has_exact_declared_shape ... FAILED
+test catalog_shop_product_structures::host_replacements_affect_new_snapshots_only ... FAILED
+test catalog_shop_product_structures::house_texture_atlas_round_trips ... FAILED
+test catalog_shop_product_structures::malformed_public_selectors_do_not_alias_stored_products ... FAILED
+test catalog_shop_product_structures::maps_use_exact_keys_without_product_display_cross_lookup ... FAILED
+test catalog_shop_product_structures::preview_bg_override_product_url_round_trips ... FAILED
+test catalog_shop_product_structures::preview_small_bg_override_product_url_round_trips ... FAILED
+test catalog_shop_product_structures::returned_tables_and_every_nested_array_are_independent ... FAILED
+test catalog_shop_product_structures::unknown_ids_and_legacy_seed_ids_return_nil ... FAILED
+test catalog_shop_product_structures::zero_decor_counts_are_present_not_nil ... FAILED
+test click_binding_spell_identifier::authentic_secret_identifiers_reject_after_gc_in_secure_and_tainted_calls ... FAILED
+test click_binding_spell_identifier::empty_eligibility_preserves_default_interaction_profile ... FAILED
+test click_binding_spell_identifier::existing_spell_profile_does_not_declare_eligibility ... FAILED
+test click_binding_spell_identifier::explicit_membership_resolves_names_and_miss_controls ... FAILED
+test click_binding_spell_identifier::full_link_alias_is_explicit_not_parsed ... FAILED
+test click_binding_spell_identifier::membership_and_named_alias_mutations_are_live_and_environment_local ... FAILED
+test click_binding_spell_identifier::numeric_alias_precedence_and_removal_are_live ... FAILED
+test click_binding_spell_identifier::public_tainted_calls_preserve_taint_and_boolean_contract ... FAILED
+test click_binding_spell_identifier::strict_public_identifiers_validate_before_alias_resolution ... FAILED
+test delves_api_inputs::active_delve_does_not_access_secret_extras_for_either_caller ... FAILED
+test delves_api_inputs::active_delve_reads_live_host_boolean_and_ignores_all_extras ... FAILED
+test delves_api_inputs::curio_link_rejects_invalid_public_arguments ... FAILED
+test delves_api_inputs::curio_link_uses_aliases_rarity_and_live_host_records_without_mutation ... FAILED
+test delves_api_inputs::curio_rarity_is_never_secret_even_after_gc_and_for_tainted_callers ... FAILED
+test delves_api_inputs::delve_inputs_are_isolated_between_environments ... FAILED
+test delves_api_inputs::eligibility_authenticates_secret_map_before_validation_or_mutation ... FAILED
+test delves_api_inputs::eligibility_invalid_inputs_preserve_last_request ... FAILED
+test delves_api_inputs::eligibility_request_records_map_and_returns_zero_values ... FAILED
+test delves_ui::delves_ui_entrance_methods_use_seeded_tier_state ... FAILED
+test encounter_event_sound_no_error::addon_sound_lookup_does_not_error_or_change_stack_taint ... ok
+test encounter_event_sound_no_error::configured_event_sound_returns_stored_fields_and_one_result ... ok
+test encounter_event_sound_no_error::missing_sound_overrides_return_no_values_without_error ... ok
+test encounter_event_sound_no_error::returned_sound_table_mutation_does_not_change_stored_override ... ok
+test raid_roster_unknown_name::cache_arrival_is_live_and_does_not_change_other_members ... FAILED
+test raid_roster_unknown_name::cached_name_keeps_existing_roster_tuple ... ok
+test raid_roster_unknown_name::missing_indices_and_inactive_group_still_return_twelve_nils ... ok
+test raid_roster_unknown_name::uncached_name_is_public_unknown_with_unchanged_tuple ... FAILED
+test spell_maw_powers::alias_changes_read_resolved_key_without_falling_back_to_previous_record ... FAILED
+test spell_maw_powers::authentic_secrets_reject_in_both_contexts_after_gc_and_public_queries_recover ... FAILED
+test spell_maw_powers::empty_defaults_and_unknown_identifiers_have_distinct_miss_arities ... FAILED
+test spell_maw_powers::invalid_public_representations_error_before_lookup ... FAILED
+test spell_maw_powers::maps_are_independent_and_replacement_removal_are_live ... FAILED
+test spell_maw_powers::numbers_names_and_full_link_aliases_return_exact_host_strings ... FAILED
+test spell_maw_powers::numeric_alias_precedence_and_removal_apply_to_both_queries ... FAILED
+test spell_maw_powers::public_queries_work_secure_and_tainted_without_changing_caller_taint ... FAILED
+test spell_maw_powers::queries_are_read_only_and_environments_are_isolated ... FAILED
+test spell_maw_powers::u32_endpoints_and_empty_strings_are_explicit_hits ... FAILED
+test spell_max_cumulative_aura_applications::invalid_identifier_representations_are_rejected ... FAILED
+test spell_max_cumulative_aura_applications::maximum_is_independent_of_currently_applied_stacks ... FAILED
+test spell_max_cumulative_aura_applications::misses_return_one_zero_and_map_changes_are_live ... FAILED
+test spell_max_cumulative_aura_applications::numeric_alias_takes_precedence_over_numeric_identity ... FAILED
+test spell_max_cumulative_aura_applications::numeric_and_seeded_name_identifiers_return_the_declared_maximum ... FAILED
+test spell_max_cumulative_aura_applications::secret_identifiers_are_rejected_as_unmodeled_policy ... FAILED
+test spell_max_cumulative_aura_applications::tainted_callers_keep_their_taint_and_cannot_open_restricted_results ... FAILED
+test spell_max_cumulative_aura_applications::unit_aura_restriction_alone_makes_the_result_secret ... FAILED
+test voice_chat_speak_text::environments_keep_separate_request_queues ... FAILED
+test voice_chat_speak_text::malformed_public_arguments_reject_atomically_and_public_calls_recover ... FAILED
+test voice_chat_speak_text::multiple_requests_keep_order_and_default_overlap_false ... FAILED
+test voice_chat_speak_text::ordinary_request_records_all_declared_fields_and_returns_zero_values ... FAILED
+test voice_chat_speak_text::rooted_secret_inputs_survive_gc_and_denial_without_declassification ... FAILED
+test voice_chat_speak_text::secret_text_is_conservatively_rejected_secure_and_tainted ... FAILED
+test voice_chat_speak_text::secure_caller_rejects_every_never_secret_position_without_state_change ... FAILED
+test voice_chat_speak_text::tainted_caller_rejects_every_never_secret_position_without_state_change ... FAILED
+
+failures:
+
+---- catalog_shop_product_structures::additional_product_pmt_urls_preserve_order_and_string_type stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.35ms
+[  0.003s] [Startup] rilua VM created in 169.88µs
+[  0.003s] [Startup] builtin frames initialized in 139.25µs
+[  0.003s] [Startup] template registry cleared in 8.75µs
+[  0.003s] [Startup] intrinsic templates registered in 6.52µs
+[  0.003s] [Startup] initial app_data lua handle installed in 719.00ns
+[  0.225s] [Startup] init_lua_state complete in 222.32ms
+[  0.225s] [Startup] final app_data lua handle installed in 284.00ns
+[  0.225s] [Startup] initial screen globals installed in 153.94µs
+[  0.225s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::additional_product_pmt_urls_preserve_order_and_string_type' (555964) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:146:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):3: attempt to index local 'd' (a nil value)", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- catalog_shop_product_structures::all_nullable_fields_are_absent_and_required_arrays_exist stdout ----
+[  0.232s] [Startup] WowLuaEnv::new begin
+[  0.234s] [Startup] SimState::default complete in 1.66ms
+[  0.234s] [Startup] rilua VM created in 90.44µs
+[  0.234s] [Startup] builtin frames initialized in 48.09µs
+[  0.234s] [Startup] template registry cleared in 6.29µs
+[  0.234s] [Startup] intrinsic templates registered in 7.20µs
+[  0.234s] [Startup] initial app_data lua handle installed in 685.00ns
+[  0.335s] [Startup] init_lua_state complete in 101.12ms
+[  0.335s] [Startup] final app_data lua handle installed in 269.00ns
+[  0.335s] [Startup] initial screen globals installed in 126.32µs
+[  0.335s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::all_nullable_fields_are_absent_and_required_arrays_exist' (555973) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:414:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "bad argument #1 to 'rawget' (table expected)", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::consumable_quantity_is_absent_from_populated_product stdout ----
+[  0.342s] [Startup] WowLuaEnv::new begin
+[  0.343s] [Startup] SimState::default complete in 1.38ms
+[  0.344s] [Startup] rilua VM created in 86.55µs
+[  0.344s] [Startup] builtin frames initialized in 41.05µs
+[  0.344s] [Startup] template registry cleared in 4.89µs
+[  0.344s] [Startup] intrinsic templates registered in 6.38µs
+[  0.344s] [Startup] initial app_data lua handle installed in 739.00ns
+[  0.445s] [Startup] init_lua_state complete in 101.48ms
+[  0.445s] [Startup] final app_data lua handle installed in 111.00ns
+[  0.445s] [Startup] initial screen globals installed in 141.66µs
+[  0.445s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::consumable_quantity_is_absent_from_populated_product' (555981) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:192:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "bad argument #1 to 'rawget' (table expected)", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::decor_quantity_round_trips_nested_numbers stdout ----
+[  0.452s] [Startup] WowLuaEnv::new begin
+[  0.453s] [Startup] SimState::default complete in 1.45ms
+[  0.454s] [Startup] rilua VM created in 87.42µs
+[  0.454s] [Startup] builtin frames initialized in 43.45µs
+[  0.454s] [Startup] template registry cleared in 4.64µs
+[  0.454s] [Startup] intrinsic templates registered in 6.29µs
+[  0.454s] [Startup] initial app_data lua handle installed in 458.00ns
+[  0.583s] [Startup] init_lua_state complete in 129.67ms
+[  0.583s] [Startup] final app_data lua handle installed in 109.00ns
+[  0.583s] [Startup] initial screen globals installed in 142.78µs
+[  0.583s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::decor_quantity_round_trips_nested_numbers' (555988) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:184:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):3: attempt to index local 'p' (a nil value)", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::environments_are_isolated stdout ----
+[  0.589s] [Startup] WowLuaEnv::new begin
+[  0.591s] [Startup] SimState::default complete in 1.56ms
+[  0.591s] [Startup] rilua VM created in 92.52µs
+[  0.591s] [Startup] builtin frames initialized in 44.52µs
+[  0.591s] [Startup] template registry cleared in 4.93µs
+[  0.591s] [Startup] intrinsic templates registered in 7.14µs
+[  0.591s] [Startup] initial app_data lua handle installed in 652.00ns
+[  0.691s] [Startup] init_lua_state complete in 99.74ms
+[  0.691s] [Startup] final app_data lua handle installed in 80.00ns
+[  0.691s] [Startup] initial screen globals installed in 141.72µs
+[  0.691s] [Startup] WowLuaEnv::new complete
+[  0.691s] [Startup] WowLuaEnv::new begin
+[  0.692s] [Startup] SimState::default complete in 1.58ms
+[  0.692s] [Startup] rilua VM created in 95.30µs
+[  0.692s] [Startup] builtin frames initialized in 44.54µs
+[  0.692s] [Startup] template registry cleared in 9.24µs
+[  0.692s] [Startup] intrinsic templates registered in 5.19µs
+[  0.692s] [Startup] initial app_data lua handle installed in 502.00ns
+[  0.803s] [Startup] init_lua_state complete in 110.44ms
+[  0.803s] [Startup] final app_data lua handle installed in 150.00ns
+[  0.803s] [Startup] initial screen globals installed in 129.63µs
+[  0.803s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::environments_are_isolated' (555993) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:513:202:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):1: attempt to index a nil value", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::fully_populated_display_has_exact_declared_shape stdout ----
+[  0.816s] [Startup] WowLuaEnv::new begin
+[  0.818s] [Startup] SimState::default complete in 1.98ms
+[  0.818s] [Startup] rilua VM created in 86.62µs
+[  0.818s] [Startup] builtin frames initialized in 42.20µs
+[  0.818s] [Startup] template registry cleared in 4.59µs
+[  0.818s] [Startup] intrinsic templates registered in 6.80µs
+[  0.818s] [Startup] initial app_data lua handle installed in 675.00ns
+[  0.926s] [Startup] init_lua_state complete in 108.47ms
+[  0.926s] [Startup] final app_data lua handle installed in 303.00ns
+[  0.926s] [Startup] initial screen globals installed in 125.35µs
+[  0.926s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::fully_populated_display_has_exact_declared_shape' (555999) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:311:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "wrong Lua type", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::fully_populated_product_has_exact_declared_shape stdout ----
+[  0.932s] [Startup] WowLuaEnv::new begin
+[  0.933s] [Startup] SimState::default complete in 1.38ms
+[  0.933s] [Startup] rilua VM created in 83.23µs
+[  0.933s] [Startup] builtin frames initialized in 39.69µs
+[  0.933s] [Startup] template registry cleared in 4.80µs
+[  0.933s] [Startup] intrinsic templates registered in 6.53µs
+[  0.933s] [Startup] initial app_data lua handle installed in 606.00ns
+[  1.030s] [Startup] init_lua_state complete in 96.44ms
+[  1.030s] [Startup] final app_data lua handle installed in 295.00ns
+[  1.030s] [Startup] initial screen globals installed in 138.88µs
+[  1.030s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::fully_populated_product_has_exact_declared_shape' (556002) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:266:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "wrong Lua type", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::host_replacements_affect_new_snapshots_only stdout ----
+[  1.036s] [Startup] WowLuaEnv::new begin
+[  1.046s] [Startup] SimState::default complete in 9.94ms
+[  1.046s] [Startup] rilua VM created in 97.54µs
+[  1.046s] [Startup] builtin frames initialized in 51.67µs
+[  1.046s] [Startup] template registry cleared in 6.27µs
+[  1.046s] [Startup] intrinsic templates registered in 7.55µs
+[  1.046s] [Startup] initial app_data lua handle installed in 601.00ns
+[  1.160s] [Startup] init_lua_state complete in 114.24ms
+[  1.160s] [Startup] final app_data lua handle installed in 96.00ns
+[  1.161s] [Startup] initial screen globals installed in 151.42µs
+[  1.161s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::host_replacements_affect_new_snapshots_only' (556006) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:480:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):2: attempt to index global 'oldProduct' (a nil value)", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::house_texture_atlas_round_trips stdout ----
+[  1.166s] [Startup] WowLuaEnv::new begin
+[  1.167s] [Startup] SimState::default complete in 1.35ms
+[  1.168s] [Startup] rilua VM created in 84.69µs
+[  1.168s] [Startup] builtin frames initialized in 37.97µs
+[  1.168s] [Startup] template registry cleared in 4.64µs
+[  1.168s] [Startup] intrinsic templates registered in 6.76µs
+[  1.168s] [Startup] initial app_data lua handle installed in 553.00ns
+[  1.273s] [Startup] init_lua_state complete in 105.50ms
+[  1.273s] [Startup] final app_data lua handle installed in 120.00ns
+[  1.273s] [Startup] initial screen globals installed in 134.53µs
+[  1.273s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::house_texture_atlas_round_trips' (556012) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:155:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):3: attempt to index local 'd' (a nil value)", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::malformed_public_selectors_do_not_alias_stored_products stdout ----
+[  1.279s] [Startup] WowLuaEnv::new begin
+[  1.281s] [Startup] SimState::default complete in 1.58ms
+[  1.281s] [Startup] rilua VM created in 88.60µs
+[  1.281s] [Startup] builtin frames initialized in 44.43µs
+[  1.281s] [Startup] template registry cleared in 5.25µs
+[  1.281s] [Startup] intrinsic templates registered in 7.43µs
+[  1.281s] [Startup] initial app_data lua handle installed in 611.00ns
+[  1.379s] [Startup] init_lua_state complete in 98.43ms
+[  1.379s] [Startup] final app_data lua handle installed in 259.00ns
+[  1.379s] [Startup] initial screen globals installed in 126.62µs
+[  1.379s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::malformed_public_selectors_do_not_alias_stored_products' (556017) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:538:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "malformed selector must not resolve a stored record", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::maps_use_exact_keys_without_product_display_cross_lookup stdout ----
+[  1.385s] [Startup] WowLuaEnv::new begin
+[  1.386s] [Startup] SimState::default complete in 1.38ms
+[  1.386s] [Startup] rilua VM created in 85.69µs
+[  1.386s] [Startup] builtin frames initialized in 39.63µs
+[  1.386s] [Startup] template registry cleared in 4.04µs
+[  1.386s] [Startup] intrinsic templates registered in 6.77µs
+[  1.386s] [Startup] initial app_data lua handle installed in 438.00ns
+[  1.498s] [Startup] init_lua_state complete in 111.90ms
+[  1.498s] [Startup] final app_data lua handle installed in 148.00ns
+[  1.498s] [Startup] initial screen globals installed in 126.98µs
+[  1.498s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::maps_use_exact_keys_without_product_display_cross_lookup' (556019) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:499:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):2: attempt to index a nil value", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::preview_bg_override_product_url_round_trips stdout ----
+[  1.504s] [Startup] WowLuaEnv::new begin
+[  1.505s] [Startup] SimState::default complete in 1.35ms
+[  1.505s] [Startup] rilua VM created in 85.21µs
+[  1.505s] [Startup] builtin frames initialized in 38.61µs
+[  1.505s] [Startup] template registry cleared in 4.79µs
+[  1.505s] [Startup] intrinsic templates registered in 6.43µs
+[  1.505s] [Startup] initial app_data lua handle installed in 665.00ns
+[  1.636s] [Startup] init_lua_state complete in 130.53ms
+[  1.636s] [Startup] final app_data lua handle installed in 96.00ns
+[  1.636s] [Startup] initial screen globals installed in 126.92µs
+[  1.636s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::preview_bg_override_product_url_round_trips' (556030) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:164:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):3: attempt to index local 'p' (a nil value)", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::preview_small_bg_override_product_url_round_trips stdout ----
+[  1.642s] [Startup] WowLuaEnv::new begin
+[  1.643s] [Startup] SimState::default complete in 1.47ms
+[  1.643s] [Startup] rilua VM created in 101.40µs
+[  1.643s] [Startup] builtin frames initialized in 44.97µs
+[  1.643s] [Startup] template registry cleared in 5.19µs
+[  1.643s] [Startup] intrinsic templates registered in 7.28µs
+[  1.643s] [Startup] initial app_data lua handle installed in 606.00ns
+[  1.761s] [Startup] init_lua_state complete in 118.05ms
+[  1.761s] [Startup] final app_data lua handle installed in 232.00ns
+[  1.761s] [Startup] initial screen globals installed in 151.04µs
+[  1.761s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::preview_small_bg_override_product_url_round_trips' (556035) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:173:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):3: attempt to index local 'p' (a nil value)", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::returned_tables_and_every_nested_array_are_independent stdout ----
+[  1.768s] [Startup] WowLuaEnv::new begin
+[  1.779s] [Startup] SimState::default complete in 10.99ms
+[  1.779s] [Startup] rilua VM created in 128.39µs
+[  1.779s] [Startup] builtin frames initialized in 62.46µs
+[  1.779s] [Startup] template registry cleared in 7.10µs
+[  1.779s] [Startup] intrinsic templates registered in 9.98µs
+[  1.779s] [Startup] initial app_data lua handle installed in 723.00ns
+[  1.907s] [Startup] init_lua_state complete in 128.36ms
+[  1.908s] [Startup] final app_data lua handle installed in 181.00ns
+[  1.908s] [Startup] initial screen globals installed in 137.38µs
+[  1.908s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::returned_tables_and_every_nested_array_are_independent' (556040) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:459:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::unknown_ids_and_legacy_seed_ids_return_nil stdout ----
+[  1.918s] [Startup] WowLuaEnv::new begin
+[  1.920s] [Startup] SimState::default complete in 1.45ms
+[  1.920s] [Startup] rilua VM created in 106.48µs
+[  1.920s] [Startup] builtin frames initialized in 43.08µs
+[  1.920s] [Startup] template registry cleared in 4.32µs
+[  1.920s] [Startup] intrinsic templates registered in 6.44µs
+[  1.920s] [Startup] initial app_data lua handle installed in 627.00ns
+[  2.018s] [Startup] init_lua_state complete in 98.19ms
+[  2.018s] [Startup] final app_data lua handle installed in 96.00ns
+[  2.018s] [Startup] initial screen globals installed in 126.76µs
+[  2.018s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::unknown_ids_and_legacy_seed_ids_return_nil' (556045) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:428:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- catalog_shop_product_structures::zero_decor_counts_are_present_not_nil stdout ----
+[  2.028s] [Startup] WowLuaEnv::new begin
+[  2.030s] [Startup] SimState::default complete in 1.37ms
+[  2.030s] [Startup] rilua VM created in 89.30µs
+[  2.030s] [Startup] builtin frames initialized in 47.10µs
+[  2.030s] [Startup] template registry cleared in 5.85µs
+[  2.030s] [Startup] intrinsic templates registered in 7.85µs
+[  2.030s] [Startup] initial app_data lua handle installed in 796.00ns
+[  2.133s] [Startup] init_lua_state complete in 103.38ms
+[  2.133s] [Startup] final app_data lua handle installed in 288.00ns
+[  2.133s] [Startup] initial screen globals installed in 128.56µs
+[  2.133s] [Startup] WowLuaEnv::new complete
+
+thread 'catalog_shop_product_structures::zero_decor_counts_are_present_not_nil' (556050) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/catalog_shop_product_structures.rs:521:157:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):1: attempt to index a nil value", level: 0, traceback: [] }))
+
+---- click_binding_spell_identifier::authentic_secret_identifiers_reject_after_gc_in_secure_and_tainted_calls stdout ----
+[  2.139s] [Startup] WowLuaEnv::new begin
+[  2.149s] [Startup] SimState::default complete in 10.37ms
+[  2.149s] [Startup] rilua VM created in 88.42µs
+[  2.149s] [Startup] builtin frames initialized in 47.76µs
+[  2.149s] [Startup] template registry cleared in 6.10µs
+[  2.149s] [Startup] intrinsic templates registered in 7.37µs
+[  2.149s] [Startup] initial app_data lua handle installed in 472.00ns
+[  2.285s] [Startup] init_lua_state complete in 136.01ms
+[  2.285s] [Startup] final app_data lua handle installed in 173.00ns
+[  2.285s] [Startup] initial screen globals installed in 140.14µs
+[  2.285s] [Startup] WowLuaEnv::new complete
+
+thread 'click_binding_spell_identifier::authentic_secret_identifiers_reject_after_gc_in_secure_and_tainted_calls' (556053) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/click_binding_spell_identifier.rs:286:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "secret rejection", level: 0, traceback: [] }))
+
+---- click_binding_spell_identifier::empty_eligibility_preserves_default_interaction_profile stdout ----
+[  2.299s] [Startup] WowLuaEnv::new begin
+[  2.301s] [Startup] SimState::default complete in 1.67ms
+[  2.301s] [Startup] rilua VM created in 89.28µs
+[  2.301s] [Startup] builtin frames initialized in 43.87µs
+[  2.301s] [Startup] template registry cleared in 4.60µs
+[  2.301s] [Startup] intrinsic templates registered in 7.49µs
+[  2.301s] [Startup] initial app_data lua handle installed in 542.00ns
+[  2.405s] [Startup] init_lua_state complete in 104.45ms
+[  2.405s] [Startup] final app_data lua handle installed in 223.00ns
+[  2.406s] [Startup] initial screen globals installed in 129.97µs
+[  2.406s] [Startup] WowLuaEnv::new complete
+
+thread 'click_binding_spell_identifier::empty_eligibility_preserves_default_interaction_profile' (556058) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/click_binding_spell_identifier.rs:68:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "host-declared eligibility", level: 0, traceback: [] }))
+
+---- click_binding_spell_identifier::existing_spell_profile_does_not_declare_eligibility stdout ----
+[  2.411s] [Startup] WowLuaEnv::new begin
+[  2.413s] [Startup] SimState::default complete in 1.38ms
+[  2.413s] [Startup] rilua VM created in 88.37µs
+[  2.413s] [Startup] builtin frames initialized in 41.84µs
+[  2.413s] [Startup] template registry cleared in 4.39µs
+[  2.413s] [Startup] intrinsic templates registered in 6.88µs
+[  2.413s] [Startup] initial app_data lua handle installed in 465.00ns
+[  2.526s] [Startup] init_lua_state complete in 113.00ms
+[  2.526s] [Startup] final app_data lua handle installed in 207.00ns
+[  2.526s] [Startup] initial screen globals installed in 134.81µs
+[  2.526s] [Startup] WowLuaEnv::new complete
+
+thread 'click_binding_spell_identifier::existing_spell_profile_does_not_declare_eligibility' (556063) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/click_binding_spell_identifier.rs:168:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "host-declared eligibility", level: 0, traceback: [] }))
+
+---- click_binding_spell_identifier::explicit_membership_resolves_names_and_miss_controls stdout ----
+[  2.531s] [Startup] WowLuaEnv::new begin
+[  2.533s] [Startup] SimState::default complete in 1.38ms
+[  2.533s] [Startup] rilua VM created in 88.95µs
+[  2.533s] [Startup] builtin frames initialized in 43.04µs
+[  2.533s] [Startup] template registry cleared in 4.71µs
+[  2.533s] [Startup] intrinsic templates registered in 6.10µs
+[  2.533s] [Startup] initial app_data lua handle installed in 573.00ns
+[  2.637s] [Startup] init_lua_state complete in 104.40ms
+[  2.637s] [Startup] final app_data lua handle installed in 124.00ns
+[  2.638s] [Startup] initial screen globals installed in 171.42µs
+[  2.638s] [Startup] WowLuaEnv::new complete
+
+thread 'click_binding_spell_identifier::explicit_membership_resolves_names_and_miss_controls' (556074) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/click_binding_spell_identifier.rs:86:10:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "host-declared eligibility", level: 0, traceback: [] }))
+
+---- click_binding_spell_identifier::full_link_alias_is_explicit_not_parsed stdout ----
+[  2.644s] [Startup] WowLuaEnv::new begin
+[  2.645s] [Startup] SimState::default complete in 1.56ms
+[  2.645s] [Startup] rilua VM created in 88.43µs
+[  2.645s] [Startup] builtin frames initialized in 42.68µs
+[  2.645s] [Startup] template registry cleared in 4.62µs
+[  2.645s] [Startup] intrinsic templates registered in 6.72µs
+[  2.645s] [Startup] initial app_data lua handle installed in 450.00ns
+[  2.765s] [Startup] init_lua_state complete in 119.86ms
+[  2.765s] [Startup] final app_data lua handle installed in 132.00ns
+[  2.765s] [Startup] initial screen globals installed in 143.71µs
+[  2.765s] [Startup] WowLuaEnv::new complete
+
+thread 'click_binding_spell_identifier::full_link_alias_is_explicit_not_parsed' (556086) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/click_binding_spell_identifier.rs:93:10:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "host-declared eligibility", level: 0, traceback: [] }))
+
+---- click_binding_spell_identifier::membership_and_named_alias_mutations_are_live_and_environment_local stdout ----
+[  2.772s] [Startup] WowLuaEnv::new begin
+[  2.773s] [Startup] SimState::default complete in 1.49ms
+[  2.774s] [Startup] rilua VM created in 92.41µs
+[  2.774s] [Startup] builtin frames initialized in 51.57µs
+[  2.774s] [Startup] template registry cleared in 4.68µs
+[  2.774s] [Startup] intrinsic templates registered in 6.47µs
+[  2.774s] [Startup] initial app_data lua handle installed in 525.00ns
+[  2.908s] [Startup] init_lua_state complete in 134.65ms
+[  2.908s] [Startup] final app_data lua handle installed in 381.00ns
+[  2.908s] [Startup] initial screen globals installed in 141.59µs
+[  2.908s] [Startup] WowLuaEnv::new complete
+[  2.909s] [Startup] WowLuaEnv::new begin
+[  2.910s] [Startup] SimState::default complete in 1.47ms
+[  2.910s] [Startup] rilua VM created in 87.73µs
+[  2.910s] [Startup] builtin frames initialized in 40.69µs
+[  2.910s] [Startup] template registry cleared in 6.11µs
+[  2.910s] [Startup] intrinsic templates registered in 5.07µs
+[  2.910s] [Startup] initial app_data lua handle installed in 304.00ns
+[  3.036s] [Startup] init_lua_state complete in 126.28ms
+[  3.036s] [Startup] final app_data lua handle installed in 173.00ns
+[  3.037s] [Startup] initial screen globals installed in 161.71µs
+[  3.037s] [Startup] WowLuaEnv::new complete
+
+thread 'click_binding_spell_identifier::membership_and_named_alias_mutations_are_live_and_environment_local' (556089) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/click_binding_spell_identifier.rs:129:59:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "host-declared eligibility", level: 0, traceback: [] }))
+
+---- click_binding_spell_identifier::numeric_alias_precedence_and_removal_are_live stdout ----
+[  3.052s] [Startup] WowLuaEnv::new begin
+[  3.054s] [Startup] SimState::default complete in 2.12ms
+[  3.054s] [Startup] rilua VM created in 134.18µs
+[  3.054s] [Startup] builtin frames initialized in 67.32µs
+[  3.054s] [Startup] template registry cleared in 7.79µs
+[  3.054s] [Startup] intrinsic templates registered in 11.21µs
+[  3.054s] [Startup] initial app_data lua handle installed in 874.00ns
+[  3.188s] [Startup] init_lua_state complete in 133.85ms
+[  3.188s] [Startup] final app_data lua handle installed in 297.00ns
+[  3.188s] [Startup] initial screen globals installed in 129.94µs
+[  3.188s] [Startup] WowLuaEnv::new complete
+
+thread 'click_binding_spell_identifier::numeric_alias_precedence_and_removal_are_live' (556098) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/click_binding_spell_identifier.rs:115:10:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "host-declared eligibility", level: 0, traceback: [] }))
+
+---- click_binding_spell_identifier::public_tainted_calls_preserve_taint_and_boolean_contract stdout ----
+[  3.194s] [Startup] WowLuaEnv::new begin
+[  3.195s] [Startup] SimState::default complete in 1.41ms
+[  3.195s] [Startup] rilua VM created in 87.45µs
+[  3.195s] [Startup] builtin frames initialized in 70.03µs
+[  3.195s] [Startup] template registry cleared in 6.76µs
+[  3.196s] [Startup] intrinsic templates registered in 7.65µs
+[  3.196s] [Startup] initial app_data lua handle installed in 592.00ns
+[  3.331s] [Startup] init_lua_state complete in 135.67ms
+[  3.331s] [Startup] final app_data lua handle installed in 195.00ns
+[  3.331s] [Startup] initial screen globals installed in 150.49µs
+[  3.331s] [Startup] WowLuaEnv::new complete
+
+thread 'click_binding_spell_identifier::public_tainted_calls_preserve_taint_and_boolean_contract' (556105) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/click_binding_spell_identifier.rs:224:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "host-declared eligibility", level: 0, traceback: [] }))
+
+---- click_binding_spell_identifier::strict_public_identifiers_validate_before_alias_resolution stdout ----
+[  3.337s] [Startup] WowLuaEnv::new begin
+[  3.339s] [Startup] SimState::default complete in 1.52ms
+[  3.339s] [Startup] rilua VM created in 86.60µs
+[  3.339s] [Startup] builtin frames initialized in 46.70µs
+[  3.339s] [Startup] template registry cleared in 4.42µs
+[  3.339s] [Startup] intrinsic templates registered in 6.31µs
+[  3.339s] [Startup] initial app_data lua handle installed in 538.00ns
+[  3.454s] [Startup] init_lua_state complete in 114.45ms
+[  3.454s] [Startup] final app_data lua handle installed in 279.00ns
+[  3.454s] [Startup] initial screen globals installed in 142.57µs
+[  3.454s] [Startup] WowLuaEnv::new complete
+
+thread 'click_binding_spell_identifier::strict_public_identifiers_validate_before_alias_resolution' (556112) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/click_binding_spell_identifier.rs:203:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "identifier rejected", level: 0, traceback: [] }))
+
+---- delves_api_inputs::active_delve_does_not_access_secret_extras_for_either_caller stdout ----
+[  3.460s] [Startup] WowLuaEnv::new begin
+[  3.461s] [Startup] SimState::default complete in 1.43ms
+[  3.461s] [Startup] rilua VM created in 102.14µs
+[  3.461s] [Startup] builtin frames initialized in 44.24µs
+[  3.461s] [Startup] template registry cleared in 4.47µs
+[  3.461s] [Startup] intrinsic templates registered in 6.60µs
+[  3.461s] [Startup] initial app_data lua handle installed in 625.00ns
+[  3.561s] [Startup] init_lua_state complete in 99.75ms
+[  3.561s] [Startup] final app_data lua handle installed in 135.00ns
+[  3.561s] [Startup] initial screen globals installed in 127.84µs
+[  3.561s] [Startup] WowLuaEnv::new complete
+
+thread 'delves_api_inputs::active_delve_does_not_access_secret_extras_for_either_caller' (556114) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delves_api_inputs.rs:109:6:
+undeclared secret arguments stay untouched: Lua(Runtime(RuntimeError { message: "expected number, got userdata at argument 1", level: 1, traceback: [] }))
+
+---- delves_api_inputs::active_delve_reads_live_host_boolean_and_ignores_all_extras stdout ----
+[  3.568s] [Startup] WowLuaEnv::new begin
+[  3.570s] [Startup] SimState::default complete in 1.47ms
+[  3.570s] [Startup] rilua VM created in 87.38µs
+[  3.570s] [Startup] builtin frames initialized in 43.20µs
+[  3.570s] [Startup] template registry cleared in 4.45µs
+[  3.570s] [Startup] intrinsic templates registered in 7.02µs
+[  3.570s] [Startup] initial app_data lua handle installed in 692.00ns
+[  3.674s] [Startup] init_lua_state complete in 103.97ms
+[  3.674s] [Startup] final app_data lua handle installed in 161.00ns
+[  3.674s] [Startup] initial screen globals installed in 133.00µs
+[  3.674s] [Startup] WowLuaEnv::new complete
+
+thread 'delves_api_inputs::active_delve_reads_live_host_boolean_and_ignores_all_extras' (556119) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delves_api_inputs.rs:78:10:
+default false regardless of former map argument: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- delves_api_inputs::curio_link_rejects_invalid_public_arguments stdout ----
+[  3.680s] [Startup] WowLuaEnv::new begin
+[  3.682s] [Startup] SimState::default complete in 2.26ms
+[  3.682s] [Startup] rilua VM created in 150.03µs
+[  3.682s] [Startup] builtin frames initialized in 48.18µs
+[  3.682s] [Startup] template registry cleared in 5.71µs
+[  3.682s] [Startup] intrinsic templates registered in 8.68µs
+[  3.682s] [Startup] initial app_data lua handle installed in 592.00ns
+[  3.781s] [Startup] init_lua_state complete in 98.86ms
+[  3.781s] [Startup] final app_data lua handle installed in 290.00ns
+[  3.781s] [Startup] initial screen globals installed in 131.16µs
+[  3.781s] [Startup] WowLuaEnv::new complete
+
+thread 'delves_api_inputs::curio_link_rejects_invalid_public_arguments' (556124) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delves_api_inputs.rs:240:6:
+INFERRED strict public identifier and u32 rarity representation: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- delves_api_inputs::curio_link_uses_aliases_rarity_and_live_host_records_without_mutation stdout ----
+[  3.787s] [Startup] WowLuaEnv::new begin
+[  3.788s] [Startup] SimState::default complete in 1.38ms
+[  3.788s] [Startup] rilua VM created in 84.69µs
+[  3.788s] [Startup] builtin frames initialized in 44.57µs
+[  3.788s] [Startup] template registry cleared in 4.70µs
+[  3.788s] [Startup] intrinsic templates registered in 6.94µs
+[  3.788s] [Startup] initial app_data lua handle installed in 525.00ns
+[  3.905s] [Startup] init_lua_state complete in 116.08ms
+[  3.905s] [Startup] final app_data lua handle installed in 352.00ns
+[  3.905s] [Startup] initial screen globals installed in 196.83µs
+[  3.905s] [Startup] WowLuaEnv::new complete
+
+thread 'delves_api_inputs::curio_link_uses_aliases_rarity_and_live_host_records_without_mutation' (556127) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delves_api_inputs.rs:210:6:
+exact seeded links; INFERRED misses error: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- delves_api_inputs::curio_rarity_is_never_secret_even_after_gc_and_for_tainted_callers stdout ----
+[  3.913s] [Startup] WowLuaEnv::new begin
+[  3.914s] [Startup] SimState::default complete in 1.36ms
+[  3.914s] [Startup] rilua VM created in 83.58µs
+[  3.914s] [Startup] builtin frames initialized in 39.81µs
+[  3.914s] [Startup] template registry cleared in 3.96µs
+[  3.914s] [Startup] intrinsic templates registered in 6.68µs
+[  3.914s] [Startup] initial app_data lua handle installed in 599.00ns
+[  4.020s] [Startup] init_lua_state complete in 105.49ms
+[  4.020s] [Startup] final app_data lua handle installed in 286.00ns
+[  4.020s] [Startup] initial screen globals installed in 138.52µs
+[  4.020s] [Startup] WowLuaEnv::new complete
+
+thread 'delves_api_inputs::curio_rarity_is_never_secret_even_after_gc_and_for_tainted_callers' (556129) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delves_api_inputs.rs:277:6:
+authentic NeverSecret boundary independent of caller taint: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- delves_api_inputs::delve_inputs_are_isolated_between_environments stdout ----
+[  4.032s] [Startup] WowLuaEnv::new begin
+[  4.034s] [Startup] SimState::default complete in 1.33ms
+[  4.034s] [Startup] rilua VM created in 99.76µs
+[  4.034s] [Startup] builtin frames initialized in 40.70µs
+[  4.034s] [Startup] template registry cleared in 5.14µs
+[  4.034s] [Startup] intrinsic templates registered in 7.07µs
+[  4.034s] [Startup] initial app_data lua handle installed in 624.00ns
+[  4.158s] [Startup] init_lua_state complete in 124.28ms
+[  4.158s] [Startup] final app_data lua handle installed in 196.00ns
+[  4.158s] [Startup] initial screen globals installed in 146.78µs
+[  4.158s] [Startup] WowLuaEnv::new complete
+[  4.158s] [Startup] WowLuaEnv::new begin
+[  4.160s] [Startup] SimState::default complete in 1.75ms
+[  4.160s] [Startup] rilua VM created in 123.36µs
+[  4.160s] [Startup] builtin frames initialized in 52.53µs
+[  4.160s] [Startup] template registry cleared in 8.80µs
+[  4.160s] [Startup] intrinsic templates registered in 6.41µs
+[  4.160s] [Startup] initial app_data lua handle installed in 526.00ns
+[  4.276s] [Startup] init_lua_state complete in 115.44ms
+[  4.276s] [Startup] final app_data lua handle installed in 208.00ns
+[  4.276s] [Startup] initial screen globals installed in 135.92µs
+[  4.276s] [Startup] WowLuaEnv::new complete
+
+thread 'delves_api_inputs::delve_inputs_are_isolated_between_environments' (556133) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delves_api_inputs.rs:293:10:
+second environment retains its own inputs: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- delves_api_inputs::eligibility_authenticates_secret_map_before_validation_or_mutation stdout ----
+[  4.290s] [Startup] WowLuaEnv::new begin
+[  4.302s] [Startup] SimState::default complete in 11.43ms
+[  4.302s] [Startup] rilua VM created in 89.69µs
+[  4.302s] [Startup] builtin frames initialized in 52.41µs
+[  4.302s] [Startup] template registry cleared in 6.57µs
+[  4.302s] [Startup] intrinsic templates registered in 7.29µs
+[  4.302s] [Startup] initial app_data lua handle installed in 517.00ns
+[  4.412s] [Startup] init_lua_state complete in 110.32ms
+[  4.412s] [Startup] final app_data lua handle installed in 226.00ns
+[  4.412s] [Startup] initial screen globals installed in 129.97µs
+[  4.412s] [Startup] WowLuaEnv::new complete
+
+thread 'delves_api_inputs::eligibility_authenticates_secret_map_before_validation_or_mutation' (556138) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delves_api_inputs.rs:160:5:
+assertion `left == right` failed
+  left: None
+ right: Some(2339)
+
+---- delves_api_inputs::eligibility_invalid_inputs_preserve_last_request stdout ----
+[  4.428s] [Startup] WowLuaEnv::new begin
+[  4.430s] [Startup] SimState::default complete in 1.45ms
+[  4.430s] [Startup] rilua VM created in 104.24µs
+[  4.430s] [Startup] builtin frames initialized in 44.96µs
+[  4.430s] [Startup] template registry cleared in 5.21µs
+[  4.430s] [Startup] intrinsic templates registered in 6.79µs
+[  4.430s] [Startup] initial app_data lua handle installed in 481.00ns
+[  4.531s] [Startup] init_lua_state complete in 100.99ms
+[  4.531s] [Startup] final app_data lua handle installed in 99.00ns
+[  4.531s] [Startup] initial screen globals installed in 151.79µs
+[  4.531s] [Startup] WowLuaEnv::new complete
+
+thread 'delves_api_inputs::eligibility_invalid_inputs_preserve_last_request' (556142) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delves_api_inputs.rs:149:14:
+invalid request errors: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- delves_api_inputs::eligibility_request_records_map_and_returns_zero_values stdout ----
+[  4.537s] [Startup] WowLuaEnv::new begin
+[  4.538s] [Startup] SimState::default complete in 1.43ms
+[  4.538s] [Startup] rilua VM created in 91.30µs
+[  4.538s] [Startup] builtin frames initialized in 41.03µs
+[  4.538s] [Startup] template registry cleared in 4.48µs
+[  4.539s] [Startup] intrinsic templates registered in 7.43µs
+[  4.539s] [Startup] initial app_data lua handle installed in 542.00ns
+[  4.650s] [Startup] init_lua_state complete in 111.67ms
+[  4.650s] [Startup] final app_data lua handle installed in 170.00ns
+[  4.650s] [Startup] initial screen globals installed in 181.35µs
+[  4.650s] [Startup] WowLuaEnv::new complete
+
+thread 'delves_api_inputs::eligibility_request_records_map_and_returns_zero_values' (556146) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delves_api_inputs.rs:118:5:
+assertion `left == right` failed
+  left: None
+ right: Some(2339)
+
+---- delves_ui::delves_ui_entrance_methods_use_seeded_tier_state stdout ----
+[  4.659s] [Startup] WowLuaEnv::new begin
+[  4.661s] [Startup] SimState::default complete in 2.01ms
+[  4.661s] [Startup] rilua VM created in 143.36µs
+[  4.661s] [Startup] builtin frames initialized in 56.57µs
+[  4.661s] [Startup] template registry cleared in 6.00µs
+[  4.661s] [Startup] intrinsic templates registered in 7.71µs
+[  4.661s] [Startup] initial app_data lua handle installed in 547.00ns
+[  4.788s] [Startup] init_lua_state complete in 127.46ms
+[  4.788s] [Startup] final app_data lua handle installed in 271.00ns
+[  4.789s] [Startup] initial screen globals installed in 150.94µs
+[  4.789s] [Startup] WowLuaEnv::new complete
+
+thread 'delves_ui::delves_ui_entrance_methods_use_seeded_tier_state' (556151) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/delves_ui.rs:104:5:
+assertion `left == right` failed
+  left: "former_map_argument_changed_active_delve"
+ right: "ok"
+
+---- raid_roster_unknown_name::cache_arrival_is_live_and_does_not_change_other_members stdout ----
+[  5.260s] [Startup] WowLuaEnv::new begin
+[  5.262s] [Startup] SimState::default complete in 1.53ms
+[  5.262s] [Startup] rilua VM created in 107.60µs
+[  5.262s] [Startup] builtin frames initialized in 41.52µs
+[  5.262s] [Startup] template registry cleared in 4.72µs
+[  5.262s] [Startup] intrinsic templates registered in 5.92µs
+[  5.262s] [Startup] initial app_data lua handle installed in 430.00ns
+[  5.379s] [Startup] init_lua_state complete in 117.17ms
+[  5.379s] [Startup] final app_data lua handle installed in 215.00ns
+[  5.379s] [Startup] initial screen globals installed in 154.46µs
+[  5.379s] [Startup] WowLuaEnv::new complete
+
+thread 'raid_roster_unknown_name::cache_arrival_is_live_and_does_not_change_other_members' (556171) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/raid_roster_unknown_name.rs:85:6:
+only unresolved roster row changes: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- raid_roster_unknown_name::uncached_name_is_public_unknown_with_unchanged_tuple stdout ----
+[  5.680s] [Startup] WowLuaEnv::new begin
+[  5.681s] [Startup] SimState::default complete in 1.45ms
+[  5.682s] [Startup] rilua VM created in 89.61µs
+[  5.682s] [Startup] builtin frames initialized in 45.15µs
+[  5.682s] [Startup] template registry cleared in 5.14µs
+[  5.682s] [Startup] intrinsic templates registered in 6.80µs
+[  5.682s] [Startup] initial app_data lua handle installed in 529.00ns
+[  5.790s] [Startup] init_lua_state complete in 108.54ms
+[  5.790s] [Startup] final app_data lua handle installed in 150.00ns
+[  5.790s] [Startup] initial screen globals installed in 138.51µs
+[  5.790s] [Startup] WowLuaEnv::new complete
+
+thread 'raid_roster_unknown_name::uncached_name_is_public_unknown_with_unchanged_tuple' (556186) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/raid_roster_unknown_name.rs:70:6:
+uncached existing member returns public localized Unknown: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- spell_maw_powers::alias_changes_read_resolved_key_without_falling_back_to_previous_record stdout ----
+[  5.797s] [Startup] WowLuaEnv::new begin
+[  5.798s] [Startup] SimState::default complete in 1.48ms
+[  5.798s] [Startup] rilua VM created in 113.02µs
+[  5.798s] [Startup] builtin frames initialized in 64.54µs
+[  5.798s] [Startup] template registry cleared in 5.30µs
+[  5.798s] [Startup] intrinsic templates registered in 7.57µs
+[  5.798s] [Startup] initial app_data lua handle installed in 560.00ns
+[  5.919s] [Startup] init_lua_state complete in 120.30ms
+[  5.919s] [Startup] final app_data lua handle installed in 350.00ns
+[  5.919s] [Startup] initial screen globals installed in 219.17µs
+[  5.919s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_maw_powers::alias_changes_read_resolved_key_without_falling_back_to_previous_record' (556188) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_maw_powers.rs:140:10:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "exact public atlas", level: 0, traceback: [] }))
+
+---- spell_maw_powers::authentic_secrets_reject_in_both_contexts_after_gc_and_public_queries_recover stdout ----
+[  5.926s] [Startup] WowLuaEnv::new begin
+[  5.927s] [Startup] SimState::default complete in 1.37ms
+[  5.927s] [Startup] rilua VM created in 109.14µs
+[  5.927s] [Startup] builtin frames initialized in 42.06µs
+[  5.927s] [Startup] template registry cleared in 5.38µs
+[  5.927s] [Startup] intrinsic templates registered in 6.41µs
+[  5.927s] [Startup] initial app_data lua handle installed in 410.00ns
+[  6.062s] [Startup] init_lua_state complete in 134.78ms
+[  6.062s] [Startup] final app_data lua handle installed in 238.00ns
+[  6.062s] [Startup] initial screen globals installed in 155.42µs
+[  6.062s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_maw_powers::authentic_secrets_reject_in_both_contexts_after_gc_and_public_queries_recover' (556194) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_maw_powers.rs:274:8:
+INFERRED conservative rejection, not native AllowedWhenTainted: Lua(Runtime(RuntimeError { message: "argument rejected", level: 0, traceback: [] }))
+
+---- spell_maw_powers::empty_defaults_and_unknown_identifiers_have_distinct_miss_arities stdout ----
+[  6.077s] [Startup] WowLuaEnv::new begin
+[  6.078s] [Startup] SimState::default complete in 1.50ms
+[  6.078s] [Startup] rilua VM created in 121.94µs
+[  6.078s] [Startup] builtin frames initialized in 51.41µs
+[  6.078s] [Startup] template registry cleared in 6.84µs
+[  6.078s] [Startup] intrinsic templates registered in 6.82µs
+[  6.078s] [Startup] initial app_data lua handle installed in 541.00ns
+[  6.193s] [Startup] init_lua_state complete in 114.77ms
+[  6.193s] [Startup] final app_data lua handle installed in 217.00ns
+[  6.193s] [Startup] initial screen globals installed in 136.13µs
+[  6.193s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_maw_powers::empty_defaults_and_unknown_identifiers_have_distinct_miss_arities' (556198) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_maw_powers.rs:109:10:
+empty host inputs do not manufacture values: Lua(Runtime(RuntimeError { message: "INFERRED zero results on link miss", level: 0, traceback: [] }))
+
+---- spell_maw_powers::invalid_public_representations_error_before_lookup stdout ----
+[  6.200s] [Startup] WowLuaEnv::new begin
+[  6.202s] [Startup] SimState::default complete in 1.61ms
+[  6.202s] [Startup] rilua VM created in 106.73µs
+[  6.202s] [Startup] builtin frames initialized in 68.24µs
+[  6.202s] [Startup] template registry cleared in 6.11µs
+[  6.202s] [Startup] intrinsic templates registered in 7.07µs
+[  6.202s] [Startup] initial app_data lua handle installed in 698.00ns
+[  6.322s] [Startup] init_lua_state complete in 120.65ms
+[  6.322s] [Startup] final app_data lua handle installed in 248.00ns
+[  6.323s] [Startup] initial screen globals installed in 124.97µs
+[  6.323s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_maw_powers::invalid_public_representations_error_before_lookup' (556202) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_maw_powers.rs:190:7:
+INFERRED strict public identifier validation, no fractional alias bypass: Lua(Runtime(RuntimeError { message: "argument rejected", level: 0, traceback: [] }))
+
+---- spell_maw_powers::maps_are_independent_and_replacement_removal_are_live stdout ----
+[  6.329s] [Startup] WowLuaEnv::new begin
+[  6.330s] [Startup] SimState::default complete in 1.49ms
+[  6.330s] [Startup] rilua VM created in 112.29µs
+[  6.331s] [Startup] builtin frames initialized in 44.47µs
+[  6.331s] [Startup] template registry cleared in 4.93µs
+[  6.331s] [Startup] intrinsic templates registered in 6.48µs
+[  6.331s] [Startup] initial app_data lua handle installed in 657.00ns
+[  6.457s] [Startup] init_lua_state complete in 126.22ms
+[  6.457s] [Startup] final app_data lua handle installed in 313.00ns
+[  6.457s] [Startup] initial screen globals installed in 139.10µs
+[  6.457s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_maw_powers::maps_are_independent_and_replacement_removal_are_live' (556204) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_maw_powers.rs:153:57:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "exact public atlas", level: 0, traceback: [] }))
+
+---- spell_maw_powers::numbers_names_and_full_link_aliases_return_exact_host_strings stdout ----
+[  6.471s] [Startup] WowLuaEnv::new begin
+[  6.472s] [Startup] SimState::default complete in 1.50ms
+[  6.472s] [Startup] rilua VM created in 110.41µs
+[  6.472s] [Startup] builtin frames initialized in 46.96µs
+[  6.472s] [Startup] template registry cleared in 5.63µs
+[  6.472s] [Startup] intrinsic templates registered in 5.94µs
+[  6.472s] [Startup] initial app_data lua handle installed in 378.00ns
+[  6.585s] [Startup] init_lua_state complete in 113.06ms
+[  6.585s] [Startup] final app_data lua handle installed in 287.00ns
+[  6.586s] [Startup] initial screen globals installed in 138.90µs
+[  6.586s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_maw_powers::numbers_names_and_full_link_aliases_return_exact_host_strings' (556209) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_maw_powers.rs:119:8:
+full link alias overrides embedded 101 with resolved 202: Lua(Runtime(RuntimeError { message: "exact public atlas", level: 0, traceback: [] }))
+
+---- spell_maw_powers::numeric_alias_precedence_and_removal_apply_to_both_queries stdout ----
+[  6.592s] [Startup] WowLuaEnv::new begin
+[  6.593s] [Startup] SimState::default complete in 1.44ms
+[  6.593s] [Startup] rilua VM created in 89.66µs
+[  6.593s] [Startup] builtin frames initialized in 41.42µs
+[  6.593s] [Startup] template registry cleared in 5.23µs
+[  6.593s] [Startup] intrinsic templates registered in 6.07µs
+[  6.593s] [Startup] initial app_data lua handle installed in 414.00ns
+[  6.716s] [Startup] init_lua_state complete in 122.26ms
+[  6.716s] [Startup] final app_data lua handle installed in 208.00ns
+[  6.716s] [Startup] initial screen globals installed in 191.23µs
+[  6.716s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_maw_powers::numeric_alias_precedence_and_removal_apply_to_both_queries' (556214) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_maw_powers.rs:128:8:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "exact public atlas", level: 0, traceback: [] }))
+
+---- spell_maw_powers::public_queries_work_secure_and_tainted_without_changing_caller_taint stdout ----
+[  6.726s] [Startup] WowLuaEnv::new begin
+[  6.728s] [Startup] SimState::default complete in 1.46ms
+[  6.728s] [Startup] rilua VM created in 94.99µs
+[  6.728s] [Startup] builtin frames initialized in 44.70µs
+[  6.728s] [Startup] template registry cleared in 31.21µs
+[  6.728s] [Startup] intrinsic templates registered in 8.21µs
+[  6.728s] [Startup] initial app_data lua handle installed in 491.00ns
+[  6.858s] [Startup] init_lua_state complete in 130.34ms
+[  6.858s] [Startup] final app_data lua handle installed in 906.00ns
+[  6.858s] [Startup] initial screen globals installed in 219.40µs
+[  6.858s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_maw_powers::public_queries_work_secure_and_tainted_without_changing_caller_taint' (556216) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_maw_powers.rs:239:8:
+ordinary public identifiers preserve secure and tainted context: Lua(Runtime(RuntimeError { message: "exact public atlas", level: 0, traceback: [] }))
+
+---- spell_maw_powers::queries_are_read_only_and_environments_are_isolated stdout ----
+[  6.868s] [Startup] WowLuaEnv::new begin
+[  6.869s] [Startup] SimState::default complete in 1.42ms
+[  6.870s] [Startup] rilua VM created in 90.36µs
+[  6.870s] [Startup] builtin frames initialized in 45.71µs
+[  6.870s] [Startup] template registry cleared in 4.83µs
+[  6.870s] [Startup] intrinsic templates registered in 8.34µs
+[  6.870s] [Startup] initial app_data lua handle installed in 666.00ns
+[  6.978s] [Startup] init_lua_state complete in 108.70ms
+[  6.978s] [Startup] final app_data lua handle installed in 133.00ns
+[  6.978s] [Startup] initial screen globals installed in 155.24µs
+[  6.978s] [Startup] WowLuaEnv::new complete
+[  6.979s] [Startup] WowLuaEnv::new begin
+[  6.981s] [Startup] SimState::default complete in 2.40ms
+[  6.981s] [Startup] rilua VM created in 117.97µs
+[  6.981s] [Startup] builtin frames initialized in 45.00µs
+[  6.981s] [Startup] template registry cleared in 8.58µs
+[  6.981s] [Startup] intrinsic templates registered in 5.95µs
+[  6.981s] [Startup] initial app_data lua handle installed in 364.00ns
+[  7.135s] [Startup] init_lua_state complete in 153.78ms
+[  7.135s] [Startup] final app_data lua handle installed in 220.00ns
+[  7.135s] [Startup] initial screen globals installed in 152.34µs
+[  7.135s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_maw_powers::queries_are_read_only_and_environments_are_isolated' (556218) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_maw_powers.rs:208:8:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "exact public atlas", level: 0, traceback: [] }))
+
+---- spell_maw_powers::u32_endpoints_and_empty_strings_are_explicit_hits stdout ----
+[  7.148s] [Startup] WowLuaEnv::new begin
+[  7.150s] [Startup] SimState::default complete in 1.76ms
+[  7.150s] [Startup] rilua VM created in 87.40µs
+[  7.150s] [Startup] builtin frames initialized in 42.01µs
+[  7.150s] [Startup] template registry cleared in 4.76µs
+[  7.150s] [Startup] intrinsic templates registered in 7.52µs
+[  7.150s] [Startup] initial app_data lua handle installed in 676.00ns
+[  7.257s] [Startup] init_lua_state complete in 107.40ms
+[  7.257s] [Startup] final app_data lua handle installed in 102.00ns
+[  7.258s] [Startup] initial screen globals installed in 130.66µs
+[  7.258s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_maw_powers::u32_endpoints_and_empty_strings_are_explicit_hits' (556231) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_maw_powers.rs:173:10:
+INFERRED shared u32 boundary; stored empty strings are not misses: Lua(Runtime(RuntimeError { message: "exact public atlas", level: 0, traceback: [] }))
+
+---- spell_max_cumulative_aura_applications::invalid_identifier_representations_are_rejected stdout ----
+[  7.264s] [Startup] WowLuaEnv::new begin
+[  7.265s] [Startup] SimState::default complete in 1.40ms
+[  7.265s] [Startup] rilua VM created in 86.97µs
+[  7.266s] [Startup] builtin frames initialized in 42.27µs
+[  7.266s] [Startup] template registry cleared in 4.24µs
+[  7.266s] [Startup] intrinsic templates registered in 6.88µs
+[  7.266s] [Startup] initial app_data lua handle installed in 601.00ns
+[  7.380s] [Startup] init_lua_state complete in 114.60ms
+[  7.380s] [Startup] final app_data lua handle installed in 275.00ns
+[  7.380s] [Startup] initial screen globals installed in 132.81µs
+[  7.380s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_max_cumulative_aura_applications::invalid_identifier_representations_are_rejected' (556234) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_max_cumulative_aura_applications.rs:141:6:
+strict public representations, then ordinary recovery: Lua(Runtime(RuntimeError { message: "argument rejection", level: 0, traceback: [] }))
+
+---- spell_max_cumulative_aura_applications::maximum_is_independent_of_currently_applied_stacks stdout ----
+[  7.388s] [Startup] WowLuaEnv::new begin
+[  7.389s] [Startup] SimState::default complete in 1.40ms
+[  7.389s] [Startup] rilua VM created in 83.67µs
+[  7.390s] [Startup] builtin frames initialized in 40.37µs
+[  7.390s] [Startup] template registry cleared in 4.57µs
+[  7.390s] [Startup] intrinsic templates registered in 6.11µs
+[  7.390s] [Startup] initial app_data lua handle installed in 473.00ns
+[  7.509s] [Startup] init_lua_state complete in 119.51ms
+[  7.509s] [Startup] final app_data lua handle installed in 104.00ns
+[  7.509s] [Startup] initial screen globals installed in 123.20µs
+[  7.509s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_max_cumulative_aura_applications::maximum_is_independent_of_currently_applied_stacks' (556239) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_max_cumulative_aura_applications.rs:97:10:
+declared maximum, not the active application count: Lua(Runtime(RuntimeError { message: "maximum", level: 0, traceback: [] }))
+
+---- spell_max_cumulative_aura_applications::misses_return_one_zero_and_map_changes_are_live stdout ----
+[  7.515s] [Startup] WowLuaEnv::new begin
+[  7.516s] [Startup] SimState::default complete in 1.39ms
+[  7.516s] [Startup] rilua VM created in 82.57µs
+[  7.516s] [Startup] builtin frames initialized in 36.92µs
+[  7.516s] [Startup] template registry cleared in 3.89µs
+[  7.516s] [Startup] intrinsic templates registered in 6.10µs
+[  7.516s] [Startup] initial app_data lua handle installed in 443.00ns
+[  7.638s] [Startup] init_lua_state complete in 121.49ms
+[  7.638s] [Startup] final app_data lua handle installed in 300.00ns
+[  7.638s] [Startup] initial screen globals installed in 121.68µs
+[  7.638s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_max_cumulative_aura_applications::misses_return_one_zero_and_map_changes_are_live' (556245) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_max_cumulative_aura_applications.rs:110:6:
+inferred zero for an undeclared spell: Lua(Runtime(RuntimeError { message: "maximum", level: 0, traceback: [] }))
+
+---- spell_max_cumulative_aura_applications::numeric_alias_takes_precedence_over_numeric_identity stdout ----
+[  7.652s] [Startup] WowLuaEnv::new begin
+[  7.653s] [Startup] SimState::default complete in 1.27ms
+[  7.653s] [Startup] rilua VM created in 80.23µs
+[  7.653s] [Startup] builtin frames initialized in 37.50µs
+[  7.653s] [Startup] template registry cleared in 3.96µs
+[  7.653s] [Startup] intrinsic templates registered in 5.90µs
+[  7.653s] [Startup] initial app_data lua handle installed in 514.00ns
+[  7.760s] [Startup] init_lua_state complete in 106.18ms
+[  7.760s] [Startup] final app_data lua handle installed in 320.00ns
+[  7.760s] [Startup] initial screen globals installed in 150.15µs
+[  7.760s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_max_cumulative_aura_applications::numeric_alias_takes_precedence_over_numeric_identity' (556250) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_max_cumulative_aura_applications.rs:73:10:
+alias-first resolution: Lua(Runtime(RuntimeError { message: "maximum", level: 0, traceback: [] }))
+
+---- spell_max_cumulative_aura_applications::numeric_and_seeded_name_identifiers_return_the_declared_maximum stdout ----
+[  7.767s] [Startup] WowLuaEnv::new begin
+[  7.769s] [Startup] SimState::default complete in 1.43ms
+[  7.769s] [Startup] rilua VM created in 98.07µs
+[  7.769s] [Startup] builtin frames initialized in 40.66µs
+[  7.769s] [Startup] template registry cleared in 4.68µs
+[  7.769s] [Startup] intrinsic templates registered in 6.26µs
+[  7.769s] [Startup] initial app_data lua handle installed in 486.00ns
+[  7.883s] [Startup] init_lua_state complete in 113.87ms
+[  7.883s] [Startup] final app_data lua handle installed in 142.00ns
+[  7.883s] [Startup] initial screen globals installed in 124.84µs
+[  7.883s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_max_cumulative_aura_applications::numeric_and_seeded_name_identifiers_return_the_declared_maximum' (556255) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_max_cumulative_aura_applications.rs:62:6:
+public number and case-normalized alias resolve the same key: Lua(Runtime(RuntimeError { message: "maximum", level: 0, traceback: [] }))
+
+---- spell_max_cumulative_aura_applications::secret_identifiers_are_rejected_as_unmodeled_policy stdout ----
+[  7.892s] [Startup] WowLuaEnv::new begin
+[  7.894s] [Startup] SimState::default complete in 1.96ms
+[  7.894s] [Startup] rilua VM created in 130.79µs
+[  7.894s] [Startup] builtin frames initialized in 61.02µs
+[  7.894s] [Startup] template registry cleared in 6.37µs
+[  7.894s] [Startup] intrinsic templates registered in 8.92µs
+[  7.894s] [Startup] initial app_data lua handle installed in 808.00ns
+[  8.001s] [Startup] init_lua_state complete in 106.78ms
+[  8.001s] [Startup] final app_data lua handle installed in 190.00ns
+[  8.001s] [Startup] initial screen globals installed in 137.17µs
+[  8.001s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_max_cumulative_aura_applications::secret_identifiers_are_rejected_as_unmodeled_policy' (556263) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_max_cumulative_aura_applications.rs:236:6:
+conservative rejection without declassification; public recovery: Lua(Runtime(RuntimeError { message: "argument rejection", level: 0, traceback: [] }))
+
+---- spell_max_cumulative_aura_applications::tainted_callers_keep_their_taint_and_cannot_open_restricted_results stdout ----
+[  8.007s] [Startup] WowLuaEnv::new begin
+[  8.009s] [Startup] SimState::default complete in 1.38ms
+[  8.009s] [Startup] rilua VM created in 84.72µs
+[  8.009s] [Startup] builtin frames initialized in 38.64µs
+[  8.009s] [Startup] template registry cleared in 4.58µs
+[  8.009s] [Startup] intrinsic templates registered in 5.50µs
+[  8.009s] [Startup] initial app_data lua handle installed in 536.00ns
+[  8.129s] [Startup] init_lua_state complete in 120.33ms
+[  8.129s] [Startup] final app_data lua handle installed in 201.00ns
+[  8.129s] [Startup] initial screen globals installed in 118.71µs
+[  8.129s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_max_cumulative_aura_applications::tainted_callers_keep_their_taint_and_cannot_open_restricted_results' (556265) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_max_cumulative_aura_applications.rs:190:6:
+public queries work under taint without clearing it: Lua(Runtime(RuntimeError { message: "maximum", level: 0, traceback: [] }))
+
+---- spell_max_cumulative_aura_applications::unit_aura_restriction_alone_makes_the_result_secret stdout ----
+[  8.134s] [Startup] WowLuaEnv::new begin
+[  8.136s] [Startup] SimState::default complete in 1.37ms
+[  8.136s] [Startup] rilua VM created in 136.10µs
+[  8.136s] [Startup] builtin frames initialized in 45.96µs
+[  8.136s] [Startup] template registry cleared in 5.03µs
+[  8.136s] [Startup] intrinsic templates registered in 5.99µs
+[  8.136s] [Startup] initial app_data lua handle installed in 732.00ns
+[  8.251s] [Startup] init_lua_state complete in 115.28ms
+[  8.251s] [Startup] final app_data lua handle installed in 199.00ns
+[  8.251s] [Startup] initial screen globals installed in 175.73µs
+[  8.251s] [Startup] WowLuaEnv::new complete
+
+thread 'spell_max_cumulative_aura_applications::unit_aura_restriction_alone_makes_the_result_secret' (556271) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/spell_max_cumulative_aura_applications.rs:153:10:
+cooldown and unit-stat restrictions are unrelated: Lua(Runtime(RuntimeError { message: "maximum", level: 0, traceback: [] }))
+
+---- voice_chat_speak_text::environments_keep_separate_request_queues stdout ----
+[  8.264s] [Startup] WowLuaEnv::new begin
+[  8.265s] [Startup] SimState::default complete in 1.36ms
+[  8.265s] [Startup] rilua VM created in 83.91µs
+[  8.265s] [Startup] builtin frames initialized in 41.32µs
+[  8.265s] [Startup] template registry cleared in 4.84µs
+[  8.265s] [Startup] intrinsic templates registered in 6.74µs
+[  8.266s] [Startup] initial app_data lua handle installed in 457.00ns
+[  8.373s] [Startup] init_lua_state complete in 107.91ms
+[  8.373s] [Startup] final app_data lua handle installed in 192.00ns
+[  8.374s] [Startup] initial screen globals installed in 213.26µs
+[  8.374s] [Startup] WowLuaEnv::new complete
+[  8.374s] [Startup] WowLuaEnv::new begin
+[  8.376s] [Startup] SimState::default complete in 2.17ms
+[  8.376s] [Startup] rilua VM created in 129.75µs
+[  8.376s] [Startup] builtin frames initialized in 51.00µs
+[  8.376s] [Startup] template registry cleared in 7.69µs
+[  8.376s] [Startup] intrinsic templates registered in 6.10µs
+[  8.376s] [Startup] initial app_data lua handle installed in 698.00ns
+[  8.541s] [Startup] init_lua_state complete in 165.12ms
+[  8.541s] [Startup] final app_data lua handle installed in 181.00ns
+[  8.541s] [Startup] initial screen globals installed in 130.63µs
+[  8.541s] [Startup] WowLuaEnv::new complete
+
+thread 'voice_chat_speak_text::environments_keep_separate_request_queues' (556282) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/voice_chat_speak_text.rs:299:5:
+assertion `left == right` failed
+  left: []
+ right: [SpeakTextRequest { voice_id: 2.0, text: "Second environment", rate: 3.0, volume: 40.0, overlap: false }]
+
+---- voice_chat_speak_text::malformed_public_arguments_reject_atomically_and_public_calls_recover stdout ----
+[  8.555s] [Startup] WowLuaEnv::new begin
+[  8.557s] [Startup] SimState::default complete in 1.64ms
+[  8.557s] [Startup] rilua VM created in 88.08µs
+[  8.557s] [Startup] builtin frames initialized in 49.99µs
+[  8.557s] [Startup] template registry cleared in 5.70µs
+[  8.557s] [Startup] intrinsic templates registered in 7.34µs
+[  8.557s] [Startup] initial app_data lua handle installed in 595.00ns
+[  8.675s] [Startup] init_lua_state complete in 118.00ms
+[  8.675s] [Startup] final app_data lua handle installed in 212.00ns
+[  8.675s] [Startup] initial screen globals installed in 151.24µs
+[  8.675s] [Startup] WowLuaEnv::new complete
+
+thread 'voice_chat_speak_text::malformed_public_arguments_reject_atomically_and_public_calls_recover' (556285) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/voice_chat_speak_text.rs:241:6:
+INFERRED strict finite numbers, UTF-8 text, boolean overlap: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- voice_chat_speak_text::multiple_requests_keep_order_and_default_overlap_false stdout ----
+[  8.681s] [Startup] WowLuaEnv::new begin
+[  8.683s] [Startup] SimState::default complete in 1.43ms
+[  8.683s] [Startup] rilua VM created in 90.42µs
+[  8.683s] [Startup] builtin frames initialized in 46.98µs
+[  8.683s] [Startup] template registry cleared in 5.93µs
+[  8.683s] [Startup] intrinsic templates registered in 7.24µs
+[  8.683s] [Startup] initial app_data lua handle installed in 811.00ns
+[  8.804s] [Startup] init_lua_state complete in 120.72ms
+[  8.804s] [Startup] final app_data lua handle installed in 249.00ns
+[  8.804s] [Startup] initial screen globals installed in 150.47µs
+[  8.804s] [Startup] WowLuaEnv::new complete
+
+thread 'voice_chat_speak_text::multiple_requests_keep_order_and_default_overlap_false' (556289) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/voice_chat_speak_text.rs:93:6:
+ordered requests, declared default and INFERRED explicit-nil default: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- voice_chat_speak_text::ordinary_request_records_all_declared_fields_and_returns_zero_values stdout ----
+[  8.810s] [Startup] WowLuaEnv::new begin
+[  8.811s] [Startup] SimState::default complete in 1.41ms
+[  8.811s] [Startup] rilua VM created in 87.58µs
+[  8.811s] [Startup] builtin frames initialized in 41.36µs
+[  8.811s] [Startup] template registry cleared in 4.71µs
+[  8.811s] [Startup] intrinsic templates registered in 7.38µs
+[  8.811s] [Startup] initial app_data lua handle installed in 1.01µs
+[  8.931s] [Startup] init_lua_state complete in 119.94ms
+[  8.931s] [Startup] final app_data lua handle installed in 155.00ns
+[  8.931s] [Startup] initial screen globals installed in 154.38µs
+[  8.931s] [Startup] WowLuaEnv::new complete
+
+thread 'voice_chat_speak_text::ordinary_request_records_all_declared_fields_and_returns_zero_values' (556301) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/voice_chat_speak_text.rs:64:5:
+assertion `left == right` failed
+  left: 1.0
+ right: 0.0
+
+---- voice_chat_speak_text::rooted_secret_inputs_survive_gc_and_denial_without_declassification stdout ----
+[  8.938s] [Startup] WowLuaEnv::new begin
+[  8.945s] [Startup] SimState::default complete in 7.02ms
+[  8.945s] [Startup] rilua VM created in 86.88µs
+[  8.945s] [Startup] builtin frames initialized in 50.67µs
+[  8.945s] [Startup] template registry cleared in 6.00µs
+[  8.945s] [Startup] intrinsic templates registered in 7.61µs
+[  8.945s] [Startup] initial app_data lua handle installed in 686.00ns
+[  9.061s] [Startup] init_lua_state complete in 116.29ms
+[  9.061s] [Startup] final app_data lua handle installed in 128.00ns
+[  9.061s] [Startup] initial screen globals installed in 133.01µs
+[  9.061s] [Startup] WowLuaEnv::new complete
+
+thread 'voice_chat_speak_text::rooted_secret_inputs_survive_gc_and_denial_without_declassification' (556305) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/voice_chat_speak_text.rs:169:6:
+NeverSecret denial preserves caller taint and every original secret: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- voice_chat_speak_text::secret_text_is_conservatively_rejected_secure_and_tainted stdout ----
+[  9.080s] [Startup] WowLuaEnv::new begin
+[  9.081s] [Startup] SimState::default complete in 1.40ms
+[  9.081s] [Startup] rilua VM created in 85.12µs
+[  9.082s] [Startup] builtin frames initialized in 40.81µs
+[  9.082s] [Startup] template registry cleared in 5.07µs
+[  9.082s] [Startup] intrinsic templates registered in 5.96µs
+[  9.082s] [Startup] initial app_data lua handle installed in 545.00ns
+[  9.193s] [Startup] init_lua_state complete in 111.10ms
+[  9.193s] [Startup] final app_data lua handle installed in 200.00ns
+[  9.193s] [Startup] initial screen globals installed in 144.05µs
+[  9.193s] [Startup] WowLuaEnv::new complete
+
+thread 'voice_chat_speak_text::secret_text_is_conservatively_rejected_secure_and_tainted' (556309) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/voice_chat_speak_text.rs:213:6:
+AllowedWhenTainted secret text remains explicitly unmodeled: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- voice_chat_speak_text::secure_caller_rejects_every_never_secret_position_without_state_change stdout ----
+[  9.199s] [Startup] WowLuaEnv::new begin
+[  9.201s] [Startup] SimState::default complete in 1.37ms
+[  9.201s] [Startup] rilua VM created in 81.10µs
+[  9.201s] [Startup] builtin frames initialized in 38.41µs
+[  9.201s] [Startup] template registry cleared in 4.41µs
+[  9.201s] [Startup] intrinsic templates registered in 6.26µs
+[  9.201s] [Startup] initial app_data lua handle installed in 468.00ns
+[  9.308s] [Startup] init_lua_state complete in 107.36ms
+[  9.308s] [Startup] final app_data lua handle installed in 87.00ns
+[  9.308s] [Startup] initial screen globals installed in 130.53µs
+[  9.308s] [Startup] WowLuaEnv::new complete
+
+thread 'voice_chat_speak_text::secure_caller_rejects_every_never_secret_position_without_state_change' (556318) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/voice_chat_speak_text.rs:169:6:
+NeverSecret denial preserves caller taint and every original secret: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- voice_chat_speak_text::tainted_caller_rejects_every_never_secret_position_without_state_change stdout ----
+[  9.326s] [Startup] WowLuaEnv::new begin
+[  9.327s] [Startup] SimState::default complete in 1.25ms
+[  9.328s] [Startup] rilua VM created in 83.04µs
+[  9.328s] [Startup] builtin frames initialized in 40.35µs
+[  9.328s] [Startup] template registry cleared in 4.25µs
+[  9.328s] [Startup] intrinsic templates registered in 12.98µs
+[  9.328s] [Startup] initial app_data lua handle installed in 535.00ns
+[  9.433s] [Startup] init_lua_state complete in 105.84ms
+[  9.433s] [Startup] final app_data lua handle installed in 220.00ns
+[  9.434s] [Startup] initial screen globals installed in 123.02µs
+[  9.434s] [Startup] WowLuaEnv::new complete
+
+thread 'voice_chat_speak_text::tainted_caller_rejects_every_never_secret_position_without_state_change' (556332) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/voice_chat_speak_text.rs:169:6:
+NeverSecret denial preserves caller taint and every original secret: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+
+failures:
+    catalog_shop_product_structures::additional_product_pmt_urls_preserve_order_and_string_type
+    catalog_shop_product_structures::all_nullable_fields_are_absent_and_required_arrays_exist
+    catalog_shop_product_structures::consumable_quantity_is_absent_from_populated_product
+    catalog_shop_product_structures::decor_quantity_round_trips_nested_numbers
+    catalog_shop_product_structures::environments_are_isolated
+    catalog_shop_product_structures::fully_populated_display_has_exact_declared_shape
+    catalog_shop_product_structures::fully_populated_product_has_exact_declared_shape
+    catalog_shop_product_structures::host_replacements_affect_new_snapshots_only
+    catalog_shop_product_structures::house_texture_atlas_round_trips
+    catalog_shop_product_structures::malformed_public_selectors_do_not_alias_stored_products
+    catalog_shop_product_structures::maps_use_exact_keys_without_product_display_cross_lookup
+    catalog_shop_product_structures::preview_bg_override_product_url_round_trips
+    catalog_shop_product_structures::preview_small_bg_override_product_url_round_trips
+    catalog_shop_product_structures::returned_tables_and_every_nested_array_are_independent
+    catalog_shop_product_structures::unknown_ids_and_legacy_seed_ids_return_nil
+    catalog_shop_product_structures::zero_decor_counts_are_present_not_nil
+    click_binding_spell_identifier::authentic_secret_identifiers_reject_after_gc_in_secure_and_tainted_calls
+    click_binding_spell_identifier::empty_eligibility_preserves_default_interaction_profile
+    click_binding_spell_identifier::existing_spell_profile_does_not_declare_eligibility
+    click_binding_spell_identifier::explicit_membership_resolves_names_and_miss_controls
+    click_binding_spell_identifier::full_link_alias_is_explicit_not_parsed
+    click_binding_spell_identifier::membership_and_named_alias_mutations_are_live_and_environment_local
+    click_binding_spell_identifier::numeric_alias_precedence_and_removal_are_live
+    click_binding_spell_identifier::public_tainted_calls_preserve_taint_and_boolean_contract
+    click_binding_spell_identifier::strict_public_identifiers_validate_before_alias_resolution
+    delves_api_inputs::active_delve_does_not_access_secret_extras_for_either_caller
+    delves_api_inputs::active_delve_reads_live_host_boolean_and_ignores_all_extras
+    delves_api_inputs::curio_link_rejects_invalid_public_arguments
+    delves_api_inputs::curio_link_uses_aliases_rarity_and_live_host_records_without_mutation
+    delves_api_inputs::curio_rarity_is_never_secret_even_after_gc_and_for_tainted_callers
+    delves_api_inputs::delve_inputs_are_isolated_between_environments
+    delves_api_inputs::eligibility_authenticates_secret_map_before_validation_or_mutation
+    delves_api_inputs::eligibility_invalid_inputs_preserve_last_request
+    delves_api_inputs::eligibility_request_records_map_and_returns_zero_values
+    delves_ui::delves_ui_entrance_methods_use_seeded_tier_state
+    raid_roster_unknown_name::cache_arrival_is_live_and_does_not_change_other_members
+    raid_roster_unknown_name::uncached_name_is_public_unknown_with_unchanged_tuple
+    spell_maw_powers::alias_changes_read_resolved_key_without_falling_back_to_previous_record
+    spell_maw_powers::authentic_secrets_reject_in_both_contexts_after_gc_and_public_queries_recover
+    spell_maw_powers::empty_defaults_and_unknown_identifiers_have_distinct_miss_arities
+    spell_maw_powers::invalid_public_representations_error_before_lookup
+    spell_maw_powers::maps_are_independent_and_replacement_removal_are_live
+    spell_maw_powers::numbers_names_and_full_link_aliases_return_exact_host_strings
+    spell_maw_powers::numeric_alias_precedence_and_removal_apply_to_both_queries
+    spell_maw_powers::public_queries_work_secure_and_tainted_without_changing_caller_taint
+    spell_maw_powers::queries_are_read_only_and_environments_are_isolated
+    spell_maw_powers::u32_endpoints_and_empty_strings_are_explicit_hits
+    spell_max_cumulative_aura_applications::invalid_identifier_representations_are_rejected
+    spell_max_cumulative_aura_applications::maximum_is_independent_of_currently_applied_stacks
+    spell_max_cumulative_aura_applications::misses_return_one_zero_and_map_changes_are_live
+    spell_max_cumulative_aura_applications::numeric_alias_takes_precedence_over_numeric_identity
+    spell_max_cumulative_aura_applications::numeric_and_seeded_name_identifiers_return_the_declared_maximum
+    spell_max_cumulative_aura_applications::secret_identifiers_are_rejected_as_unmodeled_policy
+    spell_max_cumulative_aura_applications::tainted_callers_keep_their_taint_and_cannot_open_restricted_results
+    spell_max_cumulative_aura_applications::unit_aura_restriction_alone_makes_the_result_secret
+    voice_chat_speak_text::environments_keep_separate_request_queues
+    voice_chat_speak_text::malformed_public_arguments_reject_atomically_and_public_calls_recover
+    voice_chat_speak_text::multiple_requests_keep_order_and_default_overlap_false
+    voice_chat_speak_text::ordinary_request_records_all_declared_fields_and_returns_zero_values
+    voice_chat_speak_text::rooted_secret_inputs_survive_gc_and_denial_without_declassification
+    voice_chat_speak_text::secret_text_is_conservatively_rejected_secure_and_tainted
+    voice_chat_speak_text::secure_caller_rejects_every_never_secret_position_without_state_change
+    voice_chat_speak_text::tainted_caller_rejects_every_never_secret_position_without_state_change
+
+test result: FAILED. 6 passed; 63 failed; 0 ignored; 0 measured; 10092 filtered out; finished in 9.45s
+
+
+--- stderr ---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+warning: function `register_c_catalog_shop_products` is never used
+   --> src/c_api/c_catalog_shop_products.rs:128:15
+    |
+128 | pub(crate) fn register_c_catalog_shop_products(state: &mut LuaState) -> LuaResult<()> {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `read_product_id` is never used
+   --> src/c_api/c_catalog_shop_products.rs:139:4
+    |
+139 | fn read_product_id(state: &mut LuaState) -> LuaResult<i32> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `product_info` is never used
+   --> src/c_api/c_catalog_shop_products.rs:156:4
+    |
+156 | fn product_info(state: &mut LuaState) -> LuaResult<u32> {
+    |    ^^^^^^^^^^^^
+
+warning: function `product_display_info` is never used
+   --> src/c_api/c_catalog_shop_products.rs:173:4
+    |
+173 | fn product_display_info(state: &mut LuaState) -> LuaResult<u32> {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `push_table` is never used
+   --> src/c_api/c_catalog_shop_products.rs:191:4
+    |
+191 | fn push_table(state: &mut LuaState) -> Val {
+    |    ^^^^^^^^^^
+
+warning: function `set_text` is never used
+   --> src/c_api/c_catalog_shop_products.rs:197:4
+    |
+197 | fn set_text(state: &mut LuaState, table: Val, field: &'static str, text: &str) {
+    |    ^^^^^^^^
+
+warning: function `attach_child` is never used
+   --> src/c_api/c_catalog_shop_products.rs:202:4
+    |
+202 | fn attach_child(state: &mut LuaState, parent: Val, field: &'static str, child: Val) {
+    |    ^^^^^^^^^^^^
+
+warning: function `push_sequence` is never used
+   --> src/c_api/c_catalog_shop_products.rs:209:4
+    |
+209 | fn push_sequence<T>(
+    |    ^^^^^^^^^^^^^
+
+warning: function `push_number` is never used
+   --> src/c_api/c_catalog_shop_products.rs:223:4
+    |
+223 | fn push_number(state: &mut LuaState, number: &f64) -> Val {
+    |    ^^^^^^^^^^^
+
+warning: function `push_string` is never used
+   --> src/c_api/c_catalog_shop_products.rs:229:4
+    |
+229 | fn push_string(state: &mut LuaState, text: &String) -> Val {
+    |    ^^^^^^^^^^^
+
+warning: function `push_product` is never used
+   --> src/c_api/c_catalog_shop_products.rs:235:4
+    |
+235 | fn push_product(state: &mut LuaState, record: &CatalogShopProductInfo) -> Val {
+    |    ^^^^^^^^^^^^
+
+warning: function `push_product_numbers` is never used
+   --> src/c_api/c_catalog_shop_products.rs:251:4
+    |
+251 | fn push_product_numbers(state: &mut LuaState, row: Val, record: &CatalogShopProductInfo) {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `push_product_strings` is never used
+   --> src/c_api/c_catalog_shop_products.rs:273:4
+    |
+273 | fn push_product_strings(state: &mut LuaState, row: Val, record: &CatalogShopProductInfo) {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `push_product_booleans` is never used
+   --> src/c_api/c_catalog_shop_products.rs:322:4
+    |
+322 | fn push_product_booleans(state: &mut LuaState, row: Val, record: &CatalogShopProductInfo) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `push_display` is never used
+   --> src/c_api/c_catalog_shop_products.rs:341:4
+    |
+341 | fn push_display(state: &mut LuaState, record: &CatalogShopProductDisplayInfo) -> Val {
+    |    ^^^^^^^^^^^^
+
+warning: function `push_display_numbers` is never used
+   --> src/c_api/c_catalog_shop_products.rs:362:4
+    |
+362 | fn push_display_numbers(state: &mut LuaState, row: Val, record: &CatalogShopProductDisplayInfo) {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `push_display_strings` is never used
+   --> src/c_api/c_catalog_shop_products.rs:418:4
+    |
+418 | fn push_display_strings(state: &mut LuaState, row: Val, record: &CatalogShopProductDisplayInfo) {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `push_sub_item` is never used
+   --> src/c_api/c_catalog_shop_products.rs:449:4
+    |
+449 | fn push_sub_item(state: &mut LuaState, record: &CatalogShopSubItemInfo) -> Val {
+    |    ^^^^^^^^^^^^^
+
+warning: function `push_currency` is never used
+   --> src/c_api/c_catalog_shop_products.rs:464:4
+    |
+464 | fn push_currency(state: &mut LuaState, record: &CatalogShopVirtualCurrency) -> Val {
+    |    ^^^^^^^^^^^^^
+
+warning: function `push_decor_quantity` is never used
+   --> src/c_api/c_catalog_shop_products.rs:471:4
+    |
+471 | fn push_decor_quantity(state: &mut LuaState, record: &DecorQuantity) -> Val {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `register` is never used
+ --> src/c_api/c_click_bindings_spell.rs:8:15
+  |
+8 | pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+  |               ^^^^^^^^
+
+warning: function `can_spell_be_click_bound` is never used
+  --> src/c_api/c_click_bindings_spell.rs:18:4
+   |
+18 | fn can_spell_be_click_bound(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `register` is never used
+  --> src/c_api/c_spell_maw_powers.rs:20:15
+   |
+20 | pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+   |               ^^^^^^^^
+
+warning: function `get_maw_power_border_atlas_by_spell_id` is never used
+  --> src/c_api/c_spell_maw_powers.rs:36:4
+   |
+36 | fn get_maw_power_border_atlas_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `get_maw_power_link_by_spell_id` is never used
+  --> src/c_api/c_spell_maw_powers.rs:55:4
+   |
+55 | fn get_maw_power_link_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `API_NAME` is never used
+  --> src/c_api/c_voice_chat_speak.rs:11:7
+   |
+11 | const API_NAME: &str = "C_VoiceChat.SpeakText";
+   |       ^^^^^^^^
+
+warning: function `register` is never used
+  --> src/c_api/c_voice_chat_speak.rs:23:15
+   |
+23 | pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+   |               ^^^^^^^^
+
+warning: function `speak_text` is never used
+  --> src/c_api/c_voice_chat_speak.rs:28:4
+   |
+28 | fn speak_text(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^
+
+warning: function `reject_secret_arguments` is never used
+  --> src/c_api/c_voice_chat_speak.rs:37:4
+   |
+37 | fn reject_secret_arguments(state: &LuaState) -> LuaResult<()> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_public_request` is never used
+  --> src/c_api/c_voice_chat_speak.rs:57:4
+   |
+57 | fn read_public_request(state: &LuaState) -> LuaResult<SpeakTextRequest> {
+   |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_finite_number` is never used
+  --> src/c_api/c_voice_chat_speak.rs:86:4
+   |
+86 | fn read_finite_number(state: &LuaState, index: i32, name: &str) -> LuaResult<f64> {
+   |    ^^^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 31 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 30s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+error: test failed, to rerun pass `--test integration`

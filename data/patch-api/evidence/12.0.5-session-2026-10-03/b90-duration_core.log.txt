@@ -1,0 +1,34 @@
+
+running 27 tests
+test duration_core::duration_copy_assign_preserves_receiver_identity_and_independent_timing ... ok
+test duration_core::duration_copy_assign_rejects_missing_or_wrong_source_without_mutation ... ok
+test duration_core::duration_copy_assign_self_keeps_state_and_returns_nothing ... ok
+test duration_core::duration_copy_assign_shares_clock_reference_but_rebinds_independently ... ok
+test duration_core::duration_copy_assign_unbound_source_clears_target_clock ... ok
+test duration_core::duration_copy_preserves_timing_and_returns_one_independent_object ... ok
+test duration_core::duration_copy_shares_clock_reference_but_rebinds_independently ... ok
+test duration_core::duration_core_default_clock_and_instances ... ok
+test duration_core::duration_core_end_span_reset_and_validation ... ok
+test duration_core::duration_core_manual_progress_rate_and_rewind ... ok
+test duration_core::duration_core_set_to_defaults_clears_configured_timing_and_clock ... ok
+test duration_core::duration_curve_color_results_preserve_rgba_for_all_four_queries ... ok
+test duration_core::duration_curve_elapsed_percent_is_modifier_invariant ... ok
+test duration_core::duration_curve_elapsed_seconds_follow_clock_and_modifiers ... ok
+test duration_core::duration_curve_invalid_bound_clock_preserves_duration_and_curve_state ... ok
+test duration_core::duration_curve_invalid_modifiers_preserve_duration_and_curve_state ... ok
+test duration_core::duration_curve_live_point_reconfiguration_changes_all_queries ... ok
+test duration_core::duration_curve_missing_and_wrong_curves_are_rejected_without_mutation ... ok
+test duration_core::duration_curve_remaining_percent_is_modifier_invariant ... ok
+test duration_core::duration_curve_remaining_seconds_follow_clock_and_modifiers ... ok
+test duration_core::duration_curve_unsupported_color_interpolation_propagates_evaluator_error ... ok
+test duration_core::duration_percent_rejects_invalid_bound_clock_without_mutation ... ok
+test duration_core::duration_percent_rejects_unknown_modifier_without_mutation ... ok
+test duration_core::duration_percent_tracks_clock_boundaries_and_rewind ... ok
+test duration_core::duration_percent_zero_spans_follow_epoch_elapsed_policy ... ok
+test duration_core::retail_native_aura_button_preserves_wrapped_duration_arguments ... ok
+test duration_core::retail_native_custom_aura_reads_wrapped_asset_fields ... ok
+
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 10047 filtered out; finished in 4.79s
+
+
+--- stderr ---

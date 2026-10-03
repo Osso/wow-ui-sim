@@ -1,0 +1,90 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 4 tests
+test unit_attack_speed::missing_offhand_is_a_plain_nil_second_result ... FAILED
+test unit_attack_speed::other_units_do_not_read_player_inputs ... FAILED
+test unit_attack_speed::player_speeds_follow_configured_inputs_live ... FAILED
+test unit_attack_speed::restriction_toggle_and_tainted_callers_keep_values_private ... FAILED
+
+failures:
+
+---- unit_attack_speed::missing_offhand_is_a_plain_nil_second_result stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.005s] [Startup] SimState::default complete in 4.73ms
+[  0.005s] [Startup] rilua VM created in 333.60µs
+[  0.005s] [Startup] builtin frames initialized in 216.23µs
+[  0.005s] [Startup] template registry cleared in 39.60µs
+[  0.005s] [Startup] intrinsic templates registered in 12.04µs
+[  0.005s] [Startup] initial app_data lua handle installed in 8.02µs
+[  0.398s] [Startup] init_lua_state complete in 392.52ms
+[  0.398s] [Startup] final app_data lua handle installed in 205.00ns
+[  0.398s] [Startup] initial screen globals installed in 167.33µs
+[  0.398s] [Startup] WowLuaEnv::new complete
+
+thread 'unit_attack_speed::missing_offhand_is_a_plain_nil_second_result' (465667) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/unit_attack_speed.rs:56:10:
+no off-hand: Lua(Runtime(RuntimeError { message: "main value", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- unit_attack_speed::other_units_do_not_read_player_inputs stdout ----
+[  0.413s] [Startup] WowLuaEnv::new begin
+[  0.416s] [Startup] SimState::default complete in 3.05ms
+[  0.417s] [Startup] rilua VM created in 189.78µs
+[  0.417s] [Startup] builtin frames initialized in 80.23µs
+[  0.417s] [Startup] template registry cleared in 8.97µs
+[  0.417s] [Startup] intrinsic templates registered in 9.15µs
+[  0.417s] [Startup] initial app_data lua handle installed in 1.37µs
+[  0.653s] [Startup] init_lua_state complete in 236.02ms
+[  0.653s] [Startup] final app_data lua handle installed in 561.00ns
+[  0.653s] [Startup] initial screen globals installed in 236.97µs
+[  0.653s] [Startup] WowLuaEnv::new complete
+
+thread 'unit_attack_speed::other_units_do_not_read_player_inputs' (465695) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/unit_attack_speed.rs:74:6:
+party synthetic speed and unknown-unit zero: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- unit_attack_speed::player_speeds_follow_configured_inputs_live stdout ----
+[  0.671s] [Startup] WowLuaEnv::new begin
+[  0.673s] [Startup] SimState::default complete in 2.77ms
+[  0.674s] [Startup] rilua VM created in 133.27µs
+[  0.674s] [Startup] builtin frames initialized in 62.73µs
+[  0.674s] [Startup] template registry cleared in 11.15µs
+[  0.674s] [Startup] intrinsic templates registered in 9.14µs
+[  0.674s] [Startup] initial app_data lua handle installed in 1.48µs
+[  0.920s] [Startup] init_lua_state complete in 246.76ms
+[  0.921s] [Startup] final app_data lua handle installed in 420.00ns
+[  0.921s] [Startup] initial screen globals installed in 260.88µs
+[  0.921s] [Startup] WowLuaEnv::new complete
+
+thread 'unit_attack_speed::player_speeds_follow_configured_inputs_live' (465712) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/unit_attack_speed.rs:45:10:
+configured pair: Lua(Runtime(RuntimeError { message: "main value", level: 0, traceback: [] }))
+
+---- unit_attack_speed::restriction_toggle_and_tainted_callers_keep_values_private stdout ----
+[  0.940s] [Startup] WowLuaEnv::new begin
+[  0.943s] [Startup] SimState::default complete in 2.78ms
+[  0.943s] [Startup] rilua VM created in 194.69µs
+[  0.943s] [Startup] builtin frames initialized in 80.34µs
+[  0.943s] [Startup] template registry cleared in 10.27µs
+[  0.943s] [Startup] intrinsic templates registered in 11.61µs
+[  0.943s] [Startup] initial app_data lua handle installed in 1.03µs
+[  1.178s] [Startup] init_lua_state complete in 235.10ms
+[  1.178s] [Startup] final app_data lua handle installed in 148.00ns
+[  1.179s] [Startup] initial screen globals installed in 159.75µs
+[  1.179s] [Startup] WowLuaEnv::new complete
+
+thread 'unit_attack_speed::restriction_toggle_and_tainted_callers_keep_values_private' (465741) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/unit_attack_speed.rs:86:10:
+toggle preserves values: Lua(Runtime(RuntimeError { message: "main value", level: 0, traceback: [] }))
+
+
+failures:
+    unit_attack_speed::missing_offhand_is_a_plain_nil_second_result
+    unit_attack_speed::other_units_do_not_read_player_inputs
+    unit_attack_speed::player_speeds_follow_configured_inputs_live
+    unit_attack_speed::restriction_toggle_and_tainted_callers_keep_values_private
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 10078 filtered out; finished in 1.19s
+
+
+--- stderr ---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 34s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+error: test failed, to rerun pass `--test integration`

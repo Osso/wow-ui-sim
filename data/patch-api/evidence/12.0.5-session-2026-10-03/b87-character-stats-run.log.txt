@@ -1,0 +1,42 @@
+
+running 35 tests
+test character_stats::combat_rating_value_converts_with_crit_divisor ... ok
+test character_stats::missing_apis::active_power_regen_selects_pool_and_tracks_updates ... ok
+test character_stats::missing_apis::effective_attack_power_preserves_five_distinct_fields_and_unavailable_shape ... ok
+test character_stats::missing_apis::mastery_tracks_existing_rating_and_effect_component ... ok
+test character_stats::missing_apis::missing_stats_tainted_callers_receive_opaque_host_outputs ... ok
+test character_stats::missing_apis::missing_stats_toggle_preserves_all_values_and_arities ... ok
+test character_stats::missing_apis::override_ap_by_spell_power_tracks_conversion_percentage ... ok
+test character_stats::missing_apis::override_spell_power_by_ap_tracks_independent_conversion_percentage ... ok
+test character_stats::missing_apis::pet_melee_haste_is_independent_and_missing_pet_is_zero_guess ... ok
+test character_stats::missing_apis::requested_power_regen_selects_input_not_active_pool ... ok
+test character_stats::missing_apis::secret_selection_inputs_are_allowed_when_untainted ... ok
+test character_stats::missing_apis::spell_penetration_tracks_explicit_amount ... ok
+test character_stats::missing_apis::sturdiness_tracks_explicit_percentage_not_avoidance ... ok
+test character_stats::missing_apis::weapon_attack_power_uses_existing_guid_and_never_creates_entities ... ok
+test character_stats::stat_restriction::stat_restriction_absent_unit_shapes_and_constant_outputs ... ok
+test character_stats::stat_restriction::stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle ... ok
+test character_stats::stat_restriction::stat_restriction_predicate_defaults_plain ... ok
+test character_stats::stat_restriction::stat_restriction_tainted_callers_receive_opaque_host_results ... ok
+test character_stats::test_combat_rating_bonus_is_percentage ... ok
+test character_stats::test_combat_rating_crit_positive ... ok
+test character_stats::test_combat_rating_haste_positive ... ok
+test character_stats::test_combat_rating_mastery_positive ... ok
+test character_stats::test_combat_rating_versatility_positive ... ok
+test character_stats::test_equip_increases_stats ... ok
+test character_stats::test_get_crit_chance_includes_base ... ok
+test character_stats::test_get_haste_positive ... ok
+test character_stats::test_get_mastery_effect_two_values ... ok
+test character_stats::test_get_versatility_bonus_positive ... ok
+test character_stats::test_paper_doll_combat_stat_helpers_return_safe_numbers ... ok
+test character_stats::test_stats_drop_to_base_with_no_gear ... ok
+test character_stats::test_unequip_reduces_stats ... ok
+test character_stats::test_unit_stat_returns_four_values ... ok
+test character_stats::test_unit_stat_stamina_high_with_gear ... ok
+test character_stats::test_unit_stat_strength_is_primary_for_paladin ... ok
+test character_stats::test_unit_stat_strength_positive_with_default_gear ... ok
+
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 10030 filtered out; finished in 5.39s
+
+
+--- stderr ---

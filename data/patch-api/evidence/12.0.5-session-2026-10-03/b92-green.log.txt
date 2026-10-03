@@ -1,0 +1,84 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 73 tests
+test character_stats::combat_rating_value_converts_with_crit_divisor ... ok
+test character_stats::explicit_inputs::each_scalar_reads_its_own_configured_input ... ok
+test character_stats::explicit_inputs::environments_do_not_share_inputs ... ok
+test character_stats::explicit_inputs::expertise_triples_are_ordered_and_independent ... ok
+test character_stats::explicit_inputs::pet_spell_bonus_is_optional_and_independent_of_player_stats ... ok
+test character_stats::explicit_inputs::restricted_tainted_callers_receive_opaque_configured_outputs ... ok
+test character_stats::explicit_inputs::restriction_toggle_preserves_configured_values_and_arities ... ok
+test character_stats::explicit_inputs::scalar_inputs_update_live_without_moving_neighbours ... ok
+test character_stats::explicit_inputs::shield_block_is_not_armor_and_takes_no_unit ... ok
+test character_stats::explicit_inputs::unconfigured_inputs_return_public_zeros_with_declared_arity ... ok
+test character_stats::missing_apis::active_power_regen_selects_pool_and_tracks_updates ... ok
+test character_stats::missing_apis::effective_attack_power_preserves_five_distinct_fields_and_unavailable_shape ... ok
+test character_stats::missing_apis::mastery_tracks_existing_rating_and_effect_component ... ok
+test character_stats::missing_apis::missing_stats_tainted_callers_receive_opaque_host_outputs ... ok
+test character_stats::missing_apis::missing_stats_toggle_preserves_all_values_and_arities ... ok
+test character_stats::missing_apis::override_ap_by_spell_power_tracks_conversion_percentage ... ok
+test character_stats::missing_apis::override_spell_power_by_ap_tracks_independent_conversion_percentage ... ok
+test character_stats::missing_apis::pet_melee_haste_is_independent_and_missing_pet_is_zero_guess ... ok
+test character_stats::missing_apis::requested_power_regen_selects_input_not_active_pool ... ok
+test character_stats::missing_apis::secret_selection_inputs_are_allowed_when_untainted ... ok
+test character_stats::missing_apis::spell_penetration_tracks_explicit_amount ... ok
+test character_stats::missing_apis::sturdiness_tracks_explicit_percentage_not_avoidance ... ok
+test character_stats::missing_apis::weapon_attack_power_uses_existing_guid_and_never_creates_entities ... ok
+test character_stats::stat_restriction::stat_restriction_absent_unit_shapes_and_constant_outputs ... ok
+test character_stats::stat_restriction::stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle ... ok
+test character_stats::stat_restriction::stat_restriction_predicate_defaults_plain ... ok
+test character_stats::stat_restriction::stat_restriction_tainted_callers_receive_opaque_host_results ... ok
+test character_stats::test_combat_rating_bonus_is_percentage ... ok
+test character_stats::test_combat_rating_crit_positive ... ok
+test character_stats::test_combat_rating_haste_positive ... ok
+test character_stats::test_combat_rating_mastery_positive ... ok
+test character_stats::test_combat_rating_versatility_positive ... ok
+test character_stats::test_equip_increases_stats ... ok
+test character_stats::test_get_crit_chance_includes_base ... ok
+test character_stats::test_get_haste_positive ... ok
+test character_stats::test_get_mastery_effect_two_values ... ok
+test character_stats::test_get_versatility_bonus_positive ... ok
+test character_stats::test_paper_doll_combat_stat_helpers_return_safe_numbers ... ok
+test character_stats::test_stats_drop_to_base_with_no_gear ... ok
+test character_stats::test_unequip_reduces_stats ... ok
+test character_stats::test_unit_stat_returns_four_values ... ok
+test character_stats::test_unit_stat_stamina_high_with_gear ... ok
+test character_stats::test_unit_stat_strength_is_primary_for_paladin ... ok
+test character_stats::test_unit_stat_strength_positive_with_default_gear ... ok
+test unit_attack_speed::missing_offhand_is_a_plain_nil_second_result ... ok
+test unit_attack_speed::other_units_do_not_read_player_inputs ... ok
+test unit_attack_speed::player_speeds_follow_configured_inputs_live ... ok
+test unit_attack_speed::restriction_toggle_and_tainted_callers_keep_values_private ... ok
+test unit_stats::attack_power_for_stat_is_defined_for_strength_and_agility ... ok
+test unit_stats::paper_doll_defensive_chance_globals_return_numbers ... ok
+test unit_stats::paperdoll_attribute_helpers_return_numbers ... ok
+test unit_stats::paperdoll_health_and_ap_sp_helpers_are_available ... ok
+test unit_stats::paperdoll_helpers_disable_ap_to_sp_on_intellect_spec ... ok
+test unit_stats::paperdoll_helpers_track_primary_stat_by_spec ... ok
+test unit_stats::stats_for_unknown_unit_fall_back_to_zero ... ok
+test unit_stats::unit_armor_returns_five_values_for_player ... ok
+test unit_stats::unit_attack_power_returns_three_values ... ok
+test unit_stats::unit_critical_strike_reads_player_crit_rating ... ok
+test unit_stats::unit_damage_returns_seven_values ... ok
+test unit_stats::unit_defense_scales_with_level ... ok
+test unit_stats::unit_dodge_and_parry_return_base_percents ... ok
+test unit_stats::unit_health_max_reads_player_health_max ... ok
+test unit_stats::unit_power_max_returns_only_maximum ... ok
+test unit_stats::unit_power_max_returns_requested_secondary_pool_only ... ok
+test unit_stats::unit_ranged_attack_power_matches_melee_in_sim ... ok
+test unit_stats::unit_ranged_critical_strike_matches_melee_in_sim ... ok
+test unit_stats::unit_reaction_nonexistent_unit_returns_neutral ... ok
+test unit_stats::unit_reaction_player_to_self_is_friendly ... ok
+test unit_stats::unit_resistance_returns_four_zero_values ... ok
+test unit_stats::unit_spell_haste_derives_from_haste_rating ... ok
+test unit_stats::unit_stat_indexes_map_to_strength_agility_stamina_intellect ... ok
+test unit_stats::unit_xp_reads_player_state ... ok
+test unit_stats::unit_xp_zero_for_non_player_units ... ok
+
+test result: ok. 73 passed; 0 failed; 0 ignored; 0 measured; 10009 filtered out; finished in 8.91s
+
+
+--- stderr ---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 28s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)

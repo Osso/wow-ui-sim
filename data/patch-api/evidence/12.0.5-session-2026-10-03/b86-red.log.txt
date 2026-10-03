@@ -1,0 +1,72 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 9 tests
+test aura_expiration_time::malformed_arguments_error_before_lookup ... ok
+test aura_expiration_time::party_records_are_unit_and_instance_isolated ... ok
+test aura_expiration_time::queries_leave_aura_records_unchanged_and_environments_isolated ... ok
+test aura_expiration_time::secret_arguments_survive_gc_without_declassification ... FAILED
+test aura_expiration_time::stored_expiration_changes_are_read_live ... ok
+test aura_expiration_time::tainted_query_denies_each_secret_even_before_unknown_unit_lookup ... FAILED
+test aura_expiration_time::timed_and_permanent_player_auras_return_exactly_one_public_boolean ... ok
+test aura_expiration_time::unknown_units_instances_and_nil_unit_return_false ... ok
+test aura_expiration_time::untainted_query_accepts_each_authentic_secret_argument_and_combination ... FAILED
+
+failures:
+
+---- aura_expiration_time::secret_arguments_survive_gc_without_declassification stdout ----
+[  0.693s] [Startup] WowLuaEnv::new begin
+[  0.695s] [Startup] SimState::default complete in 1.81ms
+[  0.695s] [Startup] rilua VM created in 92.18µs
+[  0.695s] [Startup] builtin frames initialized in 61.16µs
+[  0.695s] [Startup] template registry cleared in 5.87µs
+[  0.695s] [Startup] intrinsic templates registered in 7.59µs
+[  0.695s] [Startup] initial app_data lua handle installed in 810.00ns
+[  0.847s] [Startup] init_lua_state complete in 151.83ms
+[  0.847s] [Startup] final app_data lua handle installed in 334.00ns
+[  0.847s] [Startup] initial screen globals installed in 149.17µs
+[  0.847s] [Startup] WowLuaEnv::new complete
+
+thread 'aura_expiration_time::secret_arguments_survive_gc_without_declassification' (408009) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/aura_expiration_time.rs:260:6:
+rooted real secrets survive GC and stay secret: Lua(Runtime(RuntimeError { message: "C_UnitAuras: secret unit access is not modeled", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- aura_expiration_time::tainted_query_denies_each_secret_even_before_unknown_unit_lookup stdout ----
+[  0.999s] [Startup] WowLuaEnv::new begin
+[  1.000s] [Startup] SimState::default complete in 1.39ms
+[  1.001s] [Startup] rilua VM created in 90.51µs
+[  1.001s] [Startup] builtin frames initialized in 38.22µs
+[  1.001s] [Startup] template registry cleared in 4.82µs
+[  1.001s] [Startup] intrinsic templates registered in 6.05µs
+[  1.001s] [Startup] initial app_data lua handle installed in 824.00ns
+[  1.120s] [Startup] init_lua_state complete in 118.92ms
+[  1.120s] [Startup] final app_data lua handle installed in 295.00ns
+[  1.120s] [Startup] initial screen globals installed in 163.56µs
+[  1.120s] [Startup] WowLuaEnv::new complete
+
+thread 'aura_expiration_time::tainted_query_denies_each_secret_even_before_unknown_unit_lookup' (408013) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/aura_expiration_time.rs:227:6:
+VM-authenticated denial before lookup, unchanged taint and public recovery: Lua(Runtime(RuntimeError { message: "C_UnitAuras: secret unit access is not modeled", level: 0, traceback: [] }))
+
+---- aura_expiration_time::untainted_query_accepts_each_authentic_secret_argument_and_combination stdout ----
+[  1.423s] [Startup] WowLuaEnv::new begin
+[  1.425s] [Startup] SimState::default complete in 2.39ms
+[  1.426s] [Startup] rilua VM created in 185.38µs
+[  1.426s] [Startup] builtin frames initialized in 85.68µs
+[  1.426s] [Startup] template registry cleared in 6.08µs
+[  1.426s] [Startup] intrinsic templates registered in 7.30µs
+[  1.426s] [Startup] initial app_data lua handle installed in 1.16µs
+[  1.606s] [Startup] init_lua_state complete in 180.60ms
+[  1.606s] [Startup] final app_data lua handle installed in 370.00ns
+[  1.607s] [Startup] initial screen globals installed in 247.13µs
+[  1.607s] [Startup] WowLuaEnv::new complete
+
+thread 'aura_expiration_time::untainted_query_accepts_each_authentic_secret_argument_and_combination' (408027) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/aura_expiration_time.rs:195:6:
+AllowedWhenUntainted authenticates secrets; does not declassify inputs: Lua(Runtime(RuntimeError { message: "C_UnitAuras: secret unit access is not modeled", level: 0, traceback: [] }))
+
+
+failures:
+    aura_expiration_time::secret_arguments_survive_gc_without_declassification
+    aura_expiration_time::tainted_query_denies_each_secret_even_before_unknown_unit_lookup
+    aura_expiration_time::untainted_query_accepts_each_authentic_secret_argument_and_combination
+
+test result: FAILED. 6 passed; 3 failed; 0 ignored; 0 measured; 10056 filtered out; finished in 1.62s
+

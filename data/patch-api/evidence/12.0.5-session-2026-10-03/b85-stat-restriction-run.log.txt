@@ -1,0 +1,11 @@
+
+running 4 tests
+test character_stats::stat_restriction::stat_restriction_absent_unit_shapes_and_constant_outputs ... ok
+test character_stats::stat_restriction::stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle ... ok
+test character_stats::stat_restriction::stat_restriction_predicate_defaults_plain ... ok
+test character_stats::stat_restriction::stat_restriction_tainted_callers_receive_opaque_host_results ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 10061 filtered out; finished in 0.61s
+
+
+--- stderr ---

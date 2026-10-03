@@ -1,0 +1,14 @@
+
+running 7 tests
+test aura_table_shape::aura_applications_charges_stackcount_are_aliased ... ok
+test aura_table_shape::aura_points_field_is_an_empty_table ... ok
+test aura_table_shape::aura_table_exposes_boolean_flag_shape ... ok
+test aura_table_shape::buff_slot_table_has_every_documented_field ... ok
+test aura_table_shape::classification_query_snapshots_do_not_mutate_host_or_other_results ... ok
+test aura_table_shape::debuff_slot_table_reports_harmful ... ok
+test aura_table_shape::explicit_classification_flags_are_public_independent_and_query_consistent ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 10067 filtered out; finished in 1.03s
+
+
+--- stderr ---

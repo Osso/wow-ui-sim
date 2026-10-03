@@ -1,0 +1,38 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 9 tests
+test aura_expiration_time::malformed_arguments_error_before_lookup ... ok
+test aura_expiration_time::party_records_are_unit_and_instance_isolated ... ok
+test aura_expiration_time::queries_leave_aura_records_unchanged_and_environments_isolated ... ok
+test aura_expiration_time::secret_arguments_survive_gc_without_declassification ... ok
+test aura_expiration_time::stored_expiration_changes_are_read_live ... ok
+test aura_expiration_time::tainted_query_denies_each_secret_even_before_unknown_unit_lookup ... FAILED
+test aura_expiration_time::timed_and_permanent_player_auras_return_exactly_one_public_boolean ... ok
+test aura_expiration_time::unknown_units_instances_and_nil_unit_return_false ... ok
+test aura_expiration_time::untainted_query_accepts_each_authentic_secret_argument_and_combination ... ok
+
+failures:
+
+---- aura_expiration_time::tainted_query_denies_each_secret_even_before_unknown_unit_lookup stdout ----
+[  1.540s] [Startup] WowLuaEnv::new begin
+[  1.543s] [Startup] SimState::default complete in 3.25ms
+[  1.543s] [Startup] rilua VM created in 175.02µs
+[  1.543s] [Startup] builtin frames initialized in 97.82µs
+[  1.543s] [Startup] template registry cleared in 17.12µs
+[  1.543s] [Startup] intrinsic templates registered in 17.09µs
+[  1.543s] [Startup] initial app_data lua handle installed in 2.40µs
+[  1.722s] [Startup] init_lua_state complete in 179.15ms
+[  1.722s] [Startup] final app_data lua handle installed in 745.00ns
+[  1.723s] [Startup] initial screen globals installed in 557.00µs
+[  1.723s] [Startup] WowLuaEnv::new complete
+
+thread 'aura_expiration_time::tainted_query_denies_each_secret_even_before_unknown_unit_lookup' (435251) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/aura_expiration_time.rs:235:6:
+VM-authenticated denial before lookup, unchanged taint and public recovery: Lua(Runtime(RuntimeError { message: "secret denial precedes unit validation", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    aura_expiration_time::tainted_query_denies_each_secret_even_before_unknown_unit_lookup
+
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 10056 filtered out; finished in 2.30s
+
