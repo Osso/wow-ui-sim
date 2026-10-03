@@ -125,12 +125,12 @@ mod tests {
     #[test]
     fn loss_of_control_info_preserves_absent_slot_nil_shape() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
-        let spell_id: u32 = env
+        let spell_id: i32 = env
             .eval("return C_SpellBook.GetSpellBookItemInfo(5, 0).spellID")
             .expect("actual player-bank slot 5 should have a spell");
         assert_eq!(spell_id, 19750);
         env.state().borrow_mut().spell_loss_of_control.insert(
-            spell_id,
+            spell_id.try_into().expect("positive fixture spell ID"),
             crate::lua_api::LossOfControlInfo {
                 start_time: 0.0,
                 duration: 0.0,

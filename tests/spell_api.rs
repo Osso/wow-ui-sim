@@ -256,9 +256,7 @@ fn test_spellbook_get_override_spell() {
 fn test_spellbook_get_item_auto_cast_defaults_disabled() {
     let env = env();
     let (enabled, auto_cast_allowed): (bool, bool) = env
-        .eval(
-            "return C_SpellBook.GetSpellBookItemAutoCast(1, Enum.SpellBookSpellBank.Player)",
-        )
+        .eval("return C_SpellBook.GetSpellBookItemAutoCast(1, Enum.SpellBookSpellBank.Player)")
         .unwrap();
 
     assert!(!enabled);
@@ -302,12 +300,12 @@ fn test_spellbook_pickup_item_fires_cursor_changed() {
 #[test]
 fn test_spellbook_get_loss_of_control_cooldown_info() {
     let env = env();
-    let spell_id: u32 = env
+    let spell_id: i32 = env
         .eval("return C_SpellBook.GetSpellBookItemInfo(5, 0).spellID")
         .expect("actual player-bank slot 5 should have a spell");
     assert_eq!(spell_id, 19750);
     env.state().borrow_mut().spell_loss_of_control.insert(
-        spell_id,
+        spell_id.try_into().expect("positive fixture spell ID"),
         wow_ui_sim::lua_api::LossOfControlInfo {
             start_time: 0.0,
             duration: 0.0,
