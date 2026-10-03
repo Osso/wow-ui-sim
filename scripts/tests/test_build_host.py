@@ -1,5 +1,6 @@
 """Native adapter process fixtures; no Cargo, remote hosts, or GUI execution."""
 
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -16,10 +17,10 @@ FAKE_MODULE = """import json, os, subprocess, sys
 from pathlib import Path
 
 def execute(context, checkout_key, project_name, cargo_args, host,
-            runtime_args=None, binary=None, release=False, environment=None, root=None):
+            runtime_args=None, binary=None, release=False, environment=None, root=None, build=True):
     request = dict(context=str(context), key=checkout_key, project=project_name,
                    cargo_args=cargo_args, host=host, runtime_args=runtime_args,
-                   binary=binary, release=release, environment=environment, root=str(root))
+                   binary=binary, release=release, environment=environment, root=str(root), build=build)
     return subprocess.run([sys.executable, os.environ["FAKE_CHILD"], json.dumps(request)]).returncode
 """
 
@@ -222,6 +223,87 @@ class BuildHostTests(unittest.TestCase):
             (self.output / "wow-ui-sim/src/inline/tests/fixture.rs").read_text(),
             "fn fixture() {}",
         )
+
+    def test_no_build_requires_run_and_rejects_other_modes(self):
+        for args in (
+            ("--no-build",),
+            ("--no-build", "--check"),
+            ("--no-build", "--test"),
+            ("--no-build", "--save-build-host", "desktop"),
+        ):
+            with self.subTest(args=args):
+                result = self.invoke(*args, status=2)
+                self.assertIn("--no-build", result.stderr)
+                self.assertFalse(self.record.exists())
+        self.assertFalse(
+            (Path(self.env["HOME"]) / ".config/game-engine/build-host").exists()
+        )
+
+    def test_no_build_desktop_request_preserves_runtime_snapshot(self):
+        self.invoke("--build-host", "desktop", "--no-build", "--run", "--", "two words")
+        self.assertFalse(self.request()["build"])
+        self.assertEqual(self.request()["runtime_args"], ["two words"])
+        self.assertEqual(
+            (self.output / "wow-ui-sim/Interface/AddOns/Admin/new.lua").read_text(),
+            "working untracked addon Lua",
+        )
+
+    def test_no_build_real_native_existing_and_missing_profiles_without_cargo(self):
+        for name in ("native_build_hosts.py", "build_hosts.py"):
+            shutil.copy2(COMMON / name, self.common / name)
+        spec = importlib.util.spec_from_file_location(
+            "native_fixture", COMMON / "tests/test_native_build_hosts.py"
+        )
+        fixture = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(fixture)
+        cargo_bin = Path(self.env["HOME"]) / ".cargo/bin"
+        cargo_bin.mkdir(parents=True)
+        rustup = cargo_bin / "rustup"
+        rustup.write_text(fixture.RUSTUP)
+        rustup.chmod(0o755)
+        wrapper = self.common / "agent/agent-run"
+        wrapper.parent.mkdir()
+        wrapper.write_text(
+            "#!/usr/bin/env python3\nimport os, sys\nassert sys.argv[1] == 'native-build'\nos.execvp(sys.argv[2], sys.argv[2:])\n"
+        )
+        wrapper.chmod(0o755)
+        self.env["FIXTURE_ROOT"] = str(self.base)
+        for release in (False, True):
+            profile = "release" if release else "debug"
+            flags = ["--release"] if release else []
+            app = self.put(
+                f"target/{profile}/wow-sim",
+                "#!/usr/bin/env python3\nimport json, os, pathlib, sys\n"
+                "pathlib.Path(os.environ['FAKE_RUNTIME']).write_text(json.dumps(dict(args=sys.argv[1:], loader=os.environ['LD_LIBRARY_PATH'], cwd=os.getcwd())))\n"
+                "sys.exit(23)\n",
+            )
+            app.chmod(0o755)
+            self.invoke(
+                "--build-host",
+                "local",
+                *flags,
+                "--no-build",
+                "--run",
+                "--",
+                "two words",
+                status=23,
+            )
+            report = json.loads(self.runtime.read_text())
+            self.assertEqual(report["args"], ["two words"])
+            self.assertEqual(report["cwd"], str(self.root))
+            self.assertIn(str(self.base / "lib"), report["loader"].split(":"))
+            self.assertIn(
+                str(self.root / f"target/{profile}/deps"), report["loader"].split(":")
+            )
+            self.assertFalse((self.base / "cargo.log").exists())
+            app.unlink()
+            self.runtime.unlink()
+            result = self.invoke(
+                "--build-host", "local", *flags, "--no-build", "--run", status=1
+            )
+            self.assertIn(str(app), result.stderr)
+            self.assertFalse(self.runtime.exists())
+            self.assertFalse((self.base / "cargo.log").exists())
 
     def test_default_build_and_explicit_release_features(self):
         result = self.invoke("--build-host", "desktop")

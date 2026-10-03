@@ -239,6 +239,7 @@ def build(
     runtime_args=None,
     mode="build",
     test_args=(),
+    build=True,
 ):
     common, native = load_common()
     host = common.select_build_host(host)
@@ -255,6 +256,7 @@ def build(
             binary=binary,
             release=release,
             root=root,
+            build=build,
         )
 
 
@@ -271,6 +273,11 @@ def main(argv=None):
     )
     parser.add_argument("--bin", choices=("wow-sim", "wow-cli"), default=None)
     parser.add_argument("--release", action="store_true")
+    parser.add_argument(
+        "--no-build",
+        action="store_true",
+        help="run an existing binary without Cargo; requires --run",
+    )
     parser.add_argument("--no-default-features", action="store_true")
     parser.add_argument(
         "--features",
@@ -306,6 +313,10 @@ def main(argv=None):
             parser.error("runtime arguments require --run")
     else:
         args = parser.parse_args(arguments)
+    if args.no_build and (not args.run or args.save_build_host):
+        parser.error(
+            "--no-build requires --run and cannot combine with --save-build-host"
+        )
     try:
         if args.save_build_host:
             if (
@@ -332,6 +343,7 @@ def main(argv=None):
             runtime_args if args.run else None,
             "test" if args.test else "check" if args.check else "build",
             test_args,
+            build=not args.no_build,
         )
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         print(f"Build failed: {error}", file=sys.stderr)
