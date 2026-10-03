@@ -9,6 +9,9 @@ use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+#[path = "destroy_input.rs"]
+mod destroy_input;
+
 pub(crate) fn set_variant_stored_count(state: &mut LuaState) -> LuaResult<u32> {
     let (id, count) = read_storage_input(state)?;
     let changed = update_stored_count(state, id, count)?;
@@ -20,34 +23,12 @@ pub(crate) fn set_variant_stored_count(state: &mut LuaState) -> LuaResult<u32> {
 
 /// Eligible-subset deletion is simulator policy, not native mixed-stack evidence.
 pub(super) fn destroy_entry(state: &mut LuaState) -> LuaResult<u32> {
-    let (id, destroy_all) = read_destroy_input(state)?;
+    let (id, destroy_all) = destroy_input::read_input(state)?;
     let changed = destroy_eligible_instances(state, id, destroy_all)?;
     if changed {
         publish_storage_update(state, &id)?;
     }
     Ok(0)
-}
-
-fn read_destroy_input(state: &mut LuaState) -> LuaResult<(HousingCatalogEntryVariantID, bool)> {
-    let selector = read_selector(state)?;
-    let id = read_variant_id(state, selector)?;
-    for (field, value) in [
-        ("recordID", id.record_id),
-        ("entryType", id.entry_type),
-        ("variantIdentifier", id.variant_identifier),
-    ] {
-        if value < 0 {
-            return Err(rilua::runtime_error(format!(
-                "housing catalog {field} must be nonnegative"
-            )));
-        }
-    }
-    let Val::Bool(destroy_all) = Val::from_stack(state, 2)? else {
-        return Err(rilua::runtime_error(
-            "housing catalog destroyAll must be a public boolean; secret access is not modeled",
-        ));
-    };
-    Ok((id, destroy_all))
 }
 
 fn destroy_eligible_instances(
