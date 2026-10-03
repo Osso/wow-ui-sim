@@ -1421,6 +1421,23 @@
       "proof": "bounded-independent-pass-qualified-check",
       "ledger": "/tmp/patch-12.0.5-spell-bonus-stat-independent-proof.md",
       "gate_scope": "Main accepts716 bounded behavior:12 ALL refreshed PASS=7new+4stat+1proxy, compile0/108.741957s zeroDiag, startup0[]4.739207s localcascfalse; loaded probe0/3.507810s asserts publicaccepted/secureaccepted/taintedDENIED without execerror. Scopedfmt0/readability/source/wiring; single checkJSON build-finished.success true/zeroDiag but SYNCHRONOUS/direct exit NOT retained due verifier terminal stderr_to_file misuse: no exit0/async-check clearance or repeat. Original172 RED4PASS3FAIL compile0/90.716985s zeroDiag/run1011.115939s and d7 loadedruntime assertionFAIL despite CLI0 retained; original stdout-only markerfalse query corrected without rerun. Actual rooted wrapper/list identities/allocseq/caller and flag/model preservation; old-profile body source-equivalent not executed. Native/GUI/CASC/fullsuite/globalfmt1unownedaura/clean-tree gaps open."
+    },
+    {
+      "id": "spell-crit-restricted-output",
+      "symbols": [
+        "GetSpellCritChance"
+      ],
+      "scope": "B83 exact486 output annotation only: existing registered provider computes crit_rating360/180+5=7 through the shared melee crit getter and wraps its single result under the explicit restriction flag. Seeded GetSpellCritChance(2) fixture: arity1/value7/secrecy/access plain-restricted-plain, tainted opacity, denied unwrap/arithmetic, retained caller taint. Cached declaration has no Arguments/SecretArguments, so no school-authentication guard. No spell-specific/per-school/native formula, restricted no-argument case, extra-argument policy (fallible optional i32 conversion precedes output), activation, older-profile or neighboring-row credit.",
+      "spec": "docs/specs/unit-stat-output-restriction.md",
+      "tests": [
+        "tests/character_stats/stat_restriction.rs",
+        "tests/character_stats/stat_restriction_fixtures.lua"
+      ],
+      "compiled_revision": "d21d4a208da4b911f003181e5ca33163f42b92be",
+      "source_view_revision": "49c667ad40241d690afb385eb621ab283a4981dd",
+      "proof": "bounded-independent-pass-reused-record",
+      "ledger": "docs/specs/unit-stat-output-restriction.md#b83-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Main accepts independent Sol source audit ACCEPT WITH QUALIFICATIONS, 8/8 items PASS, report SHA256 d82dd28128ae506dc3cbcd74e43a07a368f6150711e3eb72ee2894b869551517 (session scratchpad, not durable). No new tests/build/check/startup: reuse of B82 committed record of four restriction tests refreshed PASS at d21d4a208 with empty src/tests/Cargo diff to 49c667ad4; committed record is aggregate (4 stat controls), not four named raw result lines, and raw /tmp artifacts were unreadable on the accounting host. B82 qualified check protocol carries over; unowned dirty aura_duration.rs outside provider chain. Native/GUI/CASC/fullsuite/globalfmt gaps open."
     }
   ],
   "source_rows": [
@@ -3168,9 +3185,11 @@
     },
     {
       "source_id": "global api-PlayerScript GetSpellCritChance-486",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "spell-crit-restricted-output"
+      ],
+      "status": "bounded-coverage",
+      "note": "B83 accepted independent Sol audit: existing crit-rating-backed simulator value7 and single-result privacy/arity/caller-opacity on the seeded (2) fixture, not a constant shim. Proof is the committed B82 record of four restriction tests at d21d4a208 with unchanged src/tests; no rerun, raw artifacts unreadable on accounting host. No spell-specific/native formula, restricted no-argument, extra-argument, activation, older-profile or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetSpellHitModifier-488",

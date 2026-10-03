@@ -165,7 +165,7 @@ Cached retail `Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua`
 
 | Provider | Ordered fixture | Wrapping |
 |---|---|---|
-| [`get_spell_crit_chance`](../../src/lua_api/globals/real/combat_stats.rs) reads an optional numeric stack slot 1, discards it, and delegates to `get_crit_chance`: `player.stats.crit_pct() + 5.0`. | `GetSpellCritChance(2)` → `{7}` from seeded crit rating360; arity1, `result`. | One `push_stat_number` position: secret host number under explicit `unit_stats_restricted`, plain otherwise. |
+| [`get_spell_crit_chance`](../../src/lua_api/globals/real/combat_stats.rs) converts stack slot 1 as a fallible optional `i32` (nil/absent accepted; non-number, fractional or out-of-range values error before any output), discards the parsed value, and delegates to `get_crit_chance`: `player.stats.crit_pct() + 5.0`. | `GetSpellCritChance(2)` → `{7}` from seeded crit rating360; arity1, `result`. | One `push_stat_number` position: secret host number under explicit `unit_stats_restricted`, plain otherwise. |
 
 Existing tests exercising this fixture, unchanged since the prior40 matrix:
 
@@ -181,7 +181,15 @@ The other two restriction tests are controls, not spell-crit evidence. No annota
 ### Limits
 
 - Value7 is the melee crit model plus simulator base5; no spell-specific or per-school crit, no native formula.
-- The fixture passes a superfluous `2`; the no-argument call is asserted for plain value only in `tests/character_stats.rs`, not under restriction. Wrong-type, nil and secret extra-argument handling are unverified against the no-argument declaration.
+- The fixture passes a superfluous `2`; the no-argument call appears only in a `tests/character_stats.rs` smoke check (number, nonnegative), with no exact value, arity or restriction assertion. Wrong-type, nil and secret extra-argument handling are unverified against the no-argument declaration.
 - Automatic restriction activation, older profiles, native/GUI parity and full-suite readiness remain unverified. `GetSpellCritChanceFromIntellect` stays plain and is not this row.
 
-Row486 remains `audit-pending` with no capability until independent validation and main accounting.
+At supplement time row486 was `audit-pending`; the acceptance below supersedes that for this one boundary.
+
+## B83 independent bounded acceptance — 2026-10-03
+
+Main accepts an independent GPT-6.1-sol read-only audit of the supplement at `49c667ad4`: **ACCEPT WITH QUALIFICATIONS**, eight items PASS, for **exact486 output annotation only**. It confirmed the literal delta and register record, the cached no-argument declaration, the registered provider and single wrapped result, `crit_pct() = crit_rating / 180` giving computed `360/180 + 5 = 7`, the assertions of the two exercising tests, the empty `d21d4a208..HEAD` diff over `src tests Cargo.toml Cargo.lock`, and the unowned aura diff lying outside the provider chain. Its two wording qualifications are applied above.
+
+Evidence class: fresh source inspection plus the **committed** B82 record, which states an aggregate "4 existing restriction controls" PASS at `d21d4a208`, not four individually named raw result lines. No test, build, check, formatter or startup ran for B83. Raw `/tmp/patch-12.0.5-*` artifacts were absent on the audit host, so historical PASS, timings and hashes are not independently re-established. The audit report (SHA256 `d82dd28128ae506dc3cbcd74e43a07a368f6150711e3eb72ee2894b869551517`) lives in a session scratchpad and is not durable; this section is the retained record.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): row486 `bounded-coverage` under new capability `spell-crit-restricted-output`; **87 capabilities/362 ordered IDs; 164 pending/180 bounded/11 partial/7 metadata**. Other 361 rows and prior 86 capabilities unchanged. Limits above, B82's qualified check protocol and all prior partial/annotation scopes stay as recorded. No neighboring row, native, older-profile or full-suite credit; audit remains in progress.
