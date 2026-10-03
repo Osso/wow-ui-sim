@@ -374,9 +374,17 @@ class BuildHostTests(unittest.TestCase):
         spec.loader.exec_module(fixture)
         cargo_bin = Path(self.env["HOME"]) / ".cargo/bin"
         cargo_bin.mkdir(parents=True)
-        rustup = cargo_bin / "rustup"
-        rustup.write_text(fixture.RUSTUP)
-        rustup.chmod(0o755)
+        rustc = cargo_bin / "rustc"
+        rustc.write_text(fixture.RUSTUP)
+        rustc.chmod(0o755)
+        cargo = cargo_bin / "cargo"
+        cargo.write_text(
+            "#!/usr/bin/env python3\nimport os, pathlib, sys\n"
+            "pathlib.Path(os.environ['FIXTURE_ROOT'], 'cargo.log').write_text('unexpected Cargo invocation')\n"
+            "sys.exit(99)\n"
+        )
+        cargo.chmod(0o755)
+        self.env["PATH"] = str(cargo_bin) + os.pathsep + self.env["PATH"]
         wrapper = self.common / "agent/agent-run"
         wrapper.parent.mkdir()
         wrapper.write_text(
@@ -407,9 +415,13 @@ class BuildHostTests(unittest.TestCase):
             report = json.loads(self.runtime.read_text())
             self.assertEqual(report["args"], ["two words"])
             self.assertEqual(report["cwd"], str(self.root))
-            self.assertIn(str(self.base / "lib"), report["loader"].split(":"))
-            self.assertIn(
-                str(self.root / f"target/{profile}/deps"), report["loader"].split(":")
+            self.assertEqual(
+                report["loader"].split(":")[:3],
+                [
+                    str(self.root / f"target/{profile}/deps"),
+                    str(self.base / "lib"),
+                    str(self.base / "lib/rustlib/x86_64-unknown-linux-gnu/lib"),
+                ],
             )
             self.assertFalse((self.base / "cargo.log").exists())
             app.unlink()
