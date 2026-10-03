@@ -1,8 +1,11 @@
-//! Test-only inferred destruction contract; parent must observe RED before production.
+//! B72 inputs only: DestroyEntry secret-boundary requirements await compiled RED.
 #![cfg(feature = "retail-12-0-5")]
 
-use rilua::LuaApiMut;
-use rilua::table_security::{wrap_host_secret_bool, wrap_host_secret_number};
+use rilua::Val;
+use rilua::table_security::{
+    is_secret_value, unwrap_secret, wrap_host_secret_bool, wrap_host_secret_number, wrap_secret,
+};
+use rilua::{LuaApi, LuaApiMut};
 use wow_ui_sim::c_api::c_housing::catalog::{
     HousingCatalogEntryID, HousingCatalogEntryRecord, HousingCatalogEntryVariantID,
     HousingCatalogVariantRecord, HousingDecorDyeSlot,
@@ -482,46 +485,397 @@ fn install_secret_inputs(env: &WowLuaEnv) {
         lua.state_mut().pop();
         inserted.unwrap();
     }
-    let secret = wrap_host_secret_bool(lua.state_mut(), true);
-    lua.state_mut().push(secret);
-    let inserted = lua.set_global_val("SecretAll", secret);
-    lua.state_mut().pop();
-    inserted.unwrap();
+    for (name, value) in [("SecretAll", true), ("SecretOne", false)] {
+        let secret = wrap_host_secret_bool(lua.state_mut(), value);
+        lua.state_mut().push(secret);
+        let inserted = lua.set_global_val(name, secret);
+        lua.state_mut().pop();
+        inserted.unwrap();
+    }
+    for (source, name) in [
+        ("firstID", "SecretFirstTable"),
+        ("secondID", "SecretSecondTable"),
+    ] {
+        let original = lua.get_global_val(source);
+        assert!(matches!(original, Val::Table(_)));
+        // Root the underlying table before wrapper allocation, then root both until publication.
+        lua.state_mut().push(original);
+        let secret = wrap_secret(lua.state_mut(), original).unwrap();
+        lua.state_mut().push(secret);
+        let inserted = lua.set_global_val(name, secret);
+        lua.state_mut().pop();
+        lua.state_mut().pop();
+        inserted.unwrap();
+    }
 }
 
-#[test]
-fn secret_selector_fields_and_boolean_reject_secure_and_tainted_callers() {
+fn assert_secret_payloads(env: &WowLuaEnv) {
+    let decor: i32 = env
+        .eval("return Enum.HousingCatalogEntryType.Decor")
+        .unwrap();
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    for (name, expected) in [
+        ("SecretRecord", Val::Num(1001.0)),
+        ("SecretType", Val::Num(f64::from(decor))),
+        ("SecretVariant", Val::Num(1.0)),
+        ("SecretAll", Val::Bool(true)),
+        ("SecretOne", Val::Bool(false)),
+    ] {
+        let value = lua.get_global_val(name);
+        assert!(
+            is_secret_value(lua.state(), value),
+            "{name} must be an actual host secret"
+        );
+        assert_eq!(unwrap_secret(lua.state(), value).unwrap(), expected);
+    }
+    for (source, name) in [
+        ("firstID", "SecretFirstTable"),
+        ("secondID", "SecretSecondTable"),
+    ] {
+        let value = lua.get_global_val(name);
+        assert!(is_secret_value(lua.state(), value));
+        assert_eq!(
+            unwrap_secret(lua.state(), value).unwrap(),
+            lua.get_global_val(source)
+        );
+    }
+}
+
+fn pending_event_names(env: &WowLuaEnv) -> Vec<String> {
+    env.state()
+        .borrow()
+        .events
+        .pending()
+        .iter()
+        .map(|event| event.name.clone())
+        .collect()
+}
+
+fn pending_sentinel(env: &WowLuaEnv) -> HousingCatalogEntryVariantID {
+    HousingCatalogEntryVariantID {
+        record_id: 1001,
+        entry_type: env
+            .eval("return Enum.HousingCatalogEntryType.Decor")
+            .unwrap(),
+        variant_identifier: 2,
+    }
+}
+
+fn secret_fixture_env() -> WowLuaEnv {
     let env = listen_for_destruction();
+    let pending = pending_sentinel(&env);
+    env.state().borrow_mut().housing.pending_new_decor = Some(pending);
     install_secret_inputs(&env);
     env.exec(
         r#"
+        function assertSecretDenied(id, all)
+            local message = assertRejected(id, all)
+            assert(string.find(message, 'requires an untainted caller', 1, true), message)
+            assert(not issecure(), 'denial must preserve addon taint')
+        end
+        function assertSecureValidationError(id, all)
+            local message = assertRejected(id, all)
+            assert(not string.find(message, 'requires an untainted caller', 1, true), message)
+            assert(issecure(), 'validation must preserve secure caller')
+            return message
+        end
+        function runDestroyAddon(callback)
+            debug.setobjecttaint(callback, 'HousingDestroyFixture')
+            local ok, message = pcall(callback)
+            assert(ok, message)
+            assert(issecure(), 'fixture caller must remain secure')
+        end
         collectgarbage('collect')
-        local function rejectSecrets()
-            assertRejected(SecretRecord, false)
-            for _, id in ipairs({
-                {recordID = SecretRecord, entryType = firstID.entryType, variantIdentifier = 1},
-                {recordID = 1001, entryType = SecretType, variantIdentifier = 1},
-                {recordID = 1001, entryType = firstID.entryType, variantIdentifier = SecretVariant},
-            }) do
-                assertRejected(id, false)
-                assertRejected(id, true)
-            end
-            assertRejected(firstID, SecretAll)
-        end
-        assert(issecure())
-        rejectSecrets()
-        local function addon()
-            rejectSecrets()
-            assert(not issecure(), 'secret rejection must preserve caller taint')
-        end
-        debug.setobjecttaint(addon, 'HousingDestroyFixture')
-        addon()
-        assert(storageDispatchCount == 0 and #storageEvents == 0)
-        assert(issecure(), 'secure fixture caller must remain untainted')
     "#,
     )
     .unwrap();
-    assert_model(&env, INITIAL_COUNTS);
+    assert_secret_payloads(&env);
+    env
+}
+
+fn assert_secret_outputs(env: &WowLuaEnv, counts: [(i32, i32); 4], events: &[String]) {
+    env.exec("collectgarbage('collect'); assert(issecure())")
+        .unwrap();
+    assert_model(env, counts);
+    assert_eq!(
+        env.state().borrow().housing.pending_new_decor,
+        Some(pending_sentinel(env))
+    );
+    assert_eq!(pending_event_names(env), events);
+    assert_secret_payloads(env);
+}
+
+const SECRET_NUMERIC_SELECTORS: [&str; 4] = [
+    "{recordID = SecretRecord, entryType = firstID.entryType, variantIdentifier = 1}",
+    "{recordID = 1001, entryType = SecretType, variantIdentifier = 1}",
+    "{recordID = 1001, entryType = firstID.entryType, variantIdentifier = SecretVariant}",
+    "{recordID = SecretRecord, entryType = SecretType, variantIdentifier = SecretVariant}",
+];
+
+fn assert_secure_secret_deletion(selector: &str, destroy_all: &str, all: bool) {
+    let env = secret_fixture_env();
+    let isolated = listen_for_destruction();
+    let events = pending_event_names(&env);
+    let (stored, eligible) = if all { (2, 0) } else { (4, 2) };
+    env.exec(&format!(
+        r#"
+        collectgarbage('collect')
+        assert(issecure())
+        assert(select('#', C_HousingCatalog.DestroyEntry({selector}, {destroy_all})) == 0)
+        assert(issecure(), 'acceptance must preserve secure caller')
+        assert(#storageEvents == 1 and storageDispatchCount == 1)
+        assertEvent(1, firstID, {stored}, {eligible}, 701)
+    "#
+    ))
+    .unwrap();
+    assert_secret_outputs(&env, [(stored, eligible), (7, 2), (6, 1), (8, 4)], &events);
+    isolated
+        .exec("assert(#storageEvents == 0 and storageDispatchCount == 0)")
+        .unwrap();
+    assert_model(&isolated, INITIAL_COUNTS);
+    assert_eq!(isolated.state().borrow().housing.pending_new_decor, None);
+}
+
+#[test]
+fn secure_secret_numeric_fields_accept_each_and_all_full_key_components() {
+    for selector in SECRET_NUMERIC_SELECTORS {
+        for (destroy_all, all) in [("false", false), ("true", true)] {
+            assert_secure_secret_deletion(selector, destroy_all, all);
+        }
+    }
+}
+
+#[test]
+fn addon_secret_numeric_fields_deny_each_and_all_components_atomically() {
+    let env = secret_fixture_env();
+    let events = pending_event_names(&env);
+    for selector in SECRET_NUMERIC_SELECTORS {
+        env.exec(&format!(
+            r#"
+            runDestroyAddon(function()
+                assert(not issecure())
+                assertSecretDenied({selector}, false)
+                assertSecretDenied({selector}, true)
+            end)
+            assert(#storageEvents == 0 and storageDispatchCount == 0)
+        "#
+        ))
+        .unwrap();
+        assert_secret_outputs(&env, INITIAL_COUNTS, &events);
+    }
+}
+
+#[test]
+fn secure_secret_boolean_true_and_false_select_all_or_one() {
+    for selector in ["firstID", SECRET_NUMERIC_SELECTORS[3], "SecretFirstTable"] {
+        for (destroy_all, all) in [("SecretOne", false), ("SecretAll", true)] {
+            assert_secure_secret_deletion(selector, destroy_all, all);
+        }
+    }
+}
+
+#[test]
+fn addon_secret_boolean_true_and_false_deny_atomically() {
+    let env = secret_fixture_env();
+    let events = pending_event_names(&env);
+    env.exec(
+        r#"
+        runDestroyAddon(function()
+            assert(not issecure())
+            assertSecretDenied(firstID, SecretOne)
+            assertSecretDenied(firstID, SecretAll)
+        end)
+        assert(#storageEvents == 0 and storageDispatchCount == 0)
+    "#,
+    )
+    .unwrap();
+    assert_secret_outputs(&env, INITIAL_COUNTS, &events);
+}
+
+#[test]
+fn secure_secret_table_selector_accepts_exact_key_and_one_event() {
+    for (destroy_all, all) in [("false", false), ("true", true)] {
+        assert_secure_secret_deletion("SecretFirstTable", destroy_all, all);
+    }
+}
+
+#[test]
+fn addon_secret_table_selector_denies_atomically() {
+    let env = secret_fixture_env();
+    let events = pending_event_names(&env);
+    env.exec(
+        r#"
+        runDestroyAddon(function()
+            for _, selector in ipairs({SecretFirstTable, SecretSecondTable}) do
+                assertSecretDenied(selector, false)
+                assertSecretDenied(selector, true)
+            end
+        end)
+        assert(#storageEvents == 0 and storageDispatchCount == 0)
+    "#,
+    )
+    .unwrap();
+    assert_secret_outputs(&env, INITIAL_COUNTS, &events);
+}
+
+#[test]
+fn original_top_arguments_authenticate_before_selector_or_boolean_type_errors() {
+    let env = secret_fixture_env();
+    let events = pending_event_names(&env);
+    env.exec(r#"
+        for _, all in ipairs({SecretOne, SecretAll}) do
+            local message = assertSecureValidationError(false, all)
+            assert(string.find(message, 'table', 1, true), message)
+            runDestroyAddon(function() assertSecretDenied(false, all) end)
+        end
+        for _, all in ipairs({false, 'malformed boolean'}) do
+            local message = assertSecureValidationError(SecretRecord, all)
+            assert(string.find(message, 'table', 1, true), message)
+            runDestroyAddon(function() assertSecretDenied(SecretRecord, all) end)
+            assertSecureValidationError(SecretFirstTable, 'malformed boolean')
+            runDestroyAddon(function() assertSecretDenied(SecretFirstTable, 'malformed boolean') end)
+        end
+        assert(#storageEvents == 0 and storageDispatchCount == 0)
+    "#).unwrap();
+    assert_secret_outputs(&env, INITIAL_COUNTS, &events);
+}
+
+#[test]
+fn all_original_fields_and_boolean_authenticate_before_field_domain_or_model_errors() {
+    let env = secret_fixture_env();
+    let events = pending_event_names(&env);
+    env.exec(
+        r#"
+        local fields = {'recordID', 'entryType', 'variantIdentifier'}
+        local secrets = {SecretRecord, SecretType, SecretVariant}
+        local function selector()
+            return {recordID = 1001, entryType = firstID.entryType, variantIdentifier = 1}
+        end
+        -- Missing/malformed/integer-range/domain errors must not hide a later secret.
+        for badIndex, badField in ipairs(fields) do
+            for _, bad in ipairs({{false}, {}, {'1001'}, {1.5}, {0/0},
+                {math.huge}, {-1}, {2147483648}}) do
+                local id = selector()
+                id[badField] = bad[1]
+                for _, all in ipairs({SecretOne, SecretAll}) do
+                    assertSecureValidationError(id, all)
+                    runDestroyAddon(function() assertSecretDenied(id, all) end)
+                end
+                for secretIndex, secretField in ipairs(fields) do
+                    if secretIndex ~= badIndex then
+                        local mixed = selector()
+                        mixed[badField] = bad[1]
+                        mixed[secretField] = secrets[secretIndex]
+                        assertSecureValidationError(mixed, false)
+                        runDestroyAddon(function() assertSecretDenied(mixed, false) end)
+                    end
+                end
+            end
+        end
+        -- Every original field authenticates even when the required bool is malformed/missing.
+        for index, field in ipairs(fields) do
+            local id = selector()
+            id[field] = secrets[index]
+            assertSecureValidationError(id, nil)
+            assertSecureValidationError(id, 'malformed boolean')
+            runDestroyAddon(function()
+                assertSecretDenied(id, nil)
+                assertSecretDenied(id, 'malformed boolean')
+            end)
+        end
+        local unknown = selector()
+        unknown.recordID = 998877
+        unknown.variantIdentifier = SecretVariant
+        assert(select('#', C_HousingCatalog.DestroyEntry(unknown, false)) == 0)
+        runDestroyAddon(function() assertSecretDenied(unknown, false) end)
+        local unknownPublic = selector()
+        unknownPublic.recordID = 998877
+        assert(select('#', C_HousingCatalog.DestroyEntry(unknownPublic, SecretAll)) == 0)
+        runDestroyAddon(function() assertSecretDenied(unknownPublic, SecretAll) end)
+        assert(#storageEvents == 0 and storageDispatchCount == 0)
+    "#,
+    )
+    .unwrap();
+    assert_secret_outputs(&env, INITIAL_COUNTS, &events);
+    // Authentication also precedes consistency validation of an existing model record.
+    replace_first_counts(&env, 2, 3);
+    env.exec(
+        r#"
+        assertSecureValidationError(firstID, SecretAll)
+        runDestroyAddon(function() assertSecretDenied(firstID, SecretAll) end)
+        assertSecureValidationError({recordID = SecretRecord, entryType = SecretType,
+            variantIdentifier = SecretVariant}, false)
+        runDestroyAddon(function()
+            assertSecretDenied({recordID = SecretRecord, entryType = SecretType,
+                variantIdentifier = SecretVariant}, false)
+        end)
+        assert(#storageEvents == 0 and storageDispatchCount == 0)
+    "#,
+    )
+    .unwrap();
+    assert_secret_outputs(&env, [(2, 3), (7, 2), (6, 1), (8, 4)], &events);
+}
+
+#[test]
+fn secret_wrapped_guarded_selector_retains_underlying_table_access_policy() {
+    let env = secret_fixture_env();
+    let events = pending_event_names(&env);
+    {
+        let loader = env.loader_env();
+        let mut lua = loader.rilua_mut();
+        rilua::table_security::register_table_security(&mut lua).unwrap();
+    }
+    env.exec(r#"
+        settablesecurity(firstID, 0)
+        collectgarbage('collect')
+        runDestroyAddon(function()
+            local ok, message = pcall(rawget, firstID, 'recordID')
+            assert(not ok and string.find(message, 'tainted access to secured table', 1, true), message)
+            message = assertRejected(firstID, false)
+            assert(string.find(message, 'tainted access to secured table', 1, true), message)
+            assertSecretDenied(SecretFirstTable, false)
+            assert(not issecure())
+        end)
+        assert(#storageEvents == 0 and storageDispatchCount == 0)
+    "#).unwrap();
+    assert_secret_outputs(&env, INITIAL_COUNTS, &events);
+    env.exec(
+        r#"
+        assert(issecure())
+        assert(select('#', C_HousingCatalog.DestroyEntry(SecretFirstTable, SecretOne)) == 0)
+        assert(issecure())
+        assert(#storageEvents == 1 and storageDispatchCount == 1)
+        assertEvent(1, firstID, 4, 2, 701)
+    "#,
+    )
+    .unwrap();
+    assert_secret_outputs(&env, [(4, 2), (7, 2), (6, 1), (8, 4)], &events);
+}
+
+#[test]
+fn secret_table_roots_survive_gc_and_event_identity_does_not_alias_caller() {
+    let env = secret_fixture_env();
+    let events = pending_event_names(&env);
+    env.exec(r#"
+        storageListener:HookScript('OnEvent', function() collectgarbage('collect') end)
+        collectgarbage('collect')
+        assert(select('#', C_HousingCatalog.DestroyEntry(SecretSecondTable, SecretOne)) == 0)
+        assert(issecure())
+        assert(#storageEvents == 1 and storageDispatchCount == 1)
+        assertEvent(1, secondID, 6, 1, 702)
+        assert(not rawequal(storageEvents[1].id, secondID), 'event must not alias caller table')
+        secondID.recordID = 998877
+        secondID.entryType = -99
+        secondID.variantIdentifier = 99
+        collectgarbage('collect')
+        assertEvent(1, {recordID = 1001, entryType = firstID.entryType, variantIdentifier = 2}, 6, 1, 702)
+        assert(select('#', C_HousingCatalog.DestroyEntry(SecretFirstTable, false)) == 0)
+        assert(#storageEvents == 2 and storageDispatchCount == 2)
+        assertEvent(2, firstID, 4, 2, 701)
+        assert(issecure())
+    "#).unwrap();
+    assert_secret_outputs(&env, [(4, 2), (6, 1), (6, 1), (8, 4)], &events);
 }
 
 #[test]

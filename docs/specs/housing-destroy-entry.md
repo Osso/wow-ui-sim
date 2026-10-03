@@ -6,7 +6,7 @@ Bounded 12.0.5 destruction slice for `C_HousingCatalog.DestroyEntry(entryVariant
 
 ### Selection and inferred eligibility
 
-- [ ] Accept an accessible public full `(recordID, entryType, variantIdentifier)` table and a required ordinary bool `destroyAll`. Successful calls return zero Lua values. Select only the exact existing variant; never use numeric, base-entry, alternate-variant or legacy-seed lookup.
+- [ ] Accept an accessible full `(recordID, entryType, variantIdentifier)` table and a required bool `destroyAll`, including authenticated actual secrets for untainted callers under the method-local boundary below. Successful calls return zero Lua values. Select only the exact existing variant; never use numeric, base-entry, alternate-variant or legacy-seed lookup.
 - [ ] **Explicit simulator inference:** `destroyable_instance_count` identifies the eligible subset of `num_stored`, independently supplied, not derived from storage. False removes one eligible instance; true removes all eligible instances. Reduce both counts by the same amount. For a mixed stack stored=5/eligible=3, false produces 4/2 and true on a fresh fixture produces 2/0. False followed by true also ends at 2/0, preserving the two exempt/protected instances.
 - [ ] Preserve other variants, other record IDs and other entry types even when identity components overlap. Preserve every dye field and all base-entry metadata. Retain the variant record when both counts reach zero.
 - [ ] **Inferred no-op policy:** missing full keys or zero eligible count succeed with zero returns, no mutation/insertion and no event. Stored instances alone do not grant deletion permission. Default environments contain no catalog records; never invent eligibility/default data.
@@ -16,9 +16,22 @@ Bounded 12.0.5 destruction slice for `C_HousingCatalog.DestroyEntry(entryVariant
 
 - [ ] Successful nonzero deletion dispatches exactly one real `HOUSING_STORAGE_ENTRY_UPDATED` callback with exactly one full variant-ID argument after both counts change and the model borrow is released. Listener queries see changed storage/eligibility and unchanged dye data. No queued duplicate event.
 - [ ] **Inferred simulator timing, not native claim:** callback completes before `DestroyEntry` returns, following the existing [admin storage producer](housing-storage-entry-updated.md), implementation `5afd73d49`. Reentrant reads and same/other-variant deletions complete inside the listener; nested callbacks see each transition. Outer completion must not overwrite nested state.
-- [ ] Malformed public selectors and missing/non-bool `destroyAll` fail explicitly and atomically, even when a well-formed selector would be missing. Selector fields must be ordinary finite nonnegative integers representable by the existing `i32` fields. Reject missing fields, non-table selectors, strings, fractions, nonfinite values and out-of-range values; no coercion or truncation. Error messages are nonempty; rejected calls do not mutate, insert or emit.
-- [ ] Ordinary tainted addon calls succeed without clearing taint. Secret whole selectors, each nested identity field and the secret boolean reject in secure and tainted contexts without declassification, mutation or event. Secured tables retain the host VM access policy: tainted indexing and destruction reject; secure destruction remains allowed. Conservative secret rejection is a simulator limit, not native `AllowedWhenUntainted` parity.
+- [ ] Malformed public selectors and missing/non-bool `destroyAll` fail explicitly and atomically, even when a well-formed selector would be missing. Authenticated selector fields must be finite nonnegative integers representable by the existing `i32` fields. Reject missing fields, non-table selectors, strings, fractions, nonfinite values and out-of-range values; no coercion or truncation. Error messages are nonempty; rejected calls do not mutate, insert or emit.
+- [ ] Ordinary tainted addon calls succeed without clearing taint. `DestroyEntry` alone accepts actual secret inputs for untainted callers; addon callers reject with `requires an untainted caller` without clearing taint. This replaces the historical conservative-secret requirement, not the shared catalog/Admin guards.
+- [ ] Authenticate both original top-level arguments before any selector/table or boolean type error. In particular, `(false, secretBool)` denies under addon taint but reaches the table-type error securely; a secret NUM selector authenticates before the table-type error even with a malformed second argument.
+- [ ] Authenticate all three original identity fields and original `destroyAll` before field integer/range/domain checks or model lookup/consistency validation. Missing, malformed, public negative or out-of-range fields cannot mask another field's or arg2's secret denial; malformed/missing arg2 cannot mask any secret field. Authenticated secure inputs still undergo ordinary validation, unknown-key no-op and consistency errors.
+- [ ] Secured tables retain underlying host VM access policy: public tainted indexing/destruction rejects, secret-wrapped tables deny addon callers at authentication, and secure wrapped-table destruction remains allowed. Do not bypass `check_table_access` by accepting a wrapper.
+- [ ] Root underlying table selectors before secret-wrapper allocation; survive GC before calls and during event dispatch. Event IDs are independent of caller tables: later caller-table mutation/GC must not alter event identity or model keys.
 - [ ] Mutation and callbacks remain local to the owning `WowLuaEnv`.
+
+### B72 authored security requirements — 2026-10-03
+
+- [ ] Genuine host secret NUM in each identity field independently and all three together accepts securely for one/all; actual secret BOOL false and true select one/all, including combined numeric/table secrets; actual secret TABLE selects the exact full key.
+- [ ] Secure success returns zero values, preserves secure state, changes only the selected variant and emits exactly one full-ID synchronous event. Unrelated variants/environment, dye/base metadata, existing pending request and event queues remain unchanged.
+- [ ] Paired addon calls deny each/all secret fields, each secret bool and secret tables with the host authentication diagnostic. Rejections preserve counts, every dye/base field, pending request, dispatch count, event queue and caller taint.
+- [ ] Top-argument and all-original-fields/arg2 precedence matrices cover type, missing, finite/integer/range/domain, unknown-key and inconsistent-model boundaries before mutation.
+
+Authored requirements only; all B72 compiled RED/GREEN pending. Main owns compiled RED before producer. Scope is `DestroyEntry` alone: shared catalog selectors, Admin and conservative guards remain unchanged. These tests assert simulator host-secret behavior, not mixed-stack native policy, full placement or security-global parity.
 
 ### Cached grounding and consumer evidence — 2026-10-01
 
@@ -45,7 +58,7 @@ Actual consumer `Blizzard_HousingTemplates/Blizzard_HousingCatalogEntry.lua:728�
 - `src/c_api/c_housing/catalog.rs`: unchanged existing record inputs; sufficient for this slice.
 - `src/c_api/c_housing/catalog/queries.rs`: unconditional Rust `DestroyEntry` registration alongside existing full-ID queries.
 - `src/c_api/c_housing/catalog/{input,snapshot}.rs`: unchanged shared selector/VM access guards and rooted serializers.
-- `src/c_api/c_housing/catalog/storage.rs`: validates public arguments and consistent counts, decrements only the exact variant's stored/eligible counts, then uses the existing admin event publisher after releasing the model borrow. Both producers retain the payload root across nested callbacks; destruction performs no post-dispatch write and never clears taint.
+- `src/c_api/c_housing/catalog/storage.rs`: historical producer validates public arguments using the shared conservative selector parser and consistent counts, decrements only the exact variant's stored/eligible counts, then uses the existing admin event publisher after releasing the model borrow. B72 method-local secret authentication is required but not yet implemented/proved by this inputs-only change. Both producers retain the payload root across nested callbacks; destruction performs no post-dispatch write and never clears taint.
 - `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: exact `DestroyEntry` no-op removed; unrelated seeded policies unchanged. No fallback.
 
 ## Tests asserting this spec
@@ -58,7 +71,24 @@ All cases require a callable API before exercising it, so invalid-input rejectio
 | `fully_eligible_stack_retains_zero_record_after_one_or_all`, `full_key_isolates_variant_type_and_record` | Zero record retention, exact compound identity and preserved metadata/dyes |
 | `missing_keys_and_explicit_zero_eligibility_are_noops`, `empty_catalog_stays_empty_without_invented_permission` | No eligibility/default data invention, no-op/no-event behavior |
 | `malformed_public_selectors_fail_atomically`, `destroy_all_is_required_public_boolean_even_for_missing_keys`, `inconsistent_counts_fail_explicitly_without_clamping_mutating_or_emitting` | Explicit atomic public/model validation, consistent one/all inconsistency diagnostics |
-| `listener_reads_and_reenters_same_and_other_variant_before_outer_return`, `public_addon_call_preserves_taint`, `secret_selector_fields_and_boolean_reject_secure_and_tainted_callers`, `guarded_selector_retains_vm_access_policy_without_mutation_on_rejection`, `destruction_and_events_are_environment_local` | Reentrant timing, ordinary addon calls, conservative secret and VM guard behavior, environment isolation |
+| `listener_reads_and_reenters_same_and_other_variant_before_outer_return`, `public_addon_call_preserves_taint`, `guarded_selector_retains_vm_access_policy_without_mutation_on_rejection`, `destruction_and_events_are_environment_local` | Reentrant timing, ordinary addon calls, public VM guard behavior, environment isolation |
+
+### B72 exact authored tests (not executed)
+
+| Exact test | Authored boundary |
+|---|---|
+| `secure_secret_numeric_fields_accept_each_and_all_full_key_components` | Each/all actual secret NUM fields, fresh secure one/all mutation, event, unrelated environment |
+| `addon_secret_numeric_fields_deny_each_and_all_components_atomically` | Paired numeric denial and atomicity |
+| `secure_secret_boolean_true_and_false_select_all_or_one` | Actual BOOL false/true, public/all-secret-field/wrapped-table selectors |
+| `addon_secret_boolean_true_and_false_deny_atomically` | Paired BOOL denial and atomicity |
+| `secure_secret_table_selector_accepts_exact_key_and_one_event` | Actual TABLE full-key secure one/all mutation |
+| `addon_secret_table_selector_denies_atomically` | Paired TABLE denial, two exact variants |
+| `original_top_arguments_authenticate_before_selector_or_boolean_type_errors` | Original arg authentication before selector/bool errors, including false arg1/secret arg2 |
+| `all_original_fields_and_boolean_authenticate_before_field_domain_or_model_errors` | Every field/arg2 before malformed, missing, negative, out-of-range and model errors |
+| `secret_wrapped_guarded_selector_retains_underlying_table_access_policy` | Public underlying-table guard and secure wrapped-table acceptance |
+| `secret_table_roots_survive_gc_and_event_identity_does_not_alias_caller` | Pre-call/callback GC, wrapper roots, caller/event/model identity independence |
+
+Shared real fixture helpers inject host wrappers, verify actual secret payloads (NUM/BOOL/TABLE), root underlying tables before allocation, seed a pending-request sentinel directly without placement execution, and assert preserved catalog/dye/base/pending/queue observations. `LuaApi` is imported for host `state()` access. Existing grouped integration module remains; no new target. Original destruction/count/full-key/error/reentry/listener tests retained except the superseded combined conservative-secret test.
 
 ### Proof ledger and producer gate
 
@@ -69,7 +99,9 @@ All cases require a callable API before exercising it, so invalid-input rejectio
 - `rustfmt --edition 2024 --config skip_children=true tests/housing_destroy_entry.rs`: exit 0 on the new test file; formatting only, not compilation or behavioral proof. Later test edits invalidate formatting scope.
 - Producer slice authorizes formatting and commit only; no builds, checks, delegation or push. Existing tests, source accounting, other specs and vendor/cache definitions unchanged.
 
-### Reconciled bounded proof — 2026-10-01
+B72 inputs-only checkpoint: no build, test, check, runtime or delegation performed. Owned-file formatting is not compilation. Main must record actual compiled RED before production and fresh GREEN afterward; historical 15-case proof does not cover these new requirements.
+
+### Historical reconciled bounded proof — 2026-10-01
 
 [Independent report](/tmp/patch-12.0.5-housing-destruction-independent-proof.md) accepts producer `67b44f2c36c12c86cc1e10c334d010041239e7c9` and tests `f94063616c0490bae295e2eeb3936910a535138d`: saved **15 destruction + 11 storage + 24 catalog = 50 PASS**, independently inspected, not rerun. Fresh default `cargo fmt --check` and `cargo check` both exit **0** at the unchanged producer snapshot. These gates cover default cumulative retail features, not historical 12.0.5-only or all-profile execution. Actual RED was **2 PASS / 13 FAIL**, not thirteen independently reached downstream boundaries.
 
@@ -78,17 +110,19 @@ All cases require a callable API before exercising it, so invalid-input rejectio
 | Full variant selector and required boolean | Behavioral PASS: exact record/type/variant isolation, zero returns, atomic malformed/public/model rejection |
 | Eligible one/all mutation and missing/zero no-op | Behavioral PASS: mixed 5/3 stack to 4/2 or 2/0, exempt instances and metadata retained; subset/no-op/consistency policies inferred, not native all-stack proof |
 | Mutation before synchronous callback and nested deletion | Behavioral PASS: one full-ID event per change, reentrant reads/deletions, no queued duplicate or outer overwrite; native timing/coalescing unknown |
-| Taint, secret inputs and secured tables | Behavioral PASS for ordinary addon taint and real host guards; conservative secure/tainted secret rejection leaves native `AllowedWhenUntainted` secure-access parity open |
+| Taint, secret inputs and secured tables | Historical Behavioral PASS for ordinary addon taint and real host guards; historical conservative secure/tainted secret rejection is superseded by B72 requirements and grants no current secret-acceptance credit |
 | Publisher rooting and error cleanup | Source inspection only; no forced-GC or dispatch-error behavioral proof |
 
 Parent `batch21-green-startup-run.json` records exit **0**, stdout **[]**, 4.2461s; saved parent evidence, **not independent startup proof**. Exact [coverage](../../data/patch-api/sources/12.0.5-page-coverage.json) rows `global api-C_HousingCatalog-DestroyEntry-281`/`-282` alone link bounded selector rename/full variant-argument coverage. Their audit-pending classification is retained; all **362 IDs**, source hash and unrelated rows/counts remain **308 pending / 40 bounded / 14 partial**. No native/all-profile or whole-row/page closure.
 
 ## Known gaps (current cycle)
 
-- [x] Parent reports actual compiled RED before producer implementation.
-- [x] Independent bounded GREEN/security/event acceptance recorded for the simulator contract above.
+- [ ] B72 actual compiled RED before the method-local producer change (main-owned).
+- [ ] B72 GREEN secure secret acceptance/addon denial, ordering, atomicity and rooting proof (main-owned).
 - [ ] Native mixed-stack eligibility, fixed-five UI/batch meaning, invalid-input errors, secret access and event timing remain unknown.
+
+Historical 15-case RED and GREEN above remain explicit historical evidence, not B72 completion.
 
 ## Out of scope
 
-Native instance policy/probes, storage-limit aggregates, search refresh/filtering, placement, full entry DTOs, `CanDestroyEntry`, legacy argument compatibility, popup behavior, asynchronous/coalesced native events and whole source-row/page or all-profile completion. Those require separate evidence; this slice changes only the destruction producer, its exact no-op replacement and this contract.
+Native instance policy/probes, storage-limit aggregates, search refresh/filtering, placement, full entry DTOs, `CanDestroyEntry`, legacy argument compatibility, popup behavior, asynchronous/coalesced native events and whole source-row/page or all-profile completion. Those require separate evidence. B72 authors only `tests/housing_destroy_entry.rs` and this contract; future security production scope is `DestroyEntry` alone, not shared catalog/Admin/conservative guards or security-global behavior.
