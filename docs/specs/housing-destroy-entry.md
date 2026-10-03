@@ -60,7 +60,7 @@ Actual consumer `Blizzard_HousingTemplates/Blizzard_HousingCatalogEntry.lua:728â
 - `src/c_api/c_housing/catalog.rs`: unchanged existing record inputs; sufficient for this slice.
 - `src/c_api/c_housing/catalog/queries.rs`: unconditional Rust `DestroyEntry` registration alongside existing full-ID queries.
 - `src/c_api/c_housing/catalog/{input,snapshot}.rs`: unchanged shared selector/VM access guards and rooted serializers.
-- `src/c_api/c_housing/catalog/destroy_input.rs`: B72 producer `7f7d0fe8a` authenticates both original top-level arguments before selector/boolean type errors, and all three original identity fields before field type, integer/range/domain or model validation. The underlying selector and original fields are stack-rooted across allocations; `check_table_access` retains underlying table policy. Stack top is restored on success/error. This is a DestroyEntry-only AllowedWhenUntainted boundary, awaiting GREEN/verifier proof.
+- `src/c_api/c_housing/catalog/destroy_input.rs`: B72 producer `7f7d0fe8a` authenticates both original top-level arguments before selector/boolean type errors, and all three original identity fields before field type, integer/range/domain or model validation. The underlying selector and original fields are stack-rooted across allocations; `check_table_access` retains underlying table policy. Stack top is restored on success/error. This DestroyEntry-only AllowedWhenUntainted boundary has independent582 bounded acceptance below.
 - `src/c_api/c_housing/catalog/storage.rs`: DestroyEntry now uses that method-local reader. Existing exact-variant count validation, eligible-subset mutation and admin event publication after releasing the model borrow remain unchanged. Shared catalog/Admin/pending inputs, cancellation equivalence, payload rooting and no post-dispatch write remain unchanged; no taint clearing.
 - `src/lua_api/workarounds/temporary/housing_catalog_state.lua`: exact `DestroyEntry` no-op removed; unrelated seeded policies unchanged. No fallback.
 
@@ -125,7 +125,7 @@ Main accepts **independent582 scoped PASS** at `ffb1845bc`, after producer `7f7d
 
 Actual input RED `0f7f47297` remains **14 PASS / 10 FAIL**, compiled261.349678s/zero diagnostics, runner7.33s. Ten secret-boundary failures do not prove ten downstream failures. All modeled requirements above are checked only at the report's bounded behavioral boundaries. GC covers before-call/during-dispatch collection and nonaliasing, not forced input-allocation GC; cleanup has source/indirect survival proof, not direct VM-top or dispatch-error measurement. Queue names/order are observed, not queued-payload equality. Helper-length and embedded-Lua matrix-nesting advisories are nonblocking; no unrequested refactor or new scope.
 
-Accounting `c6b23304c` updates only existing capability and notes281/282; new accounting validation remains pending with a separate agent. **STATUS remains audit-pending**, not native all-stack/literal-row closure: **177 pending / 164 bounded / 14 partial / 7 metadata**, **362 IDs / 77 capabilities unchanged**. Native semantics, mixed eligible policy, UI/all-profile/global privacy, cumulative epoch, dirty/globalfmt and historical limits remain. Broader audit stays open.
+Accounting `c6b23304c` updates only existing capability and notes281/282; independent584 accounting PASS43/43 ([proof](../../../../../../../../tmp/patch-12.0.5-batch72-accounting-validation.md)); 360 unrelated rows/76 unrelated capabilities unchanged. **STATUS remains audit-pending**, not native all-stack/literal-row closure: **177 pending / 164 bounded / 14 partial / 7 metadata**, **362 IDs / 77 capabilities unchanged**. Native semantics, mixed eligible policy, UI/all-profile/global privacy, cumulative epoch, dirty/globalfmt and historical limits remain. Broader audit stays open.
 
 ### Historical reconciled bounded proof â€” 2026-10-01
 
@@ -144,7 +144,7 @@ Parent `batch21-green-startup-run.json` records exit **0**, stdout **[]**, 4.246
 ## Known gaps (current cycle)
 
 - [x] B72 actual compiled RED before the method-local producer change accepted: 14 PASS / 10 FAIL; not GREEN acceptance.
-- [x] B72 bounded GREEN secure secret acceptance/addon denial, ordering, atomicity and limited rooting proof; main accepts independent582. Accounting validation remains separately pending.
+- [x] B72 bounded GREEN secure secret acceptance/addon denial, ordering, atomicity and limited rooting proof; main accepts independent582. Independent584 accounting PASS43/43 preserves all statuses/counts.
 - [ ] Native mixed-stack eligibility, fixed-five UI/batch meaning, invalid-input errors, secret access and event timing remain unknown.
 
 Historical 15-case RED and GREEN above remain explicit historical evidence, not B72 completion.
