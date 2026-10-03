@@ -58,19 +58,14 @@ pub(super) fn update_exterior(
     target: u32,
     action: AttachedDecorAction,
 ) -> LuaResult<(i32, Vec<HousingCatalogEntryVariantID>)> {
-    validate_host(housing, change)?;
+    validate_host(housing, change.api())?;
     let unchanged = validate_selection(housing, change, target)?;
     if unchanged {
         return Ok((change.unchanged_response(), Vec::new()));
     }
     let owner = fixture_owner(housing, change);
     let affected = find_affected_placements(housing, owner);
-    let stored = if action == AttachedDecorAction::Store {
-        storage::store_placements(housing, &affected, change.api())?
-    } else {
-        detach_placements(housing, &affected);
-        Vec::new()
-    };
+    let stored = update_attachments(housing, &affected, action, change.api())?;
     update_selection(housing, change, target);
     Ok((SUCCESS, stored))
 }
@@ -81,12 +76,7 @@ pub(super) fn remove_fixture(
 ) -> LuaResult<(i32, Vec<HousingCatalogEntryVariantID>)> {
     let owner = validate_removal(housing)?;
     let affected = find_affected_placements(housing, Some(owner));
-    let stored = if action == AttachedDecorAction::Store {
-        storage::store_placements(housing, &affected, REMOVE_FIXTURE_API)?
-    } else {
-        detach_placements(housing, &affected);
-        Vec::new()
-    };
+    let stored = update_attachments(housing, &affected, action, REMOVE_FIXTURE_API)?;
     housing
         .exterior
         .selected_fixture_point
@@ -96,13 +86,22 @@ pub(super) fn remove_fixture(
     Ok((SUCCESS, stored))
 }
 
-fn validate_removal(housing: &HousingState) -> LuaResult<u32> {
-    if !housing.inside_owned_plot || housing.active_house_editor_mode != EXTERIOR_CUSTOMIZATION_MODE
-    {
-        return Err(runtime_error(format!(
-            "{REMOVE_FIXTURE_API}: requires an owned plot in ExteriorCustomization mode"
-        )));
+fn update_attachments(
+    housing: &mut HousingState,
+    affected: &[String],
+    action: AttachedDecorAction,
+    api: &str,
+) -> LuaResult<Vec<HousingCatalogEntryVariantID>> {
+    if action == AttachedDecorAction::Store {
+        storage::store_placements(housing, affected, api)
+    } else {
+        detach_placements(housing, affected);
+        Ok(Vec::new())
     }
+}
+
+fn validate_removal(housing: &HousingState) -> LuaResult<u32> {
+    validate_host(housing, REMOVE_FIXTURE_API)?;
     let point = housing
         .exterior
         .selected_fixture_point
@@ -120,12 +119,11 @@ fn validate_removal(housing: &HousingState) -> LuaResult<u32> {
     Ok(point.owner_hash)
 }
 
-fn validate_host(housing: &HousingState, change: ExteriorChange) -> LuaResult<()> {
+fn validate_host(housing: &HousingState, api: &str) -> LuaResult<()> {
     if !housing.inside_owned_plot || housing.active_house_editor_mode != EXTERIOR_CUSTOMIZATION_MODE
     {
         return Err(runtime_error(format!(
-            "{}: requires an owned plot in ExteriorCustomization mode",
-            change.api()
+            "{api}: requires an owned plot in ExteriorCustomization mode"
         )));
     }
     Ok(())
