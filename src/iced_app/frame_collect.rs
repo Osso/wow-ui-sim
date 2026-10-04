@@ -178,9 +178,7 @@ fn is_frame_hittable(
     id: u64,
     frame: &crate::widget::Frame,
 ) -> bool {
-    registry.is_ancestor_visible(id)
-        && (frame.mouse_enabled || matches!(frame.widget_type, WidgetType::EditBox))
-        && !is_hit_test_excluded(frame)
+    registry.is_ancestor_visible(id) && frame.accepts_mouse() && !is_hit_test_excluded(frame)
 }
 
 fn is_hit_test_excluded(frame: &crate::widget::Frame) -> bool {
@@ -460,7 +458,7 @@ mod tests {
 
     fn register_hittable_frame(registry: &mut WidgetRegistry, name: &str, x: i32) -> u64 {
         let mut frame = Frame::new(WidgetType::Frame, Some(name.to_string()), None);
-        frame.mouse_enabled = true;
+        frame.set_mouse_enabled(true);
         frame.layout_rect = Some(crate::LayoutRect {
             x: x as f32,
             y: 0.0,

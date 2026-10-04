@@ -7,6 +7,10 @@ use crate::screen::ScreenKind;
 #[path = "mouse_tests/forbidden_aspects.rs"]
 mod forbidden_aspects;
 
+#[cfg(feature = "retail-12-1-0")]
+#[path = "mouse_tests/aura_tooltip_motion.rs"]
+mod aura_tooltip_motion;
+
 #[test]
 fn mouse_focus_order_tracks_gui_hover_after_raise_and_lower() {
     let mut app = build_test_app(ScreenKind::Game);

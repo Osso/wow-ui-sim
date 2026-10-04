@@ -14,11 +14,11 @@ pub(super) fn imply_mouse_enabled_for_mouse_handler(
     let Some(frame) = sim.widgets.get_mut(frame_id) else {
         return Ok(());
     };
-    if frame.mouse_enabled {
+    if frame.mouse_enabled && frame.mouse_motion_enabled {
         return Ok(());
     }
 
-    frame.mouse_enabled = true;
+    frame.set_mouse_enabled(true);
     sim.queue_hit_grid_eligibility_change(frame_id);
     Ok(())
 }

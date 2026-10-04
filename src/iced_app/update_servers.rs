@@ -244,7 +244,7 @@ impl App {
                 frame.frame_level = l;
             }
             frame.visible = self.inspector_state.visible;
-            frame.mouse_enabled = self.inspector_state.mouse_enabled;
+            frame.set_mouse_enabled(self.inspector_state.mouse_enabled);
         }
     }
 }

@@ -273,7 +273,7 @@ pub fn set_toplevel(state: &Rc<RefCell<SimState>>, frame_id: u64, toplevel: bool
 pub fn enable_mouse(state: &Rc<RefCell<SimState>>, frame_id: u64, enable: bool) {
     let mut s = state.borrow_mut();
     if let Some(frame) = s.widgets.get_mut(frame_id) {
-        frame.mouse_enabled = enable;
+        frame.set_mouse_enabled(enable);
     }
 }
 

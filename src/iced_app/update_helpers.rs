@@ -84,9 +84,7 @@ fn hittable_rect(
     f: &crate::widget::Frame,
     offsets: &mut crate::layout::ScrollOffsetCache,
 ) -> Option<iced::Rectangle> {
-    let mouse_enabled =
-        f.mouse_enabled || matches!(f.widget_type, crate::widget::WidgetType::EditBox);
-    if !mouse_enabled || !registry.is_ancestor_visible(id) {
+    if !f.accepts_mouse() || !registry.is_ancestor_visible(id) {
         return None;
     }
     if !crate::layout::frame_has_render_layout(registry, id) {

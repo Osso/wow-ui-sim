@@ -65,7 +65,8 @@ fn deepest_hover_target_through_visible_children(
     pos: iced::Point,
 ) -> Option<u64> {
     deepest_target_through_visible_children(widgets, grid, frame_id, pos, |frame, _| {
-        frame.mouse_enabled || matches!(frame.widget_type, crate::widget::WidgetType::EditBox)
+        frame.mouse_motion_enabled
+            || matches!(frame.widget_type, crate::widget::WidgetType::EditBox)
     })
 }
 
@@ -327,7 +328,7 @@ mod tests {
         registry
             .get_mut_visual(frame_id)
             .expect("frame should exist")
-            .mouse_enabled = true;
+            .set_mouse_enabled(true);
     }
 
     fn grid_for_all_frames(registry: &WidgetRegistry) -> HitGrid {

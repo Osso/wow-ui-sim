@@ -115,7 +115,7 @@ pub struct Frame {
     /// Effective scale (product of all ancestor scales × own scale).
     /// Updated eagerly when scale changes or frame is reparented.
     pub effective_scale: f32,
-    /// Whether mouse is enabled.
+    /// Whether mouse clicks are enabled (SetMouseClickEnabled; EnableMouse sets both flags).
     pub mouse_enabled: bool,
     /// Whether mouse wheel events are enabled for this frame.
     pub mouse_wheel_enabled: bool,
@@ -350,7 +350,7 @@ pub struct Frame {
     pub model_state: Option<Box<ModelWidgetState>>,
     /// MovieFrame subtitle preference; playback and subtitles are not rendered.
     pub movie_subtitles_enabled: bool,
-    /// Whether mouse motion events are enabled.
+    /// Whether mouse motion (hover, OnEnter/OnLeave) is enabled (SetMouseMotionEnabled).
     pub mouse_motion_enabled: bool,
     /// User-set frame ID (from XML `id` attribute or SetID()).
     pub user_id: i32,
@@ -673,6 +673,7 @@ impl Frame {
             name,
             parent_id,
             mouse_enabled,
+            mouse_motion_enabled: mouse_enabled,
             clips_children: false,
             ..Default::default()
         };
@@ -681,6 +682,18 @@ impl Frame {
             frame.has_fixed_frame_strata = true;
         }
         frame
+    }
+
+    /// EnableMouse: clicks and motion together.
+    pub fn set_mouse_enabled(&mut self, enable: bool) {
+        self.mouse_enabled = enable;
+        self.mouse_motion_enabled = enable;
+    }
+
+    /// Whether the frame takes part in mouse hit testing at all (IsMouseEnabled).
+    /// INFERRED: either click or motion input qualifies; EditBoxes always do.
+    pub fn accepts_mouse(&self) -> bool {
+        self.mouse_enabled || self.mouse_motion_enabled || self.widget_type == WidgetType::EditBox
     }
 
     pub fn set_size(&mut self, width: f32, height: f32) {

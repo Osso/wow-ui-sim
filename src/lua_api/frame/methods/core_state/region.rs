@@ -80,7 +80,7 @@ fn is_mouse_over_bounds(
     let Some(frame) = state.widgets.get(id) else {
         return false;
     };
-    if !frame.visible || !frame.mouse_enabled {
+    if !frame.visible || !frame.accepts_mouse() {
         return false;
     }
     let Some(rect) = frame.layout_rect else {

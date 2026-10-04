@@ -8,7 +8,7 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
 pub fn enable_mouse(state: &mut LuaState) -> LuaResult<u32> {
-    set_frame_input_flag(state, |frame, enable| frame.mouse_enabled = enable)
+    set_frame_input_flag(state, Frame::set_mouse_enabled)
 }
 
 fn set_frame_input_flag(
@@ -19,11 +19,9 @@ fn set_frame_input_flag(
     let enable = arg_bool(state, 2);
     let mut sim = borrow_state_mut(state)?;
     if let Some(frame) = sim.widgets.get_mut(id) {
-        let was_mouse_eligible =
-            frame.mouse_enabled || frame.widget_type == crate::widget::WidgetType::EditBox;
+        let was_mouse_eligible = frame.accepts_mouse();
         apply(frame, enable);
-        let is_mouse_eligible =
-            frame.mouse_enabled || frame.widget_type == crate::widget::WidgetType::EditBox;
+        let is_mouse_eligible = frame.accepts_mouse();
         if was_mouse_eligible != is_mouse_eligible {
             sim.queue_hit_grid_eligibility_change(id);
         }
@@ -32,7 +30,9 @@ fn set_frame_input_flag(
 }
 
 pub fn is_mouse_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    push_frame_input_flag(state, |frame| frame.mouse_enabled)
+    push_frame_input_flag(state, |frame| {
+        frame.mouse_enabled || frame.mouse_motion_enabled
+    })
 }
 
 fn push_frame_input_flag(
@@ -105,9 +105,9 @@ pub fn set_mouse_motion_enabled(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn set_mouse_click_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    enable_mouse(state)
+    set_frame_input_flag(state, |frame, enable| frame.mouse_enabled = enable)
 }
 
 pub fn is_mouse_click_enabled(state: &mut LuaState) -> LuaResult<u32> {
-    is_mouse_enabled(state)
+    push_frame_input_flag(state, |frame| frame.mouse_enabled)
 }
