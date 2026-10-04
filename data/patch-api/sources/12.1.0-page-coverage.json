@@ -1,0 +1,2009 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "12.1.0",
+  "source_register": "data/patch-api/sources/12.1.0-api-changes.txt",
+  "source_sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
+  "audit_status": "in-progress",
+  "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
+  "capabilities": [],
+  "source_rows": [
+    {
+      "source_id": "source-context-002",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AuraContainer/AuraButton type construction and template loading; this does not establish managed presentation or security."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "VectorGraphics construction/SVG metadata storage exists, but native code explicitly says SVG path rendering is not modeled. Implement 2D SVG asset decoding/rendering and legal method surface; not a 3D feature."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "The migration is supplied by unmodified cached FrameXML; prove actual Retail helper behavior and ordinary/global lookup, not the stale PTR inventory alone."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "The migration is supplied by unmodified cached FrameXML; prove actual Retail helper behavior and ordinary/global lookup, not the stale PTR inventory alone."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "HasAccessConstraints reads native flags, but CanBeAccessedInContext is registered only under client-wowforever. Retail needs its context-access query and aura restriction policy, not a copied Forever availability claim."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Audit current cached deprecated wrappers and default Retail strict-removal timing. A historical PTR symbol observation is not Retail migration acceptance."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Implement the declared CVar/default/scope and policy rather than generic name acceptance. Current CVar defaults are a nearby producer; account-wide autoLoot and session-only tooltip setting need persistence boundaries."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: simulator does not publish ManifestInterfaceData/exportinterfacefiles art; need authenticated pre/post-patch DB/export snapshots to prove filename retention and absence of new names. No implementation batch."
+    },
+    {
+      "source_id": "source-context-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-023",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+    },
+    {
+      "source_id": "source-context-026",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+    },
+    {
+      "source_id": "source-context-029",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+    },
+    {
+      "source_id": "source-context-031",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Public/forbidden proxy tables and XML mixin routing exist. Retail addon-inaccessible partitions, handler ownership and native access restrictions still need a complete model; table partitioning alone is not isolation proof."
+    },
+    {
+      "source_id": "source-context-033",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+    },
+    {
+      "source_id": "prose-2026-06-18-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+    },
+    {
+      "source_id": "source-context-036",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AuraContainer/AuraButton type construction and template loading; this does not establish managed presentation or security."
+    },
+    {
+      "source_id": "prose-2026-06-18-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: PTR1 five-button AddAuraFrame example is removed by later PTR4 text; exact original PTR1 addon/native surface is absent from current Retail. Current managed groups do not prove the historical example."
+    },
+    {
+      "source_id": "source-context-040",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Public/forbidden proxy tables and XML mixin routing exist. Retail addon-inaccessible partitions, handler ownership and native access restrictions still need a complete model; table partitioning alone is not isolation proof."
+    },
+    {
+      "source_id": "source-context-042",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+    },
+    {
+      "source_id": "source-context-044",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+    },
+    {
+      "source_id": "source-context-049",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: simulator does not publish ManifestInterfaceData/exportinterfacefiles art; need authenticated pre/post-patch DB/export snapshots to prove filename retention and absence of new names. No implementation batch."
+    },
+    {
+      "source_id": "source-context-051",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-18-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "VectorGraphics construction/SVG metadata storage exists, but native code explicitly says SVG path rendering is not modeled. Implement 2D SVG asset decoding/rendering and legal method surface; not a 3D feature."
+    },
+    {
+      "source_id": "prose-2026-06-18-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "VectorGraphics construction/SVG metadata storage exists, but native code explicitly says SVG path rendering is not modeled. Implement 2D SVG asset decoding/rendering and legal method surface; not a 3D feature."
+    },
+    {
+      "source_id": "prose-2026-06-18-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "TOC Bootstrap annotations and bootstrap-only LoD startup scheduling are implemented. Prove enabled/disabled addons, dependency ordering, one-time phase execution and subsequent full load under default Retail."
+    },
+    {
+      "source_id": "prose-2026-06-18-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "TOC Bootstrap annotations and bootstrap-only LoD startup scheduling are implemented. Prove enabled/disabled addons, dependency ordering, one-time phase execution and subsequent full load under default Retail."
+    },
+    {
+      "source_id": "prose-2026-06-18-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "TOC Bootstrap annotations and bootstrap-only LoD startup scheduling are implemented. Prove enabled/disabled addons, dependency ordering, one-time phase execution and subsequent full load under default Retail."
+    },
+    {
+      "source_id": "prose-2026-06-18-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Numeric OnUpdateMode state and dispatch modes are implemented, including hidden RunAlways and one-shot reset/rearm. Existing actual managed-aura dirty-phase test is meaningful but unexecuted in this audit."
+    },
+    {
+      "source_id": "prose-2026-06-18-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Numeric OnUpdateMode state and dispatch modes are implemented, including hidden RunAlways and one-shot reset/rearm. Existing actual managed-aura dirty-phase test is meaningful but unexecuted in this audit."
+    },
+    {
+      "source_id": "prose-2026-06-18-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail ApplyRolesetFilters is a temporary no-op; GetActiveBlockedRolesets/GetActiveAllowedRolesets/IsRolesetFiltered have no source producer. Model allowed/blocked sets, alwaysBlocked and effective visibility from current declarations."
+    },
+    {
+      "source_id": "prose-2026-06-18-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail ApplyRolesetFilters is a temporary no-op; GetActiveBlockedRolesets/GetActiveAllowedRolesets/IsRolesetFiltered have no source producer. Model allowed/blocked sets, alwaysBlocked and effective visibility from current declarations."
+    },
+    {
+      "source_id": "prose-2026-06-18-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Radial APIs currently store per-frame metadata; this is not rendered texture/statusbar radial masking. Add presentation and secret-aspect behavior with concrete radial fixtures."
+    },
+    {
+      "source_id": "prose-2026-06-18-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "XML local KeyValues, Mixins blocks and qualified mixin lookup have loader producers; prove per-addon local table identity, nested lookup, precedence and no cross-addon leakage."
+    },
+    {
+      "source_id": "prose-2026-06-18-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "XML local KeyValues, Mixins blocks and qualified mixin lookup have loader producers; prove per-addon local table identity, nested lookup, precedence and no cross-addon leakage."
+    },
+    {
+      "source_id": "prose-2026-06-18-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "XML local KeyValues, Mixins blocks and qualified mixin lookup have loader producers; prove per-addon local table identity, nested lookup, precedence and no cross-addon leakage."
+    },
+    {
+      "source_id": "prose-2026-06-18-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "XML local KeyValues, Mixins blocks and qualified mixin lookup have loader producers; prove per-addon local table identity, nested lookup, precedence and no cross-addon leakage."
+    },
+    {
+      "source_id": "source-context-068",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-071",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-072",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-23-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+    },
+    {
+      "source_id": "source-context-074",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-076",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-23-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-06-23-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-06-23-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+    },
+    {
+      "source_id": "source-context-080",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-23-081",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+    },
+    {
+      "source_id": "prose-2026-06-23-082",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+    },
+    {
+      "source_id": "prose-2026-06-23-083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "RegisterEvent/related mutation paths reject the EventRegistrations aspect and preserve existing listeners; needs default Retail acceptance proof."
+    },
+    {
+      "source_id": "prose-2026-06-23-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Click/focus guards and keyboard propagation exist; reconcile the complete mouse+keyboard contract, child inheritance and secure callers rather than treating isolated probes as all-input proof."
+    },
+    {
+      "source_id": "prose-2026-06-23-085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Click/focus guards and keyboard propagation exist; reconcile the complete mouse+keyboard contract, child inheritance and secure callers rather than treating isolated probes as all-input proof."
+    },
+    {
+      "source_id": "prose-2026-06-23-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Click/focus guards and keyboard propagation exist; reconcile the complete mouse+keyboard contract, child inheritance and secure callers rather than treating isolated probes as all-input proof."
+    },
+    {
+      "source_id": "prose-2026-06-23-087",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+    },
+    {
+      "source_id": "prose-2026-06-23-088",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "RegisterEvent/related mutation paths reject the EventRegistrations aspect and preserve existing listeners; needs default Retail acceptance proof."
+    },
+    {
+      "source_id": "prose-2026-06-23-089",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "EditBox focus APIs exist, but visibility-driven auto-focus must respect the Shown secret aspect, including inherited state."
+    },
+    {
+      "source_id": "prose-2026-06-23-090",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "SetParent/SetPoint must reject implicit acquisition of additional forbidden aspects before mutation; current shared native guard implements that boundary."
+    },
+    {
+      "source_id": "source-context-093",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-094",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-095",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-30-097",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+    },
+    {
+      "source_id": "prose-2026-06-30-098",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+    },
+    {
+      "source_id": "prose-2026-06-30-099",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+    },
+    {
+      "source_id": "prose-2026-06-30-100",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+    },
+    {
+      "source_id": "prose-2026-06-30-101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-06-30-102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-06-30-103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current Blizzard chat filter path needs a concrete 19-argument input/output probe; original 14-argument bug cannot be discharged from a callable symbol."
+    },
+    {
+      "source_id": "source-context-104",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-105",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-06-30-107",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-06-30-108",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-06-30-109",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "source-context-112",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-113",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-114",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-115",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: narrative progress/exploit rationale has no specified observable Retail result; exact historical/native evidence is missing. No implementation batch."
+    },
+    {
+      "source_id": "prose-2026-07-07-117",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-07-118",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current Retail managed creation supersedes direct AuraButton/AddAuraFrame publication; reconcile ordinary/raw lookup and actual cached templates. Original PTR producer and transition date remain unproved, but final Retail absence is modelable."
+    },
+    {
+      "source_id": "prose-2026-07-07-119",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-120",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-121",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+    },
+    {
+      "source_id": "prose-2026-07-07-122",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-123",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-124",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current native filter parser handles polarity and PLAYER only. Add negation, DISPELLABLE/IMPORTANT and raid-dispel eligibility using explicit aura/raid state; do not return plausible defaults."
+    },
+    {
+      "source_id": "prose-2026-07-07-125",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-126",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-127",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-128",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-129",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-130",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-07-131",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-07-132",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-07-133",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-07-134",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-07-135",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+    },
+    {
+      "source_id": "prose-2026-07-07-136",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+    },
+    {
+      "source_id": "prose-2026-07-07-137",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-07-138",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-07-139",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+    },
+    {
+      "source_id": "prose-2026-07-07-140",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-07-141",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached AddItemEnchantment and cancel handling exist; connect explicit temporary weapon-enchant state to managed frames and click routing."
+    },
+    {
+      "source_id": "prose-2026-07-07-142",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "source-context-143",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-07-07-145",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing private aura sound model and AddAuraSound entry point are relevant, but all-aura/application/removal triggers and successive renamed aliases need their own delta model; inherited add-context capability alone cannot close this row."
+    },
+    {
+      "source_id": "prose-2026-07-07-146",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current native filter parser handles polarity and PLAYER only. Add negation, DISPELLABLE/IMPORTANT and raid-dispel eligibility using explicit aura/raid state; do not return plausible defaults."
+    },
+    {
+      "source_id": "prose-2026-07-07-147",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+    },
+    {
+      "source_id": "prose-2026-07-07-148",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Audit current cached deprecated wrappers and default Retail strict-removal timing. A historical PTR symbol observation is not Retail migration acceptance."
+    },
+    {
+      "source_id": "prose-2026-07-07-149",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: PTR4 AuraContainer-in-combat crash/error was superseded by PTR7 allowing creation; current Retail cannot prove the original PTR4 native failure. Exact original build/native trace is missing."
+    },
+    {
+      "source_id": "prose-2026-07-07-150",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: PTR4 AuraContainer-in-combat crash/error was superseded by PTR7 allowing creation; current Retail cannot prove the original PTR4 native failure. Exact original build/native trace is missing."
+    },
+    {
+      "source_id": "prose-2026-07-07-151",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Audit current cached deprecated wrappers and default Retail strict-removal timing. A historical PTR symbol observation is not Retail migration acceptance."
+    },
+    {
+      "source_id": "prose-2026-07-07-152",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-07-07-153",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "source-context-156",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-157",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-158",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-07-14-160",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current native filter parser handles polarity and PLAYER only. Add negation, DISPELLABLE/IMPORTANT and raid-dispel eligibility using explicit aura/raid state; do not return plausible defaults."
+    },
+    {
+      "source_id": "prose-2026-07-14-161",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current native filter parser handles polarity and PLAYER only. Add negation, DISPELLABLE/IMPORTANT and raid-dispel eligibility using explicit aura/raid state; do not return plausible defaults."
+    },
+    {
+      "source_id": "prose-2026-07-14-162",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current native filter parser handles polarity and PLAYER only. Add negation, DISPELLABLE/IMPORTANT and raid-dispel eligibility using explicit aura/raid state; do not return plausible defaults."
+    },
+    {
+      "source_id": "prose-2026-07-14-163",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+    },
+    {
+      "source_id": "prose-2026-07-14-164",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+    },
+    {
+      "source_id": "prose-2026-07-14-165",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: narrative progress/exploit rationale has no specified observable Retail result; exact historical/native evidence is missing. No implementation batch."
+    },
+    {
+      "source_id": "prose-2026-07-14-166",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "WorldFrame has an engine-created object; generic CreateFrame path still needs the addon creation rejection contract rather than assuming the existing root disallows duplicates."
+    },
+    {
+      "source_id": "prose-2026-07-14-167",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+    },
+    {
+      "source_id": "source-context-170",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-171",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-172",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-07-21-174",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-21-175",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-07-21-176",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-21-177",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-07-21-178",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+    },
+    {
+      "source_id": "prose-2026-07-21-179",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Implement the declared CVar/default/scope and policy rather than generic name acceptance. Current CVar defaults are a nearby producer; account-wide autoLoot and session-only tooltip setting need persistence boundaries."
+    },
+    {
+      "source_id": "prose-2026-07-21-180",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing private aura sound model and AddAuraSound entry point are relevant, but all-aura/application/removal triggers and successive renamed aliases need their own delta model; inherited add-context capability alone cannot close this row."
+    },
+    {
+      "source_id": "prose-2026-07-21-181",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "RemoveAuraSound is already registered under retail-12-1-0 and delegates to the native registration removal model. Tests only for renamed publication, zero results, deletion/readback and legacy-wrapper forwarding; no actual playback or historical intermediate alias timing claim."
+    },
+    {
+      "source_id": "prose-2026-07-21-182",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-21-183",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "HasAccessConstraints reads native flags, but CanBeAccessedInContext is registered only under client-wowforever. Retail needs its context-access query and aura restriction policy, not a copied Forever availability claim."
+    },
+    {
+      "source_id": "prose-2026-07-21-184",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-07-21-185",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current formatter/secret infrastructure is adjacent, but the secret argument causing unrelated object secrecy needs a behavioral input/output and object-state model; no broad FormatNumber safety credit."
+    },
+    {
+      "source_id": "prose-2026-07-21-186",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-21-187",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached AddItemEnchantment and cancel handling exist; connect explicit temporary weapon-enchant state to managed frames and click routing."
+    },
+    {
+      "source_id": "prose-2026-07-21-188",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-21-189",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail ApplyRolesetFilters is a temporary no-op; GetActiveBlockedRolesets/GetActiveAllowedRolesets/IsRolesetFiltered have no source producer. Model allowed/blocked sets, alwaysBlocked and effective visibility from current declarations."
+    },
+    {
+      "source_id": "prose-2026-07-21-190",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail ApplyRolesetFilters is a temporary no-op; GetActiveBlockedRolesets/GetActiveAllowedRolesets/IsRolesetFiltered have no source producer. Model allowed/blocked sets, alwaysBlocked and effective visibility from current declarations."
+    },
+    {
+      "source_id": "prose-2026-07-21-191",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail ApplyRolesetFilters is a temporary no-op; GetActiveBlockedRolesets/GetActiveAllowedRolesets/IsRolesetFiltered have no source producer. Model allowed/blocked sets, alwaysBlocked and effective visibility from current declarations."
+    },
+    {
+      "source_id": "source-context-192",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-07-21-194",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current UnitClass/related getters return ordinary values; implement secret results based on unit identity across every API named by the source. Existing UnitName policy does not cover these added contracts."
+    },
+    {
+      "source_id": "prose-2026-07-21-195",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current UnitClass/related getters return ordinary values; implement secret results based on unit identity across every API named by the source. Existing UnitName policy does not cover these added contracts."
+    },
+    {
+      "source_id": "prose-2026-07-21-196",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetGuildInfo has state-backed producers but the compound-token ban needs explicit authentication/validation before query results."
+    },
+    {
+      "source_id": "prose-2026-07-21-197",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitIsPossessed currently returns false and UnitIsCharmed is a compatibility stub. Model charm/possession state plus aura secrecy and player/pet/vehicle exceptions."
+    },
+    {
+      "source_id": "source-context-198",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-07-21-199",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blocked: retained extract omits the healer buff/HoT spell list. Exact 12.1.0 classification DB and pinned native spell secrecy flags are missing; scratch wikitext can recover names/IDs but not native flags."
+    },
+    {
+      "source_id": "source-context-202",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-203",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-204",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-07-23-206",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+    },
+    {
+      "source_id": "prose-2026-07-23-207",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current Retail allows AuraContainer creation in combat. Existing type-construction path and tests are relevant; add an actual combat-state creation probe, without claiming historical PTR4 behavior."
+    },
+    {
+      "source_id": "prose-2026-07-23-208",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+    },
+    {
+      "source_id": "prose-2026-07-23-209",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+    },
+    {
+      "source_id": "prose-2026-07-23-210",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-07-23-211",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-07-23-212",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+    },
+    {
+      "source_id": "prose-2026-07-23-213",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "HasAccessConstraints reads native flags, but CanBeAccessedInContext is registered only under client-wowforever. Retail needs its context-access query and aura restriction policy, not a copied Forever availability claim."
+    },
+    {
+      "source_id": "prose-2026-07-23-214",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ResizeToBoundsRect is declared in cached SimpleFrame documentation but has no Rust/Lua simulator producer. Model resize from child bounds and preserve observable anchor/size semantics."
+    },
+    {
+      "source_id": "prose-2026-07-23-215",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-07-23-216",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+    },
+    {
+      "source_id": "prose-2026-07-23-217",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CastingBarTypeInfo/nameplate taint fix is in vendor Lua context; identify real addon caller/secure owner state and reproduce its route. Existing proxy/delegate infrastructure does not prove the specific taint bug."
+    },
+    {
+      "source_id": "prose-2026-07-23-218",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Unmodified cached PingableUnitFrameTemplate and C_PingSecure require a real addon-unit fixture proving taint and enemy ping behavior, not a namespace-presence test."
+    },
+    {
+      "source_id": "prose-2026-07-23-219",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-07-23-220",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+    },
+    {
+      "source_id": "prose-2026-07-23-221",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current UnitClass/related getters return ordinary values; implement secret results based on unit identity across every API named by the source. Existing UnitName policy does not cover these added contracts."
+    },
+    {
+      "source_id": "prose-2026-07-23-222",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current UnitClass/related getters return ordinary values; implement secret results based on unit identity across every API named by the source. Existing UnitName policy does not cover these added contracts."
+    },
+    {
+      "source_id": "prose-2026-07-23-223",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitIsPossessed currently returns false and UnitIsCharmed is a compatibility stub. Model charm/possession state plus aura secrecy and player/pet/vehicle exceptions."
+    },
+    {
+      "source_id": "prose-2026-07-23-224",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetGuildInfo has state-backed producers but the compound-token ban needs explicit authentication/validation before query results."
+    },
+    {
+      "source_id": "prose-2026-07-23-225",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing 12.0.5 unit-name-secret-tokens capability protects PvP tokens; the new no-secrets-in-active-PvP delta cannot inherit that opposite policy. Add explicit active-match handling."
+    },
+    {
+      "source_id": "source-context-228",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-229",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-230",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-08-04-232",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom AuraButton Lua has pandemic regions and window updates; wire duration/refresh state and real textures before claiming the feature."
+    },
+    {
+      "source_id": "prose-2026-08-04-233",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-08-04-234",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+    },
+    {
+      "source_id": "prose-2026-08-04-235",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+    },
+    {
+      "source_id": "prose-2026-08-04-236",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitIsPossessed currently returns false and UnitIsCharmed is a compatibility stub. Model charm/possession state plus aura secrecy and player/pet/vehicle exceptions."
+    },
+    {
+      "source_id": "prose-2026-08-04-237",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "VectorGraphics construction/SVG metadata storage exists, but native code explicitly says SVG path rendering is not modeled. Implement 2D SVG asset decoding/rendering and legal method surface; not a 3D feature."
+    },
+    {
+      "source_id": "prose-2026-08-04-238",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+    },
+    {
+      "source_id": "prose-2026-08-04-239",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Unmodified cached PingableUnitFrameTemplate and C_PingSecure require a real addon-unit fixture proving taint and enemy ping behavior, not a namespace-presence test."
+    },
+    {
+      "source_id": "prose-2026-08-04-240",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+    },
+    {
+      "source_id": "source-context-243",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-244",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-247",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-248",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-251",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-252",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-255",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-258",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-261",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-264",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-267",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-ClubStreamType-268",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Default non-Forever base places Other at 3; generic append publishes Discord at 4, while cached declaration specifies Discord=3. Model exact numeric publication and reordering."
+    },
+    {
+      "source_id": "enumerations-Enum-ClubStreamType-269",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `ClubStreamType.Discord = 3`. Default non-Forever base places Other at 3; generic append publishes Discord at 4, while cached declaration specifies Discord=3. Model exact numeric publication and reordering."
+    },
+    {
+      "source_id": "enumerations-Enum-CompanionConfigSlotTypes-270",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-CompanionConfigSlotTypes-271",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `CompanionConfigSlotTypes.Flavor = 3`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-272",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-273",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `CooldownViewerCategory.GroupBuff = 4`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-274",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `CooldownViewerCategory.SpecAgnosticEssential = 5`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-275",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `CooldownViewerCategory.SpecAgnosticTracked = 6`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-276",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `CooldownViewerCategory.EquipSlotEssential = 7`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-277",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `CooldownViewerCategory.EquipSlotTracked = 8`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-278",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-279",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `EditModeAccountSetting.ShowRaidWarning = 33`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeMinimapSetting-280",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeMinimapSetting-281",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `EditModeMinimapSetting.IconScale = 3`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-282",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-283",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `EditModeSystem.RaidWarning = 24`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeUnitFrameSetting-284",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Native base still publishes retired IconSize; generic append does not rename/reindex existing fields. Cached BuffIconSize=22 and DebuffIconSize=19 require exact table replacement/removal, not append."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeUnitFrameSetting-285",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current declaration has no retired member; absence supports the stated removal, not native historical behavior. Native base still publishes retired IconSize; generic append does not rename/reindex existing fields. Cached BuffIconSize=22 and DebuffIconSize=19 require exact table replacement/removal, not append."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeUnitFrameSetting-286",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `EditModeUnitFrameSetting.BuffIconSize = 22`. Native base still publishes retired IconSize; generic append does not rename/reindex existing fields. Cached BuffIconSize=22 and DebuffIconSize=19 require exact table replacement/removal, not append."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeUnitFrameSetting-287",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `EditModeUnitFrameSetting.DebuffIconSize = 19`. Native base still publishes retired IconSize; generic append does not rename/reindex existing fields. Cached BuffIconSize=22 and DebuffIconSize=19 require exact table replacement/removal, not append."
+    },
+    {
+      "source_id": "enumerations-Enum-FragmentID-288",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Base contains ReservedArchetypeSeparator=255; append assigns new values above 255, not cached FMapObject=43/FWorldStateListenerData=42. Model explicit values; do not copy the PTR-only override into a Retail proof claim."
+    },
+    {
+      "source_id": "enumerations-Enum-FragmentID-289",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `FragmentID.FMapObject = 43`. Base contains ReservedArchetypeSeparator=255; append assigns new values above 255, not cached FMapObject=43/FWorldStateListenerData=42. Model explicit values; do not copy the PTR-only override into a Retail proof claim."
+    },
+    {
+      "source_id": "enumerations-Enum-FragmentID-290",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `FragmentID.FWorldStateListenerData = 42`. Base contains ReservedArchetypeSeparator=255; append assigns new values above 255, not cached FMapObject=43/FWorldStateListenerData=42. Model explicit values; do not copy the PTR-only override into a Retail proof claim."
+    },
+    {
+      "source_id": "enumerations-Enum-FrameTutorialAccount-291",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Native base ends at HousingCleanupMode=40; append gives HousingPetBeds=41, while current cache declares 50. Model exact publication and reconcile later-cache epoch."
+    },
+    {
+      "source_id": "enumerations-Enum-FrameTutorialAccount-292",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `FrameTutorialAccount.HousingPetBeds = 50`. Native base ends at HousingCleanupMode=40; append gives HousingPetBeds=41, while current cache declares 50. Model exact publication and reconcile later-cache epoch."
+    },
+    {
+      "source_id": "enumerations-Enum-HouseFinderSuggestionReason-293",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Existing test records Relinquished=65; cache declares 128. Existing enum-publication capability covers HomeOwner, not this member. Exact native/epoch bitmask mapping must be reconciled; declaration supplies a modelable target."
+    },
+    {
+      "source_id": "enumerations-Enum-HouseFinderSuggestionReason-294",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HouseFinderSuggestionReason.Relinquished = 128`. Existing test records Relinquished=65; cache declares 128. Existing enum-publication capability covers HomeOwner, not this member. Exact native/epoch bitmask mapping must be reconciled; declaration supplies a modelable target."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-295",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current SeqEnumDef puts RoomPlacementOutOfBounds at 97; cache declares 96. Other listed additions are present at their cached values. Reconcile the changed ordering/member set without treating parent enum existence as full proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-296",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.BlueprintGenericImportError = 6`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-297",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.BlueprintStorageLimit = 14`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-298",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.BlueprintTypeInvalid = 12`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-299",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.BlueprintNotFound = 9`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-300",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.InvalidExteriorDocument = 54`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-301",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.BlueprintGenericExportError = 5`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-302",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.InvalidInteriorDocument = 59`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-303",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.BlueprintRequirementsUnmet = 10`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-304",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.RoomPlacementOutOfBounds = 96`. Current SeqEnumDef puts RoomPlacementOutOfBounds at 97; cache declares 96. Other listed additions are present at their cached values. Reconcile the changed ordering/member set without treating parent enum existence as full proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-305",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.BlueprintCodeInvalid = 3`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-306",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.InsufficientRoomBudget = 64`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-307",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.BlueprintLocationInvalid = 7`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-308",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.BlueprintNameInvalid = 8`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-309",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `HousingResult.BlueprintVersionInvalid = 15`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-NamePlateStyle-310",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-NamePlateStyle-311",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `NamePlateStyle.Classic = 6`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-PingResult-312",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-PingResult-313",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `PingResult.FailedSilent = 8`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-314",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-315",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `PingSubjectType.ActionReady = 6`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-316",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `PingSubjectType.ActionOnCooldown = 7`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-317",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `PingSubjectType.ActionUnavailable = 8`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-SecretAspect-318",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Base maximum is 524288; append gives RadialProgress=524289, while cached mask is 8388608. Replace append arithmetic with explicit mask publication and implement radial security at its producer."
+    },
+    {
+      "source_id": "enumerations-Enum-SecretAspect-319",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `SecretAspect.RadialProgress = 8388608`. Base maximum is 524288; append gives RadialProgress=524289, while cached mask is 8388608. Replace append arithmetic with explicit mask publication and implement radial security at its producer."
+    },
+    {
+      "source_id": "enumerations-Enum-TieredEntranceType-320",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-TieredEntranceType-321",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `TieredEntranceType.Lairs = 4`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-322",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-323",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `TooltipDataLineType.ItemSpellTriggerOnUse = 44`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-324",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `TooltipDataLineType.ItemSpellTriggerOnEquip = 45`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-325",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached declaration: `TooltipDataLineType.ItemSpellTriggerOnProc = 46`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+    },
+    {
+      "source_id": "source-context-328",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "structures-AddPrivateAuraAnchorArgs-329",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Input reader models the new flags and omits showCountdownFrame. Prove each default/non-default flag, retired output absence, invalid inputs and callback-visible state."
+    },
+    {
+      "source_id": "structures-AddPrivateAuraAnchorArgs-330",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Input reader models the new flags and omits showCountdownFrame. Prove each default/non-default flag, retired output absence, invalid inputs and callback-visible state."
+    },
+    {
+      "source_id": "structures-AddPrivateAuraAnchorArgs-331",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Input reader models the new flags and omits showCountdownFrame. Prove each default/non-default flag, retired output absence, invalid inputs and callback-visible state."
+    },
+    {
+      "source_id": "structures-AddPrivateAuraAnchorArgs-332",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Input reader models the new flags and omits showCountdownFrame. Prove each default/non-default flag, retired output absence, invalid inputs and callback-visible state."
+    },
+    {
+      "source_id": "structures-AddPrivateAuraAnchorArgs-333",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Input reader models the new flags and omits showCountdownFrame. Prove each default/non-default flag, retired output absence, invalid inputs and callback-visible state."
+    },
+    {
+      "source_id": "structures-BNetAccountInfo-334",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail writer supplies friendTags from explicit friend state and friendLevel as fixed 0. Prove the bounded published shape across all advertised getters; live friend-level progression remains unmodeled and uncredited."
+    },
+    {
+      "source_id": "structures-BNetAccountInfo-335",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail writer supplies friendTags from explicit friend state and friendLevel as fixed 0. Prove the bounded published shape across all advertised getters; live friend-level progression remains unmodeled and uncredited."
+    },
+    {
+      "source_id": "structures-BNetAccountInfo-336",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail writer supplies friendTags from explicit friend state and friendLevel as fixed 0. Prove the bounded published shape across all advertised getters; live friend-level progression remains unmodeled and uncredited."
+    },
+    {
+      "source_id": "structures-BNetGameAccountInfo-337",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current Retail producer publishes classFilename from uppercase class_name. Tests only for the bounded field shape across advertised getters and canonical single/multiword class fixtures; do not infer full native class-token or nilability behavior from the existing simple string assertion."
+    },
+    {
+      "source_id": "structures-BNetGameAccountInfo-338",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current Retail producer publishes classFilename from uppercase class_name. Tests only for the bounded field shape across advertised getters and canonical single/multiword class fixtures; do not infer full native class-token or nilability behavior from the existing simple string assertion."
+    },
+    {
+      "source_id": "structures-ChatMessageEventParams-339",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Chat dispatch exists, but discordInfo has no simulator producer. Add explicit DiscordChatInfo payload to the local event model and preserve the expanded chat filter argument vector."
+    },
+    {
+      "source_id": "structures-ChatMessageEventParams-340",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Chat dispatch exists, but discordInfo has no simulator producer. Add explicit DiscordChatInfo payload to the local event model and preserve the expanded chat filter argument vector."
+    },
+    {
+      "source_id": "structures-ClubMemberInfo-341",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Club member getters have a producer but no discordInfo field. Add optional DiscordChatInfo backed by explicit member state; nil defaults alone are not nonempty coverage."
+    },
+    {
+      "source_id": "structures-ClubMemberInfo-342",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Club member getters have a producer but no discordInfo field. Add optional DiscordChatInfo backed by explicit member state; nil defaults alone are not nonempty coverage."
+    },
+    {
+      "source_id": "structures-CooldownViewerCooldown-343",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetCooldownViewerCooldownInfo is a temporary nil default; no spellCategoryID/equipSlot/isInvisible producer exists. Model explicit viewer entries with optional category/equipSlot and required visibility flag."
+    },
+    {
+      "source_id": "structures-CooldownViewerCooldown-344",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetCooldownViewerCooldownInfo is a temporary nil default; no spellCategoryID/equipSlot/isInvisible producer exists. Model explicit viewer entries with optional category/equipSlot and required visibility flag."
+    },
+    {
+      "source_id": "structures-CooldownViewerCooldown-345",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetCooldownViewerCooldownInfo is a temporary nil default; no spellCategoryID/equipSlot/isInvisible producer exists. Model explicit viewer entries with optional category/equipSlot and required visibility flag."
+    },
+    {
+      "source_id": "structures-CooldownViewerCooldown-346",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetCooldownViewerCooldownInfo is a temporary nil default; no spellCategoryID/equipSlot/isInvisible producer exists. Model explicit viewer entries with optional category/equipSlot and required visibility flag."
+    },
+    {
+      "source_id": "structures-HousingDecorInstanceInfo-347",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Housing backing state exists, but no canAttachPet output producer exists. Add eligibility to decor instance state and serialize it through each relevant mode query."
+    },
+    {
+      "source_id": "structures-HousingDecorInstanceInfo-348",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Housing backing state exists, but no canAttachPet output producer exists. Add eligibility to decor instance state and serialize it through each relevant mode query."
+    },
+    {
+      "source_id": "structures-LfgEntryData-349",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetActiveEntryInfo currently returns nil; implement a nonempty active entry with censored field from explicit local listing state. Search-result field does not prove active-entry output."
+    },
+    {
+      "source_id": "structures-LfgEntryData-350",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetActiveEntryInfo currently returns nil; implement a nonempty active entry with censored field from explicit local listing state. Search-result field does not prove active-entry output."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-351",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail search serializer publishes censored=false. Prove bounded field shape from a nonempty listing and independent results; actual censorship transitions are not implemented or claimed."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-352",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail search serializer publishes censored=false. Prove bounded field shape from a nonempty listing and independent results; actual censorship transitions are not implemented or claimed."
+    },
+    {
+      "source_id": "structures-PetJournalPetInfo-353",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+    },
+    {
+      "source_id": "structures-PetJournalPetInfo-354",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+    },
+    {
+      "source_id": "structures-PetJournalPetInfo-355",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+    },
+    {
+      "source_id": "structures-PetJournalPetInfo-356",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+    },
+    {
+      "source_id": "structures-PetJournalPetInfo-357",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+    },
+    {
+      "source_id": "structures-PetJournalPetInfo-358",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+    },
+    {
+      "source_id": "structures-PetJournalPetInfo-359",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+    },
+    {
+      "source_id": "structures-PetJournalPetInfo-360",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+    },
+    {
+      "source_id": "structures-PetJournalPetInfo-361",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+    },
+    {
+      "source_id": "structures-PetJournalPetInfo-362",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+    },
+    {
+      "source_id": "structures-PlaySoundParams-363",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current PlaySoundWithOptions compatibility path is a no-op. Model and validate volumeOverride in the sound request/options state, with observable queued request or recording sink; no hardware/service restart needed."
+    },
+    {
+      "source_id": "structures-PlaySoundParams-364",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current PlaySoundWithOptions compatibility path is a no-op. Model and validate volumeOverride in the sound request/options state, with observable queued request or recording sink; no hardware/service restart needed."
+    },
+    {
+      "source_id": "structures-PlayerChoiceInfo-365",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "C_PlayerChoice serializes seeded local choice state but omits hideAnswerArt. Add the boolean state/serialization and prove live replacement through GetCurrentPlayerChoiceInfo."
+    },
+    {
+      "source_id": "structures-PlayerChoiceInfo-366",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "C_PlayerChoice serializes seeded local choice state but omits hideAnswerArt. Add the boolean state/serialization and prove live replacement through GetCurrentPlayerChoiceInfo."
+    },
+    {
+      "source_id": "structures-TieredEntranceTierInfo-367",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail serializer emits overrideTooltipSpellID=nil and isLFG=false. Current declaration requires a non-nil overrideTooltipSpellID and uses queueAsLFG rather than isLFG; model/epoch-reconcile that delta instead of crediting plausible placeholders."
+    },
+    {
+      "source_id": "structures-TieredEntranceTierInfo-368",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail serializer emits overrideTooltipSpellID=nil and isLFG=false. Current declaration requires a non-nil overrideTooltipSpellID and uses queueAsLFG rather than isLFG; model/epoch-reconcile that delta instead of crediting plausible placeholders."
+    },
+    {
+      "source_id": "structures-TieredEntranceTierInfo-369",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing Retail producer explicitly emits isLFG=false. Tests-only bounded captured-source shape proof; current cache uses queueAsLFG instead, so no historical/native or renamed-field parity credit."
+    },
+    {
+      "source_id": "structures-UnitPrivateAuraAnchorInfo-370",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Anchor output serializer publishes current flags without showCountdownFrame; prove public/callback result isolation and true/false values. This is structure shape, not private-aura rendering parity."
+    },
+    {
+      "source_id": "structures-UnitPrivateAuraAnchorInfo-371",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Anchor output serializer publishes current flags without showCountdownFrame; prove public/callback result isolation and true/false values. This is structure shape, not private-aura rendering parity."
+    },
+    {
+      "source_id": "structures-UnitPrivateAuraAnchorInfo-372",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Anchor output serializer publishes current flags without showCountdownFrame; prove public/callback result isolation and true/false values. This is structure shape, not private-aura rendering parity."
+    },
+    {
+      "source_id": "structures-UnitPrivateAuraAnchorInfo-373",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Anchor output serializer publishes current flags without showCountdownFrame; prove public/callback result isolation and true/false values. This is structure shape, not private-aura rendering parity."
+    },
+    {
+      "source_id": "structures-UnitPrivateAuraAnchorInfo-374",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Anchor output serializer publishes current flags without showCountdownFrame; prove public/callback result isolation and true/false values. This is structure shape, not private-aura rendering parity."
+    },
+    {
+      "source_id": "source-context-377",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-378",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-getglobal-380",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native global helper and unmodified cached deprecated wrapper both exist. Tests only: raw/ordinary lookup, canonical dotted lookup, write/read/error behavior and actual deprecated-addon loading. Deprecation is not equivalent to complete native absence."
+    },
+    {
+      "source_id": "deprecated api-setglobal-381",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Native global helper and unmodified cached deprecated wrapper both exist. Tests only: raw/ordinary lookup, canonical dotted lookup, write/read/error behavior and actual deprecated-addon loading. Deprecation is not equivalent to complete native absence."
+    },
+    {
+      "source_id": "source-context-383",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-BNSendVerifiedBattleTagInvite-385",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current native Battle.net replacement functions record/query explicit local invite state; cached deprecated aliases forward to them. Tests only for both wrapper/backend routes, duplicates, absent invites, exact arguments and result shape; no network delivery claim."
+    },
+    {
+      "source_id": "deprecated api-BNGetFriendInviteInfo-386",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current native Battle.net replacement functions record/query explicit local invite state; cached deprecated aliases forward to them. Tests only for both wrapper/backend routes, duplicates, absent invites, exact arguments and result shape; no network delivery claim."
+    },
+    {
+      "source_id": "source-context-388",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-C_DyeColor-GetDyeColorForItem-390",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached singular-to-plural dye wrappers exist, but plural native queries return empty compatibility lists because item/dye data is unmodeled. Model an explicit item/location-to-color catalog, then prove first-result/nil legacy forwarding. INFERRED: deterministic local catalog and invalid-location policy."
+    },
+    {
+      "source_id": "deprecated api-C_DyeColor-GetDyeColorForItemLocation-391",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached singular-to-plural dye wrappers exist, but plural native queries return empty compatibility lists because item/dye data is unmodeled. Model an explicit item/location-to-color catalog, then prove first-result/nil legacy forwarding. INFERRED: deterministic local catalog and invalid-location policy."
+    },
+    {
+      "source_id": "source-context-393",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading or source context only; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-RaidNotice_AddMessage-395",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Unmodified RaidWarningUtil/RaidWarningFrameMixin implement message addition and pool-backed clearing. Tests only: actual deprecated wrapper, message pool contents/visibility, per-type clearing and default Retail loading; text pixels and native timing are not claimed."
+    },
+    {
+      "source_id": "deprecated api-RaidNotice_Clear-396",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Unmodified RaidWarningUtil/RaidWarningFrameMixin implement message addition and pool-backed clearing. Tests only: actual deprecated wrapper, message pool contents/visibility, per-type clearing and default Retail loading; text pixels and native timing are not claimed."
+    }
+  ]
+}

@@ -7,10 +7,18 @@
   "method": "MediaWiki query prop=extracts explaintext=1; full plaintext page extract",
   "sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
   "scope": "Entire plaintext page extract; not raw wikitext/link graph",
-  "audit_status": "source-captured",
+  "audit_status": "in-progress",
   "prior_registers": [
     "12.1-behaviors.json",
     "12.1-framexml.json",
     "12.1.0-ptr-cache-manifest.txt"
-  ]
+  ],
+  "wikitext": {
+    "file": "12.1.0-api-changes.wikitext",
+    "method": "MediaWiki action=parse prop=wikitext|revid",
+    "revid": 6886719,
+    "retrieved": "2026-10-04",
+    "sha256": "de9e45f6e43c66c78be2d9e9c6a6e7945cd91676448bbe502a6a4db0d75d8bde",
+    "note": "Holds six collapsed inventories (Global API, FrameXML, ScriptObjects, Widgets, Events, CVars) that the plaintext extract drops; not yet in the page ledger."
+  }
 }
