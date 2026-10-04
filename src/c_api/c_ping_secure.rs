@@ -131,9 +131,11 @@ fn set_namespace_pending_ping_off_screen_callback(state: &mut LuaState) -> LuaRe
 #[cfg(feature = "retail-12-0-7")]
 fn authenticate_pending_ping_callback(state: &LuaState, callback: Val) -> LuaResult<Val> {
     let callback = rilua::table_security::unwrap_secret(state, callback)?;
+    // INFERRED: ignore extra arguments after authenticating every supplied value.
     for argument in state.stack.iter().take(state.top).skip(state.base + 1) {
         rilua::table_security::unwrap_secret(state, *argument)?;
     }
+    // INFERRED: accept functions only, not nil or callable tables; clear uses the separate API.
     if !matches!(callback, Val::Function(_)) {
         return Err(rilua::runtime_error(
             "pending ping callback must be a function",

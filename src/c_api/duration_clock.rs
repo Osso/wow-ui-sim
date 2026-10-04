@@ -11,7 +11,7 @@ struct ManualClock {
     time: f64,
 }
 
-/// Existing optional initialTime remains available to Classic and earlier callers.
+/// INFERRED: optional initialTime (nil/omitted = zero) retains the simulator extension.
 /// The later cached factory declaration does not document this extension.
 pub(crate) fn create(state: &mut LuaState) -> LuaResult<u32> {
     let input = unwrap_secret(state, stack_val(state, 1))?;
@@ -81,6 +81,7 @@ fn write_time(state: &mut LuaState, value: Val, time: f64) -> LuaResult<()> {
 }
 
 fn finite_number(value: Val) -> LuaResult<f64> {
+    // INFERRED: finite numbers only, no coercion; negative/fractional values are accepted.
     match value {
         Val::Num(number) if number.is_finite() => Ok(number),
         _ => Err(runtime_error("manual clock requires a finite number")),
@@ -135,6 +136,7 @@ fn mutate_time(state: &mut LuaState, mutation: Mutation) -> LuaResult<u32> {
         Mutation::Advance => previous + number,
         Mutation::Rewind => previous - number,
     };
+    // INFERRED: reject nonfinite arithmetic results before mutating the clock.
     let time = finite_number(Val::Num(time))?;
     write_time(state, receiver, time)?;
     Ok(0)

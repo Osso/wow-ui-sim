@@ -317,6 +317,7 @@ fn duration_value(
 fn authenticate_activity_modifier(state: &LuaState) -> LuaResult<()> {
     crate::c_api::duration_clock::authenticate_arguments(state)?;
     let modifier = unwrap_secret(state, stack_val(state, 2))?;
+    // INFERRED: nil acts as omitted/default RealTime; the cache declares nonnil with a default.
     match modifier {
         Val::Nil | Val::Num(0.0) | Val::Num(1.0) => Ok(()),
         _ => Err(rilua::runtime_error("unknown DurationTimeModifier")),
@@ -362,6 +363,7 @@ pub(crate) fn read_query_value(
         }
         Query::Expired => {
             let expired = if timing.base == 0.0 {
+                // INFERRED: zero span is fully elapsed on Retail 12.0.5+, independent of clock/start.
                 cfg!(feature = "retail-12-0-5")
             } else {
                 clock_time(state, object)? >= timing.end()
