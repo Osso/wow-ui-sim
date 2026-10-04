@@ -1,0 +1,19 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 05s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+
+running 8 tests
+test patch_12_0_7_widget_secret_aspects::button_enabled_secret_origin_callbacks_and_shared_lifecycle ... ok
+test patch_12_0_7_widget_secret_aspects::button_state_secret_token_lock_and_equal_public_overwrite ... ok
+test patch_12_0_7_widget_secret_aspects::host_inputs_are_read_live_and_are_isolated_between_environments ... ok
+test patch_12_0_7_widget_secret_aspects::scroll_callbacks_observe_committed_offset_and_origin_once ... ok
+test patch_12_0_7_widget_secret_aspects::scroll_offset_shared_origin_live_updates_and_equal_value_clearing ... ok
+test patch_12_0_7_widget_secret_aspects::widget_and_font_authentication_denies_tainted_inputs_before_mutation ... ok
+test patch_12_0_7_widget_secret_aspects::widget_aspects_defaults_and_public_round_trips ... ok
+test patch_12_0_7_widget_secret_aspects::widget_secret_outputs_are_returned_but_opaque_to_tainted_callers ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 10429 filtered out; finished in 0.82s
+
+
+EXIT 0
