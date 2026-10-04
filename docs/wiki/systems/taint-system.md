@@ -32,6 +32,10 @@ When blocked, callers emit `ADDON_ACTION_BLOCKED` via `emit_addon_action_blocked
 
 `Protect()` is implemented in `src/lua_api/frame/methods/misc/secret.rs`. It only sets `frame.is_protected` for secure callers; insecure callers silently fail.
 
+## Aura Access Restrictions (`src/c_api/unit_aura_access.rs`)
+
+Retail 12.1.0 `frame_id_from_stack` (native script-object resolution) rejects tainted callers when the object carries `DenyTaintedAccessWhenAurasAreSecret` and `SimState.unit_auras_restricted` (auras secret) is set; the error is `Attempt to access forbidden object from code tainted by '<addon>'` (wording INFERRED). The restriction lifts as soon as auras become public again. `CanBeAccessedInContext` follows the same rule; `IsForbidden`, `CanBeAccessedInContext`, `HasAccessConstraints` and the access-restriction mask methods resolve through `frame_id_from_stack_unrestricted` so any caller can query them. Blizzard Lua owns the timing: the AuraContainer frame provider applies the restriction after `initializeFrame`, deferred to PLAYER_ENTERING_WORLD before login. The aura-secret state itself is an explicit input; combat/encounter/M+/PvP activation is not derived. Plain Lua field reads on the frame table are not gated, and the `forbidden` flag is still not enforced on method calls. Proof: `tests/patch_12_1_0_aura_access_restrictions.rs`.
+
 ## Dual Lua Environment (`src/lua_api/globals/security.rs`)
 
 Two environments share the same Lua state:

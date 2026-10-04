@@ -139,20 +139,28 @@ fn roleset_membership_is_not_filtered_without_active_filters() {
 }
 
 #[test]
-fn context_access_denies_tainted_callers_on_restricted_objects() {
-    let observed: (bool, bool, bool, bool) = env()
-        .eval(
-            r#"local open = CreateFrame("Frame")
-            local restricted = CreateFrame("Frame")
-            restricted:AddAccessRestrictions(1)
-            local secureRestricted = restricted:CanBeAccessedInContext()
-            forceinsecure()
-            local taintedOpen = open:CanBeAccessedInContext()
-            local taintedRestricted = restricted:CanBeAccessedInContext()
-            debug.setstacktaint(nil)
-            return secureRestricted, taintedOpen, taintedRestricted,
-                restricted:CanBeAccessedInContext()"#,
-        )
-        .unwrap();
-    assert_eq!(observed, (true, true, false, true));
+fn context_access_denies_tainted_callers_on_restricted_objects_while_auras_are_secret() {
+    // (auras secret, expected secure/tainted-open/tainted-restricted/secure-again)
+    for (secret, expected) in [
+        (false, (true, true, true, true)),
+        (true, (true, true, false, true)),
+    ] {
+        let env = env();
+        env.state().borrow_mut().unit_auras_restricted = secret;
+        let observed: (bool, bool, bool, bool) = env
+            .eval(
+                r#"local open = CreateFrame("Frame")
+                local restricted = CreateFrame("Frame")
+                restricted:AddAccessRestrictions(1)
+                local secureRestricted = restricted:CanBeAccessedInContext()
+                forceinsecure()
+                local taintedOpen = open:CanBeAccessedInContext()
+                local taintedRestricted = restricted:CanBeAccessedInContext()
+                debug.setstacktaint(nil)
+                return secureRestricted, taintedOpen, taintedRestricted,
+                    restricted:CanBeAccessedInContext()"#,
+            )
+            .unwrap();
+        assert_eq!(observed, expected, "auras secret={secret}");
+    }
 }

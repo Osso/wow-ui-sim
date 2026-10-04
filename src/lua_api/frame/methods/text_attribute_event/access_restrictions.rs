@@ -1,9 +1,12 @@
 //! Per-object conditional access-restriction masks.
 //!
-//! These mask APIs do not enforce access. Forever's context-access query reads
-//! an explicit aura-secret context input; automatic activation remains unmodeled.
+//! These mask APIs only store and report masks; they resolve the object without
+//! access enforcement so tainted callers can still query it. Retail enforcement
+//! of `DenyTaintedAccessWhenAurasAreSecret` follows the live aura-secret state
+//! (`c_api::unit_aura_access`).
 
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
+use crate::c_api::unit_aura_access::aura_access_restriction_active;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack_unrestricted};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
@@ -36,16 +39,17 @@ pub(super) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<(
 }
 
 /// Secure execution may access anything; tainted execution is denied for
-/// forbidden objects and objects carrying any access-restriction mask.
+/// forbidden objects and for objects whose aura access restriction is in force
+/// (auras currently secret).
 fn can_be_accessed_in_context(state: &mut LuaState) -> LuaResult<u32> {
-    let id = frame_id_from_stack(state, 1)?;
+    let id = frame_id_from_stack_unrestricted(state, 1)?;
     let restricted = {
         let sim = borrow_state(state)?;
         let frame = sim
             .widgets
             .get(id)
             .ok_or_else(|| runtime_error("invalid frame"))?;
-        frame.forbidden || frame.access_restrictions != 0
+        frame.forbidden || aura_access_restriction_active(&sim, frame)
     };
     let can_access = rilua::api::state_is_secure(state) || !restricted;
     state.push(Val::Bool(can_access));
@@ -53,7 +57,7 @@ fn can_be_accessed_in_context(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn add_access_restrictions(state: &mut LuaState) -> LuaResult<u32> {
-    let id = frame_id_from_stack(state, 1)?;
+    let id = frame_id_from_stack_unrestricted(state, 1)?;
     let restrictions = u32::from_stack(state, 2)?;
     let mut sim = borrow_state_mut(state)?;
     let frame = sim
@@ -65,7 +69,7 @@ fn add_access_restrictions(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn stored_restrictions(state: &LuaState) -> LuaResult<u32> {
-    let id = frame_id_from_stack(state, 1)?;
+    let id = frame_id_from_stack_unrestricted(state, 1)?;
     let sim = borrow_state(state)?;
     let frame = sim
         .widgets

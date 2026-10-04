@@ -30,7 +30,19 @@ use frame_metatable::frame_metatable_for_widget_type;
 ///
 /// The table's backing `(index, generation)` encodes the widget ID as
 /// `(id as u32, (id >> 32) as u32)`.
+///
+/// Like native script-object resolution, tainted callers cannot resolve an
+/// object whose access restriction is in force.
 pub fn frame_id_from_stack(state: &LuaState, index: i32) -> LuaResult<u64> {
+    let id = frame_id_from_stack_unrestricted(state, index)?;
+    crate::c_api::unit_aura_access::ensure_script_object_accessible(state, id)?;
+    Ok(id)
+}
+
+/// Resolve a frame without access-restriction enforcement, for the queries
+/// that report access state to any caller (`IsForbidden`,
+/// `CanBeAccessedInContext`, `HasAccessConstraints`, ...).
+pub fn frame_id_from_stack_unrestricted(state: &LuaState, index: i32) -> LuaResult<u64> {
     let val = stack_val(state, index);
     frame_id_from_val(state, val)
 }

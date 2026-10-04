@@ -8,14 +8,59 @@
 //! - Spell-keyed (`RequiresNonSecretAura`) APIs stay callable; auras flagged
 //!   never-secret by `C_Secrets.GetSpellAuraSecrecy` return plain data.
 //! - `UNIT_AURA` update payloads are secret-wrapped while auras are secret.
+//! - Script objects carrying `DenyTaintedAccessWhenAurasAreSecret` (Blizzard
+//!   applies it to AuraButtons after `initializeFrame`, deferred to
+//!   PLAYER_ENTERING_WORLD before login) are forbidden to tainted callers only
+//!   while auras are secret; they become accessible again when auras do not.
 
 use crate::lua_api::methods::borrow_state;
+use crate::lua_api::state::SimState;
+use crate::widget::Frame;
 use rilua::table_security::wrap_secret;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
 fn auras_restricted(state: &LuaState) -> LuaResult<bool> {
     Ok(cfg!(feature = "retail-12-1-0") && borrow_state(state)?.unit_auras_restricted)
+}
+
+/// `Enum.ScriptObjectAccessRestriction.DenyTaintedAccessWhenAurasAreSecret`.
+pub(crate) const DENY_TAINTED_ACCESS_WHEN_AURAS_SECRET: u32 = 1;
+
+/// Whether `frame`'s aura access restriction is in force right now.
+pub(crate) fn aura_access_restriction_active(sim: &SimState, frame: &Frame) -> bool {
+    cfg!(feature = "retail-12-1-0")
+        && sim.unit_auras_restricted
+        && frame.access_restrictions & DENY_TAINTED_ACCESS_WHEN_AURAS_SECRET != 0
+}
+
+/// Native script-object resolution: tainted code cannot reach an object whose
+/// aura access restriction is in force. The stack-taint walk runs only for
+/// restricted objects while auras are secret.
+/// INFERRED: error wording follows the live forbidden-object message; the
+/// 12.1.0 page gives no text contract.
+pub(crate) fn ensure_script_object_accessible(state: &LuaState, id: u64) -> LuaResult<()> {
+    if !cfg!(feature = "retail-12-1-0") {
+        return Ok(());
+    }
+    let restricted = {
+        let sim = borrow_state(state)?;
+        sim.unit_auras_restricted
+            && sim
+                .widgets
+                .get(id)
+                .is_some_and(|frame| aura_access_restriction_active(&sim, frame))
+    };
+    if !restricted || rilua::api::state_is_secure(state) {
+        return Ok(());
+    }
+    let taint = state.call_stack[..=state.ci]
+        .iter()
+        .find_map(|frame| frame.taint.clone())
+        .unwrap_or_default();
+    Err(runtime_error(format!(
+        "Attempt to access forbidden object from code tainted by '{taint}'"
+    )))
 }
 
 /// Enforce `RequiresUnitAuraAccess` before argument parsing or lookup.
