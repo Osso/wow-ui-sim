@@ -1,5 +1,6 @@
 //! Retail 12.0.5 slot argument boundary over the existing aura lookup/DTO.
 
+use super::unit_aura_access::require_unit_aura_access;
 use crate::lua_api::globals::auras::push_aura_by_instance_id;
 use crate::lua_api::methods::val_to_string;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -15,11 +16,12 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn get_aura_data_by_slot(state: &mut LuaState) -> LuaResult<u32> {
+    require_unit_aura_access(state, API_NAME)?;
     let unit = read_public_unit(state)?;
     let slot = read_authenticated_slot(state)?;
     // Validate before the existing blocked-inclusive lookup. Native aura access
     // and restricted-output secrecy remain unmodeled.
-    push_aura_by_instance_id(state, &unit, slot);
+    push_aura_by_instance_id(state, &unit, slot)?;
     Ok(1)
 }
 

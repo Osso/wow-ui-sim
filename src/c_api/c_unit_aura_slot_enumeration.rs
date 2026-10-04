@@ -1,5 +1,6 @@
 //! Retail 12.0.5 slot enumeration argument boundary over the existing aura store.
 
+use super::unit_aura_access::require_unit_aura_access;
 use crate::lua_api::globals::auras::{collect_visible_unit_auras, filter_from_str};
 use crate::lua_api::methods::val_to_string;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -15,6 +16,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn get_aura_slots(state: &mut LuaState) -> LuaResult<u32> {
+    require_unit_aura_access(state, API_NAME)?;
     // Authenticate every position before validation, lookup or termination,
     // including unused maxSlots. Inputs remain rooted on the VM argument stack;
     // unwrap_secret reads payloads without changing wrappers or caller taint.

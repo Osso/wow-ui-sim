@@ -97,6 +97,7 @@ fn get_aura_caster_guid(state: &mut LuaState) -> LuaResult<u32> {
 /// and other units' auras cannot be cancelled.
 #[cfg(feature = "retail-12-1-0")]
 fn cancel_aura_by_instance_id(state: &mut LuaState) -> LuaResult<u32> {
+    super::unit_aura_access::require_unit_aura_access(state, "C_UnitAuras.CancelAuraByInstanceID")?;
     let unit = String::from_stack(state, 1)?;
     let instance_id = f64::from_stack(state, 2)? as i32;
     if unit != "player" {
@@ -118,6 +119,7 @@ fn cancel_aura_by_instance_id(state: &mut LuaState) -> LuaResult<u32> {
             table_set_num(state, ids, 1.0, Val::Num(f64::from(instance_id)));
         }
         table_set(state, update_info, "removedAuraInstanceIDs", removed_ids);
+        let update_info = super::unit_aura_access::unit_aura_event_payload(state, update_info)?;
         crate::lua_api::script_helpers::fire_named_event_state(
             state,
             "UNIT_AURA",
@@ -128,6 +130,7 @@ fn cancel_aura_by_instance_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_unit_aura_instance_ids(state: &mut LuaState) -> LuaResult<u32> {
+    super::unit_aura_access::require_unit_aura_access(state, "C_UnitAuras.GetUnitAuraInstanceIDs")?;
     let unit = String::from_stack(state, 1)?;
     let filter = String::from_stack(state, 2)?;
     let limit = Option::<i32>::from_stack(state, 3)?;

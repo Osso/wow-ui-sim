@@ -1,5 +1,6 @@
 //! Retail 12.0.5 indexed aura argument boundaries over the existing aura model.
 
+use super::unit_aura_access::require_unit_aura_access;
 use crate::lua_api::globals::auras::{AuraFilter, filter_from_str, push_aura_at_filtered_index};
 use crate::lua_api::methods::val_to_string;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -31,23 +32,24 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 fn get_aura_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let (unit, index, filter) = read_index_arguments(state, "GetAuraDataByIndex")?;
-    push_aura_at_filtered_index(state, &unit, filter_from_str(&filter), index);
+    push_aura_at_filtered_index(state, &unit, filter_from_str(&filter), index)?;
     Ok(1)
 }
 
 fn get_buff_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let (unit, index, _) = read_index_arguments(state, "GetBuffDataByIndex")?;
-    push_aura_at_filtered_index(state, &unit, AuraFilter::Helpful, index);
+    push_aura_at_filtered_index(state, &unit, AuraFilter::Helpful, index)?;
     Ok(1)
 }
 
 fn get_debuff_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let (unit, index, _) = read_index_arguments(state, "GetDebuffDataByIndex")?;
-    push_aura_at_filtered_index(state, &unit, AuraFilter::Harmful, index);
+    push_aura_at_filtered_index(state, &unit, AuraFilter::Harmful, index)?;
     Ok(1)
 }
 
 fn read_index_arguments(state: &LuaState, name: &str) -> LuaResult<(String, i32, String)> {
+    require_unit_aura_access(state, &format!("C_UnitAuras.{name}"))?;
     // AllowedWhenUntainted applies to all three documented positions, even the
     // wrapper filter. VM authentication retains caller taint and input secrecy.
     // UnitAuraAccess and restricted-output secrecy remain unmodeled.

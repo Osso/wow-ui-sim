@@ -27,6 +27,9 @@ use crate::c_api::aura_filter::{
     AuraFilterContext, FilterTerm, FilterToken, aura_matches_terms, is_harmful_filter,
     parse_filter_terms,
 };
+use crate::c_api::unit_aura_access::{
+    finish_aura_data, finish_spell_keyed_aura_data, require_unit_aura_access,
+};
 use crate::lua_api::game_data::AuraInfo;
 #[cfg(not(feature = "retail-12-0-5"))]
 use crate::lua_api::globals::font_strings_collection::colors::{
@@ -426,7 +429,7 @@ fn get_aura_slots(state: &mut LuaState) -> LuaResult<u32> {
 fn get_aura_data_by_slot(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let slot = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
-    push_aura_by_instance_id(state, &unit, slot);
+    push_aura_by_instance_id(state, &unit, slot)?;
     Ok(1)
 }
 
@@ -439,21 +442,21 @@ fn get_aura_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let index = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
     let filter_str = Option::<String>::from_stack(state, 3)?.unwrap_or_default();
-    push_aura_at_filtered_index(state, &unit, filter_from_str(&filter_str), index);
+    push_aura_at_filtered_index(state, &unit, filter_from_str(&filter_str), index)?;
     Ok(1)
 }
 
 fn get_unit_auras(state: &mut LuaState) -> LuaResult<u32> {
+    require_unit_aura_access(state, "C_UnitAuras.GetUnitAuras")?;
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let filter_str = Option::<String>::from_stack(state, 2)?.unwrap_or_default();
+    let auras = collect_visible_unit_auras(state, &unit, filter_from_str(&filter_str));
     let table = create_table(state);
 
     if let Val::Table(table_ref) = table {
-        for (index, aura) in collect_visible_unit_auras(state, &unit, filter_from_str(&filter_str))
-            .into_iter()
-            .enumerate()
-        {
+        for (index, aura) in auras.into_iter().enumerate() {
             let aura_table = build_aura_table(state, &aura, &unit);
+            let aura_table = finish_aura_data(state, aura_table)?;
             table_set_num(state, table_ref, (index + 1) as f64, aura_table);
         }
     }
@@ -463,9 +466,10 @@ fn get_unit_auras(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_aura_data_by_aura_instance_id(state: &mut LuaState) -> LuaResult<u32> {
+    require_unit_aura_access(state, "C_UnitAuras.GetAuraDataByAuraInstanceID")?;
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let aura_id = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
-    push_aura_by_instance_id(state, &unit, aura_id);
+    push_aura_by_instance_id(state, &unit, aura_id)?;
     Ok(1)
 }
 
@@ -476,13 +480,7 @@ fn get_aura_data_by_spell_name(state: &mut LuaState) -> LuaResult<u32> {
         .into_iter()
         .chain(collect_unit_auras(state, &unit, AuraFilter::Harmful))
         .find(|a| a.name == name);
-    match found {
-        Some(aura) => {
-            let table = build_aura_table(state, &aura, &unit);
-            state.push(table);
-        }
-        None => state.push(Val::Nil),
-    }
+    push_spell_keyed_aura(state, found.as_ref(), &unit)?;
     Ok(1)
 }
 
@@ -490,7 +488,7 @@ fn get_aura_data_by_spell_name(state: &mut LuaState) -> LuaResult<u32> {
 fn get_buff_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let index = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
-    push_aura_at_filtered_index(state, &unit, AuraFilter::Helpful, index);
+    push_aura_at_filtered_index(state, &unit, AuraFilter::Helpful, index)?;
     Ok(1)
 }
 
@@ -498,7 +496,7 @@ fn get_buff_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
 fn get_debuff_data_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let unit: String = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let index = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
-    push_aura_at_filtered_index(state, &unit, AuraFilter::Harmful, index);
+    push_aura_at_filtered_index(state, &unit, AuraFilter::Harmful, index)?;
     Ok(1)
 }
 
@@ -520,14 +518,24 @@ fn get_player_aura_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     let found = collect_unit_auras(state, "player", AuraFilter::Helpful)
         .into_iter()
         .find(|a| a.spell_id == spell_id);
-    match found {
-        Some(aura) => {
-            let table = build_aura_table(state, &aura, "player");
-            state.push(table);
-        }
-        None => state.push(Val::Nil),
-    }
+    push_spell_keyed_aura(state, found.as_ref(), "player")?;
     Ok(1)
+}
+
+fn push_spell_keyed_aura(
+    state: &mut LuaState,
+    aura: Option<&AuraInfo>,
+    unit: &str,
+) -> LuaResult<()> {
+    let result = match aura {
+        Some(aura) => {
+            let table = build_aura_table(state, aura, unit);
+            finish_spell_keyed_aura_data(state, aura.spell_id, table)?
+        }
+        None => Val::Nil,
+    };
+    state.push(result);
+    Ok(())
 }
 
 // ── Aura lookup helpers ──────────────────────────────────────────────────────
@@ -539,7 +547,7 @@ pub(crate) fn push_aura_by_spell_id(
     unit: &str,
     spell_id: u32,
     include_harmful: bool,
-) {
+) -> LuaResult<()> {
     let matches_spell = |aura: &AuraInfo| i64::from(aura.spell_id) == i64::from(spell_id);
     let mut found = collect_unit_auras(state, unit, AuraFilter::Helpful)
         .into_iter()
@@ -549,24 +557,28 @@ pub(crate) fn push_aura_by_spell_id(
             .into_iter()
             .find(matches_spell);
     }
-    match found {
-        Some(aura) => {
-            let table = build_aura_table(state, &aura, unit);
-            state.push(table);
-        }
-        None => state.push(Val::Nil),
-    }
+    push_spell_keyed_aura(state, found.as_ref(), unit)
 }
 
-pub(crate) fn push_aura_by_instance_id(state: &mut LuaState, unit: &str, aura_instance_id: i32) {
+pub(crate) fn push_aura_by_instance_id(
+    state: &mut LuaState,
+    unit: &str,
+    aura_instance_id: i32,
+) -> LuaResult<()> {
     let found = find_aura_by_instance_id(state, unit, aura_instance_id);
-    match found {
+    push_aura_data(state, found.as_ref(), unit)
+}
+
+fn push_aura_data(state: &mut LuaState, aura: Option<&AuraInfo>, unit: &str) -> LuaResult<()> {
+    let result = match aura {
         Some(aura) => {
-            let table = build_aura_table(state, &aura, unit);
-            state.push(table);
+            let table = build_aura_table(state, aura, unit);
+            finish_aura_data(state, table)?
         }
-        None => state.push(Val::Nil),
-    }
+        None => Val::Nil,
+    };
+    state.push(result);
+    Ok(())
 }
 
 pub(crate) fn find_aura_by_instance_id(
@@ -585,19 +597,22 @@ pub(crate) fn push_aura_at_filtered_index(
     unit: &str,
     filter: AuraFilter,
     index: i32,
-) {
-    if index < 1 {
-        state.push(Val::Nil);
-        return;
-    }
+) -> LuaResult<()> {
     let auras = collect_visible_unit_auras(state, unit, filter);
-    match auras.get((index - 1) as usize) {
-        Some(aura) => {
-            let table = build_aura_table(state, aura, unit);
-            state.push(table);
-        }
-        None => state.push(Val::Nil),
-    }
+    push_aura_at_index(state, &auras, unit, index)
+}
+
+fn push_aura_at_index(
+    state: &mut LuaState,
+    auras: &[AuraInfo],
+    unit: &str,
+    index: i32,
+) -> LuaResult<()> {
+    let aura = index
+        .checked_sub(1)
+        .and_then(|i| usize::try_from(i).ok())
+        .and_then(|i| auras.get(i));
+    push_aura_data(state, aura, unit)
 }
 
 fn add_blocked_aura(state: &mut LuaState) -> LuaResult<u32> {
@@ -771,7 +786,7 @@ fn aura_util_get_aura_data_by_aura_instance_id(state: &mut LuaState) -> LuaResul
     }
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let aura_id = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
-    push_aura_by_instance_id(state, &unit, aura_id);
+    push_aura_by_instance_id(state, &unit, aura_id)?;
     Ok(1)
 }
 

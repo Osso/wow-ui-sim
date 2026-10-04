@@ -60,7 +60,18 @@ pub(crate) fn apply_spell_effect(
         Some(crate::lua_api::game_data::SpellEffectResult::PlayerAurasChanged) => {
             let unit = env.lua_string("player");
             if let Ok(info) = env.eval::<rilua::Val>("return { isFullUpdate = true }") {
-                let _ = env.fire_event_with_args("UNIT_AURA", &[unit, info]);
+                let info = crate::c_api::unit_aura_access::unit_aura_event_payload(
+                    rilua::LuaApiMut::state_mut(&mut *env.lua.borrow_mut()),
+                    info,
+                );
+                match info {
+                    Ok(info) => {
+                        let _ = env.fire_event_with_args("UNIT_AURA", &[unit, info]);
+                    }
+                    Err(error) => {
+                        crate::logging::eprintln_elapsed(&format!("[UNIT_AURA] payload: {error}"))
+                    }
+                }
             }
         }
         None => {}

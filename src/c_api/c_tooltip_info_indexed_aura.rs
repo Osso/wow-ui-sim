@@ -29,6 +29,7 @@ fn get_unit_debuff(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_indexed_aura(state: &mut LuaState, api_name: &str, polarity: AuraFilter) -> LuaResult<u32> {
+    super::unit_aura_access::require_unit_aura_access(state, api_name)?;
     let arguments = authenticate_arguments(state, api_name)?;
     let unit = parse_string(state, arguments[0], 1, api_name)?;
     let index = parse_index(arguments[1], api_name)?;

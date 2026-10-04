@@ -21,6 +21,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn get_aura_application_display_count(state: &mut LuaState) -> LuaResult<u32> {
+    super::unit_aura_access::require_unit_aura_access(state, API_NAME)?;
     let unit = read_authenticated_unit(state)?;
     let instance_id = read_authenticated_instance_id(state)?;
     let minimum = if state.top.saturating_sub(state.base) < 3 {

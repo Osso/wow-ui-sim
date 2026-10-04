@@ -413,6 +413,7 @@ pub(super) fn c_tooltip_get_unit_debuff_by_aura_instance_id(
 }
 
 pub(super) fn c_tooltip_get_unit_aura(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::unit_aura_access::require_unit_aura_access(state, "C_TooltipInfo.GetUnitAura")?;
     let _unit = String::from_stack(state, 1)?;
     let index = i32::from_stack(state, 2)?;
     let filter = String::from_stack(state, 3).unwrap_or_default();

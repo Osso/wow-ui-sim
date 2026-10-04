@@ -1,6 +1,7 @@
 //! Bounded Retail 12.0.5 instance filtering over the existing aura model.
 
 use super::aura_filter::AuraFilterContext;
+use super::unit_aura_access::require_unit_aura_access;
 use crate::lua_api::globals::auras::{aura_matches_filter_string, find_aura_by_instance_id};
 use crate::lua_api::methods::val_to_string;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -19,6 +20,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn is_aura_filtered_out_by_instance_id(state: &mut LuaState) -> LuaResult<u32> {
+    require_unit_aura_access(state, "C_UnitAuras.IsAuraFilteredOutByInstanceID")?;
     // All documented arguments are AllowedWhenUntainted; the VM retains
     // caller taint and original wrapper secrecy. UnitAuraAccess is unmodeled.
     let unit = read_authenticated_string(state, 1)?;

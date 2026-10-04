@@ -24,7 +24,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 
 fn get_player_aura_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     match read_public_spell_identifier(state, 1)? {
-        Some(id) => push_aura_by_spell_id(state, "player", id, false),
+        Some(id) => push_aura_by_spell_id(state, "player", id, false)?,
         None => state.push(Val::Nil),
     }
     Ok(1)
@@ -36,7 +36,7 @@ fn get_unit_aura_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     let unit = read_public_unit(state)?;
     match (unit, spell_id) {
         // INFERRED first-match order: helpful then harmful; no visibility model.
-        (Some(unit), Some(id)) => push_aura_by_spell_id(state, &unit, id, true),
+        (Some(unit), Some(id)) => push_aura_by_spell_id(state, &unit, id, true)?,
         _ => state.push(Val::Nil),
     }
     Ok(1)

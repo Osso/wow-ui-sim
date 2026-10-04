@@ -223,8 +223,7 @@ pub(crate) fn execute_spell_by_id(state: &mut LuaState, spell_id: u32) -> LuaRes
 
     crate::logging::eprintln_elapsed(&format!("[spellcast] INSTANT spell_id={spell_id}"));
     start_instant_spell_cooldowns(state, spell_id);
-    apply_spell_to_target(state, spell_id);
-    Ok(())
+    apply_spell_to_target(state, spell_id)
 }
 
 fn start_timed_spell_cast(state: &mut LuaState, spell_id: u32) -> bool {
@@ -259,9 +258,9 @@ fn cast_time_ms_for_spell(spell_id: u32) -> i32 {
     (DEFAULT_CAST_DURATION * 1000.0) as i32
 }
 
-fn apply_spell_to_target(state: &mut LuaState, spell_id: u32) {
+fn apply_spell_to_target(state: &mut LuaState, spell_id: u32) -> LuaResult<()> {
     let Some(app_data) = state.app_data::<WowLuaAppData>().cloned() else {
-        return;
+        return Ok(());
     };
     match game_data::apply_spell_to_state(&app_data.sim_state, spell_id) {
         Some(SpellEffectResult::UnitHealthChanged(unit_id)) => {
@@ -271,10 +270,13 @@ fn apply_spell_to_target(state: &mut LuaState, spell_id: u32) {
         Some(SpellEffectResult::PlayerAurasChanged) => {
             let unit = create_string(state, "player");
             let update_info = aura_full_update_info(state);
+            let update_info =
+                crate::c_api::unit_aura_access::unit_aura_event_payload(state, update_info)?;
             fire_named_event_state(state, "UNIT_AURA", &[unit, update_info]);
         }
         None => {}
     }
+    Ok(())
 }
 
 fn aura_full_update_info(state: &mut LuaState) -> Val {

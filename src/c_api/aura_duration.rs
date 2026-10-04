@@ -1,6 +1,7 @@
 //! Immutable aura duration queries over explicit per-environment recast metadata.
 //! Formula, eligibility and validation policies are INFERRED, not native-verified.
 
+use super::unit_aura_access::require_unit_aura_access;
 use crate::lua_api::game_data::AuraInfo;
 use crate::lua_api::globals::auras::collect_filtered_unit_auras;
 use crate::lua_api::globals::lua_duration_object::push_timed_duration_object;
@@ -65,6 +66,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 /// Timed snapshot of a stored aura. INFERRED: an unknown unit or instance errors
 /// (`RequiresValidUnitAuraInstance`); a permanent aura yields a zero-span object.
 fn get_aura_duration(state: &mut LuaState) -> LuaResult<u32> {
+    require_unit_aura_access(state, "C_UnitAuras.GetAuraDuration")?;
     let (unit, instance_id) = read_expiration_arguments(state)?;
     let aura = unit
         .as_deref()
@@ -74,6 +76,7 @@ fn get_aura_duration(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn does_aura_have_expiration_time(state: &mut LuaState) -> LuaResult<u32> {
+    require_unit_aura_access(state, "C_UnitAuras.DoesAuraHaveExpirationTime")?;
     let (unit, instance_id) = read_expiration_arguments(state)?;
     let expires = unit
         .as_deref()
@@ -106,10 +109,12 @@ fn read_expiration_arguments(state: &LuaState) -> LuaResult<(Option<String>, f64
 }
 
 fn get_aura_base_duration(state: &mut LuaState) -> LuaResult<u32> {
+    require_unit_aura_access(state, "C_UnitAuras.GetAuraBaseDuration")?;
     push_duration(state, false)
 }
 
 fn get_refresh_extended_duration(state: &mut LuaState) -> LuaResult<u32> {
+    require_unit_aura_access(state, "C_UnitAuras.GetRefreshExtendedDuration")?;
     push_duration(state, true)
 }
 

@@ -44,6 +44,7 @@ fn get_debuff(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn push_tooltip(state: &mut LuaState, api_name: &str, helpful: Option<bool>) -> LuaResult<u32> {
+    super::unit_aura_access::require_unit_aura_access(state, api_name)?;
     let arguments = authenticate_arguments(state, api_name)?;
     let unit = val_to_string(state, arguments[0]).ok_or_else(|| {
         rilua::runtime_error(format!("{api_name}: argument 1 requires a UTF-8 string"))

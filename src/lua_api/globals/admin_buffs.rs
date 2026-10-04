@@ -27,11 +27,13 @@ fn icon_string_from_stack(state: &mut LuaState, index: i32) -> LuaResult<String>
 /// Fire `UNIT_AURA` for the player with a full-update payload, matching the
 /// event listeners in Blizzard's BuffFrame/DebuffFrame which ignore the event
 /// unless `unitAuraUpdateInfo` reports changed auras.
-fn fire_player_unit_aura(state: &mut LuaState) {
+fn fire_player_unit_aura(state: &mut LuaState) -> LuaResult<()> {
     let unit = create_string(state, "player");
     let info = create_table(state);
     table_set(state, info, "isFullUpdate", Val::Bool(true));
+    let info = crate::c_api::unit_aura_access::unit_aura_event_payload(state, info)?;
     fire_named_event_state(state, "UNIT_AURA", &[unit, info]);
+    Ok(())
 }
 
 pub(super) fn add_buff(state: &mut LuaState) -> LuaResult<u32> {
@@ -45,7 +47,7 @@ pub(super) fn add_buff(state: &mut LuaState) -> LuaResult<u32> {
         let buff = build_admin_buff(&st, spell_id, name, icon, duration, stacks);
         st.player.buffs.push(buff);
     }
-    fire_player_unit_aura(state);
+    fire_player_unit_aura(state)?;
     Ok(0)
 }
 
@@ -74,7 +76,7 @@ pub(super) fn add_debuff(state: &mut LuaState) -> LuaResult<u32> {
         );
         st.player.buffs.push(debuff);
     }
-    fire_player_unit_aura(state);
+    fire_player_unit_aura(state)?;
     Ok(0)
 }
 
@@ -84,7 +86,7 @@ pub(super) fn remove_buff(state: &mut LuaState) -> LuaResult<u32> {
         let mut st = borrow_state_mut(state)?;
         st.player.buffs.retain(|a| a.spell_id != spell_id);
     }
-    fire_player_unit_aura(state);
+    fire_player_unit_aura(state)?;
     Ok(0)
 }
 
@@ -93,7 +95,7 @@ pub(super) fn clear_buffs(state: &mut LuaState) -> LuaResult<u32> {
         let mut st = borrow_state_mut(state)?;
         st.player.buffs.clear();
     }
-    fire_player_unit_aura(state);
+    fire_player_unit_aura(state)?;
     Ok(0)
 }
 

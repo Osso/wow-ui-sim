@@ -21,6 +21,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn get_aura_dispel_type_color(state: &mut LuaState) -> LuaResult<u32> {
+    super::unit_aura_access::require_unit_aura_access(state, API_NAME)?;
     let curve_input = stack_val(state, 3);
     let secret_curve = is_secret_value(state, curve_input);
     // Authenticate every documented argument before ANY type validation or lookup.
