@@ -1,0 +1,37 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 48s
+     Running unittests src/lib.rs (target/debug/deps/wow_ui_sim-d92e30b171b2bc31)
+
+running 26 tests
+test loader::tests::wow_api_globals::startup_globals::debugstack_uses_wow_bracketed_file_locations ... ok
+test loader::tests::wow_api_globals::startup_globals::test_addon_startup_frame_scale_and_merchant_namespaces_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_addon_startup_table_time_and_string_helpers_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_addon_startup_time_and_difficulty_globals_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_old_stack_power_lfg_and_cleanup_globals_exist_on_rilua_path ... ok
+test loader::tests::wow_api_globals::startup_globals::test_old_stack_startup_globals_exist_on_rilua_path ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_duration_objects_and_text_binding ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_removal_and_event_surface ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_safe_global_bridges ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_widget_compatibility_surface ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_battle_net_presence_state ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_cvars_and_enums_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_discord_state_surface ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_duration_binding_reference_lifetime_and_identity ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_housing_blueprint_availability_state ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_housing_blueprint_best_effort_state ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_housing_editor_decor_layout_state ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_housing_inside_owned_state_and_reset ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_safe_global_bridges ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_strict_removed_symbols_are_hidden ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_cursor_surface_accepts_texture_paths ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_pvp_queue_surfaces_are_safe ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_service_globals_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_social_and_lfg_globals_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_time_and_service_globals_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_utility_globals_exist ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 1949 filtered out; finished in 2.03s
+
+
+EXIT 0
