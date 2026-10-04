@@ -50,4 +50,6 @@ Remaining 21 gaps:
 - `EncounterJournal_OpenToTieredEntrance`: only in the full LoD addon. `ShouldDisplaySpellCooldown`: only a mixin method.
 - `Frame:ResizeToBoundsRect`: undocumented behavior. `CHAT_MSG_*`: wildcard, unprobeable.
 
-Not caused by this round, still failing: `c_spell_static_fallbacks` (expects a function retail removed in 12.0.7), `wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles`, `on_update_modes_process_actual_managed_aura_dirty_phases`. No independent review.
+Not caused by this round, still failing: `c_spell_static_fallbacks` (expects a function retail removed in 12.0.7), `wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles`, `on_update_modes_process_actual_managed_aura_dirty_phases`.
+
+`prefork_full_ui` at `616bf37ab`: 2,009 passed / 7 failed. All 7 also fail at the pre-round base `d1a2a0250`: four wardrobe tests (`itemModifiedAppearanceID requires a number`), two `Deprecated_HousingCatalog` legacy-field wrappers, `catalog_shop` (`product_provider_empty`). No independent review.
