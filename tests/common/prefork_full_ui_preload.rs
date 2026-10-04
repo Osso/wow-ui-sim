@@ -1,6 +1,9 @@
 use std::path::Path;
 
-use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
+use wow_ui_sim::loader::{
+    StartupAddonLoadKind, discover_blizzard_startup_addons_for_screen, load_addon,
+    load_startup_addon,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
@@ -61,9 +64,14 @@ pub(crate) fn preload_full_game_ui() -> Result<WowLuaEnv, String> {
     env.state().borrow_mut().addon_base_paths = vec![blizzard_ui.clone()];
     env.gc_stop();
 
-    let addons = discover_blizzard_addons_for_screen(&blizzard_ui, ScreenKind::Game);
-    for (name, toc_path) in addons {
-        load_blizzard_addon(&env, &name, &toc_path)?;
+    // Same discovery as the wow-sim Game startup, including LoD bootstrap-only nodes.
+    for addon in discover_blizzard_startup_addons_for_screen(&blizzard_ui, ScreenKind::Game) {
+        match addon.kind {
+            StartupAddonLoadKind::Full => load_blizzard_addon(&env, &addon.name, &addon.toc_path)?,
+            StartupAddonLoadKind::BootstrapOnly => {
+                load_blizzard_bootstrap(&env, &addon.name, &addon.toc_path)?
+            }
+        }
     }
 
     env.sync_string_metatable_to_global_string();
@@ -111,6 +119,27 @@ pub(crate) fn load_blizzard_addon(
             })?;
     }
     Ok(())
+}
+
+fn load_blizzard_bootstrap(env: &WowLuaEnv, name: &str, toc_path: &Path) -> Result<(), String> {
+    let error_count = lua_error_count(env);
+    load_startup_addon(
+        &env.loader_env(),
+        toc_path,
+        StartupAddonLoadKind::BootstrapOnly,
+        None,
+    )
+    .map_err(|error| {
+        format!(
+            "load bootstrap of Blizzard addon `{name}` from {}: {error}",
+            toc_path.display()
+        )
+    })?;
+    ensure_no_new_lua_errors(
+        env,
+        error_count,
+        &format!("loading bootstrap of Blizzard addon `{name}`"),
+    )
 }
 
 fn apply_post_load_workarounds(env: &WowLuaEnv) -> Result<(), String> {

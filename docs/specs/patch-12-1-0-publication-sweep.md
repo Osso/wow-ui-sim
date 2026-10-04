@@ -20,8 +20,8 @@ A data-driven breadth probe covers all 778 entries in the [wikitext register](..
 ## Implementation inventory
 
 - `tests/patch_12_1_0_publication_sweep.rs` — register-driven classifier and one environment per sweep.
-- `tests/data/patch_12_1_0_sweep_known_gaps.json` — reviewed exact set of 147 non-ok IDs; membership grants no coverage.
-- `tests/common/prefork_full_ui_preload.rs` — existing full cached Game preload reused without changes.
+- `tests/data/patch_12_1_0_sweep_known_gaps.json` — reviewed exact set of non-ok IDs; membership grants no coverage.
+- `tests/common/prefork_full_ui_preload.rs` — full cached Game preload using the same startup discovery as `wow-sim`, including LoD `[Bootstrap]`-only nodes (bootstrap files run; the addon stays unloaded and gets no `ADDON_LOADED`).
 
 ## Tests asserting this spec
 
@@ -41,11 +41,12 @@ A data-driven breadth probe covers all 778 entries in the [wikitext register](..
 
 No per-symbol exceptions. Widget method lookup proves reachability, not owner restrictions.
 
-Default Retail sweep: GREEN against the reviewed gap set, 778 observations (631 OK, 147 non-OK). GREEN proves the gap set is unchanged, not that all symbols work. Three negative controls were non-OK. Cached UI provenance reports Retail `12.1.0.69933`; this is provenance metadata, not native-client authentication.
+Default Retail sweep: GREEN against the reviewed gap set, 778 observations (705 OK, 73 non-OK after LoD bootstrap preload parity). GREEN proves the gap set is unchanged, not that all symbols work. Three negative controls were non-OK. Cached UI provenance reports Retail `12.1.0.69933`; this is provenance metadata, not native-client authentication.
 
 ## Known gaps (current cycle)
 
 - [ ] Default Game startup has 142 direct publication/absence failures: 91 globals, 36 namespace/mixin members, five object methods, four concrete events and six CVars. These are startup-surface gaps, not proof of native-client absence. All remain non-ok even when the exact-set regression test passes.
+- [ ] `PlayerChoiceToggle_TryShow` appears as both added (868) and removed (1027) in the source page; the cached 12.1.0 bootstrap publishes it, so the removed row stays non-ok.
 - [ ] `CHAT_MSG_*` describes a family, not one registerable event; its row remains non-ok without an authoritative concrete expansion.
 - [ ] RadialProgress is not a recognized simulator animation type at authoring time; its real factory probe rejects a returned generic Animation. No generic-method fallback earns credit.
 - [ ] The current register does not carry CVar page defaults (all CVar annotations are empty); default comparison can only apply when `page_default` (or `default`) metadata is supplied.
@@ -53,5 +54,5 @@ Default Retail sweep: GREEN against the reviewed gap set, 778 observations (631 
 ## Out of scope
 
 - Function signatures, outputs, security/secret policies, changed behavioral contracts, event payloads, dispatch, CVar mutability, and native-client parity.
-- Loading optional LoD panels or Glue screens beyond the existing cached Game startup helper. Their unpublished rows remain gaps; this does not prove they are missing in native Retail.
+- Fully loading optional LoD panels or Glue screens beyond the cached Game startup set (their bootstrap files are part of startup). Their unpublished rows remain gaps; this does not prove they are missing in native Retail.
 - Authenticating the cached UI as a particular native build, fixing runtime gaps, or automatically upgrading ledger status from a baseline pass. Known gaps remain gaps even when expected.
