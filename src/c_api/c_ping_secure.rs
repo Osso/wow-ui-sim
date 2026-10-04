@@ -81,7 +81,7 @@ fn register_callback_setters(
 const PING_SECURE_CALLBACK_SETTERS: &[(&str, fn(&mut LuaState) -> LuaResult<u32>)] = &[
     (
         "SetPendingPingOffScreenCallback",
-        set_pending_ping_off_screen_callback,
+        set_namespace_pending_ping_off_screen_callback,
     ),
     (
         "SetPingCooldownStartedCallback",
@@ -114,8 +114,32 @@ fn create_frame(_state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 fn set_pending_ping_off_screen_callback(state: &mut LuaState) -> LuaResult<u32> {
     set_callback(state, "pendingPingOffScreen")
+}
+
+fn set_namespace_pending_ping_off_screen_callback(state: &mut LuaState) -> LuaResult<u32> {
+    let callback = stack_val(state, 1);
+    #[cfg(feature = "retail-12-0-7")]
+    let callback = authenticate_pending_ping_callback(state, callback)?;
+    let callbacks = callback_table(state);
+    table_set(state, callbacks, "pendingPingOffScreen", callback);
+    Ok(0)
+}
+
+#[cfg(feature = "retail-12-0-7")]
+fn authenticate_pending_ping_callback(state: &LuaState, callback: Val) -> LuaResult<Val> {
+    let callback = rilua::table_security::unwrap_secret(state, callback)?;
+    for argument in state.stack.iter().take(state.top).skip(state.base + 1) {
+        rilua::table_security::unwrap_secret(state, *argument)?;
+    }
+    if !matches!(callback, Val::Function(_)) {
+        return Err(rilua::runtime_error(
+            "pending ping callback must be a function",
+        ));
+    }
+    Ok(callback)
 }
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
