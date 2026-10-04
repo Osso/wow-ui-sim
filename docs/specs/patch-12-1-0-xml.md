@@ -16,8 +16,8 @@ Bounded simulator proof for [prose-2026-06-18-064; prose-2026-06-18-065; prose-2
 
 ## Implementation inventory
 
-- `src/loader/frame/ — XML mixin and key-value loading`
-- `src/loader/templates/ — runtime template application`
+- `src/loader/xml_frame/ — XML mixin and key-value loading`
+- `src/lua_api/globals/create_frame/ — runtime template application`
 
 ## Tests asserting this spec
 

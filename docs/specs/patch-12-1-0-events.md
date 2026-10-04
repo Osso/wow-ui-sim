@@ -14,7 +14,7 @@ Bounded simulator proof for [prose-2026-06-23-083; prose-2026-06-23-088](../../d
 
 ## Implementation inventory
 
-- `src/lua_api/frame/methods/events/ — event registration restriction`
+- `src/lua_api/frame/methods/text_attribute_event/events.rs — event registration restriction`
 - `cached Blizzard_AuraContainer/Blizzard_AuraContainer.xml — intrinsic template lacks EventRegistrations declaration`
 
 ## Tests asserting this spec

@@ -14,8 +14,8 @@ Bounded simulator proof for [prose-2026-06-18-058; prose-2026-06-18-059](../../d
 
 ## Implementation inventory
 
-- `src/lua_api/frame/methods/scripted.rs — update mode API`
-- `src/lua_api/env.rs — dispatch`
+- `src/lua_api/frame/methods/text_attribute_event/mod.rs — update mode API`
+- `src/lua_api/on_update.rs — dispatch`
 - `cached Blizzard_AuraContainer/Blizzard_ManagedAuraContainer.lua — dirty phases (read-only)`
 
 ## Tests asserting this spec

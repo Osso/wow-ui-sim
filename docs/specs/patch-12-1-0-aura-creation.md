@@ -1,6 +1,6 @@
 # Retail 12.1.0 aura-creation — C01
 
-Bounded simulator proof for [prose-undated-009; prose-2026-06-02-037; prose-2026-07-23-207](../../data/patch-api/sources/12.1.0-api-changes.txt), captured 2026-10-04. No native-client parity or live-service claim.
+Bounded simulator proof for [prose-undated-009; prose-2026-06-18-037; prose-2026-07-23-207](../../data/patch-api/sources/12.1.0-api-changes.txt), captured 2026-10-04. No native-client parity or live-service claim.
 
 ## What it must do
 
@@ -16,7 +16,7 @@ Bounded simulator proof for [prose-undated-009; prose-2026-06-02-037; prose-2026
 ## Implementation inventory
 
 - `src/xml/types_elements.rs — intrinsic XML types`
-- `src/lua_api/globals/create_frame.rs — creation`
+- `src/lua_api/globals/create_frame/ — creation`
 
 ## Tests asserting this spec
 
