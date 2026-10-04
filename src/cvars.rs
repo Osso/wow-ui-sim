@@ -377,8 +377,13 @@ const PATCH_12_0_7_CVARS: &[(&str, &str)] = &[
 ];
 
 #[cfg(feature = "retail-12-1-0")]
-const PATCH_12_1_REMOVED_CVARS: &[&str] =
-    &["lastLockedDelvesCompanionAbilities", "SlugSupersampling"];
+const PATCH_12_1_REMOVED_CVARS: &[&str] = &[
+    "auctionDisplayOnCharacter",
+    "auctionSortByBuyoutPrice",
+    "auctionSortByUnitPrice",
+    "lastLockedDelvesCompanionAbilities",
+    "SlugSupersampling",
+];
 
 #[cfg(feature = "retail-12-1-0")]
 const PATCH_12_1_CVARS: &[(&str, &str)] = &[
@@ -401,7 +406,11 @@ const PATCH_12_1_CVARS: &[(&str, &str)] = &[
     ("showPingsOnRaidFrames", "1"),
     ("showScreenNarrationDialog", "1"),
     ("taintLogObjectSecrets", "0"),
+    // INFERRED simulator defaults (off); the 12.1.0 page names these CVars only.
+    ("tooltipShowAuraSpellIDs", "0"),
     ("userFontScaleGlue", "1.0"),
+    ("worldMapShowCursorCoords", "0"),
+    ("worldMapShowPlayerCoords", "0"),
 ];
 
 /// Load persisted overrides from disk.

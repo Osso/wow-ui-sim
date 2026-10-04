@@ -14,6 +14,7 @@ pub enum AnimationType {
     FlipBook,
     VertexColor,
     TextureCoordTranslation,
+    RadialProgress,
     Animation,
 }
 
@@ -30,6 +31,7 @@ impl AnimationType {
             "FLIPBOOK" => Self::FlipBook,
             "VERTEXCOLOR" => Self::VertexColor,
             "TEXTURECOORDTRANSLATION" => Self::TextureCoordTranslation,
+            "RADIALPROGRESS" => Self::RadialProgress,
             _ => Self::Animation,
         }
     }
@@ -45,6 +47,7 @@ impl AnimationType {
             Self::Path => "Path",
             Self::FlipBook => "FlipBook",
             Self::VertexColor => "VertexColor",
+            Self::RadialProgress => "RadialProgress",
             Self::TextureCoordTranslation | Self::Animation => "Animation",
         }
     }
@@ -79,6 +82,9 @@ pub struct AnimState {
     pub elapsed: f64,
     pub from_alpha: f64,
     pub to_alpha: f64,
+    /// RadialProgress sweep endpoints; INFERRED defaults cover the full circle.
+    pub from_percent: f64,
+    pub to_percent: f64,
     pub smoothing: String,
     pub flipbook_rows: u32,
     pub flipbook_columns: u32,
@@ -101,6 +107,8 @@ impl AnimState {
             elapsed: 0.0,
             from_alpha: 0.0,
             to_alpha: 1.0,
+            from_percent: 0.0,
+            to_percent: 1.0,
             smoothing: "NONE".to_string(),
             flipbook_rows: 0,
             flipbook_columns: 0,

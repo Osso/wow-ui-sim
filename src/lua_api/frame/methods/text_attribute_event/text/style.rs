@@ -151,6 +151,17 @@ pub(crate) fn set_fixed_color(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(feature = "retail-12-1-0")]
+pub(crate) fn set_desaturate_embedded_textures(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let desaturate = <bool as crate::lua_bridge::FromStack>::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    if let Some(frame) = sim.widgets.get_mut_visual(id) {
+        frame.desaturate_embedded_textures = desaturate;
+    }
+    Ok(0)
+}
+
 pub(crate) fn get_text_color(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let text_type = val_to_string(state, stack_val(state, 2)).unwrap_or_default();

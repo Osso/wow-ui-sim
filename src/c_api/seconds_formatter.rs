@@ -94,6 +94,8 @@ fn new_configuration(state: &mut LuaState) -> LuaResult<u32> {
         ("minInterval", 0.0),
         ("maxInterval", 3.0),
         ("desiredUnitCount", 1.0),
+        // Enum.SecondsFormatterRounding.Truncate, the formatter's effective default.
+        ("rounding", 1.0),
     ] {
         table_set_static(state, values, key, Val::Num(value));
     }

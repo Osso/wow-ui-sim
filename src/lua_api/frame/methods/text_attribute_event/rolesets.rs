@@ -11,7 +11,18 @@ pub(super) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<(
     table_set_rust_fn_static(state, table, "AddRoleset", add_roleset)?;
     table_set_rust_fn_static(state, table, "GetRolesetNames", get_roleset_names)?;
     table_set_rust_fn_static(state, table, "RemoveRoleset", remove_roleset)?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(state, table, "IsRolesetFiltered", is_roleset_filtered)?;
     table_set_rust_fn_static(state, table, "SetRolesets", set_rolesets)
+}
+
+/// No roleset filter is ever active: `C_Roleset.ApplyRolesetFilters` is a
+/// temporary workaround that hides nothing, so no frame is filtered.
+#[cfg(feature = "retail-12-1-0")]
+fn is_roleset_filtered(state: &mut LuaState) -> LuaResult<u32> {
+    frame_id_from_stack(state, 1)?;
+    state.push(Val::Bool(false));
+    Ok(1)
 }
 
 fn frame_fields(state: &mut LuaState) -> LuaResult<Val> {

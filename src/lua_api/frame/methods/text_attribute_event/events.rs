@@ -365,6 +365,7 @@ fn is_animation_object_type(object_type_name: &str) -> bool {
             | "Path"
             | "FlipBook"
             | "VertexColor"
+            | "RadialProgress"
             | "Animation"
     )
 }

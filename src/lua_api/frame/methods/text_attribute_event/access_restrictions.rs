@@ -26,7 +26,30 @@ pub(super) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<(
         table,
         "HasAnyAccessRestrictions",
         has_any_access_restrictions,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table,
+        "CanBeAccessedInContext",
+        can_be_accessed_in_context,
     )
+}
+
+/// Secure execution may access anything; tainted execution is denied for
+/// forbidden objects and objects carrying any access-restriction mask.
+fn can_be_accessed_in_context(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let restricted = {
+        let sim = borrow_state(state)?;
+        let frame = sim
+            .widgets
+            .get(id)
+            .ok_or_else(|| runtime_error("invalid frame"))?;
+        frame.forbidden || frame.access_restrictions != 0
+    };
+    let can_access = rilua::api::state_is_secure(state) || !restricted;
+    state.push(Val::Bool(can_access));
+    Ok(1)
 }
 
 fn add_access_restrictions(state: &mut LuaState) -> LuaResult<u32> {

@@ -1,15 +1,5 @@
 [
-  "wt-cvars-auctionDisplayOnCharacter-1338",
-  "wt-cvars-auctionSortByBuyoutPrice-1339",
-  "wt-cvars-auctionSortByUnitPrice-1340",
-  "wt-cvars-tooltipShowAuraSpellIDs-1332",
-  "wt-cvars-worldMapShowCursorCoords-1334",
-  "wt-cvars-worldMapShowPlayerCoords-1335",
   "wt-events-CHAT_MSG_*-1300",
-  "wt-events-FULLSCREEN_BROWSER_SPINNER_HIDE-1262",
-  "wt-events-FULLSCREEN_BROWSER_SPINNER_SHOW-1263",
-  "wt-events-HOUSING_LAYOUT_NUM_FLOORS_CHANGED-1297",
-  "wt-events-HOUSING_LAYOUT_OCCUPIED_FLOOR_RANGE_CHANGED-1283",
   "wt-framexml-EncounterJournal_OpenToTieredEntrance-712",
   "wt-framexml-EventUtil.AreVariablesLoaded-986",
   "wt-framexml-MacroFrame_SaveMacro-1017",
@@ -60,13 +50,5 @@
   "wt-global-api-CancelItemTempEnchantment-577",
   "wt-global-api-GetInspectSpecialization-578",
   "wt-global-api-GetWeaponEnchantInfo-580",
-  "wt-scriptobjects-SecondsFormatter:GetRounding-1103",
-  "wt-widgets-FontString:SetDesaturateEmbeddedTextures-1128",
-  "wt-widgets-Frame:IsRolesetFiltered-1150",
-  "wt-widgets-Frame:ResizeToBoundsRect-1152",
-  "wt-widgets-FrameScriptObject:CanBeAccessedInContext-1120",
-  "wt-widgets-RadialProgress:GetFromPercent-1142",
-  "wt-widgets-RadialProgress:GetToPercent-1143",
-  "wt-widgets-RadialProgress:SetFromPercent-1144",
-  "wt-widgets-RadialProgress:SetToPercent-1145"
+  "wt-widgets-Frame:ResizeToBoundsRect-1152"
 ]

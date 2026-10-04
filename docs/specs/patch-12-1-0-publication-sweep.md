@@ -41,14 +41,15 @@ A data-driven breadth probe covers all 778 entries in the [wikitext register](..
 
 No per-symbol exceptions. Widget method lookup proves reachability, not owner restrictions.
 
-Default Retail sweep: GREEN against the reviewed gap set, 778 observations (705 OK, 73 non-OK after LoD bootstrap preload parity). GREEN proves the gap set is unchanged, not that all symbols work. Three negative controls were non-OK. Cached UI provenance reports Retail `12.1.0.69933`; this is provenance metadata, not native-client authentication.
+Default Retail sweep: GREEN against the reviewed gap set, 778 observations (726 OK, 52 non-OK). GREEN proves the gap set is unchanged, not that all symbols work. Three negative controls were non-OK. Cached UI provenance reports Retail `12.1.0.69933`; this is provenance metadata, not native-client authentication.
 
 ## Known gaps (current cycle)
 
-- [ ] Default Game startup has 142 direct publication/absence failures: 91 globals, 36 namespace/mixin members, five object methods, four concrete events and six CVars. These are startup-surface gaps, not proof of native-client absence. All remain non-ok even when the exact-set regression test passes.
+- [ ] Default Game startup has 52 non-ok rows: 39 global-api (30 added rows owned by a separate pass), 11 framexml, one widget method and one event family. These are startup-surface gaps, not proof of native-client absence. All remain non-ok even when the exact-set regression test passes.
+- [ ] Removed rows republished by cached Blizzard Lua with the default `loadDeprecationFallbacks=1` stay non-ok: `getglobal`, `setglobal`, `GetWeaponEnchantInfo`, `CancelItemTempEnchantment`, `GetInspectSpecialization`, `C_UnitAuras.Add/RemovePrivateAuraAppliedSound`, `C_HousingLayout.GetNumFloors` (`Blizzard_Deprecated` 12.1.0 files), `BNGetFriendInviteInfo`, `BNSendVerifiedBattleTagInvite` (`Blizzard_DeprecatedBattleNet`), `RaidNotice_*` (`Blizzard_DeprecatedRaidWarning`). `MacroFrame_SaveMacro` comes from `Blizzard_MacroUI`, which startup loads.
+- [ ] `Frame:ResizeToBoundsRect` is unpublished: its native semantics are undocumented and the simulator's `GetBoundsRect` returns only the frame's own rect.
 - [ ] `PlayerChoiceToggle_TryShow` appears as both added (868) and removed (1027) in the source page; the cached 12.1.0 bootstrap publishes it, so the removed row stays non-ok.
 - [ ] `CHAT_MSG_*` describes a family, not one registerable event; its row remains non-ok without an authoritative concrete expansion.
-- [ ] RadialProgress is not a recognized simulator animation type at authoring time; its real factory probe rejects a returned generic Animation. No generic-method fallback earns credit.
 - [ ] The current register does not carry CVar page defaults (all CVar annotations are empty); default comparison can only apply when `page_default` (or `default`) metadata is supplied.
 
 ## Out of scope

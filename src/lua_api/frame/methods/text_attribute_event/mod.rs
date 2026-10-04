@@ -314,6 +314,13 @@ fn register_text_colors(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<
     table_set_rust_fn_static(state, table, "SetTextColor", text::set_text_color)?;
     table_set_rust_fn_static(state, table, "GetTextColor", text::get_text_color)?;
     table_set_rust_fn_static(state, table, "SetFixedColor", text::set_fixed_color)?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(
+        state,
+        table,
+        "SetDesaturateEmbeddedTextures",
+        text::set_desaturate_embedded_textures,
+    )?;
     Ok(())
 }
 

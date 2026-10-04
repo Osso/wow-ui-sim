@@ -552,6 +552,30 @@ pub(super) fn animation_get_to_alpha(state: &mut LuaState) -> LuaResult<u32> {
     push_anim_field(state, |a| a.to_alpha)
 }
 
+#[cfg(feature = "retail-12-1-0")]
+pub(super) fn animation_set_from_percent(state: &mut LuaState) -> LuaResult<u32> {
+    let value = <f64 as crate::lua_bridge::FromStack>::from_stack(state, 2)?;
+    with_animation_state_mut(state, |a| a.from_percent = value)?;
+    Ok(0)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+pub(super) fn animation_get_from_percent(state: &mut LuaState) -> LuaResult<u32> {
+    push_anim_field(state, |a| a.from_percent)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+pub(super) fn animation_set_to_percent(state: &mut LuaState) -> LuaResult<u32> {
+    let value = <f64 as crate::lua_bridge::FromStack>::from_stack(state, 2)?;
+    with_animation_state_mut(state, |a| a.to_percent = value)?;
+    Ok(0)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+pub(super) fn animation_get_to_percent(state: &mut LuaState) -> LuaResult<u32> {
+    push_anim_field(state, |a| a.to_percent)
+}
+
 pub(super) fn animation_set_change(state: &mut LuaState) -> LuaResult<u32> {
     let change = match stack_val(state, 2) {
         Val::Num(n) => n,

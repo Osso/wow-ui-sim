@@ -61,6 +61,7 @@ if Enum.SecondsFormatterIntervalWhitespace ~= nil then
     set_value(self, "stripIntervalWhitespace", mode)
   end
   function methods:GetStripIntervalWhitespace() return configuration(self).stripIntervalWhitespace end
+  function methods:GetRounding() return configuration(self).rounding end
 end
 
 function methods:SetApproximationSeconds(value) set_number(self, "approximationSeconds", value) end

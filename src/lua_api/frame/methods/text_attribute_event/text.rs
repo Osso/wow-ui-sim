@@ -4,6 +4,8 @@ mod formatting;
 mod metrics;
 mod simple_html;
 mod style;
+#[cfg(feature = "retail-12-1-0")]
+pub(super) use style::set_desaturate_embedded_textures;
 #[cfg(feature = "retail-12-0-0")]
 pub(super) use style::{get_scale_animation_mode, set_scale_animation_mode};
 #[cfg(feature = "retail-12-0-5")]

@@ -81,6 +81,7 @@ macro_rules! frame_defaults {
             title: None,
             text_color: Color::new(1.0, 0.8, 0.2, 1.0),
             text_color_fixed: false,
+            desaturate_embedded_textures: false,
             shadow_color: Color::new(0.0, 0.0, 0.0, 0.0),
             shadow_offset: (0.0, 0.0),
             font: None,

@@ -577,8 +577,30 @@ fn register_animation_config(state: &mut LuaState, table: GcRef<Table>) -> LuaRe
         table_set_rust_fn_static(state, table, name, func)?;
     }
     table_set_rust_fn_static(state, table, "SetScale", animations::set_scale_dispatch)?;
+    #[cfg(feature = "retail-12-1-0")]
+    register_methods(state, table, RADIAL_PROGRESS_METHODS)?;
     Ok(())
 }
+
+#[cfg(feature = "retail-12-1-0")]
+const RADIAL_PROGRESS_METHODS: &[MethodBinding] = &[
+    MethodBinding {
+        name: "SetFromPercent",
+        func: animations::animation_set_from_percent,
+    },
+    MethodBinding {
+        name: "GetFromPercent",
+        func: animations::animation_get_from_percent,
+    },
+    MethodBinding {
+        name: "SetToPercent",
+        func: animations::animation_set_to_percent,
+    },
+    MethodBinding {
+        name: "GetToPercent",
+        func: animations::animation_get_to_percent,
+    },
+];
 
 fn register_animation_target(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
     register_methods(state, table, ANIMATION_TARGET_METHODS)

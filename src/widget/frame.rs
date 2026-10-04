@@ -161,6 +161,9 @@ pub struct Frame {
     /// updates (button highlight, disabled gray, theme switches). Explicit
     /// `SetTextColor` calls still apply.
     pub text_color_fixed: bool,
+    /// `SetDesaturateEmbeddedTextures`: desaturate inline `|T`/`|A` textures.
+    /// Stored only; inline textures are stripped by the text renderer.
+    pub desaturate_embedded_textures: bool,
     /// Shadow color for FontStrings (defaults to transparent = no shadow).
     pub shadow_color: Color,
     /// Shadow offset (x, y) in pixels for FontStrings.
