@@ -5,14 +5,14 @@ fn env() -> WowLuaEnv {
 }
 
 #[test]
-fn cooldown_viewer_fallbacks_return_safe_empty_defaults() {
+fn cooldown_viewer_empty_state_has_no_cooldowns() {
     let env = env();
     let (category_count, cooldown_is_nil, cooldown_id_is_nil): (i32, bool, bool) = env
         .eval(
             r#"
             return
-                #C_CooldownViewer.GetCooldownViewerCategorySet(),
-                C_CooldownViewer.GetCooldownViewerCooldownInfo() == nil,
+                #C_CooldownViewer.GetCooldownViewerCategorySet(Enum.CooldownViewerCategory.Essential, true),
+                C_CooldownViewer.GetCooldownViewerCooldownInfo(1) == nil,
                 C_CooldownViewer.GetCooldownID() == nil
             "#,
         )

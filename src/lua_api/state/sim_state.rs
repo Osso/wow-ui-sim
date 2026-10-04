@@ -327,6 +327,9 @@ pub struct SimState {
     pub weapon_enchants: [Vec<crate::c_api::weapon_enchants::WeaponEnchant>; 3],
     pub sound_manager: Option<SoundManager>,
     pub last_sound_kit_requested: Option<u32>,
+    /// `C_CooldownViewer` entries keyed by cooldownID; empty until populated.
+    pub cooldown_viewer_cooldowns:
+        std::collections::BTreeMap<i32, crate::c_api::c_cooldown_viewer::CooldownViewerCooldown>,
     #[cfg(feature = "retail-12-1-0")]
     pub last_sound_request: Option<crate::c_api::c_sound::PlaySoundRequest>,
     pub last_sound_file_requested: Option<String>,

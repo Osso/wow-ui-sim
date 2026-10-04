@@ -66,6 +66,7 @@ mod c_combat_log;
 #[cfg(feature = "retail-12-0-0")]
 mod c_combat_text;
 pub(crate) mod c_console;
+pub mod c_cooldown_viewer;
 pub(crate) mod c_creature_info;
 pub mod c_cursor;
 pub mod c_curve_util;
