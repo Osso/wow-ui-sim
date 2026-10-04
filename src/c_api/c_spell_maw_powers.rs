@@ -7,7 +7,6 @@ use std::collections::HashMap;
 use crate::lua_api::methods::{borrow_state, create_string};
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::LuaResult;
-#[cfg(not(feature = "retail-12-0-7"))]
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
