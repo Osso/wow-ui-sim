@@ -1,5 +1,21 @@
 # Patch 12.0.7 API Audit
 
+### Page accounting — preparation checkpoint (2026-10-03)
+
+12.0.7 now has a tracked `patch-page-coverage/v1` ledger at `data/patch-api/sources/12.0.7-page-coverage.json`, modeled on [[patch-12-0-5-api-audit]]. It binds `data/patch-api/sources/12.0.7-register.json` by SHA-256 `389e3b19174bf77c3646028f764cf186ccfe1b7dddaca2a3b3fcba75e3bdec60` and accounts every nonblank line of the retained [source snapshot](../../../data/patch-api/sources/12.0.7-api-changes.txt).
+
+**0 capabilities/166 source IDs; 153 pending /0 bounded /0 partial /13 metadata**: thirteen heading/context rows are metadata-only; triage separately proposes three rows for inherited 12.0.5 capabilities, not yet promoted. Triage and batch plan: [evidence](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/README.md). 73 rows need proof against existing implementations, 59 are modelable bounded work, and 18 remain evidence-blocked. Audit **IN PROGRESS**, not finished.
+
+### Source scope and occurrence distinction
+
+The 131 named occurrences (79 added/29 changed/23 removed) are preserved with derived section/subject/source-line IDs, plus 35 supplemental prose, wrapper, CVar completeness and editorial rows missing from that register. Section totals: Source context 14, Blue posts 16, Global API 52, ScriptObjects 36, Widgets 20, Events 17, CVars 6, Deprecated API 5. Combined lines retain all their semantic obligations. Source text is undated for the individual blue-post bullets, so `prose-undated-NNN` does not invent post chronology.
+
+The retained text covers the recorded 12.0.5 build 67602 -> 12.0.7 build 68182 delta, but it is a crawler excerpt, not authenticated full-page extraction; it explicitly omits 14 CVar addition names and five removal names. The aggregate omission claim stays blocked. No consolidated enum/structure section is present; EncounterUnitStatus and CalendarTime claims are retained as prose, not silently discarded. Full-page provenance/completeness still needs historical source capture and reconciliation before page completion.
+
+The occurrence manifest `data/patch-api/12.0.7.json` and [[patch-12-0-7-occurrence-inventory]] remain separate: 29 implemented/101 best-effort/1 exception-requested is not page-row conformance. Current cached generated declarations may postdate 12.0.7. `retail-12-0-7` includes `retail-12-0-5`, enabling bounded earlier capability reuse where policy is unchanged, but not changed vehicle-aura, font validation, marker-prefix or private-aura-M+ permission behavior. Default retail is newer than 12.0.7; strict epoch proof is separate.
+
+Read-only preparation executed no builds/tests or runtime gates. No repo files changed. See staged `triage.md`, `batches.md` and `source-row-map.json` for exact per-line decisions, current provider/declaration anchors, required proofs and missing evidence. Existing bridge work below remains historical and qualified; this checkpoint does not promote it automatically.
+
 Patch 12.0.7 API work in wow-ui-sim separates safe additive compatibility bridges from security, taint, and secret-value behavior that must be proven with live Blizzard observations before implementation.
 
 ## Content

@@ -1,3 +1,7 @@
+## [2026-10-03] docs | 12.0.7 page audit started
+
+Exhaustive ledger for the retained 12.0.7 page excerpt seeded from the register plus 35 supplemental rows. [Audit page](investigations/patch-12-0-7-api-audit.md); 0 capabilities/166 source IDs; 153 pending /0 bounded /0 partial /13 metadata.
+
 ## [2026-10-03] docs | Round 100 follow-ups accounted
 
 Exact534 bounded; roster names, selected-unit parsing and viewed outfit recorded on their rows. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#round-100--review-follow-ups); 131 capabilities/362 IDs; 28 pending /270 bounded /29 partial /35 metadata.

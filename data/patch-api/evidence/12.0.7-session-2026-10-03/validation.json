@@ -1,0 +1,52 @@
+{
+  "validation": "PASS",
+  "rows": 166,
+  "unique_ids": 166,
+  "named_occurrences": 131,
+  "supplemental_rows": 35,
+  "section_counts": {
+    "Source context": 14,
+    "Blue posts": 16,
+    "Global API": 52,
+    "ScriptObjects": 36,
+    "Widgets": 20,
+    "Events": 17,
+    "CVars": 6,
+    "Deprecated API": 5
+  },
+  "triage_counts": {
+    "METADATA-ONLY": 13,
+    "ALREADY-IMPLEMENTED-NEEDS-PROOF": 73,
+    "MODELABLE": 59,
+    "BLOCKED": 18,
+    "ALREADY-COVERED-BY-12.0.5-CAPABILITY": 3
+  },
+  "seed_status_counts": {
+    "audit-pending": 166
+  },
+  "source_register_sha256": "389e3b19174bf77c3646028f764cf186ccfe1b7dddaca2a3b3fcba75e3bdec60",
+  "text_sha256": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e",
+  "source_text_lines": 178,
+  "covered_nonblank_lines": 166,
+  "12.0.5_section_counts": {
+    "Blue posts": 118,
+    "Global API": 155,
+    "ScriptObjects": 5,
+    "Widgets": 10,
+    "Events": 6,
+    "Enums": 33,
+    "Structures": 35
+  },
+  "batch_count": 44,
+  "modelable_or_needs_proof_rows_planned": 132,
+  "referenced_repo_paths_exist": true,
+  "named_occurrence_ids_preserved": true,
+  "input_sha256": {
+    "data/patch-api/sources/12.0.5-register.json": "eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed",
+    "data/patch-api/sources/12.0.5-page-coverage.json": "324f244b564d3115efa7e3dcd7122c84551cc754030d619a05a1294ad4c9f6bc",
+    "data/patch-api/sources/12.0.7-register.json": "389e3b19174bf77c3646028f764cf186ccfe1b7dddaca2a3b3fcba75e3bdec60",
+    "data/patch-api/sources/12.0.7-api-changes.txt": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e",
+    "data/patch-api/12.0.7.json": "320773e0ca7a77d432b8eb004b56b72463b4bd3d6743262af137d011bc4b562c",
+    "Cargo.toml": "6704a600a431bd7e27d8a7aea1c9c3a8ddc20354f3d67f856ed930c83cda1fbd"
+  }
+}

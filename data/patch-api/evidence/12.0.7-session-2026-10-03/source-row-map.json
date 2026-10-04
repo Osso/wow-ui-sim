@@ -1,0 +1,1979 @@
+[
+  {
+    "id": "source-context-001",
+    "section": "Source context",
+    "line": 1,
+    "symbol": "",
+    "text": "Patch 12.0.7/API changes - Warcraft Wiki source snapshot from https://warcraft.wiki.gg/wiki/Patch_12.0.7/API_changes (searched 2026-07-06)."
+  },
+  {
+    "id": "source-context-003",
+    "section": "Source context",
+    "line": 3,
+    "symbol": "",
+    "text": "Resources: TOC 120007. Previous patch 12.0.5. Next patch 12.1.0."
+  },
+  {
+    "id": "source-context-004",
+    "section": "Source context",
+    "line": 4,
+    "symbol": "",
+    "text": "Undocumented: Removed IMPORTANT from AuraFilters."
+  },
+  {
+    "id": "source-context-006",
+    "section": "Source context",
+    "line": 6,
+    "symbol": "",
+    "text": "Blue posts / notes:"
+  },
+  {
+    "id": "prose-undated-007",
+    "section": "Blue posts",
+    "line": 7,
+    "symbol": "",
+    "text": "- Added GameTooltip_AddMoneyLine API using embedded atlases/MoneyFormatter; Blizzard removed usages of SetTooltipMoney."
+  },
+  {
+    "id": "prose-undated-008",
+    "section": "Blue posts",
+    "line": 8,
+    "symbol": "",
+    "text": "- Unit identity: APIs restricting unit token types (UnitGUID, UnitAura, health/power APIs when called with PvP-restricted tokens) no longer raise Lua errors for unsupported tokens; return nil/default."
+  },
+  {
+    "id": "prose-undated-009",
+    "section": "Blue posts",
+    "line": 9,
+    "symbol": "",
+    "text": "- ENCOUNTER_END includes additional payload: list of EncounterUnitStatus tables for all boss units engaged; fields creatureID, creatureName, remainingHealthPercent as non-secrets."
+  },
+  {
+    "id": "prose-undated-010",
+    "section": "Blue posts",
+    "line": 10,
+    "symbol": "",
+    "text": "- C_EncounterEvents allows configuration of different colors for text warnings/timeline events; custom color for 5 seconds remaining signaled via ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED; color APIs accept alpha."
+  },
+  {
+    "id": "prose-undated-011",
+    "section": "Blue posts",
+    "line": 11,
+    "symbol": "",
+    "text": "- Added C_UIFileAsset namespace: GetFileID(asset), IsKnownFile(asset), IsLooseFile(asset)."
+  },
+  {
+    "id": "prose-undated-012",
+    "section": "Blue posts",
+    "line": 12,
+    "symbol": "",
+    "text": "- Profiling APIs available to addons again: GetEventCPUUsage, GetFunctionCPUUsage, GetScriptCPUUsage."
+  },
+  {
+    "id": "prose-undated-013",
+    "section": "Blue posts",
+    "line": 13,
+    "symbol": "",
+    "text": "- SimulateMouse APIs no longer carry taint when used, restricted to gamepad action and disallowed with forbidden/locked/script-inaccessible/protected mouse foci in combat."
+  },
+  {
+    "id": "prose-undated-014",
+    "section": "Blue posts",
+    "line": 14,
+    "symbol": "",
+    "text": "- debugstack and debuglocals return secret values if current function or caller accessed secret value."
+  },
+  {
+    "id": "prose-undated-015",
+    "section": "Blue posts",
+    "line": 15,
+    "symbol": "",
+    "text": "- Added secure action raidtarget option \"set-unmarked\" and /tm ~marker syntax."
+  },
+  {
+    "id": "prose-undated-016",
+    "section": "Blue posts",
+    "line": 16,
+    "symbol": "",
+    "text": "- C_MythicPlus.GetRunHistory, GetWeeklyBestForMap, GetSeasonBestForMap now return CalendarTime structs instead of MythicPlusDate structs."
+  },
+  {
+    "id": "prose-undated-017",
+    "section": "Blue posts",
+    "line": 17,
+    "symbol": "",
+    "text": "- GROUP_FORMED sent when player joins a follower dungeon or delve alone."
+  },
+  {
+    "id": "prose-undated-018",
+    "section": "Blue posts",
+    "line": 18,
+    "symbol": "",
+    "text": "- AuraData.isFromPlayerOrPlayerPet true if aura came from player-controlled vehicle."
+  },
+  {
+    "id": "prose-undated-019",
+    "section": "Blue posts",
+    "line": 19,
+    "symbol": "",
+    "text": "- Addons allowed to call C_UnitAuras.AddPrivateAuraAppliedSound during active M+ if player not in combat."
+  },
+  {
+    "id": "prose-undated-020",
+    "section": "Blue posts",
+    "line": 20,
+    "symbol": "",
+    "text": "- Fixed secret value errors in SetFrameStrata."
+  },
+  {
+    "id": "prose-undated-021",
+    "section": "Blue posts",
+    "line": 21,
+    "symbol": "",
+    "text": "- BNInviteFriend migrated to C_BattleNet.InviteFriend."
+  },
+  {
+    "id": "prose-undated-022",
+    "section": "Blue posts",
+    "line": 22,
+    "symbol": "",
+    "text": "- Added DurationTextBinding script object type."
+  },
+  {
+    "id": "source-context-024",
+    "section": "Source context",
+    "line": 24,
+    "symbol": "",
+    "text": "Consolidated changes 12.0.5 (67602) -> 12.0.7 (68182) Jun 12 2026."
+  },
+  {
+    "id": "source-context-026",
+    "section": "Source context",
+    "line": 26,
+    "symbol": "",
+    "text": "Global API Added (35):"
+  },
+  {
+    "id": "global api-C_BattleNet-InviteFriend-027",
+    "section": "Global API",
+    "line": 27,
+    "symbol": "C_BattleNet.InviteFriend",
+    "text": "C_BattleNet.InviteFriend",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_BattleNet.InviteFriend"
+    },
+    "occurrence_id": "added:C_BattleNet.InviteFriend"
+  },
+  {
+    "id": "global api-C_Container-CalculateTotalNumberOfFreeBagSlots-028",
+    "section": "Global API",
+    "line": 28,
+    "symbol": "C_Container.CalculateTotalNumberOfFreeBagSlots",
+    "text": "C_Container.CalculateTotalNumberOfFreeBagSlots",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_Container.CalculateTotalNumberOfFreeBagSlots"
+    },
+    "occurrence_id": "added:C_Container.CalculateTotalNumberOfFreeBagSlots"
+  },
+  {
+    "id": "global api-C_DelvesUI-GetDelveEntranceTitleString-029",
+    "section": "Global API",
+    "line": 29,
+    "symbol": "C_DelvesUI.GetDelveEntranceTitleString",
+    "text": "C_DelvesUI.GetDelveEntranceTitleString",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_DelvesUI.GetDelveEntranceTitleString"
+    },
+    "occurrence_id": "added:C_DelvesUI.GetDelveEntranceTitleString"
+  },
+  {
+    "id": "global api-C_DelvesUI-GetWorldTierDifficultyForActivePlayer-030",
+    "section": "Global API",
+    "line": 30,
+    "symbol": "C_DelvesUI.GetWorldTierDifficultyForActivePlayer",
+    "text": "C_DelvesUI.GetWorldTierDifficultyForActivePlayer",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_DelvesUI.GetWorldTierDifficultyForActivePlayer"
+    },
+    "occurrence_id": "added:C_DelvesUI.GetWorldTierDifficultyForActivePlayer"
+  },
+  {
+    "id": "global api-C_DurationUtil-CreateDurationTextBinding-031",
+    "section": "Global API",
+    "line": 31,
+    "symbol": "C_DurationUtil.CreateDurationTextBinding",
+    "text": "C_DurationUtil.CreateDurationTextBinding",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_DurationUtil.CreateDurationTextBinding"
+    },
+    "occurrence_id": "added:C_DurationUtil.CreateDurationTextBinding"
+  },
+  {
+    "id": "global api-C_DurationUtil-CreateManualClock-032",
+    "section": "Global API",
+    "line": 32,
+    "symbol": "C_DurationUtil.CreateManualClock",
+    "text": "C_DurationUtil.CreateManualClock",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_DurationUtil.CreateManualClock"
+    },
+    "occurrence_id": "added:C_DurationUtil.CreateManualClock"
+  },
+  {
+    "id": "global api-C_EncounterTimeline-GetEventColor-033",
+    "section": "Global API",
+    "line": 33,
+    "symbol": "C_EncounterTimeline.GetEventColor",
+    "text": "C_EncounterTimeline.GetEventColor",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_EncounterTimeline.GetEventColor"
+    },
+    "occurrence_id": "added:C_EncounterTimeline.GetEventColor"
+  },
+  {
+    "id": "global api-C_HousingCatalog-GetCatalogCategoryAndSubcategoryNames-034",
+    "section": "Global API",
+    "line": 34,
+    "symbol": "C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames",
+    "text": "C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames"
+    },
+    "occurrence_id": "added:C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames"
+  },
+  {
+    "id": "global api-C_HousingCustomizeMode-RoomConnectionSupportsDoorType-035",
+    "section": "Global API",
+    "line": 35,
+    "symbol": "C_HousingCustomizeMode.RoomConnectionSupportsDoorType",
+    "text": "C_HousingCustomizeMode.RoomConnectionSupportsDoorType",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_HousingCustomizeMode.RoomConnectionSupportsDoorType"
+    },
+    "occurrence_id": "added:C_HousingCustomizeMode.RoomConnectionSupportsDoorType"
+  },
+  {
+    "id": "global api-C_HousingLayout-CanSetViewedFloor-036",
+    "section": "Global API",
+    "line": 36,
+    "symbol": "C_HousingLayout.CanSetViewedFloor",
+    "text": "C_HousingLayout.CanSetViewedFloor",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_HousingLayout.CanSetViewedFloor"
+    },
+    "occurrence_id": "added:C_HousingLayout.CanSetViewedFloor"
+  },
+  {
+    "id": "global api-C_MerchantFrame-GetMerchantCurrencies-037",
+    "section": "Global API",
+    "line": 37,
+    "symbol": "C_MerchantFrame.GetMerchantCurrencies",
+    "text": "C_MerchantFrame.GetMerchantCurrencies",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_MerchantFrame.GetMerchantCurrencies"
+    },
+    "occurrence_id": "added:C_MerchantFrame.GetMerchantCurrencies"
+  },
+  {
+    "id": "global api-C_PartyInfo-ConfirmReadyCheck-038",
+    "section": "Global API",
+    "line": 38,
+    "symbol": "C_PartyInfo.ConfirmReadyCheck",
+    "text": "C_PartyInfo.ConfirmReadyCheck",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_PartyInfo.ConfirmReadyCheck"
+    },
+    "occurrence_id": "added:C_PartyInfo.ConfirmReadyCheck"
+  },
+  {
+    "id": "global api-C_PartyInfo-DemoteAssistant-039",
+    "section": "Global API",
+    "line": 39,
+    "symbol": "C_PartyInfo.DemoteAssistant",
+    "text": "C_PartyInfo.DemoteAssistant",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_PartyInfo.DemoteAssistant"
+    },
+    "occurrence_id": "added:C_PartyInfo.DemoteAssistant"
+  },
+  {
+    "id": "global api-C_PartyInfo-DoReadyCheck-040",
+    "section": "Global API",
+    "line": 40,
+    "symbol": "C_PartyInfo.DoReadyCheck",
+    "text": "C_PartyInfo.DoReadyCheck",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_PartyInfo.DoReadyCheck"
+    },
+    "occurrence_id": "added:C_PartyInfo.DoReadyCheck"
+  },
+  {
+    "id": "global api-C_PartyInfo-IsGUIDInGroup-041",
+    "section": "Global API",
+    "line": 41,
+    "symbol": "C_PartyInfo.IsGUIDInGroup",
+    "text": "C_PartyInfo.IsGUIDInGroup",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_PartyInfo.IsGUIDInGroup"
+    },
+    "occurrence_id": "added:C_PartyInfo.IsGUIDInGroup"
+  },
+  {
+    "id": "global api-C_PartyInfo-PromoteToAssistant-042",
+    "section": "Global API",
+    "line": 42,
+    "symbol": "C_PartyInfo.PromoteToAssistant",
+    "text": "C_PartyInfo.PromoteToAssistant",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_PartyInfo.PromoteToAssistant"
+    },
+    "occurrence_id": "added:C_PartyInfo.PromoteToAssistant"
+  },
+  {
+    "id": "global api-C_PartyInfo-PromoteToLeader-043",
+    "section": "Global API",
+    "line": 43,
+    "symbol": "C_PartyInfo.PromoteToLeader",
+    "text": "C_PartyInfo.PromoteToLeader",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_PartyInfo.PromoteToLeader"
+    },
+    "occurrence_id": "added:C_PartyInfo.PromoteToLeader"
+  },
+  {
+    "id": "global api-C_PartyInfo-SetEveryoneIsAssistant-044",
+    "section": "Global API",
+    "line": 44,
+    "symbol": "C_PartyInfo.SetEveryoneIsAssistant",
+    "text": "C_PartyInfo.SetEveryoneIsAssistant",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_PartyInfo.SetEveryoneIsAssistant"
+    },
+    "occurrence_id": "added:C_PartyInfo.SetEveryoneIsAssistant"
+  },
+  {
+    "id": "global api-C_PartyInfo-UninviteUnit-045",
+    "section": "Global API",
+    "line": 45,
+    "symbol": "C_PartyInfo.UninviteUnit",
+    "text": "C_PartyInfo.UninviteUnit",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_PartyInfo.UninviteUnit"
+    },
+    "occurrence_id": "added:C_PartyInfo.UninviteUnit"
+  },
+  {
+    "id": "global api-C_PingSecure-ClearPendingPingOffScreenCallback-046",
+    "section": "Global API",
+    "line": 46,
+    "symbol": "C_PingSecure.ClearPendingPingOffScreenCallback",
+    "text": "C_PingSecure.ClearPendingPingOffScreenCallback",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_PingSecure.ClearPendingPingOffScreenCallback"
+    },
+    "occurrence_id": "added:C_PingSecure.ClearPendingPingOffScreenCallback"
+  },
+  {
+    "id": "global api-C_PingSecure-SetPendingPingOffScreenCallback-047",
+    "section": "Global API",
+    "line": 47,
+    "symbol": "C_PingSecure.SetPendingPingOffScreenCallback",
+    "text": "C_PingSecure.SetPendingPingOffScreenCallback",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_PingSecure.SetPendingPingOffScreenCallback"
+    },
+    "occurrence_id": "added:C_PingSecure.SetPendingPingOffScreenCallback"
+  },
+  {
+    "id": "global api-C_QuestHub-GetDragonridingRacesForAreaPOI-048",
+    "section": "Global API",
+    "line": 48,
+    "symbol": "C_QuestHub.GetDragonridingRacesForAreaPOI",
+    "text": "C_QuestHub.GetDragonridingRacesForAreaPOI",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_QuestHub.GetDragonridingRacesForAreaPOI"
+    },
+    "occurrence_id": "added:C_QuestHub.GetDragonridingRacesForAreaPOI"
+  },
+  {
+    "id": "global api-C_UIFileAsset-GetFileID-049",
+    "section": "Global API",
+    "line": 49,
+    "symbol": "C_UIFileAsset.GetFileID",
+    "text": "C_UIFileAsset.GetFileID",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_UIFileAsset.GetFileID"
+    },
+    "occurrence_id": "added:C_UIFileAsset.GetFileID"
+  },
+  {
+    "id": "global api-C_UIFileAsset-IsKnownFile-050",
+    "section": "Global API",
+    "line": 50,
+    "symbol": "C_UIFileAsset.IsKnownFile",
+    "text": "C_UIFileAsset.IsKnownFile",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_UIFileAsset.IsKnownFile"
+    },
+    "occurrence_id": "added:C_UIFileAsset.IsKnownFile"
+  },
+  {
+    "id": "global api-C_UIFileAsset-IsLooseFile-051",
+    "section": "Global API",
+    "line": 51,
+    "symbol": "C_UIFileAsset.IsLooseFile",
+    "text": "C_UIFileAsset.IsLooseFile",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "C_UIFileAsset.IsLooseFile"
+    },
+    "occurrence_id": "added:C_UIFileAsset.IsLooseFile"
+  },
+  {
+    "id": "global api-GetEventCPUUsage-052",
+    "section": "Global API",
+    "line": 52,
+    "symbol": "GetEventCPUUsage",
+    "text": "GetEventCPUUsage",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "GetEventCPUUsage"
+    },
+    "occurrence_id": "added:GetEventCPUUsage"
+  },
+  {
+    "id": "global api-GetFunctionCPUUsage-053",
+    "section": "Global API",
+    "line": 53,
+    "symbol": "GetFunctionCPUUsage",
+    "text": "GetFunctionCPUUsage",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "GetFunctionCPUUsage"
+    },
+    "occurrence_id": "added:GetFunctionCPUUsage"
+  },
+  {
+    "id": "global api-GetScriptCPUUsage-054",
+    "section": "Global API",
+    "line": 54,
+    "symbol": "GetScriptCPUUsage",
+    "text": "GetScriptCPUUsage",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "GetScriptCPUUsage"
+    },
+    "occurrence_id": "added:GetScriptCPUUsage"
+  },
+  {
+    "id": "global api-GetSecurePendingButtonCallback-055",
+    "section": "Global API",
+    "line": 55,
+    "symbol": "GetSecurePendingButtonCallback",
+    "text": "GetSecurePendingButtonCallback",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "GetSecurePendingButtonCallback"
+    },
+    "occurrence_id": "added:GetSecurePendingButtonCallback"
+  },
+  {
+    "id": "global api-GetSecurePendingPingOffScreenCallback-056",
+    "section": "Global API",
+    "line": 56,
+    "symbol": "GetSecurePendingPingOffScreenCallback",
+    "text": "GetSecurePendingPingOffScreenCallback",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "GetSecurePendingPingOffScreenCallback"
+    },
+    "occurrence_id": "added:GetSecurePendingPingOffScreenCallback"
+  },
+  {
+    "id": "global api-GetSecurePendingToggleRunCallback-057",
+    "section": "Global API",
+    "line": 57,
+    "symbol": "GetSecurePendingToggleRunCallback",
+    "text": "GetSecurePendingToggleRunCallback",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "GetSecurePendingToggleRunCallback"
+    },
+    "occurrence_id": "added:GetSecurePendingToggleRunCallback"
+  },
+  {
+    "id": "global api-GameTooltip_AddMoneyLine-058",
+    "section": "Global API",
+    "line": 58,
+    "symbol": "GameTooltip_AddMoneyLine",
+    "text": "GameTooltip_AddMoneyLine",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "GameTooltip_AddMoneyLine"
+    },
+    "occurrence_id": "added:GameTooltip_AddMoneyLine"
+  },
+  {
+    "id": "global api-SetSecurePendingButtonCallback-059",
+    "section": "Global API",
+    "line": 59,
+    "symbol": "SetSecurePendingButtonCallback",
+    "text": "SetSecurePendingButtonCallback",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "SetSecurePendingButtonCallback"
+    },
+    "occurrence_id": "added:SetSecurePendingButtonCallback"
+  },
+  {
+    "id": "global api-SetSecurePendingPingOffScreenCallback-060",
+    "section": "Global API",
+    "line": 60,
+    "symbol": "SetSecurePendingPingOffScreenCallback",
+    "text": "SetSecurePendingPingOffScreenCallback",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "SetSecurePendingPingOffScreenCallback"
+    },
+    "occurrence_id": "added:SetSecurePendingPingOffScreenCallback"
+  },
+  {
+    "id": "global api-SetSecurePendingToggleRunCallback-061",
+    "section": "Global API",
+    "line": 61,
+    "symbol": "SetSecurePendingToggleRunCallback",
+    "text": "SetSecurePendingToggleRunCallback",
+    "occurrence": {
+      "direction": "added",
+      "category": "global-api",
+      "symbol": "SetSecurePendingToggleRunCallback"
+    },
+    "occurrence_id": "added:SetSecurePendingToggleRunCallback"
+  },
+  {
+    "id": "source-context-063",
+    "section": "Source context",
+    "line": 63,
+    "symbol": "",
+    "text": "Global API Removed (17):"
+  },
+  {
+    "id": "global api-BNInviteFriend-064",
+    "section": "Global API",
+    "line": 64,
+    "symbol": "BNInviteFriend",
+    "text": "BNInviteFriend",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "BNInviteFriend"
+    },
+    "occurrence_id": "removed:BNInviteFriend"
+  },
+  {
+    "id": "global api-C_ClickBindings-GetStringFromModifiers-065",
+    "section": "Global API",
+    "line": 65,
+    "symbol": "C_ClickBindings.GetStringFromModifiers",
+    "text": "C_ClickBindings.GetStringFromModifiers",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "C_ClickBindings.GetStringFromModifiers"
+    },
+    "occurrence_id": "removed:C_ClickBindings.GetStringFromModifiers"
+  },
+  {
+    "id": "global api-C_ClickBindings-MakeModifiers-066",
+    "section": "Global API",
+    "line": 66,
+    "symbol": "C_ClickBindings.MakeModifiers",
+    "text": "C_ClickBindings.MakeModifiers",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "C_ClickBindings.MakeModifiers"
+    },
+    "occurrence_id": "removed:C_ClickBindings.MakeModifiers"
+  },
+  {
+    "id": "global api-C_Spell-GetMawPowerBorderAtlasBySpellID-067",
+    "section": "Global API",
+    "line": 67,
+    "symbol": "C_Spell.GetMawPowerBorderAtlasBySpellID",
+    "text": "C_Spell.GetMawPowerBorderAtlasBySpellID",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "C_Spell.GetMawPowerBorderAtlasBySpellID"
+    },
+    "occurrence_id": "removed:C_Spell.GetMawPowerBorderAtlasBySpellID"
+  },
+  {
+    "id": "global api-ConfirmReadyCheck-068",
+    "section": "Global API",
+    "line": 68,
+    "symbol": "ConfirmReadyCheck",
+    "text": "ConfirmReadyCheck",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "ConfirmReadyCheck"
+    },
+    "occurrence_id": "removed:ConfirmReadyCheck"
+  },
+  {
+    "id": "global api-DemoteAssistant-069",
+    "section": "Global API",
+    "line": 69,
+    "symbol": "DemoteAssistant",
+    "text": "DemoteAssistant",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "DemoteAssistant"
+    },
+    "occurrence_id": "removed:DemoteAssistant"
+  },
+  {
+    "id": "global api-DoReadyCheck-070",
+    "section": "Global API",
+    "line": 70,
+    "symbol": "DoReadyCheck",
+    "text": "DoReadyCheck",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "DoReadyCheck"
+    },
+    "occurrence_id": "removed:DoReadyCheck"
+  },
+  {
+    "id": "global api-GetMerchantCurrencies-071",
+    "section": "Global API",
+    "line": 71,
+    "symbol": "GetMerchantCurrencies",
+    "text": "GetMerchantCurrencies",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "GetMerchantCurrencies"
+    },
+    "occurrence_id": "removed:GetMerchantCurrencies"
+  },
+  {
+    "id": "global api-IsGUIDInGroup-072",
+    "section": "Global API",
+    "line": 72,
+    "symbol": "IsGUIDInGroup",
+    "text": "IsGUIDInGroup",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "IsGUIDInGroup"
+    },
+    "occurrence_id": "removed:IsGUIDInGroup"
+  },
+  {
+    "id": "global api-PromoteToAssistant-073",
+    "section": "Global API",
+    "line": 73,
+    "symbol": "PromoteToAssistant",
+    "text": "PromoteToAssistant",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "PromoteToAssistant"
+    },
+    "occurrence_id": "removed:PromoteToAssistant"
+  },
+  {
+    "id": "global api-PromoteToLeader-074",
+    "section": "Global API",
+    "line": 74,
+    "symbol": "PromoteToLeader",
+    "text": "PromoteToLeader",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "PromoteToLeader"
+    },
+    "occurrence_id": "removed:PromoteToLeader"
+  },
+  {
+    "id": "global api-SetEveryoneIsAssistant-075",
+    "section": "Global API",
+    "line": 75,
+    "symbol": "SetEveryoneIsAssistant",
+    "text": "SetEveryoneIsAssistant",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "SetEveryoneIsAssistant"
+    },
+    "occurrence_id": "removed:SetEveryoneIsAssistant"
+  },
+  {
+    "id": "global api-UninviteUnit-076",
+    "section": "Global API",
+    "line": 76,
+    "symbol": "UninviteUnit",
+    "text": "UninviteUnit",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "UninviteUnit"
+    },
+    "occurrence_id": "removed:UninviteUnit"
+  },
+  {
+    "id": "global api-GetAutoCompletePresenceID-077",
+    "section": "Global API",
+    "line": 77,
+    "symbol": "GetAutoCompletePresenceID",
+    "text": "GetAutoCompletePresenceID",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "GetAutoCompletePresenceID"
+    },
+    "occurrence_id": "removed:GetAutoCompletePresenceID"
+  },
+  {
+    "id": "global api-GetAutoCompleteResults-078",
+    "section": "Global API",
+    "line": 78,
+    "symbol": "GetAutoCompleteResults",
+    "text": "GetAutoCompleteResults",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "GetAutoCompleteResults"
+    },
+    "occurrence_id": "removed:GetAutoCompleteResults"
+  },
+  {
+    "id": "global api-GetAutoCompleteRealms-079",
+    "section": "Global API",
+    "line": 79,
+    "symbol": "GetAutoCompleteRealms",
+    "text": "GetAutoCompleteRealms",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "GetAutoCompleteRealms"
+    },
+    "occurrence_id": "removed:GetAutoCompleteRealms"
+  },
+  {
+    "id": "global api-IsRecognizedName-080",
+    "section": "Global API",
+    "line": 80,
+    "symbol": "IsRecognizedName",
+    "text": "IsRecognizedName",
+    "occurrence": {
+      "direction": "removed",
+      "category": "global-api",
+      "symbol": "IsRecognizedName"
+    },
+    "occurrence_id": "removed:IsRecognizedName"
+  },
+  {
+    "id": "source-context-082",
+    "section": "Source context",
+    "line": 82,
+    "symbol": "",
+    "text": "ScriptObjects Added (36):"
+  },
+  {
+    "id": "scriptobjects-DurationClock-GetTime-083",
+    "section": "ScriptObjects",
+    "line": 83,
+    "symbol": "DurationClock.GetTime",
+    "text": "DurationClock:GetTime",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationClock.GetTime"
+    },
+    "occurrence_id": "added:DurationClock.GetTime"
+  },
+  {
+    "id": "scriptobjects-DurationManualClock-AdvanceTime-084",
+    "section": "ScriptObjects",
+    "line": 84,
+    "symbol": "DurationManualClock.AdvanceTime",
+    "text": "DurationManualClock:AdvanceTime",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationManualClock.AdvanceTime"
+    },
+    "occurrence_id": "added:DurationManualClock.AdvanceTime"
+  },
+  {
+    "id": "scriptobjects-DurationManualClock-ResetTime-085",
+    "section": "ScriptObjects",
+    "line": 85,
+    "symbol": "DurationManualClock.ResetTime",
+    "text": "DurationManualClock:ResetTime",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationManualClock.ResetTime"
+    },
+    "occurrence_id": "added:DurationManualClock.ResetTime"
+  },
+  {
+    "id": "scriptobjects-DurationManualClock-RewindTime-086",
+    "section": "ScriptObjects",
+    "line": 86,
+    "symbol": "DurationManualClock.RewindTime",
+    "text": "DurationManualClock:RewindTime",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationManualClock.RewindTime"
+    },
+    "occurrence_id": "added:DurationManualClock.RewindTime"
+  },
+  {
+    "id": "scriptobjects-DurationManualClock-SetTime-087",
+    "section": "ScriptObjects",
+    "line": 87,
+    "symbol": "DurationManualClock.SetTime",
+    "text": "DurationManualClock:SetTime",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationManualClock.SetTime"
+    },
+    "occurrence_id": "added:DurationManualClock.SetTime"
+  },
+  {
+    "id": "scriptobjects-DurationObject-GetClock-088",
+    "section": "ScriptObjects",
+    "line": 88,
+    "symbol": "DurationObject.GetClock",
+    "text": "DurationObject:GetClock",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationObject.GetClock"
+    },
+    "occurrence_id": "added:DurationObject.GetClock"
+  },
+  {
+    "id": "scriptobjects-DurationObject-HasExpired-089",
+    "section": "ScriptObjects",
+    "line": 89,
+    "symbol": "DurationObject.HasExpired",
+    "text": "DurationObject:HasExpired",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationObject.HasExpired"
+    },
+    "occurrence_id": "added:DurationObject.HasExpired"
+  },
+  {
+    "id": "scriptobjects-DurationObject-HasStarted-090",
+    "section": "ScriptObjects",
+    "line": 90,
+    "symbol": "DurationObject.HasStarted",
+    "text": "DurationObject:HasStarted",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationObject.HasStarted"
+    },
+    "occurrence_id": "added:DurationObject.HasStarted"
+  },
+  {
+    "id": "scriptobjects-DurationObject-IsActive-091",
+    "section": "ScriptObjects",
+    "line": 91,
+    "symbol": "DurationObject.IsActive",
+    "text": "DurationObject:IsActive",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationObject.IsActive"
+    },
+    "occurrence_id": "added:DurationObject.IsActive"
+  },
+  {
+    "id": "scriptobjects-DurationObject-SetClock-092",
+    "section": "ScriptObjects",
+    "line": 92,
+    "symbol": "DurationObject.SetClock",
+    "text": "DurationObject:SetClock",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationObject.SetClock"
+    },
+    "occurrence_id": "added:DurationObject.SetClock"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-CanFormatText-093",
+    "section": "ScriptObjects",
+    "line": 93,
+    "symbol": "DurationTextBinding.CanFormatText",
+    "text": "DurationTextBinding:CanFormatText",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.CanFormatText"
+    },
+    "occurrence_id": "added:DurationTextBinding.CanFormatText"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-CanUpdateFontString-094",
+    "section": "ScriptObjects",
+    "line": 94,
+    "symbol": "DurationTextBinding.CanUpdateFontString",
+    "text": "DurationTextBinding:CanUpdateFontString",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.CanUpdateFontString"
+    },
+    "occurrence_id": "added:DurationTextBinding.CanUpdateFontString"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-Disable-095",
+    "section": "ScriptObjects",
+    "line": 95,
+    "symbol": "DurationTextBinding.Disable",
+    "text": "DurationTextBinding:Disable",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.Disable"
+    },
+    "occurrence_id": "added:DurationTextBinding.Disable"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-Enable-096",
+    "section": "ScriptObjects",
+    "line": 96,
+    "symbol": "DurationTextBinding.Enable",
+    "text": "DurationTextBinding:Enable",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.Enable"
+    },
+    "occurrence_id": "added:DurationTextBinding.Enable"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-GetDuration-097",
+    "section": "ScriptObjects",
+    "line": 97,
+    "symbol": "DurationTextBinding.GetDuration",
+    "text": "DurationTextBinding:GetDuration",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.GetDuration"
+    },
+    "occurrence_id": "added:DurationTextBinding.GetDuration"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-GetExpiredText-098",
+    "section": "ScriptObjects",
+    "line": 98,
+    "symbol": "DurationTextBinding.GetExpiredText",
+    "text": "DurationTextBinding:GetExpiredText",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.GetExpiredText"
+    },
+    "occurrence_id": "added:DurationTextBinding.GetExpiredText"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-GetFontString-099",
+    "section": "ScriptObjects",
+    "line": 99,
+    "symbol": "DurationTextBinding.GetFontString",
+    "text": "DurationTextBinding:GetFontString",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.GetFontString"
+    },
+    "occurrence_id": "added:DurationTextBinding.GetFontString"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-GetFormattedText-100",
+    "section": "ScriptObjects",
+    "line": 100,
+    "symbol": "DurationTextBinding.GetFormattedText",
+    "text": "DurationTextBinding:GetFormattedText",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.GetFormattedText"
+    },
+    "occurrence_id": "added:DurationTextBinding.GetFormattedText"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-GetTimeModifier-101",
+    "section": "ScriptObjects",
+    "line": 101,
+    "symbol": "DurationTextBinding.GetTimeModifier",
+    "text": "DurationTextBinding:GetTimeModifier",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.GetTimeModifier"
+    },
+    "occurrence_id": "added:DurationTextBinding.GetTimeModifier"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-GetUpdateInterval-102",
+    "section": "ScriptObjects",
+    "line": 102,
+    "symbol": "DurationTextBinding.GetUpdateInterval",
+    "text": "DurationTextBinding:GetUpdateInterval",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.GetUpdateInterval"
+    },
+    "occurrence_id": "added:DurationTextBinding.GetUpdateInterval"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-GetZeroDurationText-103",
+    "section": "ScriptObjects",
+    "line": 103,
+    "symbol": "DurationTextBinding.GetZeroDurationText",
+    "text": "DurationTextBinding:GetZeroDurationText",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.GetZeroDurationText"
+    },
+    "occurrence_id": "added:DurationTextBinding.GetZeroDurationText"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-IsEnabled-104",
+    "section": "ScriptObjects",
+    "line": 104,
+    "symbol": "DurationTextBinding.IsEnabled",
+    "text": "DurationTextBinding:IsEnabled",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.IsEnabled"
+    },
+    "occurrence_id": "added:DurationTextBinding.IsEnabled"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-SetDuration-105",
+    "section": "ScriptObjects",
+    "line": 105,
+    "symbol": "DurationTextBinding.SetDuration",
+    "text": "DurationTextBinding:SetDuration",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.SetDuration"
+    },
+    "occurrence_id": "added:DurationTextBinding.SetDuration"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-SetExpiredText-106",
+    "section": "ScriptObjects",
+    "line": 106,
+    "symbol": "DurationTextBinding.SetExpiredText",
+    "text": "DurationTextBinding:SetExpiredText",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.SetExpiredText"
+    },
+    "occurrence_id": "added:DurationTextBinding.SetExpiredText"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-SetFontString-107",
+    "section": "ScriptObjects",
+    "line": 107,
+    "symbol": "DurationTextBinding.SetFontString",
+    "text": "DurationTextBinding:SetFontString",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.SetFontString"
+    },
+    "occurrence_id": "added:DurationTextBinding.SetFontString"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-SetTimeModifier-108",
+    "section": "ScriptObjects",
+    "line": 108,
+    "symbol": "DurationTextBinding.SetTimeModifier",
+    "text": "DurationTextBinding:SetTimeModifier",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.SetTimeModifier"
+    },
+    "occurrence_id": "added:DurationTextBinding.SetTimeModifier"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-SetUpdateInterval-109",
+    "section": "ScriptObjects",
+    "line": 109,
+    "symbol": "DurationTextBinding.SetUpdateInterval",
+    "text": "DurationTextBinding:SetUpdateInterval",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.SetUpdateInterval"
+    },
+    "occurrence_id": "added:DurationTextBinding.SetUpdateInterval"
+  },
+  {
+    "id": "scriptobjects-DurationTextBinding-SetZeroDurationText-110",
+    "section": "ScriptObjects",
+    "line": 110,
+    "symbol": "DurationTextBinding.SetZeroDurationText",
+    "text": "DurationTextBinding:SetZeroDurationText",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextBinding.SetZeroDurationText"
+    },
+    "occurrence_id": "added:DurationTextBinding.SetZeroDurationText"
+  },
+  {
+    "id": "scriptobjects-DurationTextFormattingOptions-GetAddRemainingText-111",
+    "section": "ScriptObjects",
+    "line": 111,
+    "symbol": "DurationTextFormattingOptions.GetAddRemainingText",
+    "text": "DurationTextFormattingOptions:GetAddRemainingText",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextFormattingOptions.GetAddRemainingText"
+    },
+    "occurrence_id": "added:DurationTextFormattingOptions.GetAddRemainingText"
+  },
+  {
+    "id": "scriptobjects-DurationTextFormattingOptions-GetDurationType-112",
+    "section": "ScriptObjects",
+    "line": 112,
+    "symbol": "DurationTextFormattingOptions.GetDurationType",
+    "text": "DurationTextFormattingOptions:GetDurationType",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextFormattingOptions.GetDurationType"
+    },
+    "occurrence_id": "added:DurationTextFormattingOptions.GetDurationType"
+  },
+  {
+    "id": "scriptobjects-DurationTextFormattingOptions-SetAddRemainingText-113",
+    "section": "ScriptObjects",
+    "line": 113,
+    "symbol": "DurationTextFormattingOptions.SetAddRemainingText",
+    "text": "DurationTextFormattingOptions:SetAddRemainingText",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextFormattingOptions.SetAddRemainingText"
+    },
+    "occurrence_id": "added:DurationTextFormattingOptions.SetAddRemainingText"
+  },
+  {
+    "id": "scriptobjects-DurationTextFormattingOptions-SetDurationType-114",
+    "section": "ScriptObjects",
+    "line": 114,
+    "symbol": "DurationTextFormattingOptions.SetDurationType",
+    "text": "DurationTextFormattingOptions:SetDurationType",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextFormattingOptions.SetDurationType"
+    },
+    "occurrence_id": "added:DurationTextFormattingOptions.SetDurationType"
+  },
+  {
+    "id": "scriptobjects-DurationTextRawValue-GetMilliseconds-115",
+    "section": "ScriptObjects",
+    "line": 115,
+    "symbol": "DurationTextRawValue.GetMilliseconds",
+    "text": "DurationTextRawValue:GetMilliseconds",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextRawValue.GetMilliseconds"
+    },
+    "occurrence_id": "added:DurationTextRawValue.GetMilliseconds"
+  },
+  {
+    "id": "scriptobjects-DurationTextRawValue-GetSeconds-116",
+    "section": "ScriptObjects",
+    "line": 116,
+    "symbol": "DurationTextRawValue.GetSeconds",
+    "text": "DurationTextRawValue:GetSeconds",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextRawValue.GetSeconds"
+    },
+    "occurrence_id": "added:DurationTextRawValue.GetSeconds"
+  },
+  {
+    "id": "scriptobjects-DurationTextRawValue-SetMilliseconds-117",
+    "section": "ScriptObjects",
+    "line": 117,
+    "symbol": "DurationTextRawValue.SetMilliseconds",
+    "text": "DurationTextRawValue:SetMilliseconds",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextRawValue.SetMilliseconds"
+    },
+    "occurrence_id": "added:DurationTextRawValue.SetMilliseconds"
+  },
+  {
+    "id": "scriptobjects-DurationTextRawValue-SetSeconds-118",
+    "section": "ScriptObjects",
+    "line": 118,
+    "symbol": "DurationTextRawValue.SetSeconds",
+    "text": "DurationTextRawValue:SetSeconds",
+    "occurrence": {
+      "direction": "added",
+      "category": "script-object-method",
+      "symbol": "DurationTextRawValue.SetSeconds"
+    },
+    "occurrence_id": "added:DurationTextRawValue.SetSeconds"
+  },
+  {
+    "id": "source-context-120",
+    "section": "Source context",
+    "line": 120,
+    "symbol": "",
+    "text": "Widgets Removed (6):"
+  },
+  {
+    "id": "widgets-Minimap-SetBlipTexture-121",
+    "section": "Widgets",
+    "line": 121,
+    "symbol": "Minimap.SetBlipTexture",
+    "text": "Minimap:SetBlipTexture",
+    "occurrence": {
+      "direction": "removed",
+      "category": "widget-method",
+      "symbol": "Minimap.SetBlipTexture"
+    },
+    "occurrence_id": "removed:Minimap.SetBlipTexture"
+  },
+  {
+    "id": "widgets-Minimap-SetCorpsePOIArrowTexture-122",
+    "section": "Widgets",
+    "line": 122,
+    "symbol": "Minimap.SetCorpsePOIArrowTexture",
+    "text": "Minimap:SetCorpsePOIArrowTexture",
+    "occurrence": {
+      "direction": "removed",
+      "category": "widget-method",
+      "symbol": "Minimap.SetCorpsePOIArrowTexture"
+    },
+    "occurrence_id": "removed:Minimap.SetCorpsePOIArrowTexture"
+  },
+  {
+    "id": "widgets-Minimap-SetIconTexture-123",
+    "section": "Widgets",
+    "line": 123,
+    "symbol": "Minimap.SetIconTexture",
+    "text": "Minimap:SetIconTexture",
+    "occurrence": {
+      "direction": "removed",
+      "category": "widget-method",
+      "symbol": "Minimap.SetIconTexture"
+    },
+    "occurrence_id": "removed:Minimap.SetIconTexture"
+  },
+  {
+    "id": "widgets-Minimap-SetPOIArrowTexture-124",
+    "section": "Widgets",
+    "line": 124,
+    "symbol": "Minimap.SetPOIArrowTexture",
+    "text": "Minimap:SetPOIArrowTexture",
+    "occurrence": {
+      "direction": "removed",
+      "category": "widget-method",
+      "symbol": "Minimap.SetPOIArrowTexture"
+    },
+    "occurrence_id": "removed:Minimap.SetPOIArrowTexture"
+  },
+  {
+    "id": "widgets-Minimap-SetPlayerTexture-125",
+    "section": "Widgets",
+    "line": 125,
+    "symbol": "Minimap.SetPlayerTexture",
+    "text": "Minimap:SetPlayerTexture",
+    "occurrence": {
+      "direction": "removed",
+      "category": "widget-method",
+      "symbol": "Minimap.SetPlayerTexture"
+    },
+    "occurrence_id": "removed:Minimap.SetPlayerTexture"
+  },
+  {
+    "id": "widgets-Minimap-SetStaticPOIArrowTexture-126",
+    "section": "Widgets",
+    "line": 126,
+    "symbol": "Minimap.SetStaticPOIArrowTexture",
+    "text": "Minimap:SetStaticPOIArrowTexture",
+    "occurrence": {
+      "direction": "removed",
+      "category": "widget-method",
+      "symbol": "Minimap.SetStaticPOIArrowTexture"
+    },
+    "occurrence_id": "removed:Minimap.SetStaticPOIArrowTexture"
+  },
+  {
+    "id": "source-context-128",
+    "section": "Source context",
+    "line": 128,
+    "symbol": "",
+    "text": "Widget Changes:"
+  },
+  {
+    "id": "widgets-Button-GetButtonState-129",
+    "section": "Widgets",
+    "line": 129,
+    "symbol": "Button.GetButtonState",
+    "text": "Button:GetButtonState + SecretReturnsForAspect",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "Button.GetButtonState",
+      "detail": "+ SecretReturnsForAspect"
+    },
+    "occurrence_id": "changed:Button.GetButtonState"
+  },
+  {
+    "id": "widgets-Button-IsEnabled-130",
+    "section": "Widgets",
+    "line": 130,
+    "symbol": "Button.IsEnabled",
+    "text": "Button:IsEnabled + SecretReturnsForAspect",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "Button.IsEnabled",
+      "detail": "+ SecretReturnsForAspect"
+    },
+    "occurrence_id": "changed:Button.IsEnabled"
+  },
+  {
+    "id": "widgets-Button-SetButtonState-131",
+    "section": "Widgets",
+    "line": 131,
+    "symbol": "Button.SetButtonState",
+    "text": "Button:SetButtonState + SecretArgumentsAddAspect",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "Button.SetButtonState",
+      "detail": "+ SecretArgumentsAddAspect"
+    },
+    "occurrence_id": "changed:Button.SetButtonState"
+  },
+  {
+    "id": "widgets-Button-SetEnabled-132",
+    "section": "Widgets",
+    "line": 132,
+    "symbol": "Button.SetEnabled",
+    "text": "Button:SetEnabled + SecretArgumentsAddAspect, SecretArguments NotAllowed -> AllowedWhenUntainted",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "Button.SetEnabled",
+      "detail": "+ SecretArgumentsAddAspect, SecretArguments NotAllowed -> AllowedWhenUntainted"
+    },
+    "occurrence_id": "changed:Button.SetEnabled"
+  },
+  {
+    "id": "widgets-EditBox-SetFont-133",
+    "section": "Widgets",
+    "line": 133,
+    "symbol": "EditBox.SetFont",
+    "text": "EditBox:SetFont + RequiresValidFontHeight + RequiresValidFontAsset",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "EditBox.SetFont",
+      "detail": "+ RequiresValidFontHeight + RequiresValidFontAsset"
+    },
+    "occurrence_id": "changed:EditBox.SetFont"
+  },
+  {
+    "id": "widgets-Font-SetFont-134",
+    "section": "Widgets",
+    "line": 134,
+    "symbol": "Font.SetFont",
+    "text": "Font:SetFont + RequiresValidFontHeight + RequiresValidFontAsset",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "Font.SetFont",
+      "detail": "+ RequiresValidFontHeight + RequiresValidFontAsset"
+    },
+    "occurrence_id": "changed:Font.SetFont"
+  },
+  {
+    "id": "widgets-FontString-SetFont-135",
+    "section": "Widgets",
+    "line": 135,
+    "symbol": "FontString.SetFont",
+    "text": "FontString:SetFont + RequiresValidFontHeight + RequiresValidFontAsset, arg2.Type number -> uiFontHeight",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "FontString.SetFont",
+      "detail": "+ RequiresValidFontHeight + RequiresValidFontAsset, arg2.Type number -> uiFontHeight"
+    },
+    "occurrence_id": "changed:FontString.SetFont"
+  },
+  {
+    "id": "widgets-MessageFrame-SetFont-136",
+    "section": "Widgets",
+    "line": 136,
+    "symbol": "MessageFrame.SetFont",
+    "text": "MessageFrame:SetFont + RequiresValidFontHeight + RequiresValidFontAsset",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "MessageFrame.SetFont",
+      "detail": "+ RequiresValidFontHeight + RequiresValidFontAsset"
+    },
+    "occurrence_id": "changed:MessageFrame.SetFont"
+  },
+  {
+    "id": "widgets-ModelSceneActorBase-GetModelUnitGUID-137",
+    "section": "Widgets",
+    "line": 137,
+    "symbol": "ModelSceneActorBase.GetModelUnitGUID",
+    "text": "ModelSceneActorBase:GetModelUnitGUID - ret1.ConditionalSecret",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "ModelSceneActorBase.GetModelUnitGUID",
+      "detail": "- ret1.ConditionalSecret"
+    },
+    "occurrence_id": "changed:ModelSceneActorBase.GetModelUnitGUID"
+  },
+  {
+    "id": "widgets-ScrollFrame-GetHorizontalScroll-138",
+    "section": "Widgets",
+    "line": 138,
+    "symbol": "ScrollFrame.GetHorizontalScroll",
+    "text": "ScrollFrame:GetHorizontalScroll + SecretReturnsForAspect",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "ScrollFrame.GetHorizontalScroll",
+      "detail": "+ SecretReturnsForAspect"
+    },
+    "occurrence_id": "changed:ScrollFrame.GetHorizontalScroll"
+  },
+  {
+    "id": "widgets-ScrollFrame-GetVerticalScroll-139",
+    "section": "Widgets",
+    "line": 139,
+    "symbol": "ScrollFrame.GetVerticalScroll",
+    "text": "ScrollFrame:GetVerticalScroll + SecretReturnsForAspect",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "ScrollFrame.GetVerticalScroll",
+      "detail": "+ SecretReturnsForAspect"
+    },
+    "occurrence_id": "changed:ScrollFrame.GetVerticalScroll"
+  },
+  {
+    "id": "widgets-ScrollFrame-SetHorizontalScroll-140",
+    "section": "Widgets",
+    "line": 140,
+    "symbol": "ScrollFrame.SetHorizontalScroll",
+    "text": "ScrollFrame:SetHorizontalScroll SecretArguments NotAllowed -> AllowedWhenUntainted + SecretArgumentsAddAspect",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "ScrollFrame.SetHorizontalScroll",
+      "detail": "SecretArguments NotAllowed -> AllowedWhenUntainted + SecretArgumentsAddAspect"
+    },
+    "occurrence_id": "changed:ScrollFrame.SetHorizontalScroll"
+  },
+  {
+    "id": "widgets-ScrollFrame-SetVerticalScroll-141",
+    "section": "Widgets",
+    "line": 141,
+    "symbol": "ScrollFrame.SetVerticalScroll",
+    "text": "ScrollFrame:SetVerticalScroll SecretArguments NotAllowed -> AllowedWhenUntainted + SecretArgumentsAddAspect",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "ScrollFrame.SetVerticalScroll",
+      "detail": "SecretArguments NotAllowed -> AllowedWhenUntainted + SecretArgumentsAddAspect"
+    },
+    "occurrence_id": "changed:ScrollFrame.SetVerticalScroll"
+  },
+  {
+    "id": "widgets-SimpleHTML-SetFont-142",
+    "section": "Widgets",
+    "line": 142,
+    "symbol": "SimpleHTML.SetFont",
+    "text": "SimpleHTML:SetFont + RequiresValidFontHeight + RequiresValidFontAsset",
+    "occurrence": {
+      "direction": "changed",
+      "category": "widget-method",
+      "symbol": "SimpleHTML.SetFont",
+      "detail": "+ RequiresValidFontHeight + RequiresValidFontAsset"
+    },
+    "occurrence_id": "changed:SimpleHTML.SetFont"
+  },
+  {
+    "id": "source-context-144",
+    "section": "Source context",
+    "line": 144,
+    "symbol": "",
+    "text": "Events Added (2):"
+  },
+  {
+    "id": "events-ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED-145",
+    "section": "Events",
+    "line": 145,
+    "symbol": "ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED",
+    "text": "ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED",
+    "occurrence": {
+      "direction": "added",
+      "category": "event",
+      "symbol": "ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED"
+    },
+    "occurrence_id": "added:ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED"
+  },
+  {
+    "id": "events-URL_TEXTURE_REQUEST_RESULT-146",
+    "section": "Events",
+    "line": 146,
+    "symbol": "URL_TEXTURE_REQUEST_RESULT",
+    "text": "URL_TEXTURE_REQUEST_RESULT",
+    "occurrence": {
+      "direction": "added",
+      "category": "event",
+      "symbol": "URL_TEXTURE_REQUEST_RESULT"
+    },
+    "occurrence_id": "added:URL_TEXTURE_REQUEST_RESULT"
+  },
+  {
+    "id": "source-context-148",
+    "section": "Source context",
+    "line": 148,
+    "symbol": "",
+    "text": "Event Changes:"
+  },
+  {
+    "id": "events-CHAT_MSG_COMBAT_FACTION_CHANGE-149",
+    "section": "Events",
+    "line": 149,
+    "symbol": "CHAT_MSG_COMBAT_FACTION_CHANGE",
+    "text": "CHAT_MSG_COMBAT_FACTION_CHANGE - SecretInChatMessagingLockdown",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CHAT_MSG_COMBAT_FACTION_CHANGE",
+      "detail": "- SecretInChatMessagingLockdown"
+    },
+    "occurrence_id": "changed:CHAT_MSG_COMBAT_FACTION_CHANGE"
+  },
+  {
+    "id": "events-CHAT_MSG_COMBAT_HONOR_GAIN-150",
+    "section": "Events",
+    "line": 150,
+    "symbol": "CHAT_MSG_COMBAT_HONOR_GAIN",
+    "text": "CHAT_MSG_COMBAT_HONOR_GAIN - SecretInChatMessagingLockdown",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CHAT_MSG_COMBAT_HONOR_GAIN",
+      "detail": "- SecretInChatMessagingLockdown"
+    },
+    "occurrence_id": "changed:CHAT_MSG_COMBAT_HONOR_GAIN"
+  },
+  {
+    "id": "events-CHAT_MSG_COMBAT_MISC_INFO-151",
+    "section": "Events",
+    "line": 151,
+    "symbol": "CHAT_MSG_COMBAT_MISC_INFO",
+    "text": "CHAT_MSG_COMBAT_MISC_INFO - SecretInChatMessagingLockdown",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CHAT_MSG_COMBAT_MISC_INFO",
+      "detail": "- SecretInChatMessagingLockdown"
+    },
+    "occurrence_id": "changed:CHAT_MSG_COMBAT_MISC_INFO"
+  },
+  {
+    "id": "events-CHAT_MSG_COMBAT_XP_GAIN-152",
+    "section": "Events",
+    "line": 152,
+    "symbol": "CHAT_MSG_COMBAT_XP_GAIN",
+    "text": "CHAT_MSG_COMBAT_XP_GAIN - SecretInChatMessagingLockdown",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CHAT_MSG_COMBAT_XP_GAIN",
+      "detail": "- SecretInChatMessagingLockdown"
+    },
+    "occurrence_id": "changed:CHAT_MSG_COMBAT_XP_GAIN"
+  },
+  {
+    "id": "events-CHAT_MSG_CURRENCY-153",
+    "section": "Events",
+    "line": 153,
+    "symbol": "CHAT_MSG_CURRENCY",
+    "text": "CHAT_MSG_CURRENCY - SecretInChatMessagingLockdown",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CHAT_MSG_CURRENCY",
+      "detail": "- SecretInChatMessagingLockdown"
+    },
+    "occurrence_id": "changed:CHAT_MSG_CURRENCY"
+  },
+  {
+    "id": "events-CHAT_MSG_FILTERED-154",
+    "section": "Events",
+    "line": 154,
+    "symbol": "CHAT_MSG_FILTERED",
+    "text": "CHAT_MSG_FILTERED - SecretInChatMessagingLockdown",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CHAT_MSG_FILTERED",
+      "detail": "- SecretInChatMessagingLockdown"
+    },
+    "occurrence_id": "changed:CHAT_MSG_FILTERED"
+  },
+  {
+    "id": "events-CHAT_MSG_LOOT-155",
+    "section": "Events",
+    "line": 155,
+    "symbol": "CHAT_MSG_LOOT",
+    "text": "CHAT_MSG_LOOT - SecretInChatMessagingLockdown",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CHAT_MSG_LOOT",
+      "detail": "- SecretInChatMessagingLockdown"
+    },
+    "occurrence_id": "changed:CHAT_MSG_LOOT"
+  },
+  {
+    "id": "events-CHAT_MSG_MONEY-156",
+    "section": "Events",
+    "line": 156,
+    "symbol": "CHAT_MSG_MONEY",
+    "text": "CHAT_MSG_MONEY - SecretInChatMessagingLockdown",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CHAT_MSG_MONEY",
+      "detail": "- SecretInChatMessagingLockdown"
+    },
+    "occurrence_id": "changed:CHAT_MSG_MONEY"
+  },
+  {
+    "id": "events-CHAT_MSG_RESTRICTED-157",
+    "section": "Events",
+    "line": 157,
+    "symbol": "CHAT_MSG_RESTRICTED",
+    "text": "CHAT_MSG_RESTRICTED - SecretInChatMessagingLockdown",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CHAT_MSG_RESTRICTED",
+      "detail": "- SecretInChatMessagingLockdown"
+    },
+    "occurrence_id": "changed:CHAT_MSG_RESTRICTED"
+  },
+  {
+    "id": "events-CLUB_MEMBER_ADDED-158",
+    "section": "Events",
+    "line": 158,
+    "symbol": "CLUB_MEMBER_ADDED",
+    "text": "CLUB_MEMBER_ADDED [2].Type number -> ClubMemberOpaqueId",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CLUB_MEMBER_ADDED",
+      "detail": "[2].Type number -> ClubMemberOpaqueId"
+    },
+    "occurrence_id": "changed:CLUB_MEMBER_ADDED"
+  },
+  {
+    "id": "events-CLUB_MEMBER_PRESENCE_UPDATED-159",
+    "section": "Events",
+    "line": 159,
+    "symbol": "CLUB_MEMBER_PRESENCE_UPDATED",
+    "text": "CLUB_MEMBER_PRESENCE_UPDATED [2].Type number -> ClubMemberOpaqueId",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CLUB_MEMBER_PRESENCE_UPDATED",
+      "detail": "[2].Type number -> ClubMemberOpaqueId"
+    },
+    "occurrence_id": "changed:CLUB_MEMBER_PRESENCE_UPDATED"
+  },
+  {
+    "id": "events-CLUB_MEMBER_REMOVED-160",
+    "section": "Events",
+    "line": 160,
+    "symbol": "CLUB_MEMBER_REMOVED",
+    "text": "CLUB_MEMBER_REMOVED [2].Type number -> ClubMemberOpaqueId",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CLUB_MEMBER_REMOVED",
+      "detail": "[2].Type number -> ClubMemberOpaqueId"
+    },
+    "occurrence_id": "changed:CLUB_MEMBER_REMOVED"
+  },
+  {
+    "id": "events-CLUB_MEMBER_ROLE_UPDATED-161",
+    "section": "Events",
+    "line": 161,
+    "symbol": "CLUB_MEMBER_ROLE_UPDATED",
+    "text": "CLUB_MEMBER_ROLE_UPDATED [2].Type number -> ClubMemberOpaqueId",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CLUB_MEMBER_ROLE_UPDATED",
+      "detail": "[2].Type number -> ClubMemberOpaqueId"
+    },
+    "occurrence_id": "changed:CLUB_MEMBER_ROLE_UPDATED"
+  },
+  {
+    "id": "events-CLUB_MEMBER_UPDATED-162",
+    "section": "Events",
+    "line": 162,
+    "symbol": "CLUB_MEMBER_UPDATED",
+    "text": "CLUB_MEMBER_UPDATED [2].Type number -> ClubMemberOpaqueId",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "CLUB_MEMBER_UPDATED",
+      "detail": "[2].Type number -> ClubMemberOpaqueId"
+    },
+    "occurrence_id": "changed:CLUB_MEMBER_UPDATED"
+  },
+  {
+    "id": "events-ENCOUNTER_END-163",
+    "section": "Events",
+    "line": 163,
+    "symbol": "ENCOUNTER_END",
+    "text": "ENCOUNTER_END + encounterUnitStatus",
+    "occurrence": {
+      "direction": "changed",
+      "category": "event",
+      "symbol": "ENCOUNTER_END",
+      "detail": "+ encounterUnitStatus"
+    },
+    "occurrence_id": "changed:ENCOUNTER_END"
+  },
+  {
+    "id": "source-context-165",
+    "section": "Source context",
+    "line": 165,
+    "symbol": "",
+    "text": "CVars Added examples from crawled page:"
+  },
+  {
+    "id": "cvars-assistedCombatReduceHighlights-166",
+    "section": "CVars",
+    "line": 166,
+    "symbol": "assistedCombatReduceHighlights",
+    "text": "assistedCombatReduceHighlights",
+    "occurrence": {
+      "direction": "added",
+      "category": "cvar",
+      "symbol": "assistedCombatReduceHighlights"
+    },
+    "occurrence_id": "added:assistedCombatReduceHighlights"
+  },
+  {
+    "id": "cvars-developerLogFilterDebug-167",
+    "section": "CVars",
+    "line": 167,
+    "symbol": "developerLogFilterDebug",
+    "text": "developerLogFilterDebug",
+    "occurrence": {
+      "direction": "added",
+      "category": "cvar",
+      "symbol": "developerLogFilterDebug"
+    },
+    "occurrence_id": "added:developerLogFilterDebug"
+  },
+  {
+    "id": "cvars-developerLogFilterError-168",
+    "section": "CVars",
+    "line": 168,
+    "symbol": "developerLogFilterError",
+    "text": "developerLogFilterError",
+    "occurrence": {
+      "direction": "added",
+      "category": "cvar",
+      "symbol": "developerLogFilterError"
+    },
+    "occurrence_id": "added:developerLogFilterError"
+  },
+  {
+    "id": "cvars-developerLogFilterFatal-169",
+    "section": "CVars",
+    "line": 169,
+    "symbol": "developerLogFilterFatal",
+    "text": "developerLogFilterFatal",
+    "occurrence": {
+      "direction": "added",
+      "category": "cvar",
+      "symbol": "developerLogFilterFatal"
+    },
+    "occurrence_id": "added:developerLogFilterFatal"
+  },
+  {
+    "id": "cvars-developerLogFilterNormal-170",
+    "section": "CVars",
+    "line": 170,
+    "symbol": "developerLogFilterNormal",
+    "text": "developerLogFilterNormal",
+    "occurrence": {
+      "direction": "added",
+      "category": "cvar",
+      "symbol": "developerLogFilterNormal"
+    },
+    "occurrence_id": "added:developerLogFilterNormal"
+  },
+  {
+    "id": "cvars-developerLogFilterSpam-171",
+    "section": "CVars",
+    "line": 171,
+    "symbol": "developerLogFilterSpam",
+    "text": "developerLogFilterSpam",
+    "occurrence": {
+      "direction": "added",
+      "category": "cvar",
+      "symbol": "developerLogFilterSpam"
+    },
+    "occurrence_id": "added:developerLogFilterSpam"
+  },
+  {
+    "id": "source-context-172",
+    "section": "Source context",
+    "line": 172,
+    "symbol": "",
+    "text": "(20 added, 5 removed; crawler excerpt did not include full list.)"
+  },
+  {
+    "id": "deprecated-api-174",
+    "section": "Deprecated API",
+    "line": 174,
+    "symbol": "",
+    "text": "Deprecated API added:"
+  },
+  {
+    "id": "deprecated-api-175",
+    "section": "Deprecated API",
+    "line": 175,
+    "symbol": "",
+    "text": "12.0.7 Deprecated_12_0_7.lua: C_ClickBindings.MakeModifiers -> MakeModifiers; C_ClickBindings.GetStringFromModifiers -> GetStringFromModifiers; C_Spell.GetMawPowerBorderAtlasBySpellID -> C_Spell.GetMawPowerRarityInfoBySpellID; GetMerchantCurrencies -> C_MerchantFrame.GetMerchantCurrencies."
+  },
+  {
+    "id": "deprecated-api-176",
+    "section": "Deprecated API",
+    "line": 176,
+    "symbol": "",
+    "text": "Deprecated_BattleNet.lua: BNInviteFriend -> C_BattleNet.InviteFriend."
+  },
+  {
+    "id": "deprecated-api-177",
+    "section": "Deprecated API",
+    "line": 177,
+    "symbol": "",
+    "text": "Deprecated_PartyInfo.lua: ConfirmReadyCheck/DemoteAssistant/DoReadyCheck/PromoteToAssistant/PromoteToLeader/SetEveryoneIsAssistant/UninviteUnit/IsGUIDInGroup -> C_PartyInfo namespace."
+  },
+  {
+    "id": "deprecated-api-178",
+    "section": "Deprecated API",
+    "line": 178,
+    "symbol": "",
+    "text": "12.0.5 Deprecated_AutoComplete.lua wrappers: GetAutoCompletePresenceID/GetAutoCompleteResults/GetAutoCompleteRealms/IsRecognizedName -> C_AutoComplete namespace."
+  }
+]

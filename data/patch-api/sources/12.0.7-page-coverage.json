@@ -1,0 +1,1007 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "12.0.7",
+  "source_register": "data/patch-api/sources/12.0.7-register.json",
+  "source_sha256": "389e3b19174bf77c3646028f764cf186ccfe1b7dddaca2a3b3fcba75e3bdec60",
+  "audit_status": "in-progress",
+  "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
+  "capabilities": [],
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Snapshot title, URL and retrieval note identify the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "TOC and neighboring-patch resource labels are source context only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "source-context-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Section heading and stated inventory count organize the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "source-context-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Consolidated build range and date establish source chronology only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "source-context-026",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Section heading and stated inventory count organize the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "global api-C_BattleNet-InviteFriend-027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_Container-CalculateTotalNumberOfFreeBagSlots-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_DelvesUI-GetDelveEntranceTitleString-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_DelvesUI-GetWorldTierDifficultyForActivePlayer-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_DurationUtil-CreateDurationTextBinding-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_DurationUtil-CreateManualClock-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_EncounterTimeline-GetEventColor-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_HousingCatalog-GetCatalogCategoryAndSubcategoryNames-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_HousingCustomizeMode-RoomConnectionSupportsDoorType-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_HousingLayout-CanSetViewedFloor-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_MerchantFrame-GetMerchantCurrencies-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_PartyInfo-ConfirmReadyCheck-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_PartyInfo-DemoteAssistant-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_PartyInfo-DoReadyCheck-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_PartyInfo-IsGUIDInGroup-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_PartyInfo-PromoteToAssistant-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_PartyInfo-PromoteToLeader-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_PartyInfo-SetEveryoneIsAssistant-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_PartyInfo-UninviteUnit-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_PingSecure-ClearPendingPingOffScreenCallback-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_PingSecure-SetPendingPingOffScreenCallback-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_QuestHub-GetDragonridingRacesForAreaPOI-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_UIFileAsset-GetFileID-049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_UIFileAsset-IsKnownFile-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_UIFileAsset-IsLooseFile-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GetEventCPUUsage-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GetFunctionCPUUsage-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GetScriptCPUUsage-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GetSecurePendingButtonCallback-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GetSecurePendingPingOffScreenCallback-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GetSecurePendingToggleRunCallback-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GameTooltip_AddMoneyLine-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-SetSecurePendingButtonCallback-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-SetSecurePendingPingOffScreenCallback-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-SetSecurePendingToggleRunCallback-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "source-context-063",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Section heading and stated inventory count organize the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "global api-BNInviteFriend-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_ClickBindings-GetStringFromModifiers-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_ClickBindings-MakeModifiers-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-C_Spell-GetMawPowerBorderAtlasBySpellID-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-ConfirmReadyCheck-068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-DemoteAssistant-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-DoReadyCheck-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GetMerchantCurrencies-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-IsGUIDInGroup-072",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-PromoteToAssistant-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-PromoteToLeader-074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-SetEveryoneIsAssistant-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-UninviteUnit-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GetAutoCompletePresenceID-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GetAutoCompleteResults-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-GetAutoCompleteRealms-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "global api-IsRecognizedName-080",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "source-context-082",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Section heading and stated inventory count organize the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "scriptobjects-DurationClock-GetTime-083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationManualClock-AdvanceTime-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationManualClock-ResetTime-085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationManualClock-RewindTime-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationManualClock-SetTime-087",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationObject-GetClock-088",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationObject-HasExpired-089",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationObject-HasStarted-090",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationObject-IsActive-091",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationObject-SetClock-092",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-CanFormatText-093",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-CanUpdateFontString-094",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-Disable-095",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-Enable-096",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-GetDuration-097",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-GetExpiredText-098",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-GetFontString-099",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-GetFormattedText-100",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-GetTimeModifier-101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-GetUpdateInterval-102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-GetZeroDurationText-103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-IsEnabled-104",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-SetDuration-105",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-SetExpiredText-106",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-SetFontString-107",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-SetTimeModifier-108",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-SetUpdateInterval-109",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextBinding-SetZeroDurationText-110",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextFormattingOptions-GetAddRemainingText-111",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextFormattingOptions-GetDurationType-112",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextFormattingOptions-SetAddRemainingText-113",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextFormattingOptions-SetDurationType-114",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextRawValue-GetMilliseconds-115",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextRawValue-GetSeconds-116",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextRawValue-SetMilliseconds-117",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "scriptobjects-DurationTextRawValue-SetSeconds-118",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "source-context-120",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Section heading and stated inventory count organize the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "widgets-Minimap-SetBlipTexture-121",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-Minimap-SetCorpsePOIArrowTexture-122",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-Minimap-SetIconTexture-123",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-Minimap-SetPOIArrowTexture-124",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-Minimap-SetPlayerTexture-125",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-Minimap-SetStaticPOIArrowTexture-126",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "source-context-128",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Section heading and stated inventory count organize the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "widgets-Button-GetButtonState-129",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-Button-IsEnabled-130",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-Button-SetButtonState-131",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-Button-SetEnabled-132",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-EditBox-SetFont-133",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-Font-SetFont-134",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-FontString-SetFont-135",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-MessageFrame-SetFont-136",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-ModelSceneActorBase-GetModelUnitGUID-137",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-ScrollFrame-GetHorizontalScroll-138",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-ScrollFrame-GetVerticalScroll-139",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-ScrollFrame-SetHorizontalScroll-140",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-ScrollFrame-SetVerticalScroll-141",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "widgets-SimpleHTML-SetFont-142",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "source-context-144",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Section heading and stated inventory count organize the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "events-ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED-145",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-URL_TEXTURE_REQUEST_RESULT-146",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "source-context-148",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Section heading and stated inventory count organize the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "events-CHAT_MSG_COMBAT_FACTION_CHANGE-149",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CHAT_MSG_COMBAT_HONOR_GAIN-150",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CHAT_MSG_COMBAT_MISC_INFO-151",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CHAT_MSG_COMBAT_XP_GAIN-152",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CHAT_MSG_CURRENCY-153",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CHAT_MSG_FILTERED-154",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CHAT_MSG_LOOT-155",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CHAT_MSG_MONEY-156",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CHAT_MSG_RESTRICTED-157",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CLUB_MEMBER_ADDED-158",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CLUB_MEMBER_PRESENCE_UPDATED-159",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CLUB_MEMBER_REMOVED-160",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CLUB_MEMBER_ROLE_UPDATED-161",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-CLUB_MEMBER_UPDATED-162",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "events-ENCOUNTER_END-163",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "source-context-165",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Section heading and stated inventory count organize the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "cvars-assistedCombatReduceHighlights-166",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "cvars-developerLogFilterDebug-167",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "cvars-developerLogFilterError-168",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "cvars-developerLogFilterFatal-169",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "cvars-developerLogFilterNormal-170",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "cvars-developerLogFilterSpam-171",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "source-context-172",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "deprecated-api-174",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Section heading and stated inventory count organize the retained excerpt only; no runtime or implementation credit."
+    },
+    {
+      "source_id": "deprecated-api-175",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "deprecated-api-176",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "deprecated-api-177",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    },
+    {
+      "source_id": "deprecated-api-178",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source retained; behavioral applicability audit not completed."
+    }
+  ]
+}
