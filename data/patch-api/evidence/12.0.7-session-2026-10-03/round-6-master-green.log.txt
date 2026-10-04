@@ -1,0 +1,67 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 38s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+
+running 56 tests
+test patch_1207_b39_b44::b39_all_nine_chat_rows_deliver_public_exact_payload_in_both_lockdown_states ... ok
+test patch_1207_b39_b44::b39_empty_ingress_and_environment_isolation ... ok
+test patch_1207_b39_b44::b39_independent_source_secret_survives_exemption_and_addon_taint ... ok
+test patch_1207_b39_b44::b39_lockdown_is_read_at_delivery_and_restricted_control_remains_secret ... ok
+test patch_1207_b39_b44::b39_never_secret_host_position_rejects_before_listener_dispatch ... ok
+test patch_1207_b39_b44::b41_default_snapshot_matches_declared_return_arity ... ok
+test patch_1207_b39_b44::b41_inferred_never_secret_checks_every_extra_for_every_caller ... ok
+test patch_1207_b39_b44::b41_snapshots_are_environment_local ... ok
+test patch_1207_b39_b44::b41_snapshots_read_host_updates_live_without_cross_input_coupling ... ok
+test patch_1207_b39_b44::b42_invalid_host_receiver_fails_without_notification ... ok
+test patch_1207_b39_b44::b42_notifications_are_environment_local ... ok
+test patch_1207_b39_b44::b42_notifications_use_actual_texture_identity_and_cached_enum_values_once ... ok
+test patch_1207_b39_b44::b43_authentication_precedes_unsupported_defaults_and_argument_validation ... ok
+test patch_1207_b39_b44::b43_explicit_unsupported_state_overrides_existing_identity_and_vitals_live ... ok
+test patch_1207_b39_b44::b43_legacy_aura_defaults_do_not_delete_populated_host_aura ... ok
+test patch_1207_b39_b44::b43_unknown_tokens_have_defaults_and_supported_target_is_live ... ok
+test patch_1207_b39_b44::b43_unsupported_state_is_environment_local ... ok
+test patch_12_0_7_b01_b04::b01_asset_ids_and_normalized_catalog_paths_are_concrete_not_constants ... ok
+test patch_12_0_7_b01_b04::b01_inferred_numeric_boundaries_and_mandatory_asset_type ... ok
+test patch_12_0_7_b01_b04::b01_tainted_secret_extras_are_denied_before_invalid_first_argument ... ok
+test patch_12_0_7_b01_b04::b01_untainted_secrets_work_and_remain_rooted_across_gc ... ok
+test patch_12_0_7_b01_b04::b02_cached_deprecated_dispatch_forwards_numeric_account_and_zero_results ... ok
+test patch_12_0_7_b01_b04::b02_invalid_ids_do_not_mutate_the_last_request ... ok
+test patch_12_0_7_b01_b04::b02_numeric_invitation_requests_replace_live_input_without_fake_friendship ... ok
+test patch_12_0_7_b01_b04::b02_tainted_denial_precedes_validation_and_has_no_invitation_side_effect ... ok
+test patch_12_0_7_b01_b04::b02_untainted_secrets_and_every_extra_are_authenticated ... ok
+test patch_12_0_7_b01_b04::b03_free_slots_follow_capacity_occupancy_family_and_missing_bags_live ... ok
+test patch_12_0_7_b01_b04::b03_no_argument_query_ignores_secret_extras_and_environments_are_isolated ... ok
+test patch_12_0_7_b01_b04::b04_no_declared_title_arguments_are_read_and_picker_default_is_compatible ... ok
+test patch_12_0_7_b01_b04::b04_title_reads_live_host_text_replacement_removal_and_isolation ... ok
+test patch_12_0_7_b23_b28::b23_source_identity_controls_and_environments_are_independent ... ok
+test patch_12_0_7_b23_b28::b23_vehicle_classification_changes_live_without_rewriting_stored_aura ... ok
+test patch_12_0_7_b23_b28::b23_vehicle_flag_is_public_to_addons_and_slot_unit_remains_never_secret ... ok
+test patch_12_0_7_b23_b28::b24_cached_legacy_forwarding_keeps_out_of_combat_permission_and_removal ... ok
+test patch_12_0_7_b23_b28::b24_epoch_permission_matrix_has_32_contexts_and_atomic_denial ... ok
+test patch_12_0_7_b23_b28::b24_live_combat_transition_recovery_and_environment_isolation ... ok
+test patch_12_0_7_b23_b28::b24_out_of_combat_permission_does_not_declassify_secret_sound_or_extras ... ok
+test patch_12_0_7_b23_b28::b28_catalog_isolation_and_host_revocation_are_live ... ok
+test patch_12_0_7_b23_b28::b28_empty_catalog_defaults_and_live_shipped_id_membership ... ok
+test patch_12_0_7_b23_b28::b28_inferred_type_and_numeric_boundary_policy_is_not_numeric_coercion ... ok
+test patch_12_0_7_b23_b28::b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries ... ok
+test patch_12_0_7_b23_b28::b28_secure_secrets_preserve_values_arity_and_public_results ... ok
+test patch_12_0_7_b23_b28::b28_tainted_secret_extras_authenticate_before_any_public_type_validation ... ok
+test private_aura_sound_add_context::actual_full_deprecated_chunk_preserves_add_context_and_removal ... ok
+test private_aura_sound_add_context::allocator_avoids_host_ids_and_exhaustion_returns_one_nil ... ok
+test private_aura_sound_add_context::each_context_denies_addon_without_consuming_id_then_recovers ... ok
+test private_aura_sound_add_context::malformed_inputs_leave_host_registration_and_allocator_unchanged ... ok
+test private_aura_sound_add_context::modern_authenticates_both_arguments_before_trigger_validation ... ok
+test private_aura_sound_add_context::ordinary_tainted_combat_add_copies_real_payload_and_removes_it ... ok
+test private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon ... ok
+test private_aura_sound_add_context::secure_caller_registers_in_all_contexts_and_environments_are_isolated ... ok
+test unit_auras_private::native_unit_event_dispatch_respects_unit_filter ... ok
+test unit_auras_private::private_aura_anchor_callbacks_and_state_are_tracked ... ok
+test unit_auras_private::private_aura_update_callbacks_and_lookup_queries_are_stateful ... ok
+test unit_auras_private::private_warning_and_show_dispel_callbacks_are_state_backed ... ok
+test unit_auras_private::unit_aura_blocked_supports_registered_and_unit_filtered_dispatch ... ok
+
+test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 10373 filtered out; finished in 15.17s
+
+
+EXIT 0
