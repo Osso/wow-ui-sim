@@ -158,22 +158,24 @@ impl<'a> LoaderEnv<'a> {
         })?;
         for widget_id in listeners {
             let result: std::result::Result<(), crate::Error> = self.with_state(|state| {
-                let handler = crate::lua_api::script_helpers::get_dispatch_script(
+                let handlers = crate::lua_api::script_helpers::get_scripts_for_dispatch(
                     state, widget_id, "OnEvent",
                 );
-                let Some(handler) = handler else {
+                if handlers.is_empty() {
                     return Ok(());
-                };
+                }
                 let frame = crate::lua_api::methods::frame_ref(state, widget_id)?;
                 let event_name = crate::lua_api::methods::create_string(state, event);
                 let mut call_args = Vec::with_capacity(args.len() + 2);
                 call_args.push(frame);
                 call_args.push(event_name);
                 call_args.extend_from_slice(args);
-                if let Err(error) = crate::lua_api::script_helpers::call_void_function_state(
-                    state, handler, &call_args,
-                ) {
-                    call_error_handler_state(state, &error);
+                for handler in handlers {
+                    if let Err(error) = crate::lua_api::script_helpers::call_void_function_state(
+                        state, handler, &call_args,
+                    ) {
+                        call_error_handler_state(state, &error);
+                    }
                 }
                 Ok(())
             });

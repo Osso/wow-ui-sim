@@ -25,7 +25,7 @@ use crate::lua_api::globals::admin::build_mail;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, frame_ref,
 };
-use crate::lua_api::script_helpers::{get_dispatch_script, get_event_listeners};
+use crate::lua_api::script_helpers::{get_event_listeners, get_scripts_for_dispatch};
 use crate::lua_api::state_types::{CursorInfo, MailAttachment, MailMessage};
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::state::LuaState;
@@ -37,14 +37,13 @@ fn push_event(state: &mut LuaState, name: &str) -> LuaResult<()> {
         args: Vec::new(),
     });
     for widget_id in get_event_listeners(state, name) {
-        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
-            continue;
-        };
         let Ok(frame) = frame_ref(state, widget_id) else {
             continue;
         };
         let event_name_val = create_string(state, name);
-        let _ = call_function_state(state, handler, &[frame, event_name_val]);
+        for handler in get_scripts_for_dispatch(state, widget_id, "OnEvent") {
+            let _ = call_function_state(state, handler, &[frame, event_name_val]);
+        }
     }
     Ok(())
 }

@@ -7,8 +7,8 @@ use crate::lua_api::methods::{
     call_function as call_rilua_function, create_string, frame_ref, val_to_string,
 };
 use crate::lua_api::script_helpers::{
-    call_error_handler, event_matches_unit_filter, get_dispatch_script, get_event_listeners,
-    get_script, protected_lua_pcall_state,
+    call_error_handler, event_matches_unit_filter, get_event_listeners, get_script,
+    get_scripts_for_dispatch, protected_lua_pcall_state,
 };
 use rilua::{LuaApi, LuaApiMut, Val};
 use std::cell::RefCell;
@@ -228,6 +228,18 @@ impl WowLuaEnv {
         self.fire_event_with_args(event, &[])
     }
 
+    /// Fire `UNIT_AURA(unit, {isFullUpdate=true})` with the payload secrecy
+    /// applied to live aura updates.
+    pub fn fire_unit_aura_full_update(&self, unit: &str) -> Result<()> {
+        let unit = self.lua_string(unit);
+        let info = self.eval::<Val>("return { isFullUpdate = true }")?;
+        let info = crate::c_api::unit_aura_access::unit_aura_event_payload(
+            self.lua.borrow_mut().state_mut(),
+            info,
+        )?;
+        self.fire_event_with_args("UNIT_AURA", &[unit, info])
+    }
+
     /// Fire an event with arguments to all registered frames.
     pub fn fire_event_with_args(&self, event: &str, args: &[Val]) -> Result<()> {
         #[cfg(feature = "retail-12-0-5")]
@@ -373,11 +385,6 @@ impl WowLuaEnv {
         Some((frame_name, state.start_time))
     }
 
-    fn on_event_handler(&self, lua: &mut rilua::Lua, widget_id: u64) -> Option<Val> {
-        let state = lua.state_mut();
-        get_dispatch_script(state, widget_id, "OnEvent")
-    }
-
     fn log_event_dispatch(&self, trace_label: &Option<EventTraceLabel>, event: &str, phase: &str) {
         let Some((frame_name, start_time)) = trace_label else {
             return;
@@ -406,15 +413,18 @@ impl WowLuaEnv {
         if !event_matches_unit_filter(lua.state(), widget_id, event, args)? {
             return Ok(());
         }
-        let handler = self.on_event_handler(&mut lua, widget_id);
-        let Some(handler) = handler else {
+        // Intrinsic precall/postcall bindings receive events alongside the normal script.
+        let handlers = get_scripts_for_dispatch(lua.state_mut(), widget_id, "OnEvent");
+        if handlers.is_empty() {
             return Ok(());
-        };
+        }
         self.log_event_dispatch(&trace_label, event, "begin");
         let call_args = self.build_event_call_args(&mut lua, widget_id, event, args)?;
-        self.call_widget_handler(
-            &mut lua, widget_id, addon_idx, "OnEvent", handler, &call_args,
-        );
+        for handler in handlers {
+            self.call_widget_handler(
+                &mut lua, widget_id, addon_idx, "OnEvent", handler, &call_args,
+            );
+        }
         self.log_event_dispatch(&trace_label, event, "end");
         Ok(())
     }

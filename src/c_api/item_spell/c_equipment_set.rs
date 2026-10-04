@@ -19,7 +19,7 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, create_table, frame_ref,
     table_set_num, val_to_string,
 };
-use crate::lua_api::script_helpers::{get_dispatch_script, get_event_listeners};
+use crate::lua_api::script_helpers::{get_event_listeners, get_scripts_for_dispatch};
 use crate::lua_api::state_types::{CharacterStats, EquipmentSet, EquippedItem};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
@@ -84,9 +84,6 @@ fn fire_event(state: &mut LuaState, event_name: &'static str, args: Vec<Val>) ->
         });
     }
     for widget_id in get_event_listeners(state, event_name) {
-        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
-            continue;
-        };
         let Ok(frame) = frame_ref(state, widget_id) else {
             continue;
         };
@@ -95,7 +92,9 @@ fn fire_event(state: &mut LuaState, event_name: &'static str, args: Vec<Val>) ->
         call_args.push(frame);
         call_args.push(event_val);
         call_args.extend(args.iter().cloned());
-        let _ = call_function_state(state, handler, &call_args);
+        for handler in get_scripts_for_dispatch(state, widget_id, "OnEvent") {
+            let _ = call_function_state(state, handler, &call_args);
+        }
     }
     Ok(())
 }
