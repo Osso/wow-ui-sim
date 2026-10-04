@@ -206,6 +206,12 @@ fn get_delve_entrance_description_string(state: &mut LuaState) -> LuaResult<u32>
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-7")]
+fn get_delve_entrance_title_string(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::c_delves_entrance::get_title(state)
+}
+
+#[cfg(not(feature = "retail-12-0-7"))]
 fn get_delve_entrance_title_string(state: &mut LuaState) -> LuaResult<u32> {
     get_delve_entrance_header_string(state)
 }

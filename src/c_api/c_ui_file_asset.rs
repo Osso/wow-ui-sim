@@ -28,6 +28,42 @@ pub(crate) fn register_c_ui_file_asset(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
+#[cfg(feature = "retail-12-0-7")]
+fn c_ui_file_asset_get_file_id(state: &mut LuaState) -> LuaResult<u32> {
+    let asset = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    for value in state.stack.iter().take(state.top).skip(state.base + 1) {
+        rilua::table_security::unwrap_secret(state, *value)?;
+    }
+    let file_id = resolve_authenticated_asset_id(state, asset)?;
+    state.push(file_id.map_or(Val::Nil, |id| Val::Num(id as f64)));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-7")]
+fn resolve_authenticated_asset_id(state: &LuaState, asset: Val) -> LuaResult<Option<u32>> {
+    // INFERRED positive integral u32 domain, nil for numeric boundary misses.
+    let file_id = match asset {
+        Val::Num(number) => {
+            let is_integer = number.is_finite() && number.fract() == 0.0;
+            let in_domain = (1.0..=u32::MAX as f64).contains(&number);
+            (is_integer && in_domain).then_some(number as u32)
+        }
+        Val::Str(_) => {
+            let path = val_to_string(state, asset).ok_or_else(|| {
+                rilua::runtime_error("C_UIFileAsset.GetFileID: invalid asset string")
+            })?;
+            crate::limited_listfile::lookup_path(&path)
+        }
+        _ => {
+            return Err(rilua::runtime_error(
+                "C_UIFileAsset.GetFileID: asset must be a number or path string",
+            ));
+        }
+    };
+    Ok(file_id)
+}
+
+#[cfg(not(feature = "retail-12-0-7"))]
 fn c_ui_file_asset_get_file_id(state: &mut LuaState) -> LuaResult<u32> {
     match file_id_from_asset_arg(state) {
         Some(file_id) => state.push(Val::Num(file_id as f64)),

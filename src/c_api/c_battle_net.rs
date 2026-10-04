@@ -390,6 +390,12 @@ fn c_bnet_get_num_friends(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-7")]
+fn c_bnet_invite_friend(state: &mut LuaState) -> LuaResult<u32> {
+    crate::c_api::c_battle_net_invite::invite_friend(state)
+}
+
+#[cfg(not(feature = "retail-12-0-7"))]
 fn c_bnet_invite_friend(state: &mut LuaState) -> LuaResult<u32> {
     let Some(raw_name) = Option::<String>::from_stack(state, 1)? else {
         return Ok(0);
@@ -418,10 +424,12 @@ fn c_bnet_invite_friend(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn is_same_bnet_friend(friend: &BnetFriend, name: &str) -> bool {
     friend.battle_tag.eq_ignore_ascii_case(name) || friend.account_name.eq_ignore_ascii_case(name)
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn next_bnet_account_id(friends: &[BnetFriend]) -> i32 {
     friends
         .iter()
@@ -431,6 +439,7 @@ fn next_bnet_account_id(friends: &[BnetFriend]) -> i32 {
         + 1
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn invited_bnet_friend(name: &str, friend_index: i32, account_id: i32) -> BnetFriend {
     BnetFriend {
         friend_index,
@@ -455,6 +464,7 @@ fn invited_bnet_friend(name: &str, friend_index: i32, account_id: i32) -> BnetFr
     }
 }
 
+#[cfg(any(not(feature = "retail-12-0-7"), feature = "retail-12-1-0"))]
 fn account_name_from_invite(name: &str) -> String {
     name.split('#').next().unwrap_or(name).to_string()
 }

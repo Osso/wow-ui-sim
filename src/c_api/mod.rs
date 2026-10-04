@@ -43,6 +43,8 @@ pub mod c_azerite_essence;
 pub mod c_azerite_item;
 pub mod c_barber_shop;
 pub mod c_battle_net;
+#[cfg(feature = "retail-12-0-7")]
+pub(crate) mod c_battle_net_invite;
 pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
 pub mod c_character_services;
@@ -65,6 +67,8 @@ pub mod c_cursor;
 pub mod c_curve_util;
 pub mod c_damage_meter;
 pub mod c_death_recap;
+#[cfg(feature = "retail-12-0-7")]
+pub(crate) mod c_delves_entrance;
 pub mod c_discord;
 #[cfg(feature = "client-wowforever")]
 mod c_edit_mode;

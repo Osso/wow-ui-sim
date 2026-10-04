@@ -202,6 +202,12 @@ pub struct SimState {
     pub maw_powers: crate::c_api::c_spell_maw_powers::MawPowers,
     /// Explicit host active-delve state, independent of undeclared query arguments.
     pub has_active_delve: bool,
+    /// Host-owned entrance title; None is no title, not a synthetic location.
+    #[cfg(feature = "retail-12-0-7")]
+    pub delve_entrance_title: Option<String>,
+    /// INFERRED most recent numeric game-account request, not service success.
+    #[cfg(feature = "retail-12-0-7")]
+    pub last_bnet_invite_game_account_id: Option<i32>,
     /// Explicit host entrance PDEID; INFERRED zero default, not a native sentinel.
     pub tiered_entrance_pde_id: u32,
     /// INFERRED observable request input only; no eligibility response or event model.

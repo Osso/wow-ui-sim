@@ -214,17 +214,11 @@ fn test_patch_12_0_7_safe_global_bridges() {
         .eval(
             r#"
             local initialBNetFriends = C_BattleNet.GetNumFriends()
-            C_BattleNet.InviteFriend("Jaina#3000")
-            if C_BattleNet.GetNumFriends() ~= initialBNetFriends + 1 then return "bnet-invite-count" end
-            local invitedInfo = C_BattleNet.GetFriendAccountInfo(initialBNetFriends + 1)
-            if type(invitedInfo) ~= "table" then return "bnet-invite-info" end
-            if invitedInfo.battleTag ~= "Jaina#3000" then return "bnet-invite-tag" end
-            if invitedInfo.accountName ~= "Jaina" then return "bnet-invite-account" end
-            if invitedInfo.isFriend ~= true then return "bnet-invite-friend" end
-            C_BattleNet.InviteFriend("Jaina#3000")
-            if C_BattleNet.GetNumFriends() ~= initialBNetFriends + 1 then return "bnet-invite-duplicate" end
+            if select('#', C_BattleNet.InviteFriend(64217)) ~= 0 then return "bnet-invite-arity" end
+            C_BattleNet.InviteFriend(64217)
+            if C_BattleNet.GetNumFriends() ~= initialBNetFriends then return "bnet-fabricated-friend" end
             if type(C_Container.CalculateTotalNumberOfFreeBagSlots()) ~= "number" then return "container-free" end
-            if type(C_DelvesUI.GetDelveEntranceTitleString(1)) ~= "string" then return "delve-title" end
+            if C_DelvesUI.GetDelveEntranceTitleString(1) ~= nil then return "delve-title" end
             if type(C_DelvesUI.GetWorldTierDifficultyForActivePlayer()) ~= "number" then return "delve-world-tier" end
             if rawget(C_EncounterTimeline, "AddScriptEvent") then
                 local id = C_EncounterTimeline.AddScriptEvent({spellID=19750, iconFileID=135907, duration=10, severity=0})
@@ -1537,4 +1531,25 @@ fn test_addon_startup_table_time_and_string_helpers_exist() {
     assert!(colored.ends_with("|r"));
     assert_eq!(replaced, "Hello Palaky");
     assert!(unmute_result);
+}
+
+#[cfg(all(feature = "retail-12-0-5", not(feature = "retail-12-0-7")))]
+#[test]
+fn test_pre_12_0_7_bnet_string_invite_and_delve_title_defaults() {
+    let env = WowLuaEnv::new().unwrap();
+    let result: String = env.eval(r#"
+            local initialBNetFriends = C_BattleNet.GetNumFriends()
+            C_BattleNet.InviteFriend("Jaina#3000")
+            if C_BattleNet.GetNumFriends() ~= initialBNetFriends + 1 then return "bnet-invite-count" end
+            local invitedInfo = C_BattleNet.GetFriendAccountInfo(initialBNetFriends + 1)
+            if type(invitedInfo) ~= "table" then return "bnet-invite-info" end
+            if invitedInfo.battleTag ~= "Jaina#3000" then return "bnet-invite-tag" end
+            if invitedInfo.accountName ~= "Jaina" then return "bnet-invite-account" end
+            if invitedInfo.isFriend ~= true then return "bnet-invite-friend" end
+            C_BattleNet.InviteFriend("Jaina#3000")
+            if C_BattleNet.GetNumFriends() ~= initialBNetFriends + 1 then return "bnet-invite-duplicate" end
+            if type(C_DelvesUI.GetDelveEntranceTitleString(1)) ~= "string" then return "delve-title" end
+            return "ok"
+    "#).unwrap();
+    assert_eq!(result, "ok");
 }
