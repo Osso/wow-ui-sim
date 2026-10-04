@@ -2,6 +2,48 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[cfg(not(feature = "retail-12-0-7"))]
+#[test]
+fn patch_12_0_7_named_defaults_are_absent_before_publication() {
+    env()
+        .exec(
+            r#"
+            -- Control: public CVar state remains usable before 12.0.7.
+            assert(GetCVarDefault('nameplateShowEnemies') == '1')
+            assert(C_CVar.SetCVar('nameplateShowEnemies', '0') == true)
+            assert(GetCVar('nameplateShowEnemies') == '0')
+            assert(C_CVar.GetCVarBool('nameplateShowEnemies') == false)
+            assert(SetCVar('nameplateShowEnemies', GetCVarDefault('nameplateShowEnemies')) == true)
+            assert(C_CVar.GetCVar('nameplateShowEnemies') == '1')
+            assert(GetCVarBool('nameplateShowEnemies') == true)
+            local function checkAbsent(name)
+                local function checkNil(...)
+                    assert(select('#', ...) == 1, name .. ': one nil result')
+                    assert((...) == nil, name .. ': built-in not published')
+                end
+                checkNil(GetCVar(name))
+                checkNil(C_CVar.GetCVar(name))
+                checkNil(GetCVarDefault(name))
+                checkNil(C_CVar.GetCVarDefault(name))
+                assert(GetCVarBool(name) == false, name .. ': global bool')
+                assert(C_CVar.GetCVarBool(name) == false, name .. ': namespace bool')
+            end
+            for _, name in ipairs({
+                'assistedCombatReduceHighlights',
+                'developerLogFilterDebug',
+                'developerLogFilterError',
+                'developerLogFilterFatal',
+                'developerLogFilterNormal',
+                'developerLogFilterSpam',
+            }) do
+                checkAbsent(name)
+                checkAbsent(string.upper(name))
+            end
+        "#,
+        )
+        .expect("six built-in defaults absent before their publication epoch");
+}
+
 fn env() -> WowLuaEnv {
     WowLuaEnv::new().expect("WowLuaEnv init")
 }

@@ -354,8 +354,10 @@ const PATCH_12_0_7_REMOVED_CVARS: &[&str] = &[
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
 const PATCH_12_0_7_CVARS: &[(&str, &str)] = &[
+    // INFERRED simulator default; the retained 12.0.7 excerpt names this CVar only.
     ("assistedCombatReduceHighlights", "1"),
     ("developerLog", "0"),
+    // INFERRED simulator defaults; native historical filter defaults are unproved.
     ("developerLogFilterDebug", "0"),
     ("developerLogFilterError", "1"),
     ("developerLogFilterFatal", "1"),
