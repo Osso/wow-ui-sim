@@ -59,7 +59,20 @@ Copies of the independent review reports, RED/GREEN run logs and startup outputs
 | `b98-verify-events-commands.md` | 10018 | `72c3dbad682b576a045792d498f279ba54e7ef7b6094d5364da3d8a5817b4ac3` |
 | `b98-verify-identity.md` | 12947 | `70f728554b59a734ba418b08dbe1c668e3fd38c851f8ca831e4f915357516b36` |
 | `b98-verify-outfit-formatter.md` | 13701 | `b4386140882065dcdb77c094ae3f83ef204f4f74d76aee06633e0f01d657b870` |
+| `b99-fix-green.log.txt` | 45480 | `28cc3d69a4276aa727c2aaa56ba77c0df375e85ac3cb8255af248ffd76e63cf9` |
+| `b99-green.log.txt` | 33843 | `cd5f4771ea39e8dc48d2f9a2a8f145b11a90db6a70c6df28833d21b996501cb9` |
+| `b99-green2.log.txt` | 34278 | `a955434eba87504427c2860f01a79e45517405a0d888f7c3e58443c68e5c296e` |
+| `b99-integration-plan.md` | 102582 | `110c3787cf4a7680ea825375d1acdd8ff69a0f765ea77b6d42b71f3952343a11` |
+| `b99-phase1.md` | 28626 | `94ed804c477be57df98b681f52b7f7546a6b02af5bfedeffd3d719bb179144af` |
+| `b99-phase2.md` | 13983 | `d280f0dde7b9e5105b67295388c5b892b355d54f7d1a2c554885b2554fa3e1bf` |
+| `b99-red.log.txt` | 138130 | `2b0e96dc81e1ece273db7b90d6600355305997659d4fcb9b2e74775d724f3cc3` |
+| `b99-startup.stdout` | 289 | `a7b01b9749c080025a59c622dd46d1ea01c822fad064f9d788a9747a5f2aad76` |
+| `b99-verify-auras-nav.md` | 15219 | `c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20` |
+| `b99-verify-housing-bars.md` | 14081 | `6cc70517c54675b995a442bc47d2fa681c21e457ea32e5dd0d9d582baa6fc65d` |
 | `blocked-rows-ledger.md` | 31557 | `b075af5e76d74958e5bfb7e4bb722a22de52f3f9424e9422a2d08e4e5bd5b25a` |
+| `classic-on-master-retail.log.txt` | 10738 | `1bc65c78b107157adf876be69aac4361c87e08f72782712cb16321eae502eb3f` |
+| `classic-secrets-result.md` | 8896 | `a68450c985f4450f2d2998c6b73dcbb3ca7f86f0566d5c6d5cfa1d71433d8b8f` |
+| `classic-secrets-review.md` | 14119 | `edae62bd107133e94808f39f7015ff1fe3cd032a3edb4778387da80e09eb1333` |
 | `failing-tests-root-cause.md` | 11480 | `02772dc33ce07a22e7b22c7a51c37945b71fac9e829f9e7eafce9f2834e89342` |
 | `handoff-channel-lockdown.md` | 7401 | `340a6593ca0284eef0631deb8e157526926711f0cf6ee8a28aaca422552a4a4d` |
 | `handoff-classic-secrets.md` | 33410 | `4af479915dea68f5f430af6db45f34699086b2fece0a5d3ad5577fbd94b04be4` |
@@ -69,6 +82,7 @@ Copies of the independent review reports, RED/GREEN run logs and startup outputs
 | `handoff-held-live.md` | 21902 | `103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3` |
 | `handoff-taint-log.md` | 7804 | `5a512f92c96516579c8742e04a189785dd7b56b676dafddfbd6ba61e301a1bde` |
 | `pi-delegate-resume.md` | 27981 | `aeba7d565e21c55a66218aa45793f65a8214c4e6a1cd1369523a1a0aefa3a17e` |
+| `plan-12-0-0-audit.md` | 32256 | `31482a2394731f1dcaa3f7ef6f0732e523ef36fe812a009a1ed213810396792b` |
 | `rilua-secret-transform-review.md` | 5427 | `b65e61da9ecdf863aacaeacdeed8259f9c35822a0a9730a326d961cf96eaf823` |
 | `rilua-secret-transform.md` | 10712 | `289f7f75954834bedae4c91fc8b48d42e437f7e52520a3c46cef72eaac44aa33` |
 | `rilua-tainted-read-hook-review.md` | 8895 | `de67b44e1184aba0d88d92f099241968e7eeb552250d8fa9865629fbe2d6b256` |
@@ -76,5 +90,7 @@ Copies of the independent review reports, RED/GREEN run logs and startup outputs
 | `scout-held-rows.md` | 139435 | `39dd16c7198ba78d44ed3d56d05a0da6923012d964a79ad64776bcebc9e63310` |
 | `scout-other-patches.md` | 71527 | `66ab636e121f69291a629477958235b1b70a4b4e67fccfa0f3a0d940c882b055` |
 | `scout-remaining.md` | 156781 | `3d92e49f5de89af865cf28ea158634166fca82946dd44c53dedfc2500934df76` |
+| `strict-1205-green.log.txt` | 1450 | `fca7cb982032bfd83f63dda863e6bd036119aef3aa49b6d7797a7490872b2c72` |
+| `strict-1205-red.log.txt` | 2881 | `c1f0c3fc35f64d1604144b2889d204060fb179bdaa60f51447c499be8a30b999` |
 
 Run logs carry a `.txt` suffix because the repository ignores `*.log`.

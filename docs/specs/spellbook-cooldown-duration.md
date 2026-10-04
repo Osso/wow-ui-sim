@@ -26,6 +26,14 @@
 
 `tests/cooldown_probes/ignore_gcd.rs` covers slot 5/bank 0, rejected ID-as-slot and pet/unknown bank inputs, overlapping/individual/GCD-only/empty/expired state, omitted/false/true, snapshots and runtime clock. Actual RED at `9a50d8a5c`: 0/6 pass in `/tmp/patch-12.0.5-batch4-ignore-gcd-red.log`; six cases jointly exercise action/spell/spellbook, not six independent native contracts. Parent owns batched GREEN; checkboxes remain unchecked pending that proof.
 
+## Development proof and independent bounded acceptance — 2026-10-03 (cooldown-ignore-gcd-authentication)
+
+Commit `4d142e325`. RED: 2 PASS / 3 FAIL module. GREEN: 5/5 module. This section supersedes wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun), [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-auras-nav.md) SHA256 `c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20`. Spell variant, coercion and consumers unproven. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-03-25-114 partial-development-green under capability `cooldown-ignore-gcd-authentication`; **131 capabilities/362 IDs; 28 pending /269 bounded /30 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 - [ ] Post-change GREEN and earlier-profile/epoch preservation proof are pending.

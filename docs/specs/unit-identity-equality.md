@@ -38,6 +38,14 @@ These are simulator model-consistency requirements, not native-client proof. Cac
 
 `tests/unit_api.rs`, `test_unit_is_unit*`: player/target/focus symmetry, retargeting, clearing, party removal, absent identities, and retained same/different controls. `tests/unit_comparison_permissions.rs`: symmetric permission matrix, canonical token limits, zero-return denial, missing/type controls, secure typed tokens and taint preservation, plus older-profile controls. Both use the existing grouped integration target; no new Cargo target.
 
+## Development proof and independent bounded acceptance — 2026-10-03 (unit-comparison-same-name-guid)
+
+Commit `4d142e325`. RED: none for this row: the UnitIsUnit control passes on the unchanged producer. GREEN: 5/5 module. This section supersedes wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun), [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-auras-nav.md) SHA256 `c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20`. Regression coverage only. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-03-25-104 partial-development-green under capability `unit-comparison-same-name-guid`; **131 capabilities/362 IDs; 28 pending /269 bounded /30 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 `1787bd5f76007c12132fa7c4f65f5fa9fabc6f7e` reproduces four failures with two retained controls passing. Production `bfa742675ec489e1bfb3f2a42e0c4d3d4369d555` is independently GREEN: 83 `unit_api::` cases, 24 `targeting_verbs::` cases plus one nested consumer, format, check, and readability. `/tmp/cross-version-unit-identity-verification-ledger.md` records exact commands, revisions, and logs; authorized source remains unchanged through docs-only `33155da3e`.

@@ -1,0 +1,2183 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 69 tests
+test follower_nameplate_display::follower_display_authenticates_host_secret_token_and_restores_addon_context ... FAILED
+test follower_nameplate_display::follower_display_classification_follows_guid_not_target_slot ... FAILED
+test follower_nameplate_display::follower_display_classification_is_environment_local ... FAILED
+test follower_nameplate_display::follower_display_classification_preserves_npc_identity_and_can_be_removed ... FAILED
+test follower_nameplate_display::follower_display_flag_does_not_imply_friendliness ... FAILED
+test follower_nameplate_display::follower_display_query_does_not_fabricate_pet_vehicle_or_missing_units ... FAILED
+test follower_nameplate_display::follower_display_query_preserves_secure_and_addon_stack_taint ... FAILED
+test group_combat_restrictions::confirm_convert_to_raid_blocks_combat_then_converts_small_party ... FAILED
+test group_combat_restrictions::convert_to_party_blocks_combat_then_restores_small_raid_to_party ... FAILED
+test group_combat_restrictions::convert_to_raid_blocks_combat_then_converts_small_party ... FAILED
+test group_combat_restrictions::demote_assistant_preserves_roles_in_combat_then_changes_one_member ... FAILED
+test group_combat_restrictions::everyone_assistant_setting_is_atomic_in_combat_and_recovers ... FAILED
+test group_combat_restrictions::leader_restriction_and_live_combat_state_are_environment_isolated ... FAILED
+test group_combat_restrictions::promote_to_assistant_preserves_roles_in_combat_then_changes_one_member ... FAILED
+test group_combat_restrictions::promote_to_leader_preserves_leader_in_combat_then_recovers ... FAILED
+test house_exterior_core_fixture::core_authenticates_original_arguments_before_parsing_or_lookup ... FAILED
+test house_exterior_core_fixture::core_detach_preserves_placements_and_inventory ... FAILED
+test house_exterior_core_fixture::core_different_style_default_and_explicit_store_commit_inventory ... FAILED
+test house_exterior_core_fixture::core_host_updates_empty_defaults_and_environment_isolation ... FAILED
+test house_exterior_core_fixture::core_mixed_variants_reject_before_storing_the_valid_stack ... FAILED
+test house_exterior_core_fixture::core_recolor_reparents_even_when_store_is_requested ... FAILED
+test house_exterior_core_fixture::core_rejections_are_atomic_and_do_not_publish_events ... FAILED
+test house_exterior_core_fixture::core_same_selection_does_not_store_or_detach_attachments ... FAILED
+test house_exterior_core_fixture::core_storage_callbacks_reenter_committed_selection_without_outer_overwrite ... FAILED
+test house_exterior_core_fixture::core_store_validates_all_counts_before_mutating_any_placement ... FAILED
+test housing_bundle_structures::housing_bundle_declared_shape_order_and_legacy_extensions ... FAILED
+test housing_bundle_structures::housing_bundle_empty_state_optional_price_and_zero_values ... FAILED
+test housing_bundle_structures::housing_bundle_featured_snapshots_follow_record_updates_and_removal ... FAILED
+test housing_bundle_structures::housing_bundle_invalid_selectors_do_not_mutate_records ... FAILED
+test housing_bundle_structures::housing_bundle_non_decor_contents_disable_preview ... FAILED
+test housing_bundle_structures::housing_bundle_seed_and_market_action_share_state_on_every_profile ... FAILED
+test patch_12_0_5_navigation_aura_entry::aura_added_after_entry_is_queryable_without_rekeying_survivors ... FAILED
+test patch_12_0_5_navigation_aura_entry::aura_entry_admin_global_and_loader_dispatch_use_the_same_transition ... FAILED
+test patch_12_0_5_navigation_aura_entry::aura_entry_invalid_plan_is_atomic_and_does_not_deliver_entry_event ... FAILED
+test patch_12_0_5_navigation_aura_entry::aura_entry_rekeys_before_each_entry_event_consumer_without_payload_loss ... FAILED
+test patch_12_0_5_navigation_aura_entry::aura_entry_rekeys_party_helpful_and_harmful_stores_without_changing_members ... FAILED
+test patch_12_0_5_navigation_aura_entry::navigation_addon_denial_preserves_host_selection_and_caller_taint ... FAILED
+test patch_12_0_5_navigation_aura_entry::navigation_authorizes_before_reading_absent_host_selection ... FAILED
+test patch_12_0_5_navigation_aura_entry::navigation_trusted_results_follow_explicit_host_selection ... FAILED
+test pdeid_specialbar::pdeid_default_is_exactly_one_public_numeric_zero ... FAILED
+test pdeid_specialbar::pdeid_reads_live_scalar_including_zero_and_storage_boundary ... FAILED
+test pdeid_specialbar::pdeid_updates_are_environment_local ... FAILED
+test pdeid_specialbar::special_membership_is_live_union_not_direct_slot_assignment ... FAILED
+test pdeid_specialbar::special_membership_preserves_public_validation_and_unmodeled_secret_boundary ... FAILED
+test pdeid_specialbar::special_membership_queries_are_read_only_and_environment_local ... FAILED
+test pdeid_specialbar::special_membership_survives_direct_macro_and_outfit_shadows ... FAILED
+test pdeid_specialbar::special_membership_uses_live_alias_resolution_not_link_grammar ... FAILED
+test private_aura_sound_add_context::actual_full_deprecated_chunk_preserves_add_context_and_removal ... FAILED
+test private_aura_sound_add_context::allocator_avoids_host_ids_and_exhaustion_returns_one_nil ... FAILED
+test private_aura_sound_add_context::each_context_denies_addon_without_consuming_id_then_recovers ... FAILED
+test private_aura_sound_add_context::malformed_inputs_leave_host_registration_and_allocator_unchanged ... FAILED
+test private_aura_sound_add_context::modern_authenticates_both_arguments_before_trigger_validation ... FAILED
+test private_aura_sound_add_context::ordinary_tainted_combat_add_copies_real_payload_and_removes_it ... FAILED
+test private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon ... FAILED
+test private_aura_sound_add_context::secure_caller_registers_in_all_contexts_and_environments_are_isolated ... FAILED
+test restricted_outfit_index::real_cached_helper_preserves_original_getter_secret_boundary ... ok
+test restricted_outfit_index::real_restricted_environment_keeps_direct_tables_forbidden ... ok
+test restricted_outfit_index::real_restricted_helper_output_drives_existing_outfit_macro_consumer ... ok
+test restricted_outfit_index::real_restricted_helper_reads_live_catalog_and_is_environment_local ... ok
+test retail_12_0_5_partial_104_114::ignore_gcd_book_authenticates_flag_before_missing_entry_return ... FAILED
+test retail_12_0_5_partial_104_114::ignore_gcd_secure_secret_flags_select_action_and_book_intervals ... FAILED
+test retail_12_0_5_partial_104_114::ignore_gcd_selected_objects_drive_cooldown_widgets_after_state_changes ... ok
+test retail_12_0_5_partial_104_114::ignore_gcd_tainted_secret_flags_are_denied_without_losing_taint ... FAILED
+test retail_12_0_5_partial_104_114::unit_permissions_compare_distinct_guids_despite_identical_names ... ok
+test secure_aura_header_helpers::cached_class_talent_loadout_helpers_keep_real_talent_fields_clean ... FAILED
+test secure_aura_header_helpers::cached_class_talent_spec_helpers_keep_real_ui_and_castbar_fields_clean ... FAILED
+test secure_aura_header_helpers::cached_helper_delegate_restores_caller_after_addon_callback_error ... FAILED
+test secure_aura_header_helpers::cached_secure_aura_header_reorders_and_hides_stale_children ... FAILED
+test secure_aura_header_helpers::cached_secure_aura_header_sorts_finite_before_permanent ... FAILED
+
+failures:
+
+---- follower_nameplate_display::follower_display_authenticates_host_secret_token_and_restores_addon_context stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.30ms
+[  0.003s] [Startup] rilua VM created in 148.62µs
+[  0.003s] [Startup] builtin frames initialized in 114.96µs
+[  0.003s] [Startup] template registry cleared in 11.49µs
+[  0.003s] [Startup] intrinsic templates registered in 5.68µs
+[  0.003s] [Startup] initial app_data lua handle installed in 895.00ns
+[  0.484s] [Startup] init_lua_state complete in 481.79ms
+[  0.484s] [Startup] final app_data lua handle installed in 252.00ns
+[  0.485s] [Startup] initial screen globals installed in 197.76µs
+[  0.485s] [Startup] WowLuaEnv::new complete
+
+thread 'follower_nameplate_display::follower_display_authenticates_host_secret_token_and_restores_addon_context' (899462) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/follower_nameplate_display.rs:176:6:
+AllowedWhenUntainted preserves rooted argument and caller trust: Lua(Runtime(RuntimeError { message: "expected string, got userdata at argument 1", level: 1, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- follower_nameplate_display::follower_display_classification_follows_guid_not_target_slot stdout ----
+[  0.504s] [Startup] WowLuaEnv::new begin
+[  0.505s] [Startup] SimState::default complete in 1.47ms
+[  0.506s] [Startup] rilua VM created in 93.50µs
+[  0.506s] [Startup] builtin frames initialized in 46.34µs
+[  0.506s] [Startup] template registry cleared in 4.84µs
+[  0.506s] [Startup] intrinsic templates registered in 6.06µs
+[  0.506s] [Startup] initial app_data lua handle installed in 732.00ns
+[  0.841s] [Startup] init_lua_state complete in 335.26ms
+[  0.841s] [Startup] final app_data lua handle installed in 271.00ns
+[  0.841s] [Startup] initial screen globals installed in 146.03µs
+[  0.841s] [Startup] WowLuaEnv::new complete
+
+thread 'follower_nameplate_display::follower_display_classification_follows_guid_not_target_slot' (899485) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/follower_nameplate_display.rs:82:6:
+new target does not inherit the old target classification: Lua(Runtime(RuntimeError { message: "focus still resolves follower GUID", level: 0, traceback: [] }))
+
+---- follower_nameplate_display::follower_display_classification_is_environment_local stdout ----
+[  0.868s] [Startup] WowLuaEnv::new begin
+[  0.870s] [Startup] SimState::default complete in 1.58ms
+[  0.870s] [Startup] rilua VM created in 90.76µs
+[  0.870s] [Startup] builtin frames initialized in 51.10µs
+[  0.870s] [Startup] template registry cleared in 5.95µs
+[  0.870s] [Startup] intrinsic templates registered in 6.99µs
+[  0.870s] [Startup] initial app_data lua handle installed in 842.00ns
+[  1.328s] [Startup] init_lua_state complete in 457.98ms
+[  1.328s] [Startup] final app_data lua handle installed in 209.00ns
+[  1.332s] [Startup] initial screen globals installed in 4.25ms
+[  1.332s] [Startup] WowLuaEnv::new complete
+[  1.332s] [Startup] WowLuaEnv::new begin
+[  1.334s] [Startup] SimState::default complete in 1.96ms
+[  1.334s] [Startup] rilua VM created in 98.54µs
+[  1.334s] [Startup] builtin frames initialized in 52.09µs
+[  1.334s] [Startup] template registry cleared in 9.42µs
+[  1.334s] [Startup] intrinsic templates registered in 6.09µs
+[  1.334s] [Startup] initial app_data lua handle installed in 636.00ns
+[  1.671s] [Startup] init_lua_state complete in 336.63ms
+[  1.671s] [Startup] final app_data lua handle installed in 294.00ns
+[  1.671s] [Startup] initial screen globals installed in 143.86µs
+[  1.671s] [Startup] WowLuaEnv::new complete
+
+thread 'follower_nameplate_display::follower_display_classification_is_environment_local' (899497) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/follower_nameplate_display.rs:95:10:
+first environment has follower input: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- follower_nameplate_display::follower_display_classification_preserves_npc_identity_and_can_be_removed stdout ----
+[  1.752s] [Startup] WowLuaEnv::new begin
+[  1.754s] [Startup] SimState::default complete in 1.83ms
+[  1.754s] [Startup] rilua VM created in 138.75µs
+[  1.754s] [Startup] builtin frames initialized in 56.47µs
+[  1.754s] [Startup] template registry cleared in 5.20µs
+[  1.754s] [Startup] intrinsic templates registered in 7.79µs
+[  1.754s] [Startup] initial app_data lua handle installed in 592.00ns
+[  2.124s] [Startup] init_lua_state complete in 370.40ms
+[  2.125s] [Startup] final app_data lua handle installed in 324.00ns
+[  2.125s] [Startup] initial screen globals installed in 174.58µs
+[  2.125s] [Startup] WowLuaEnv::new complete
+
+thread 'follower_nameplate_display::follower_display_classification_preserves_npc_identity_and_can_be_removed' (899555) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/follower_nameplate_display.rs:58:6:
+follower classification does not rewrite identity/class/friendliness: Lua(Runtime(RuntimeError { message: "host-marked NPC is display-player", level: 0, traceback: [] }))
+
+---- follower_nameplate_display::follower_display_flag_does_not_imply_friendliness stdout ----
+[  2.140s] [Startup] WowLuaEnv::new begin
+[  2.141s] [Startup] SimState::default complete in 1.33ms
+[  2.141s] [Startup] rilua VM created in 86.63µs
+[  2.141s] [Startup] builtin frames initialized in 42.93µs
+[  2.141s] [Startup] template registry cleared in 4.17µs
+[  2.141s] [Startup] intrinsic templates registered in 6.05µs
+[  2.141s] [Startup] initial app_data lua handle installed in 776.00ns
+[  2.404s] [Startup] init_lua_state complete in 262.50ms
+[  2.404s] [Startup] final app_data lua handle installed in 295.00ns
+[  2.404s] [Startup] initial screen globals installed in 174.99µs
+[  2.404s] [Startup] WowLuaEnv::new complete
+
+thread 'follower_nameplate_display::follower_display_flag_does_not_imply_friendliness' (899564) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/follower_nameplate_display.rs:118:6:
+classification is independent of hostility; vendor still gates friendly CVars: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- follower_nameplate_display::follower_display_query_does_not_fabricate_pet_vehicle_or_missing_units stdout ----
+[  2.436s] [Startup] WowLuaEnv::new begin
+[  2.438s] [Startup] SimState::default complete in 1.92ms
+[  2.438s] [Startup] rilua VM created in 130.18µs
+[  2.438s] [Startup] builtin frames initialized in 52.56µs
+[  2.438s] [Startup] template registry cleared in 5.60µs
+[  2.438s] [Startup] intrinsic templates registered in 8.26µs
+[  2.438s] [Startup] initial app_data lua handle installed in 1.05µs
+[  2.741s] [Startup] init_lua_state complete in 303.21ms
+[  2.741s] [Startup] final app_data lua handle installed in 189.00ns
+[  2.742s] [Startup] initial screen globals installed in 136.33µs
+[  2.742s] [Startup] WowLuaEnv::new complete
+
+thread 'follower_nameplate_display::follower_display_query_does_not_fabricate_pet_vehicle_or_missing_units' (899573) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/follower_nameplate_display.rs:193:6:
+inferred missing-unit/type policies; remove blanket pet/vehicle defaults: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- follower_nameplate_display::follower_display_query_preserves_secure_and_addon_stack_taint stdout ----
+[  2.764s] [Startup] WowLuaEnv::new begin
+[  2.766s] [Startup] SimState::default complete in 1.33ms
+[  2.766s] [Startup] rilua VM created in 89.59µs
+[  2.766s] [Startup] builtin frames initialized in 43.81µs
+[  2.766s] [Startup] template registry cleared in 4.45µs
+[  2.766s] [Startup] intrinsic templates registered in 5.84µs
+[  2.766s] [Startup] initial app_data lua handle installed in 750.00ns
+[  3.120s] [Startup] init_lua_state complete in 353.82ms
+[  3.120s] [Startup] final app_data lua handle installed in 193.00ns
+[  3.128s] [Startup] initial screen globals installed in 8.32ms
+[  3.128s] [Startup] WowLuaEnv::new complete
+
+thread 'follower_nameplate_display::follower_display_query_preserves_secure_and_addon_stack_taint' (899577) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/follower_nameplate_display.rs:140:6:
+public host classification does not elevate callers or taint outputs: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- group_combat_restrictions::confirm_convert_to_raid_blocks_combat_then_converts_small_party stdout ----
+[  3.148s] [Startup] WowLuaEnv::new begin
+[  3.150s] [Startup] SimState::default complete in 1.54ms
+[  3.150s] [Startup] rilua VM created in 106.68µs
+[  3.150s] [Startup] builtin frames initialized in 54.74µs
+[  3.150s] [Startup] template registry cleared in 4.90µs
+[  3.150s] [Startup] intrinsic templates registered in 7.44µs
+[  3.150s] [Startup] initial app_data lua handle installed in 782.00ns
+[  3.594s] [Startup] init_lua_state complete in 443.51ms
+[  3.594s] [Startup] final app_data lua handle installed in 441.00ns
+[  3.594s] [Startup] initial screen globals installed in 227.39µs
+[  3.594s] [Startup] WowLuaEnv::new complete
+
+thread 'group_combat_restrictions::confirm_convert_to_raid_blocks_combat_then_converts_small_party' (899592) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/group_combat_restrictions.rs:181:14:
+allowed explicit confirmation changes kind: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- group_combat_restrictions::convert_to_party_blocks_combat_then_restores_small_raid_to_party stdout ----
+[  3.644s] [Startup] WowLuaEnv::new begin
+[  3.646s] [Startup] SimState::default complete in 1.45ms
+[  3.646s] [Startup] rilua VM created in 90.07µs
+[  3.646s] [Startup] builtin frames initialized in 54.40µs
+[  3.646s] [Startup] template registry cleared in 6.36µs
+[  3.646s] [Startup] intrinsic templates registered in 7.21µs
+[  3.646s] [Startup] initial app_data lua handle installed in 931.00ns
+[  4.006s] [Startup] init_lua_state complete in 360.31ms
+[  4.006s] [Startup] final app_data lua handle installed in 326.00ns
+[  4.006s] [Startup] initial screen globals installed in 182.24µs
+[  4.006s] [Startup] WowLuaEnv::new complete
+
+thread 'group_combat_restrictions::convert_to_party_blocks_combat_then_restores_small_raid_to_party' (899600) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/group_combat_restrictions.rs:191:14:
+seed small raid through real conversion producer: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- group_combat_restrictions::convert_to_raid_blocks_combat_then_converts_small_party stdout ----
+[  4.040s] [Startup] WowLuaEnv::new begin
+[  4.041s] [Startup] SimState::default complete in 1.30ms
+[  4.042s] [Startup] rilua VM created in 86.90µs
+[  4.042s] [Startup] builtin frames initialized in 41.76µs
+[  4.042s] [Startup] template registry cleared in 4.54µs
+[  4.042s] [Startup] intrinsic templates registered in 5.66µs
+[  4.042s] [Startup] initial app_data lua handle installed in 930.00ns
+[  4.482s] [Startup] init_lua_state complete in 440.66ms
+[  4.482s] [Startup] final app_data lua handle installed in 320.00ns
+[  4.482s] [Startup] initial screen globals installed in 136.37µs
+[  4.482s] [Startup] WowLuaEnv::new complete
+
+thread 'group_combat_restrictions::convert_to_raid_blocks_combat_then_converts_small_party' (899610) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/group_combat_restrictions.rs:165:14:
+allowed conversion changes kind, not roster count: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- group_combat_restrictions::demote_assistant_preserves_roles_in_combat_then_changes_one_member stdout ----
+[  4.528s] [Startup] WowLuaEnv::new begin
+[  4.529s] [Startup] SimState::default complete in 1.39ms
+[  4.529s] [Startup] rilua VM created in 90.40µs
+[  4.530s] [Startup] builtin frames initialized in 48.68µs
+[  4.530s] [Startup] template registry cleared in 4.68µs
+[  4.530s] [Startup] intrinsic templates registered in 6.70µs
+[  4.530s] [Startup] initial app_data lua handle installed in 757.00ns
+[  4.938s] [Startup] init_lua_state complete in 408.07ms
+[  4.938s] [Startup] final app_data lua handle installed in 262.00ns
+[  4.938s] [Startup] initial screen globals installed in 130.12µs
+[  4.938s] [Startup] WowLuaEnv::new complete
+
+thread 'group_combat_restrictions::demote_assistant_preserves_roles_in_combat_then_changes_one_member' (899618) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/group_combat_restrictions.rs:104:10:
+combat preserves existing assistants: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- group_combat_restrictions::everyone_assistant_setting_is_atomic_in_combat_and_recovers stdout ----
+[  4.956s] [Startup] WowLuaEnv::new begin
+[  4.957s] [Startup] SimState::default complete in 1.39ms
+[  4.958s] [Startup] rilua VM created in 101.11µs
+[  4.958s] [Startup] builtin frames initialized in 52.80µs
+[  4.958s] [Startup] template registry cleared in 6.36µs
+[  4.958s] [Startup] intrinsic templates registered in 8.45µs
+[  4.958s] [Startup] initial app_data lua handle installed in 967.00ns
+[  5.334s] [Startup] init_lua_state complete in 376.78ms
+[  5.334s] [Startup] final app_data lua handle installed in 206.00ns
+[  5.335s] [Startup] initial screen globals installed in 128.48µs
+[  5.335s] [Startup] WowLuaEnv::new complete
+
+thread 'group_combat_restrictions::everyone_assistant_setting_is_atomic_in_combat_and_recovers' (899622) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/group_combat_restrictions.rs:130:13:
+assertion `left == right` failed
+  left: true
+ right: false
+
+---- group_combat_restrictions::leader_restriction_and_live_combat_state_are_environment_isolated stdout ----
+[  5.360s] [Startup] WowLuaEnv::new begin
+[  5.361s] [Startup] SimState::default complete in 1.33ms
+[  5.361s] [Startup] rilua VM created in 109.44µs
+[  5.361s] [Startup] builtin frames initialized in 45.57µs
+[  5.361s] [Startup] template registry cleared in 4.62µs
+[  5.362s] [Startup] intrinsic templates registered in 5.50µs
+[  5.362s] [Startup] initial app_data lua handle installed in 980.00ns
+[  5.799s] [Startup] init_lua_state complete in 437.62ms
+[  5.799s] [Startup] final app_data lua handle installed in 392.00ns
+[  5.799s] [Startup] initial screen globals installed in 181.10µs
+[  5.799s] [Startup] WowLuaEnv::new complete
+[  5.800s] [Startup] WowLuaEnv::new begin
+[  5.842s] [Startup] SimState::default complete in 42.69ms
+[  5.842s] [Startup] rilua VM created in 108.24µs
+[  5.842s] [Startup] builtin frames initialized in 43.93µs
+[  5.842s] [Startup] template registry cleared in 8.12µs
+[  5.842s] [Startup] intrinsic templates registered in 4.79µs
+[  5.842s] [Startup] initial app_data lua handle installed in 859.00ns
+[  6.274s] [Startup] init_lua_state complete in 431.46ms
+[  6.274s] [Startup] final app_data lua handle installed in 317.00ns
+[  6.274s] [Startup] initial screen globals installed in 135.03µs
+[  6.274s] [Startup] WowLuaEnv::new complete
+
+thread 'group_combat_restrictions::leader_restriction_and_live_combat_state_are_environment_isolated' (899631) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/group_combat_restrictions.rs:217:5:
+assertion `left == right` failed
+  left: Some(0)
+ right: None
+
+---- group_combat_restrictions::promote_to_assistant_preserves_roles_in_combat_then_changes_one_member stdout ----
+[  6.332s] [Startup] WowLuaEnv::new begin
+[  6.333s] [Startup] SimState::default complete in 1.38ms
+[  6.333s] [Startup] rilua VM created in 99.26µs
+[  6.333s] [Startup] builtin frames initialized in 46.86µs
+[  6.333s] [Startup] template registry cleared in 5.23µs
+[  6.333s] [Startup] intrinsic templates registered in 6.36µs
+[  6.333s] [Startup] initial app_data lua handle installed in 709.00ns
+[  6.545s] [Startup] init_lua_state complete in 211.57ms
+[  6.545s] [Startup] final app_data lua handle installed in 224.00ns
+[  6.545s] [Startup] initial screen globals installed in 174.62µs
+[  6.545s] [Startup] WowLuaEnv::new complete
+
+thread 'group_combat_restrictions::promote_to_assistant_preserves_roles_in_combat_then_changes_one_member' (899669) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/group_combat_restrictions.rs:73:10:
+combat preserves individual and everyone roles: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- group_combat_restrictions::promote_to_leader_preserves_leader_in_combat_then_recovers stdout ----
+[  6.564s] [Startup] WowLuaEnv::new begin
+[  6.565s] [Startup] SimState::default complete in 1.38ms
+[  6.566s] [Startup] rilua VM created in 89.43µs
+[  6.566s] [Startup] builtin frames initialized in 47.21µs
+[  6.566s] [Startup] template registry cleared in 4.85µs
+[  6.566s] [Startup] intrinsic templates registered in 6.09µs
+[  6.566s] [Startup] initial app_data lua handle installed in 846.00ns
+[  6.843s] [Startup] init_lua_state complete in 277.54ms
+[  6.843s] [Startup] final app_data lua handle installed in 310.00ns
+[  6.843s] [Startup] initial screen globals installed in 186.33µs
+[  6.843s] [Startup] WowLuaEnv::new complete
+
+thread 'group_combat_restrictions::promote_to_leader_preserves_leader_in_combat_then_recovers' (899682) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/group_combat_restrictions.rs:51:9:
+assertion `left == right` failed
+  left: Some(0)
+ right: None
+
+---- house_exterior_core_fixture::core_authenticates_original_arguments_before_parsing_or_lookup stdout ----
+[  6.872s] [Startup] WowLuaEnv::new begin
+[  6.874s] [Startup] SimState::default complete in 1.32ms
+[  6.874s] [Startup] rilua VM created in 91.62µs
+[  6.874s] [Startup] builtin frames initialized in 44.82µs
+[  6.874s] [Startup] template registry cleared in 3.93µs
+[  6.874s] [Startup] intrinsic templates registered in 5.98µs
+[  6.874s] [Startup] initial app_data lua handle installed in 1.39µs
+[  7.131s] [Startup] init_lua_state complete in 257.52ms
+[  7.131s] [Startup] final app_data lua handle installed in 200.00ns
+[  7.132s] [Startup] initial screen globals installed in 138.56µs
+[  7.132s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_authenticates_original_arguments_before_parsing_or_lookup' (899699) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:257:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- house_exterior_core_fixture::core_detach_preserves_placements_and_inventory stdout ----
+[  7.156s] [Startup] WowLuaEnv::new begin
+[  7.158s] [Startup] SimState::default complete in 1.56ms
+[  7.158s] [Startup] rilua VM created in 105.87µs
+[  7.158s] [Startup] builtin frames initialized in 55.60µs
+[  7.158s] [Startup] template registry cleared in 5.84µs
+[  7.158s] [Startup] intrinsic templates registered in 7.37µs
+[  7.158s] [Startup] initial app_data lua handle installed in 894.00ns
+[  7.524s] [Startup] init_lua_state complete in 366.17ms
+[  7.524s] [Startup] final app_data lua handle installed in 96.00ns
+[  7.524s] [Startup] initial screen globals installed in 145.29µs
+[  7.524s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_detach_preserves_placements_and_inventory' (899713) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:131:5:
+assertion `left == right` failed
+  left: 301
+ right: 401
+
+---- house_exterior_core_fixture::core_different_style_default_and_explicit_store_commit_inventory stdout ----
+[  7.544s] [Startup] WowLuaEnv::new begin
+[  7.546s] [Startup] SimState::default complete in 1.31ms
+[  7.546s] [Startup] rilua VM created in 85.78µs
+[  7.546s] [Startup] builtin frames initialized in 43.93µs
+[  7.546s] [Startup] template registry cleared in 5.27µs
+[  7.546s] [Startup] intrinsic templates registered in 5.82µs
+[  7.546s] [Startup] initial app_data lua handle installed in 1.02µs
+[  7.927s] [Startup] init_lua_state complete in 380.97ms
+[  7.927s] [Startup] final app_data lua handle installed in 191.00ns
+[  7.927s] [Startup] initial screen globals installed in 132.33µs
+[  7.927s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_different_style_default_and_explicit_store_commit_inventory' (899723) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:131:5:
+assertion `left == right` failed
+  left: 301
+ right: 401
+
+---- house_exterior_core_fixture::core_host_updates_empty_defaults_and_environment_isolation stdout ----
+[  7.951s] [Startup] WowLuaEnv::new begin
+[  7.956s] [Startup] SimState::default complete in 5.38ms
+[  7.956s] [Startup] rilua VM created in 91.26µs
+[  7.956s] [Startup] builtin frames initialized in 50.62µs
+[  7.956s] [Startup] template registry cleared in 6.40µs
+[  7.956s] [Startup] intrinsic templates registered in 7.37µs
+[  7.956s] [Startup] initial app_data lua handle installed in 632.00ns
+[  8.268s] [Startup] init_lua_state complete in 312.15ms
+[  8.268s] [Startup] final app_data lua handle installed in 244.00ns
+[  8.269s] [Startup] initial screen globals installed in 158.11µs
+[  8.269s] [Startup] WowLuaEnv::new complete
+[  8.269s] [Startup] WowLuaEnv::new begin
+[  8.270s] [Startup] SimState::default complete in 1.50ms
+[  8.270s] [Startup] rilua VM created in 95.37µs
+[  8.270s] [Startup] builtin frames initialized in 43.54µs
+[  8.270s] [Startup] template registry cleared in 9.41µs
+[  8.270s] [Startup] intrinsic templates registered in 5.01µs
+[  8.270s] [Startup] initial app_data lua handle installed in 405.00ns
+[  8.663s] [Startup] init_lua_state complete in 392.12ms
+[  8.663s] [Startup] final app_data lua handle installed in 176.00ns
+[  8.663s] [Startup] initial screen globals installed in 127.24µs
+[  8.663s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_host_updates_empty_defaults_and_environment_isolation' (899747) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:118:5:
+assertion `left == right` failed
+  left: 2
+ right: 4
+
+---- house_exterior_core_fixture::core_mixed_variants_reject_before_storing_the_valid_stack stdout ----
+[  8.704s] [Startup] WowLuaEnv::new begin
+[  8.705s] [Startup] SimState::default complete in 1.27ms
+[  8.705s] [Startup] rilua VM created in 83.39µs
+[  8.705s] [Startup] builtin frames initialized in 45.13µs
+[  8.705s] [Startup] template registry cleared in 4.15µs
+[  8.705s] [Startup] intrinsic templates registered in 5.96µs
+[  8.705s] [Startup] initial app_data lua handle installed in 935.00ns
+[  8.843s] [Startup] init_lua_state complete in 137.93ms
+[  8.843s] [Startup] final app_data lua handle installed in 248.00ns
+[  8.844s] [Startup] initial screen globals installed in 134.60µs
+[  8.844s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_mixed_variants_reject_before_storing_the_valid_stack' (899837) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:446:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- house_exterior_core_fixture::core_recolor_reparents_even_when_store_is_requested stdout ----
+[  8.850s] [Startup] WowLuaEnv::new begin
+[  8.851s] [Startup] SimState::default complete in 1.23ms
+[  8.851s] [Startup] rilua VM created in 83.01µs
+[  8.851s] [Startup] builtin frames initialized in 35.54µs
+[  8.851s] [Startup] template registry cleared in 3.29µs
+[  8.851s] [Startup] intrinsic templates registered in 5.14µs
+[  8.851s] [Startup] initial app_data lua handle installed in 639.00ns
+[  9.049s] [Startup] init_lua_state complete in 197.96ms
+[  9.049s] [Startup] final app_data lua handle installed in 295.00ns
+[  9.049s] [Startup] initial screen globals installed in 132.95µs
+[  9.049s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_recolor_reparents_even_when_store_is_requested' (899849) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:131:5:
+assertion `left == right` failed
+  left: 301
+ right: 302
+
+---- house_exterior_core_fixture::core_rejections_are_atomic_and_do_not_publish_events stdout ----
+[  9.056s] [Startup] WowLuaEnv::new begin
+[  9.057s] [Startup] SimState::default complete in 1.39ms
+[  9.057s] [Startup] rilua VM created in 87.61µs
+[  9.057s] [Startup] builtin frames initialized in 48.15µs
+[  9.057s] [Startup] template registry cleared in 3.91µs
+[  9.057s] [Startup] intrinsic templates registered in 7.24µs
+[  9.057s] [Startup] initial app_data lua handle installed in 710.00ns
+[  9.189s] [Startup] init_lua_state complete in 131.63ms
+[  9.189s] [Startup] final app_data lua handle installed in 272.00ns
+[  9.189s] [Startup] initial screen globals installed in 211.61µs
+[  9.189s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_rejections_are_atomic_and_do_not_publish_events' (899865) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:292:14:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- house_exterior_core_fixture::core_same_selection_does_not_store_or_detach_attachments stdout ----
+[  9.217s] [Startup] WowLuaEnv::new begin
+[  9.224s] [Startup] SimState::default complete in 6.68ms
+[  9.224s] [Startup] rilua VM created in 105.88µs
+[  9.224s] [Startup] builtin frames initialized in 69.18µs
+[  9.224s] [Startup] template registry cleared in 8.67µs
+[  9.224s] [Startup] intrinsic templates registered in 9.52µs
+[  9.224s] [Startup] initial app_data lua handle installed in 1.38µs
+[  9.500s] [Startup] init_lua_state complete in 275.52ms
+[  9.500s] [Startup] final app_data lua handle installed in 162.00ns
+[  9.504s] [Startup] initial screen globals installed in 4.29ms
+[  9.504s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_same_selection_does_not_store_or_detach_attachments' (899880) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:484:10:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- house_exterior_core_fixture::core_storage_callbacks_reenter_committed_selection_without_outer_overwrite stdout ----
+[  9.524s] [Startup] WowLuaEnv::new begin
+[  9.526s] [Startup] SimState::default complete in 1.49ms
+[  9.526s] [Startup] rilua VM created in 91.34µs
+[  9.526s] [Startup] builtin frames initialized in 53.08µs
+[  9.526s] [Startup] template registry cleared in 5.26µs
+[  9.526s] [Startup] intrinsic templates registered in 9.21µs
+[  9.526s] [Startup] initial app_data lua handle installed in 794.00ns
+[  9.688s] [Startup] init_lua_state complete in 162.61ms
+[  9.688s] [Startup] final app_data lua handle installed in 227.00ns
+[  9.688s] [Startup] initial screen globals installed in 152.70µs
+[  9.688s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_storage_callbacks_reenter_committed_selection_without_outer_overwrite' (899888) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:469:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- house_exterior_core_fixture::core_store_validates_all_counts_before_mutating_any_placement stdout ----
+[  9.695s] [Startup] WowLuaEnv::new begin
+[  9.697s] [Startup] SimState::default complete in 1.50ms
+[  9.697s] [Startup] rilua VM created in 91.53µs
+[  9.697s] [Startup] builtin frames initialized in 49.28µs
+[  9.697s] [Startup] template registry cleared in 6.89µs
+[  9.697s] [Startup] intrinsic templates registered in 8.57µs
+[  9.697s] [Startup] initial app_data lua handle installed in 900.00ns
+[  9.821s] [Startup] init_lua_state complete in 123.52ms
+[  9.821s] [Startup] final app_data lua handle installed in 467.00ns
+[  9.821s] [Startup] initial screen globals installed in 139.69µs
+[  9.821s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_store_validates_all_counts_before_mutating_any_placement' (899900) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:356:110:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_declared_shape_order_and_legacy_extensions stdout ----
+[  9.827s] [Startup] WowLuaEnv::new begin
+[  9.828s] [Startup] SimState::default complete in 1.50ms
+[  9.828s] [Startup] rilua VM created in 95.92µs
+[  9.828s] [Startup] builtin frames initialized in 53.83µs
+[  9.828s] [Startup] template registry cleared in 6.96µs
+[  9.828s] [Startup] intrinsic templates registered in 7.38µs
+[  9.828s] [Startup] initial app_data lua handle installed in 1.06µs
+[  9.948s] [Startup] init_lua_state complete in 119.80ms
+[  9.948s] [Startup] final app_data lua handle installed in 259.00ns
+[  9.948s] [Startup] initial screen globals installed in 169.52µs
+[  9.948s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_declared_shape_order_and_legacy_extensions' (899902) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:91:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):513: attempt to index global '__wow_housing_seeded_bundle_state' (a nil value)", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_empty_state_optional_price_and_zero_values stdout ----
+[  9.955s] [Startup] WowLuaEnv::new begin
+[  9.957s] [Startup] SimState::default complete in 1.56ms
+[  9.957s] [Startup] rilua VM created in 96.72µs
+[  9.957s] [Startup] builtin frames initialized in 48.49µs
+[  9.957s] [Startup] template registry cleared in 6.32µs
+[  9.957s] [Startup] intrinsic templates registered in 6.20µs
+[  9.957s] [Startup] initial app_data lua handle installed in 1.03µs
+[ 10.163s] [Startup] init_lua_state complete in 206.02ms
+[ 10.163s] [Startup] final app_data lua handle installed in 450.00ns
+[ 10.163s] [Startup] initial screen globals installed in 127.43µs
+[ 10.163s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_empty_state_optional_price_and_zero_values' (899906) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:112:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):513: attempt to index global '__wow_housing_seeded_bundle_state' (a nil value)", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_featured_snapshots_follow_record_updates_and_removal stdout ----
+[ 10.169s] [Startup] WowLuaEnv::new begin
+[ 10.171s] [Startup] SimState::default complete in 1.72ms
+[ 10.171s] [Startup] rilua VM created in 108.59µs
+[ 10.171s] [Startup] builtin frames initialized in 51.92µs
+[ 10.171s] [Startup] template registry cleared in 5.99µs
+[ 10.171s] [Startup] intrinsic templates registered in 7.75µs
+[ 10.171s] [Startup] initial app_data lua handle installed in 502.00ns
+[ 10.443s] [Startup] init_lua_state complete in 271.80ms
+[ 10.443s] [Startup] final app_data lua handle installed in 605.00ns
+[ 10.443s] [Startup] initial screen globals installed in 196.06µs
+[ 10.443s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_featured_snapshots_follow_record_updates_and_removal' (899914) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:169:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):513: attempt to index global '__wow_housing_seeded_bundle_state' (a nil value)", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_invalid_selectors_do_not_mutate_records stdout ----
+[ 10.470s] [Startup] WowLuaEnv::new begin
+[ 10.472s] [Startup] SimState::default complete in 1.65ms
+[ 10.472s] [Startup] rilua VM created in 109.18µs
+[ 10.472s] [Startup] builtin frames initialized in 59.92µs
+[ 10.472s] [Startup] template registry cleared in 6.86µs
+[ 10.472s] [Startup] intrinsic templates registered in 9.54µs
+[ 10.472s] [Startup] initial app_data lua handle installed in 1.82µs
+[ 10.701s] [Startup] init_lua_state complete in 229.18ms
+[ 10.701s] [Startup] final app_data lua handle installed in 397.00ns
+[ 10.702s] [Startup] initial screen globals installed in 168.05µs
+[ 10.702s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_invalid_selectors_do_not_mutate_records' (899923) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:256:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):513: attempt to index global '__wow_housing_seeded_bundle_state' (a nil value)", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_non_decor_contents_disable_preview stdout ----
+[ 10.728s] [Startup] WowLuaEnv::new begin
+[ 10.729s] [Startup] SimState::default complete in 1.34ms
+[ 10.729s] [Startup] rilua VM created in 110.71µs
+[ 10.730s] [Startup] builtin frames initialized in 47.94µs
+[ 10.730s] [Startup] template registry cleared in 4.67µs
+[ 10.730s] [Startup] intrinsic templates registered in 6.13µs
+[ 10.730s] [Startup] initial app_data lua handle installed in 780.00ns
+[ 10.973s] [Startup] init_lua_state complete in 243.00ms
+[ 10.973s] [Startup] final app_data lua handle installed in 265.00ns
+[ 10.973s] [Startup] initial screen globals installed in 168.17µs
+[ 10.973s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_non_decor_contents_disable_preview' (899933) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:219:10:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):513: attempt to index global '__wow_housing_seeded_bundle_state' (a nil value)", level: 0, traceback: [] }))
+
+---- housing_bundle_structures::housing_bundle_seed_and_market_action_share_state_on_every_profile stdout ----
+[ 10.992s] [Startup] WowLuaEnv::new begin
+[ 10.994s] [Startup] SimState::default complete in 1.44ms
+[ 10.994s] [Startup] rilua VM created in 93.23µs
+[ 10.994s] [Startup] builtin frames initialized in 49.60µs
+[ 10.994s] [Startup] template registry cleared in 6.06µs
+[ 10.994s] [Startup] intrinsic templates registered in 8.58µs
+[ 10.994s] [Startup] initial app_data lua handle installed in 953.00ns
+[ 11.266s] [Startup] init_lua_state complete in 272.29ms
+[ 11.266s] [Startup] final app_data lua handle installed in 447.00ns
+[ 11.266s] [Startup] initial screen globals installed in 204.77µs
+[ 11.266s] [Startup] WowLuaEnv::new complete
+
+thread 'housing_bundle_structures::housing_bundle_seed_and_market_action_share_state_on_every_profile' (899938) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/housing_bundle_structures.rs:55:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "(string):513: attempt to index global '__wow_housing_seeded_bundle_state' (a nil value)", level: 0, traceback: [] }))
+
+---- patch_12_0_5_navigation_aura_entry::aura_added_after_entry_is_queryable_without_rekeying_survivors stdout ----
+[ 11.316s] [Startup] WowLuaEnv::new begin
+[ 11.318s] [Startup] SimState::default complete in 1.42ms
+[ 11.318s] [Startup] rilua VM created in 107.72µs
+[ 11.318s] [Startup] builtin frames initialized in 53.91µs
+[ 11.318s] [Startup] template registry cleared in 5.54µs
+[ 11.318s] [Startup] intrinsic templates registered in 5.98µs
+[ 11.318s] [Startup] initial app_data lua handle installed in 1.84µs
+[ 11.691s] [Startup] init_lua_state complete in 373.31ms
+[ 11.691s] [Startup] final app_data lua handle installed in 390.00ns
+[ 11.691s] [Startup] initial screen globals installed in 134.07µs
+[ 11.691s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_12_0_5_navigation_aura_entry::aura_added_after_entry_is_queryable_without_rekeying_survivors' (899941) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/patch_12_0_5_navigation_aura_entry.rs:63:9:
+assertion failed: env.eval::<bool>(&format!("return C_UnitAuras.GetAuraDataByAuraInstanceID('player', {id}) == nil")).unwrap()
+
+---- patch_12_0_5_navigation_aura_entry::aura_entry_admin_global_and_loader_dispatch_use_the_same_transition stdout ----
+[ 11.697s] [Startup] WowLuaEnv::new begin
+[ 11.699s] [Startup] SimState::default complete in 1.36ms
+[ 11.699s] [Startup] rilua VM created in 86.12µs
+[ 11.699s] [Startup] builtin frames initialized in 40.03µs
+[ 11.699s] [Startup] template registry cleared in 4.18µs
+[ 11.699s] [Startup] intrinsic templates registered in 5.61µs
+[ 11.699s] [Startup] initial app_data lua handle installed in 805.00ns
+[ 11.941s] [Startup] init_lua_state complete in 241.79ms
+[ 11.941s] [Startup] final app_data lua handle installed in 441.00ns
+[ 11.941s] [Startup] initial screen globals installed in 216.78µs
+[ 11.941s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_12_0_5_navigation_aura_entry::aura_entry_admin_global_and_loader_dispatch_use_the_same_transition' (899946) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/patch_12_0_5_navigation_aura_entry.rs:63:9:
+assertion failed: env.eval::<bool>(&format!("return C_UnitAuras.GetAuraDataByAuraInstanceID('player', {id}) == nil")).unwrap()
+
+---- patch_12_0_5_navigation_aura_entry::aura_entry_invalid_plan_is_atomic_and_does_not_deliver_entry_event stdout ----
+[ 11.948s] [Startup] WowLuaEnv::new begin
+[ 11.950s] [Startup] SimState::default complete in 1.73ms
+[ 11.950s] [Startup] rilua VM created in 109.01µs
+[ 11.950s] [Startup] builtin frames initialized in 57.26µs
+[ 11.950s] [Startup] template registry cleared in 9.28µs
+[ 11.950s] [Startup] intrinsic templates registered in 8.73µs
+[ 11.950s] [Startup] initial app_data lua handle installed in 885.00ns
+[ 12.165s] [Startup] init_lua_state complete in 215.43ms
+[ 12.165s] [Startup] final app_data lua handle installed in 404.00ns
+[ 12.166s] [Startup] initial screen globals installed in 145.48µs
+[ 12.166s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_12_0_5_navigation_aura_entry::aura_entry_invalid_plan_is_atomic_and_does_not_deliver_entry_event' (899950) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/patch_12_0_5_navigation_aura_entry.rs:204:9:
+assertion failed: env.fire_event("ENCOUNTER_START").is_err()
+
+---- patch_12_0_5_navigation_aura_entry::aura_entry_rekeys_before_each_entry_event_consumer_without_payload_loss stdout ----
+[ 12.172s] [Startup] WowLuaEnv::new begin
+[ 12.173s] [Startup] SimState::default complete in 1.46ms
+[ 12.173s] [Startup] rilua VM created in 92.15µs
+[ 12.173s] [Startup] builtin frames initialized in 45.18µs
+[ 12.173s] [Startup] template registry cleared in 4.93µs
+[ 12.173s] [Startup] intrinsic templates registered in 6.36µs
+[ 12.173s] [Startup] initial app_data lua handle installed in 1.61µs
+[ 12.387s] [Startup] init_lua_state complete in 213.42ms
+[ 12.387s] [Startup] final app_data lua handle installed in 308.00ns
+[ 12.387s] [Startup] initial screen globals installed in 136.27µs
+[ 12.387s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_12_0_5_navigation_aura_entry::aura_entry_rekeys_before_each_entry_event_consumer_without_payload_loss' (899959) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/patch_12_0_5_navigation_aura_entry.rs:63:9:
+assertion failed: env.eval::<bool>(&format!("return C_UnitAuras.GetAuraDataByAuraInstanceID('player', {id}) == nil")).unwrap()
+
+---- patch_12_0_5_navigation_aura_entry::aura_entry_rekeys_party_helpful_and_harmful_stores_without_changing_members stdout ----
+[ 12.393s] [Startup] WowLuaEnv::new begin
+[ 12.395s] [Startup] SimState::default complete in 1.36ms
+[ 12.395s] [Startup] rilua VM created in 90.72µs
+[ 12.395s] [Startup] builtin frames initialized in 44.60µs
+[ 12.395s] [Startup] template registry cleared in 5.94µs
+[ 12.395s] [Startup] intrinsic templates registered in 7.39µs
+[ 12.395s] [Startup] initial app_data lua handle installed in 849.00ns
+[ 12.549s] [Startup] init_lua_state complete in 153.88ms
+[ 12.549s] [Startup] final app_data lua handle installed in 280.00ns
+[ 12.549s] [Startup] initial screen globals installed in 163.80µs
+[ 12.549s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_12_0_5_navigation_aura_entry::aura_entry_rekeys_party_helpful_and_harmful_stores_without_changing_members' (899965) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/patch_12_0_5_navigation_aura_entry.rs:63:9:
+assertion failed: env.eval::<bool>(&format!("return C_UnitAuras.GetAuraDataByAuraInstanceID('player', {id}) == nil")).unwrap()
+
+---- patch_12_0_5_navigation_aura_entry::navigation_addon_denial_preserves_host_selection_and_caller_taint stdout ----
+[ 12.555s] [Startup] WowLuaEnv::new begin
+[ 12.557s] [Startup] SimState::default complete in 1.51ms
+[ 12.557s] [Startup] rilua VM created in 88.51µs
+[ 12.557s] [Startup] builtin frames initialized in 49.00µs
+[ 12.557s] [Startup] template registry cleared in 6.58µs
+[ 12.557s] [Startup] intrinsic templates registered in 6.60µs
+[ 12.557s] [Startup] initial app_data lua handle installed in 667.00ns
+[ 12.960s] [Startup] init_lua_state complete in 403.23ms
+[ 12.960s] [Startup] final app_data lua handle installed in 475.00ns
+[ 12.960s] [Startup] initial screen globals installed in 211.60µs
+[ 12.960s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_12_0_5_navigation_aura_entry::navigation_addon_denial_preserves_host_selection_and_caller_taint' (899968) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/patch_12_0_5_navigation_aura_entry.rs:139:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "addon must not receive selected party token", level: 0, traceback: [] }))
+
+---- patch_12_0_5_navigation_aura_entry::navigation_authorizes_before_reading_absent_host_selection stdout ----
+[ 13.004s] [Startup] WowLuaEnv::new begin
+[ 13.006s] [Startup] SimState::default complete in 1.58ms
+[ 13.006s] [Startup] rilua VM created in 111.16µs
+[ 13.006s] [Startup] builtin frames initialized in 50.44µs
+[ 13.006s] [Startup] template registry cleared in 6.65µs
+[ 13.006s] [Startup] intrinsic templates registered in 7.54µs
+[ 13.006s] [Startup] initial app_data lua handle installed in 981.00ns
+[ 13.244s] [Startup] init_lua_state complete in 238.12ms
+[ 13.244s] [Startup] final app_data lua handle installed in 196.00ns
+[ 13.244s] [Startup] initial screen globals installed in 165.05µs
+[ 13.244s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_12_0_5_navigation_aura_entry::navigation_authorizes_before_reading_absent_host_selection' (899973) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/patch_12_0_5_navigation_aura_entry.rs:162:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- patch_12_0_5_navigation_aura_entry::navigation_trusted_results_follow_explicit_host_selection stdout ----
+[ 13.257s] [Startup] WowLuaEnv::new begin
+[ 13.258s] [Startup] SimState::default complete in 1.43ms
+[ 13.258s] [Startup] rilua VM created in 102.38µs
+[ 13.258s] [Startup] builtin frames initialized in 60.70µs
+[ 13.258s] [Startup] template registry cleared in 5.97µs
+[ 13.258s] [Startup] intrinsic templates registered in 7.18µs
+[ 13.258s] [Startup] initial app_data lua handle installed in 687.00ns
+[ 13.424s] [Startup] init_lua_state complete in 165.71ms
+[ 13.424s] [Startup] final app_data lua handle installed in 286.00ns
+[ 13.424s] [Startup] initial screen globals installed in 148.43µs
+[ 13.424s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_12_0_5_navigation_aura_entry::navigation_trusted_results_follow_explicit_host_selection' (899979) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/patch_12_0_5_navigation_aura_entry.rs:105:18:
+called `Result::unwrap()` on an `Err` value: Other("expected string result, got nil")
+
+---- pdeid_specialbar::pdeid_default_is_exactly_one_public_numeric_zero stdout ----
+[ 13.430s] [Startup] WowLuaEnv::new begin
+[ 13.431s] [Startup] SimState::default complete in 1.27ms
+[ 13.431s] [Startup] rilua VM created in 82.90µs
+[ 13.431s] [Startup] builtin frames initialized in 35.06µs
+[ 13.431s] [Startup] template registry cleared in 4.55µs
+[ 13.431s] [Startup] intrinsic templates registered in 6.31µs
+[ 13.431s] [Startup] initial app_data lua handle installed in 887.00ns
+[ 13.554s] [Startup] init_lua_state complete in 122.83ms
+[ 13.554s] [Startup] final app_data lua handle installed in 368.00ns
+[ 13.554s] [Startup] initial screen globals installed in 164.14µs
+[ 13.554s] [Startup] WowLuaEnv::new complete
+
+thread 'pdeid_specialbar::pdeid_default_is_exactly_one_public_numeric_zero' (899985) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/pdeid_specialbar.rs:52:31:
+INFERRED zero default: Lua(Runtime(RuntimeError { message: "live host PDEID", level: 0, traceback: [] }))
+
+---- pdeid_specialbar::pdeid_reads_live_scalar_including_zero_and_storage_boundary stdout ----
+[ 13.560s] [Startup] WowLuaEnv::new begin
+[ 13.562s] [Startup] SimState::default complete in 1.45ms
+[ 13.562s] [Startup] rilua VM created in 84.56µs
+[ 13.562s] [Startup] builtin frames initialized in 37.56µs
+[ 13.562s] [Startup] template registry cleared in 3.97µs
+[ 13.562s] [Startup] intrinsic templates registered in 5.85µs
+[ 13.562s] [Startup] initial app_data lua handle installed in 704.00ns
+[ 13.717s] [Startup] init_lua_state complete in 154.83ms
+[ 13.717s] [Startup] final app_data lua handle installed in 486.00ns
+[ 13.717s] [Startup] initial screen globals installed in 153.40µs
+[ 13.717s] [Startup] WowLuaEnv::new complete
+
+thread 'pdeid_specialbar::pdeid_reads_live_scalar_including_zero_and_storage_boundary' (899988) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/pdeid_specialbar.rs:61:14:
+one numeric result for each live host value: Lua(Runtime(RuntimeError { message: "live host PDEID", level: 0, traceback: [] }))
+
+---- pdeid_specialbar::pdeid_updates_are_environment_local stdout ----
+[ 13.736s] [Startup] WowLuaEnv::new begin
+[ 13.738s] [Startup] SimState::default complete in 1.74ms
+[ 13.738s] [Startup] rilua VM created in 98.67µs
+[ 13.738s] [Startup] builtin frames initialized in 56.03µs
+[ 13.738s] [Startup] template registry cleared in 6.94µs
+[ 13.738s] [Startup] intrinsic templates registered in 8.36µs
+[ 13.738s] [Startup] initial app_data lua handle installed in 805.00ns
+[ 14.101s] [Startup] init_lua_state complete in 362.59ms
+[ 14.101s] [Startup] final app_data lua handle installed in 445.00ns
+[ 14.101s] [Startup] initial screen globals installed in 152.36µs
+[ 14.101s] [Startup] WowLuaEnv::new complete
+[ 14.101s] [Startup] WowLuaEnv::new begin
+[ 14.108s] [Startup] SimState::default complete in 7.53ms
+[ 14.108s] [Startup] rilua VM created in 101.48µs
+[ 14.109s] [Startup] builtin frames initialized in 47.47µs
+[ 14.109s] [Startup] template registry cleared in 7.57µs
+[ 14.109s] [Startup] intrinsic templates registered in 20.74µs
+[ 14.109s] [Startup] initial app_data lua handle installed in 766.00ns
+[ 14.696s] [Startup] init_lua_state complete in 587.17ms
+[ 14.696s] [Startup] final app_data lua handle installed in 456.00ns
+[ 14.704s] [Startup] initial screen globals installed in 8.21ms
+[ 14.704s] [Startup] WowLuaEnv::new complete
+
+thread 'pdeid_specialbar::pdeid_updates_are_environment_local' (899992) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/pdeid_specialbar.rs:71:37:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "live host PDEID", level: 0, traceback: [] }))
+
+---- pdeid_specialbar::special_membership_is_live_union_not_direct_slot_assignment stdout ----
+[ 14.749s] [Startup] WowLuaEnv::new begin
+[ 14.751s] [Startup] SimState::default complete in 1.35ms
+[ 14.751s] [Startup] rilua VM created in 85.92µs
+[ 14.751s] [Startup] builtin frames initialized in 41.83µs
+[ 14.751s] [Startup] template registry cleared in 3.92µs
+[ 14.751s] [Startup] intrinsic templates registered in 5.67µs
+[ 14.751s] [Startup] initial app_data lua handle installed in 777.00ns
+[ 14.966s] [Startup] init_lua_state complete in 215.33ms
+[ 14.966s] [Startup] final app_data lua handle installed in 191.00ns
+[ 14.966s] [Startup] initial screen globals installed in 123.12µs
+[ 14.966s] [Startup] WowLuaEnv::new complete
+
+thread 'pdeid_specialbar::special_membership_is_live_union_not_direct_slot_assignment' (900011) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/pdeid_specialbar.rs:92:6:
+special-only membership leaves direct queries unchanged: Lua(Runtime(RuntimeError { message: "direct or explicit special membership", level: 0, traceback: [] }))
+
+---- pdeid_specialbar::special_membership_preserves_public_validation_and_unmodeled_secret_boundary stdout ----
+[ 14.976s] [Startup] WowLuaEnv::new begin
+[ 14.977s] [Startup] SimState::default complete in 1.33ms
+[ 14.977s] [Startup] rilua VM created in 86.03µs
+[ 14.977s] [Startup] builtin frames initialized in 44.17µs
+[ 14.977s] [Startup] template registry cleared in 4.54µs
+[ 14.977s] [Startup] intrinsic templates registered in 6.15µs
+[ 14.977s] [Startup] initial app_data lua handle installed in 893.00ns
+[ 15.204s] [Startup] init_lua_state complete in 226.89ms
+[ 15.204s] [Startup] final app_data lua handle installed in 286.00ns
+[ 15.205s] [Startup] initial screen globals installed in 154.26µs
+[ 15.205s] [Startup] WowLuaEnv::new complete
+
+thread 'pdeid_specialbar::special_membership_preserves_public_validation_and_unmodeled_secret_boundary' (900014) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/pdeid_specialbar.rs:254:6:
+unchanged public boundary, rooted secret wrappers and caller taint: Lua(Runtime(RuntimeError { message: "direct or explicit special membership", level: 0, traceback: [] }))
+
+---- pdeid_specialbar::special_membership_queries_are_read_only_and_environment_local stdout ----
+[ 15.216s] [Startup] WowLuaEnv::new begin
+[ 15.218s] [Startup] SimState::default complete in 1.34ms
+[ 15.218s] [Startup] rilua VM created in 83.39µs
+[ 15.218s] [Startup] builtin frames initialized in 43.60µs
+[ 15.218s] [Startup] template registry cleared in 4.24µs
+[ 15.218s] [Startup] intrinsic templates registered in 5.62µs
+[ 15.218s] [Startup] initial app_data lua handle installed in 1.23µs
+[ 15.333s] [Startup] init_lua_state complete in 115.55ms
+[ 15.333s] [Startup] final app_data lua handle installed in 169.00ns
+[ 15.334s] [Startup] initial screen globals installed in 133.91µs
+[ 15.334s] [Startup] WowLuaEnv::new complete
+[ 15.334s] [Startup] WowLuaEnv::new begin
+[ 15.341s] [Startup] SimState::default complete in 7.32ms
+[ 15.341s] [Startup] rilua VM created in 105.08µs
+[ 15.341s] [Startup] builtin frames initialized in 44.30µs
+[ 15.341s] [Startup] template registry cleared in 8.76µs
+[ 15.341s] [Startup] intrinsic templates registered in 4.83µs
+[ 15.341s] [Startup] initial app_data lua handle installed in 542.00ns
+[ 15.470s] [Startup] init_lua_state complete in 129.21ms
+[ 15.470s] [Startup] final app_data lua handle installed in 388.00ns
+[ 15.471s] [Startup] initial screen globals installed in 209.95µs
+[ 15.471s] [Startup] WowLuaEnv::new complete
+
+thread 'pdeid_specialbar::special_membership_queries_are_read_only_and_environment_local' (900020) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/pdeid_specialbar.rs:181:10:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "direct or explicit special membership", level: 0, traceback: [] }))
+
+---- pdeid_specialbar::special_membership_survives_direct_macro_and_outfit_shadows stdout ----
+[ 15.485s] [Startup] WowLuaEnv::new begin
+[ 15.486s] [Startup] SimState::default complete in 1.40ms
+[ 15.486s] [Startup] rilua VM created in 88.19µs
+[ 15.486s] [Startup] builtin frames initialized in 41.81µs
+[ 15.486s] [Startup] template registry cleared in 4.71µs
+[ 15.486s] [Startup] intrinsic templates registered in 6.15µs
+[ 15.486s] [Startup] initial app_data lua handle installed in 1.06µs
+[ 15.817s] [Startup] init_lua_state complete in 330.24ms
+[ 15.817s] [Startup] final app_data lua handle installed in 287.00ns
+[ 15.817s] [Startup] initial screen globals installed in 155.80µs
+[ 15.817s] [Startup] WowLuaEnv::new complete
+
+thread 'pdeid_specialbar::special_membership_survives_direct_macro_and_outfit_shadows' (900022) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/pdeid_specialbar.rs:163:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "direct or explicit special membership", level: 0, traceback: [] }))
+
+---- pdeid_specialbar::special_membership_uses_live_alias_resolution_not_link_grammar stdout ----
+[ 15.836s] [Startup] WowLuaEnv::new begin
+[ 15.838s] [Startup] SimState::default complete in 1.62ms
+[ 15.838s] [Startup] rilua VM created in 99.52µs
+[ 15.838s] [Startup] builtin frames initialized in 51.05µs
+[ 15.838s] [Startup] template registry cleared in 5.44µs
+[ 15.838s] [Startup] intrinsic templates registered in 7.10µs
+[ 15.838s] [Startup] initial app_data lua handle installed in 647.00ns
+[ 16.084s] [Startup] init_lua_state complete in 245.93ms
+[ 16.084s] [Startup] final app_data lua handle installed in 456.00ns
+[ 16.088s] [Startup] initial screen globals installed in 4.31ms
+[ 16.088s] [Startup] WowLuaEnv::new complete
+
+thread 'pdeid_specialbar::special_membership_uses_live_alias_resolution_not_link_grammar' (900030) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/pdeid_specialbar.rs:131:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "direct or explicit special membership", level: 0, traceback: [] }))
+
+---- private_aura_sound_add_context::actual_full_deprecated_chunk_preserves_add_context_and_removal stdout ----
+[ 16.096s] [Startup] WowLuaEnv::new begin
+[ 16.100s] [Startup] SimState::default complete in 3.89ms
+[ 16.100s] [Startup] rilua VM created in 105.22µs
+[ 16.100s] [Startup] builtin frames initialized in 56.72µs
+[ 16.100s] [Startup] template registry cleared in 6.61µs
+[ 16.100s] [Startup] intrinsic templates registered in 8.03µs
+[ 16.100s] [Startup] initial app_data lua handle installed in 646.00ns
+[ 16.394s] [Startup] init_lua_state complete in 294.24ms
+[ 16.394s] [Startup] final app_data lua handle installed in 266.00ns
+[ 16.394s] [Startup] initial screen globals installed in 126.41µs
+[ 16.394s] [Startup] WowLuaEnv::new complete
+
+thread 'private_aura_sound_add_context::actual_full_deprecated_chunk_preserves_add_context_and_removal' (900037) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/private_aura_sound_add_context.rs:40:8:
+actual stamped addon closure and outer secure recovery: Lua(Runtime(RuntimeError { message: "allocated public sound ID required", level: 0, traceback: [] }))
+
+---- private_aura_sound_add_context::allocator_avoids_host_ids_and_exhaustion_returns_one_nil stdout ----
+[ 16.427s] [Startup] WowLuaEnv::new begin
+[ 16.428s] [Startup] SimState::default complete in 1.36ms
+[ 16.428s] [Startup] rilua VM created in 117.12µs
+[ 16.428s] [Startup] builtin frames initialized in 57.20µs
+[ 16.428s] [Startup] template registry cleared in 5.83µs
+[ 16.429s] [Startup] intrinsic templates registered in 20.90µs
+[ 16.429s] [Startup] initial app_data lua handle installed in 1.11µs
+[ 16.598s] [Startup] init_lua_state complete in 169.86ms
+[ 16.598s] [Startup] final app_data lua handle installed in 393.00ns
+[ 16.599s] [Startup] initial screen globals installed in 135.71µs
+[ 16.599s] [Startup] WowLuaEnv::new complete
+
+thread 'private_aura_sound_add_context::allocator_avoids_host_ids_and_exhaustion_returns_one_nil' (900043) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/private_aura_sound_add_context.rs:177:53:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "allocated public sound ID required", level: 0, traceback: [] }))
+
+---- private_aura_sound_add_context::each_context_denies_addon_without_consuming_id_then_recovers stdout ----
+[ 16.604s] [Startup] WowLuaEnv::new begin
+[ 16.606s] [Startup] SimState::default complete in 1.34ms
+[ 16.606s] [Startup] rilua VM created in 86.78µs
+[ 16.606s] [Startup] builtin frames initialized in 45.13µs
+[ 16.606s] [Startup] template registry cleared in 4.97µs
+[ 16.606s] [Startup] intrinsic templates registered in 6.92µs
+[ 16.606s] [Startup] initial app_data lua handle installed in 698.00ns
+[ 16.753s] [Startup] init_lua_state complete in 147.16ms
+[ 16.753s] [Startup] final app_data lua handle installed in 270.00ns
+[ 16.753s] [Startup] initial screen globals installed in 145.78µs
+[ 16.753s] [Startup] WowLuaEnv::new complete
+
+thread 'private_aura_sound_add_context::each_context_denies_addon_without_consuming_id_then_recovers' (900044) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/private_aura_sound_add_context.rs:40:8:
+actual stamped addon closure and outer secure recovery: Lua(Runtime(RuntimeError { message: "context denies insecure Add", level: 0, traceback: [] }))
+
+---- private_aura_sound_add_context::malformed_inputs_leave_host_registration_and_allocator_unchanged stdout ----
+[ 16.760s] [Startup] WowLuaEnv::new begin
+[ 16.761s] [Startup] SimState::default complete in 1.35ms
+[ 16.761s] [Startup] rilua VM created in 89.28µs
+[ 16.762s] [Startup] builtin frames initialized in 46.77µs
+[ 16.762s] [Startup] template registry cleared in 6.65µs
+[ 16.762s] [Startup] intrinsic templates registered in 6.15µs
+[ 16.762s] [Startup] initial app_data lua handle installed in 606.00ns
+[ 17.207s] [Startup] init_lua_state complete in 445.01ms
+[ 17.207s] [Startup] final app_data lua handle installed in 366.00ns
+[ 17.207s] [Startup] initial screen globals installed in 134.31µs
+[ 17.207s] [Startup] WowLuaEnv::new complete
+
+thread 'private_aura_sound_add_context::malformed_inputs_leave_host_registration_and_allocator_unchanged' (900052) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/private_aura_sound_add_context.rs:216:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- private_aura_sound_add_context::modern_authenticates_both_arguments_before_trigger_validation stdout ----
+[ 17.236s] [Startup] WowLuaEnv::new begin
+[ 17.237s] [Startup] SimState::default complete in 1.32ms
+[ 17.237s] [Startup] rilua VM created in 85.86µs
+[ 17.237s] [Startup] builtin frames initialized in 42.32µs
+[ 17.237s] [Startup] template registry cleared in 4.28µs
+[ 17.237s] [Startup] intrinsic templates registered in 5.80µs
+[ 17.237s] [Startup] initial app_data lua handle installed in 807.00ns
+[ 17.552s] [Startup] init_lua_state complete in 314.51ms
+[ 17.552s] [Startup] final app_data lua handle installed in 245.00ns
+[ 17.552s] [Startup] initial screen globals installed in 138.95µs
+[ 17.552s] [Startup] WowLuaEnv::new complete
+
+thread 'private_aura_sound_add_context::modern_authenticates_both_arguments_before_trigger_validation' (900057) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/private_aura_sound_add_context.rs:40:8:
+actual stamped addon closure and outer secure recovery: Lua(Runtime(RuntimeError { message: "later secret argument authenticates before malformed public trigger", level: 0, traceback: [] }))
+
+---- private_aura_sound_add_context::ordinary_tainted_combat_add_copies_real_payload_and_removes_it stdout ----
+[ 17.568s] [Startup] WowLuaEnv::new begin
+[ 17.569s] [Startup] SimState::default complete in 1.31ms
+[ 17.569s] [Startup] rilua VM created in 84.96µs
+[ 17.569s] [Startup] builtin frames initialized in 42.21µs
+[ 17.569s] [Startup] template registry cleared in 4.72µs
+[ 17.569s] [Startup] intrinsic templates registered in 6.21µs
+[ 17.569s] [Startup] initial app_data lua handle installed in 702.00ns
+[ 17.961s] [Startup] init_lua_state complete in 392.01ms
+[ 17.961s] [Startup] final app_data lua handle installed in 268.00ns
+[ 17.962s] [Startup] initial screen globals installed in 196.65µs
+[ 17.962s] [Startup] WowLuaEnv::new complete
+
+thread 'private_aura_sound_add_context::ordinary_tainted_combat_add_copies_real_payload_and_removes_it' (900065) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/private_aura_sound_add_context.rs:40:8:
+actual stamped addon closure and outer secure recovery: Lua(Runtime(RuntimeError { message: "allocated public sound ID required", level: 0, traceback: [] }))
+
+---- private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon stdout ----
+[ 18.004s] [Startup] WowLuaEnv::new begin
+[ 18.006s] [Startup] SimState::default complete in 1.39ms
+[ 18.006s] [Startup] rilua VM created in 88.12µs
+[ 18.006s] [Startup] builtin frames initialized in 43.38µs
+[ 18.006s] [Startup] template registry cleared in 4.34µs
+[ 18.006s] [Startup] intrinsic templates registered in 6.19µs
+[ 18.006s] [Startup] initial app_data lua handle installed in 846.00ns
+[ 18.438s] [Startup] init_lua_state complete in 431.93ms
+[ 18.438s] [Startup] final app_data lua handle installed in 286.00ns
+[ 18.438s] [Startup] initial screen globals installed in 149.64µs
+[ 18.438s] [Startup] WowLuaEnv::new complete
+
+thread 'private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon' (900070) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/private_aura_sound_add_context.rs:267:56:
+called `Result::unwrap()` on an `Err` value: Other("expected numeric result, got nil")
+
+---- private_aura_sound_add_context::secure_caller_registers_in_all_contexts_and_environments_are_isolated stdout ----
+[ 18.508s] [Startup] WowLuaEnv::new begin
+[ 18.517s] [Startup] SimState::default complete in 8.60ms
+[ 18.517s] [Startup] rilua VM created in 95.52µs
+[ 18.517s] [Startup] builtin frames initialized in 66.44µs
+[ 18.517s] [Startup] template registry cleared in 6.38µs
+[ 18.517s] [Startup] intrinsic templates registered in 6.39µs
+[ 18.517s] [Startup] initial app_data lua handle installed in 1.15µs
+[ 18.666s] [Startup] init_lua_state complete in 148.66ms
+[ 18.666s] [Startup] final app_data lua handle installed in 441.00ns
+[ 18.666s] [Startup] initial screen globals installed in 165.81µs
+[ 18.666s] [Startup] WowLuaEnv::new complete
+[ 18.666s] [Startup] WowLuaEnv::new begin
+[ 18.667s] [Startup] SimState::default complete in 1.59ms
+[ 18.667s] [Startup] rilua VM created in 96.94µs
+[ 18.668s] [Startup] builtin frames initialized in 46.04µs
+[ 18.668s] [Startup] template registry cleared in 20.67µs
+[ 18.668s] [Startup] intrinsic templates registered in 5.11µs
+[ 18.668s] [Startup] initial app_data lua handle installed in 453.00ns
+[ 18.793s] [Startup] init_lua_state complete in 125.49ms
+[ 18.793s] [Startup] final app_data lua handle installed in 316.00ns
+[ 18.793s] [Startup] initial screen globals installed in 132.80µs
+[ 18.793s] [Startup] WowLuaEnv::new complete
+
+thread 'private_aura_sound_add_context::secure_caller_registers_in_all_contexts_and_environments_are_isolated' (900080) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/private_aura_sound_add_context.rs:145:14:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "allocated public sound ID required", level: 0, traceback: [] }))
+
+---- retail_12_0_5_partial_104_114::ignore_gcd_book_authenticates_flag_before_missing_entry_return stdout ----
+[ 28.062s] [Startup] WowLuaEnv::new begin
+[ 28.063s] [Startup] SimState::default complete in 1.39ms
+[ 28.063s] [Startup] rilua VM created in 90.40µs
+[ 28.063s] [Startup] builtin frames initialized in 57.65µs
+[ 28.063s] [Startup] template registry cleared in 4.17µs
+[ 28.063s] [Startup] intrinsic templates registered in 6.44µs
+[ 28.063s] [Startup] initial app_data lua handle installed in 699.00ns
+[ 28.209s] [Startup] init_lua_state complete in 145.70ms
+[ 28.209s] [Startup] final app_data lua handle installed in 365.00ns
+[ 28.209s] [Startup] initial screen globals installed in 162.11µs
+[ 28.209s] [Startup] WowLuaEnv::new complete
+
+thread 'retail_12_0_5_partial_104_114::ignore_gcd_book_authenticates_flag_before_missing_entry_return' (900280) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/retail_12_0_5_partial_104_114.rs:173:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- retail_12_0_5_partial_104_114::ignore_gcd_secure_secret_flags_select_action_and_book_intervals stdout ----
+[ 28.220s] [Startup] WowLuaEnv::new begin
+[ 28.222s] [Startup] SimState::default complete in 1.54ms
+[ 28.222s] [Startup] rilua VM created in 91.08µs
+[ 28.222s] [Startup] builtin frames initialized in 66.14µs
+[ 28.222s] [Startup] template registry cleared in 5.32µs
+[ 28.222s] [Startup] intrinsic templates registered in 6.57µs
+[ 28.222s] [Startup] initial app_data lua handle installed in 858.00ns
+[ 28.366s] [Startup] init_lua_state complete in 144.16ms
+[ 28.366s] [Startup] final app_data lua handle installed in 409.00ns
+[ 28.367s] [Startup] initial screen globals installed in 135.16µs
+[ 28.367s] [Startup] WowLuaEnv::new complete
+
+thread 'retail_12_0_5_partial_104_114::ignore_gcd_secure_secret_flags_select_action_and_book_intervals' (900285) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/retail_12_0_5_partial_104_114.rs:122:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- retail_12_0_5_partial_104_114::ignore_gcd_tainted_secret_flags_are_denied_without_losing_taint stdout ----
+[ 28.536s] [Startup] WowLuaEnv::new begin
+[ 28.538s] [Startup] SimState::default complete in 2.14ms
+[ 28.538s] [Startup] rilua VM created in 136.06µs
+[ 28.538s] [Startup] builtin frames initialized in 75.47µs
+[ 28.538s] [Startup] template registry cleared in 8.22µs
+[ 28.538s] [Startup] intrinsic templates registered in 8.38µs
+[ 28.538s] [Startup] initial app_data lua handle installed in 1.13µs
+[ 28.683s] [Startup] init_lua_state complete in 144.73ms
+[ 28.683s] [Startup] final app_data lua handle installed in 559.00ns
+[ 28.683s] [Startup] initial screen globals installed in 293.38µs
+[ 28.683s] [Startup] WowLuaEnv::new complete
+
+thread 'retail_12_0_5_partial_104_114::ignore_gcd_tainted_secret_flags_are_denied_without_losing_taint' (900293) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/retail_12_0_5_partial_104_114.rs:150:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- secure_aura_header_helpers::cached_class_talent_loadout_helpers_keep_real_talent_fields_clean stdout ----
+[ 28.856s] [Startup] WowLuaEnv::new begin
+[ 28.857s] [Startup] SimState::default complete in 1.36ms
+[ 28.858s] [Startup] rilua VM created in 114.44µs
+[ 28.858s] [Startup] builtin frames initialized in 51.75µs
+[ 28.858s] [Startup] template registry cleared in 4.75µs
+[ 28.858s] [Startup] intrinsic templates registered in 7.14µs
+[ 28.858s] [Startup] initial app_data lua handle installed in 1.06µs
+[ 28.988s] [Startup] init_lua_state complete in 130.82ms
+[ 28.988s] [Startup] final app_data lua handle installed in 123.00ns
+[ 28.989s] [Startup] initial screen globals installed in 186.89µs
+[ 28.989s] [Startup] WowLuaEnv::new complete
+Lua error: Failed to create frame __Blizzard_GroupFinder_45169: bad argument #1 to 'string.find' (string expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: Failed to create frame __Blizzard_GroupFinder_45169: bad argument #1 to 'string.find' (string expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+[ 13.519s] [Startup] apply_post_load_workarounds: begin
+[ 13.519s] [Workarounds] starting patch_edit_mode_manager
+[ 13.519s] [Workarounds] finished patch_edit_mode_manager in 688.64µs
+[ 13.519s] [Workarounds] starting init_edit_mode_layout
+[ 13.519s] [EditMode] starting setup_layout_info
+[ 13.526s] [EditMode] finished setup_layout_info in 6.30ms
+[ 13.526s] [EditMode] starting apply_system_anchors
+[ 14.067s] [EditMode] finished apply_system_anchors in 541.34ms
+[ 14.067s] [EditMode] starting finalize_action_bar_positions
+[ 14.070s] [EditMode] finished finalize_action_bar_positions in 2.97ms
+[ 14.070s] [EditMode] starting invoke_anchor_changed_hooks
+[ 14.071s] [EditMode] finished invoke_anchor_changed_hooks in 618.07µs
+[ 14.071s] [EditMode] starting fix_action_bar_nan_size
+[ 14.071s] [EditMode] finished fix_action_bar_nan_size in 62.22µs
+[ 14.071s] [EditMode] starting fix_action_bar_scale
+[ 14.071s] [EditMode] finished fix_action_bar_scale in 9.33µs
+[ 14.071s] [Workarounds] finished init_edit_mode_layout in 551.34ms
+[ 14.071s] [Workarounds] starting patch_ui_parent_panel_toggles
+[ 14.071s] [Workarounds] finished patch_ui_parent_panel_toggles in 335.08µs
+[ 14.071s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[ 14.071s] [Workarounds] finished patch_uiparent_onupdate_worklists in 118.09µs
+[ 14.071s] [Workarounds] starting init_chat_type_colors
+[ 14.071s] [Workarounds] finished init_chat_type_colors in 140.28µs
+[ 14.071s] [Workarounds] starting patch_chat_voice_button_surface
+[ 14.071s] [Workarounds] finished patch_chat_voice_button_surface in 169.15µs
+[ 14.071s] [Workarounds] starting patch_item_socketing_tooltips
+[ 14.071s] [Workarounds] finished patch_item_socketing_tooltips in 68.56µs
+[ 14.071s] [Workarounds] starting patch_character_select_selected_name
+[ 14.071s] [Workarounds] finished patch_character_select_selected_name in 32.77µs
+[ 14.071s] [Workarounds] starting patch_character_create_defaults
+[ 14.072s] [Workarounds] finished patch_character_create_defaults in 236.00µs
+[ 14.072s] [Workarounds] starting patch_character_frame_title_refresh
+[ 14.078s] [Workarounds] finished patch_character_frame_title_refresh in 5.99ms
+[ 14.078s] [Workarounds] starting patch_vignette_pin_template
+[ 14.078s] [Workarounds] finished patch_vignette_pin_template in 162.28µs
+[ 14.078s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[ 14.078s] [Workarounds] finished patch_fog_of_war_pin_mixin in 359.46µs
+[ 14.078s] [Workarounds] starting patch_map_exploration_pin_mixin
+[ 14.094s] [Workarounds] finished patch_map_exploration_pin_mixin in 15.40ms
+[ 14.094s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[ 14.094s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 157.00µs
+[ 14.094s] [Workarounds] starting ensure_adventure_map_frame_surface
+[ 14.094s] [Workarounds] finished ensure_adventure_map_frame_surface in 641.49µs
+[ 14.094s] [Workarounds] starting patch_action_bar_button_event_fanout
+[ 14.095s] [Workarounds] finished patch_action_bar_button_event_fanout in 133.18µs
+[ 14.095s] [Workarounds] starting patch_paging_controls_page_text
+[ 14.095s] [Workarounds] finished patch_paging_controls_page_text in 52.54µs
+[ 14.095s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[ 14.095s] [Workarounds] finished patch_talent_edge_frame_level_sync in 39.63µs
+[ 14.095s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[ 14.095s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 83.74µs
+[ 14.095s] [Workarounds] starting patch_game_time_defaults
+[ 14.095s] [Workarounds] finished patch_game_time_defaults in 12.73µs
+[ 14.095s] [Workarounds] starting patch_tooltip_nineslice_surface
+[ 14.095s] [Workarounds] finished patch_tooltip_nineslice_surface in 48.29µs
+[ 14.095s] [Workarounds] starting patch_container_frame_token_tracker
+[ 14.095s] [Workarounds] finished patch_container_frame_token_tracker in 598.24µs
+[ 14.095s] [Workarounds] starting patch_achievement_display_set_achievements
+[ 14.095s] [Workarounds] finished patch_achievement_display_set_achievements in 22.58µs
+[ 14.095s] [Workarounds] starting patch_housing_dashboard_preload
+[ 14.096s] [Workarounds] finished patch_housing_dashboard_preload in 109.43µs
+[ 14.096s] [Workarounds] starting patch_lfg_lock_list
+[ 14.096s] [Workarounds] finished patch_lfg_lock_list in 52.47µs
+[ 14.096s] [Workarounds] starting patch_auction_house_browse_results_event
+[ 14.096s] [Workarounds] finished patch_auction_house_browse_results_event in 114.87µs
+[ 14.096s] [Workarounds] starting patch_auction_house_search_context_aliases
+[ 14.096s] [Workarounds] finished patch_auction_house_search_context_aliases in 54.76µs
+[ 14.096s] [Workarounds] starting patch_auth_challenge_frame_parent
+[ 14.096s] [Workarounds] finished patch_auth_challenge_frame_parent in 116.11µs
+[ 14.096s] [Workarounds] starting patch_settings_surface_defaults
+[ 14.097s] [Workarounds] finished patch_settings_surface_defaults in 586.68µs
+[ 14.097s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[ 14.097s] [Workarounds] finished patch_settings_canvas_layout_visibility in 141.70µs
+[ 14.097s] [Startup] apply_post_load_workarounds: workarounds complete
+[ 14.197s] [Startup] apply_post_load_workarounds: globals restored
+[ 14.198s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[ 14.198s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[ 14.198s] [Startup] begin login sequence
+[ 14.198s] [Startup] Firing ADDON_LOADED
+[ 14.198s] [Startup] Firing VARIABLES_LOADED
+[ 14.437s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[ 14.628s] [Startup] Firing UI_SCALE_CHANGED
+[ 14.630s] [Startup] Firing PLAYER_LOGIN
+[ 14.630s] [Startup] end login sequence in 432.49ms
+[ 14.630s] [Startup] begin world enter sequence
+[ 14.630s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[ 14.630s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[ 14.630s] [Startup] Firing PLAYER_ENTERING_WORLD
+[ 15.462s] [EditMode] starting setup_layout_info
+[ 15.481s] [EditMode] finished setup_layout_info in 18.83ms
+[ 15.481s] [EditMode] starting apply_system_anchors
+[ 15.846s] [EditMode] finished apply_system_anchors in 365.11ms
+[ 15.846s] [EditMode] starting finalize_action_bar_positions
+[ 15.850s] [EditMode] finished finalize_action_bar_positions in 4.00ms
+[ 15.850s] [EditMode] starting invoke_anchor_changed_hooks
+[ 15.862s] [EditMode] finished invoke_anchor_changed_hooks in 12.20ms
+[ 15.862s] [EditMode] starting fix_action_bar_nan_size
+[ 15.863s] [EditMode] finished fix_action_bar_nan_size in 74.32µs
+[ 15.863s] [EditMode] starting fix_action_bar_scale
+[ 15.863s] [EditMode] finished fix_action_bar_scale in 10.52µs
+[ 15.863s] [EditMode] starting reapply_player_frame_anchor
+[ 15.864s] [EditMode] finished reapply_player_frame_anchor in 1.80ms
+[ 15.874s] [Startup] end world enter sequence in 1.24s
+[ 15.874s] [Startup] begin post-login events
+[ 15.875s] [Startup] Firing UNIT_AURA
+[ 15.876s] [Startup] Firing PET_UI_UPDATE
+[ 15.878s] [Startup] Firing BAG_UPDATE_DELAYED
+[ 15.880s] [Startup] Firing QUEST_LOG_UPDATE
+[ 15.881s] [Startup] Firing GROUP_ROSTER_UPDATE
+[ 16.175s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[ 16.175s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[ 16.181s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[ 16.239s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[ 16.239s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[ 16.239s] [Startup] Firing UPDATE_BINDINGS
+[ 16.251s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[ 16.267s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[ 16.277s] [Startup] end post-login events in 403.00ms
+[ 16.277s] [Startup] begin close startup special windows
+[ 16.277s] [Startup] end close startup special windows in 340.16µs
+[ 16.277s] [Startup] begin FIRST_FRAME_RENDERED
+[ 16.277s] [Startup] Firing FIRST_FRAME_RENDERED
+[ 16.277s] [Startup] end FIRST_FRAME_RENDERED in 85.13µs
+[ 16.277s] [Startup] begin unblock hidden splash alerts
+[ 16.277s] [Startup] end unblock hidden splash alerts in 28.32µs
+[ 16.277s] [Startup] begin post-event workarounds
+[ 16.277s] [Startup] end post-event workarounds in 313.00ns
+
+thread 'secure_aura_header_helpers::cached_class_talent_loadout_helpers_keep_real_talent_fields_clean' (900297) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/secure_aura_header_helpers.rs:343:11:
+loadout UI writes are untainted: Lua(Runtime(RuntimeError { message: "real LoadConfigInternal wrote its Ready result", level: 0, traceback: [] }))
+
+---- secure_aura_header_helpers::cached_class_talent_spec_helpers_keep_real_ui_and_castbar_fields_clean stdout ----
+[ 46.768s] [Startup] WowLuaEnv::new begin
+[ 46.770s] [Startup] SimState::default complete in 1.45ms
+[ 46.770s] [Startup] rilua VM created in 95.77µs
+[ 46.770s] [Startup] builtin frames initialized in 71.38µs
+[ 46.770s] [Startup] template registry cleared in 5.68µs
+[ 46.770s] [Startup] intrinsic templates registered in 7.12µs
+[ 46.770s] [Startup] initial app_data lua handle installed in 863.00ns
+[ 46.881s] [Startup] init_lua_state complete in 110.87ms
+[ 46.881s] [Startup] final app_data lua handle installed in 200.00ns
+[ 46.881s] [Startup] initial screen globals installed in 132.95µs
+[ 46.881s] [Startup] WowLuaEnv::new complete
+[  4.724s] [Startup] apply_post_load_workarounds: begin
+[  4.724s] [Workarounds] starting patch_edit_mode_manager
+[  4.725s] [Workarounds] finished patch_edit_mode_manager in 404.66µs
+[  4.725s] [Workarounds] starting init_edit_mode_layout
+[  4.725s] [EditMode] starting setup_layout_info
+[  4.730s] [EditMode] finished setup_layout_info in 5.24ms
+[  4.730s] [EditMode] starting apply_system_anchors
+[  5.057s] [EditMode] finished apply_system_anchors in 327.43ms
+[  5.057s] [EditMode] starting finalize_action_bar_positions
+[  5.061s] [EditMode] finished finalize_action_bar_positions in 3.34ms
+[  5.061s] [EditMode] starting invoke_anchor_changed_hooks
+[  5.061s] [EditMode] finished invoke_anchor_changed_hooks in 656.82µs
+[  5.061s] [EditMode] starting fix_action_bar_nan_size
+[  5.061s] [EditMode] finished fix_action_bar_nan_size in 69.32µs
+[  5.061s] [EditMode] starting fix_action_bar_scale
+[  5.061s] [EditMode] finished fix_action_bar_scale in 9.52µs
+[  5.061s] [Workarounds] finished init_edit_mode_layout in 336.78ms
+[  5.061s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  5.062s] [Workarounds] finished patch_ui_parent_panel_toggles in 304.62µs
+[  5.062s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  5.062s] [Workarounds] finished patch_uiparent_onupdate_worklists in 113.46µs
+[  5.062s] [Workarounds] starting init_chat_type_colors
+[  5.062s] [Workarounds] finished init_chat_type_colors in 140.91µs
+[  5.062s] [Workarounds] starting patch_chat_voice_button_surface
+[  5.062s] [Workarounds] finished patch_chat_voice_button_surface in 183.20µs
+[  5.062s] [Workarounds] starting patch_item_socketing_tooltips
+[  5.062s] [Workarounds] finished patch_item_socketing_tooltips in 71.13µs
+[  5.062s] [Workarounds] starting patch_character_select_selected_name
+[  5.062s] [Workarounds] finished patch_character_select_selected_name in 35.33µs
+[  5.062s] [Workarounds] starting patch_character_create_defaults
+[  5.062s] [Workarounds] finished patch_character_create_defaults in 248.31µs
+[  5.062s] [Workarounds] starting patch_character_frame_title_refresh
+[  5.069s] [Workarounds] finished patch_character_frame_title_refresh in 6.09ms
+[  5.069s] [Workarounds] starting patch_vignette_pin_template
+[  5.069s] [Workarounds] finished patch_vignette_pin_template in 173.23µs
+[  5.069s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  5.069s] [Workarounds] finished patch_fog_of_war_pin_mixin in 324.99µs
+[  5.069s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  5.070s] [Workarounds] finished patch_map_exploration_pin_mixin in 441.73µs
+[  5.070s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  5.070s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 74.97µs
+[  5.070s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  5.070s] [Workarounds] finished ensure_adventure_map_frame_surface in 639.78µs
+[  5.070s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  5.070s] [Workarounds] finished patch_action_bar_button_event_fanout in 145.59µs
+[  5.070s] [Workarounds] starting patch_paging_controls_page_text
+[  5.070s] [Workarounds] finished patch_paging_controls_page_text in 53.39µs
+[  5.070s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  5.071s] [Workarounds] finished patch_talent_edge_frame_level_sync in 60.32µs
+[  5.071s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  5.071s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 86.68µs
+[  5.071s] [Workarounds] starting patch_game_time_defaults
+[  5.071s] [Workarounds] finished patch_game_time_defaults in 10.48µs
+[  5.071s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  5.071s] [Workarounds] finished patch_tooltip_nineslice_surface in 51.80µs
+[  5.071s] [Workarounds] starting patch_container_frame_token_tracker
+[  5.071s] [Workarounds] finished patch_container_frame_token_tracker in 580.33µs
+[  5.071s] [Workarounds] starting patch_achievement_display_set_achievements
+[  5.071s] [Workarounds] finished patch_achievement_display_set_achievements in 14.33µs
+[  5.071s] [Workarounds] starting patch_housing_dashboard_preload
+[  5.071s] [Workarounds] finished patch_housing_dashboard_preload in 77.64µs
+[  5.071s] [Workarounds] starting patch_lfg_lock_list
+[  5.071s] [Workarounds] finished patch_lfg_lock_list in 39.59µs
+[  5.071s] [Workarounds] starting patch_auction_house_browse_results_event
+[  5.071s] [Workarounds] finished patch_auction_house_browse_results_event in 101.74µs
+[  5.071s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  5.072s] [Workarounds] finished patch_auction_house_search_context_aliases in 32.12µs
+[  5.072s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  5.072s] [Workarounds] finished patch_auth_challenge_frame_parent in 90.59µs
+[  5.072s] [Workarounds] starting patch_settings_surface_defaults
+[  5.072s] [Workarounds] finished patch_settings_surface_defaults in 647.91µs
+[  5.072s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  5.072s] [Workarounds] finished patch_settings_canvas_layout_visibility in 169.08µs
+[  5.072s] [Startup] apply_post_load_workarounds: workarounds complete
+[  5.182s] [Startup] apply_post_load_workarounds: globals restored
+[  5.183s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  5.183s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  5.183s] [Startup] begin login sequence
+[  5.183s] [Startup] Firing ADDON_LOADED
+[  5.183s] [Startup] Firing VARIABLES_LOADED
+[  5.320s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  5.387s] [Startup] Firing UI_SCALE_CHANGED
+[  5.389s] [Startup] Firing PLAYER_LOGIN
+[  5.389s] [Startup] end login sequence in 206.08ms
+[  5.389s] [Startup] begin world enter sequence
+[  5.389s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  5.389s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  5.389s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  5.863s] [EditMode] starting setup_layout_info
+[  5.868s] [EditMode] finished setup_layout_info in 4.75ms
+[  5.868s] [EditMode] starting apply_system_anchors
+[  6.032s] [EditMode] finished apply_system_anchors in 163.61ms
+[  6.032s] [EditMode] starting finalize_action_bar_positions
+[  6.036s] [EditMode] finished finalize_action_bar_positions in 3.90ms
+[  6.036s] [EditMode] starting invoke_anchor_changed_hooks
+[  6.043s] [EditMode] finished invoke_anchor_changed_hooks in 7.74ms
+[  6.043s] [EditMode] starting fix_action_bar_nan_size
+[  6.043s] [EditMode] finished fix_action_bar_nan_size in 73.25µs
+[  6.043s] [EditMode] starting fix_action_bar_scale
+[  6.043s] [EditMode] finished fix_action_bar_scale in 9.98µs
+[  6.043s] [EditMode] starting reapply_player_frame_anchor
+[  6.050s] [EditMode] finished reapply_player_frame_anchor in 6.16ms
+[  6.059s] [Startup] end world enter sequence in 669.68ms
+[  6.059s] [Startup] begin post-login events
+[  6.060s] [Startup] Firing UNIT_AURA
+[  6.061s] [Startup] Firing PET_UI_UPDATE
+[  6.066s] [Startup] Firing BAG_UPDATE_DELAYED
+[  6.068s] [Startup] Firing QUEST_LOG_UPDATE
+[  6.069s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  6.213s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  6.213s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  6.215s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  6.249s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  6.249s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  6.249s] [Startup] Firing UPDATE_BINDINGS
+[  6.253s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  6.256s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  6.257s] [Startup] end post-login events in 198.69ms
+[  6.257s] [Startup] begin close startup special windows
+[  6.258s] [Startup] end close startup special windows in 296.63µs
+[  6.258s] [Startup] begin FIRST_FRAME_RENDERED
+[  6.258s] [Startup] Firing FIRST_FRAME_RENDERED
+[  6.258s] [Startup] end FIRST_FRAME_RENDERED in 107.86µs
+[  6.258s] [Startup] begin unblock hidden splash alerts
+[  6.258s] [Startup] end unblock hidden splash alerts in 17.81µs
+[  6.258s] [Startup] begin post-event workarounds
+[  6.258s] [Startup] end post-event workarounds in 308.00ns
+
+thread 'secure_aura_header_helpers::cached_class_talent_spec_helpers_keep_real_ui_and_castbar_fields_clean' (901243) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/secure_aura_header_helpers.rs:286:10:
+documented neutrality on fields actually mutated by vendor code: Lua(Runtime(RuntimeError { message: "real spec activation UI was driven", level: 0, traceback: [] }))
+
+---- secure_aura_header_helpers::cached_helper_delegate_restores_caller_after_addon_callback_error stdout ----
+[ 53.873s] [Startup] WowLuaEnv::new begin
+[ 53.874s] [Startup] SimState::default complete in 1.54ms
+[ 53.875s] [Startup] rilua VM created in 104.39µs
+[ 53.875s] [Startup] builtin frames initialized in 84.77µs
+[ 53.875s] [Startup] template registry cleared in 5.07µs
+[ 53.875s] [Startup] intrinsic templates registered in 7.40µs
+[ 53.875s] [Startup] initial app_data lua handle installed in 931.00ns
+[ 54.109s] [Startup] init_lua_state complete in 234.59ms
+[ 54.109s] [Startup] final app_data lua handle installed in 268.00ns
+[ 54.109s] [Startup] initial screen globals installed in 145.42µs
+[ 54.109s] [Startup] WowLuaEnv::new complete
+[  7.818s] [Startup] apply_post_load_workarounds: begin
+[  7.818s] [Workarounds] starting patch_edit_mode_manager
+[  7.818s] [Workarounds] finished patch_edit_mode_manager in 416.31µs
+[  7.818s] [Workarounds] starting init_edit_mode_layout
+[  7.818s] [EditMode] starting setup_layout_info
+[  7.832s] [EditMode] finished setup_layout_info in 13.30ms
+[  7.832s] [EditMode] starting apply_system_anchors
+[  8.399s] [EditMode] finished apply_system_anchors in 566.94ms
+[  8.399s] [EditMode] starting finalize_action_bar_positions
+[  8.413s] [EditMode] finished finalize_action_bar_positions in 14.78ms
+[  8.413s] [EditMode] starting invoke_anchor_changed_hooks
+[  8.414s] [EditMode] finished invoke_anchor_changed_hooks in 727.54µs
+[  8.414s] [EditMode] starting fix_action_bar_nan_size
+[  8.414s] [EditMode] finished fix_action_bar_nan_size in 76.35µs
+[  8.414s] [EditMode] starting fix_action_bar_scale
+[  8.414s] [EditMode] finished fix_action_bar_scale in 18.83µs
+[  8.414s] [Workarounds] finished init_edit_mode_layout in 595.89ms
+[  8.414s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  8.415s] [Workarounds] finished patch_ui_parent_panel_toggles in 389.17µs
+[  8.415s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  8.415s] [Workarounds] finished patch_uiparent_onupdate_worklists in 149.02µs
+[  8.415s] [Workarounds] starting init_chat_type_colors
+[  8.415s] [Workarounds] finished init_chat_type_colors in 166.42µs
+[  8.415s] [Workarounds] starting patch_chat_voice_button_surface
+[  8.415s] [Workarounds] finished patch_chat_voice_button_surface in 268.06µs
+[  8.415s] [Workarounds] starting patch_item_socketing_tooltips
+[  8.415s] [Workarounds] finished patch_item_socketing_tooltips in 159.05µs
+[  8.415s] [Workarounds] starting patch_character_select_selected_name
+[  8.415s] [Workarounds] finished patch_character_select_selected_name in 44.90µs
+[  8.415s] [Workarounds] starting patch_character_create_defaults
+[  8.416s] [Workarounds] finished patch_character_create_defaults in 266.74µs
+[  8.416s] [Workarounds] starting patch_character_frame_title_refresh
+[  8.434s] [Workarounds] finished patch_character_frame_title_refresh in 18.27ms
+[  8.434s] [Workarounds] starting patch_vignette_pin_template
+[  8.434s] [Workarounds] finished patch_vignette_pin_template in 176.59µs
+[  8.434s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  8.434s] [Workarounds] finished patch_fog_of_war_pin_mixin in 335.32µs
+[  8.434s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  8.435s] [Workarounds] finished patch_map_exploration_pin_mixin in 510.25µs
+[  8.435s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  8.435s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 82.28µs
+[  8.435s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  8.436s] [Workarounds] finished ensure_adventure_map_frame_surface in 727.72µs
+[  8.436s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  8.436s] [Workarounds] finished patch_action_bar_button_event_fanout in 166.22µs
+[  8.436s] [Workarounds] starting patch_paging_controls_page_text
+[  8.436s] [Workarounds] finished patch_paging_controls_page_text in 54.41µs
+[  8.436s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  8.436s] [Workarounds] finished patch_talent_edge_frame_level_sync in 40.35µs
+[  8.436s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  8.436s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 86.13µs
+[  8.436s] [Workarounds] starting patch_game_time_defaults
+[  8.436s] [Workarounds] finished patch_game_time_defaults in 11.68µs
+[  8.436s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  8.436s] [Workarounds] finished patch_tooltip_nineslice_surface in 51.43µs
+[  8.436s] [Workarounds] starting patch_container_frame_token_tracker
+[  8.437s] [Workarounds] finished patch_container_frame_token_tracker in 607.33µs
+[  8.437s] [Workarounds] starting patch_achievement_display_set_achievements
+[  8.437s] [Workarounds] finished patch_achievement_display_set_achievements in 16.70µs
+[  8.437s] [Workarounds] starting patch_housing_dashboard_preload
+[  8.437s] [Workarounds] finished patch_housing_dashboard_preload in 82.50µs
+[  8.437s] [Workarounds] starting patch_lfg_lock_list
+[  8.437s] [Workarounds] finished patch_lfg_lock_list in 42.35µs
+[  8.437s] [Workarounds] starting patch_auction_house_browse_results_event
+[  8.437s] [Workarounds] finished patch_auction_house_browse_results_event in 95.01µs
+[  8.437s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  8.437s] [Workarounds] finished patch_auction_house_search_context_aliases in 33.00µs
+[  8.437s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  8.437s] [Workarounds] finished patch_auth_challenge_frame_parent in 90.57µs
+[  8.437s] [Workarounds] starting patch_settings_surface_defaults
+[  8.438s] [Workarounds] finished patch_settings_surface_defaults in 569.96µs
+[  8.438s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  8.438s] [Workarounds] finished patch_settings_canvas_layout_visibility in 192.23µs
+[  8.438s] [Startup] apply_post_load_workarounds: workarounds complete
+[  8.638s] [Startup] apply_post_load_workarounds: globals restored
+[  8.638s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  8.638s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  8.638s] [Startup] begin login sequence
+[  8.638s] [Startup] Firing ADDON_LOADED
+[  8.638s] [Startup] Firing VARIABLES_LOADED
+[  8.879s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  9.034s] [Startup] Firing UI_SCALE_CHANGED
+[  9.053s] [Startup] Firing PLAYER_LOGIN
+[  9.053s] [Startup] end login sequence in 415.10ms
+[  9.053s] [Startup] begin world enter sequence
+[  9.053s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  9.053s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  9.053s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  9.344s] [EditMode] starting setup_layout_info
+[  9.349s] [EditMode] finished setup_layout_info in 4.67ms
+[  9.349s] [EditMode] starting apply_system_anchors
+[  9.710s] [EditMode] finished apply_system_anchors in 360.88ms
+[  9.710s] [EditMode] starting finalize_action_bar_positions
+[  9.722s] [EditMode] finished finalize_action_bar_positions in 12.40ms
+[  9.722s] [EditMode] starting invoke_anchor_changed_hooks
+[  9.761s] [EditMode] finished invoke_anchor_changed_hooks in 38.20ms
+[  9.761s] [EditMode] starting fix_action_bar_nan_size
+[  9.761s] [EditMode] finished fix_action_bar_nan_size in 79.65µs
+[  9.761s] [EditMode] starting fix_action_bar_scale
+[  9.761s] [EditMode] finished fix_action_bar_scale in 10.91µs
+[  9.761s] [EditMode] starting reapply_player_frame_anchor
+[  9.763s] [EditMode] finished reapply_player_frame_anchor in 1.91ms
+[  9.798s] [Startup] end world enter sequence in 744.45ms
+[  9.798s] [Startup] begin post-login events
+[  9.807s] [Startup] Firing UNIT_AURA
+[  9.808s] [Startup] Firing PET_UI_UPDATE
+[  9.819s] [Startup] Firing BAG_UPDATE_DELAYED
+[  9.821s] [Startup] Firing QUEST_LOG_UPDATE
+[  9.828s] [Startup] Firing GROUP_ROSTER_UPDATE
+[ 10.257s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[ 10.257s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[ 10.258s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[ 10.316s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[ 10.316s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[ 10.316s] [Startup] Firing UPDATE_BINDINGS
+[ 10.324s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[ 10.336s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[ 10.337s] [Startup] end post-login events in 539.15ms
+[ 10.337s] [Startup] begin close startup special windows
+[ 10.337s] [Startup] end close startup special windows in 281.77µs
+[ 10.337s] [Startup] begin FIRST_FRAME_RENDERED
+[ 10.337s] [Startup] Firing FIRST_FRAME_RENDERED
+[ 10.337s] [Startup] end FIRST_FRAME_RENDERED in 78.66µs
+[ 10.337s] [Startup] begin unblock hidden splash alerts
+[ 10.337s] [Startup] end unblock hidden splash alerts in 17.06µs
+[ 10.337s] [Startup] begin post-event workarounds
+[ 10.337s] [Startup] end post-event workarounds in 296.00ns
+
+thread 'secure_aura_header_helpers::cached_helper_delegate_restores_caller_after_addon_callback_error' (901443) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/secure_aura_header_helpers.rs:374:6:
+real helper delegates, invalid vendor selection does not start a cast, addon observer stays tainted: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+
+---- secure_aura_header_helpers::cached_secure_aura_header_reorders_and_hides_stale_children stdout ----
+[ 64.944s] [Startup] WowLuaEnv::new begin
+[ 64.946s] [Startup] SimState::default complete in 1.39ms
+[ 64.946s] [Startup] rilua VM created in 96.65µs
+[ 64.946s] [Startup] builtin frames initialized in 62.82µs
+[ 64.946s] [Startup] template registry cleared in 4.91µs
+[ 64.946s] [Startup] intrinsic templates registered in 6.12µs
+[ 64.946s] [Startup] initial app_data lua handle installed in 795.00ns
+[ 65.153s] [Startup] init_lua_state complete in 207.69ms
+[ 65.153s] [Startup] final app_data lua handle installed in 383.00ns
+[ 65.154s] [Startup] initial screen globals installed in 150.20µs
+[ 65.154s] [Startup] WowLuaEnv::new complete
+Lua error: Failed to create frame __Blizzard_GroupFinder_166336: bad argument #1 to 'string.find' (string expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: Failed to create frame __Blizzard_GroupFinder_166336: bad argument #1 to 'string.find' (string expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+[  6.821s] [Startup] apply_post_load_workarounds: begin
+[  6.821s] [Workarounds] starting patch_edit_mode_manager
+[  6.821s] [Workarounds] finished patch_edit_mode_manager in 445.32µs
+[  6.821s] [Workarounds] starting init_edit_mode_layout
+[  6.821s] [EditMode] starting setup_layout_info
+[  6.831s] [EditMode] finished setup_layout_info in 9.26ms
+[  6.831s] [EditMode] starting apply_system_anchors
+[  7.194s] [EditMode] finished apply_system_anchors in 362.92ms
+[  7.194s] [EditMode] starting finalize_action_bar_positions
+[  7.197s] [EditMode] finished finalize_action_bar_positions in 2.95ms
+[  7.197s] [EditMode] starting invoke_anchor_changed_hooks
+[  7.197s] [EditMode] finished invoke_anchor_changed_hooks in 555.31µs
+[  7.197s] [EditMode] starting fix_action_bar_nan_size
+[  7.197s] [EditMode] finished fix_action_bar_nan_size in 66.66µs
+[  7.197s] [EditMode] starting fix_action_bar_scale
+[  7.197s] [EditMode] finished fix_action_bar_scale in 13.30µs
+[  7.197s] [Workarounds] finished init_edit_mode_layout in 375.81ms
+[  7.197s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  7.198s] [Workarounds] finished patch_ui_parent_panel_toggles in 306.13µs
+[  7.198s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  7.198s] [Workarounds] finished patch_uiparent_onupdate_worklists in 115.06µs
+[  7.198s] [Workarounds] starting init_chat_type_colors
+[  7.198s] [Workarounds] finished init_chat_type_colors in 140.54µs
+[  7.198s] [Workarounds] starting patch_chat_voice_button_surface
+[  7.198s] [Workarounds] finished patch_chat_voice_button_surface in 177.60µs
+[  7.198s] [Workarounds] starting patch_item_socketing_tooltips
+[  7.198s] [Workarounds] finished patch_item_socketing_tooltips in 74.15µs
+[  7.198s] [Workarounds] starting patch_character_select_selected_name
+[  7.198s] [Workarounds] finished patch_character_select_selected_name in 34.07µs
+[  7.198s] [Workarounds] starting patch_character_create_defaults
+[  7.198s] [Workarounds] finished patch_character_create_defaults in 256.72µs
+[  7.198s] [Workarounds] starting patch_character_frame_title_refresh
+[  7.204s] [Workarounds] finished patch_character_frame_title_refresh in 6.10ms
+[  7.204s] [Workarounds] starting patch_vignette_pin_template
+[  7.205s] [Workarounds] finished patch_vignette_pin_template in 175.84µs
+[  7.205s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  7.205s] [Workarounds] finished patch_fog_of_war_pin_mixin in 335.20µs
+[  7.205s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  7.205s] [Workarounds] finished patch_map_exploration_pin_mixin in 477.10µs
+[  7.205s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  7.206s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 75.84µs
+[  7.206s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  7.206s] [Workarounds] finished ensure_adventure_map_frame_surface in 581.43µs
+[  7.206s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  7.206s] [Workarounds] finished patch_action_bar_button_event_fanout in 133.28µs
+[  7.206s] [Workarounds] starting patch_paging_controls_page_text
+[  7.206s] [Workarounds] finished patch_paging_controls_page_text in 55.13µs
+[  7.206s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  7.206s] [Workarounds] finished patch_talent_edge_frame_level_sync in 39.87µs
+[  7.206s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  7.206s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 81.45µs
+[  7.206s] [Workarounds] starting patch_game_time_defaults
+[  7.206s] [Workarounds] finished patch_game_time_defaults in 10.99µs
+[  7.206s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  7.207s] [Workarounds] finished patch_tooltip_nineslice_surface in 48.75µs
+[  7.207s] [Workarounds] starting patch_container_frame_token_tracker
+[  7.207s] [Workarounds] finished patch_container_frame_token_tracker in 587.99µs
+[  7.207s] [Workarounds] starting patch_achievement_display_set_achievements
+[  7.207s] [Workarounds] finished patch_achievement_display_set_achievements in 16.45µs
+[  7.207s] [Workarounds] starting patch_housing_dashboard_preload
+[  7.207s] [Workarounds] finished patch_housing_dashboard_preload in 95.41µs
+[  7.207s] [Workarounds] starting patch_lfg_lock_list
+[  7.207s] [Workarounds] finished patch_lfg_lock_list in 41.82µs
+[  7.207s] [Workarounds] starting patch_auction_house_browse_results_event
+[  7.207s] [Workarounds] finished patch_auction_house_browse_results_event in 90.00µs
+[  7.207s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  7.207s] [Workarounds] finished patch_auction_house_search_context_aliases in 30.97µs
+[  7.207s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  7.207s] [Workarounds] finished patch_auth_challenge_frame_parent in 93.28µs
+[  7.207s] [Workarounds] starting patch_settings_surface_defaults
+[  7.208s] [Workarounds] finished patch_settings_surface_defaults in 522.11µs
+[  7.208s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  7.208s] [Workarounds] finished patch_settings_canvas_layout_visibility in 131.07µs
+[  7.208s] [Startup] apply_post_load_workarounds: workarounds complete
+[  7.359s] [Startup] apply_post_load_workarounds: globals restored
+[  7.359s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  7.359s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  7.359s] [Startup] begin login sequence
+[  7.359s] [Startup] Firing ADDON_LOADED
+[  7.359s] [Startup] Firing VARIABLES_LOADED
+[  7.484s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  7.547s] [Startup] Firing UI_SCALE_CHANGED
+[  7.554s] [Startup] Firing PLAYER_LOGIN
+[  7.554s] [Startup] end login sequence in 194.62ms
+[  7.554s] [Startup] begin world enter sequence
+[  7.554s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  7.554s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  7.554s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  7.894s] [EditMode] starting setup_layout_info
+[  7.899s] [EditMode] finished setup_layout_info in 5.06ms
+[  7.899s] [EditMode] starting apply_system_anchors
+[  8.095s] [EditMode] finished apply_system_anchors in 196.60ms
+[  8.095s] [EditMode] starting finalize_action_bar_positions
+[  8.100s] [EditMode] finished finalize_action_bar_positions in 4.33ms
+[  8.100s] [EditMode] starting invoke_anchor_changed_hooks
+[  8.108s] [EditMode] finished invoke_anchor_changed_hooks in 8.03ms
+[  8.108s] [EditMode] starting fix_action_bar_nan_size
+[  8.112s] [EditMode] finished fix_action_bar_nan_size in 4.18ms
+[  8.112s] [EditMode] starting fix_action_bar_scale
+[  8.112s] [EditMode] finished fix_action_bar_scale in 35.36µs
+[  8.112s] [EditMode] starting reapply_player_frame_anchor
+[  8.114s] [EditMode] finished reapply_player_frame_anchor in 2.14ms
+[  8.123s] [Startup] end world enter sequence in 569.62ms
+[  8.123s] [Startup] begin post-login events
+[  8.129s] [Startup] Firing UNIT_AURA
+[  8.130s] [Startup] Firing PET_UI_UPDATE
+[  8.133s] [Startup] Firing BAG_UPDATE_DELAYED
+[  8.135s] [Startup] Firing QUEST_LOG_UPDATE
+[  8.136s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  8.262s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  8.262s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  8.263s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  8.283s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  8.283s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  8.283s] [Startup] Firing UPDATE_BINDINGS
+[  8.286s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  8.290s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  8.291s] [Startup] end post-login events in 167.46ms
+[  8.291s] [Startup] begin close startup special windows
+[  8.291s] [Startup] end close startup special windows in 288.20µs
+[  8.291s] [Startup] begin FIRST_FRAME_RENDERED
+[  8.291s] [Startup] Firing FIRST_FRAME_RENDERED
+[  8.291s] [Startup] end FIRST_FRAME_RENDERED in 91.15µs
+[  8.291s] [Startup] begin unblock hidden splash alerts
+[  8.291s] [Startup] end unblock hidden splash alerts in 17.68µs
+[  8.291s] [Startup] begin post-event workarounds
+[  8.291s] [Startup] end post-event workarounds in 279.00ns
+
+thread 'secure_aura_header_helpers::cached_secure_aura_header_reorders_and_hides_stale_children' (901836) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/secure_aura_header_helpers.rs:163:5:
+assertion `left == right` failed
+  left: ""
+ right: "313,312,311"
+
+---- secure_aura_header_helpers::cached_secure_aura_header_sorts_finite_before_permanent stdout ----
+[ 74.146s] [Startup] WowLuaEnv::new begin
+[ 74.147s] [Startup] SimState::default complete in 1.54ms
+[ 74.147s] [Startup] rilua VM created in 97.40µs
+[ 74.147s] [Startup] builtin frames initialized in 59.23µs
+[ 74.147s] [Startup] template registry cleared in 5.05µs
+[ 74.147s] [Startup] intrinsic templates registered in 7.69µs
+[ 74.147s] [Startup] initial app_data lua handle installed in 779.00ns
+[ 74.305s] [Startup] init_lua_state complete in 158.07ms
+[ 74.305s] [Startup] final app_data lua handle installed in 277.00ns
+[ 74.306s] [Startup] initial screen globals installed in 155.81µs
+[ 74.306s] [Startup] WowLuaEnv::new complete
+[ 11.117s] [Startup] apply_post_load_workarounds: begin
+[ 11.117s] [Workarounds] starting patch_edit_mode_manager
+[ 11.117s] [Workarounds] finished patch_edit_mode_manager in 396.65µs
+[ 11.117s] [Workarounds] starting init_edit_mode_layout
+[ 11.117s] [EditMode] starting setup_layout_info
+[ 11.122s] [EditMode] finished setup_layout_info in 4.26ms
+[ 11.122s] [EditMode] starting apply_system_anchors
+[ 11.352s] [EditMode] finished apply_system_anchors in 230.02ms
+[ 11.352s] [EditMode] starting finalize_action_bar_positions
+[ 11.355s] [EditMode] finished finalize_action_bar_positions in 2.95ms
+[ 11.355s] [EditMode] starting invoke_anchor_changed_hooks
+[ 11.355s] [EditMode] finished invoke_anchor_changed_hooks in 571.60µs
+[ 11.355s] [EditMode] starting fix_action_bar_nan_size
+[ 11.355s] [EditMode] finished fix_action_bar_nan_size in 65.54µs
+[ 11.355s] [EditMode] starting fix_action_bar_scale
+[ 11.355s] [EditMode] finished fix_action_bar_scale in 8.76µs
+[ 11.355s] [Workarounds] finished init_edit_mode_layout in 237.91ms
+[ 11.355s] [Workarounds] starting patch_ui_parent_panel_toggles
+[ 11.356s] [Workarounds] finished patch_ui_parent_panel_toggles in 328.82µs
+[ 11.356s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[ 11.356s] [Workarounds] finished patch_uiparent_onupdate_worklists in 132.03µs
+[ 11.356s] [Workarounds] starting init_chat_type_colors
+[ 11.356s] [Workarounds] finished init_chat_type_colors in 139.83µs
+[ 11.356s] [Workarounds] starting patch_chat_voice_button_surface
+[ 11.356s] [Workarounds] finished patch_chat_voice_button_surface in 163.58µs
+[ 11.356s] [Workarounds] starting patch_item_socketing_tooltips
+[ 11.356s] [Workarounds] finished patch_item_socketing_tooltips in 68.84µs
+[ 11.356s] [Workarounds] starting patch_character_select_selected_name
+[ 11.356s] [Workarounds] finished patch_character_select_selected_name in 34.22µs
+[ 11.356s] [Workarounds] starting patch_character_create_defaults
+[ 11.356s] [Workarounds] finished patch_character_create_defaults in 249.78µs
+[ 11.356s] [Workarounds] starting patch_character_frame_title_refresh
+[ 11.362s] [Workarounds] finished patch_character_frame_title_refresh in 5.81ms
+[ 11.362s] [Workarounds] starting patch_vignette_pin_template
+[ 11.362s] [Workarounds] finished patch_vignette_pin_template in 191.82µs
+[ 11.362s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[ 11.363s] [Workarounds] finished patch_fog_of_war_pin_mixin in 317.64µs
+[ 11.363s] [Workarounds] starting patch_map_exploration_pin_mixin
+[ 11.363s] [Workarounds] finished patch_map_exploration_pin_mixin in 446.07µs
+[ 11.363s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[ 11.363s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 73.19µs
+[ 11.363s] [Workarounds] starting ensure_adventure_map_frame_surface
+[ 11.364s] [Workarounds] finished ensure_adventure_map_frame_surface in 584.33µs
+[ 11.364s] [Workarounds] starting patch_action_bar_button_event_fanout
+[ 11.364s] [Workarounds] finished patch_action_bar_button_event_fanout in 133.97µs
+[ 11.364s] [Workarounds] starting patch_paging_controls_page_text
+[ 11.364s] [Workarounds] finished patch_paging_controls_page_text in 49.46µs
+[ 11.364s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[ 11.364s] [Workarounds] finished patch_talent_edge_frame_level_sync in 38.14µs
+[ 11.364s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[ 11.364s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 81.96µs
+[ 11.364s] [Workarounds] starting patch_game_time_defaults
+[ 11.364s] [Workarounds] finished patch_game_time_defaults in 11.56µs
+[ 11.364s] [Workarounds] starting patch_tooltip_nineslice_surface
+[ 11.364s] [Workarounds] finished patch_tooltip_nineslice_surface in 49.53µs
+[ 11.364s] [Workarounds] starting patch_container_frame_token_tracker
+[ 11.365s] [Workarounds] finished patch_container_frame_token_tracker in 530.15µs
+[ 11.365s] [Workarounds] starting patch_achievement_display_set_achievements
+[ 11.365s] [Workarounds] finished patch_achievement_display_set_achievements in 18.25µs
+[ 11.365s] [Workarounds] starting patch_housing_dashboard_preload
+[ 11.365s] [Workarounds] finished patch_housing_dashboard_preload in 72.46µs
+[ 11.365s] [Workarounds] starting patch_lfg_lock_list
+[ 11.365s] [Workarounds] finished patch_lfg_lock_list in 38.42µs
+[ 11.365s] [Workarounds] starting patch_auction_house_browse_results_event
+[ 11.365s] [Workarounds] finished patch_auction_house_browse_results_event in 86.73µs
+[ 11.365s] [Workarounds] starting patch_auction_house_search_context_aliases
+[ 11.365s] [Workarounds] finished patch_auction_house_search_context_aliases in 30.24µs
+[ 11.365s] [Workarounds] starting patch_auth_challenge_frame_parent
+[ 11.365s] [Workarounds] finished patch_auth_challenge_frame_parent in 81.93µs
+[ 11.365s] [Workarounds] starting patch_settings_surface_defaults
+[ 11.365s] [Workarounds] finished patch_settings_surface_defaults in 481.78µs
+[ 11.365s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[ 11.366s] [Workarounds] finished patch_settings_canvas_layout_visibility in 139.46µs
+[ 11.366s] [Startup] apply_post_load_workarounds: workarounds complete
+[ 11.508s] [Startup] apply_post_load_workarounds: globals restored
+[ 11.509s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[ 11.509s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[ 11.509s] [Startup] begin login sequence
+[ 11.509s] [Startup] Firing ADDON_LOADED
+[ 11.509s] [Startup] Firing VARIABLES_LOADED
+[ 11.955s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[ 12.207s] [Startup] Firing UI_SCALE_CHANGED
+[ 12.209s] [Startup] Firing PLAYER_LOGIN
+[ 12.209s] [Startup] end login sequence in 700.49ms
+[ 12.209s] [Startup] begin world enter sequence
+[ 12.209s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[ 12.209s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[ 12.209s] [Startup] Firing PLAYER_ENTERING_WORLD
+[ 13.328s] [EditMode] starting setup_layout_info
+[ 13.342s] [EditMode] finished setup_layout_info in 13.88ms
+[ 13.342s] [EditMode] starting apply_system_anchors
+[ 13.978s] [EditMode] finished apply_system_anchors in 636.08ms
+[ 13.978s] [EditMode] starting finalize_action_bar_positions
+[ 13.995s] [EditMode] finished finalize_action_bar_positions in 17.33ms
+[ 13.995s] [EditMode] starting invoke_anchor_changed_hooks
+[ 14.022s] [EditMode] finished invoke_anchor_changed_hooks in 27.09ms
+[ 14.022s] [EditMode] starting fix_action_bar_nan_size
+[ 14.022s] [EditMode] finished fix_action_bar_nan_size in 72.07µs
+[ 14.022s] [EditMode] starting fix_action_bar_scale
+[ 14.022s] [EditMode] finished fix_action_bar_scale in 10.50µs
+[ 14.022s] [EditMode] starting reapply_player_frame_anchor
+[ 14.040s] [EditMode] finished reapply_player_frame_anchor in 18.23ms
+[ 14.091s] [Startup] end world enter sequence in 1.88s
+[ 14.091s] [Startup] begin post-login events
+[ 14.093s] [Startup] Firing UNIT_AURA
+[ 14.094s] [Startup] Firing PET_UI_UPDATE
+[ 14.101s] [Startup] Firing BAG_UPDATE_DELAYED
+[ 14.111s] [Startup] Firing QUEST_LOG_UPDATE
+[ 14.113s] [Startup] Firing GROUP_ROSTER_UPDATE
+[ 14.669s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[ 14.669s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[ 14.686s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[ 14.766s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[ 14.766s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[ 14.766s] [Startup] Firing UPDATE_BINDINGS
+[ 14.774s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[ 14.785s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[ 14.787s] [Startup] end post-login events in 695.16ms
+[ 14.787s] [Startup] begin close startup special windows
+[ 14.787s] [Startup] end close startup special windows in 283.05µs
+[ 14.787s] [Startup] begin FIRST_FRAME_RENDERED
+[ 14.787s] [Startup] Firing FIRST_FRAME_RENDERED
+[ 14.787s] [Startup] end FIRST_FRAME_RENDERED in 121.01µs
+[ 14.787s] [Startup] begin unblock hidden splash alerts
+[ 14.787s] [Startup] end unblock hidden splash alerts in 24.14µs
+[ 14.787s] [Startup] begin post-event workarounds
+[ 14.787s] [Startup] end post-event workarounds in 302.00ns
+
+thread 'secure_aura_header_helpers::cached_secure_aura_header_sorts_finite_before_permanent' (902214) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/secure_aura_header_helpers.rs:136:5:
+TIME ascending must place both permanents last: 
+
+
+failures:
+    follower_nameplate_display::follower_display_authenticates_host_secret_token_and_restores_addon_context
+    follower_nameplate_display::follower_display_classification_follows_guid_not_target_slot
+    follower_nameplate_display::follower_display_classification_is_environment_local
+    follower_nameplate_display::follower_display_classification_preserves_npc_identity_and_can_be_removed
+    follower_nameplate_display::follower_display_flag_does_not_imply_friendliness
+    follower_nameplate_display::follower_display_query_does_not_fabricate_pet_vehicle_or_missing_units
+    follower_nameplate_display::follower_display_query_preserves_secure_and_addon_stack_taint
+    group_combat_restrictions::confirm_convert_to_raid_blocks_combat_then_converts_small_party
+    group_combat_restrictions::convert_to_party_blocks_combat_then_restores_small_raid_to_party
+    group_combat_restrictions::convert_to_raid_blocks_combat_then_converts_small_party
+    group_combat_restrictions::demote_assistant_preserves_roles_in_combat_then_changes_one_member
+    group_combat_restrictions::everyone_assistant_setting_is_atomic_in_combat_and_recovers
+    group_combat_restrictions::leader_restriction_and_live_combat_state_are_environment_isolated
+    group_combat_restrictions::promote_to_assistant_preserves_roles_in_combat_then_changes_one_member
+    group_combat_restrictions::promote_to_leader_preserves_leader_in_combat_then_recovers
+    house_exterior_core_fixture::core_authenticates_original_arguments_before_parsing_or_lookup
+    house_exterior_core_fixture::core_detach_preserves_placements_and_inventory
+    house_exterior_core_fixture::core_different_style_default_and_explicit_store_commit_inventory
+    house_exterior_core_fixture::core_host_updates_empty_defaults_and_environment_isolation
+    house_exterior_core_fixture::core_mixed_variants_reject_before_storing_the_valid_stack
+    house_exterior_core_fixture::core_recolor_reparents_even_when_store_is_requested
+    house_exterior_core_fixture::core_rejections_are_atomic_and_do_not_publish_events
+    house_exterior_core_fixture::core_same_selection_does_not_store_or_detach_attachments
+    house_exterior_core_fixture::core_storage_callbacks_reenter_committed_selection_without_outer_overwrite
+    house_exterior_core_fixture::core_store_validates_all_counts_before_mutating_any_placement
+    housing_bundle_structures::housing_bundle_declared_shape_order_and_legacy_extensions
+    housing_bundle_structures::housing_bundle_empty_state_optional_price_and_zero_values
+    housing_bundle_structures::housing_bundle_featured_snapshots_follow_record_updates_and_removal
+    housing_bundle_structures::housing_bundle_invalid_selectors_do_not_mutate_records
+    housing_bundle_structures::housing_bundle_non_decor_contents_disable_preview
+    housing_bundle_structures::housing_bundle_seed_and_market_action_share_state_on_every_profile
+    patch_12_0_5_navigation_aura_entry::aura_added_after_entry_is_queryable_without_rekeying_survivors
+    patch_12_0_5_navigation_aura_entry::aura_entry_admin_global_and_loader_dispatch_use_the_same_transition
+    patch_12_0_5_navigation_aura_entry::aura_entry_invalid_plan_is_atomic_and_does_not_deliver_entry_event
+    patch_12_0_5_navigation_aura_entry::aura_entry_rekeys_before_each_entry_event_consumer_without_payload_loss
+    patch_12_0_5_navigation_aura_entry::aura_entry_rekeys_party_helpful_and_harmful_stores_without_changing_members
+    patch_12_0_5_navigation_aura_entry::navigation_addon_denial_preserves_host_selection_and_caller_taint
+    patch_12_0_5_navigation_aura_entry::navigation_authorizes_before_reading_absent_host_selection
+    patch_12_0_5_navigation_aura_entry::navigation_trusted_results_follow_explicit_host_selection
+    pdeid_specialbar::pdeid_default_is_exactly_one_public_numeric_zero
+    pdeid_specialbar::pdeid_reads_live_scalar_including_zero_and_storage_boundary
+    pdeid_specialbar::pdeid_updates_are_environment_local
+    pdeid_specialbar::special_membership_is_live_union_not_direct_slot_assignment
+    pdeid_specialbar::special_membership_preserves_public_validation_and_unmodeled_secret_boundary
+    pdeid_specialbar::special_membership_queries_are_read_only_and_environment_local
+    pdeid_specialbar::special_membership_survives_direct_macro_and_outfit_shadows
+    pdeid_specialbar::special_membership_uses_live_alias_resolution_not_link_grammar
+    private_aura_sound_add_context::actual_full_deprecated_chunk_preserves_add_context_and_removal
+    private_aura_sound_add_context::allocator_avoids_host_ids_and_exhaustion_returns_one_nil
+    private_aura_sound_add_context::each_context_denies_addon_without_consuming_id_then_recovers
+    private_aura_sound_add_context::malformed_inputs_leave_host_registration_and_allocator_unchanged
+    private_aura_sound_add_context::modern_authenticates_both_arguments_before_trigger_validation
+    private_aura_sound_add_context::ordinary_tainted_combat_add_copies_real_payload_and_removes_it
+    private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon
+    private_aura_sound_add_context::secure_caller_registers_in_all_contexts_and_environments_are_isolated
+    retail_12_0_5_partial_104_114::ignore_gcd_book_authenticates_flag_before_missing_entry_return
+    retail_12_0_5_partial_104_114::ignore_gcd_secure_secret_flags_select_action_and_book_intervals
+    retail_12_0_5_partial_104_114::ignore_gcd_tainted_secret_flags_are_denied_without_losing_taint
+    secure_aura_header_helpers::cached_class_talent_loadout_helpers_keep_real_talent_fields_clean
+    secure_aura_header_helpers::cached_class_talent_spec_helpers_keep_real_ui_and_castbar_fields_clean
+    secure_aura_header_helpers::cached_helper_delegate_restores_caller_after_addon_callback_error
+    secure_aura_header_helpers::cached_secure_aura_header_reorders_and_hides_stale_children
+    secure_aura_header_helpers::cached_secure_aura_header_sorts_finite_before_permanent
+
+test result: FAILED. 6 passed; 63 failed; 0 ignored; 0 measured; 10216 filtered out; finished in 90.16s
+
+
+---STDERR---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+warning: function `apply_entry_event` is never used
+ --> src/c_api/aura_entry.rs:9:15
+  |
+9 | pub(crate) fn apply_entry_event(state: &mut LuaState, event: &str) -> LuaResult<()> {
+  |               ^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `collect_live_ids` is never used
+  --> src/c_api/aura_entry.rs:20:4
+   |
+20 | fn collect_live_ids(sim: &SimState) -> Vec<i32> {
+   |    ^^^^^^^^^^^^^^^^
+
+warning: function `validate_replacements` is never used
+  --> src/c_api/aura_entry.rs:33:4
+   |
+33 | fn validate_replacements(sim: &SimState, live_ids: &[i32]) -> LuaResult<()> {
+   |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `rekey_aura_instance_ids` is never used
+  --> src/c_api/aura_entry.rs:57:4
+   |
+57 | fn rekey_aura_instance_ids(sim: &mut SimState) -> LuaResult<()> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `retired` is never read
+  --> src/c_api/aura_entry_ids.rs:11:16
+   |
+ 6 | pub struct AuraEntryIds {
+   |            ------------ field in this struct
+...
+11 |     pub(crate) retired: HashSet<i32>,
+   |                ^^^^^^^
+   |
+   = note: `AuraEntryIds` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: constant `API` is never used
+ --> src/c_api/c_housing/exterior/core.rs:9:18
+  |
+9 | pub(super) const API: &str = "C_HouseExterior.SelectCoreFixtureOption";
+  |                  ^^^
+
+warning: constant `SUCCESS` is never used
+  --> src/c_api/c_housing/exterior/core.rs:10:7
+   |
+10 | const SUCCESS: i32 = 0;
+   |       ^^^^^^^
+
+warning: function `update_core_fixture` is never used
+  --> src/c_api/c_housing/exterior/core.rs:12:15
+   |
+12 | pub(super) fn update_core_fixture(
+   |               ^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_validated_options` is never used
+  --> src/c_api/c_housing/exterior/core.rs:39:4
+   |
+39 | fn read_validated_options(
+   |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `is_recolor` is never used
+  --> src/c_api/c_housing/exterior/core.rs:62:4
+   |
+62 | fn is_recolor(old: &ExteriorCoreFixtureOption, new: &ExteriorCoreFixtureOption) -> bool {
+   |    ^^^^^^^^^^
+
+warning: function `reparent_placements` is never used
+  --> src/c_api/c_housing/exterior/core.rs:67:4
+   |
+67 | fn reparent_placements(housing: &mut HousingState, affected: &[String], owner_hash: u32) {
+   |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `register_c_housing_bundles` is never used
+  --> src/c_api/c_housing_bundles.rs:71:15
+   |
+71 | pub(crate) fn register_c_housing_bundles(state: &mut LuaState) -> LuaResult<()> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_bundle_id` is never used
+  --> src/c_api/c_housing_bundles.rs:83:4
+   |
+83 | fn read_bundle_id(state: &mut LuaState) -> LuaResult<i32> {
+   |    ^^^^^^^^^^^^^^
+
+warning: function `bundle_info` is never used
+  --> src/c_api/c_housing_bundles.rs:99:4
+   |
+99 | fn bundle_info(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^
+
+warning: function `featured_bundles` is never used
+   --> src/c_api/c_housing_bundles.rs:116:4
+    |
+116 | fn featured_bundles(state: &mut LuaState) -> LuaResult<u32> {
+    |    ^^^^^^^^^^^^^^^^
+
+warning: function `view_bundle` is never used
+   --> src/c_api/c_housing_bundles.rs:136:4
+    |
+136 | fn view_bundle(state: &mut LuaState) -> LuaResult<u32> {
+    |    ^^^^^^^^^^^
+
+warning: function `push_table` is never used
+   --> src/c_api/c_housing_bundles.rs:154:4
+    |
+154 | fn push_table(state: &mut LuaState) -> Val {
+    |    ^^^^^^^^^^
+
+warning: function `attach_child` is never used
+   --> src/c_api/c_housing_bundles.rs:160:4
+    |
+160 | fn attach_child(state: &mut LuaState, parent: Val, field: &'static str, child: Val) {
+    |    ^^^^^^^^^^^^
+
+warning: function `push_bundle` is never used
+   --> src/c_api/c_housing_bundles.rs:167:4
+    |
+167 | fn push_bundle(state: &mut LuaState, record: &HousingBundleInfo) -> Val {
+    |    ^^^^^^^^^^^
+
+warning: function `push_numbers` is never used
+   --> src/c_api/c_housing_bundles.rs:187:4
+    |
+187 | fn push_numbers(state: &mut LuaState, numbers: &[f64]) -> Val {
+    |    ^^^^^^^^^^^^
+
+warning: function `push_decor_ids` is never used
+   --> src/c_api/c_housing_bundles.rs:195:4
+    |
+195 | fn push_decor_ids(state: &mut LuaState, entries: &[HousingBundleDecorEntryInfo]) -> Val {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `push_decor_entries` is never used
+   --> src/c_api/c_housing_bundles.rs:203:4
+    |
+203 | fn push_decor_entries(state: &mut LuaState, entries: &[HousingBundleDecorEntryInfo]) -> Val {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `register` is never used
+ --> src/c_api/c_navigation.rs:8:15
+  |
+8 | pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
+  |               ^^^^^^^^
+
+warning: function `authorize_navigation_caller` is never used
+  --> src/c_api/c_navigation.rs:18:4
+   |
+18 | fn authorize_navigation_caller(state: &LuaState) -> LuaResult<()> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `get_nearest_party_member_token` is never used
+  --> src/c_api/c_navigation.rs:33:4
+   |
+33 | fn get_nearest_party_member_token(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `register` is never used
+  --> src/c_api/class_talent_commands.rs:15:15
+   |
+15 | pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+   |               ^^^^^^^^
+
+warning: function `switch_loadout_by_name` is never used
+  --> src/c_api/class_talent_commands.rs:36:4
+   |
+36 | fn switch_loadout_by_name(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `switch_loadout_by_index` is never used
+  --> src/c_api/class_talent_commands.rs:40:4
+   |
+40 | fn switch_loadout_by_index(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `switch_specialization_by_name` is never used
+  --> src/c_api/class_talent_commands.rs:44:4
+   |
+44 | fn switch_specialization_by_name(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `switch_specialization_by_index` is never used
+  --> src/c_api/class_talent_commands.rs:48:4
+   |
+48 | fn switch_specialization_by_index(state: &mut LuaState) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `dispatch_name_command` is never used
+  --> src/c_api/class_talent_commands.rs:52:4
+   |
+52 | fn dispatch_name_command(state: &mut LuaState, event: &str) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `dispatch_index_command` is never used
+  --> src/c_api/class_talent_commands.rs:63:4
+   |
+63 | fn dispatch_index_command(state: &mut LuaState, event: &str) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `API` is never used
+  --> src/c_api/private_aura_sounds/add.rs:11:7
+   |
+11 | const API: &str = "C_UnitAuras.AddPrivateAuraAppliedSound";
+   |       ^^^
+
+warning: constant `ADDED` is never used
+  --> src/c_api/private_aura_sounds/add.rs:12:7
+   |
+12 | const ADDED: u32 = 0;
+   |       ^^^^^
+
+warning: function `input_error` is never used
+  --> src/c_api/private_aura_sounds/add.rs:14:4
+   |
+14 | fn input_error(message: &str) -> rilua::LuaError {
+   |    ^^^^^^^^^^^
+
+warning: function `add_private` is never used
+  --> src/c_api/private_aura_sounds/add.rs:18:15
+   |
+18 | pub(super) fn add_private(state: &mut LuaState) -> LuaResult<u32> {
+   |               ^^^^^^^^^^^
+
+warning: function `add_modern` is never used
+  --> src/c_api/private_aura_sounds/add.rs:26:15
+   |
+26 | pub(super) fn add_modern(state: &mut LuaState) -> LuaResult<u32> {
+   |               ^^^^^^^^^^
+
+warning: function `authenticate_fields` is never used
+  --> src/c_api/private_aura_sounds/add.rs:42:4
+   |
+42 | fn authenticate_fields(state: &mut LuaState, sound: Val) -> LuaResult<[Val; 5]> {
+   |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_sound` is never used
+  --> src/c_api/private_aura_sounds/add.rs:63:4
+   |
+63 | fn read_sound(state: &mut LuaState, sound: Val, trigger: u32) -> LuaResult<AuraSoundRegistration> {
+   |    ^^^^^^^^^^
+
+warning: function `read_string` is never used
+  --> src/c_api/private_aura_sounds/add.rs:86:4
+   |
+86 | fn read_string(state: &LuaState, value: Val, message: &str) -> LuaResult<String> {
+   |    ^^^^^^^^^^^
+
+warning: function `read_number` is never used
+  --> src/c_api/private_aura_sounds/add.rs:94:4
+   |
+94 | fn read_number(value: Val, message: &str) -> LuaResult<u32> {
+   |    ^^^^^^^^^^^
+
+warning: function `read_optional_string` is never used
+   --> src/c_api/private_aura_sounds/add.rs:106:4
+    |
+106 | fn read_optional_string(state: &LuaState, value: Val) -> LuaResult<Option<String>> {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_optional_number` is never used
+   --> src/c_api/private_aura_sounds/add.rs:118:4
+    |
+118 | fn read_optional_number(value: Val) -> LuaResult<Option<u32>> {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `check_context` is never used
+   --> src/c_api/private_aura_sounds/add.rs:125:4
+    |
+125 | fn check_context(state: &LuaState) -> LuaResult<()> {
+    |    ^^^^^^^^^^^^^
+
+warning: function `allocate_id` is never used
+   --> src/c_api/private_aura_sounds/add.rs:139:4
+    |
+139 | fn allocate_id(sounds: &mut PrivateAuraSoundRegistrations) -> Option<u32> {
+    |    ^^^^^^^^^^^
+
+warning: function `register_sound` is never used
+   --> src/c_api/private_aura_sounds/add.rs:150:4
+    |
+150 | fn register_sound(state: &mut LuaState, registration: AuraSoundRegistration) -> LuaResult<u32> {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `unit_treat_as_player_for_display` is never used
+  --> src/lua_api/globals/real/nameplate_display.rs:11:15
+   |
+11 | pub(crate) fn unit_treat_as_player_for_display(state: &mut LuaState) -> LuaResult<u32> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 47 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 4m 37s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+error: test failed, to rerun pass `--test integration`

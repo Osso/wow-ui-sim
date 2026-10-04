@@ -26,6 +26,14 @@ Retail12.0.5 entry transitions invalidate prior host-modeled aura IDs while reta
 
 `tests/patch_12_0_5_navigation_aura_entry.rs`: five aura cases cover all three entry kinds, repeated entry, real event consumers, ordinary updates, invalid batches, party payload, post-entry insertion and host/admin/global/loader dispatch. Authored only; no executed proof here.
 
+## Development proof and independent bounded acceptance — 2026-10-03 (aura-entry-instance-ids)
+
+Commit `fcdcf43c6`. RED: 0 PASS / 8 FAIL module. GREEN: 8/8 module. This section supersedes wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun), [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-auras-nav.md) SHA256 `c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20`. Review rejected the first version for dropping entry events; fixed in the follow-up commit. Rekey happens only on host input. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-03-31-150 partial-development-green under capability `aura-entry-instance-ids`; **131 capabilities/362 IDs; 28 pending /269 bounded /30 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 - [ ] Main must run genuine state-only RED, producer GREEN and required verification.

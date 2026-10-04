@@ -27,6 +27,14 @@ Bounded host-backed input for retail 12.0.5 prose row `prose-2026-03-31-174` in 
 
 - `tests/follower_nameplate_display.rs`: seven behavioral tests auto-included in integration.
 
+## Development proof and independent bounded acceptance — 2026-10-03 (follower-nameplate-display)
+
+Commit `4d142e325`. RED: 0 PASS / 7 FAIL. GREEN: 7/7. This section supersedes wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun), [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-auras-nav.md) SHA256 `c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20`. Query only; nameplate consumers are outside the simulator's modeled surface; pet/vehicle default changed. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-03-31-174 partial-development-green under capability `follower-nameplate-display`; **131 capabilities/362 IDs; 28 pending /269 bounded /30 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 - [ ] Main must execute RED with state/tests applied and producers withheld, then GREEN with producers applied.

@@ -1,5 +1,17 @@
 # Patch 12.0.5 API Audit
 
+### Batch99 and Classic — twelve capabilities, one rejected slice fixed
+
+Commits `4d142e325` (eight slices), `ce418cbe4` (Classic secret policy, built and run under `client-mists` in a worktree) and `fcdcf43c6` (review fixes). B99 RED 6 PASS / 63 FAIL, GREEN 381/381 with control suites, startup `[]`.
+
+- Bounded: [private aura sound Add](../../specs/private-aura-sound-add-context.md) (03-31-168), [navigation token](../../specs/navigation-nearest-party-token.md) (03-25-092), [housing bundles](../../specs/housing-bundle-structures.md) (641), [entrance PDEID](../../specs/tiered-entrance-pdeid.md) (exact260), [core fixture selection](../../specs/house-exterior-core-fixture.md) (exact270), [restricted outfit helper](../../specs/restricted-outfit-index.md) (03-12-032, tests only), and [table.freeze](../../specs/table-freeze.md) (03-25-094) after a strict 12.0.5 build showed RED with the old gate and GREEN with the new one.
+- Partial: 03-25-117 (superseded for Remove), [follower display](../../specs/follower-nameplate-display.md) (03-31-174, query only), [aura entry rekey](../../specs/aura-entry-instance-ids.md) (03-31-150, host-staged only), [special-bar membership](../../specs/action-bar-special-membership.md) (exact245), 03-25-114 and 03-25-104, [Classic secret policy](../../specs/classic-secret-policy.md) (04-17-213/214; 215 stays pending).
+- Review **rejected** the first aura-rekey version: with auras present and no staged IDs, encounter/M+/PvP entry events raised before listeners ran. Fixed: no staged batch, no rekey, event delivered. The same review found older profiles had lost `GetNearestPartyMemberToken` and `SelectCoreFixtureOption`; both inert defaults restored for them.
+- Parked: chat expressions (253, needs an unpublished rilua helper), combat restrictions (03-25-074, no denial contract in the source), aura header and talent helper (03-25-112/120, 03-31-151/177).
+- Behavior changes: entrance PDEID default 0 instead of 77011; pet/vehicle no longer always player-for-display.
+
+**131 capabilities/362 IDs; 28 pending /269 bounded /30 partial /35 metadata**; audit **IN PROGRESS**.
+
 ### Batch98 — instanced identity, model guard, cast events, /tm, /outfit, delve instance, table.freeze, quest favor
 
 Commit `a4cce2db1`; RED 49 PASS / 31 FAIL, GREEN 404/404 with control suites, startup `[]`; three independent source reviews, all accept with qualifications.

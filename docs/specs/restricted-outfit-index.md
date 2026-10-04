@@ -29,6 +29,14 @@ All boxes remain unchecked: authored tests, not executed proof.
 
 `tests/restricted_outfit_index.rs` loads the actual cached TOC through the existing closure harness. Existing `tests/patch_12_0_5_outfit_catalog.rs` and `tests/outfit_action_command.rs` remain unchanged; their passing results cannot substitute for executing these helper tests.
 
+## Development proof and independent bounded acceptance — 2026-10-03 (restricted-outfit-index)
+
+Commit `4d142e325`. RED: none: 4/4 passed before any change (existing capability). GREEN: 4/4. This section supersedes wording above that describes the slice as staged, unapplied or unrun.
+
+Main accepts an independent GPT-6.1-sol source review (no test rerun), [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-housing-bars.md) SHA256 `6cc70517c54675b995a442bc47d2fa681c21e457ea32e5dd0d9d582baa6fc65d`. Existing behavior proven by new tests; no producer change. Requirement checkboxes are left as authored; the report lists which are earned and to what bound. Bounded simulator proof, not native parity.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose-2026-03-12-032 bounded-coverage under capability `restricted-outfit-index`; **131 capabilities/362 IDs; 28 pending /269 bounded /30 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 - [ ] Execute four cases against the current integrated producer. They may already pass. No missing simulator exposure has been demonstrated; therefore none is authored.

@@ -1,0 +1,53 @@
+native source=/home/osso-test/.worktrees/wow-ui-sim-strict-1205 target=/home/osso-test/.worktrees/wow-ui-sim-strict-1205/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/.worktrees/wow-ui-sim-strict-1205)
+warning: unused import: `val_to_string`
+ --> src/lua_api/globals/lua_duration_object/formatting.rs:5:66
+  |
+5 |     call_function_state, create_string, registry_get, table_get, val_to_string,
+  |                                                                  ^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `refresh_metadata` is never used
+  --> src/c_api/patch_12_0_5_enums.rs:18:15
+   |
+18 | pub(crate) fn refresh_metadata(state: &mut LuaState) {
+   |               ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `wow-ui-sim` (lib) generated 2 warnings (run `cargo fix --lib -p wow-ui-sim` to apply 1 suggestion)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 09s
+     Running tests/integration.rs (target/debug/deps/integration-c4ea781aeec63ade)
+
+running 1 test
+test retail_12_0_5_addon_table_freeze::retail_12_0_5_addon_can_freeze_its_own_table_without_freezing_children ... FAILED
+
+failures:
+
+---- retail_12_0_5_addon_table_freeze::retail_12_0_5_addon_can_freeze_its_own_table_without_freezing_children stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.90ms
+[  0.002s] [Startup] rilua VM created in 120.64µs
+[  0.002s] [Startup] builtin frames initialized in 102.91µs
+[  0.002s] [Startup] template registry cleared in 9.62µs
+[  0.002s] [Startup] intrinsic templates registered in 5.05µs
+[  0.002s] [Startup] initial app_data lua handle installed in 405.00ns
+[  0.124s] [Startup] init_lua_state complete in 122.03ms
+[  0.124s] [Startup] final app_data lua handle installed in 185.00ns
+[  0.124s] [Startup] initial screen globals installed in 127.16µs
+[  0.124s] [Startup] WowLuaEnv::new complete
+
+thread 'retail_12_0_5_addon_table_freeze::retail_12_0_5_addon_can_freeze_its_own_table_without_freezing_children' (907233) panicked at /home/osso-test/.worktrees/wow-ui-sim-strict-1205/tests/retail_12_0_5_addon_table_freeze.rs:44:6:
+addon-owned table is shallow read-only in Retail 12.0.5: Lua(Runtime(RuntimeError { message: "12.0.5 must publish table.freeze", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    retail_12_0_5_addon_table_freeze::retail_12_0_5_addon_can_freeze_its_own_table_without_freezing_children
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 9167 filtered out; finished in 0.13s
+
+error: test failed, to rerun pass `--test integration`
+
+EXIT 101

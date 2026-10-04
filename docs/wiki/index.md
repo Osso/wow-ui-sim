@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | B99 and Classic accounted; table.freeze epoch proven
+
+Seven rows bounded, nine partial; a rejected aura-rekey defect fixed. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch99-and-classic--twelve-capabilities-one-rejected-slice-fixed); 131 capabilities/362 IDs; 28 pending /269 bounded /30 partial /35 metadata.
+
 ## [2026-10-03] evidence | B98 nine capabilities accounted, blocked rows annotated
 
 Twelve rows bounded, six partial, one metadata-only; nineteen blocked rows carry specific notes. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch98--instanced-identity-model-guard-cast-events-tm-outfit-delve-instance-tablefreeze-quest-favor); 119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata.

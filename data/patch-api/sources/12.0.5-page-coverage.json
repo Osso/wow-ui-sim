@@ -2028,6 +2028,225 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/cooldown-countdown-formatter.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
       "gate_scope": "Commit a4cce2db1. RED none: existing implementation, no code change; GREEN 8/8 public (rerun by the auditor on a prebuilt binary); 8 renderer cases from saved batch36 evidence, not rerun within a 404/404 run that included control suites, cargo fmt --check exit0, startup lua-errors []. Independent Sol source review (no rerun) ACCEPT WITH QUALIFICATIONS SHA256 b4386140882065dcdb77c094ae3f83ef204f4f74d76aee06633e0f01d657b870, report data/patch-api/evidence/12.0.5-session-2026-10-03/b98-verify-outfit-formatter.md. No cargo check, broad suite, strict-epoch or older-profile run."
+    },
+    {
+      "id": "private-aura-sound-add-context",
+      "symbols": [
+        "C_UnitAuras.AddPrivateAuraAppliedSound",
+        "C_UnitAuras.AddAuraSound"
+      ],
+      "scope": "B99 prose 03-31-168 and 03-25-117: Add stores an owned sound registration under an allocated ID after authenticating every argument and table entry; insecure callers are denied during an encounter, an active M+ or a host-flagged PvP match, without consuming an ID; removal deletes handle and payload. 117 partial: its claim that restrictions remain on Remove is superseded by line 168. Secure-caller permission is inferred; pvp_match_active is host-set only; no playback.",
+      "spec": "docs/specs/private-aura-sound-add-context.md",
+      "tests": [
+        "tests/private_aura_sound_add_context.rs",
+        "tests/private_aura_sound_removal.rs"
+      ],
+      "inputs": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "implementation": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "compiled_revision": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/private-aura-sound-add-context.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED 0 PASS / 8 FAIL; GREEN 8/8; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-auras-nav.md. No cargo check or broad suite."
+    },
+    {
+      "id": "follower-nameplate-display",
+      "symbols": [
+        "UnitTreatAsPlayerForDisplay"
+      ],
+      "scope": "B99 prose 03-31-174, PARTIAL: UnitTreatAsPlayerForDisplay is true for players and for units whose GUID is in an explicit host follower set, authenticated argument. Query only: no live nameplates, class-color or name-only output, or CVar consumers. Pet/vehicle tokens no longer answer true unconditionally; GUID-string arguments (ChannelRoster) do not resolve.",
+      "spec": "docs/specs/follower-nameplate-display.md",
+      "tests": [
+        "tests/follower_nameplate_display.rs"
+      ],
+      "inputs": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "implementation": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "compiled_revision": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/follower-nameplate-display.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED 0 PASS / 7 FAIL; GREEN 7/7; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-auras-nav.md. No cargo check or broad suite."
+    },
+    {
+      "id": "navigation-nearest-party-token",
+      "symbols": [
+        "C_Navigation.GetNearestPartyMemberToken"
+      ],
+      "scope": "B99 prose 03-25-092: the query is denied to tainted call frames before reading state and returns the explicit host-selected token to secure callers, erroring when none is selected. Epochs before 12.0.5 keep the inert nil default. No geometry or automatic selection; no loaded-addon invocation test.",
+      "spec": "docs/specs/navigation-nearest-party-token.md",
+      "tests": [
+        "tests/patch_12_0_5_navigation_aura_entry.rs",
+        "tests/c_navigation_probes.rs"
+      ],
+      "inputs": "fcdcf43c6145dc4bd5be25c3bd9f9caa5bab9f9e",
+      "implementation": "fcdcf43c6145dc4bd5be25c3bd9f9caa5bab9f9e",
+      "compiled_revision": "fcdcf43c6145dc4bd5be25c3bd9f9caa5bab9f9e",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/navigation-nearest-party-token.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED 0 PASS / 8 FAIL module; GREEN 8/8 module; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-auras-nav.md. No cargo check or broad suite."
+    },
+    {
+      "id": "aura-entry-instance-ids",
+      "symbols": [
+        "ENCOUNTER_START",
+        "CHALLENGE_MODE_START",
+        "PVP_MATCH_ACTIVE"
+      ],
+      "scope": "B99 prose 03-31-150, PARTIAL: when a host stages a full batch of fresh IDs, player and party aura instance IDs are replaced atomically before the entry event reaches listeners, old IDs stop resolving and payloads are preserved; a malformed batch errors without change. Without a staged batch nothing is rekeyed and the event is delivered (fixed after review: it used to raise before listeners). No automatic re-randomization, UNIT_AURA refresh or cooldown-viewer ordering.",
+      "spec": "docs/specs/aura-entry-instance-ids.md",
+      "tests": [
+        "tests/patch_12_0_5_navigation_aura_entry.rs"
+      ],
+      "inputs": "fcdcf43c6145dc4bd5be25c3bd9f9caa5bab9f9e",
+      "implementation": "fcdcf43c6145dc4bd5be25c3bd9f9caa5bab9f9e",
+      "compiled_revision": "fcdcf43c6145dc4bd5be25c3bd9f9caa5bab9f9e",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/aura-entry-instance-ids.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED 0 PASS / 8 FAIL module; GREEN 8/8 module; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-auras-nav.md. No cargo check or broad suite."
+    },
+    {
+      "id": "housing-bundle-structures",
+      "symbols": [
+        "C_HousingCatalog.GetBundleInfo",
+        "C_HousingCatalog.GetFeaturedBundles",
+        "C_HousingCatalog.HousingMarketActionViewBundle"
+      ],
+      "scope": "B99 structure 641 nonDecorProducts: one Rust record map backs both getters and the view action on every profile; DTO fields match the cached declaration; entryIDs and wasViewed are labelled simulator extensions; default seeds bundle 5001. Featured output shares the serializer but has only representative shape checks; no secret or coercion parity.",
+      "spec": "docs/specs/housing-bundle-structures.md",
+      "tests": [
+        "tests/housing_bundle_structures.rs",
+        "tests/housing_catalog.rs"
+      ],
+      "inputs": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "implementation": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "compiled_revision": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/housing-bundle-structures.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED 0 PASS / 6 FAIL; GREEN 6/6; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 6cc70517c54675b995a442bc47d2fa681c21e457ea32e5dd0d9d582baa6fc65d, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-housing-bars.md. No cargo check or broad suite."
+    },
+    {
+      "id": "tiered-entrance-pdeid",
+      "symbols": [
+        "C_DelvesUI.GetTieredEntrancePDEID"
+      ],
+      "scope": "B99 exact260 (MayReturnNothing removed): always exactly one public number read live from an explicit host scalar; default 0 replaces the constant 77011, which changes the key the cached difficulty picker uses to remember a tier. Loaded picker and CVar round trip not exercised.",
+      "spec": "docs/specs/tiered-entrance-pdeid.md",
+      "tests": [
+        "tests/pdeid_specialbar.rs"
+      ],
+      "inputs": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "implementation": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "compiled_revision": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/tiered-entrance-pdeid.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED 0 PASS / 3 FAIL; GREEN 3/3 PDEID cases; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 6cc70517c54675b995a442bc47d2fa681c21e457ea32e5dd0d9d582baa6fc65d, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-housing-bars.md. No cargo check or broad suite."
+    },
+    {
+      "id": "action-bar-special-membership",
+      "symbols": [
+        "C_ActionBar.IsOnBarOrSpecialBar"
+      ],
+      "scope": "B99 exact245 (arg1 number -> SpellIdentifier), PARTIAL: result is effective direct membership or membership in an explicit host special-bar spell set; macro/outfit shadows suppress only the direct part. The row's own delta is only partly met: strings resolve through explicit host aliases, not native name/link grammar, and secret identifiers are rejected (declared AllowedWhenTainted).",
+      "spec": "docs/specs/action-bar-special-membership.md",
+      "tests": [
+        "tests/pdeid_specialbar.rs",
+        "tests/action_bar_membership.rs"
+      ],
+      "inputs": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "implementation": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "compiled_revision": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/action-bar-special-membership.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED 0 PASS / 5 FAIL; GREEN 5/5 special-bar cases; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 6cc70517c54675b995a442bc47d2fa681c21e457ea32e5dd0d9d582baa6fc65d, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-housing-bars.md. No cargo check or broad suite."
+    },
+    {
+      "id": "house-exterior-core-fixture",
+      "symbols": [
+        "C_HouseExterior.SelectCoreFixtureOption"
+      ],
+      "scope": "B99 exact270 attachedDecorAction: core selection on explicit host state with Store (default) and Detach transactions for attached decor and recolor reparenting regardless of action; both arguments authenticated before parsing; atomic rejection; one response event. Direct-owner model with one explicit core family; dye and unknown-aggregate preservation and duplicate-ID cases untested; older profiles keep the no-op.",
+      "spec": "docs/specs/house-exterior-core-fixture.md",
+      "tests": [
+        "tests/house_exterior_core_fixture.rs",
+        "tests/house_exterior.rs"
+      ],
+      "inputs": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "implementation": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "compiled_revision": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/house-exterior-core-fixture.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED 0 PASS / 10 FAIL; GREEN 10/10; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 6cc70517c54675b995a442bc47d2fa681c21e457ea32e5dd0d9d582baa6fc65d, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-housing-bars.md. No cargo check or broad suite."
+    },
+    {
+      "id": "restricted-outfit-index",
+      "symbols": [
+        "GetOutfitIndex (restricted environment)"
+      ],
+      "scope": "B99 prose 03-12-032, tests only: the unchanged cached restricted-environment helper resolves an outfit's player-facing index from the state-backed catalog inside real restricted snippets, and snippet-built /outfit macro text selects outfits. No protected macro-button click or native scrub parity.",
+      "spec": "docs/specs/restricted-outfit-index.md",
+      "tests": [
+        "tests/restricted_outfit_index.rs"
+      ],
+      "inputs": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "implementation": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "compiled_revision": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/restricted-outfit-index.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED none: 4/4 passed before any change (existing capability); GREEN 4/4; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 6cc70517c54675b995a442bc47d2fa681c21e457ea32e5dd0d9d582baa6fc65d, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-housing-bars.md. No cargo check or broad suite."
+    },
+    {
+      "id": "cooldown-ignore-gcd-authentication",
+      "symbols": [
+        "C_ActionBar.GetActionCooldownDuration",
+        "C_SpellBook.GetSpellBookItemCooldownDuration"
+      ],
+      "scope": "B99 prose 03-25-114, PARTIAL: the ignoreGCD flag on action and spellbook cooldown-duration queries is authenticated (untainted secret accepted, tainted denied) before use and, for the book, before the missing-entry return. C_Spell's variant is declared AllowedWhenTainted and is untouched; native coercion, restricted output and loaded consumers unproven.",
+      "spec": "docs/specs/spellbook-cooldown-duration.md",
+      "tests": [
+        "tests/retail_12_0_5_partial_104_114.rs"
+      ],
+      "inputs": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "implementation": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "compiled_revision": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/spellbook-cooldown-duration.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED 2 PASS / 3 FAIL module; GREEN 5/5 module; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-auras-nav.md. No cargo check or broad suite."
+    },
+    {
+      "id": "unit-comparison-same-name-guid",
+      "symbols": [
+        "UnitIsUnit"
+      ],
+      "scope": "B99 prose 03-25-104, PARTIAL: regression coverage that same-name units with different GUIDs compare unequal symmetrically and equality returns after refocus; producer unchanged. Permitted-identity breadth, token grammar, nil-versus-zero-result denial and SELF-menu integration unproven.",
+      "spec": "docs/specs/unit-identity-equality.md",
+      "tests": [
+        "tests/retail_12_0_5_partial_104_114.rs"
+      ],
+      "inputs": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "implementation": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "compiled_revision": "4d142e325498810ade994df6436b9f3a16fd79f7",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/unit-identity-equality.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED none for this row: the UnitIsUnit control passes on the unchanged producer; GREEN 5/5 module; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 c810ea3b9a7e3468a21bae71c13d18bedfe71c13c51e4438eb1f8a280ef11b20, report data/patch-api/evidence/12.0.5-session-2026-10-03/b99-verify-auras-nav.md. No cargo check or broad suite."
+    },
+    {
+      "id": "classic-secret-policy",
+      "symbols": [
+        "issecretvalue",
+        "UnitName",
+        "GetRaidRosterInfo",
+        "loadstring"
+      ],
+      "scope": "Prose 04-17-213/214, PARTIAL: on Wrath, Mists, Era and Anniversary a runtime profile predicate stops identity/roster secret markers and secret classification of tainted loadstring closures; taint stamping and one protected-action denial stay intact; stat/cooldown ordinary outputs and duration/curve constructors confirmed as controls. Only Mists executed; chat, guild and combat-log clauses and every other secret-producing API unproven; native VM propagation of injected secrets remains.",
+      "spec": "docs/specs/classic-secret-policy.md",
+      "tests": [
+        "tests/classic_secret_policy.rs",
+        "tests/security_api.rs"
+      ],
+      "inputs": "ce418cbe46049c28ed7798c67a929a0dbb6e4354",
+      "implementation": "ce418cbe46049c28ed7798c67a929a0dbb6e4354",
+      "compiled_revision": "ce418cbe46049c28ed7798c67a929a0dbb6e4354",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/classic-secret-policy.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "RED 4 PASS / 3 FAIL under client-mists; GREEN 7/7 new + 46 security_api + 15 admin_identity_api under client-mists; retail 122/122 after cherry-pick; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 edae62bd107133e94808f39f7015ff1fe3cd032a3edb4778387da80e09eb1333, report data/patch-api/evidence/12.0.5-session-2026-10-03/classic-secrets-review.md. No cargo check or broad suite."
     }
   ],
   "source_rows": [
@@ -2096,9 +2315,11 @@
     },
     {
       "source_id": "prose-2026-03-12-032",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "restricted-outfit-index"
+      ],
+      "status": "bounded-coverage",
+      "note": "Accepted independent Sol source review (main ran 4/4). Existing behavior proven by new tests; no producer change. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-12-035",
@@ -2302,9 +2523,11 @@
     },
     {
       "source_id": "prose-2026-03-25-092",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "navigation-nearest-party-token"
+      ],
+      "status": "bounded-coverage",
+      "note": "Accepted independent Sol source review (main ran 8/8 module). Host selection has no runtime producer; cached SuperTrackedFrame would error if party tracking became active without one. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-093",
@@ -2317,8 +2540,8 @@
       "capabilities": [
         "table-freeze-addon-read-only"
       ],
-      "status": "partial-development-green",
-      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 1/1). Partial until a strict 12.0.5 build executes the test. Bounded simulator proof, not native parity."
+      "status": "bounded-coverage",
+      "note": "Strict 12.0.5 build (--no-default-features --features sound,gui,casc,profile-retail,retail-12-0-5) executed in a worktree at aa29d7d7f: RED 0/1 with the old retail-12-1-0 gate ('12.0.5 must publish table.freeze'), GREEN 1/1 with the retail-12-0-5 gate. Logs strict-1205-red.log.txt / strict-1205-green.log.txt in data/patch-api/evidence/12.0.5-session-2026-10-03/. The strict build first needed tests/character_stats missing_apis gated to client-retail. Prior note: B98 accepted independent Sol source review of a4cce2db1 (main ran 1/1). Partial until a strict 12.0.5 build executes the test. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-095",
@@ -2342,9 +2565,11 @@
     },
     {
       "source_id": "prose-2026-03-25-104",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "unit-comparison-same-name-guid"
+      ],
+      "status": "partial-development-green",
+      "note": "Accepted independent Sol source review (main ran 5/5 module). Regression coverage only. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-105",
@@ -2402,9 +2627,11 @@
     },
     {
       "source_id": "prose-2026-03-25-114",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cooldown-ignore-gcd-authentication"
+      ],
+      "status": "partial-development-green",
+      "note": "Accepted independent Sol source review (main ran 5/5 module). Spell variant, coercion and consumers unproven. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-115",
@@ -2425,9 +2652,11 @@
     },
     {
       "source_id": "prose-2026-03-25-117",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "private-aura-sound-add-context"
+      ],
+      "status": "partial-development-green",
+      "note": "Accepted independent Sol source review (main ran 8/8). Secure-caller permission inferred; PvP flag has no runtime writer; row 117 superseded for Remove. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-120",
@@ -2545,9 +2774,11 @@
     },
     {
       "source_id": "prose-2026-03-31-150",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "aura-entry-instance-ids"
+      ],
+      "status": "partial-development-green",
+      "note": "Accepted independent Sol source review (main ran 8/8 module). Review rejected the first version for dropping entry events; fixed in the follow-up commit. Rekey happens only on host input. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-151",
@@ -2605,9 +2836,11 @@
     },
     {
       "source_id": "prose-2026-03-31-168",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "private-aura-sound-add-context"
+      ],
+      "status": "bounded-coverage",
+      "note": "Accepted independent Sol source review (main ran 8/8). Secure-caller permission inferred; PvP flag has no runtime writer; row 117 superseded for Remove. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-169",
@@ -2652,9 +2885,11 @@
     },
     {
       "source_id": "prose-2026-03-31-174",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "follower-nameplate-display"
+      ],
+      "status": "partial-development-green",
+      "note": "Accepted independent Sol source review (main ran 7/7). Query only; nameplate consumers are outside the simulator's modeled surface; pet/vehicle default changed. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-177",
@@ -2830,21 +3065,25 @@
     },
     {
       "source_id": "prose-2026-04-17-213",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "classic-secret-policy"
+      ],
+      "status": "partial-development-green",
+      "note": "Accepted independent Sol source review (main ran 7/7 new + 46 security_api + 15 admin_identity_api under client-mists; retail 122/122 after cherry-pick). One Classic profile executed; line 214's chat/guild/combat-log clauses untested. Row 215 (documentation cleanup) stays pending. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-04-17-214",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "12.0.5-api-changes.txt:214 says \"The new chat restrictions will also be inactive in Classic\" and \"The existing pre-Midnight security systems (taint, restricted actions, etc.) will still be active of course.\" It also requires unchanged Classic combat logs, inactive Midnight guild/API restrictions and available duration/curve objects. Checked client-profile selection, security registration and scout accounting: individual constructors or chat tests do not establish this conjunction. Missing named guild/other API inventory, combat-log payload scope and per-profile epoch matrix. Unblock with that authoritative matrix and real allowed/denied/event/object fixtures across its profiles. Not metadata-only; neither Classic secret-disablement nor blanket removal of protected-action checks closes it. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
+      "capabilities": [
+        "classic-secret-policy"
+      ],
+      "status": "partial-development-green",
+      "note": "Accepted independent Sol source review (main ran 7/7 new + 46 security_api + 15 admin_identity_api under client-mists; retail 122/122 after cherry-pick). One Classic profile executed; line 214's chat/guild/combat-log clauses untested. Row 215 (documentation cleanup) stays pending. Bounded simulator proof, not native parity. Prior note: 12.0.5-api-changes.txt:214 says \"The new chat restrictions will also be inactive in Classic\" and \"The existing pre-Midnight security systems (taint, restricted actions, etc.) will still be active of course.\" It also requires unchanged Classic combat logs, inactive Midnight guild/API restrictions and available duration/curve objects. Checked client-profile selection, security registration and scout accounting: individual constructors or chat tests do not establish this conjunction. Missing named guild/other API inventory, combat-log payload scope and per-profile epoch matrix. Unblock with that authoritative matrix and real allowed/denied/event/object fixtures across its profiles. Not metadata-only; neither Classic secret-disablement nor blanket removal of protected-action checks closes it. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
     },
     {
       "source_id": "prose-2026-04-17-215",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "12.0.5-api-changes.txt:215 concerns upstream API documentation still referencing secrets on Classic and a general validation pass; no runtime delta beyond rows 213/214, whose bounded Classic correction is credited there (classic-secret-policy). Kept pending: nothing in the simulator can complete an upstream documentation cleanup, and it is not classified metadata-only because it restates the Classic non-secret claim."
     },
     {
       "source_id": "prose-2026-04-17-219",
@@ -2920,9 +3159,12 @@
     },
     {
       "source_id": "global api-C_ActionBar-IsOnBarOrSpecialBar-245",
-      "capabilities": ["action-bar-direct-membership"],
-      "status": "audit-pending",
-      "note": "B78 bounded PUBLIC direct-spell membership accepted670:11new+17companion PASS, startup[], scopedfmt/check0. Explicit aliases/effective assignments now modeled; native AllowedWhenTainted permission/resultsecrecy and special-bar membership remain unmodeled. Exact source stays pending; no full identifier/annotation/native/all-profile credit."
+      "capabilities": [
+        "action-bar-direct-membership",
+        "action-bar-special-membership"
+      ],
+      "status": "partial-development-green",
+      "note": "Accepted independent Sol source review (main ran 5/5 special-bar cases). Identifier grammar and secret permission unmodeled; special-bar acquisition is host-declared. Bounded simulator proof, not native parity. Prior note: B78 bounded PUBLIC direct-spell membership accepted670:11new+17companion PASS, startup[], scopedfmt/check0. Explicit aliases/effective assignments now modeled; native AllowedWhenTainted permission/resultsecrecy and special-bar membership remain unmodeled. Exact source stays pending; no full identifier/annotation/native/all-profile credit."
     },
     {
       "source_id": "global api-C_CatalogShop-GetProductInfo-247",
@@ -2976,9 +3218,11 @@
     },
     {
       "source_id": "global api-C_DelvesUI-GetTieredEntrancePDEID-260",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tiered-entrance-pdeid"
+      ],
+      "status": "bounded-coverage",
+      "note": "Accepted independent Sol source review (main ran 3/3 PDEID cases). Default changed from 77011 to 0 on every profile; tests are 12.0.5-gated. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_DelvesUI-HasActiveDelve-262",
@@ -3018,9 +3262,11 @@
     },
     {
       "source_id": "global api-C_HouseExterior-SelectCoreFixtureOption-270",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "house-exterior-core-fixture"
+      ],
+      "status": "bounded-coverage",
+      "note": "Accepted independent Sol source review (main ran 10/10). Two requirement items only partly tested (dye/aggregate preservation, duplicate options). Bounded simulator proof, not native parity."
     },
     {
       "source_id": "global api-C_HouseExterior-SelectFixtureOption-272",
@@ -4542,9 +4788,11 @@
     },
     {
       "source_id": "structures-HousingBundleInfo-641",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-bundle-structures"
+      ],
+      "status": "bounded-coverage",
+      "note": "Accepted independent Sol source review (main ran 6/6). Seed-only shape assertions are not RED evidence; all-profile execution not run. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "structures-HousingCatalogCategoryInfo-643",

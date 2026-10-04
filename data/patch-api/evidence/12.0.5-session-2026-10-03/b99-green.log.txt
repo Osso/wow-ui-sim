@@ -1,0 +1,394 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 342 tests
+test action_bar_membership::duplicate_membership_survives_one_removal_then_disappears_after_last ... ok
+test action_bar_membership::effective_direct_spell_assignment_matches ... ok
+test action_bar_membership::full_link_is_only_an_explicit_registry_alias_not_embedded_id_grammar ... ok
+test action_bar_membership::macro_and_outfit_overrides_exclude_direct_spell_until_removed ... ok
+test action_bar_membership::membership_and_alias_mutations_are_environment_local ... ok
+test action_bar_membership::membership_queries_leave_existing_inputs_unchanged ... ok
+test action_bar_membership::name_registry_replace_and_remove_are_live ... ok
+test action_bar_membership::registered_lowercase_name_resolves_case_normalized_public_input ... ok
+test action_bar_membership::registered_numeric_key_overrides_identity_and_string_requires_registry ... ok
+test action_bar_membership::slot_zero_alone_does_not_create_effective_membership ... ok
+test action_bar_membership::unassigned_spell_and_empty_bar_miss ... ok
+test admin_party_api::set_party_size_defaults_to_player_leader ... ok
+test admin_party_api::test_get_num_group_members_includes_player ... ok
+test admin_party_api::test_get_num_group_members_zero_when_no_party ... ok
+test admin_party_api::test_get_num_party_members_matches_subgroup_count ... ok
+test admin_party_api::test_get_num_raid_members_counts_raid_including_player ... ok
+test admin_party_api::test_get_num_raid_members_zero_for_party_size_under_six ... ok
+test admin_party_api::test_get_num_subgroup_members_matches_party_size ... ok
+test admin_party_api::test_get_raid_roster_info_covers_forced_party_raid_frames ... ok
+test admin_party_api::test_get_raid_roster_info_covers_player_and_all_party_members ... ok
+test admin_party_api::test_group_has_offline_member_defaults_false ... ok
+test admin_party_api::test_group_queries_switch_between_solo_and_grouped_states ... ok
+test admin_party_api::test_party_category_queries_only_model_home_party ... ok
+test admin_party_api::test_raid_roster_info_has_row_for_every_group_member ... ok
+test admin_party_api::test_raid_roster_info_includes_player_and_party_members ... ok
+test admin_party_api::test_set_party_leader_to_party_member_updates_group_leader_queries ... ok
+test admin_party_api::test_set_party_leader_zero_restores_player_leadership ... ok
+test admin_party_api::test_set_party_member_class_readable_via_unit_class ... ok
+test admin_party_api::test_set_party_member_does_not_affect_other_slots ... ok
+test admin_party_api::test_set_party_member_health_current ... ok
+test admin_party_api::test_set_party_member_health_does_not_affect_other_member ... ok
+test admin_party_api::test_set_party_member_health_max ... ok
+test admin_party_api::test_set_party_member_health_second_member ... ok
+test admin_party_api::test_set_party_member_level_readable_via_unit_level ... ok
+test admin_party_api::test_set_party_member_name_readable_via_unit_name ... ok
+test admin_party_api::test_set_party_member_second_slot ... ok
+test admin_party_api::test_set_party_size_defaults_leadership_to_player ... ok
+test admin_party_api::test_set_party_size_nonzero_means_in_group ... ok
+test admin_party_api::test_set_party_size_zero_means_not_in_group ... ok
+test blizzard_quest_navigation_loads::blizzard_quest_navigation_appears_in_eager_game_discovery ... ok
+test blizzard_quest_navigation_loads::blizzard_quest_navigation_appears_in_full_addon_inventory ... ok
+test blizzard_quest_navigation_loads::blizzard_quest_navigation_find_toc_resolves_bare_variant ... ok
+test blizzard_quest_navigation_loads::blizzard_quest_navigation_toc_declares_metadata_in_raw_bytes ... ok
+test blizzard_quest_navigation_loads::blizzard_quest_navigation_toc_lists_one_xml_file ... ok
+test blizzard_quest_navigation_loads::blizzard_quest_navigation_toc_pins_eager_no_lod_no_deps ... ok
+test c_navigation_probes::navigation_fallbacks_return_safe_empty_defaults ... ok
+test catalog_shop_product_structures::additional_product_pmt_urls_preserve_order_and_string_type ... ok
+test catalog_shop_product_structures::all_nullable_fields_are_absent_and_required_arrays_exist ... ok
+test catalog_shop_product_structures::consumable_quantity_is_absent_from_populated_product ... ok
+test catalog_shop_product_structures::decor_quantity_round_trips_nested_numbers ... ok
+test catalog_shop_product_structures::environments_are_isolated ... ok
+test catalog_shop_product_structures::fully_populated_display_has_exact_declared_shape ... ok
+test catalog_shop_product_structures::fully_populated_product_has_exact_declared_shape ... ok
+test catalog_shop_product_structures::host_replacements_affect_new_snapshots_only ... ok
+test catalog_shop_product_structures::house_texture_atlas_round_trips ... ok
+test catalog_shop_product_structures::malformed_public_selectors_do_not_alias_stored_products ... ok
+test catalog_shop_product_structures::maps_use_exact_keys_without_product_display_cross_lookup ... ok
+test catalog_shop_product_structures::preview_bg_override_product_url_round_trips ... ok
+test catalog_shop_product_structures::preview_small_bg_override_product_url_round_trips ... ok
+test catalog_shop_product_structures::returned_tables_and_every_nested_array_are_independent ... ok
+test catalog_shop_product_structures::unknown_ids_and_legacy_seed_ids_return_nil ... ok
+test catalog_shop_product_structures::zero_decor_counts_are_present_not_nil ... ok
+test character_stats::combat_rating_value_converts_with_crit_divisor ... ok
+test character_stats::explicit_inputs::each_scalar_reads_its_own_configured_input ... ok
+test character_stats::explicit_inputs::environments_do_not_share_inputs ... ok
+test character_stats::explicit_inputs::expertise_triples_are_ordered_and_independent ... ok
+test character_stats::explicit_inputs::pet_spell_bonus_is_optional_and_independent_of_player_stats ... ok
+test character_stats::explicit_inputs::restricted_tainted_callers_receive_opaque_configured_outputs ... ok
+test character_stats::explicit_inputs::restriction_toggle_preserves_configured_values_and_arities ... ok
+test character_stats::explicit_inputs::scalar_inputs_update_live_without_moving_neighbours ... ok
+test character_stats::explicit_inputs::shield_block_is_not_armor_and_takes_no_unit ... ok
+test character_stats::explicit_inputs::unconfigured_inputs_return_public_zeros_with_declared_arity ... ok
+test character_stats::missing_apis::active_power_regen_selects_pool_and_tracks_updates ... ok
+test character_stats::missing_apis::effective_attack_power_preserves_five_distinct_fields_and_unavailable_shape ... ok
+test character_stats::missing_apis::mastery_tracks_existing_rating_and_effect_component ... ok
+test character_stats::missing_apis::missing_stats_tainted_callers_receive_opaque_host_outputs ... ok
+test character_stats::missing_apis::missing_stats_toggle_preserves_all_values_and_arities ... ok
+test character_stats::missing_apis::override_ap_by_spell_power_tracks_conversion_percentage ... ok
+test character_stats::missing_apis::override_spell_power_by_ap_tracks_independent_conversion_percentage ... ok
+test character_stats::missing_apis::pet_melee_haste_is_independent_and_missing_pet_is_zero_guess ... ok
+test character_stats::missing_apis::requested_power_regen_selects_input_not_active_pool ... ok
+test character_stats::missing_apis::secret_selection_inputs_are_allowed_when_untainted ... ok
+test character_stats::missing_apis::spell_penetration_tracks_explicit_amount ... ok
+test character_stats::missing_apis::sturdiness_tracks_explicit_percentage_not_avoidance ... ok
+test character_stats::missing_apis::weapon_attack_power_uses_existing_guid_and_never_creates_entities ... ok
+test character_stats::stat_restriction::stat_restriction_absent_unit_shapes_and_constant_outputs ... ok
+test character_stats::stat_restriction::stat_restriction_all_supported_outputs_preserve_values_arity_and_toggle ... ok
+test character_stats::stat_restriction::stat_restriction_predicate_defaults_plain ... ok
+test character_stats::stat_restriction::stat_restriction_tainted_callers_receive_opaque_host_results ... ok
+test character_stats::test_combat_rating_bonus_is_percentage ... ok
+test character_stats::test_combat_rating_crit_positive ... ok
+test character_stats::test_combat_rating_haste_positive ... ok
+test character_stats::test_combat_rating_mastery_positive ... ok
+test character_stats::test_combat_rating_versatility_positive ... ok
+test character_stats::test_equip_increases_stats ... ok
+test character_stats::test_get_crit_chance_includes_base ... ok
+test character_stats::test_get_haste_positive ... ok
+test character_stats::test_get_mastery_effect_two_values ... ok
+test character_stats::test_get_versatility_bonus_positive ... ok
+test character_stats::test_paper_doll_combat_stat_helpers_return_safe_numbers ... ok
+test character_stats::test_stats_drop_to_base_with_no_gear ... ok
+test character_stats::test_unequip_reduces_stats ... ok
+test character_stats::test_unit_stat_returns_four_values ... ok
+test character_stats::test_unit_stat_stamina_high_with_gear ... ok
+test character_stats::test_unit_stat_strength_is_primary_for_paladin ... ok
+test character_stats::test_unit_stat_strength_positive_with_default_gear ... ok
+test cooldown_probes::charge_duration::charge_duration_active_recharge_uses_shared_interval_rate_and_runtime_clock ... ok
+test cooldown_probes::charge_duration::charge_duration_at_max_is_zero_span_fully_elapsed_at_query_time ... ok
+test cooldown_probes::charge_duration::charge_duration_empty_action_and_unresolved_book_have_no_recharge ... ok
+test cooldown_probes::charge_duration::charge_duration_noncharge_spell_does_not_fabricate_recharge_on_any_surface ... ok
+test cooldown_probes::charge_duration::charge_duration_snapshots_survive_changed_state_alias_mapping_and_clock ... ok
+test cooldown_probes::charge_duration::charge_duration_unknown_spell_and_alias_return_no_recharge ... ok
+test cooldown_probes::charge_duration::charge_queries_derive_all_five_fields_from_same_explicit_state ... ok
+test cooldown_probes::charge_duration::charge_query_tables_do_not_fabricate_counts_without_charge_input ... ok
+test cooldown_probes::charge_duration::charge_zero_max_input_is_not_a_configured_charge_spell ... ok
+test cooldown_probes::charge_duration::charge_zero_span_core_is_fully_elapsed_even_before_start_and_after_reset ... ok
+test cooldown_probes::cooldown_set_paused_isolates_instances ... ok
+test cooldown_probes::cooldown_set_paused_preserves_immediate_cooldown_times ... ok
+test cooldown_probes::cooldown_set_paused_preserves_model_scene_pause_state ... ok
+test cooldown_probes::cooldown_set_paused_returns_zero_values ... ok
+test cooldown_probes::cooldown_set_paused_updates_is_paused ... ok
+test cooldown_probes::get_action_cooldown_active_is_false_after_expiration ... ok
+test cooldown_probes::get_action_cooldown_active_is_false_for_zero_start ... ok
+test cooldown_probes::get_action_cooldown_active_tracks_admin_spell_assignment_and_clear ... ok
+test cooldown_probes::get_action_cooldown_duration_empty_inactive_and_expired_are_zero ... ok
+test cooldown_probes::get_action_cooldown_duration_reads_active_slot_and_runtime_clock ... ok
+test cooldown_probes::get_action_cooldown_duration_selects_later_ending_gcd ... ok
+test cooldown_probes::get_action_cooldown_duration_snapshots_slot_and_spell_state ... ok
+test cooldown_probes::get_action_cooldown_empty_slot_returns_zero ... ok
+test cooldown_probes::get_action_cooldown_resolves_bar_slot_through_spell ... ok
+test cooldown_probes::get_inventory_item_cooldown_reads_state_entry ... ok
+test cooldown_probes::get_inventory_item_cooldown_zero_when_no_cooldown ... ok
+test cooldown_probes::get_spell_autocast_always_false ... ok
+test cooldown_probes::get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias ... ok
+test cooldown_probes::get_spell_cooldown_duration_reads_active_spell_and_runtime_clock ... ok
+test cooldown_probes::get_spell_cooldown_duration_resolves_alias_and_snapshots_state ... ok
+test cooldown_probes::get_spell_cooldown_duration_selects_later_ending_gcd ... ok
+test cooldown_probes::get_spell_cooldown_reads_spell_cooldowns_entry ... ok
+test cooldown_probes::get_spell_cooldown_zero_when_no_cooldown ... ok
+test cooldown_probes::get_spell_level_learned_one_for_known_spell ... ok
+test cooldown_probes::get_spell_level_learned_zero_for_unknown_spell ... ok
+test cooldown_probes::ignore_gcd::ignore_gcd_only_gcd_returns_zero_individual_interval ... ok
+test cooldown_probes::ignore_gcd::ignore_gcd_only_spell_and_empty_preserve_zero_object_contract ... ok
+test cooldown_probes::ignore_gcd::ignore_gcd_overlap_selects_individual_interval_on_all_three_surfaces ... ok
+test cooldown_probes::ignore_gcd::ignore_gcd_snapshots_keep_interval_and_runtime_clock_after_model_changes ... ok
+test cooldown_probes::ignore_gcd::ignore_gcd_spell_ending_later_and_expired_spell ... ok
+test cooldown_probes::ignore_gcd::ignore_gcd_unknown_inputs_do_not_invent_slot_spell_or_bank_mappings ... ok
+test cooldown_probes::spell_bonus_damage_and_healing_share_intellect_bucket ... ok
+test delves_api_inputs::active_delve_does_not_access_secret_extras_for_either_caller ... ok
+test delves_api_inputs::active_delve_reads_live_host_boolean_and_ignores_all_extras ... ok
+test delves_api_inputs::curio_link_rejects_invalid_public_arguments ... ok
+test delves_api_inputs::curio_link_uses_aliases_rarity_and_live_host_records_without_mutation ... ok
+test delves_api_inputs::curio_rarity_is_never_secret_even_after_gc_and_for_tainted_callers ... ok
+test delves_api_inputs::delve_inputs_are_isolated_between_environments ... ok
+test delves_api_inputs::eligibility_authenticates_secret_map_before_validation_or_mutation ... ok
+test delves_api_inputs::eligibility_invalid_inputs_preserve_last_request ... ok
+test delves_api_inputs::eligibility_request_records_map_and_returns_zero_values ... ok
+test delves_ui::delves_ui_entrance_methods_use_seeded_tier_state ... ok
+test duration_core::duration_copy_assign_preserves_receiver_identity_and_independent_timing ... ok
+test duration_core::duration_copy_assign_rejects_missing_or_wrong_source_without_mutation ... ok
+test duration_core::duration_copy_assign_self_keeps_state_and_returns_nothing ... ok
+test duration_core::duration_copy_assign_shares_clock_reference_but_rebinds_independently ... ok
+test duration_core::duration_copy_assign_unbound_source_clears_target_clock ... ok
+test duration_core::duration_copy_preserves_timing_and_returns_one_independent_object ... ok
+test duration_core::duration_copy_shares_clock_reference_but_rebinds_independently ... ok
+test duration_core::duration_core_default_clock_and_instances ... ok
+test duration_core::duration_core_end_span_reset_and_validation ... ok
+test duration_core::duration_core_manual_progress_rate_and_rewind ... ok
+test duration_core::duration_core_set_to_defaults_clears_configured_timing_and_clock ... ok
+test duration_core::duration_curve_color_results_preserve_rgba_for_all_four_queries ... ok
+test duration_core::duration_curve_elapsed_percent_is_modifier_invariant ... ok
+test duration_core::duration_curve_elapsed_seconds_follow_clock_and_modifiers ... ok
+test duration_core::duration_curve_invalid_bound_clock_preserves_duration_and_curve_state ... ok
+test duration_core::duration_curve_invalid_modifiers_preserve_duration_and_curve_state ... ok
+test duration_core::duration_curve_live_point_reconfiguration_changes_all_queries ... ok
+test duration_core::duration_curve_missing_and_wrong_curves_are_rejected_without_mutation ... ok
+test duration_core::duration_curve_remaining_percent_is_modifier_invariant ... ok
+test duration_core::duration_curve_remaining_seconds_follow_clock_and_modifiers ... ok
+test duration_core::duration_curve_unsupported_color_interpolation_propagates_evaluator_error ... ok
+test duration_core::duration_percent_rejects_invalid_bound_clock_without_mutation ... ok
+test duration_core::duration_percent_rejects_unknown_modifier_without_mutation ... ok
+test duration_core::duration_percent_tracks_clock_boundaries_and_rewind ... ok
+test duration_core::duration_percent_zero_spans_follow_epoch_elapsed_policy ... ok
+test duration_core::retail_native_aura_button_preserves_wrapped_duration_arguments ... ok
+test duration_core::retail_native_custom_aura_reads_wrapped_asset_fields ... ok
+test follower_nameplate_display::follower_display_authenticates_host_secret_token_and_restores_addon_context ... ok
+test follower_nameplate_display::follower_display_classification_follows_guid_not_target_slot ... ok
+test follower_nameplate_display::follower_display_classification_is_environment_local ... ok
+test follower_nameplate_display::follower_display_classification_preserves_npc_identity_and_can_be_removed ... ok
+test follower_nameplate_display::follower_display_flag_does_not_imply_friendliness ... ok
+test follower_nameplate_display::follower_display_query_does_not_fabricate_pet_vehicle_or_missing_units ... ok
+test follower_nameplate_display::follower_display_query_preserves_secure_and_addon_stack_taint ... ok
+test house_exterior::current_house_exterior_type_returns_seeded_type_and_name ... ok
+test house_exterior::house_exterior_attachment_queries_and_hidden_toggle_use_seeded_state ... ok
+test house_exterior::house_exterior_size_options_return_seeded_options ... ok
+test house_exterior::house_exterior_type_options_return_seeded_options ... ok
+test house_exterior_core_fixture::core_authenticates_original_arguments_before_parsing_or_lookup ... FAILED
+test house_exterior_core_fixture::core_detach_preserves_placements_and_inventory ... ok
+test house_exterior_core_fixture::core_different_style_default_and_explicit_store_commit_inventory ... ok
+test house_exterior_core_fixture::core_host_updates_empty_defaults_and_environment_isolation ... ok
+test house_exterior_core_fixture::core_mixed_variants_reject_before_storing_the_valid_stack ... ok
+test house_exterior_core_fixture::core_recolor_reparents_even_when_store_is_requested ... ok
+test house_exterior_core_fixture::core_rejections_are_atomic_and_do_not_publish_events ... ok
+test house_exterior_core_fixture::core_same_selection_does_not_store_or_detach_attachments ... ok
+test house_exterior_core_fixture::core_storage_callbacks_reenter_committed_selection_without_outer_overwrite ... ok
+test house_exterior_core_fixture::core_store_validates_all_counts_before_mutating_any_placement ... ok
+test housing_bundle_structures::housing_bundle_declared_shape_order_and_legacy_extensions ... ok
+test housing_bundle_structures::housing_bundle_empty_state_optional_price_and_zero_values ... ok
+test housing_bundle_structures::housing_bundle_featured_snapshots_follow_record_updates_and_removal ... ok
+test housing_bundle_structures::housing_bundle_invalid_selectors_do_not_mutate_records ... ok
+test housing_bundle_structures::housing_bundle_non_decor_contents_disable_preview ... ok
+test housing_bundle_structures::housing_bundle_seed_and_market_action_share_state_on_every_profile ... ok
+test housing_catalog::housing_catalog_cart_size_limit_returns_seeded_limit ... ok
+test housing_catalog::housing_catalog_empty_surface_remains_registered ... ok
+test housing_catalog::housing_catalog_storefront_and_market_methods_use_seeded_state ... ok
+test housing_catalog::housing_preview_cart_state_round_trips_and_promotes ... ok
+test patch_12_0_5_navigation_aura_entry::aura_added_after_entry_is_queryable_without_rekeying_survivors ... ok
+test patch_12_0_5_navigation_aura_entry::aura_entry_admin_global_and_loader_dispatch_use_the_same_transition ... ok
+test patch_12_0_5_navigation_aura_entry::aura_entry_invalid_plan_is_atomic_and_does_not_deliver_entry_event ... ok
+test patch_12_0_5_navigation_aura_entry::aura_entry_rekeys_before_each_entry_event_consumer_without_payload_loss ... ok
+test patch_12_0_5_navigation_aura_entry::aura_entry_rekeys_party_helpful_and_harmful_stores_without_changing_members ... ok
+test patch_12_0_5_navigation_aura_entry::navigation_addon_denial_preserves_host_selection_and_caller_taint ... ok
+test patch_12_0_5_navigation_aura_entry::navigation_authorizes_before_reading_absent_host_selection ... ok
+test patch_12_0_5_navigation_aura_entry::navigation_trusted_results_follow_explicit_host_selection ... ok
+test pdeid_specialbar::pdeid_default_is_exactly_one_public_numeric_zero ... ok
+test pdeid_specialbar::pdeid_reads_live_scalar_including_zero_and_storage_boundary ... ok
+test pdeid_specialbar::pdeid_updates_are_environment_local ... ok
+test pdeid_specialbar::special_membership_is_live_union_not_direct_slot_assignment ... ok
+test pdeid_specialbar::special_membership_preserves_public_validation_and_unmodeled_secret_boundary ... ok
+test pdeid_specialbar::special_membership_queries_are_read_only_and_environment_local ... ok
+test pdeid_specialbar::special_membership_survives_direct_macro_and_outfit_shadows ... ok
+test pdeid_specialbar::special_membership_uses_live_alias_resolution_not_link_grammar ... ok
+test private_aura_sound_add_context::actual_full_deprecated_chunk_preserves_add_context_and_removal ... ok
+test private_aura_sound_add_context::allocator_avoids_host_ids_and_exhaustion_returns_one_nil ... ok
+test private_aura_sound_add_context::each_context_denies_addon_without_consuming_id_then_recovers ... ok
+test private_aura_sound_add_context::malformed_inputs_leave_host_registration_and_allocator_unchanged ... ok
+test private_aura_sound_add_context::modern_authenticates_both_arguments_before_trigger_validation ... ok
+test private_aura_sound_add_context::ordinary_tainted_combat_add_copies_real_payload_and_removes_it ... ok
+test private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon ... FAILED
+test private_aura_sound_add_context::secure_caller_registers_in_all_contexts_and_environments_are_isolated ... ok
+test private_aura_sound_removal::actual_cached_deprecated_file_keeps_legacy_removal_durable_after_bootstrap ... ok
+test private_aura_sound_removal::direct_modern_and_legacy_removers_share_real_state ... ok
+test private_aura_sound_removal::empty_default_has_no_acquired_sound_ids ... ok
+test private_aura_sound_removal::host_replacement_changes_the_current_removal_set ... ok
+test private_aura_sound_removal::public_numeric_u32_endpoints_remove_only_their_ids ... ok
+test private_aura_sound_removal::public_tainted_closure_removes_live_id_without_caller_or_combat_gate ... ok
+test private_aura_sound_removal::real_rooted_vm_secrets_reject_secure_without_mutation_or_declassification ... ok
+test private_aura_sound_removal::real_rooted_vm_secrets_reject_tainted_without_mutation_or_declassification ... ok
+test private_aura_sound_removal::removal_is_environment_local_and_leaves_other_maps_unchanged ... ok
+test private_aura_sound_removal::repeated_removal_is_a_valid_zero_result_noop ... ok
+test private_aura_sound_removal::seeded_removal_is_immediate_and_returns_zero_values ... ok
+test private_aura_sound_removal::strict_invalid_arguments_reject_without_mutation_then_allow_public_recovery ... ok
+test private_aura_sound_removal::unknown_valid_id_preserves_all_live_ids ... ok
+test restricted_outfit_index::real_cached_helper_preserves_original_getter_secret_boundary ... ok
+test restricted_outfit_index::real_restricted_environment_keeps_direct_tables_forbidden ... ok
+test restricted_outfit_index::real_restricted_helper_output_drives_existing_outfit_macro_consumer ... ok
+test restricted_outfit_index::real_restricted_helper_reads_live_catalog_and_is_environment_local ... ok
+test retail_12_0_5_partial_104_114::ignore_gcd_book_authenticates_flag_before_missing_entry_return ... ok
+test retail_12_0_5_partial_104_114::ignore_gcd_secure_secret_flags_select_action_and_book_intervals ... ok
+test retail_12_0_5_partial_104_114::ignore_gcd_selected_objects_drive_cooldown_widgets_after_state_changes ... ok
+test retail_12_0_5_partial_104_114::ignore_gcd_tainted_secret_flags_are_denied_without_losing_taint ... ok
+test retail_12_0_5_partial_104_114::unit_permissions_compare_distinct_guids_despite_identical_names ... ok
+test security_api::addon_tainted_global_helper_taints_blizzard_call_path ... ok
+test security_api::addon_tainted_table_slot_does_not_make_table_secret ... ok
+test security_api::native_secret_contents_remain_inaccessible_in_public_table ... ok
+test security_api::test_admin_can_mark_frame_protected_for_internal_setup ... ok
+test security_api::test_can_change_protected_state_allows_secure_and_out_of_combat_calls ... ok
+test security_api::test_can_change_protected_state_matches_lockdown_rules ... ok
+test security_api::test_canaccessallvalues_all_clean ... ok
+test security_api::test_canaccessallvalues_one_tainted ... ok
+test security_api::test_canaccesstable_clean ... ok
+test security_api::test_canaccessvalue_tainted ... ok
+test security_api::test_canaccessvalue_untainted ... ok
+test security_api::test_execute_attribute_calls_function_attribute_and_returns_success_tuple ... ok
+test security_api::test_execute_attribute_rejects_unprotected_string_body ... ok
+test security_api::test_execute_attribute_runs_protected_string_body_with_frame_refs ... ok
+test security_api::test_forceinsecure ... ok
+test security_api::test_frame_identity_slot_can_redirect_method_receiver ... ok
+test security_api::test_frame_identity_slots_dispatch_surrogate_methods ... ok
+test security_api::test_hooksecurefunc_global ... ok
+test security_api::test_hooksecurefunc_table ... ok
+test security_api::test_issecretvalue_tainted ... ok
+test security_api::test_issecretvalue_untainted ... ok
+test security_api::test_issecure_returns_true ... ok
+test security_api::test_issecurevariable_detects_taint ... ok
+test security_api::test_issecurevariable_returns_true ... ok
+test security_api::test_loadstring_taints ... ok
+test security_api::test_party_full_name_marks_name_and_realm_secret ... ok
+test security_api::test_party_roster_name_is_secret_value ... ok
+test security_api::test_protect_methods_are_not_public_addon_surface ... ok
+test security_api::test_scrub_helpers_are_passthrough ... ok
+test security_api::test_secure_handler_stubs_exist ... ok
+test security_api::test_secure_handler_unwrap_script_restores_original_handler ... ok
+test security_api::test_secure_handlers_store_frame_refs_and_execute_snippets ... ok
+test security_api::test_secure_map_rejects_secret_keys_and_values ... ok
+test security_api::test_securecall ... ok
+test security_api::test_securecall_accepts_global_function_name ... ok
+test security_api::test_securecall_clears_taint_for_nested_closures ... ok
+test security_api::test_securecall_restores_taint ... ok
+test security_api::test_securecallfunction ... ok
+test security_api::test_securecallfunction_passes_table_self_to_unbound_method ... ok
+test security_api::test_securecmdoptionparse_matches_modifier_and_comma_conditions ... ok
+test security_api::test_securecmdoptionparse_returns_nil_when_no_clause_matches ... ok
+test security_api::test_securecmdoptionparse_single_option ... ok
+test security_api::test_securecmdoptionparse_supports_harm_and_unit_override ... ok
+test security_api::test_securecmdoptionparse_uses_fallback_when_condition_is_false ... ok
+test security_api::test_securecmdoptionparse_uses_first_matching_combat_clause ... ok
+test security_api::test_secureexecuterange ... ok
+test security_api::test_table_containing_party_identity_is_not_accessible ... ok
+test spell_book_cooldown_outputs::current::book_dynamic_real_slot_selects_alternate_spell_not_slot_number ... ok
+test spell_book_cooldown_outputs::current::book_invalid_missing_and_actual_offspec_slots_return_one_nil ... ok
+test spell_book_cooldown_outputs::current::book_other_or_missing_banks_never_fabricate_player_results ... ok
+test spell_book_cooldown_outputs::current::book_public_expired_intervals_are_zero ... ok
+test spell_book_cooldown_outputs::current::book_public_gcd_only_uses_real_model ... ok
+test spell_book_cooldown_outputs::current::book_public_no_cooldown_is_enabled_inactive ... ok
+test spell_book_cooldown_outputs::current::book_public_overlap_selects_latest_ending_gcd ... ok
+test spell_book_cooldown_outputs::current::book_public_spell_only_uses_real_model ... ok
+test spell_book_cooldown_outputs::current::book_public_wrong_types_use_inferred_nil_not_new_type_errors ... ok
+test spell_book_cooldown_outputs::current::book_secure_actual_secret_numeric_selectors_resolve_real_identity ... ok
+test spell_book_cooldown_outputs::current::book_tainted_secret_selectors_deny_before_unknown_identity ... ok
+test spell_book_cooldown_outputs::current::flag_off_returns_public_snapshot_without_declassifying_old_roots ... ok
+test spell_book_cooldown_outputs::current::live_model_changes_and_independent_environments_remain_isolated ... ok
+test spell_book_cooldown_outputs::current::queries_are_read_only_without_charge_or_action_fabrication ... ok
+test spell_book_cooldown_outputs::current::required_booleans_and_five_field_shape_stay_public ... ok
+test spell_book_cooldown_outputs::current::restricted_both_namespaces_preserve_all_interval_payloads ... ok
+test spell_book_cooldown_outputs::current::restriction_flag_is_independent_of_combat_and_stat_policy ... ok
+test spell_book_cooldown_outputs::current::spell_public_expired_intervals_are_zero ... ok
+test spell_book_cooldown_outputs::current::spell_public_gcd_only_interval ... ok
+test spell_book_cooldown_outputs::current::spell_public_no_cooldown_is_enabled_inactive ... ok
+test spell_book_cooldown_outputs::current::spell_public_overlap_selects_latest_ending_gcd ... ok
+test spell_book_cooldown_outputs::current::spell_public_spell_only_interval ... ok
+test spell_book_cooldown_outputs::current::spell_strict_u32_parser_and_existing_secret_rejection_are_preserved ... ok
+test spell_book_cooldown_outputs::current::table_mutation_and_replacement_do_not_mutate_other_snapshots ... ok
+test spell_book_cooldown_outputs::current::tainted_arithmetic_denial_preserves_roots_and_recovery ... ok
+test spell_book_cooldown_outputs::current::tainted_copy_and_gc_keep_actual_wrapper_metadata_and_payloads ... ok
+test spell_book_cooldown_outputs::current::tainted_public_selectors_preserve_caller_and_public_booleans ... ok
+test unit_comparison_permissions::comparison_permissions_base_tokens_allow_even_restricted_counterparts ... ok
+test unit_comparison_permissions::comparison_permissions_group_and_pet_tokens_allow_simple_counterparts ... ok
+test unit_comparison_permissions::comparison_permissions_group_and_pet_tokens_deny_restricted_counterparts ... ok
+test unit_comparison_permissions::comparison_permissions_nonbase_pairs_are_denied_even_when_identical ... ok
+test unit_comparison_permissions::comparison_permissions_preserve_missing_argument_and_type_conversion_controls ... ok
+test unit_comparison_permissions::comparison_permissions_typed_secrets_require_untainted_callers ... ok
+
+failures:
+
+---- house_exterior_core_fixture::core_authenticates_original_arguments_before_parsing_or_lookup stdout ----
+[ 20.919s] [Startup] WowLuaEnv::new begin
+[ 20.920s] [Startup] SimState::default complete in 1.46ms
+[ 20.920s] [Startup] rilua VM created in 85.53µs
+[ 20.920s] [Startup] builtin frames initialized in 47.18µs
+[ 20.920s] [Startup] template registry cleared in 4.41µs
+[ 20.920s] [Startup] intrinsic templates registered in 6.08µs
+[ 20.920s] [Startup] initial app_data lua handle installed in 516.00ns
+[ 21.035s] [Startup] init_lua_state complete in 114.50ms
+[ 21.035s] [Startup] final app_data lua handle installed in 105.00ns
+[ 21.035s] [Startup] initial screen globals installed in 158.36µs
+[ 21.035s] [Startup] WowLuaEnv::new complete
+
+thread 'house_exterior_core_fixture::core_authenticates_original_arguments_before_parsing_or_lookup' (931925) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/house_exterior_core_fixture.rs:257:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon stdout ----
+[ 29.239s] [Startup] WowLuaEnv::new begin
+[ 29.240s] [Startup] SimState::default complete in 1.36ms
+[ 29.240s] [Startup] rilua VM created in 84.14µs
+[ 29.240s] [Startup] builtin frames initialized in 49.08µs
+[ 29.240s] [Startup] template registry cleared in 4.84µs
+[ 29.240s] [Startup] intrinsic templates registered in 6.60µs
+[ 29.240s] [Startup] initial app_data lua handle installed in 812.00ns
+[ 29.340s] [Startup] init_lua_state complete in 99.80ms
+[ 29.340s] [Startup] final app_data lua handle installed in 321.00ns
+[ 29.340s] [Startup] initial screen globals installed in 129.18µs
+[ 29.340s] [Startup] WowLuaEnv::new complete
+
+thread 'private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon' (932683) panicked at /home/osso-test/Projects/wow/wow-ui-sim/tests/private_aura_sound_add_context.rs:40:8:
+actual stamped addon closure and outer secure recovery: Lua(Runtime(RuntimeError { message: "authenticate later secret field before malformed early public field", level: 0, traceback: [] }))
+
+
+failures:
+    house_exterior_core_fixture::core_authenticates_original_arguments_before_parsing_or_lookup
+    private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon
+
+test result: FAILED. 340 passed; 2 failed; 0 ignored; 0 measured; 9930 filtered out; finished in 46.35s
+
+
+---STDERR---
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 15s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+error: test failed, to rerun pass `--test integration`
