@@ -46,12 +46,12 @@ fn register_training_grounds(state: &mut LuaState, ns: GcRef<Table>) -> LuaResul
 
 #[cfg(not(feature = "retail-12-1-5"))]
 fn register_training_grounds(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
-    use crate::lua_api::methods::{create_table, table_set};
     // Prevent the namespace fallback from fabricating PTR-only queries.
-    let removed = create_table(state);
-    table_set(state, removed, "IsTrainingGroundsArena", Val::Bool(true));
-    table_set(state, removed, "IsTrainingGroundsBG", Val::Bool(true));
-    table_set(state, Val::Table(ns), "__wow_removed_keys", removed);
+    crate::c_api::mark_namespace_keys_removed(
+        state,
+        ns,
+        &["IsTrainingGroundsArena", "IsTrainingGroundsBG"],
+    );
     Ok(())
 }
 
@@ -86,6 +86,8 @@ fn query_training_ground(state: &mut LuaState, kind: TrainingGroundKind) -> LuaR
 
 #[cfg(feature = "retail-12-1-0")]
 fn register_patch_12_1_c_pvp_surface(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
+    // 12.1.0 split the random Training Grounds join into arena/battleground calls.
+    crate::c_api::mark_namespace_keys_removed(state, ns, &["JoinRandomTrainingGround"]);
     table_set_rust_fn_static(state, ns, "CanSurrenderArena", can_surrender_arena)
 }
 

@@ -44,7 +44,6 @@
   "wt-global-api-C_LFGInfo.IsInMatchmadeRaidWithoutRoleRequirements-516",
   "wt-global-api-C_NeighborhoodInitiative.GetInitiativeTaskRewardScaling-523",
   "wt-global-api-C_PaperDollInfo.CancelTemporaryEnchantment-524",
-  "wt-global-api-C_PvP.JoinRandomTrainingGround-570",
   "wt-global-api-C_PvP.JoinRandomTrainingGroundArena-530",
   "wt-global-api-C_PvP.JoinRandomTrainingGroundBattleground-531",
   "wt-global-api-C_QuestHub.IsQuestCurrentlyRelatedToHub-602",

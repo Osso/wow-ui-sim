@@ -235,7 +235,9 @@ mod gamepad_action_bar_constants;
 mod helpers;
 mod registration;
 
-pub(crate) use helpers::{ensure_global_table, ensure_namespace, global_val, set_global_val};
+pub(crate) use helpers::{
+    ensure_global_table, ensure_namespace, global_val, mark_namespace_keys_removed, set_global_val,
+};
 pub use permanent_shims::c_map_api;
 pub(crate) use registration::{
     register_character_progression_tables, register_interaction_tables, register_item_power_tables,

@@ -106,22 +106,6 @@ pub fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> 
         is_macro_action_with_showtooltip,
     )?;
     #[cfg(not(feature = "retail-12-1-5"))]
-    {
-        use crate::lua_api::methods::{create_table, table_get, table_set};
-        let table = Val::Table(namespace);
-        let existing = table_get(state, table, "__wow_removed_keys");
-        let removed = if matches!(existing, Val::Table(_)) {
-            existing
-        } else {
-            create_table(state)
-        };
-        table_set(
-            state,
-            removed,
-            "IsMacroActionWithShowTooltip",
-            Val::Bool(true),
-        );
-        table_set(state, table, "__wow_removed_keys", removed);
-    }
+    super::mark_namespace_keys_removed(state, namespace, &["IsMacroActionWithShowTooltip"]);
     Ok(())
 }

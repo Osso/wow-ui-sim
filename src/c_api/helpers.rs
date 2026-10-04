@@ -63,6 +63,26 @@ pub(crate) fn ensure_namespace(
     Ok(table_ref)
 }
 
+/// Keep ordinary namespace lookup from fabricating retired members.
+pub(crate) fn mark_namespace_keys_removed(
+    state: &mut LuaState,
+    namespace: GcRef<Table>,
+    names: &[&str],
+) {
+    use crate::lua_api::methods::{create_table, table_get, table_set};
+    let table = Val::Table(namespace);
+    let existing = table_get(state, table, "__wow_removed_keys");
+    let removed = if matches!(existing, Val::Table(_)) {
+        existing
+    } else {
+        create_table(state)
+    };
+    for name in names {
+        table_set(state, removed, name, Val::Bool(true));
+    }
+    table_set(state, table, "__wow_removed_keys", removed);
+}
+
 pub(crate) fn set_table_array(state: &mut LuaState, table: Val, index: i64, value: Val) {
     let Val::Table(table_ref) = table else { return };
     if let Some(table) = state.gc.tables.get_mut(table_ref) {
