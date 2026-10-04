@@ -215,6 +215,8 @@ pub struct DiscordState {
     pub server_update_requested: bool,
     pub guild_lobby_update_requested: bool,
     pub user_id: Option<String>,
+    /// Known Discord user display names keyed by decimal user ID.
+    pub user_names: HashMap<String, String>,
     pub display_name_type: i32,
     pub servers: Vec<DiscordServer>,
     pub channels: Vec<DiscordChannel>,

@@ -50,6 +50,15 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         any(feature = "profile-retail", feature = "client-ptr")
     ))]
     viewed_slots::register(state, namespace)?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "CanPlayerTransmogSlot",
+        can_player_transmog_slot,
+    )?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(state, namespace, "IsTransmogEnabled", is_transmog_enabled)?;
     table_set_rust_fn_static(
         state,
         namespace,
@@ -62,6 +71,38 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         "SetOutfitSituationsEnabled",
         set_outfit_situations_enabled,
     )
+}
+
+/// `Enum.TransmogOutfitSlot` spans Head (0) through WeaponRanged (14).
+#[cfg(feature = "retail-12-1-0")]
+const TRANSMOG_SLOT_WEAPON_RANGED: i32 = 14;
+#[cfg(feature = "retail-12-1-0")]
+const HUNTER_CLASS_ID: i32 = 3;
+
+/// INFERRED: retail ranged weapons are Hunter-only, so only Hunters own a
+/// transmoggable ranged slot (Blizzard_Transmog hides the ranged preview
+/// toggle otherwise); every other outfit slot is available to all classes.
+#[cfg(feature = "retail-12-1-0")]
+fn can_player_transmog_slot(state: &mut LuaState) -> LuaResult<u32> {
+    let valid = match stack_val(state, 1) {
+        Val::Num(slot) if slot.fract() == 0.0 => match slot as i32 {
+            0..TRANSMOG_SLOT_WEAPON_RANGED => true,
+            TRANSMOG_SLOT_WEAPON_RANGED => {
+                borrow_state(state)?.player.class_index == HUNTER_CLASS_ID
+            }
+            _ => false,
+        },
+        _ => false,
+    };
+    state.push(Val::Bool(valid));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn is_transmog_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let enabled = borrow_state(state)?.transmog_enabled;
+    state.push(Val::Bool(enabled));
+    Ok(1)
 }
 
 fn get_outfit_situations_enabled(state: &mut LuaState) -> LuaResult<u32> {

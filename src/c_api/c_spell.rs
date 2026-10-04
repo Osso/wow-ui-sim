@@ -66,6 +66,16 @@ const SPELL_QUERY_METHODS: &[(&str, SpellScriptFn)] = &[
     #[cfg(feature = "base-spell-relationships")]
     ("GetBaseSpell", super::spell_base::get_base_spell),
     ("GetSpellDescription", get_spell_description),
+    #[cfg(feature = "retail-12-1-0")]
+    (
+        "GetSpellDescriptionForItemLocation",
+        get_spell_description_for_item_location,
+    ),
+    #[cfg(feature = "retail-12-1-0")]
+    (
+        "GetLastCategoryCooldownSource",
+        get_last_category_cooldown_source,
+    ),
     ("GetSpellQueueWindow", get_spell_queue_window),
     ("GetSpellInfo", get_spell_info),
     ("GetSpellTexture", get_spell_texture),
@@ -161,6 +171,47 @@ fn get_spell_description(state: &mut LuaState) -> LuaResult<u32> {
     let description = create_string(state, &description_text);
     state.push(description);
     Ok(1)
+}
+
+/// Item-scaled spell text is unmodeled, so the item location selects the plain
+/// description; unknown spells return nothing.
+#[cfg(feature = "retail-12-1-0")]
+fn get_spell_description_for_item_location(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(spell_id) = numeric_spell_id(state, 1).filter(|id| spells::get_spell(*id).is_some())
+    else {
+        return Ok(0);
+    };
+    let description_text = {
+        let sim = borrow_state(state)?;
+        crate::spell_description_resolver::resolve_spell_description_or_empty(&sim, spell_id)
+    };
+    let description = create_string(state, &description_text);
+    state.push(description);
+    Ok(1)
+}
+
+/// Most recent cooldown start among spells in `spellCategory`, with the item
+/// that triggered it when one did.
+#[cfg(feature = "retail-12-1-0")]
+fn get_last_category_cooldown_source(state: &mut LuaState) -> LuaResult<u32> {
+    let category = i32::from_stack(state, 1)?;
+    let source = {
+        let sim = borrow_state(state)?;
+        sim.spell_cooldowns
+            .iter()
+            .filter(|(spell_id, _)| sim.spell_cooldown_categories.get(spell_id) == Some(&category))
+            .max_by(|(_, left), (_, right)| left.start.total_cmp(&right.start))
+            .map(|(spell_id, _)| {
+                let item_id = sim.spell_cooldown_item_sources.get(spell_id).copied();
+                (*spell_id, item_id)
+            })
+    };
+    let Some((spell_id, item_id)) = source else {
+        return Ok(0);
+    };
+    state.push(Val::Num(f64::from(spell_id)));
+    state.push(item_id.map_or(Val::Nil, |id| Val::Num(f64::from(id))));
+    Ok(2)
 }
 
 fn get_spell_queue_window(state: &mut LuaState) -> LuaResult<u32> {

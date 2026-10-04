@@ -41,6 +41,10 @@ pub(super) fn register_delves_ui_surface(state: &mut LuaState) -> LuaResult<()> 
     for (name, func) in METHODS {
         table_set_rust_fn_static(state, ns, name, func)?;
     }
+    #[cfg(feature = "retail-12-1-0")]
+    for (name, func) in LAIR_METHODS {
+        table_set_rust_fn_static(state, ns, name, func)?;
+    }
     store_active_tier(state, DEFAULT_ACTIVE_TIER);
     Ok(())
 }
@@ -316,6 +320,40 @@ fn get_world_tier_difficulty_for_active_player(state: &mut LuaState) -> LuaResul
 fn has_active_delve(state: &mut LuaState) -> LuaResult<u32> {
     let active = crate::lua_api::methods::borrow_state(state)?.has_active_delve;
     state.push(Val::Bool(active));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+const LAIR_METHODS: [(&str, rilua::vm::closure::RustFn); 3] = [
+    ("HasActiveLair", has_active_lair),
+    ("HasActiveLFGLair", has_active_lfg_lair),
+    ("IsInLair", is_in_lair),
+];
+
+#[cfg(feature = "retail-12-1-0")]
+fn has_active_lair(state: &mut LuaState) -> LuaResult<u32> {
+    let active = crate::lua_api::methods::borrow_state(state)?.has_active_lair;
+    state.push(Val::Bool(active));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn has_active_lfg_lair(state: &mut LuaState) -> LuaResult<u32> {
+    let sim = crate::lua_api::methods::borrow_state(state)?;
+    let active = sim.has_active_lair && sim.active_lair_is_lfg;
+    drop(sim);
+    state.push(Val::Bool(active));
+    Ok(1)
+}
+
+/// Every lair is a delve (Blizzard InstanceDifficulty.lua), so the player is in
+/// the lair when the active delve they occupy is the party's active lair.
+#[cfg(feature = "retail-12-1-0")]
+fn is_in_lair(state: &mut LuaState) -> LuaResult<u32> {
+    let sim = crate::lua_api::methods::borrow_state(state)?;
+    let in_lair = sim.has_active_lair && sim.has_active_delve;
+    drop(sim);
+    state.push(Val::Bool(in_lair));
     Ok(1)
 }
 

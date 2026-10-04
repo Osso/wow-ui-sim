@@ -47,7 +47,33 @@ pub(super) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
     let table_ref = ensure_namespace(state, "C_Club")?;
     register_club_lookup_methods(state, table_ref)?;
     register_club_status_methods(state, table_ref)?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "SendTitleFriendRequest",
+        c_club_send_title_friend_request,
+    )?;
     Ok(())
+}
+
+/// Sends an in-game friend request to a guild club member, by their roster name.
+#[cfg(feature = "retail-12-1-0")]
+fn c_club_send_title_friend_request(state: &mut LuaState) -> LuaResult<u32> {
+    if !is_guild_club_arg(state) {
+        return Ok(0);
+    }
+    let member_id = i64::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    // Member 1 is the player; befriending yourself is not a request.
+    let name = index_from_member_id(member_id)
+        .filter(|index| *index != 0)
+        .and_then(|index| sim.world.guild_members.get(index))
+        .map(|member| member.name.clone());
+    if let Some(name) = name {
+        crate::c_api::c_battle_net_friend_search::record_title_friend_request(&mut *sim, &name);
+    }
+    Ok(0)
 }
 
 fn register_club_lookup_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> LuaResult<()> {

@@ -212,6 +212,18 @@ pub struct SimState {
     pub maw_powers: crate::c_api::c_spell_maw_powers::MawPowers,
     /// Explicit host active-delve state, independent of undeclared query arguments.
     pub has_active_delve: bool,
+    /// Host lair state: the party has an active lair (a delve variant).
+    pub has_active_lair: bool,
+    /// Whether the active lair group was formed through LFG matchmaking.
+    pub active_lair_is_lfg: bool,
+    /// Outgoing in-game ("title") friend requests by character name.
+    pub title_friend_requests: Vec<String>,
+    /// Host spell data: cooldown category of each spell that has one.
+    pub spell_cooldown_categories: HashMap<u32, i32>,
+    /// Item whose use started a spell's current cooldown, keyed by spell ID.
+    pub spell_cooldown_item_sources: HashMap<u32, i32>,
+    /// Account-level transmog availability; the simulator enables it.
+    pub transmog_enabled: bool,
     /// Host-owned entrance title; None is no title, not a synthetic location.
     #[cfg(feature = "retail-12-0-7")]
     pub delve_entrance_title: Option<String>,

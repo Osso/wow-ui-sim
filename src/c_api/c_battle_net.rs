@@ -56,6 +56,15 @@ fn register_texture_methods(state: &mut LuaState, table_ref: BattleNetTable) -> 
         "AreHighResTexturesInstalled",
         c_bnet_are_high_res_textures_installed,
     )?;
+    // INFERRED: installed high-res textures toggle in place; otherwise the
+    // client must download them and reload.
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "CanToggleHighResTexturesWithoutClientReload",
+        c_bnet_are_high_res_textures_installed,
+    )?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -100,6 +109,7 @@ fn register_patch_12_1_friend_query_methods(
     state: &mut LuaState,
     table_ref: BattleNetTable,
 ) -> LuaResult<()> {
+    super::c_battle_net_friend_search::register(state, table_ref)?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -288,7 +298,7 @@ fn friend_mut_by_index(friends: &mut [BnetFriend], friend_index: i32) -> Option<
 }
 
 #[cfg(feature = "retail-12-1-0")]
-fn string_array_from_lua_table(state: &LuaState, value: Val) -> Vec<String> {
+pub(super) fn string_array_from_lua_table(state: &LuaState, value: Val) -> Vec<String> {
     let Val::Table(table_ref) = value else {
         return Vec::new();
     };

@@ -198,6 +198,12 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             maw_powers: Default::default(),
             has_active_delve: false,
+            has_active_lair: false,
+            active_lair_is_lfg: false,
+            title_friend_requests: Vec::new(),
+            spell_cooldown_categories: HashMap::new(),
+            spell_cooldown_item_sources: HashMap::new(),
+            transmog_enabled: true,
             #[cfg(feature = "retail-12-0-7")]
             delve_entrance_title: None,
             #[cfg(feature = "retail-12-0-7")]

@@ -35,6 +35,7 @@ fn register_patch_12_1_discord_surface(
         get_discord_channel_name,
     )?;
     table_set_rust_fn_static(state, discord, "GetDiscordUserID", get_discord_user_id)?;
+    table_set_rust_fn_static(state, discord, "GetDiscordUserName", get_discord_user_name)?;
     table_set_rust_fn_static(state, discord, "GetDisplayNameType", get_display_name_type)?;
     table_set_rust_fn_static(state, discord, "GetGuildLinkStatus", get_guild_link_status)?;
     table_set_rust_fn_static(
@@ -107,6 +108,24 @@ fn get_discord_channel_name(state: &mut LuaState) -> LuaResult<u32> {
 fn get_discord_user_id(state: &mut LuaState) -> LuaResult<u32> {
     let user_id = borrow_state(state)?.discord.user_id.clone();
     push_optional_string(state, user_id.as_deref());
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn get_discord_user_name(state: &mut LuaState) -> LuaResult<u32> {
+    // ItemRefHandlers passes `tonumber(discordUserID)`; key both forms by decimal text.
+    let user_id = match crate::lua_bridge::stack_val(state, 1) {
+        Val::Num(id) => format!("{id:.0}"),
+        _ => Option::<String>::from_stack(state, 1)?.unwrap_or_default(),
+    };
+    // INFERRED: unknown users yield an empty name; the return is non-nilable.
+    let name = borrow_state(state)?
+        .discord
+        .user_names
+        .get(&user_id)
+        .cloned()
+        .unwrap_or_default();
+    push_optional_string(state, Some(&name));
     Ok(1)
 }
 

@@ -108,7 +108,7 @@ fn housing_blueprint_input_normalizes_hyperlinks() {
             return "trim"
         end
         if C_HousingBlueprint.UpdateBlueprintStringFromInput(link) ~= code then return "link" end
-        if select("#", C_HousingBlueprint.UpdateBlueprintStringFromInput("   ")) ~= 0 then
+        if select('#', C_HousingBlueprint.UpdateBlueprintStringFromInput("   ")) ~= 0 then
             return "empty"
         end
         return "ok"
@@ -150,4 +150,264 @@ fn housing_all_placement_budgets_map_budget_types() {
         return "ok"
         "#,
     );
+}
+
+#[test]
+fn discord_user_name_reads_known_users() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state()
+        .borrow_mut()
+        .discord
+        .user_names
+        .insert("123456789".to_string(), "Moira".to_string());
+    eval_ok(
+        &env,
+        r#"
+        if C_Discord.GetDiscordUserName(123456789) ~= "Moira" then return "numeric" end
+        if C_Discord.GetDiscordUserName("123456789") ~= "Moira" then return "string" end
+        if C_Discord.GetDiscordUserName(42) ~= "" then return "unknown" end
+        return "ok"
+        "#,
+    );
+}
+
+#[test]
+fn battle_net_search_friends_filters_seeded_friends() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().bnet_friends[1].friend_tags = vec!["raid".to_string()];
+    let search = |fields: &str| -> String {
+        env.eval(&format!(
+            r#"
+            local info = {{ searchText = "", isOnline = false, isOffline = false, isDND = false,
+                isAFK = false, isInQueue = false, isAvailableForQueue = false, tags = {{}} }}
+            for key, value in pairs({{ {fields} }}) do info[key] = value end
+            return table.concat(C_BattleNet.SearchFriends(info), ",")
+            "#
+        ))
+        .unwrap()
+    };
+    assert_eq!(search(""), "1,2");
+    assert_eq!(search(r#"searchText = "THR""#), "2");
+    assert_eq!(search(r#"searchText = "lightbringer""#), "1");
+    assert_eq!(search("isOnline = true"), "1");
+    assert_eq!(search("isOffline = true"), "2");
+    assert_eq!(search("isOnline = true, isOffline = true"), "1,2");
+    assert_eq!(search(r#"tags = { "raid" }"#), "2");
+    assert_eq!(search("isInQueue = true"), "");
+}
+
+#[test]
+fn title_friend_requests_record_by_name_and_club_member() {
+    use wow_ui_sim::lua_api::state::GuildMember;
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().world.guild_members = vec![
+        GuildMember {
+            name: "Uther".to_string(),
+            rank_index: 1,
+            online: true,
+        },
+        GuildMember {
+            name: "Jaina".to_string(),
+            rank_index: 2,
+            online: false,
+        },
+    ];
+    env.exec(
+        r#"
+        C_BattleNet.SendTitleFriendInviteByName("  Varian ")
+        C_BattleNet.SendTitleFriendInviteByName("varian")
+        C_BattleNet.SendTitleFriendInviteByName("")
+        C_Club.SendTitleFriendRequest("guild-0", 2)
+        C_Club.SendTitleFriendRequest("guild-0", 1)
+        C_Club.SendTitleFriendRequest("guild-0", 9)
+        C_Club.SendTitleFriendRequest("other-club", 2)
+        "#,
+    )
+    .unwrap();
+    assert_eq!(
+        env.state().borrow().title_friend_requests,
+        vec!["Varian".to_string(), "Jaina".to_string()]
+    );
+}
+
+#[test]
+fn battle_net_high_res_toggle_follows_installed_textures() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"SetCVar("useHighResTextures", "0")"#).unwrap();
+    let before: bool = env
+        .eval("return C_BattleNet.CanToggleHighResTexturesWithoutClientReload()")
+        .unwrap();
+    env.exec(r#"SetCVar("useHighResTextures", "1")"#).unwrap();
+    let after: bool = env
+        .eval("return C_BattleNet.CanToggleHighResTexturesWithoutClientReload()")
+        .unwrap();
+    assert!(!before);
+    assert!(after);
+}
+
+#[test]
+fn delves_lair_state_drives_lair_and_matchmade_raid_queries() {
+    let env = WowLuaEnv::new().unwrap();
+    let probe = r#"
+        return string.format("%s %s %s %s", tostring(C_DelvesUI.HasActiveLair()),
+            tostring(C_DelvesUI.HasActiveLFGLair()), tostring(C_DelvesUI.IsInLair()),
+            tostring(C_LFGInfo.IsInMatchmadeRaidWithoutRoleRequirements()))
+    "#;
+    let idle: String = env.eval(probe).unwrap();
+    assert_eq!(idle, "false false false false");
+    env.state().borrow_mut().has_active_lair = true;
+    let premade: String = env.eval(probe).unwrap();
+    assert_eq!(premade, "true false false false");
+    {
+        let mut state = env.state().borrow_mut();
+        state.active_lair_is_lfg = true;
+        state.has_active_delve = true;
+    }
+    let inside: String = env.eval(probe).unwrap();
+    assert_eq!(inside, "true true true false");
+    {
+        let mut state = env.state().borrow_mut();
+        let template = state.party_members[0].clone();
+        state.party_members = vec![template; 6];
+        state.party_group_active = true;
+    }
+    let raid: String = env.eval(probe).unwrap();
+    assert_eq!(raid, "true true true true");
+}
+
+#[test]
+fn spell_last_category_cooldown_source_tracks_latest_start() {
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.spell_cooldown_categories.insert(19750, 77);
+        state.spell_cooldown_categories.insert(642, 77);
+        state.spell_cooldown_item_sources.insert(642, 5512);
+    }
+    eval_ok(
+        &env,
+        r#"
+        if select('#', C_Spell.GetLastCategoryCooldownSource(77)) ~= 0 then return "idle" end
+        A_Admin.SetSpellCooldown(19750, 30)
+        local spellID, itemID = C_Spell.GetLastCategoryCooldownSource(77)
+        if spellID ~= 19750 or itemID ~= nil then return "first" end
+        return "ok"
+        "#,
+    );
+    std::thread::sleep(std::time::Duration::from_millis(5));
+    eval_ok(
+        &env,
+        r#"
+        A_Admin.SetSpellCooldown(642, 30)
+        local spellID, itemID = C_Spell.GetLastCategoryCooldownSource(77)
+        if spellID ~= 642 or itemID ~= 5512 then return "latest" end
+        if select('#', C_Spell.GetLastCategoryCooldownSource(78)) ~= 0 then return "other" end
+        return "ok"
+        "#,
+    );
+}
+
+#[test]
+fn spell_description_for_item_location_uses_spell_text() {
+    let env = WowLuaEnv::new().unwrap();
+    eval_ok(
+        &env,
+        r#"
+        local location = { equipmentSlotIndex = 16 }
+        local plain = C_Spell.GetSpellDescription(19750)
+        if plain == "" then return "fixture" end
+        if C_Spell.GetSpellDescriptionForItemLocation(19750, location) ~= plain then
+            return "description"
+        end
+        if select('#', C_Spell.GetSpellDescriptionForItemLocation(999999999, location)) ~= 0 then
+            return "unknown"
+        end
+        return "ok"
+        "#,
+    );
+}
+
+#[test]
+fn cancel_aura_by_instance_id_removes_player_buff_and_fires_unit_aura() {
+    let env = WowLuaEnv::new().unwrap();
+    eval_ok(
+        &env,
+        r#"
+        A_Admin.ClearBuffs()
+        A_Admin.AddBuff(21562, "Power Word: Fortitude", 135987, 0, 0)
+        A_Admin.AddDebuff(589, "Shadow Word: Pain", 136207, 18, 0, "Magic")
+        local buff = C_UnitAuras.GetAuraDataBySpellName("player", "Power Word: Fortitude")
+        local debuff = C_UnitAuras.GetAuraDataBySpellName("player", "Shadow Word: Pain")
+        local removed
+        local frame = CreateFrame("Frame")
+        frame:RegisterEvent("UNIT_AURA")
+        frame:SetScript("OnEvent", function(_, _, unit, info)
+            removed = unit == "player" and info.removedAuraInstanceIDs and info.removedAuraInstanceIDs[1]
+        end)
+        C_UnitAuras.CancelAuraByInstanceID("player", debuff.auraInstanceID)
+        if removed ~= nil then return "debuff-event" end
+        if not C_UnitAuras.GetAuraDataByAuraInstanceID("player", debuff.auraInstanceID) then
+            return "debuff-removed"
+        end
+        C_UnitAuras.CancelAuraByInstanceID("player", buff.auraInstanceID)
+        if removed ~= buff.auraInstanceID then return "event" end
+        if C_UnitAuras.GetAuraDataByAuraInstanceID("player", buff.auraInstanceID) then
+            return "buff-kept"
+        end
+        return "ok"
+        "#,
+    );
+}
+
+#[test]
+fn cancel_temporary_enchantment_clears_only_temporary_weapon_enchants() {
+    use wow_ui_sim::c_api::weapon_enchants::{TEMPORARY_ENCHANT_TYPE, WeaponEnchant};
+    let env = WowLuaEnv::new().unwrap();
+    let enchant = |enchant_type, enchant_id| WeaponEnchant {
+        enchant_type,
+        time_left: 60_000.0,
+        charges: 0,
+        enchant_id,
+        icon_id: 0,
+    };
+    {
+        let mut state = env.state().borrow_mut();
+        state.weapon_enchants[0] = vec![enchant(TEMPORARY_ENCHANT_TYPE, 7001), enchant(1, 3368)];
+        state.weapon_enchants[1] = vec![enchant(TEMPORARY_ENCHANT_TYPE, 7002)];
+    }
+    env.exec("C_PaperDollInfo.CancelTemporaryEnchantment(16); C_PaperDollInfo.CancelTemporaryEnchantment(5)")
+        .unwrap();
+    let state = env.state().borrow();
+    let main_hand: Vec<u32> = state.weapon_enchants[0].iter().map(|e| e.enchant_id).collect();
+    let off_hand: Vec<u32> = state.weapon_enchants[1].iter().map(|e| e.enchant_id).collect();
+    assert_eq!(main_hand, vec![3368]);
+    assert_eq!(off_hand, vec![7002]);
+}
+
+#[test]
+fn transmog_slot_availability_follows_player_class() {
+    let env = WowLuaEnv::new().unwrap();
+    let probe = r#"
+        local S = Enum.TransmogOutfitSlot
+        return string.format("%s %s %s %s", tostring(C_TransmogOutfitInfo.CanPlayerTransmogSlot(S.Head)),
+            tostring(C_TransmogOutfitInfo.CanPlayerTransmogSlot(S.WeaponMainHand)),
+            tostring(C_TransmogOutfitInfo.CanPlayerTransmogSlot(S.WeaponRanged)),
+            tostring(C_TransmogOutfitInfo.CanPlayerTransmogSlot(99)))
+    "#;
+    env.state().borrow_mut().player.class_index = 2;
+    let paladin: String = env.eval(probe).unwrap();
+    assert_eq!(paladin, "true true false false");
+    env.state().borrow_mut().player.class_index = 3;
+    let hunter: String = env.eval(probe).unwrap();
+    assert_eq!(hunter, "true true true false");
+}
+
+#[test]
+fn transmog_enabled_reads_account_availability() {
+    let env = WowLuaEnv::new().unwrap();
+    let enabled: bool = env.eval("return C_TransmogOutfitInfo.IsTransmogEnabled()").unwrap();
+    env.state().borrow_mut().transmog_enabled = false;
+    let disabled: bool = env.eval("return C_TransmogOutfitInfo.IsTransmogEnabled()").unwrap();
+    assert!(enabled);
+    assert!(!disabled);
 }

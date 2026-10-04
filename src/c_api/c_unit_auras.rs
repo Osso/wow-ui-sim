@@ -27,6 +27,13 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetUnitAuraInstanceIDs",
         get_unit_aura_instance_ids,
     )?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(
+        state,
+        public,
+        "CancelAuraByInstanceID",
+        cancel_aura_by_instance_id,
+    )?;
     #[cfg(feature = "aura-containers")]
     register_private_enumeration(state)?;
     Ok(())
@@ -83,6 +90,41 @@ fn get_aura_caster_guid(state: &mut LuaState) -> LuaResult<u32> {
         .unwrap_or(Val::Nil);
     state.push(result);
     Ok(1)
+}
+
+/// Removes one of the player's own helpful auras and reports it through an
+/// incremental `UNIT_AURA` payload. INFERRED: like `CancelUnitBuff`, debuffs
+/// and other units' auras cannot be cancelled.
+#[cfg(feature = "retail-12-1-0")]
+fn cancel_aura_by_instance_id(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = String::from_stack(state, 1)?;
+    let instance_id = f64::from_stack(state, 2)? as i32;
+    if unit != "player" {
+        return Ok(0);
+    }
+    let removed = {
+        let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
+        let before = sim.player.buffs.len();
+        sim.player
+            .buffs
+            .retain(|aura| !(aura.is_helpful && aura.aura_instance_id == instance_id));
+        sim.player.buffs.len() != before
+    };
+    if removed {
+        let unit = crate::lua_api::methods::create_string(state, "player");
+        let update_info = create_table(state);
+        let removed_ids = create_table(state);
+        if let Val::Table(ids) = removed_ids {
+            table_set_num(state, ids, 1.0, Val::Num(f64::from(instance_id)));
+        }
+        table_set(state, update_info, "removedAuraInstanceIDs", removed_ids);
+        crate::lua_api::script_helpers::fire_named_event_state(
+            state,
+            "UNIT_AURA",
+            &[unit, update_info],
+        );
+    }
+    Ok(0)
 }
 
 fn get_unit_aura_instance_ids(state: &mut LuaState) -> LuaResult<u32> {
