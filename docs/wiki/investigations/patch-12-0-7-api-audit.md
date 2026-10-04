@@ -19,6 +19,18 @@ Read-only preparation executed no builds/tests or runtime gates. No repo files c
 Patch 12.0.7 API work in wow-ui-sim separates safe additive compatibility bridges from security, taint, and secret-value behavior that must be proven with live Blizzard observations before implementation.
 
 
+
+## Rounds 4–5 accounted — 2026-10-04
+
+Fourteen capabilities; **87 pending / 46 bounded / 20 partial / 13 metadata** of 166 IDs.
+
+- Partial, 13 rows: six `C_PartyInfo` role/leader/removal functions, solo `GROUP_FORMED`, `/tm ~marker`, three housing queries, `C_MerchantFrame.GetMerchantCurrencies`, Mythic+ `CalendarTime`. All read explicit host state; native derivation, permissions and timing are unproved, so none is bounded.
+- Ready-check rows 038/040 stay pending: they only inherit the 12.0.5 lockdown.
+
+Proof: master run at `3557d5f1d`, 119 passed / 0 failed over 10 filters, startup `lua-errors` `[]`, `cargo fmt --check` exit 0 ([log](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-4-5-master-green.log.txt)). [Round 5 review](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r5-review.md): ACCEPT WITH QUALIFICATIONS. Round 4 review pending at accounting time. Results: [round 4](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r4-result.md), [round 5](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r5-result.md).
+
+Behavior changes from round 5: individual demotion no longer disables everyone-is-assistant mode; an unknown leader name no longer resets leadership to the player; roster mutations on an inactive group are no-ops; macro text and button validation is stricter.
+
 ## Rounds 1–3 accounted — 2026-10-04
 
 Ten capabilities; **100 pending / 46 bounded / 7 partial / 13 metadata** of 166 IDs ([ledger](../../../data/patch-api/sources/12.0.7-page-coverage.json)).

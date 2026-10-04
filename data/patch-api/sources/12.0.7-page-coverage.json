@@ -164,6 +164,73 @@
       "compiled_revision": "d8aaad4f6",
       "proof": "main-confirmed GREEN; no independent review",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    },
+    {
+      "id": "party-roles-solo-marker-12-0-7",
+      "symbols": [
+        "C_PartyInfo.DemoteAssistant/IsGUIDInGroup/PromoteToAssistant/PromoteToLeader/SetEveryoneIsAssistant/UninviteUnit",
+        "GROUP_FORMED (solo)",
+        "/tm ~marker"
+      ],
+      "scope": "Individual roles, authenticated mutations, explicit host-driven solo GROUP_FORMED and conditional marker through the cached secure click path. Name-based role identity; native permissions, timing and automatic join source unproved; role queries UnitIsGroupAssistant/UnitLeadsAnyGroup do not authenticate secrets; category default and macro-button nilability differ from cached declarations.",
+      "spec": "docs/specs/party-12-0-7-audit.md",
+      "tests": [
+        "tests/party_1207_audit.rs"
+      ],
+      "implementation": "7d20fc2ae+ae306d87a",
+      "compiled_revision": "3557d5f1d",
+      "proof": "main-confirmed GREEN; independent source-read review ACCEPT WITH QUALIFICATIONS; partial",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-4-5-master-green.log.txt"
+    },
+    {
+      "id": "housing-queries-12-0-7",
+      "symbols": [
+        "C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames",
+        "C_HousingCustomizeMode.RoomConnectionSupportsDoorType",
+        "C_HousingLayout.CanSetViewedFloor"
+      ],
+      "scope": "Host-declared labels, door-type sets and floor permissions read live with authenticated selectors and extras. No native labels, geometry, ownership or editor coupling.",
+      "spec": "docs/specs/retail-12-0-7-housing-queries.md",
+      "tests": [
+        "tests/p1207_housing_names.rs",
+        "tests/p1207_housing_door.rs",
+        "tests/p1207_housing_floor.rs"
+      ],
+      "implementation": "d297d2c17",
+      "compiled_revision": "3557d5f1d",
+      "proof": "main-confirmed GREEN; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-4-5-master-green.log.txt"
+    },
+    {
+      "id": "merchant-currencies-12-0-7",
+      "symbols": [
+        "C_MerchantFrame.GetMerchantCurrencies"
+      ],
+      "scope": "Ordered host currency IDs as one detached table, empty table by default (cached consumers take its length unguarded). Native derivation and MayReturnNothing unproved.",
+      "spec": "docs/specs/retail-12-0-7-merchant-currencies.md",
+      "tests": [
+        "tests/p1207_merchant_currencies.rs"
+      ],
+      "implementation": "5cb3fb19c",
+      "compiled_revision": "3557d5f1d",
+      "proof": "main-confirmed GREEN; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-4-5-master-green.log.txt"
+    },
+    {
+      "id": "mythic-calendar-time-12-0-7",
+      "symbols": [
+        "C_MythicPlus run history / weekly best / season best completion dates"
+      ],
+      "scope": "Three producers expose a six-field CalendarTime from host records with live changes and detached snapshots. Native indexing, timezone and history filters unproved.",
+      "spec": "docs/specs/retail-12-0-7-mythic-calendar.md",
+      "tests": [
+        "tests/p1207_mythic_calendar.rs",
+        "tests/c_mythic_plus_probes.rs"
+      ],
+      "implementation": "e35c47d4b+5e92eaf7b",
+      "compiled_revision": "3557d5f1d",
+      "proof": "main-confirmed GREEN; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-4-5-master-green.log.txt"
     }
   ],
   "source_rows": [
@@ -245,21 +312,27 @@
     },
     {
       "source_id": "prose-undated-015",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "party-roles-solo-marker-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Conditional /tm ~n reads the live marker map and dispatches through the cached secure click path; historical evidence and native click authorization unproved."
     },
     {
       "source_id": "prose-undated-016",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "mythic-calendar-time-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Six-field CalendarTime on three producers from host records; native indexing and timezone unproved."
     },
     {
       "source_id": "prose-undated-017",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "party-roles-solo-marker-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Host-driven solo GROUP_FORMED with category and GUID payload; no server join pipeline, misses unobserved between-tick transitions."
     },
     {
       "source_id": "prose-undated-018",
@@ -357,75 +430,95 @@
     },
     {
       "source_id": "global api-C_HousingCatalog-GetCatalogCategoryAndSubcategoryNames-034",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-queries-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Two host labels per subcategory with authenticated selector; native/localized labels unproved."
     },
     {
       "source_id": "global api-C_HousingCustomizeMode-RoomConnectionSupportsDoorType-035",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-queries-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Host-declared supported door types per room component; no geometric compatibility."
     },
     {
       "source_id": "global api-C_HousingLayout-CanSetViewedFloor-036",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "housing-queries-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Host floor permissions; no ownership or editor coupling."
     },
     {
       "source_id": "global api-C_MerchantFrame-GetMerchantCurrencies-037",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "merchant-currencies-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Ordered host IDs, empty table default; native derivation unproved."
     },
     {
       "source_id": "global api-C_PartyInfo-ConfirmReadyCheck-038",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Inherits the 12.0.5 ready-check lockdown only; the lockdown check runs before argument authentication and extras are not authenticated. No new credit."
     },
     {
       "source_id": "global api-C_PartyInfo-DemoteAssistant-039",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "party-roles-solo-marker-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Authenticated individual demotion on the live roster; native permissions and name/realm parity unproved."
     },
     {
       "source_id": "global api-C_PartyInfo-DoReadyCheck-040",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Inherits the 12.0.5 ready-check lockdown only; no 12.0.7-specific proof. No new credit."
     },
     {
       "source_id": "global api-C_PartyInfo-IsGUIDInGroup-041",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "party-roles-solo-marker-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Live membership by GUID and category; positional home GUIDs, category default differs from cached declaration."
     },
     {
       "source_id": "global api-C_PartyInfo-PromoteToAssistant-042",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "party-roles-solo-marker-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Authenticated individual promotion; native permissions and name/realm parity unproved."
     },
     {
       "source_id": "global api-C_PartyInfo-PromoteToLeader-043",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "party-roles-solo-marker-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Live leader change with synchronous notification; native authorization and timing unproved."
     },
     {
       "source_id": "global api-C_PartyInfo-SetEveryoneIsAssistant-044",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "party-roles-solo-marker-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "One public updated bool, toggle and duplicate cases; native exclusion semantics unproved."
     },
     {
       "source_id": "global api-C_PartyInfo-UninviteUnit-045",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "party-roles-solo-marker-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Validated removal of one live member with roster cleanup; native self-removal, permissions and durable GUIDs unproved."
     },
     {
       "source_id": "global api-C_PingSecure-ClearPendingPingOffScreenCallback-046",
