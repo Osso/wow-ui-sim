@@ -1,5 +1,5 @@
 //! Scalar binding state and live duration sampling for the existing provider.
-use crate::lua_api::methods::call_function_state;
+use crate::lua_api::globals::lua_duration_object::core::{Query, read_query_value};
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::table_security::unwrap_secret;
 use rilua::vm::{state::LuaState, value::Userdata};
@@ -112,14 +112,26 @@ pub(super) fn validate_duration(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn is_zero(state: &mut LuaState) -> LuaResult<u32> {
+    let duration = crate::lua_api::globals::lua_duration_object::require_duration(state, 1)?;
+    let value = read_query_value(state, duration, Query::Zero, 0)?;
+    state.push(value);
+    Ok(1)
+}
+
+pub(super) fn has_expired(state: &mut LuaState) -> LuaResult<u32> {
+    let duration = crate::lua_api::globals::lua_duration_object::require_duration(state, 1)?;
+    let value = read_query_value(state, duration, Query::Expired, 0)?;
+    state.push(value);
+    Ok(1)
+}
+
 /// Read the same host scalar settings and existing live duration-clock producer.
 pub(super) fn sample_remaining(state: &mut LuaState) -> LuaResult<u32> {
     let settings = read_settings(state, stack_val(state, 1))?;
-    let modifier = Val::Num(settings.modifier);
-    let duration = stack_val(state, 2);
-    let key = state.gc.intern_string(b"GetRemainingDuration");
-    let method = state.gettable(duration, Val::Str(key))?;
-    let value = call_function_state(state, method, &[duration, modifier])?;
+    let modifier = settings.modifier as i32;
+    let duration = crate::lua_api::globals::lua_duration_object::require_duration(state, 2)?;
+    let value = read_query_value(state, duration, Query::Remaining, modifier)?;
     state.push(value);
     Ok(1)
 }

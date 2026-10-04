@@ -258,7 +258,7 @@ fn reset(state: &mut LuaState, defaults: bool) -> LuaResult<u32> {
 }
 
 #[derive(Clone, Copy)]
-enum Query {
+pub(crate) enum Query {
     Start,
     End,
     Total,
@@ -274,8 +274,8 @@ enum Query {
     Active,
 }
 
-fn time_scale(state: &mut LuaState, timing: Timing) -> LuaResult<f64> {
-    match Option::<i32>::from_stack(state, 2)?.unwrap_or(0) {
+fn time_scale(timing: Timing, modifier: i32) -> LuaResult<f64> {
+    match modifier {
         0 => Ok(1.0),
         1 => Ok(timing.rate),
         _ => Err(rilua::runtime_error("unknown DurationTimeModifier")),
@@ -287,8 +287,9 @@ fn duration_value(
     object: Val,
     timing: Timing,
     query: Query,
+    modifier: i32,
 ) -> LuaResult<f64> {
-    let scale = time_scale(state, timing)?;
+    let scale = time_scale(timing, modifier)?;
     let span = timing.span();
     if matches!(query, Query::Total) {
         return Ok(span * scale);
@@ -329,6 +330,26 @@ fn query(state: &mut LuaState, kind: Query) -> LuaResult<u32> {
         authenticate_activity_modifier(state)?;
     }
     let object = stack_val(state, 1);
+    let modifier = match kind {
+        Query::Total
+        | Query::Elapsed
+        | Query::Remaining
+        | Query::ElapsedPercent
+        | Query::RemainingPercent => Option::<i32>::from_stack(state, 2)?.unwrap_or(0),
+        _ => 0,
+    };
+    let value = read_query_value(state, object, kind, modifier)?;
+    state.push(value);
+    Ok(1)
+}
+
+/// Read timing and the bound clock without resolving replaceable Lua methods.
+pub(crate) fn read_query_value(
+    state: &mut LuaState,
+    object: Val,
+    kind: Query,
+    modifier: i32,
+) -> LuaResult<Val> {
     let timing = read_timing(state, object)?;
     let value = match kind {
         Query::Start => Val::Num(timing.start),
@@ -351,10 +372,9 @@ fn query(state: &mut LuaState, kind: Query) -> LuaResult<u32> {
             let now = clock_time(state, object)?;
             Val::Bool(timing.base > 0.0 && now >= timing.start && now < timing.end())
         }
-        _ => Val::Num(duration_value(state, object, timing, kind)?),
+        _ => Val::Num(duration_value(state, object, timing, kind, modifier)?),
     };
-    state.push(value);
-    Ok(1)
+    Ok(value)
 }
 
 fn evaluate_with_curve(state: &mut LuaState, getter: &str) -> LuaResult<u32> {

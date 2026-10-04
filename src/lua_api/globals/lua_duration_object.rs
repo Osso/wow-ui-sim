@@ -15,7 +15,7 @@
 //! `missing_surface::register_all`, so the duration surface is installed before
 //! Blizzard/addon Lua can request duration objects.
 
-mod core;
+pub(crate) mod core;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod formatting;
 

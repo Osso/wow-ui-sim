@@ -109,6 +109,35 @@ fn p1207_binding_formats_live_host_clock_rate_zero_and_expiration() {
 }
 
 #[test]
+fn p1207_binding_ignores_replaced_duration_methods() {
+    let env = binding_environment();
+    env.exec(r#"
+        Binding:SetExpiredText('done'); Binding:SetZeroDurationText('zero')
+        rawset(Duration, 'GetRemainingDuration', function() return 999 end)
+        Clock:SetTime(12)
+        assert(Duration:GetRemainingDuration() == 999)
+        assert(Binding:GetFormattedText() == '6s', 'binding sampled replaced remaining method')
+        rawset(Duration, 'IsZero', function() return true end)
+        rawset(Duration, 'HasExpired', function() return true end)
+        assert(Binding:CanFormatText() and Binding:GetFormattedText() == '6s')
+        Binding:SetTimeModifier(1)
+        assert(Binding:GetFormattedText() == '12s')
+        Binding:UpdateFontString()
+        assert(Label:GetText() == '12s')
+        rawset(Duration, 'IsZero', function() return false end)
+        rawset(Duration, 'HasExpired', function() return false end)
+        Clock:SetTime(18)
+        assert(Binding:GetFormattedText() == 'done')
+        Clock:RewindTime(1)
+        assert(Binding:GetFormattedText() == '2s')
+        Duration:SetTimeFromStart(100, 0)
+        assert(Binding:GetFormattedText() == 'zero')
+        Binding:SetZeroDurationText(nil)
+        assert(not Binding:CanFormatText())
+    "#).unwrap();
+}
+
+#[test]
 fn p1207_binding_automatic_updates_read_live_state_and_respect_disable_interval() {
     let env = binding_environment();
     env.fire_on_update(0.125).unwrap();

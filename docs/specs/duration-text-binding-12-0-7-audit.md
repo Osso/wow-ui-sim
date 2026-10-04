@@ -23,7 +23,7 @@ The retained [12.0.7 source](../../data/patch-api/sources/12.0.7-api-changes.txt
 
 ### Live production
 
-- [ ] Sample the existing duration object and host-owned clock live through the Rust duration producer, with no mutable Lua clock substituted by the binding.
+- [x] Sample timing and the bound clock directly through the shared Rust duration producer, without resolving replaceable GetRemainingDuration/IsZero/HasExpired Lua methods or substituting a binding-owned clock.
 - [x] Read RealTime/BaseTime modifier from host settings. Concrete interval [10,18) at rate 2 returns 6s at clock=12 in RealTime and 12s in BaseTime; advancing, rewinding, changing rate/span or rebinding the duration clock affects subsequent formatting without replacing the binding.
 - [x] Use configured zero text for unconfigured/zero duration and configured expired text after expiration. INFERRED: zero text wins over expired text; otherwise a valid NumericFormatter is required. Missing formatting configuration raises an explicit error; it never returns a fabricated "0".
 - [x] Use the configured NumericFormatter for remaining-duration text. Preserve the existing percent-format SetTextFormat extension; do not substitute another formatter when the configured formatter errors or returns nil.
@@ -56,7 +56,7 @@ The retained [12.0.7 source](../../data/patch-api/sources/12.0.7-api-changes.txt
 
 ## Tests asserting this spec
 
-- `tests/patch_12_0_7_duration_text_binding.rs` — nine new public-API behavioral tests: defaults/arity, Copy/Assign/reset/surface, live host clock and modifier, engine cadence, environment isolation, invalid-input atomicity, all-input authentication ordering, secret text/timing handoff, HasExpired boundaries.
+- `tests/patch_12_0_7_duration_text_binding.rs` — public-API behavioral tests, including method-replacement isolation: defaults/arity, Copy/Assign/reset/surface, live host clock and modifier, engine cadence, environment isolation, invalid-input atomicity, all-input authentication ordering, secret text/timing handoff, HasExpired boundaries.
 - `src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_0_7_duration_objects_and_text_binding` — corrected zero-span expectation and documented duration/formatter fixtures replacing numeric pseudo-durations.
 - `tests/patch_12_0_7_duration_clocks.rs` — existing host clock proof; unchanged.
 
@@ -77,4 +77,4 @@ Observed integration on default Retail, 2026-10-04: new module 9/9; duration cor
 - Page-ledger/capability promotion and native-client execution: owned by the main audit, not this integration.
 - Earlier-profile execution: excluded by this integration task; no earlier-profile availability or regression claim.
 - FontString GetText secret-return tagging: existing secure readout returns plain text; the binding test observes the wrapped public SetText input instead of changing widget policy.
-- Overridden duration-query methods: live sampling currently resolves the existing duration getter through its Lua proxy; trusted dispatch under method replacement is not established by these tests.
+- Overridden duration-query methods: sampling and zero/expired selection now read the shared Rust timing producer directly. Regression replaces all three Lua methods and asserts live clock/rate/zero/expiration behavior.

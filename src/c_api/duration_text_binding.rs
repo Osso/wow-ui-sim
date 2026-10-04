@@ -17,7 +17,7 @@ const SCHEDULER_KEY: &str = "__duration_text_binding_scheduler";
 const DURATION_TEXT_BINDING_LUA: &str = r#"
 do
     local isPatch121, hasSecretInput, readSecretInput, wrapSecretOutput, reportUpdateError = ...
-    local isPatch1207, createSettings, readSetting, writeSetting, authenticateArguments, validateDuration, sampleRemaining = select(6, ...)
+    local isPatch1207, createSettings, readSetting, writeSetting, authenticateArguments, validateDuration, sampleRemaining, durationIsZero, durationHasExpired = select(6, ...)
     local scalarFields = {enabled = true, updateInterval = true, timeModifier = true}
     local unpackArguments = unpack
     -- Capture host bootstrap functions, not later addon replacements.
@@ -163,8 +163,8 @@ do
             local duration = binding.duration
             if duration == nil then return has_text(binding.zeroDurationText) end
             if hasSecretInput(duration) then duration = readSecretInput(duration) end
-            if duration:IsZero() then return has_text(binding.zeroDurationText) end
-            if duration:HasExpired() and has_text(binding.expiredText) then return true end
+            if durationIsZero(duration) then return has_text(binding.zeroDurationText) end
+            if durationHasExpired(duration) and has_text(binding.expiredText) then return true end
             return type(binding.formatter) == "userdata" and type(binding.formatter.FormatNumber) == "function"
         end
         function binding:CanFormatText()
@@ -188,8 +188,8 @@ do
                 local secret = hasSecretInput(duration)
                 if secret then duration = readSecretInput(duration) end
                 -- INFERRED: zero-duration text takes precedence over expiration text.
-                if duration:IsZero() then return protect_text(self.zeroDurationText, secret) end
-                if duration:HasExpired() and has_text(self.expiredText) then return protect_text(self.expiredText, secret) end
+                if durationIsZero(duration) then return protect_text(self.zeroDurationText, secret) end
+                if durationHasExpired(duration) and has_text(self.expiredText) then return protect_text(self.expiredText, secret) end
                 local value = sampleRemaining(settings, duration)
                 -- INFERRED: sampled secret timing is handed to the formatter as a VM secret.
                 if secret then value = wrapSecretOutput(value) end
@@ -382,6 +382,12 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
             state,
             "DurationBinding.SampleRemaining",
             self::state::sample_remaining,
+        ),
+        secret_callback(state, "DurationBinding.IsZero", self::state::is_zero),
+        secret_callback(
+            state,
+            "DurationBinding.HasExpired",
+            self::state::has_expired,
         ),
     ];
     let callback = lua.call_function(&bootstrap, &arguments)?;
