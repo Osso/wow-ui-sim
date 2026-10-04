@@ -15,30 +15,30 @@ The retained [12.0.7 source](../../data/patch-api/sources/12.0.7-api-changes.txt
 
 ### State and lifetime
 
-- [ ] Keep the existing userdata binding factory, weak tick registry and Copy/Assign/SetClock methods. Never install a second provider or retry another formatter after failure.
-- [ ] Keep enabled, update interval and duration time modifier in independent host-owned state. Rust reads current settings when getters or formatting run; changing one binding never changes another or another environment.
+- [x] Keep the existing userdata binding factory, weak tick registry and Copy/Assign/SetClock methods. Never install a second provider or retry another formatter after failure.
+- [x] Keep enabled, update interval and duration time modifier in independent host-owned state. Rust reads current settings when getters or formatting run; changing one binding never changes another or another environment.
 - [ ] Keep duration, font string, formatter, clock and text references rooted by the existing VM-owned configuration closures. No Rust payload may hold an untraced Lua `Val`.
-- [ ] Preserve identity of configured duration/font string references and shared clock references during Copy/Assign. Scalar settings and tick schedules are independent.
-- [ ] INFERRED: newly created 12.0.7 bindings have nil duration/font string/expired/zero text; enabled=true, interval=1 and modifier=RealTime. Reset clears duration/font string/format/formatter/text and restores scalar defaults. Later declaration says reset clears these fields; exact historical defaults remain unverified.
+- [x] Preserve identity of configured duration/font string references and shared clock references during Copy/Assign. Scalar settings and tick schedules are independent.
+- [x] INFERRED: newly created 12.0.7 bindings have nil duration/font string/expired/zero text; enabled=true, interval=1 and modifier=RealTime. Reset clears duration/font string/format/formatter/text and restores scalar defaults. Later declaration says reset clears these fields; exact historical defaults remain unverified.
 
 ### Live production
 
 - [ ] Sample the existing duration object and host-owned clock live through the Rust duration producer, with no mutable Lua clock substituted by the binding.
-- [ ] Read RealTime/BaseTime modifier from host settings. Concrete interval [10,18) at rate 2 returns 6s at clock=12 in RealTime and 12s in BaseTime; advancing, rewinding, changing rate/span or rebinding the duration clock affects subsequent formatting without replacing the binding.
-- [ ] Use configured zero text for unconfigured/zero duration and configured expired text after expiration. INFERRED: zero text wins over expired text; otherwise a valid NumericFormatter is required. Missing formatting configuration raises an explicit error; it never returns a fabricated "0".
-- [ ] Use the configured NumericFormatter for remaining-duration text. Preserve the existing percent-format SetTextFormat extension; do not substitute another formatter when the configured formatter errors or returns nil.
-- [ ] CanFormatText reflects eligibility; CanUpdateFontString additionally requires a configured font string. Eligibility does not require automatic updates to be enabled.
-- [ ] Disable suppresses automatic updates, Enable resumes them, and zero interval updates each engine tick. INFERRED: first update/configuration changes invalidate cadence immediately; elapsed cadence uses engine ticks while numeric duration sampling uses its bound clock.
-- [ ] Return exactly one value from getters/predicates/GetFormattedText and no results from setters/Enable/Disable. Getter nils remain explicit single nil results.
+- [x] Read RealTime/BaseTime modifier from host settings. Concrete interval [10,18) at rate 2 returns 6s at clock=12 in RealTime and 12s in BaseTime; advancing, rewinding, changing rate/span or rebinding the duration clock affects subsequent formatting without replacing the binding.
+- [x] Use configured zero text for unconfigured/zero duration and configured expired text after expiration. INFERRED: zero text wins over expired text; otherwise a valid NumericFormatter is required. Missing formatting configuration raises an explicit error; it never returns a fabricated "0".
+- [x] Use the configured NumericFormatter for remaining-duration text. Preserve the existing percent-format SetTextFormat extension; do not substitute another formatter when the configured formatter errors or returns nil.
+- [x] CanFormatText reflects eligibility; CanUpdateFontString additionally requires a configured font string. Eligibility does not require automatic updates to be enabled.
+- [x] Disable suppresses automatic updates, Enable resumes them, and zero interval updates each engine tick. INFERRED: first update/configuration changes invalidate cadence immediately; elapsed cadence uses engine ticks while numeric duration sampling uses its bound clock.
+- [x] Return exactly one value from getters/predicates/GetFormattedText and no results from setters/Enable/Disable. Getter nils remain explicit single nil results.
 
 ### Input and secrecy
 
-- [ ] Every selected setter with cached `SecretArguments = "AllowedWhenUntainted"` calls `rilua::table_security::unwrap_secret` on ALL supplied inputs, receiver and ignored extras before any receiver/type/range validation. Tainted rejection leaves configured state unchanged; public plain inputs still work without clearing caller taint.
-- [ ] SetDuration accepts the existing LuaDurationObject, not a numeric pseudo-duration. SetFontString requires a FontString. Expired/zero text accept string or nil. Time modifier accepts RealTime/BaseTime. Update interval requires a finite nonnegative number. INFERRED: strict noncoercing validation and negative/nonfinite rejection; later cache gives types, not native coercion/range behavior.
-- [ ] Keep authenticated secret text as VM wrappers, not decoded public strings. INFERRED: secret timing sampled into text (including zero/expired text selection) yields a VM secret text result; tainted callers cannot derive text from secret timing, and the font-string handoff preserves the wrapper.
-- [ ] INFERRED: authenticated wrapped references and scalar settings normalize to their decoded values; wrapped text remains wrapped, and duration timing secrecy remains the existing core policy. No native secret-return parity is claimed beyond the conditional-secret declaration.
+- [x] Every selected setter with cached `SecretArguments = "AllowedWhenUntainted"` calls `rilua::table_security::unwrap_secret` on ALL supplied inputs, receiver and ignored extras before any receiver/type/range validation. Tainted rejection leaves configured state unchanged; public plain inputs still work without clearing caller taint.
+- [x] SetDuration accepts the existing LuaDurationObject, not a numeric pseudo-duration. SetFontString requires a FontString. Expired/zero text accept string or nil. Time modifier accepts RealTime/BaseTime. Update interval requires a finite nonnegative number. INFERRED: strict noncoercing validation and negative/nonfinite rejection; later cache gives types, not native coercion/range behavior.
+- [x] Keep authenticated secret text as VM wrappers, not decoded public strings. INFERRED: secret timing sampled into text (including zero/expired text selection) yields a VM secret text result; tainted callers cannot derive text from secret timing, and the font-string handoff preserves the wrapper.
+- [x] INFERRED: authenticated wrapped references and scalar settings normalize to their decoded values; wrapped text remains wrapped, and duration timing secrecy remains the existing core policy. No native secret-return parity is claimed beyond the conditional-secret declaration.
 - [ ] No selected input declaration says NeverSecret/NotAllowed. Do not invent an authentication policy from absent annotations. If historical declarations add such a policy, reject secrets for every caller before validating anything.
-- [ ] DurationObject.HasExpired authenticates all inputs/extras before modifier validation under `retail-12-0-7`; omitted/nil/RealTime/BaseTime are accepted. INFERRED: zero-span remains fully elapsed/expired via inherited 12.0.5 semantics. The page only lists the method addition and the cache says "reached its end time"; neither establishes a contrary zero-span exception.
+- [x] DurationObject.HasExpired authenticates all inputs/extras before modifier validation under `retail-12-0-7`; omitted/nil/RealTime/BaseTime are accepted. INFERRED: zero-span remains fully elapsed/expired via inherited 12.0.5 semantics. The page only lists the method addition and the cache says "reached its end time"; neither establishes a contrary zero-span exception.
 - [ ] New defaults/formatting/validation/HasExpired authentication are gated on `retail-12-0-7`. Earlier profile implementations receive shared host-scalar storage without claiming historical API availability. Earlier profile execution must be checked by integration.
 
 ## How it works
@@ -60,19 +60,21 @@ The retained [12.0.7 source](../../data/patch-api/sources/12.0.7-api-changes.txt
 - `src/loader/tests/wow_api_globals/startup_globals.rs::test_patch_12_0_7_duration_objects_and_text_binding` — corrected zero-span expectation and documented duration/formatter fixtures replacing numeric pseudo-durations.
 - `tests/patch_12_0_7_duration_clocks.rs` — existing host clock proof; unchanged.
 
-No tests executed during authoring. All boxes remain unchecked; staged code is not acceptance evidence.
+Observed integration on default Retail, 2026-10-04: new module 9/9; duration core 27/27; duration clocks 9/9; startup globals 26/26; binding lib 1/1; retained copy 7/7, including cached CustomAuraButton execution; common numeric formatting 5/5. Exact revisions, argv and logs: `/home/osso-test/.cache/wow-ui-sim-audit/p1207-r8-result.md`. Proof is bounded simulator behavior, not native historical conformance. Binding tick controls select zero tests on Retail and earn no proof credit.
 
 ## Known gaps (current cycle)
 
-- [ ] Integrator must compile and run targeted RED/GREEN, including the modified lib startup fixture and new integration module; tests/*.rs share one integration binary.
+- [x] Targeted RED compiled: new module 1/9 passed before producers; GREEN 9/9 after producers and correcting the FontString readout fixture. Existing lib fixtures and retained copy controls use real durations/formatters, preserving their assertions.
 - [ ] Historical cache/build 68182 and native probes are unavailable. Formatting options/component composition, exact default texts, rounding and expiry precedence are not authenticated for 12.0.7.
 - [ ] NumericFormatter and FontString checks currently validate public protocol/type information; exact native handle identity is not independently proven.
 - [ ] Exact native formatter behavior and full secret-output policy need historical/native reconciliation; staged code rejects non-string formatter results and sampled output policy is explicitly INFERRED.
-- [ ] Earlier profile regression proof, retained weak lifetime behavior and exhaustive scheduler error-handler behavior remain integration work.
+- [ ] Earlier profile regression proof, weak-scheduler collection and exhaustive scheduler error-handler behavior remain unproved. Retained Copy resource lifetime and handle identity are covered by the passing Retail copy controls.
 
 ## Out of scope
 
 - B06/B07 clock redesign: existing host clocks are reused, never replaced.
 - B31 DurationTextFormattingOptions methods and later text-color/component behavior: separate rows and historical epoch evidence required; existing methods are retained but this slice does not claim their complete conformance.
-- Page-ledger/capability promotion, integration, commits and repository writes: author-only handoff.
-- Tests, cargo/builds, simulator/native-client execution and independent-model review: expressly prohibited for this authoring task.
+- Page-ledger/capability promotion and native-client execution: owned by the main audit, not this integration.
+- Earlier-profile execution: excluded by this integration task; no earlier-profile availability or regression claim.
+- FontString GetText secret-return tagging: existing secure readout returns plain text; the binding test observes the wrapped public SetText input instead of changing widget policy.
+- Overridden duration-query methods: live sampling currently resolves the existing duration getter through its Lua proxy; trusted dispatch under method replacement is not established by these tests.
