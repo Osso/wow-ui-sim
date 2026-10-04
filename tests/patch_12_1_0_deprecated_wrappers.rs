@@ -4,10 +4,6 @@
 //! The native simulator `getglobal`/`setglobal` remain registered; this file
 //! proves the cached Shared/Deprecated_12_1_0.lua replaces them at load, not
 //! that disabling fallbacks removes them.
-//!
-//! Not covered: C_DyeColor.GetDyeColorForItem[Location] (rows 390/391). The
-//! cached Mainline/Deprecated_12_1_0.lua installs both, then
-//! src/ptr/strict_removals.lua hides them after startup events.
 #![cfg(feature = "client-retail")]
 
 use wow_ui_sim::lua_api::WowLuaEnv;
@@ -94,6 +90,47 @@ const ROWS: &[WrapperRow] = &[
             local id2, name2, isBattleTag2 = BNGetFriendInviteInfo(2)
             if id2 ~= 12 or name2 ~= "Thrall" or isBattleTag2 ~= false then return "realid" end
             if select("#", BNGetFriendInviteInfo(3)) ~= 0 then return "missing" end
+            return "ok"
+        "##,
+    },
+    WrapperRow {
+        source_id: "deprecated api-C_DyeColor-GetDyeColorForItem-390",
+        old_fn: "C_DyeColor.GetDyeColorForItem",
+        defined_in: "Mainline/Deprecated_12_1_0.lua",
+        seed: no_seed,
+        probe: r##"
+            local original = C_DyeColor.GetDyeColorsForItem
+            local seen
+            C_DyeColor.GetDyeColorsForItem = function(item)
+                seen = item
+                if item == 2001 then return { 7, 9 } end
+                return {}
+            end
+            local first = C_DyeColor.GetDyeColorForItem(2001)
+            local empty = C_DyeColor.GetDyeColorForItem(2002)
+            C_DyeColor.GetDyeColorsForItem = original
+            if first ~= 7 then return "first" end
+            if empty ~= nil or seen ~= 2002 then return "empty" end
+            return "ok"
+        "##,
+    },
+    WrapperRow {
+        source_id: "deprecated api-C_DyeColor-GetDyeColorForItemLocation-391",
+        old_fn: "C_DyeColor.GetDyeColorForItemLocation",
+        defined_in: "Mainline/Deprecated_12_1_0.lua",
+        seed: no_seed,
+        probe: r##"
+            local original = C_DyeColor.GetDyeColorsForItemLocation
+            local location = { bagID = 0, slotIndex = 1 }
+            local seen
+            C_DyeColor.GetDyeColorsForItemLocation = function(itemLocation)
+                seen = itemLocation
+                return { 12 }
+            end
+            local first = C_DyeColor.GetDyeColorForItemLocation(location)
+            C_DyeColor.GetDyeColorsForItemLocation = original
+            if first ~= 12 or seen ~= location then return "delegate" end
+            if C_DyeColor.GetDyeColorForItemLocation(location) ~= nil then return "empty" end
             return "ok"
         "##,
     },
