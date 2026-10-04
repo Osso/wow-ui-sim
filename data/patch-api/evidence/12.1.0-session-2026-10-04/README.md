@@ -1016,3 +1016,28 @@ The initial `Bluepost` body is W20–29; it contains the announcement's aura-sec
 ## Static accounting verification
 
 Python-only JSON/byte/accounting inspection; no project tests, builds, Cargo or simulator execution. Source hash equals provenance; one unique ledger and triage entry per nonblank source line; only metadata rows leave audit-pending; every nonblocked substantive row belongs to one numbered batch, tests-only batches precede modelable batches, and blocked batch notes match ledger notes exactly. Cited file/line locations were checked for existence; this does not establish behavior. Scratch proof ledger: `/home/osso-test/.cache/wow-ui-sim-audit/12.1.0-session-2026-10-04/static-validation.json`.
+
+## Supplemental raw-wikitext inventory audit — 2026-10-04
+
+Added [wikitext register](../../sources/12.1.0-wikitext-register.json), [static triage](triage-wikitext.md), and [batch queue](batches-wikitext.md). Register parses six dropped collapsed inventories from committed raw wikitext, revision **6886719**, SHA-256 `de9e45f6e43c66c78be2d9e9c6a6e7945cd91676448bbe502a6a4db0d75d8bde`. The earlier unpinned-fetch caveat above describes that earlier operation; this supplemental register uses the committed provenance revision, not a fresh network fetch.
+
+| Section | Added | Removed | Changed |
+|---|---:|---:|---:|
+| global-api | 147 | 19 | 12 |
+| framexml | 337 | 124 | 0 |
+| scriptobjects | 8 | 0 | 0 |
+| widgets | 45 | 0 | 11 |
+| events | 43 | 2 | 2 |
+| cvars | 23 | 5 | 0 |
+
+**778 entries appended; 1111 ledger rows total.** All new rows have empty capabilities and audit-pending status; `supplemental_register` identifies the new source file. Only header discrepancy: Global API 147 additions versus page header 145. Other added/removed counts match; changed blocks have no declared totals. CHAT_MSG_* remains one wildcard occurrence.
+
+Static triage: **579 implemented-needs-proof**; **72 modelable**; **111 already-removed/absent-as-required**; **16 needs-look**.
+
+**252 batches**: 215 tests-only candidates first; 34 modelable (maximum eight symbols); 3 deferred needs-look.
+
+Limits: exact-token Python src/ search and cached declaration inspection only, not runtime proof or full registration reachability. Plain Blizzard Lua additions are grouped by owning cached file for future load/call proof; no vendor modifications proposed. Cache is not authenticated build 69587. Previous 12.1 FrameXML/behavior source registers and PTR machine ledgers are cross-references, never copied proof. Restricted-environment removed helpers are deferred; source mentions on other publication surfaces do not establish a removed global.
+
+Surprises: deprecated wrappers are listed as removed by page convention and can remain conditional on loadDeprecationFallbacks; explicit post-startup removal filters still take precedence where present. Some supposedly removed event/CVar names remain in simulator tables. Several existing CVar defaults differ from the page, e.g. accessibilityScreenNarrationEnabled 0 versus 1 (`src/cvars.rs:385`, W1313); publication alone is not fidelity. Triage retains these caveats rather than granting coverage.
+
+Validation: scratch parse.py/search.py/triage.py/batches.py/finish.py; JSON round-trip format and trailing newline checked; unique source IDs; all 778 entries occur exactly once in batches and once in triage; changed annotations retained; original 333 ledger objects remain byte-identical in serialized content. No cargo, tests, builds, simulator, agents/model CLIs or git-state operations ran. Changes remain uncommitted for main-session integration.

@@ -2004,6 +2004,4675 @@
       "capabilities": [],
       "status": "audit-pending",
       "note": "Unmodified RaidWarningUtil/RaidWarningFrameMixin implement message addition and pool-backed clearing. Tests only: actual deprecated wrapper, message pool contents/visibility, per-type clearing and default Retail loading; text pixels and native timing are not claimed."
+    },
+    {
+      "source_id": "wt-global-api-C_AuraContainerUtil.ProcessAuraTooltipBackdropOptions-414",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_AuraContainerUtil.ProcessAuraTooltipNineSliceOptions-415",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_AuraContainerUtil.ProcessAuraTooltipTextureSliceOptions-416",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_AuraContainerUtil.ProcessCustomAuraButtonApplicationBarOptions-417",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_AuraContainerUtil.ProcessCustomAuraButtonApplicationCountOptions-418",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_AuraContainerUtil.ProcessCustomAuraButtonDispelTypeTextOptions-419",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_AuraContainerUtil.ProcessCustomAuraButtonDispelTypeTextureOptions-420",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_AuraContainerUtil.ProcessCustomAuraButtonDurationBarOptions-421",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_AuraContainerUtil.ProcessCustomAuraButtonDurationTextOptions-422",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.AreFriendTagsEnabled-423",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.AreTitleFriendCustomNamesEnabled-424",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.AreTitleFriendsEnabled-425",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.BNCheckTitleFriendInviteToUnit-426",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.CanToggleHighResTexturesWithoutClientReload-427",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.GetCustomTitleFriendName-428",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.GetFriendInviteInfo-429",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.IsBattleNetFriendsListEnabled-430",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.IsBattleNetFriendsListSupported-431",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.SearchFriends-432",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.SendTitleFriendInviteByName-433",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.SendVerifiedBattleNetFriendInvite-434",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.SetAppearOffline-435",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.SetCustomTitleFriendName-436",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.SetFriendTags-437",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Browser.CloseFullscreenBrowser-438",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_CVar.AreCVarsLoaded-439",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_ClientScene.IsSceneTypeActive-440",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Club.SendTitleFriendRequest-441",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_CooldownViewer.GetGroupBuffItems-442",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetFlavorNodeForCompanion-443",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetFlavorNodeNameForCompanion-444",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.HasActiveLFGLair-445",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.HasActiveLair-446",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.IsInLair-447",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.Authorize-448",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GetDiscordChannelName-449",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GetDiscordUserID-450",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GetDiscordUserName-451",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GetDisplayNameType-452",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GetGuildLinkStatus-453",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GetNumDiscordChannels-454",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GetNumDiscordServers-455",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GetServerLinkableChannels-456",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GetServerName-457",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GuildLink-458",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.GuildUnlink-459",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.IsEnabled-460",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.IsGuildChannelLinked-461",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.IsGuildSettingSet-462",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.IsUserOAuthed-463",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.RefreshAuth-464",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.SetGuildSetting-465",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.UpdateDiscordServers-466",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Discord.UpdateGuildLobby-467",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorsForItemLocation-468",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorsForItem-469",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.GetBaseDifficultyID-470",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.InstanceHasDifficultyID-471",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.IsLegacyFriendSystemEnabled-472",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.IsDiscordStreamSeparate-473",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorPlayerType-474",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HouseFinderIgnoreNeighborhood-475",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsideOwnedHouseOrPlot-476",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsideOwnedHouse-477",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsideOwnedPlot-478",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ResetHouse-479",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.CanExportRoom-480",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.CanExportTypeFromCurrentLocation-481",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.CanImportTypeFromCurrentLocation-482",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.DeleteBlueprint-483",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.ExportBlueprint-484",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.ExportRoomBlueprint-485",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.GetBlueprintHyperlink-486",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.GetBlueprintTypeForCode-487",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.GetExportAvailability-488",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.GetFeatureAvailability-489",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.GetImportAvailability-490",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.ImportBlueprint-491",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.IsShareCodeValid-492",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.RenameBlueprint-493",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.RequestBlueprintCollection-494",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.RequestBlueprintContentsForContext-495",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.RequestBlueprintContents-496",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.StartImportRoomBlueprint-497",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBlueprint.UpdateBlueprintStringFromInput-498",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyPetToSelectedDecor-499",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetSelectedDecorPetInfo-500",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.AnyDecorPlacedInRoom-501",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetAllMaxPlacementBudgets-502",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetAllSpentPlacementBudgets-503",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetDecorAssignedPetName-504",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetDecorCanAttachPet-505",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetMaxPetPlacementBudget-506",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetSpentPetPlacementBudget-507",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetBaseRoomFloor-508",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetHighestOccupiedFloorIndex-509",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetLowestOccupiedFloorIndex-510",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetRoomPlayerIsIn-511",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedBlueprintFloorplan-512",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedBlueprintFloorplan-513",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.RoomHasStairs-514",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Item.DoesItemMatchSpellItemCondition-515",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.IsInMatchmadeRaidWithoutRoleRequirements-516",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.ConfirmCensoredActiveEntry-517",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.DoesCensoredTextMatch-518",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.IsCensoredActiveEntryUnresolved-519",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.RevealCensoredActiveEntry-520",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.RevealCensoredSearchResult-521",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Navigation.GetNextWaypointForMap-522",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_NeighborhoodInitiative.GetInitiativeTaskRewardScaling-523",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_PaperDollInfo.CancelTemporaryEnchantment-524",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_PaperDollInfo.GetInventorySlotInfoForInvSlot-525",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_PaperDollInfo.GetInventorySlotInfo-526",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_PaperDollInfo.GetTemporaryEnchantmentInfo-527",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetPetInfoTableBySpeciesID-528",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.CanSurrenderArena-529",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.JoinRandomTrainingGroundArena-530",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.JoinRandomTrainingGroundBattleground-531",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_QuestHub.IsAreaPOICurrentlyRelatedToHub-532",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.SearchRecentAllies-533",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.IsSystemEnabled-534",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.IsSystemSupported-535",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Roleset.ApplyRolesetFilters-536",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Roleset.GetActiveAllowedRolesets-537",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Roleset.GetActiveBlockedRolesets-538",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_SocialQueue.IsSystemEnabled-539",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_SocialQueue.IsSystemSupported-540",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_SocialRestrictions.IsFriendsDisabled-541",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_SocialUI.IsSystemEnabled-542",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Sound.PlaySoundWithOptions-543",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.GetInspectSpecialization-544",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetLastCategoryCooldownSource-545",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetSpellDescriptionForItemLocation-546",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.TargetSpellChecksItemCondition-547",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogOutfitInfo.CanPlayerTransmogSlot-548",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogOutfitInfo.IsTransmogEnabled-549",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.AddAuraSound-550",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.CancelAuraByInstanceID-551",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetGroupBuffVisualAlerts-552",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetHiddenGroupBuffs-553",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.RemoveAuraSound-554",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.SetGroupBuffVisualAlerts-555",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.SetHiddenGroupBuffs-556",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-GetSpecializationSystem-557",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-UnitIsPlayerControlledOrGroupMember-558",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-securecopy-559",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-settablesecurity-560",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-BNGetFriendInviteInfo-563",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-BNSendVerifiedBattleTagInvite-564",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorForItemLocation-565",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorForItem-566",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsideOwnHouse-567",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetNumFloors-568",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Ping.GetContextualPingTypeForUnit-569",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.JoinRandomTrainingGround-570",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.IsEnabled-571",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_SuperTrack.GetNextWaypointForMap-572",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.AddPrivateAuraAppliedSound-573",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.RemovePrivateAuraAppliedSound-574",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.TriggerPrivateAuraShowDispelType-575",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-CanSurrenderArena-576",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-CancelItemTempEnchantment-577",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-GetInspectSpecialization-578",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-GetInventorySlotInfo-579",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-GetWeaponEnchantInfo-580",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-SetTableSecurityOption-581",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.ForceUpdateAction-584",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_CombatAudioAlert.SpeakText-586",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetMaxPlacementBudget-589",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetSpentPlacementBudget-591",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetRoomPlacementBudget-593",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSpentPlacementBudget-595",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Ping.SendMacroPing-597",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_QuestHub.IsQuestCurrentlyRelatedToHub-602",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.CanSummonFriend-604",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Sound.PlaySound-608",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetSpellTexture-610",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-global-api-CreateSecureDelegate-612",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AchievementFrame_RefreshBackButton-624",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AchievementFrame_SetComparisonMode-625",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AddBehavioralMessagingTrayToStatusFrames-626",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AddFriendFrame_Show-627",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AddGMChatStatusFrameToStatusFrames-628",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AddTicketStatusFrameToStatusFrames-629",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AddWowSurveyStatusFrameToStatusFrames-630",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AlliedRacesFrame_TryShow-631",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AnchorUtil.ApplyFlowLayout-632",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AnchorUtil.CreateFlowLayout-633",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ApplySecureDelegatesToTable-634",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ArchaeologyFrame_ToggleUI-635",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ArcheologyDigsiteProgressBar_OnSurveyCast-636",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ArdenwealdGardening_LoadUI-637",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ArtifactFrame_OnTraitsRefunded-638",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.AuraInstanceIDOnlyAuraCompare-639",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.ExpirationAuraCompare-640",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.ExpirationOnlyAuraCompare-641",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.GetAuraBorderColor-642",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.GetAuraDispelTypeIcon-643",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.GetUnitAuras-644",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.ImportantOnlyAuraCompare-645",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.IsValidFilterString-646",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.NameAuraCompare-647",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.NameOnlyAuraCompare-648",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AuraUtil.SetAuraDispelTypeIcon-649",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AzeriteEmpoweredItemUI_LoadUI-650",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AzeriteEssenceUI_LoadUI-651",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BattlefieldMap_ToggleUI-652",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BehavioralMessaging_LoadUI-653",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BehavioralMessagingTray_OnNotification-654",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-Blizzard_HousingCatalogUtil.AddDecorEntryTooltipTrackingText-655",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-Blizzard_HousingCatalogUtil.TrackHousingDecorID-656",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BNet_GetBattleTagComponents-657",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BNet_GetBattleTagSelf-658",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BNet_GetBroadcastTextSelf-659",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BNet_GetFriendLevelRank-660",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BNet_IsFriendLevelEqualOrHigher-661",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BoostTutorial_LoadUI-662",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CDMDebugGetDebugger-663",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ChallengeModeCompleteBanner_OnChallengeModeCompleted-664",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ChatAdditionalColor_OpenColorPicker-665",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ChatFrameUtil.DiscordNameColorize-666",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ChatFrameUtil.FormatDiscordMessage-667",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ChatFrameUtil.GetNameForDiscordMessage-668",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CheckActiveStoreForFree-669",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatAudioAlertUtil.EnumerateInterruptCastInfo-670",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatAudioAlertUtil.EnumerateInterruptCastSuccessInfo-671",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatAudioAlertUtil.EnumerateSayCombatEndInfo-672",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatAudioAlertUtil.EnumerateSayCombatStartInfo-673",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatAudioAlertUtil.EnumeratetWhenTargetDiesInfo-674",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatAudioAlertUtil.GetInterruptCastInfo-675",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatAudioAlertUtil.GetInterruptCastSuccessInfo-676",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatAudioAlertUtil.GetSayCombatEndInfo-677",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatAudioAlertUtil.GetSayCombatStartInfo-678",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatAudioAlertUtil.GetWhenTargetDiesInfo-679",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CombatText_LoadUI-680",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CompactUnitFrame_GetOptionDispelIndicatorOverlayAnimation-681",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CompactUnitFrame_GetOptionDispelIndicatorOverlayType-682",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CompactUnitFrameLayoutTemplates_LayoutFrameElement-683",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CompactUnitFrameUtil.ApplyConfig-684",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CompactUnitFrameUtil.GenerateNewConfig-685",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ConfirmDisenchantRollDialog_Show-686",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ConfirmLootRollDialog_Show-687",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ConfirmTalentWipeDialog_Show-688",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ContributionCollectionFrame_LoadUI-689",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownManagerLayout_GetGroupBuffVisualAlerts-690",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownManagerLayout_GetHiddenGroupBuffs-691",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownManagerLayout_SetGroupBuffVisualAlerts-692",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownManagerLayout_SetHiddenGroupBuffs-693",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownViewer_MarkAuraCacheDirty-694",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownViewerContextMenu_AddAlertEntryButton-695",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownViewerContextMenu_AddNewAlertButton-696",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownViewerDraggedItem_Clear-697",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownViewerDraggedItem_Pickup-698",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownViewerDraggedItem_SetIsLegalTarget-699",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownViewerUtil.AddSoundAlertRadio-700",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownViewerUtil.BuildSoundMenus-701",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownViewerUtil.GetSoundTypeSoundKit-702",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CooldownViewerUtil.GetSoundTypeText-703",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CovenantCallings_LoadUI-704",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-DebugTools_LoadUI-705",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-DifficultyUtil.GetCreatureDifficultyColor-706",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-DifficultyUtil.GetDifficultyColor-707",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-DifficultyUtil.GetQuestDifficultyColor-708",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-DifficultyUtil.GetRelativeDifficultyColor-709",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-DifficultyUtil.GetScalingQuestDifficultyColor-710",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-EditModeManagerFrame_EscapePressed-711",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-EncounterJournal_OpenToTieredEntrance-712",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-EventTrace_LoadUI-713",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ExpansionTrial_LoadUI-714",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FadingFrame_CopyTextScalingTime-715",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FadingFrame_GetTextScalingMinHeight-716",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FadingFrame_InitSlot-717",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FadingFrame_SetTextScaling-718",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FadingFrame_StartTextScaling-719",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FadingFrame_StopTextScaling-720",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FadingFrame_UpdateTextScaling-721",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsFrame_HideAllPotentialSubFrames-722",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.BuildCharacterClassDisplayText-723",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.BuildCharacterLevelDisplayText-724",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.BuildCharacterNameDisplayText-725",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.BuildFriendNameDisplayText-726",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.BuildLocationDisplayText-727",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.BuildTooltipBroadcastText-728",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GameStateUsesFactions-729",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetBattleNetFriendGameAccountInfoIfExactlyOneDirectInviteTargetExists-730",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetBattleNetFriendInviteInfo-731",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetBattleNetFriendInviteTypeLabel-732",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetBattleNetFriendPartyInviteRestrictionText-733",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetBattleNetFriendPartyInviteRestriction-734",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetFormattedCharacterName-735",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetFriendAccountNameText-736",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetFriendNameColorForFriendType-737",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetFriendNameDisplayColor-738",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetFriendNameOfflineDisplayColor-739",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetGameAccountPartyInviteRestriction-740",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetLastOnlineText-741",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetRegionName-742",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.GetRelativeTimeText-743",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.HasMultipleGameAccounts-744",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.InviteOrRequestToJoin-745",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.IsPlayingDifferentWoWProject-746",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.IsPlayingSameWoWProject-747",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.IsPlayingWoW-748",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.IsRequestInviteType-749",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.IsTitleFriend-750",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsListUtil.ShouldShowRichPresenceOnly-751",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GameMenuFrame_EscapePressed-752",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GameMenuFrame_IsShown-753",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GameMenuFrame_Show-754",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GameRulesUtil.IsPlayerAtEffectiveMaxLevel-755",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetBottomManagedFrameContainer-756",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetChatAdditionalColor-757",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetDiscordUserCommunityLink-758",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetDiscordUserLink-759",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetGarrisonMissionFrameNameForFollowerType-760",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetGarrisonTypeForFollowerType-761",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetPlayerBottomManagedFrameContainer-762",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetRightManagedFrameContainer-763",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetTimeStringFromSeconds-764",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetUIPanelLayoutAttribute-765",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetUIPanelLayoutFrame-766",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GMChatFrame_OnWhisperFromGM-767",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GossipConfirmDialog_Show-768",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlDiscord_Loaded_OnEvent-769",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlDiscord_Loaded_OnLoad-770",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlDiscord_SetGuildSettingsCheckboxes-771",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlRankDiscord_OnLoad-772",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlUI_Discord_HideAll-773",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlUI_Discord_Update-774",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlUI_DiscordFrame_OnLoad-775",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlUI_LoadUI-776",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlUI_OnShow-777",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlUI_SetupDiscord-778",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlUI_SetupSelected-779",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlUI_Setup-780",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlUI_Show-781",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GuildControlUI_UnlinkDiscord-782",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HandleQuestSessionInviteToPartyConfirmation-783",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HelpFrame_EscapePressed-784",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideAuctionHouseFrame-785",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideBarberShopFrame-786",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideBlackMarketFrame-787",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideGarrisonMissionFrames-788",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideGarrisonShipyardFrame-789",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideGossipFrame-790",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideGuildBankFrame-791",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideInstanceBootDialog-792",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideInstanceLockDialog-793",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideItemUpgradeFrame-794",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideProfessionsCustomerOrdersFrame-795",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HideSummonConfirmationDialogs-796",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HouseFinderFrame_LoadUI-797",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingBulletinBoardFrame_LoadUI-798",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingControls_LoadUI-799",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingFramesUtil.IsBlueprintCollectionAvailable-800",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingFramesUtil.IsBlueprintOperationInProgress-801",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingFramesUtil.ShowBlueprintExport-802",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingFramesUtil.ShowBlueprintImport-803",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingFramesUtil.ShowBlueprintRoomExport-804",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingFramesUtil.TryOpenBlueprintCollection-805",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingTutorialUtil.HousingDecorQuestTutorialComplete-806",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HybridMinimap_LoadUI-807",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InputBoxInstructions_OnEnter-808",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InputBoxInstructions_OnLeave-809",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InputBoxInstructions_ShowTooltipIfTruncated-810",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InputUtil.CursorOnUpdate-811",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InputUtil.CursorUpdate-812",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InputUtil.GetCursorDelta-813",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InputUtil.IsMouseOver-814",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InputUtil.ShowInspectCursor-815",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InterfaceUtil.GetScreenHeightScale-816",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InterfaceUtil.GetScreenWidthScale-817",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-InterpolatorUtil.GetSmoothProgressChange-818",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-IslandsPartyPoseFrame_TryShow-819",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-IsMouseoverCastSupported-820",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-IsSummonConfirmationDialogVisible-821",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-IsTypeAdditionalChatColor-822",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-IsUnseenNewSettingInCurrentVersion-823",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ItemUtil.DisplayEquipSlotTooltip-824",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ItemUtil.GetEmptyEquipSlotTooltipForSlotName-825",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ItemUtil.GetEmptyEquipSlotTooltip-826",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ItemUtil.GetEquipSlotTexture-827",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ItemUtil.GetValidatedItemLocation-828",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-Kiosk_LoadUI-829",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-KioskFrame_HandlePlayerEnteringWorld-830",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LandingSoulbinds_LoadUI-831",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LFGListApplicationViewer_OpenEditMode-832",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LFGListApplicationViewerRemoveEntryButton_OnClick-833",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LoadAddOnWithErrorHandling-834",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LocaleUtil.GetLocaleDisplayName-835",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LocalizePlayerFrame_zhCN-836",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LocalizePlayerFrame_zhTW-837",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LootFrame_EscapePressed-838",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-MacroFrame_SaveMacro-839",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ManageFramePositions-840",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-MenuUtil.CreateHighlightButton-841",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-MovePad_LoadUI-842",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.CreateNarrationInfo-843",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.GetCheckboxContext-844",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.MakeIndexInfo-845",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.MakeNarrationStringForMoney-846",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.MakeNarrationStringFromIndexInfo-847",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.MakeNarrationStringFromInfo-848",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.MakeNarrationString-849",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.NarrateCurrentScreen-850",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.RegionToNarrationInfo-851",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.ResolveForwardedRegion-852",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.SetStaticDescription-853",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.SetStaticName-854",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.ShouldBeEnabled-855",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NarrationUtil.ShouldRegionNavigationSkipTooltips-856",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NPE_InitializeIfLoaded-857",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-OpacityFrame_EscapePressed-858",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-OpenEncounterJournalToJourney-859",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-OpenEncounterJournalToTieredEntrance-860",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-OpenMapToUserWaypoint-861",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-OpenOrderHallTalentUI-862",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-OpenPlayerSpellsToGlyphTarget-863",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-PhotoSharingFrame_EscapePressed-864",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-PingUtil.SendMacroPing-865",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-PingUtil.TogglePingTarget-866",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-PlayerChoiceFrame_TryShow-867",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-PlayerChoiceToggle_TryShow-868",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-PVPUI_LoadUI-869",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidWarningUtil.AddMessage-870",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidWarningUtil.ClearBossEmotes-871",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidWarningUtil.UpdateCenterScreenAnchors-872",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RecentAlliesUtil.GetBestSocialUIPresenceTypeForStateData-873",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RecruitAFriendFrameSocialViewInitializeAADC-874",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RegionUtil.GetTopLeftMost-875",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RegionUtil.SortByTopLeft-876",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RegisterGameMenuEscHandler-877",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RegisterPlayerInteraction-878",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ReportFrame_EscapePressed-879",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ResetDiscordSettings-880",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RestoreGMChatFrameSession-881",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SetGhostFrameShown-882",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SetPlayerInteractionConditions-883",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SettingsPanel_EscapePressed-884",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SetUIPanelLayoutAttribute-885",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShakeFrameRandom-886",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShakeFrame-887",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShouldDisplaySpellCooldown-888",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowAchievementFrameForAchievement-889",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowAdventureMapFrameForFollowerType-890",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowArtifactFrame-891",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowArtifactRelicForgeFrame-892",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowAuctionHouseFrame-893",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowBarberShopFrame-894",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowBlackMarketFrame-895",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowChallengesKeystoneFrame-896",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowFlightMapFrame-897",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowGarrisonCapacitiveDisplayFrame-898",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowGarrisonMissionFrameForFollowerType-899",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowGarrisonRecruiterFrame-900",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowGarrisonShipyardFrame-901",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowGuildBankFrame-902",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowHeirloomsJournalToClosestUpgradeablePage-903",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowInstanceBootDialog-904",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowInstanceLockDialog-905",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowItemSocketingFrame-906",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowItemUpgradeFrame-907",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowMatchCelebrationPartyPoseFrame-908",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowPendingPlayerChoiceResponseUI-909",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowPerksProgramFrame-910",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowProfessionEquipmentHelpTip-911",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowProfessionsCustomerOrdersFrame-912",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowProfessionsFrame-913",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowQuestSessionGroupInviteConfirmation-914",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowQuestSessionGroupInviteReceivedConfirmation-915",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowRemixArtifactFrame-916",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowRuneforgeFrame-917",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowSummonConfirmationDialog-918",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowTaxiMapFrame-919",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SimpleCheckout_EscapePressed-920",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIContactsFrameInitializeAADC-921",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.AddSeparatorToTooltip-922",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.GetBattleNetFriendTagInterestsUIOrder-923",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.GetBattleNetFriendTagRoleUIOrder-924",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.GetBlockedName-925",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.GetIconForPresenceType-926",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.GetLabelForBattleNetFriendTag-927",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.GetLabelForPresenceType-928",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.GetPresenceTypeForBattleNetAccountInfo-929",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.GetPresenceTypeSelf-930",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.InitializeUserScaledDropdownButton-931",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.InitializeUserScaledDropdownMainTitle-932",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.InitializeUserScaledDropdownTitle-933",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SocialUIUtil.SetBattleNetPresenceFromSocialUIPresence-934",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SoulbindViewer_LoadUI-935",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SpellFlyout_EscapePressed-936",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SplashFrame_EscapePressed-937",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-StoreEscapePressed-938",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-StringUtil.JoinAlternatingConditionalColor-939",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-TextureUtil.AnimateTexCoords-940",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-TimeUtil.BetterDate-941",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-TimeUtil.GetRecentTimeDate-942",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ToggleRAFPanel-943",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ToggleSocialUI-944",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-TryShowAnimaDiversionFrame-945",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-TryShowCovenantPreviewFrame-946",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIModeUtil.CreateExtendedBlocklist-947",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIModeUtil.CreateModifiedBlocklist-948",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIModeUtil.IsModeActive-949",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIModeUtil.RegisterMode-950",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIModeUtil.SetModeActive-951",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UnitPopupSharedUtil.IsFriendshipUpgrade-952",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UpdateQuestAcceptLogFullDialog-953",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-VisualAlert_GetTypeTemplate-954",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-VisualAlert_GetTypeText-955",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-VisualAlertData_ForEach-956",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-VisualAlerts_RegisterAll-957",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-WarfrontsPartyPoseFrame_TryShow-958",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-WowSurveyStatusFrame_OnSurveyDelivered-959",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-assertf-960",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AddFrameLock-963",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AnimatedShine_OnUpdate-964",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-AnimateTexCoords-965",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BattleTagInviteFrame_Show-966",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BetterDate-967",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BFAMissionFrame_EscapePressed-968",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BoostTutorial_AttemptLoad-969",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BuildColoredListString-970",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BuildIconArray-971",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BuildListString-972",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BuildMultilineTooltip-973",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-BuildNewLineListString-974",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ButtonPulse_OnUpdate-975",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CanAccessObject-976",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ClassTrainerFrame_Hide-977",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ClassTrainerFrame_Show-978",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CloseCalendarMenus-979",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CommunitiesFrame_IsEnabled-980",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CompactUnitFrame_GetOptionDisplayOnlyHealerPowerBars-981",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CompactUnitFrame_GetOptionDisplayPowerBar-982",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-CompactUnitFrame_GetOptionShowDispelIndicatorOverlay-983",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ConvertRGBtoColorString-984",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-DisplayTypeUnassignedSupported-985",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-EventUtil.AreVariablesLoaded-986",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ExpansionTrial_CheckLoadUI-987",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsFrame_CloseQuickJoinHelpTip-988",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsFrameAddFriendButton_OnClick-989",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsFriends_InitButton-990",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsFriends_SetSelection-991",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsFriendsButton_SetSelected-992",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-FriendsFriendsFrame_Close-993",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetDungeonNameWithDifficulty-994",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetNotchHeight-995",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetPlayerKeyState-996",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetScaledCursorDelta-997",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetScaledCursorPositionForFrame-998",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetScaledCursorPosition-999",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetScreenHeightScale-1000",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetScreenWidthScale-1001",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetSmoothProgressChange-1002",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetSocialColoredName-1003",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetSortedSelfResurrectOptions-1004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-GetUIParentOffset-1005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HelpPlatesSupported-1006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingControlsUtil.CanActivateHousingControls-1007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-HousingTutorialUtil.HousingQuestTutorialComplete-1008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-IsFrameLockActive-1009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-IsFrameSmartShown-1010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-IsLevelAtEffectiveMaxLevel-1011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-IsPlayerAtEffectiveMaxLevel-1012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-KeyBindingFrame_LoadUI-1013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LocalizePlayerFrame-1014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LocalizezhCN-1015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-LocalizezhTW-1016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-MacroFrame_SaveMacro-1017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-MajorFactions_LoadUI-1018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-MouseIsOver-1019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NPE_CheckTutorials-1020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-NPETutorial_AttemptToBegin-1021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-OpenAchievementFrameToAchievement-1022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-OrderHallMissionFrame_EscapePressed-1023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-OrderHallTalentFrame_EscapePressed-1024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-OutfitterUI_LoadUI-1025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-PingUtil.GetContextualPingTypeForUnit-1026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-PlayerChoiceToggle_TryShow-1027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-QuickJoin_JoinQueueButtonOnClick-1028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidBossEmoteFrame_OnEvent-1029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidBossEmoteFrame_OnLoad-1030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidBrowser_IsEmpowered-1031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidNotice_AddMessage-1032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidNotice_ClearSlot-1033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidNotice_Clear-1034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidNotice_FadeInit-1035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidNotice_OnUpdate-1036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidNotice_SetSlot-1037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidNotice_UpdateSlot-1038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidWarningFrame_OnEvent-1039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RaidWarningFrame_OnLoad-1040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RecentTimeDate-1041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RefreshAuras-1042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RegisterNewFrameLock-1043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-RemoveFrameLock-1044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ReverseQuestObjective-1045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SecureAuraHeader_GetUnit-1046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SecureAuraHeader_OnAttributeChanged-1047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SecureAuraHeader_OnEvent-1048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SecureAuraHeader_OnHide-1049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SecureAuraHeader_OnLoad-1050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SecureAuraHeader_OnShow-1051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SecureAuraHeader_OnUpdate-1052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SecureAuraHeader_UpdateEventRegistrations-1053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SecureAuraHeader_Update-1054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SetDesaturation-1055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SetFrameLock-1056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ShowResurrectRequest-1057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SmartHide-1058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-SmartShow-1059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-TalentFrame_LoadUI-1060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-TargetFrame_UpdateBuffAnchor-1061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-TargetFrame_UpdateDebuffAnchor-1062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ToggleLFGFrame-1063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ToggleRafPanel-1064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ToggleRaidBrowser-1065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-ToggleWoWHackCharacterUI-1066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-TokenFrame_LoadUI-1067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-TrialAccountCapReached_Inform-1068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIDoFramesIntersect-1069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIParent_ManageFramePositions-1070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIParent_OnEvent-1071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIParent_OnHide-1072",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIParent_OnLoad-1073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIParent_OnShow-1074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIParent_Shared_OnEvent-1075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIParent_Shared_OnLoad-1076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIParent_UpdateTopFramePositions-1077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UIParentLoadAddOn-1078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UnitHasMana-1079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UpdateFrameLock-1080",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-UpdateUIElementsForClientScene-1081",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-WorldFrame_OnLoad-1082",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-WorldFrame_OnUpdate-1083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-WoWHackSpellsUI_LoadUI-1084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-getglobal-1085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-framexml-setglobal-1086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:Assign-1097",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:ClearTextColorCurve-1098",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:Copy-1099",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:GetFormattedTextColor-1100",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:GetTextColorCurve-1101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetTextColorCurve-1102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetRounding-1103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetRounding-1104",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:AddAccessRestrictions-1117",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:AddForbiddenAspects-1118",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:AddSecretAspect-1119",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:CanBeAccessedInContext-1120",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:GetAccessRestrictions-1121",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:GetForbiddenAspects-1122",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:GetInheritableForbiddenAspects-1123",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:GetObjectTable-1124",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:HasAccessConstraints-1125",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:HasAnyAccessRestrictions-1126",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:HasAnyForbiddenAspects-1127",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FontString:SetDesaturateEmbeddedTextures-1128",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:ClearRadialProgressBar-1129",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:ClearSVG-1130",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:GetRadialProgressBarEndOffset-1131",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:GetRadialProgressBarFeather-1132",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:GetRadialProgressBarPercent-1133",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:GetRadialProgressBarReverse-1134",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:GetRadialProgressBarStartOffset-1135",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:SetRadialProgressBarEndOffset-1136",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:SetRadialProgressBarFeather-1137",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:SetRadialProgressBarPercent-1138",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:SetRadialProgressBarReverse-1139",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:SetRadialProgressBarStartOffset-1140",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:SetSVG-1141",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-RadialProgress:GetFromPercent-1142",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-RadialProgress:GetToPercent-1143",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-RadialProgress:SetFromPercent-1144",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-RadialProgress:SetToPercent-1145",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Frame:AddRoleset-1146",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Frame:CreateVectorGraphics-1147",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Frame:GetOnUpdateMode-1148",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Frame:GetRolesetNames-1149",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Frame:IsRolesetFiltered-1150",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Frame:RemoveRoleset-1151",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Frame:ResizeToBoundsRect-1152",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Frame:SetOnUpdateMode-1153",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Frame:SetRolesets-1154",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Minimap:SetIconScale-1155",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-StatusBar:GetRenderMode-1156",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-StatusBar:SetRenderMode-1157",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-VectorGraphics:ClearSVG-1158",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-VectorGraphics:GetSVGFileID-1159",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-VectorGraphics:HasSVG-1160",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-VectorGraphics:SetSVG-1161",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Animation:GetScript-1166",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Animation:HookScript-1174",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-Animation:SetScript-1184",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-AnimationGroup:GetScript-1190",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-AnimationGroup:HookScript-1198",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-AnimationGroup:SetScript-1208",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:SetToDefaults-1214",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:ClearScripts-1216",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:GetScript-1218",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:HookScript-1226",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:SetScript-1236",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-BATTLE_NET_FRIEND_TAG_ENABLED_STATUS_UPDATED-1251",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-BATTLE_NET_TITLE_FRIEND_CUSTOM_NAME_ENABLED_STATUS_UPDATED-1252",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_GUILD_DISCORD-1253",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-CONFIRM_BATTLE_NET_FRIEND_INVITE_SHOW-1254",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-DISCORD_GUILD_ACHIEVEMENT-1255",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-DISCORD_GUILD_LOBBY_UPDATE-1256",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-DISCORD_GUILD_SETTINGS_UPDATE-1257",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-DISCORD_LINK_UPDATE-1258",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-DISCORD_SERVER_LIST_UPDATE-1259",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-DISCORD_STATUS_UPDATE-1260",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-EXTERNAL_EVENT_LAUNCH_URL_FAILED-1261",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-FULLSCREEN_BROWSER_SPINNER_HIDE-1262",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-FULLSCREEN_BROWSER_SPINNER_SHOW-1263",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-GROUP_BUFF_VISUAL_ALERTS_CHANGED-1264",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-GUILD_RANKS_UPDATE_ACTIVE_PLAYER-1265",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HIDDEN_GROUP_BUFFS_CHANGED-1266",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSE_RESET_COMPLETED-1267",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSE_RESET_FAILED-1268",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_COLLECTION_FAILURE-1269",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_COLLECTION_RECEIVED-1270",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_CONTENTS_FAILURE-1271",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_CONTENTS_RECEIVED-1272",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_DELETE_FAILURE-1273",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_DELETE_SUCCESS-1274",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_EXPORT_FAILURE-1275",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_EXPORT_SUCCESS-1276",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_IMPORT_FAILURE-1277",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_IMPORT_STARTED-1278",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_IMPORT_SUCCESS-1279",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_RENAME_FAILURE-1280",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINT_RENAME_SUCCESS-1281",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_BLUEPRINTS_AVAILABILITY_CHANGED-1282",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_OCCUPIED_FLOOR_RANGE_CHANGED-1283",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_NEW_DECOR_PLACE_COMPLETE-1284",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-IGNORE_NEIGHBORHOOD_RESPONSE-1285",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-LEGACY_FRIEND_SYSTEM_STATUS_UPDATED-1286",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-LFG_LIST_CENSORED_ACTIVE_ENTRY_UPDATE-1287",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-LFG_LIST_REVEALED_CENSORED_ACTIVE_ENTRY-1288",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-SOCIAL_UI_FRIENDS_LIST_SYSTEM_STATUS_UPDATED-1289",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-SOCIAL_UI_SOCIAL_QUEUE_SYSTEM_STATUS_UPDATED-1290",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-SOCIAL_UI_SYSTEM_STATUS_UPDATED-1291",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-UNIT_PING_PIN_ADDED-1292",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-UNIT_PING_PIN_REMOVED-1293",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-BATTLETAG_INVITE_SHOW-1296",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_NUM_FLOORS_CHANGED-1297",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_*-1300",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-events-SPELL_UPDATE_COOLDOWN-1302",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-accessibilityScreenNarrationEnabled-1313",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-accessibilityScreenNarrationSpeechRate-1314",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-accessibilityScreenNarrationSpeechVolume-1315",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-accessibilityScreenNarrationVoice-1316",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-AftermathShaderDebug-1317",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-discordClientEnabled-1318",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-discordDisplayName-1319",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-nameplateCheckDistanceForTarget-1320",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-nameplateForceShowUnitName-1321",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-nameplateNotSelectedAlpha-1322",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-nameplatePlayRemovalAnimation-1323",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowAllPersonalAuras-1324",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowFriendlyRealmName-1325",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowFriends-1326",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-pingTarget-1327",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-raidFramesDispelIndicatorOverlayAnimation-1328",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-showPingsOnRaidFrames-1329",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-showScreenNarrationDialog-1330",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-taintLogObjectSecrets-1331",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-tooltipShowAuraSpellIDs-1332",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-userFontScaleGlue-1333",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-worldMapShowCursorCoords-1334",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-worldMapShowPlayerCoords-1335",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-auctionDisplayOnCharacter-1338",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-auctionSortByBuyoutPrice-1339",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-auctionSortByUnitPrice-1340",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-lastLockedDelvesCompanionAbilities-1341",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
+    },
+    {
+      "source_id": "wt-cvars-SlugSupersampling-1342",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": ""
     }
-  ]
+  ],
+  "supplemental_register": "data/patch-api/sources/12.1.0-wikitext-register.json"
 }
