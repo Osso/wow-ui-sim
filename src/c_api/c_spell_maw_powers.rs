@@ -28,12 +28,37 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetMawPowerBorderAtlasBySpellID",
         get_maw_power_border_atlas_by_spell_id,
     )?;
+    #[cfg(feature = "retail-12-0-7")]
+    mark_border_atlas_removed(state, namespace);
     table_set_rust_fn_static(
         state,
         namespace,
         "GetMawPowerLinkBySpellID",
         get_maw_power_link_by_spell_id,
     )
+}
+
+/// Keep ordinary namespace lookup from fabricating the member retired in 12.0.7.
+#[cfg(feature = "retail-12-0-7")]
+fn mark_border_atlas_removed(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) {
+    use crate::lua_api::methods::{create_table, table_get, table_set};
+    let table = Val::Table(namespace);
+    let existing = table_get(state, table, "__wow_removed_keys");
+    let removed = if matches!(existing, Val::Table(_)) {
+        existing
+    } else {
+        create_table(state)
+    };
+    table_set(
+        state,
+        removed,
+        "GetMawPowerBorderAtlasBySpellID",
+        Val::Bool(true),
+    );
+    table_set(state, table, "__wow_removed_keys", removed);
 }
 
 #[cfg(not(feature = "retail-12-0-7"))]

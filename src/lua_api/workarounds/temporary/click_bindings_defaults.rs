@@ -6,6 +6,14 @@ const CLICK_BINDINGS_DEFAULTS_LUA: &str = r#"
 local publishLegacyNative = ...
 C_ClickBindings = C_ClickBindings or __wow_namespace()
 
+if not publishLegacyNative then
+    -- Retired in 12.0.7: ordinary namespace lookup must not fabricate them.
+    local removed = rawget(C_ClickBindings, "__wow_removed_keys") or {}
+    removed.GetStringFromModifiers = true
+    removed.MakeModifiers = true
+    rawset(C_ClickBindings, "__wow_removed_keys", removed)
+end
+
 if rawget(C_ClickBindings, "CanSpellBeClickBound") == nil then
     function C_ClickBindings.CanSpellBeClickBound(_spellID)
         return true

@@ -32,7 +32,10 @@ fn load_cached_lua(env: &WowLuaEnv, relative_path: &str) {
 fn assert_native_absent(env: &WowLuaEnv, symbol: &str) {
     let (namespace, member) = symbol.split_once('.').unwrap_or(("_G", symbol));
     env.exec(&format!(
-        "assert(rawget({namespace}, '{member}') == nil, 'native {symbol} survived')"
+        "assert(rawget({namespace}, '{member}') == nil, 'native {symbol} survived')
+         assert({namespace}['{member}'] == nil, 'ordinary lookup fabricated {symbol}')
+         assert(not pcall(function() {namespace}['{member}']() end), '{symbol} remained callable')
+         assert(rawget({namespace}, '{member}') == nil, 'lookup published {symbol}')"
     ))
     .unwrap();
 }
