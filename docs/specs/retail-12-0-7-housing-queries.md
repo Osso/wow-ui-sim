@@ -1,14 +1,14 @@
-# Retail 12.0.7 housing names, doors and floors — B19–B21
+# Retail 12.0.7 housing names, doors and floors — B18/B20/B21
 
 Source rows [034–036](../../data/patch-api/sources/12.0.7-api-changes.txt) add three queries. Cached retail HousingCatalogUI, HousingCustomizeModeUI and HousingLayoutUI documentation supplies signatures and `AllowedWhenUntainted`; cache may postdate 12.0.7 and is not native historical proof.
 
 ## What it must do
 
-- [ ] Under `retail-12-0-7`, names read the subcategory's explicit parent and both live labels, returning exactly two public strings.
-- [ ] Door compatibility reads the explicit `(roomGUID, componentID)` type set; floor permission reads the explicit signed floor-index map. Queries return one public boolean without mutation.
-- [ ] Authenticate all arguments and extras using `unwrap_secret` before selector validation. Untainted callers may use secrets; tainted callers cannot, including on misses or malformed preceding arguments.
-- [ ] Outputs follow live updates and environments remain independent.
-- [ ] INFERRED: empty host state has no names or permissions; missing relation/label or malformed exact-i32 selector returns no names / false, never synthesized service data. Negative floor indices are supported.
+- [x] Under `retail-12-0-7`, names read the subcategory's explicit parent and both live labels, returning exactly two public strings.
+- [x] Door compatibility reads the explicit `(roomGUID, componentID)` type set; floor permission reads the explicit signed floor-index map. Queries return one public boolean without mutation.
+- [x] Authenticate all arguments and extras using `unwrap_secret` before selector validation. Untainted callers may use secrets; tainted callers cannot, including on misses or malformed preceding arguments.
+- [x] Outputs follow live updates and environments remain independent.
+- [x] INFERRED: empty host state has no names or permissions; missing relation/label or malformed exact-i32 selector returns no names / false, never synthesized service data. Negative floor indices are supported.
 
 ## How it works
 

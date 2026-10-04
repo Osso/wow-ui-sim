@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] Under `retail-12-0-7`, all three APIs read explicit completion dates live and encode exactly six public CalendarTime fields, with no historical `day` field.
-- [ ] Run history preserves run metadata and returns one detached array. Weekly best returns six values: duration, level, date, affixes, members, score. Season best returns two independently nilable records with duration, level, date, affixes, members and dungeonScore.
-- [ ] Nested dates, affixes and members are detached; host state updates/removals are visible; environments remain independent.
-- [ ] Authenticate every argument/extra via `unwrap_secret` before validation. Tainted secret flags/maps/extras fail even after malformed arguments or unknown maps; caller taint and host secrets survive GC.
-- [ ] INFERRED: malformed exact-i32 map selectors miss. Undated history rows are omitted, undated/missing weekly best returns no values, undated/missing season sides return nil independently. Default history/weekly/season host inputs are empty; no dates are fabricated.
+- [x] Under `retail-12-0-7`, all three APIs read explicit completion dates live and encode exactly six public CalendarTime fields, with no historical `day` field.
+- [x] Run history preserves run metadata and returns one detached array. Weekly best returns six values: duration, level, date, affixes, members, score. Season best returns two independently nilable records with duration, level, date, affixes, members and dungeonScore.
+- [x] Nested dates, affixes and members are detached; host state updates/removals are visible; environments remain independent.
+- [x] Authenticate every argument/extra via `unwrap_secret` before validation. Tainted secret flags/maps/extras fail even after malformed arguments or unknown maps; caller taint and host secrets survive GC.
+- [x] INFERRED: malformed exact-i32 map selectors miss. Undated history rows are omitted, undated/missing weekly best returns no values, undated/missing season sides return nil independently. Default history/weekly/season host inputs are empty; no dates are fabricated.
 
 ## How it works
 

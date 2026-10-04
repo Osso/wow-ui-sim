@@ -157,14 +157,13 @@ fn push_best(state: &mut LuaState, best: Option<&MythicPlusWeeklyBest>) {
     };
     let table = create_table(state);
     state.push(table);
-    table_set(
-        state,
-        table,
-        "durationSec",
-        Val::Num(f64::from(best.duration_sec)),
-    );
-    table_set(state, table, "level", Val::Num(f64::from(best.level)));
-    table_set(state, table, "dungeonScore", Val::Num(best.score));
+    for (key, number) in [
+        ("durationSec", f64::from(best.duration_sec)),
+        ("level", f64::from(best.level)),
+        ("dungeonScore", best.score),
+    ] {
+        table_set(state, table, key, Val::Num(number));
+    }
     let calendar = push_calendar(state, date);
     table_set(state, table, "completionDate", calendar);
     state.pop();

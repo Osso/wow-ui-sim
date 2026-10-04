@@ -1,4 +1,4 @@
-//! B19–B21 live host queries. No catalog seeds or inferred housing service.
+//! B18/B20/B21 live host queries. No catalog seeds or inferred housing service.
 
 use crate::lua_api::methods::{borrow_state, create_string, val_to_string};
 use rilua::vm::state::LuaState;

@@ -1,4 +1,4 @@
-//! Shared authentication boundary for B19–B22 host queries.
+//! Shared authentication boundary for B18/B20–B22 host queries.
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 

@@ -4,10 +4,10 @@ Source row [037](../../data/patch-api/sources/12.0.7-api-changes.txt) adds `C_Me
 
 ## What it must do
 
-- [ ] Read ordered host currency IDs live, return exactly one public array, detach each snapshot, preserve environment isolation.
-- [ ] INFERRED: default/cleared input returns one empty table (cached MerchantFrame uses `#currencies` unconditionally); host order is authoritative, not derived from merchant items.
-- [ ] INFERRED: without a SecretArguments declaration, reject all secret arguments/extras for both untainted and tainted callers; ignore public extras.
-- [ ] Retired global is nil by ordinary lookup before loading the real cached wrapper; wrapper returns exactly the configured IDs, or zero results for empty input.
+- [x] Read ordered host currency IDs live, return exactly one public array, detach each snapshot, preserve environment isolation.
+- [x] INFERRED: default/cleared input returns one empty table (cached MerchantFrame uses `#currencies` unconditionally); host order is authoritative, not derived from merchant items.
+- [x] INFERRED: without a SecretArguments declaration, reject all secret arguments/extras for both untainted and tainted callers; ignore public extras.
+- [x] Retired global is nil by ordinary lookup before loading the real cached wrapper; wrapper returns exactly the configured IDs, or zero results for empty input.
 
 ## How it works
 
