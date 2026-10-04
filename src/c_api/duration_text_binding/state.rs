@@ -112,6 +112,23 @@ pub(super) fn validate_duration(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn validate_font_string(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_api::methods::{borrow_state, native_frame_id_from_val};
+    use crate::widget::WidgetType;
+
+    let id = native_frame_id_from_val(state, stack_val(state, 1))
+        .ok_or_else(|| runtime_error("FontString expected"))?;
+    let sim = borrow_state(state)?;
+    let frame = sim
+        .widgets
+        .get(id)
+        .ok_or_else(|| runtime_error("FontString expected"))?;
+    if frame.widget_type != WidgetType::FontString {
+        return Err(runtime_error("FontString expected"));
+    }
+    Ok(0)
+}
+
 pub(super) fn is_zero(state: &mut LuaState) -> LuaResult<u32> {
     let duration = crate::lua_api::globals::lua_duration_object::require_duration(state, 1)?;
     let value = read_query_value(state, duration, Query::Zero, 0)?;

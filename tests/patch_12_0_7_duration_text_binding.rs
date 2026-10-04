@@ -178,6 +178,38 @@ fn p1207_binding_configuration_and_clock_are_environment_local() {
 }
 
 #[test]
+fn p1207_binding_rejects_forged_fontstring_without_storing_it() {
+    let env = binding_environment();
+    env.exec(r#"
+        local forged = {GetObjectType=function() return 'FontString' end, SetText=function() end}
+        local ok, message = pcall(Binding.SetFontString, Binding, forged)
+        assert(not ok, 'binding accepted forged FontString')
+        assert(tostring(message):find('FontString', 1, true))
+        assert(Binding:GetFontString() == Label)
+        local empty = C_DurationUtil.CreateDurationTextBinding()
+        assert(not pcall(empty.SetFontString, empty, forged))
+        assert(empty:GetFontString() == nil)
+        local frame = CreateFrame('Frame')
+        frame.GetObjectType = function() return 'FontString' end
+        assert(not pcall(Binding.SetFontString, Binding, frame))
+        assert(Binding:GetFontString() == Label)
+        local real = CreateFrame('Frame'):CreateFontString()
+        real.GetObjectType = function() return 'Frame' end
+        assert(select('#', Binding:SetFontString(real)) == 0)
+        assert(Binding:GetFontString() == real)
+        Clock:SetTime(12)
+        Binding:UpdateFontString()
+        assert(real:GetText() == '6s', 'genuine FontString did not receive live text')
+        local wrappedForged, deniedExtra = secretwrap(forged, 1)
+        forceinsecure()
+        local denied, denial = pcall(Binding.SetFontString, Binding, wrappedForged)
+        assert(not denied and tostring(denial):find('untainted', 1, true), tostring(denial))
+        assert(not pcall(Binding.SetFontString, Binding, real, deniedExtra))
+        assert(Binding:GetFontString() == real)
+    "#).unwrap();
+}
+
+#[test]
 fn p1207_binding_invalid_setters_reject_before_mutation() {
     let env = binding_environment();
     env.exec(r#"

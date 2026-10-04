@@ -17,7 +17,7 @@ const SCHEDULER_KEY: &str = "__duration_text_binding_scheduler";
 const DURATION_TEXT_BINDING_LUA: &str = r#"
 do
     local isPatch121, hasSecretInput, readSecretInput, wrapSecretOutput, reportUpdateError = ...
-    local isPatch1207, createSettings, readSetting, writeSetting, authenticateArguments, validateDuration, sampleRemaining, durationIsZero, durationHasExpired = select(6, ...)
+    local isPatch1207, createSettings, readSetting, writeSetting, authenticateArguments, validateDuration, sampleRemaining, durationIsZero, durationHasExpired, validateFontString = select(6, ...)
     local scalarFields = {enabled = true, updateInterval = true, timeModifier = true}
     local unpackArguments = unpack
     -- Capture host bootstrap functions, not later addon replacements.
@@ -302,9 +302,7 @@ do
                     elseif name == "SetEnabled" then
                         if type(value) ~= "boolean" then error("enabled must be boolean", 2) end
                     elseif name == "SetFontString" then
-                        if value == nil or type(value.GetObjectType) ~= "function" or value:GetObjectType() ~= "FontString" then
-                            error("FontString expected", 2)
-                        end
+                        validateFontString(value)
                     elseif name == "SetFormatter" then
                         if type(value) ~= "userdata" or type(value.FormatNumber) ~= "function" then error("NumericFormatter expected", 2) end
                     end
@@ -388,6 +386,11 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
             state,
             "DurationBinding.HasExpired",
             self::state::has_expired,
+        ),
+        secret_callback(
+            state,
+            "DurationBinding.ValidateFontString",
+            self::state::validate_font_string,
         ),
     ];
     let callback = lua.call_function(&bootstrap, &arguments)?;

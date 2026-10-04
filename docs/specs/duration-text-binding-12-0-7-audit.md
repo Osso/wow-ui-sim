@@ -34,7 +34,7 @@ The retained [12.0.7 source](../../data/patch-api/sources/12.0.7-api-changes.txt
 ### Input and secrecy
 
 - [x] Every selected setter with cached `SecretArguments = "AllowedWhenUntainted"` calls `rilua::table_security::unwrap_secret` on ALL supplied inputs, receiver and ignored extras before any receiver/type/range validation. Tainted rejection leaves configured state unchanged; public plain inputs still work without clearing caller taint.
-- [x] SetDuration accepts the existing LuaDurationObject, not a numeric pseudo-duration. SetFontString requires a FontString. Expired/zero text accept string or nil. Time modifier accepts RealTime/BaseTime. Update interval requires a finite nonnegative number. INFERRED: strict noncoercing validation and negative/nonfinite rejection; later cache gives types, not native coercion/range behavior.
+- [x] SetDuration accepts the existing LuaDurationObject, not a numeric pseudo-duration. SetFontString requires a genuine simulator FontString frame, validated by VM backing identity and registry WidgetType after argument authentication; forged GetObjectType tables are rejected without storage. Expired/zero text accept string or nil. Time modifier accepts RealTime/BaseTime. Update interval requires a finite nonnegative number. INFERRED: strict noncoercing validation and negative/nonfinite rejection; later cache gives types, not native coercion/range behavior.
 - [x] Keep authenticated secret text as VM wrappers, not decoded public strings. INFERRED: secret timing sampled into text (including zero/expired text selection) yields a VM secret text result; tainted callers cannot derive text from secret timing, and the font-string handoff preserves the wrapper.
 - [x] INFERRED: authenticated wrapped references and scalar settings normalize to their decoded values; wrapped text remains wrapped, and duration timing secrecy remains the existing core policy. No native secret-return parity is claimed beyond the conditional-secret declaration.
 - [ ] No selected input declaration says NeverSecret/NotAllowed. Do not invent an authentication policy from absent annotations. If historical declarations add such a policy, reject secrets for every caller before validating anything.
@@ -66,7 +66,8 @@ Observed integration on default Retail, 2026-10-04: new module 9/9; duration cor
 
 - [x] Targeted RED compiled: new module 1/9 passed before producers; GREEN 9/9 after producers and correcting the FontString readout fixture. Existing lib fixtures and retained copy controls use real durations/formatters, preserving their assertions.
 - [ ] Historical cache/build 68182 and native probes are unavailable. Formatting options/component composition, exact default texts, rounding and expiry precedence are not authenticated for 12.0.7.
-- [ ] NumericFormatter and FontString checks currently validate public protocol/type information; exact native handle identity is not independently proven.
+- [x] FontString identity uses the existing native frame-backing check, not replaceable GetObjectType; regression proves forged-table/wrong-widget rejection, atomic storage and genuine FontString formatting.
+- [ ] NumericFormatter checks still validate public protocol/type information; exact native formatter handle identity is not independently proven.
 - [ ] Exact native formatter behavior and full secret-output policy need historical/native reconciliation; staged code rejects non-string formatter results and sampled output policy is explicitly INFERRED.
 - [ ] Earlier profile regression proof, weak-scheduler collection and exhaustive scheduler error-handler behavior remain unproved. Retained Copy resource lifetime and handle identity are covered by the passing Retail copy controls.
 
