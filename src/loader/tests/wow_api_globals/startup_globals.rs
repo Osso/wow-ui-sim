@@ -210,6 +210,10 @@ fn test_patch_12_1_duration_binding_reference_lifetime_and_identity() {
 #[test]
 fn test_patch_12_0_7_safe_global_bridges() {
     let env = WowLuaEnv::new().unwrap();
+    env.state()
+        .borrow_mut()
+        .known_shipped_asset_ids
+        .insert(136243);
     let result: String = env
         .eval(
             r#"

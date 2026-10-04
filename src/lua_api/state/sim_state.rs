@@ -210,6 +210,15 @@ pub struct SimState {
     pub last_bnet_invite_game_account_id: Option<i32>,
     /// Explicit host entrance PDEID; INFERRED zero default, not a native sentinel.
     pub tiered_entrance_pde_id: u32,
+    /// INFERRED source-token ownership and live aura-query timing; empty by default.
+    #[cfg(feature = "retail-12-0-7")]
+    pub player_controlled_vehicle_sources: HashSet<String>,
+    /// INFERRED explicit client catalog; GetFileID resolution does not imply membership.
+    #[cfg(feature = "retail-12-0-7")]
+    pub known_shipped_asset_ids: HashSet<u32>,
+    /// INFERRED normalized lowercase slash paths; host owns selected-root reconciliation.
+    #[cfg(feature = "retail-12-0-7")]
+    pub known_loose_asset_paths: HashSet<String>,
     /// INFERRED observable request input only; no eligibility response or event model.
     pub last_delve_eligibility_map_id: Option<i32>,
     /// Explicit host links keyed by resolved spell ID and rarity; no fabricated links.

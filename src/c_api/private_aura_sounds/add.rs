@@ -166,10 +166,14 @@ fn read_optional_number(value: Val) -> LuaResult<Option<u32>> {
 
 fn check_context(state: &LuaState) -> LuaResult<()> {
     let sim = borrow_state(state)?;
+    #[cfg(feature = "retail-12-0-7")]
+    let mythic_restricted = sim.mythic_plus.is_active && sim.player.in_combat;
+    #[cfg(not(feature = "retail-12-0-7"))]
+    let mythic_restricted = sim.mythic_plus.is_active;
     let restricted = sim.world.encounter_in_progress
-        || sim.mythic_plus.is_active
+        || mythic_restricted
         || sim.private_aura_sound_registrations.pvp_match_active;
-    // INFERRED HasRestrictions policy: no insecure registration in these contexts.
+    // INFERRED: encounter/PvP restrictions still win over out-of-combat M+ permission.
     if restricted && !rilua::api::state_is_secure(state) {
         return Err(input_error(
             "insecure registration denied during encounter/M+/PvP match",

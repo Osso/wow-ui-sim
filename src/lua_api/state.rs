@@ -195,6 +195,12 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-7")]
             last_bnet_invite_game_account_id: None,
             tiered_entrance_pde_id: 0,
+            #[cfg(feature = "retail-12-0-7")]
+            player_controlled_vehicle_sources: HashSet::new(),
+            #[cfg(feature = "retail-12-0-7")]
+            known_shipped_asset_ids: HashSet::new(),
+            #[cfg(feature = "retail-12-0-7")]
+            known_loose_asset_paths: HashSet::new(),
             last_delve_eligibility_map_id: None,
             curio_links: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]

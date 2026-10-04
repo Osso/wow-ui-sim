@@ -293,14 +293,37 @@ fn collect_unit_auras(state: &mut LuaState, unit: &str, filter: AuraFilter) -> V
             .collect()
     } else if unit == "target" {
         let target_auras = target_fixture_auras();
-        return target_auras
+        let target_auras = target_auras
             .into_iter()
             .filter(|a| aura_matches_filter(a, filter))
             .collect();
+        #[cfg(feature = "retail-12-0-7")]
+        let target_auras =
+            classify_vehicle_auras(target_auras, &sim.player_controlled_vehicle_sources);
+        return target_auras;
     } else {
         return Vec::new();
     };
-    auras.into_iter().cloned().collect()
+    let copied = auras.into_iter().cloned().collect();
+    #[cfg(feature = "retail-12-0-7")]
+    let copied = classify_vehicle_auras(copied, &sim.player_controlled_vehicle_sources);
+    copied
+}
+
+/// INFERRED token identity and live ownership timing; never mutates stored AuraInfo.
+#[cfg(feature = "retail-12-0-7")]
+fn classify_vehicle_auras(
+    auras: Vec<AuraInfo>,
+    controlled_sources: &std::collections::HashSet<String>,
+) -> Vec<AuraInfo> {
+    auras
+        .into_iter()
+        .map(|mut aura| {
+            let controlled_vehicle = controlled_sources.contains(&aura.source_unit);
+            aura.is_from_player_or_player_pet |= controlled_vehicle;
+            aura
+        })
+        .collect()
 }
 
 fn blocked_aura_key(unit: &str, aura_instance_id: i32) -> String {

@@ -1,4 +1,6 @@
-//! Addon-local file queries must use the TOC directory selected by the real loader.
+//! Legacy pre-12.0.7 filesystem contract. 12.0.7 host registry tests live in
+//! patch_12_0_7_b23_b28.rs; loader registry acquisition is not modeled there.
+#![cfg(not(feature = "retail-12-0-7"))]
 
 use std::fs;
 use std::path::{Path, PathBuf};

@@ -121,6 +121,8 @@ fn each_context_denies_addon_without_consuming_id_then_recovers() {
     ] {
         let env = fixture();
         set_context(&env, context.0, context.1, context.2);
+        // This existing denial test targets restricted M+, not the 12.0.7 exception.
+        env.state().borrow_mut().player.in_combat = true;
         addon(&env, "DenySound()");
         {
             let state = env.state().borrow();
