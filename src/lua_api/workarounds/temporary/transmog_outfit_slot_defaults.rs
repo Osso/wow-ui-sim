@@ -1,13 +1,11 @@
 //! Temporary `C_TransmogOutfitInfo` slot/outfit defaults.
 //!
 //! Outfit locks are state-backed in `lua_api::globals::transmog_outfit_info`.
-//! Slot metadata, sheathe categories, and viewed metadata remain compatibility
-//! defaults. Retail 12.0.5 applied selection belongs to the catalog-backed C API.
+//! Slot metadata and sheathe categories remain compatibility defaults.
+//! Retail 12.0.5 active/viewed selection belongs to the catalog-backed C API.
 
 const TRANSMOG_OUTFIT_SLOT_DEFAULTS_LUA: &str = r#"
 C_TransmogOutfitInfo = C_TransmogOutfitInfo or __wow_namespace()
-
-local CURRENTLY_VIEWED_OUTFIT_ID_KEY = "__currentlyViewedOutfitID"
 local PENDING_SHEATHE_CATEGORIES_KEY = "__pendingSheatheCategories"
 local VALID_SHEATHE_SLOT_TRANSMOG_ID = 190001
 
@@ -20,15 +18,6 @@ local function enumValue(enumName, key, fallback)
     end
 
     return fallback
-end
-
-local function outfitIDValue(key)
-    local value = rawget(C_TransmogOutfitInfo, key)
-    if type(value) == "number" then
-        return value
-    end
-
-    return 0
 end
 
 local function numberOrNumericString(value)
@@ -96,12 +85,6 @@ local function buildSlotArray(specs, transmogType)
         slots[index] = slotInfo(spec[1], spec[2], spec[3], spec[4], spec[5], transmogType)
     end
     return slots
-end
-
-if rawget(C_TransmogOutfitInfo, "GetCurrentlyViewedOutfitID") == nil then
-    function C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID()
-        return outfitIDValue(CURRENTLY_VIEWED_OUTFIT_ID_KEY)
-    end
 end
 
 if rawget(C_TransmogOutfitInfo, "GetAllTransmogOutfitOptionSheatheCategoryInfo") == nil then
@@ -176,6 +159,12 @@ end
 local function resetOutfitState()
     setOutfitIDs(0)
     C_TransmogOutfitInfo[PENDING_SHEATHE_CATEGORIES_KEY] = {}
+end
+
+if rawget(C_TransmogOutfitInfo, "GetCurrentlyViewedOutfitID") == nil then
+    function C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID()
+        return outfitIDValue(CURRENTLY_VIEWED_OUTFIT_ID_KEY)
+    end
 end
 
 if rawget(C_TransmogOutfitInfo, "GetActiveOutfitID") == nil then

@@ -1,5 +1,5 @@
 //! `SecureCmdOptionParse(options)` — returns the first option whose bracketed
-//! condition list matches current simulator state.
+//! condition list matches current simulator state, plus its explicit unit selector.
 
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -24,16 +24,27 @@ pub(super) fn secure_cmd_option_parse(state: &mut LuaState) -> LuaResult<u32> {
     };
     let selected = {
         let sim = borrow_state(state)?;
-        resolve_cmd_option(&text, &sim).map(str::to_string)
+        resolve_cmd_option_with_explicit_unit(&text, &sim)
+            .map(|(value, unit)| (value.to_owned(), unit.map(str::to_owned)))
     };
-    match selected {
-        Some(value) => {
-            let result = Val::Str(state.gc.intern_string(value.as_bytes()));
-            state.push(result);
-        }
-        None => state.push(Val::Nil),
-    }
-    Ok(1)
+    Ok(push_cmd_option_results(state, selected))
+}
+
+fn push_cmd_option_results(
+    state: &mut LuaState,
+    selected: Option<(String, Option<String>)>,
+) -> u32 {
+    let Some((value, unit)) = selected else {
+        state.push(Val::Nil);
+        return 1;
+    };
+    let value = Val::Str(state.gc.intern_string(value.as_bytes()));
+    state.push(value);
+    let unit = unit.map_or(Val::Nil, |unit| {
+        Val::Str(state.gc.intern_string(unit.as_bytes()))
+    });
+    state.push(unit);
+    2
 }
 
 pub(crate) fn resolve_cmd_option<'a>(
@@ -48,11 +59,19 @@ pub(crate) fn resolve_cmd_option_with_unit<'a>(
     text: &'a str,
     sim: &crate::lua_api::SimState,
 ) -> Option<(&'a str, &'a str)> {
+    resolve_cmd_option_with_explicit_unit(text, sim)
+        .map(|(value, unit)| (value, unit.unwrap_or("target")))
+}
+
+fn resolve_cmd_option_with_explicit_unit<'a>(
+    text: &'a str,
+    sim: &crate::lua_api::SimState,
+) -> Option<(&'a str, Option<&'a str>)> {
     text.split(';')
         .filter_map(parse_cmd_option_clause)
         .find_map(|clause| {
             clause.matches(sim).then(|| {
-                let unit = clause.conditions.map_or("target", condition_unit);
+                let unit = clause.conditions.and_then(explicit_condition_unit);
                 (clause.value, unit)
             })
         })
@@ -104,11 +123,14 @@ fn condition_list_matches(conditions: &str, sim: &crate::lua_api::SimState) -> b
 }
 
 fn condition_unit(conditions: &str) -> &str {
+    explicit_condition_unit(conditions).unwrap_or("target")
+}
+
+fn explicit_condition_unit(conditions: &str) -> Option<&str> {
     // INFERRED: preserve the existing parser's last-selector-wins policy.
     conditions
         .rsplit(',')
         .find_map(|condition| parse_unit_override(condition.trim()))
-        .unwrap_or("target")
 }
 
 fn parse_unit_override(condition: &str) -> Option<&str> {

@@ -28,7 +28,7 @@ mod cmd_option;
 pub(crate) use cmd_option::{resolve_cmd_option, resolve_cmd_option_with_unit};
 mod environment;
 mod loader_env;
-mod secret_values;
+pub(super) mod secret_values;
 mod secure_env;
 mod secure_handler;
 mod securecallmethod;
@@ -41,7 +41,6 @@ pub use secure_env::{
     create_secure_environment, mark_secure, mark_secure_state, set_in_both_envs_rilua,
 };
 
-pub(crate) use secret_values::mark_secret_value;
 #[cfg(feature = "retail-12-1-0")]
 pub(crate) use secret_values::register_retail_secret_values;
 

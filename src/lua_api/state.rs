@@ -175,6 +175,8 @@ macro_rules! build_empty_sim_state {
             transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog::default(),
             #[cfg(feature = "retail-12-0-5")]
             active_transmog_outfit_id: None,
+            #[cfg(feature = "retail-12-0-5")]
+            viewed_transmog_outfit_id: None,
             // Simulator initial policy; native default is unverified.
             outfit_situations_enabled: false,
             transmog_set_filters: HashMap::new(),

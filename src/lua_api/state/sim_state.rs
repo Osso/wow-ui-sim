@@ -183,6 +183,9 @@ pub struct SimState {
     /// Explicit applied selection; independent of viewed/pending outfit metadata.
     #[cfg(feature = "retail-12-0-5")]
     pub active_transmog_outfit_id: Option<i64>,
+    /// Explicit catalog-backed viewed selection; independent of active/pending state.
+    #[cfg(feature = "retail-12-0-5")]
+    pub viewed_transmog_outfit_id: Option<i64>,
     /// Global setting only; no per-outfit or pending-situation behavior.
     pub outfit_situations_enabled: bool,
     /// Explicit filter values only; native defaults and set filtering are unmodeled.

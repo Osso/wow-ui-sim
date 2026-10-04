@@ -4,7 +4,7 @@
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
 )))]
-use crate::lua_api::globals::security::mark_secret_value;
+use crate::lua_api::globals::security::secret_values::mark_secret_value;
 use crate::lua_api::methods::{borrow_state, create_string, create_string_static, create_table};
 use crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID;
 use crate::lua_bridge::FromStack;

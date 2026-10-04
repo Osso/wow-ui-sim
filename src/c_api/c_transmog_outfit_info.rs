@@ -8,6 +8,8 @@ pub use catalog::{OutfitCatalog, OutfitEntry};
 #[cfg(feature = "retail-12-0-5")]
 mod actions;
 #[cfg(feature = "retail-12-0-5")]
+mod viewed;
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) use actions::run_outfit_command;
 
 #[cfg(feature = "retail-12-0-5")]
@@ -41,6 +43,8 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     catalog::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
     actions::register(state, namespace)?;
+    #[cfg(feature = "retail-12-0-5")]
+    viewed::register(state, namespace)?;
     #[cfg(all(
         feature = "retail-12-0-5",
         any(feature = "profile-retail", feature = "client-ptr")

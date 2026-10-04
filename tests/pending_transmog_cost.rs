@@ -105,8 +105,7 @@ fn pending_transmog_cost_repeated_reads_do_not_derive_or_mutate_owned_state() {
         C_TransmogOutfitInfo.ChangeToOutfit(7, false)
         assert(C_TransmogOutfitInfo.GetActiveOutfitID() == 91, 'catalog index 7 should select outfit 91')
         assert(C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID() == 0, 'selection should not set viewed metadata')
-        -- ChangeViewedOutfit is declared but unimplemented here; seed the viewed-outfit storage directly.
-        rawset(C_TransmogOutfitInfo, '__currentlyViewedOutfitID', 91)
+        C_TransmogOutfitInfo.ChangeViewedOutfit(91)
         C_TransmogOutfitInfo.SetPendingTransmogSheatheCategory(16, 2, 2)
         "#,
     )
@@ -120,7 +119,7 @@ fn pending_transmog_cost_repeated_reads_do_not_derive_or_mutate_owned_state() {
     env.exec(
         r#"
         assert(C_TransmogOutfitInfo.GetActiveOutfitID() == 91, 'cost reads should preserve active selection')
-        assert(C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID() == 91, 'cost reads should preserve explicitly seeded viewed metadata')
+        assert(C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID() == 91, 'cost reads should preserve API-selected viewed outfit')
         local pending = rawget(C_TransmogOutfitInfo, '__pendingSheatheCategories')
         assert(pending['16:2'] == 2, 'cost reads should preserve pending sheathe category')
         local count = 0
