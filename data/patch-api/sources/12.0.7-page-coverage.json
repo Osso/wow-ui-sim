@@ -198,7 +198,7 @@
       ],
       "implementation": "d297d2c17",
       "compiled_revision": "3557d5f1d",
-      "proof": "main-confirmed GREEN; independent review pending; partial",
+      "proof": "main-confirmed GREEN; independent source-read review ACCEPT WITH QUALIFICATIONS; partial",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-4-5-master-green.log.txt"
     },
     {
@@ -213,7 +213,7 @@
       ],
       "implementation": "5cb3fb19c",
       "compiled_revision": "3557d5f1d",
-      "proof": "main-confirmed GREEN; independent review pending; partial",
+      "proof": "main-confirmed GREEN; independent source-read review ACCEPT WITH QUALIFICATIONS; partial",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-4-5-master-green.log.txt"
     },
     {
@@ -229,7 +229,7 @@
       ],
       "implementation": "e35c47d4b+5e92eaf7b",
       "compiled_revision": "3557d5f1d",
-      "proof": "main-confirmed GREEN; independent review pending; partial",
+      "proof": "main-confirmed GREEN; independent source-read review ACCEPT WITH QUALIFICATIONS; partial",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-4-5-master-green.log.txt"
     }
   ],
