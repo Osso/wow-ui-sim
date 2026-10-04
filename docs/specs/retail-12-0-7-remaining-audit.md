@@ -18,13 +18,13 @@ Eighteen source rows in the [12.0.7 retained excerpt](../../data/patch-api/sourc
 ### Model-unit GUID — row 137
 
 - [ ] Register `GetModelUnitGUID` only with feature `retail-12-0-7`; older builds retain absence. No renderer or vendor Lua changes.
-- [ ] Read existing per-actor Rust `PlayerModelState.last_unit`, not a Lua field, Lua `UnitGUID` or replaceable `GetObjectType` method.
-- [ ] INFERRED: resolve the bound token's current host identity on every call; native bind-time snapshot versus live token semantics are not established.
-- [ ] INFERRED: an unbound actor or missing identity returns exactly one empty string. Cached declaration says nonnil WOWGUID but does not specify that default. No cached Lua consumer of this getter was located, so no observed consumer conflicts with this empty default; this is not native default evidence.
-- [ ] Require a genuinely native-backed simulator actor and check its Rust `object_type_name`. Copying an actor identity token into a plain table does not authorize access.
-- [ ] Return a public GUID even when the corresponding UnitGUID is conditionally secret. The source removes `ret1.ConditionalSecret`; do not substitute suppression or wrapped constants for that delta.
-- [ ] INFERRED NotAllowed: cached getter omits input policy. Reject secret receiver and every extra for secure and tainted callers before any receiver validation. Public extras are ignored; no caller taint changes.
-- [ ] Host identity changes and actor binding changes are observed live; actors and environments remain independent.
+- [x] Read existing per-actor Rust `PlayerModelState.last_unit`, not a Lua field, Lua `UnitGUID` or replaceable `GetObjectType` method.
+- [x] INFERRED: resolve the bound token's current host identity on every call; native bind-time snapshot versus live token semantics are not established.
+- [x] INFERRED: an unbound actor or missing identity returns exactly one empty string. Cached declaration says nonnil WOWGUID but does not specify that default. No cached Lua consumer of this getter was located, so no observed consumer conflicts with this empty default; this is not native default evidence.
+- [x] Require a genuinely native-backed simulator actor and check its Rust `object_type_name`. Copying an actor identity token into a plain table does not authorize access.
+- [x] Return a public GUID even when the corresponding UnitGUID is conditionally secret. The source removes `ret1.ConditionalSecret`; do not substitute suppression or wrapped constants for that delta.
+- [x] INFERRED NotAllowed: cached getter omits input policy. Reject secret receiver and every extra for secure and tainted callers before any receiver validation. Public extras are ignored; no caller taint changes.
+- [x] Host identity changes and actor binding changes are observed live; actors and environments remain independent.
 
 ### Existing timeline color notification — row 145
 
@@ -51,22 +51,22 @@ Eighteen source rows in the [12.0.7 retained excerpt](../../data/patch-api/sourc
 ## Implementation inventory
 
 - `src/widget/frame_types.rs` — existing optional actor unit token; no new state or parallel identity provider.
-- `src/lua_api/frame/methods/widgets/model/model_unit_guid.rs` — proposed gated Rust getter, native receiver validation and secret rejection.
-- `src/lua_api/frame/methods/widgets/model.rs` — proposed feature-gated module and method registration.
+- `src/lua_api/frame/methods/widgets/model/model_unit_guid.rs` — gated Rust getter, native receiver validation and secret rejection.
+- `src/lua_api/frame/methods/widgets/model.rs` — feature-gated module and method registration.
 - `src/lua_api/globals/unit_misc.rs` — existing host-state GUID lookup reused without Lua calls.
 - `src/c_api/c_encounter_timeline/notifications.rs`, `layout.rs` — existing later-epoch color notification and five-second transition.
 - `src/loader/tests/wow_api_globals/startup_globals.rs` — existing absence assertion replaced by unbound value/arity assertion.
 
 ## Tests asserting this spec
 
-- `tests/p1207_remaining_model_unit_guid.rs` — six authored cases: default/arity, live host mutation and Lua replacement immunity, binding/actor/environment independence, ConditionalSecret removal, native handle validation and all-argument secret denial for both caller contexts.
-- `tests/p1207_remaining_timeline_color_event.rs` — four authored later-epoch cases: empty timeline, threshold/exact payload/no duplicate, environment isolation and cancellation; callback checks public payload, live state and taint preservation.
+- `tests/p1207_remaining_model_unit_guid.rs` — six default-Retail passing cases (RED: six behavioral failures with producer withheld): default/arity, live host mutation and Lua replacement immunity, binding/actor/environment independence, ConditionalSecret removal, native handle validation and all-argument secret denial for both caller contexts.
+- `tests/p1207_remaining_timeline_color_event.rs` — four authored but unrun later-epoch cases (default Retail filters all four out): empty timeline, threshold/exact payload/no duplicate, environment isolation and cancellation; callback checks public payload, live state and taint preservation.
 - Existing startup widget-compatibility fixture changes with the new getter. Duration factory-absence assertions remain unchanged while their rows are blocked.
 
 ## Known gaps (current cycle)
 
 - [ ] Integration verification is limited to default-Retail targeted tests and compiler/format checks. The four timeline tests require `retail-12-1-5`, disabled by default; they remain authored but unrun. No alternate profiles, startup CLI or native execution are included.
-- [ ] Row 137's default, token-versus-snapshot choice and input policy are INFERRED, not native conformance. ClearModel/rebinding lifecycle parity is not established by this getter proposal.
+- [ ] Row 137's default, token-versus-snapshot choice and input policy are INFERRED, not native conformance. Older-feature absence is statically gated but not execution-tested. ClearModel/rebinding lifecycle parity is not established by this getter.
 - [ ] Row 145's strict-12.0.7 lifecycle is missing. Existing 12.1.5 notifications do not supply that proof; color-setter/alpha/native UniqueEvent coalescing are not covered by these tests.
 - [ ] Sixteen blocked rows retain audit-pending with exact missing-evidence notes in the authoring handoff. No tests should falsely close them by asserting absence, wrapped constants or name registration.
 
