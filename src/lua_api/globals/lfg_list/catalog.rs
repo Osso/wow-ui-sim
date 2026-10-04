@@ -333,18 +333,6 @@ pub(super) fn has_activity_list(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-/// `HasActiveEntryInfo()` -> bool. False because there is no own-listing model.
-pub(super) fn has_active_entry_info(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(false));
-    Ok(1)
-}
-
-/// `GetActiveEntryInfo()` -> nil. No active listing.
-pub(super) fn get_active_entry_info(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Nil);
-    Ok(1)
-}
-
 /// `GetAvailableRoles()` -> (tank, healer, dps). Always true.
 pub(super) fn get_available_roles(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(true));
@@ -434,7 +422,7 @@ fn set_advanced_filter_activities(state: &mut LuaState, info: Val, activities: &
     table_set(state, info, "activities", activities_table);
 }
 
-fn u32_array_table(state: &mut LuaState, values: &[u32]) -> Val {
+pub(super) fn u32_array_table(state: &mut LuaState, values: &[u32]) -> Val {
     let table = create_table(state);
     let Val::Table(table_ref) = table else {
         return table;

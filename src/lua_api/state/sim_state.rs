@@ -420,6 +420,7 @@ pub struct SimState {
     pub pet_battles: PetBattleState,
     pub pet: PetState,
     pub lfg_list_counts: LfgListCounts,
+    pub lfg_active_entry: Option<crate::lua_api::state_types::LfgActiveEntry>,
     pub can_use_premade_group: bool,
     pub lfg_category_info: std::collections::HashMap<i32, LfgCategoryInfo>,
     pub lfg_active_categories: std::collections::HashSet<i32>,

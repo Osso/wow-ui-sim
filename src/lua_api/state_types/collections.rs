@@ -467,6 +467,28 @@ pub struct TransmogAppearance {
     pub item_mod_id: i32,
 }
 
+/// The player's own Group Finder listing, set by `C_LFGList.CreateListing` /
+/// `UpdateListing` (`LfgListingCreateData`) and read by `GetActiveEntryInfo`.
+#[derive(Debug, Clone)]
+pub struct LfgActiveEntry {
+    pub activity_ids: Vec<u32>,
+    pub quest_id: Option<i32>,
+    pub auto_accept: bool,
+    pub cross_faction_listing: bool,
+    pub private_group: bool,
+    pub new_player_friendly: bool,
+    /// `Enum.LFGEntryPlaystyle`.
+    pub playstyle: i32,
+    /// `Enum.LFGEntryGeneralPlaystyle`.
+    pub general_playstyle: i32,
+    pub required_dungeon_score: f64,
+    pub required_item_level: f64,
+    pub required_pvp_rating: f64,
+    /// Server moderation flag; listings start uncensored.
+    pub censored: bool,
+    pub created_at: std::time::Instant,
+}
+
 /// A premade group listing in the Group Finder.
 ///
 /// Backs `C_LFGList.GetSearchResultInfo` and `GetSearchResultMemberCounts`.

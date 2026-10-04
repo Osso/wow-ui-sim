@@ -3,6 +3,7 @@
 //! Backed by `SimState::lfg_category_info`, `lfg_activity_groups`,
 //! `lfg_activities`, and `world.premade_listings`.
 
+mod active_entry;
 mod catalog;
 mod counts;
 
@@ -48,11 +49,13 @@ fn fire_event_with_args(state: &mut LuaState, event_name: &str, args: Vec<Val>) 
     Ok(())
 }
 
-fn defer_lfg_search_results_event(state: &mut LuaState) -> LuaResult<()> {
-    let callback = Val::Function(state.gc.alloc_closure(Closure::Rust(RustClosure::new(
-        dispatch_lfg_search_results_received,
-        "C_LFGList.SearchResultsReady",
-    ))));
+/// Fire `dispatch` on the next timer tick, as the server reply would arrive.
+fn defer_lfg_event(state: &mut LuaState, dispatch: RustFn, label: &'static str) -> LuaResult<()> {
+    let callback = Val::Function(
+        state
+            .gc
+            .alloc_closure(Closure::Rust(RustClosure::new(dispatch, label))),
+    );
     let id = next_timer_id();
     timer_layout::store_timer_callback(state, id, callback);
 
@@ -272,7 +275,11 @@ fn get_search_results(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn search(state: &mut LuaState) -> LuaResult<u32> {
-    defer_lfg_search_results_event(state)?;
+    defer_lfg_event(
+        state,
+        dispatch_lfg_search_results_received,
+        "C_LFGList.SearchResultsReady",
+    )?;
     Ok(0)
 }
 
@@ -413,10 +420,6 @@ fn can_create_scenario_group(_state: &mut LuaState) -> LuaResult<u32> {
 fn is_premade_group_finder_enabled(_state: &mut LuaState) -> LuaResult<u32> {
     _state.push(rilua::Val::Bool(false));
     Ok(1)
-}
-
-fn remove_listing(_state: &mut LuaState) -> LuaResult<u32> {
-    Ok(0)
 }
 
 /// `GetApplicationInfo(searchResultID)` →
@@ -699,7 +702,9 @@ fn register_listing_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lu
             ("RevealCensoredSearchResult", reveal_censored_search_result),
             ("GetNumApplications", counts::get_num_applications),
             ("GetNumApplicants", counts::get_num_applicants),
-            ("RemoveListing", remove_listing),
+            ("CreateListing", active_entry::create_listing),
+            ("UpdateListing", active_entry::update_listing),
+            ("RemoveListing", active_entry::remove_listing),
             ("GetApplications", get_applications),
             ("GetApplicationInfo", get_application_info),
             ("ApplyToGroup", apply_to_group),
@@ -721,8 +726,8 @@ fn register_capability_methods(state: &mut LuaState, table_ref: GcRef<Table>) ->
                 is_premade_group_finder_enabled,
             ),
             ("HasActivityList", catalog::has_activity_list),
-            ("HasActiveEntryInfo", catalog::has_active_entry_info),
-            ("GetActiveEntryInfo", catalog::get_active_entry_info),
+            ("HasActiveEntryInfo", active_entry::has_active_entry_info),
+            ("GetActiveEntryInfo", active_entry::get_active_entry_info),
             ("GetAvailableRoles", catalog::get_available_roles),
         ],
     )

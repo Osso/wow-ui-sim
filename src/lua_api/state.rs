@@ -354,6 +354,7 @@ macro_rules! build_empty_sim_state {
             pet_battles: PetBattleState::default(),
             pet: PetState::default(),
             lfg_list_counts: LfgListCounts::default(),
+            lfg_active_entry: None,
             can_use_premade_group: true,
             lfg_category_info: default_lfg_category_info(),
             lfg_active_categories: ::std::collections::HashSet::new(),
