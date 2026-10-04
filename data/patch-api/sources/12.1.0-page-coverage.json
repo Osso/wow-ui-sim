@@ -242,6 +242,52 @@
       "implementation": "test only",
       "compiled_revision": "10118708c",
       "proof": "main-thread GREEN on master 10118708c (filter run alone); no independent review"
+    },
+    {
+      "id": "roleset-filtering-12-1-0",
+      "symbols": [
+        "Frame rolesets, ApplyRolesetFilters, IsRolesetFiltered, alwaysBlocked"
+      ],
+      "scope": "Filtered frames keep IsShown true, lose IsVisible (with children), strata membership and effective alpha; alwaysBlocked hides without filters; XML roleset= applied via template chain. INFERRED: untagged frames never filtered by allowlist; no OnShow/OnHide on filter change.",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_1_0_rolesets.rs"
+      ],
+      "implementation": "src/lua_api/frame/methods/text_attribute_event/rolesets.rs, src/c_api/c_roleset.rs",
+      "compiled_revision": "851e5a3db",
+      "proof": "agent-run GREEN on branch; no independent review"
+    },
+    {
+      "id": "cvar-scope-12-1-0",
+      "symbols": [
+        "autoLootDefault",
+        "tooltipShowAuraSpellIDs"
+      ],
+      "scope": "Session-only tooltipShowAuraSpellIDs is not saved/loaded; autoLootDefault persists across reload. Single CVar store: account vs character scope not modeled.",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "src/cvars.rs cvars::tests::patch_12_1_cvar_scope_survives_or_resets_across_sessions"
+      ],
+      "implementation": "src/cvars.rs",
+      "compiled_revision": "851e5a3db",
+      "proof": "agent-run GREEN on branch; no independent review"
+    },
+    {
+      "id": "singles-12-1-0",
+      "symbols": [
+        "CreateFrame WorldFrame rejection",
+        "disabled-addon [Bootstrap]",
+        "FormatNumber secret input"
+      ],
+      "scope": "WorldFrame type rejected by addon CreateFrame; disabled LoD addon bootstrap not run at startup (existing bin test); FormatNumber secret input leaves other objects plain (pins existing behavior, no prior leak).",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_1_0_singles.rs",
+        "src/addon_loading tests startup_bootstrap_runs_inline_without_full_load_or_event"
+      ],
+      "implementation": "resolve_runtime_widget_type",
+      "compiled_revision": "851e5a3db",
+      "proof": "agent-run GREEN on branch; no independent review"
     }
   ],
   "source_rows": [
@@ -321,9 +367,11 @@
     },
     {
       "source_id": "prose-undated-015",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Implement the declared CVar/default/scope and policy rather than generic name acceptance. Current CVar defaults are a nearby producer; account-wide autoLoot and session-only tooltip setting need persistence boundaries."
+      "capabilities": [
+        "cvar-scope-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Persists across reload; account-wide vs per-character not modeled (single CVar store)."
     },
     {
       "source_id": "prose-undated-016",
@@ -511,7 +559,7 @@
       "source_id": "prose-2026-06-18-054",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "VectorGraphics construction/SVG metadata storage exists, but native code explicitly says SVG path rendering is not modeled. Implement 2D SVG asset decoding/rendering and legal method surface; not a 3D feature."
+      "note": "VectorGraphics inherits LayeredRegion (not Texture) per Wowless; sim FrameRef dispatch serves all methods to all types, so absence of unsupported methods needs per-type method dispatch."
     },
     {
       "source_id": "prose-2026-06-18-055",
@@ -523,9 +571,11 @@
     },
     {
       "source_id": "prose-2026-06-18-056",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "No credit. No executed disabled-startup proof Unproved: Disabled startup and complete vendor UIParent migration (audit-pending)"
+      "capabilities": [
+        "singles-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Disabled LoD addon [Bootstrap] not run at startup (existing bin test)."
     },
     {
       "source_id": "prose-2026-06-18-057",
@@ -553,15 +603,19 @@
     },
     {
       "source_id": "prose-2026-06-18-060",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail ApplyRolesetFilters is a temporary no-op; GetActiveBlockedRolesets/GetActiveAllowedRolesets/IsRolesetFiltered have no source producer. Model allowed/blocked sets, alwaysBlocked and effective visibility from current declarations."
+      "capabilities": [
+        "roleset-filtering-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Roleset filtering modeled (patch_12_1_0_rolesets); two INFERRED semantics."
     },
     {
       "source_id": "prose-2026-06-18-061",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail ApplyRolesetFilters is a temporary no-op; GetActiveBlockedRolesets/GetActiveAllowedRolesets/IsRolesetFiltered have no source producer. Model allowed/blocked sets, alwaysBlocked and effective visibility from current declarations."
+      "capabilities": [
+        "roleset-filtering-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Roleset filtering modeled (patch_12_1_0_rolesets); two INFERRED semantics."
     },
     {
       "source_id": "prose-2026-06-18-062",
@@ -783,7 +837,7 @@
       "source_id": "prose-2026-06-30-103",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Current Blizzard chat filter path needs a concrete 19-argument input/output probe; original 14-argument bug cannot be discharged from a callable symbol."
+      "note": "Cached retail/ptr ChatFrameOverrides.lua:304 still passes arg1..arg14 to ProcessMessageEventFilters; 19-arg change not in cached Blizzard Lua (vendor, not editable)."
     },
     {
       "source_id": "source-context-104",
@@ -1133,9 +1187,11 @@
     },
     {
       "source_id": "prose-2026-07-14-166",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "WorldFrame has an engine-created object; generic CreateFrame path still needs the addon creation rejection contract rather than assuming the existing root disallows duplicates."
+      "capabilities": [
+        "singles-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "CreateFrame('WorldFrame') rejected (was a real bug: XML tag fallback to Frame)."
     },
     {
       "source_id": "prose-2026-07-14-167",
@@ -1193,9 +1249,11 @@
     },
     {
       "source_id": "prose-2026-07-21-179",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Implement the declared CVar/default/scope and policy rather than generic name acceptance. Current CVar defaults are a nearby producer; account-wide autoLoot and session-only tooltip setting need persistence boundaries."
+      "capabilities": [
+        "cvar-scope-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Session-only CVar not persisted across sessions (lib test)."
     },
     {
       "source_id": "prose-2026-07-21-180",
@@ -1231,9 +1289,11 @@
     },
     {
       "source_id": "prose-2026-07-21-185",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current formatter/secret infrastructure is adjacent, but the secret argument causing unrelated object secrecy needs a behavioral input/output and object-state model; no broad FormatNumber safety credit."
+      "capabilities": [
+        "singles-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Pins current behavior only; test would not have failed before."
     },
     {
       "source_id": "prose-2026-07-21-186",
@@ -1263,15 +1323,19 @@
     },
     {
       "source_id": "prose-2026-07-21-190",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail ApplyRolesetFilters is a temporary no-op; GetActiveBlockedRolesets/GetActiveAllowedRolesets/IsRolesetFiltered have no source producer. Model allowed/blocked sets, alwaysBlocked and effective visibility from current declarations."
+      "capabilities": [
+        "roleset-filtering-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Roleset filtering modeled (patch_12_1_0_rolesets); two INFERRED semantics."
     },
     {
       "source_id": "prose-2026-07-21-191",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail ApplyRolesetFilters is a temporary no-op; GetActiveBlockedRolesets/GetActiveAllowedRolesets/IsRolesetFiltered have no source producer. Model allowed/blocked sets, alwaysBlocked and effective visibility from current declarations."
+      "capabilities": [
+        "roleset-filtering-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Roleset filtering modeled (patch_12_1_0_rolesets); two INFERRED semantics."
     },
     {
       "source_id": "source-context-192",
