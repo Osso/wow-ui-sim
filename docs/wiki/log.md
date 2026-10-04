@@ -1,4 +1,4 @@
-## [2026-10-04] investigation | 12.1.0 page audit started, round 1 accounted
+## [2026-10-04] docs | 12.1.0 publication sweep accounted
 
-[Patch 12.1.0 page audit](investigations/patch-12-1-0-page-audit.md): 1,111 rows (333 extract + 778 wikitext inventory); 1,022 pending /24 bounded /1 partial /64 metadata.
+778 inventory symbols swept: 631 match, 147 gaps baselined. [Audit page](investigations/patch-12-1-0-page-audit.md#round-2--publication-sweep--2026-10-04); 1,111 rows; 391 pending /151 bounded /505 partial /64 metadata.
 

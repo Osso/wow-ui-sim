@@ -18,3 +18,15 @@ Tests and specs only, no producer change: AuraContainer/AuraButton creation, Fra
 - [Review](../../../data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-review.md): ACCEPT WITH QUALIFICATIONS — 24 bounded, 1 partial, 2 pending; no vacuous tests.
 - Pending: disabled-addon bootstrap (not exercised); AuraContainer intrinsic event-registration restriction (observed mask 0 — a real gap, modelable).
 - The OnUpdate rows rest on four passing tests; `on_update_modes_process_actual_managed_aura_dirty_phases` was failing before this audit and still is.
+
+## Round 2 — publication sweep — 2026-10-04
+
+**391 pending / 151 bounded / 505 partial / 64 metadata.**
+
+One data-driven test over the 778 inventory symbols ([spec](../../specs/patch-12-1-0-publication-sweep.md)): 631 match the page, 147 do not.
+
+- 504 added/changed symbols are published: partial, "publication only" — a looser credit rule than the rest of the audit, chosen for breadth.
+- 127 removed symbols are absent by raw and ordinary lookup: bounded.
+- 147 gaps stay pending and are baselined in `tests/data/patch_12_1_0_sweep_known_gaps.json`, so the test fails on any change to the gap set. Roughly: 85 FrameXML helpers not found (many `*_LoadUI` / `Show…Frame` functions, possibly a load-on-demand bootstrap loading gap), 35 missing Global API functions, 20 removed symbols still published, 15 widget methods, events and CVars.
+
+Master: sweep test passed, startup `lua-errors` `[]`, `cargo fmt --check` exit 0 ([log](../../../data/patch-api/evidence/12.1.0-session-2026-10-04/round-2-master-green.log.txt)). Per-symbol output: [result](../../../data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-sweep-result.json). No independent review.
