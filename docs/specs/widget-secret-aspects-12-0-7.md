@@ -1,6 +1,6 @@
 # Widget button-state and scroll-offset secret aspects — B37–B38
 
-Eight Retail 12.0.7 widget changes add `ButtonState`/`ScrollOffset` input and output annotations in the [retained API source](../../data/patch-api/sources/12.0.7-api-changes.txt). Producers must read live per-widget state and authenticate actual VM secrets. The later retail cache supplies declaration context, not native historical proof. This is an authored, unintegrated contract; no test has run. See [Lua API](../lua-api.md) for runtime architecture.
+Eight Retail 12.0.7 widget changes add `ButtonState`/`ScrollOffset` input and output annotations in the [retained API source](../../data/patch-api/sources/12.0.7-api-changes.txt). Producers must read live per-widget state and authenticate actual VM secrets. The later retail cache supplies declaration context, not native historical proof. Integrated bounded development proof: eight Retail cases and narrow button/scroll/font/slider regressions pass. Native historical policy and independent final acceptance remain unproved. See [Lua API](../lua-api.md) for runtime architecture.
 
 | Source row | API | Required delta | Live input |
 |---|---|---|---|
@@ -18,23 +18,23 @@ Eight Retail 12.0.7 widget changes add `ButtonState`/`ScrollOffset` input and ou
 ### Publication and live state
 
 - [ ] New behavior is gated directly on `retail-12-0-7`, not the separately inherited `forbidden-aspects` feature. With that feature absent, even host-configured origin bits do not wrap getter outputs.
-- [ ] Default getters return plain `NORMAL`, true, zero and zero, one result each. Setters keep zero-result arity and ordinary state transitions.
-- [ ] All four getters read live state on every call. Changing token, enabled attribute, either offset or any origin bit after creation changes the next result; no captured/wrapped constants.
-- [ ] Inputs and origins are per frame and per `WowLuaEnv`; same names in separate environments share nothing.
+- [x] Default getters return plain `NORMAL`, true, zero and zero, one result each. Setters keep zero-result arity and ordinary state transitions.
+- [x] All four getters read live state on every call. Changing token, enabled attribute, either offset or any origin bit after creation changes the next result; no captured/wrapped constants.
+- [x] Inputs and origins are per frame and per `WowLuaEnv`; same names in separate environments share nothing.
 
 ### Secret authentication and output policy
 
-- [ ] Each setter calls `rilua::table_security::unwrap_secret` on receiver, every supplied named argument and every extra argument before receiver lookup, argument validation or mutation. Authentication neither clears taint nor modifies original wrappers.
-- [ ] Secure callers may set actual VM secret token, bool, lock and offset inputs. Tainted callers cannot; denial leaves offsets/token/enabled/origins unchanged and sends no callbacks.
-- [ ] Secret origin on either button input makes both button getter results secret; secret origin on either scroll axis makes both offset getter results secret. Getters still succeed for tainted callers and preserve exact result count.
-- [ ] Trusted host bool/string/number wrappers preserve live payload values. Tainted callers cannot unwrap outputs, branch on enabled, order offsets or perform offset arithmetic. Caller taint stays unchanged.
-- [ ] INFERRED: an accepted extra secret argument contributes to the shared aspect; secrets in lock contribute even when the existing lock behavior ignores that argument.
-- [ ] INFERRED: origins are tracked per input. Public overwrite clears only its own input origin, even for an unchanged value; another secret input keeps the shared aspect secret. No automatic inheritance or permanent accumulation is claimed.
+- [x] Each setter calls `rilua::table_security::unwrap_secret` on receiver, every supplied named argument and every extra argument before receiver lookup, argument validation or mutation. Authentication neither clears taint nor modifies original wrappers.
+- [x] Secure callers may set actual VM secret token, bool, lock and offset inputs. Tainted callers cannot; denial leaves offsets/token/enabled/origins unchanged and sends no callbacks.
+- [x] Secret origin on either button input makes both button getter results secret; secret origin on either scroll axis makes both offset getter results secret. Getters still succeed for tainted callers and preserve exact result count.
+- [x] Trusted host bool/string/number wrappers preserve live payload values. Tainted callers cannot unwrap outputs, branch on enabled, order offsets or perform offset arithmetic. Caller taint stays unchanged.
+- [x] INFERRED: an accepted extra secret argument contributes to the shared aspect; secrets in lock contribute even when the existing lock behavior ignores that argument.
+- [x] INFERRED: origins are tracked per input. Public overwrite clears only its own input origin, even for an unchanged value; another secret input keeps the shared aspect secret. No automatic inheritance or permanent accumulation is claimed.
 
 ### Script ordering and B36 prerequisites
 
-- [ ] Existing OnEnable/OnDisable and scroll callback ordering remains: actual value change commits value and origin before dispatch, unchanged values suppress dispatch. Public payload/order behavior remains intact.
-- [ ] `EditBox`, `Font`, `FontString`, `MessageFrame` and `SimpleHTML` SetFont paths authenticate every argument and extra under the same feature gate before existing decoding and early returns. Secure secret path/height/flags work with the existing storage; tainted input denial is atomic. This is an authentication prerequisite only, not `RequiresValidFontHeight` or `RequiresValidFontAsset` coverage.
+- [x] Existing OnEnable/OnDisable and scroll callback ordering remains: actual value change commits value and origin before dispatch, unchanged values suppress dispatch. Public payload/order behavior remains intact.
+- [x] `EditBox`, `Font`, `FontString`, `MessageFrame` and `SimpleHTML` SetFont paths authenticate every argument and extra under the same feature gate before existing decoding and early returns. Secure secret path/height/flags work with the existing storage; tainted input denial is atomic. This is an authentication prerequisite only, not `RequiresValidFontHeight` or `RequiresValidFontAsset` coverage.
 
 ## How it works
 
@@ -45,7 +45,7 @@ Eight Retail 12.0.7 widget changes add `ButtonState`/`ScrollOffset` input and ou
 
 ## Implementation inventory
 
-Proposed edits, not integrated:
+Integrated producers and state:
 
 - `src/widget/frame.rs`, `src/widget/frame_defaults.rs` — four explicit per-input origins, default false.
 - `src/lua_api/frame/methods/secret_origin.rs` — whole-call VM authentication with a direct feature gate.
@@ -55,7 +55,7 @@ Proposed edits, not integrated:
 
 ## Tests asserting this spec
 
-`tests/patch_12_0_7_widget_secret_aspects.rs`: nine authored cases (eight with `retail-12-0-7`, one without), no execution proof:
+`tests/patch_12_0_7_widget_secret_aspects.rs`: nine cases (eight with `retail-12-0-7` pass; one feature-off control is unrun):
 
 | Case | Observable contract |
 |---|---|
@@ -71,15 +71,15 @@ Proposed edits, not integrated:
 
 ## Known gaps (current cycle)
 
-- [ ] All nine tests are authored only. Compilation, RED/GREEN, startup Lua errors, broader regression checks and independent acceptance are not run; prohibited in this authoring task.
+- [ ] Feature-off case, full startup Lua errors and independent acceptance remain unrun. Default Retail module: RED 1 pass/7 fail, GREEN 8 pass/0 fail. Narrow regressions: methods_button 34, scroll_widgets 40, font_api 45, widget_slider 15; lib widget compatibility 1, all passing. Alternate features and startup CLI are excluded from this integration task.
 - [ ] B36 rows 133/134/135/136/142 remain blocked: no authoritative host font-validity model, height bounds or native failure semantics. The optional renderer/CASC cache and default-family substitution are not a validity oracle. FontString's later-cache `FontAsset` domain differs from the other receivers' `cstring`; receiver-specific return contracts require care. Authentication-only edits cannot close these rows.
 - [ ] Native aspect clearing/aggregation, treatment of extra arguments and strict 68182 declaration epoch remain unverified; their proposed policies are INFERRED.
 - [ ] Scroll callbacks still receive existing plain numeric event arguments; their secret payload policy is not declared in the inspected generated docs. Tainted callback access can expose offsets despite getter opacity. Do not claim end-to-end non-disclosure or quietly change script payloads without consumer/native evidence.
-- [ ] Public scrolling, enabled bindings and cached UI consumers need integration-time regression proof. Shared ScrollUtil/InputBox consumers perform offset arithmetic; opaque secret inputs in those paths may fail. No vendor changes, broad secret-arithmetic changes or read-denial substitutes are authorized here.
+- [ ] Narrow public scrolling/enabled/font regressions pass, including cached EventScrollFrame/FauxScrollFrame bindings. Full cached UI startup and secret-input consumers remain unproved. Shared ScrollUtil/InputBox consumers perform offset arithmetic; opaque secret inputs in those paths may fail. No vendor changes, broad secret-arithmetic changes or read-denial substitutes are authorized here.
 
 ## Out of scope
 
 - Native font asset loading, height rules, clamping, invalid-font failure shape, hard-coded font allowlists and renderer fallback validity: unsupported evidence and unsafe consumer assumptions.
 - Lock semantics, SetEnabled missing/nil argument coercion, Enable/Disable/Click-origin clearing, protected-frame access control and arbitrary aspect inheritance: existing behavior retained, not part of these added annotations.
 - ScrollRange and script event secret-argument annotations: separate policy boundary, not proved by ScrollOffset getter tests.
-- Native parity, older-profile full UI loading, changes to cached Blizzard/vendor Lua, source-substring tests, simulator/build execution and row promotion.
+- Native parity, older-profile full UI loading, changes to cached Blizzard/vendor Lua, source-substring tests, broad startup execution and coverage-ledger row promotion.

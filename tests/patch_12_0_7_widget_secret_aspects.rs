@@ -1,4 +1,4 @@
-//! Authored B36 prerequisites and B37/B38 contracts; not executed.
+//! B36 authentication prerequisites and bounded B37/B38 secret-aspect contracts.
 //! INFERRED: public overwrite clears only its own input origin; extras add origin.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
