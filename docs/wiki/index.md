@@ -1,3 +1,7 @@
+## [2026-10-04] evidence | 12.1.0 page audit started
+
+[Patch 12.1.0 page audit](investigations/patch-12-1-0-page-audit.md): 1,111 rows (333 from the page extract, 778 from the wikitext inventories). Round 1: 24 bounded, 1 partial.
+
 ## [2026-10-04] evidence | Party roles, solo formation and conditional markers
 
 [Bounded contract and development proof](../specs/party-12-0-7-audit.md) covers eight candidate source rows; historical/native and server-input gaps remain. Page coverage ledger unchanged.
@@ -8,7 +12,6 @@ Four prose rows partial under two capabilities. [Audit follow-up](investigations
 
 ## [2026-10-03] evidence | 12.0.7 page audit started
 
-- [Patch 12.1.0 page audit](investigations/patch-12-1-0-page-audit.md) — row-by-row audit of the 12.1.0 API-changes page; 1,111 rows, source includes the wikitext inventories
 Exhaustive ledger for the retained 12.0.7 page excerpt seeded from the register plus 35 supplemental rows. [Audit page](investigations/patch-12-0-7-api-audit.md); 0 capabilities/166 source IDs; 153 pending /0 bounded /0 partial /13 metadata.
 
 ## [2026-10-03] evidence | Round 100 follow-ups accounted
