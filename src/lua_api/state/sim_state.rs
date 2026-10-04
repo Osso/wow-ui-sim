@@ -479,6 +479,9 @@ pub struct SimState {
     pub achievement_search: AchievementSearchState,
     pub focused_achievement: Option<i32>,
     pub area_pois: HashMap<i32, AreaPoiInfo>,
+    /// INFERRED row048: ordered race POI identifiers per hub POI; empty by default.
+    #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+    pub quest_hub_dragonriding_races: HashMap<i32, Vec<i32>>,
     pub bnet_friends: Vec<BnetFriend>,
     pub bnet_friend_invites: Vec<BnetFriendInvite>,
     pub bnet_appear_offline: bool,

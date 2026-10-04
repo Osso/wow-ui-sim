@@ -432,6 +432,8 @@ macro_rules! build_empty_sim_state {
             achievement_search: AchievementSearchState::default(),
             focused_achievement: None,
             area_pois: default_area_pois(),
+            #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+            quest_hub_dragonriding_races: ::std::collections::HashMap::new(),
             bnet_friends: default_bnet_friends(),
             bnet_friend_invites: Vec::new(),
             bnet_appear_offline: false,
