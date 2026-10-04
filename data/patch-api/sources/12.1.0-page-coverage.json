@@ -218,7 +218,7 @@
     {
       "id": "struct-shapes-12-1-0",
       "symbols": [
-        "AddPrivateAuraAnchorArgs, UnitPrivateAuraAnchorInfo, LfgSearchResultData, ClubMemberInfo, PlayerChoiceInfo, HousingDecorInstanceInfo, TieredEntranceTierInfo, BNetAccountInfo, BNetGameAccountInfo"
+        "AddPrivateAuraAnchorArgs, UnitPrivateAuraAnchorInfo, LfgSearchResultData, ClubMemberInfo, PlayerChoiceInfo, HousingDecorInstanceInfo, TieredEntranceTierInfo, BNetAccountInfo, BNetGameAccountInfo, ChatMessageEventParams (DiscordChatInfo payload 18), CooldownViewerCooldown, LfgEntryData, PetJournalPetInfo, PlaySoundParams"
       ],
       "scope": "Page-listed field presence/absence and Lua type vs cached doc Type/Nilable from real getters with fixture state. TieredEntranceTierInfo and LfgSearchResultData.censored values are static; queueAsLFG follows cached docs (no Blizzard consumer reads it).",
       "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
@@ -226,8 +226,8 @@
         "tests/patch_12_1_0_struct_shapes.rs"
       ],
       "implementation": "c_player_choice.rs, c_battle_net.rs, delves_ui.rs, housing state, friends defaults",
-      "compiled_revision": "10118708c",
-      "proof": "main-thread GREEN on master 10118708c (filter run alone); no independent review"
+      "compiled_revision": "a938b7602",
+      "proof": "main-thread GREEN on master 10118708c (filter run alone); no independent review; S-MODEL rows GREEN on master a938b7602 (prefork 2011/7 pre-existing, lib 6 pre-existing)"
     },
     {
       "id": "deprecated-wrappers-12-1-0",
@@ -2405,15 +2405,19 @@
     },
     {
       "source_id": "structures-ChatMessageEventParams-339",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Chat dispatch exists, but discordInfo has no simulator producer. Add explicit DiscordChatInfo payload to the local event model and preserve the expanded chat filter argument vector."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-ChatMessageEventParams-340",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Chat dispatch exists, but discordInfo has no simulator producer. Add explicit DiscordChatInfo payload to the local event model and preserve the expanded chat filter argument vector."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-ClubMemberInfo-341",
@@ -2433,27 +2437,35 @@
     },
     {
       "source_id": "structures-CooldownViewerCooldown-343",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "GetCooldownViewerCooldownInfo is a temporary nil default; no spellCategoryID/equipSlot/isInvisible producer exists. Model explicit viewer entries with optional category/equipSlot and required visibility flag."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-CooldownViewerCooldown-344",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "GetCooldownViewerCooldownInfo is a temporary nil default; no spellCategoryID/equipSlot/isInvisible producer exists. Model explicit viewer entries with optional category/equipSlot and required visibility flag."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-CooldownViewerCooldown-345",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "GetCooldownViewerCooldownInfo is a temporary nil default; no spellCategoryID/equipSlot/isInvisible producer exists. Model explicit viewer entries with optional category/equipSlot and required visibility flag."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-CooldownViewerCooldown-346",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "GetCooldownViewerCooldownInfo is a temporary nil default; no spellCategoryID/equipSlot/isInvisible producer exists. Model explicit viewer entries with optional category/equipSlot and required visibility flag."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-HousingDecorInstanceInfo-347",
@@ -2473,15 +2485,19 @@
     },
     {
       "source_id": "structures-LfgEntryData-349",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "GetActiveEntryInfo currently returns nil; implement a nonempty active entry with censored field from explicit local listing state. Search-result field does not prove active-entry output."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-LfgEntryData-350",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "GetActiveEntryInfo currently returns nil; implement a nonempty active entry with censored field from explicit local listing state. Search-result field does not prove active-entry output."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-LfgSearchResultData-351",
@@ -2501,75 +2517,99 @@
     },
     {
       "source_id": "structures-PetJournalPetInfo-353",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PetJournalPetInfo-354",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PetJournalPetInfo-355",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PetJournalPetInfo-356",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PetJournalPetInfo-357",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PetJournalPetInfo-358",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PetJournalPetInfo-359",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PetJournalPetInfo-360",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PetJournalPetInfo-361",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PetJournalPetInfo-362",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Species-ID table producer provides only a partial schema with canAttachToDecor=false/creatureModelScale=1; no GetPetInfoTableByPetID producer was found. Model both documented getters, complete named fields, nullable fields and luaIndex type over explicit pet state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PlaySoundParams-363",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current PlaySoundWithOptions compatibility path is a no-op. Model and validate volumeOverride in the sound request/options state, with observable queued request or recording sink; no hardware/service restart needed."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PlaySoundParams-364",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current PlaySoundWithOptions compatibility path is a no-op. Model and validate volumeOverride in the sound request/options state, with observable queued request or recording sink; no hardware/service restart needed."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "State-backed producer; field presence/type vs cached docs (patch_12_1_0_struct_shapes, S-MODEL a938b7602)."
     },
     {
       "source_id": "structures-PlayerChoiceInfo-365",
