@@ -753,7 +753,7 @@ fn is_friendly_unit(state: &mut LuaState, unit: &str) -> LuaResult<bool> {
     })
 }
 
-fn is_attackable_unit(state: &mut LuaState, unit: &str) -> LuaResult<bool> {
+pub(crate) fn is_attackable_unit(state: &mut LuaState, unit: &str) -> LuaResult<bool> {
     let st = borrow_state(state)?;
     Ok(match unit {
         "target" => st

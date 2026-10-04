@@ -22,6 +22,11 @@
 //! slots available", spinning forever (see
 //! docs/wiki/investigations/partyframe-tree.md).
 
+#[cfg(feature = "aura-instance-enumeration")]
+use crate::c_api::aura_filter::{
+    AuraFilterContext, FilterTerm, FilterToken, aura_matches_terms, is_harmful_filter,
+    parse_filter_terms,
+};
 use crate::lua_api::game_data::AuraInfo;
 #[cfg(not(feature = "retail-12-0-5"))]
 use crate::lua_api::globals::font_strings_collection::colors::{
@@ -211,6 +216,25 @@ pub(crate) fn filter_from_str(filter: &str) -> AuraFilter {
     }
 }
 
+/// Collection polarity for parsed filter components, honoring negation.
+#[cfg(feature = "aura-instance-enumeration")]
+fn filter_from_terms(terms: &[FilterTerm]) -> AuraFilter {
+    let has = |token: FilterToken| {
+        terms
+            .iter()
+            .any(|term| term.token == token && !term.negated)
+    };
+    if has(FilterToken::Maw) {
+        AuraFilter::Maw
+    } else if has(FilterToken::ExternalDefensive) {
+        AuraFilter::ExternalDefensive
+    } else if is_harmful_filter(terms) {
+        AuraFilter::Harmful
+    } else {
+        AuraFilter::Helpful
+    }
+}
+
 fn aura_matches_filter(aura: &AuraInfo, filter: AuraFilter) -> bool {
     match filter {
         AuraFilter::Helpful => aura.is_helpful,
@@ -221,16 +245,15 @@ fn aura_matches_filter(aura: &AuraInfo, filter: AuraFilter) -> bool {
 }
 
 #[cfg(feature = "aura-instance-enumeration")]
-pub(crate) fn aura_matches_filter_string(aura: &AuraInfo, filter: &str) -> bool {
-    let matches_polarity = aura_matches_filter(aura, filter_from_str(filter));
-    let requires_player_source = filter
-        .split('|')
-        .any(|token| token.eq_ignore_ascii_case("PLAYER"));
-    let matches_source = !requires_player_source || aura.is_from_player_or_player_pet;
-    matches_polarity && matches_source
+pub(crate) fn aura_matches_filter_string(
+    aura: &AuraInfo,
+    filter: &str,
+    context: &AuraFilterContext,
+) -> bool {
+    aura_matches_terms(aura, &parse_filter_terms(filter), context)
 }
 
-fn target_fixture_auras() -> Vec<AuraInfo> {
+pub(crate) fn target_fixture_auras() -> Vec<AuraInfo> {
     vec![
         AuraInfo {
             name: "Weakened Armor".to_string(),
@@ -292,10 +315,11 @@ fn collect_unit_auras(state: &mut LuaState, unit: &str, filter: AuraFilter) -> V
             .filter(|a| aura_matches_filter(a, filter))
             .collect()
     } else if unit == "target" {
-        let target_auras = target_fixture_auras();
-        let target_auras = target_auras
-            .into_iter()
+        let target_auras = sim
+            .target_auras
+            .iter()
             .filter(|a| aura_matches_filter(a, filter))
+            .cloned()
             .collect();
         #[cfg(feature = "retail-12-0-7")]
         let target_auras =
@@ -356,9 +380,11 @@ pub(crate) fn collect_filtered_unit_auras(
     unit: &str,
     filter: &str,
 ) -> Vec<AuraInfo> {
-    collect_visible_unit_auras(state, unit, filter_from_str(filter))
+    let terms = parse_filter_terms(filter);
+    let context = AuraFilterContext::for_unit(state, unit);
+    collect_visible_unit_auras(state, unit, filter_from_terms(&terms))
         .into_iter()
-        .filter(|aura| aura_matches_filter_string(aura, filter))
+        .filter(|aura| aura_matches_terms(aura, &terms, &context))
         .collect()
 }
 

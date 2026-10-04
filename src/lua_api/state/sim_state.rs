@@ -351,6 +351,10 @@ pub struct SimState {
     pub spell_max_cumulative_aura_applications: HashMap<u32, u32>,
     /// Explicit unit-aura output policy input, independent of cooldowns and unit stats.
     pub unit_auras_restricted: bool,
+    /// Explicit aura-filter classification and raid dispel capabilities.
+    pub aura_filter_facts: crate::lua_api::game_data::AuraFilterFacts,
+    /// Live target auras; seeded with the legacy target fixture.
+    pub target_auras: Vec<crate::lua_api::game_data::AuraInfo>,
     pub inventory_item_cooldowns: HashMap<i32, SpellCooldownState>,
     pub action_ui_buttons: Vec<(u64, u32)>,
     pub cursor_item: Option<CursorInfo>,

@@ -1,5 +1,6 @@
 //! Bounded Retail 12.0.5 instance filtering over the existing aura model.
 
+use super::aura_filter::AuraFilterContext;
 use crate::lua_api::globals::auras::{aura_matches_filter_string, find_aura_by_instance_id};
 use crate::lua_api::methods::val_to_string;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -25,8 +26,9 @@ fn is_aura_filtered_out_by_instance_id(state: &mut LuaState) -> LuaResult<u32> {
     let filter = read_authenticated_string(state, 3)?;
     // INFERRED: absent instances are filtered. Unfiltered lookup deliberately
     // keeps blocked records resolvable, unlike public aura enumeration.
+    let context = AuraFilterContext::for_unit(state, &unit);
     let is_filtered = find_aura_by_instance_id(state, &unit, instance_id)
-        .is_none_or(|aura| !aura_matches_filter_string(&aura, &filter));
+        .is_none_or(|aura| !aura_matches_filter_string(&aura, &filter, &context));
     state.push(Val::Bool(is_filtered));
     Ok(1)
 }

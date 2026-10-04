@@ -102,9 +102,12 @@ fn select_indexed_aura(
         return None;
     }
     let helpful = matches!(polarity, AuraFilter::Helpful);
+    let context = super::aura_filter::AuraFilterContext::for_unit(state, unit);
     collect_visible_unit_auras(state, unit, polarity)
         .into_iter()
         // Both party stores can contain malformed polarity; enforce the API's polarity.
-        .filter(|aura| aura.is_helpful == helpful && aura_matches_filter_string(aura, filter))
+        .filter(|aura| {
+            aura.is_helpful == helpful && aura_matches_filter_string(aura, filter, &context)
+        })
         .nth((index - 1) as usize)
 }

@@ -10,7 +10,7 @@ pub use allied_races::{default_allied_races, default_model_scenes};
 pub use empower::EmpowerTiming;
 
 use crate::lua_api::state::{MajorFactionData, RenownLevelInfo};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 /// Server-provided interaction capabilities for a resolved world object.
 #[derive(Clone, Copy, Debug, Default)]
@@ -98,6 +98,19 @@ pub struct AuraInfo {
     pub dispel_type: Option<String>,
     /// Unique instance ID for this aura.
     pub aura_instance_id: i32,
+}
+
+/// Explicit inputs for aura filter components that are not AuraData fields.
+#[derive(Debug, Clone, Default)]
+pub struct AuraFilterFacts {
+    /// Spells flagged IMPORTANT. INFERRED: importance is a spell-level flag.
+    pub important_spell_ids: HashSet<i32>,
+    /// Dispel types some raid member can remove from friendly units.
+    pub raid_defensive_dispel_types: HashSet<String>,
+    /// Dispel types some raid member can purge from enemy units.
+    pub raid_offensive_dispel_types: HashSet<String>,
+    /// Whether some raid member can steal stealable enemy auras.
+    pub raid_can_spellsteal: bool,
 }
 
 /// Explicit resolved cast recipient; never reinterpreted through a selected unit token.

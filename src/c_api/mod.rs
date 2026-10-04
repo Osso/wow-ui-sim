@@ -18,6 +18,8 @@ pub mod aura_duration;
 pub(crate) mod aura_entry;
 #[cfg(feature = "retail-12-0-5")]
 pub mod aura_entry_ids;
+#[cfg(feature = "aura-instance-enumeration")]
+pub(crate) mod aura_filter;
 pub mod bag_info;
 pub mod c_account_services;
 pub(crate) mod c_action_bar;
