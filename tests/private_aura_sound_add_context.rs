@@ -44,7 +44,7 @@ fn set_context(env: &WowLuaEnv, encounter: bool, mythic: bool, pvp: bool) {
     let mut state = env.state().borrow_mut();
     state.world.encounter_in_progress = encounter;
     state.mythic_plus.is_active = mythic;
-    state.private_aura_sound_registrations.pvp_match_active = pvp;
+    state.pvp_match_active = pvp;
 }
 
 #[test]

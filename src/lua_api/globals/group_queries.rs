@@ -98,6 +98,13 @@ fn register_unit_relationships(state: &mut LuaState) {
     register_unit_membership_relationships(state);
     register_unit_group_roles(state);
     set_global(state, "UnitIsPossessed", relationships::unit_is_possessed);
+    set_global(state, "UnitIsCharmed", relationships::unit_is_possessed);
+    set_global(
+        state,
+        "UnitIsOwnerOrControllerOfUnit",
+        relationships::unit_is_owner_or_controller_of_unit,
+    );
+    set_global(state, "UnitIsPVP", relationships::unit_is_pvp);
     set_global(
         state,
         "UnitRealmRelationship",
@@ -157,6 +164,26 @@ fn register_unit_membership_relationships(state: &mut LuaState) {
 }
 
 fn register_unit_group_roles(state: &mut LuaState) {
+    set_global(
+        state,
+        "UnitGroupRolesAssigned",
+        relationships::unit_group_roles_assigned,
+    );
+    set_global(
+        state,
+        "UnitGroupRolesAssignedEnum",
+        relationships::unit_group_roles_assigned_enum,
+    );
+    set_global(
+        state,
+        "UnitGetAvailableRoles",
+        relationships::unit_get_available_roles,
+    );
+    set_global(
+        state,
+        "UnitIsRaidOfficer",
+        relationships::unit_is_raid_officer,
+    );
     set_global(
         state,
         "UnitIsGroupLeader",
@@ -485,24 +512,38 @@ pub(crate) fn unit_exists_in_state(st: &crate::lua_api::state::SimState, unit: &
     }
 }
 
+/// `UnitName` follows `SecretWhenUnitNameIdentityRestricted`.
 fn unit_name(state: &mut LuaState) -> LuaResult<u32> {
+    push_unit_name(state, true)
+}
+
+/// `UnitNameUnmodified` follows plain `SecretWhenUnitIdentityRestricted`.
+fn unit_name_unmodified(state: &mut LuaState) -> LuaResult<u32> {
+    push_unit_name(state, false)
+}
+
+fn push_unit_name(state: &mut LuaState, name_rules: bool) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let name = unit_name_for(state, &unit)?;
-    let secret = unit_identity_is_secret(state, &unit, &name)?;
+    let secret = unit_identity_is_secret(state, &unit, &name, name_rules)?;
     let value = identity_output(state, &name, secret);
     state.push(value);
     Ok(1)
-}
-
-fn unit_name_unmodified(state: &mut LuaState) -> LuaResult<u32> {
-    unit_name(state)
 }
 
 #[cfg(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
-fn unit_identity_is_secret(state: &mut LuaState, unit: &str, _name: &str) -> LuaResult<bool> {
+fn unit_identity_is_secret(
+    state: &mut LuaState,
+    unit: &str,
+    _name: &str,
+    name_rules: bool,
+) -> LuaResult<bool> {
+    if name_rules {
+        return super::real::unit_secret_predicates::unit_name_identity_restricted(state, unit);
+    }
     super::unit_misc::unit_identity_is_secret(state, unit)
 }
 
@@ -510,7 +551,12 @@ fn unit_identity_is_secret(state: &mut LuaState, unit: &str, _name: &str) -> Lua
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
 )))]
-fn unit_identity_is_secret(_state: &mut LuaState, unit: &str, name: &str) -> LuaResult<bool> {
+fn unit_identity_is_secret(
+    _state: &mut LuaState,
+    unit: &str,
+    name: &str,
+    _name_rules: bool,
+) -> LuaResult<bool> {
     Ok(name != "Unknown"
         && (crate::lua_api::globals::unit_api::parse_party_index(unit).is_some()
             || unit.strip_prefix("raid").is_some()))
@@ -598,7 +644,7 @@ fn unit_class(state: &mut LuaState) -> LuaResult<u32> {
     state.push(class_name_val);
     state.push(class_file_val);
     state.push(Val::Num(class_id as f64));
-    Ok(3)
+    super::real::unit_secret_predicates::finish_identity_restricted(state, &[&unit], 3)
 }
 
 fn visible_party_member<'a>(

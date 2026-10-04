@@ -356,6 +356,8 @@ pub struct SimState {
     pub spell_max_cumulative_aura_applications: HashMap<u32, u32>,
     /// Explicit unit-aura output policy input, independent of cooldowns and unit stats.
     pub unit_auras_restricted: bool,
+    /// INFERRED host input: active PvP match, not queue/instance presence.
+    pub pvp_match_active: bool,
     /// Explicit aura-filter classification and raid dispel capabilities.
     pub aura_filter_facts: crate::lua_api::game_data::AuraFilterFacts,
     /// Live target auras; seeded with the legacy target fixture.

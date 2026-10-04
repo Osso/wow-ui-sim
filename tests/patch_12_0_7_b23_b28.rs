@@ -77,7 +77,7 @@ fn b24_epoch_permission_matrix_has_32_contexts_and_atomic_denial() {
             let mut sim = env.state().borrow_mut();
             sim.world.encounter_in_progress = encounter;
             sim.mythic_plus.is_active = mythic;
-            sim.private_aura_sound_registrations.pvp_match_active = pvp;
+            sim.pvp_match_active = pvp;
             sim.player.in_combat = combat;
             assert!(
                 sim.private_aura_sound_registrations
@@ -128,7 +128,7 @@ fn b24_live_combat_transition_recovery_and_environment_isolation() {
         let mut sim = env.state().borrow_mut();
         assert!(!sim.mythic_plus.is_active);
         assert!(!sim.world.encounter_in_progress);
-        assert!(!sim.private_aura_sound_registrations.pvp_match_active);
+        assert!(!sim.pvp_match_active);
         sim.mythic_plus.is_active = true;
         sim.player.in_combat = true;
     }

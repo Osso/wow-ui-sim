@@ -138,7 +138,7 @@ fn unit_class_base(state: &mut LuaState) -> LuaResult<u32> {
     let (_, class_file, _) = crate::lua_api::game_data::class_info_by_index(class_index);
     let class_file = create_string_static(state, class_file);
     state.push(class_file);
-    Ok(1)
+    super::real::unit_secret_predicates::finish_identity_restricted(state, &[&unit], 1)
 }
 
 fn unit_guid(state: &mut LuaState) -> LuaResult<u32> {

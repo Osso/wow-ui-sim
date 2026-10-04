@@ -297,6 +297,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             spell_max_cumulative_aura_applications: ::std::collections::HashMap::new(),
             unit_auras_restricted: false,
+            pvp_match_active: false,
             aura_filter_facts: Default::default(),
             target_auras: crate::lua_api::globals::auras::target_fixture_auras(),
             inventory_item_cooldowns: ::std::collections::HashMap::new(),

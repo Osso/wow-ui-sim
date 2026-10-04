@@ -170,9 +170,7 @@ fn check_context(state: &LuaState) -> LuaResult<()> {
     let mythic_restricted = sim.mythic_plus.is_active && sim.player.in_combat;
     #[cfg(not(feature = "retail-12-0-7"))]
     let mythic_restricted = sim.mythic_plus.is_active;
-    let restricted = sim.world.encounter_in_progress
-        || mythic_restricted
-        || sim.private_aura_sound_registrations.pvp_match_active;
+    let restricted = sim.world.encounter_in_progress || mythic_restricted || sim.pvp_match_active;
     // INFERRED: encounter/PvP restrictions still win over out-of-combat M+ permission.
     if restricted && !rilua::api::state_is_secure(state) {
         return Err(input_error(

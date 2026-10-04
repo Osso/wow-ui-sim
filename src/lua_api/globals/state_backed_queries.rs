@@ -30,6 +30,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     register_loot_slot_functions(lua)?;
     LuaApiMut::register_function(lua, "UnitRace", unit_race)?;
     LuaApiMut::register_function(lua, "UnitSex", unit_sex)?;
+    LuaApiMut::register_function(lua, "UnitSexBase", unit_sex)?;
     LuaApiMut::register_function(lua, "UnitHonorLevel", unit_honor_level)?;
     LuaApiMut::register_function(lua, "UnitPowerBarTimerInfo", unit_power_bar_timer_info)?;
     LuaApiMut::register_function(lua, "SetCursor", set_cursor)?;
@@ -39,7 +40,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         LuaApiMut::register_function(lua, "GetSpecialization", get_specialization)?;
     }
     LuaApiMut::register_function(lua, "GuildQuit", guild_quit)?;
-    LuaApiMut::register_function(lua, "GetGuildInfo", c_guild_get_guild_info)?;
+    LuaApiMut::register_function(lua, "GetGuildInfo", get_guild_info_for_unit)?;
     LuaApiMut::register_function(lua, "GetGMStatus", get_gm_status)?;
 
     let state = lua.state_mut();
@@ -305,7 +306,7 @@ fn confirm_loot_roll(_state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn unit_race(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = Option::<String>::from_stack(state, 1)?;
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let race_index = borrow_state(state)?
         .player
         .race_index
@@ -316,14 +317,16 @@ fn unit_race(state: &mut LuaState) -> LuaResult<u32> {
     state.push(localized);
     state.push(english);
     state.push(Val::Num((race_index + 1) as f64));
-    Ok(3)
+    super::real::unit_secret_predicates::finish_identity_restricted(state, &[&unit], 3)
 }
 
+/// `UnitSex` / `UnitSexBase`. INFERRED: no unit has a modeled base sex
+/// distinct from its displayed sex.
 fn unit_sex(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = Option::<String>::from_stack(state, 1)?;
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let sex = borrow_state(state)?.player.sex;
     state.push(Val::Num(sex as f64));
-    Ok(1)
+    super::real::unit_secret_predicates::finish_identity_restricted(state, &[&unit], 1)
 }
 
 fn unit_honor_level(state: &mut LuaState) -> LuaResult<u32> {
@@ -376,6 +379,22 @@ fn register_c_guild(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, table_ref, "GetGuildInfo", c_guild_get_guild_info)?;
     table_set_rust_fn_static(state, table_ref, "IsInGuild", c_guild_is_in_guild)?;
     Ok(())
+}
+
+/// Retail 12.1.0 `GetGuildInfo(unit)` no longer accepts compound unit tokens.
+/// INFERRED: a compound token (a unit followed by a `target` suffix, e.g.
+/// `targettarget`, `party1target`) returns nothing instead of erroring.
+fn get_guild_info_for_unit(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    if cfg!(feature = "retail-12-1-0") && is_compound_unit_token(&unit) {
+        return Ok(0);
+    }
+    c_guild_get_guild_info(state)
+}
+
+fn is_compound_unit_token(unit: &str) -> bool {
+    let unit = unit.to_ascii_lowercase();
+    unit.len() > "target".len() && unit.ends_with("target")
 }
 
 fn c_guild_get_guild_info(state: &mut LuaState) -> LuaResult<u32> {

@@ -1,3 +1,6 @@
+use super::super::real::unit_secret_predicates::{
+    finish_identity_restricted, finish_possession_restricted,
+};
 use super::{is_friendly_unit, visible_party_member};
 use crate::lua_api::game_data::RACE_DATA;
 use crate::lua_api::methods::{borrow_state, create_string};
@@ -35,7 +38,7 @@ pub(super) fn unit_in_raid(state: &mut LuaState) -> LuaResult<u32> {
         }
     };
     state.push(Val::Bool(in_raid));
-    Ok(1)
+    finish_identity_restricted(state, &[&unit], 1)
 }
 
 pub(super) fn unit_player_or_pet_in_party(state: &mut LuaState) -> LuaResult<u32> {
@@ -52,11 +55,29 @@ pub(super) fn unit_targets_vehicle_in_raid_ui(state: &mut LuaState) -> LuaResult
     Ok(1)
 }
 
-/// `UnitIsPossessed(unit)` — possession is not modeled in current SimState.
+/// `UnitIsPossessed(unit)` / `UnitIsCharmed(unit)` — possession and charm are
+/// not modeled in current SimState; only their secrecy is.
 pub(super) fn unit_is_possessed(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = Option::<String>::from_stack(state, 1)?;
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     state.push(Val::Bool(false));
-    Ok(1)
+    finish_possession_restricted(state, &unit, 1)
+}
+
+/// `UnitIsOwnerOrControllerOfUnit(controllingUnit, controlledUnit)` — pet and
+/// vehicle ownership is not modeled. INFERRED: secret when either unit's
+/// identity is secret.
+pub(super) fn unit_is_owner_or_controller_of_unit(state: &mut LuaState) -> LuaResult<u32> {
+    let controlling = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    let controlled = Option::<String>::from_stack(state, 2)?.unwrap_or_default();
+    state.push(Val::Bool(false));
+    finish_identity_restricted(state, &[&controlling, &controlled], 1)
+}
+
+/// `UnitIsPVP(unit)` — PvP flagging is not modeled.
+pub(super) fn unit_is_pvp(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    state.push(Val::Bool(false));
+    finish_identity_restricted(state, &[&unit], 1)
 }
 
 /// `UnitRealmRelationship(unit)` — all simulated unit tokens are same-realm.
@@ -82,9 +103,9 @@ pub(super) fn unit_is_pvp_free_for_all(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `UnitPhaseReason(unit)` — no phase/Chromie-time reason is modeled.
 pub(super) fn unit_phase_reason(state: &mut LuaState) -> LuaResult<u32> {
-    let _ = Option::<String>::from_stack(state, 1)?;
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     state.push(Val::Nil);
-    Ok(1)
+    finish_identity_restricted(state, &[&unit], 1)
 }
 
 /// `UnitInOtherParty(unit)` — sim does not model cross-party; always false.
@@ -215,22 +236,22 @@ pub(super) fn unit_can_cooperate(state: &mut LuaState) -> LuaResult<u32> {
 /// index is `None`.
 pub(super) fn unit_is_group_leader(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let leader = {
-        let st = borrow_state(state)?;
-        let player_tokens = matches!(unit.as_str(), "player" | "pet" | "vehicle");
-        let active = st.party_group_active && !st.party_members.is_empty();
-        if !active {
-            false
-        } else if player_tokens {
-            st.party_leader_index.is_none()
-        } else if let Some(idx) = resolve_unit_party_index(&st, &unit) {
-            st.party_leader_index == Some(idx)
-        } else {
-            false
-        }
-    };
+    let leader = is_group_leader(&*borrow_state(state)?, &unit);
     state.push(Val::Bool(leader));
-    Ok(1)
+    finish_identity_restricted(state, &[&unit], 1)
+}
+
+fn is_group_leader(st: &crate::lua_api::state::SimState, unit: &str) -> bool {
+    let active = st.party_group_active && !st.party_members.is_empty();
+    if !active {
+        false
+    } else if matches!(unit, "player" | "pet" | "vehicle") {
+        st.party_leader_index.is_none()
+    } else if let Some(idx) = resolve_unit_party_index(st, unit) {
+        st.party_leader_index == Some(idx)
+    } else {
+        false
+    }
 }
 
 /// `UnitIsGroupAssistant(unit)` — true only when raid-wide
@@ -238,23 +259,59 @@ pub(super) fn unit_is_group_leader(state: &mut LuaState) -> LuaResult<u32> {
 /// or the player.
 pub(super) fn unit_is_group_assistant(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    #[cfg(feature = "retail-12-0-7")]
-    let assistant = {
-        let sim = borrow_state(state)?;
-        crate::c_api::c_party_info::roles_1207::is_assistant(&sim, &unit)
-    };
-    #[cfg(not(feature = "retail-12-0-7"))]
-    let assistant = {
-        let st = borrow_state(state)?;
-        if !st.everyone_assistant {
-            false
-        } else {
-            matches!(unit.as_str(), "player" | "pet" | "vehicle")
-                || visible_party_member(&st, &unit).is_some()
-        }
-    };
+    let assistant = is_group_assistant(&*borrow_state(state)?, &unit);
     state.push(Val::Bool(assistant));
-    Ok(1)
+    finish_identity_restricted(state, &[&unit], 1)
+}
+
+#[cfg(feature = "retail-12-0-7")]
+fn is_group_assistant(st: &crate::lua_api::state::SimState, unit: &str) -> bool {
+    crate::c_api::c_party_info::roles_1207::is_assistant(st, unit)
+}
+
+#[cfg(not(feature = "retail-12-0-7"))]
+fn is_group_assistant(st: &crate::lua_api::state::SimState, unit: &str) -> bool {
+    st.everyone_assistant
+        && (matches!(unit, "player" | "pet" | "vehicle")
+            || visible_party_member(st, unit).is_some())
+}
+
+/// `UnitGroupRolesAssigned(unit)` — group roles are not modeled; `"NONE"`.
+pub(super) fn unit_group_roles_assigned(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    let role = create_string(state, "NONE");
+    state.push(role);
+    finish_identity_restricted(state, &[&unit], 1)
+}
+
+/// `UnitGroupRolesAssignedEnum(unit)` — group roles are not modeled; `-1`.
+pub(super) fn unit_group_roles_assigned_enum(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    state.push(Val::Num(-1.0));
+    finish_identity_restricted(state, &[&unit], 1)
+}
+
+/// `UnitGetAvailableRoles(unit)` — role eligibility is not modeled; every
+/// role is available.
+pub(super) fn unit_get_available_roles(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    for available in [true, true, true] {
+        state.push(Val::Bool(available));
+    }
+    finish_identity_restricted(state, &[&unit], 3)
+}
+
+/// `UnitIsRaidOfficer(unit)` — INFERRED: the raid leader or an assistant while
+/// the group is a raid (party >= 6, matching `UnitInRaid`).
+pub(super) fn unit_is_raid_officer(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    let officer = {
+        let st = borrow_state(state)?;
+        st.party_members.len() >= 6
+            && (is_group_leader(&st, &unit) || is_group_assistant(&st, &unit))
+    };
+    state.push(Val::Bool(officer));
+    finish_identity_restricted(state, &[&unit], 1)
 }
 
 pub(super) fn unit_leads_any_group(state: &mut LuaState) -> LuaResult<u32> {
@@ -276,7 +333,7 @@ pub(super) fn unit_leads_any_group(state: &mut LuaState) -> LuaResult<u32> {
         }
     };
     state.push(Val::Bool(leads));
-    Ok(1)
+    finish_identity_restricted(state, &[&unit], 1)
 }
 
 fn resolve_unit_party_index(st: &crate::lua_api::state::SimState, unit: &str) -> Option<usize> {

@@ -84,23 +84,6 @@ if GetIconForRoleEnum == nil then
     end
 end
 
-if UnitGroupRolesAssigned == nil then
-    function UnitGroupRolesAssigned()
-        return "NONE"
-    end
-end
-
-if UnitGroupRolesAssignedEnum == nil then
-    function UnitGroupRolesAssignedEnum()
-        return -1
-    end
-end
-
-if UnitGetAvailableRoles == nil then
-    function UnitGetAvailableRoles()
-        return true, true, true
-    end
-end
 if GetLFDRoleRestrictions == nil then
     function GetLFDRoleRestrictions(_lfgID)
         return false, false, false
@@ -257,30 +240,6 @@ mod tests {
     }
 
     #[test]
-    fn installs_unit_group_role_defaults() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let roles: (String, i32) = env
-            .eval(
-                r#"return UnitGroupRolesAssigned("player"), UnitGroupRolesAssignedEnum("player")"#,
-            )
-            .expect("legacy unit group role probe should run");
-
-        assert_eq!(roles, ("NONE".to_string(), -1));
-    }
-
-    #[test]
-    fn installs_unit_available_role_defaults() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-
-        let roles: (bool, bool, bool) = env
-            .eval(r#"return UnitGetAvailableRoles("player")"#)
-            .expect("legacy available role probe should run");
-
-        assert_eq!(roles, (true, true, true));
-    }
-
-    #[test]
     fn installs_role_restriction_and_shortage_reward_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
@@ -306,24 +265,6 @@ mod tests {
             .expect("legacy LFG role defaults probe should run");
 
         assert_eq!(result, "ok");
-    }
-
-    #[test]
-    fn preserves_existing_unit_available_role_function() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec(r#"function UnitGetAvailableRoles() return false, true, false end"#)
-            .expect("fixture should install existing available role function");
-
-        {
-            let mut lua = env.lua.borrow_mut();
-            super::apply_bootstrap(&mut lua).expect("legacy LFG defaults should apply");
-        }
-
-        let roles: (bool, bool, bool) = env
-            .eval(r#"return UnitGetAvailableRoles("player")"#)
-            .expect("legacy available role preservation probe should run");
-
-        assert_eq!(roles, (false, true, false));
     }
 
     #[test]
@@ -368,31 +309,6 @@ mod tests {
             .expect("legacy LFG role preservation probe should run");
 
         assert_eq!(result, "ok");
-    }
-
-    #[test]
-    fn preserves_existing_unit_group_role_function() {
-        let env = WowLuaEnv::new().expect("lua env should initialize");
-        env.exec(
-            r#"
-            function UnitGroupRolesAssigned() return "TANK" end
-            function UnitGroupRolesAssignedEnum() return 0 end
-            "#,
-        )
-        .expect("fixture should install existing unit role functions");
-
-        {
-            let mut lua = env.lua.borrow_mut();
-            super::apply_bootstrap(&mut lua).expect("legacy LFG defaults should apply");
-        }
-
-        let roles: (String, i32) = env
-            .eval(
-                r#"return UnitGroupRolesAssigned("player"), UnitGroupRolesAssignedEnum("player")"#,
-            )
-            .expect("legacy unit group role preservation probe should run");
-
-        assert_eq!(roles, ("TANK".to_string(), 0));
     }
 
     #[test]

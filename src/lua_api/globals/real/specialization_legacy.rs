@@ -182,12 +182,9 @@ fn get_inspect_specialization(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     }
 
-    let Some(spec) = active_player_spec(state) else {
-        state.push(Val::Num(0.0));
-        return Ok(1);
-    };
-    state.push(Val::Num(spec.id as f64));
-    Ok(1)
+    let spec_id = active_player_spec(state).map_or(0.0, |spec| spec.id as f64);
+    state.push(Val::Num(spec_id));
+    super::unit_secret_predicates::finish_identity_restricted(state, &[&unit], 1)
 }
 
 fn get_specialization_role_by_id(state: &mut LuaState) -> LuaResult<u32> {
