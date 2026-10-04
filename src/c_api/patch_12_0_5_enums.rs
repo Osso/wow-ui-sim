@@ -72,8 +72,8 @@ const ADDITIONS: &[(&str, &str, i32)] = &[
     ("HouseFinderSuggestionReason", "HomeOwner", 64),
 ];
 
-// Complete cached enumerations omit these names. IconSize's later removal is
-// also enforced by ptr/strict_removals.lua; DebuffIconSize is its current name.
+// Complete cached enumerations omit these names. DebuffIconSize is IconSize's
+// current name.
 #[cfg(feature = "client-retail")]
 const CURRENT_RETAIL_REMOVALS: &[(&str, &str)] = &[
     ("AbbreviationDataError", "InvalidAbbreviation"),

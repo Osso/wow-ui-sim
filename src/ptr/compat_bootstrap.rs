@@ -31,10 +31,33 @@ const PATCH_12_1_COMPAT_BOOTSTRAP_LUA: &str = concat!(
     "\n",
     include_str!("seconds_formatter_abbreviation.lua"),
 );
-const PATCH_12_1_STRICT_REMOVALS_LUA: &str = include_str!("strict_removals.lua");
+
+// Members removed in 12.1.0. Marking (not deleting) stops the namespace
+// fallback from fabricating them while Blizzard deprecation fallbacks
+// (Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua) can still assign them.
+const PATCH_12_1_REMOVED_NAMESPACE_KEYS: &[(&str, &[&str])] = &[
+    (
+        "C_DyeColor",
+        &["GetDyeColorForItem", "GetDyeColorForItemLocation"],
+    ),
+    ("C_Housing", &["IsInsideOwnHouse"]),
+    ("C_Ping", &["GetContextualPingTypeForUnit"]),
+    ("C_RecruitAFriend", &["IsEnabled"]),
+    ("C_SuperTrack", &["GetNextWaypointForMap"]),
+    ("C_UnitAuras", &["TriggerPrivateAuraShowDispelType"]),
+];
+
+fn mark_removed_namespace_keys(state: &mut rilua::vm::state::LuaState) -> crate::Result<()> {
+    for &(namespace, keys) in PATCH_12_1_REMOVED_NAMESPACE_KEYS {
+        let table = crate::c_api::ensure_namespace(state, namespace)?;
+        crate::c_api::mark_namespace_keys_removed(state, table, keys);
+    }
+    Ok(())
+}
 
 pub fn init(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PATCH_12_1_COMPAT_BOOTSTRAP_LUA)?;
+    mark_removed_namespace_keys(lua.state_mut())?;
     crate::c_api::patch_12_0_5_enums::refresh_metadata(lua.state_mut());
     crate::c_api::patch_12_1_0_enums::register(lua.state_mut());
     crate::c_api::on_update_modes::register(lua.state_mut());
@@ -48,12 +71,6 @@ pub fn apply_post_load(env: &crate::lua_api::WowLuaEnv) {
     crate::c_api::patch_12_0_5_enums::refresh_metadata(env.rilua_mut().state_mut());
     crate::c_api::patch_12_1_0_enums::register(env.rilua_mut().state_mut());
     crate::c_api::on_update_modes::register(env.rilua_mut().state_mut());
-}
-
-pub fn apply_strict_removals(env: &crate::lua_api::WowLuaEnv) {
-    if let Err(err) = env.exec(PATCH_12_1_STRICT_REMOVALS_LUA) {
-        eprintln!("patch 12.1 strict removals failed after startup events: {err}");
-    }
 }
 
 #[cfg(test)]

@@ -315,7 +315,7 @@ fn edit_mode_profile_option_enums_match_blizzard_docs() {
                 "CastBarOnSide", "ShowCastTime", "ViewRaidSize", "FrameWidth",
                 "FrameHeight", "DisplayBorder", "RaidGroupDisplayType", "SortPlayersBy",
                 "RowSize", "FrameSize", "ViewArenaSize", "AuraOrganizationType",
-                "IconSize", "Opacity", "BigDefensiveIconSize",
+                "DebuffIconSize", "Opacity", "BigDefensiveIconSize", "BuffIconSize",
             },
             EditModeVehicleSeatIndicatorSetting = { "Size" },
         }

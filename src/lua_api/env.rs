@@ -281,8 +281,6 @@ impl WowLuaEnv {
             return;
         }
         super::workarounds::apply_post_event(self);
-        #[cfg(feature = "retail-12-1-0")]
-        crate::ptr::compat_bootstrap::apply_strict_removals(self);
     }
 }
 

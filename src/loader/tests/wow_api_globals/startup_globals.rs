@@ -508,7 +508,6 @@ fn test_patch_12_1_cvars_and_enums_exist() {
 fn test_patch_12_1_strict_removed_symbols_are_hidden() {
     let env = WowLuaEnv::new().unwrap();
     crate::ptr::compat_bootstrap::apply_post_load(&env);
-    crate::ptr::compat_bootstrap::apply_strict_removals(&env);
     let result: String = env
         .eval(
             r#"
@@ -526,6 +525,33 @@ fn test_patch_12_1_strict_removed_symbols_are_hidden() {
             local frame = CreateFrame("Frame")
             if pcall(function() frame:RegisterEvent("BATTLETAG_INVITE_SHOW") end) then return "battletag-event" end
             if pcall(function() frame:RegisterUnitEvent("BATTLETAG_INVITE_SHOW", "player") end) then return "battletag-unit-event" end
+            return "ok"
+            "#,
+        )
+        .unwrap();
+
+    assert_eq!(result, "ok");
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn test_patch_12_1_removed_namespace_keys_accept_blizzard_fallback_assignments() {
+    let env = WowLuaEnv::new().unwrap();
+    crate::ptr::compat_bootstrap::apply_post_load(&env);
+    // Mirrors Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua assignments.
+    let result: String = env
+        .eval(
+            r#"
+            local function wrapper() return "wrapped" end
+            C_DyeColor.GetDyeColorForItem = wrapper
+            C_Housing.IsInsideOwnHouse = C_Housing.IsInsideOwnedHouse
+            C_SuperTrack.GetNextWaypointForMap = C_Navigation.GetNextWaypointForMap
+            if C_DyeColor.GetDyeColorForItem ~= wrapper then return "dye-item" end
+            if C_Housing.IsInsideOwnHouse ~= C_Housing.IsInsideOwnedHouse then return "housing-own" end
+            if C_SuperTrack.GetNextWaypointForMap ~= C_Navigation.GetNextWaypointForMap then
+                return "supertrack-waypoint"
+            end
+            if C_DyeColor.GetDyeColorForItemLocation ~= nil then return "dye-location" end
             return "ok"
             "#,
         )

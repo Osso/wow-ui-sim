@@ -66,16 +66,6 @@ if rawget(C_UnitAurasPrivate, "SetShowDispelTypeCallback") == nil then
     end
 end
 
-if rawget(C_UnitAuras, "TriggerPrivateAuraShowDispelType") == nil then
-    function C_UnitAuras.TriggerPrivateAuraShowDispelType(showDispelType)
-        local state = PrivateAuraState()
-        state.lastShowDispelType = showDispelType
-        if type(C_UnitAurasPrivate._showDispelTypeCallback) == "function" then
-            C_UnitAurasPrivate._showDispelTypeCallback(showDispelType)
-        end
-    end
-end
-
 if rawget(C_UnitAurasPrivate, "AddPrivateAuraUpdateCallback") == nil then
     function C_UnitAurasPrivate.AddPrivateAuraUpdateCallback(unitToken, callback)
         local state = PrivateAuraState()
@@ -130,10 +120,24 @@ if rawget(C_UnitAurasPrivate, "GetAuraDataByAuraInstanceIDPrivate") == nil then
 end
 "#;
 
+// 12.1.0 removed the public trigger.
+#[cfg(not(feature = "retail-12-1-0"))]
+const SHOW_DISPEL_TYPE_TRIGGER_LUA: &str = r#"
+if rawget(C_UnitAuras, "TriggerPrivateAuraShowDispelType") == nil then
+    function C_UnitAuras.TriggerPrivateAuraShowDispelType(showDispelType)
+        local state = C_UnitAurasPrivate._state
+        state.lastShowDispelType = showDispelType
+        if type(C_UnitAurasPrivate._showDispelTypeCallback) == "function" then
+            C_UnitAurasPrivate._showDispelTypeCallback(showDispelType)
+        end
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PRIVATE_AURA_STATE_LUA)?;
-    #[cfg(feature = "retail-12-1-0")]
-    lua.exec("C_UnitAuras.TriggerPrivateAuraShowDispelType = nil")?;
+    #[cfg(not(feature = "retail-12-1-0"))]
+    lua.exec(SHOW_DISPEL_TYPE_TRIGGER_LUA)?;
     Ok(())
 }
 

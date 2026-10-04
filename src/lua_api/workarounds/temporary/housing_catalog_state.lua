@@ -7,6 +7,10 @@ local __wow_namespace_mt = {
     if key == nil then
       return nil
     end
+    local removed = rawget(t, "__wow_removed_keys")
+    if type(removed) == "table" and removed[key] then
+      return nil
+    end
     local value = function() end
     rawset(t, key, value)
     return value

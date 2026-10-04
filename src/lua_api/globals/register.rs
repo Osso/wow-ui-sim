@@ -178,6 +178,8 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::unit_misc::register_all(lua)?;
     #[cfg(feature = "aura-containers")]
     super::real::unit_relationships::register_all(lua)?;
+    // 12.1.0 removed the global; C_PaperDollInfo.GetInventorySlotInfo replaces it.
+    #[cfg(not(feature = "retail-12-1-0"))]
     super::inventory_slot::register_all(lua)?;
     super::zone_text::register_all(lua)?;
     super::real::modifier_keys::register_all(lua)?;

@@ -24,6 +24,8 @@ end
 __wow_fill_enum("EditModeAccountSetting", { "ShowRaidWarning" })
 __wow_fill_enum("EditModeSystem", { "RaidWarning" })
 __wow_fill_enum("EditModeUnitFrameSetting", { "BuffIconSize", "DebuffIconSize" })
+-- 12.1.0 renamed IconSize to DebuffIconSize.
+rawset(Enum.EditModeUnitFrameSetting, "IconSize", nil)
 __wow_fill_enum("HousingResult", {
   "BlueprintGenericImportError",
   "BlueprintStorageLimit",

@@ -17,6 +17,7 @@ pub(super) fn register_recruit_a_friend_surface(state: &mut LuaState) -> LuaResu
         "GetSummonFriendCooldown",
         get_summon_friend_cooldown,
     )?;
+    #[cfg(not(feature = "retail-12-1-0"))]
     table_set_rust_fn_static(state, ns, "IsEnabled", is_enabled)?;
     #[cfg(feature = "retail-12-1-0")]
     table_set_rust_fn_static(state, ns, "IsSystemEnabled", is_enabled)?;
