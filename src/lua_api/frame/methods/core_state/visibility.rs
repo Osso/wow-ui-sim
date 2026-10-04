@@ -310,8 +310,19 @@ fn run_visibility_handlers(
         .widgets
         .get(frame_id)
         .is_some_and(|frame| frame.is_protected || frame.forbidden);
+    let forbidden_partition =
+        crate::lua_api::frame::methods::forbidden_aspects::uses_forbidden_object_table(
+            state, frame_id,
+        );
     for handler in handlers {
-        let saved_taints = secure_dispatch.then(|| clear_active_stack_taint(state));
+        // Forbidden-partition handlers run untainted even when addon code
+        // toggled visibility; addon-installed handlers keep their own taint.
+        let untainted = secure_dispatch
+            || (forbidden_partition
+                && !crate::lua_api::frame::methods::forbidden_aspects::is_addon_installed_handler(
+                    state, handler,
+                ));
+        let saved_taints = untainted.then(|| clear_active_stack_taint(state));
         let result =
             crate::lua_api::script_helpers::protected_lua_pcall_state(state, handler, &[frame]);
         if let Some(saved_taints) = saved_taints {

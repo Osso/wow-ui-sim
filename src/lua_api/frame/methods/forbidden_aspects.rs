@@ -79,6 +79,15 @@ pub(crate) fn is_addon_installed_handler(state: &mut LuaState, handler: Val) -> 
     }
 }
 
+/// Whether the frame was created in a `useForbiddenObjectTable` scope, i.e. its
+/// Blizzard-bound handlers live in the forbidden partition.
+pub(crate) fn uses_forbidden_object_table(state: &mut LuaState, frame_id: u64) -> bool {
+    let Ok(frame) = crate::lua_api::methods::frame_ref(state, frame_id) else {
+        return false;
+    };
+    table_get(state, frame, "__wowUseForbiddenObjectTable") == Val::Bool(true)
+}
+
 /// HookScript chain gate `(frameId, layoutHandler, component) -> allowed`. A chain mixes
 /// handlers installed by different callers, so each component is checked when it runs.
 pub(crate) fn hooked_script_component_allowed(state: &mut LuaState) -> LuaResult<u32> {
@@ -139,6 +148,20 @@ pub(crate) fn add_forbidden_aspects(
     frame.forbidden_aspects |= mask | reset;
     frame.inheritable_forbidden_aspects_parent |= mask & hierarchy;
     frame.inheritable_forbidden_aspects_layout |= mask & layout;
+    // INFERRED: parent-inheritable aspects reach existing descendants too, not
+    // only children parented afterwards (e.g. a tooltip's NineSlice once the
+    // tooltip adopts an aura button's layout aspects).
+    let inherited = mask & hierarchy;
+    let mut pending = frame.children.clone();
+    while let Some(child_id) = pending.pop() {
+        let Some(child) = sim.widgets.get_mut(child_id) else {
+            continue;
+        };
+        child.forbidden_aspects |= inherited | reset;
+        child.inheritable_forbidden_aspects_parent |= inherited;
+        child.inheritable_forbidden_aspects_layout |= inherited & layout;
+        pending.extend(child.children.iter().copied());
+    }
     Ok(())
 }
 
