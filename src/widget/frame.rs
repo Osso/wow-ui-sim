@@ -52,6 +52,11 @@ pub struct Frame {
     pub secret_height: bool,
     pub secret_anchor_points: Vec<AnchorPoint>,
     pub secret_texture: bool,
+    /// INFERRED: per-input origins keep shared aspects secret until both clear.
+    pub secret_button_state: bool,
+    pub secret_button_enabled: bool,
+    pub secret_scroll_horizontal: bool,
+    pub secret_scroll_vertical: bool,
     pub show_hide_depth: u16, // reentry depth for Show/Hide mutual recursion limit
     pub click_depth: u16,     // reentry depth for programmatic Button:Click recursion limit
     pub collapses_layout: bool,
