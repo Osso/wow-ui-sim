@@ -234,30 +234,37 @@ fn p1207_binding_secret_timing_and_text_stay_opaque_to_tainted_callers() {
         Duration:SetTimeFromStart(secretwrap(10, 16, 2))
         local text = Binding:GetFormattedText()
         -- INFERRED: sampled secret timing yields a VM-owned secret text result.
-        assert(issecretvalue(text) and secretunwrap(text) == '8s')
+        assert(issecretvalue(text) and secretunwrap(text) == '8s', 'secret boundary 7')
         local function addon()
-            assert(not pcall(Binding.GetFormattedText, Binding))
-            assert(not pcall(secretunwrap, text))
-            assert(debug.getstacktaint() == 'BindingSecretAudit')
+            assert(not pcall(Binding.GetFormattedText, Binding), 'secret boundary 9')
+            assert(not pcall(secretunwrap, text), 'secret boundary 10')
+            assert(debug.getstacktaint() == 'BindingSecretAudit', 'secret boundary 11')
         end
         debug.setobjecttaint(addon, 'BindingSecretAudit'); addon()
-        assert(debug.getstacktaint() == nil)
+        assert(debug.getstacktaint() == nil, 'secret boundary 14')
+        local setText = Label.SetText
+        local handedText
+        Label.SetText = function(label, value)
+            handedText = value
+            setText(label, value)
+        end
         Binding:UpdateFontString()
-        local labelText = Label:GetText()
-        assert(issecretvalue(labelText) and secretunwrap(labelText) == '8s')
+        assert(issecretvalue(handedText) and secretunwrap(handedText) == '8s', 'secret SetText input')
+        -- Existing FontString policy returns plain text to a secure caller.
+        assert(Label:GetText() == '8s', 'secure FontString read')
         Binding:SetExpiredText('expired'); Clock:SetTime(18)
         local expired = Binding:GetFormattedText()
-        assert(issecretvalue(expired) and secretunwrap(expired) == 'expired')
+        assert(issecretvalue(expired) and secretunwrap(expired) == 'expired', 'secret boundary 20')
         Binding:SetZeroDurationText('zero'); Duration:SetTimeFromStart(100, 0)
         local zeroTiming = Binding:GetFormattedText()
-        assert(issecretvalue(zeroTiming) and secretunwrap(zeroTiming) == 'zero')
+        assert(issecretvalue(zeroTiming) and secretunwrap(zeroTiming) == 'zero', 'secret boundary 23')
         Duration:SetToDefaults()
         local zero = secretwrap('hidden-zero')
         Binding:SetZeroDurationText(zero)
         local function readZero()
             local result = Binding:GetFormattedText()
-            assert(issecretvalue(result) and not pcall(secretunwrap, result))
-            assert(debug.getstacktaint() == 'BindingZeroAudit')
+            assert(issecretvalue(result) and not pcall(secretunwrap, result), 'secret boundary 29')
+            assert(debug.getstacktaint() == 'BindingZeroAudit', 'secret boundary 30')
         end
         debug.setobjecttaint(readZero, 'BindingZeroAudit'); readZero()
     "#,
