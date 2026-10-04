@@ -4,7 +4,13 @@
 
 use std::path::PathBuf;
 
+use wow_ui_sim::c_api::c_cooldown_viewer::CooldownViewerCooldown;
+use wow_ui_sim::c_api::c_sound::PlaySoundRequest;
+use wow_ui_sim::event::EventArg;
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::host_chat_inputs::{
+    DiscordChatInfo, HostChatArgument, HostChatKind, HostChatMessage,
+};
 use wow_ui_sim::lua_api::state::PlayerChoiceInfo;
 
 struct DocField {
@@ -50,6 +56,92 @@ fn seed_bnet_title_friend(env: &WowLuaEnv) {
     let account = &mut friend.game_accounts[0];
     account.class_id = 6;
     account.class_name = "Death Knight".into();
+}
+
+/// Publish one CHAT_MSG_SAY from the host queue and keep its payload in
+/// `ChatParams`, named by the cached ChatMessageEventParams field order.
+fn seed_discord_chat_line(env: &WowLuaEnv) {
+    let names: Vec<String> = doc_struct_fields("ChatInfoDocumentation.lua", "ChatMessageEventParams")
+        .into_iter()
+        .map(|field| format!("{:?}", field.name))
+        .collect();
+    env.exec(&format!(
+        r##"
+        local names = {{ {} }}
+        local frame = CreateFrame("Frame")
+        frame:RegisterEvent("CHAT_MSG_SAY")
+        frame:SetScript("OnEvent", function(_, _, ...)
+            ChatParams = {{ count = select("#", ...) }}
+            for index, name in ipairs(names) do
+                ChatParams[name] = (select(index, ...))
+            end
+        end)
+        "##,
+        names.join(", ")
+    ))
+    .expect("install chat listener");
+    env.state()
+        .borrow_mut()
+        .host_chat_inputs
+        .pending
+        .push_back(HostChatMessage {
+            kind: HostChatKind::Say,
+            arguments: vec![
+                HostChatArgument {
+                    value: EventArg::String("from the bridge".into()),
+                    secret: false,
+                },
+                HostChatArgument {
+                    value: EventArg::String("Osso".into()),
+                    secret: false,
+                },
+            ],
+            discord_info: DiscordChatInfo {
+                user_id: 4242.0,
+                global_name: "osso.discord".into(),
+                display_name_type: 2,
+                has_attachment: true,
+                from_discord: true,
+                ..Default::default()
+            },
+        });
+    assert!(env.publish_next_host_chat().expect("publish host chat"));
+}
+
+fn seed_cooldown_viewer(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    for cooldown in [
+        CooldownViewerCooldown {
+            cooldown_id: 501,
+            spell_id: Some(2061),
+            spell_category_id: Some(1234),
+            equip_slot: Some(13),
+            linked_spell_ids: vec![2050, 2060],
+            is_known: true,
+            is_invisible: true,
+            category: 1,
+            ..Default::default()
+        },
+        CooldownViewerCooldown {
+            cooldown_id: 502,
+            spell_id: Some(34433),
+            category: 1,
+            ..Default::default()
+        },
+    ] {
+        state
+            .cooldown_viewer_cooldowns
+            .insert(cooldown.cooldown_id, cooldown);
+    }
+}
+
+fn seed_owned_decor_pet(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    let pet = &mut state.world.pets[0];
+    pet.custom_name = Some("Sprocket".into());
+    pet.is_favorite = true;
+    pet.can_attach_to_decor = true;
+    pet.creature_model_scale = Some(0.75);
 }
 
 fn doc_path(doc_file: &str) -> PathBuf {
@@ -357,6 +449,166 @@ const CASES: &[ShapeCase] = &[
         removed: &[],
         values: r#"return info.classFilename == "DEATHKNIGHT" and "ok" or tostring(info.classFilename)"#,
     },
+    ShapeCase {
+        source_ids: &[
+            "structures-ChatMessageEventParams-339",
+            "structures-ChatMessageEventParams-340",
+        ],
+        doc_file: "ChatInfoDocumentation.lua",
+        struct_name: "ChatMessageEventParams",
+        seed: seed_discord_chat_line,
+        getter: "return ChatParams",
+        added: &["discordInfo"],
+        removed: &[],
+        // Blizzard's ChatFrameMixin:MessageEventHandler reads discordInfo as arg18.
+        values: r#"
+            if info.count ~= 18 or info.text ~= "from the bridge" or info.playerName ~= "Osso" then
+                return "payload"
+            end
+            local discord = info.discordInfo
+            if discord.userID ~= 4242 or discord.globalName ~= "osso.discord" then return "identity" end
+            if discord.type ~= 2 or discord.fromDiscord ~= true or discord.hasAttachment ~= true then
+                return "flags"
+            end
+            if discord.hasPoll ~= false or discord.lastOnlineName ~= "" then return "defaults" end
+            return "ok"
+        "#,
+    },
+    ShapeCase {
+        source_ids: &[
+            "structures-CooldownViewerCooldown-343",
+            "structures-CooldownViewerCooldown-344",
+            "structures-CooldownViewerCooldown-345",
+            "structures-CooldownViewerCooldown-346",
+        ],
+        doc_file: "CooldownViewerDocumentation.lua",
+        struct_name: "CooldownViewerCooldown",
+        seed: seed_cooldown_viewer,
+        getter: "return C_CooldownViewer.GetCooldownViewerCooldownInfo(501)",
+        added: &["spellCategoryID", "equipSlot", "isInvisible"],
+        removed: &[],
+        values: r#"
+            if info.cooldownID ~= 501 or info.spellID ~= 2061 then return "identity" end
+            if info.spellCategoryID ~= 1234 or info.equipSlot ~= 13 or info.isInvisible ~= true then
+                return "12.1.0 fields"
+            end
+            if info.linkedSpellIDs[2] ~= 2060 or info.category ~= 1 or info.isKnown ~= true then
+                return "entry"
+            end
+            local plain = C_CooldownViewer.GetCooldownViewerCooldownInfo(502)
+            if plain.spellCategoryID ~= nil or plain.equipSlot ~= nil or plain.isInvisible ~= false then
+                return "unset fields"
+            end
+            local known = C_CooldownViewer.GetCooldownViewerCategorySet(1)
+            if #known ~= 1 or known[1] ~= 501 then return "known set" end
+            local all = C_CooldownViewer.GetCooldownViewerCategorySet(1, true)
+            if #all ~= 2 or all[2] ~= 502 then return "unlearned set" end
+            if C_CooldownViewer.GetCooldownViewerCooldownInfo(999) ~= nil then return "unknown" end
+            return "ok"
+        "#,
+    },
+    ShapeCase {
+        source_ids: &["structures-LfgEntryData-349", "structures-LfgEntryData-350"],
+        doc_file: "LFGListInfoDocumentation.lua",
+        struct_name: "LfgEntryData",
+        seed: no_seed,
+        getter: r#"
+            if C_LFGList.GetActiveEntryInfo() ~= nil then return "listed before create" end
+            assert(C_LFGList.CreateListing({
+                activityIDs = { 493 }, isAutoAccept = true, requiredItemLevel = 600,
+                generalPlaystyle = 2, isCrossFactionListing = true,
+            }))
+            return C_LFGList.GetActiveEntryInfo()
+        "#,
+        added: &["censored"],
+        removed: &[],
+        values: r#"
+            if info.censored ~= false then return "censored" end
+            if info.activityIDs[1] ~= 493 or info.autoAccept ~= true or info.requiredItemLevel ~= 600 then
+                return "create data"
+            end
+            if info.generalPlaystyle ~= 2 or info.isCrossFactionListing ~= true or info.questID ~= nil then
+                return "options"
+            end
+            if C_LFGList.HasActiveEntryInfo() ~= true then return "has" end
+            if C_LFGList.CreateListing({ activityIDs = { 1 } }) ~= false then return "double create" end
+            assert(C_LFGList.UpdateListing({ activityIDs = { 494 }, requiredItemLevel = 610 }))
+            local updated = C_LFGList.GetActiveEntryInfo()
+            if updated.activityIDs[1] ~= 494 or updated.autoAccept ~= false then return "update" end
+            C_LFGList.RemoveListing()
+            if C_LFGList.GetActiveEntryInfo() ~= nil or C_LFGList.HasActiveEntryInfo() then
+                return "remove"
+            end
+            if C_LFGList.UpdateListing({ activityIDs = { 494 } }) ~= false then return "update unlisted" end
+            return "ok"
+        "#,
+    },
+    ShapeCase {
+        source_ids: &[
+            "structures-PetJournalPetInfo-353",
+            "structures-PetJournalPetInfo-354",
+            "structures-PetJournalPetInfo-355",
+            "structures-PetJournalPetInfo-356",
+            "structures-PetJournalPetInfo-357",
+            "structures-PetJournalPetInfo-358",
+            "structures-PetJournalPetInfo-359",
+            "structures-PetJournalPetInfo-360",
+            "structures-PetJournalPetInfo-361",
+            "structures-PetJournalPetInfo-362",
+        ],
+        doc_file: "PetJournalInfoDocumentation.lua",
+        struct_name: "PetJournalPetInfo",
+        seed: seed_owned_decor_pet,
+        // Owned pet: the Nilable owned-pet fields are populated.
+        getter: r#"
+            local petID = C_PetJournal.GetPetInfoByIndex(1)
+            return C_PetJournal.GetPetInfoTableByPetID(petID)
+        "#,
+        added: &[
+            "petLevel", "xp", "maxXP", "displayID", "isFavorite", "petType", "isWild",
+            "tradable", "unique", "canAttachToDecor", "creatureModelScale",
+        ],
+        removed: &["isTradeable", "isUnique"],
+        values: r#"
+            if info.speciesID ~= 39 or info.customName ~= "Sprocket" or info.petLevel ~= 25 then
+                return "owned identity"
+            end
+            if info.isFavorite ~= true or info.isWild ~= false or type(info.maxXP) ~= "number" then
+                return "owned fields"
+            end
+            if info.canAttachToDecor ~= true or info.creatureModelScale ~= 0.75 then return "decor" end
+            if C_PetJournal.GetPetInfoTableByPetID("BattlePet-0-FFFFFFFF") ~= nil then return "unknown" end
+            return "ok"
+        "#,
+    },
+    ShapeCase {
+        source_ids: &[
+            "structures-PetJournalPetInfo-353",
+            "structures-PetJournalPetInfo-354",
+            "structures-PetJournalPetInfo-355",
+            "structures-PetJournalPetInfo-356",
+            "structures-PetJournalPetInfo-357",
+            "structures-PetJournalPetInfo-358",
+            "structures-PetJournalPetInfo-360",
+        ],
+        doc_file: "PetJournalInfoDocumentation.lua",
+        struct_name: "PetJournalPetInfo",
+        seed: seed_owned_decor_pet,
+        // Species query: the now-Nilable owned-pet fields are nil.
+        getter: "return C_PetJournal.GetPetInfoTableBySpeciesID(39)",
+        added: &[
+            "petLevel", "xp", "maxXP", "displayID", "isFavorite", "isWild", "canAttachToDecor",
+        ],
+        removed: &[],
+        values: r#"
+            if info.customName ~= nil or info.petLevel ~= nil or info.xp ~= nil or info.maxXP ~= nil then
+                return "owned fields leaked"
+            end
+            if info.isFavorite ~= nil or info.isWild ~= nil then return "owned flags leaked" end
+            if info.name ~= "Mechanical Squirrel" or info.canAttachToDecor ~= true then return "species" end
+            return "ok"
+        "#,
+    },
 ];
 
 #[test]
@@ -374,4 +626,97 @@ fn patch_12_1_0_struct_shapes_match_cached_docs() {
         "struct shape failures:\n  {}",
         failures.join("\n  ")
     );
+}
+
+/// PlaySoundParams is input-only: prove the documented fields reach the
+/// recorded request (structures-PlaySoundParams-363/364).
+#[test]
+fn patch_12_1_0_play_sound_params_record_volume_override() {
+    let doc = doc_struct_fields("SoundDocumentation.lua", "PlaySoundParams");
+    let volume = doc
+        .iter()
+        .find(|field| field.name == "volumeOverride")
+        .expect("cached PlaySoundParams lists volumeOverride");
+    assert_eq!((volume.doc_type.as_str(), volume.nilable), ("number", true));
+
+    let env = WowLuaEnv::new().expect("create sound environment");
+    let returned: i32 = env
+        .eval(
+            r##"
+            return select("#", C_Sound.PlaySoundWithOptions({
+                soundKitID = 8959, uiSoundSubType = "Voice", volumeOverride = 0.35,
+            }))
+            "##,
+        )
+        .expect("play with volume override");
+    assert_eq!(returned, 0, "headless playback returns nothing");
+    let request = env.state().borrow().last_sound_request.clone();
+    assert_eq!(
+        request,
+        Some(PlaySoundRequest {
+            sound_kit_id: 8959,
+            ui_sound_sub_type: Some("Voice".into()),
+            force_no_duplicates: false,
+            run_finish_callback: false,
+            override_priority: None,
+            volume_override: Some(0.35),
+        })
+    );
+
+    env.exec("C_Sound.PlaySoundWithOptions({ soundKitID = 12867, forceNoDuplicates = true })")
+        .expect("play without override");
+    let request = env.state().borrow().last_sound_request.clone().unwrap();
+    assert_eq!(
+        (request.sound_kit_id, request.force_no_duplicates, request.volume_override),
+        (12867, true, None)
+    );
+    assert!(
+        env.exec(r#"C_Sound.PlaySoundWithOptions({ soundKitID = 1, volumeOverride = "loud" })"#)
+            .is_err()
+    );
+    assert!(env.exec("C_Sound.PlaySoundWithOptions({ volumeOverride = 1 })").is_err());
+}
+
+/// Moderation state set on the active listing is what GetActiveEntryInfo reports,
+/// and LFG_LIST_ACTIVE_ENTRY_UPDATE arrives on the next tick, not inside the call.
+#[test]
+fn patch_12_1_0_lfg_active_entry_censored_and_deferred_update() {
+    let env = WowLuaEnv::new().expect("create lfg environment");
+    env.exec(
+        r#"
+        EntryUpdates = {}
+        local frame = CreateFrame("Frame")
+        frame:RegisterEvent("LFG_LIST_ACTIVE_ENTRY_UPDATE")
+        frame:SetScript("OnEvent", function(_, _, created)
+            EntryUpdates[#EntryUpdates + 1] = tostring(created)
+        end)
+        assert(C_LFGList.CreateListing({ activityIDs = { 493 } }))
+        assert(#EntryUpdates == 0)
+        "#,
+    )
+    .expect("create listing");
+    env.process_timers().expect("tick timers");
+    env.state()
+        .borrow_mut()
+        .lfg_active_entry
+        .as_mut()
+        .expect("active listing")
+        .censored = true;
+    let observed: String = env
+        .eval(
+            r#"
+            local censored = C_LFGList.GetActiveEntryInfo().censored
+            C_LFGList.UpdateListing({ activityIDs = { 493 } })
+            return tostring(censored) .. ":" .. tostring(C_LFGList.GetActiveEntryInfo().censored)
+            "#,
+        )
+        .expect("read censored");
+    env.process_timers().expect("tick timers");
+    env.exec("C_LFGList.RemoveListing()").expect("remove");
+    env.process_timers().expect("tick timers");
+    let updates: String = env
+        .eval("return table.concat(EntryUpdates, ',')")
+        .expect("updates");
+    assert_eq!(observed, "true:true");
+    assert_eq!(updates, "true,false,nil");
 }
