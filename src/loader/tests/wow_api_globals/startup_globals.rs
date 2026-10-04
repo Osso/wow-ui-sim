@@ -846,7 +846,7 @@ fn test_patch_12_1_safe_global_bridges() {
             if type(C_DelvesUI.GetFlavorNodeForCompanion(1)) ~= "number" then return "delve-flavor-node" end
             if type(C_DelvesUI.GetFlavorNodeNameForCompanion(1)) ~= "string" then return "delve-flavor-name" end
             if C_GuildInfo.IsDiscordStreamSeparate() ~= false then return "guild-discord" end
-            if C_Sound.PlaySoundWithOptions(1, { volumeOverride = 0.5 }) ~= nil then return "sound" end
+            if C_Sound.PlaySoundWithOptions({ soundKitID = 1, volumeOverride = 0.5 }) ~= nil then return "sound" end
             if C_Navigation.GetNextWaypointForMap(1) ~= nil then return "navigation" end
             if type(C_Ping.SendMacroPing({ type = Enum.PingSubjectType.ActionReady })) ~= "number" then return "ping-macro" end
             local _, _, _, _, _, _, _, _, _, _, _, speciesID = C_PetJournal.GetPetInfoByIndex(1)

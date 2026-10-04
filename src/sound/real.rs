@@ -50,6 +50,13 @@ impl SoundManager {
         self.play_file(&full_path)
     }
 
+    /// Scale one playing sound's volume (1.0 = unchanged).
+    pub fn set_volume(&mut self, handle: u32, volume: f32) {
+        if let Some(sink) = self.active_sounds.get(&handle) {
+            sink.set_volume(volume);
+        }
+    }
+
     /// Stop a playing sound by handle.
     pub fn stop_sound(&mut self, handle: u32) {
         if let Some(sink) = self.active_sounds.remove(&handle) {

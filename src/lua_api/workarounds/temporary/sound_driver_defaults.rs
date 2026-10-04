@@ -43,11 +43,6 @@ end
 if rawget(C_Sound, "PlaySound") == nil then
     function C_Sound.PlaySound() end
 end
-if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
-    if rawget(C_Sound, "PlaySoundWithOptions") == nil then
-        function C_Sound.PlaySoundWithOptions() end
-    end
-end
 if rawget(C_Sound, "PlaySoundFile") == nil then
     function C_Sound.PlaySoundFile() end
 end

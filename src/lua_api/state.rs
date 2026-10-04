@@ -268,6 +268,8 @@ macro_rules! build_empty_sim_state {
             unit_raid_target_icons: HashMap::new(),
             sound_manager: $runtime.sound_manager,
             last_sound_kit_requested: $runtime.last_sound_kit_requested,
+            #[cfg(feature = "retail-12-1-0")]
+            last_sound_request: None,
             last_sound_file_requested: $runtime.last_sound_file_requested,
             last_stopped_sound_handle: $runtime.last_stopped_sound_handle,
             combat_audio_speaker_speed: 0.0,

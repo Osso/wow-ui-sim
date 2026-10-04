@@ -72,6 +72,8 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     c_arrow_callout_manager::register_c_arrow_callout_manager_surface(state)?;
     #[cfg(feature = "retail-12-1-0")]
     c_browser::register_c_browser_surface(state)?;
+    #[cfg(feature = "retail-12-1-0")]
+    super::c_sound::register(state)?;
     c_player_interaction_manager::register_c_player_interaction_manager_surface(state)
 }
 

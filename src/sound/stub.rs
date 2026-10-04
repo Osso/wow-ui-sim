@@ -16,6 +16,8 @@ impl SoundManager {
 
     pub fn stop_sound(&mut self, _handle: u32) {}
 
+    pub fn set_volume(&mut self, _handle: u32, _volume: f32) {}
+
     pub fn is_playing(&self, _handle: u32) -> bool {
         false
     }

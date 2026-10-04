@@ -166,12 +166,6 @@ if rawget(C_CooldownViewer, "GetGroupBuffItems") == nil then
   end
 end
 
-C_Sound = C_Sound or {}
-if rawget(C_Sound, "PlaySoundWithOptions") == nil then
-  function C_Sound.PlaySoundWithOptions()
-  end
-end
-
 C_Navigation = C_Navigation or {}
 if rawget(C_Navigation, "GetNextWaypointForMap") == nil then
   function C_Navigation.GetNextWaypointForMap()
