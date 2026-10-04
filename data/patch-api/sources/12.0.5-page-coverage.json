@@ -2247,6 +2247,45 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/classic-secret-policy.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
       "gate_scope": "RED 4 PASS / 3 FAIL under client-mists; GREEN 7/7 new + 46 security_api + 15 admin_identity_api under client-mists; retail 122/122 after cherry-pick; B99 run 381/381 with control suites, cargo fmt --check exit0, startup lua-errors []; follow-up fix commit fcdcf43c6 427 PASS / 1 FAIL (on_update_modes aura-container test, origin under bisection). Independent Sol source review SHA256 edae62bd107133e94808f39f7015ff1fe3cd032a3edb4778387da80e09eb1333, report data/patch-api/evidence/12.0.5-session-2026-10-03/classic-secrets-review.md. No cargo check or broad suite."
+    },
+    {
+      "id": "secure-aura-header-ordering",
+      "symbols": [
+        "SecureAuraHeader_Update"
+      ],
+      "scope": "Round 101 prose 03-25-112/03-31-151, PARTIAL: the unchanged cached SecureAuraHeader Lua/XML, loaded by a fixture that extends the restricted-environment TOC before its first load, orders children short < long < permanent under TIME ascending, across shuffled input, finite-to-permanent updates, removal/readdition and child reuse, reading the simulator's aura data. No producer change. The retail TOC excludes these files ([AllowLoadGameType classic]), so this is isolated component proof, not evidence that retail exposes the template; other sort directions, filters, grouping and ties untested.",
+      "spec": "docs/specs/secure-aura-header-helper-delegation.md",
+      "tests": [
+        "tests/secure_aura_header_helpers.rs"
+      ],
+      "inputs": "d62a972eb65592de039b9c3f74f384139be07be0",
+      "implementation": "d62a972eb65592de039b9c3f74f384139be07be0",
+      "compiled_revision": "d62a972eb65592de039b9c3f74f384139be07be0",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/secure-aura-header-helper-delegation.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commits a9f6b0a26 and d62a972eb, integrated in a worktree: RED aura 2 PASS, helper 0 PASS / 4 FAIL, lifecycle 0/1; GREEN 381 integration + 12 lib there, cargo check clean; master 144/144 with controls, startup lua-errors [], cargo fmt --check exit0. Independent Sol source review ACCEPT WITH QUALIFICATIONS SHA256 108ffe0e872180e50f2193eb78916633d1410913d2ed078f1d39ee5d83cec2bc, report data/patch-api/evidence/12.0.5-session-2026-10-03/round-101-review.md. No broad suite or older-profile run."
+    },
+    {
+      "id": "class-talent-helper-delegation",
+      "symbols": [
+        "C_ClassTalents.SwitchToLoadoutByName",
+        "C_ClassTalents.SwitchToLoadoutByIndex",
+        "C_ClassTalents.SwitchToSpecializationByName",
+        "C_ClassTalents.SwitchToSpecializationByIndex"
+      ],
+      "scope": "Round 101 prose 03-25-120/03-31-177, PARTIAL: the four switch commands dispatch secure command events to the real cached ClassTalentHelper callbacks; from a tainted addon caller the talent-frame writes and, for specialization, the player/overlay castbar writes stay untainted through initiation and completion, caller taint is restored on success and error. Specialization completes through a shared cast-completion module (GUI and headless) that also syncs talent/config/hero state and publishes ACTIVE_PLAYER_SPECIALIZATION_CHANGED. With no helper callbacks registered (bare environment) the commands are now a silent no-op where they used to mutate state. Delayed loadout commit/castbar flow, cold lazy loading and combat/secret arguments unmodeled; added event chronology is simulator policy.",
+      "spec": "docs/specs/secure-aura-header-helper-delegation.md",
+      "tests": [
+        "tests/secure_aura_header_helpers.rs",
+        "tests/hero_talents.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "inputs": "d62a972eb65592de039b9c3f74f384139be07be0",
+      "implementation": "d62a972eb65592de039b9c3f74f384139be07be0",
+      "compiled_revision": "d62a972eb65592de039b9c3f74f384139be07be0",
+      "proof": "bounded-independent-pass",
+      "ledger": "docs/specs/secure-aura-header-helper-delegation.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
+      "gate_scope": "Commits a9f6b0a26 and d62a972eb, integrated in a worktree: RED aura 2 PASS, helper 0 PASS / 4 FAIL, lifecycle 0/1; GREEN 381 integration + 12 lib there, cargo check clean; master 144/144 with controls, startup lua-errors [], cargo fmt --check exit0. Independent Sol source review ACCEPT WITH QUALIFICATIONS SHA256 108ffe0e872180e50f2193eb78916633d1410913d2ed078f1d39ee5d83cec2bc, report data/patch-api/evidence/12.0.5-session-2026-10-03/round-101-review.md. No broad suite or older-profile run."
     }
   ],
   "source_rows": [
@@ -2613,9 +2652,11 @@
     },
     {
       "source_id": "prose-2026-03-25-112",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "secure-aura-header-ordering"
+      ],
+      "status": "partial-development-green",
+      "note": "Round 101: ordering proven through the real cached SecureAuraHeader code in an isolated fixture; partial because the retail TOC does not load those files (classic-only), so retail applicability is unproven. Review ACCEPT WITH QUALIFICATIONS (round-101-review.md)."
     },
     {
       "source_id": "prose-2026-03-25-113",
@@ -2660,9 +2701,11 @@
     },
     {
       "source_id": "prose-2026-03-25-120",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "class-talent-helper-delegation"
+      ],
+      "status": "partial-development-green",
+      "note": "Round 101: helper commands run the real cached callbacks without tainting talent-frame or specialization castbar writes; partial because the delayed loadout commit/castbar flow is unmodeled. Behavior change: with no helper callbacks registered the commands no longer mutate state. Review ACCEPT WITH QUALIFICATIONS (round-101-review.md)."
     },
     {
       "source_id": "prose-2026-03-25-121",
@@ -2782,9 +2825,11 @@
     },
     {
       "source_id": "prose-2026-03-31-151",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "secure-aura-header-ordering"
+      ],
+      "status": "partial-development-green",
+      "note": "Round 101: ordering proven through the real cached SecureAuraHeader code in an isolated fixture; partial because the retail TOC does not load those files (classic-only), so retail applicability is unproven. Review ACCEPT WITH QUALIFICATIONS (round-101-review.md)."
     },
     {
       "source_id": "prose-2026-03-31-154",
@@ -2893,9 +2938,11 @@
     },
     {
       "source_id": "prose-2026-03-31-177",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "class-talent-helper-delegation"
+      ],
+      "status": "partial-development-green",
+      "note": "Round 101: helper commands run the real cached callbacks without tainting talent-frame or specialization castbar writes; partial because the delayed loadout commit/castbar flow is unmodeled. Behavior change: with no helper callbacks registered the commands no longer mutate state. Review ACCEPT WITH QUALIFICATIONS (round-101-review.md)."
     },
     {
       "source_id": "prose-2026-03-31-178",

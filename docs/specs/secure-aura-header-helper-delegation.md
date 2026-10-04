@@ -34,6 +34,14 @@ The test/refactor-only checkpoint compiled: both aura tests passed, four helper 
 
 These are simulator development tests against the cached retail UI, not native-client comparison or independent full-row acceptance. Audit classification remains unchanged.
 
+## Development proof and independent bounded acceptance — 2026-10-03
+
+Commits `a9f6b0a26` (aura ordering tests) and `d62a972eb` (helper delegation and shared cast completion). Worktree RED: aura 2 PASS, helper 0 PASS / 4 FAIL, rewritten lifecycle test 0/1. GREEN there 381 integration + 12 lib, `cargo check` clean; on master 144/144 with controls, startup `lua-errors` `[]`, `cargo fmt --check` exit0.
+
+Main accepts an independent GPT-6.1-sol source review: **ACCEPT WITH QUALIFICATIONS**, [report](../../data/patch-api/evidence/12.0.5-session-2026-10-03/round-101-review.md) SHA256 `108ffe0e872180e50f2193eb78916633d1410913d2ed078f1d39ee5d83cec2bc`. Qualifications: the retail TOC excludes `SecureAuraHeader` (classic-only), so the ordering proof is isolated component proof; in an environment with no helper callbacks registered the four switch commands are now a silent no-op instead of mutating state; delayed loadout commit is unmodeled; two cast tests select the payload slot by epoch feature where the producer selects by `player-cast-durations`.
+
+[Page accounting](../../data/patch-api/sources/12.0.5-page-coverage.json): prose 03-25-112, 03-31-151, 03-25-120 and 03-31-177 partial; **133 capabilities/362 IDs; 24 pending /270 bounded /33 partial /35 metadata**.
+
 ## Known gaps (current cycle)
 
 - [ ] Startup was not executed: the required build helper invocation rejected `--run --target-dir` with an unrecognized-arguments error.

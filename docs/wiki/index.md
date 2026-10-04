@@ -1,3 +1,7 @@
+## [2026-10-03] evidence | Round 101 accounted
+
+Four prose rows partial under two capabilities. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#round-101--aura-header-ordering-and-talent-helper-delegation); 133 capabilities/362 IDs; 24 pending /270 bounded /33 partial /35 metadata.
+
 ## [2026-10-03] evidence | 12.0.7 page audit started
 
 Exhaustive ledger for the retained 12.0.7 page excerpt seeded from the register plus 35 supplemental rows. [Audit page](investigations/patch-12-0-7-api-audit.md); 0 capabilities/166 source IDs; 153 pending /0 bounded /0 partial /13 metadata.

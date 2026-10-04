@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Round 101 — aura header ordering and talent-helper delegation
+
+Commits `a9f6b0a26` and `d62a972eb`; [contract and acceptance](../../specs/secure-aura-header-helper-delegation.md). All four prose rows (03-25-112, 03-31-151, 03-25-120, 03-31-177) are **partial**: aura ordering is proven through the real cached header code, but retail does not load that file; the helper commands run the real cached callbacks without taint, but the delayed loadout commit is unmodeled. Behavior change: `C_ClassTalents.SwitchTo*` no longer mutates state when no helper callbacks are registered. Cast completion now lives in one module shared by GUI and headless ticking. **133 capabilities/362 IDs; 24 pending /270 bounded /33 partial /35 metadata**; audit **IN PROGRESS**.
+
 ### Round 100 — review follow-ups
 
 Commits `942833a04` and `8828f7394`, integrated and proven in a worktree (RED 0/10 on the new behavior, GREEN 347 selected tests there, 140/140 on master, startup `[]`), reviewed and accepted with qualifications ([report](../../../data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md)). `GetRaidRosterInfo` names follow the shared identity predicate; model `SetUnit` is now tested on real PlayerModel-family frames, so exact534 becomes bounded; `SecureCmdOptionParse` returns the selected unit and the unchanged cached `/tm` handler honors it; viewed outfit is host state with a real `ChangeViewedOutfit`. Other rows keep their status with updated notes. Four tests that fail on master were shown, by building the session-start commit, to have failed before this session ([report](../../../data/patch-api/evidence/12.0.5-session-2026-10-03/baseline-failures.md)). **131 capabilities/362 IDs; 28 pending /270 bounded /29 partial /35 metadata**; audit **IN PROGRESS**.
