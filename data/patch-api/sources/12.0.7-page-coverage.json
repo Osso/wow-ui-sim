@@ -291,7 +291,7 @@
         "DurationTextBinding script object",
         "DurationObject rows touched by the binding"
       ],
-      "scope": "Existing provider with host binding state and authenticated inputs. Both round 8 review defects fixed in round 9 (c1ded7c63: values computed in Rust from timing state, not replaceable Lua methods; cbe938d38: SetFontString requires a genuine FontString handle), confirmed on master, not yet re-reviewed. Defaults and zero-span HasExpired=true are simulator inferences. Shared by older profiles, unexecuted.",
+      "scope": "Existing provider with host binding state and authenticated inputs. Both round 8 review defects fixed in round 9 (c1ded7c63: values computed in Rust from timing state, not replaceable Lua methods; cbe938d38: SetFontString requires a genuine FontString handle), confirmed on master, not yet re-reviewed. Defaults and zero-span HasExpired=true are simulator inferences. Shared by older profiles, unexecuted. Re-review: both regressions closed; duration and clock objects remain Lua table proxies whose timing slots are replaceable, so no whole-capability claim of host-owned unreplaceable state. Broad prose row stays partial.",
       "spec": "docs/specs/duration-text-binding-12-0-7-audit.md",
       "tests": [
         "tests/patch_12_0_7_duration_text_binding.rs",
@@ -299,7 +299,7 @@
       ],
       "implementation": "six commits ending 'Record bounded Retail duration binding proof and exclusions'",
       "compiled_revision": "2136907ab",
-      "proof": "main-confirmed GREEN incl. round 9 regression tests; round 8 review REJECT for bounded; fixes not independently re-reviewed; partial",
+      "proof": "main-confirmed GREEN; independent source-read re-review ACCEPT WITH QUALIFICATIONS (p1207-r9-r10-review.md); bounded per-row narrow scopes",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-9-10-master-green.log.txt"
     },
     {
@@ -314,7 +314,7 @@
       ],
       "implementation": "three commits ending 4d6cc1476 (worktree SHAs)",
       "compiled_revision": "2136907ab",
-      "proof": "integrator RED 6 fail then GREEN; main-confirmed GREEN; no independent review; partial",
+      "proof": "main-confirmed GREEN; independent source-read re-review ACCEPT WITH QUALIFICATIONS (p1207-r9-r10-review.md); bounded per-row narrow scopes",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-9-10-master-green.log.txt"
     }
   ],
@@ -510,8 +510,8 @@
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Factory creates independent handles and nil duration/font configuration; retains sole provider and resource identity. Unproved: Undocumented constructor extensions, exact historical defaults/native identity."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: No-argument creation returns distinct userdata with independent configuration; not constructor-extension/default-native parity."
     },
     {
       "source_id": "global api-C_DurationUtil-CreateManualClock-032",
@@ -932,8 +932,8 @@
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Inherited zero-span true; before/end-time observations on live manual clock; single return; untainted wrapped modifier/extras; tainted rejection precedes receiver validation. Unproved: Native zero-span semantics, exact coercions/errors, exhaustive secret timing/clock combinations."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: Live before/end-time and inherited zero-span=true; one bool; modifier/extras authentication. C:318\u2013379; T:337\u2013364. Not exhaustive timing-secret/receiver cases."
     },
     {
       "source_id": "scriptobjects-DurationObject-HasStarted-090",
@@ -964,144 +964,144 @@
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Unconfigured false; configured zero text true; duration plus formatter eligibility; eligibility used by real live formatting. Unproved: Native eligibility/default/expired-text precedence and all configuration combinations."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: Unconfigured false, configured zero/active/expired eligibility; ignores replaced duration methods. B:156\u2013172; T:27\u201348,80\u2013104,110\u2013140. Not arbitrary raw-state or formatter protocol identity."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-CanUpdateFontString-094",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: False without configured FontString; configured eligible bindings update concrete text; formatting eligibility included. Unproved: Native handle validation and all incomplete/forbidden combinations."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: False without label; eligible real label can receive changing text. B:174\u2013175; T:27\u201348,80\u2013104,179\u2013209. Not all forbidden states."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-Disable-095",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Disable returns no values; host enabled=false; engine ticks stop changing concrete FontString text. Unproved: Native scheduling/GC/error routing and other profiles."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: No result; host enabled=false; ticks preserve label despite clock advances."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-Enable-096",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Enable returns no values; host enabled=true; next eligible engine tick resumes text updates. Unproved: Native invalidation timing/GC/error routing and other profiles."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: No result; host enabled=true; eligible tick resumes concrete updates. B:178; T:45\u201348,143\u2013165. First-update cadence is inferred."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetDuration-097",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Single nil default; duration reference identity survives Copy/Assign/GC and environment isolation; live duration changes affect output. Unproved: Native handle identity/custom fields/secret-reference provenance policies."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: One nil/reference result; public-set duration identity retained through Copy/Assign. B:180; T:27\u201376; retained GC case `tests/duration_text_binding_copy.rs:161\u2013203`. No universal identity guarantee over field/constructor bypasses."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetExpiredText-098",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Single nil default; plain and wrapped text readback; Copy/Assign/reset and per-environment independence. Unproved: Native defaults, coercions and exact secret getter tagging."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: One nil/string/wrapped string readback; configured state copied/reset independently. B:181; T:51\u201377,249\u2013288. Secret-native provenance excluded."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetFontString-099",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Single nil default; configured FontString identity preserved through Copy/Assign/resource collection. Unproved: Native handle identity/forbidden-frame combinations."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: One nil/real FontString reference; setter failure leaves old reference unchanged. B:182; T:51\u201377,179\u2013209. Field/constructor/Assign bypasses excluded."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetFormattedText-100",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Single concrete remaining text from host clock/rate and host modifier; zero/expired selection; rewind/reconfiguration; VM-secret formatting and wrapped SetText handoff; errors propagate without fallback. Unproved: Native strings/rounding/precedence, B31 component/color semantics, method-override dispatch and exhaustive secret combinations."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: RealTime 6s/BaseTime 12s, rewind/expiration/zero, method-override isolation; configured formatter errors propagate; selected secret handoff. B:183\u2013204; T:80\u2013140,217\u2013245,292\u2013328. NOT immutable timing/protocol-clock authority or exact NumericFormatter identity/native formatting."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetTimeModifier-101",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Single RealTime default; authenticated BaseTime setting read live by Rust sampling; copied/assigned scalars independent. Unproved: Exact native default/coercion and profiles outside default Retail."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: One host scalar; 0/1 readback, independent copies and live rate-scaled output."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetUpdateInterval-102",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Single interval=1 default; finite interval roundtrip/Copy/Assign/isolation and cadence changes reflected in engine updates. Unproved: Native defaults/ranges/precision and exhaustive scheduling."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: One host scalar; roundtrip/isolation and concrete cadence, including zero."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetZeroDurationText-103",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Single nil default; concrete plain zero text and opaque wrapped zero text; resets clear configuration. Unproved: Exact native defaults and secret getter/zero-text selection parity."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: One nil/plain/wrapped value; configured zero formatting and reset. B:223; T:27\u201377,291\u2013334. Native zero/default secrecy excluded."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-IsEnabled-104",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Single true default; host-state Disable/Enable/SetEnabled transitions; copied bindings independent. Unproved: Native lifecycle/scheduling and other profiles."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: One boolean; actual Disable/Enable/SetEnabled and independent host state."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetDuration-105",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Actual duration identity accepted; wrapped reference authenticated; missing/nil/table/numeric pseudo-duration rejected atomically; tainted wrapped args/extras rejected before validation. Unproved: Native exact proxy identity/coercions/errors and constructor input compatibility."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: Genuine duration accepted, wrapped reference authenticated, invalid inputs atomic, tainted args/extras denied first. B:231\u2013233,286\u2013309; S:110\u2013112; T:213\u2013288. Exact unforgeable duration taxonomy not claimed."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetExpiredText-106",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: String/nil and secure wrapped text accepted; wrapped string stays opaque; invalid numeric input atomic; tainted args/extras rejected first. Unproved: Native coercions/error text/secret-output provenance parity."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: String/nil and secure wrapped text; zero returns; invalid input atomic, tainted denial first."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetFontString-107",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Actual FontString and secure wrapped reference accepted; missing/nil/table rejected atomically; tainted args/extras rejected first. Unproved: Unforgeable native handle identity/forbidden-object validation; protocol test is not full native type proof."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: Native FontString identity after all-input authentication, spoof/wrong-widget rejection without storage, concrete label update."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetTimeModifier-108",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: RealTime/BaseTime secure wrapped/plain values accepted; 1.5/table/nil rejected atomically; extras authenticated first; Rust live state changes concrete rate-scaled output. Unproved: Native coercion/range/error policies and profiles outside default Retail."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: Authenticated 0/1, no results, atomic invalid/nil/table/1.5 rejection, output changes."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetUpdateInterval-109",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Finite nonnegative host interval; secure wrapped/plain accepted; negative/nonfinite/string/table/nil rejected atomically; tainted args/extras rejected first; zero cadence updates every tick. Unproved: Native range/default/precision and exhaustive scheduler-error policy."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: Authenticated finite nonnegative values; atomic rejection; concrete zero/per-interval cadence. B:258,286\u2013301; S:58\u201398; T:143\u2013176,213\u2013288. Native range/coercion unproved."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetZeroDurationText-110",
       "capabilities": [
         "duration-text-binding-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: String/nil and secure wrapped text accepted; wrapped nil normalizes to nil; false rejected atomically; tainted args/extras rejected first; zero text remains opaque to addon. Unproved: Native coercions/error text/defaults/secret-output parity."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: Authenticated string/nil/wrapped text and wrapped-nil normalization, atomic false rejection, opaque selected zero text."
     },
     {
       "source_id": "scriptobjects-DurationTextFormattingOptions-GetAddRemainingText-111",
@@ -1272,8 +1272,8 @@
       "capabilities": [
         "model-unit-guid-12-0-7"
       ],
-      "status": "partial-development-green",
-      "note": "Non-rendering GUID getter over model unit state, tests pass on master; GUID policy inferred and not independently reviewed."
+      "status": "bounded-coverage",
+      "note": "Bounded scope: default-Retail non-rendering getter; rejects secret receiver and extras, reads live Rust model unit state, one public string. GUID empty default and NotAllowed inputs are inferences."
     },
     {
       "source_id": "widgets-ScrollFrame-GetHorizontalScroll-138",

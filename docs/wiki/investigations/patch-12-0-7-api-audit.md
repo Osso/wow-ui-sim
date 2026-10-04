@@ -24,6 +24,13 @@ Patch 12.0.7 API work in wow-ui-sim separates safe additive compatibility bridge
 
 
 
+
+## Re-review promotes 21 rows — 2026-10-04
+
+**37 pending / 67 bounded / 49 partial / 13 metadata** of 166 IDs.
+
+[Re-review](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r9-r10-review.md) of the round 9 fixes and row 137: ACCEPT WITH QUALIFICATIONS. Both round 8 regressions are closed. Twenty `DurationTextBinding` rows and `GetModelUnitGUID` are bounded, each for the narrow scope in its ledger note; the broad script-object prose row stays partial. Qualification: duration and clock objects are still Lua table proxies with replaceable timing slots, so no claim that all duration state is host-owned. No tests were rerun for this step; the proof is the rounds 9–10 master run above.
+
 ## Rounds 9–10 accounted; 12.0.7 first pass complete — 2026-10-04
 
 Nineteen capabilities; **37 pending / 46 bounded / 70 partial / 13 metadata** of 166 IDs. Every pending row carries a reason in the [ledger](../../../data/patch-api/sources/12.0.7-page-coverage.json).
