@@ -8,6 +8,7 @@ Four prose rows partial under two capabilities. [Audit follow-up](investigations
 
 ## [2026-10-03] evidence | 12.0.7 page audit started
 
+- [Patch 12.1.0 page audit](investigations/patch-12-1-0-page-audit.md) — row-by-row audit of the 12.1.0 API-changes page; 1,111 rows, source includes the wikitext inventories
 Exhaustive ledger for the retained 12.0.7 page excerpt seeded from the register plus 35 supplemental rows. [Audit page](investigations/patch-12-0-7-api-audit.md); 0 capabilities/166 source IDs; 153 pending /0 bounded /0 partial /13 metadata.
 
 ## [2026-10-03] evidence | Round 100 follow-ups accounted

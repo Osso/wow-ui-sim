@@ -1,4 +1,4 @@
-## [2026-10-04] docs | 12.0.7 dragonriding races getter
+## [2026-10-04] investigation | 12.1.0 page audit started, round 1 accounted
 
-`C_QuestHub.GetDragonridingRacesForAreaPOI` modeled with an inferred contract ([spec](../specs/quest-hub-dragonriding-races-12-0-7.md)), row partial. 166 IDs; 36 pending /67 bounded /50 partial /13 metadata.
+[Patch 12.1.0 page audit](investigations/patch-12-1-0-page-audit.md): 1,111 rows (333 extract + 778 wikitext inventory); 1,022 pending /24 bounded /1 partial /64 metadata.
 

@@ -20,7 +20,7 @@
       ],
       "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C01 \u2026'",
       "compiled_revision": "c2ef6b442",
-      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent source-read review ACCEPT WITH QUALIFICATIONS (p1210-r1-review.md)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
     },
     {
@@ -36,7 +36,7 @@
       ],
       "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C02 \u2026'",
       "compiled_revision": "c2ef6b442",
-      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent source-read review ACCEPT WITH QUALIFICATIONS (p1210-r1-review.md)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
     },
     {
@@ -52,7 +52,7 @@
       ],
       "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C03 \u2026'",
       "compiled_revision": "c2ef6b442",
-      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent source-read review ACCEPT WITH QUALIFICATIONS (p1210-r1-review.md)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
     },
     {
@@ -68,7 +68,7 @@
       ],
       "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C04 \u2026'",
       "compiled_revision": "c2ef6b442",
-      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent source-read review ACCEPT WITH QUALIFICATIONS (p1210-r1-review.md)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
     },
     {
@@ -86,7 +86,7 @@
       ],
       "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C05 \u2026'",
       "compiled_revision": "c2ef6b442",
-      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent source-read review ACCEPT WITH QUALIFICATIONS (p1210-r1-review.md)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
     },
     {
@@ -101,7 +101,7 @@
       ],
       "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C06 \u2026'",
       "compiled_revision": "c2ef6b442",
-      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent source-read review ACCEPT WITH QUALIFICATIONS (p1210-r1-review.md)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
     },
     {
@@ -116,7 +116,7 @@
       ],
       "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C07 \u2026'",
       "compiled_revision": "c2ef6b442",
-      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent source-read review ACCEPT WITH QUALIFICATIONS (p1210-r1-review.md)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
     },
     {
@@ -136,7 +136,7 @@
       ],
       "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C08 \u2026'",
       "compiled_revision": "c2ef6b442",
-      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent source-read review ACCEPT WITH QUALIFICATIONS (p1210-r1-review.md)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
     },
     {
@@ -153,7 +153,7 @@
       ],
       "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C09 \u2026'",
       "compiled_revision": "c2ef6b442",
-      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent source-read review ACCEPT WITH QUALIFICATIONS (p1210-r1-review.md)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
     },
     {
@@ -168,7 +168,7 @@
       ],
       "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C10 \u2026'",
       "compiled_revision": "c2ef6b442",
-      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent source-read review ACCEPT WITH QUALIFICATIONS (p1210-r1-review.md)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
     }
   ],
@@ -208,8 +208,8 @@
       "capabilities": [
         "patch-12-1-0-aura-creation"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-undated-010",
@@ -222,16 +222,16 @@
       "capabilities": [
         "patch-12-1-0-framexml-migrations"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Real migrated loader/dialog and native mouse-offset forwarding; old helper absence. Unproved: Native scaling/offset naming parity. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Real migrated loader/dialog and native mouse-offset forwarding; old helper absence. Unproved: Native scaling/offset naming parity. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-undated-012",
       "capabilities": [
         "patch-12-1-0-framexml-migrations"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Real migrated loader/dialog and native mouse-offset forwarding; old helper absence. Unproved: Native scaling/offset naming parity. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Real migrated loader/dialog and native mouse-offset forwarding; old helper absence. Unproved: Native scaling/offset naming parity. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-undated-013",
@@ -352,8 +352,8 @@
       "capabilities": [
         "patch-12-1-0-aura-creation"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-06-18-039",
@@ -444,8 +444,8 @@
       "capabilities": [
         "patch-12-1-0-bootstrap"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Real phased LoD lifecycle, order, later full-load/idempotence and dependencies. Unproved: Disabled startup and complete vendor UIParent migration. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Real phased LoD lifecycle, order, later full-load/idempotence and dependencies. Unproved: Disabled startup and complete vendor UIParent migration. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-06-18-056",
@@ -459,23 +459,23 @@
         "patch-12-1-0-bootstrap"
       ],
       "status": "partial-development-green",
-      "note": "Proven: Real phased LoD lifecycle, order, later full-load/idempotence and dependencies. Unproved: Disabled startup and complete vendor UIParent migration. Integrator recommends partial-development-green; independent review pending."
+      "note": "Proven: Real phased LoD lifecycle, order, later full-load/idempotence and dependencies. Unproved: Disabled startup and complete vendor UIParent migration. Integrator recommends partial-development-green; reviewed: partial-development-green."
     },
     {
       "source_id": "prose-2026-06-18-058",
       "capabilities": [
         "patch-12-1-0-onupdate"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Numeric modes, default/rejection, visibility, one-shot/rearm and XML dispatch. Unproved: Known managed dirty-phase fixture fails mask18. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Numeric modes, default/rejection, visibility, one-shot/rearm and XML dispatch. Unproved: Known managed dirty-phase fixture fails mask18. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-06-18-059",
       "capabilities": [
         "patch-12-1-0-onupdate"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Numeric modes, default/rejection, visibility, one-shot/rearm and XML dispatch. Unproved: Known managed dirty-phase fixture fails mask18. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Numeric modes, default/rejection, visibility, one-shot/rearm and XML dispatch. Unproved: Known managed dirty-phase fixture fails mask18. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-06-18-060",
@@ -500,32 +500,32 @@
       "capabilities": [
         "patch-12-1-0-xml"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-06-18-065",
       "capabilities": [
         "patch-12-1-0-xml"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-06-18-066",
       "capabilities": [
         "patch-12-1-0-xml"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-06-18-067",
       "capabilities": [
         "patch-12-1-0-xml"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Reviewed: bounded for this scope."
     },
     {
       "source_id": "source-context-068",
@@ -604,8 +604,8 @@
       "capabilities": [
         "patch-12-1-0-events"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Generic aspect mutations reject; original listeners/callback delivery preserved. Unproved: Intrinsic AuraContainer lacks mask (0 observed). Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Generic aspect mutations reject; original listeners/callback delivery preserved. Unproved: Intrinsic AuraContainer lacks mask (0 observed). Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-06-23-084",
@@ -648,8 +648,8 @@
       "capabilities": [
         "patch-12-1-0-inheritance"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Implicit forbidden-aspect parent/anchor acquisition rejects without zero-baseline mutation. Unproved: All bits and preexisting nonempty anchor tuple preservation. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Implicit forbidden-aspect parent/anchor acquisition rejects without zero-baseline mutation. Unproved: All bits and preexisting nonempty anchor tuple preservation. Reviewed: bounded for this scope."
     },
     {
       "source_id": "source-context-093",
@@ -782,16 +782,16 @@
       "capabilities": [
         "patch-12-1-0-aura-groups"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-07-120",
       "capabilities": [
         "patch-12-1-0-aura-groups"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-07-121",
@@ -804,16 +804,16 @@
       "capabilities": [
         "patch-12-1-0-aura-groups"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-07-123",
       "capabilities": [
         "patch-12-1-0-aura-groups"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-07-124",
@@ -826,40 +826,40 @@
       "capabilities": [
         "patch-12-1-0-aura-groups"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-07-126",
       "capabilities": [
         "patch-12-1-0-aura-groups"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-07-127",
       "capabilities": [
         "patch-12-1-0-aura-group-options"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Actual icon position ordering normal/reverse, every frame callback taint, template size/alpha and base methods. Unproved: Arbitrary-field partition publication, other sorts/secret lifetime. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Actual icon position ordering normal/reverse, every frame callback taint, template size/alpha and base methods. Unproved: Arbitrary-field partition publication, other sorts/secret lifetime. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-07-128",
       "capabilities": [
         "patch-12-1-0-aura-group-options"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Actual icon position ordering normal/reverse, every frame callback taint, template size/alpha and base methods. Unproved: Arbitrary-field partition publication, other sorts/secret lifetime. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Actual icon position ordering normal/reverse, every frame callback taint, template size/alpha and base methods. Unproved: Arbitrary-field partition publication, other sorts/secret lifetime. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-07-129",
       "capabilities": [
         "patch-12-1-0-aura-group-options"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Actual icon position ordering normal/reverse, every frame callback taint, template size/alpha and base methods. Unproved: Arbitrary-field partition publication, other sorts/secret lifetime. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Actual icon position ordering normal/reverse, every frame callback taint, template size/alpha and base methods. Unproved: Arbitrary-field partition publication, other sorts/secret lifetime. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-07-130",
@@ -1130,8 +1130,8 @@
       "capabilities": [
         "patch-12-1-0-aura-sound-remove-proof"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Modern/legacy zero-result removal on real ID set and cached vendor forwarding. Unproved: Playback, acquisition and historical timing. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Modern/legacy zero-result removal on real ID set and cached vendor forwarding. Unproved: Playback, acquisition and historical timing. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-21-182",
@@ -1264,8 +1264,8 @@
       "capabilities": [
         "patch-12-1-0-aura-creation"
       ],
-      "status": "partial-development-green",
-      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Integrator recommends bounded-coverage; independent review pending."
+      "status": "bounded-coverage",
+      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Reviewed: bounded for this scope."
     },
     {
       "source_id": "prose-2026-07-23-208",
