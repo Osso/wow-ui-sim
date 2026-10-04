@@ -90,6 +90,8 @@ pub mod c_major_factions;
 pub mod c_map;
 pub mod c_map_exploration_info;
 pub mod c_merchant_frame;
+#[cfg(feature = "retail-12-0-7")]
+pub(crate) mod patch_12_0_7_inputs;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_mount_spell_lookup;
 #[cfg(feature = "retail-12-0-5")]

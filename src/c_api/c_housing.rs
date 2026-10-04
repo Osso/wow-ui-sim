@@ -10,6 +10,8 @@
 mod basic_mode;
 pub mod catalog;
 pub mod exterior;
+#[cfg(feature = "retail-12-0-7")]
+pub(crate) mod patch_12_0_7;
 
 use crate::c_api::helpers::ensure_namespace;
 #[cfg(feature = "retail-12-1-0")]
@@ -344,13 +346,19 @@ fn register_layout_methods(state: &mut LuaState, layout: NamespaceTable) -> LuaR
     )
 }
 
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(feature = "retail-12-0-7")]
+use patch_12_0_7::{
+    can_view_floor as can_set_viewed_floor, names as get_catalog_category_and_subcategory_names,
+    supports_door as room_connection_supports_door_type,
+};
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "retail-12-0-7")))]
 fn get_catalog_category_and_subcategory_names(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Nil);
     Ok(1)
 }
 
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(all(feature = "retail-12-1-0", not(feature = "retail-12-0-7")))]
 fn room_connection_supports_door_type(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(false));
     Ok(1)
@@ -641,7 +649,7 @@ fn get_spent_pet_placement_budget(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(all(feature = "retail-12-1-0", not(feature = "retail-12-0-7")))]
 fn can_set_viewed_floor(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(false));
     Ok(1)

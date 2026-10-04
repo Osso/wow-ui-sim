@@ -293,7 +293,11 @@ pub struct HousingState {
     pub spent_outdoor_placement_budget: Option<i32>,
     pub max_pet_placement_budget: Option<i32>,
     pub spent_pet_placement_budget: Option<i32>,
+    #[cfg(feature = "retail-12-0-7")]
+    pub room_connection_door_types: HashMap<(String, i32), std::collections::HashSet<i32>>,
     pub base_room_floors: HashMap<i32, i32>,
+    #[cfg(feature = "retail-12-0-7")]
+    pub viewed_floor_permissions: HashMap<i32, bool>,
     pub room_player_is_in: Option<i32>,
     pub selected_blueprint_floorplan: Option<i32>,
     pub current_level: i32,
