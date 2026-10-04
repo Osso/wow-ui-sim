@@ -70,6 +70,7 @@ fn enqueue(env: &WowLuaEnv, kind: HostChatKind, secret: bool) {
                     secret: false,
                 },
             ],
+            discord_info: Default::default(),
         });
 }
 
@@ -121,7 +122,7 @@ fn b39_all_nine_chat_rows_deliver_public_exact_payload_in_both_lockdown_states()
             enqueue(&env, kind, false);
             assert!(env.publish_next_host_chat().unwrap());
             env.exec(&format!(
-                "local e=B39Events[#B39Events]; assert(e.event=='{}'); assert(e.count==4); assert(e[1]=='Gold +17' and e[2]==17 and e[3]==true and e[4]==nil); for i=1,3 do assert(not issecretvalue(e[i])) end",
+                "local e=B39Events[#B39Events]; assert(e.event=='{}'); assert(e.count==18); assert(e[1]=='Gold +17' and e[2]==17 and e[3]==true and e[4]==nil); assert(e[17]==nil and e[18].userID==0); for i=1,3 do assert(not issecretvalue(e[i])) end",
                 kind.event_name(),
             )).unwrap();
         }
@@ -135,7 +136,7 @@ fn b39_lockdown_is_read_at_delivery_and_restricted_control_remains_secret() {
     enqueue(&env, HostChatKind::Say, false);
     env.state().borrow_mut().chat_messaging_lockdown = true;
     assert!(env.publish_next_host_chat().unwrap());
-    env.exec("local e=B39Events[1]; assert(e.count==4); assert(issecretvalue(e[1]) and issecretvalue(e[2])); assert(not issecretvalue(e[3])); assert(not issecretvalue(e[4]))").unwrap();
+    env.exec("local e=B39Events[1]; assert(e.count==18); assert(issecretvalue(e[1]) and issecretvalue(e[2])); assert(not issecretvalue(e[3])); assert(not issecretvalue(e[4]))").unwrap();
     env.state().borrow_mut().chat_messaging_lockdown = false;
     enqueue(&env, HostChatKind::Say, false);
     assert!(env.publish_next_host_chat().unwrap());
@@ -161,7 +162,7 @@ fn b39_independent_source_secret_survives_exemption_and_addon_taint() {
         r#"
         B39Tainted(function()
             local e = B39Events[1]
-            assert(e.count == 4 and issecretvalue(e[1]))
+            assert(e.count == 18 and issecretvalue(e[1]))
             assert(not pcall(secretunwrap, e[1]))
             assert(e[2] == 17 and not issecretvalue(e[2]))
         end)
