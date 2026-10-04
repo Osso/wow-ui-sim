@@ -1,0 +1,19 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 56.72s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+
+running 8 tests
+test patch_12_1_0_aura_creation::patch_12_1_0_aura_creation_in_combat_preserves_parent_and_frame_state ... ok
+test patch_12_1_0_aura_group_options::patch_12_1_0_aura_group_options_apply_additional_template_size_and_alpha ... ok
+test patch_12_1_0_aura_group_options::patch_12_1_0_aura_group_options_initialize_each_native_button_without_extra_templates ... ok
+test patch_12_1_0_aura_group_options::patch_12_1_0_aura_group_options_sort_direction_changes_actual_icon_positions ... ok
+test patch_12_1_0_aura_groups::patch_12_1_0_aura_groups_filter_limit_and_refresh_actual_frames ... ok
+test patch_12_1_0_framexml_migrations::patch_12_1_0_migrated_loader_handles_success_missing_and_disabled_addons ... ok
+test patch_12_1_0_framexml_migrations::patch_12_1_0_migrated_mouse_helper_queries_real_frame_with_offsets ... ok
+test patch_12_1_0_xml::patch_12_1_0_xml_preserves_private_identity_nested_mixins_and_addon_isolation ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 10461 filtered out; finished in 2.46s
+
+
+EXIT 0

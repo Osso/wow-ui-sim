@@ -5,7 +5,173 @@
   "source_sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
   "audit_status": "in-progress",
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
-  "capabilities": [],
+  "capabilities": [
+    {
+      "id": "patch-12-1-0-aura-creation",
+      "symbols": [
+        "prose-undated-009",
+        "prose-2026-06-18-037",
+        "prose-2026-07-23-207"
+      ],
+      "scope": "Batch C01 proof-only: existing 12.1.0 producers exercised through the public Lua API; see spec for proven and unproved scope.",
+      "spec": "docs/specs/patch-12-1-0-aura-creation.md",
+      "tests": [
+        "see spec"
+      ],
+      "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C01 \u2026'",
+      "compiled_revision": "c2ef6b442",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
+    },
+    {
+      "id": "patch-12-1-0-framexml-migrations",
+      "symbols": [
+        "prose-undated-011",
+        "prose-undated-012"
+      ],
+      "scope": "Batch C02 proof-only: existing 12.1.0 producers exercised through the public Lua API; see spec for proven and unproved scope.",
+      "spec": "docs/specs/patch-12-1-0-framexml-migrations.md",
+      "tests": [
+        "see spec"
+      ],
+      "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C02 \u2026'",
+      "compiled_revision": "c2ef6b442",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
+    },
+    {
+      "id": "patch-12-1-0-bootstrap",
+      "symbols": [
+        "prose-2026-06-18-055",
+        "prose-2026-06-18-057"
+      ],
+      "scope": "Batch C03 proof-only: existing 12.1.0 producers exercised through the public Lua API; see spec for proven and unproved scope.",
+      "spec": "docs/specs/patch-12-1-0-bootstrap.md",
+      "tests": [
+        "see spec"
+      ],
+      "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C03 \u2026'",
+      "compiled_revision": "c2ef6b442",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
+    },
+    {
+      "id": "patch-12-1-0-onupdate",
+      "symbols": [
+        "prose-2026-06-18-058",
+        "prose-2026-06-18-059"
+      ],
+      "scope": "Batch C04 proof-only: existing 12.1.0 producers exercised through the public Lua API; see spec for proven and unproved scope.",
+      "spec": "docs/specs/patch-12-1-0-onupdate.md",
+      "tests": [
+        "see spec"
+      ],
+      "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C04 \u2026'",
+      "compiled_revision": "c2ef6b442",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
+    },
+    {
+      "id": "patch-12-1-0-xml",
+      "symbols": [
+        "prose-2026-06-18-064",
+        "prose-2026-06-18-065",
+        "prose-2026-06-18-066",
+        "prose-2026-06-18-067"
+      ],
+      "scope": "Batch C05 proof-only: existing 12.1.0 producers exercised through the public Lua API; see spec for proven and unproved scope.",
+      "spec": "docs/specs/patch-12-1-0-xml.md",
+      "tests": [
+        "see spec"
+      ],
+      "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C05 \u2026'",
+      "compiled_revision": "c2ef6b442",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
+    },
+    {
+      "id": "patch-12-1-0-events",
+      "symbols": [
+        "prose-2026-06-23-083"
+      ],
+      "scope": "Batch C06 proof-only: existing 12.1.0 producers exercised through the public Lua API; see spec for proven and unproved scope.",
+      "spec": "docs/specs/patch-12-1-0-events.md",
+      "tests": [
+        "see spec"
+      ],
+      "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C06 \u2026'",
+      "compiled_revision": "c2ef6b442",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
+    },
+    {
+      "id": "patch-12-1-0-inheritance",
+      "symbols": [
+        "prose-2026-06-23-090"
+      ],
+      "scope": "Batch C07 proof-only: existing 12.1.0 producers exercised through the public Lua API; see spec for proven and unproved scope.",
+      "spec": "docs/specs/patch-12-1-0-inheritance.md",
+      "tests": [
+        "see spec"
+      ],
+      "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C07 \u2026'",
+      "compiled_revision": "c2ef6b442",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
+    },
+    {
+      "id": "patch-12-1-0-aura-groups",
+      "symbols": [
+        "prose-2026-07-07-119",
+        "prose-2026-07-07-120",
+        "prose-2026-07-07-122",
+        "prose-2026-07-07-123",
+        "prose-2026-07-07-125",
+        "prose-2026-07-07-126"
+      ],
+      "scope": "Batch C08 proof-only: existing 12.1.0 producers exercised through the public Lua API; see spec for proven and unproved scope.",
+      "spec": "docs/specs/patch-12-1-0-aura-groups.md",
+      "tests": [
+        "see spec"
+      ],
+      "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C08 \u2026'",
+      "compiled_revision": "c2ef6b442",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
+    },
+    {
+      "id": "patch-12-1-0-aura-group-options",
+      "symbols": [
+        "prose-2026-07-07-127",
+        "prose-2026-07-07-128",
+        "prose-2026-07-07-129"
+      ],
+      "scope": "Batch C09 proof-only: existing 12.1.0 producers exercised through the public Lua API; see spec for proven and unproved scope.",
+      "spec": "docs/specs/patch-12-1-0-aura-group-options.md",
+      "tests": [
+        "see spec"
+      ],
+      "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C09 \u2026'",
+      "compiled_revision": "c2ef6b442",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
+    },
+    {
+      "id": "patch-12-1-0-aura-sound-remove-proof",
+      "symbols": [
+        "prose-2026-07-21-181"
+      ],
+      "scope": "Batch C10 proof-only: existing 12.1.0 producers exercised through the public Lua API; see spec for proven and unproved scope.",
+      "spec": "docs/specs/patch-12-1-0-aura-sound-remove-proof.md",
+      "tests": [
+        "see spec"
+      ],
+      "implementation": "pre-existing producers; tests in commits 'Prove 12.1.0 C10 \u2026'",
+      "compiled_revision": "c2ef6b442",
+      "proof": "integrator GREEN (25 focused tests in worktree); main-confirmed 8 new tests GREEN, startup clean; independent review pending; partial",
+      "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r1-result.md"
+    }
+  ],
   "source_rows": [
     {
       "source_id": "source-context-002",
@@ -39,9 +205,11 @@
     },
     {
       "source_id": "prose-undated-009",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "AuraContainer/AuraButton type construction and template loading; this does not establish managed presentation or security."
+      "capabilities": [
+        "patch-12-1-0-aura-creation"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-undated-010",
@@ -51,15 +219,19 @@
     },
     {
       "source_id": "prose-undated-011",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "The migration is supplied by unmodified cached FrameXML; prove actual Retail helper behavior and ordinary/global lookup, not the stale PTR inventory alone."
+      "capabilities": [
+        "patch-12-1-0-framexml-migrations"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Real migrated loader/dialog and native mouse-offset forwarding; old helper absence. Unproved: Native scaling/offset naming parity. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-undated-012",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "The migration is supplied by unmodified cached FrameXML; prove actual Retail helper behavior and ordinary/global lookup, not the stale PTR inventory alone."
+      "capabilities": [
+        "patch-12-1-0-framexml-migrations"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Real migrated loader/dialog and native mouse-offset forwarding; old helper absence. Unproved: Native scaling/offset naming parity. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-undated-013",
@@ -177,9 +349,11 @@
     },
     {
       "source_id": "prose-2026-06-18-037",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "AuraContainer/AuraButton type construction and template loading; this does not establish managed presentation or security."
+      "capabilities": [
+        "patch-12-1-0-aura-creation"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-06-18-039",
@@ -267,33 +441,41 @@
     },
     {
       "source_id": "prose-2026-06-18-055",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "TOC Bootstrap annotations and bootstrap-only LoD startup scheduling are implemented. Prove enabled/disabled addons, dependency ordering, one-time phase execution and subsequent full load under default Retail."
+      "capabilities": [
+        "patch-12-1-0-bootstrap"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Real phased LoD lifecycle, order, later full-load/idempotence and dependencies. Unproved: Disabled startup and complete vendor UIParent migration. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-06-18-056",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "TOC Bootstrap annotations and bootstrap-only LoD startup scheduling are implemented. Prove enabled/disabled addons, dependency ordering, one-time phase execution and subsequent full load under default Retail."
+      "note": "No credit. No executed disabled-startup proof Unproved: Disabled startup and complete vendor UIParent migration (audit-pending)"
     },
     {
       "source_id": "prose-2026-06-18-057",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "TOC Bootstrap annotations and bootstrap-only LoD startup scheduling are implemented. Prove enabled/disabled addons, dependency ordering, one-time phase execution and subsequent full load under default Retail."
+      "capabilities": [
+        "patch-12-1-0-bootstrap"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Real phased LoD lifecycle, order, later full-load/idempotence and dependencies. Unproved: Disabled startup and complete vendor UIParent migration. Integrator recommends partial-development-green; independent review pending."
     },
     {
       "source_id": "prose-2026-06-18-058",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Numeric OnUpdateMode state and dispatch modes are implemented, including hidden RunAlways and one-shot reset/rearm. Existing actual managed-aura dirty-phase test is meaningful but unexecuted in this audit."
+      "capabilities": [
+        "patch-12-1-0-onupdate"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Numeric modes, default/rejection, visibility, one-shot/rearm and XML dispatch. Unproved: Known managed dirty-phase fixture fails mask18. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-06-18-059",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Numeric OnUpdateMode state and dispatch modes are implemented, including hidden RunAlways and one-shot reset/rearm. Existing actual managed-aura dirty-phase test is meaningful but unexecuted in this audit."
+      "capabilities": [
+        "patch-12-1-0-onupdate"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Numeric modes, default/rejection, visibility, one-shot/rearm and XML dispatch. Unproved: Known managed dirty-phase fixture fails mask18. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-06-18-060",
@@ -315,27 +497,35 @@
     },
     {
       "source_id": "prose-2026-06-18-064",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "XML local KeyValues, Mixins blocks and qualified mixin lookup have loader producers; prove per-addon local table identity, nested lookup, precedence and no cross-addon leakage."
+      "capabilities": [
+        "patch-12-1-0-xml"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-06-18-065",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "XML local KeyValues, Mixins blocks and qualified mixin lookup have loader producers; prove per-addon local table identity, nested lookup, precedence and no cross-addon leakage."
+      "capabilities": [
+        "patch-12-1-0-xml"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-06-18-066",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "XML local KeyValues, Mixins blocks and qualified mixin lookup have loader producers; prove per-addon local table identity, nested lookup, precedence and no cross-addon leakage."
+      "capabilities": [
+        "patch-12-1-0-xml"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-06-18-067",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "XML local KeyValues, Mixins blocks and qualified mixin lookup have loader producers; prove per-addon local table identity, nested lookup, precedence and no cross-addon leakage."
+      "capabilities": [
+        "patch-12-1-0-xml"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Local table identity/live updates, block/global nested mixins, precedence and cross-addon isolation. Unproved: Exhaustive invalid-path/security combinations. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "source-context-068",
@@ -411,9 +601,11 @@
     },
     {
       "source_id": "prose-2026-06-23-083",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "RegisterEvent/related mutation paths reject the EventRegistrations aspect and preserve existing listeners; needs default Retail acceptance proof."
+      "capabilities": [
+        "patch-12-1-0-events"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Generic aspect mutations reject; original listeners/callback delivery preserved. Unproved: Intrinsic AuraContainer lacks mask (0 observed). Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-06-23-084",
@@ -443,7 +635,7 @@
       "source_id": "prose-2026-06-23-088",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "RegisterEvent/related mutation paths reject the EventRegistrations aspect and preserve existing listeners; needs default Retail acceptance proof."
+      "note": "No credit. No intrinsic enforcement proof; actual mask0 finding Unproved: Intrinsic AuraContainer lacks mask (0 observed) (audit-pending; reclassify modelable)"
     },
     {
       "source_id": "prose-2026-06-23-089",
@@ -453,9 +645,11 @@
     },
     {
       "source_id": "prose-2026-06-23-090",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "SetParent/SetPoint must reject implicit acquisition of additional forbidden aspects before mutation; current shared native guard implements that boundary."
+      "capabilities": [
+        "patch-12-1-0-inheritance"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Implicit forbidden-aspect parent/anchor acquisition rejects without zero-baseline mutation. Unproved: All bits and preexisting nonempty anchor tuple preservation. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "source-context-093",
@@ -585,15 +779,19 @@
     },
     {
       "source_id": "prose-2026-07-07-119",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+      "capabilities": [
+        "patch-12-1-0-aura-groups"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-07-120",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+      "capabilities": [
+        "patch-12-1-0-aura-groups"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-07-121",
@@ -603,15 +801,19 @@
     },
     {
       "source_id": "prose-2026-07-07-122",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+      "capabilities": [
+        "patch-12-1-0-aura-groups"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-07-123",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+      "capabilities": [
+        "patch-12-1-0-aura-groups"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-07-124",
@@ -621,33 +823,43 @@
     },
     {
       "source_id": "prose-2026-07-07-125",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+      "capabilities": [
+        "patch-12-1-0-aura-groups"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-07-126",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+      "capabilities": [
+        "patch-12-1-0-aura-groups"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Native nonempty managed group filters, arbitrary keys, options/cap transitions and visible real frames. Unproved: Plain AuraContainer and combat-secret/removal-event lifecycle. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-07-127",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+      "capabilities": [
+        "patch-12-1-0-aura-group-options"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Actual icon position ordering normal/reverse, every frame callback taint, template size/alpha and base methods. Unproved: Arbitrary-field partition publication, other sorts/secret lifetime. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-07-128",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+      "capabilities": [
+        "patch-12-1-0-aura-group-options"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Actual icon position ordering normal/reverse, every frame callback taint, template size/alpha and base methods. Unproved: Arbitrary-field partition publication, other sorts/secret lifetime. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-07-129",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current CustomAuraContainer Lua stores/validates this group option and creates managed groups; existing provider tests are related but do not prove this exact addon-facing contract. Tests only: exercise the real template, its actual options and managed callbacks; no security or live-service credit."
+      "capabilities": [
+        "patch-12-1-0-aura-group-options"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Actual icon position ordering normal/reverse, every frame callback taint, template size/alpha and base methods. Unproved: Arbitrary-field partition publication, other sorts/secret lifetime. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-07-130",
@@ -915,9 +1127,11 @@
     },
     {
       "source_id": "prose-2026-07-21-181",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "RemoveAuraSound is already registered under retail-12-1-0 and delegates to the native registration removal model. Tests only for renamed publication, zero results, deletion/readback and legacy-wrapper forwarding; no actual playback or historical intermediate alias timing claim."
+      "capabilities": [
+        "patch-12-1-0-aura-sound-remove-proof"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Modern/legacy zero-result removal on real ID set and cached vendor forwarding. Unproved: Playback, acquisition and historical timing. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-21-182",
@@ -1047,9 +1261,11 @@
     },
     {
       "source_id": "prose-2026-07-23-207",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current Retail allows AuraContainer creation in combat. Existing type-construction path and tests are relevant; add an actual combat-state creation probe, without claiming historical PTR4 behavior."
+      "capabilities": [
+        "patch-12-1-0-aura-creation"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Integrator recommends bounded-coverage; independent review pending."
     },
     {
       "source_id": "prose-2026-07-23-208",
