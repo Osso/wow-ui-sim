@@ -228,6 +228,13 @@ fn parse_template_initializer(state: &LuaState, value: Val) -> LuaResult<Val> {
 }
 
 fn resolve_runtime_widget_type(frame_type: &str) -> LuaResult<WidgetType> {
+    // 12.1.0: addons can no longer create WorldFrame instances; the XML tag
+    // fallback to Frame must not leak into CreateFrame.
+    if frame_type.eq_ignore_ascii_case("WorldFrame") {
+        return Err(rilua::runtime_error(format!(
+            "unknown frame type '{frame_type}'"
+        )));
+    }
     let mapped_frame_type =
         crate::xml::widget_type_for_tag(frame_type).map(|(widget_type, _)| widget_type);
     let widget_type_name = mapped_frame_type.unwrap_or(frame_type);
