@@ -49,8 +49,8 @@ fn native_unit_event_dispatch_respects_unit_filter() {
         r#"
         local allEvents, playerEvents, targetEvents = {}, {}, {}
         local function record(events)
-            return function(_, event, unit, spellID)
-                events[#events + 1] = { event, unit, spellID }
+            return function(_, event, unit, castGUID, spellID, castBarID)
+                events[#events + 1] = { event, unit, spellID, castGUID, castBarID }
             end
         end
         local all = CreateFrame('Frame')
@@ -68,6 +68,8 @@ fn native_unit_event_dispatch_respects_unit_filter() {
         for _, events in ipairs({ allEvents, playerEvents }) do
             assert(events[1][1] == 'UNIT_SPELLCAST_START')
             assert(events[1][2] == 'player' and events[1][3] == 200749)
+            assert(events[1][4] == select(7, UnitCastingInfo('player')))
+            assert(events[1][5] == select(10, UnitCastingInfo('player')))
         end
     "#,
     )

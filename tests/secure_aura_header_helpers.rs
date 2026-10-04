@@ -209,3 +209,371 @@ fn cached_secure_aura_header_reorders_and_hides_stale_children() {
     assert_no_lua_errors(&env);
 }
 
+
+fn load_helper_ui() -> WowLuaEnv {
+    load_helper_ui_for_spec(3)
+}
+
+fn load_helper_ui_for_spec(spec_index: i32) -> WowLuaEnv {
+    let env = load_game_ui(false, spec_index);
+    let toc = retail_cache().join("Blizzard_PlayerSpells/Blizzard_PlayerSpells.toc");
+    load_addon(&env.loader_env(), &toc).expect("load real PlayerSpells UI");
+    env.fire_event_with_args("ADDON_LOADED", &[env.lua_string("Blizzard_PlayerSpells")])
+        .expect("initialize real talent saved-variable lifecycle");
+    env.exec(
+        r#"
+        assert(ClassTalentHelper and PlayerSpellsFrame)
+        assert(PlayerCastingBarFrame and OverlayPlayerCastingBarFrame)
+        function FrameFields(frame)
+            local environment = debug.getfenv(frame)
+            assert(environment and type(environment[1]) == 'table', 'real frame backing table')
+            return environment[1]
+        end
+        function AssertCleanField(frame, field)
+            local clean, owner = issecurevariable(FrameFields(frame), field)
+            assert(clean, field .. ' tainted by ' .. tostring(owner))
+        end
+        function RunAddonHelper(helper, argument)
+            local function addon()
+                assert(not issecure(), 'actual addon caller taint')
+                assert(debug.getstacktaint() == 'HeaderHelperAudit')
+                helper(argument)
+                assert(not issecure(), 'producer must not launder caller')
+                assert(debug.getstacktaint() == 'HeaderHelperAudit', 'caller owner restored')
+            end
+            debug.setobjecttaint(addon, 'HeaderHelperAudit')
+            assert(issecure(), 'secure outer context before addon')
+            addon()
+            assert(issecure(), 'secure outer context after addon')
+        end
+        -- Observe the real frame fields table, not an unconditional success on
+        -- an unsupported value. Prime a slot before testing a tainted overwrite.
+        local control = CreateFrame('Frame')
+        control.probe = false
+        local function dirtyControl() control.probe = true end
+        debug.setobjecttaint(dirtyControl, 'HeaderHelperAudit')
+        dirtyControl()
+        local clean, owner = issecurevariable(FrameFields(control), 'probe')
+        assert(not clean and owner == 'HeaderHelperAudit', 'field-taint negative control')
+        "#,
+    )
+    .expect("prepare real helper calls and frame-field taint observations");
+    env.state().borrow_mut().lua_errors.clear();
+    env
+}
+
+#[test]
+fn cached_class_talent_spec_helpers_keep_real_ui_and_castbar_fields_clean() {
+    for helper in [
+        "SwitchToSpecializationByIndex",
+        "SwitchToSpecializationByName",
+    ] {
+        let env = load_helper_ui();
+        env.exec(
+            r#"
+            PlayerSpellsFrame:SetTab(PlayerSpellsFrame.specTabID)
+            PlayerSpellsFrame:Show()
+            assert(PlayerSpellsFrame.SpecFrame:IsVisible())
+            assert(PlayerSpellsFrame.SpecFrame.isInitialized)
+            assert(not PlayerSpellsFrame.SpecFrame:IsActivateInProgress())
+            AssertCleanField(PlayerSpellsFrame.SpecFrame, 'activatedSpecIndex')
+            AssertCleanField(PlayerCastingBarFrame, 'showCastbar')
+            AssertCleanField(OverlayPlayerCastingBarFrame, 'overrideBarType')
+            "#,
+        )
+        .expect("initialize actual visible specialization UI");
+        let argument = if helper.ends_with("ByIndex") {
+            "2"
+        } else {
+            "'Protection'"
+        };
+        env.exec(&format!(
+            "RunAddonHelper(ClassTalentHelper.{helper}, {argument})"
+        ))
+        .expect("addon enters cached helper, real callback and real UI methods");
+        env.exec(
+            r#"
+            assert(PlayerSpellsFrame.SpecFrame.activatedSpecIndex == 2, 'real spec activation UI was driven')
+            assert(OverlayPlayerCastingBarFrame:GetParent() == PlayerSpellsFrame.SpecFrame.DisabledOverlay)
+            assert(OverlayPlayerCastingBarFrame.overrideBarType == CastingBarType.ApplyingTalents)
+            assert(PlayerCastingBarFrame.showCastbar == false, 'real player castbar was changed')
+            assert(OverlayPlayerCastingBarFrame.showCastbar == true)
+            AssertCleanField(PlayerSpellsFrame.SpecFrame, 'activatedSpecIndex')
+            AssertCleanField(PlayerCastingBarFrame, 'showCastbar')
+            AssertCleanField(OverlayPlayerCastingBarFrame, 'showCastbar')
+            AssertCleanField(OverlayPlayerCastingBarFrame, 'overrideBarType')
+            "#,
+        )
+        .expect("documented neutrality on fields actually mutated by vendor code");
+        assert_eq!(env.state().borrow().player.pending_spec_change, Some(2));
+        assert_eq!(
+            env.state()
+                .borrow()
+                .casting
+                .as_ref()
+                .expect("modeled spec cast")
+                .spell_id,
+            200749
+        );
+        complete_spec_cast(&env);
+        assert_eq!(env.state().borrow().player.active_spec_index, 2);
+        assert_eq!(env.state().borrow().talents.active_spec_id, 66);
+        env.exec(
+            "assert(UnitCastingInfo('player') == nil); \
+             AssertCleanField(PlayerSpellsFrame.SpecFrame, 'activatedSpecIndex'); \
+             AssertCleanField(PlayerCastingBarFrame, 'showCastbar'); \
+             AssertCleanField(OverlayPlayerCastingBarFrame, 'showCastbar')",
+        )
+        .expect("completed helper cast keeps real UI fields clean");
+        assert_no_lua_errors(&env);
+    }
+}
+
+#[test]
+fn cached_class_talent_loadout_helpers_keep_real_talent_fields_clean() {
+    for helper in ["SwitchToLoadoutByIndex", "SwitchToLoadoutByName"] {
+        let env = load_helper_ui();
+        let expected: f64 = env.eval(
+            r#"
+            PlayerSpellsFrame:SetTab(PlayerSpellsFrame.talentTabID)
+            PlayerSpellsFrame:Show()
+            local frame = PlayerSpellsFrame.TalentsFrame
+            assert(frame.variablesLoaded and frame.configIDs and #frame.configIDs >= 2)
+            assert(not frame:IsCommitInProgress() and not frame:IsSpecActivationInProgress())
+            TargetLoadoutID = frame.configIDs[2]
+            TargetLoadoutName = frame.configIDToName[TargetLoadoutID]
+            assert(TargetLoadoutName and #TargetLoadoutName > 0)
+            assert(C_ClassTalents.GetActiveConfigID() ~= TargetLoadoutID, 'nontrivial state transition')
+            -- Real vendor priming avoids giving first-write raw-set taint gaps
+            -- credit: the tested helper must overwrite an existing clean slot.
+            frame:LoadConfigInternal(C_ClassTalents.GetActiveConfigID(), true)
+            assert(frame.isConfigReadyToApply == false)
+            AssertCleanField(frame, 'isConfigReadyToApply')
+            return TargetLoadoutID
+            "#,
+        ).expect("initialize actual loadout UI and choose a different seeded loadout");
+        let argument = if helper.ends_with("ByIndex") {
+            "2"
+        } else {
+            "TargetLoadoutName"
+        };
+        env.exec(&format!(
+            "RunAddonHelper(ClassTalentHelper.{helper}, {argument})"
+        ))
+        .expect("addon enters cached helper and real loadout callback");
+        let actual: f64 = env
+            .eval("return C_ClassTalents.GetActiveConfigID()")
+            .expect("state-backed loadout ID");
+        assert_eq!(actual, expected);
+        env.exec(
+            r#"
+            assert(PlayerSpellsFrame.TalentsFrame.isConfigReadyToApply == true, 'real LoadConfigInternal wrote its Ready result')
+            AssertCleanField(PlayerSpellsFrame.TalentsFrame, 'isConfigReadyToApply')
+            AssertCleanField(PlayerSpellsFrame.TalentsFrame, 'stagedPurchaseNodesForNextCommit')
+            "#,
+        ).expect("loadout UI writes are untainted");
+        // LoadConfig currently reports Ready rather than LoadInProgress. No
+        // claim that this fixture exercises the loadout commit/castbar path.
+        assert_no_lua_errors(&env);
+    }
+}
+
+#[test]
+fn cached_helper_delegate_restores_caller_after_addon_callback_error() {
+    let env = load_helper_ui();
+    env.exec(
+        r#"
+        local function failingObserver()
+            assert(debug.getstacktaint() == 'UntrustedObserver', 'do not sanitize addon closures')
+            error('intentional observer failure')
+        end
+        debug.setobjecttaint(failingObserver, 'UntrustedObserver')
+        RegisterEventCallback('CLASS_TALENTS_SWITCH_TO_SPECIALIZATION_BY_INDEX', failingObserver)
+        local function addon()
+            assert(debug.getstacktaint() == 'HeaderHelperAudit')
+            local ok, message = pcall(ClassTalentHelper.SwitchToSpecializationByIndex, -1)
+            assert(not ok and tostring(message):find('intentional observer failure', 1, true))
+            assert(not issecure(), 'exception must not launder caller')
+            assert(debug.getstacktaint() == 'HeaderHelperAudit', 'restore owner after delegate exception')
+        end
+        debug.setobjecttaint(addon, 'HeaderHelperAudit')
+        assert(issecure())
+        addon()
+        assert(issecure(), 'outer context recovered after handled error')
+        "#,
+    )
+    .expect("real helper delegates, invalid vendor selection does not start a cast, addon observer stays tainted");
+    let state = env.state().borrow();
+    assert_eq!(state.player.active_spec_index, 3);
+    assert!(state.player.pending_spec_change.is_none());
+    assert!(state.casting.is_none());
+    drop(state);
+    assert_no_lua_errors(&env);
+}
+
+fn complete_spec_cast(env: &WowLuaEnv) {
+    let pending = env.state().borrow().player.pending_spec_change;
+    assert!(pending.is_some(), "helper initiated a specialization cast");
+    wow_ui_sim::lua_api::cast_completion::tick_casting(env);
+    assert_eq!(env.state().borrow().player.pending_spec_change, pending);
+    assert!(
+        env.state().borrow().casting.is_some(),
+        "no premature completion"
+    );
+    // Advance only the cast deadline. Do not assign the resulting spec/loadout,
+    // clear the cast, or synthesize completion notifications in the fixture.
+    env.state()
+        .borrow_mut()
+        .casting
+        .as_mut()
+        .expect("spec cast")
+        .end_time = 0.0;
+    wow_ui_sim::lua_api::cast_completion::tick_casting(env);
+    assert!(env.state().borrow().casting.is_none());
+    assert!(env.state().borrow().player.pending_spec_change.is_none());
+}
+
+fn listen_for_helper_lifecycle(env: &WowLuaEnv) {
+    env.exec(r#"
+        HelperLifecycleEvents = {}
+        local listener = CreateFrame('Frame')
+        for _, event in ipairs({'UNIT_SPELLCAST_START', 'UNIT_SPELLCAST_STOP',
+                               'UNIT_SPELLCAST_SUCCEEDED', 'PLAYER_SPECIALIZATION_CHANGED',
+                               'ACTIVE_COMBAT_CONFIG_CHANGED', 'ACTIVE_PLAYER_SPECIALIZATION_CHANGED'}) do
+            listener:RegisterEvent(event)
+        end
+        listener:SetScript('OnEvent', function(_, event, ...)
+            local row = {event = event, count = select('#', ...), spec = GetSpecialization(),
+                         config = C_ClassTalents.GetActiveConfigID(), ...}
+            table.insert(HelperLifecycleEvents, row)
+        end)
+    "#).expect("observe actual producer and completion notifications");
+}
+
+fn assert_spec_switch_completes(
+    env: &WowLuaEnv,
+    command: &str,
+    expected_index: i32,
+    expected_spec_id: u32,
+    expected_config: i32,
+) {
+    let previous_index = env.state().borrow().player.active_spec_index;
+    let previous_config = env.state().borrow().talents.active_config_id;
+    env.exec("PlayerSpellsFrame:SetTab(PlayerSpellsFrame.specTabID); PlayerSpellsFrame:Show(); HelperLifecycleEvents = {}")
+        .expect("initialize actual specialization contents");
+    env.exec(command)
+        .expect("call actual specialization helper");
+    assert_eq!(
+        env.state().borrow().player.active_spec_index,
+        previous_index
+    );
+    assert_eq!(
+        env.state().borrow().talents.active_config_id,
+        previous_config
+    );
+    assert_eq!(
+        env.state().borrow().player.pending_spec_change,
+        Some(expected_index)
+    );
+    complete_spec_cast(env);
+    env.exec(&format!(
+        r#"
+        local events = {{}}
+        for _, row in ipairs(HelperLifecycleEvents) do
+            if row.event ~= 'ACTIVE_COMBAT_CONFIG_CHANGED' then table.insert(events, row) end
+        end
+        assert(#events == 5, 'START, STOP, SUCCEEDED, and both specialization notifications')
+        assert(events[1].event == 'UNIT_SPELLCAST_START')
+        assert(events[2].event == 'UNIT_SPELLCAST_STOP')
+        assert(events[3].event == 'UNIT_SPELLCAST_SUCCEEDED')
+        assert(events[4].event == 'PLAYER_SPECIALIZATION_CHANGED' and events[4][1] == 'player')
+        for i = 1, 3 do
+            assert(events[i].spec == {previous_index} and events[i].config == {previous_config})
+            assert(events[i][1] == 'player' and events[i][3] == 200749)
+            assert(events[i][2] == events[1][2] and events[i][4] == events[1][4])
+        end
+        assert(events[4].spec == {expected_index} and events[4].config == {expected_config})
+        assert(events[5].event == 'ACTIVE_PLAYER_SPECIALIZATION_CHANGED' and events[5].count == 0)
+        assert(events[5].spec == {expected_index} and events[5].config == {expected_config})
+        assert(C_ClassTalents.GetLastSelectedSavedConfigID({expected_spec_id}) == {expected_config})
+        local heroes = C_ClassTalents.GetHeroTalentSpecsForClassSpec(1, {expected_spec_id})
+        assert(tContains(heroes, C_ClassTalents.GetActiveHeroTalentSpec()))
+        assert(UnitCastingInfo('player') == nil)
+    "#
+    ))
+    .expect("completed state and real event ordering retain old mapping guarantees");
+    let event_count: i32 = env
+        .eval("return #HelperLifecycleEvents")
+        .expect("event count");
+    wow_ui_sim::lua_api::cast_completion::tick_casting(env);
+    assert_eq!(
+        env.eval::<i32>("return #HelperLifecycleEvents").unwrap(),
+        event_count
+    );
+    assert_no_lua_errors(env);
+}
+
+// The existing hero_talents test delegates here for the retail epoch, so its
+// seeded mapping contract is still asserted through the actual completion path.
+#[cfg(feature = "gui")]
+pub(crate) fn assert_seeded_helper_switch_lifecycle() {
+    let env = load_helper_ui_for_spec(2);
+    listen_for_helper_lifecycle(&env);
+    env.exec(
+        r#"
+        PlayerSpellsFrame:SetTab(PlayerSpellsFrame.talentTabID)
+        PlayerSpellsFrame:Show()
+        local configs = C_ClassTalents.GetConfigIDsBySpecID(66)
+        assert(#configs == 2 and C_ClassTalents.GetActiveConfigID() == configs[1])
+        RunAddonHelper(ClassTalentHelper.SwitchToLoadoutByName, 'Protection Mythic+')
+        assert(C_ClassTalents.GetActiveConfigID() == configs[2] and configs[2] == 202)
+        assert(C_ClassTalents.GetLastSelectedSavedConfigID(66) == 202)
+        assert(C_Traits.GetConfigInfo(202).name == 'Protection Mythic+')
+        local changed = HelperLifecycleEvents[#HelperLifecycleEvents]
+        assert(changed.event == 'ACTIVE_COMBAT_CONFIG_CHANGED' and changed[1] == 202)
+    "#,
+    )
+    .expect("real loadout callback reaches existing instant completion provider");
+    assert_spec_switch_completes(
+        &env,
+        "RunAddonHelper(ClassTalentHelper.SwitchToSpecializationByName, 'Holy')",
+        1,
+        65,
+        101,
+    );
+    env.exec(
+        r#"
+        PlayerSpellsFrame:SetTab(PlayerSpellsFrame.talentTabID)
+        PlayerSpellsFrame:Show()
+        local configs = C_ClassTalents.GetConfigIDsBySpecID(65)
+        assert(#configs == 2 and configs[2] == 102)
+        RunAddonHelper(ClassTalentHelper.SwitchToLoadoutByIndex, 2)
+        assert(C_ClassTalents.GetActiveConfigID() == 102)
+        assert(C_ClassTalents.GetLastSelectedSavedConfigID(65) == 102)
+        assert(C_Traits.GetConfigInfo(102).name == 'Holy Raid')
+        local changed = HelperLifecycleEvents[#HelperLifecycleEvents]
+        assert(changed.event == 'ACTIVE_COMBAT_CONFIG_CHANGED' and changed[1] == 102)
+    "#,
+    )
+    .expect("index helper retains current specialization loadout ordering");
+    assert_spec_switch_completes(
+        &env,
+        "RunAddonHelper(ClassTalentHelper.SwitchToSpecializationByIndex, 3)",
+        3,
+        70,
+        301,
+    );
+}
+
+#[test]
+fn cached_helper_completion_updates_talent_state_before_specialization_notification() {
+    let env = load_helper_ui();
+    listen_for_helper_lifecycle(&env);
+    assert_spec_switch_completes(
+        &env,
+        "RunAddonHelper(ClassTalentHelper.SwitchToSpecializationByName, 'Holy')",
+        1,
+        65,
+        101,
+    );
+}

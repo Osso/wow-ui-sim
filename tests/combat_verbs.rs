@@ -232,16 +232,18 @@ fn spell_stop_casting_clears_active_cast_and_reports_result() {
 #[test]
 fn successive_casts_advance_cast_id() {
     let env = env();
+    // Retail's cast GUID moved numeric identity to the castBarID slot.
+    let identity_slot = if cfg!(feature = "retail-12-1-0") { 10 } else { 7 };
     let (id1, id2): (f64, f64) = env
-        .eval(
+        .eval(&format!(
             r#"
             CastSpellByID(1)
-            local _, _, _, _, _, _, castId1 = UnitCastingInfo("player")
+            local castId1 = select({identity_slot}, UnitCastingInfo("player"))
             CastSpellByID(2)
-            local _, _, _, _, _, _, castId2 = UnitCastingInfo("player")
+            local castId2 = select({identity_slot}, UnitCastingInfo("player"))
             return castId1, castId2
             "#,
-        )
+        ))
         .unwrap();
     assert!(id2 > id1, "cast id must advance between casts");
 }

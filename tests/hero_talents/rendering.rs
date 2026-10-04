@@ -1,12 +1,11 @@
-use super::env_with_full_ui;
+use super::env_with_protection_ui;
 
 #[test]
 fn test_class_talent_edges_render_below_visible_talent_buttons() {
-    let env = env_with_full_ui();
+    let env = env_with_protection_ui();
     let result: String = env
         .eval(
             r#"
-            C_ClassTalents.SwitchToSpecializationByName("Protection")
             local ok = C_Traits.SetSelection(1, 99838, 123361) -- Lightsmith
             assert(ok, "expected deterministic hero subtree selection")
             assert(C_ClassTalents.GetActiveHeroTalentSpec() == 49, "expected active subtree 49")
@@ -152,11 +151,10 @@ fn test_class_talent_edges_render_below_visible_talent_buttons() {
 
 #[test]
 fn test_button_frame_level_change_relevels_connected_edges_on_update() {
-    let env = env_with_full_ui();
+    let env = env_with_protection_ui();
     let result: String = env
         .eval(
             r#"
-            C_ClassTalents.SwitchToSpecializationByName("Protection")
             local ok = C_Traits.SetSelection(1, 99838, 123361) -- Lightsmith
             assert(ok, "expected deterministic hero subtree selection")
             PlayerSpellsUtil.OpenToClassTalentsTab()
@@ -230,11 +228,10 @@ fn test_hero_spec_content_spec_image_anchors_to_spec_name() {
     // Before fix (commit 1cae5342), xml_layer_batch collected all textures first
     // then appended fontstrings, so SpecImage's SetPoint ran before SpecName FontString
     // existed, causing parent["SpecName"] to be nil and anchoring to the parent frame.
-    let env = env_with_full_ui();
+    let env = env_with_protection_ui();
     let result: String = env
         .eval(
             r#"
-            C_ClassTalents.SwitchToSpecializationByName("Protection")
             PlayerSpellsUtil.OpenToClassTalentsTab()
 
             local talentFrame = PlayerSpellsFrame and PlayerSpellsFrame.TalentsFrame

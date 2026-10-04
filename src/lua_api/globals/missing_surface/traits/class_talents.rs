@@ -7,6 +7,7 @@ fn config_ids_for_spec_id(spec_id: u32) -> Vec<i32> {
         .collect()
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn current_config_ids(state: &LuaState) -> Vec<i32> {
     current_spec_id(state)
         .map(config_ids_for_spec_id)
@@ -103,6 +104,15 @@ fn register_c_class_talents_query_fns(
     Ok(())
 }
 
+#[cfg(feature = "retail-12-0-5")]
+fn register_c_class_talents_action_fns(
+    state: &mut LuaState,
+    table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    crate::c_api::class_talent_commands::register(state, table_ref)
+}
+
+#[cfg(not(feature = "retail-12-0-5"))]
 fn register_c_class_talents_action_fns(
     state: &mut LuaState,
     table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
@@ -233,6 +243,7 @@ fn c_class_talents_update_last_selected_saved_config_id(state: &mut LuaState) ->
     Ok(0)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn c_class_talents_switch_to_loadout_by_name(state: &mut LuaState) -> LuaResult<u32> {
     let name = String::from_stack(state, 1)?;
     let config_id = current_config_ids(state)
@@ -251,6 +262,7 @@ fn c_class_talents_switch_to_loadout_by_name(state: &mut LuaState) -> LuaResult<
     Ok(0)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn c_class_talents_switch_to_loadout_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let index = i32::from_stack(state, 1)?.max(1) as usize - 1;
     let configs = current_config_ids(state);
@@ -264,6 +276,7 @@ fn c_class_talents_switch_to_loadout_by_index(state: &mut LuaState) -> LuaResult
     Ok(0)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn c_class_talents_switch_to_specialization_by_name(state: &mut LuaState) -> LuaResult<u32> {
     let spec_name = String::from_stack(state, 1)?;
     let class_id = borrow_state(state)?.player.class_index as u32;
@@ -279,6 +292,7 @@ fn c_class_talents_switch_to_specialization_by_name(state: &mut LuaState) -> Lua
     Ok(0)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 fn c_class_talents_switch_to_specialization_by_index(state: &mut LuaState) -> LuaResult<u32> {
     let spec_index = i32::from_stack(state, 1)?.max(1) as usize - 1;
     let class_id = borrow_state(state)?.player.class_index as u32;

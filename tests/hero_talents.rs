@@ -16,7 +16,21 @@ fn env() -> WowLuaEnv {
 }
 
 fn env_with_full_ui() -> WowLuaEnv {
+    load_full_ui(env())
+}
+
+fn env_with_protection_ui() -> WowLuaEnv {
     let env = env();
+    {
+        let mut state = env.state().borrow_mut();
+        state.player.class_index = 2;
+        state.player.active_spec_index = 2;
+        state.talents.switch_to_spec(66);
+    }
+    load_full_ui(env)
+}
+
+fn load_full_ui(env: WowLuaEnv) -> WowLuaEnv {
     env.set_screen_size(1024.0, 768.0);
 
     let ui = default_blizzard_ui_addons_path().expect("Blizzard UI cache should be synced");
@@ -190,6 +204,13 @@ fn test_set_atlas_numeric_element_id() {
     );
 }
 
+#[cfg(feature = "retail-12-0-5")]
+#[test]
+fn test_class_talents_switch_methods_update_seeded_spec_and_loadout_state() {
+    crate::secure_aura_header_helpers::assert_seeded_helper_switch_lifecycle();
+}
+
+#[cfg(not(feature = "retail-12-0-5"))]
 #[test]
 fn test_class_talents_switch_methods_update_seeded_spec_and_loadout_state() {
     let env = env();
@@ -390,11 +411,10 @@ fn test_active_hero_subtree_exposes_multiple_visible_nodes_and_edges() {
 
 #[test]
 fn test_non_selectable_hero_nodes_do_not_show_selectable_glow() {
-    let env = env_with_full_ui();
+    let env = env_with_protection_ui();
     let result: String = env
         .eval(
             r#"
-            C_ClassTalents.SwitchToSpecializationByName("Protection")
             local ok = C_Traits.SetSelection(1, 99838, 123361) -- Lightsmith
             assert(ok, "expected deterministic hero subtree selection")
             assert(C_ClassTalents.GetActiveHeroTalentSpec() == 49, "expected active subtree 49")

@@ -3,6 +3,7 @@
 mod addon_scan;
 pub mod animation;
 mod builtin_frames;
+pub mod cast_completion;
 #[cfg(feature = "retail-12-0-5")]
 mod cast_success;
 #[cfg(feature = "player-cast-durations")]

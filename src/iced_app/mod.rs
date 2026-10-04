@@ -23,8 +23,6 @@ mod benchmark;
 #[cfg(feature = "gui")]
 mod button_vis;
 #[cfg(feature = "gui")]
-mod casting;
-#[cfg(feature = "gui")]
 mod click_probe;
 #[cfg(feature = "gui")]
 mod hit_grid;

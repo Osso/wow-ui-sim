@@ -274,7 +274,8 @@ fn test_trait_config_mapping_tracks_active_loadout() {
             local byTreeBefore = C_Traits.GetConfigIDByTreeID(treeID)
             local bySystemBefore = C_Traits.GetConfigIDBySystemID(1)
 
-            C_ClassTalents.SwitchToLoadoutByIndex(2)
+            local configs = C_ClassTalents.GetConfigIDsBySpecID(66)
+            assert(C_ClassTalents.LoadConfig(configs[2], true) == Enum.LoadConfigResult.Ready)
 
             local activeAfter = C_ClassTalents.GetActiveConfigID()
             local switchedTreeID = C_Traits.GetConfigInfo(activeAfter).treeIDs[1]

@@ -114,17 +114,19 @@ fn cast_spell_book_item_blocked_while_casting() {
         env.exec(&format!("C_SpellBook.CastSpellBookItem({slot}, 0)"))
             .expect("first cast");
 
-        let cast_id_1: i64 = env
-            .eval("return select(7, UnitCastingInfo('player'))")
-            .unwrap();
+        // Observe numeric castBarID on the new tuple, legacy castID otherwise.
+        let identity_query = if cfg!(feature = "retail-12-1-0") {
+            "return select(10, UnitCastingInfo('player'))"
+        } else {
+            "return select(7, UnitCastingInfo('player'))"
+        };
+        let cast_id_1: i64 = env.eval(identity_query).unwrap();
 
         // Try to cast again — should be blocked (already casting)
         env.exec(&format!("C_SpellBook.CastSpellBookItem({slot}, 0)"))
             .expect("second cast attempt");
 
-        let cast_id_2: i64 = env
-            .eval("return select(7, UnitCastingInfo('player'))")
-            .unwrap();
+        let cast_id_2: i64 = env.eval(identity_query).unwrap();
         assert_eq!(cast_id_1, cast_id_2, "second cast should be blocked, cast_id unchanged");
     }
 }

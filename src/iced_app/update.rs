@@ -564,12 +564,7 @@ impl App {
 
     fn tick_casting(&mut self) {
         let env = self.env.borrow();
-        let completed = super::casting::extract_completed_cast(env.state());
-        if let Some((cast_id, spell_id)) = completed {
-            super::casting::fire_cast_complete_events(&env, cast_id, spell_id);
-            super::casting::apply_spell_effect(env.state(), &env, spell_id);
-            super::casting::apply_spec_change(env.state(), &env);
-        }
+        crate::lua_api::cast_completion::tick_casting(&env);
     }
 
     pub(super) fn run_pending_exec_lua(&mut self) {
