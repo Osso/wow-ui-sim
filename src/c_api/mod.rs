@@ -209,6 +209,8 @@ pub(crate) mod numeric_rule_formatter;
 pub(crate) mod on_update_modes;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod patch_12_0_5_enums;
+#[cfg(feature = "retail-12-1-0")]
+pub(crate) mod patch_12_1_0_enums;
 pub mod permanent_shims;
 pub mod private_aura_anchors;
 #[cfg(feature = "retail-12-0-5")]

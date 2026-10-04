@@ -21,16 +21,9 @@ local function __wow_fill_enum(enumName, values)
   end
 end
 
-__wow_fill_enum("ClubStreamType", { "Discord" })
-__wow_fill_enum("CompanionConfigSlotTypes", { "Flavor" })
-__wow_fill_enum("CooldownViewerCategory", { "GroupBuff", "SpecAgnosticEssential", "SpecAgnosticTracked", "EquipSlotEssential", "EquipSlotTracked" })
 __wow_fill_enum("EditModeAccountSetting", { "ShowRaidWarning" })
-__wow_fill_enum("EditModeMinimapSetting", { "IconScale" })
 __wow_fill_enum("EditModeSystem", { "RaidWarning" })
 __wow_fill_enum("EditModeUnitFrameSetting", { "BuffIconSize", "DebuffIconSize" })
-__wow_fill_enum("FragmentID", { "FMapObject", "FWorldStateListenerData" })
-__wow_fill_enum("FrameTutorialAccount", { "HousingPetBeds" })
-__wow_fill_enum("HouseFinderSuggestionReason", { "Relinquished" })
 __wow_fill_enum("HousingResult", {
   "BlueprintGenericImportError",
   "BlueprintStorageLimit",
@@ -47,11 +40,6 @@ __wow_fill_enum("HousingResult", {
   "BlueprintNameInvalid",
   "BlueprintVersionInvalid",
 })
-__wow_fill_enum("NamePlateStyle", { "Classic" })
-__wow_fill_enum("PingResult", { "FailedSilent" })
-__wow_fill_enum("PingSubjectType", { "ActionReady", "ActionOnCooldown", "ActionUnavailable" })
-__wow_fill_enum("SecretAspect", { "RadialProgress" })
-__wow_fill_enum("TooltipDataLineType", { "ItemSpellTriggerOnUse", "ItemSpellTriggerOnEquip", "ItemSpellTriggerOnProc" })
 
 if not Enum.ForbiddenScriptObjectAspect then
   rawset(Enum, "ForbiddenScriptObjectAspect", {

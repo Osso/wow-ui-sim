@@ -83,19 +83,18 @@ fn house_finder_publishes_home_owner_without_adding_later_reasons() {
     let env = WowLuaEnv::new().unwrap();
     let expected = "{ None=0, Owner=1, CharterInvite=2, Guild=4, BNetFriends=8,
         PartySync=16, Random=32, HomeOwner=64 }";
-    // Shared 12.1 compatibility already publishes Relinquished=65.
-    // Preserve it; correcting that later member is outside this patch.
+    // 12.1 publishes the next flag bit, Relinquished=128.
     let later_epoch = cfg!(feature = "retail-12-1-0");
     let count = if later_epoch { 9 } else { 8 };
-    let max = if later_epoch { 65 } else { 64 };
+    let max = if later_epoch { 128 } else { 64 };
     assert_publication_in_env(&env, "HouseFinderSuggestionReason", expected, count, 0, max);
     #[cfg(feature = "retail-12-1-0")]
     {
-        env.exec("assert(Enum.HouseFinderSuggestionReason.Relinquished == 65)")
+        env.exec("assert(Enum.HouseFinderSuggestionReason.Relinquished == 128)")
             .unwrap();
         wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
         assert_publication_in_env(&env, "HouseFinderSuggestionReason", expected, count, 0, max);
-        env.exec("assert(Enum.HouseFinderSuggestionReason.Relinquished == 65)")
+        env.exec("assert(Enum.HouseFinderSuggestionReason.Relinquished == 128)")
             .unwrap();
     }
 }

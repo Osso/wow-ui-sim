@@ -1,5 +1,5 @@
-//! Publication only. Current retail has 47 members but stale 0/43/44 metadata.
-//! Preserve that observed drift; PTR follows the pinned 52-member target.
+//! Publication only. Retail follows the cached 50-member declaration; PTR
+//! follows the pinned 52-member target.
 
 use crate::lua_api::WowLuaEnv;
 
@@ -15,24 +15,22 @@ fn expected_members() -> Vec<(String, i64)> {
         .find(|row| row["symbol"] == "Enum.TooltipDataLineType")
         .unwrap();
     assert_eq!(parent["before"]["Fields"].as_array().unwrap().len(), 50);
-    if cfg!(feature = "client-ptr") {
-        return parent["after"]["Fields"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .map(|field| {
-                (
-                    field["Name"].as_str().unwrap().to_owned(),
-                    field["EnumValue"].as_i64().unwrap(),
-                )
-            })
-            .collect();
-    }
-    let names = "None Blank UnitName GemSocket AzeriteEssenceSlot AzeriteEssencePower LearnableSpell UnitThreat QuestObjective AzeriteItemPowerDescription RuneforgeLegendaryPowerDescription SellPrice ProfessionCraftingQuality SpellName CurrencyTotal ItemEnchantmentPermanent UnitOwner QuestTitle QuestPlayer NestedBlock ItemBinding EquipSlot ItemName Separator ToyName ToyText ToyEffect ToyDuration ToyDescription ToySource GemSocketEnchantment ItemLevel ItemUpgradeLevel SpellPassive SpellDescription ItemQuality TradeTimeRemaining FlavorText ItemSpellTriggerLearn LearnTransmogSet LearnTransmogIllusion ErrorLine DisabledLine UsageRequirement ItemSpellTriggerOnUse ItemSpellTriggerOnEquip ItemSpellTriggerOnProc";
-    names
-        .split_whitespace()
-        .enumerate()
-        .map(|(value, name)| (name.to_owned(), value as i64))
+    // `before` equals cached retail TooltipInfoSharedDocumentation.lua:27–85.
+    let side = if cfg!(feature = "client-ptr") {
+        "after"
+    } else {
+        "before"
+    };
+    parent[side]["Fields"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|field| {
+            (
+                field["Name"].as_str().unwrap().to_owned(),
+                field["EnumValue"].as_i64().unwrap(),
+            )
+        })
         .collect()
 }
 
@@ -56,7 +54,7 @@ fn assert_publication(env: &WowLuaEnv, expected: &[(String, i64)]) {
     let metadata = if cfg!(feature = "client-ptr") {
         (0, 51, 52)
     } else {
-        (0, 43, 44)
+        (0, 49, 50)
     };
     assert_eq!(
         actual,

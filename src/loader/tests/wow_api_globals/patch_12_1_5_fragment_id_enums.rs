@@ -36,22 +36,20 @@ fn assert_fragment_metadata(env: &WowLuaEnv, count: i32) {
     assert_eq!(actual, (0, 255, count, 3));
 }
 
-#[cfg(feature = "client-ptr")]
-#[test]
-fn patch_12_1_5_fragment_id_enums_ptr() {
-    // Frozen semantic fixture: Gethe a89e9d0c -> 49b69918, not runtime enum data.
+/// Frozen semantic fixture: Gethe a89e9d0c (`before`, current retail) -> 49b69918 (`after`).
+fn register_fields(side: &str) -> (String, usize) {
     let register: serde_json::Value = serde_json::from_str(include_str!(
         "../../../../data/patch-api/sources/12.1.5-register.json"
     ))
     .unwrap();
-    let target = &register["occurrences"]
+    let fields = register["occurrences"]
         .as_array()
         .unwrap()
         .iter()
         .find(|row| row["symbol"] == "Enum.FragmentID")
-        .unwrap()["after"];
-    let fields = target["Fields"].as_array().unwrap();
-    assert_eq!(fields.len(), 78);
+        .unwrap()[side]["Fields"]
+        .as_array()
+        .unwrap();
     let expected = fields
         .iter()
         .map(|field| {
@@ -63,48 +61,29 @@ fn patch_12_1_5_fragment_id_enums_ptr() {
         })
         .collect::<Vec<_>>()
         .join("\n");
-    let env = WowLuaEnv::new().unwrap();
-    assert_fragment_publication(&env, &expected, 78);
-    assert_fragment_metadata(&env, 78);
-    crate::ptr::compat_bootstrap::apply_post_load(&env);
-    assert_fragment_publication(&env, &expected, 78);
-    assert_fragment_metadata(&env, 78);
+    (expected, fields.len())
 }
 
+fn assert_publication_survives_post_load(side: &str, count: usize) {
+    let (expected, fields) = register_fields(side);
+    assert_eq!(fields, count);
+    let env = WowLuaEnv::new().unwrap();
+    assert_fragment_publication(&env, &expected, count);
+    assert_fragment_metadata(&env, count as i32);
+    crate::ptr::compat_bootstrap::apply_post_load(&env);
+    assert_fragment_publication(&env, &expected, count);
+    assert_fragment_metadata(&env, count as i32);
+}
+
+#[cfg(feature = "client-ptr")]
+#[test]
+fn patch_12_1_5_fragment_id_enums_ptr() {
+    assert_publication_survives_post_load("after", 78);
+}
+
+// Cached retail WowCSConstantsDocumentation.lua:6–91 equals the register's `before`.
 #[cfg(feature = "client-retail")]
 #[test]
 fn patch_12_1_5_fragment_id_enums_preserves_retail() {
-    let env = WowLuaEnv::new().unwrap();
-    // Existing retail publication, including its two bootstrap-added members.
-    let expected = r#"
-        MirrorState=0, EntityPosition=1, CgObject=2, JamDispatcher=3,
-        HeartbeatData=4, FTransportLink=5, ClientObservablesData=6,
-        TimerQueues=7, TransferSuspensionData=8, DeferredMessages=9,
-        FPersistableJamServers=10, FPlayerJamServers=11, FLootObjectList=12,
-        FPlayerOwnershipLink=13, FUnitAreaTriggerLink=14, Actor=15,
-        FPhaseShiftData=16, FVendor=17, MirroredObjectC=18, FMeshObjectData=19,
-        FHousingDecor=20, FHousingRoom=21, FHousingRoomComponentMesh=22,
-        FHousingPlayerHouse=23, FHousingHouseDecorSet=24, FHousingHouseRoomSet=25,
-        FHousingDecorProxy=26, FJamHousingCornerstone=27, FHousingDecorActor=28,
-        FHousingPlotAreaTrigger=29, FNeighborhoodMirrorData=30,
-        FMirroredPositionData=31, FPlayerHouseInfo=32, FHousingStorageMirrorData=33,
-        FHousingFixture=34, FHousingHouseFixtureSet=35, Timer=36,
-        FPlayerInitiativeInfo=37, FNeighborhoodStateData=38, FUnitAIGroupLink=39,
-        TagItem=200, TagContainer=201, TagAzeriteEmpoweredItem=202,
-        TagAzeriteItem=203, TagUnit=204, TagPlayer=205, TagGameObject=206,
-        TagDynamicObject=207, TagCorpse=208, TagAreaTrigger=209,
-        TagSceneObject=210, TagConversation=211, TagAIGroup=212, TagScenario=213,
-        TagLootObject=214, TagActivePlayer=215, TagActiveClientS=216,
-        TagActiveObjectC=217, TagVisibleObjectC=218, TagUnitVehicle=219,
-        TagHousingRoom=220, TagMeshObject=221, TagHousingSubdivisionObject=222,
-        TagHousingPoolObject=223, TagHouseExteriorPiece=224, TagHouseExteriorRoot=225,
-        TestFragment_1=250, TestFragment_2=251, TestFragment_3=252,
-        TestFragment_4=253, TestFragment_5=254, ReservedArchetypeSeparator=255,
-        FMapObject=256, FWorldStateListenerData=257,
-    "#;
-    assert_fragment_publication(&env, expected, 74);
-    assert_fragment_metadata(&env, 72);
-    crate::ptr::compat_bootstrap::apply_post_load(&env);
-    assert_fragment_publication(&env, expected, 74);
-    assert_fragment_metadata(&env, 72);
+    assert_publication_survives_post_load("before", 77);
 }

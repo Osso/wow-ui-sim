@@ -36,6 +36,7 @@ const PATCH_12_1_STRICT_REMOVALS_LUA: &str = include_str!("strict_removals.lua")
 pub fn init(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PATCH_12_1_COMPAT_BOOTSTRAP_LUA)?;
     crate::c_api::patch_12_0_5_enums::refresh_metadata(lua.state_mut());
+    crate::c_api::patch_12_1_0_enums::register(lua.state_mut());
     crate::c_api::on_update_modes::register(lua.state_mut());
     Ok(())
 }
@@ -45,6 +46,7 @@ pub fn apply_post_load(env: &crate::lua_api::WowLuaEnv) {
         eprintln!("patch 12.1 compat bootstrap failed after load: {err}");
     }
     crate::c_api::patch_12_0_5_enums::refresh_metadata(env.rilua_mut().state_mut());
+    crate::c_api::patch_12_1_0_enums::register(env.rilua_mut().state_mut());
     crate::c_api::on_update_modes::register(env.rilua_mut().state_mut());
 }
 
@@ -127,20 +129,20 @@ mod tests {
     #[test]
     fn patch_12_1_post_load_reapplies_epoch_enums_after_generated_docs_reset() {
         let env = WowLuaEnv::new().expect("env");
-        env.exec("Enum.OnUpdateMode = nil; Enum.ClubStreamType.Discord = nil")
+        env.exec("Enum.OnUpdateMode = nil; Enum.HouseFinderSuggestionReason.Relinquished = nil")
             .expect("reset enums");
 
         super::apply_post_load(&env);
 
-        let (on_update_mode, discord): (i32, String) = env
+        let (on_update_mode, relinquished): (i32, i32) = env
             .eval(
                 r#"
                 return Enum.OnUpdateMode.Disabled,
-                    type(Enum.ClubStreamType.Discord)
+                    Enum.HouseFinderSuggestionReason.Relinquished
                 "#,
             )
             .expect("patch 12.1 enums");
         assert_eq!(on_update_mode, 0);
-        assert_eq!(discord, "number");
+        assert_eq!(relinquished, 128);
     }
 }

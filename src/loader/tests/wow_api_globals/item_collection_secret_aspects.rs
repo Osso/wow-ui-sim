@@ -138,8 +138,14 @@ fn test_patch_12_0_0_secret_aspect_epoch_values() {
 #[test]
 fn test_later_retail_secret_aspect_values() {
     let env = WowLuaEnv::new().unwrap();
+    // 12.1.0 adds TooltipTexture..RadialProgress (SecretAspectConstantsDocumentation.lua:6–44).
+    let (max_value, num_values) = if cfg!(feature = "retail-12-1-0") {
+        (8_388_608, 30)
+    } else {
+        (524_288, 26)
+    };
     let result: String = env
-        .eval(
+        .eval(&format!(
             r#"
                 local aspects = Enum.SecretAspect
                 local metadata = Enum.SecretAspectMeta
@@ -149,12 +155,12 @@ fn test_later_retail_secret_aspect_values() {
                 if aspects.CooldownStyle ~= 524288 then
                     return "CooldownStyle=" .. tostring(aspects.CooldownStyle)
                 end
-                if metadata.MaxValue ~= 524288 or metadata.MinValue ~= 1 or metadata.NumValues ~= 26 then
+                if metadata.MaxValue ~= {max_value} or metadata.MinValue ~= 1 or metadata.NumValues ~= {num_values} then
                     return "metadata=" .. tostring(metadata.MaxValue) .. "/" .. tostring(metadata.MinValue) .. "/" .. tostring(metadata.NumValues)
                 end
                 return "ok"
             "#,
-        )
+        ))
         .unwrap();
     assert_eq!(result, "ok", "later retail SecretAspect values changed");
 }

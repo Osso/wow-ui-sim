@@ -195,7 +195,7 @@ pub const EXPLICIT_ENUMS: &[EnumDef] = &[
     forever_shared::RECENT_ALLIES_INTERACTION_CATEGORY_FILTER,
     #[cfg(feature = "client-wowforever")]
     forever_shared::RECENT_ALLIES_INTERACTION_CATEGORY_FILTER_META,
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(feature = "client-wowforever", feature = "retail-12-1-0"))]
     (
         "ClubStreamTypeMeta",
         &[("MinValue", 0), ("MaxValue", 4), ("NumValues", 5)],
