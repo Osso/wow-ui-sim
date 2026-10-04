@@ -199,6 +199,49 @@
       "implementation": "src/c_api (see commits 35f825e37, e070565f1, 616bf37ab)",
       "compiled_revision": "616bf37ab",
       "proof": "22 targeted tests GREEN (agent-run, post-rebase); lua-errors clean; no independent review"
+    },
+    {
+      "id": "enum-values-12-1-0",
+      "symbols": [
+        "17 page-listed enums"
+      ],
+      "scope": "Exact numeric values and Meta of page-listed enum members against cached Blizzard_APIDocumentationGenerated, after full Game UI preload; removed EditModeUnitFrameSetting.IconSize nil.",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/data/patch_12_1_0_enums.json"
+      ],
+      "implementation": "src/c_api/patch_12_1_0_enums.rs; ClubStreamType in enum_data/game_system.rs",
+      "compiled_revision": "10118708c",
+      "proof": "main-thread GREEN on master 10118708c (filter run alone); no independent review"
+    },
+    {
+      "id": "struct-shapes-12-1-0",
+      "symbols": [
+        "AddPrivateAuraAnchorArgs, UnitPrivateAuraAnchorInfo, LfgSearchResultData, ClubMemberInfo, PlayerChoiceInfo, HousingDecorInstanceInfo, TieredEntranceTierInfo, BNetAccountInfo, BNetGameAccountInfo"
+      ],
+      "scope": "Page-listed field presence/absence and Lua type vs cached doc Type/Nilable from real getters with fixture state. TieredEntranceTierInfo and LfgSearchResultData.censored values are static; queueAsLFG follows cached docs (no Blizzard consumer reads it).",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_1_0_struct_shapes.rs"
+      ],
+      "implementation": "c_player_choice.rs, c_battle_net.rs, delves_ui.rs, housing state, friends defaults",
+      "compiled_revision": "10118708c",
+      "proof": "main-thread GREEN on master 10118708c (filter run alone); no independent review"
+    },
+    {
+      "id": "deprecated-wrappers-12-1-0",
+      "symbols": [
+        "getglobal, setglobal, BNSendVerifiedBattleTagInvite, BNGetFriendInviteInfo, RaidNotice_AddMessage, RaidNotice_Clear, SecureAuraHeaderTemplate, SecureGroupHeaderTemplate"
+      ],
+      "scope": "After full Game load with default loadDeprecationFallbacks, old functions come from cached deprecated Lua and delegate to new APIs; SecureAuraHeader absent and SecureGroupHeader present in retail. Native getglobal/setglobal still registered (fallbacks-off absence not modeled). Dye wrappers 390/391 excluded: strict removals deletes them.",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_1_0_deprecated_wrappers.rs"
+      ],
+      "implementation": "test only",
+      "compiled_revision": "10118708c",
+      "proof": "main-thread GREEN on master 10118708c (filter run alone); no independent review"
     }
   ],
   "source_rows": [
@@ -270,9 +313,11 @@
     },
     {
       "source_id": "prose-undated-014",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Audit current cached deprecated wrappers and default Retail strict-removal timing. A historical PTR symbol observation is not Retail migration acceptance."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates to the new API / TOC game-type gate observed (patch_12_1_0_deprecated_wrappers)."
     },
     {
       "source_id": "prose-undated-015",
@@ -994,9 +1039,11 @@
     },
     {
       "source_id": "prose-2026-07-07-148",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Audit current cached deprecated wrappers and default Retail strict-removal timing. A historical PTR symbol observation is not Retail migration acceptance."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates to the new API / TOC game-type gate observed (patch_12_1_0_deprecated_wrappers)."
     },
     {
       "source_id": "prose-2026-07-07-149",
@@ -1012,9 +1059,11 @@
     },
     {
       "source_id": "prose-2026-07-07-151",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Audit current cached deprecated wrappers and default Retail strict-removal timing. A historical PTR symbol observation is not Retail migration acceptance."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates to the new API / TOC game-type gate observed (patch_12_1_0_deprecated_wrappers)."
     },
     {
       "source_id": "prose-2026-07-07-152",
@@ -1546,351 +1595,467 @@
     },
     {
       "source_id": "enumerations-Enum-ClubStreamType-268",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Default non-Forever base places Other at 3; generic append publishes Discord at 4, while cached declaration specifies Discord=3. Model exact numeric publication and reordering."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-ClubStreamType-269",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `ClubStreamType.Discord = 3`. Default non-Forever base places Other at 3; generic append publishes Discord at 4, while cached declaration specifies Discord=3. Model exact numeric publication and reordering."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-CompanionConfigSlotTypes-270",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-CompanionConfigSlotTypes-271",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `CompanionConfigSlotTypes.Flavor = 3`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-CooldownViewerCategory-272",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-CooldownViewerCategory-273",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `CooldownViewerCategory.GroupBuff = 4`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-CooldownViewerCategory-274",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `CooldownViewerCategory.SpecAgnosticEssential = 5`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-CooldownViewerCategory-275",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `CooldownViewerCategory.SpecAgnosticTracked = 6`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-CooldownViewerCategory-276",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `CooldownViewerCategory.EquipSlotEssential = 7`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-CooldownViewerCategory-277",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `CooldownViewerCategory.EquipSlotTracked = 8`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeAccountSetting-278",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeAccountSetting-279",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `EditModeAccountSetting.ShowRaidWarning = 33`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeMinimapSetting-280",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeMinimapSetting-281",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `EditModeMinimapSetting.IconScale = 3`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeSystem-282",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeSystem-283",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `EditModeSystem.RaidWarning = 24`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeUnitFrameSetting-284",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Native base still publishes retired IconSize; generic append does not rename/reindex existing fields. Cached BuffIconSize=22 and DebuffIconSize=19 require exact table replacement/removal, not append."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeUnitFrameSetting-285",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current declaration has no retired member; absence supports the stated removal, not native historical behavior. Native base still publishes retired IconSize; generic append does not rename/reindex existing fields. Cached BuffIconSize=22 and DebuffIconSize=19 require exact table replacement/removal, not append."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeUnitFrameSetting-286",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `EditModeUnitFrameSetting.BuffIconSize = 22`. Native base still publishes retired IconSize; generic append does not rename/reindex existing fields. Cached BuffIconSize=22 and DebuffIconSize=19 require exact table replacement/removal, not append."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeUnitFrameSetting-287",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `EditModeUnitFrameSetting.DebuffIconSize = 19`. Native base still publishes retired IconSize; generic append does not rename/reindex existing fields. Cached BuffIconSize=22 and DebuffIconSize=19 require exact table replacement/removal, not append."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-FragmentID-288",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Base contains ReservedArchetypeSeparator=255; append assigns new values above 255, not cached FMapObject=43/FWorldStateListenerData=42. Model explicit values; do not copy the PTR-only override into a Retail proof claim."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-FragmentID-289",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `FragmentID.FMapObject = 43`. Base contains ReservedArchetypeSeparator=255; append assigns new values above 255, not cached FMapObject=43/FWorldStateListenerData=42. Model explicit values; do not copy the PTR-only override into a Retail proof claim."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-FragmentID-290",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `FragmentID.FWorldStateListenerData = 42`. Base contains ReservedArchetypeSeparator=255; append assigns new values above 255, not cached FMapObject=43/FWorldStateListenerData=42. Model explicit values; do not copy the PTR-only override into a Retail proof claim."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-FrameTutorialAccount-291",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Native base ends at HousingCleanupMode=40; append gives HousingPetBeds=41, while current cache declares 50. Model exact publication and reconcile later-cache epoch."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-FrameTutorialAccount-292",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `FrameTutorialAccount.HousingPetBeds = 50`. Native base ends at HousingCleanupMode=40; append gives HousingPetBeds=41, while current cache declares 50. Model exact publication and reconcile later-cache epoch."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HouseFinderSuggestionReason-293",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Existing test records Relinquished=65; cache declares 128. Existing enum-publication capability covers HomeOwner, not this member. Exact native/epoch bitmask mapping must be reconciled; declaration supplies a modelable target."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HouseFinderSuggestionReason-294",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HouseFinderSuggestionReason.Relinquished = 128`. Existing test records Relinquished=65; cache declares 128. Existing enum-publication capability covers HomeOwner, not this member. Exact native/epoch bitmask mapping must be reconciled; declaration supplies a modelable target."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-295",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current SeqEnumDef puts RoomPlacementOutOfBounds at 97; cache declares 96. Other listed additions are present at their cached values. Reconcile the changed ordering/member set without treating parent enum existence as full proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-296",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.BlueprintGenericImportError = 6`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-297",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.BlueprintStorageLimit = 14`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-298",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.BlueprintTypeInvalid = 12`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-299",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.BlueprintNotFound = 9`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-300",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.InvalidExteriorDocument = 54`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-301",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.BlueprintGenericExportError = 5`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-302",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.InvalidInteriorDocument = 59`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-303",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.BlueprintRequirementsUnmet = 10`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-304",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.RoomPlacementOutOfBounds = 96`. Current SeqEnumDef puts RoomPlacementOutOfBounds at 97; cache declares 96. Other listed additions are present at their cached values. Reconcile the changed ordering/member set without treating parent enum existence as full proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-305",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.BlueprintCodeInvalid = 3`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-306",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.InsufficientRoomBudget = 64`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-307",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.BlueprintLocationInvalid = 7`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-308",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.BlueprintNameInvalid = 8`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-HousingResult-309",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `HousingResult.BlueprintVersionInvalid = 15`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-NamePlateStyle-310",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-NamePlateStyle-311",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `NamePlateStyle.Classic = 6`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-PingResult-312",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-PingResult-313",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `PingResult.FailedSilent = 8`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-PingSubjectType-314",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-PingSubjectType-315",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `PingSubjectType.ActionReady = 6`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-PingSubjectType-316",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `PingSubjectType.ActionOnCooldown = 7`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-PingSubjectType-317",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `PingSubjectType.ActionUnavailable = 8`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-SecretAspect-318",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Base maximum is 524288; append gives RadialProgress=524289, while cached mask is 8388608. Replace append arithmetic with explicit mask publication and implement radial security at its producer."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-SecretAspect-319",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `SecretAspect.RadialProgress = 8388608`. Base maximum is 524288; append gives RadialProgress=524289, while cached mask is 8388608. Replace append arithmetic with explicit mask publication and implement radial security at its producer."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-TieredEntranceType-320",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-TieredEntranceType-321",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `TieredEntranceType.Lairs = 4`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-322",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Parent enum and linked API context; review every following delta, not just table existence. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-323",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `TooltipDataLineType.ItemSpellTriggerOnUse = 44`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-324",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `TooltipDataLineType.ItemSpellTriggerOnEquip = 45`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-325",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached declaration: `TooltipDataLineType.ItemSpellTriggerOnProc = 46`. Current default Retail already has the listed enum member producers, including the shared 12.1 compatibility bootstrap. Prove exact value, metadata, no cross-environment mutation and default-profile publication; names alone are not numerical proof."
+      "capabilities": [
+        "enum-values-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact member values and Meta equal cached generated docs after full Game preload (patch_12_1_0_enum_publication)."
     },
     {
       "source_id": "source-context-328",
@@ -1900,63 +2065,83 @@
     },
     {
       "source_id": "structures-AddPrivateAuraAnchorArgs-329",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Input reader models the new flags and omits showCountdownFrame. Prove each default/non-default flag, retired output absence, invalid inputs and callback-visible state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-AddPrivateAuraAnchorArgs-330",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Input reader models the new flags and omits showCountdownFrame. Prove each default/non-default flag, retired output absence, invalid inputs and callback-visible state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-AddPrivateAuraAnchorArgs-331",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Input reader models the new flags and omits showCountdownFrame. Prove each default/non-default flag, retired output absence, invalid inputs and callback-visible state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-AddPrivateAuraAnchorArgs-332",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Input reader models the new flags and omits showCountdownFrame. Prove each default/non-default flag, retired output absence, invalid inputs and callback-visible state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-AddPrivateAuraAnchorArgs-333",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Input reader models the new flags and omits showCountdownFrame. Prove each default/non-default flag, retired output absence, invalid inputs and callback-visible state."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-BNetAccountInfo-334",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail writer supplies friendTags from explicit friend state and friendLevel as fixed 0. Prove the bounded published shape across all advertised getters; live friend-level progression remains unmodeled and uncredited."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-BNetAccountInfo-335",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail writer supplies friendTags from explicit friend state and friendLevel as fixed 0. Prove the bounded published shape across all advertised getters; live friend-level progression remains unmodeled and uncredited."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-BNetAccountInfo-336",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail writer supplies friendTags from explicit friend state and friendLevel as fixed 0. Prove the bounded published shape across all advertised getters; live friend-level progression remains unmodeled and uncredited."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-BNetGameAccountInfo-337",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current Retail producer publishes classFilename from uppercase class_name. Tests only for the bounded field shape across advertised getters and canonical single/multiword class fixtures; do not infer full native class-token or nilability behavior from the existing simple string assertion."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-BNetGameAccountInfo-338",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current Retail producer publishes classFilename from uppercase class_name. Tests only for the bounded field shape across advertised getters and canonical single/multiword class fixtures; do not infer full native class-token or nilability behavior from the existing simple string assertion."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-ChatMessageEventParams-339",
@@ -1972,15 +2157,19 @@
     },
     {
       "source_id": "structures-ClubMemberInfo-341",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Club member getters have a producer but no discordInfo field. Add optional DiscordChatInfo backed by explicit member state; nil defaults alone are not nonempty coverage."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-ClubMemberInfo-342",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Club member getters have a producer but no discordInfo field. Add optional DiscordChatInfo backed by explicit member state; nil defaults alone are not nonempty coverage."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-CooldownViewerCooldown-343",
@@ -2008,15 +2197,19 @@
     },
     {
       "source_id": "structures-HousingDecorInstanceInfo-347",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Housing backing state exists, but no canAttachPet output producer exists. Add eligibility to decor instance state and serialize it through each relevant mode query."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-HousingDecorInstanceInfo-348",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Housing backing state exists, but no canAttachPet output producer exists. Add eligibility to decor instance state and serialize it through each relevant mode query."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-LfgEntryData-349",
@@ -2032,15 +2225,19 @@
     },
     {
       "source_id": "structures-LfgSearchResultData-351",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail search serializer publishes censored=false. Prove bounded field shape from a nonempty listing and independent results; actual censorship transitions are not implemented or claimed."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-LfgSearchResultData-352",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail search serializer publishes censored=false. Prove bounded field shape from a nonempty listing and independent results; actual censorship transitions are not implemented or claimed."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-PetJournalPetInfo-353",
@@ -2116,63 +2313,83 @@
     },
     {
       "source_id": "structures-PlayerChoiceInfo-365",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_PlayerChoice serializes seeded local choice state but omits hideAnswerArt. Add the boolean state/serialization and prove live replacement through GetCurrentPlayerChoiceInfo."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-PlayerChoiceInfo-366",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_PlayerChoice serializes seeded local choice state but omits hideAnswerArt. Add the boolean state/serialization and prove live replacement through GetCurrentPlayerChoiceInfo."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-TieredEntranceTierInfo-367",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail serializer emits overrideTooltipSpellID=nil and isLFG=false. Current declaration requires a non-nil overrideTooltipSpellID and uses queueAsLFG rather than isLFG; model/epoch-reconcile that delta instead of crediting plausible placeholders."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-TieredEntranceTierInfo-368",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail serializer emits overrideTooltipSpellID=nil and isLFG=false. Current declaration requires a non-nil overrideTooltipSpellID and uses queueAsLFG rather than isLFG; model/epoch-reconcile that delta instead of crediting plausible placeholders."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-TieredEntranceTierInfo-369",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Existing Retail producer explicitly emits isLFG=false. Tests-only bounded captured-source shape proof; current cache uses queueAsLFG instead, so no historical/native or renamed-field parity credit."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-UnitPrivateAuraAnchorInfo-370",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Anchor output serializer publishes current flags without showCountdownFrame; prove public/callback result isolation and true/false values. This is structure shape, not private-aura rendering parity."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-UnitPrivateAuraAnchorInfo-371",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Anchor output serializer publishes current flags without showCountdownFrame; prove public/callback result isolation and true/false values. This is structure shape, not private-aura rendering parity."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-UnitPrivateAuraAnchorInfo-372",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Anchor output serializer publishes current flags without showCountdownFrame; prove public/callback result isolation and true/false values. This is structure shape, not private-aura rendering parity."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-UnitPrivateAuraAnchorInfo-373",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Anchor output serializer publishes current flags without showCountdownFrame; prove public/callback result isolation and true/false values. This is structure shape, not private-aura rendering parity."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "structures-UnitPrivateAuraAnchorInfo-374",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Anchor output serializer publishes current flags without showCountdownFrame; prove public/callback result isolation and true/false values. This is structure shape, not private-aura rendering parity."
+      "capabilities": [
+        "struct-shapes-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Field presence/type against cached generated docs (patch_12_1_0_struct_shapes); some values static, not state-backed."
     },
     {
       "source_id": "source-context-377",
@@ -2188,15 +2405,19 @@
     },
     {
       "source_id": "deprecated api-getglobal-380",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Native global helper and unmodified cached deprecated wrapper both exist. Tests only: raw/ordinary lookup, canonical dotted lookup, write/read/error behavior and actual deprecated-addon loading. Deprecation is not equivalent to complete native absence."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates to the new API / TOC game-type gate observed (patch_12_1_0_deprecated_wrappers)."
     },
     {
       "source_id": "deprecated api-setglobal-381",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Native global helper and unmodified cached deprecated wrapper both exist. Tests only: raw/ordinary lookup, canonical dotted lookup, write/read/error behavior and actual deprecated-addon loading. Deprecation is not equivalent to complete native absence."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates to the new API / TOC game-type gate observed (patch_12_1_0_deprecated_wrappers)."
     },
     {
       "source_id": "source-context-383",
@@ -2206,15 +2427,19 @@
     },
     {
       "source_id": "deprecated api-BNSendVerifiedBattleTagInvite-385",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current native Battle.net replacement functions record/query explicit local invite state; cached deprecated aliases forward to them. Tests only for both wrapper/backend routes, duplicates, absent invites, exact arguments and result shape; no network delivery claim."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates to the new API / TOC game-type gate observed (patch_12_1_0_deprecated_wrappers)."
     },
     {
       "source_id": "deprecated api-BNGetFriendInviteInfo-386",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current native Battle.net replacement functions record/query explicit local invite state; cached deprecated aliases forward to them. Tests only for both wrapper/backend routes, duplicates, absent invites, exact arguments and result shape; no network delivery claim."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates to the new API / TOC game-type gate observed (patch_12_1_0_deprecated_wrappers)."
     },
     {
       "source_id": "source-context-388",
@@ -2242,15 +2467,19 @@
     },
     {
       "source_id": "deprecated api-RaidNotice_AddMessage-395",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Unmodified RaidWarningUtil/RaidWarningFrameMixin implement message addition and pool-backed clearing. Tests only: actual deprecated wrapper, message pool contents/visibility, per-type clearing and default Retail loading; text pixels and native timing are not claimed."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates to the new API / TOC game-type gate observed (patch_12_1_0_deprecated_wrappers)."
     },
     {
       "source_id": "deprecated api-RaidNotice_Clear-396",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Unmodified RaidWarningUtil/RaidWarningFrameMixin implement message addition and pool-backed clearing. Tests only: actual deprecated wrapper, message pool contents/visibility, per-type clearing and default Retail loading; text pixels and native timing are not claimed."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates to the new API / TOC game-type gate observed (patch_12_1_0_deprecated_wrappers)."
     },
     {
       "source_id": "wt-global-api-C_AuraContainerUtil.ProcessAuraTooltipBackdropOptions-414",

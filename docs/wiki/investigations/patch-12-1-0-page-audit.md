@@ -53,3 +53,17 @@ Remaining 21 gaps:
 Not caused by this round, still failing: `c_spell_static_fallbacks` (expects a function retail removed in 12.0.7), `wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles`, `on_update_modes_process_actual_managed_aura_dirty_phases`.
 
 `prefork_full_ui` at `616bf37ab`: 2,009 passed / 7 failed. All 7 also fail at the pre-round base `d1a2a0250`: four wardrobe tests (`itemModifiedAppearanceID requires a number`), two `Deprecated_HousingCatalog` legacy-field wrappers, `catalog_shop` (`product_provider_empty`). No independent review.
+
+## Round 4 — extract rows: enums, structs, deprecated wrappers — 2026-10-04
+
+**156 pending / 224 bounded / 652 partial / 79 metadata.**
+
+Plan: [extract scout](../../../data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-extract-scout.md) classified the 244 non-sweep pending rows into 15 batches.
+
+- 15 editorial rows → metadata-only; roleset getters row credited.
+- **Enums (58, bounded):** `tests/patch_12_1_0_enums.rs` checks exact values and Meta against cached generated docs. 11 values were wrong because `__wow_fill_enum` assigned max+1 (broke flag enums and mid-table inserts); 12 enums now publish explicit doc pairs from `src/c_api/patch_12_1_0_enums.rs`.
+- **Structs (26, partial):** `tests/patch_12_1_0_struct_shapes.rs` checks field presence/type against cached docs. Producer fixes: `hideAnswerArt`, `canAttachPet`, `friendLevel`, `classFilename` from class ID, `overrideTooltipSpellID`. `TieredEntranceTierInfo` uses `queueAsLFG` (cached docs; no Blizzard consumer reads either name).
+- **Deprecated wrappers (9, bounded):** `tests/patch_12_1_0_deprecated_wrappers.rs` (prefork_full_ui) proves cached deprecated Lua installs and delegates.
+- **Open bug:** `apply_strict_removals` (`src/ptr/strict_removals.lua`) runs after startup and deletes wrappers cached Blizzard Lua installs (`C_DyeColor.GetDyeColorForItem[Location]`, `C_Housing.IsInsideOwnHouse`, `C_SuperTrack.GetNextWaypointForMap`, likely `GetInventorySlotInfo`). Rows 390/391 stay pending.
+
+Master `10118708c`: sweep, enum, struct, added-globals, surface-closures and deprecated-wrapper tests GREEN, each run alone. Pre-existing failures noted by the enums agent, unchanged by this round: `test_patch_12_0_0_transmog_situation_enum_values`, `edit_mode_profile_option_enums_match_blizzard_docs`, `unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size`. No independent review.
