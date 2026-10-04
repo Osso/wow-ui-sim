@@ -259,6 +259,7 @@ fn duration_binding_survives_secure_option_copy_without_losing_handle_identity()
         local label = CreateFrame('Frame'):CreateFontString()
         source:SetFontString(label)
         source:SetDuration(CreateBindingDuration(7))
+        source:SetFormatter(CreateBindingFormatter('%.0f'))
         local options = {binding=source, textFormat={formatString='%s', components={}}}
         local copied = securecopy(options)
         assert(copied ~= options and copied.textFormat ~= options.textFormat)
