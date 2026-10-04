@@ -23,6 +23,19 @@ Patch 12.0.7 API work in wow-ui-sim separates safe additive compatibility bridge
 
 
 
+
+## Rounds 9–10 accounted; 12.0.7 first pass complete — 2026-10-04
+
+Nineteen capabilities; **37 pending / 46 bounded / 70 partial / 13 metadata** of 166 IDs. Every pending row carries a reason in the [ledger](../../../data/patch-api/sources/12.0.7-page-coverage.json).
+
+- Round 9 fixed the two round 8 review defects: the text binding computes its values in Rust from timing state (`c1ded7c63`), and `SetFontString` requires a genuine FontString handle (`cbe938d38`). Both have failing-first regression tests. The 21 rows stay partial until re-reviewed.
+- Round 10: `ModelSceneActorBase:GetModelUnitGUID` partial (no independent review). `ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED` stays pending: its producer is gated on 12.1.5 and the new tests are compiled out on the default build.
+- Sixteen never-attempted rows were examined and are blocked: no cached declaration (duration formatting options, raw values, dragonriding races), no opaque club member identity, no limited-input model, no VM tracking of secret access per call frame.
+
+Proof: master run at `2136907ab`, 72 passed / 0 failed over seven filters; lib `startup_globals::` 26 passed / 0 failed; startup `lua-errors` `[]`; `cargo fmt --check` exit 0 ([integration](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-9-10-master-green.log.txt), [lib](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-9-10-master-lib.log.txt)). Results: [round 9](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r9-result.md), [round 10](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r10-result.md).
+
+Whole-pass limits: default feature set only; strict 12.0.7 and older client profiles were never built, although several changed producers are shared with them. No broad suite was run. Partial rows read explicit host state but lack native derivation, permissions or timing.
+
 ## Round 8 accounted — 2026-10-04
 
 Eighteen capabilities; **38 pending / 46 bounded / 69 partial / 13 metadata** of 166 IDs.

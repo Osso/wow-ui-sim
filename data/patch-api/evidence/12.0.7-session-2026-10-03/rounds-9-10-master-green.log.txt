@@ -1,0 +1,83 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 4m 26s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+
+running 72 tests
+test duration_core::duration_copy_assign_preserves_receiver_identity_and_independent_timing ... ok
+test duration_core::duration_copy_assign_rejects_missing_or_wrong_source_without_mutation ... ok
+test duration_core::duration_copy_assign_self_keeps_state_and_returns_nothing ... ok
+test duration_core::duration_copy_assign_shares_clock_reference_but_rebinds_independently ... ok
+test duration_core::duration_copy_assign_unbound_source_clears_target_clock ... ok
+test duration_core::duration_copy_preserves_timing_and_returns_one_independent_object ... ok
+test duration_core::duration_copy_shares_clock_reference_but_rebinds_independently ... ok
+test duration_core::duration_core_default_clock_and_instances ... ok
+test duration_core::duration_core_end_span_reset_and_validation ... ok
+test duration_core::duration_core_manual_progress_rate_and_rewind ... ok
+test duration_core::duration_core_set_to_defaults_clears_configured_timing_and_clock ... ok
+test duration_core::duration_curve_color_results_preserve_rgba_for_all_four_queries ... ok
+test duration_core::duration_curve_elapsed_percent_is_modifier_invariant ... ok
+test duration_core::duration_curve_elapsed_seconds_follow_clock_and_modifiers ... ok
+test duration_core::duration_curve_invalid_bound_clock_preserves_duration_and_curve_state ... ok
+test duration_core::duration_curve_invalid_modifiers_preserve_duration_and_curve_state ... ok
+test duration_core::duration_curve_live_point_reconfiguration_changes_all_queries ... ok
+test duration_core::duration_curve_missing_and_wrong_curves_are_rejected_without_mutation ... ok
+test duration_core::duration_curve_remaining_percent_is_modifier_invariant ... ok
+test duration_core::duration_curve_remaining_seconds_follow_clock_and_modifiers ... ok
+test duration_core::duration_curve_unsupported_color_interpolation_propagates_evaluator_error ... ok
+test duration_core::duration_percent_rejects_invalid_bound_clock_without_mutation ... ok
+test duration_core::duration_percent_rejects_unknown_modifier_without_mutation ... ok
+test duration_core::duration_percent_tracks_clock_boundaries_and_rewind ... ok
+test duration_core::duration_percent_zero_spans_follow_epoch_elapsed_policy ... ok
+test duration_core::retail_native_aura_button_preserves_wrapped_duration_arguments ... ok
+test duration_core::retail_native_custom_aura_reads_wrapped_asset_fields ... ok
+test duration_text_binding_copy::duration_binding_assign_preserves_receiver_and_configuration_handles ... ok
+test duration_text_binding_copy::duration_binding_assign_validates_atomically_clears_absent_values_and_handles_self_assignment ... ok
+test duration_text_binding_copy::duration_binding_assignment_supports_actual_custom_aura_button_duration_text ... ok
+test duration_text_binding_copy::duration_binding_copies_mutable_format_components_without_cloning_formatter_handles ... ok
+test duration_text_binding_copy::duration_binding_copy_updates_text_with_independent_configuration ... ok
+test duration_text_binding_copy::duration_binding_survives_secure_option_copy_without_losing_handle_identity ... ok
+test duration_text_binding_copy::duration_binding_userdata_copy_retains_resources_through_collection ... ok
+test p1207_pending_callbacks::all_slots_root_closures_and_upvalues_across_full_gc ... ok
+test p1207_pending_callbacks::callback_error_does_not_change_slot_or_break_later_dispatch ... ok
+test p1207_pending_callbacks::clear_ping_preserves_button_and_run_slots_and_environment_isolation ... ok
+test p1207_pending_callbacks::namespace_and_legacy_ping_share_one_live_slot ... ok
+test p1207_pending_callbacks::namespace_authenticates_extra_arguments_before_type_validation ... ok
+test p1207_pending_callbacks::namespace_rejects_malformed_callback_atomically_and_recovers ... ok
+test p1207_pending_callbacks::namespace_unwraps_authentic_function_for_secure_caller ... ok
+test p1207_pending_callbacks::nested_real_fire_event_observes_replacement_without_duplicate_old_call ... ok
+test p1207_pending_callbacks::replacement_and_clear_inside_callback_take_effect_on_next_event ... ok
+test p1207_pending_callbacks::retrieved_callback_keeps_its_taint_when_event_consumer_invokes_it ... ok
+test p1207_pending_callbacks::slots_replace_identity_clear_and_have_exact_public_arities ... ok
+test p1207_pending_callbacks::storage_operations_preserve_secure_and_tainted_caller_context ... ok
+test p1207_remaining_model_unit_guid::p1207_model_guid_binding_changes_are_local_to_actor_and_environment ... ok
+test p1207_remaining_model_unit_guid::p1207_model_guid_default_is_one_public_empty_string ... ok
+test p1207_remaining_model_unit_guid::p1207_model_guid_reads_live_host_identity_not_replaceable_lua ... ok
+test p1207_remaining_model_unit_guid::p1207_model_guid_rejects_secret_receiver_and_every_extra_for_all_callers ... ok
+test p1207_remaining_model_unit_guid::p1207_model_guid_removed_conditional_secret_is_public_for_both_callers ... ok
+test p1207_remaining_model_unit_guid::p1207_model_guid_requires_native_actor_not_forgeable_type_protocol ... ok
+test patch_12_0_7_duration_clocks::allowed_when_untainted_authenticates_ignored_extras_before_any_validation ... ok
+test patch_12_0_7_duration_clocks::duration_activity_predicates_authenticate_and_validate_modifier_without_changing_state ... ok
+test patch_12_0_7_duration_clocks::duration_clock_rebinding_reads_live_boundaries_and_roots_clock_identity ... ok
+test patch_12_0_7_duration_clocks::duration_clocks_and_bindings_are_independent_between_environments ... ok
+test patch_12_0_7_duration_clocks::duration_set_clock_authenticates_wrapped_clock_and_nil_without_rebinding_on_denial ... ok
+test patch_12_0_7_duration_clocks::manual_clock_allowed_when_untainted_authenticates_inputs_before_receiver_validation ... ok
+test patch_12_0_7_duration_clocks::manual_clock_fractional_transitions_independence_and_return_arity ... ok
+test patch_12_0_7_duration_clocks::manual_clock_inferred_validation_rejects_before_mutating ... ok
+test patch_12_0_7_duration_clocks::manual_clock_state_is_host_owned_not_raw_writable_table_storage ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_allowed_when_untainted_authenticates_every_input_and_extra_first ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_automatic_updates_read_live_state_and_respect_disable_interval ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_configuration_and_clock_are_environment_local ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_defaults_and_exact_query_arity ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_formats_live_host_clock_rate_zero_and_expiration ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_ignores_replaced_duration_methods ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_invalid_setters_reject_before_mutation ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_rejects_forged_fontstring_without_storing_it ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_secret_timing_and_text_stay_opaque_to_tainted_callers ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_state_roundtrips_copy_assign_and_reset_preserve_surface ... ok
+test patch_12_0_7_duration_text_binding::p1207_has_expired_inherits_zero_span_and_authenticates_modifiers_and_extras ... ok
+
+test result: ok. 72 passed; 0 failed; 0 ignored; 0 measured; 10382 filtered out; finished in 11.91s
+
+
+EXIT 0
