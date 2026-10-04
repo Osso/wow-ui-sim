@@ -177,13 +177,17 @@ impl CVarStorage {
             .or_insert_with(|| value.to_string());
     }
 
-    /// Persist current overrides to disk.
+    /// Persist current overrides to disk, except session-only CVars.
     fn save(&self) {
         if let Some(parent) = self.storage_path.parent() {
             let _ = std::fs::create_dir_all(parent);
         }
         let overrides = self.overrides.read().unwrap();
-        if let Ok(json) = serde_json::to_string_pretty(&*overrides) {
+        let persisted: HashMap<&String, &String> = overrides
+            .iter()
+            .filter(|(key, _)| !is_session_only_cvar_key(key))
+            .collect();
+        if let Ok(json) = serde_json::to_string_pretty(&persisted) {
             let _ = std::fs::write(&self.storage_path, json);
         }
     }
@@ -413,12 +417,22 @@ const PATCH_12_1_CVARS: &[(&str, &str)] = &[
     ("worldMapShowPlayerCoords", "0"),
 ];
 
-/// Load persisted overrides from disk.
+/// CVars whose value resets every session (lowercase keys). The 12.1.0 page:
+/// "This cvar will not persist between sessions."
+const SESSION_ONLY_CVAR_KEYS: &[&str] = &["tooltipshowauraspellids"];
+
+fn is_session_only_cvar_key(key: &str) -> bool {
+    SESSION_ONLY_CVAR_KEYS.contains(&key)
+}
+
+/// Load persisted overrides from disk, dropping session-only CVars.
 fn load_overrides(path: &PathBuf) -> HashMap<String, String> {
-    match std::fs::read_to_string(path) {
+    let mut overrides: HashMap<String, String> = match std::fs::read_to_string(path) {
         Ok(contents) => serde_json::from_str(&contents).unwrap_or_default(),
         Err(_) => HashMap::new(),
-    }
+    };
+    overrides.retain(|key, _| !is_session_only_cvar_key(key));
+    overrides
 }
 
 /// Parse YAML in format `key: 'value'` or `key: value`.
@@ -554,6 +568,29 @@ mod tests {
                 "lowercase lookup should also work"
             );
         }
+    }
+
+    /// 12.1.0: autoLootDefault is account wide and survives a new session;
+    /// tooltipShowAuraSpellIDs resets to its default every session.
+    #[cfg(feature = "retail-12-1-0")]
+    #[test]
+    fn patch_12_1_cvar_scope_survives_or_resets_across_sessions() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("cvars.json");
+        {
+            let storage = CVarStorage::with_path(path.clone());
+            storage.set("autoLootDefault", "1");
+            storage.set("tooltipShowAuraSpellIDs", "1");
+            assert_eq!(storage.get("tooltipShowAuraSpellIDs").as_deref(), Some("1"));
+        }
+        let storage = CVarStorage::with_path(path.clone());
+        assert_eq!(storage.get("autoLootDefault").as_deref(), Some("1"));
+        assert_eq!(storage.get("tooltipShowAuraSpellIDs").as_deref(), Some("0"));
+        assert!(
+            !fs::read_to_string(&path)
+                .unwrap()
+                .contains("tooltipshowauraspellids")
+        );
     }
 
     #[test]
