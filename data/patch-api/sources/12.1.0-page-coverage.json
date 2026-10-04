@@ -330,6 +330,24 @@
       "implementation": "forbidden_aspects.rs, get_dispatch_script, propagation.rs, mouse.rs, editbox.rs",
       "compiled_revision": "4a303f6d0",
       "proof": "agent-run GREEN; main-thread re-run of forbidden_aspect/taint/secure/hook/focus/keyboard/propagat/editbox filters and lib forbidden_aspect+mouse GREEN on master 4a303f6d0; no independent review"
+    },
+    {
+      "id": "managed-aura-container-12-1-0",
+      "symbols": [
+        "ManagedAuraContainer, AuraButton, aura groups/slots, layout, presentation, tooltips, temporary enchants"
+      ],
+      "scope": "Harness (tests/common/aura_container_harness.rs): addon-tainted code creates a ManagedAuraContainer from the cached CustomAuraContainerTemplate; auras seeded in SimState and delivered via fire_unit_aura_full_update. Full UNIT_AURA updates only; hover/click via fire_script_handler, not hit-testing. Simulator fixes: intrinsic OnEvent dispatch on all event paths, ChangeParent on SetParent, IsPrivateAuraFilteredOutByInstanceID, step curves and secret curve inputs, secure-env placeholder rebinding, CreateSecureDelegate secure call-through, forbidden-partition visibility handlers, tooltip anchorOffsets default, GetTemporaryEnchantmentInfo. 10 INFERRED choices in code.",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_1_0_managed_aura_groups.rs",
+        "tests/patch_12_1_0_managed_aura_layout.rs",
+        "tests/patch_12_1_0_managed_aura_buttons.rs",
+        "tests/patch_12_1_0_managed_aura_tooltips.rs",
+        "tests/patch_12_1_0_managed_aura_enchants.rs"
+      ],
+      "implementation": "see commits ef0843889..8e01da096",
+      "compiled_revision": "8e01da096",
+      "proof": "main-thread on master 8e01da096: 81 patch_12_1_0_ integration, broad aura/forbidden/secure/taint/tooltip/visibility/event/curve filters 1645 pass (2 pre-existing), lib same 6 pre-existing failures as f8c84069c, prefork_full_ui 2011/7 pre-existing; no independent review"
     }
   ],
   "source_rows": [
@@ -741,21 +759,25 @@
     },
     {
       "source_id": "prose-2026-06-23-077",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-06-23-078",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-06-23-079",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+      "note": "Automatic tooltip proven; disabling via SetMouseMotionEnabled unprovable: hover hit-test ignores mouse_motion_enabled."
     },
     {
       "source_id": "source-context-080",
@@ -893,15 +915,19 @@
     },
     {
       "source_id": "prose-2026-06-30-101",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-06-30-102",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-06-30-103",
@@ -923,21 +949,27 @@
     },
     {
       "source_id": "prose-2026-06-30-107",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-06-30-108",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-06-30-109",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "source-context-112",
@@ -965,15 +997,17 @@
     },
     {
       "source_id": "prose-2026-07-07-117",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-07-118",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Current Retail managed creation supersedes direct AuraButton/AddAuraFrame publication; reconcile ordinary/raw lookup and actual cached templates. Original PTR producer and transition date remain unproved, but final Retail absence is modelable."
+      "note": "AddAuraFrame absence proven; addon CreateFrame(\"AuraButton\") not rejected (allowUntaintedCreation unmodeled)."
     },
     {
       "source_id": "prose-2026-07-07-119",
@@ -993,9 +1027,11 @@
     },
     {
       "source_id": "prose-2026-07-07-121",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12b layout (patch_12_1_0_managed_aura_layout)."
     },
     {
       "source_id": "prose-2026-07-07-122",
@@ -1063,81 +1099,107 @@
     },
     {
       "source_id": "prose-2026-07-07-130",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-07-131",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-07-132",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-07-133",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-07-134",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-07-135",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12b layout (patch_12_1_0_managed_aura_layout)."
     },
     {
       "source_id": "prose-2026-07-07-136",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12b layout (patch_12_1_0_managed_aura_layout)."
     },
     {
       "source_id": "prose-2026-07-07-137",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-07-138",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-07-139",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12b layout (patch_12_1_0_managed_aura_layout)."
     },
     {
       "source_id": "prose-2026-07-07-140",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-07-141",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached AddItemEnchantment and cancel handling exist; connect explicit temporary weapon-enchant state to managed frames and click routing."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12e item enchants (patch_12_1_0_managed_aura_enchants)."
     },
     {
       "source_id": "prose-2026-07-07-142",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "source-context-143",
@@ -1149,7 +1211,7 @@
       "source_id": "prose-2026-07-07-145",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Existing private aura sound model and AddAuraSound entry point are relevant, but all-aura/application/removal triggers and successive renamed aliases need their own delta model; inherited add-context capability alone cannot close this row."
+      "note": "Aura sounds registered, but no aura add/application/remove detection or sound playback record (needs aura-change subsystem)."
     },
     {
       "source_id": "prose-2026-07-07-146",
@@ -1197,15 +1259,19 @@
     },
     {
       "source_id": "prose-2026-07-07-152",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-07-07-153",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "source-context-156",
@@ -1301,33 +1367,43 @@
     },
     {
       "source_id": "prose-2026-07-21-174",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-21-175",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-07-21-176",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-21-177",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-07-21-178",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12b layout (patch_12_1_0_managed_aura_layout)."
     },
     {
       "source_id": "prose-2026-07-21-179",
@@ -1341,7 +1417,7 @@
       "source_id": "prose-2026-07-21-180",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Existing private aura sound model and AddAuraSound entry point are relevant, but all-aura/application/removal triggers and successive renamed aliases need their own delta model; inherited add-context capability alone cannot close this row."
+      "note": "Same as 145: no aura-change sound subsystem."
     },
     {
       "source_id": "prose-2026-07-21-181",
@@ -1353,9 +1429,11 @@
     },
     {
       "source_id": "prose-2026-07-21-182",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-21-183",
@@ -1365,9 +1443,11 @@
     },
     {
       "source_id": "prose-2026-07-21-184",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-07-21-185",
@@ -1379,21 +1459,27 @@
     },
     {
       "source_id": "prose-2026-07-21-186",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-21-187",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached AddItemEnchantment and cancel handling exist; connect explicit temporary weapon-enchant state to managed frames and click routing."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12e item enchants (patch_12_1_0_managed_aura_enchants)."
     },
     {
       "source_id": "prose-2026-07-21-188",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-21-189",
@@ -1481,9 +1567,11 @@
     },
     {
       "source_id": "prose-2026-07-23-206",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached Lua implements group flow layout and resize. Native forbidden layout notifications and real managed-frame resize/anchor integration require modeling and behavioral proof."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12b layout (patch_12_1_0_managed_aura_layout)."
     },
     {
       "source_id": "prose-2026-07-23-207",
@@ -1495,33 +1583,43 @@
     },
     {
       "source_id": "prose-2026-07-23-208",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12d tooltips (patch_12_1_0_managed_aura_tooltips)."
     },
     {
       "source_id": "prose-2026-07-23-209",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12d tooltips (patch_12_1_0_managed_aura_tooltips)."
     },
     {
       "source_id": "prose-2026-07-23-210",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-07-23-211",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-07-23-212",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12d tooltips (patch_12_1_0_managed_aura_tooltips)."
     },
     {
       "source_id": "prose-2026-07-23-213",
@@ -1537,15 +1635,19 @@
     },
     {
       "source_id": "prose-2026-07-23-215",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-07-23-216",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12d tooltips (patch_12_1_0_managed_aura_tooltips)."
     },
     {
       "source_id": "prose-2026-07-23-217",
@@ -1561,9 +1663,11 @@
     },
     {
       "source_id": "prose-2026-07-23-219",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-07-23-220",
@@ -1621,27 +1725,35 @@
     },
     {
       "source_id": "prose-2026-08-04-232",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom AuraButton Lua has pandemic regions and window updates; wire duration/refresh state and real textures before claiming the feature."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-08-04-233",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-08-04-234",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached aura-button tooltip lifecycle exists, including options and throttling. Need native managed button identity, visibility and restricted-aura integration; older AuraButtonMixin mock tooltip tests are not this new contract."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12d tooltips (patch_12_1_0_managed_aura_tooltips)."
     },
     {
       "source_id": "prose-2026-08-04-235",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current unmodified cached Lua has managed group/slot/filter/layout logic. Native filter/secrecy/lifecycle integration is incomplete; existing mock-provider tests are narrower than real addon creation and managed frame updates."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12a groups/filter/sort (patch_12_1_0_managed_aura_groups)."
     },
     {
       "source_id": "prose-2026-08-04-236",
@@ -1657,9 +1769,11 @@
     },
     {
       "source_id": "prose-2026-08-04-238",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached custom button Lua has presentation setters and aura update handlers; real native aura data, secured region ownership and presentation updates remain incomplete. Exercise actual templates, not table-only substitutes."
+      "capabilities": [
+        "managed-aura-container-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Real cached ManagedAuraContainer driven by simulator aura state, full UNIT_AURA updates only: 12c button presentation (patch_12_1_0_managed_aura_buttons)."
     },
     {
       "source_id": "prose-2026-08-04-239",
