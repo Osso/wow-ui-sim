@@ -49,6 +49,7 @@ fn get_rest_state_reflects_normal_state() {
     assert!((mult - 1.0).abs() < 1e-6);
 }
 
+#[cfg(not(feature = "retail-12-1-0"))]
 #[test]
 fn is_player_at_effective_max_level_reads_flag() {
     let env = WowLuaEnv::new().expect("env");
@@ -164,4 +165,14 @@ fn get_xp_exhaustion_returns_nil_after_clearing() {
     env.state().borrow_mut().player_xp.exhaustion = None;
     let is_nil: bool = env.eval("return GetXPExhaustion() == nil").unwrap();
     assert!(is_nil);
+}
+
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn is_player_at_effective_max_level_global_is_absent_in_retail_12_1() {
+    let env = WowLuaEnv::new().expect("env");
+    let kind: String = env
+        .eval("return type(IsPlayerAtEffectiveMaxLevel)")
+        .unwrap();
+    assert_eq!(kind, "nil");
 }

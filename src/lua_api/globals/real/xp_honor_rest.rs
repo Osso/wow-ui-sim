@@ -9,7 +9,7 @@
 //!
 //! - `GetXPExhaustion()` → rest XP (nil when none).
 //! - `GetRestState()` → `(state, name, multiplier)`.
-//! - `IsPlayerAtEffectiveMaxLevel()` → `state.player_xp.is_max_level`.
+//! - `IsPlayerAtEffectiveMaxLevel()` → `state.player_xp.is_max_level` (pre-12.1.0 profiles).
 //! - `GameLimitedMode_IsBankedXPActive()` → `banked_xp_active`.
 //! - `GameLimitedMode_GetLevelLimit()` → `level_limit`.
 //! - `UnitHonor(unit)` → current honor (was a 0-stub).
@@ -60,6 +60,7 @@ fn get_rest_state(state: &mut LuaState) -> LuaResult<u32> {
     Ok(3)
 }
 
+#[cfg(not(feature = "retail-12-1-0"))]
 fn is_player_at_effective_max_level(state: &mut LuaState) -> LuaResult<u32> {
     let at_max = borrow_state(state)?.player_xp.is_max_level;
     state.push(Val::Bool(at_max));
@@ -125,6 +126,8 @@ fn get_restricted_account_data(state: &mut LuaState) -> LuaResult<u32> {
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetXPExhaustion", get_xp_exhaustion)?;
     LuaApiMut::register_function(lua, "GetRestState", get_rest_state)?;
+    // Retail 12.1.0 removed the global; Blizzard uses GameRulesUtil instead.
+    #[cfg(not(feature = "retail-12-1-0"))]
     LuaApiMut::register_function(
         lua,
         "IsPlayerAtEffectiveMaxLevel",

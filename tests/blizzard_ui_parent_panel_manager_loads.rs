@@ -79,7 +79,6 @@ const FREE_FUNCTIONS: &[&str] = &[
     "RaiseFrameLevel",
     "PassClickToParent",
     "ValidateFramePosition",
-    "UIParent_ManageFramePositions",
 ];
 
 const REPRESENTATIVE_PANEL_WINDOWS: &[(&str, &str)] = &[

@@ -1,4 +1,6 @@
 //! The full cached Game preload mirrors wow-sim startup for LoD bootstrap-only addons.
+//! Like the 12.1.0 sweep, run it as its own filter: the preload's bytecode-cache
+//! parent bypass fails once other tests in the process have used the cache.
 #![cfg(feature = "client-retail")]
 
 #[path = "common/prefork_full_ui_preload.rs"]
