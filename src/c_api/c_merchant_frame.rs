@@ -1,7 +1,6 @@
 //! `C_MerchantFrame` 12.0.7 probe surface.
 //!
-//! The simulator has no merchant currency model yet, so the currency list is a
-//! deterministic empty table while merchant item APIs live in existing surfaces.
+//! Retail 12.0.7 currency IDs read the explicit ordered host snapshot.
 
 #[cfg(feature = "client-wowforever")]
 pub mod junk;
@@ -48,7 +47,34 @@ fn register_patch_12_0_7_merchant_frame_surface(
     Ok(())
 }
 
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(feature = "retail-12-0-7")]
+fn get_merchant_currencies(state: &mut LuaState) -> LuaResult<u32> {
+    // INFERRED: no SecretArguments declaration; reject secret extras for every caller.
+    for value in &state.stack[state.base..state.top] {
+        if rilua::table_security::is_secret_value(state, *value) {
+            return Err(rilua::runtime_error(
+                "GetMerchantCurrencies rejects secret arguments",
+            ));
+        }
+    }
+    // INFERRED: preserve host order; absent merchant input returns one empty table.
+    let ids = crate::lua_api::methods::borrow_state(state)?
+        .merchant_currencies
+        .clone();
+    let currencies = create_table(state);
+    state.push(currencies);
+    for (index, id) in ids.into_iter().enumerate() {
+        crate::c_api::helpers::set_table_array(
+            state,
+            currencies,
+            index as i64 + 1,
+            rilua::Val::Num(f64::from(id)),
+        );
+    }
+    Ok(1)
+}
+
+#[cfg(all(feature = "retail-12-1-0", not(feature = "retail-12-0-7")))]
 fn get_merchant_currencies(state: &mut LuaState) -> LuaResult<u32> {
     let currencies = create_table(state);
     state.push(currencies);
