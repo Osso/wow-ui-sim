@@ -22,6 +22,17 @@ Patch 12.0.7 API work in wow-ui-sim separates safe additive compatibility bridge
 
 
 
+
+## Round 8 accounted — 2026-10-04
+
+Eighteen capabilities; **38 pending / 46 bounded / 69 partial / 13 metadata** of 166 IDs.
+
+- Partial, 21 rows: `DurationTextBinding` and the duration rows it touches, on the existing provider.
+- [Review](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r8-review.md): REJECT for bounded credit, partial only. Two open defects: the binding samples by calling replaceable Lua methods on the duration instead of reading timing state, and `SetFontString` accepts any table that reports `GetObjectType() == "FontString"`.
+- The zero-span `HasExpired` lib assertion now expects `true`, matching [duration-core](../../specs/duration-core.md); the cached declaration does not decide the case, so this is simulator inference, not native proof.
+
+Proof: master run, 60 passed / 0 failed over the binding, duration and widget-aspect modules; lib `startup_globals::` 26 passed / 0 failed after a clean rebuild; startup `lua-errors` `[]`; `cargo fmt --check` exit 0 ([integration](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/round-8-master-green.log.txt), [lib](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/round-8-master-lib.log.txt)). The lib run also closes the rerun owed for round 7. [Result](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r8-result.md).
+
 ## Round 7 accounted — 2026-10-04
 
 Seventeen capabilities; **59 pending / 46 bounded / 48 partial / 13 metadata** of 166 IDs.

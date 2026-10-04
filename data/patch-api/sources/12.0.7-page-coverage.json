@@ -284,6 +284,23 @@
       "compiled_revision": "372f40db1",
       "proof": "main-confirmed GREEN (integration and startup; lib rerun pending); independent source-read review ACCEPT WITH QUALIFICATIONS; partial",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/round-7-master-green.log.txt"
+    },
+    {
+      "id": "duration-text-binding-12-0-7",
+      "symbols": [
+        "DurationTextBinding script object",
+        "DurationObject rows touched by the binding"
+      ],
+      "scope": "Existing provider extended with host binding state and authenticated inputs; live clock and formatter reconfiguration proved with unmodified methods. Review REJECT for bounded credit: sampling calls replaceable Lua methods on the duration (GetRemainingDuration/IsZero/HasExpired) instead of reading timing state, and SetFontString accepts any table reporting GetObjectType 'FontString'. Defaults and zero-span HasExpired=true are simulator inferences. Shared by older profiles, unexecuted.",
+      "spec": "docs/specs/duration-text-binding-12-0-7-audit.md",
+      "tests": [
+        "tests/patch_12_0_7_duration_text_binding.rs",
+        "tests/duration_text_binding_copy.rs"
+      ],
+      "implementation": "six commits ending 'Record bounded Retail duration binding proof and exclusions'",
+      "compiled_revision": "8a117fc51",
+      "proof": "main-confirmed GREEN (integration, lib, startup); independent source-read review REJECT for bounded, partial only",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/round-8-master-green.log.txt"
     }
   ],
   "source_rows": [
@@ -425,9 +442,11 @@
     },
     {
       "source_id": "prose-undated-022",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Distinct factory userdata; default configuration, reset, Copy/Assign, host scalars and cached aura initialization. Unproved: Whole ScriptObject/native identity and historical publication/defaults."
     },
     {
       "source_id": "source-context-024",
@@ -473,9 +492,11 @@
     },
     {
       "source_id": "global api-C_DurationUtil-CreateDurationTextBinding-031",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Factory creates independent handles and nil duration/font configuration; retains sole provider and resource identity. Unproved: Undocumented constructor extensions, exact historical defaults/native identity."
     },
     {
       "source_id": "global api-C_DurationUtil-CreateManualClock-032",
@@ -893,9 +914,11 @@
     },
     {
       "source_id": "scriptobjects-DurationObject-HasExpired-089",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Inherited zero-span true; before/end-time observations on live manual clock; single return; untainted wrapped modifier/extras; tainted rejection precedes receiver validation. Unproved: Native zero-span semantics, exact coercions/errors, exhaustive secret timing/clock combinations."
     },
     {
       "source_id": "scriptobjects-DurationObject-HasStarted-090",
@@ -923,111 +946,147 @@
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-CanFormatText-093",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Unconfigured false; configured zero text true; duration plus formatter eligibility; eligibility used by real live formatting. Unproved: Native eligibility/default/expired-text precedence and all configuration combinations."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-CanUpdateFontString-094",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: False without configured FontString; configured eligible bindings update concrete text; formatting eligibility included. Unproved: Native handle validation and all incomplete/forbidden combinations."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-Disable-095",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Disable returns no values; host enabled=false; engine ticks stop changing concrete FontString text. Unproved: Native scheduling/GC/error routing and other profiles."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-Enable-096",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Enable returns no values; host enabled=true; next eligible engine tick resumes text updates. Unproved: Native invalidation timing/GC/error routing and other profiles."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetDuration-097",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Single nil default; duration reference identity survives Copy/Assign/GC and environment isolation; live duration changes affect output. Unproved: Native handle identity/custom fields/secret-reference provenance policies."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetExpiredText-098",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Single nil default; plain and wrapped text readback; Copy/Assign/reset and per-environment independence. Unproved: Native defaults, coercions and exact secret getter tagging."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetFontString-099",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Single nil default; configured FontString identity preserved through Copy/Assign/resource collection. Unproved: Native handle identity/forbidden-frame combinations."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetFormattedText-100",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Single concrete remaining text from host clock/rate and host modifier; zero/expired selection; rewind/reconfiguration; VM-secret formatting and wrapped SetText handoff; errors propagate without fallback. Unproved: Native strings/rounding/precedence, B31 component/color semantics, method-override dispatch and exhaustive secret combinations."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetTimeModifier-101",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Single RealTime default; authenticated BaseTime setting read live by Rust sampling; copied/assigned scalars independent. Unproved: Exact native default/coercion and profiles outside default Retail."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetUpdateInterval-102",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Single interval=1 default; finite interval roundtrip/Copy/Assign/isolation and cadence changes reflected in engine updates. Unproved: Native defaults/ranges/precision and exhaustive scheduling."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-GetZeroDurationText-103",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Single nil default; concrete plain zero text and opaque wrapped zero text; resets clear configuration. Unproved: Exact native defaults and secret getter/zero-text selection parity."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-IsEnabled-104",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Single true default; host-state Disable/Enable/SetEnabled transitions; copied bindings independent. Unproved: Native lifecycle/scheduling and other profiles."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetDuration-105",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Actual duration identity accepted; wrapped reference authenticated; missing/nil/table/numeric pseudo-duration rejected atomically; tainted wrapped args/extras rejected before validation. Unproved: Native exact proxy identity/coercions/errors and constructor input compatibility."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetExpiredText-106",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: String/nil and secure wrapped text accepted; wrapped string stays opaque; invalid numeric input atomic; tainted args/extras rejected first. Unproved: Native coercions/error text/secret-output provenance parity."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetFontString-107",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Actual FontString and secure wrapped reference accepted; missing/nil/table rejected atomically; tainted args/extras rejected first. Unproved: Unforgeable native handle identity/forbidden-object validation; protocol test is not full native type proof."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetTimeModifier-108",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: RealTime/BaseTime secure wrapped/plain values accepted; 1.5/table/nil rejected atomically; extras authenticated first; Rust live state changes concrete rate-scaled output. Unproved: Native coercion/range/error policies and profiles outside default Retail."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetUpdateInterval-109",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Finite nonnegative host interval; secure wrapped/plain accepted; negative/nonfinite/string/table/nil rejected atomically; tainted args/extras rejected first; zero cadence updates every tick. Unproved: Native range/default/precision and exhaustive scheduler-error policy."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-SetZeroDurationText-110",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-text-binding-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: String/nil and secure wrapped text accepted; wrapped nil normalizes to nil; false rejected atomically; tainted args/extras rejected first; zero text remains opaque to addon. Unproved: Native coercions/error text/defaults/secret-output parity."
     },
     {
       "source_id": "scriptobjects-DurationTextFormattingOptions-GetAddRemainingText-111",
