@@ -127,12 +127,10 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
     },
     LuaSourcePatch {
         suffix: "/EventUtil.lua",
-        operations: &[
-            LuaSourcePatchOp::Replace {
-                from: "callback();",
-                to: "if type(callback) == \"function\" then callback(); end",
-            },
-        ],
+        operations: &[LuaSourcePatchOp::Replace {
+            from: "callback();",
+            to: "if type(callback) == \"function\" then callback(); end",
+        }],
     },
     LuaSourcePatch {
         suffix: "/LocalizationMachinery.lua",
