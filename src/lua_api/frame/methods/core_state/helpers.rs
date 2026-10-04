@@ -21,43 +21,13 @@ pub(super) fn opt_f32(state: &LuaState, index: i32) -> f32 {
     }
 }
 
-pub(super) fn has_queryable_rect(frame: &crate::widget::Frame, id: u64) -> bool {
-    !frame.anchors.is_empty() || frame.name.as_deref() == Some("UIParent") || id == 1
-}
+pub(super) use crate::widget::has_queryable_rect;
 
 fn raw_frame_size(state: &crate::lua_api::state::SimState, id: u64) -> (f32, f32) {
     state
         .widgets
         .get(id)
         .map(|frame| (frame.width, frame.height))
-        .unwrap_or((0.0, 0.0))
-}
-
-fn resolved_frame_size(state: &crate::lua_api::state::SimState, id: u64) -> (f32, f32) {
-    state
-        .widgets
-        .get(id)
-        .map(|frame| {
-            // FontString:GetWidth reports its text extent after SetText/SetWidth,
-            // even when anchors also determine the eventual render rect.
-            if frame.widget_type == crate::widget::WidgetType::FontString && frame.width > 0.0 {
-                return (
-                    state.widgets.round_layout_value(frame, frame.width),
-                    state.widgets.round_layout_value(frame, frame.height),
-                );
-            }
-            if has_queryable_rect(frame, id)
-                && let Some(rect) = frame.layout_rect
-            {
-                let eff_scale = frame.effective_scale.max(1e-6);
-                (rect.width / eff_scale, rect.height / eff_scale)
-            } else {
-                (
-                    state.widgets.round_layout_value(frame, frame.width),
-                    state.widgets.round_layout_value(frame, frame.height),
-                )
-            }
-        })
         .unwrap_or((0.0, 0.0))
 }
 
@@ -74,7 +44,7 @@ pub(super) fn frame_size(state: &mut LuaState, id: u64, raw: bool) -> LuaResult<
     let size = if raw {
         raw_frame_size(&sim, id)
     } else {
-        resolved_frame_size(&sim, id)
+        sim.widgets.resolved_size(id)
     };
     Ok(size)
 }

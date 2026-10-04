@@ -3,6 +3,9 @@
 mod anchor;
 mod anchor_edits;
 mod pixel_scale;
+mod size_changes;
+
+pub(crate) use size_changes::has_queryable_rect;
 mod storage;
 
 use super::Frame;
@@ -61,6 +64,8 @@ pub struct WidgetRegistry {
     anchor_edit_baselines: RefCell<FxHashMap<u64, anchor_edits::AnchorEditBaseline>>,
     /// Layout canvas size, for resolving rects when settling anchor edits.
     layout_canvas_size: Option<(f32, f32)>,
+    /// Script-capable frames whose resolved size changed since the last OnSizeChanged dispatch.
+    size_changed_ids: FxHashSet<u64>,
 }
 
 impl WidgetRegistry {
@@ -104,6 +109,7 @@ impl WidgetRegistry {
             cooldown_ids: FxHashSet::default(),
             anchor_edit_baselines: RefCell::new(FxHashMap::default()),
             layout_canvas_size: None,
+            size_changed_ids: FxHashSet::default(),
         }
     }
 

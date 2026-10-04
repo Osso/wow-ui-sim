@@ -184,6 +184,7 @@ macro_rules! frame_defaults {
             button_state: 0,
             pushed_text_offset: (0.0, 0.0),
             layout_rect: None,
+            reported_size: (0.0, 0.0),
 
             // Slider
             slider_value: 0.0,

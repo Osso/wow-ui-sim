@@ -15,6 +15,7 @@ pub use frame::{
 };
 pub use frame_enums::{DrawLayer, FrameStrata};
 pub use frame_types::TextSegment;
+pub(crate) use registry::has_queryable_rect;
 pub use registry::{AnchorCyclePath, RenderDirtyBatch, RenderDirtySource, WidgetRegistry};
 
 use std::sync::atomic::{AtomicU64, Ordering};

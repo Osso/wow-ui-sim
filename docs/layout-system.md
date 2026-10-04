@@ -290,6 +290,10 @@ let bottom = screen_height - rect.y - rect.height;
 5. **Renderer** uses LayoutRect to draw frame quads and child regions
 6. **Lua queries** (GetRect, GetWidth, etc.) convert back to WoW coordinates if needed
 
+### OnSizeChanged
+
+Every rect write in `recompute_layout_subtree` calls `WidgetRegistry::note_layout_size`, which compares the `GetSize`-equivalent frame-unit size (`resolved_size`) with `Frame.reported_size` (starts at 0x0) and queues changed script-capable frames. `on_update::fire` runs one layout pass per tick (`ensure_layout_rects`), drains the queue in id order, and dispatches `OnSizeChanged(self, width, height)` through the forbidden-aspect filter, so UntrustedLayoutScriptExecution suppresses addon handlers on restricted frames and frames anchored to them. Dispatch is deferred (INFERRED): resizes resolved mid-script by geometry queries, and resizes made by an OnSizeChanged handler, report on the next tick. Scale-only changes do not change frame-unit size. Tests: `tests/layout_size_changed.rs`, `tests/patch_12_1_0_aura_size_changed.rs`.
+
 ---
 
 ## Tests

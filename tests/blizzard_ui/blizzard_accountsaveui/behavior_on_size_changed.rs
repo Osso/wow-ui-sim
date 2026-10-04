@@ -43,10 +43,8 @@
 //!      `self.ContentInsets:GetWidth()`, `captured_width` would be
 //!      AccountSaveFrame's own 360 (vs. ContentInsets' ~310).
 //!
-//! The simulator's `SetWidth` does NOT auto-dispatch `OnSizeChanged`
-//! (`src/lua_api/frame/methods/core_state/size.rs:71-94` mutates the
-//! widget but doesn't fire the script handler), so the test calls
-//! `OnSizeChanged` directly via the standard mixin dispatch. The
+//! `OnSizeChanged` is dispatched only by the per-tick layout pass, so the
+//! test calls `OnSizeChanged` directly via the standard mixin dispatch. The
 //! XML `<OnSizeChanged method="OnSizeChanged"/>` wiring is already
 //! pinned by `surface_mixins.rs` (the method exists on the mixin) —
 //! this fixture pins the method body's effect.

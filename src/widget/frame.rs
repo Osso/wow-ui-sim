@@ -360,6 +360,8 @@ pub struct Frame {
     pub pushed_text_offset: (f32, f32),
     /// Eagerly computed layout rect (updated on SetPoint, SetSize, etc.).
     pub layout_rect: Option<crate::LayoutRect>,
+    /// Size last reported to OnSizeChanged, in frame units (starts at 0x0).
+    pub reported_size: (f32, f32),
     // --- Slider fields ---
     /// Current slider value.
     pub slider_value: f64,

@@ -63,6 +63,8 @@ pub(crate) fn fire(
     advance_animation_groups(env, elapsed)?;
     timings.animation_groups = started.elapsed();
 
+    fire_layout_size_changes(env)?;
+
     let started = Instant::now();
     fire_on_post_update_handlers(env, &frame_ids, elapsed)?;
     timings.on_post_update = started.elapsed();
@@ -112,6 +114,29 @@ fn dispatch_on_update_handlers(
 
 fn advance_animation_groups(env: &super::env::WowLuaEnv, elapsed: f64) -> crate::Result<()> {
     crate::lua_api::frame::methods::button_anchor_hierarchy::advance_animation_groups(env, elapsed)
+}
+
+/// The per-tick layout pass: resolve dirty rects, then run OnSizeChanged for frames
+/// whose resolved size changed since it last fired. INFERRED: dispatch is deferred to
+/// this pass (rects resolved mid-script by geometry queries report here too), and a
+/// resize made by an OnSizeChanged handler is reported on the next tick.
+fn fire_layout_size_changes(env: &super::env::WowLuaEnv) -> crate::Result<()> {
+    let changes = {
+        let mut sim = env.state().borrow_mut();
+        sim.ensure_layout_rects();
+        sim.widgets.drain_size_changes()
+    };
+    for (frame_id, (width, height)) in changes {
+        env.fire_script_handler(
+            frame_id,
+            "OnSizeChanged",
+            vec![
+                rilua::Val::Num(width as f64),
+                rilua::Val::Num(height as f64),
+            ],
+        )?;
+    }
+    Ok(())
 }
 
 fn fire_on_post_update_handlers(

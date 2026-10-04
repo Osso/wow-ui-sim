@@ -346,6 +346,7 @@ impl SimState {
         if let Some(f) = widgets.get_mut(id) {
             f.layout_rect = Some(rect);
         }
+        widgets.note_layout_size(id);
         widgets.mark_layout_resolved(id);
         for child_id in children {
             Self::recompute_layout_subtree(widgets, child_id, screen_width, screen_height, cache);
