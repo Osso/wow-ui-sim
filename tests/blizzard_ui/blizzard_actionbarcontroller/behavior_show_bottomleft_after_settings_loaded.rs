@@ -33,7 +33,14 @@ fn show_bottomleft_defers_until_settings_loaded_then_sets_immediately() {
             function Settings.SetOnValueChangedCallback() end
             function MultiActionBar_Update() end
             StatusTrackingBarManager.UpdateBarTicks = function() end
-            EventRegistry.TriggerEvent = function() end
+            -- Silence UI callback events only: Blizzard's EventUtil routes
+            -- frame events (SETTINGS_LOADED) through EventRegistry:TriggerEvent.
+            local originalTriggerEvent = EventRegistry.TriggerEvent
+            EventRegistry.TriggerEvent = function(registry, event, ...)
+                if C_EventUtils.IsEventValid(event) then
+                    return originalTriggerEvent(registry, event, ...)
+                end
+            end
 
             function EventUtil.ContinueAfterAllEvents(callback, ...)
                 _G.bottomLeftDeferredCalls = _G.bottomLeftDeferredCalls + 1

@@ -132,7 +132,6 @@ const LUA_SOURCE_PATCHES: &[LuaSourcePatch] = &[
                 from: "callback();",
                 to: "if type(callback) == \"function\" then callback(); end",
             },
-            LuaSourcePatchOp::Prefix("if EventUtil ~= nil then return end\n"),
         ],
     },
     LuaSourcePatch {
