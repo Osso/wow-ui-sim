@@ -468,19 +468,37 @@ fn scroll_child_subtree_bounds(
 
 pub(super) fn get_horizontal_scroll(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let offset = borrow_state(state)?
-        .widgets
-        .get(id)
-        .map(|frame| frame.scroll_horizontal)
-        .unwrap_or(0.0);
-    state.push(Val::Num(offset));
+    let (offset, secret) = {
+        let sim = borrow_state(state)?;
+        let frame = sim.widgets.get(id);
+        let offset = frame.map(|frame| frame.scroll_horizontal).unwrap_or(0.0);
+        let secret = cfg!(feature = "retail-12-0-7")
+            && frame.is_some_and(|frame| {
+                frame.secret_scroll_horizontal || frame.secret_scroll_vertical
+            });
+        (offset, secret)
+    };
+    let value = if secret {
+        rilua::table_security::wrap_host_secret_number(state, offset)
+    } else {
+        Val::Num(offset)
+    };
+    state.push(value);
     Ok(1)
 }
 
 pub(super) fn set_horizontal_scroll(state: &mut LuaState) -> LuaResult<u32> {
+    let secret =
+        crate::lua_api::frame::methods::secret_origin::authenticate_retail_arguments(state)?;
     let id = frame_id_from_stack(state, 1)?;
     let offset = val_to_f64(stack_val(state, 2));
     let mut sim = borrow_state_mut(state)?;
+    if cfg!(feature = "retail-12-0-7") {
+        if let Some(frame) = sim.widgets.get_mut(id) {
+            // INFERRED: public overwrite clears only this axis's origin.
+            frame.secret_scroll_horizontal = secret;
+        }
+    }
     if sim
         .widgets
         .get(id)
@@ -510,19 +528,37 @@ pub(super) fn get_horizontal_scroll_range(state: &mut LuaState) -> LuaResult<u32
 
 pub(super) fn get_vertical_scroll(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let offset = borrow_state(state)?
-        .widgets
-        .get(id)
-        .map(|frame| frame.scroll_vertical)
-        .unwrap_or(0.0);
-    state.push(Val::Num(offset));
+    let (offset, secret) = {
+        let sim = borrow_state(state)?;
+        let frame = sim.widgets.get(id);
+        let offset = frame.map(|frame| frame.scroll_vertical).unwrap_or(0.0);
+        let secret = cfg!(feature = "retail-12-0-7")
+            && frame.is_some_and(|frame| {
+                frame.secret_scroll_horizontal || frame.secret_scroll_vertical
+            });
+        (offset, secret)
+    };
+    let value = if secret {
+        rilua::table_security::wrap_host_secret_number(state, offset)
+    } else {
+        Val::Num(offset)
+    };
+    state.push(value);
     Ok(1)
 }
 
 pub(super) fn set_vertical_scroll(state: &mut LuaState) -> LuaResult<u32> {
+    let secret =
+        crate::lua_api::frame::methods::secret_origin::authenticate_retail_arguments(state)?;
     let id = frame_id_from_stack(state, 1)?;
     let offset = val_to_f64(stack_val(state, 2));
     let mut sim = borrow_state_mut(state)?;
+    if cfg!(feature = "retail-12-0-7") {
+        if let Some(frame) = sim.widgets.get_mut(id) {
+            // INFERRED: public overwrite clears only this axis's origin.
+            frame.secret_scroll_vertical = secret;
+        }
+    }
     if sim
         .widgets
         .get(id)

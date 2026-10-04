@@ -71,11 +71,20 @@ pub(super) fn set_button_enabled_value(
 
 pub(super) fn is_enabled(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let enabled = {
+    let (enabled, secret) = {
         let sim = borrow_state(state)?;
-        sim.widgets.get(id).map(button_enabled).unwrap_or(true)
+        let frame = sim.widgets.get(id);
+        let enabled = frame.map(button_enabled).unwrap_or(true);
+        let secret = cfg!(feature = "retail-12-0-7")
+            && frame.is_some_and(|frame| frame.secret_button_state || frame.secret_button_enabled);
+        (enabled, secret)
     };
-    state.push(Val::Bool(enabled));
+    let value = if secret {
+        rilua::table_security::wrap_host_secret_bool(state, enabled)
+    } else {
+        Val::Bool(enabled)
+    };
+    state.push(value);
     Ok(1)
 }
 
@@ -96,6 +105,7 @@ fn fire_enable_disable_script(state: &mut LuaState, id: u64, enabled: bool) -> L
 }
 
 pub(super) fn set_enabled(state: &mut LuaState) -> LuaResult<u32> {
+    let secret = super::super::secret_origin::authenticate_retail_arguments(state)?;
     let id = frame_id_from_stack(state, 1)?;
     let enabled = bool::from_stack(state, 2).ok().unwrap_or(true);
     let changed = {
@@ -105,6 +115,12 @@ pub(super) fn set_enabled(state: &mut LuaState) -> LuaResult<u32> {
             .map(|f| button_enabled(f) != enabled)
             .unwrap_or(false)
     };
+    if cfg!(feature = "retail-12-0-7") {
+        if let Some(frame) = borrow_state_mut(state)?.widgets.get_mut(id) {
+            // INFERRED: public overwrite clears only this input's origin.
+            frame.secret_button_enabled = secret;
+        }
+    }
     set_button_enabled_value(state, id, enabled)?;
     if changed {
         fire_enable_disable_script(state, id, enabled)?;
@@ -171,6 +187,7 @@ fn collect_click_registration_args(
 }
 
 pub(super) fn set_button_state(state: &mut LuaState) -> LuaResult<u32> {
+    let secret = super::super::secret_origin::authenticate_retail_arguments(state)?;
     let id = frame_id_from_stack(state, 1)?;
     let state_name = String::from_stack(state, 2)?;
     let pushed = state_name.eq_ignore_ascii_case("PUSHED");
@@ -178,6 +195,10 @@ pub(super) fn set_button_state(state: &mut LuaState) -> LuaResult<u32> {
         let mut sim = borrow_state_mut(state)?;
         if let Some(frame) = sim.widgets.get_mut_visual(id) {
             frame.button_state = if pushed { 1 } else { 0 };
+            if cfg!(feature = "retail-12-0-7") {
+                // INFERRED: public overwrite clears only this input's origin.
+                frame.secret_button_state = secret;
+            }
         }
         sync_button_slot_visibility(&mut sim, id);
     }
@@ -186,15 +207,20 @@ pub(super) fn set_button_state(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn get_button_state(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let pushed = {
+    let (pushed, secret) = {
         let sim = borrow_state(state)?;
-        sim.widgets
-            .get(id)
-            .map(|frame| frame.button_state == 1)
-            .unwrap_or(false)
+        let frame = sim.widgets.get(id);
+        let pushed = frame.is_some_and(|frame| frame.button_state == 1);
+        let secret = cfg!(feature = "retail-12-0-7")
+            && frame.is_some_and(|frame| frame.secret_button_state || frame.secret_button_enabled);
+        (pushed, secret)
     };
     let name = if pushed { "PUSHED" } else { "NORMAL" };
-    let name_val = create_string(state, name);
+    let name_val = if secret {
+        rilua::table_security::wrap_host_secret_string(state, name)
+    } else {
+        create_string(state, name)
+    };
     state.push(name_val);
     Ok(1)
 }

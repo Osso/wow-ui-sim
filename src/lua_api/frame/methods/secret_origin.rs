@@ -23,6 +23,28 @@ pub(crate) fn unwrap_input(state: &LuaState, value: Val) -> LuaResult<(Val, bool
     Ok((value, secret))
 }
 
+/// Authenticate receiver, named arguments and extras before any validation.
+/// Replace call-stack inputs only after the entire list authenticates.
+pub(crate) fn authenticate_retail_arguments(state: &mut LuaState) -> LuaResult<bool> {
+    if !cfg!(feature = "retail-12-0-7") {
+        return Ok(false);
+    }
+    let values = state.stack[state.base..state.top]
+        .iter()
+        .map(|value| {
+            let secret = rilua::table_security::is_secret_value(state, *value);
+            let plain = rilua::table_security::unwrap_secret(state, *value)?;
+            Ok((plain, secret))
+        })
+        .collect::<LuaResult<Vec<_>>>()?;
+    // INFERRED: accepted extra secret arguments also contribute to the aspect.
+    let secret = values.iter().skip(1).any(|(_, secret)| *secret);
+    for (index, (value, _)) in values.into_iter().enumerate() {
+        state.stack_set(state.base + index, value);
+    }
+    Ok(secret)
+}
+
 /// Conservative guess: geometry depends on both parent and relative-anchor geometry.
 pub(crate) fn require_geometry_readable(state: &LuaState, id: u64) -> LuaResult<()> {
     if rilua::api::state_is_secure(state) {

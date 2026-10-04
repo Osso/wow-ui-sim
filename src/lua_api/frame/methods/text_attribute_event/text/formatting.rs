@@ -328,6 +328,7 @@ fn ensure_intrinsic_formatted_text_width(state: &mut LuaState, id: u64) -> LuaRe
 }
 
 pub(crate) fn set_font(state: &mut LuaState) -> LuaResult<u32> {
+    crate::lua_api::frame::methods::secret_origin::authenticate_retail_arguments(state)?;
     let id = frame_id_from_stack(state, 1)?;
     let text_type = val_to_string(state, stack_val(state, 2)).unwrap_or_default();
     if is_simple_html_frame(state, id) {

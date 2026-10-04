@@ -100,6 +100,7 @@ fn font_get_font_height(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn font_set_font(state: &mut LuaState) -> LuaResult<u32> {
+    crate::lua_api::frame::methods::secret_origin::authenticate_retail_arguments(state)?;
     let font = stack_val(state, 1);
     let path = Option::<String>::from_stack(state, 2)?;
     let height = Option::<f64>::from_stack(state, 3)?;
