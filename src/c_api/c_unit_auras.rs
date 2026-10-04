@@ -47,7 +47,84 @@ fn register_private_enumeration(state: &mut LuaState) -> LuaResult<()> {
         private,
         "GetAllPrivateAuraInstanceIDs",
         get_private_aura_instance_ids,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        private,
+        "IsPrivateAuraFilteredOutByInstanceID",
+        is_private_aura_filtered_out_by_instance_id,
     )
+}
+
+/// Private-aura counterpart of `C_UnitAuras.IsAuraFilteredOutByInstanceID`,
+/// evaluated against the private aura store. INFERRED: absent instances are
+/// filtered, matching the public query.
+#[cfg(feature = "aura-containers")]
+fn is_private_aura_filtered_out_by_instance_id(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = String::from_stack(state, 1)?;
+    let instance_id = i32::from_stack(state, 2)?;
+    let filter = String::from_stack(state, 3)?;
+    let context = crate::c_api::aura_filter::AuraFilterContext::for_unit(state, &unit);
+    let is_filtered = private_aura_info(state, &unit, instance_id).is_none_or(|aura| {
+        !crate::lua_api::globals::auras::aura_matches_filter_string(&aura, &filter, &context)
+    });
+    state.push(Val::Bool(is_filtered));
+    Ok(1)
+}
+
+/// Read one private AuraData record as the public aura model.
+#[cfg(feature = "aura-containers")]
+fn private_aura_info(state: &mut LuaState, unit: &str, instance_id: i32) -> Option<AuraInfo> {
+    let namespace = super::global_val(state, "C_UnitAurasPrivate");
+    let private_state = table_get(state, namespace, "_state");
+    let by_unit = table_get(state, private_state, "auraDataByUnit");
+    let Val::Table(records) = table_get(state, by_unit, unit) else {
+        return None;
+    };
+    let record = state
+        .gc
+        .tables
+        .get(records)?
+        .get_int(i64::from(instance_id));
+    if !matches!(record, Val::Table(_)) {
+        return None;
+    }
+    Some(AuraInfo {
+        name: record_string(state, record, "name").unwrap_or_default(),
+        spell_id: record_number(state, record, "spellId") as i32,
+        icon: record_number(state, record, "icon") as i32,
+        duration: record_number(state, record, "duration"),
+        expiration_time: record_number(state, record, "expirationTime"),
+        applications: record_number(state, record, "applications") as i32,
+        source_unit: record_string(state, record, "sourceUnit").unwrap_or_default(),
+        is_helpful: record_bool(state, record, "isHelpful"),
+        is_raid: record_bool(state, record, "isRaid"),
+        is_nameplate_only: record_bool(state, record, "isNameplateOnly"),
+        is_stealable: record_bool(state, record, "isStealable"),
+        can_apply_aura: record_bool(state, record, "canApplyAura"),
+        is_from_player_or_player_pet: record_bool(state, record, "isFromPlayerOrPlayerPet"),
+        dispel_type: record_string(state, record, "dispelName"),
+        aura_instance_id: instance_id,
+    })
+}
+
+#[cfg(feature = "aura-containers")]
+fn record_number(state: &mut LuaState, record: Val, key: &str) -> f64 {
+    match table_get(state, record, key) {
+        Val::Num(number) => number,
+        _ => 0.0,
+    }
+}
+
+#[cfg(feature = "aura-containers")]
+fn record_bool(state: &mut LuaState, record: Val, key: &str) -> bool {
+    matches!(table_get(state, record, key), Val::Bool(true))
+}
+
+#[cfg(feature = "aura-containers")]
+fn record_string(state: &mut LuaState, record: Val, key: &str) -> Option<String> {
+    let value = table_get(state, record, key);
+    crate::lua_api::methods::val_to_string(state, value)
 }
 
 pub(crate) fn register_sound_trigger_enum(state: &mut LuaState, enums: Val) {
