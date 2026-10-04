@@ -176,7 +176,7 @@
       "symbols": [
         "778 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication (added/changed) or absence (removed, raw and ordinary lookup) in a fully loaded default-Retail environment. Publication only: no signature, behavior, security or payload proof. 11 known gaps baselined in tests/data/patch_12_1_0_sweep_known_gaps.json. Removed symbols accepted when the value is a Lua function from a cached Blizzard deprecation file.",
+      "scope": "Data-driven publication (added/changed) or absence (removed, raw and ordinary lookup) in a fully loaded default-Retail environment. Publication only: no signature, behavior, security or payload proof. 10 known gaps baselined in tests/data/patch_12_1_0_sweep_known_gaps.json. Removed symbols accepted when the value is a Lua function from a cached Blizzard deprecation file.",
       "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_1_0_publication_sweep.rs"
@@ -348,6 +348,21 @@
       "implementation": "see commits ef0843889..8e01da096",
       "compiled_revision": "8e01da096",
       "proof": "main-thread on master 8e01da096: 81 patch_12_1_0_ integration, broad aura/forbidden/secure/taint/tooltip/visibility/event/curve filters 1645 pass (2 pre-existing), lib same 6 pre-existing failures as f8c84069c, prefork_full_ui 2011/7 pre-existing; no independent review"
+    },
+    {
+      "id": "aura-secret-access-12-1-0",
+      "symbols": [
+        "DenyTaintedAccessWhenAurasAreSecret, CanBeAccessedInContext, HasAccessConstraints"
+      ],
+      "scope": "While unit_auras_restricted is set, tainted callers of frame methods on access-restricted objects get a forbidden error; initializeFrame runs before the restriction; buttons stay accessible through PLAYER_LOGIN; access returns when auras go public. Restriction application left to cached AuraContainerUtil.ApplyAccessRestrictions. INFERRED: error text; aura secrecy is a manual state input (not driven by combat/encounters).",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_1_0_aura_access_restrictions.rs",
+        "tests/patch_12_1_0_surface_closures.rs"
+      ],
+      "implementation": "src/c_api/unit_aura_access.rs, frame_id_from_stack in src/lua_api/methods.rs",
+      "compiled_revision": "501d6f13a",
+      "proof": "main-thread on master 501d6f13a: 86 patch_12_1_0_ tests, broad forbidden/secure/taint/eventutil/action_bar/access/settings 824 pass, lib/prefork only pre-existing failures, mists --check clean, lua-errors []; no independent review"
     }
   ],
   "source_rows": [
@@ -413,9 +428,11 @@
     },
     {
       "source_id": "prose-undated-013",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "CanBeAccessedInContext is registered on retail since round 3 (forbidden-aspects feature, access_restrictions.rs). Still pending: automatic aura-secret activation and the aura restriction policy are unmodeled."
+      "capabilities": [
+        "aura-secret-access-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven with aura secrecy as a manual state input (patch_12_1_0_aura_access_restrictions)."
     },
     {
       "source_id": "prose-undated-014",
@@ -1317,15 +1334,19 @@
     },
     {
       "source_id": "prose-2026-07-14-163",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+      "capabilities": [
+        "aura-secret-access-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven with aura secrecy as a manual state input (patch_12_1_0_aura_access_restrictions)."
     },
     {
       "source_id": "prose-2026-07-14-164",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+      "capabilities": [
+        "aura-secret-access-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven with aura secrecy as a manual state input (patch_12_1_0_aura_access_restrictions)."
     },
     {
       "source_id": "prose-2026-07-14-165",
@@ -1345,7 +1366,7 @@
       "source_id": "prose-2026-07-14-167",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+      "note": "Page only says error messages improved; cached Blizzard UI has no native message text to compare."
     },
     {
       "source_id": "source-context-170",
@@ -1437,9 +1458,11 @@
     },
     {
       "source_id": "prose-2026-07-21-183",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "CanBeAccessedInContext is registered on retail since round 3 (forbidden-aspects feature, access_restrictions.rs). Still pending: automatic aura-secret activation and the aura restriction policy are unmodeled."
+      "capabilities": [
+        "aura-secret-access-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven with aura secrecy as a manual state input (patch_12_1_0_aura_access_restrictions)."
     },
     {
       "source_id": "prose-2026-07-21-184",
@@ -1623,9 +1646,11 @@
     },
     {
       "source_id": "prose-2026-07-23-213",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "CanBeAccessedInContext is registered on retail since round 3 (forbidden-aspects feature, access_restrictions.rs). Still pending: automatic aura-secret activation and the aura restriction policy are unmodeled."
+      "capabilities": [
+        "aura-secret-access-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven with aura secrecy as a manual state input (patch_12_1_0_aura_access_restrictions)."
     },
     {
       "source_id": "prose-2026-07-23-214",
@@ -7109,9 +7134,11 @@
     },
     {
       "source_id": "wt-framexml-EventUtil.AreVariablesLoaded-986",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent after removing the source patch that skipped Blizzard EventUtil.lua (sweep)."
     },
     {
       "source_id": "wt-framexml-ExpansionTrial_CheckLoadUI-987",

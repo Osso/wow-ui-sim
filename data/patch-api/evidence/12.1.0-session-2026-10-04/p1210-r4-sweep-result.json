@@ -3206,11 +3206,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-framexml-ExpansionTrial_CheckLoadUI-987": {
     "expected": {
