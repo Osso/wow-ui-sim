@@ -1,3 +1,7 @@
+## [2026-10-04] evidence | Party roles, solo formation and conditional markers
+
+[Bounded contract and development proof](../specs/party-12-0-7-audit.md) covers eight candidate source rows; historical/native and server-input gaps remain. Page coverage ledger unchanged.
+
 ## [2026-10-03] evidence | Round 101 accounted
 
 Four prose rows partial under two capabilities. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#round-101--aura-header-ordering-and-talent-helper-delegation); 133 capabilities/362 IDs; 24 pending /270 bounded /33 partial /35 metadata.

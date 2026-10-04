@@ -2,3 +2,5961 @@
 
 Ten capabilities. [Audit page](investigations/patch-12-0-7-api-audit.md#rounds-13-accounted--2026-10-04); 166 IDs; 100 pending /46 bounded /7 partial /13 metadata.
 
+## [2026-10-03] docs | 12.0.7 page audit started
+
+Exhaustive ledger for the retained 12.0.7 page excerpt seeded from the register plus 35 supplemental rows. [Audit page](investigations/patch-12-0-7-api-audit.md); 0 capabilities/166 source IDs; 153 pending /0 bounded /0 partial /13 metadata.
+
+## [2026-10-03] docs | Round 100 follow-ups accounted
+
+Exact534 bounded; roster names, selected-unit parsing and viewed outfit recorded on their rows. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#round-100--review-follow-ups); 131 capabilities/362 IDs; 28 pending /270 bounded /29 partial /35 metadata.
+
+## [2026-10-03] docs | B99 and Classic accounted; table.freeze epoch proven
+
+Seven rows bounded, nine partial; a rejected aura-rekey defect fixed. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch99-and-classic--twelve-capabilities-one-rejected-slice-fixed); 131 capabilities/362 IDs; 28 pending /269 bounded /30 partial /35 metadata.
+
+## [2026-10-03] docs | B98 nine capabilities accounted, blocked rows annotated
+
+Twelve rows bounded, six partial, one metadata-only; nineteen blocked rows carry specific notes. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch98--instanced-identity-model-guard-cast-events-tm-outfit-delve-instance-tablefreeze-quest-favor); 119 capabilities/362 IDs; 42 pending /262 bounded /23 partial /35 metadata.
+
+## [2026-10-03] docs | Ten held 12.0.5 rows reconciled
+
+Exact278/279/281/282/291/342/347 bounded, structures 650/651 partial, prose 03-25-088 metadata-only, all under existing capabilities. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#held-rows-reconciled-against-existing-capabilities); 110 capabilities/362 IDs; 61 pending /250 bounded /17 partial /34 metadata.
+
+## [2026-10-03] docs | B97 equipset, tooltip line secrecy, identity GUID suppression
+
+Three slice specs own prose 03-25-121/03-31-178 and 03-31-136/03-25-075 as bounded, 03-12-048/03-25-084 as partial. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch97--equipset-command-tooltip-line-secrecy-identity-guid-suppression); 110 capabilities/362 IDs; 71 pending /243 bounded /15 partial /33 metadata.
+
+## [2026-10-03] docs | B95/B96 eight explicit-state slices accepted
+
+Linked eight slice specs and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch9596--eight-explicit-state-slices-accepted): twenty source IDs accounted after commit `a0e23199d` and four independent reviews. 107 capabilities/362 IDs; 77 pending /239 bounded /13 partial /33 metadata.
+
+## [2026-10-03] docs | B94 GetSpellBookItemCastCount accepted
+
+Linked [acceptance SSOT](../specs/spell-book-cast-count.md#development-proof-and-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch94--getspellbookitemcastcount-registered-and-accepted): row318 bounded after RED `96994beaf`, producer `a881a1729` and independent review. 99 capabilities/362 IDs; 97 pending /220 bounded /12 partial /33 metadata.
+
+## [2026-10-03] docs | B93 GetAuraDuration accepted
+
+Linked [acceptance SSOT](../specs/aura-duration-object.md#development-proof-and-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch93--getauraduration-registered-and-accepted): row380 bounded after inputs `b9b9eeec8`, producer `012cf889a` and independent review. 98 capabilities/362 IDs; 98 pending /219 bounded /12 partial /33 metadata.
+
+## [2026-10-03] docs | B91/B92 accepted
+
+Linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch91--fontstring-setfont-shape-and-removed-housing-id-fields): SetFont shape tests (547/548 bounded, 549 partial), housing entry-ID field removals (645/646), `UnitAttackSpeed` inputs (504) after RED/GREEN and independent review. 97 capabilities/362 IDs; 99 pending /218 bounded /12 partial /33 metadata.
+
+## [2026-10-03] docs | B90 four already-implemented rows accepted
+
+Linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch90--four-already-implemented-rows-accepted): row371 joins `aura-refresh-duration`; prose `023/026` under new `zero-span-charge-durations`; prose `029` under new `aura-classification-public-flags`. Independent verification plus fresh 18/27/10/7 runs. 94 capabilities/362 IDs; 105 pending /213 bounded /11 partial /33 metadata.
+
+## [2026-10-03] docs | B88 explicit stat inputs accepted
+
+Linked [acceptance SSOT](../specs/explicit-stat-inputs.md#development-proof-and-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch88--explicit-inputs-replace-ten-constant-stat-producers): rows 422/434/436/440/452/464/470/472/478/488 bounded after inputs `be7c0cc2c`, producers `62d0ce70f` and independent review. 92 capabilities/362 IDs; 109 pending /209 bounded /11 partial /33 metadata.
+
+## [2026-10-03] docs | B89 prose classification
+
+Linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch89--prose-classification-26-metadata-only-6-restatements-credited): 26 narrative prose rows metadata-only, 03-25 `105/106/107/116` and 03-31 `171` bounded under existing capabilities, 03-25 `104` partial; no new behavior or capability. 91 capabilities/362 IDs; 119 pending /199 bounded /11 partial /33 metadata.
+
+## [2026-10-03] docs | B86 aura expiration query argument policy accepted
+
+Linked [acceptance SSOT](../specs/aura-expiration-time.md#independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch86--aura-expiration-query-argument-policy-accepted): row365 bounded after an independent rejection (unit validated before instance ID authenticated), ordering RED and corrected producer `d1bbdc8e8`; independent rerun 9/9 + 18/18. 91 capabilities/362 IDs, 150/194/11/7.
+
+## [2026-10-03] docs | B87 eight existing stat models accepted
+
+Linked [acceptance SSOT](../specs/retail-missing-stat-inputs.md#b87-existing-model-output-annotations-accepted--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch87--eight-existing-stat-models-accepted): eight state-backed stat rows bounded output-only; eleven constant/proxy rows left pending with required inputs named. Fresh 35/35 `character_stats::` run. 90 capabilities/362 IDs, 151/193/11/7.
+
+## [2026-10-03] docs | B85 attack power and spell haste output annotations accepted
+
+Linked [acceptance SSOT](../specs/unit-stat-output-restriction.md#b85-independent-bounded-acceptance-and-refreshed-restriction-proof--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch85--attack-power-and-spell-haste-output-annotations-accepted): exact502/508/512 bounded output-only from an independent Sol source audit; fresh 4/4 stat-restriction run at clean `0d2a98596` replaces B82 record reuse for B83–B85; 478/504 deferred. `aura_duration.rs` committed `608d52558`; rustfmt installed, whole-tree fmt check exit0. 89 capabilities/362 IDs, 159/185/11/7.
+
+## [2026-10-03] docs | B84 ranged crit and haste output annotations accepted
+
+After `64a19cb63`, linked [acceptance SSOT](../specs/unit-stat-output-restriction.md#b84-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch84--ranged-crit-and-haste-output-annotations-accepted): exact474/476 bounded output-only from an independent Sol source audit; one supplement wording claim corrected; committed B82 restriction record reused, no tests/builds run. 88 capabilities/362 IDs, 162/182/11/7. B82 agent719 metadata audit still uninspected. Only audit/index/log updated.
+
+## [2026-10-03] docs | B83 spell crit output annotation accepted
+
+After `e8a6b7527`, linked [acceptance SSOT](../specs/unit-stat-output-restriction.md#b83-independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch83--spell-crit-output-annotation-accepted): exact486 bounded output-only from an independent Sol source audit; committed B82 restriction record reused, no tests/builds run, raw `/tmp` artifacts unreadable on this host. 87 capabilities/362 IDs, 164/180/11/7. B82 agent719 metadata audit not inspected (reports absent here); no acceptance inferred. Only audit/index/log updated.
+
+## [2026-10-03] docs | B82 bounded acceptance and qualified check reconciled
+
+After `7f53f4648`, linked [acceptance SSOT](../specs/spell-bonus-stat-security.md#independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch82--independent-bounded-acceptance): main716 bounded12 refreshed accepted; startup/loaded-probe and scopedfmt/source/readability accepted. Check remains PROTOCOL QUALIFIED (success JSON/zero diagnostics; synchronous execution/direct exit not retained), not exit0/async/all-gates-pass; actual test compile0 supplies compile proof, no rerun. Exact482/484 bounded output-only, input policy separate/proxy unchanged;86 capabilities/362 IDs,165/179/11/7, new independent metadata audit pending. Linked gaps and original probe/RED/downstream GC limits retained without duplicating full proof; historical input/producer checkpoints and B81 accepted707/durable71364 versus missing71148 unaccepted preserved. Only audit/index/log updated; no execution gates, delegation or push.
+
+## [2026-10-03] docs | B82 producer and supplied grouped RED checkpoint
+
+After producer `d21d4a208`, linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch82--producer-checkpoint-proof-pending) and [spec SSOT](../specs/spell-bonus-stat-security.md). Supplied `17211be121` compile0/zero diagnostics90.716985s; run101/1.115939s,4 PASS/3 FAIL at required denial-before-output (tainted NUM/malformed/GC schedules), not full GC proof. One callback/eight lines authenticates original school via existing VM unwrap before stat read/output, Retail12.0.5-gated/error context; public shape/ignored-school intellect proxy/healing/wrapping unchanged, no new type/range/formula/nil/native claims. GREEN3892114 compiling7 new+4 stat+1 proxy plus startup/loaded-runtime probe, independent verifier pending; no polling/inferred GREEN. Historical `71c384eec` then-pending checkpoint and prior STDERR marker/assertion failure/exit0-not-PASS preserved.482/484 OUTPUT only; B81 accepted707+durable71364/64, missing-artifact71148/48 unaccepted;85 capabilities/362 IDs,167/177/11/7 unchanged. Only audit/index/log updated; no execution gates, delegation or push.
+
+## [2026-10-03] docs | B82 inputs-only historical checkpoint
+
+Linked [B82 audit checkpoint](investigations/patch-12-0-5-api-audit.md#batch82--spell-bonus-inputs-only-checkpoint) and [spell bonus security SSOT](../specs/spell-bonus-stat-security.md): seven authored cases/test+spec inputs `17211be121`, all new requirements unchecked; main worker3886715 compiling at `/tmp/patch-12.0.5-spell-bonus-stat-red-ops/` at supplied stage, no completed compiled RED/GREEN/producer. Qualified prior pinned runtime failure and corrected stdout-only false query linked without duplicating proof/cases or rerunning. Existing intellect proxy/explicit output model unchanged; authentication planned, unverified policy/native/activation/older-profile gaps retained. Exact482/484 output-only delta adds no argument-removal/output/capability/status credit. B81 accepted707+durable corrective71364/64 and original711 missing-artifact48/48 unaccepted preserved;85 capabilities/362 IDs,167/177/11/7 unchanged. Only audit/index/log updated; no polling, execution gates, delegation or push.
+
+## [2026-10-03] docs | B81 independent bounded acceptance reconciled
+
+After `33e444bad`, linked [acceptance SSOT](../specs/tooltip-unit-debuff-security.md#independent-bounded-acceptance--2026-10-03) and [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch81--independent-bounded-acceptance): main accepts707,71 distinct all-refreshed PASS (15 Debuff+18 Buff+24 instance+14 filter), current local startup `[]`/`casc=false`, scopedfmt/defaultcheck. Shared indexed producer `d7d7b41fc` preserves Buff under refreshed controls; old-profile body/wiring source-proven only. [Coverage SSOT](../../data/patch-api/sources/12.0.5-page-coverage.json) records85 capabilities/362 ordered IDs and unchanged167/177/11/7 statuses; corrective713 metadata audit accepted64/64 with durable host-read-back reports; original711 missing-report48/48 claim remains unaccepted ([audit history](investigations/patch-12-0-5-api-audit.md#batch81--independent-bounded-acceptance)), no new semantic execution credit. Exact347 pending/access/restricted outputs UNMODELED and general-unit/native/GUI/CASC/all-profile/full-suite/unowned globalfmt1 gaps retained. Main rejects test-helper length findings classified test code below200; neutral callback naming deferred/nonblocking. Historical RED/input `d860ea62b`/producer `b07e860c8` pending checkpoints and B79/B80 terminal corrective proofs preserved; full proof not duplicated. Only audit/index/log reconciled, no execution gates or delegation.
+
+## [2026-10-03] docs | B81 producer and supplied RED checkpoint
+
+Linked [audit follow-up](investigations/patch-12-0-5-api-audit.md#batch81--producer-checkpoint-proof-pending) and [GetUnitDebuff SSOT](../specs/tooltip-unit-debuff-security.md) after producer `d7d7b41fc`. Main supplies `6aa7a391b` compile0/zero diagnostics89.594915s,15 FAIL/0 PASS1.898831s and stdout hash recorded in audit; reached empty selected payload/original userdata/API context, not all GC branches. Shared original-three-position authentication before parse and live harmful player/party visibility/PLAYER-before-index producer inventory recorded without acceptance. Existing builder/older profiles retained; modern old provider retired, Buff preservation pending controls; chosen target exclusion/policies inferred. GREEN3863957 pending/compiling15 Debuff+18 Buff+24 instance+14 filter/startup, verifier707 pending. No polling/log reads/source-inferred GREEN. Exact347 pending/access/restricted outputs UNMODELED; B80 counts unchanged84 capabilities/362 IDs,167/177/11/7. Historical `d860ea62b` authored/compiling checkpoint and earlier proofs preserved. Only audit/index/log changed; no execution gates, delegation or push.
+
+## [2026-10-03] docs | B81 exact347 inputs-only checkpoint
+
+Linked [GetUnitDebuff SSOT](../specs/tooltip-unit-debuff-security.md) and [B81 audit checkpoint](investigations/patch-12-0-5-api-audit.md#batch81--exact347-inputs-only-checkpoint):15 authored cases/test+spec inputs `6aa7a391b`; main async RED worker3857761 at `/tmp/patch-12.0.5-debuff-indexed-red-ops/` compiling, NOT executed/accepted at supplied checkpoint. No producer/PASS claim or worker polling; main supplies finished-worker evidence. Existing unit/index-discarding empty DTO remains; harmful player/party model planned,347 pending/access/restricted outputs UNMODELED. Prior wiki `31d7340c5` B80 terminal701 PASS32/32 accepted after `7a9ce5d37` remains correct. Historical B79/B80 proofs/gaps and accounting preserved. Three wiki docs only; no source/spec/metadata edits or execution gates.
+
+## [2026-10-03] docs | B80 acceptance and B79 terminal accounting follow-up
+
+After `7a9ce5d37`, linked [B80 acceptance SSOT](../specs/unit-identity-equality.md#b80-independent-bounded-acceptance--2026-10-03) and added [audit follow-ups](investigations/patch-12-0-5-api-audit.md#batch80--bounded-unit-comparison-acceptance). Main accepts698 bounded12 refreshed pinned cases; exact142/143/144 bounded,141 partial;84 capabilities/362 IDs,167 pending/177 bounded/11 partial/7 metadata. Independent701 metadata audit accepted PASS32/32;83 other capabilities/358 other rows and register/hash/policy unchanged, no reruns. Historical B5/RED, inherited690 gates, open native/profile/identity/UI/full-suite limits and globalfmt1 retained. B79 terminal696 PASS31 + corrective699 PASS33 supersede only in-flight query defects; bounded18-table/register-hash corrected,342 pending/status limits unchanged. Earlier checkpoint truth remains below. Three wiki docs only; no source/spec/metadata edits or execution gates; main owns integration.
+
+## [2026-10-03] evidence | B79 bounded acceptance reconciled
+
+Linked [acceptance SSOT](../specs/tooltip-unit-buff-security.md#independent-bounded-acceptance--2026-10-03), committed `1e042a289`, in index and [audit](investigations/patch-12-0-5-api-audit.md#batch79--exact342-inputs-only-checkpoint): main-accepted690+694,18 refreshed `ad1821805` +38 inherited =56 distinct, not56 new runs. Direct root identity/readability accepted; scoped check/startup reused. Original690 STATE/root-only source qualifications and RED history retained; globalfmt1 only unowned `aura_duration.rs:44`, no clearance. Capability83→84;362 IDs/statuses167 pending/174 bounded/14 partial/7 metadata unchanged. Independent accounting pending a new agent; exact342/access/output/general-unit/native/old-profile gaps remain open. Separate qualified mount/headless/CASC acceptance unchanged.
+
+## [2026-10-03] docs | B79 producer inventory pending proof
+
+Linked producer `a28293ee0` [inventory SSOT](../specs/tooltip-unit-buff-security.md#implementation-inventory) in [B79 audit checkpoint](investigations/patch-12-0-5-api-audit.md#batch79--exact342-inputs-only-checkpoint) and index. Main supplies actual compiled RED at inputs `a23adf150`:compile0/88.098727s/zero diagnostics,0 PASS/18 FAIL in2.161859s; identity/miss/from-stack/auth-context failures do not prove all downstream GC branches. GREEN3821573 and independent verification active; no GREEN/acceptance. Three wiki paths only, supplied evidence, no execution/delegation/commit.
+
+## [2026-10-03] docs | B79 exact342 historical inputs checkpoint
+
+Linked committed `a23adf150` [inputs SSOT](../specs/tooltip-unit-buff-security.md) in [B79 audit checkpoint](investigations/patch-12-0-5-api-audit.md#batch79--exact342-inputs-only-checkpoint) and index:18 authored tests, main precommit formatting; at that historical checkpoint worker3815774 asynchronous compiled RED was active, no completed RED/GREEN/acceptance was then claimed. Preserved exact342 pending, UNMODELED access/restricted outputs and historical evidence limits. Latest supplied `5ec536a36` accounting accepted68737/37 unchanged83 capabilities/362 rows,167/174/14/7; mount291 pending. Only three wiki paths edited; no execution, delegation, tests, checks or commit.
+
+## [2026-10-03] evidence | Mount capability and qualified desktop saved proof accepted
+
+[Mount acceptance SSOT](../specs/mount-spell-identifier.md#independent-qualified-saved-acceptance--2026-10-03) owns main-accepted independent674 and retained654/653 acceptance without reruns. Separate headless startup and three-texture CASC decode do not prove headless CASC integration or GUI/access readiness. Main adds bounded mount capability:83, unchanged167 pending/174 bounded/14 partial/7 metadata,362 IDs; source291 AUDIT-PENDING, source245/B78 unchanged. Historical failure/provenance/broad-suite limits retained. Four authorized docs only; no execution, delegation or commit.
+
+## [2026-10-03] docs | B78 bounded public membership checkpoint
+
+Linked [acceptance SSOT](../specs/action-bar-membership.md#independent-bounded-acceptance--2026-10-03) in existing [audit](investigations/patch-12-0-5-api-audit.md#batch78--public-direct-spell-membership-bounded-acceptance) and index after `04586ffe2`. Independent670 accepts11 new+17 controls, local startup `[]`, defaultcheck0/scopedfmt0; unowned globalfmt1 remains uncleared. Public direct-model only; source245 special-bar/native AllowedWhenTainted gaps and mount291 remain pending. Accounting362 IDs/82 capabilities; statuses167 pending/174 bounded/14 partial/7 metadata unchanged. Desktop probe was unaccepted at this historical82-capability checkpoint; current separate qualified acceptance is linked above. Three wiki files only; no Git operations, tests or delegation.
+
+## [2026-10-03] docs | B76/B77 and UnitHasPowerType checkpoint
+
+Reconciled existing [audit](investigations/patch-12-0-5-api-audit.md#batch77--bounded-mount-proof-desktop-startup-pending) and index after `e49ec0626`/`8dc686e96`. [Mount SSOT](../specs/mount-spell-identifier.md#implementation-inventory) owns local16/desktop16 PASS plus check; desktop startup/CASC were PENDING at that historical checkpoint; current separate qualified acceptance is linked above. [B76 SSOT](../specs/unit-stat-output-restriction.md#b76-existing-model-bounded-acceptance--2026-10-03) retains647 report31/31 with unavailable raw artifacts disclosed. [Power acceptance SSOT](../specs/unit-has-power-type.md#independent-bounded-acceptance--2026-10-03) owns independent662 five saved PASS; source157 already bounded, no row/count or fmt/native/older-profile credit. Coverage remains167 pending/174 bounded/14 partial/7 metadata,362 IDs/81 capabilities.
+
+## [2026-10-03] evidence | B75 existing-model annotations accepted
+
+Updated [B75 acceptance SSOT](../specs/retail-missing-stat-inputs.md#b75-existing-model-bounded-acceptance--2026-10-03), [audit](investigations/patch-12-0-5-api-audit.md#batch75--existing-model-output-annotations-accepted) and index from supplied632 evidence/accounting88362f9a6. Output annotations only; saved-proof equivalence limits, accounting640 PASS39/39 and native/B74/OPEN full-suite gates retained. Four-doc diff only; no code, execution gates, delegation or commit.
+
+## [2026-10-03] docs | B74 producer and fixture-repair checkpoint
+
+[B74 proof SSOT](../specs/ambiguate-context.md#b74-producer-checkpoint--2026-10-03) and [audit checkpoint](investigations/patch-12-0-5-api-audit.md#batch74--ambiguate-inputs-only-checkpoint) supersede inputs-only status: actual RED `d11`, build0/zero diagnostics828.602250s;22 cases4 PASS/18 FAIL21.161436s. Earlier E0277 is not RED. Producer `9441f7c7c`: real public transform/old fallback removed, private-epoch context-secret rejection before arg1, old Lua exact body/inverse boolfalse retained. GREEN/check/Forever independent acceptance PENDING; boxes unchecked, separate default/Forever async roots and revision-scoped source proof. [Repair checkpoint](investigations/patch-12-0-5-api-audit.md#test-only-fixture-repairs--pending-proof-checkpoint) retains independent609 exterior acceptance; two LoC cases observed fresh PASS from fixed RED operations, new independent gate PENDING. No native/416/count promotion/full-suite or whole-HEAD clearance; historical dirty-combined/check-interruption limits retained.
+
+## [2026-10-03] docs | Reconcile B73 bounded acceptance
+
+[Removal acceptance SSOT](../specs/house-exterior-attached-decor.md#b73-independent-bounded-acceptance--2026-10-03) and [Batch73 audit](investigations/patch-12-0-5-api-audit.md#batch73--fixture-removal-bounded-acceptance) record saved **60/60 modern PASS (19 new/41 retained)**, separate Forever inverse1 PASS, startup0 `[]`, scopedfmt/check0 zero diagnostics. Later full-suite summary: **12,022 PASS/60 FAIL/18 ignored**, separate custom11 failures, doctests **0 PASS/3 ignored**; not blanket GREEN or full-UI/whole-goal completion. Historical compiled RED19 FAIL/0 PASS at710674128, E0063/approved `9d9015e1e` repair and EXDEV/pending checkpoint preserved; bounded acceptance supersedes only selected pending gates. Inferred/native limits and helper LENGTH advisory retained. Main accounting `cbf001ba5` promotes only267/268, adds one capability; independent603 PASS33/33. Current175 pending/166 bounded/14 partial/7 metadata,362 ordered IDs/78 capabilities. Historical counters retained; no broad-suite clearance.
+
+## [2026-10-03] docs | Reconcile B72 bounded acceptance
+
+[Acceptance SSOT](../specs/housing-destroy-entry.md#b72-independent-bounded-acceptance--2026-10-03) and [Batch72 audit](investigations/patch-12-0-5-api-audit.md#batch72--destroyentry-bounded-acceptance) record main-accepted independent582 scoped PASS at `ffb1845bc`: fresh35 PASS=24 DestroyEntry+11 Admin/storage, startup0 `[]`, scopedfmt/check0 zero diagnostics143.492908539s including unmeasured lock wait; GREEN compile160.637006766s zero diagnostics, runners9.64s+2.00s, startup5.546410418s. No B71 89 reuse; unchanged model/publication/Admin/shared input bodies. Bounded modeled requirements checked, native/inferred mixed policy and historical15-case proof separate; prior GREEN/verifier pending superseded. GC before calls/during dispatch/nonaliasing only, no forced input-allocation GC/direct top-dispatch-error/queued-payload equality credit. Nonblocking helper/matrix advisories do not authorize refactor. Accounting `c6b23304c` existing cap/notes281282 only, separate validation pending; rows audit-pending,177/164/14/7,362IDs/77caps unchanged. Native UI/all-profile/global privacy/cumulative epoch/dirty/globalfmt/history limits preserved. Four owned docs only; supplied evidence, no delegation/build/runtime/check/protected-source inspection/broad scan.
+
+## [2026-10-03] docs | Historical B72 producer and accepted compiled RED
+
+Updated only [DestroyEntry SSOT](../specs/housing-destroy-entry.md#b72-implementation-and-accepted-compiled-red--2026-10-03), [Batch72 audit](investigations/patch-12-0-5-api-audit.md#batch72--destroyentry-bounded-acceptance), index and log. Producer `7f7d0fe8a` follows accepted `0f7f47297` RED: 24 tests, 14 retained PASS/10 new FAIL, 7.33s; compile261.349678s/zero diagnostics. Saved artifact inspection and only permitted storage/destroy_input source reads; narrow authentication order/underlying guard/rooting recorded without behavioral acceptance. At this historical checkpoint GREEN/verifier pending; current acceptance above supersedes that status. Old 15-case fixture proof remains separate; conservative secret rejection superseded only for DestroyEntry. Rows281/282 audit-pending,177/164/14/7 unchanged; no native/all-profile/placement/domain/whole-goal credit. No delegation/runtime/build/checks/protected-source inspection/broad scans.
+
+## [2026-10-03] docs | Reconcile B71 bounded acceptance
+
+[Batch71 audit](investigations/patch-12-0-5-api-audit.md#batch71--pending-decor-bounded-acceptance) links [acceptance SSOT](../specs/housing-pending-decor.md#b71-implementation--independent-bounded-acceptance): main accepts independent574 PASS,89 distinct Retail PASS=20 pending+69 catalog/startup0 `[]`, final scopedfmt/defaultcheck0 zero diagnostics21.503126679s at `d83666b13`; import-only runtime equivalence, not new final ELF/zeroDiag GREEN rebuild. Saved GREEN/original-check warnings retained; checked requirements mean bounded pending/input only. Accounting `c7366a4a0` existing cap/notes278279 only, verification pending new agent; rows audit-pending,177/164/14/7,362IDs/77caps unchanged. Pending secure-secret rejection superseded only for pending; shared catalog unchanged. Helper-length advisory rejected as unrelated refactor; no blocking counterexample. Historical checkpoints/native/type/acquisition/profile/epoch/dirty/globalfmt/process/full-placement limits preserved. Four owned docs only; no delegation/source inspection/execution gates.
+
+## [2026-10-03] implementation | Historical B71 compiled RED and pending producer
+
+[Batch71 audit](investigations/patch-12-0-5-api-audit.md#batch71--pending-decor-bounded-acceptance) links [pending-decor SSOT](../specs/housing-pending-decor.md#b71-implementation--independent-bounded-acceptance): main-supplied `c685f487` narrow AllowedWhenUntainted original-selector/all-three-field authentication before parse, rooted table/check_table_access; shared catalog and host-model/stock/nonplacement/no-events unchanged. Actual `4bec1394a` compiled RED after missing LuaApi import fix:220.479727s/zero diagnostics,13 PASS/7 FAIL in5.58s, twenty tests13 controls/seven secret boundaries. `df00d200` compile failure is not behavioral RED; historical fourteen-test proof remains separate. At this historical checkpoint GREEN/verifier was PENDING; current bounded acceptance is linked above. Exact278/279 pending,177/164/14/7 accounting unchanged. No native/full-placement/acquisition/profile-parity/other catalog-security credit. Four authorized docs only; supplied evidence, no delegation/source inspection/execution gates.
+
+## [2026-10-03] docs | Reconcile B70 bounded acceptance
+
+[Batch70 audit](investigations/patch-12-0-5-api-audit.md#batch70--exterior-attached-decor-bounded-acceptance) links [acceptance SSOT](../specs/house-exterior-attached-decor.md#independent-bounded-acceptance--2026-10-03): independent566 accepted for exact272/274/276; accounting `0cf868024`, independent568 PASS; linked SSOT owns counts/proof. Checked requirements mean bounded simulator proof only; native/inferred and historical failure/protected-path limits remain. Prior counters remain historical; broader audit open. Four owned docs only; no execution gates/source operations.
+
+## [2026-10-02] implementation | Document B70 pending exterior acceptance
+
+Updated only the [B70 spec/proof SSOT](../specs/house-exterior-attached-decor.md#proof-ledger), [audit](investigations/patch-12-0-5-api-audit.md#batch70--exterior-attached-decor-bounded-acceptance) and index/log. Recorded supplied pre-runtime RED and main-authored runtime/query commits as implementation awaiting acceptance; cached declarations, inferred policies and native gaps remain distinct. No accepted capability/core/remove/enum credit or accounting edits; prior B69 checkpoints/gaps preserved. Docs-only inspection; no builds/tests/checks, delegation or protected-file inspection.
+
+## [2026-10-03] source accounting | Record accepted six-row classification
+
+After `c7f9635cf`, [accounting SSOT links](investigations/patch-12-0-5-api-audit.md#six-source-occurrences--metadata-only-accounting-accepted) record accepted independent556 metadata-only classifications, preserved IDs/capabilities/source integrity and separately pending adjacent contracts. Zero runtime/implementation credit. B69 `fae926860`/`c22c5d5a5` counts retained as historical checkpoints; broader audit open. Three owned wiki files only.
+
+## [2026-10-03] docs | Reconcile B69 bounded acceptance
+
+After `fae926860`, reconcile exact313/326 current claims and checked requirements with [acceptance SSOT](../specs/spell-book-loss-of-control-outputs.md#independent-bounded-acceptance--2026-10-03). Checked behavior is bounded simulator proof, not native parity; dated RED, B68/B67 accounting and all limitations retained. Five owned docs only; no runtime/source operations.
+
+## [2026-10-02] implementation | Record EXACT313/326 LoC outputs pending proof
+
+After producer `cc69ac3c4`, [[lua-api#Retail 12.0.5 spell and spellbook loss-of-control outputs]] and [Batch69 audit](investigations/patch-12-0-5-api-audit.md#batch69--exact313326-loc-outputs-accepted) link [contract/inventory/proof SSOT](../specs/spell-book-loss-of-control-outputs.md). Existing typed LoC map, actual book bank0 lookup, original-selector authentication before model and shared rooted writer: three flag-restricted private NUMs/two public NeverSecret BOOLs. Permissive spell parser retained; native AllowedWhenTainted secret-input credit withheld. Actual `b324f2159289327cc4b8bd74f6793e7e0422824c` RED27:5 PASS/22 FAIL, compile103.959996s/run4.086695s; downstream GC mostly unreached, no22GC claim. At this historical RED checkpoint, outputs awaited independent acceptance; no GREEN/native/current-profile credit then. Current bounded acceptance is recorded in the [SSOT](../specs/spell-book-loss-of-control-outputs.md#independent-bounded-acceptance--2026-10-03). Authored/inferred policies and native/type/acquisition/pet/future/UI gaps remain. Historical checkpoint188 pending/159 bounded/14 partial/1 metadata,362 IDs/75 capabilities unchanged at that time. Earlier B68 accepted `758cdf49c` plus docs `e895`/`72df` remains separate: original537 Gate FAIL retained, narrow541 follow-up accepted by main; no unrelated credit. Full source histories/globalfmt/process limits preserved; no source-code-change or globalfmt/process clearance.
+
+## [2026-10-02] evidence | Reconcile Batch68 accepted cooldown output proof
+
+Updated only B68 claims in [spec SSOT](../specs/spell-book-cooldown-outputs.md#independent-bounded-acceptance--2026-10-02), [[lua-api#Retail 12.0.5 spell and spellbook cooldown outputs]], [[patch-12-0-5-api-audit]] and index after `758cdf49c`. Independent537+541:162 unique Retail PASS (27 refreshed+135 inherited)/one ignored, inherited startup `[]`, scopedfmt/check0, modern/legacy grouping equivalence and post-grouping Forever compile0/legacy1 PASS. Original Forever64 PASS/1 FAIL/1 ignored retained without duplicate credit; no cooldown call at mask-quad failure, applicability rejected, causal preexistence UNRESOLVED, whole filter non-green. Acceptance checkpoint188/159/14/1,362 IDs/75 capabilities. Historical RED/pending checkpoints preserved as dated evidence; inferred/native/input/type/future/pet/full-bank/UI and dirty/globalfmt1/historical502 limits remain. Docs-only diff/commit inspection; no source inspection or execution gates. Broader goal open.
+
+## [2026-10-02] implementation | Document bounded batch68 EXACT305/322 producer
+
+Updated [[lua-api#Retail 12.0.5 spell and spellbook cooldown outputs]], Sources and index after `11447717f`, linking [spec SSOT](../specs/spell-book-cooldown-outputs.md). Preserved real numeric-only C_Spell parser/GCD intervals; new Retail125/PTR actual player-book bank0 interval provider supplies five required fields, both VM selectors authenticated before model, current-entry typed offspec rejection without API callback indirection. Shared rooted table has three restricted private NUMs/two public BOOLs; shared NUM absence of NeverSecret and independently grounded BOOL NeverSecret metadata do not convert function metadata into native field proof. Public tainted calls permitted; opaque nominal-type gap retained without VM override/declassification/bypass. Earlier/Forever disabled four-field legacy remains; no optional extras/new state/catalog/pet/reagents/fallback. Actual `e5d11e497` current-selected RED27:5PASS/22FAIL, authored28 includes excluded earlier control. Book-positive assertions precede guard credit; zero intervals/disabled shape/ignored bank/offspec/public parse/secret conversion/false secrecy failures do not establish downstream GC RED. Supplied compile511.677244s exit0/zero diagnostics, run5.977233s exit101; no GREEN/current-profile/acceptance.192 pending/155 bounded/14 partial/1 metadata,362IDs/73caps; batch67 pending parent. Spec authored2026-10-02 and observed producer Git author/committer2026-10-02T19:25:49-05:00 preserved separately from supplied build/run evidence. Only three wiki files changed; no spec/coverage/PLAN/source/tests/Cargo/build/gates/ops/delegation/protected-body inspection.
+
+## [2026-10-02] evidence | Reconcile Batch67 current proof claims
+
+Reconciled current EXACT301/309 assertions in the [spell-count SSOT](../specs/spell-count-outputs.md#independent-bounded-acceptance--2026-10-02), [[lua-api]] and [[patch-12-0-5-api-audit]] after `ee1f7b6b5`. Bounded payload/opacity/copy/root/GC proof accepted; explorer540 contrary claim rejected. Historical pending checkpoints preserved; cast permission, native/type/global-privacy/UI limits remain open. Saved follow-up and accounting artifacts only; no runtime verification or accounting mutation.
+
+## [2026-10-02] implementation | Document bounded batch67 EXACT301/309 producer
+
+Updated [[lua-api#Retail 12.0.5 spell cast and display-count outputs]], Sources and index after `c939971f8`, linking [spec SSOT](../specs/spell-count-outputs.md). Spell-keyed empty explicit cast map is independent of action counts; valid charges affect display only, unchanged shared pure formatter retains9999/>max/replacement behavior. Existing real registration/inverse shim preserves earlier/Forever numeric0. Cast secret argument1 AllowedWhenTainted explicitly UNMODELED: existing public parser denies even secure secrets, no NeverSecret credit. Display authenticates all3 original VM inputs before types/model, Value alias extraction without stack-mutating declassification. Rooted scalar host NUM/STR, live flag, read-only/copy/caller/GC privacy are requirements, not downstream proof. Actual pre-producer RED30:0PASS/30FAIL at old numeric0/static wrong display domain; many auth/GC assertions unreached. Compilation420.460077s exit0/zero diagnostics. No GREEN/acceptance/profile/current-counter claim; requester192 pending/155 bounded/14 partial/1 metadata,362IDs/73caps after separate66 acceptance `3cd7`; no neighboring action/base/Maw credit. Native conditions/type/UI/reagent acquisition/exceptions unknown; priority/default/domain/format policies inferred. Local entry2026-10-02, spec authored2026-10-01 and observed producer Git author/committer2026-10-02T17:53:38-05:00 remain distinct. Only three owned wiki paths; spec/coverage/PLAN and unowned changes preserved. No delegation/source/tests/Cargo/build/gates/ops/protected-body inspection.
+
+## [2026-10-01] evidence | Accept action display/use-count outputs
+
+[Exact237/241 acceptance SSOT](../specs/action-count-outputs.md#independent-bounded-acceptance--2026-10-01) records521+523+525:28 refreshed plus117 reusable Retail controls, startup0 `[]`,36 existing Forever controls, current typed-state check and full test equivalence/readability/format. Only237/241 promote;360 unrelated rows/72 prior capabilities retained. Inferred count sources/defaults/domains, opaque nominal-type/native/global-privacy/UI limits, dirty/globalfmt and historical process failure remain. Host provenance dates stay separate; broader goal open.
+
+## [2026-10-01] implementation | Document bounded batch66 EXACT237/241 producer
+
+Updated [[lua-api#Retail 12.0.5 action display and use-count outputs]], Sources and index after `b1cb0ee9f`, linking [spec SSOT](../specs/action-count-outputs.md). Recorded explicit empty-default slot-keyed spell/count input with current binding match, independent use snapshot and display-only valid-charge quantity priority; source-sensitive >max/default9999/replacement `"*"`/UTF8 CString formatting. Full VM authentication precedes parse/model; scalar roots preserve actual host-secret STRING/NUM payload/metadata and Lua opacity, not nominal primitive type. Existing publication/inverse earlier/Forever gates retained; no fabricated catalog, consumption, inventory link or native acquisition. Saved compiled RED28 selected,0PASS/28FAIL stops primarily at nil/0 versus meaningful scalar before many auth/GC asserts;608.535910s build completed via supported auto-background, not rerun. No GREEN/acceptance/profile/global privacy/UI/data parity or237/241 credit. Current194 pending/153 bounded/14 partial/1 metadata,362 IDs/72 capabilities; separate233/239 acceptance `5523335834f0b3ed26d1c1168f2551b82419111a` supplies no proof here. Authored header2026-10-01 and observed host Git/build2026-10-02 kept distinct. Only three wiki files; specs/coverage/PLAN/source/tests untouched, no delegation/Cargo/build/gates/ops/protected inspection.
+
+## [2026-10-02] evidence | Accept cooldown and action LoC output predicates
+
+[Combined233/239 acceptance SSOT](../specs/action-cooldown-output-restriction.md#independent-bounded-acceptance--2026-10-02) and [LoC contract](../specs/action-loss-control-cooldown-info.md#independent-bounded-acceptance--2026-10-02) record independent515:117 Retail PASS/startup0 `[]`, freshfmt/check/security/readability and36 separate existing Forever controls. Only233/239 promote;360 unrelated rows/70 prior capabilities retained. Opaque nominal-type fixture corrections preserve payload/opacity/root/GC proof; native/inferred/globalfmt/dirty/historical process limits remain. Broader goal open.
+
+## [2026-10-02] implementation | Document bounded batch65 EXACT239 producer
+
+Updated [[lua-api#Retail 12.0.5 action loss-of-control cooldown info]], Sources and index after `831aa8553`, linking [EXACT239 spec SSOT](../specs/action-loss-control-cooldown-info.md), not237. Existing action slot→spell→typed LoC map supplies read-only five-field snapshots/inferred inactive defaults; sole VM argument authentication precedes strict parsing. Rooted public DTO retains three authentic restricted secret NUMs and two public NeverSecret BOOLs; existing sole namespace binding/inverse legacy gate preserves earlier epochs/Forever. No new state/activation/GCD/expiry/callback rewrite. Corrected `add2d0a84` RED1PASS/21FAIL includes miss baseline control; positive payload/input/secrecy fail before downstream GC proof. Opaque-userdata nominal fixture corrected, host-authenticated NUM payload and actual Lua opacity preserved; NativePrimitiveTypeGap explicit. GREEN/acceptance/239 credit pending; current196 pending/151 bounded/14 partial/1 metadata,362 IDs/70 capabilities after separate295 acceptance `1f5`; no Source233/native/full-profile/UI/LoC-acquisition credit. Docs-only: exact three wiki files; no spec/coverage/PLAN/source/tests/Cargo/build/gates/ops/delegation/protected-body inspection.
+
+## [2026-10-02] evidence | Accept exact base-spell specialization boundary
+
+[Exact295 acceptance SSOT](../specs/base-spell-specialization-security.md#independent-bounded-acceptance--2026-10-02) records502+505+509:81 distinct Retail PASS, three separate existing Forever PASS, scopedfmt/check/startup and equivalent test-readability fix. Only295 promotes;361 unrelated rows/69 prior capabilities preserved. Meaningful empty-default specialization model and raw arg2 NeverSecret only; arg1/native/dataset/profile/UI limits, dirty/globalfmt and initial protected-search process breach remain explicit. Broader goal open.
+
+## [2026-10-02] implementation | Document bounded batch64 action cooldown producer
+
+Updated [[lua-api#Retail 12.0.5 action cooldown output restriction]], Sources and index after `fad6e780f`, linking [exact233 spec SSOT](../specs/action-cooldown-output-restriction.md). Recorded unchanged existing state-backed spell/GCD intervals and selector, explicit live `cooldowns_restricted` through existing Retail125/PTR helper gate, ordinary rooted result table and typed secret NUMs only for startTime/duration/modRate. Public BOOLs/existing fieldset unchanged; numeric-field/zero/table policies inferred. Actual pre-producer RED4PASS/14FAIL reaches first secret/wrapper observations; downstream denial/recovery/copy/isolation/GC not RED-proven. No GREEN/acceptance/source credit. Input guards/duration objects/Forever/new fields/charge partial231/native exceptions/UI parity excluded. Current197 pending/150 bounded/14 partial/1 metadata,362 IDs/69 capabilities unchanged;233 pending,295 artifacts pending main acceptance,239 tests-only. Docs-only; spec/coverage/PLAN/source/tests/other changes untouched; no delegation/build/tests/Cargo/gates/ops or protected source inspection.
+
+## [2026-10-02] evidence | Accept two item-context additions
+
+[Exact330/331 acceptance SSOT](../specs/tooltip-item-context.md#independent-bounded-acceptance--2026-10-02) records independent497+499:24 refreshed focused PASS plus153 reusable controls/startup0 `[]`, producer-scoped fmt/check/security/wiring and four equivalent assertion fixes. Only330/331 promote;360 unrelated rows/68 prior capabilities preserved. Explicit empty-default variants over finite catalog only; inferred policies, eleven historical fixture diagnostics, dirty/globalfmt/native/profile/quality/fullvariants limits remain. Broader goal open.
+
+## [2026-10-02] implementation | Document bounded batch63 base-spell producer
+
+Updated [[lua-api#Retail 12.0.5 base-spell specialization security]], Sources and index after `815456e84`, linking [exact295 spec SSOT](../specs/base-spell-specialization-security.md) and [existing Forever base SSOT](../specs/spell-base.md). Recorded literal shared Cargo `base-spell-relationships` capability enabled Retail125+Forever, existing empty-default `BaseSpellRelationships` host map with current/exact-specialization selection and documented identity, promoted common C_Spell publication, and Retail125-only raw VM arg2 NeverSecret rejection before arg1. Forever old public/conservative arg1/secret validation retained; earlier profiles default-unpublished, no catalog/traversal/new alias data. Preserved compiled `a920153ef` RED0PASS/20FAIL: one nil/public numeric base and secret-spec denial boundaries, not downstream GC proof. Five unused-helper warnings were scaffold registration gap; producer wiring expected fix, warning clearance unverified. No GREEN/current Forever execution/acceptance/accounting credit. Supplied current199 pending/148 bounded/14 partial/1 metadata,362 IDs/68 capabilities unchanged;295 pending; batch62 exact330/331 final artifact passed pending main acceptance. Docs-only; specs/source/tests/PLAN/protected aura-duration untouched, no delegation/build/tests/gates/ops.
+
+## [2026-10-02] implementation | Document bounded batch62 item-context producer
+
+Updated [[lua-api#Retail 12.0.5 item tooltip contexts]], Sources and index after `23efb40c8`, linking [exact330/331 spec SSOT](../specs/tooltip-item-context.md). Recorded literal empty-default host key→u16 map, level-only catalog clone/shared line builder/stat heuristic, native VM all-four authentication before parsing/lookup, ignored quality, exact misses without alternate catalog fallback and single epoch125 registration/inverse legacy gate. Preserved inferred nil/domain/miss/map policies and finite-catalog/native-acquisition/quality/output/profile/UI limits. Compiled pre-producer RED2PASS/22FAIL retained; authoritative parent diagnosis rejects agent490 false shared-setup failure: eight-line base passes, test probe243 reaches variant/miss/type/auth errors. Downstream freshness/recovery/GC unproved; no fixture correction, GREEN, acceptance or accounting credit.199 pending/148 bounded/14 partial/1 metadata,362 IDs/68 capabilities unchanged. Docs-only; spec/PLAN/source/tests/protected aura-duration untouched, no delegation/build/test/gates/operations.
+
+## [2026-10-02] evidence | Accept six aura-instance tooltip input deltas
+
+[Batch61 acceptance SSOT](../specs/tooltip-aura-instance-security.md#independent-bounded-acceptance--2026-10-02) records independent486:209 distinctPASS/startup0 `[]`, scopedfmt/check/security/wiring/readability. Only339/340/344/345/349/350 promote;356 unrelated rows/67 prior capabilities preserved. Meaningful helpful/harmful player payloads and authentic VM input policy only; inferred polarity/misses, dirty/globalfmt/restricted-output/filter/native/profile limits remain. Broader goal open.
+
+## [2026-10-02] implementation | Document bounded aura-instance tooltip producer
+
+Updated [[lua-api#Retail 12.0.5 tooltip aura-instance argument security]], Sources and index link to [spec SSOT](../specs/tooltip-aura-instance-security.md) after `6edbe3533`. Three literal epoch125 namespace functions authenticate all documented positions before type/model access; narrow existing player host lookup uses inferred polarity selection, ignored arg3 and unchanged hardcoded `1 hr` builder. Inverse old-entry gating preserves earlier epochs without profile proof. Saved pre-producer RED3PASS/21FAIL retains earliest-failure limits: downstream authentication/recovery/GC remain unproved. No new execution, GREEN, acceptance, native/profile claim or six-row credit. Batch60 acceptance `448689a26` remains separate; accounting/spec/PLAN/source/tests and protected aura-duration work untouched. Docs-only, no delegation or gates.
+
+## [2026-10-02] evidence | Accept exact pending-cost modifier return
+
+[Exact357 acceptance SSOT](../specs/pending-transmog-cost.md#independent-bounded-acceptance--2026-10-02) records independent477+481+483: ten refreshed focused PASS plus88 reusable controls/startup0 `[]`, scopedfmt/check/security/wiring and equivalent assertion readability fixes. Only357 promotes;361 unrelated rows/66 prior capabilities preserved. Snapshot-only inferred absence/precision, dirty/globalfmt/native/profile/pricing/lifecycle limits remain; broader goal open.
+
+## [2026-10-02] evidence | Accept exact illusion category queries
+
+[Batch59 acceptance SSOT](../specs/illusion-category-queries.md#independent-bounded-acceptance--2026-10-02) records independent470+471:16 refreshedPASS plus72 reusable controls/startup0 `[]`, scopedfmt/check/security/wiring and three readability fixes. Only352/353 promote;360 unrelated rows/65 prior capabilities preserved. Dirty/globalfmt/native/profile/catalog/inferred-policy limits remain; broader goal open.
+
+## [2026-10-02] implementation | Document bounded batch59 illusion query producer
+
+Updated [[lua-api#Retail 12.0.5 illusion category queries]], Sources and index crosslink to [exact352/353 SSOT](../specs/illusion-category-queries.md) for `cd6eb9a2f`. Literal empty-default `Vec<IllusionInfo>` carries category plus six output fields; epoch125 VM AllowedWhenUntainted authentication precedes strict nil/u32 validation, with fresh rows in input order and one rooted-namespace publication/legacy inverse gate. Nil/all, unknown/empty, order and strict-domain policies remain inferred; no production catalog, appearance-derived records or hidden-flag filter. Initial E0603 and export correction `f83e073f9` retained separately from genuine corrected RED2PASS/14FAIL. No new execution, GREEN or acceptance claim;208 pending/139 bounded/14 partial/1 metadata,362 IDs/65 capabilities unchanged;352/353 pending. Docs-only; spec/source/tests/data/PLAN untouched; no builds/tests/checks/gates/push/ops/delegation or protected source inspection.
+
+## [2026-10-02] evidence | Accept glyph boundary and classify return-label metadata
+
+[Exact311 acceptance](../specs/spell-link-glyph-security.md#independent-bounded-acceptance--2026-10-02) retains69PASS/1 unrelated charge-controlFAIL/startup0 `[]`; [exact355 classification](../specs/outfit-catalog-lookups.md#exact355-metadata-only-classification--2026-10-02) is source-only, empty capabilities/no runtime credit. Independent463 scoped gates/readability/security pass; dirty/globalfmt/native/profile limits remain.360 unrelated rows/64 prior capabilities preserved; broader goal open.
+
+## [2026-10-02] audit | Narrow row311 implementation and RED evidence
+
+Updated [[lua-api#Retail 12.0.5 spell-link glyph argument security]] and index crosslink to [row311 SSOT](../specs/spell-link-glyph-security.md). `da2ec8cb8` implements epoch125 authentic secret arg2 rejection before unchanged numeric dispatch; public ignored glyph behavior unchanged. Saved genuine RED3PASS/5FAIL, compile149.032s/run1.0117s in `/tmp/patch-12.0.5-batch57-red-*`; no new execution, GREEN/check/acceptance/native claims. No arg1/glyph-catalog/native permission credit;210 pending/138 bounded/14 partial;64 capabilities unchanged, row311 pending. Docs-only; spec/source/tests/data/PLAN untouched.
+
+## [2026-10-02] evidence | Accept exact tooltip spell/mount boundaries
+
+[Batch56 acceptance SSOT](../specs/tooltip-spell-mount-identifiers.md#independent-bounded-acceptance--2026-10-02) records independent457:155 distinctPASS/startup0 `[]`, scopedfmt/check/security/readability pass; globalfmt fails on preserved unowned source. Only333/334/336/337 promote;358 unrelated rows/63 prior capabilities retained. Inferred misses/security, dirty-combined/native/profile/frame/flags limits remain; broader goal open.
+
+## [2026-10-02] evidence | Reconcile batch56 saved parent GREEN
+
+[Tooltip identifier proof SSOT](../specs/tooltip-spell-mount-identifiers.md#reconciled-batch56-saved-parent-green--2026-10-02) preserves mixed initial RED and corrected3PASS/19genuineFAIL; actual155 uniquePASS/all5 exits0/startup0 `[]`, exact39.89666002884041434s execution separately from139.876873968984s compile. RGBA/lineIndex fixture correction only; dirty-combined provenance, inferred miss/security policies and frame/native gaps retained. Fresh independent acceptance, requirements/accounting/PLAN pending;214/134/14 unchanged.
+
+## [2026-10-02] evidence | Accept exact tertiary stat inputs
+
+[Exact420/442/480 acceptance SSOT](../specs/tertiary-stat-inputs.md#independent-bounded-acceptance--2026-10-02) records parent-accepted450:119 uniquePASS/startup0 `[]`, scopedfmt/check/readability pass, globalfmt failed on preserved unowned source. Only three rows promote;359 unrelated rows/62 prior capabilities retained. Conversion remains guessed, earlier-profile proof static, dirty-combined/native/acquisition limits explicit. Parent owns postcommit validation; broader goal open.
+
+## [2026-10-02] evidence | Reconcile batch55 saved parent GREEN
+
+[Batch55 tertiary proof SSOT](../specs/tertiary-stat-inputs.md#reconciled-batch55-saved-parent-green--2026-10-02) records saved observations and limits; fresh independent acceptance, unchecked requirements and source420/442/480 accounting remain pending.
+
+## [2026-10-02] evidence | Accept exact formatter and eight stat annotations
+
+[Combined53/54 acceptance SSOT](../specs/break-up-large-numbers.md#independent-bounded-acceptance--2026-10-02) and [exact-eight stat scope](../specs/unit-stat-output-restriction.md#exact-eight-annotation-acceptance--2026-10-02) record parent-accepted443 plus446 owned-format supplement. Only411/426/428/444/448/450/494/506/510 promote;353 unrelated rows and60 prior capabilities retained. Globalfmt remains failed on unowned source; dirty-combined/inferred/native/profile/model limits explicit. Parent owns postcommit validation; broader goal open.
+
+## [2026-10-02] evidence | Reconcile batch53 saved corrected GREEN
+
+[Formatter proof SSOT](../specs/break-up-large-numbers.md#reconciled-batch53-saved-parent-green--2026-10-02) records genuine16FAIL, historical17PASS/3FAIL and fixture-only corrected20PASS +90 reusable controls =110 distinct selectedPASS/startup0 `[]`. Invalid tainted secret-BOOL equality guard corrected without security relaxation; host wrapper identity and callback failure/GC coverage retained. Dirty revision-bound proof; runtime/compile costs separate. Verifier443 and source411/accounting/unchecked requirements pending; native semantics/errors/permissions/secrecy remain unknown.
+
+## [2026-10-02] evidence | Accept exact batch51/52 bounded rows
+
+[Combined acceptance SSOT](../specs/action-spell-slot-identifiers.md#independent-bounded-acceptance--2026-10-02) and [exact-five stat scope](../specs/unit-stat-output-restriction.md#exact-five-annotation-acceptance--2026-10-02) record parent-accepted independent414. Only229/243/514/500/424/438/498 promote;355 unrelated rows and58 prior capabilities retained. Scopedfmt/check pass; globalfmt remains failed on unowned source, dirty-combined and native/profile limits explicit. Parent owns postcommit accounting validation; broader goal open.
+
+## [2026-10-02] evidence | Reconcile combined batch51/52 saved parent GREEN
+
+[Combined batch51/52 saved proof SSOT](../specs/action-spell-slot-identifiers.md#reconciled-combined-batch5152-parent-green--2026-10-02) owns artifact/revision/hash/timing evidence and inferred capability limits; [exact-five annotation scope](../specs/unit-stat-output-restriction.md#batch52-saved-parent-observed-proof--2026-10-02) preserves prior40-stat history. Genuine action RED and failed producer compilation retained; unchanged stat provider has no invented RED. Dirty-combined bounded observation, not clean revision/native/final acceptance. Verifier414 and independent acceptance/accounting/unchecked requirements pending; no coverage or PLAN changes.
+
+## [2026-10-02] evidence | Reconcile combined batch49/50 saved GREEN
+
+## [2026-10-02] evidence | Accept exact sound-removal and space-limit rows
+
+[Independent389 bounded acceptance](../specs/private-aura-sound-removal.md#independent-bounded-acceptance--2026-10-02) owns combined evidence, accounting and limits; [space scope](../specs/string-util-space-limit-security.md) links there. Only403/328 promote; native gaps and historical checkpoints retained. Parent owns postcommit validation.
+
+
+Updated [sound proof SSOT](../specs/private-aura-sound-removal.md#reconciled-combined-batch4950-parent-green--2026-10-02), [space-limit scope](../specs/string-util-space-limit-security.md) and [[lua-api#Retail 12.0.5 private aura sound removal]] links from full saved artifacts. Genuine sound RED and inferred/native gaps retained; unchanged space provider validates/rejects opaque secret limits, not authenticates payloads. Independent389 pending; no acceptance, checked requirements or accounting promotion. Docs-only, no source access or new execution proof.
+
+## [2026-10-02] implementation | Add bounded batch49 sound removal callback
+
+Updated [[lua-api#Retail 12.0.5 private aura sound removal]] and [row403 contract](../specs/private-aura-sound-removal.md) with shared epoch-gated legacy/modern registration, strict public-u32 validation, conservative actual-VM secret rejection and current live-ID removal with zero outputs. Saved genuine parent RED0PASS/13FAIL retained; fixtures/inputs/defaults untouched. No GREEN, gates, checked requirements or accounting credit; parent owns verification. Native acquisition/permissions/result/error/context parity remain unknown.
+
+## [2026-10-02] implementation | Add bounded batch48 spell classification getters
+
+Updated [[lua-api#Retail 12.0.5 aura spell classifications]] and [classification contract](../specs/aura-spell-classification-identifiers.md) with sole epoch-gated getters, unchanged copied/default map reads and saved parent compiled RED. Extracted identical three-callback validation into `c_spell::read_public_spell_identifier_at`; [cooldown inventory](../specs/cooldown-aura-spell-identifiers.md#implementation-inventory) records shared role only. No fixtures/state/accounting changes or GREEN/acceptance claim; parent owns subsequent verification.
+
+## [2026-10-02] evidence | Accept exact batch47 cooldown association row
+
+[Independent373 bounded acceptance](../specs/cooldown-aura-spell-identifiers.md#independent-bounded-acceptance--2026-10-02) owns210 uniquePASS/startup0[], commands/hashes and dirty provenance. Only387 promotes: **238 pending/110 bounded/14 partial =362;54 capabilities**. Ordered IDs,361 unrelated rows,53 prior capabilities and source provenance retained. Scopedfmt0/dirtycheck0; globalfmt1 unowned retained. Four advisories deferred; inferred map/aliases/public result/taint/conservative rejection only, native permissions/access/secrecy/catalog/acquisition/direction unknown. Bounded development, not final page/goal/native acceptance; parent owns postcommit validation.
+
+## [2026-10-02] evidence | Reconcile batch47 saved parent GREEN
+
+[Cooldown association proof SSOT](../specs/cooldown-aura-spell-identifiers.md#reconciled-batch47-parent-green--2026-10-02) records14 new +196 controls =210 uniquePASS/all14 exits0, startup0 `[]`, exact commands/timings/hashes and dirty provenance, not clean-revision proof. Warm runtime46.811717730015516s below60 target: bounded development, not final whole-page/goal/native acceptance. Original invalid-FrameShape RED and corrected11 genuineFAIL retained; inferred association/alias/strict-boundary/conservative rejection and native permissions/access/secrecy/acquisition gaps retained. Independent verifier pending; row387/source accounting/unchecked requirements unchanged.
+
+## [2026-10-02] implementation | Add bounded row387 cooldown association getter
+
+Updated [[lua-api#Retail 12.0.5 cooldown aura spell identifiers]], [row387 contract](../specs/cooldown-aura-spell-identifiers.md) and [[frame-surrogate-identity-slot]]: sole epoch-gated getter over unchanged empty per-environment associations, strict public inputs and conservative VM-secret rejection before shared resolution. Corrected parent RED retained; owned formatting only, GREEN/acceptance parent-owned. Fixtures, model defaults, native limits and accounting unchanged.
+
+## [2026-10-02] evidence | Accept exact combined batch45/46 bounded rows
+
+[Combined acceptance SSOT](../specs/aura-dispel-color-arguments.md#independent-bounded-acceptance--2026-10-02) and [enumeration scope](../specs/unit-aura-slot-enumeration-arguments.md#independent-bounded-acceptance--2026-10-02) record parent-accepted independent365 plus367 supplement. Only378/382 promote: **241/107/14 →239 pending/109 bounded/14 partial =362**; ordered IDs,360 unrelated rows, prior51 capabilities and provenance preserved. Reused196 uniquePASS/startup0[]/dirtycheck0/VM-security-wiring-readability; fresh eight-filefmt0 after admin formatting-only c436649ad. Original365 overallFAIL/globalfmt1 unowned duration historical, not fixed; dirty combined not clean revision. Runtime31.527s below60 target, bounded DEVELOPMENT not final whole-goal/page/native acceptance. Inferred policies/native permissions/secret POINTS/secrecy/pagination/consumer/profile/full setters gaps retained; advisories deferred. Parent owns postcommit validation; earlier pending checkpoints historical.
+
+## [2026-10-02] evidence | Reconcile combined batch45/46 saved parent GREEN
+
+[Combined ledger](../specs/aura-dispel-color-arguments.md#reconciled-combined-batch4546-parent-green--2026-10-02) owns exact revisions/hashes/commands/artifacts: compile0/119.52380113198888s,16 corrected color +12 enumeration +168 controls =196 unique PASS/all13 exits0; startup0 `[]`/3.39698344306089s. [Enumeration matrix](../specs/unit-aura-slot-enumeration-arguments.md#reconciled-combined-batch4546-parent-green--2026-10-02) retains one-batch argument authentication and inferred representations. Original color RED16FAIL and first14PASS/2FAIL SetRGBA attempt historical; field-mutation assertions preserved. Enumeration RED4PASS/8FAIL reused first-attempt compilation, no extra RED build. Dirty-source-bound proof, not clean revision; actual warm partition28.130951017374173s below60 target, no padding/repeat/final whole-goal claim. Independent combined Rust/security/readability/acceptance pending; rows378/382 uncredited,241 pending/107 bounded/14 partial unchanged. Native parity/access/restricted output/secret POINTS/full setters/all profiles/pagination excluded. Parent owns accounting/gates.
+
+## [2026-10-01] implementation | Add bounded row382 aura enumeration boundary
+
+Updated [[lua-api#Retail 12.0.5 aura slot enumeration arguments]] and [row382 contract](../specs/unit-aura-slot-enumeration-arguments.md): sole epoch-owned producer authenticates four stack-rooted arguments before inferred strings/finite-f64 validation; earlier provider cfg-separated, collector/output unchanged. Saved parent RED4PASS/8FAIL; formatting only here, parent combined GREEN/acceptance pending. Native access/output/pagination and accounting excluded; tests and batch45 work untouched.
+
+## [2026-10-02] evidence | Accept exact batch44 aura slot row
+
+[Independent353 acceptance](../specs/unit-aura-slot-secret-arguments.md#independent-bounded-acceptance--2026-10-02) owns150 unique PASS (12 slot +138 controls), startup0[], full hashes/commands and limits. Only376 promotes; unit retains NeverSecret. **242/106/14 →241 pending/107 bounded/14 partial =362**; ordered IDs,361 unrelated rows, prior50 capabilities and provenance preserved. Dirty-combined check0/scopedfmt0, globalfmt1 preserved unowned; later batch45 control bytes excluded. Two old plain CreateColor successes are invalid curve-contract inputs, not378 evidence. Partition55.283s misses60 target, retained without padding; bounded development acceptance, not final whole-goal acceptance. Four readability suggestions deferred; native access/output/profile gaps excluded. Historical pending checkpoints superseded; parent owns postcommit validation.
+
+## [2026-10-02] evidence | Reconcile batch44 aura slot parent GREEN
+
+[[lua-api#Retail 12.0.5 aura slot arguments]] links [saved batch44 proof](../specs/unit-aura-slot-secret-arguments.md#reconciled-batch44-parent-green--2026-10-02): compile0/270.583s, 12 slot +94 controls =106 unique PASS/all exit0, startup0 `[]`/13.061s. Contract owns concrete capability matrix, exact commands/revisions/fixture/binary hashes and artifact references; corrects actual RED/compiled-command date to October 2, 2026. Proof is producer plus preserved unowned dirty duration diff, not clean revision. Independent verifier active; gates/parent acceptance pending. Native access/output secrecy and inferred validation/miss limits retained. Row376 pending; totals242 pending/106 bounded/14 partial unchanged. No PLAN/data/source changes or new execution proof.
+
+## [2026-10-01] implementation | Add bounded aura slot argument producer
+
+Updated [[lua-api#Retail 12.0.5 aura slot arguments]] and [slot contract](../specs/unit-aura-slot-secret-arguments.md) in `054525aff`; index/log links follow after shared-path release. Sole `retail-12-0-5` boundary uses VM NeverSecret unit rejection and authenticated slot decoding before unchanged lookup/DTO. Saved parent RED5PASS/7FAIL, unchanged fixtures; owned `rustfmt --config skip_children=true` exit0. No builds/tests/gates here; parent GREEN/acceptance pending. Inferred representation/no-positive-cap retained; no native permission/output/accounting credit. Disputed duration file not read/edited/formatted/staged.
+
+## [2026-10-02] evidence | Accept exact batch43 display-count rows
+
+[Independent bounded acceptance](../specs/aura-application-display-count.md#independent-bounded-acceptance--2026-10-02) owns parent-accepted independent345, 94 unique PASS/startup0[], full commands/hashes and limits. Only367/368 NeverSecret thresholds and369 AllowedWhenUntainted unit/ID promote: **245/103/14 →242 pending/106 bounded/14 partial =362**. Ordered IDs,359 unrelated rows, prior49 capabilities and provenance preserved. Dirty combined source proof is not clean revision; globalfmt1 on unowned aura_duration.rs retained, scopedfmt0/dirtycheck0 accepted. Three nonblocking readability suggestions deferred. Native permission/output/full-page parity excluded; older pending checkpoints below are historical. Parent owns postcommit validation/ignored PLAN.
+
+## [2026-10-01] evidence | Reconcile batch43 display-count parent GREEN
+
+[[lua-api#Retail 12.0.5 aura application display count]] links [saved batch43 proof](../specs/aura-application-display-count.md#reconciled-batch43-parent-green--2026-10-01): compile0/336.675s, 14 display + 80 controls = 94 unique PASS/all exit0, startup0 `[]`/17.512s. Contract owns exact producer/fixture/binary hashes and full artifacts. Evidence covers committed producer PLUS preserved unowned dirty aura-duration diff, not clean-revision proof. Security and unchanged blocked-inclusive typed-state query covered; native access/valid-instance/restricted output secrecy excluded, representation/decimal/missing policies inferred. Independent gates/parent acceptance pending; rows367–369 uncredited, accounting/PLAN unchanged.
+
+## [2026-10-01] implementation | Add bounded aura application display count producer
+
+Updated [[lua-api#Retail 12.0.5 aura application display count]], index and [contract](../specs/aura-application-display-count.md). Sole `retail-12-0-5` count producer authenticates unit/ID through pinned VM and rejects actual secret thresholds independently of caller security; validates supplied positions before unchanged blocked-inclusive typed lookup. Saved parent RED14FAIL/0PASS; formatting only here, parent GREEN/controls/startup/independent gates pending. Fixtures/model/DTO/provider state and unowned dirty aura_duration.rs preserved. No row/accounting/native credit.
+
+## [2026-10-01] evidence | Accept exact indexed aura argument rows
+
+[Independent bounded acceptance](../specs/unit-aura-index-secret-arguments.md#independent-bounded-acceptance--2026-10-01) records accepted indexed scope and unresolved global formatting failure. Updated exact six source rows only; retained IDs/hashes/prior capabilities/356 unrelated rows. Earlier GREEN-only pending checkpoint superseded, not whole-page/native closure.
+
+## [2026-10-01] evidence | Reconcile batch42 indexed aura parent GREEN
+
+[Indexed argument proof](../specs/unit-aura-index-secret-arguments.md#reconciled-batch42-parent-green--2026-10-01) records producer `8e04eaa335b4df36b213c92842ef4242d81d2025`, unchanged fixtures `414f87346`, compile0/238.27s, **12 indexed + 14 filter + 7 shape + 29 aura + 18 corrected admin = 80 unique PASS**, startup0 `[]`, exact artifacts/hashes. Zero-test `admin_buff::` excluded. Independent Rust/security/readability gates and parent acceptance pending; exact373/374/384/385/389/390 uncredited, accounting/PLAN unchanged. Native access/conditional output secrecy excluded; strict representations inferred, selection/DTO/store and earlier profiles retained.
+
+## [2026-10-01] implementation | Add bounded indexed aura argument producers
+
+Updated [[lua-api#Retail 12.0.5 indexed aura arguments]], index and [contract](../specs/unit-aura-index-secret-arguments.md). Added epoch-gated C API providers; original indexed providers remain only before 12.0.5. Existing helper/polarity/DTO/store behavior retained; all documented positions VM-authenticated and strictly validated before lookup. Saved parent batch42 RED provenance corrected in contract. Formatting only in producer slice; parent GREEN/regression/startup/independent gates and exact six-row accounting pending. No native permission/restricted-output or source-row completion claim.
+
+## [2026-10-01] implementation | Add bounded aura instance filter producer
+
+Updated [[lua-api#Retail 12.0.5 aura instance filter query]], index and [contract](../specs/unit-aura-filter-query.md). Removed old globals provider; new C API module authenticates all required arguments before unchanged unfiltered lookup/filter matching. Tests/store/DTO unchanged. Corrected parent RED provenance retained. Subsequent parent GREEN at `a881d04`: 14 filter + 47 controls = 61 unique PASS; startup exit0 `[]`. [Independent bounded acceptance](../specs/unit-aura-filter-query.md#independent-bounded-acceptance--2026-10-01) records independent335 fresh fmt/check and security/readability audit. Only rows398/399 promoted:251 pending/97 bounded/14 partial; native/permission/filter/consumer gaps remain.
+
+## [2026-10-01] evidence | Accept private-aura restriction-removal rows401/405
+
+[[patch-12-0-5-api-audit#Private-aura restriction removals — bounded independent acceptance]] records literal source-axis accounting and independent330 current runtime proof. Namespace intersections justified existing-filter refresh; no redundant build/gates. Native secret acceptance, cached closure errors and broader historical failure remain open.
+
+## [2026-10-01] evidence | Accept bounded altered-form row407
+
+[Independent bounded acceptance](../specs/unit-aura-altered-form.md#independent-bounded-acceptance--2026-10-01) reconciles 53 unique PASS, normal startup0 `[]`, fresh fmt/check0 and no blocking readability findings. Exact row407 only gains bounded credit; source-accounting validation and retained native/model limitations live in the spec. Ignored PLAN untouched.
+
+## [2026-10-01] implementation | Add bounded altered-form query producer
+
+Updated [[lua-api#Retail 12.0.5 altered-form query]], index and [contract](../specs/unit-aura-altered-form.md). C API producer authenticates only the unit argument, resolves player GUID identity and reads the independent bool without mutation; epoch-gated registration supersedes generic missing-method synthesis, with no explicit same-function default to remove. Saved parent RED at `732d1c5e6`: **1 PASS / 9 FAIL**, Cargo build-finished success true (wrapper exit unretained). Tests unchanged; formatting only, parent GREEN/acceptance pending. Defaults/misses/errors inferred; no native, source-accounting or 3D credit.
+
+## [2026-10-01] evidence | Reconcile batch38 aura duration parent GREEN
+
+[Independent bounded acceptance](../specs/aura-refresh-duration.md#independent-bounded-acceptance--2026-10-01): row394 only, **18 duration + 73 controls = 91 PASS**, startup0 `[]`, fresh fmt/check0; **257/91/14 → 256/92/14 = 362**. Consumer base prerequisite and unknown metadata included; two nonblocking LENGTH/COMPLEX_COND suggestions deferred, not zero issues. Informed policies remain nonnative; production empty returns nil until metadata. IDs/register/source SHA/unrelated rows preserved; no Blizzard visual/native/all-profile claim.
+
+## [2026-10-01] implementation | Add bounded aura refresh duration producers
+
+Updated [[lua-api#Retail 12.0.5 aura refresh duration]], index and [duration contract](../specs/aura-refresh-duration.md). Epoch-gated authoritative getters reuse public blocked-filtered helpful/harmful records, explicit environment metadata and seeded alias resolver. Full saved parent RED read: **1 PASS / 17 FAIL** at `ea7d67237`; empty-default PASS not producer proof. Tests unchanged; formatted producer committed before parent-owned GREEN/acceptance. Formula/eligibility/security inferred; no native or row394/accounting credit.
+
+## [2026-10-01] evidence | Reconcile batch37 aura spell parent GREEN
+
+## [2026-10-01] evidence | Accept exact outfit stored-index DTO row
+
+[Independent315 acceptance](../specs/outfit-catalog-lookups.md#independent-stored-indexdto-acceptance--2026-10-01): current-VM **5/5 PASS**, applicable fmt/check0 reused, no readability issues. Only673 promoted: **258/90/14 → 257/91/14 = 362**; IDs/register/plaintext SHA/unrelated rows preserved. Stored7/42 differ from IDs91/305; complete first-record DTO assertions, partial second-record per-path assertions explicitly retained. No native/catalog lifecycle/all-profile parity. Separate from aura392/396 commit; supersedes prior unaccepted315 checkpoint. Before/after artifact linked in spec; ignored PLAN never staged.
+
+
+## [2026-10-01] evidence | Accept exact bounded aura spell identifiers
+
+[[aura-spell-identifier-proof]] links [independent acceptance](../specs/aura-spell-identifier.md#independent-bounded-acceptance--2026-10-01): parent accepts full95-line independent310 report, saved **73 selected PASS**, startup0 `[]`, fresh default fmt/check0, no new readability violations. Only rows392/396 gain bounded simulator credit: **260/88/14 → 258/90/14 = 362**; IDs/register/plaintext SHA and unrelated rows preserved in explicit before/after artifact. Seeded aliases/order/target fixture and conservative security remain inferred; no native name/link, generic visibility, all-profile or consumer closure parity. Row394/new duration314 separate; future315 outfit verdict unaccepted, row673 pending. PLAN ignored, never staged.
+
+
+[[aura-spell-identifier-proof]] links [exact parent proof](../specs/aura-spell-identifier.md#reconciled-batch37-parent-proof--2026-10-01): input `28393b01b` RED compile0/130.04s, 3 PASS / 9 FAIL; producer `4b98920f0` GREEN compile0/378.90s, **12 query + 29 aura + 18 admin + 14 C_Spell = 73 PASS**, saved startup0 `[]`. **Independent310 pending**. Existing model/seeded-alias reuse, alias precedence, order and strict/secret policies remain inferred; legacy preserved. No native/generic spell catalog/refresh coverage or row promotion. **260/88/14 = 362**, IDs/register/plaintext hash unchanged, row394 pending; ignored PLAN never staged.
+
+## [2026-10-01] correction | Accept row169 bounded predicate coverage
+
+[Chronological decision/four-family proof](../specs/party-countdown.md#exact-row169-decision--bounded-predicate-acceptance) supersedes prior pending rationale: ping delivery prerequisite was assistant-invented. Only row169 promoted using countdown10/35selected, ready6/22selected, ping7/29selected and loot19unique/31executions independent proof; no new runtime runs. **261/87/14 → 260/88/14 = 362**; row168/IDs/register/plaintextSHA/unrelated rows unchanged. Native producer/security/error/permissions/exhaustiveAPI/allprofile unknown; no `C_Ping` action claim. Earlier pending milestones/counts remain historical, not current status.
+
+## [2026-10-01] implementation | Add bounded aura spell query producers
+
+Updated [[lua-api]] and [aura spell contract](../specs/aura-spell-identifier.md) for epoch-gated C API ownership, shared resolver, existing collector/DTO reuse and unchanged legacy behavior. Saved parent RED at `28393b01b`: build0 / 130.04s, 3 controls PASS / 9 FAIL. Formatting only in producer work; parent GREEN/controls/startup/checks/readability/acceptance pending. No source accounting changes or native parity claim.
+
+## [2026-10-01] evidence | Accept exact bounded cooldown slices
+
+[Independent cooldown acceptance](../specs/cooldown-abbreviation-threshold.md#independent-bounded-acceptance--2026-10-01): saved source/binary-bound **40 PASS**, fresh fmt/check **0**, no reruns. Exact numeric-unit/consumer slices536/538/540 only become bounded: **261 pending / 87 bounded / 14 partial =362**. IDs/register/source plaintext SHA/unrelated rows retained; aliases are annotations, not classes/behavior. Native/secret/error parity unproven; range/ceil/equality inferred. One naming suggestion deferred. PLAN remains ignored local accounting, never staged.
+
+## [2026-10-01] evidence | Reconcile bounded cooldown parent GREEN
+
+[Batch36 cooldown proof](../specs/cooldown-abbreviation-threshold.md#reconciled-batch36-parent-proof--2026-10-01): corrected RED20=10PASS10FAIL, storage1PASS; wrong-filter0tests excluded. Parent GREEN `053d7ed4d` includes `69c454146`, compile0/447.06s; **40PASS = 20 formatter + 8 renderer + 12 widget**. **Independent299 pending**, no startup rerun (registration unchanged). Cached below-threshold `m:ss` explicit; range/ceil/boundaries inferred. Rows536/538/540 pending; **264/84/14=362**, IDs/source hash retained. PLAN tracking corrected053d7ed4d; local ignored only.
+
+## [2026-10-01] implementation | Add bounded party countdown producer
+
+## [2026-10-01] evidence | Accept bounded countdown; retain row169 pending
+
+[Countdown proof/decision](../specs/party-countdown.md#independent-bounded-acceptance--2026-10-01): independent10+25controls35PASS,fmt/check0,startup0[]. Lifecycle/security inferred; magic3600 finding deferred. Historical pending rationale required ping actions/delivery; chronological correction above withdraws that assistant-added condition. Row168 separate;264/84/14=362 IDs/hash retained. Cooldown parent GREEN recorded in linked batch36 proof; independent299 pending. Docs only; no reruns/delegation.
+
+
+## [2026-10-01] evidence | Accept loot bounded proof; reconcile countdown parent GREEN
+
+[Independent loot acceptance](../specs/party-loot-method.md#independent-bounded-acceptance--2026-10-01): **19 unique PASS / 31 executions**, saved startup0 `[]`, fresh fmt/check0. Fmt revision artifact collision explicitly limits provenance; original check snapshots at `676e4c25a` valid, later countdown edits excluded. Two nonblocking readability findings deferred. [Countdown parent proof](../specs/party-countdown.md#reconciled-batch35-parent-proof--2026-10-01): `27a840b34`, build0/251.83s, countdown10+loot12+ready6+ping7=**35 PASS**, startup0 `[]`; **independent292 pending**. Row169 stays pending; **264/84/14 = 362**, IDs/source hash retained. Future decision limited to explicit chat-lockdown-vs-combat predicate, not native/network/permission enforcement.
+
+[[lua-api#Retail 12.0.5 party countdown]] links [countdown contract](../specs/party-countdown.md): C API-owned per-environment request snapshots, lockdown-first public finite-duration validation and synchronous exact START/CANCEL payloads commit before callbacks. Parent reports ten compiled RED failures at `676e4c25a`; producer formatting only, GREEN/acceptance pending. Cancellation/replacement/security/no-chat policies inferred; no scheduler, native permissions/network parity or audit promotion. Loot code/tests untouched.
+
+## [2026-10-01] implementation | Add bounded party loot producer
+
+[[lua-api#Retail 12.0.5 party loot method]] links [party loot contract](../specs/party-loot-method.md): shared-state numeric getter/setter and inferred validation/identity/change-event policies implemented after parent compiled RED `1c7af9c03` (0 PASS / 12 FAIL). Earlier epochs, legacy getters, threshold and availability unchanged. Formatting only; parent owns GREEN/controls and acceptance. No native security, general raid mapping or audit promotion.
+
+## [2026-10-01] evidence | Accept bounded independent warning placement proof
+
+[Warning contract/proof](../specs/private-warning-text-anchor.md#independent-bounded-acceptance--2026-10-01): Independent report `/tmp/patch-12.0.5-warning-placement-independent-proof.md` accepts bounded saved producer `dae082322` proof: **12 warning + 18 anchor + 4 private-unit PASS / 1 historically established specialization FAIL** (34 PASS / 1 FAIL). Fresh default fmt/check exit **0** at producer; normal saved startup exit **0**, `[]`. Cached `PingSystemTutorial` string.find closure errors persist; broad controls and clean cached closure remain **NOT GREEN**. Two function-length suggestions (`validate_placement`, `apply_placement`) deferred as nonbehavioral blockers, not zero readability findings. Parenting/order/nil/snapshot/security policies remain inferred or unknown; no native, full-row/page or all-profile acceptance. **264 pending / 84 bounded / 14 partial = 362**, source IDs/hash unchanged. Exact warning rows168/405 remain pending.
+
+## [2026-10-01] evidence | Accept bounded independent ping proof
+
+[Party ping ledger](../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01) reconciles full independent report: saved **29/29 PASS**, startup **0 []**, fresh default fmt/check **0**; relevant hashes unchanged while warning-fixture/docs HEAD advanced through `ee9984ec6`. No immutable whole-tree, warning-runtime, native ping delivery or security-parity credit. March31 row169 stays PENDING (countdown/loot); **264/84/14 = 362**, IDs/source SHA preserved. Docs-only; no runtime reruns or other-owned edits.
+
+## [2026-10-01] evidence | Reconcile bounded ping parent proof
+
+[[patch-12-0-5-api-audit#Party ping restrictions — bounded parent PASS, independent pending]] links [batch32 ledger](../specs/party-ping-restrictions.md#reconciled-batch32-parent-proof--2026-10-01): corrected compiled RED `12e4a1a28` 0/7, initial missing-trait compile failure excluded; producer `77ab2785f` saved 7 ping + 22 controls = **29 selected PASS**, parent startup exit0 `[]`. Independent verifier273 report pending, no independent credit. Strict enum/secret/error/default policies inferred; no native AllowedWhenUntainted, ping delivery/roles/events. March31 row169 remains PENDING, countdown/loot open; historical superseded March25 preserved. **264 pending / 84 bounded / 14 partial = 362**, IDs/source SHA retained; no whole-source credit. Docs-only, no delegation/build/check/push/deploy; other-owned private-warning work excluded.
+
+## [2026-10-01] implementation | Add bounded party ping producer
+
+[[lua-api#Retail 12.0.5 party ping restrictions]] links [party ping contract](../specs/party-ping-restrictions.md): epoch-gated numeric getter/public enum setter reuses chat lockdown guard, rejects malformed/secrets atomically under inferred policies. Saved parent compiled RED at `12e4a1a28`: seven FAIL. Parent compilation/GREEN pending; no audit promotion, native parity, ping delivery or permissions claim.
+
+## [2026-10-01] evidence | Accept bounded ready-check proof
+
+[[patch-12-0-5-api-audit#Chat lockdown ready checks — bounded independent PASS]] links [ready-check proof](../specs/chat-lockdown-ready-checks.md#reconciled-batch31-parent-proof--2026-10-01): full verifier266 report accepts saved 22 PASS and bounded state/event/alias/recovery behavior; fresh default fmt/check exit0 at clean `6f264ce3e`, relevant producer/test hashes unchanged. Later ping inputs excluded. Final `prose-2026-03-31-169` remains pending; countdown/ping/loot undone, no native parity. 264 pending/84 bounded/14 partial = 362; IDs/text SHA retained. No reruns/delegation/push.
+
+## [2026-10-01] evidence | Accept bounded chat predicate proof
+
+[[patch-12-0-5-api-audit#Chat lockdown predicate — bounded independent PASS]] links [Predicate proof](../specs/chat-messaging-lockdown.md#reconciled-batch30-bounded-proof--2026-10-01) owns independent bounded acceptance: saved five predicate + two controls PASS at `18b09cbf9`, ancillary parent startup0 `[]`; fresh fmt/check once exit0 at `0d247625c`, original scope matches producer. Only row251 gains explicit-input one-boolean/no-second-reason coverage: **264 pending / 84 bounded / 14 partial = 362**, IDs/source hash/unrelated rows preserved. RED nonboolean nil, not two returns. Ready-check `8649fe072` and concurrent code excluded; no native producer/security/enforcement/macros/all-profile/full-page claim. **IN PROGRESS**.
+
+## [2026-10-01] evidence | Accept bounded private-anchor field proof
+
+[[patch-12-0-5-api-audit#Private anchors — bounded independent PASS]] links [batch29 proof](../specs/private-aura-anchors.md#reconciled-batch29-bounded-proof--2026-10-01): full independent report accepts saved fifteen original anchors at `2b24386c5` plus one at `053f6c860`, not a combined run; migrated integration and seven shape controls separately reusable. Callback-error **2 PASS** actually compiled `91e845021`, tests `f69497fc6`; inferred simulator policy, not native characterization. Fresh fmt/check **0** at clean `053f6c860`, callback file separately format-checked; chat inputs `f777027be` excluded. Only literal structure fields **626/675/676** gain bounded coverage: input/output default false/explicit true `isContainer`, canonical usable added/list `parent` including GC. **265 pending / 83 bounded / 14 partial = 362**, IDs/text SHA256/unrelated rows retained. Restrictions359/401, native security/producer, rendering/destruction/full-page/all-profile unproven; **IN PROGRESS; BROAD NOT GREEN**. All earlier startup errors disappear after exact event fix, not 21 independently diagnosed causes. No code/tests/chatfiles/PLAN/builds/delegation/push.
+
+## [2026-10-01] evidence | Reconcile batch28 aura classification partial proof
+
+[Aura classification proof](../specs/aura-classification-flags.md#reconciled-batch28-bounded-partial-proof--2026-10-01) owns producer `bff26b9c1`, deterministic fixture `e652d9610` and saved seven PASS in shared batch29 red-fixed build `7926dfdfe`; final independent followup resolves the intermediate source-identity finding. Initial private-import compile failure is not RED; corrected RED 6/7 isRaid mismatch, first producer 6/7 old forced-from-player failure. Fresh fmt passed; source-identical check reused. Historical unique controls **121/123 PASS**, managed dirty phase/nativeSpecialization dispatch failures unresolved, **PREEXISTING UNPROVEN; BROAD NOT GREEN**. Startup **0 []** saved, not rerun. Exact `prose-2026-03-12-029` gains bounded partial proof note only, remains pending; **268 pending / 80 bounded / 14 partial = 362**, source SHA unchanged. Native five-boolean secrecy delta/combat-secret policies, generic declassification, profiles and public target model unproved; overall **INPROGRESS**. No private-anchor credit, builds/tests/delegation/push.
+
+## [2026-10-01] evidence | Reconcile bounded batch26 search and batch27 raw DTO
+
+[[patch-12-0-5-api-audit#Housing category search and removed raw fields — bounded independent PASS]] links [search proof](../specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01) and [raw DTO proof](../specs/housing-catalog-aggregates.md#reconciled-batch27-raw-output-proof--2026-10-01). Producer `a608db343`: saved **78 PASS/startup 0 []**, independent fmt/check **0**. Separate tests-only `9cdb13a59`: saved **13 aggregate PASS**, fresh fmt **0**, unchanged production check valid. Exact row **661** new-filter name and **653–657** populated raw output absence/injection-freshness gain bounded coverage; **268 pending / 80 bounded / 14 partial = 362**. IDs/source SHA retained; **IN PROGRESS**. No invented absence RED, legacy-wrapper absence, input645/646, native AllowedWhenUntainted, inferred featured-parent/order/mode parity, full DTO or ordinary-searcher filtering claim.
+
+## [2026-10-01] evidence | Accept bounded batch25 category DTO rename
+
+[[patch-12-0-5-api-audit#Housing category DTO rename — bounded independent PASS]] links [category proof](../specs/housing-catalog-categories.md#reconciled-batch25-bounded-proof--2026-10-01): inputs `63b53dfe5`, producer `bbbacf8f0`, actual RED **2/12**, saved **66 GREEN PASS/startup 0 []**, fresh independent default fmt/check **0** at clean producer. Rows **643/659** gain bounded explicit DTO rename coverage; **274 pending / 74 bounded / 14 partial = 362**, IDs/text hash retained, **IN PROGRESS**. Batch25 gives no search credit; former seeded search/getter mismatch is addressed by [separate bounded batch26 proof](../specs/housing-category-search.md#reconciled-batch26-bounded-proof--2026-10-01). Native AllowedWhenUntainted/full catalog/UI/all-profile claims and later search/editor-context inputs excluded. Saved runtime/startup inspected, not rerun; source/readability limits owned by linked contract. Docs validation only; no builds/tests/delegation/push.
+
+## [2026-10-01] evidence | Reconcile bounded batch24 aggregates
+
+[[patch-12-0-5-api-audit#Housing explicit aggregates — bounded independent PASS]] links [aggregate proof](../specs/housing-catalog-aggregates.md#reconciled-batch24-bounded-proof--2026-10-01): inputs `fe874979b`, producer `72795fbfa`, RED **2 PASS / 10 FAIL** at stored assertion, saved **76 PASS**, parent startup **0 []**, fresh independent fmt/check **0** at identical relevant code/docs `2973774c5`. Rows 650/651 remain pending with bounded explicit-field links; **276 pending / 72 bounded / 14 partial = 362**, IDs/text hash preserved. None→nil is simulator missing-data gap, not cached required native-number parity. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile closure; **IN PROGRESS**. Docs/accounting validation only; no builds/tests/delegation/push.
+
+## [2026-10-01] evidence | Accept bounded batch23 base selectors
+
+[[patch-12-0-5-api-audit#Housing base selectors — bounded independent PASS]] links [batch23 contract/proof](../specs/housing-catalog-variants.md#reconciled-batch23-bounded-proof--2026-10-01): producer `346c7e1be`, tests `1e452eac3`, RED **0/12**, saved GREEN **56 PASS**, parent startup **0 []**, independent fmt/check **0** at clean producer. Only two trailing-argument deltas promoted; **276 pending / 72 bounded / 14 partial**, 362 IDs/text hash retained. Ambiguity inferred; two late tests lack predecessor RED. No broad-query/full DTO/native row closure or batch24 acceptance. Docs/accounting validation only; audit **IN PROGRESS**.
+
+## [2026-10-01] evidence | Reconcile bounded batch22 pending decor
+
+[[patch-12-0-5-api-audit#Housing pending decor — bounded independent PASS]] links the [pending contract](../specs/housing-pending-decor.md#reconciled-bounded-proof--2026-10-01): independent saved **45/45 PASS** at `f59c03402`, RED `659f79a3c` **1 PASS / 13 FAIL**, snapshot default fmt/check **0**. Parent startup **0 []** is saved, not independent compilation provenance. Explicit pending request only; inferred policy does not close real placement delta. Exact rows 278/279 remain **audit-pending** with proof links; **278 pending / 70 bounded / 14 partial**, 362 IDs/source hash retained. Finish/instance/3D/stock mutation/event production/native/all-profile/full-domain acceptance excluded; audit **IN PROGRESS**.
+
+## [2026-10-01] evidence | Reconcile bounded batch21 DestroyEntry
+
+[[patch-12-0-5-api-audit#Housing DestroyEntry — bounded independent PASS]] links the [destruction contract](../specs/housing-destroy-entry.md#reconciled-bounded-proof--2026-10-01): independent saved **15 destruction + 11 storage + 24 catalog = 50 PASS**, snapshot fmt/check **0** at `67b44f2c3`. Exact rows 281/282 link full variant-argument coverage without status promotion; **362 IDs/hash**, **308 pending / 40 bounded / 14 partial** preserved. Mixed eligible subset/no-op/consistency/synchronous policies inferred, not native all-stack proof; secure-secret parity open. Parent batch21 startup **0 []** not independent; no whole-row/page or all-profile closure.
+
+## [2026-10-01] evidence | Reconcile bounded batch20 storage event
+
+[Storage event contract](../specs/housing-storage-entry-updated.md#reconciled-bounded-proof--2026-10-01) owns bounded independent acceptance at `5afd73d49`: saved **11 storage + 24 catalog + 5 quest + 28 party = 68 PASS**, snapshot default fmt/check **0**. Exact event rows 555/556 gain bounded first-argument rename/full variant-type coverage via explicit admin state producer. Synchronous timing/edge-only emission are simulator inferences; cached `UniqueEvent` is not native synchronous evidence. Parent batch20 startup **0 []** is saved, not independent. All 362 IDs/hash and unrelated accounting retained; **308 pending / 40 bounded / 14 partial**. No DestroyEntry-triggered/native/all-profile or whole-row/page claim; concurrent DestroyEntry work excluded.
+
+## [2026-10-01] evidence | Reconcile bounded batch19 count
+
+[Count contract](../specs/housing-destroyable-count.md#reconciled-bounded-proof--2026-10-01) owns independent bounded acceptance at `3068e48d2`: saved **10 count + 14 variant controls PASS**, default fmt/check **0**, relevant source hashes unchanged. Exact rows `global api-C_HousingCatalog-GetDestroyableInstanceCount-288`/`-289` alone gain bounded coverage for parameter name/type and full variant-key lookup. Explicit count is independent of stored count; default/missing zero is simulator inference. Parent `batch19-green-startup-run.json` exits 0 `[]`, not independent startup proof. Native secure-secret parity/count policy and all-profile execution remain unverified. All 362 IDs/source hash and unrelated accounting retained: **310 audit-pending + 38 bounded-coverage + 14 partial-development-green = 362**. Storage events/mutations/placement excluded; no whole-row/page completion.
+
+## [2026-10-01] evidence | Reconcile bounded batch18 variants
+
+[Variant contract](../specs/housing-catalog-variants.md#reconciled-bounded-proof--2026-10-01) owns independent saved 14 variants + 11 controls PASS, default fmt/check 0 at `157d15cef`, and parent startup 0 `[]` (not verifier-run). Eight exact search/base/dye rows gain bounded coverage; 362 IDs/hash bindings retained. Categories: 312 audit-pending + 36 bounded-coverage + 14 partial-development-green = 362. Filtering/full DTO/native security remain partial. Batch19 count proof/docs remain separate and pending; its spec untouched. No production/PLAN/build/delegation/push.
+
+## [2026-10-01] evidence | Reconcile bounded housing parent GREEN
+
+[Variant proof](../specs/housing-catalog-variants.md#proof-ledger-and-producer-gate) records repaired parent `157d15cef` compile and 14 variants PASS, four cart + four free-place + one customize + two decor controls PASS, saved startup exit 0 `[]`, and exact artifact metadata. Initial 13/14 came from retail no-op table security; host test-local VM registration corrected the fixture without production changes. Independent report 178 and accounting acceptance pending. All 362 IDs and unrelated DamageMeter accounting preserved; docs audit ran no builds/tests/delegation/push.
+
+## [2026-10-01] fix | Install real VM policy in housing guard fixture
+
+[Guard diagnosis](../specs/housing-catalog-variants.md#guarded-selector-fixture-root-cause) records parent compile PASS, variants 13/14 and cart 4 PASS. Retail's no-op `settablesecurity` left the fixture unguarded; test-local pinned VM registration restores its premise without production changes. Named secure/tainted source and query assertions retain rejection/taint requirements. Revised proof remains parent-owned; zero-match filters and native behavior are not evidence. See [[patch-12-0-5-api-audit#Housing catalog variant producer — parent GREEN, independent pending]].
+
+## [2026-10-01] implementation | Replace overlapping housing catalog seeds
+
+[[patch-12-0-5-api-audit#Housing catalog variant producer — parent GREEN, independent pending]] links the [contract](../specs/housing-catalog-variants.md): actual parent RED 0/11 precedes empty-backed base/variant queries and distinct source/results publication. C API owns retained Lua lifecycle; registration remains unconditional, excluded temporary providers untouched. Secret selectors conservatively rejected without unwrapping or taint clearing; guard/snapshot controls unrun. No builds/checks/delegation/push; parent GREEN/startup and acceptance pending, all accounting IDs unchanged.
+
+## [2026-10-01] evidence | Reconcile bounded DamageMeter acceptance
+
+[[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] links [reconciled proof](../specs/damage-meter-combat-source.md#reconciled-bounded-proof--2026-10-01): default and historical 12.0.0 each nine PASS; seventeen prior controls reused narrowly; snapshot fmt/check exit 0. Shapes, empty input, selectors, reset/snapshots and explicit secret/combat errors covered. Producer `1a9fcd1ec`, scope `e38d98a89`, import `c1dce16c3`, host fixture `5b0644b33`. Parent startup 0 `[]` saved, not independent. Exact source row remains PARTIAL for sensitive value/secrecy/native gaps; 362 IDs/hash preserved. No combat/native/all-profile/full-addon UI closure.
+
+## [2026-10-01] input/spec | Prepare housing variant fixtures
+
+[Variant contract](../specs/housing-catalog-variants.md) owns eleven unrun grouped cases, empty C API-owned inputs, exact source/filter IDs and equivalent fixture replacement coverage. [[patch-12-0-5-api-audit#Housing catalog variant inputs — historical pre-RED checkpoint]] records corrected registration order and retained unrelated providers. No output edits/build/check/delegation or actual RED/row credit.
+
+## [2026-10-01] fix | Preserve DamageMeter registration scope
+
+[Scope repair](../specs/damage-meter-combat-source.md#registration-scope-regression-after-1a9fcd1ec) records original unconditional bootstrap evidence and removal of replacement/state/fixture epoch gates. Same empty-backed C API across profiles, including historical 12.0.0 and WowForever; no seed/fallback or combat-policy change. Scoped formatting/commit only; default/historical bounded execution is now reconciled; other profiles remain unrun. See [[patch-12-0-5-api-audit#DamageMeter input only — pending RED]].
+
+## [2026-10-01] evidence | Reconcile bounded quest confirmation acceptance
+
+[[patch-12-0-5-api-audit#Quest accept confirmation — bounded independent PASS]] links the [contract proof](../specs/quest-accept-confirmation.md#tests-asserting-this-spec): producer `e5ab15302`, RED 1 PASS/4 missing-method FAIL, GREEN build 510.99s, saved 5 quest + 6 prompt and fresh 13 lifecycle controls PASS; snapshot fmt/check exit 0. Security/rooting source-only; separate parent hash-bound normal startup exit 0 `[]`, zero errors, 12.70s, not verifier-run. Exact event row 558 gains bounded coverage; 362 IDs/source hash retained. Historical unrelated bin-test failure remains; no broad-suite/native/popup/all-profile/full-page GREEN. Audit **IN PROGRESS**.
+
+## [2026-10-01] input/spec | Separate DamageMeter aggregates and details
+
+[Structure contract](../specs/damage-meter-combat-source.md) owns exact shapes, security annotations, inferred selectors and replacement-test mapping. [[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] records input-only scope and parent-owned unrun compilation/RED; seeded producer unchanged, no acceptance or source-row closure.
+
+## [2026-10-01] evidence | Reconcile bounded spell prompt acceptance
+
+[Prompt contract](../specs/spell-confirmation-prompts.md#tests-asserting-this-spec) owns producer `b07fc61f6`, compiled/docs `329eabfbb`, independent six prompt + twelve control PASS and snapshot-scoped default fmt/check exit 0. Validation/security/rooting remain source-only; no native/all-profile or whole-row/page acceptance. Exact event source rows 560/561/562 now have bounded coverage; all 362 IDs and source hash retained. Separate parent startup exits 0 with `[]`, zero Lua errors, 46.39s; not independently verified. Normal binary and integration emitted by batch16 combined build, which still exits **101** from unrelated wow-sim test `AddonMetadata.addon_dir` missing at `enable_state.rs:225`. Audit remains **IN PROGRESS**. See [[patch-12-0-5-api-audit#Spell confirmation prompts — bounded independent PASS]].
+
+## [2026-10-01] implementation | Record pending spell confirmation producer
+
+[[lua-api#Global Functions]] links the [contract](../specs/spell-confirmation-prompts.md), which owns exact mapping, inferred lifecycle and saved prerequisite RED. Historical implementation-time status: producer `b07fc61f6` formatted/committed, gates then pending; superseded by bounded acceptance above. No native/source-accounting credit.
+
+## [2026-10-01] evidence | Account for bounded UNIT_CONNECTION transitions
+
+[[patch-12-0-5-api-audit#UNIT_CONNECTION party transitions — bounded GREEN]] links the [contract proof](../specs/party-connection.md#tests-asserting-this-spec): exact retained prose row 182, missing-setter RED 0/6, implementation `527cb2f57` GREEN 55/55 and saved zero-error startup. Cached synchronous two-argument event contract is explicit; model policies remain inferred. All 362 IDs retained; independent bounded PASS and snapshot-scoped default fmt/check recorded in the linked contract; unrelated tests/`tests/forever_auto_roll.rs` edits excluded, no current whole-worktree formatting claim. No native/network/all-profile/full-row/full-page acceptance.
+
+## [2026-10-01] contract | Bound AutoRoll fixture to consumed paths
+
+[AutoRoll fixture contract](../specs/forever-auto-roll-fixture.md) owns user-approved consumed-path scope, exact retained setup diagnostics, full-history guards and unexecuted calibrated VM observation. Complete cached/local loading and real lifecycle/loot assertions remain. Historical 71/75 RED is unchanged; no AutoRoll acceptance or production changes. Read-only code/contract audit of `184132263` + `71770807b` confirms exact diagnostic matching, original-function observation, full C history/Reveal guards and four lifecycle/loot fixtures by inspection only. Corrected stale model-wiki scope attribution; revised execution remains unproven, including calibration. `71770807b` attributes formatting/commit-only workflow to the implementation phase, not a user request.
+
+## [2026-10-01] implementation | Add bounded shared party connectivity
+
+[[lua-api#Global Functions]] links the [contract](../specs/party-connection.md), which owns actual RED artifacts and superseding bounded development GREEN. Added shared party bool, active admin edge transition and query consumption; updated all constructors. Two additional controls now pass for inactive retained members and preserved non-party aliases. Linked contract owns 55 PASS and saved startup; independent bounded acceptance and snapshot-scoped default gates now recorded; startup remains parent-owned saved evidence. Exact source accounting is bounded, not whole-row completion.
+
+## [2026-10-01] evidence | Record partial cast-target snapshot GREEN
+
+[[patch-12-0-5-api-audit#UnitSpellTargetName snapshot — partial GREEN]] links the [contract proof](../specs/unit-spell-target-name.md#tests-asserting-this-spec): inputs `c14076510` RED 0/10, producer `5beaf7545` compiled at `024afed64`, target GREEN 10/10 plus flyout 14/14 and vehicle 22/22 controls; saved startup exit 0 with `[]`. Exact dated PTR row `prose-2026-03-12-041` has partial development coverage; all 362 IDs and unrelated statuses retained. Player caster and explicit snapshot only; actual targeting, nonplayer caster and native semantics unclaimed. Linked contract records independent bounded behavior/security PASS and default fmt/check snapshot `4c5aeb2d8`, excluding later party tests `03ebe6972`. Ten RED cases hit missing query surface, not ten independent behavioral failures; readability length finding is advisory.
+
+## [2026-10-01] evidence | Finalize bounded hover independent audit
+
+[Contract proof SSOT](../specs/gamepad-mapped-state.md#final-independent-proof-and-limits) records completed independent report/command ledger, overall FAIL 71/75, immutable runtime inputs, preserved failed-fmt/restart evidence, corrected fmt PASS and zero-warning default check with classified drift and no reruns. Existing system/comparison/coverage/index pending claims reconciled. Mainline eager capture versus callback invocation and base eager hardcore call are classified; whole-dependency versus consumed-path fixture cleanliness remains user-owned. Production edits stopped after three dependency iterations; newer casting representation lacks runtime blanket coverage. Docs-only; no code/data/tests/builds/checks/delegation/operations or overall completion.
+
+## [2026-10-01] evidence | Reconcile bounded Recent Allies independent proof
+
+Updated [contract proof ledger](../specs/recent-allies-state-data.md#tests-asserting-this-spec), exact coverage row/capability, [[patch-12-0-5-api-audit]] and index from saved independent PASS. Contract owns reused RED/GREEN/startup, scoped wiring/rooting/readability and default fmt/check evidence over unchanged source `f442b0913` → `a956dfdd3`. Newer cast input `c14076510` is not covered; no current full-source verification. All 362 IDs and bounded/native/profile/populated-addon limits retained. Docs/data only; no code, builds, tests, delegation or push.
+
+## [2026-10-01] evidence | Reconcile current-pin hover and initializer GREEN
+
+Updated [contract](../specs/gamepad-mapped-state.md), [[gamepad-mapped-state]], [[forever-addon-comparison]], runtime coverage and index from actual `hover-green-ledger.json`/stdout/stderr: source-scoped `a956dfdd3`, rilua `6044544b`, 71/75 pass. All eleven mapped/hover cases pass, including three unchanged cached initializer cases; prior 36 workflows and 24 loot/instance controls pass. Four AutoRoll cases stop before local lifecycle decisions at StaticPopup requirements for `C_Club.GetInvitationCandidates` and `C_GameRules.IsHardcoreActive`; classification complete; fixture cleanliness scope remains user-owned, no masking/exemption/native claim. Original Pi-restart-interrupted runner is a terminated zombie with no surviving compiler; lost-output proof retained. Retry build exits 0 with unchanged inputs; actual runtime artifacts lack the retry prefix. independent audits complete; scoped default gates recorded in the contract, overall FAIL. Native hover/hardware/full DTO/Reveal and source-only profile-absence limits retained; no AutoRoll/inventory credit. Docs-only; no tests/builds/checks/delegation/push.
+
+## [2026-10-01] audit | Record bounded hover policy without GREEN
+
+Audited `f442b0913`; updated [[gamepad-mapped-state]], [contract](../specs/gamepad-mapped-state.md), [[forever-addon-comparison]] and index. Documented bool getter/setter, AllowedWhenUntainted and synchronous bool changed event are separate from optional mapped state. Initial false/change-only/state-before-callback remain guesses; physical cursor filtering is absent. Five `0ff9d1c5a` actual RED cases stop at unknown-event registration, not getter assertions. `ee3e27172` finds only setter unexpected within seven failed GamepadSharedUtility TOCs; later closure unknown, exact Reveal exception retained. Historical audit `20366` complete; prior gates do not establish current-source acceptance. No GREEN; final verifier compiling 75 cases has no result. Docs-only audit; no tests/checks/builds/delegation/operations run.
+
+## [2026-10-01] implementation | Record bounded Recent Allies producer
+
+Updated [[patch-12-0-5-api-audit]] and index, linking the [contract](../specs/recent-allies-state-data.md). Query implemented after actual 0/4 RED; generic lazy nil provider traced, no targeted obsolete provider found. Nested stack-rooting and independent explicit-input snapshots documented. Saved producer `3666902bf` evidence now supersedes pending GREEN: actual 4/4, six source/TOC controls (not addon runtime integration), startup exit 0 with `[]`. Exact source row records bounded development coverage; all 362 source IDs retained. Independent Rust proof was absent at recording; that historical pending status is superseded by the reconciliation above, not native/full-system/page credit.
+
+## [2026-10-01] evidence | Reconcile mapped-stick current-pin boundary
+
+Updated [mapped-stick contract](../specs/gamepad-mapped-state.md), [[gamepad-mapped-state]], [[forever-addon-comparison]], runtime coverage and index from persistent `model-v2-ledger.json` / stdout / stderr: rilua `6044544b`, build `5e15752` → run `74e6c8845`, 63/70 pass. Three direct-model cases pass; three cached initializer and four AutoRoll cases fail at `SetAllowHoverEventsWithFreeLook`, `FrameControlsManager.lua:830`, before local addon/decision assertions. Prior 36 workflows and 24 producer controls pass. Granular checked criteria reflect only observable assertions; cached GREEN and overall acceptance stay open. Existing default fmt/check ledger records unchanged source/config; audit `20366` pending. Native hover/controller/Reveal unmodeled; pending hover tests have no inferred outcome. No archive/matrix counters changed; no tests/builds/checks/delegation run.
+
+## [2026-10-01] scaffolding | Record cooldown restriction input-only slice
+
+Updated [[spell-charge-state]] and index with the [restriction contract](../specs/cooldown-restriction.md). Independent false-default boolean and eight grouped real-query fixtures; no predicate/output/book producer changes. Exact retained IDs and cached annotations grounded the boundary. Actual RED/GREEN and final gates remain parent-owned; opaque spell identifiers unresolved.
+
+## [2026-10-01] implementation | Record bounded mapped-stick input
+
+Added [[gamepad-mapped-state]] and index for `f774ce454`, linking the [contract](../specs/gamepad-mapped-state.md). Two Forever queries use optional C API input independent of UI style; six grouped tests include actual cached initialization with preinstalled fixtures. Targeted rustfmt completed before commit. No Cargo/GREEN/check/readability/delegation/deployment run; parent owns verification. Prior corrected AutoRoll artifact establishes only the pre-addon namespace gap. Native fields/signatures/hardware semantics remain unknown; exact Reveal limitation retained without changes.
+
+## [2026-10-01] audit | Record renown input-only boundary
+
+Updated [[patch-12-0-5-api-audit]] and index from `766272cdc`, the remaining-structures renown row and [renown contract](../specs/major-faction-renown-rewards.md). Empty-default C API row/map inputs and five fixture tests only; exact source `structures-MajorFactionRenownRewardInfo-665`. Producer/fallback unchanged; compilation and actual RED not run. No behavior/native/completed-row credit; source IDs, unrelated classifications and secret-printf documentation preserved.
+
+## [2026-10-01] evidence | Finalize bounded messaging/BugCapture checks
+
+Reconciled [outbound contract](../specs/addon-messages.md), [[lua-api]], [[forever-addon-comparison]], index, runtime coverage and ignored PLAN with full `verify-green.json`: independent 36/36 and single default fmt/check-offline passes, exit 0, zero warnings at `255adcbde`; docs-only `54c6bfaf2` preserves 3252 inputs. Rechecked recorded inputs, 29 local vendor files, host CVar and artifact hashes without mismatches; manifest/lock/pin unchanged. Fifteen messaging cases include one legacy contract plus seven additional legacy controls. Expected module/capture diagnostics remain; zero unexpected BugSack errors. Two readability findings are nonblocking. No archive/inventory/native/pixel/full-cache credit; AutoRoll remains separate.
+
+## [2026-09-30] evidence | Reconcile observed messaging GREEN
+
+Updated outbound spec, [[lua-api]], [[forever-addon-comparison]], index and runtime coverage from actual main build/run ledgers and full stdout/stderr: 36/36 at unchanged `255adcbde`. Current-local 29-file capture proof only; no archive credit. Corrected MissingRequirements provenance; independent final/default fmt/check remain pending. PLAN records bounded observation, not goal closure.
+
+## [2026-09-30] implementation | Record bounded Forever outbound messaging
+
+Updated [[lua-api]], index and [outbound contract](../specs/addon-messages.md) for three Forever-only C_* senders. Actual message-log records replace no legacy behavior; VM-authenticated secret access preserves taint. Valid RED `79bedc49e` is 9/22 pass, thirteen assertion failures of unmodeled behavior after callable namespace sender checks passed; these are not missing-method failures. The separate actual BugSack workflow's `MissingRequirements` nil-symbol-access diagnostic (not `RequiresAPI` TOC metadata) remains valid. No addon-inventory credit follows. Main unchanged-source build/run artifacts now show 36/36 GREEN; independent final/default fmt/check remain parent-owned and pending. Binary stringView limitation and inferred local policies are explicit.
+
+## [2026-09-30] implementation | Record live Cooldown formatter handoff
+
+Updated [[duration-core#Cooldown countdown formatter]] and index from committed attachment/consumer stages. [Cooldown formatter contract](../specs/cooldown-countdown-formatter.md) separates API development GREEN from actual library renderer RED and pending consumer GREEN; no final integration or native/glyph claim.
+
+## [2026-10-01] implementation | Wire explicit charge model and shared zero semantics
+
+Updated [[spell-charge-state]] and [charge contract](../specs/spell-charge-state.md) with public map/clock/mapping paths and the lazy nil spell-duration provider. Actual concrete `eac08bda3` RED is 1/10 pass; `13af6a6b2` then installs shared table/duration producers, removes exact fabricated providers, and interprets 12.0.5 fully elapsed zero spans as expired plus elapsed fraction one. Existing zero/reset/default tests are epoch-aware; no charge-only override, fabricated transitions, pet/macros, secret bypass, Cargo, push, deploy, or native parity claim. Parent GREEN/final gates remain pending.
+
+## [2026-09-30] implementation | Record bounded cooldown ignoreGCD selection
+
+Updated [[duration-core]] and index with duration-only shared selection and the retail-gated [spellbook duration contract](../specs/spellbook-cooldown-duration.md). Existing player bank 0 resolves real slots; unsupported banks/slots return nil. True individual-only and omitted/false later-end selection are simulator inferences from the source-named argument, not native evidence. Actual grouped RED at `9a50d8a5c` is 0/6 in `/tmp/patch-12.0.5-batch4-ignore-gcd-red.log`; parent owns GREEN and older-profile checks. No Cargo, delegation, vendor changes, secrecy bypass, fabricated pet/macro mappings, push or deploy.
+
+## [2026-09-30] investigation | Audit BugCapture selected-TOC source correction
+
+Updated [[forever-addon-comparison#BugCapture selected-TOC source boundary]] and index from `dd77368b7` and persistent `forever-bug-capture-2026-10-01` artifacts. Both !BugGrabber Lua files were rejected as relative paths outside the absolute TOC root; the unobserved already-loaded assertion is rejected. Source removes implicit alternate selection without relaxing the guard or editing vendors. Combined updated-rilua proof is 1 baseline pass / 1 loading failure, not BugSack acceptance. Post-fix GREEN and docs requirements stay pending/unchecked; current-local 29-file identity is not an archive release, and matrix statuses remain unchanged. Docs-only audit; no tests, Cargo, runtime, delegation, downloads, or operations.
+
+## [2026-10-01] implementation | Record bounded FontString smooth scaling
+
+Updated [[rendering-pipeline]] and index with [FontString smooth scaling](../specs/fontstring-smooth-scaling.md). `0624da720` implements independent boolean state, checked secret inputs, fractional shared height, cache identity and verified `smoothScaling` XML spelling; `3c8b48012` adds wrapped render/cache assertions. Valid RED fails six API and one renderer cases on missing methods, not later height/cache assertions; targeted GREEN remains parent-owned and pending. Public default and exact metrics are inferred; false legacy behavior, animation-mode independence and earlier XML epoch gap are explicit. Future native recorder is tracked, not run.
+
+## [2026-09-30] audit | Extend common duration NumericFormatter consumption
+
+Updated [[duration-core]] and index with [common duration formatting](../specs/duration-core.md#common-numeric-formatting). Parent build `a3ba2a23a` records 0/4 focused default RED: three incompatible abbreviated receiver failures and one decoded modifier exposed to an overridden Lua getter. Common dispatch validates known instances, uses native core getters/printf, and retains private Seconds closures with opaque timing; its configuration table is not exported. Typed host producers retain taint and existing read guards. Parent build `9a50d8a5c` passes common 4/4, abbreviated 4/4 and numeric-rule 7/7, including later number-`__tostring` coverage absent from RED. That default run used Seconds primitive text; a separate real-unit test failed with `93`. Native promotion `e0ff01ef1` is committed, but localized output and the fifth curve case await the next batch. Native/general-debug parity is unclaimed.
+
+## [2026-10-01] audit | Record bounded 12.0.5 stat-output secrecy
+
+Updated [[patch-12-0-5-api-audit]] and index from `8da12a42c`, `f35d0293f`, `edab2563a`, and [unit-stat restriction spec](../specs/unit-stat-output-restriction.md). Exact source inventory is 50 APIs: secrecy implemented for 40 supported default-retail outputs; 10 missing base models remain pending. Explicit default-false input/predicate and trusted Rust numeric production preserve caller taint; unrelated zero-result aliases remain plain. Executed RED at `9a50d8a5c` passes predicate / fails three output cases; post-change GREEN and final gate remain pending. Activation policy and native stat-model parity are unclaimed. Expanded patch audit stays IN PROGRESS; historical provenance and probe-register classification unchanged.
+
+## [2026-09-30] investigation | Record cached Forever RestrictedExecution proof
+
+Updated [[forever-addon-comparison#Cached RestrictedExecution state and rejection coverage]] and index from tests-only `6e2f65346` and `/home/osso/.local/state/wow-ui-sim-proof/forever-restricted-execution-2026-09-30/{ledger.json,stdout,stderr}`. Source proof passes 1/1: normal cached-addon harness/public SecureHandler execution preserves separate header state `10 → 11 → 12` and `20`, rejects direct table literals through public `CallRestrictedClosure`, and resumes after rejection without collected Lua errors. Independent audit `20328` remains pending. Historical DisenchantHelper nil-loadstring failure does not reproduce in this bounded consumer; unavailable archived addon prevents exact replay or matrix reclassification. Datamine stays blocked while the broader goal continues. No new spec, source/test edits, Cargo/runtime execution, downloads, delegation, or operational changes.
+
+## [2026-09-30] audit | Record bounded abbreviated formatter implementation
+
+Updated [[duration-core]] and index from `786e731a1`, `663de5528`, and [abbreviated formatter spec](../specs/abbreviated-number-formatter.md). Public FormatNumber is grounded in the common NumericFormatter documentation; suffix lookup is grounded in localization declarations and existing global strings. Four grouped RED cases fail on missing surface; GREEN is pending shared compilation. Native policies and existing multi-formatter duration dispatch remain explicitly unclaimed.
+
+## [2026-09-30] audit | Link bounded 12.0.5 capability and future-probe inventory
+
+Updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]] and index from the six linked specs and commits `326e571b8`, `5bfca2e16`, `f372687b6`, `857146cda`, `9d89c7021`, `50feedbfe`. Compact coverage distinguishes documented contracts, inferred policies, spec-reported proof state and future probes; this ingest is docs/source inference, not code or native proof. Full audit remains **IN PROGRESS**, final gate pending, and 38-row register status unchanged. `patch-page-index.json` discovers 138 API pages / 98 retail-history candidate titles by title classification only.
+
+## [2026-09-27] investigation | Extend XML empty-function clearing coverage
+
+Updated [[xml-empty-script-clearing]] and [XML empty script-function clearing](../specs/xml-empty-script-clearing.md) from test commit `267f1fea4` and `/tmp/cross-version-empty-script-edge-verification-ledger.md`. Five added behavior tests close the prior source-only branches: intrinsic-default precall clearing, ordinary/runtime whitespace and empty-body clearing, and ordinary/runtime `method=` plus empty `function=`. Independent inspection at descendant docs revision `5d2dfb990` confirms the default-profile module passes 9/9 and `cargo fmt --check` passes; unchanged-runtime `cargo check` proof is reused without rerun. Native-client parity is unclaimed.
+
+## [2026-09-27] audit | Record pending XML `OnDoubleClick` registration proof
+
+Updated [[xml-template-system]], [[lua-api]], index, and [XML double-click script registration](../specs/xml-double-click-scripts.md) from `4d42cb803` and tests-only `0d052b4b2`. The optimized collector now enumerates `OnDoubleClick`, preventing empty successful collection from silently bypassing general XML compilation. RED remains three ordinary/runtime method-and-inline cases; an `OnEnter` mixin control passes. `GetScript` plus manual Lua invocation proves registration and declared side effects only. Independent post-change verification is pending; physical double-click input, native arguments, other handler expansion, and vendor/UI behavior are unclaimed. No code, test, Cargo, delegation, Bash, push, or deployment work ran for this documentation update.
+
+## [2026-09-27] audit | Finalize ScrollFrame XML binding dispatch
+
+Updated [[xml-template-system]], [[widget-system]], [[lua-api]], index, and [ScrollFrame script bindings](../specs/scrollframe-script-bindings.md) from `1c66baffc`, `2cc079507`, original RED `1e4706e2a` / `c46c6f76d`, and final proof `c82ed91af`. All three declarations register in ordinary and runtime-template paths; dispatch uses precall/normal-hooks/postcall bindings instead of normal-only lookup plus unregistered `*_Intrinsic` property calls. The original RED was three missing registrations plus one bogus-property invocation, not dispatch-only. Final bounded proof validates 60 unique relevant cases, including ordinary XML and cached EventScrollFrame paths with zero recorded Lua errors. The proof ledger reports pre-existing `input_handlers_with_options` length and `template_chain.rs` file-size caps, not new violations. Native/GPU, other profiles, and inline named-parameter mapping remain unverified; mouse-wheel, size, and lifecycle dispatch are unchanged. No source, test, Cargo, delegation, Bash, push, or deployment work ran for this documentation update.
+
+## [2026-09-27] audit | Record pending Button enabled-state callback dispatch
+
+Updated [[widget-system]], [[lua-api]], index, and [Button enabled-state callbacks](../specs/button-enabled-callbacks.md) from `1d989b0a3` and tests-only `960c20b32`. `Enable`, `Disable`, and `SetEnabled` retain committed-state callback visibility, transition-only dispatch, same-value no-ops, and handler-error continuation, while routing `OnEnable`/`OnDisable` through existing precall/normal-plus-hooks/postcall lookup. XML `GetScript` queries prove registered intrinsic bindings; RED remains two intrinsic dispatch failures with one normal hook-only control passing. Intrinsic `HookScript` restrictions remain unchanged. Eight unchanged Click test bodies moved to `methods_button/click_callbacks.rs` within the same integration target only to bound the original file. Independent post-change verification is pending. No native all-profile or vendor/UI claim. No runtime, test, Cargo, delegation, Bash, push, or deployment work ran for this documentation update.
+
+## [2026-09-27] audit | Finalize bounded programmatic EditBox MaxLetters proof
+
+Updated [EditBox text position and selection](../specs/editbox-text-position-selection.md), [widget system](../widget-system.md), [Lua API inventory](../lua-api.md), [[widget-system]], [[lua-api]], and index from `390e560f5`, tests-only `7542b1a56`, `64d9246b8`, `924a44fbc`, and `/tmp/cross-version-editbox-settext-limit-verification-ledger.md`. Positive `MaxLetters` clips programmatic EditBox `SetText` and shared `SetFormattedText` before cache, cursor/selection, and callbacks; same final text is a no-op, while non-EditBoxes and unlimited limits are unchanged. Bounded proof passes 51 default-profile cases and 23 Forever-profile cases; totals overlap and are not distinct features. The Forever regression at `tests/editbox_stub_family/max_letters.rs` covers positive-limit secret clipping, tainted `GetText`/secret `SetText` denial, atomic failed secret and ordinary-userdata writes, and a plain replacement clearing secret origin. `924a44fbc` makes the existing combo-point constant `pub(crate)` without changing its value `4` or behavior; fresh Forever `cargo check` exits 0 in 1m25s with no warnings. The earlier Forever integration compilation transcript was not retained, so integration linking, Cargo exit, and warnings are not claimed. The 2026-02-23 ASCII record (`hello`, five letters) and fixture lack exact client-build/historical-hash provenance. Unicode-scalar clipping follows the existing simulator `GetNumLetters` model; native markup/grapheme behavior and `SetText` MaxBytes remain unresolved. No native-game probes ran. No runtime, test, Cargo, delegation, Bash, push, or deployment work ran for this documentation audit.
+
+## [2026-09-26] audit | Record pending EditBox XML-limit proof
+
+Updated [EditBox text position and selection](../specs/editbox-text-position-selection.md), [[widget-system]], [[xml-template-system]], and index from `547907429` and `/tmp/cross-version-editbox-xml-limits-proof.md`. The commit parses `bytes` and resolves XML `bytes`/`letters` independently: explicit instance values, including zero, override the most-derived inherited value literally. Ordinary XML and runtime-template construction, including nested template EditBoxes, apply both limits before `OnLoad`. Tests-only `5f94dd219` is pre-change RED: four failures; one ordinary-`letters` control passes. Independent post-change verification is pending; native byte/terminator accounting is unverified and no adjustment is inferred. No Blizzard/vendor UI files changed. No runtime, test, Cargo, delegation, Bash, push, or deployment work ran for this documentation update.
+
+## [2026-09-27] audit | Finalize bounded ColorSelect callback/XML proof
+
+Updated [ColorSelect RGB callback](../specs/colorselect-rgb-callback.md), [[widget-system]], and index from `/tmp/cross-version-colorselect-verification-ledger.md`. `3397eeec9` commits changed RGB before normal script/hook callback dispatch; `69e4bd61d`/`579770559` bind all six XML roles across ordinary, inherited-template, and runtime-template creation. At `e586e6d30`, 35 behavioral cases are valid: 18 retained XML controls, three moved XML cases, 12 state controls, and two exact callback/Retail-consumer cases. Fresh format and integration compilation passed without warnings; the unchanged Retail setup/hex consumer asserts zero recorded Lua errors. No Blizzard/vendor UI files changed. Native HSV-only/alpha-only callbacks, reentry, GPU parity, and other profiles remain unverified. No runtime, test, Cargo, delegation, Bash, push, or deployment work ran for this documentation update.
+
+## [2026-09-27] audit | Record pending EditBox keyboard-limit proof
+
+Updated [EditBox text position and selection](../specs/editbox-text-position-selection.md), [widget system](../widget-system.md), [Lua API inventory](../lua-api.md), [[widget-system]], and index from `1933cb68c`, tests-only `e114cafe0`, and `/tmp/cross-version-editbox-limits-proof.md`. Focused keyboard input validates its proposed selected-range replacement against positive scalar (`MaxLetters`) and UTF-8 byte (`MaxBytes`) limits before mutation. Overflow is a user-selected simulator no-edit/no-callback policy, preserving text, caret, selection, and render caches; accepted callbacks remain unchanged. RED is three failures with one zero-default control passing; independent post-change verification is pending. Public `Insert`/`SetText` limits, Blizzard UI/XML, replacement EditBoxes, and native-client semantics remain out of scope. No tests, Cargo, delegation, Bash, push, or deployment ran for this documentation audit.
+
+## [2026-09-26] investigation | 60 Hz tick cap and cheaper OnUpdate dispatch
+
+`8c59186f1`..`b59d80c8b`: the idle rate came from Blizzard SmoothStatusBar's session-long 0-interval ticker. The tick is now capped at 60 Hz. OnUpdate dispatch resolves keys once per pass and builds report metadata lazily, OnPostUpdate is filtered to frames that have it, and the tick-interval scans short-circuit. Steady-state tick p50 went from ~0.55 to ~0.36ms. See [[tick-cooldown-scan]].
+
+## [2026-09-26] audit | Record pending scripted Button click lifecycle
+
+Updated [[widget-system]], [[lua-api]], index, and [Scripted Button clicks](../specs/button-script-click.md) from `7b5f40bf3` and tests-only `8ff05b19a`. Public `Button:Click()` rejects `ScriptedInput` before mutation, toggles CheckButtons before enabled/same-button recursion guards, then dispatches `PreClick`, `OnClick`, and `PostClick` through registered script bindings with `(self, mouseButton, down)`; omitted arguments default to `LeftButton` and `false`. Handler errors report and continue; cleanup releases the guard. RED is six failures; two new and two existing controls pass. Fixtures cover normal scripts and `HookScript`, not intrinsic-binding order. `/tmp/cross-version-button-click-proof.md` records the bounded evidence; independent verification is pending. Wowless corroborates Button order, arguments, and error continuation but has no CheckButton override. Solarity corroborates toggle-before-guard but propagates handler errors. No native or physical-click parity claim. No tests, Cargo, delegation, Bash, push, or deployment ran for this documentation audit.
+
+## [2026-09-27] audit | Record pending ScrollFrame child-ownership boundary
+
+Updated [[widget-system]] and index from `07afe68ae`, tests-only `3eea04853`, and [ScrollFrame child ownership](../specs/scrollframe-child-ownership.md). Replacing or nil-clearing the designation clears it and reparents the old child before assignment, invalidating layout/presentation; same-child assignment avoids detachment. RED remains two ownership failures / one control pass; independent post-change verification is pending. Local Wowless corroborates only unparent-before-replace. Native callbacks, anchor resets, and unrelated custom Lua `ScrollChild` properties remain unclaimed. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
+## [2026-09-27] audit | Finalize bounded EditBox selected-keyboard proof
+
+Updated [EditBox text position and selection](../specs/editbox-text-position-selection.md), [widget system](../widget-system.md), [Lua API inventory](../lua-api.md), [[widget-system]], index, and log from `0c5d5f047`, `67beac8c0`, and `/tmp/cross-version-editbox-key-selection-verification-ledger.md`. Focused printable input, Backspace, and Delete consume a nonempty selection through the Frame helper shared with public `Insert`; text, scalar caret, and render caches commit before existing callbacks. Rejected numeric input preserves selection. RED is 5 failed / 4 existing unselected controls passed; independent bounded GREEN is 45 scoped invocations: 24 key-dispatch, 11 EditBox, six focus, and four scripted-focus guards. `cargo fmt --check`, `cargo check`, and integration compilation pass without compiler warnings. Three existing Lua diagnostics remain in scoped logs: bare-environment ESCAPE-to-`ToggleGameMenu` nil call, plus explicit text-set and focus callback-error controls; no clean-Lua-error claim. Public `Insert` callback behavior, keyboard selection creation/navigation, IME, and native-client behavior remain unverified. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
+## [2026-09-26] audit | Record retail panel AuraContainer fixture publisher
+
+Updated [addon loading](systems/addon-loading.md) and [the addon/XML loading pipeline](../addon-loading-pipeline.md) for `64039bc63` from `/tmp/cross-version-target-aura-verification-ledger.md` and its five execution logs. Retail `Blizzard_AuraContainer` is an implicit `PANEL_ADDONS` publisher only: all prior roots remain, with no runtime/startup or secure-replay change. The real TargetFrame private buff/debuff groups initialize; public `AuraContainerUtil` is nil and secure `__secureenv.AuraContainerUtil` is a table. Bounded proof passes 31 distinct top-level tests: 26 targeting, two panel, one Spellbook, and two exact security controls; one panel case is ignored and prefork children are not additional tests. All five complete logs have zero Lua-error and panic lines. Format, reused valid source-unchanged check, grouped integration compilation, and changed-file readability pass. The previous 28-test panel-closure proof remains valid for its earlier scope. No whole cross-version, native, GPU, replay-equivalence, or all-errors-fixed claim. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
+## [2026-09-26] audit | Document panel-fixture dependency closure
+
+Updated [addon loading](systems/addon-loading.md) and [the addon/XML loading pipeline](../addon-loading-pipeline.md) from `298e5d9f3`, test-only `9513c4a7d`, and `/tmp/cross-version-panel-dependency-verification-ledger.md`. At docs-only `5b6105b44`, bounded verification passed format, check, integration compilation, 25 `targeting_verbs::` tests including the Narration regression, two fixture consumers, and one Spellbook consumer: 28 distinct top-level tests. The regression separately passed by exact name; prefork children do not increase the count. This is only proof that the modeled panel-fixture closure supplies `NarrationSliderMixin.SetNarrationValueFormatter`; it does not claim clean fixture startup, all-UI behavior, or native semantics. The `TargetFrameAuraContainer.lua:242` `AuraContainerUtil`-nil residual remains, while no other 22 old baseline errors appeared in scoped logs. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
+## [2026-09-26] audit | Record UnitIsUnit modeled-identity boundary
+
+Updated [[lua-api]], index, and [modeled unit identity equality](../specs/unit-identity-equality.md) from production `bfa742675ec489e1bfb3f2a42e0c4d3d4369d555`, tests `1787bd5f76007c12132fa7c4f65f5fa9fabc6f7e`, and `/tmp/cross-version-unit-identity-verification-ledger.md`. `UnitIsUnit` compares resolved existing modeled GUIDs: player, assigned target/focus, and active party aliases can match; missing identities never match, including two absent tokens. Pet/vehicle identities remain unmodeled. RED is 4 failures / 2 controls; bounded independent proof is GREEN: 83 `unit_api::` cases, 24 `targeting_verbs::` cases plus one nested consumer, format, check, and readability. Authorized source remained unchanged through docs-only `33155da3e`. The target fixture emits 12 Lua dependency errors with unestablished provenance, so no clean full-UI claim. Cached retail `Blizzard_UnitFrame/Mainline/TargetFrame.lua` calls `UnitIsUnit("target", "player")` for SELF-menu selection, consumer evidence only. Native behavior, same-name distinct fixtures, and menu interaction remain unverified. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
+## [2026-09-26] investigation | Same-value setters stop dirtying regions
+
+`9805bc079`, `bef30706e`: SetTexture, SetDesaturated/SetDesaturation, SetTextColor, SetFont and SetText no longer mark regions dirty when the drawn result is unchanged. This removes ClickableRaidBuffs' timer-driven idle dirt. See [[tick-cooldown-scan]].
+
+## [2026-09-26] investigation | Silent animated alpha writes
+
+`81484068d`: animated alpha writes no longer dirty frames whose effective alpha doesn't change. Hidden pulses (BoostTutorial glow, a casting-bar texture, LFG GroupFinder textures) stopped forcing redraws. Idle draw went from about 0.6 to 0.1ms. Timer-driven dirt on three UIParent children remains. See [[tick-cooldown-scan]].
+
+## [2026-09-26] audit | Record Region:IsMouseOver presentation-query boundary
+
+Updated [[layout-system]], [[widget-system]], [[lua-api]], [[rendering-pipeline]], and index from `b6bb2f710`, `1529f22c0`, and [ScrollFrame presentation offsets](../specs/scrollframe-presentation.md). `Region:IsMouseOver` applies the shared translation after its logical-rect, visibility, and mouse-enabled guards, before bounds/margin comparison; `GetRect` remains logical and optional margins remain preserved. Independent verification passes the bounded query scope; the spec links the 35-case, format/check, and source-inspection evidence. The query does not gain viewport clipping or intersection semantics; no native claim is made. This proof remains separate from the prior 52-case render/hit presentation proof. Cached MapCanvas queries its viewport rather than a scrolled child and is not evidence of this mismatch. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
+## [2026-09-26] audit | Record ScrollFrame presentation boundary
+
+Updated [[widget-system]], [[rendering-pipeline]], and index from `08c43a536`, `4c39f4a5a`, `ec6b39047`, `ed69bd136`, `4e344ab4f`, `1ecc0c98c`, and [ScrollFrame presentation offsets](../specs/scrollframe-presentation.md). Requested offsets remain stored state; the shared presentation transform moves only every designated scroll-child subtree, including externally anchored descendants and nested viewports, leaving logical anchors/layout immutable. Render and hit paths share presented geometry and viewport clips; disjoint nested intersections use explicit empty clips. `ec6b39047` reuses existing hover clipping instead of retaining a duplicate helper. `4e344ab4f` and `1ecc0c98c` reuse cumulative ancestor offsets only within each render-list build, hit-grid batch, or hit-test descent; nonclipping parent edges short-circuit, with no persistent cache or invalidation system. Initial proof passes 27 scroll-widget, eight cache-backed hit, six strata, three mask, three line, and one hover cases, but existing 20,000-frame deep click/hover chains timed out at 90 seconds from repeated ancestry traversal. Final independent verification passes 52 scoped cases, including the four direct hit cases in 0.477 seconds, scaled-child quads and nested hit targets. Format/check pass; changed-function readability has no findings, with a pre-existing `strata_emit.rs` file-length violation retained. `/tmp/cross-version-scroll-presentation-final-verification-ledger.md`. Solarity corroborates logical/presentation separation only; no native or all-UI proof.
+
+## [2026-09-26] audit | Record UnitGUID modeled-identity boundary
+
+Updated [[lua-api]] and index after production `2938de6e1`. Public `UnitGUID` now uses the shared existing-identity resolver, returning nil for missing target/focus, unknown tokens, removed party slots, and internal unknown/empty identities while retaining modeled player, assigned target/focus, and active party GUID strings. Tests-only `147a6a776` recorded RED 4 failures / 2 present-identity controls. Independent verification passes 79 unit API cases, 24 targeting cases plus one nested consumer, two retained nested-timer cases, and format/check/readability; `/tmp/cross-version-unit-guid-verification-ledger.md`. The targeting fixture logs 12 dependency-related Lua errors despite passing assertions; provenance is unestablished. Wowless `data/impl/UnitGUID.lua` supports only the bounded modeled rule. Cached retail and Mists `Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua` use GUID truthiness, but its remote-update comment rules out a UnitExists-equivalence claim. No native-client or clean full-UI startup proof is claimed.
+
+## [2026-09-26] audit | Record explicit macro action texture resolution
+
+Updated [Macro action textures](../specs/macro-action-textures.md), [[lua-api]], and index from `041c8235a`, `2ead3b96c`, `2032f8aed`, and `/tmp/cross-version-macro-texture-proof.md`. Both formerly spell-only texture queries now use shared `c_action_bar::action_texture_path`: an assigned macro reads its nonempty stored `MacroInfo.icon`; spell lookup remains the alternative. Tests cover edit, move, clear, deletion, empty-icon, and spell controls. Initial macro lookup failures become independent GREEN four macro-query/profile cases and 25 inventory controls, plus format/check/readability; `/tmp/cross-version-macro-texture-verification-ledger.md`. Numeric icons, `#showtooltip`, native semantics, and rendering remain excluded. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
+## [2026-09-26] audit | Record ScrollFrame requested-offset boundary
+
+Updated [ScrollFrame offsets](../specs/scrollframe-offsets.md), [[widget-system]], and index from `ee25b7d62`, `e9b72b107`, `docs/wow-client-diff/README.md:107-108`, and `/tmp/cross-version-scroll-offset-proof.md`. Both setters now preserve the supplied offset instead of clamping it, retaining callback delivery after committed state and same-offset suppression. Cached observations record vertical `-50` and horizontal `999`; no fresh probe ran. Initial RED 0/2 becomes independent GREEN 6 ScrollFrame +15 shared widget controls, with format/check/readability passing; `/tmp/cross-version-scroll-offset-verification-ledger.md` records revisions. Renderer movement and implicit range-refresh timing are excluded. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
+## [2026-09-26] investigation | Timer-only animations wake at loop boundaries
+
+`0d43b3dd9`: animation groups made only of plain `Animation` steps, with no OnUpdate handler, no longer force 16ms ticks. The idle tick rate is still ~63/s, driven by strata dirt and addon C_Timers. See [[tick-cooldown-scan]].
+
+## [2026-09-26] audit | Verify Slider/StatusBar range validation
+
+[[wrath-statusbar-value-callback]] links the [range contract](../specs/widget-range-validation.md). Tests `0e3c8157c`, implementation `c72db371d`, and format-only `90c4f189b` have independent 15+1 behavioral passes, format/check and changed-function readability proof. `/tmp/cross-version-range-validation-verification-ledger.md` preserves exact scope and native/interpolation limitations.
+
+## [2026-09-26] audit | Verify reparent visibility transitions
+
+Independent verification after `1fcdb52b2` passes six reparent cases, nine existing Show/Hide cases and four parent/alpha controls, plus format/check and changed-function readability. [Visibility dispatch](../specs/visibility-script-dispatch.md) and `/tmp/cross-version-reparent-visibility-proof.md` retain source-only and public-method boundaries; this supersedes the pending gate below without claiming native timing or all parent writers.
+
+## [2026-09-26] audit | Record public SetParent effective-visibility callbacks
+
+Updated [Visibility script dispatch](../specs/visibility-script-dispatch.md), [[widget-system]], [[lua-api]], index, and log from `676cda72e`, `/tmp/cross-version-reparent-visibility-proof.md`, and its actual six-case GREEN log. After existing protected-state, forbidden-aspect, and self/descendant cycle guards, public Lua `SetParent` compares effective visibility before and after hierarchy mutation. On a transition it dispatches child-first `OnHide`/`OnShow` without mutating local shown state; locally hidden descendants are excluded. The GREEN cases also cover unchanged effective visibility, handler-driven reparenting suppressing stale callbacks, error continuation to the parent binding, and retained cycle/valid-reparent controls. Wowless `api.lua:106-126` plus `visibility.lua` corroborates the modeled public transition and child-first traversal only; it is not native-client evidence. Other parent writers and a full native claim are excluded. Final independent gate remains pending. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
+## [2026-09-26] audit | Verify locked-highlight state policy
+
+Follow-up `e545bdcda` restores pressed/disabled suppression after the first locked-highlight patch failed the expanded Lua-to-quad control. Independent verification passes all nine button-state cases, retains three unchanged generic highlight controls, and passes format/check/readability. [The spec](../specs/button-locked-highlight-rendering.md), [[three-slice-button-tiling]] and `/tmp/cross-version-locked-highlight-proof.md` retain source scope and native/legacy-path limits.
+
+## [2026-09-26] audit | Record locked standard Button highlight boundary
+
+Updated [Button locked-highlight rendering](../specs/button-locked-highlight-rendering.md), [rendering pipeline](../rendering-pipeline.md), [[three-slice-button-tiling]], index, and log from `204f52235` and the full `/tmp/cross-version-locked-highlight-proof.md` actual RED/GREEN logs. The root was an early `button_vis.rs` cull of `HighlightTexture` and generic HIGHLIGHT children, which made a late quad-builder locked-child allowance unreachable. The repair permits only a locked standard slot early; registry generic and live hover paths share an unlocked-and-visible predicate, preventing unlocked-hover duplicates. The full `button_state_textures::` group is GREEN 9/9 after RED 0/1 for locked nonhover; hidden ancestors suppress locked and hovered emission. Pressed/disabled selection and generic HIGHLIGHT policy are unchanged. This is simulator-only evidence: final gate and native behavior remain unverified. No tests, Cargo, delegation, Bash, or push ran for this documentation audit.
+
+## [2026-09-26] audit | Verify parent cycles and ItemLocation queries
+
+Independent verification at `aa5f686f8` passes 44 C_Item cases, retains six unchanged parent/creation/visibility controls, and passes format/check and changed-function readability. [ItemLocation links](../specs/c-item-location-links.md) and [parent-cycle rejection](../specs/set-parent-cycles.md) preserve their boundaries; `/tmp/cross-version-parent-item-location-proof.md` records commands and logs. Existing GUID synthesis, broader metadata-cache semantics and other parent writers remain outside this work.
+
+## [2026-09-26] audit | Record bounded C_Item ItemLocation resolution
+
+Updated [Shared C_Item location queries and links](../specs/c-item-location-links.md), [C_* API Signature Audit](../c-api-signature-audit.md), [C_* API Stub Audit](../c-api-stub-audit.md), [[api-coverage]], index, and log from `3f44fa891`, the full `/tmp/cross-version-item-location-proof.md`, its actual RED/GREEN logs, and cached retail `Blizzard_APIDocumentationGenerated/ItemDocumentation.lua`. Shared resolver behavior now documented as resolving occupied equipment and equipped bags from `bag_info`; `DoesItemExist` and `GetItemID` report modeled presence/ID, while `GetItemLink` preserves captured links and returns nil for uncataloged modeled items without one. The ledger records four new pure-model location cases and GREEN 44/44 `c_item_api::c_item::` controls at the committed code. Cached documentation declares the ItemLocation inputs for `DoesItemExist`, `GetItemID`, `GetItemLink`, and `IsItemDataCached`; it is not native execution. Stable GUIDs remain unmodeled; this change leaves the pre-existing location-derived bag GUID implementation untouched. `IsItemDataCached` is a modeled cache policy, not a fully native-verified lifecycle. `818fe8d59` parent-cycle work is separate; its final combined gate remains pending. No tests, Cargo, delegation, push, or independent final gate ran for this documentation audit.
+
+## [2026-09-26] audit | Record bounded SetParent cycle-rejection boundary
+
+Updated [SetParent parent cycles](../specs/set-parent-cycles.md), [[widget-system]], [[lua-api]], index, and log from `818fe8d59`, the full `/tmp/cross-version-parent-cycle-proof.md`, and its actual RED/GREEN logs. Public Lua `SetParent` preserves its protected-state and forbidden-aspect guards before the shared `would_create_parent_cycle` helper walks the proposed parent's `parent_id` ancestry. Self-parenting and parenting to a descendant are rejected before animation reparenting or `apply_parent_change`; the RED runs fail both new cases before the commit, while grouped GREEN is 4/4: self rejection, descendant rejection, valid reparent/nil/same-parent child-count control, and existing region enumeration. Rejection preserves the tested hierarchy and visibility. Only a simulator error containing `cycle` is tested; native wording is not claimed. The helper assumes an acyclic existing chain, does not validate every malformed model graph, and does not cover other parent writers. Final combined gate remains pending. No tests, Cargo, delegation, push, or deployment ran for this documentation audit; the concurrent `tests/c_item_api/c_item.rs` modification remains unmodified.
+
+## [2026-09-26] audit | Record bounded C_Item.GetStackCount location counts
+
+Updated [C_Item.GetStackCount location counts](../specs/c-item-stack-count.md), [C_* API Stub Audit](../c-api-stub-audit.md), [[api-coverage]], index, and log from `c80aaefba`, `/tmp/cross-version-item-stack-count-proof.md`, its actual GREEN logs, and cached retail `Blizzard_APIDocumentationGenerated/ItemDocumentation.lua`. Valid ItemLocation `{ bagID, slotIndex }` returns its modeled bag stack or zero when empty; `{ equipmentSlotIndex }` returns one when occupied and zero when empty, including synthetic item IDs without metadata. Numeric IDs, item-link strings, and nil are rejected. Cached documentation declares `GetStackCount(itemLocation: ItemLocation) -> stackCount`; its separately declared `GetItemCount(itemInfo, ...) -> count` remains the modeled aggregate API. Focused `c_item_api::c_item::` is GREEN 40/40 at `c80aaefba`. Subsequent independent verification passes the same exact-source 40-case batch, format/check and changed-code readability; the ledger records commands and logs. No broad suite was required or claimed. No native-client or native error-wording claim. No tests, Cargo, delegation, push, or deployment ran for this documentation audit; broader goal unchanged.
+
+## [2026-09-26] audit | Record bounded EditBox SetText lifecycle
+
+Updated [EditBox text position and selection](../specs/editbox-text-position-selection.md), [[widget-system]], [[event-system]], [Lua API inventory](../lua-api.md), index, and log from `a6f4e27ba` and the full `/tmp/cross-version-editbox-settext-proof.md` RED/GREEN records. Changed `SetText`/`SetFormattedText` commit text and clamp scalar caret/selection endpoints before ordered `OnTextSet(self)` then `OnTextChanged(self, false)`; same-value assignment is a tested simulator no-op, preventing callback self-assignment recursion. Hooks participate in both phases. An `OnTextSet` error reaches the error handler while later handlers and the `OnTextChanged` phase continue; no `OnChar` is emitted. Final default-feature target is GREEN 11/11. Independent verification subsequently passes the 11-case lifecycle batch, 19 keyboard, four focus and three non-EditBox controls, plus format/check without warnings. The existing file-length finding remains recorded in the ledger. Warcraft Wiki `UIHANDLER_OnTextChanged` and `API:EditBox_GetText` are API-reference sources, not native execution; native same-value policy, caret/selection behavior, always-end placement, and IME lifecycle remain unverified. Broader simulator goal remains broad. No tests, Cargo, delegation, push, or deployment ran for this documentation audit.
+
+## [2026-09-26] investigation | Unseen animations wake at loop boundaries
+
+`a1dbdb697`: animation groups under an effective-alpha-0 parent now schedule the tick at their next loop/finish boundary instead of forcing 16ms ticks. This removes the BoostTutorial glow as an idle fast-tick source. The DandersFrames base-`Animation` loop still forces the fast tick. See [[tick-cooldown-scan]].
+
+## [2026-09-26] audit | Verify EditBox text-position correction
+
+At `3b5ee8d55`, independent verification passes seven EditBox family cases and four focus controls, with 19 unchanged key-dispatch cases retained, plus format/check. The previously failing shortened-text regression now covers stale cursor and UTF-8 selection endpoints followed by another insert. [The spec](../specs/editbox-text-position-selection.md) and `/tmp/cross-version-editbox-text-position-proof.md` retain exact limits and logs; `SetText`'s own lifecycle and native callback semantics remain unclaimed.
+
+## [2026-09-26] audit | Record pending shortened-text EditBox cursor follow-up
+
+Updated [EditBox text position and selection](../specs/editbox-text-position-selection.md), [widget system](../widget-system.md), [Lua API inventory](../lua-api.md), index, and `/tmp/cross-version-editbox-text-position-proof.md` from `3b5ee8d55` and `/tmp/editbox-shortening-red.log`. The new shortened-text test was initially RED 0/1: `SetText` left old logical cursor/selection state, `Insert` clamped byte editing to the shorter text, then derived its cursor from that old index. The follow-up derives the cursor from the actual clamped prefix plus inserted scalar count. GREEN and final gates remain pending; the spec item remains unchecked. No full `SetText` cursor-lifecycle or native-callback claim. Broader goal unchanged. No tests, builds, delegation, push, or deployment ran for this documentation audit.
+
+## [2026-09-26] audit | Record bounded EditBox byte-offset selection boundary
+
+Updated [EditBox text position and selection](../specs/editbox-text-position-selection.md), [widget system](../widget-system.md), [Lua API inventory](../lua-api.md), index, and log from `419b9cfc9` and `/tmp/cross-version-editbox-text-position-proof.md`. Lua cursor and highlight endpoints use valid UTF-8 byte offsets; widget state retains character cursor and selection indices. `Insert` replaces a nonempty selection, accepts empty insertion as deletion, and clears the consumed selection. Actual committed targeted commands are GREEN 34/34 `editbox_`, 19/19 `key_dispatch::`, and 4/4 `forbidden_aspect_creation::scripted_focus_aspect_`. Cached Blizzard `strlen`/Lua `string.sub` byte-offset consumers corroborate this public API boundary only; they are not a native probe. Final check, readability, broad suite, delegation, push, and deployment remain pending. The broader simulator goal remains broad. No tests or builds ran for this documentation audit.
+
+## [2026-09-26] audit | Verify anchor protection and FontObject spacing
+
+Independent verification retains 93/93 unchanged anchor/security cases and passes 16/16 focused font cases after `00c4edb01`, plus format/check and a zero-issue changed-code readability audit. [[protected-frames]] and [FontString spacing](../specs/fontstring-spacing.md) retain their explicit behavioral limits. `/tmp/cross-version-anchor-font-proof.md` records commands, revisions and logs; earlier pending notes below are superseded for this bounded batch.
+
+## [2026-09-26] audit | Record bounded FontObject spacing snapshot
+
+Updated [FontString spacing](../specs/fontstring-spacing.md), [rendering pipeline](../rendering-pipeline.md), [Lua API inventory](../lua-api.md), index, and log from `4ccf92ee0`, `2c0dcb53f`, `/tmp/cross-version-font-object-spacing-proof.md`, and actual final GREEN logs. Initial FontString construction and explicit `SetFontObject` assignment now snapshot an explicitly defined FontObject spacing value; assignment refreshes auto text height. The grouped default-feature `spacing_roundtrip` batch is GREEN 12/12, and later local FontString `SetSpacing` remains independent. Final independent verification is pending. Later live FontObject mutation, graph propagation, and override precedence remain unverified; no all-FontObject behavior claim. No tests or builds ran for this documentation audit.
+
+## [2026-09-26] investigation | Bare item strings and idle retry timers
+
+`d533fc182`: `GetItemInfo("item:ID")` returned nil, so AllTheThings kept ~10k 3s retry timers pending, and every idle tick scanned them. After the fix: 0 AllTheThings timers, idle tick ~4.5 to ~3.1ms. The two looping animations (DandersFrames, BoostTutorial glow) still keep the 16ms tick. See [[tick-cooldown-scan]].
+
+## [2026-09-26] audit | Record protected anchor-offset mutation boundary
+
+Updated [[protected-frames]] and index from `ad01e3d8e`, [the protected offset contract](../specs/protected-anchor-offsets.md), `/tmp/cross-version-anchor-protection-proof.md`, and its actual logs. `AdjustPointsOffset` and `SetPointsOffset` now use the existing protected-frame policy: insecure combat calls on protected or protected-anchor-related frames preserve offsets and emit method-named `ADDON_ACTION_BLOCKED`; plain-frame, secure-combat, and insecure-out-of-combat controls remain allowed. RED runtime was 0/1; post-edit GREEN was 3/3 plus two existing 1/1 controls. The post-edit compile had unrelated unstaged `tests/spacing_roundtrip.rs`, not included in `ad01e3d8e`. No post-commit check, readability review, broad suite, deploy, or independent final gate ran. No native-client or `ClearPointsOffset` semantics claim. No tests or builds ran for this documentation audit.
+
+## [2026-09-26] audit | Verify text spacing and animation Stop batch
+
+Independent verification at `d6d7a9078` passes 49 animation cases, six exact-source spacing cases and four measurement/glyph controls, plus format and default-feature check without warnings. [FontString spacing](../specs/fontstring-spacing.md) and [[animation-group-stop-callback]] retain native/untested-widget limits; `/tmp/cross-version-text-animation-proof.md` records commands, logs and existing readability findings. Earlier pending-GREEN notes below are superseded for this bounded batch.
+
+## [2026-09-26] audit | Record bounded FontString spacing and AnimationGroup Stop behavior
+
+Updated [FontString spacing](../specs/fontstring-spacing.md), [rendering pipeline](../rendering-pipeline.md), [Lua API inventory](../lua-api.md), [[animation-group-stop-callback]], and index from `d6d7a9078`, `43025255d`, source inspection, `/tmp/cross-version-font-spacing-proof.md`, `/tmp/cross-version-animation-stop-proof.md`, and their targeted logs. Default-feature FontString source proof is RED 0/2 library and 0/3 integration, then GREEN 2/2 library and 4/4 integration; this is FontString-only, excluding FontObject/MessageFrame and final independent verification. Playing-group Stop callback proof remains Wrath RED 0/1 then GREEN 1/1; `43025255d` source routes `OnStop` handler failures to the error handler, while its error-path test has valid pre-correction RED 0/1 and no post-correction GREEN. No native-client, full-profile, broad-suite, or final-gate claim. The broader goal remains useful cross-version behavior, without exclusive FontString/animation priority. No tests or builds ran for this documentation audit.
+
+## [2026-09-26] investigation | Measured FPS overlay metrics
+
+`bbd568584` replaces the overlay's derived `other` number, which included idle wait time, with measured per-second numbers: tick/draw/prepare ms, ticks/s, main-thread CPU busy %, and unmeasured busy ms. Tests: `sample_display_metrics_*`, `main_thread_cpu_time_advances_with_busy_work` (26 passed). See [[tick-cooldown-scan]].
+
+## [2026-09-26] audit | Verify shared focus and vitals batch
+
+At `19757e081`, independent grouped tests pass Wrath 74/74 and retail 87/87; format/check pass. [[shared-unit-vitals-lookup]] and [[event-system]] retain exact behavior boundaries. `/tmp/cross-version-batch-proof.md` records commands, source scope and logs; existing file-size findings remain, with no native-client or full-suite claim. Historical intermediate vitals failures below are superseded by this scoped GREEN.
+
+## [2026-09-26] audit | Record EditBox Lua focus callback boundary
+
+Updated [[event-system]], [[widget-system]], and index from `df9ddbf09`, [the EditBox focus callback contract](../specs/editbox-focus-callbacks.md), `/tmp/cross-version-editbox-focus-proof.md`, and its actual GREEN log. This is a simulator omission, not evidence that native WoW skips callbacks: Lua `SetFocus`/`ClearFocus` now dispatch normal ordered handlers and `HookScript` callbacks after committing focus state. The source/runtime batch is GREEN 4 new + 2 unchanged existing cases: transfer with callback-visible state, repeated/non-owner no-ops, loss reentry suppressing stale gain, intrinsic ordering, and error reporting while later gain continues. `/tmp/cross-version-vitals-green.log` is a separate concurrent batch, failing 2/3; it is not focus proof and vitals work remains pending. Existing mouse focus dispatch is unchanged. Independent final focus verification remains pending. No tests or builds ran for this documentation audit.
+
+## [2026-09-26] audit | Record authoritative unit-vitals maxima registration
+
+Updated [[shared-unit-vitals-lookup]], [the unit-vitals contract](../specs/unit-vitals-lookup.md), [Lua API inventory](../lua-api.md), and index from `19757e081`, `bd6f091ac`, source registration, grouped regressions, `/tmp/cross-version-vitals-proof.md`, and local current/read-only Wrath 3.4.3 API documentation. `unit_stats.rs` had registered `UnitHealthMax` and `UnitPowerMax` after the shared provider, overriding focus/group/absent-unit behavior and returning a second power-type value. `19757e081` deletes those handlers, leaving shared lookup registration authoritative. The targeting-only seed and one-return boundaries are RED evidence; independent `gui,client-wrath` GREEN remains pending. The API declarations establish only one `maxPower` result, not absent-unit, coercion, scaling, or secret/restriction semantics. No target-version/cache prerequisite applies; full simulator scope remains broad. No tests ran for this documentation audit.
+
+## [2026-09-26] audit | Record shared unit-vitals lookup boundary
+
+Created [[shared-unit-vitals-lookup]] and updated index from `bd6f091ac`, [the unit-vitals contract](../specs/unit-vitals-lookup.md), actual lookup/resolver/group code, grouped assertions, and `/tmp/cross-version-vitals-proof.md`. The source model reads seeded focus and active party/raid snapshots and returns zero numeric vitals—including explicit secondary power—for cleared/unknown/inactive aliases instead of player values. `UnitPowerType` keeps its independent `0, MANA` fallback. The committed-scope `gui,client-wrath` integration binary remains GREEN pending; no test passed in this documentation audit. No target-version, Blizzard UI cache, or CASC prerequisite applies. Completed resource fixes and the broad audit portfolio remain retained.
+
+## [2026-09-26] investigation | De-duplicate hit-grid batch updates
+
+`45808d6ab` visits each frame once per hit-grid batch; spellbook repeat-open draw p50 fell ~33% and close draw ~49% (fast-core `bench_spellbook --cycles 20` pairs). Full lib suite 1911/1915; failures are the four known pre-existing ones. See [[tick-cooldown-scan]].
+
+## [2026-09-26] investigation | De-duplicate per-pass layout recompute
+
+A spellbook open's single layout pass recomputed 100k frame subtrees from 64 dirty roots. `4e64f9e20` rewrites each stored rect at most once per pass; repeat-open total p50 fell ~18% and close ~15% (fast-core `bench_spellbook --cycles 20` pairs). Full lib suite: 1909/1914, remaining failures pre-existing (3 EditMode, `installs_debug_environment_defaults`) plus a wall-clock flake in `unit_cast_duration_clears_before_completion_callbacks` that passes alone. See [[tick-cooldown-scan]].
+
+## [2026-09-26] audit | Record Wrath tooltip content lifecycle source boundary
+
+Updated [[tooltip-owner-lifecycle]] and index from `1e9674bcd`, [the existing tooltip lifecycle spec](../specs/tooltip-owner-lifecycle.md), `/tmp/wrath-tooltip-content-lifecycle-proof.md`, and its full RED/GREEN logs. Normal `gui,client-wrath` grouped `tooltip_basic::` is source GREEN 62/62: `SetOwner` internally hides and clears content while retaining the new owner/anchor; owned populated `SetText` shows; `AddLine`/`AddDoubleLine` append without showing; spell payloads still show; and direct `Hide`, `SetShown(false)`, and `FadeOut` clear owner state even when already hidden. `ClearLines` owner retention and ordinary-frame isolation remain covered. Subsequent independent format/check pass. Wider filters initially found seven failing instances; `12734d0ae` corrects three visible-tooltip fixtures and five instances pass focused reruns. The remaining duplicated full-UI case requires absent `BuffFrame.UpdateAuras`; it is not classified as preexisting and full integration is not green. API documentation is not native execution; callback/effective-visibility edges remain open. Final exact proof is retained in the ledger.
+
+## [2026-09-26] tooling | Repeatable panel benchmark and Fx hit-grid hashing
+
+`02cc4185d` adds `bench_spellbook --cycles N`. Spellbook-open profiling (flat self time, ~384ms main-thread CPU across open/close) split: Lua 21%, hashing/allocation 16%, layout 12%, main-thread PNG decode 10%, hit grid 4.7%, strata buckets 3.1%, quad emission 2%. `c007a2f6b` swaps std SipHash maps in the hit grid and strata-bucket code for Fx maps; fast-core interleaved pairs show ~5-8% lower repeat-open/close draw p50. Runs are bimodal on this host's Zen 5/Zen 5c mix; see [[cli-commands]].
+
+## [2026-09-26] audit | Record runtime StatusBar template orientation source boundary
+
+Updated [StatusBar texture rotation](../specs/statusbar-texture-rotation.md) and [[wrath-statusbar-value-callback]] from `4ad244e56`, `/tmp/wrath-statusbar-orientation-template-proof.md`, and all referenced focused logs. Normal `gui,client-wrath` runtime orientation changed from RED 0/1 to source GREEN 1/1: direct/inherited `VERTICAL` and explicit `HORIZONTAL` override are observable before `OnLoad`. Six retained normal-lane renderer/collector controls cover vertical normal/reverse 2/2, rotated atlas 1/1, Lua orientation collection 1/1, and horizontal rotation controls 2/2. They are source proof only; no native fill-direction claim. Independent final normal `fmt`/`check` and changed-Rust readability pass; check has zero warnings. User chose to defer uncorroborated range/initialization/callback-order semantics and start Stage 2, retaining those as explicit gaps; stages 2–5 remain tooltip lifecycle, scrolling/text, broader API audit, and integrated Wrath validation. No tests ran for this documentation audit.
+
+## [2026-09-26] audit | Record Wrath StatusBar vertical source boundary
+
+Updated [StatusBar texture rotation](../specs/statusbar-texture-rotation.md), [[wrath-statusbar-value-callback]], and index from commit `e0720b992`, `/tmp/wrath-statusbar-vertical-proof.md`, and its actual GREEN logs. Targeted normal `gui,client-wrath` source GREEN is vertical normal/reverse 2/2, vertical rotated atlas 1/1, and Lua orientation collection 1/1; horizontal rotation controls remain GREEN 2/2 within overlapping `rotated_statusbar_` 3/3. Bottom-up normal/top-down reverse is inferred from local evidence, not native-verified. Stage 1 still lacks target corroboration for range validity, first-zero dispatch, `OnMinMaxChanged`, and callback order. Independent final normal `fmt`/`check` remains pending. Stages 2–5 remain tooltip lifecycle, scrolling/text, broader API audit, and integrated Wrath validation. No tests ran for this documentation audit.
+
+## [2026-09-26] audit | Record Wrath StatusBar XML rotation boundary
+
+Updated [StatusBar texture rotation](../specs/statusbar-texture-rotation.md), [[wrath-statusbar-value-callback]], and index from commit `9198d4a0` and `/tmp/wrath-statusbar-xml-proof.md`. Normal `gui,client-wrath` integration build passed. Before the commit, two static XML cases and one runtime-template case failed (RED 0/2 + 0/1); after it, static GREEN is 2/2 and runtime GREEN is 1/1. The covered behavior is direct `rotatesTexture="true"`, inherited template `true`, and explicit XML `false` override, each applied before `OnLoad`; runtime `CreateFrame` template application is also before `OnLoad`. Subsequent independent verification at the same source revision passes fresh format/check and normal-profile callback/Slider10 plus rotation-state/adoption3. Combined with XML3 this is 16 unique integration cases (the rotation filter overlaps one XML case). Two renderer unit cases retain diagnostic-feature proof; vertical rendering remains open. Native execution was not performed. Full commands, results, and readability proof are in the ledger.
+
+## [2026-09-26] audit | Record Wrath StatusBar normal-lane blocker fix
+
+Updated [[wrath-statusbar-value-callback]] and index for `91cb5c735`. `enums.rs` now gates `c_unit_auras::register_sound_trigger_enum` with `aura-instance-enumeration`, matching the owning API module and committing the normal `gui,client-wrath` compile-blocker fix. No post-fix normal compile or regression verifier ran: the retained 15-case diagnostic proof is `widget_slider::` 10/10 plus rotation 5/5 under `gui,client-wrath,aura-instance-enumeration`, not normal-profile GREEN. The diagnostic 0/1 callback RED and Stage-1 matrix remain intact; range/first-value initialization, callback ordering, geometry, and XML behavior remain unproven. Native execution was not performed. No tests ran for this documentation audit.
+
+## [2026-09-26] audit | Record Wrath StatusBar diagnostic source GREEN
+
+Updated both StatusBar specs, [[wrath-statusbar-value-callback]], and index from final `/tmp/wrath-statusbar-proof.md` logs for `9ea6555f8` and `98101cda3`. Under diagnostic `gui,client-wrath,aura-instance-enumeration`, final source passes are rotation 5/5—two renderer UV, two source-replacement/atlas-coordinate, one adopted-custom-coordinate—and `widget_slider::` 10/10, including `statusbar_value_change_updates_text_synchronously`. The prior callback RED remains recorded as the pre-fix 0/1 boundary. Normal `gui,client-wrath` remains blocked independently by the `enums.rs` `c_unit_auras` feature gate, so neither diagnostic pass accepts that profile. Native execution was not performed. Stage 1 is not complete: range/first-value initialization, callback ordering, geometry, and XML behavior remain unproven; the later stages retain normal-lane unblock, normal-lane regression, source-supported expansion, and profile/native validation. No commands beyond Git were run for this documentation audit.
+
+## [2026-09-26] investigation | Record default build linker-cache boundary
+
+Created [[default-build-linker-cache]] and updated index from `/tmp/retail-linker/proof.json`, both build stderr logs, archive symbol listing, and quarantine manifest. Default incremental `cargo build --bin wow-sim -v` failed in 1.345s while mold linked cached `libwow_ui_sim-f3ad90e455e35ad1.rlib`; archive references with anonymous suffix `18005206435280134742` had matching-prefix definitions ending `820421656293145055`. Quarantined only that archive and `target/debug/incremental/wow_ui_sim-0z26aiavexk6u`; dependencies were untouched. The same default workflow later compiled in 178.164s with no source or environment change. No disk-corruption, concurrency, rustc, mold, or runtime-GREEN claim; independent verifier evidence remains pending. `incremental = true` and mold remain unchanged. No commands ran for this documentation audit.
+
+## [2026-09-26] audit | Identify retail MainHand popup interceptor
+
+Updated [click-binding interaction profile](../specs/click-binding-interaction-profile.md) and index from `/tmp/retail-regression/mainhand-close-popup.json`, stdout, and stderr. The intercepting `OnShow` upvalue is CraftSim's `PATCH_NOTES`, not EllesmereUI. Hit-testing its close button, then `CharacterMainHandSlot`, shows a nonempty GameTooltip; `OnLeave` hides it; neither log has Lua error lines. This is bounded application-dispatch evidence, not physical-input proof. Subsequent fixture-only verification passed; physical native input and fresh native bag capture remain unchecked. No commands ran for this documentation audit.
+
+## [2026-09-26] audit | Correct protected wrapped-click fixture boundary
+
+Updated [prefork harness](../specs/prefork-test-harness.md), [click-binding interaction profile](../specs/click-binding-interaction-profile.md), and index for test-only `d7cec2b25`. The failed positive `SecureHandlerWrapScript` fixture had created a plain button; vendor `GetFrameHandle(self, true)` only returns a handle for explicitly protected frames. Its positive control now uses `SecureHandlerBaseTemplate`; the retained plain-button negative proves original click behavior survives while the restricted prebody does not run. Caller taint and restricted `self`/header identity remain asserted. Subsequent fixture-only verification passed `tainted_addon_secure_handler` 2/2; it is not suite-green. The earlier `mainhand-input-probe.json` did not establish addon identity; later `mainhand-close-popup.json` identifies CraftSim `PATCH_NOTES`, disproving Ellesmere attribution. Application dispatch remains distinct from physical input; fresh native bag capture remains absent. No commands ran for this documentation audit.
+
+## [2026-09-26] audit | Reconcile bounded retail bag and application-input proof
+
+Updated [[server-snapshot-action-bars]], [bag contract](../specs/server-snapshot-bags.md), [click-binding interaction profile](../specs/click-binding-interaction-profile.md), [prefork harness](../specs/prefork-test-harness.md), and index from `/tmp/retail-regression/proof-ledger.json` final proof `29d2ee30e`. The exact non-incremental target build passed; 373 integration assertions passed and one delayed-event capture fixture failed (`callback` nil). Subsequent fixture-only verification passes `server_snapshot_capture_bags` 5/5 and `tainted_addon_secure_handler` 2/2 with format/check; these results do not add to 373. Current SavedVariables is the July 5 no-bag snapshot, so fresh native capture remains pending. `native-input-app.json` and `mainhand-input-probe.json` use application debug-key/internal hit-tested mouse, not physical input: bounded Character/Social/Talents toggles, microclick, and Head/Shoulder tooltips work; MainHand is blocked by `#68088`. Neither GUI log reports Lua errors. No commands were run for this documentation audit.
+
+## [2026-09-26] audit | Record ServerSnapshot carried-bag replication boundary
+
+Updated [[server-snapshot-action-bars]] and index from producer `43c179b04`, bag model `da3c1ae89`, importer/deployment `5e0e9150d`, the [bag contract](../specs/server-snapshot-bags.md), and ServerSnapshot README. User-approved Python deployment installed source-matching 0.3.0 Lua/TOC at `/syncthing/World of Warcraft/_retail_/Interface/AddOns/ServerSnapshot`; supplied SHA-256 values are recorded on the system page. No fresh native capture exists: user must `/ssnap`, then `/reload` or log out. Existing `/tmp/retail-regression/bag-red.*` is RED against old SavedVariables (backpack 16, reagent 0), not an importer result for the expected captured reagent capacity 36. Subsequent fixture-only verification passes the producer event cases 5/5; it does not establish fresh native capture. No external game-server transport or bank/account-bank capture is in scope. No source/spec edits, build, test, deploy, push, or delegation occurred.
+
+## [2026-09-25] investigation | Bound ATT unit hyperlink tooltip payload
+
+[[att-unit-hyperlink-tooltip]] records the `GetHyperlink` empty-Item fallback behind ATT `NPC.lua:58`. Pre-fix existing-binary diagnostic returned Item type `0` with zero lines for an unknown creature GUID. `dc6672dc2` resolves known modeled unit GUIDs to Unit lines and returns nil for missing/unsupported links; grouped behavior cases are committed but cannot be run while another owner holds Cargo. No rebuilt binary, GREEN or GUI-hover claim.
+
+## [2026-09-25] audit | Record retail secret-origin geometry RED boundary
+
+Updated [[patch-12-1-5-api-audit]], index, and this log for `8815f22ce`; no source, spec, build, or test ran in this audit. Existing authenticated secret-input decoding now uses shared `forbidden-aspects` for retail 12.1, PTR, and Forever; wrapper authentication and tainted-read guards remain unchanged. `/tmp/retail-regression/last-aura-trace.stdout` is final pre-fix RED: `Blizzard_CustomAuraContainer.lua:676` `ApplyElementLayout` reaches `SetPoint` with wrapped argument 2 as userdata. Geometry/texture test gates share the capability. `/tmp/retail-regression/onload-after.*` predates the gate fix at 1 unique/1 occurrence. Rebuilt retail replay and independent GREEN remain pending; no reduction claimed.
+
+## [2026-09-25] audit | Record `OnLoad` creation-origin RED boundary
+
+Updated [[patch-12-1-5-api-audit]], index, and this log for `63fe3183a`; no spec was changed. Runtime `OnLoad` now clears only constructor-stack taint for protected dispatch, preserves declared handler origin, and restores the constructor after success or failure. Two committed observable tests cover deferred callbacks from trusted XML under an addon constructor and addon XML under a clean constructor. `/tmp/retail-regression/phase-provenance.stdout` reports clean AuraContainer `#61195`/`#76243` script, proxied/private `Update`, and `OnUpdate`, but six `dirtyPhase` closures created in `Blizzard_ManagedAuraContainer.lua:68–73` retain DandersFrames/BetterBlizzFrames taint. The retained 22-occurrence `OnUpdate` table-security error is RED provenance, not a build, replay, reduction, or GREEN result.
+
+## [2026-09-25] audit | Preserve private projection method-origin RED boundary
+
+Updated [[target-aura-private-count]] and index only for `eafd75a76`; the script-object environment spec was read, not changed. `/tmp/retail-regression/exact-aura-provenance.stdout` identifies AuraContainer `#61195`/`#76243`: generated script and private `OnUpdate` are clean, private `Update` wrapper is tainted by DandersFrames/BetterBlizzFrames at `@shared-bootstrap:150`, and the underlying Blizzard method is clean. `/tmp/retail-regression/private-method-origin-red.*` reports `trustedread=false`, `capturedread=false`, and `addonread=false`. The commit creates proxy metatables and bound-method adapters through the native secure-call factory; invocation does not clear caller or original method taint. `/tmp/retail-regression/wrapper-after.*` is pre-fix at 1 unique error / 22 occurrences (20 DandersFrames, 2 BetterBlizzFrames). No build, test run, rebuilt replay, reduction, or GREEN claim.
+
+## [2026-09-25] audit | Preserve retail template and hook origin RED boundary
+
+Updated [[windows-casc-blizzard-taint]] and index only; the hook and template specs were read, not changed. `35adfc738` separates XML declaration origin from frame-constructor taint; `d63ddd32a` makes declaration classification use the canonical TOC policy, including internal `Blizzard_` folders without `AllowLoad`; `fc7570022` separates fixed engine hook factories from addon callbacks. `/tmp/retail-regression/taint-provenance.stdout` explicitly pairs generated-wrapper `BetterBlizzFrames`/`DandersFrames` taint with underlying Blizzard-method `nil` taint. `/tmp/retail-regression/hookscript-origin-red.*` and `/tmp/retail-regression/securehook-origin-red.*` each report `false false`; the latter reports a secret wrapper. The current `4/27` baseline predates all three commits. Latest runtime build, current-tree replay, and GREEN remain pending; no residual reduction credited.
+
+## [2026-09-25] audit | Record retail protected-visibility and latest taint boundaries
+
+Updated [[patch-12-1-5-api-audit]], index, and this log for `ec661653b` and `d9e524204` with rilua `77e0f76`. The committed scope is protected/forbidden visibility-handler taint suspension/restoration plus wrapped-table/nil guards, deepest-active closure taint, and weak GC-safe closure stamps. Actual vendor protected-visibility and custom-asset artifacts remain RED; `/tmp/retail-regression/taint-after.*` predates the latest pin and is only a two-unique/four-occurrence historical baseline. A preceding-source runtime-only build took 208.8s (197.17s shared library, 6.5s binary), distinct from ~16s test execution; no latency claim. Rebuilt replay and independent proof remain pending.
+
+## [2026-09-25] audit | Record retail secrecy and closure-taint limits
+
+Updated [[patch-12-1-5-api-audit]] and index from source, specs, supplied residual artifacts, and upstream logs. `b982e9165` keeps addon-tainted table slots distinct from shallow secrecy; `924276644` installs retail native `secretwrap`/`secretunwrap`; `089d016f7` pins rilua `f1ddc1b` weak closure-key stamps. Upstream targeted logs pass 5 closure-lifetime and 9 taint-stdlib tests. The no-addons secure-environment diagnostic captures `__secureenv.secretunwrap`, passes 19 assertions, and returns `[]`; `c583268c2` removes its unrelated pre-existing `settablesecurity` shim assertion. `/tmp/rilua-taint-red-runtime.log` is pre-pin stale-closure evidence. Current supplied default residual remains four unique errors / 55 occurrences. No simulator build/tests, combined replay, or GREEN claim.
+
+## [2026-09-25] audit | Record retail residual corrections without combined GREEN
+
+Updated [[patch-12-1-5-api-audit]] and index for `a0b472971`, `9884fab8e`, `0e638e3e2`, `491ad1e6a`/`ac35dc0b2`, and `1f7e08f20`. XML locale selection, held-key state, retail combo/speed queries, nil unknown schematics, and protected attribute delegates are committed corrections; prior per-slice logs are partial and final combined verification remains pending. Preserved 8-error no-SavedVariables and 9-error default runs as replay baselines only. `/tmp/retail-regression/secure-delegate-red-tests.log` separates Cargo file-lock/build 8m51 from the exact already-built binary's 16.125-second `timeout 90` RED run in `secure-delegate-bounded-red.log`; recorded one-Cargo-owner, separate `--no-run` compile, then bounded binary execution as procedure, not runner redesign.
+
+## [2026-09-25] investigation | Filter XML file references by text locale
+
+Updated [[addon-loading]], [pipeline](../addon-loading-pipeline.md), and [XML locale contract](../specs/xml-file-locale-annotations.md). Temporary-addon regression failed on literal annotated path, then passed 1/1 after XML Script/Include reused TOC filtering and annotation stripping. RED `/tmp/simpleitemlevel-locale-red.log`; GREEN `/tmp/simpleitemlevel-locale-green.log`. No native or broad-suite claim.
+
+## [2026-09-25] verification | Bound retail cascade recovery and residual failures
+
+At `9b8d44b06`, independent default verification passes 26 focused simulator tests, format and check; published rilua `1788318` has separate bounded write/GC proof. Owned GUI PID `1505333` confirms Character/Friends/PlayerSpells open-close-reopen and Housing/PlayerSpells microbutton pressed state. No-SavedVariables startup falls 480→8 unique errors; default settings plus replay retain 9 errors. Updated [[patch-12-1-5-api-audit]] with exact artifacts, residual classifications and limits, [[attribute-callback-error-recovery]], specs and index. No full-suite, zero-error, native or pixel-equivalence claim.
+
+## [2026-09-25] investigation | Record table.freeze recursive GC cascade
+
+`748d4df0c` pins rilua `1788318c20d400a8339f3e7125aa40c9e54ea435` and moves public `table.freeze` to shallow `Table::read_only`, independent of recursive GC freezing. The prior recursive walk from Syndicator's frozen Search/API/root namespace reached closure environments, `_G`, `callbacksPending`, and later addon state; traversal skipping damaged references. `/tmp/claude/table-freeze-red-addon.out` records the new lifecycle regression still RED. `87f2a48af` separately fixed attribute-error call-state unwind and has 11 verified tests, but cascade records were 480 before and 484 after. QuestieTDB's direct Classic Era probe supports shallow semantics only; it is not retail native proof. Main report GREEN and retail startup replay remain pending. Updated [[patch-12-1-5-api-audit]], index, and [table freezing](../specs/table-freeze.md).
+
+## [2026-09-25] investigation | Preserve caller state after attribute callback errors
+
+`87f2a48af` replaces raw `state.call_function` in registered and direct `OnAttributeChanged` dispatch, whose error paths called the handler and restored only `top`. RED `/tmp/attribute-handler-error-red.log` has both paths failing with `expected Lua closure in execute`; full startup had 480 records versus 2 with `--no-addons`, and cache-disabled startup still reproduced. `protected_lua_pcall_state` now restores caller state while preserving the secure-delegate taint boundary. GREEN tests and startup replay remain pending. See [[attribute-callback-error-recovery]] and [[lua-call-frame-restoration]].
+
+## [2026-09-25] investigation | Skip render invalidation for no-op re-anchoring
+
+`MicroMenu` stays layout-dirty in Blizzard code and re-anchors five frames to identical points every frame. `672c32aab` defers anchor-edit render invalidation until the dirty set is read and skips frames whose anchors and resolved rect are unchanged. Draw min p50 fell ~2–3x in a noisy A/B. Pre-existing unrelated failures: three `apply_system_anchors` EditMode lib tests (`InitSystemAnchors` nil), also failing on master. See [[tick-cooldown-scan]].
+
+## [2026-09-25] audit | Record final bounded unit-frame click and aura evidence
+
+The owned local Forever release build from `a2fd85382` exited `0` (`/tmp/wow-unit-frame-bug/release-build.log`). PID `1218515` records PlayerFrame click selecting Uther with matching `Player-1-00000001` GUID, Combo CVar `1` at `0`, absent CharCustomizeFrame, both XP/reputation animation texture pairs hidden, panel open/close/reopen `true/false/true`, and zero hook/final errors; PID `1220915` records Aura ID `1` hover tooltip `Arcane Intellect`. Task-owner screenshot inspection accepted `after-click.png` and `panels.png`. Verifier fmt/check exit `0` without warnings. The accidentally broad 78-test click-filter batch is 68 pass / 10 distinct failures, recorded without a suite-green, baseline, or pre-existing assertion; the blocked spell-book case expected numeric slot `7` but received a string and is outside click-profile methods. First `@file` probe misuse is superseded and excluded. Updated [[final-unit-frame-click-aura-proof]], [[target-aura-private-count]], [[secret-number-ordering]], [click binding](../specs/click-binding-interaction-profile.md), [script-object environments](../specs/script-object-environments.md), and index; no native-client conformance claim.
+
+## [2026-09-25] audit | Close bounded aura/secret-number integration slice
+
+`a2fd85382` (scoped XML-child publication), `30971450a` (original PlayerFrame `PLAYER_ENTERING_WORLD` → ComboFrame `3 → 0` CVar pre-`OnLoad` ordering), and pinned rilua `9ad8720b10ef7ed7b855fe741a6368c631af0dc2` now have bounded 2/2 simulator regression evidence with zero Lua errors in `/tmp/wow-unit-frame-bug/aura-combo-green-20260925.log`. The actual `__tpl25839` dispatcher was the AuraContainer; its nested AuraButton had Rust/public Count but no private Count. Independent rilua verification is 21/21 plus format/check in `/tmp/wow-unit-frame-bug/rilua-verify-ledger-20260925.json`; inherited `strlen` warning remains outside this slice. No original screenshot-exact reproduction, GUI, or final simulator claim. Updated [[target-aura-private-count]], [[secret-number-ordering]], the partition and secret-number specs, and index; no new Count page.
+
+## [2026-09-25] audit | Record guarded secret-number ordering boundary
+
+Audited simulator commit `8b8a089e5`: it pins published rilua `9ad8720b10ef7ed7b855fe741a6368c631af0dc2` from `osso/host-secret-bool`. The demonstrated consumer is Forever target-aura layout: `TargetFrameAuraFlowLayoutMixin:OnLayoutComplete` stores `secretwrap(lineCount)`, then `TargetFrameMixin:ShouldAnchorSpellBarToAuraContainer` compares it with public zero or two. The dependency supports guarded numeric ordering only, with tainted ancestor access rejected; nonnumeric wrappers, secret arithmetic, and equality remain outside that boundary. Semantics are inferred, not native-verified. Dependency verification, simulator integration, clean tick, and GUI proof remain pending. Added [[secret-number-ordering]] and cross-links; Count-spec work untouched.
+
+## [2026-09-25] audit | Supersede stale click-binding full-chain failure
+
+`dfcacefbe` replaces the click fixture's incomplete handpicked startup list with production Blizzard Game-screen discovery/loading. Independent inspection of `/tmp/wow-unit-frame-bug/click-production-fixture.log` records `blizzard_full_ui_click_chain_targets_and_casts` PASS 1/1, including PlayerFrame and PartyFrame targeting plus Flash of Light spell/action paths; the PlayerFrame assertion has no direct targeting fallback. The owned prior-release `/tmp/wow-unit-frame-bug/aura-global/probe.txt` records PlayerFrame `target` and `menu` attributes as supporting configuration evidence only. GUI proof for the new release and final Rust checks remain pending; a separate target-aura `OnUpdate` error remains under investigation. The initial unmodified click defaults remain inferred simulator policy, not native proof. Supersedes the stale failure statement in the earlier click-binding entry. Updated [[lua-api]], [[taint-system]], and [click-binding interaction profile](../specs/click-binding-interaction-profile.md).
+
+## [2026-09-25] tooling | Add deterministic steady-state benchmark
+
+Separate GUI runs of one binary varied `on_update` p50 from 0.87ms to 4.11ms with host load and `perf`, and an old/new A/B showed both regimes per binary, so the suspected `on_update` regression was noise. `bench_steady_state` drives the GUI tick/draw path headless with forced OnUpdate intervals; `min p50` across rounds reproduced within 1% (tick) and 6% (draw). Every measured frame uploads at least one stratum. See [[cli-commands]] and [[tick-cooldown-scan]].
+
+## [2026-09-25] audit | Bound texture-atlas visibility propagation
+
+Audited `83a43ca61`. Generic `Texture:SetAtlas()` had treated every `parentKey` as a button-state slot, defaulting an unknown key to visible and exposing XML-hidden gain-flare/level-up overlays on XP and reputation bars. Propagation now applies only to recognized state slots on `Button`/`CheckButton`; other texture children preserve their own visibility. The cached vendor `GradualAnimatedStatusBar` template begins with both animation textures hidden; its `SetAnimationTextures()` path stays hidden, while ordinary play/tick completion controls temporary show/hide. `/tmp/wow-xml-atlas-green.log` records 6/6 targeted `xml_animation_group_onload` tests passing. GUI XP/reputation startup proof and final checks remain pending. This is simulator and cached-vendor-source evidence, not native-client conformance. Updated [[texture-atlas]], [texture atlas visibility](../specs/texture-atlas-visibility.md), and index.
+
+## [2026-09-25] investigation | Correct atlas-driven animated status-bar visibility
+
+`83a43ca61` fixes a simulator SetAtlas path that showed XML-hidden non-button textures with parentKeys. Actual Forever GradualAnimatedStatusBar template RED: `SetAnimationTextures` showed its gain flare before animation. The focused six-test group is GREEN after restricting button-state visibility updates to recognized Button/CheckButton slots; actual animation completion still hides textures. Full UI screenshot remains pending, and a later button control command was blocked by unrelated concurrent test compilation. Added [[animated-status-bar-atlas-visibility]], [texture atlas visibility](../specs/texture-atlas-visibility.md), and index entry.
+
+## [2026-09-25] investigation | Bound bootstrap-only dependency selection
+
+Audited `003128db2`. The actual stray `CharCustomizeFrame` producer was `Blizzard_CharacterCustomize`, promoted to `Full` by a second startup dependency closure after its bootstrap-only `Blizzard_BarbershopUI` owner inserted `RequiredDep`. Removing that closure preserves eager dependencies of full startup roots and retains dependency-before-owner ordering for a later explicit full load. The targeted synthetic lifecycle regression is RED in `/tmp/bootstrap-startup-red-20260925.log` and GREEN in `/tmp/bootstrap-startup-green-003128db2.log`; GUI and final checks remain pending. This is simulator/source evidence, not native-proven dependency semantics. Updated [[addon-loading]], [bootstrap loading](../specs/addon-bootstrap-loading.md), and index; click-binding documentation untouched.
+
+## [2026-09-25] audit | Document bounded click-binding interaction profile
+
+Audited `c00f44d0e`. `C_ClickBindings` now owns a per-environment modeled interaction profile with inferred unmodified LeftButton target and RightButton context-menu defaults; profile reads are copied, replacement/reset and effective-button queries share that state, while `ExecuteBinding()` remains inert. Targeted profile coverage is 2/2 and unchanged Blizzard `SecureUnitButton_OnClick` player/party coverage is 1/1. The full UI click-chain test currently fails at `PlayerFrame:GetAttribute("*type1") == nil`; main integration is investigating. A runtime release `target` attribute does not prove the click chain, physical GUI hit testing, or targeting success. Updated [[lua-api]], [[taint-system]], [click-binding interaction profile](../specs/click-binding-interaction-profile.md), and the index; no new wiki page.
+
+## [2026-09-24] investigation | Scope idle texture warmup to rebuilt strata
+
+`7535af12e` and `946d8255b` stop per-tick full texture-request path scans: warmup now checks only strata rebuilt since it last settled, and emptiness checks no longer clone every path. `HashSet<String>::insert` self time 4.3% → 0.13%; preload p90 1.51ms → 0.62ms. See [[tick-cooldown-scan]].
+
+## [2026-09-25] investigation | Record current default-install cold GUI proof
+
+`4eb32befa` release artifact `3591808ae3f797c69bf370ef3205dea9382b0fb461b813be8cc6191b787ef892` used default install discovery with no `WOW_INSTALL_PATH`, `WOW_DATA_PATH`, or `WOW_PRODUCT`; isolated XDG and a fresh `ASSET_RESOLVER_CACHE_DIR` made resolver/catalog SQLite cold. The actual community CSV and 1,460 other extracted UI assets were linked, so this is not fully cold all-assets proof. CASC built 1,441,761 entries in 7.8s before font initialization at 17.447s. IPC reported `COLD_GUI_READY=true` for Character, PaperDoll, and Backpack; inspected PNG shows c60 art and Backpack 178×280, 16 slots, portrait 36, top 95, bottom 100. First draw stalled 850.4ms (14.4ms quads, 11.0ms textures, 825.0ms other); no later observed draw exceeded 500ms. Excluded local FDID `2447783` extracted after GUI without another 500ms draw stall. Metadata hashes/mtimes are unchanged; stderr has no Lua errors and only the unrelated minimap-mask miss. Updated [[forever-character-panel]], [[backpack-background-texture]], [[casc-local-index-generations]], [[casc-asset-cache]], [CASC asset loading](../specs/casc-loading.md), and index; addon audit and other-profile limits unchanged.
+
+## [2026-09-25] investigation | Verify default installed-product startup
+
+`4eb32befa` release build exited `0`. The subsequent actual GUI used default installation discovery with only isolated XDG config/data; `WOW_INSTALL_PATH`, `WOW_DATA_PATH`, `WOW_PRODUCT`, and resolver-cache overrides were absent. IPC reported `DEFAULT_INSTALL_READY=true`, Forever 1.60.1.69977, and ready Character/Backpack panels. Screenshot inspection confirms c60 art and Backpack 178×280, 16 slots, portrait 36, top 95, bottom 100. `.build.info` and `.product.db` hashes/mtimes remain identical from before the GUI through the isolated error-dialog and parser checks. Expected outer timeout `124` followed readiness; no Lua errors occurred and only generic minimap-mask resolution remains missing. First draw was 814.3ms (13.2ms quads, 13.4ms textures, 787.8ms other). Simulator verification records format/check exit 0, `build_identity` 2/2, GUI cache preparation 1/1 in 12.80s, and pinned cascette product-db parsing 8/8 with zero warnings. Separately, an isolated missing-`.product.db` startup displayed literal `<profile>` in Linux Zenity without GTK markup parsing; KDE and Windows dialogs remain untested. Updated [[forever-character-panel]], [[casc-local-index-generations]], [[casc-asset-cache]], [CASC asset loading](../specs/casc-loading.md), index, and PLAN; addon audit untouched.
+
+## [2026-09-25] investigation | Correct isolated Forever cold-fixture mapping diagnosis
+
+`d0f525630` bundles deterministic mappings for CommonMask (`8254784`), BagSlot (`8187737`), and FrameMetal (`8069116`); its targeted limited-listfile regression passed 4/4. Root cause of the prior isolated cold failure: the fixture omitted the community listfile CSV, while GUI startup changes cwd to the binary directory in `main.rs`, leaving the resolver without a source catalog. Cached blobs cannot resolve requested paths without path-to-FDID mapping. The completed cold fixture restores the real community CSV symlink at `resolver/data/community-listfile.csv` and starts without resolver SQLite or resolution cache; it resolves the mapped assets. Original names are 69913 data; 69977 content MD5 is proven for CommonMask and BagSlot only, while FrameMetal's cache content is not independently verified against the active root. No cache-case fallback was added. Updated [[forever-character-panel]], [[backpack-background-texture]], and the Forever change record.
+
+## [2026-09-25] maintenance | Document installed-product discovery
+
+Documented `692e36936`/`4eb32befa`: non-pinned identity now selects the exact requested `.product.db` product via cascette's shared parser, retaining version field 7, active build key field 14, and optional install key field 16. The synthetic missing-row and stale-retail controls cover no metadata writes and no other-product fallback; dependency-targeted proof is recorded as 8/8 and asset-resolver proof as 2/2, while final verification remains ongoing. Real Forever product DB, PE metadata, and build config 69977 agree. No user metadata repair or Battle.net action is required. This is simulator policy, not native behavior or a full-content guarantee. The new release build starts; default real-install GUI proof remains pending. Updated [[forever-character-panel]], [[casc-asset-cache]], [[casc-local-index-generations]], [[addon-loading]], [CASC asset loading](../specs/casc-loading.md), and the patch-update guide.
+
+## [2026-09-25] investigation | Record bounded Forever release-fixture character/backpack proof
+
+`/tmp/wow-character-bug/release-mapping-build.result` records release build exit `0`; `wow-sim` SHA-256 is `0dd8413215a619ce6b5a64c11ff3798931a7cb6c9afd31cce18aacd9a8009861`. The isolated historical 69977 cold smoke reported `RELEASE_READY=true` for Character, PaperDoll, and Backpack; screenshot capture succeeded and main inspection confirms correct bag geometry and slot art. Metrics are 178×280, 16 slots, portrait 36, top 95, bottom 100. CASC built 1,441,761 resolution entries in 13.6 seconds before GUI font initialization at 30.409 seconds. First draw stalled 1.2 seconds (18.6ms quads, 12.1ms textures, 1.2s other), with no later draw stall; excluded FDID `2447783` extracted from local CASC after `--exec-lua`. stderr has no Lua errors; only `ui-hud-minimap-frame-generic-mask` remains `Not found`. Outer timeout `124` is expected after readiness. This proves only the release binary against the frozen fixture; real-install/default startup remains blocked by missing `wow_classic_beta`. Updated [[forever-character-panel]], [[backpack-background-texture]], index, and Forever change record; unrelated addon audit untouched.
+
+## [2026-09-25] investigation | Finalize bounded Forever character-panel/CASC documentation
+
+Recorded final scoped verification at `72d6d8b45`: 12/12 focused passes (3 CDN/status, 3 relic, 2 atlas, identity, full panel, 2 incidental relic), `cargo fmt --check`, and `cargo check`. Updated the 69977 source/cache boundary: isolated CASC-first sync acquired 4,398 files (4,068 local, 330 CDN), byte-equal cache promotion, and MD5-verified acquisition of four original panel textures plus `bagsitemslot2xc60`; no fallback, substitute, Gethe byte copy, host-startup, native-English, or final-release visual claim. Final GUI artifacts cover character open/close/reopen and a ready 178×280, 16-slot Backpack. Registered-install startup remains blocked by missing `wow_classic_beta` metadata; minimap mask miss remains unrelated. Updated [[forever-character-panel]], [[backpack-background-texture]], [[casc-local-index-generations]], [[casc-asset-cache]], and backed spec evidence only.
+
+## [2026-09-25] investigation | Record local CASC index-generation defect
+
+Confirmed that old aggregate local index loading overwrote newest `ac` bucket data with later directory entry `aa`, returning `None` for installed 69977 BNet `7216281` and Chat `4637050` records. Explicit newest-generation reads return `data.089` offsets; direct BLTE decode matches both expected MD5 content keys. `9ac8d0554` pins published cascette `d8ec31f4…`, asset-resolver `b2bd6c88…`, and casc-extract `b25e415a…`; independent GREEN remains pending. The selected target remains 69977 with Gethe `c6e899…` manifest-only; four texture records remain genuinely unindexed and the Blizzard UI cache remains incomplete after earlier sync failures. Updated [[casc-local-index-generations]], [[casc-asset-cache]], and [[forever-character-panel]].
+
+## [2026-09-24] audit | Record pending Forever remaining-stat coverage
+
+Audited `1a841388d` and `2b3a96d10` against [Forever character-panel remaining stat rows](../specs/forever-character-remaining-stats.md). Exact cached diagnostic `/tmp/wow-character-bug/stat-handlers.stdout` predates both commits and records 15 passes / 10 failures across 25 visible handlers. The same-path Spirit, weapon-predicate, modifier-read, ranged-haste second-return, and defense-tuple gaps are now implemented, while four focused tests await verifier GREEN. Armor penetration remains flat from cached tooltip evidence; cfg preserves other profiles. No handler, full-panel, native, or pixel pass is credited; four asset-content blockers remain. Updated [[forever-character-panel]] and index.
+
+## [2026-09-24] audit | Record pending Camelot stat and catalog-prewarm follow-ups
+
+Audited `6a076ed46`, `b871b7083`, and `79382f3b6`. The stat contract keeps 100-points-to-1%-crit, class-specific ranged-AP, spirit 0.2/0.1 regen rates, and unseeded spirit 0 as explicit simulator policies; all new GREEN remains pending. Cold evidence records the 19.6-second pre-GUI resolution build, 7.3-second initial catalog lookup, and 266-ms forced FDID `2447783` extract; catalog prewarming has no post-change cold proof yet. Updated [[forever-character-panel]], [[casc-asset-cache]], and [CASC asset loading](../specs/casc-loading.md); four local content blockers remain unchanged.
+
+## [2026-09-24] investigation | Scope the next Camelot character-panel failure
+
+Updated [[forever-character-panel]] for `GetCritChanceFromStat` at cached Camelot line 291 and the six documented missing stat/regen globals. Recorded guessed simulator coefficients in [stat contribution contract](../specs/forever-character-stat-contributions.md). Code and tests await batched GREEN and full-UI replay; no native or complete-panel claim.
+
+## [2026-09-24] audit | Align pending GUI cache and Forever speed contracts
+
+Audited `57ffc3d01` and `7be534fff` against [CASC asset loading](../specs/casc-loading.md) and [Forever unit speed](../specs/unit-speed.md). Both contracts remain unchecked pending focused GREEN results. [[forever-character-panel]] now links the cache-preparation contract without duplicating its behavior.
+
+## [2026-09-24] investigation | Resolve Forever character-panel sidetab mappings
+
+Updated [[forever-character-panel]] after auditing `34975b1c2` and complete active-root evidence. Uppercase-backslash direct Jenkins hashes resolve the four formerly unmapped sidetab names; the generator now preserves explicit override FDIDs. Supersedes all-four-unmapped blocker status, but leaves extraction/runtime GREEN pending and four content blockers: Stats plus `8175455`, `8245174`, and `8254784`. API/cache verifier proof, native, pixels, and full-panel pass remain uncredited.
+
+## [2026-09-24] investigation | Stop cross-project listfile cache rebuilds
+
+asset-resolver `3088dee` keys the community listfile SQLite cache by canonical source path; wow-ui-sim pins it in `c3e373f9c`. Projects with different sources, and symlinked worktree sources, no longer force ~2.1M-row rebuilds on the GUI thread. RED/GREEN listfile tests 6/6; full asset-resolver tests pass; second headless run reused the cache. See [[tick-cooldown-scan]].
+
+## [2026-09-24] investigation | Index Cooldown widgets for tick checks
+
+Settled no-addons GUI profile: ~46% of main-thread self time went to finding Cooldown widgets by scanning the whole registry from `compute_tick_interval` (after every message), `drop_stale_timer_tick`, and `mark_active_cooldown_widgets_dirty`. Draw p50 was 3.8ms; rendering was not the bottleneck. `77089bb12` adds a registry `cooldown_ids` index; focused `app_tests` pass. Shared asset-resolver listfile cache thrash across projects recorded, unfixed. See [[tick-cooldown-scan]].
+
+## [2026-09-23] investigation | Collect Datamine XML creation failure
+
+`f095f24c6` makes the nested XML `CreateFrame` Lua failure enter canonical collection once while retaining the addon-load warning. Focused `xml_create_error_reporting` passes with one matching collector entry: `/tmp/forever-addon-audit/xml-error-collector-green-ftxo0ffp/ledger.json`. Clean `f095f24c6` replay of exact Datamine `8936714` now exits `1` with `MovieFrame.lua:270` calling missing `EnableSubtitles` and the Blizzard ScriptErrors mirror; 863 staged members and host CVars remain unchanged: `/tmp/forever-addon-runtime/datamine-collected-error-mzafz9ai/ledger.json`. Diagnostics are corrected; startup and `/dm ui` remain failed. See [[forever-addon-comparison]].
+
+## [2026-09-23] investigation | Retain Datamine KeyValue proof; expose next warning
+
+`dd52ef974` and `3f2cf7c26` pass the four focused texture-KeyValue/XML-error tests after the valid 2-failure RED; independent format/default-check/readability proof is `/tmp/forever-addon-audit/verify-datamine-keyvalues-ledger.json`. Temporary diagnostic instrumentation was removed; proof remains scoped to committed `6dc802b5e`, excluding a later uncommitted Map-template regression. Exact Datamine `8936714` startup remains failed despite trailing `[]`: one XML warning reaches `MapController.lua:92` with nil `templateInfo` from `C_XMLUtil.GetTemplateInfo(TILE_TEMPLATE_NAME)`. The current chat-dispatched `/dm ui` attempt fails before open at nil `ShowAnim`, with no `DONE`. Matrix remains 222 clean / 29 failed / 14 unloaded / 3 dependency-blocked / 1 unavailable; interactions 18 passes / 1 failed / 250 not run. See [[forever-addon-comparison]].
+
+## [2026-09-23] investigation | Identify Datamine texture KeyValue producer
+
+Datamine's recovered `Missing FileName or FilePath` is traced to `resolve_texture_inheritance` dropping instance texture `KeyValues`: its custom-atlas control reaches `ApplyAtlas()` with no `Icon.FileName`, aborting nested workspace creation. `dd52ef974` retains those instance values; `3f2cf7c26` propagates the partial-create error instead of silently reporting a healthy addon. The valid RED has two expected failures and two existing lifecycle controls passing: `/tmp/forever-addon-audit/datamine-texture-error-red-n7c75m2n/ledger.json`. GREEN and unchanged-Datamine replay remain pending; retain failed startup/workflow counts. See [[forever-addon-comparison]].
+
+## [2026-09-23] investigation | Correct Datamine false-negative startup credit
+
+Numeric CVar registration (18/18) and modeled CVar console catalog (2/2) remain independently verified: `/tmp/forever-addon-audit/verify-datamine-catalog-ledger.json`. The prior exact 863-member Datamine `8936714` `[]` startup result is invalidated by diagnostic trace: recovery from `Failed to create frame __Datamine_45253: Missing FileName or FilePath` was silently discarded by `src/loader/xml_frame/setup.rs`, losing deferred-child initialization. The observed `[]` is not healthy startup evidence: `/tmp/forever-addon-runtime/datamine-recovery-trace-2do7026r/stderr`. The chat-dispatched `/dm ui` attempt remains failed despite open/close/DONE, with nil SearchMode-derived enum input and nil `tagToActor`. Matrix: 222 clean / 29 failed / 14 unloaded / 3 dependency-blocked / 1 unavailable; 18 bounded passes / 1 failed / 250 not run. See [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Record finite numeric CVar defaults
+
+`19c11e551` converts finite Lua numeric `RegisterCVar` defaults through both global and `C_CVar` surfaces while preserving existing first-default/override behavior and typed/secret rejection. Development RED contains two expected failures; GREEN has 18/18 grouped tests: `/tmp/forever-addon-audit/register-cvar-numeric-{red,green}/ledger.json`. Independent verification is in `/tmp/forever-addon-audit/verify-datamine-catalog-ledger.json`; Datamine `8936714` motivates this inferred policy. Its startup replay is invalidated separately by recovered-frame discard, so no startup/matrix credit follows. Updated [CVar registration](../specs/cvar-registration.md) and [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Preserve CVarsBackup scoreboard blocker
+
+Frozen `963a3b791` reproduces CVarsBackup `8925285` calling missing `GetNumBattlefieldScores()` from button `OnUpdate`; exact archive/CVar isolation is recorded in `/tmp/forever-addon-runtime/cvarsbackup-current-k5wyhwr5/ledger.json`. Existing queue/active-battlefield state is not a score-row producer. No shim, implementation, native claim, or matrix update.
+
+## [2026-09-22] investigation | Trace BigWigs loose sound assets
+
+Frozen `0bee9e939` confirms all five present BigWigs sound paths were rejected by listfile-only `C_UIFileAsset`, followed by five reset warnings. `77513cbed` retains the selected TOC directory and `a9afe0231` adds bounded loose-asset recognition. Frozen `963a3b791` then registers all five unchanged staged sounds at exact paths with zero reset warnings, `DONE`, `[]`, unchanged CVars, and extensionless Otravi preserved: `/tmp/forever-addon-runtime/bigwigs-sound-assets-public-_wheduwi/ledger.json`. Independent audit passes focused loader/API checks 3/3, warning-free formatting/default checks, readability, and the exact replay: `/tmp/forever-addon-audit/verify-ui-file-assets-ledger.json`. Final `5913de433` only removes an unused classification payload, so frozen behavior proof is reused. Existing-file probing and loose-ID `nil` are simulator policies, not native-tested behavior. Updated [UI file assets](../specs/ui-file-assets.md) and [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Exercise BigWigs Create Test Bar
+
+Read-only audit confirms fixture `e826e801d` uses real `/bw` options, Bars TreeGroup, and enabled AceGUI Create Test Bar clicks rather than callback/producer bypass. Frozen `0bee9e939` and exact 442-file archive record localized duration `21`, progress `20.80755216`, expiry/hide, `DONE` before timeout, zero Lua errors, and unchanged host CVars. This updates the existing BigWigs row without changing the matrix: 18 bounded passes, zero failures, 251 not run. CASC-disabled 73 missing textures remain; historical custom-sound warnings are separately resolved by frozen `963a3b791`. No pixel/audio-playback/raid/native claim. See [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Add bounded script-object context query
+
+`d4b0401f3` captures the real BigWigs `/bw` deferred-plugin failure at `CanBeAccessedInContext`; `ec6c3c9f7` adds the Forever-only method. It checks caller taint, forbidden state, and the conditional aura restriction only against explicit per-environment inactive-by-default context. ObjectSecurity booleans use rilua’s host-only secret result support; there is no combat/static-secrecy inference or global enforcement. RED and independent GREEN are recorded: `e3cafcc11` covers 17 unique integration cases; final readability-only `0bee9e939` revalidates context 4/4, parser 3/3, formatting/default checks and unchanged BigWigs Core/Plugins/Options loading through `/bw` to `DONE` with `[]`. Five sound warnings follow the JSON, so the generic parser remains incomplete; raw output and exact archive/binary identity are independently audited. Rilua’s 19 focused secret-boolean checks pass; one of 463 full integration checks is baseline-confirmed as a pre-existing nil-diagnostic mismatch. See [context access](../specs/script-object-context-access.md) and [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Restore bounded BigWigs Classic expansion comparison
+
+`e11c0d792`, `ae045495a`, `f8a87599e`, and `fbcd9bb51` add a Forever-only `ClassicExpansionAtMost` comparator against existing temporary Classic level `10`, preserving the distinct inferred current level `0` and other profiles. Frozen previous-binary RED reproduces missing publication; focused 3/3 GREEN, formatting, and default compilation pass. Independent verification reuses matching source hashes, the frozen binary, exact 442-file archive, and isolated replay. BigWigs root loads with `[]`; Core/Options/Plugins remain deferred, while all eight encounter TOCs use `AllowLoadGameType: standard` and are excluded by Forever. This is partial/unloaded, not full clean startup. A real `/bw` deferred workflow now fails separately at `BigWigs_Plugins/Auras.lua:2408` on missing `CanBeAccessedInContext`. Documented scope: [predicate](../specs/classic-expansion-at-most.md) and [[forever-addon-comparison]]. Native numeric policy and major workflows remain open.
+
+## [2026-09-22] investigation | Count merchant junk in modeled bags
+
+Audited `67b32cddd`, `58b0072d1`, `8260074a3`, and `/tmp/forever-addon-audit/verify-merchant-read-family-ledger.json`. Hash-matched reuse covers 11/11 repair, buyback, and junk tests plus cached BAG_UPDATE; fresh formatting/default checks and changed-Rust readability pass. The frozen no-addons control and exact 23-file generic-TOC BagMeter OOD replay both exit 0 with empty errors, crediting only observed count transitions. `GetNumJunkItems` derives from carried modeled items, known positive sell prices, quality 0, and existing junk-sale exclusions; eligibility and stack-unit semantics are explicit inferences. Positive junk metadata remains fixture-only because the live catalog has no quality-0 records. No item-catalog change, sale transaction, full repair system, native claim, or `_Forever`/Classic BagMeter coverage follows. Updated [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Exercise Accountant and BagMeter workflows
+
+Audited fixtures `e8d4cf879`, their BagMeter corrections `bc498d6cf` and `a26fc043b`, and `/tmp/forever-addon-audit/verify-accountant-bagmeter-ledger.json`. Exact unchanged Accountant Classic `8919183` (92 staged files) records `+250/-250` `PLAYER_MONEY` deltas in Session, Day, and Total records, with `DONE` and empty errors; this is bounded simulator event evidence only. The later verified merchant read family makes exact unchanged BagMeter `8917130` (23 files) generic-TOC/OOD count replay clean with `DONE`; `_Forever.toc` remains untested. Matrix `2e39c97ba` is 17 bounded passes, zero failed workflows, 252 not run; startup totals unchanged. Updated [[forever-addon-comparison]]. Inventory goal remains open.
+
+## [2026-09-22] investigation | Model Forever guild invite preference
+
+Audited `7529257de`, `6632d6373`, `8ae18aa3d`, and parent evidence `a37490748`. The Forever-only setter reuses existing guild state/getter; cached metadata establishes optional false argument behavior and existing VM secret validation, while stored initial false and no event remain unverified/preserved. Independent verification reuses 5/5 proof and passes formatting, default checking, readability and security. The exact unchanged 81-file Account-wide UI archive completes `saved-zero → restored-zero → DONE` with empty errors and unchanged host CVars. This is bounded self-cast handler coverage only—not all-settings, bag preferences, persistence, native behavior or rendered UI. Updated [[forever-addon-comparison]]. Inventory goal remains open.
+
+## [2026-09-22] investigation | Model Forever neighborhood invite preference
+
+Audited `9733a87a8`, `6eccec458`, and `a923ce7cf`. The Forever-only getter/setter use a distinct per-environment bool, retaining VM secret validation. Cached documentation establishes the optional setter argument default `false`, not stored initial state; initial `false` is a simulator guess. No event was invented. Independent verification reuses 5/5 focused proof and passes formatting, default offline checking, security, and readability. The later guild setter resolves the recorded load boundary and completes the bounded Account-wide UI self-cast route; native preference semantics remain unproven. Updated [[forever-addon-comparison]]. Inventory goal remains open.
+
+## [2026-09-22] investigation | Model Forever recent-allies location preference
+
+Audited `561943dd0`, `37da0f132`, and `e5a97c5b0`. Forever stores recent-allies location preference per environment, defaulting to `true` from cached Settings metadata. Getter/setter behavior reuses VM secret validation; changed values synchronously emit the documented no-payload event. Same-value suppression is inferred from cached Settings feedback, not native proof. Independent verification reuses 5/5 tests and passes formatting, default offline checking, and readability. Neighborhood and guild follow-ups resolve the subsequent historical boundaries and complete bounded Account-wide UI self-cast coverage; no persistence, network-visibility, native-coercion or all-settings claim follows. Updated [[forever-addon-comparison]]. Inventory goal remains open.
+
+## [2026-09-22] investigation | Model Camelot stable reads
+
+Audited `e6f5e5792` and `a6fbf432e` after the two-field PetConsts publication reached StableUI's next nil read. Forever now has only the four state-backed calls consumed by that money-event path: `GetNumStableSlots`, `GetNextStableSlotCost`, `GetNumStablePets`, and `GetStablePetInfo`. Two empty owned stable slots with next cost `0` are an explicit simulator scenario guess, not native evidence; the current-pet-inclusive count is likewise inferred. Existing open probe and other-profile behavior remain untouched. Independent verification reuses 4/4 tests, passes formatting/default offline checking, and validates frozen `wow-sim-a6fbf432`, exact 109+28-member archives, fixture, and unchanged host CVars. The no-addons control and unchanged Aurarium money/overview workflow exit 0 with empty Lua-error JSON; Aurarium reaches `DONE` and becomes a bounded pass. This does not establish native pet behavior or inventory compatibility. Updated [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Restore Slider value callbacks
+
+`20318baf7` and `3d6017fe3` close the observed ClassicCastBar setter boundary: changed clamped Slider values now synchronously deliver existing `OnValueChanged` bindings after state borrowing is released. Payload includes self, value, and documented mouse-event boolean; unchanged values remain suppressed, error routing continues later bindings, and StatusBars are untouched. Independent verification reuses 9/9 focused tests, passes formatting/default offline checking and direct StatusBar regression. Frozen unchanged ClassicCastBar completes scale `1 → 1.35 → 1`, icon/reset and `DONE` with no Lua errors; no-addons control returns `[]`. Mouse dragging, native timing/security, pixels, navigation and persistence remain unproven; inventory acceptance stays open. Updated [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Preserve explicit empty CVar registration
+
+Audited `2530fcf56` and `d1e2487f6`: ClassicCastBarForever’s fresh explicit-empty CVar registration had become simulator-default `"0"`, overriding its authored scale. Independent proof passes the matching 15/15 target, formatting, and default offline checking; frozen `d1e2487f` clean-starts unchanged archive `8909724`, while the no-addons control returns `[]`. Source/Wowless evidence remains an inference, not a native probe. The separate Slider correction now has independent verification and a bounded replay, but is not mouse, navigation, or restart-persistence acceptance. Updated [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Verify DinoUnitFrames normalized curve producer
+
+`17abf7071` and `d23cfe65c` pass independent bounded verification: fresh grouped Forever curves 8/8, formatting, and default offline checking. Frozen `d23cfe65` clean-starts unchanged DinoUnitFrames `8936218`; a no-addons control returns `[]`. Its GUI modeled-power workflow observes segment alpha transitions `0 → 2 → 5 → 1 → 0`, `DONE` before timeout 124, no Lua errors, and unchanged host CVars. Normalized `current / max` curve input remains an inference from unchanged `id / 5` thresholds and cached Blizzard `CurveConstants`; native runtime scale, secrets, gameplay production, and pixel rendering remain unproven. No-curve results remain `0..100`; Retail and other profiles retain prior policy. Inventory acceptance remains open. See [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Register bounded Forever swing events
+
+`PLAYER_SWING` and `PLAYER_SWING_RANGE_UPDATE` are now finite documented Forever registrations with cleanup-aware payload tests. Independent verification passes 13 targeted tests, formatting, and default compilation. Frozen `ff19ecca` clean-starts AppelSwingsForever; an isolated injected four-second main-hand/six-second ranged workflow observes activation, progress, independent expiry, retained idle tracks, `DONE`, zero Lua errors, and unchanged host CVars. This does not model gameplay swings or range checks. See [[event-system]].
+
+## [2026-09-22] investigation | Verify registered template existence
+
+Final independent verification confirms `DoesTemplateExist` formatting, default offline checking, registry/source/readability audit, and immutable replay provenance. Frozen `2c5bf78c7` passes the 3/3 lifecycle target; unchanged DRaidFrames `8922652` starts with no collected Lua errors at wow-sim SHA-256 `7d0ff153e1bf2149f670e09ba1eea253460bf58b6bb9d2f754c64f857f8ccfbf`. Added [[template-existence]].
+
+## [2026-09-22] investigation | Observe bounded ActionBarAuras duration lifecycle
+
+Frozen build `748e3668` observes the unchanged ActionBarAuras player-buff path after automatic duration-binding scheduling: `7s` → `6s`, then hidden after removal, with a completion marker, no collected Lua errors, and unchanged host CVars. The 20-second timeout follows completion. Target-debuff, colors/rendering, native timing parity, and final scheduler formatter-error isolation/independent verification remain open. Updated [[duration-core]] and [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Publish Lua 5.1 unknown-escape parser fix
+
+Cached Buffalo/dgks failures trace to rilua rejecting unknown short-string escapes that the local Lua 5.1-derived Elune lexer accepts. User authorized publication: `15b52249` is published on `Osso/rilua` branch `fix-lua51-unknown-escapes`, and wow-ui-sim `b8f0982be` pins it. Development proof is 52 lexer tests plus one compile/execute regression; independent verification and addon replay remain pending. Added [[lua51-unknown-escapes]].
+
+## [2026-09-22] investigation | Stage bounded Forever event, base-spell, and expansion producers
+
+Audited `232bc7e72`, `f1c0a19a8`, and `374c2c6c7`. The event list gains only generated-documentation `CHAT_MSG_COLLECTED_APPEARANCE` and `UNIT_AURA_BLOCKED`; it remains finite, and native production/payload semantics are unproven. `C_Spell.GetBaseSpell` uses explicit per-specialization relationships with no seeded live data, no alias reversal, and secret rejection despite the documented tainted-input allowance. Forever current expansion becomes an inferred Classic `0` policy for Angleur's authored Camelot predicate; native numeric identity remains unknown. Targeted compilation, tests, and unchanged addon replays are pending. Updated [[event-system]], [[lua-api]], [[client-profiles]], and [[forever-addon-comparison]].
+
+## [2026-09-22] investigation | Add bounded Forever GetComboPoints model
+
+Recorded the missing native API separately from shared-CVar audit contamination. Player secondary power remains the count source; one target-GUID assignment prevents stale UnitPower from being displayed on a different target. At `c1e830ffa`, the isolated Forever build and six grouped regressions pass, including unchanged CVar-enabled ComboFrame updates. Explicit simulator guesses and unsupported-owner errors remain documented in [[forever-combo-points]]; isolated addon-path proof remains open.
+
+## [2026-09-22] investigation | Isolate cached addon runtime CVar state
+
+`d10d5dbd4` makes each staged package root own `XDG_DATA_HOME`. The writer/fresh-reader/same-root sentinel passes with empty Lua-error JSON and preserves the host CVar hash. Earlier shared-CVar package baselines remain non-acceptance history; the inventory goal is open.
+
+## [2026-09-22] coverage | Track runtime acceptance for cached Forever addons
+
+`2cb544376` adds the runtime-coverage matrix for the exact cached project set and links it from the comparison audit. Static comparisons remain non-runtime evidence; the inventory-wide compatibility goal stays open until projects and their major workflows have explicit runtime results. The selected Forever archive is hash-verified for 268 projects; ConsumableTracker's unavailable selected archive remains a blocker without substitution. See [runtime coverage](../forever-addon-runtime-coverage.md) and [[forever-addon-comparison]].
+
+## [2026-09-21] investigation | Dispatch intrinsic visibility bindings after `ReloadFrames`
+
+`1e1dfe7c0` changes recursive visibility delivery from normal-only to ordered precall/normal/postcall bindings, preserving children-first order. Root cause: `ReloadFrames` hides the parent, configures the native AuraContainer, then shows the parent; normal-only recursive `OnShow` skipped its intrinsic `UNIT_AURA` re-registration. `c6d970cf3` remains only the `FireEvent`/`A_Admin.FireEvent` fix; `AddBuff`/`RemoveBuff` already used `fire_named_event_state`. At `9c223f8b7`, visibility tests pass 9/9, synchronous-event tests 12/12, and native Forever consumers 5/5. Trusted 90-second GUI acceptance passes five interactions plus aura paint/removal/cleanup with zero Lua errors; timeout 124 is teardown. See [[synchronous-intrinsic-events]].
+
+## [2026-09-21] investigation | Correct `FireEvent` intrinsic-event delivery attribution
+
+Recorded `c6d970cf3` as a normal-only `FireEvent`/`A_Admin.FireEvent` correction with shared all-binding dispatch and API-level ordering/filter regressions. Diagnosis correction: admin aura producers use `fire_named_event_state` already, so their passing cold-container lifecycle test is not proof for that commit. Post-`ReloadFrames` evidence instead points to normal-only recursive `OnShow` visibility dispatch skipping AuraContainer's intrinsic re-registration; implementation and GREEN remain pending. See [[synchronous-intrinsic-events]].
+
+## [2026-09-21] investigation | Record secret aura geometry and texture handoffs
+
+`fc83c50cc` accepts authenticated wrapped inputs only at demonstrated native AuraContainer boundaries: `SetPoint`, size setters, and `Texture:SetTexture`. It records anchor origin per point, independent width/height origins, and private texture-source origin; conservative tainted read guards cover demonstrated direct, parent, and relative-anchor paths. Native source proves wrapped inputs; origin/readout behavior remains an explicitly authorized simulator guess because Forever probes are unavailable. Focused expanded aura-secret display proof passes 6/6, and trusted GUI acceptance paints then removes the secret-duration aura. See [[ellesmereui-forever]] and [aura secret display](../specs/aura-secret-display.md).
+
+## [2026-09-21] investigation | Record secret duration binding and widget handoffs
+
+`a9fa01e18` and `3ba3bd429` extend the explicitly guessed secret-duration policy into duration text binding: formatter inputs remain wrapped, addon conversion overrides do not receive decoded timing, and text output reaches `SetText` wrapped. `0f33ec35a` adds private Rust-only widget origin flags for shown/text/timing and guards only direct tainted reads of flagged modeled values. Focused secret-handoff proof covers duration core 28/28, binding 11/11, numeric formatter 8/8, and initial aura display 3/3; later expanded aura display is 6/6. These results do not establish general secrecy enforcement, aspect enforcement, or native conformance. See [[ellesmereui-forever]].
+
+## [2026-09-21] investigation | Record bounded secret duration policy
+
+`e6b928a23` stores Forever secret duration timing in authenticated rilua wrappers after actual native AuraButton setup passed wrapped numerics and all three setters rejected them. Cached native contracts prove the input boundary, non-secret `HasSecretValues`, and `SetToDefaults` clearing secret state. Reset/plain-reconfiguration, copy/assignment, and secret getter behavior lack Forever-client evidence; the user explicitly permits informed guesses and cannot run Forever probes. The documented simulator policy retains secret state through reset/reconfiguration, preserves it through copies, clears it on defaults, and rejects tainted timing reads. Focused duration-core proof is 28/28 and downstream binding/widget/aura proof is recorded separately; the final trusted GUI replay paints then removes the aura. These are simulator-policy results, not native lifecycle or secrecy conformance. See [[ellesmereui-forever]].
+
+## [2026-09-21] investigation | Trace actual AuraContainer enumeration and action cooldown shape
+
+Real GUI tracing after an injected helpful aura (`instance 7`, `spell 19750`, icon `135907`, stacks `3`) found both public and secure `C_UnitAuras.GetUnitAuraInstanceIDs` plus private enumeration functions returned nil despite identical namespaces. This precedes filters, groups, and display; `4dadf6a5a` shares existing enumeration registration with Forever, pending compiled GREEN. The same trace found a five-second current action cooldown omitted `isActive` while the matching spell cooldown reported active after 0.665 seconds. Forever returns `SpellCooldownInfo`, so `bff7719e3` publishes the modeled field without changing historical four-field payloads; pending compiled GREEN. `ac9ce1897` fixes tab-separated trailing TOC annotations that caused secure TargetFrame aura paths to include `[AllowLoadGameType mainline]` in their filenames. See [[ellesmereui-forever]].
+
+## [2026-09-21] investigation | Record access restrictions and TargetFrame diagnostic
+
+`9d1174236` shares the existing access-restriction mask methods through `forbidden-aspects` after native AuraContainer calls found `AddAccessRestrictions` absent. Its regression covers native deferred pre-login application, `PLAYER_LOGIN`, `PLAYER_ENTERING_WORLD`, and immediate post-login application; conditional aura-secrecy enforcement remains unmodeled. `2bf64b02c` adds a manual-closure, pre-cleanup TargetFrame callback diagnostic with warnings and mixin snapshots. It is test-only and does not establish a mixin-composition cause or production fix. Both GREEN results remain pending. Updated [[ellesmereui-forever]] and index; parent report unchanged.
+
+## [2026-09-21] investigation | Record secure AuraContainer delegate follow-up
+
+`d0d6a346d` shares the existing `AddSecretAspect` mutation through `forbidden-aspects` after native CustomAuraButton initialization failed with the method absent; it does not add masks or secret-value enforcement. `9476efcf5` makes only explicit forbidden `secureDelegates` invoke native delegates through `securecallfunction`, addressing the demonstrated tainted `settablesecurity` failure while preserving callback and caller taint boundaries. The combined Forever `--no-run` build at `248f665fd` succeeded before these focused source slices; their targeted GREEN remains pending. GUI acceptance at that revision is 4/6 (chat, options, casts, target); action and aura remain unproven, and the aura fixture now checks only collision on its own spell ID. Updated [[ellesmereui-forever]] and index; parent report unchanged.
+
+## [2026-09-21] investigation | Commit bounded AuraContainer follow-up producers
+
+`c3d11eb23` shares existing base AuraContainer processors, aura secrecy, and documented enum publication through `aura-containers`; native-present caster-name options and `minApplications` remain intentionally unexpanded. `0a6330816` preserves the existing `C_StringUtil` namespace/factory across EnvironmentCleanup restoration. `b9dcb571a` projects only direct native-frame arguments at explicit forbidden XML delegates, preserving ordinary tables, nil/vararg positions, and the public initializer contract. Source/spec/test commits only: combined Forever compiled GREEN and real replay remain pending. Updated [[ellesmereui-forever]] and index; parent report unchanged.
+
+## [2026-09-21] investigation | Preserve deferred timer and duration-binding availability
+
+`1604954a2` preserves timers created by `After`, `NewTimer`, or `NewTicker` callbacks after the active queue pass; the nested fixture covers deferred dispatch, repeating timers, pending entries, and cancellation. `9c56b683d` replaces the `GetBuildInfo` availability guard for the existing duration-text binding with explicit profile selection: Forever and Retail-family 12.0.7+ receive the factory, while color methods stay Forever/12.1+. Both are source/test/spec commits only: compiled GREEN and real Ellesmere replay remain pending. See [[ellesmereui-forever]].
+
+## [2026-09-21] investigation | Audit native AuraContainer dependency chain before further patches
+
+Read-only audit of pinned Forever `Blizzard_AuraContainer` corrects several earlier assumptions. Native `UpdateAuraDisplay` is a private Lua mixin hook, not a Rust method gap. `process_timers()` previously lost callback-enqueued timers by overwriting the state queue with its old requeue, explaining stalled nested GUI `/eui` continuation; `1604954a2` now has source/test coverage pending compiled GREEN. `CreateSecondsFormatter` must be tested across `Blizzard_EnvironmentCleanup`, which rebuilds `C_StringUtil`; custom-button update enum, AuraContainer utilities, and Secrets remain narrowly Retail-gated. Forever's validator requires forbidden object/owner identity while XML delegates convert receivers but not ordinary inbound child arguments; `GetObjectTable` and the real addon initializer contract must remain public. Source-backed audit artifacts and limits are recorded in [[ellesmereui-forever]].
+
+## [2026-09-21] investigation | Extend narrow Ellesmere Forever producer coverage
+
+`a31e12d50` shares existing local-player `UnitClassFromGUID` with the same Retail 12.1+/Forever capability as `UnitNameFromGUID`; actual native interrupt formatting reaches `CastingBarFrame.lua:622`. `c5f5da7fb` shares the existing numeric rule formatter and rounding enum for AuraKit's preferred duration path, preserving the modeled `59.9 → "60"` threshold behavior without a fallback rewrite. `156fbf184` / `8602cc967` make the existing secure/global object transfer available under forbidden aspects, so the native AuraContainer provider can receive its private `UpdateAuraDisplay` mixin rather than a new stub. External RED artifacts record each missing producer; compiled Forever GREEN and real replay remain pending. Updated [[ellesmereui-forever]] and index; parent report unchanged.
+
+## [2026-09-21] investigation | Share Forever forbidden-aspect consumers
+
+`cc57bea8d` shares the existing base forbidden-aspect capability with Forever: its thirteen native masks, metadata, FrameRef query/mutation methods, and existing `SetParent`/`SetPoint` inheritance guards. `QueryAnimationProgress` and `AddAnimations` remain a separate PTR 12.1.5+/Forever mask extension; Retail 12.1 keeps eleven base bits. Actual AuraContainer evidence made `GetObjectTable` a demonstrated same-feature dependency; unrelated access restrictions and `ClearScripts` remain excluded. Actual Ellesmere RED reaches `SecureHandlers.lua:592`, tainted AuraKit's unknown `UntrustedScriptExecution`, and the provider's public/private crossing; compiled GREEN and full replay remain pending. Optional-mask filtering in `HasAnyForbiddenAspects` is unchanged and unneeded by the demonstrated consumer. Updated [[ellesmereui-forever]] and index; parent report unchanged.
+
+## [2026-09-21] system | Model shared player cast duration queries
+
+`180d08b69` adds the narrow `player-cast-durations` capability for Retail 12.1+ and Forever. It exposes nullable player-only casting, channel, and empowered-channel duration objects over simulator-owned timestamps, shares the existing channel lifecycle without enabling an unrelated Retail epoch, and aligns numeric cast-bar tuple IDs with update/stop event payloads. The pinned Forever Unit documentation supplies nullable query shapes; the ordinary-channel hold boundary is an inference from the pinned CastingBar consumer's separate hold adjustment. Focused RED is 0/5; GREEN and real Ellesmere acceptance remain pending. Updated [[duration-core]], [the duration spec](../specs/unit-cast-durations.md), [combat admin API](../admin-api/combat.md), and index; parent report unchanged.
+
+## [2026-09-21] investigation | Implement numeric shared OnUpdate modes
+
+`d93621f42` introduces `on-update-modes` for Retail 12.1+ and Forever without enabling a broader Retail epoch. It publishes native numeric `Enum.OnUpdateMode` values and metadata, stores numeric mode state, maps XML names, resets one-shot modes before callbacks so rearming survives, and replaces PTR string/undocumented-alias publication with the shared Rust producer. Five focused cases are RED, including the real inherited ManagedAuraContainer dirty path; GREEN and runtime replay are pending. Updated [[ellesmereui-forever]], [the OnUpdate-mode spec](../specs/on-update-modes.md), and index; parent report unchanged.
+
+## [2026-09-21] investigation | Restore native Edit Mode initial-anchor ordering
+
+`0b95bed3e` adds the native `EditModeManagerFrame:InitSystemAnchors()` phase before the simulator's custom per-system replay. Failure-time QueueProbe evidence from actual Ellesmere startup found `QueueStatusButton` at 45×45 with zero anchors and nil center while earlier MicroMenu/action-bar/Minimap callbacks reached Camelot `UpdateDefaultAnchor`; settled geometry was not causal evidence. Pinned `EditModeManager.lua` calls initialization before `UpdateSystems()`. The exact regression fixture is RED at `/tmp/ellesmere-forever/queue-regression-red.stderr`; focused GREEN and real addon replay remain pending. See [[ellesmereui-forever]] and [the initial-anchor spec](../specs/edit-mode-initial-anchors.md).
+
+## [2026-09-21] system | Bind persisted Lua bytecode to locked Rilua
+
+`8ddf0908d` updates [[bytecode-cache-growth]] and [[ellesmereui-forever]]. Pack headers and content keys now carry the exact Git revision resolved from `Cargo.lock`; malformed, missing, or ambiguous compiler identity fails the build. `WOWBC003` rejects earlier packs, and loose `.luac` plus legacy keys are ignored instead of imported. Existing bounded storage, read-only, and prefork behavior remain in scope. This records implementation only: parent-owned Ellesmere stale-cache rejection, cold compilation, and warm replay acceptance remain pending.
+
+## [2026-09-21] investigation | Record EllesmereUI Forever producer defects
+
+Added [[ellesmereui-forever]] from the unchanged cached EllesmereUI 9.2.2 file `8936131`. It separates 14 records / 31 occurrences, intentional Camelot stand-downs, the 13-target special-bar correction, the extra-legacy-specialization diagnosis, and rilua's published conditional-`LOADNIL` correction from open warm-cache and end-to-end startup proof. Updated the index; parent-owned runtime report/spec/source files remain untouched.
+
+## [2026-09-21] investigation | Record cached Camelot selector and combat namespace follow-up
+
+`31ac46b3a` makes dash/underscore Camelot TOCs win before generic files; focused selection passes 44 targets and cached Carbonite’s providers/dependents load. Its later map-2521 `OnUpdate` fails after the modern map-art API path because exact-build art metadata/decoder inputs are absent. No filename, asset, metadata, or fallback is inferred. `9862dc7b3` removes public `C_CombatLog.GetCurrentEventInfo` synthesis while retaining Internal/Secure publication; 3 new plus 4 existing checks pass. Cached EpicDamageMeter starts cleanly and its modern path completes 60 updates on one instance with two named rows—seeded rendering, not native combat. Independent follow-up verification passes at `572f1c23c`; exact reused/fresh proof and the eight pre-existing lib-test warnings are recorded in [the shared verification section](../forever-addon-comparison.md#follow-up-verification). Updated [[forever-addon-comparison]] and [the running report](../wowforever-1.60.1.md); the separate native-POV report remains `362b65c7f` on `forever-ui-api-report`.
+
+## [2026-09-21] investigation | Correct cached EasyFishing cursor transfer
+
+`215a4080a` replaces the no-op `C_Container.PickupContainerItem` workaround with shared simulator bag/cursor/equipment transfer behavior. Cached EasyFishing's actual pickup → auto-equip → pickup path went RED 0/4 and focused inventory proof GREEN 25/25. Final source `d40397025` passes independent bounded verification; see the [shared proof record](../forever-addon-comparison.md#independent-verification). This is an item-ID/count transfer result, not full addon or native inventory compatibility. See [[forever-addon-comparison]] and the [cursor transfer contract](../specs/cursor-item-transfer.md).
+
+## [2026-09-21] investigation | Freeze Forever addon comparison to cached archives
+
+Commit `6397eb7a3` records the offline-only boundary after further acquisition stopped. [The comparison audit](../forever-addon-comparison.md) remains the source of truth for cached coverage, parked work, and static candidate dispositions; none establishes runtime acceptance or full addon compatibility. Updated [[forever-addon-comparison]] and the running Forever report.
+
+## [2026-09-21] investigation | Start full Forever addon comparison audit
+
+Commit `7eb74d91e` records a complete public CurseForge Forever/1.60.1 corpus: 875 unique projects across 44 A–Z pages, no duplicate or missing rows, and a stable 875 count during capture. This is catalog coverage only; pairing, historical/source diffs, consumer reproduction, and broad addon compatibility remain in progress. Commit `bb83a4c0a` corrects the first source-documented producer discrepancy: Forever-only `Enum.BagIndex` character tabs `6..14`, account tabs `15..23`, and exact metadata. Two BetterBags-shaped consumer-loop tests were RED then GREEN; the result does not claim BetterBags loading, bank state, Warbank, or native conformance. Added [[forever-addon-comparison]], updated index and the Forever report.
+
+## [2026-09-20] investigation | Test Mainline SpellBook lifecycle across profiles
+
+Retail-only panel fixtures did not exercise Forever's real spellbook close path. `d06147537` and `389c3a2d5` add a production-shaped `S` keybinding regression shared by Retail, PTR, and Forever; each passes open, ten ticks, close, and ten ticks with zero collected Lua errors. Forever producer fixes cover LoadOnDemand bootstrap publication, `GetClassSkillLineInfo`, state-backed `GetPetIcon`, documented `ActionBarSet` and clear-transmog values, and exact spell `1247917`. Mists/Cata and legacy SpellBook contracts remain explicitly tracked rather than silently skipped. Added [[mainline-spellbook-lifecycle]], updated index, spec, and Forever report.
+
+## [2026-09-20] investigation | Fix Forever WorldMap sustained update failure
+
+Startup-only acceptance missed repeated `Blizzard_WorldMap` updates failing with nil `targetScale`. `WorldMapMixin:OnShow()` aborted before `SetMapID()` because the Camelot quest-count consumer lacked source-published `Constants.QuestLogConsts.MAXIMUM_NUM_QUESTS_LOG_CAN_ACCEPT = 40`. Commit `ed4c97a8a` publishes the Forever-only constant. Actual WorldMap Show plus 60 GUI-style ticks passes 1/1 with a positive target scale and zero errors; a fresh 20-second GUI run records no Lua error, update failure, nil comparison, or warning. Updated [[forever-clean-startup]], index, spec, and the Forever report.
+
+## [2026-09-20] acceptance | Clean Forever 1.60.1 startup
+
+Immutable batch fifteen at `7e449f911` compiled `gui,client-wowforever`, copied and hashed its binary, then ran `lua-errors` with no addons or SavedVariables: exit 0, stdout `[]`, zero records and occurrences. The subsequent interaction script completed its Gamepad-page, pet-ID, EditMode, weapon-enchant, BuffFrame, interact-icon, MainActionBar, and chat-overflow assertions and emitted no Lua errors. Updated [[forever-clean-startup]], the running report, index, and current Forever baseline. Native Gamepad hardware, pet-slot offset, dynamic EditMode policy, and secret-value limits remain explicit.
+
+## [2026-09-20] investigation | Fix Forever chat overflow button-slot animations
+
+Documented `13ca52c1c`, `016aec606`, and `32c666fd4` in [[forever-chat-overflow-slot-animations]]. The actual DockManager overflow `HighlightTexture` was created without its XML-owned `FlashAnim`; unchanged `FCFDockOverflowButton_UpdatePulseState` then called `ChatFrameUtil.StopFlash` with nil. RED was 0/1 and GREEN 4/4 for group ownership, identity, stop behavior, and consumer behavior. Earlier minFrame/tab-glow and general lifecycle-order hypotheses were falsified. Pinned immutable batch six at `32c666fd4` remains failing, but improves to 20 records / 36 occurrences. Updated the Forever running report and index.
+
+## [2026-09-20] system | Extend documented Forever event registration
+
+`af05c04e8` adds only rejected documented GuildControl/Friends events: `DISCORD_GUILD_LOBBY_UPDATE`, `DISCORD_GUILD_SETTINGS_UPDATE`, and `SOCIAL_UI_FRIENDS_LIST_SYSTEM_STATUS_UPDATED`. `NEW_MATCHMAKING_PARTY_INVITE` was already accepted. RED was 0/1; grouped GREEN 4/4 establishes registration only, not producers or native delivery. Updated the Forever running report and index.
+
+## [2026-09-20] reference | Start Forever 1.60.1 running report
+
+Created [Forever 1.60.1.69913](../wowforever-1.60.1.md) as the patch-specific running report. It records committed profile, manifest/mapping, `require`, and `[Family]` routing work; distinguishes the historical 422-record startup baseline from current proof; and lists source-backed pending compatibility groups without claiming completion. Linked from [[client-profiles]].
+
+## [2026-09-20] system | Correct Forever Family TOC routing
+
+Commit `5e26960b6` corrects `client-wowforever` `[Family]` substitution from `Classic` to `Mainline`, matching the authenticated Forever source's base `NineSliceLayouts`, `InputUtil`, and shared-panel templates. `[Game]` remains `Camelot`; `camelot`/`classic` annotation filtering remains unchanged, so this does not load general `mainline`-annotated entries. The earlier 422-record startup baseline predates this correction and remains failure evidence only. Updated [[client-profiles]], [[addon-loading]], and the index.
+
+## [2026-09-20] system | Synchronize Forever source cache and record failing startup baseline
+
+Commit `65139f909` regenerated the bundled listfile from refreshed community data, adding 592 `wowforever` path-to-FDID rows. Rebuilt `wow-cli casc sync-blizzard-ui` extracted all 4,398 manifest files from local `wow_classic_beta` CASC with no unresolved paths. The first no-addons/no-saved-vars startup capture instead exited 1: `docs/baselines/wowforever-lua-errors.json` records 422 distinct errors and 514 occurrences, including missing `BattleNetFriendLevel` and `InputUtil`. This proves mapping and extraction only, not startup, Blizzard UI, or native compatibility. Updated [[client-profiles]], [[casc-asset-cache]], and their index summaries.
+
+## [2026-09-19] system | Integrate Forever loader module imports
+
+Updated [[addon-module-imports]] and [[client-profiles]] after `abbc1272f` and `78cf08372`. Forever is now a distinct seventh profile (`16001`, `wow_classic_beta`, `wowforever` cache; canonical source branch `forever`), never an Era/Anniversary alias. Its loader-bound `require` returns completed-file values with private GC roots and prototype caller provenance; disk cross-addon imports require direct TOC dependencies, while dynamic absolute callers are exempt. Targeted profile tests passed 8/8 and loader tests 10/10 before formatting, extraction, startup smoke, and final verification. No native execution or full Blizzard-baseline claim.
+
+## [2026-09-19] investigation | Correct recipe-quality final guard ordering
+
+Documented `f132248d4`: initial independent verification of `b7ea594a2` was 7/9 because the frozen ninth original-ID guard could revoke quality, recipe-list ancestry, or schematic ancestry after prior checks, forwarding one revoked input in each of twenty-four cases. The correction boundedly reauthorizes those original sources around an original-argument recheck without reconstruction or coercion. Development RED covered thirteen existing plus five new groups; GREEN passed eighteen groups with zero forbidden forwards across twenty-four frozen and 288 staged cross-input occurrences. Frozen cases overlap staged group three, so counts are not disjoint. Fixed-revision independent verification passed 9/9. Sequential checks establish neither atomic authorization nor native behavior, conformance, or execution. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded recipe-quality input recorder
+
+Documented `b7ea594a2`: manual `recipe-quality-acceptance <label>`, excluded from `all`, forwards at most four original accessible finite tracked IDs to `GetRecipeSchematic(id, false, nil)`, then sends each same-schematic original `productQuality` unchanged with its original ID to `GetRecipeItemQualityInfo`. It retains raw tuples and exposes only thirteen guarded fields from each first quality result. Nine calls, eighteen cumulative fixtures, ten item-quality regressions, and eleven schematic regressions prove local input-acceptance recorder mechanics only. No valid-index/range/maximum/equivalence, crafting/recrafting, native acceptance, or conformance claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded unit-fed heal-calculator recorder
+
+Documented `cc123a50a`: manual `unit-heal-calculator <label>`, excluded from `all`, creates fresh no-argument calculators for `player` and `target`. Each lane reads five getters, calls `UnitGetDetailedHealPrediction(unit, nil, originalCalculator)`, then reads those five getters again: 24 calls total. Fourteen fresh fixtures plus eleven older mode regressions establish recorder mechanics only. The documented signature corrects any current claim that no unit-fed calculator producer exists. It does not credit `UnitHealPredictionValues` fields, resource mutation, native healing, or conformance. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded timeline Edit Mode preview recorder
+
+Documented `c0d80bd22`: manual `timeline-edit-preview <label>`, excluded from `all`, is explicit preparation only. Guarded inactive Edit Mode and zero Edit Mode-source-count gates precede one permitted `AddEditModeEvents()` attempt. Cleanup checks actual current Edit Mode first and refuses broad cancellation when active; unconfirmed cleanup locks later attempts for the session. Later manual use may create preview side effects and does not establish ownership or preservation of real encounter events. Twelve experiment calls, fifteen fixtures, and twelve timeline-track regressions establish local recorder mechanics only. No native execution, atomic ownership, cleanup guarantee, isolation, conformance, or native-preservation claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded recraft limit recorder
+
+Documented `175fab0ab`: manual `recraft-limit-read <label>`, excluded from `all`, takes at most two original accessible finite tracked recipe IDs, queries each schematic with `false, nil`, and forwards only two slots with two original accessible table/userdata reagents per slot to `RecraftLimitCategoryValid`. It preserves original reagent identity and only guarded declared `itemID`/`currencyID` fields. Initial independent evidence was 8 passed / 1 failed: a final ancestry receiver guard revoked a declared reagent field before forwarding. Correction `fedcccc41` adds bounded field/ancestor reauthorization. Development RED reproduced 32 exact final-receiver revocations; targeted GREEN was 16/16 cumulative fixtures, including five new fixtures and 480 staged cross-input cases. It makes no atomic authorization, native behavior, conformance, or native-execution claim; fixed-revision independent verification passed 9/9. Updated [[api-contract-probes]] and the index.
+
+
+## [2026-09-19] investigation | Prepare bounded recraft reagent input recorder
+
+Documented `232a6201f`: manual `recraft-reagent-read <label>`, excluded from `all`, constructs two original guarded equipment `ItemLocation` values and reads opaque GUIDs, then uses two original accessible finite tracked recipe IDs, two schematic slots, and two original reagents per slot. Initial independent evidence was 7/9: 64 final-currency-guard-to-item/location revocations could reach forwarding, plus a separate weak-reference failure. Correction `555d75278` reauthorizes declared fields and equipment ancestry after the final guard. Development RED reproduced all 64 guard cases; JIT guard/staged coverage is 16/17 solely because the separate weak-reference fixture fails, while interpreter mode is 17/17 and staged cross-input coverage is 576 cases. A source-specific diagnostic supports a JIT-associated retention root, not an identified root: input objects survived two GCs and fixture-return, appeared in none of 208 returned-DB tables, then released after `jit.flush()` plus GC. Seventeen cumulative fixtures, including five new fixtures, prove recorder mechanics only. Final independent verification by agent 19549 remains pending. No atomic authorization, production retention fix, actual recraft allocation, target/native validity, warning, mutation, crafting, recrafting, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded crafting enchant-item recorder
+
+Documented `20691891d`: manual `crafting-enchant-items <label>`, excluded from `all`, reads one `GetRecipesTracked(false)` tuple and forwards at most four original accessible finite tracked recipe IDs to `GetEnchantItems(id, nil)`. The optional reagent remains unpopulated; only first-eight scalar or opaque GUID values from each first returned item list are recorded. Five calls, twelve actual TOC/slash fixtures, and eleven schematic regressions establish recorder mechanics only. No enchant/recraft/crafting mutation, recipe validity, reagent semantics, list completeness, native validity, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] audit | Reconcile existing same-size scale-event capture
+
+Metadata `df99b2924` reclassifies `ScaleEventProbe.SameSizeDuplicatePair` as partial from existing capture only: event ordering, snapshots, marks, and pre-login buffering. Actual window-transition identity, an unchanged-size control, and native equal-size evidence remain missing. No recorder, native execution, or native credit changed. See [[api-contract-probes]] and [[display-size-ui-scale-events]].
+
+## [2026-09-19] investigation | Correct abbreviation-options final guard ordering
+
+Initial independent verification of `e26d37b3d` preserved an 8-passed/1-failed failure: final numeric access validation could revoke an already checked original breakpoint table or owned options table before forwarding. Correction `a4096bb6f` adds bounded sequential reauthorization after the numeric guard. Development evidence records 17 fixtures, including six new fixtures, 64 exact numeric-guard RED cases, and 128 staged cross-input cases. Independent interpreter verification passed 9/9. Separate warmed-LuaJIT diagnosis remained 8/9: breakpoint/options survived two GCs and fixture-return GCs, collected after `jit.flush()` plus GC with JIT enabled, and raw traversal of 209 returned-DB tables found zero referent matches. Eager assertion-message `tostring` had masked this liveness failure. Evidence supports JIT-associated retention, not an identified trace/root, warmed-JIT resolution, production fix, or native claim. Updated [[api-contract-probes]].
+
+## [2026-09-19] investigation | Prepare bounded abbreviation-options recorder
+
+Documented `e26d37b3d`: manual `abbreviation-options <label>`, excluded from `all`, calls `C_StringUtil.GetDefaultAbbreviationBreakpoints(nil)` once and uses an accessible original table only as `breakpointData` on one owned options table. Eight fixed finite numbers each receive omitted and owned-options calls to `AbbreviateNumbers` and `AbbreviateLargeNumbers`, under thirty-three calls per snapshot. Eleven fixtures and six older abbreviation regressions establish local recorder mechanics only. No configuration or locale mutation, native formatting/equality/default, conformance, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded timeline track-query recorder
+
+Documented `0f6dde217`: manual `timeline-track-queries <label>`, excluded from `all`, forwards only the first eight original accessible finite IDs from one `GetEventList()` tuple to independent `GetEventTrack(id)` calls and preserves their raw track/sort-index tuples without interpretation. Independently it exposes eight declared guarded fields from the first five `GetTrackList()` entries and captures one opaque `HasVisibleEvents()` tuple. Eleven calls, twelve actual TOC/slash fixtures, and twelve timeline-track-info regressions establish local recorder mechanics only. No Edit Mode operation, event mutation, native placement, visibility, queue, timing, conformance, or native-execution claim follows. Lifecycle mutation and native populated queue/timing/transition, validation, and restricted-context gaps remain. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded timeline track-information recorder
+
+Documented `90ecfa0ab`: manual `timeline-track-info <label>`, excluded from `all`, forwards each of five fixed published original accessible finite `Enum.EncounterTimelineTrack` values once to `C_EncounterTimeline.GetTrackInfo`. Only the first returned table/userdata exposes eight declared guarded fields; raw objects and other returns remain opaque. Five calls, twelve actual TOC/slash fixtures, and eleven timeline-source-count regressions establish local recorder mechanics only. No Edit Mode events, mutation, native queue, timing, conformance, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded heal-calculator mode recorder
+
+Documented `c5246eee6`: manual `heal-calculator-modes <label>`, excluded from `all`, uses one fresh owned calculator for three baseline getters, seven published setter/getter pairs, and two resets followed by six reads. Twenty-five method calls plus one constructor call, eleven fresh fixtures, and seven older read-only regressions establish local recorder mechanics only. No equality, default, reset-equivalence, native, or resource conclusion follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded LFG title-match recorder
+
+Documented `91503ab04`: manual `lfg-title-match-read <label>`, excluded from `all`, follows at most two original category, group, and activity positions per stage before calling `DoesEntryTitleMatchPrebuiltTitle(activityID, groupID, nil, nil)` with exactly four arguments. Explicit nil playstyle positions are an experiment, not native caller defaults or title context. Fifteen calls, eleven actual TOC/slash fixtures, and eleven playstyle-format regressions establish local recorder mechanics only. No title/entry/search-result/listing operation, request, mutation, native title-match result, default, historical behavior, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded LFG playstyle-format recorder
+
+Documented `95a63168f`: manual `lfg-playstyle-format <label>`, excluded from `all`, forwards at most two original category IDs and two original activity IDs per category through the bounded LFG producer chain. The vendor group argument `0` remains separate from the guarded published PvE filter; formatting receives separately guarded published `None` values and original activity-info objects only. Eleven calls, eleven actual TOC/slash fixtures, and eleven plus sixteen focused regressions establish local recorder mechanics only. No search-result/listing operation, mutation, native listing, default, formatting, or native-execution claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Prepare bounded crafting schematic recorder
+
+Documented `b29aae9bf`: manual `crafting-schematic-read <label>`, excluded from `all`, takes up to four original accessible finite IDs from `C_TradeSkillUI.GetRecipesTracked(false)` and independently calls `GetRecipeSchematic(id, false, nil)`. It reads only fixed current fields across four bounded reagent slots, reagents, and variable quantities. Five API calls, eleven fixtures, and sixteen neighborhood regressions prove local recorder mechanics only. No crafting/order behavior, wrapper structure, native behavior, or native execution claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Record omitted quest-favor arguments
+
+Documented `996db2fdf`: four original produced-ID quest-favor cases remain unchanged; independent zero-argument and explicit `nil, false` calls run even when the producer is unavailable. Eleven calls per snapshot and seventeen cumulative fixtures, including seven new cases, are local recorder proof only. No default, clamp, equality, native behavior, or native execution claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Record omitted and nil unit role-predicate arguments
+
+Documented `ba0d2edc0`: the fixed twenty-four token calls remain unchanged; separate zero-argument and explicit-nil `UnitIsNPCAsPlayer` observations raise the bound to twenty-six calls. Sixteen cumulative fixtures, including six new cases, are local recorder proof only. No equivalence, default, native behavior, or native execution claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-19] investigation | Correct transmog source-validity final index guard
+
+Initial independent supplementation of `48f2eb121` preserved an 8-passed/1-failed result: final original-count validation could revoke an already checked derived source-filter index before `IsValidTransmogSource` forwarding. Runtime correction `4ed9baf9d` immediately rechecks that index after the count guard. Development RED recorded 11 passed / 2 failed; GREEN recorded 13/13 cumulative fixtures after two new count-guard revocation cases. Fixed-revision independent verification completed 9/9; no native execution or credit occurred. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-17] investigation | Prepare bounded transmog source-validity recorder
+
+Runtime `48f2eb121` adds manual `transmog-source-validity <label>`, excluded from `all`. It calls original `GetNumTransmogSources()` once and accepts only an accessible finite nonnegative integer first return; that value yields at most eight original one-based vendor source-filter indices for independent `IsValidTransmogSource` calls. The indices are not appearance IDs or visual `baseSourceID`/`appliedSourceID` values. Invalid, restricted, or error counts make no validity calls; the cap is nine API calls per snapshot. Thirteen cumulative fixtures, including two later count-guard revocation cases, and ten custom-set regressions prove local recorder mechanics only. Metadata `0254088b7` maps the retained observation without native credit. No mutation, filters, fallback IDs, native validity, ordering, completeness, or transition conclusion follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-17] investigation | Extend bounded transmog slot visual recorder
+
+`6464827ad` extends manual `transmog-slot-visual-info <label>`, excluded from `all`. Four guarded original vendor factory cases (`HEADSLOT`/`SHOULDERSLOT` × secondary false/true) call original `GetData` and `C_Transmog.GetSlotVisualInfo`; original accessible base/applied source IDs then each independently query `C_TransmogCollection.GetAppearanceSourceInfo`, exposing ten guarded fields. Recorder-level calls cap at twenty per snapshot, excluding vendor-internal factory calls. Eighteen cumulative fixtures, including seven new cases, plus eleven item-info, nine transmog-eligibility, and eight item-binding regressions establish local mechanics only. No native visual, collection, apply, selection, equipment/account/3D mutation, or restricted-context conclusion follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-17] investigation | Prepare bounded error-code publication recorder
+
+`d313b16d9` adds manual `error-code-publication <label>`, excluded from `all`. It reads twelve fixed retained `LE_GAME_ERR_*` globals through guarded lookup only; no numeric fallback, error trigger, or shared-target change. Twelve fixtures prove recorder mechanics only; native mappings, emission, timing, load phase, and plan behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-17] investigation | Prepare bounded resource color-curve input recorder
+
+`bd13c305e` adds manual `resource-color-input <label>`, excluded from `all`. It creates a fresh owned color curve, two original RGBA colors, and two controlled literal points before independently calling opaque health- and power-percent APIs. Failed setup prevents both resource calls; curve, color, and result objects are not retained. Seven calls per snapshot and thirteen fixtures prove recorder mechanics only. No native scale, color, security, or behavior claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-17] investigation | Prepare bounded timeline source-count recorder
+
+`664fb4808` adds manual `timeline-source-counts <label>`. It calls `GetEventCountBySource` twice for each fixed published `Encounter`, `Script`, and `EditMode` source value, preserving guarded raw tuples under six calls per snapshot. Eleven fixtures establish recorder mechanics only; native source counts, event population, ordering, transitions, and security remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-17] investigation | Prepare bounded timeline lifecycle-read recorder
+
+`dae53acf2` extends manual `timeline-lifecycle-read <label>` from `08a8ae25d`. `GetEventTimer` return values alone receive the shared current-only ten-method duration inspector; no timer retention or event mutation occurs. The 35 API-call cap remains, with 80 declared-return method calls and a defensive 1,280-method-call bound per snapshot. Seventeen cumulative fixtures, including six new timer cases, prove recorder mechanics only; no native lifecycle, timing, ordering, completeness, restricted-context, or native claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded current timeline-events recorder
+
+`68da96764` adds manual `timeline-current-events <label>`. It observes one `GetEventList` result, bounds its original accessible finite ID list to eight entries, then independently captures `GetEventInfo` through ten fixed guarded fields and opaque `GetEventColor` with override omitted. Seventeen calls per snapshot, twelve local fixtures, and eleven plus sixteen targeted regressions establish recorder mechanics only. No synthetic events, icon mutation, security probing, native execution, or native behavior claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded cloak/helm transition recorder
+
+Runtime `b33e99159` adds manual `cloak-helm-transition`. The mode remains outside `all` because it can change appearance when later manually run. It records guarded baseline, transition, and restoration tuples per lane; unconfirmed cleanup blocks later transition captures in the addon session. Fourteen fixtures and eleven player-state regressions establish recorder mechanics only. No native execution, restoration semantics, security, or appearance claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded threat-lead recorder
+
+Runtime `0dd177d2a` adds manual `threat-lead-read`: four guarded fixed unit-token pairs feed `UnitThreatLeadSituation`, whose second parameter remains a token rather than a derived GUID. Conditional-secret outputs remain opaque. Nine fixtures plus eleven GUID-identity and ten full-name regressions prove recorder mechanics only; no combat, threat, security, scale, default, classification, or native conclusion follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded GUID-identity recorder
+
+Documented runtime `7fc5ad8b9`: manual `guid-identity` forwards only original accessible GUID strings from `player`, `target`, and `party1` to `UnitClassFromGUID` and `UnitNameFromGUID`. Eleven fixtures plus ten full-name regressions prove bounded recorder mechanics only. Conditional-secret results remain opaque; native identity, class, realm, and restricted-context behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] audit | Correct retained security probe deferral
+
+Correction `812a981fe` reverses the earlier whole-plan deferral for mixed `remaining-security-forbidden-store-observation`: ordinary `DropdownPopulation` remains in-scope; only forbidden/secure enforcement is deferred. Eighteen newly deferred whole security plans plus two existing deferrals yield twenty total. `private-aura-border-scale` remains unreviewed. No implementation, completion, or native credit follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded item-interaction flags recorder
+
+Runtime `9a296becb` adds manual `item-interaction-flags`: two zero-argument `C_ItemInteraction.GetItemInteractionInfo` calls, with only guarded first-result `flags` observed. Eleven fixtures prove recorder mechanics only; no interaction operation, populated native state, flags semantics, historical compatibility, or native credit follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded expansion-audio field recorder
+
+Documented runtime `4f2138bba`: manual `expansion-audio-fields` reads published `LE_EXPANSION_CLASSIC` and `LE_EXPANSION_LEVEL_CURRENT` twice each through `GetExpansionDisplayInfo`, with optional release omitted. It inspects only guarded first-result `glueAmbianceSoundKit`, `glueCreditsSoundKit`, and `glueMusicSoundKit` fields. Eleven fixtures plus seventeen public-query regressions establish recorder mechanics only; playback, native assets, defaults, release variants, and load phases remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded Perks criteria recorder
+
+`1e1d9de4f` adds manual `perks-criteria`: two guarded roots, first eight activities, four criteria and four requirements through current declared fields. Ten fixtures plus sixteen neighborhood-structures regressions prove recorder mechanics only. Removed type identities, native behavior, historical compatibility, ordering, and completeness remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare equipped transmog eligibility recorder
+
+`7d4d063eb` adds manual `equipped-transmog-eligibility`: each original owned `ItemLocation:CreateFromEquipmentSlot` result for slots 1–19 feeds one `C_Item.CanItemTransmogAppearance` call. Both outputs remain raw and guarded; the recorder neither equips nor transmogrifies. Nine fixtures, eight item-binding regressions, and eleven equipped-item-info regressions prove local mechanics only. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare equipped item-info recorder
+
+`ad054cd3d` adds manual `equipped-item-info`, excluded from `all`: each original accessible equipment link from slots 1–19 feeds one `C_Item.GetItemInfo` call. Its declared 18-return tuple is a local exception to the shared 16-position bound; values 16–18, including nils, remain captured without deeper traversal. Eleven fixtures plus eight item-binding regressions establish recorder mechanics only. No ItemLocation, transmog, mutation, native, or historical claim follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare selected-slot action loss-of-control duration recorder
+
+Documented runtime `7865a172c`: manual `action-loss-control-duration <slot> <label>` records selected-slot control and `C_ActionBar.GetActionLossOfControlCooldownDuration(slot)` independently. It inspects returned duration objects only through ten current-only read methods, retains none, and caps work at two API calls and 160 method calls per snapshot. Ten fixtures plus ten action-state regressions establish recorder mechanics only; historical non-duration loss-of-control and cooldown-info observations, native behavior, and credit remain open. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] audit | Record concrete preparation blockers
+
+`1e0b2a9bc` records four source-checked constraints: global `SetCursorPosition` needs limited-gamepad context; no `string.concat` signature or caller was located in reviewed retail/PTR sources, and it is not equated with `strconcat`; `GetNextSignal` returns scalar key/time, not `TimedSignalMapEntry`; and PTR `CreateRegionParams` has no located table-form constructor consumer. No status, runtime, or native credit changed. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare selected-slot action-state recorder
+
+Documented runtime `87750c75b`: manual `action-state <slot> <label>` records guarded `GetActionInfo(slot)` control, twelve independent one-slot `C_ActionBar` queries, and two no-argument bar-index queries. It omits the range target, makes fifteen calls per snapshot, and remains excluded from `all`. Ten fixtures prove recorder mechanics only; no action execution, mutation, classification, or native conclusion follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare duplicate callback registrations
+
+`e04fc0148` adds manual `callbacks-duplicate-start`: same owned closure twice per global/unit lane, four registrations maximum. Existing stop performs at most four pending exact-identity removals; false/error slots remain for an explicit later retry. Sixteen duplicate fixtures plus four normal-mode regressions prove recorder mechanics only. No native deduplication, delivery, ordering, GC or security conclusion follows. See [[api-contract-probes]].
+
+## [2026-09-16] audit | Reconcile shared recorder target routing
+
+`eda32cf0a` records 287 exact executable target mappings across 112 shared-recorder plans: 199 publication/CVar entries route to `capturePublication`; 88 event entries route to `controlEvents`/`recordEvent`. Publication load phases, external event producers, payload/transition behavior, plan-specific experiments, and native evidence remain open. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded combat-audio settings recorder
+
+Documented runtime `fedb65fb0`: manual `combat-audio-settings-read` records `C_CombatAudioAlert.IsEnabled()` twice, nine guarded published spec settings twice, and eleven guarded published throttles twice, excluded from `all`. Forty-two calls per snapshot and ten fixtures establish recorder mechanics only; setters, playback, enforcement, CVar interpretation, and native behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded encounter-warning-state recorder
+
+Documented runtime `6fbefcb73`: manual `encounter-warning-state` calls `C_EncounterWarnings.IsFeatureAvailable()` and `IsFeatureEnabled()` twice each with zero arguments, excluded from `all`. Twelve fixtures establish recorder mechanics only; warning toggles, sounds, creation, native availability/enabled state, defaults, stability, security, and conformance remain unverified. Focused regression proof retains twelve ping-enabled and seventeen public-query fixtures. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded ping-enabled recorder
+
+Documented runtime `f9f24fa84`: manual `ping-enabled` calls `C_Ping.IsPingSystemEnabled()` twice with zero arguments, excluded from `all`. Twelve fixtures establish recorder mechanics only; secure ping send/toggle APIs, CVars, native enabled state, defaults, stability, security, and conformance remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare explicit-power recorder
+
+Documented runtime `2d0ee4876`: manual `explicit-power` reads three guarded published power types for `player` and `target`, with independent false/true power, maximum, and percent calls; percent calls explicitly pass a nil curve. Eight fixtures establish recorder mechanics only. Existing `resources` behavior remains unchanged; native scale, curve, restricted-context behavior, and conformance remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare residual hyperlink matrix recorder
+
+Documented runtime `a64c3a9a5`: manual `hyperlinks-residual` adds thirty-five six-argument optional-position cases and eight malformed/binary one-argument cases, excluded from `all`. Seven fixtures establish recorder mechanics only; native coercion, fifth-flag, security, and output semantics remain unverified. Runtime reports a Lua 60-upvalue wrapper adjustment. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded player-state recorder
+
+Documented runtime `14f75d44e`: manual `player-state-queries` makes two zero-argument reads each for `GetCollapsingStarCost`, `ShowingCloak`, and `ShowingHelm`, excluded from `all`. Eleven fixtures establish recorder mechanics only; no cloak/helm mutation, purchase, native cost/state/default claim, or native credit follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded outfit-tooltip recorder
+
+Documented runtime `8b2555739`: manual `outfit-tooltip` uses the first four original accessible finite outfit IDs from `GetOutfitsInfo()` for independent `C_TooltipInfo.GetOutfit` calls. TooltipData remains opaque; no UI, mutation, request, native content, or native credit follows. Nine fixtures establish recorder mechanics only. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded tradeskill item-quality recorder
+
+Documented runtime `ac475000f`: manual `tradeskill-item-quality` reads original accessible player-equipment links from slots 1–19 and independently queries crafted and reagent quality. It bounds first returned objects to thirteen guarded declared fields and fifty-seven calls per snapshot. Ten fixtures establish recorder mechanics only; recipe/crafting/order operations, mutations, atlas interpretation, native quality populations, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded nameplate-metrics recorder
+
+Documented runtime `506d529b9`: manual `nameplate-metrics` reads `GetNamePlateSize` twice and `GetNamePlateHitTestInsets` twice for the fixed published `Friendly` and `Enemy` nameplate types. Six calls per snapshot and eleven fixtures establish recorder mechanics only; setters, camera/3D behavior, geometry/default claims, and native credit remain excluded. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded death-recap recorder
+
+Documented runtime `95a18c015`: manual `death-recap-current` makes two zero-argument reads each for `GetRecapEvents`, `GetRecapLink`, and `HasRecapEvents`, excluded from `all`. Nilable recap IDs remain omitted; no original-ID producer is required for this vendor current-call shape. Eleven fixtures establish recorder mechanics only; no death trigger, request, mutation, event traversal, native recap data, or native credit follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded quest-favor recorder
+
+Documented runtime `a02865ad4`: manual `quest-favor` reads the first four original neighborhood-task `rewardQuestID` values, calling `GetQuestLogRewardFavor` with clamp omitted and `true` independently. Nine calls per snapshot and ten fixtures establish recorder mechanics only; requests, refreshes, quest/reward mutation, favor semantics, and native credit remain excluded. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded empowered-stage recorder
+
+Documented runtime `c6818f925` and extension `f3b0efea9`: manual `empowered-stages` calls durations plus percentage queries with false and true for seven fixed unit tokens, capped at twenty-one producer calls per snapshot and excluded from `all`. First-return duration entries 1–8 receive current-only ten-method observations with receiver rechecks; percentage entries remain scalar-only. No objects are retained and cast state remains isolated. Fifteen cumulative fixtures establish recorder mechanics only; casts, percentage semantics, and native behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded unit role-predicate recorder
+
+Documented runtime `28d6194e0`: manual `unit-role-predicates` makes independent `UnitIsLieutenant`, `UnitIsMinion`, and `UnitIsNPCAsPlayer` calls for eight fixed tokens, capped at twenty-four calls per snapshot and excluded from `all`. Ten fixtures establish recorder mechanics only; threat/secret identity queries, mutations, and native classifications remain excluded or unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded stable bonus-slot recorder
+
+Documented runtime `8eb05bf4f`: manual `stable-bonus-slot` makes two independent no-argument `C_StableInfo.IsBonusPetSlotAvailable` calls, excluded from `all`. Eleven fixtures prove recorder mechanics only; pet queries, mutations, and native behavior remain excluded or unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded cooldown-viewer recorder
+
+Documented runtime `491d3a818`: manual `cooldown-viewer-read` reads nine fixed published categories with `false`, then bounds each category set to eight original IDs and independent cooldown-info/alert reads. Only `cooldownID`, `category`, and eight alert scalars are captured. The cap is 153 calls per snapshot; refreshes, mutations, flag interpretation, native values, and conformance credit remain excluded. Eight fixtures establish recorder mechanics only. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Correct prey-widget guard ordering
+
+Runtime `57cab9ffc` fixes the `prey-quest-widgets` visualization chain: it rechecks discriminator access immediately before comparing it and widget-ID access immediately before dispatch. Sixteen cumulative fixtures include two new guard-order regressions; the second was not reached by the initial RED run. Final independent verification remains pending. Native behavior and conformance credit remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded prey-quest widget recorder
+
+Documented runtime `7937582a2`: manual `prey-quest-widgets` obtains three original widget-set IDs, then inspects at most four widgets per set. Only guarded published `PreyHuntProgress` widgets query visualization data through sixteen fixed fields. The cap is nineteen calls per snapshot. Fourteen cumulative fixtures establish recorder mechanics only; wrong-type calls, quest mutations, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded major-faction renown-reward recorder
+
+Documented runtime `83a9fb0bb`: manual `major-faction-renown-rewards` obtains original faction IDs with `GetMajorFactionIDs(nil)`, bounds each to four produced levels and four produced rewards, and captures fifteen declared reward fields including `rewardType`. The cap is forty-one calls per snapshot. Ten fixtures establish mechanics only; unlock/claim, mutations, ordering/completeness, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Extend major-faction journey recorder
+
+Documented runtime `f9da77301`: original faction IDs now also independently query `GetMajorFactionData`, bounded to guarded `description`, `playerCompanionID`, and first-four highlight title/description/level fields. Predicates remain; the cap is twenty-five calls per snapshot. Fifteen cumulative fixtures, including five new cases, establish mechanics only; reward structures, mutations, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded major-faction journey recorder
+
+Documented runtime `f2e7c222c`: manual `major-faction-journey` calls `GetMajorFactionIDs(nil)` once, then runs two independent predicates for original accessible finite faction IDs from entries 1–8. It preserves raw arity, nils, errors, duplicates, and fractional IDs under seventeen calls per snapshot. Ten fixtures establish recorder mechanics only; structures, mutations, ordering/completeness, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded training-grounds structures recorder
+
+Documented runtime `5459e10c8`: manual `training-grounds-structures` independently records no-argument `GetTrainingGrounds()` and `GetRandomTrainingGroundRewards()` once each. Only first training entries 1–8 expose fourteen declared fields; reward tuple positions remain raw and nested tables opaque. Eleven fixtures establish recorder mechanics only; queue/join, requests, mutations, ordering, completeness, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded training-grounds state recorder
+
+Documented runtime `1aeb67703`: manual `training-grounds-state` makes two zero-argument observations each of `AreTrainingGroundsEnabled`, `CanPlayerUseTrainingGroundsUI`, and `HasRandomTrainingGroundWinToday`, capped at six calls per snapshot. Ten local fixtures establish mechanics only; queue/join, requests, mutations, structures, native values, and conformance credit remain excluded. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Extend housing-catalog currency recorder
+
+Documented `637a9fecc`: two guarded published currency-key strings independently feed `GetVirtualCurrencyBalance` once each without a literal fallback or truncated input forwarding. The housing-catalog cap is twenty-two calls per snapshot. Twenty-four cumulative fixtures, including six new cases, establish mechanics only; no refresh, purchase, mutation, native currency state, or conformance credit follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Extend bounded housing-catalog recorder
+
+Documented `8a34f0120`: each first-eight original category ID now independently feeds `GetProductIDsForCategory`, whose first-return scalar positions are capped at eight with no recursive product followups. The historical housing-catalog cap is twenty calls per snapshot. Eighteen cumulative fixtures, including seven new cases, establish mechanics only; no request, purchase, refund, mutation, native value, ordering, or conformance credit follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded housing-catalog recorder
+
+Documented `6ff4a22f1`: manual `housing-catalog` records featured state twice, new products once, first-eight original product IDs and category fields, plus one omitted-filter refundable-decor result with its raw second minimum-time return. `standaloneDecorProductID` remains a declared-gap observation. Twelve maximum calls and eleven local fixtures establish mechanics only; no request, purchase, refund, mutation, native value, or conformance credit follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded neighborhood-structures recorder
+
+Runtime `2288d233b` extends manual `neighborhood-structures`, excluded from `all`. It preserves three initiative producers, activity entries 1–8, tracked original IDs 1–4, and task-info/task-link reads; it adds four fixed task entries, four milestones, and four reward entries per milestone. Requirements and criteria remain opaque. Sixteen cumulative fixtures, including five new cases, establish recorder mechanics only; no requests, mutations, or native credit follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded neighborhood-state recorder
+
+Runtime `bc0768208` adds manual `neighborhood-state`, excluded from `all`: two zero-argument observations each for seven `C_NeighborhoodInitiative` state queries, bounded to fourteen calls per snapshot. It neither requests nor changes state, nor queries structured initiative/activity/task data. Ten local fixtures establish recorder mechanics only; native neighborhood state, transitions, group identity, defaults, and restricted-context behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded house-exterior options recorder
+
+Runtime `185a2b6cc` adds bounded zero-argument house-exterior option capture. It records current declared size/type option fields only; `reasonString` does not establish historical `lockReasonString`. Ten fixtures, ten Perks regressions, and sixteen neighborhood regressions prove recorder mechanics only.
+
+## [2026-09-16] investigation | Prepare bounded sets-catalog recorder
+
+Documented runtime `7f2769fab`, sixth-field addition `006264322`, and inventory `91076a4af`: manual `sets-catalog` records one available-set list and two independent default-filter reads, bounded to entries 1–8 and six guarded fields. `grantAsPrecedingVariant` is declared in the pinned source; its prior claimed absence was corrected. Fourteen cumulative fixtures establish recorder mechanics only; no setters, native values, ordering, defaults, or native credit follows. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded custom-set name recorder
+
+Documented `10df9a28a`: manual `custom-set-names` reads maximum custom sets twice, bounds the first list to four original IDs, then queries each original ID and its original untruncated accessible name once. Eleven calls per snapshot and ten fixtures establish recorder mechanics only. Custom-set mutation, item-list/hyperlink table forwarding, name-validity semantics, and native behavior remain unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-16] investigation | Prepare bounded outfit-state recorder
+
+Runtime `c3a88dd56` adds manual `/apicontract outfit-state <label>`, excluded from `all`. It independently observes seven no-argument outfit-state queries twice each, preserving pending-cost arity without mutations, purchases, selection, price interpretation, or native credit. Ten local fixtures establish recorder mechanics only.
+
+## [2026-09-16] investigation | Prepare bounded outfit-slot recorder
+
+Runtime `c3d32142b` adds manual `/apicontract outfit-slots <label>`, excluded from `all`. It independently observes two no-argument slot producers, capped location/group structures, and two read-only queries using only up to sixteen guarded original location slots. Eleven local fixtures establish recorder mechanics only; no mutation, 3D, mapping, ordering, completeness, or native result was observed.
+
+## [2026-09-16] investigation | Prepare bounded outfit-catalog recorder
+
+Runtime `b02947092` adds manual `/apicontract outfit-catalog <label>`, excluded from `all`. It bounds `GetOutfitsInfo()` inspection to first-table entries 1–8, seven guarded fields, and category sublists 1–8; accessible original IDs independently receive one non-recursive `GetOutfitInfo(id)` query. Eleven fixtures prove recorder mechanics only. No native execution, mutation, outfit selection, identity/order/completeness claim, or native credit occurred.
+
+## [2026-09-16] investigation | Prepare spell-diminish category recorder
+
+Runtime `55836b66d` adds manual `/apicontract spell-diminish-categories <label>`, excluded from `all`. Three fixed published rulesets and eight fixed published categories produce eleven independent observations; accessible results expose only bounded first-list or first-info `category`, `name`, and `icon` fields. Eleven local fixtures establish recorder mechanics only. Secret tracking, events, mutations, native semantics, and native results remain unverified. See [[api-contract-probes]].
+
+## [2026-09-16] investigation | Extend bounded public-query recorder
+
+Runtime `c5d272d63` retains seven public-query pairs and adds two reads each of `C_TransmogOutfitInfo.GetActiveOutfitID`, `C_HousingCustomizeMode.IsHouseExteriorDoorHovered`, and `C_SpellDiminish.IsSystemSupported`. Ten APIs make twenty calls per snapshot; seventeen cumulative fixtures, including five new cases, establish recorder mechanics only. No native outfit, hover, diminish, clock, encounter, housing, default, or state-transition behavior was observed.
+
+## [2026-09-16] investigation | Prepare weekly progress recorder
+
+Runtime `1043a349a` adds manual `/apicontract weekly-progress <label>`, excluded from `all`. It queries five fixed published weekly-reward threshold names with `false` and `true`, then reads only entries 1–8 of an accessible first result table and only guarded `activityTierID`, `difficulty`, and `numPoints` fields. Eleven local fixtures establish recorder mechanics only; sorting, combine behavior, completeness, and native results remain unverified. See [[api-contract-probes]].
+
+## [2026-09-16] investigation | Prepare housing preview-mode recorder
+
+Runtime `742df677d` adds manual `/apicontract housing-preview-modes <label>`, excluded from `all`. It reads only the fixed published `BasicDecor`, `ExpertDecor`, `Customize`, `Cleanup`, `Layout`, and `ExteriorCustomization` HouseEditorMode names, querying each twice without fallback or mutation. Eight local fixtures establish recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
+## [2026-09-16] investigation | Prepare selected-slot spellbook-duration recorder
+
+Runtime `fe68b79b6` adds manual `/apicontract spellbook-duration <slot> <label>`, excluded from `all`. It uses an accessible selected-action spell ID with guarded `FindSpellBookSlotForSpell(id, false, true, true, true)`, then forwards its original finite slot/bank pair to independent charge, cooldown-with-`false`, and loss-of-control duration queries. Current duration objects receive ten read-only methods without retention. Ten fixtures and eight spellbook-metadata regressions establish recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
+## [2026-09-16] investigation | Prepare selected-slot spellbook metadata recorder
+
+Runtime `63bb28063` adds manual `/apicontract spellbook-metadata <slot> <label>`, excluded from `all`. It forwards only an accessible original selected-slot spell ID to independent guarded base-spell, flyout-slot, and override queries. Eight local fixtures establish recorder mechanics only. At that revision, it did not produce spellbook slots or query item durations. No native behavior is established. See [[api-contract-probes]].
+
+## [2026-09-16] investigation | Prepare bounded unit target-display recorder
+
+Runtime `fc1e54637` adds manual `/apicontract unit-target-display <label>`, excluded from `all`. It records two `UnitShouldDisplaySpellTargetName` observations for each of seven fixed tokens. Secret target name/class APIs, casts, mutations, and default claims are excluded. Eight local fixtures establish recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
+## [2026-09-16] investigation | Prepare current unit-aura recorder
+
+Runtime `a7b51126e` adds manual `/apicontract unit-auras-current <label>`, excluded from `all`. It records three independent current `GetUnitAuras` calls: omitted required filter as an invalid negative, then player HELPFUL/HARMFUL with max 8 and omitted sort arguments. Only entries 1–8 of an accessible first returned table receive guarded consumer-grounded `auraInstanceID`, `spellId`, and `applications` reads. Nine fixtures establish local recorder mechanics only; no native ordering, completeness, defaults, security, or historical-contract conclusion follows. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Extend current-only aura-time duration observations
+
+Runtime `ee4349ec6` adds the ten-method current-only whitelist to accessible `GetAuraDuration` table/userdata returns at positions 1–16. Receiver access is rechecked after method lookup and function guards before each invocation; objects are not retained. Eleven cumulative aura-time fixtures include three new cases, with eight display-count, nine spell-duration, and two main-harness targeted regressions. Recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare current-only aura-time recorder
+
+Historical runtime `87e230e6b` added the first-page player HELPFUL producer and four independent two-argument time/duration calls with optional spell ID omitted. Duration objects were then recorded without methods or retention. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare first-page aura display-count recorder
+
+Runtime `ca237baf9` adds manual `/apicontract aura-display-count <label>`, excluded from `all`. It records one player HELPFUL first page of eight slots without continuation traversal, then five guarded display-count argument variants for each accessible original aura instance ID. Eight local fixtures establish bounded recorder mechanics only; native behavior remains unverified. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Extend selected-slot spell metadata with aura predicate
+
+Runtime `02ab512c6` adds independent `auraQueries.AuraIsBigDefensive` using the original accessible `GetActionInfo(slot)` spell ID. Existing seven metadata queries and three visibility enums remain unchanged. Nineteen cumulative local fixtures include five new aura-defensive cases; native behavior remains unverified. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Extend selected-slot spell metadata with visibility
+
+Runtime `057183033` extends manual `/apicontract spell-metadata <slot> <label>`, still excluded from `all`. An accessible selected-slot spell ID adds guarded `GetVisibilityInfo` calls for fixed published `SpellAuraVisibilityType` names `RaidInCombat`, `RaidOutOfCombat`, and `EnemyTarget`; unavailable enum values make no call. Fourteen cumulative local fixtures include six new visibility cases. Native classifications, producer fixtures, rank/override transitions and security remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare selected-slot spell-duration recorder
+
+Runtime `b9c832a19` adds manual `/apicontract spell-duration <slot> <label>`, excluded from `all`. An accessible `GetActionInfo(slot)` spell ID enables guarded charge and loss-of-control duration producers, followed by ten current-object read-only methods. No objects are retained between snapshots and cast-duration retention state remains untouched. Nine separate local fixtures prove recorder mechanics only; native charge/recharge and loss-of-control transitions, spellbook behavior, timing and restricted-context semantics remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare selected-slot spell-metadata recorder
+
+Runtime `9647bd5d5` adds manual `/apicontract spell-metadata <slot> <label>`, excluded from `all`. It uses only an accessible `GetActionInfo(slot)` spell result and original finite spell ID to issue seven independent guarded metadata/predicate queries. Eight local fixtures prove recorder mechanics only. No nil producer result is passed downstream; `GetVisibilityInfo`, native spell fixtures, rank/override transitions, classifications and security remain pending. See [[api-contract-probes]].
+
+## [2026-09-16] investigation | Prepare bounded full-name recorder
+
+Runtime `b490f4777` adds manual `/apicontract full-names <label>`, excluded from `all`. It records one guarded `UnitFullName` call for each of eight fixed tokens, retaining raw two-return, nil, zero-arity, error, and conditionally restricted states without identity or realm conclusions. Ten fixtures prove recorder mechanics only; native behavior remains unverified. Updated [[api-contract-probes]] and the index.
+
+## [2026-09-15] investigation | Prepare bounded public-query recorder
+
+Runtime `03ac1a023` adds manual `/apicontract public-queries <label>`, excluded from `all`. It records two no-argument `C_GameRules.IsPersonalResourceDisplayEnabled()` calls and two no-argument `C_DelvesUI.GetLockedTextForCompanion()` calls, retaining only the omitted-companion case. Seven separate fixtures prove recorder mechanics only; native ruleset transitions, companion lock policy, trait-tree fixtures, and restricted-context behavior remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare equipped-item account-binding recorder
+
+`9fd1d250d` adds manual `/apicontract item-binding <label>`, excluded from `all`. It queries slots 1–19 through `GetInventoryItemLink("player", slot)` and passes only accessible non-secret produced links once to `C_Item.IsItemBindToAccount`. Unavailable or restricted producer inputs do not become false. Eight separate fixtures prove bounded recorder mechanics, not native item classifications, security behavior or account effects. Synthetic inputs, options and mutations remain excluded. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare bounded StatusBar fill-style recorder
+
+Runtime `6637f2d2e` adds manual `/apicontract statusbar-fill <label>`, excluded from `all`. It creates one unnamed StatusBar under `UIParent`, attempts `Hide`, captures fresh `GetFillStyle()` only after Hide succeeds, then uses only accessible finite values from the four published `Enum.StatusBarFillStyle` names. Each setter is followed by two independent getter observations; no numeric fallback or equality conclusion is made. Seven separate fixtures prove recorder mechanics only. On Hide failure, visibility is unconfirmed and no cleanup/disposal claim follows. Native defaults, invalid inputs/coercion, security, rendering and validation remain pending. See [[api-contract-probes]].
+
+## [2026-09-16] investigation | Reconcile retained literal recorder coverage
+
+Metadata `19b0c52f1` maps literal-003 to existing `/apicontract raid-markers` `IsRaidMarkerSystemEnabled` calls. No runtime or native credit changed; publication/load-phase and marker-system transition obligations remain open. Reconciliation also confirms `names` calls `UnitName` and `UnitNameUnmodified`, not `UnitFullName`; literal-followup-3 remains recorder-design work. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare bounded raid-marker recorder
+
+`666a930d8` adds manual `/apicontract raid-markers <label>`, excluded from `all`: `CanBeRaidTarget` twice for nine fixed tokens, `IsRaidMarkerActive` twice for indices 1–8, and `IsRaidMarkerSystemEnabled` twice, for 36 independent read-only calls. Six separate fixtures prove bounded routing and observation only. `GetRaidTargetIndex`, all mutations, permission/security conclusions, native output and populated world-marker fixtures remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare bounded abbreviation recorder
+
+`7c6a00e6d` adds manual `/apicontract abbreviations <label>`, excluded from `all`. It calls `AbbreviateLargeNumbers` and `AbbreviateNumbers` for the shared 25 finite inputs with options omitted, and records `GetLocale()` once. Six separate fixtures prove bounded recorder mechanics; the main harness remains 44. Native output, options/configuration, table producers, locale mutation and security remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare bounded heal-calculator recorder
+
+`c47811794` adds manual `/apicontract heal-calculator <label>`, excluded from `all`. Two fresh no-argument calculators receive five read-only getters twice each. Seven separate local fixtures establish only bounded recorder behavior. Native fresh/default values, populated state, reset/default semantics and security remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Prepare pure mapvalues recorder
+
+`decd7bc49` adds manual `/apicontract mapvalues <label>`, excluded from `all`. It records fixed vararg inputs, callback/outer tuple arity and nil positions, nil/multiple/zero returns, opaque callback errors, and bounded 16-position/32-invocation observations without classifying native packing or order. Its separate suite has eight fixtures; main and color harnesses remain 44 and four. Native execution, callback-failure propagation and security remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Record independent UnitSex controls
+
+`9d88dc424` removes existence-gating from `UnitSex` and `UnitSexBase` capture; `1bedd3ce9` corrects the restricted-existence fixture. Each of nine fixed tokens has independent `exists`, `legacy`, and `base` observations. The main harness has 44 cumulative fixtures. Native before/during/after-disguise capture with independently established stable unit identity remains pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Document producer duration recorder
+
+`88e9d1253` prepares manual `/apicontract cast-durations <label>`, excluded from `all`. It queries cast, channel and empowered-channel duration producers with hold variants, calls ten guarded read methods only, and caps prior-object re-observation at 28. The main harness has 43 cumulative fixtures; a separate color harness has four. Native active/completed/interrupted/absent producer and clock-boundary captures remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Document producer duration recorder
+
+`88e9d1253` prepares manual `/apicontract cast-durations <label>`, excluded from `all`. Three duration producers, empowered hold variants, ten guarded read-only methods, and bounded prior-reference re-observation are recorded without a native semantics claim. The 43 main fixtures remain separate from the four color fixtures. Native producer states and clock boundaries remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Document guarded color-curve state recorder
+
+`ffd3b08ca` prepares manual `/apicontract color-curves <label>`, excluded from `all`. Four new fixture cases extend the existing 41-fixture harness: they exercise guarded raw RGBA tables, opaque userdata, state/evaluation/reset/copy observations, and bounded failure paths. This does not establish native color representation, identity, coercion, security, removal/replacement or interpolation semantics. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Document manual scalar curve point mutation recorder
+
+Runtime `9b7fdb43e` adds manual `/apicontract curve-edit <label>`, excluded from `all`. Fresh `RemovePoint` indices and independent empty/unsorted-duplicate `SetPoints` cases use actual `CreateVector2D` objects; each records bounded state before/after without inferring index, ordering, duplicate, copy or coercion semantics. The 41 local fixtures are cumulative recorder proof only. Native execution, color curves and secret behavior remain pending. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Document manual scalar curve state recorder
+
+`411edf39e` prepares `/apicontract curve-state <label>`, manual-only and excluded from `all`. It records empty/populated unsorted duplicate scalar curves, raw type/count/point/secret state, evaluation, reset and copy-isolation observations without interpreting them. Thirty-seven local fixtures are cumulative recorder proof, not native evidence; color curves, set/remove-point and secret behavior remain unexecuted. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Document residual plain callback recorder
+
+`98ba5a44a` prepares manual `callbacks-start`/`callbacks-stop` recording for only the probe's plain global and player-filtered `UNIT_HEALTH` callbacks. It preserves retained callback identities, registration/cleanup outcomes, and bounded passive scalar payloads. Thirty-three local fixtures do not establish native producer timing, wrapper, duplicate/order/alias, mutation or security behavior. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Document residual scalar resource scale recorder
+
+`151480a4e` prepares manual `/apicontract resources <label>` capture, excluded from `all`. It observes raw health/max, power/max/type, omitted/nil curves, explicit `unmodified` values and a six-point scalar curve without classifying native scale or inventing power IDs. Twenty-nine local fixtures prove recorder mechanics only. Native matching-client partial-resource, prediction, secondary-power, color-curve, event-order and security captures remain pending. This is best-effort residual preparation, not an audit credit or snapshot-plan completion. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Document selected action-slot recorder
+
+`be0f5f54c` adds manual `/apicontract actions <slot> <label>` for one independently selected slot; `all` excludes actions. It retains raw `currentCharges`, `maxCharges`, `cooldownStartTime`, `cooldownDuration`, and `chargeModRate`, while charge duration remains kind/status/arity-only. Twenty-three local fixtures prove recorder behavior only. Native populated-slot, recharge, consumable transition, and duration-semantics evidence remains pending; no native claim or audit credit changed. See [[api-contract-probes]].
+
+## [2026-09-15] investigation | Document bounded cast/channel identity recorder
+
+`aac8c8be1` adds manual `/apicontract casts <label>` and `all` inclusion. Scalar-only recording preserves exact arity and nil positions through 16 returns without inspecting returned objects. Twenty local fixtures prove recorder mechanics, not native contracts. Matching-client ordinary cast, cancellation, replacement/consecutive cast, non-player channel and empowered/non-empowered channel sequences remain pending; no spells or native actions were invented. See [[api-contract-probes]].
+
+## [2026-09-15] audit | Record residual StripHyperlinks native observations
+
+`521b328de` prepares manual `/apicontract hyperlinks <label>` capture: 16 inputs × nine flag variants, bounded raw results, omission distinguished from five false flags, redaction and opaque errors. Twenty-six local fixtures prove recorder mechanics only. This best-effort residual work is outside the evidence-required snapshot; no credit or active-plan completion follows. Native malformed/coercion/arbitrary-byte/security behavior remains unexecuted. See [[api-contract-probes]] and [contract](../specs/strip-hyperlinks.md).
+
+## [2026-09-15] investigation | Document bounded UnitName realm recorder
+
+Runtime `3f7934e27` adds `/apicontract names <label>` and includes name/realm capture in `all`. Thirteen local fixtures verify raw arity/positional nil preservation, modified versus unmodified results, nil/empty/explicit realms, fixed unknown inputs, redaction and opaque errors. They are recorder proof only: actual matching-client same-realm and cross-realm party sessions remain pending, and no audit credit or all-probe completion is claimed. See [[api-contract-probes]].
+
+## [2026-09-14] audit | Expand preparation beyond the three initial probes
+
+Full snapshot inventory: 1,083 rows, 275 active / 282 retained plans. Shared recorders target 199 publication/CVar observations and 88 event registrations; these are not complete behavioral plans. Passive capture correction `d959372a3` passes 10/10 fixtures plus 21/21 independent checks. Preparation remains open: see [[api-contract-probes]] and [inventory](../baselines/native-probe-preparation.json).
+
+## [2026-09-15] audit | Document finite numeric recorder boundaries
+
+Runtime `41bcd89f0` adds `/apicontract numbers <label>` and `all` inclusion: raw `GetLocale`, `C_StringUtil.FloorToNearestString`, and `RoundToNearestString` observations for 25 finite inputs. Sixteen local fixtures prove raw recording only. Native output corpora, actual locale/build captures, nonfinite/coercion/security behavior, and values outside the corpus remain unknown. The name recorder's prior 13 fixtures plus 12 supplemental checks remain valid only in that prior scope. Full audit remains open; no installation, native results, or API credits. See [[api-contract-probes]].
+
+## [2026-09-14] audit | Prepare remaining native contract probes
+
+Scalar curve points and UnitSexBase now share a manual recorder; existing dispel probe remains ready. Runtime `a055b98c9`: 8/8 local fixtures and 14/14 independent supplemental checks. No installation, native results or API credits. See [[api-contract-probes]] and [capture protocol](../addons/ApiContractProbe/README.md).
+
+## [2026-09-14] audit | Credit bounded unit-filtered global callback lifecycle
+
+Two credits cover ordinary `RegisterUnitEventCallback`/`UnregisterUnitEventCallback`: pinned `Event.lua` FunctionContainer wrappers, exact first-payload filtering, nil owner/payload, both dispatch paths, event/container/unit identity removal, zero-return arity and environment isolation. Runtime `0a0ac416f` plus publication `0835b3c94` passes 12/12 each retail 12.0.0/12.0.5/12.0.7; fallback proof is 2/2 retail and 3/3 Mists. Fmt/check/default builds/startup `[]` pass. Metadata `539c44c57`: two credits, 63 renewals, 20 additions, 15,124 fresh / zero stale, six bindings and validator exit 0 / 3,410 rows; totals **2351 / 1057 / 2**, snapshot **1,083 / 282**. Exact matching/order/validation remain simulator policies; aliases/lists, native ordering/errors/eligibility, secrecy/taint, full-LoD and callback mutation/recursion/error recovery remain open. One registration-length signal and eight Mists failures remain.
+
+## [2026-09-14] audit | Credit StripHyperlinks balanced markup flags
+
+Parser `1463fce69`, API `50448633e` and tests `2094af7e2` cover balanced well-formed UTF-8 hyperlink markup and documented flags. Behavior passes 5/5 per retail 12.0.0/12.0.5/12.0.7, parser 6/6, and an actual unmodified Talent UI consumer fixture; fmt/check/default builds/startup `[]` pass. The 12.0.0 saved stdout proves 5/5, but exit/compiler stderr/warnings are unknown after recorder loss. Metadata `1f78ffddc` proves one credit, nine renewals, six additions, 15,104 fresh / zero stale, six bindings and validator exit 0 / 3,410 rows. Totals **2349 / 1059 / 2**; snapshot **1,085 / 282**. Literal `|n` preservation when false, escaped/malformed markup and flag truthiness remain simulator policies; native byte/coercion/security/full-LoD gaps remain.
+
+## [2026-09-14] audit | Credit bounded global event callback lifecycle
+
+Two credits cover ordinary plain-function and actual `Event.lua` container callback lifecycle: nil owner/payload, both dispatch paths, identity removal, arity and environment isolation. Independent proof passes 8/8 per retail 12.0.0/12.0.5/12.0.7 (12.0.0 reused), plus fmt/check/default build/startup `[]`; the original two startup errors are gone. Metadata `cf15e178e` proves 118 renewals, 28 additions, **15,098 fresh / zero stale**, six bindings and validator exit 0 / 3,410 matching rows. Totals **2348 / 1060 / 2**; snapshot **1,086 / 282**. Two function-length signals remain. Mutation/recursion/error recovery, native duplicate/order/validation/eligibility/security/full-LoD and unit variants remain unverified.
+
+## [2026-09-14] investigation | Prepare native AuraDispelCurveProbe
+
+Documented `f2d1e94b9` and `97b770c54` as a manual-only native recorder for `C_UnitAuras.GetAuraDispelTypeColor`; no install, deployment, native run, runtime edit, or API credit occurred. The TOC interface `120100` follows pinned local retail `12.1.0.69497`, not observed desktop retail `12.0.5.67823`. [Protocol](investigations/aura-dispel-curve-probe.md), [README](../addons/AuraDispelCurveProbe/README.md), and [spec](../specs/aura-dispel-curve-probe.md) require real helpful/harmful aura scenarios, `/auradispelcurve`, and `/reload`/logout before reviewing SavedVariables. Fixture-only IDs/interpolation and restricted addon-tainted results remain non-native/inconclusive.
+
+## [2026-09-14] audit | Credit bounded UnitPowerPercent curve evaluation
+
+Tests `eb495dbc7` reached RED with two ordinary nil/omitted passes and four supplied-curve failures. Runtime `2ba41cda2` evaluates non-nil argument 4 through the existing evaluator. Independent `/tmp/verify-unit-power-percent-curves-ledger.json` passes six power tests plus five health regressions (11/11) on each retail 12.0.0/12.0.5/12.0.7; fmt/check/default binary build/startup passed with startup `[]`. Metadata `f846069c9` records 64 renewals, seven additions and one credit. Correction `9c75403d2` renewed one stale prior health-spec reference; final snapshot binding `52297be78` proves **15,070 fresh / zero stale**, validator exit 0 and all 3,410 rows matching. Totals **2346 / 1062 / 2**; snapshot **1,088 / 282**. The `0..100` input is simulator policy, not native evidence. Native scale/validation, `unmodified`, zero-max/defaults, unknown units, security and full-LoD remain unverified. Broad audit and eight Mists failures remain open. [Spec](../specs/unit-power-percent-curves.md); [[patch-12-0-0-api-audit]].
+
+## [2026-09-14] audit | Credit bounded UnitHealthPercent curve evaluation
+
+`13bf5219f` produced RED 1/3 for supplied scalar/color curves; `b31004297` produced invalid-curve RED. Runtime `92b4f8c4f` evaluates supplied curves through the existing evaluator. Independent proof passes 5/5 on retail 12.0.0/12.0.5/12.0.7; 12.0.0 exact-byte proof was reused and later profiles were fresh. Fmt/check/build/startup passed with startup `[]`. Metadata proof `68ad13265`: **15,063 fresh / zero stale**, 59 renewals, seven additions, one credit, validator exit 0 and all 3,410 rows matching. Totals **2345 / 1063 / 2**; snapshot **1,089 / 282**. The `0..100` input is simulator policy, not native evidence. Prediction, native scale, unknown units, security, full-LoD, eight Mists failures and broad audit remain open. [Spec](../specs/unit-health-percent-curves.md); [[patch-12-0-0-api-audit]].
+
+## [2026-09-14] audit | Credit historical aura-instance enumeration publication
+
+`33f7fdb39` exposed that `C_UnitAuras.GetUnitAuraInstanceIDs` was unavailable at retail 12.0.0 because the parent module had a `retail-12-1-0` publication gate. Runtime `ba31c6b94` corrects public historical publication only; later private/caster/enum boundaries remain gated. Independent proof passes the two ordinary tests 2/2 each on retail 12.0.0/12.0.5/12.0.7 and five default-feature later-gated regressions 5/5. Metadata proof `e9f56b974`: 15,056 fresh hashes, zero stale, 59 renewals, five additions, one credit, validator exit 0 / 3,410 matching rows. Totals 2344 / 1064 / 2; snapshot 1,090 / 282. Native filter domains, ordering, defaults, identity, security and full-LoD behavior remain open.
+
+## [2026-09-14] audit | Credit bounded global outfit-situations setting
+
+Two bounded credits cover explicit/repeated global boolean writes, one-boolean getter, zero-return setter and environment isolation. Runtime `457a8ae88`, tests `14ac47769`: independent 3/3 each on retail 12.0.0/12.0.5/12.0.7 in `/tmp/verify-outfit-situations-enabled-ledger.json`. Final metadata proof at `9c6404e68` records **15,051 fresh / zero stale**, 107 renewals, eight additions, validator exit 0 and all 3,410 rows matching. Totals **2343 / 1065 / 2**; snapshot **1,091 rows / 282 plans**. Initial false is simulator policy; native defaults, pending/per-outfit behavior, reset, persistence, events, UI/consumer execution and security remain unproven. Broad audit and eight Mists failures remain open. [Spec](../specs/outfit-situations-enabled.md).
+
+## [2026-09-14] audit | Credit bounded transmog-set filter state
+
+Tests `4fb364410` reached RED 0/3: after an explicit filter write, the getter had the wrong type and the setter returned nonzero values. Runtime `5cded1d0b` passes **3/3** on retail 12.0.0 (exact-byte reuse), 12.0.5 and 12.0.7; fmt/check/build/startup/readability pass. Final metadata proof at `870511b28`: **15,043 fresh / zero stale**, 101 renewals, eight additions, validator exit 0 and all 3,410 rows matching. Two credits cover explicit/repeated booleans at indices 1–4, getter-one/setter-zero arity and key/environment isolation. Totals **2341 / 1067 / 2**; snapshot **1,093 rows / 282 plans**. Default/reset APIs remain uncredited. Native unset/default/reset behavior, validation, filter effects, events, persistence, consumer execution and security remain unproven. Broad audit and eight Mists AccountStore failures remain open. [Spec](../specs/transmog-sets-filter-state.md).
+
+## [2026-09-14] audit | Credit bounded CombatText active-unit selection
+
+Tests `8113cc6bc` reached RED 0/3: after a write the generic getter was nil and setter results were nonzero, without proving exact setter arity. Runtime `375c71192` passes **3/3** on retail 12.0.0 (exact-byte reuse), 12.0.5 and 12.0.7; fmt/check/build/startup/readability pass. Final metadata proof at `c099a68e6`: **15,035 fresh / zero stale**, 95 renewals, eight additions, validator exit 0 and all 3,410 rows matching. Two credits cover copied explicit `player`/`vehicle` selection, getter-one nil/string, setter-zero returns, repeated writes and environment isolation. Totals **2339 / 1069 / 2**; snapshot **1,095 rows / 282 plans**. Native initial/token/identity behavior, secret/declassified handling, lifecycle, routing, events and consumer execution remain unproven; `GetCurrentEventInfo` is unchanged. Broad audit and eight Mists AccountStore failures remain open. [Spec](../specs/combat-text-active-unit.md).
+
+## [2026-09-14] audit | Credit bounded neighborhood tracked-task membership
+
+Four bounded credits cover Add/Remove/GetTrackedInitiativeTasks and InitiativeTasksTracked.trackedIDs: ordinary numeric membership, copied arrays, return arity and bidirectional environment isolation. Tests `3abb84e1c` reached RED 0/3 when added task IDs did not enter the returned membership list. Runtime `d6d48d1e5` stopped at compiler error E0308 before tests ran; corrected `27223f82a` has 3/3 each targeted profile (12.0.0 exact-byte reuse; 12.0.5/12.0.7 fresh), plus fmt/check/build/startup/readability PASS in `/tmp/verify-neighborhood-tracked-tasks-ledger.json`. Final metadata proof at `71209241a`: **15,027 fresh / zero stale**, 151 renewals, 16 additions, validator exit 0 and all 3,410 rows matching. Totals **2337 / 1071 / 2**; snapshot **1,097 rows / 282 plans**. Native validation, initial/order/duplicate/unknown-ID policies, task records/InitiativeTaskInfo.tracked, events, refresh, persistence, lifecycle, consumers and security remain unproven. Broad audit and eight Mists AccountStore failures remain open. [Spec](../specs/neighborhood-tracked-tasks.md).
+
+## [2026-09-14] audit | Credit bounded custom-set CRUD proof
+
+Seven historical CRUD methods receive bounded ordinary-state credit at runtime `df6264867`: concrete records, numeric IDs, ID/info/item retrieval, modify/rename/delete, copied input/output values, arity and record/environment isolation. Tests `ef9bbe70c` reached RED 0/4 (initial NewCustomSet returned nil); independent `/tmp/verify-custom-set-crud-ledger.json` records 4/4 each on retail 12.0.0/12.0.5/12.0.7 (12.0.0 exact-byte reuse), fmt/check/build/startup PASS. Final metadata proof at `2531a0e61`: **15,011 fresh / zero stale**, 86 renewals, 35 additions, seven credits, validator exit 0 and all 3,410 rows matching. Readability length/local-Vec-loop findings remain a reviewed signal; main rejected mandatory `read_items` refactoring, not a clean-readability claim. Totals: **2333 / 1075 / 2**; snapshot **1,101 rows / 282 plans**. Native validation/error policy/defaults/limits/events/persistence/hyperlinks/consumer behavior remain unproven. Broad audit stays open; eight Mists AccountStore failures remain unresolved. [Spec](../specs/transmog-custom-set-crud.md); [audit](investigations/patch-12-0-0-api-audit.md).
+
+## [2026-09-14] audit | Credit bounded combat-audio format-setting state
+
+Exactly two Get/SetFormatSetting credits cover ordinary keyed numeric explicit/repeated writes, return arity, accepted-write `true` simulator policy, key/environment independence and speaker preservation. Runtime `b36c27ce3`: **3/3 each** on retail 12.0.0/12.0.5/12.0.7 (12.0.0 exact-byte reused; 12.0.5/12.0.7 fresh), with fmt/check/build/startup (`[]`)/readability PASS. Final metadata proof `/tmp/verify-audio-format-setting-metadata-ledger.json` at `19c423c5f`: **14,976 fresh / zero stale**, 43 renewals, 12 additions, validator exit 0 and 3,410 matching rows. Totals **2326 / 1082 / 2**; snapshot **1,108 / 282**. Native defaults/ranges/validation/success, CVar/output/callback/persistence/playback, consumer and security gaps remain unproven. Eight Mists failures and broad audit remain open. [Spec](../specs/combat-audio-format-setting.md).
+
+## [2026-09-14] audit | Credit bounded speaker-volume state
+
+Exactly two historical `GetSpeakerVolume()` / `SetSpeakerVolume(number)` credits cover explicit/repeated numeric writes, getter-one-number/setter-one-boolean arity, simulator accepted-write `true`, speed independence and distinct environment isolation; no category argument. Tests `4b5ac2a4a` reached RED 0/3 at a nil setter result. Runtime `cfad799bb` has independent 3/3 per retail 12.0.0/12.0.5/12.0.7 (12.0.0 GREEN reused by exact bytes; later profiles fresh), plus fmt/check/build/startup (`[]`)/readability PASS in `/tmp/verify-audio-speaker-volume-ledger.json`. Final metadata proof at `dcf344b01` records **14,964 fresh / zero stale** hashes, **31 renewals, 12 evidence additions**, validator exit 0 and all 3,410 rows matching. Totals: **2324 / 1084 / 2**; snapshot: **1,110 remaining rows / 282 plans**. All six manifests were scanned. Initial `100.0`, native ranges/coercion/success semantics, CVar coupling, callbacks, persistence/lifecycle, playback, consumers and security remain unproven. Eight Mists AccountStore failures and the broad audit remain open. [Spec](../specs/combat-audio-speaker-volume.md).
+
+## [2026-09-14] audit | Credit bounded speaker-speed state
+
+Tests `87adb4882` reached RED 0/3 at the wrong setter result, not a missing-method exception. Runtime `df3137a23` has independent fresh **3/3 each** on retail 12.0.0/12.0.5/12.0.7 plus fmt/check/build/startup (`[]`)/readability PASS. Exactly two credits cover numeric stored state, getter-one-number/setter-one-boolean arity, accepted-write `true` simulator policy and distinct environment isolation. Totals: **2322 / 1086 / 2**; 21 reference renewals and 16 additions. Modeled Rust registration is gated at `retail-12-0-0`; earlier-profile fallback callability/absence is unproven. Initial `0`, native ranges/coercion/success semantics, CVar aliasing, callbacks, persistence/lifecycle, playback, consumers and security remain unproven; no native policy credit. Runtime proof: `/tmp/verify-audio-speaker-speed-ledger.json`; final metadata proof: `/tmp/verify-audio-speaker-speed-metadata-ledger.json` at `519dad999`, reusing saved validator exit 0 / 3,410 matching rows with 14,952 fresh hashes, zero stale, 21 renewals and 16 additions. Broad audit remains open. [Spec](../specs/combat-audio-speaker-speed.md).
+
+## [2026-09-14] audit | Credit bounded C_CombatLog stored settings
+
+Five existing-behavior tests initially passed at `7bd7f10ca`; no RED or runtime change. Follow-up `3d69ec6ea` has fresh independent **5/5 each** on retail 12.0.0/12.0.5/12.0.7, including distinct boolean/numeric isolation writes in both directions; fmt/readability pass and unchanged-runtime check/build/startup proof is reused by exact hashes. Metadata verification at `19eab5ef4` records 14,933 fresh hashes, zero stale, zero renewals, 16 additions, four credits and validator exit 0 with 3,410 matching rows. Totals: **2319 / 1089 / 2**. Earlier intentionally unattached fixture tests do not become native closure: filtering/matching, restrictions, pruning/bounds, defaults/native validation, events/lifecycle and consumers remain unproven. Proof: `/tmp/verify-combatlog-settings-isolation-ledger.json`; metadata: `/tmp/verify-combatlog-settings-metadata-ledger.json`. [Spec](../specs/combat-log-setting-state.md).
+
+## [2026-09-13] audit | Credit bounded housing free-place state
+
+Runtime `3839f707f`, tests `220897051`: independent ordinary-state proof passes 4/4 each on retail 12.0.0/12.0.5/12.0.7, plus fmt/check/build/startup (`[]`)/readability. Exactly two credits cover explicit boolean/repeated writes, getter-one/setter-zero arity, environment isolation and unrelated housing-service preservation. Separately, current-default loaded `HousingFramesUtil` forwards false/true/false with zero returns; not native or historical-profile/full-LoD proof. Correction-only metadata verification at `804a6b073` records 14,917 fresh hashes, zero stale, 139 renewals and 14 additions; totals **2315 / 1093 / 2**. The 1,119-row snapshot retains 282 plans, 281 unchanged from before credit. Validator output has 3,410 matching rows and empty stderr, but its exit status was not retained; no rerun. Native/default/reset/lifecycle/persistence, placement/rendering/events, validation, earlier-profile and security behavior remain unproven. Proof: `/tmp/verify-housing-freeplace-ledger.json`; metadata: `/tmp/verify-housing-freeplace-metadata-corrected-ledger.json`.
+
+## [2026-09-14] audit | Credit bounded combat-log message-limit query
+
+One GetMessageLimit storage/query credit uses existing-runtime tests `bd76679e0`: explicit/repeated 41/42 writes, getter-one numeric/setter-zero arity, filter/retention independence and distinct 43/44 environment writes. Independent proof at `b91e21c62` reuses 12.0.0 **3/3** and records fresh 12.0.5/12.0.7 **3/3 each**, fmt/readability PASS and unchanged-runtime gates. Existing settings-test prefix and SetMessageLimit event credit remain unchanged; no RED or runtime change. Final metadata verification at `5c2d06cb7` records 14,936 fresh hashes, zero stale, 16 renewals, three file::leaf additions and one credit: **2320 / 1088 / 2**. Snapshot: **1,114 rows / 282 plans**. It reuses `152154a11`'s saved validator CommandResult—exit 0, all 3,410 rows matching final identical manifest bytes—without rerun. Bounds, pruning/enforcement, defaults, validation, events/lifecycle, native/consumer and security gaps remain open. Proof: `/tmp/verify-combatlog-message-limit-ledger.json`; metadata: `/tmp/verify-combatlog-message-limit-metadata-ledger.json`.
+
+## [2026-09-13] audit | Link all remaining occurrences to evidence plans
+
+[Blocker inventory](investigations/patch-api-blocker-inventory.md) now links all 1,121 unresolved rows to 282 plans: 124 family plans cover 963 rows; 158 plans preserve explicit source requirements. Every plan retains missing fixtures/contracts and is non-executable. Source checks corrected family routing, argument/output shapes and the false StatusBar removal claim. Independent final verification passed at `8cae7bfdf`: exact 1,121-row/282-plan coverage, 14,903 fresh hashes/zero stale, validator exit 0 and source-alignment corrections. Native behavior and executable readiness remain unproven; no behavior credits or runtime changes.
+
+## [2026-09-13] audit | Correct StatusBar source interpretation
+
+Pinned before/after fields retain `reverseFill` and `rotatesTexture`; their removal was incorrectly asserted in the unresolved widget note. Corrected manifest, occurrence inventory and [blocker snapshot](investigations/patch-api-blocker-inventory.md), retaining all statuses/credits and existing bounded fill-style proof. No runtime change.
+
+## [2026-09-13] audit | Refine concrete blocker probes
+
+[Blocker inventory](investigations/patch-api-blocker-inventory.md) adds 13 observation plans for 35 rows, distinguishing cast identities, realm/base-sex fixtures, formatting/markup, populated action/aura transitions, publication and PTR structure exposure. Remaining 1,086 rows still need concrete design. No native outcomes, runtime changes or credits. Independent refinement proof passed at `747017217`; the 12.0.0 hyperlink matrix was corrected to four controls/16 combinations, keeping later fifth-control applicability separate.
+
+## [2026-09-13] audit | Inventory remaining evidence dependencies
+
+User-selected documentation phase: [blocker inventory](investigations/patch-api-blocker-inventory.md) maps 1,121 evidence-required rows to literal gaps and proposed probes. Counts cover all six manifests; no runtime, credit, or deployment change. Mixed security obligations remain separated from ordinary behavior, and unestablished producer/input details remain probe-design blockers. Independent consistency verification passed at `19b2a4920`: exact committed manifest hashes, all 1,121 keys once, literal notes/distinct references, protocol counts and links. See inventory page for proof limits.
+
+## [2026-09-13] audit | Bounded Cooldown.SetPaused proof
+
+Bounded best-effort: explicit boolean paused-state updates, zero return arity, cooldown instance isolation, immediate timing preservation, and independent ModelScene paused-state preservation. Runtime `218ba9977` corrects shared `SetPaused` dispatch in `model/model_scene.rs`; this was not missing registration. Final exact-byte metadata verification at `37caff416` reuses 5/5 each retail 12.0.0/12.0.5/12.0.7 proof plus fmt/check/build/startup (`[]`)/readability, passes the 3,410-row validator, and records 14,903 fresh hashes, zero stale, 15 renewals, and six additions. One bounded credit; totals **2313 / 1095 / 2**. Native clocks, elapsed freezing/rebasing, rendering, lifecycle/events, validation/coercion, earlier-profile availability, and secret/taint behavior remain unproven. Broad audit remains open. See [Cooldown paused state](../specs/cooldown-paused-state.md).
+
+## [2026-09-13] audit | Credit ordinary boolean vertex-color state
+
+Tests `90f291cca` reached missing-method RED 0/4; runtime `7677086b5` selects complete RGBA into existing vertex-color state. Independent bounded PASS at `3ed25adc8`: four tests pass 4/4 on each retail 12.0.0, 12.0.5, and 12.0.7. Credit covers only ordinary Texture/FontString true/false complete RGBA state (including alpha), zero returns, input preservation, and same-type instance isolation. Native validation/coercion, rendering/propagation, security/secrets, earlier-profile availability, lifecycle, and full-LoD consumers remain unproven. Proof: `/tmp/verify-vertex-boolean-ledger.json`.
+
+Two bounded 12.0.0 occurrence credits produce **2310 / 1098 / 2**. Final bounded metadata verification at `2c8bca6da` reuses exact runtime bytes, passes the validator, and records 14,887 fresh hashes, zero stale hashes, 13 renewals, and nine evidence additions. Broad audit remains open. Eight Mists AccountStore failures remain unresolved. See [[patch-12-0-0-api-audit]].
+
+## [2026-09-13] audit | Credit bounded FontString scale-mode state
+
+Independent proof at `3b3877603` reuses exact bytes and passes 4/4 each on retail 12.0.0/12.0.5/12.0.7, plus fmt/check/build/startup (`[]`)/readability. Final metadata validation at `88e4998ee` passes the validator with 14,897 fresh hashes, zero stale hashes, 26 renewals, and ten additions across six manifests. Two bounded Get/Set credits cover only explicitly-set numeric 0/1, getter-one/setter-zero arity, and per-FontString isolation; totals: **2312 / 1096 / 2**. Native/default/invalid-input behavior, animation/layout/rendering, and earlier-profile availability remain unproven. Broad audit and eight unresolved Mists AccountStore failures remain open. See [spec](../specs/fontstring-scale-animation-mode.md).
+
+## [2026-09-13] audit | Model numeric StatusBar fill-style state
+
+`557036636` adds five 12.0.0-gated tests and records RED 2/5: enum values and zero setter returns pass, while getter numeric state, instance isolation, and invalid-input rejection fail. `3c8264198` converts the stored `Frame` field from `String` to `u8`, returns stored per-instance numeric state, and applies strict validation as simulator policy; it also updates an obsolete string setter control to a numeric enum. Two bounded credits update the audit to **2308 / 1100 / 2**. Independent bounded PASS at `e6db367b9`: unchanged retail 12.0.0 GREEN 25/25 reused by exact hash; retail 12.0.5/12.0.7 fresh 25/25 each; fmt/check/default build/startup `[]`, validator, and readability pass. Existing warnings: 6/1/profile; default none. The committed exact-byte scan found 14,878 fresh hashes, zero stale, 19 renewals, and four new evidence references. Rendering ignores fill style; zero-range/geometry/interpolation, native defaults and validation, reverse-fill interaction, protected/secret behavior, lifecycle, and consumers remain open. Eight Mists AccountStore failures remain unresolved; no Mists claim is made. The broad audit remains open. See [StatusBar fill-style state](../specs/statusbar-fill-style.md) and [[patch-12-0-0-api-audit]].
+
+## [2026-09-13] audit | Document default string trimming mismatch
+
+`string.trim` gains one bounded credit for four-byte defaults, VT/FF preservation/stopping, interior/empty cases, explicit-nil simulator policy, both names, explicit `xy`/empty controls, and one-string returns: **2306 / 1102 / 2**. `a3ce6850b` RED 4/6 exposed bootstrap `%s`; `0d648ebde` reaches GREEN 6/6. Independent bounded PASS at `1c3cc302d`: exact-hash 12.0.0 reuse 6/6; fresh 12.0.5/12.0.7 6/6 each; fmt/check/default build/startup `[]`, validator, and readability pass. Existing warnings are 6/1/profile, default none; committed exact-byte scan finds 14,874 fresh hashes, zero stale, six renewals. Native coercion/errors, arbitrary custom sets, security, full-LoD, lifecycle, Mists, and consumer semantics remain open; broad audit remains open. Ledger: `/tmp/verify-string-trim-ledger.json`. See [String trimming](../specs/string-trim.md).
+
+## [2026-09-13] audit | Model missing unit power
+
+`65873915e` RED 0/3 and `c2d838c75` GREEN 3/3 establish one bounded `UnitPowerMissing` credit: primary player/target and tested player power type 9 current/max difference, later power changes, exact one numeric return, query non-mutation, and explicit `unmodified=false`. Metadata records **2305 / 1103 / 2**. Independent bounded PASS at `07e950b89`: retail 12.0.0 reuses unchanged GREEN 3/3; retail 12.0.5 and 12.0.7 freshly pass 3/3 each. Formatter, check, default build, startup `[]`, and readability pass; existing warnings are 6/1/profile and default none. The exact-byte archive scan finds 14,873 fresh hashes, zero stale/missing, and 58 renewals. Other tokens/power types, `unmodified=true`, native validation/security, lifecycle, and consumers remain unproven. Existing eight Mists AccountStore setup failures remain unresolved. Ledger: `/tmp/verify-unit-power-missing-ledger.json`. See [Missing unit power](../specs/unit-power-missing.md).
+
+## [2026-09-13] audit | Model missing unit health
+
+`ec5363a18` RED 0/2 and `ab204a8cb` GREEN 2/2 establish one bounded `UnitHealthMissing` credit: player/target current/max difference, later vital-state changes, exact one numeric return, query non-mutation, and explicit `usePredicted=false`. Metadata updates changed references and records **2304 / 1104 / 2**. Independent bounded PASS at `ca6798aa5`: retail 12.0.0 reuses unchanged GREEN 2/2; retail 12.0.5 and 12.0.7 freshly pass 2/2 each. Formatter, check, default build, startup `[]`, and readability pass; warnings are existing 6/1/profile and none on default check/build. The committed manifest scan finds 14,873 fresh hashes, zero stale, and 57 renewals including 15 in `ca6798aa5`. Prediction, other tokens, native validation/security, lifecycle, and consumers remain unproven. Existing eight Mists AccountStore setup failures remain unresolved. Ledger: `/tmp/verify-unit-health-missing-ledger.json`. See [Missing unit health](../specs/unit-health-missing.md).
+
+## [2026-09-13] audit | Bound TruncateWhenZero formatting
+
+`b8032c876` RED and `cfdd647c4` GREEN 3/3 establish one bounded `C_StringUtil.TruncateWhenZero` credit: ordinary finite nonnegative round-down/zero-empty results, one-string arity, call independence, and explicit simulator-policy rejection. Metadata renews 16 changed-path hashes, adds one test reference, and records **2303 / 1105 / 2**. Native coercion/error detail, negative/extreme/locale behavior, secret/security, historical availability, lifecycle, and consumers remain unproven. Existing eight Mists AccountStore setup failures remain unresolved; no Mists proof claimed. Independent bounded PASS at `c6bc7f9d0`: retail 12.0.0 reuses unchanged GREEN 3/3; retail 12.0.5 and 12.0.7 freshly pass 3/3 each. Fmt/check/default build/startup `[]` and readability pass; existing warnings are 6/1/profile and default none. Ledger: `/tmp/verify-truncate-when-zero-ledger.json`.
+
+## [2026-09-13] audit | Correct contaminated 12.0.0 inventory notes
+
+Corrected 1,634 remaining unrelated inventory notes copied by historical `0dea0ce9f3`. Each was restored from the matching 12.0.0 manifest row note; four legitimate InitiativeRewardFlags rows remain unchanged. Documentation only: no runtime proof, credits, classifications, validators, or generators changed.
+
+## [2026-09-13] audit | Implement contiguous ASCII-space truncation
+
+`e04c44803` and `5d23c606b` establish four test-first `C_StringUtil.RemoveContiguousSpaces` cases: RED is 0/4. `8de0d6e6c` adds retail-12.0.0-gated byte-level truncation; development GREEN is 4/4. Independent proof at `e1f7fd2a5` passes retail 6/6 each on 12.0.0/12.0.5/12.0.7; Mists 1/1 is only an existing old-helper-absence control, not new API availability. `36dce310d` is an equivalent readability-only predicate naming change with fresh fmt/check; profile/build/startup proof is reused explicitly. Metadata: one credit, four references, 12 initial plus nine follow-up hash-only renewals, 14,872 fresh hashes, zero stale, **2302 / 1106 / 2**. Invalid-limit rejection is simulator policy, not native validation proof. See [Contiguous ASCII spaces](../specs/contiguous-ascii-spaces.md).
+
+## [2026-09-13] audit | Extract creature IDs from shared GUID parsing
+
+`63c91f0b4` reproduces absent `C_CreatureInfo.GetCreatureID`; `aff45e594` exposes the unchanged shared parser now owned by `src/c_api/c_creature_info.rs`. GREEN is 3/3: two Creature GUID numeric IDs and exact-one nil results for Player/empty controls. Retail `creature` verification is 44/44 each on 12.0.0/12.0.5/12.0.7. Mists broad `creature` is 33/41 because eight unrelated AccountStore tests fail setup at `tests/common/mod.rs:183` without a compatible `Blizzard_Colors` TOC; relevant helper and legacy checks pass, but this is not an overall Mists proof. Metadata: one credit, three refs, 11 renewals, 14,868 fresh hashes, **2301 / 1107 / 2**. See [[creature-guid-identifiers]] and [Creature GUID identifiers](../specs/creature-id.md).
+
+## [2026-09-13] audit | Credit existing C_StringUtil byte transformations
+
+Classified `C_StringUtil.EscapeLuaFormatString`, `EscapeLuaPatterns`, and `WrapString` as best-effort behavioral from `6a5a6aa54` and `tests/c_api_surface.rs::c_string_util_escapes_bytes_and_wraps_nonempty_infixes`. The escaping methods cover their tested byte transformations; `WrapString` covers optional affixes, empty infix, embedded NUL, and raw bytes. Return arity, coercion, native epoch, taint/secret, and consumers remain unproven.
+
+## [2026-09-13] audit | Store predicted heal values
+
+`be2aae3db` characterizes `UnitHealPredictionCalculator.SetPredictedValues` as six-field temporary-proxy storage with exact zero returns, snapshots, replacement, and instance isolation. Verification at `0104813a7` reuses retail 12.0.0 3/3 and records 16/16 each on retail 12.0.5, 12.0.7, and Mists; format/readability/validators and unchanged production proof pass. One credit, three references, 90 renewals, 14,863 fresh hashes, totals **2297 / 1111 / 2**. Ledger: `/tmp/verify-heal-predicted-values-ledger.json`. Native structure, calculations, reset/defaults, validation, identity, security, lifecycle, and consumers remain unverified.
+
+## [2026-09-13] audit | Characterize remaining heal configuration
+
+`88f578128` adds six focused configuration tests for `UnitHealPredictionCalculator.Get/SetHealAbsorbMode`, `Get/SetIncomingHealClampMode`, and `Get/SetIncomingHealOverflowPercent`. Published enum values plus explicit numeric `0`, `0.5`, and `1.5` round-trip through per-instance stored state; getters return one numeric value and setters return zero values. Accepted ranges are simulator observations, not native numeric contracts. Six rows gain bounded credit with twelve test references. Final verification at `a5f438b65` records 78 renewals (70 in 12.0.0, 8 in 12.1-behaviors), 14,860 fresh hashes, totals **2296 / 1112 / 2**, reused retail 12.0.0 6/6, and fresh 13/13 each on retail 12.0.5, 12.0.7, and Mists; all gates pass. Ledger: `/tmp/verify-heal-configuration-reconciled-ledger.json`. Native defaults/reset, validation/coercion, calculation effects, identity, security/lifecycle, and consumers remain open.
+
+## [2026-09-12] audit | Bound heal-absorb clamp configuration
+
+`7c3a6beb7` adds two focused existing-behavior cases for `UnitHealPredictionCalculator.GetHealAbsorbClampMode` and `SetHealAbsorbClampMode`: explicit `MaximumHealth`/`CurrentHealth` transitions, exact getter/setter arity, and instance-local configuration. Verification at `846c7759c` reuses retail 12.0.0 2/2 and records 7/7 on retail 12.0.5, 12.0.7, and Mists; format/readability/validators and unchanged check proof pass. Two credits, four references, 74 renewals, 14,848 fresh hashes, totals **2290 / 1118 / 2**. Defaults/reset, validation/coercion, absorb calculations, native identity/security/lifecycle, and consumers remain open.
+
+## [2026-09-12] audit | Unpack modeled color-curve evaluation
+
+`c8c6afbc5` adds four RED cases (0/4) for absent `EvaluateUnpacked`; `bab9d8ab4` returns exactly four numeric RGBA channels from existing color evaluation (development GREEN 4/4). Empty, single-point, Linear interior, and Step interior numeric cases are simulator policies, not native proof. Verification at `a0750de45` reuses runtime proof: 50/50 each retail 12.0.0/12.0.5/12.0.7 and 46/46 Mists; default gates, startup and readability pass. Corrected metadata has 108 renewals, four test references, 14,844 fresh hashes and totals **2288 / 1120 / 2**. Native interpolation/extrapolation, coercion/errors, identity, secrets/security, and consumers remain open. See [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] audit | Replace stored color-curve points
+
+Tests `717d67f53` reproduce missing color `SetPoints` (RED 0/3); `388b59457` replaces existing point state (retail 12.0.0 GREEN 3/3). Tests assert zero returns, populated/empty replacement, input array/record/color mutation isolation, evaluation and Copy independence. Replacement/order/copy semantics are simulator policies. Verified totals: **2287 / 1121 / 2**, three test references and 105 provenance renewals. Independent verification at `3addffb4e` passes grouped userdata tests 46/46 each retail 12.0.0/12.0.5/12.0.7 and 42/42 Mists; format/default check/build, startup `[]`, readability, both validators and 14,840 evidence hashes pass. Ledger: `/tmp/verify-color-curve-set-points-ledger.json`. Invalid inputs, native/security/structure semantics and scalar/vector methods remain open. See [curve objects](../specs/curve-objects.md).
+
+## [2026-09-12] audit | Remove stored color-curve points
+
+Tests `84d091201` reproduce missing color `RemovePoint` (RED 0/3); `17bad77a3` mutates existing point state (retail 12.0.0 GREEN 3/3). Tests assert zero returns, first/middle/last removal, compact order/count, empty state, changed evaluation and Copy independence. Valid one-based indexing and compaction are simulator assumptions. Verified totals: **2286 / 1122 / 2**, three test references and 102 provenance renewals. Independent verification at `2eb91714c` passes grouped userdata tests 43/43 each retail 12.0.0/12.0.5/12.0.7 and 39/39 Mists; format/default check/build, startup `[]`, readability, both validators and 14,837 evidence hashes pass. Ledger: `/tmp/verify-color-curve-remove-point-ledger.json`. Invalid indices, coercion/errors, native/security/structure semantics remain open. See [curve objects](../specs/curve-objects.md).
+
+## [2026-09-12] audit | Retrieve color-curve point collections
+
+Tests `4fae6e8af` reproduce missing color `GetPoints` (RED 0/3); `ba2d6e2a0` returns one array of copied existing-state points (retail 12.0.0 GREEN 3/3). Stored order and fresh array/record/color snapshots are simulator assumptions. Mutation isolation and Copy/Clear/reuse are covered. Verified totals: **2285 / 1123 / 2**, three new test references, 99 provenance renewals. Independent verification at `221869fde` passes grouped userdata tests 40/40 each retail 12.0.0/12.0.5/12.0.7 and 36/36 Mists; format/default check/build, startup with zero Lua errors, readability, both validators and 14,834 evidence hashes pass. Ledger: `/tmp/verify-color-curve-get-points-ledger.json`. Scalar/vector queries, complete point structures and native semantics remain open. See [curve objects](../specs/curve-objects.md).
+
+## [2026-09-12] audit | Retrieve stored color-curve points
+
+`6b7bd754f` reproduces missing color `GetPoint` (0/3); `d2e29052f` implements existing-state retrieval and `3c5ecaefa` corrects fixture mutation (final retail 12.0.0 GREEN 3/3). One-based indexing, missing-index nil and fresh point/color output are simulator assumptions. Tests cover fractional x/RGBA values, return count, output mutation isolation, and Copy/Clear/reuse. Only the getter gains credit: **2284 / 1124 / 2**, three test references and 96 provenance renewals. Independent verification at `539f9151f` passes grouped userdata tests 37/37 each retail 12.0.0/12.0.5/12.0.7 and 33/33 Mists; format/check/build, startup `[]`, readability, both validators and 14,831 evidence hashes pass. Ledger: `/tmp/verify-color-curve-get-point-ledger.json`. Scalar vector queries, full point-structure contracts, invalid-input/coercion/errors, secrets, native identity and consumers remain open. See [curve objects](../specs/curve-objects.md).
+
+## [2026-09-12] audit | Bound existing bonus-bar offset fixture
+
+Existing `26f4b9608` fixture injects bonus index `11` and asserts namespace/global offset values `5`. Only this relation gains best-effort credit: **2283 / 1125 / 2**; one test reference, no source/test changes or hash renewals. Verification at `3e0790f23` passes 9/9 grouped action-bar tests on each retail 12.0.0/12.0.5/12.0.7 profile, plus validator/checklist/inventory and 14,828 fresh hashes; unchanged default gates reused. Ledger: `/tmp/verify-bonus-offset-ledger.json`. Lower bounds, return cardinality, native paging/lifecycle/precedence and security remain unverified. See [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] audit | Expose scalar/color curve mode getter
+
+`11cacdf20` reproduces absent `GetType` on both curve kinds (0/2); `e0f6ba163` reads existing per-object mode state (retail 12.0.0 GREEN 2/2). Tests cover a single numeric return, default Linear, Step/Linear changes, and independent copied mode state. Only the getter gains best-effort credit: **2282 / 1126 / 2**. Ninety-four existing references renew changed-file hashes without expanding their claims. Independent verification at `b241590df` passes: grouped userdata tests 34/34 each retail 12.0.0/12.0.5/12.0.7 and 30/30 Mists; format/default check/build, startup `[]`, readability, both validators, and 14,827 evidence hashes pass. Ledger: `/tmp/verify-curve-get-type-ledger.json`. Native identity, coercion/errors, secrets, lifecycle, consumers and unsupported interpolation remain open. See [curve objects](../specs/curve-objects.md).
+
+## [2026-09-12] audit | Bound self-buff classifier evidence
+
+Existing self-buff classifier fixtures pass 3/3 each on retail 12.0.0/12.0.5/12.0.7; metadata verification passes at totals `2281 / 1127 / 2`. Runtime unchanged; native effect-completeness semantics remain open. See [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] audit | Test namespace current-action cast transitions
+
+Two direct namespace fixtures verify cast/stop and live slot-state behavior without runtime changes: 16/16 on retail 12.0.0/12.0.5/12.0.7. Format/check/readability and metadata verification pass; totals `2280 / 1128 / 2`. Native, channeling, autorepeat, and usability semantics remain open. See [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] audit | Credit existing action cooldown info assertions
+
+`4474392b4` / `7dd785804` add four narrow credits for the namespace cooldown query and observed start/span/default-rate fields. `/tmp/verify-action-cooldown-fields-ledger.json` passes seven new references, no renewals, 14,820 fresh hashes, validation and inventory matching; existing profile proof is reused without Cargo. Totals `2279 / 1129 / 2`; GCD rate, enablement and broader native/consumer semantics remain open. See [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] investigation | Build spell cooldown duration objects from modeled state
+
+`f1535023c` adds retail 12.0.0 spell-duration regressions; all four fail because `C_Spell.GetSpellCooldownDuration` returns generic nil. `14e5f8e46` records the observed Mists nil control rather than claiming earlier-profile absence. `0e47eae2f` adds a retail 12.0.0+ producer that reuses seeded numeric/string alias resolution, the existing spell/GCD selector, and shared duration snapshots. `/tmp/verify-spell-cooldown-duration-ledger.json` passes 32/32 on each audited retail profile and 29/29 on Mists; format, default check/build, startup `[]`, validators, readability, and 14,813 references pass. It renews 39 references across 35 rows, adds five references, credits only this row, and reaches `2275 / 1133 / 2`. Native identifier/return/GCD/snapshot/identity/error, security, and consumer behavior remain open. See [spell cooldown duration](../../specs/spell-cooldown-duration.md).
+
+## [2026-09-12] investigation | Build action cooldown duration objects from modeled state
+
+`eb9383afb` replaces `C_ActionBar.GetActionCooldownDuration`'s ignored-slot default duration producer with a shared action-slot cooldown lookup and query-time duration snapshot. The C API producer lives in `src/c_api/c_action_bar.rs`; it reuses the existing spell/GCD interval selection rather than introducing parallel cooldown state. `/tmp/verify-action-cooldown-duration-reconciled-ledger.json` reuses 12.0.0 4/4 and records 14/14 on 12.0.5, 12.0.7, and Mists; format, readability, binaries, startup `[]`, validator, and 14,808 fresh references pass. It confirms 72 renewals, five new references, one credit, and totals `2274 / 1134 / 2`. The import-only correction `6987cbf21` has final warning-free default `cargo check` proof: exit 0 with no warnings or errors. Empty, inactive, and expired modeled slots retain zero timing; native invalid inputs, `ignoreGCD`, rates, identity/lifecycle, secrets/security, and consumer behavior remain open. See [action cooldown duration](../../specs/action-cooldown-duration.md).
+
+## [2026-09-12] audit | Credit tested color curve mode switching
+
+`3d804b9c5` credits `LuaCurveObjectBase.SetType` only for the unchanged color `Step`/`Linear` switching and copied-curve isolation asserted by `color_curve_copy_returns_userdata` at `77310f806`. `/tmp/verify-curve-settype-ledger.json` passes the metadata gate: exactly one credit and test reference, zero hash renewals, 14,803 fresh evidence references, and exact checklist/inventory matching. It reuses 2/2 proof on retail 12.0.0, 12.0.5, and 12.0.7 without Cargo reruns; format, readability, and unchanged production proof remain valid. Totals: `2273 / 1135 / 2`. Scalar modes, `GetType`, native base/interface semantics, coercion, ordering, extrapolation, lifecycle, security, and consumers remain open. See [curve objects](../../specs/curve-objects.md).
+
+## [2026-09-12] audit | Strengthen curve copy evidence
+
+`77310f806` strengthens existing scalar/color curve-copy fixtures. Copied scalar points remain independent after clearing/rebuilding either curve; copied color points and `Step` configuration remain independent from later `Linear`/`Step` and point mutations. The color fixture observes counts `0 → 1 → 2 → 0`. `e463e77f3` narrows both existing Copy records to those fixtures and credits `LuaColorCurveObject.GetPointCount`; committed classification is `2272 / 1136 / 2`. `/tmp/verify-curve-copy-ledger.json` reuses matching 12.0.0 2/2 proof and records fresh 12.0.5/12.0.7 2/2 proof. Format/readability, both validators, 14,802 fresh references, and exact checklist/inventory pass; unchanged production/default and duration-profile proof is reused. Historical 6/6/1 warnings remain. Strengthened Copy cases were not run on PTR or Mists. Native/security/GC/consumer semantics and the broader audit remain open. See [curve objects](../../specs/curve-objects.md).
+
+## [2026-09-12] audit | Credit existing duration-curve integration assertions
+
+`4393823e1` credits four narrow existing observations: scalar `LuaCurveObject.ClearPoints`; color `LuaColorCurveObject.AddPoint`, `ClearPoints`, and `Evaluate`. A rebuilt scalar curve changes the tested midpoint from `20` to `70`; rebuilt color points yield midpoint RGBA `(0.5, 0.5, 0.5, 0.25)` through duration evaluation, while existing checks cover ColorMixin midpoint/endpoint channels with tested modifiers. `9957fc863` restricts summaries to these values. No source/test changed and `/tmp/verify-duration-curve-ledger.json` is reused; `/tmp/verify-curve-existing-ledger.json` passes canonical validation, all 14,801 evidence hashes, and checklist/inventory matching without test/build reruns. Totals: `2271 / 1137 / 2`. Empty/count/order/coercion, native interpolation/identity, security/lifecycle, and consumer semantics remain open. See [[duration-curve-evaluation]].
+
+## [2026-09-12] investigation | Replace duration curve-evaluation zero stubs
+
+`aae5996eb` routes four `LuaDurationObject` evaluation methods through existing duration getters and the registered scalar/color curve evaluator rather than returning numeric zero. `/tmp/duration-curve-red-ledger.json` records ten 12.0.0 RED cases: zero scalar/color results and suppressed validation/interpolation errors; `/tmp/duration-curve-green-ledger.json` records 10/10 GREEN on retail 12.0.0. Final proof `/tmp/verify-duration-curve-ledger.json` passes all 25 `duration_core::` cases with exit 0 on 12.0.0, 12.0.5, 12.0.7, and Mists; 11 PTR curve/userdata cases; format, default check, both default binaries, zero-error startup, affected validators, and all-manifest hashes. Historical warnings remain 6/6/1/6; PTR and default verification emit none. `79507d7a9` credits only the four evaluation rows, renews 103 existing references across 73 rows, and moves retail 12.0.0 to `2267 / 1141 / 2`. The `LuaCurveEvaluatedResult` name is not treated as a separate result-object claim because cached scalar/color curve declarations return numbers/ColorMixin values. Native and consumer semantics remain open. See [[duration-curve-evaluation]].
+
+## [2026-09-12] audit | Model duration Copy and Assign
+
+`19416ff84` copies only modeled duration timing and optional clock bindings. Seven `duration_copy_` cases cover independent timing, return arity, receiver identity/custom fields, self-assignment, shared clock references with independently mutable bindings, unbound-source clearing, and invalid-source atomicity. The RED ledger had 1/7 pass and six failures. The first GREEN attempt did not compile: `/tmp/duration-copy-green-ledger.json` records E0308 before tests ran; `acb86ceda` corrects it. Final independent proof `/tmp/verify-duration-copy-ledger.json` passes all 15 `duration_core::` cases with exit 0 on 12.0.0, 12.0.5, 12.0.7, and Mists; format, default check, both binaries, zero-error startup, both validators, and all-manifest hash scanning pass. The audit renews 63 references across 35 rows, credits only Assign and Copy, and reaches `2263 / 1145 / 2`. Historical warnings remain 6/6/1/6; default verification has none. Native identity, clock, coercion, security, lifecycle/GC, and consumer behavior remain open. See [duration core](../specs/duration-core.md) and [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] audit | Credit loaded Blizzard tooltip money consumers
+
+`8097a844c` removes the bootstrap `GameTooltip_AddMoneyLine` substitute: it incorrectly treated argument three as prefix text, used plain `GetMoneyString`, and omitted loaded color selection. `e393e2f8e` verifies hash-matched 3/3 loaded Blizzard tooltip/mail consumer cases plus 2/2 fresh bootstrap-surface checks. Format, default check, both default binary builds, zero-error startup, three validators, and manifest hash scanning pass. The first 12.0.7 validator failed only for invalid `load_addon` metadata; the corrected retry passed. The dependency closure emitted 128 distinct Lua-error headers plus 18 suppression notices, including missing `GetSystemSettingDisplayInfoMap` at `EditModeSystemTemplates.lua:27`; this is not clean whole-addon/container/layout proof. Native historical-client behavior, locale/rendering variation, and whole-addon compatibility remain open. See [[tooltip-money-line]] and [tooltip money-line spec](../specs/tooltip-money-line.md).
+
+## [2026-09-12] audit | Credit bounded `C_Timer.After` dispatch
+
+`1e069b03b` gives `After` a dedicated no-argument simulator invoker, retaining callback capture and cancellation suppression while leaving `NewTimer`/`NewTicker` proxy delivery unchanged. `a1c187d2f` credits only `changed:C_Timer.After`, renews 53 existing references across 52 rows, and moves retail 12.0.0 to `2261 / 1147 / 2`. `/tmp/verify-timer-after-ledger.json` reuses hash-matched 12.0.0 4/4 GREEN and records fresh 4/4 focused cases on 12.0.5, 12.0.7, and Mists. At `62b9eb70c`, format, default check, both default binaries, zero-error startup, canonical validation, and all-manifest evidence hashes pass. Historical-profile warnings remain 6/1/6 on 12.0.5/12.0.7/Mists; default verification emitted none. Native callback/container identity, historical arity, coercion, exact timing, cancellation, lifecycle/GC, and real consumer behavior remain open. See [[timer-after-callback-dispatch]] and [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] audit | Credit nonzero duration defaults transition
+
+`5f7d70fe6` adds one 12.0.0 test for `SetToDefaults` from nonzero configured timing and a bound manual clock. `44e8055e3` credits only that row, moving the register to `2260 / 1148 / 2`; 20 existing duration-test hashes renew across two manifests. `/tmp/verify-duration-defaults-ledger.json` records 8/8 duration-core tests on retail 12.0.0 (reused matching hashes), 12.0.5, and 12.0.7; format/readability pass, production check/build/startup proof is unchanged and reused, and both affected validators pass with fresh hashes. Native reset/clock/coercion/error/identity/security and consumer behavior remain open. See [[patch-12-0-0-api-audit]] and [[duration-core]].
+
+## [2026-09-12] audit | Credit existing duration timing assertions
+
+`fb6149683` changes eleven 12.0.0 duration rows to bounded best-effort from existing `duration_core::` behavior only: configuration, endpoints, rate, total/elapsed/remaining duration, reset, and current time. `e26ebc464` narrows two summaries to actual assertions. `/tmp/verify-duration-existing-final-ledger.json` passes metadata follow-up: `3410` rows, `2259 / 1149 / 2`, and zero stale hashes. Native and consumer semantics remain open; `Assign`, `Copy`, and evaluation methods gain no credit. See [[patch-12-0-0-api-audit]] and [[duration-core]].
+
+## [2026-09-12] system | Verify duration-percent simulator policy
+
+`/tmp/verify-duration-percent-ledger.json` reuses matching 12.0.0 proof and records seven `duration_core::` tests passing on 12.0.5 and 12.0.7, with format, check, build, and standalone startup also passing. `eb2d60dc8` refreshes 21 stale hashes across seven PTR rows; `/tmp/verify-duration-percent-reconciled-ledger.json` then passes all-manifest freshness and both affected validators. No overall-audit completion is claimed. Fractions remain ordinary simulator policies, not native or consumer proof. See [[duration-core]].
+
+## [2026-09-12] audit | Add ordinary CurveUtil boolean selectors
+
+`977d30276` installs the two 12.0.0 `C_CurveUtil` boolean selectors behind the retail-12.0.0 feature gate; `be38a2c52` credits only those two rows. Ordinary color selection returns a fresh ColorMixin table, component selection returns the selected number, and both candidate arguments are validated before selection. These are simulator policies, not native identity/coercion/security evidence. The five behavioral tests were RED at `7e2d48ae8`; grouped 12.0.0 proof is 32/32. Independent controls passed 5/5 on 12.0.5, 5/5 on 12.0.7, and 1/1 on Mists; format/check/build and current-retail startup (`[]`) passed. Historical-profile warnings were pre-existing. Eighty-two existing references renew provenance only. See [boolean color selection](../specs/boolean-color-selection.md).
+
+## [2026-09-12] audit | Reconcile unsafe retail 12.0.0 source context
+
+`5e8fc3902` + `a9da1cf7f` reconcile all 538 stale references across 478 rows: 536 unsafe source-context references and two legacy rows with explicit PTR assertions backed by unchanged PTR proof. Corrections through `9aa6f7ada` bring related curve references to 27 and remove false duration-clock, point-structure, and producer-absence claims. No status, behavior, test, assertion, or source-pin credit changes; totals remain `2244 / 1164 / 2`. Independent metadata verification and canonical validation passed: 3410 rows, exact checklist/inventory, zero stale hashes. Older entries record commit-time state; compatibility gaps remain open. See [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] system | Prove bounded unit raid-target icons and sprite cells
+
+`b269650ae` credits exactly bounded `SetRaidTarget` and `TextureBase.SetSpriteSheetCell` behavior, expanding existing `GetRaidTargetIndex` credit to `2244 / 1164 / 2`. Final runtime `5bc5cdb6f` preserves one recorded plus one synchronous post-mutation `RAID_TARGET_UPDATE`; metadata `8d1ad818c` is unchanged through `9a2892eec`. Historical proof was 23 targeting tests (19 existing, four icon) + sprite 3 + consumer 1, with two corrected record tests separate. Independent proof passed corrected record/consumer 3/3 on 12.0.7 and record 2/2 on Mists; earlier 12.0.5/12.0.7 51-case and Mists ordinary-control proof is reused only for unaffected assertions. Fresh format/check/build/current startup (`[]`) passed. Historical consumer closures retain 71 known errors; current closure errors are distinct. Optional dimensions, native fidelity, and XML construction remain open. Five other validators retain valid proof; 12.0.0 still fails unchanged 538 stale references. World markers and `RemoveRaidTargets` remain evidence-required. See [[unit-raid-target-icons]], [sprite cells](../specs/sprite-sheet-cell.md), and [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] audit | Renew tested retail 12.0.0 evidence
+
+`5a4893d57` renews 1,040 references: 1,034 behavioral references across 917 rows plus six provenance-only references. Eleven curve rows now describe tested userdata behavior through `src/c_api/c_curve_util.rs`; classifications remain `2242 / 1166 / 2`. The 538 unresolved references remain 536 evidence-required and two PTR-only legacy compatibility rows. Canonical validation is pending. See [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] test infrastructure | Restore later EncounterEventFlags test reachability
+
+`093371db9` moves `patch_12_0_0_small_enums` outside the exact-12.0.0 test-module registry. Its module gate permits later retail epochs, but its later `EncounterEventFlags` control requires `retail-12-0-5`; the enclosing registry had excluded that configuration, so the control could not run. The 12.0.0-only assertions remain individually gated. Test wiring only: focused later-epoch proof passed 1/1, alongside 3/3 historical small-enum controls; no runtime, audit, or native claim changes. See [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] test infrastructure | Gate current-profile helpers from historical library builds
+
+`cf08fa330` gates three existing 12.1.5 test modules in `wow_api_globals/mod.rs` to current retail/PTR. The functions were already profile-gated, but unconditional module inclusion prevented the retail 12.0.0 `--lib` target from compiling because a HousingResult helper referenced PTR-only `crate::ptr`. This changes test compilation only; pending 12.0.0 stale-evidence proof is not claimed as rerun. See [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] audit | Record bounded 12.0.0 paragon and specialization proof
+
+`dc346a706` adds a sixth explicitly seeded paragon storage return; `9a8c05992` resolves the pinned seventh specialization `classID` against existing records. Focused paragon and specialization proof passed, including unchanged cached CooldownViewer cross-class output. Independent proof at `9a8c05992` passed 29/29 grouped 12.0.7 cases, 12/12 historical admin controls, and 10/10 Mists controls; format/check/build/readability and current-retail startup (`[]`) passed. Two rows gain bounded best-effort credit (2242 / 1166 / 2 exceptions). Native storage/validation, Journeys sixth-return consumption, and clean historical UI loading remain unproven; historical loader errors are retained in the proof ledger. See [paragon storage](../../specs/faction-paragon-storage-level.md), [specialization class selection](../../specs/specialization-class-selection.md), and [[patch-12-0-0-api-audit]].
+
+## [2026-09-12] audit | Clarify 12.0.5 same-size transition blocker
+
+`ScaleEventProbe.SameSizeDuplicatePair` remains evidence-required/impossible. Retained live data already captures dimensions and ordered pairs; the missing fact is a production maximize/restore/fullscreen transition input. The simulator receives only draw-time `iced::Size` and ignores equal sizes, while pinned iced 0.14.0 / winit 0.30.12 provide no ordered mode-transition notification. Polling mode/maximize state or firing an admin event would be an approximation, not a fidelity fix. The 12.0.5 register remains 33 best-effort, 4 evidence-required, and 1 provenance exception. See [[patch-12-0-5-api-audit]].
+
+## [2026-09-12] audit | Document bounded 12.0.7 encounter-end input
+
+`ee979b81b` adds an explicit simulator-only `A_Admin.SimulateBossKill` status-list input for the 12.0.7 `ENCOUNTER_END.encounterUnitStatus` field. It copies caller-supplied records or emits a fresh empty list; it does not infer boss state. Tests were committed RED-first in `3c6c8e72d`; independent proof now passes fourteen 12.0.7 admin cases and twelve 12.0.5 controls. Existing best-effort classification now describes the explicit producer rather than registration alone; native encounter production remains unproven. See [admin event inputs](../../admin-api/events.md), [encounter-end status](../../specs/encounter-end-unit-status.md), and [[patch-12-0-7-api-audit]].
+
+## [2026-09-12] audit | Credit bounded 12.1 private projection policies
+
+`8787273ad` moves exactly `PrivateScriptObjects.PrivateIdentity` and `InaccessiblePublicKeys` to bounded best-effort. Six retail `forbidden_partition_` tests prove interned distinct projections, per-frame field/method isolation, native parent/method acceptance, ordinary-table spoof rejection, ordinary-field transfer, and actual AuraContainer provider/initializer boundaries. This is simulator partition behavior only: no native identity equivalence, universal inaccessible-key list, caller authority, hook/storage boundary, secret behavior, or security enforcement is claimed. Three earlier-12.0.7 controls also pass. Current register: 42 best-effort / 12 evidence-required. See [policy spec](../specs/script-object-environments.md) and [[patch-12-1-api-audit]].
+
+## [2026-09-12] audit | Credit modeled 12.1 scripted input and focus queries
+
+`7d4ff6e8d` moves exactly `ForbiddenAspects.ScriptedInput` and `QueryFocus` to bounded best-effort. A caller-neutral simulator policy rejects only six PTR-annotated Lua methods before state/callback changes: `Click`, `SetFocus`, `ClearFocus`, `SetCursorPosition`, `HasFocus`, and `IsMouseMotionFocus`. Four integration and three GUI-mouse tests retain physical clicking, edit-box click-to-focus/typing, ordinary controls, global focus queries, and `IsMouseOver`. Earlier-profile proof remains pending. Native security, authority, error wording, and timing remain unverified. Current register: 40 best-effort / 14 evidence-required. See [policy spec](../specs/forbidden-aspect-scripted-input-query-focus.md) and [[patch-12-1-api-audit]].
+
+## [2026-09-12] audit | Credit modeled 12.1 event and keyboard restrictions
+
+`5125e2407` moves `ForbiddenAspects.EventRegistrations` and `AlwaysPropagateInput` to bounded best-effort. Event registration mutations reject before listener/callback/index changes and preserve existing delivery; effective keyboard propagation is forced by direct, inherited, or handler-added masks, and disabling rejects without state loss. These are caller-taint-neutral simulator policies, not native security/routing/error/timing claims. Focused retail tests: five event cases and three keyboard cases passed. Current register: 38 best-effort / 16 evidence-required. See [policy spec](../specs/forbidden-aspect-event-input.md) and [[patch-12-1-api-audit]].
+
+## [2026-09-12] audit | Preserve patch 12.1 historical cache input
+
+`6572d7b0e` preserves the original PTR 12.1 file list in `data/patch-api/sources/12.1.0-ptr-cache-manifest.txt`; both 12.1 manifests point to that immutable audit input. Runtime `data/blizzard-ui-files/ptr.txt` remains current-PTR data. This is provenance preservation, not native historical execution. See [[patch-12-1-api-audit]].
+
+## [2026-09-12] audit | Credit bounded patch 12.1 binding and removal policies
+
+Audited `37c599ca6` after implementation/proof commits `9a8189612`, `d7bcd3589`, `b78b996b4`, `960877d1c`, and `173023b62`. The 54-row 12.1 behavior register is now 36 best-effort and 18 evidence-required: userdata DurationTextBinding representation/retention, post-world-entry strict-removal visibility, and idempotent wrapper timing are bounded simulator policies. Native object layout/finalization/GC, exact native retirement timing, private/secret behavior, and security remain unverified. Development proof is recorded; final independent verification remains pending. See [DurationTextBinding](../specs/duration-text-binding.md), [strict-removal timing](../specs/strict-removal-timing.md), and [[patch-12-1-api-audit]].
+
+## [2026-09-12] audit | Record PTR remaining structure controls
+
+Captured [`Ptr125RemainingProbe`](../addons/Ptr125RemainingProbe/README.md) non-secret structure controls on PTR `12.1.5.69594` / interface `120105`; committed exact artifact [`ptr-12-1-5-remaining-structures.lua`](../baselines/ptr-12-1-5-remaining-structures.lua). Positional Texture/FontString/Line/MaskTexture controls preserved tested names/layers/sublevels; templates measured about `17 × 19` and `23 × 29`; candidate options-table calls and public documentation-structure globals failed/returned nil. `SignalAt(17, 74362.09300000001)` yielded confirmed membership/time and a two-number `(17, time)` next-signal result, not an entry table. No generated structure contract, public globals, or audit rows were inferred; counts remain `439 / 10`. Secret/access work is deferred. See [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR script-bucket throttle mock output
+
+`ec51f3a7e` and `6a6244864` move exactly six added rows to bounded best-effort: `GetScriptBucketThrottleLimits`, `ScriptBucketThrottleLimits`, and its four fields. Credit proves only PTR publication, earlier-retail absence, one fresh return table, and four numeric-zero mock fields. The zeros are placeholders, not native limits or disabled-mode semantics. Native limit values, normal/restricted selection, accounting, enforcement, and setters remain unclaimed. Totals: 439 best-effort, 10 evidence-required, 0 untriaged. See [script bucket throttle mock](../specs/script-bucket-throttle-limits.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR channel and empower spellcast events
+
+`89c03462c` moves exactly six changed spellcast rows to bounded best-effort: `UNIT_SPELLCAST_CHANNEL_START`, `CHANNEL_UPDATE`, `CHANNEL_STOP`, `EMPOWER_START`, `EMPOWER_UPDATE`, and `EMPOWER_STOP`. Committed source/test/spec review credits only public `A_Admin` inputs, retained state/identity, millisecond timing queries, exclusive cross-mode replacement, callback-safe terminals, and unmodified Blizzard consumers on PTR and earlier retail. `UnitChannelInfo` excludes empower hold while the deadline includes it. Natural/early STOP uses nil `interruptedBy`, a consumer-driven policy conflicting with generated non-nil metadata. The unmodified empower UPDATE handler retains old pips and omits hold from display maximum; no full native UI correctness is claimed. Refreshed all stale shared cast/query/state evidence hashes, including affected producer/query tests. Totals: 433 best-effort, 16 evidence-required, 0 untriaged. See [channel/empower lifecycle](../specs/channel-empower-lifecycles.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR EncounterWarnings Edit Mode preview rows
+
+`c4423207a` moves exactly `changed:C_EncounterWarnings.EncounterWarningInfo` and `.duration` to bounded best-effort/behavioral. Committed source/test/spec review covers only fresh synthetic fourteen-field Low/Medium/High preview records, independent ColorMixin colors, finite five-second duration, and the actual Blizzard EncounterWarnings Edit Mode view's display, existing timer expiration, replacement, cancellation, and reuse lifecycle. `AnimationGroup:Play()` now commits state then dispatches existing `OnPlay` handlers after releasing its borrow; this is a bounded model-root correction supporting the unmodified consumer, not credit for unrelated animation rows or a native callback/security claim. No gameplay warning trigger/store, sound/chat behavior, preview/native values, security, taint, protected/forbidden semantics, or native timing is credited. Refreshed the two warning-row evidence sets and all 16 stale shared SimpleAnim/SimpleAnimGroup source hashes. Totals: 423 best-effort, 26 evidence-required, 0 untriaged. See [warning preview](../specs/encounter-warning-preview.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR EncounterTimeline core, tracks, filters, views, and Edit Mode
+
+`385c7790f` core plus implementation/test commits through `ec9f06834` move eleven remaining changed rows to bounded best-effort: `AddEditModeEvents`; `EncounterTimelineEventFilter` with `maxEventDuration`; `EncounterTimelineTrackInfo` with `maximumDuration`, `minimumDuration`, `minimumEventIntroDuration`, and `minimumEventGapDuration`; `GetSortedEventList`; `GetTrackMaxEventDuration`; and `GetEventHighlightTime`. Together with the prior nine core rows, recorded source/test proof covers only fixed simulator tracks, queue hold, filters, previews, and real Blizzard TrackLayout/TimelineView consumers. `GetViewType` is a documented target API, not an invented helper. Thresholds, capacities, hidden/order policy, colors/icons, native hold placement, ordering, validation, security, and native timing/layout remain assumptions or unverified. Final combined verification remains parent-owned; platform execution is accepted pending. Totals: 421 best-effort, 28 evidence-required, 0 untriaged. See [script-event core](../specs/encounter-timeline-script-core.md), [tracks](../specs/encounter-timeline-tracks.md), and [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR EncounterTimeline script core
+
+`385c7790f` originally moved nine exact changed rows to bounded best-effort: `GetCurrentTime`, `GetEventTimeElapsed`, `GetEventTimeRemaining`, `EncounterTimelineEventInfo` with `duration`/`maxQueueDuration`, and `EncounterTimelineScriptEventRequest` with `duration`/`maxQueueDuration`. Subsequent track/view proof supersedes the former metadata-only/deferred-track boundary; native ordering, security, coercion, and timing semantics remain unverified. See [script-event core](../specs/encounter-timeline-script-core.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR SecondsFormatter.Format
+
+`59833ba76` implements; `ab2972d99` and `4901c9255` correct source/test evidence for `changed:SecondsFormatter.Format`. Pinned PTR publishes only `None=0`, `Truncate=1`, `OneLetter=2`, mapping `0` wide, `1` short, `2` narrow; aliases and `3` are absent/rejected. Earlier retail deliberately retains its legacy four-member enum and placeholder output as a baseline gap. Renderer policy, native wording/defaults, exact ICU output, coercion, security, and Windows/macOS/Docker execution remain unverified. Totals: 401 best-effort, 48 evidence-required, 0 untriaged. See [format](../specs/seconds-formatter-format.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR animation factory
+
+`df07f0c37` reviews implementation commits `b171612210` and `61eb0d358` and moves only `changed:SimpleAnimGroup.CreateAnimation` to `best-effort`/`behavioral`. Ordinary simulator credit covers optional arguments, requested identity, group ownership/order, real XML virtual templates, parent-first inheritance, supported fields, script binding, instance isolation, simulator unknown/cyclic-template errors, and recorded PTR/earlier-retail proof. The PTR `AddAnimations` forbidden-aspect delta, `SecretArguments`/security enforcement, native coercion, unsupported engine fields, and native error semantics remain unverified. Refreshed 16 shared SimpleAnim/SimpleAnimGroup query-row source hashes after the factory import change. Totals: 400 best-effort, 49 evidence-required, 0 untriaged. See [animation factory](../specs/animation-factory.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR ICU4C string matches
+
+`cca21ea0774872e520a5a7f693f8148e978fc119` and `328f229e6c8f3793010027e8b498d0f5e873b3c0` credit global/context `FindStringMatches`. Committed source/test review covers all five strengths, global/context locale selection, one linear UTF-16-to-UTF-8 byte-offset map, canonical/expansion matching, multibyte/NUL input, non-overlap, and earlier-retail absence. Zero-based offsets, normalization, empty-table and zero-length-match policy remain modeled; `MayReturnNothing`, ICU4C-vs-ICU4X data, native WoW equivalence, and security remain unverified. Platform execution is accepted pending. Totals: 399 best-effort, 50 evidence-required, 0 untriaged. See [string matches](../specs/intl-string-matches.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR ICU4C display names and transliteration
+
+`617d79e82` moves global/context `GetDisplayName` and global `Transliterate` to bounded best-effort. Review covered naming direction, independent context/current locale selection, strict UTF-8, transliteration and retrying growth, and PTR/retail profile source. ICU data/version/inheritance, error/no-result behavior, native equivalence, and security remain unverified. Platform execution remains accepted pending. Totals: 397 best-effort, 52 evidence-required, 0 untriaged. See [display names and transliteration](../specs/intl-display-transliteration.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR ICU4C date/time formatting
+
+`ca312b672`, `3259e3a76`, and `ec09c4037` credit six bounded PTR rows: global/context `FormatDate`, `FormatTime`, and `FormatDateTime`. Focused native and profile proof covers Unix seconds × 1000, all five styles including `None`, supplied valid UTC/fixed-offset/named zones, day boundary, New York DST, locale/context selection, and earlier-retail absence. Empty-zone UTC, both-None empty output, validation, exact output, ICU/CLDR/tzdata version, no-result conditions, native WoW equivalence, and security remain policy or unverified. Windows/macOS/Docker execution remains accepted pending. See [date and time formatting](../specs/intl-date-formatting.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-11] audit | Credit PTR ICU4C currency metadata
+
+`2170f394a` supplies committed source and focused test evidence for global/context `GetCurrencyName` and global `GetCurrencyFractionDigits`. The manifest credits only five-style mapping, locale selection, known/miss catalogue behavior, USD/KWD/JPY precision, and PTR/earlier-retail profiles: 388 best-effort, 61 evidence-required, 0 untriaged. Invalid-code errors and unknown-code zero results remain selected policy; ICU naming/catalogue/version, security, native WoW conformance, and Windows/macOS execution remain unverified or pending. See [currency metadata](../specs/intl-currency-metadata.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit PTR ICU4C number and currency APIs
+
+`03e788970`, `8b1648770`, `ddb780f86`, and `0f25b13b7` credit 11 bounded PTR rows: global/context `FormatNumber`, `ParseNumber`, `FormatCurrency`, `ParseCurrency`, and `CurrencyParseResult` with `amount`/`currencyCode`. Eight Linux native-wrapper tests and three PTR Lua API tests prove ordinary ICU4C-backed behavior only. ICU defaults/data, rounding, parsing grammar, error policy, `AllowedWhenUntainted` enforcement, native WoW equivalence, retail exclusion, and macOS/Windows linkage/runtime smoke remain unresolved. See [number formatting](../specs/intl-number-formatting.md), [native linking](../specs/intl-native-linking.md), and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit `SimpleAnim.SetParent`
+
+`e44ffa9a8` credits the changed `SimpleAnim.SetParent` row as bounded ordinary simulator behavior. Focused PTR and earlier-retail tests cover ownership transfer, configuration/index/target preservation, local-progress reset only across owners, existing destination timelines, callback ownership, same-parent behavior, atomic rejection, and generic frame/region regression. Native timing, scheduling, coercion, callback-dispatch mutation, and protected/secret/taint/forbidden-aspect semantics remain unresolved. Totals: 374 best-effort, 75 evidence-required, 0 untriaged. See [animation SetParent](../specs/animation-set-parent.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit SecondsFormatter evaluators
+
+`89fced131` and `b2856c8ff` credit `SecondsFormatter.CanApproximate`, `EvaluateMinInterval`, `EvaluateMaxInterval`, and `EvaluateDesiredUnitCount` as bounded configured proxy behavior. Tests cover strict approximation bounds, static values, live curve dispatch/mode switching, validation, independence, and exact arity on PTR and earlier retail. Native defaults, unit policy, curve rounding, formatting, coercion, `Seconds` identity, and security remain unresolved. Totals: 373 best-effort, 76 evidence-required, 0 untriaged. See [configuration](../specs/seconds-formatter-configuration.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit cooldown numeric methods and shared `Clear`
+
+`943b21255`, `9b2ddae68`, `060dbc0ff`, and `e70762b3b` credit eight changed `FrameAPICooldown` rows: `Clear`, `GetMinimumCountdownDuration`, `SetCooldown`, `SetCooldownDuration`, `SetCooldownFromExpirationTime`, `SetCooldownUNIX`, `SetCountdownAbbrevThreshold`, and `SetMinimumCountdownDuration`. Focused PTR and earlier-retail tests prove stored numeric state, default rate one, literal UNIX-start storage, expiration-minus-duration storage, and shared `Clear` dispatch without MessageFrame/ScrollingMessageFrame regression. Native units/epoch conversion, coercion, security enforcement, rendering/countdown effects, and native timing remain unresolved. Totals: 369 best-effort, 80 evidence-required, 0 untriaged. See [cooldown numeric methods](../specs/cooldown-numeric-methods.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit PTR animation query lifecycle
+
+`9bc06cfe2`, `23bdf9fe6`, and `70cf29a12` credit sixteen changed `SimpleAnim` / `SimpleAnimGroup` query rows as bounded ordinary simulator behavior. Focused PTR and earlier-retail tests exercise real playback, pause/resume, restart/stop, pending finish callbacks, reverse/repeat/bounce loops, delays, and query boundaries. Native owner/child lifecycle, security, timing, smoothing, identity, reverse/bounce geometry, callback timing, and mutation contracts remain unresolved. See [animation query lifecycle](../specs/animation-query-lifecycle.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | SecondsFormatter configuration
+
+`872b24bd8` adds independent approximation-seconds and millisecond-threshold state. Four audit rows cover modeled accessors only; formatting/evaluation and native defaults/security remain unverified. See [configuration](../specs/seconds-formatter-configuration.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit cooldown `clearIfZero` behavior
+
+`8ccb7897c` credits `FrameAPICooldown.SetCooldownFromDurationObject` as bounded ordinary simulator behavior. Real duration-proxy tests establish explicit `false` preserves zero-duration timing, omitted/`true` clears it, and nonzero duration updates ignore the flag. The base/PTR declarations both default `clearIfZero` to `true`; protected-call enforcement, secret/taint/forbidden behavior, coercion, rendering, and native timing remain unresolved. Totals: 341 best-effort, 108 evidence-required, 0 untriaged. See [duration core](../specs/duration-core.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit table freezing
+
+`8c1011969` supplies modeled `table.freeze` / `table.isfrozen` state and profile return arity. Four tests per profile cover isolated recursive graphs and guarded mutations; native traversal and shared-environment hazards remain unresolved. See [table freezing](../specs/table-freeze.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit PTR spellcast producer payloads
+
+`f474fb2f9` and `c09027a2d` credit three changed spellcast event rows: `UNIT_SPELLCAST_START`, `UNIT_SPELLCAST_STOP`, and `UNIT_SPELLCAST_SUCCEEDED`. Real action-spell, crafting, specialization, and timed-completion tests establish four modeled payload fields: unit target, synthetic cast GUID, spell ID, and cast-bar ID. Native GUID format, lifecycle timing/order, secret/restricted behavior, invalid transitions, and all other spellcast events remain unresolved. Totals: 338 best-effort, 111 evidence-required, 0 untriaged. See [spellcast payloads](../specs/spellcast-event-payloads.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit PTR Training Grounds classification
+
+`60ca3d415` and `8c13c6e80` credit `C_PvP.IsTrainingGroundsArena` and `C_PvP.IsTrainingGroundsBG` as bounded PTR simulator behavior. Focused tests prove PTR publication, explicit Arena/Battleground catalog classification, unclassified and unknown false results, live catalog mutation, input validation, unaffected LFG/PvP regressions, and earlier-retail absence before and after bootstrap. Fixture IDs and default catalog classification are simulator-owned; real game catalog IDs, classification, security, taint, coercion, and native semantics remain unresolved. See [Training Grounds classification](../specs/training-grounds-classification.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit PTR aura caster GUID model
+
+`7e694c69d`, `b2a6b845c`, and `41f83ecdb` credit `C_UnitAuras.GetAuraCasterGUID` as bounded PTR simulator behavior. Focused tests prove PTR publication, player/party source resolution, unit and aura-instance isolation, unresolved-source nil, live source-token changes, required arguments, and earlier-retail absence. The result deliberately resolves the current `source_unit` through `UnitGUID`, not a captured native caster GUID; access control, aura validity, secrecy, taint, coercion, and native semantics remain unresolved. See [aura caster GUID](../specs/aura-caster-guid.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit PTR cast-bar query returns
+
+`3d4d483d3` and `cf43bfdef` credit six changed `UnitCastingInfo` / `UnitChannelInfo` rows: both functions, result structures, and `castBarID` fields. Focused tests prove 11-result cast/channel tuple ordering, numeric state-backed castBarID placement, and no-cast nil results. UnitCastBarID mapping is simulator-owned; spellcast event payloads/timing, native identity allocation/reuse, interruptibility, coercion, taint, secret, protected, forbidden, and native-edge behavior remain unproven. Totals: 335 best-effort, 114 evidence-required, and 0 untriaged rows. See [cast-bar ID returns](../specs/cast-bar-id-returns.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-10] audit | Credit PTR active LFG dungeon name
+
+`cc15512ab` and `f96557ce2` credit `C_LFGInfo.GetActiveLFGDungeonName` as bounded PTR simulator behavior. Focused tests prove PTR publication, current instance-ID/LFD-catalog lookup, live state changes, inactive/proposal-only empty-string behavior, unknown-ID error recovery, arity, unaffected existing LFG APIs, and earlier-retail absence before and after bootstrap. Instance-ID-only selection, inactive/error behavior, validation, queue/proposal precedence, security, taint, coercion, and native semantics remain assumptions or unresolved. See [active LFG dungeon name](../specs/active-lfg-dungeon-name.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] audit | Credit PTR ICU collation
+
+`974e38888` credits global and locale-context `CompareStrings` and `GetSortKey` for focused PTR ICU 2.1.1 five-strength comparison, binary-key ordering, locale-context mutation, validation, and earlier-retail absence. Signs, raw key bytes, locale parsing, errors, `MayReturnNothing`, Unicode/CLDR equivalence, security, and native semantics remain assumptions or unresolved. See [PTR Intl collation](../specs/intl-collation.md), [[intl-collation]], and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR ICU collation
+
+[[intl-collation]] records the ICU collation dependency, binary-key model, locale-context behavior, proof, and native-conformance boundary.
+
+## [2026-09-09] audit | Credit PTR ICU locale transforms
+
+`15a52023b` and `1b287e67e` credit `C_Intl.TransformLocale` and `LuaLocaleContext.TransformLocale` for PTR-only modeled ICU 2.1.1 canonicalization, likely-subtag transforms, component extraction, syntactic parent reduction, context independence, invalid-input behavior, and earlier-retail absence. WoW-tag translation, serialization, empty components, variant order, parent policy, `MayReturnNothing`, CLDR/Unicode-version equivalence, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR locale transforms](../specs/intl-locale-transform.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR locale transforms
+
+[PTR locale transforms](../specs/intl-locale-transform.md) records the ICU dependency pin, return-only context behavior, selector coverage, and simulator/native boundary.
+
+## [2026-09-09] audit | Credit PTR FindBreaks behavior
+
+`d86f5c177`, `2744e14ba`, and `e30cf16b0` credit `C_Intl.FindBreaks` and `LuaLocaleContext.FindBreaks` for focused PTR ICU 2.1.1 grapheme, word, sentence, and line UTF-8 byte-boundary tables plus earlier-retail absence. Zero-based endpoints, empty-input handling, locale-independent segmentation, validation, optional returns, Unicode-version equivalence, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR Intl breaks](../specs/intl-breaks.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] audit | Credit PTR ICU titlecasing
+
+`0081d03f0` and `bd3d6a330` credit `C_Intl.ToTitle` and `LuaLocaleContext.ToTitle` for PTR-only modeled ICU 2.1.1 per-word titlecasing on valid UTF-8, punctuation/spacing preservation, focused locale cases, and earlier-retail absence. Word segmentation, default ICU options, malformed-input/`MayReturnNothing` behavior, locale translation, Unicode version, cstring, security, coercion, and native semantics remain assumptions or unresolved. See [PTR Unicode titlecasing](../specs/intl-titlecase.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR ICU titlecasing
+
+[PTR Unicode titlecasing](../specs/intl-titlecase.md) records per-word ICU segmentation/titlecasing, dependency pins, focused proof, and the native-conformance boundary.
+
+## [2026-09-09] audit | Credit PTR ICU casing
+
+`f94a5be6d` credits the six PTR global/context casing declarations for focused ICU 2.1.1 lower, upper, and full-fold behavior on valid UTF-8 plus earlier-retail absence. Locale identifier translation, invalid-input errors, Unicode-version equivalence, embedded-NUL, coercion, security, and native semantics remain simulator assumptions or unresolved. See [PTR Unicode casing](../specs/intl-casing.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR ICU casing
+
+[PTR Unicode casing](../specs/intl-casing.md) records the direct ICU dependencies, modeled locale parsing, test coverage, and source-versus-native boundary.
+
+## [2026-09-09] audit | Credit PTR locale scalar length
+
+`d491728e1` credits `C_Intl.Length` and `LuaLocaleContext.Length` for PTR-only valid UTF-8 Unicode scalar counting, locale-independent contexts, strict receiver/input validation, and earlier-retail absence. Scalar units and errors are simulator policy; byte, grapheme, UTF-16, cstring/NUL, MayReturnNothing, security, coercion, and native behavior remain unresolved. See [PTR text length](../specs/intl-length.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR locale scalar length
+
+[PTR text length](../specs/intl-length.md) records the shared strict UTF-8 implementation and explicit model/native boundary.
+
+## [2026-09-09] audit | Credit PTR ICU normalization
+
+`33ff9c993` credits `C_Intl.Normalize` and `C_Intl.IsNormalized` for PTR-only ICU 2.1.1 NFC/NFD/NFKC/NFKD behavior on valid UTF-8, predicate consistency, and earlier-retail absence. Invalid UTF-8/form errors and one-result Normalize handling are explicit simulator policy; native failure behavior, Unicode version, cstring embedded-NUL, coercion, and security remain unresolved. See [[intl-normalization]] and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model PTR ICU normalization
+
+Added [[intl-normalization]] with C API registration, ICU dependency pin, test coverage, and source-versus-simulator boundaries.
+
+## [2026-09-09] audit | Credit PTR locale-context storage
+
+`61bf36927` resolves five locale-context declarations as bounded simulator behavior: PTR exposes opaque userdata contexts with independent byte identifiers, `GetLocale`/`SetLocale`, and current-locale consistency; earlier retail omits `C_Intl` and no global type table is published. Identifier validation and setter-success rules are explicit simulator assumptions. See [[locale-context-storage]], [opaque locale contexts](../specs/intl-locale-context.md), and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] system | Model opaque PTR locale contexts
+
+[[locale-context-storage]] records the C API boundary, profile registration, state isolation, and exclusions for locale parsing, canonicalization, Unicode, formatting, and security semantics.
+
+## [2026-09-09] audit | Credit PTR duration core simulator behavior
+
+`9aa4a1eb7`, `89a71308d`, `7c3a41b67`, and `5149f5d46` credit manual-clock advance/rewind and duration start/end plus elapsed/remaining/total queries as bounded simulator behavior. [[duration-core]] preserves native timing, type identity, security, and forbidden behavior as unresolved.
+
+## [2026-09-09] system | Model bounded duration core
+
+`9aa4a1eb7`, `89a71308d`, `7c3a41b67`, and `5149f5d46` model ordinary clock-driven `LuaDurationObject` state and repair ordinary cooldown duration-proxy consumption through Lua indexing. [[duration-core]] separates simulator formulas from unproven native timing and security behavior.
+
+## [2026-09-09] audit | Credit PTR duration core behavior
+
+Seven changed duration rows are now bounded best-effort simulator behavior: manual advance/rewind plus start/end configuration and elapsed/remaining/total queries. Focused duration-core tests cover ordinary state; native `Seconds`, rate/modifier, clock/reset/zero, coercion, secret, protected, and forbidden behavior remains unclaimed.
+
+## [2026-09-09] audit | Credit PTR region rounding controls
+
+`fd2ab64d6` supplies client-retail method-absence coverage for Frame, Texture, and FontString; existing `pixel_rounding_probe` capture replay establishes the PTR flag/default/dirty-layout and captured geometry behavior. `SimpleScriptRegion.GetRoundLayoutToNearestPixel` and `.SetRoundLayoutToNearestPixel` are best-effort simulator behavior only. Protected/secret enforcement, inheritance, untested widget types, half-pixel ties, rendering, hit testing, coercion, and native edges remain unresolved.
+
+## [2026-09-09] audit | Credit PTR string extension simulator behavior
+
+`65704757d` implements five added PTR string methods; `a11406477` records the bounded source/test contract. Focused PTR proof covers byte-preserving literal/case matching, empty inputs and needles, one-sided byte-set trimming, the documented omitted trim default, and NUL/invalid UTF-8 bytes. Earlier retail omits all five methods. Byte-set/literal/case/explicit-nil choices are simulator assumptions; Unicode, locale, coercion, `AllowedWhenUntainted`, taint, secret, protected, forbidden, invalid-input, string-view identity/lifetime, and native-edge semantics remain unclaimed. Totals: 280 best-effort, 169 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [PTR Lua string extensions](../specs/lua-string-extensions.md).
+
+## [2026-09-09] audit | Credit PTR macro action tooltip query
+
+`80d312c5a`, `e53298cce`, and `96c186c1c` resolve `added:C_ActionBar.IsMacroActionWithShowTooltip` as one bounded best-effort behavioral row. The narrow `src/c_api/action_macros.rs` boundary owns PTR publication and macro-slot associations; focused tests cover macro-body lookup, assignment, edits, movement, replacement, deletion, ID reuse, directive-recognition assumptions, and earlier-retail fallback suppression. Directive case/line/token parsing and validation remain simulator assumptions, not native conformance; macro conditional/token resolution, secret/taint/protected behavior, coercion, macro execution, and native edges remain unclaimed. Totals: 275 best-effort, 174 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [macro tooltip query](../specs/macro-action-showtooltip.md).
+
+## [2026-09-09] audit | Credit PTR weather simulator proof
+
+`c77963250`, `42457f475`, and `b4943dcf6` resolve five rows as bounded simulator behavior: `C_Weather.GetCurrentWeather`, `WeatherInfo`, its `type` and `intensity` fields, and `WEATHER_CHANGED`. PTR tests cover fresh snapshots, controlled mutation, explicit zero-argument event injection after mutation, and earlier-retail namespace absence. Clear/zero initialization, validation, intensity range, event timing/payload, automatic transitions, rendering, security, and native behavior remain assumptions or unclaimed. Totals: 274 best-effort, 175 evidence-required, and 0 untriaged rows. See [[weather-state]] and [[patch-12-1-5-api-audit]].
+
+## [2026-09-09] audit | Credit PTR CreateFrameWithOptions adapter
+
+`e6712ab29` resolves the constructor, `CreateFrameOptions`, and seven fields as 9 best-effort/behavioral rows. Focused PTR proof covers declared structured allocation, ordered templates, explicit hidden/forbidden flags, and documented simulator validation/lifecycle choices; earlier retail keeps the constructor and argument structure absent. The [CreateFrameWithOptions spec](../specs/create-frame-with-options.md) labels lifecycle and validation choices as assumptions, not native conformance. Security, coercion, global structure publication, reentrancy, and native edges remain unresolved. Totals: 269 best-effort, 180 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR TimedSignalMap behavior
+
+`3bff28497`, `1be3abaa0`, `45b39beed`, and `ad23581f2` resolve 11 exact added rows as best-effort/behavioral: `C_Timer.NewTimedSignalMap`, `TimedSignalMap`, `CancelAllSignals`, `CancelSignal`, populated `GetNextSignal`, `GetSignalCount`, `GetSignalTime`, `HasSignal`, `SignalAfter`, `SignalAt`, and `TimedSignalMapCallback`. Focused PTR proof covers userdata factory publication, keyed scheduling/replacement/count/positive lookup/exact time/cancellation, and a callback receiving one numeric due key; focused earlier-retail proof verifies raw and ordinary factory lookup remain nil through the existing removed-key namespace mechanism. `RequiresTimedSignalMapAccess`, `TimedSignalMapEntry` and fields, empty-map `GetNextSignal`, FrameTime identity, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 260 best-effort, 189 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR HousingResult publication
+
+`e6ea692ba` and `950b8fb28` resolve 43 exact rows as best-effort/behavioral: changed `Enum.HousingResult`, added `MessageTooLong = 71`, and 41 shifted members from `MissingCoreFixture` through `UnlockOperationFailed`. Focused PTR proof verifies every member of the exact 113-value target table and metadata `0/112/113` before and after post-load bootstrap; earlier-retail proof verifies every member of the exact 112-value base table, `MessageTooLong` absence, and metadata `0/111/112`. Housing gameplay, consumers, validation, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 249 best-effort, 200 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR TooltipDataLineType publication
+
+`bb72d4031` and `28330eedd` resolve exactly three rows as best-effort/behavioral: changed `Enum.TooltipDataLineType`, added `UnitCriteriaProgress = 50`, and added `AuraCaster = 51`. Focused profile proof verifies PTR’s exact 52-member target map and metadata `0/51/52` before and after post-load bootstrap. Earlier retail intentionally retains its actual 47-member publication and stale metadata `0/43/44`, not the pinned 50-member base; this is numeric publication proof, not base conformance. Tooltip rendering, gameplay, consumers, validation, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 206 best-effort, 243 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR TransmogIllusionFlags publication
+
+`abcd763cb` resolves two exact enum rows as best-effort/behavioral: changed `Enum.TransmogIllusionFlags` and added `HiddenIllusion = 8`. Focused PTR proof publishes `1/2/4/8` with metadata `1/8/4` before and after post-load bootstrap. Earlier retail intentionally preserves the actual simulator `1/2` map and metadata `1/2/2`, not the pinned base `1/2/4` and `1/4/3`; this is publication proof, not base conformance. Gameplay, transmog, consumers, validation, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 203 best-effort, 246 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR TieredEntranceType publication
+
+`16a89f7b2` resolves three exact `Enum.TieredEntranceType` rows as best-effort/behavioral: the changed parent plus `Placeholder_5 = 5` and `Placeholder_6 = 6`. Focused PTR proof preserves `Invalid`/`Delve`/`Sites`/`WorldTier`/`Lairs` values `0/1/2/3/4`, adds both placeholders, and verifies metadata `0/6/7` before and after post-load bootstrap; focused earlier-retail proof preserves the five-value map, both additions absent, and metadata `0/4/5`. Placeholder meaning, consumers, validation, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 201 best-effort, 248 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR locale option enum publication
+
+`50958d938` resolves 45 added enum rows as best-effort/behavioral: parents and all members for `BreakType`, `CollationStrength`, `CurrencyNameStyle`, `DateTimeStyle`, `LocaleTransform`, `NormalizationForm`, `NumberStyle`, and `PluralType`. Focused client-profile proof derives each exact map and metadata from the pinned register, verifies PTR publication before and after post-load bootstrap, and verifies earlier-retail enum/metadata absence. `C_Intl`, Unicode, locale algorithms, formatting, collation, normalization, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 198 best-effort, 251 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR player-data flag enum publication
+
+`96b91aa4b` resolves four added enum rows as best-effort/behavioral: `Enum.PlayerDataElementAccountFlags`, `Enum.PlayerDataElementAccountFlags.Log`, `Enum.PlayerDataElementCharacterFlags`, and `Enum.PlayerDataElementCharacterFlags.Log`. Focused PTR proof verifies each exact one-member `Log = 1` map and metadata `1/1/1` before and after post-load bootstrap; focused earlier-retail proof preserves enum and metadata absence. Player-data, logging, gameplay, consumer, validation, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 153 best-effort, 296 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR WeatherType publication
+
+`286d0d3f7` and `17c085065` resolve six added `Enum.WeatherType` rows as best-effort/behavioral: parent `Enum.WeatherType` and `Clear=0`, `Rain=1`, `Snow=2`, `Sandstorm=3`, and `Miscellaneous=4`. Focused PTR proof verifies the exact five-member map and metadata `0/4/5` before and after post-load bootstrap; focused earlier-retail proof preserves enum and metadata absence. Weather state, events, intensity, rendering, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 149 best-effort, 300 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR CurioRarity publication
+
+`867bcc8ea` resolves `Enum.CurioRarity` and `Enum.CurioRarity.EpicTier2` as best-effort/behavioral. Focused PTR proof preserves Common/Uncommon/Rare/Epic values `1/2/3/4`, adds `EpicTier2 = 5`, and verifies metadata `1/5/5`; focused earlier-retail proof preserves the four-value map, `EpicTier2` absence, and metadata `1/4/4`. ItemQuality mapping, Curio/gameplay meaning, consumers, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 143 best-effort, 306 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR BonusStatIndex reserved-range publication
+
+`bc786d5e5` resolves 60 exact `Enum.BonusStatIndex` rows as best-effort/behavioral: the changed parent and `Reserved_83` through `Reserved_141`. Focused PTR proof preserves values 0–82, publishes every reserved value and metadata `0/141/142` before and after post-load bootstrap; focused earlier-retail proof preserves `0/82/83` and absence of every reserved addition. Stat/gameplay meaning, consumers, validation, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 141 best-effort, 308 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR caster-name aura option normalization
+
+`894333d48` resolves four added `C_AuraContainerUtil` rows as best-effort/behavioral: `CustomAuraButtonCasterNameOptions`, `showRealmName`, `useClassColors`, and `ProcessCustomAuraButtonCasterNameOptions`. Focused PTR proof covers processor publication, nil/omitted/empty defaults to `false`, and all explicit boolean combinations; earlier-retail proof preserves processor absence. Rendering, realm formatting, class-color display, coercion, secret/taint/protected/forbidden behavior, invalid inputs, and native edges remain unclaimed. Totals: 81 best-effort, 368 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit cooldown threshold publication
+
+Commit `88c705aa7` resolves three changed `FrameAPICooldown` threshold rows as best-effort/behavioral: `GetCountdownAbbrevThreshold`, `SetCountdownMillisecondsThreshold`, and `GetCountdownMillisecondsThreshold`. Focused PTR and earlier-retail tests prove method publication, simulator-default numeric storage, literal numeric round trips, independent cooldown-frame state, and preserved abbreviation setter behavior. The generated `DurationSecondsPrimitive` → `Seconds` aliases do not establish native defaults, rendering/display effects, units/conversion, type/coercion, security/taint/secret/protected/forbidden behavior, invalid inputs, or native edges. Totals: 77 best-effort, 372 evidence-required, and 0 untriaged rows. See [[patch-12-1-5-api-audit]] and [[patch-12-1-5-occurrence-inventory]].
+
+## [2026-09-09] audit | Credit PTR FragmentID publication
+
+Commit `5e5e46dd9` resolves 45 exact `Enum.FragmentID` rows as best-effort/behavioral: the changed parent enum, added `AuthMirrorState`, and 43 shifted members. Focused PTR proof derives and verifies the exact 78-member table plus `FragmentIDMeta` before and after the post-load bootstrap; focused earlier-retail proof preserves the exact prior table and metadata. Claims exclude gameplay meaning, consumers, validation, coercion, security/taint/secret/protected/forbidden behavior, invalid inputs, and native edges. Totals: 74 best-effort, 375 evidence-required, and 0 untriaged rows.
+
+## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
+
+Added [[patch-12-1-5-api-audit]], [[patch-12-1-5-occurrence-inventory]], `data/patch-api/12.1.5.json`, and the generated checklist for the pinned 449-row `12.1.0.69587` → `12.1.5.69594` documentation delta. Commit `1d11c0176` provides eight focused PTR table-extension tests, moving those rows to best-effort behavioral proof; Commit `240c662d0` credits 11 math rows, `ac3ac03ac` credits five PTR enum-publication rows, `ac40ca2cd` removes PTR publication of `C_TableUtil.FindIndexedMismatch`, and `f0ae4a96a` credits `table.getcountinfo` and `table.create`, bringing totals to 27 best-effort and 422 evidence-required; none are untriaged.
+
+## [2026-09-08] investigation | Native unit-frame layering establishes owner groups
+
+Reconciled [[betterblizzframes-no-portrait-overlay]], [[rendering-pipeline]], and [top-level render groups](../specs/toplevel-render-groups.md). `f5d9ff91f` groups descendants at their top-level owner's strata while preserving raw values and parent-derived raised levels; `4e89f895a` and `a9ef47c06` make flattened render-bucket rank input SSOT through coalesced Hide→Show; `2d3693f30` invalidates cached owner groups and hit eligibility on parent changes even when raw `HIGH` is unchanged. Core integration passed 13 cases; input coverage previously passed 28/29, then the sole reparent case passed after the invalidation fix. This is not a combined all-green rerun. Private actual-addon/SavedVariables `/tmp/pi-layering-fixed-fullscene.webp` and `.json` show BetterBlizzFrames no-portrait behind SpellBook while raw state remains `HIGH`/level `2` versus `MEDIUM`/level `1`; colored icons remain and Clicked tooltip spell `45524` succeeds. No private image is versioned. Final independent verification passed 48 library/32 integration cases; after readability-only refactors, stable `ffc125710` passed fmt/check and intersecting 10 library/13 integration cases. The report `/tmp/pi-toplevel-final-verification.md` distinguishes retained coverage, diagnostic ignore, visual proof and remaining limits. Default binaries were rebuilt; addon settings/raw strata were not changed.
+
+## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
+
+Added [[betterblizzframes-no-portrait-overlay]] after the `Uther` overlap report. Saved BetterBlizzFrames no-portrait mode creates a `HIGH`-strata PlayerFrame child; SpellBook is `MEDIUM`. Mask sampling did not change order. The user reports native WoW keeps the overlay below SpellBook; requested read-only [UnitFrameLayerProbe](../addons/UnitFrameLayerProbe/README.md) records raw layering/geometry state without altering observed panels or other addons' settings/SavedVariables. Five local protocol cases have valid retained passes across two runs; independent syntax/formatting, persistence and read-only audits passed (`/tmp/pi-unit-layer-probe-verification.md`). This staging record is superseded by the controlled native result above. No addon, SavedVariables, or simulator overlap correction was made.
+
+## [2026-09-08] rendering | Use alpha for all mask coverage
+
+Committed `939efe88d` after the supplied SpellBook screenshot showed blank active icons while passive icons rendered. Live state proved active icons had valid file IDs, texture state, and alpha; the square `spellbook-item-spellicon-mask` instead had black RGB with opaque alpha. The filename-derived RGB/alpha split was removed, so mask coverage now always samples alpha. Rendered-pixel RED/GREEN (`/tmp/pi-spell-mask-pixels-{red,green}.*`) covers the active SpellBook mask, passive talent-circle mask, and legacy CircleMask. Actual addon/SavedVariables GUI capture `/tmp/pi-spell-icons-after.webp` visibly restores active square icons and preserves passive circles (35 active, six passive). Independent verification `/tmp/pi-spell-icons-verification.md` passed fmt/check and nine focused UV/BC/minimap/spellbook regressions, reusing three passing GPU pixel tests. Existing user process was not restarted; rebuilt binary requires relaunch. Updated [[mask-texture]], [[action-button-icon-mask]], [[minimap-map-ring-alignment]], and [[rendering-pipeline]].
+
+## [2026-09-08] acceptance | Reconcile actual addon startup, aura surfaces, and accepted GUI proof
+
+Updated [aura options](../specs/aura-container-options.md), [curve objects](../specs/curve-objects.md), [duration binding](../specs/duration-text-binding.md), [forbidden aspects](../specs/forbidden-aspect-inheritance.md), [base aura secrecy](../specs/spell-aura-secrecy.md), [controlled-player tokens](../specs/unit-player-controlled-or-group-member.md), [Lua error reporting](../specs/lua-error-reporting.md), [[playerspells-runtime-load]], and [talents panel](../specs/talents-panel.md). Actual retail-addon/SavedVariables `lua-errors` returns JSON `[]`, exit 0, and final `CLEAN` with zero unique/occurrence errors (`/tmp/pi-accepted-final-startup.*`); three loader warnings remain. `/tmp/pi-gui-accepted-panels.json` proves accepted 1906-unit GUI Escape closes specialization without GameMenu and SpellBook has 43 visible/41 valid rows. Narrow 1266-unit panel-fit overflow remains unsupported. Final bounded verification passed: `cargo fmt --check`, default `cargo check`, 63 focused default integration tests, two legacy library tests, and 26 PTR integration tests with one existing ignored snapshot helper (`/tmp/pi-final-addon-verification.md`). A separate PTR no-addon/no-SavedVariables `lua-errors` run returned `[]`, exit 0 (`/tmp/pi-final-ptr-startup.*`); this is not PTR personal-addon acceptance. Default `wow-sim` was restored afterward (`/tmp/pi-final-default-restored.*`).
+
+## [2026-09-08] investigation | Record accepted PlayerSpells Escape viewport
+
+Updated [[playerspells-runtime-load]] and [talents panel](../specs/talents-panel.md) after the user explicitly accepted the wider window. `/tmp/pi-gui-escape-wide.json` proves actual retail addons and SavedVariables at a 1906-unit canvas: PlayerSpells remains a center panel and one native GUI Escape closes specialization without opening GameMenu. `/tmp/pi-gui-escape-fit-hook.json` preserves the unfixed 1266-unit overflow and the observed BlizzMove/EnhanceQoLMover callbacks without attributing sole cause. Superseded startup blocker text is reconciled by the entry above.
+
+## [2026-09-08] audit | Reconcile bounded aura-model proofs with full-addon blockers
+
+Updated [spell aura secrecy](../specs/spell-aura-secrecy.md), [forbidden-aspect inheritance](../specs/forbidden-aspect-inheritance.md), [duration binding](../specs/duration-text-binding.md), [[lua-api]], and [[patch-12-1-api-audit]] for commits `721836971`, `ee05355ae`, `d12cfead4`, `d1d65a92f`, and `92675f08d`. Focused proof is secrecy 4/4 in `/tmp/pi-aura-three-models-green.*`; forbidden 4/4 and duration 6/6 in `/tmp/pi-aura-followup-green.*`. At this audit point startup still failed on the dispel-filter enum and controlled-player global; the later reconciliation above records their resolution. GUI tracing proves panel-fit overflow and observes two fit callbacks in `/tmp/pi-gui-escape-fit-hook.json`; it does not assign sole causation to either hook.
+
+## [2026-09-08] system | Model base spell aura secrecy
+
+`721836971` adds a generated sparse native-attribute lookup for `C_Secrets.GetSpellAuraSecrecy`. Existing name/ID resolution and secrecy enum metadata are retained; contradictory flags yield an explicit query error. RED 4/4 missing-namespace failures became GREEN 4/4, including Blizzard's identity-candidate filter. Generator tests pass 4/4 and pinned regeneration is byte-identical. See [[lua-api]] and [the contract](../specs/spell-aura-secrecy.md); no combat secrecy policy or full-addon acceptance is claimed.
+
+## [2026-09-07] system | Model public/private aura ID enumeration
+
+`31b0e0f95` replaces missing instance-ID queries consumed by ManagedAuraContainer with existing public filter/block and private-list data. Native `GetUnitAuraInstanceIDs` returns one array; source-wrapper matched-filter flags remain true for public and false for private. Added the native three-value sound-trigger enum before secure copying. RED 5/5 failures became GREEN 5/5. See [[lua-api]] and [the contract](../specs/unit-aura-instance-enumeration.md).
+
+## [2026-09-07] investigation | Correct retail MicroMenu bootstrap gate
+
+Audited retail EncounterJournal TOC/bootstrap and reproduced the real `EJMicroButton` OnClick failure at line 1635 without fixture helper injection. Broadened the ordered bootstrap gate from `retail-12-1-5` to `retail-12-1-0`, leaving Classic selection unchanged. The regression now requires runtime LoD completion, two real clicks, visible/closed state, and empty error JSON. Source preparation is complete; GREEN awaits a build slot. See [[addon-loading]].
+
+## [2026-09-07] acceptance | Complete bounded PTR 12.1.5 proof
+
+`53b741bc3` closes the documented bounded PTR scope: selected parser/discovery/bootstrap lifecycle tests, native rounding fixtures, clean PTR startup, six representative panel transitions, and default preservation pass. It does not claim full API, all profiles, full-suite, visual/rasterization, bootstrap-private-state, or temporary identity-slot coverage. See [[ptr-pixel-rounding-probe]], [PTR panel interactions](../baselines/ptr-panel-interactions.md), and [bootstrap loading](../specs/addon-bootstrap-loading.md).
+
+## [2026-09-07] investigation | Capture PTR LoD bootstrap lifecycle
+
+Retrieved ignored `BootstrapOrderProbe-2026-09-07-durable.lua`; its 8,004-byte raw SHA-256 `5f21fe45373f1d2fbe3a645c7dd7f66b3c740925158dbc2f985039008c2af889` identifies a complete 13-record `12.1.5` / `69594` / `120105` capture with no errors. B bootstrap runs once at startup (`true,false`), then returns to `false,false`; D preserves `Before → [Bootstrap] → Normal`. The first explicit B load runs `Before → Normal` without re-running bootstrap and ends `true,true`; the second executes no B files. ClickBinding/Collections stay false/false while helpers are functions. This replaces the incomplete startup capture; its stale disk-file cause remains unknown. Updated [[ptr-pixel-rounding-probe]] and [probe instructions](../addons/BootstrapOrderProbe_A/README.md); no loader behavior changed.
+
+## [2026-09-06] system | Model bounded PTR pixel-layout rounding
+
+Commit `07cce4a63` adds the `retail-12-1-5` per-region native flag and applies source-backed rounding in shared layout: requested explicit dimensions and anchor offsets are rounded with `768 / (physical height × effective scale)`, while stored anchor values, relative target geometry, and stretch-derived dimensions remain unmodified. A replay of 66 nonempty live capture rectangles (264 coordinates) has maximum residual `0.00002595186236931113`; the tested rounded left edge remains fractional in physical pixels, ruling out global final-edge snapping for that case. The registry cache is refreshed by the existing display setter. Tests remain under verification; startup and bootstrap gaps remain open. See [[ptr-pixel-rounding-probe]] and [pixel layout rounding](../specs/pixel-layout-rounding.md).
+
+## [2026-09-06] investigation | Receive PTR pixel-rounding capture
+
+Retrieved the flushed PTR SavedVariables capture into ignored `docs/local/private/probes/PixelRoundingProbe-2026-09-06.{lua,json}`. Raw Lua SHA-256 `1383e92e76920adf718e0beafbeeff55fe1dc78134735f66177b73374a3a23bf` matched desktop and local copies; staged Lua/TOC hashes remain `dd4066abad6849d99185879239754192bf405602983736b368a7e7d8640dd53a` / `cfcd6f3fcb2990c29179115c78cf3dc39e6d767c312a7f359edac59455bfc86c`. All six samples contain 12 cases, identify `12.1.5` / `69594` / `120105`, record physical `3440×1440`, and contain no errors. The flag defaults false, changes geometry when enabled, restores captured unrounded geometry when disabled, and leaves raw anchors unchanged; immediate and settled readings agree only for captured cases. Passive helpers exist while ClickBinding/Collections report false/false. User reports no personal addons; probe does not inventory them. Updated [[ptr-pixel-rounding-probe]], the probe README, and index. General rounding and LoD ordering remain open.
+
+## [2026-09-05] investigation | Record PTR passive bootstrap observations
+
+Updated [[ptr-pixel-rounding-probe]] and the probe README for commit `0c05c89c1`: each existing pixel-rounding capture passively records `Blizzard_ClickBindingUI` and `Blizzard_Collections` loaded/finished state plus `InClickBindingMode` and `ToggleCollectionsJournal` presence. It loads no addon, invokes no panel helper, adds no command, and does not establish native LoadOnDemand semantics. PTR panel smoke reports `GetBuildInfo()` `12.1.5` / `69594` / `120105`, a missing Spellbook `InClickBindingMode`, and sequential Collections visibility symptoms; at this entry's time, live SavedVariables capture was pending. The staged Lua SHA-256 is `dd4066abad6849d99185879239754192bf405602983736b368a7e7d8640dd53a`. The normal TOC-order finding for `[Bootstrap]` entries remains unchanged.
+
+## [2026-09-05] system | Report pinned PTR runtime identity
+
+Documented commit `7c8b8b8d9`: under `client-ptr`, `GetBuildInfo()` derives `12.1.5` / `69594` from pinned PTR metadata and returns interface `120105`. Non-PTR temporary defaults remain interface `120100` with `retail-12-1-0`, otherwise `120007`; this preservation does not claim historical client identity correctness. Its date and remaining slots are temporary defaults, so this is not a complete live-client API claim. Updated [[lua-api]], [[client-profiles]], and the index. No code, cache, test, network, or `PLAN.md` action occurred in this documentation commit.
+
+## [2026-09-05] audit | Correct PTR pixel probe physical-screen capture
+
+Audited commit `5a5b7a187`: `PixelRoundingProbe` now captures display pixels through the documented two-result `GetPhysicalScreenSize()` API, replacing nonexistent width/height globals. An actual simulator VM probe failed before that correction and passed afterward; this validates the capture protocol only. The corrected Lua SHA-256 is `e9cb08416dfc4b859c67ab31f0c938dd5016c5f9e1b06cebc9679d09c408e44b`, matching the staged `_xptr_` file; the TOC hash remains `cfcd6f3fcb2990c29179115c78cf3dc39e6d767c312a7f359edac59455bfc86c`. No PTR SavedVariables capture exists, so native anchor-versus-final-edge rounding remains unknown. See [[ptr-pixel-rounding-probe]].
+
+## [2026-09-05] investigation | Stage PTR pixel-rounding evidence probe
+
+Audited `e958786cb` and `15ca6bd2c`: [PixelRoundingProbe](../addons/PixelRoundingProbe/README.md) is staged in the desktop `_xptr_` addon directory, with local/staged Lua and TOC SHA-256 matches. The active desktop `WowT.exe` is `wowxptr` `12.1.5.69594` / build key `4a9973f37906f8cfb344f8a9fe6777e0`. The probe only creates hidden anonymous frames and regions, and its settled sample resamples the same objects rather than recreating cases. No SavedVariables capture exists yet. PTR source establishes the native flag API and pixel conversion used by deprecated helpers, but not whether the flag rounds anchor offsets or final edges; no simulator behavior claim is made. See [[ptr-pixel-rounding-probe]].
+
+## [2026-09-05] audit | Publish 12.1 compatibility strings on PTR
+
+Audited commit `4cd6de091`: the complete 70-entry 12.1 compatibility table now registers under cumulative `retail-12-1-0`, including PTR, instead of requiring `profile-retail`. Pinned PTR startup had exposed missing ChatFrame and Social UI strings; the existing focused test reproduced a missing ChatFrame format string before the gate change. The retail `12.1.0.69497` live probe still proves only the 32 exact globals retained under `profile-retail`; no PTR locale/value, service, or startup-success claim is made. Updated [[patch-12-1-api-audit]], [[lua-api]], [the maintained Lua API reference](../lua-api.md), and the index. No code, test, network, or `PLAN.md` action occurred in this documentation audit.
+
+## [2026-09-05] system | Pin PTR 12.1.5 Blizzard UI source
+
+Audited commit `766e27344`: `wow-cli casc sync-blizzard-ui` synchronized all 4,025 PTR source entries from a committed immutable `wowxptr` CDN content index for build `12.1.5.69594`, with Gethe `ptr2` revision `49b69918…` used for source-path provenance only. Cache validation rejects stale `wowt` identity and checks archive range, BLTE encoding key, and decoded content key; no local-product relabeling or Gethe-content fallback exists. The first `lua-errors` capture contains 109 distinct entries, so startup and panel compatibility remain open. Updated [[client-profiles]], [[casc-asset-cache]], the client-profile/PTR-source specs, and the patch-update procedure; no code, cache, test, network, or `PLAN.md` action occurred in this documentation commit.
+
+## [2026-09-05] audit | Document PTR 12.1.5 Lua math extensions
+
+Documented commit `129c3a3e6`: `retail-12-1-5` publishes the eleven native `math` extensions required by PTR `Blizzard_SharedXMLBase/MathUtil.lua`. The grouped PTR test proves normal numeric behavior, extrapolation, half-away-from-zero rounding, and equal-endpoint wrapping. Generated API documentation supplies signatures/transformation descriptions; reversed or other degenerate ranges and secret-value propagation remain unproven. Updated [[lua-api]] and [the maintained Lua API reference](../lua-api.md); no test, source, cache, network, or `PLAN.md` action occurred.
+
+## [2026-09-05] system | Advance PTR profile epoch to 12.1.5
+
+Documented commit `c8826d9f5`: `client-ptr` now selects cumulative `retail-12-1-5` / interface `120105` and the `wowxptr` CASC product; `client-retail` remains `retail-12-1-0` / `120100`. No PTR2 manifest, runtime cache, or startup proof exists yet. Updated [[client-profiles]] and its index summary; no source, cache, test, network, or `PLAN.md` action occurred.
+
+## [2026-09-04] verification | Accept scoped causal replay and baseline fixes
+
+Independent acceptance passed: 28/28 default frame cases, 12/12 display/replay/probe cases, 55/55 affected ObjectiveTracker/EditMode cases, and 2,011/2,011 prefork cases. Build/checks are warning-free and startup Lua errors are `[]`. Inventory is 8,372 integration plus 2,011 prefork names, zero overlap. Reused unchanged broad proof; no full-suite replay for documentation. Source-build and one-unit tolerance limits remain explicit in [[frame-position-baseline-drift]].
+
+## [2026-09-04] verification | Reconcile frame baseline with causal evidence
+
+Updated the raid-anchor size/position and managed-container name using the live capture and causal replay, and replaced the artificial tracker height with Blizzard's native default parent-height contract. Added explicit state/anchor/parent checks; retained all 28 test names and existing tolerances. Independent display/replay/probe coverage passed 12/12; standalone baseline verification follows. See [[frame-position-baseline-drift]].
+
+## [2026-09-04] documentation | Retire ObjectiveTracker geometry repairs
+
+Updated [[frame-position-baseline-drift]], [display metrics](../specs/display-metrics.md), [[layout-system]], and the index for `c6a452dfc` after `b8d098059`/`1e79fca4f`. All ObjectiveTracker repair code is removed from `post_event_frame_layout.rs`; the duplicate headless height clamp is removed from `startup.rs`. Native Blizzard/EditMode layout now owns tracker anchors and height for default and custom layouts.
+
+Captured replay remains within the existing one-UI-unit tolerance; final focused 12-case verification is pending. The legacy default fixture now observes native ObjectiveTracker height `847.5`, not artificial `836.5`; original raid geometry and old-name failures remain, and no assertion changed. Cache `12.1.0.69497` versus capture `12.1.0.69587`, non-bitwise container width, and whole-UI/78-addon parity remain open. No test, source, cache, remote, or delegation action was performed for this documentation update.
+
+## [2026-09-04] documentation | Record physical display and causal replay boundary
+
+Documented commit `b8d098059`: literal `screen_width`/`screen_height` are base-canvas layout dimensions, separate from physical-pixel `physical_screen_width`/`physical_screen_height`. `set_screen_size` retains deliberate one-to-one behavior; [`display-metrics.md`](../specs/display-metrics.md) records that `set_display_size` derives the base canvas from Blizzard PixelUtil's 768-unit reference while effective frame scale remains separate. No GUI/headless caller change is claimed.
+
+Corrected [[frame-position-baseline-drift]]: the custom live display, scale, Ultrawide EditMode, and relevant addon state are valid causal replay inputs. Their mismatch with the default fixture means replay is incomplete, not that the capture is invalid. `frame_positions` assertions remain unchanged.
+
+## [2026-09-04] investigation | Record non-parity live frame-position capture
+
+Updated [[frame-position-baseline-drift]] with six error-free `FramePositionProbe` samples from retail `12.1.0.69587`: current private-raid anchor relationship/size and current right-container naming are present under no raid messages and hidden deadly debuffs. The capture used scaled 3440×1440 Ultrawide layout with 78 non-Blizzard addons, versus the simulator's 1600×1200 scale-1 fixture and `12.1.0.69497` cache. Delayed samples share one timestamp. It is diagnostic, not assertion-changing parity evidence.
+
+## [2026-09-04] investigation | Record frame-position baseline drift
+
+Recorded the two `frame_positions` failures without changing assertions: the exact 1600×1200 fixture reproducibly produces `PrivateRaidBossEmoteFrameAnchor` `(400,182,800×80)` from current RaidWarning XML/default no-message anchoring, and current `RightManagedFrameContainer` `(1335,260,260×847.5)` while the old `UIParentRightManagedFrameContainer` name is absent. No matching live-client capture exists, so current-source consistency is not retail validation. See [[frame-position-baseline-drift]].
+
+## [2026-09-04] maintenance | Split prefork workload locking and refresh CASC dependency lock
+
+Commit `887ea5ca7` moves shared lock mechanics into `tests/common/workload_gate_core.rs`, which `prefork_full_ui` imports directly. The ordinary `workload_gate.rs` wrapper retains shared/exclusive mode APIs for timeout and performance callers, preserving conformance coverage while avoiding standalone-prefork dead-code warnings. Commit `1422c3f6f` updates locked transitive `binrw` and `binrw_derive` from 0.15.1 to 0.15.2 for the unchanged CASC dependency graph, removing the E0365 private macro re-export future-incompatibility warning. Final warning-free verification remains pending.
+
+## [2026-09-04] system | Split prefork workload-gate surface
+
+`prefork_full_ui` now imports the shared-only workload-gate core, while ordinary integration helpers retain their `Shared`/`Exclusive` wrapper. This removes target-specific dead-code warnings without dummy use or weakened locking: the same process-local `RwLock`, cross-process `flock`, timeout ordering, and five workload-gate conformance contracts remain intact.
+
+## [2026-09-04] audit | Refresh panel-pulse evidence after prefork migration
+
+Refreshed the `AttributeDispatchProbe.PanelPulse` source hash in `12.0.5-probes.json` after migration commit `e7c1b8576` changed the containing test file. The referenced panel-pulse test name, assertions, and audit status are unchanged. See [[prefork-test-harness]].
+
+## [2026-09-04] audit | Document C_StringUtil escaping helpers
+
+Updated [[lua-api]] and the maintained Lua API reference for retail-family `C_StringUtil.EscapeLuaFormatString`, `EscapeLuaPatterns`, and `WrapString`: `%` escaping, all Lua pattern-character escaping, and empty-infix/optional-affix wrapping. Local `StringUtilDocumentation.lua` establishes signatures and transformations only; live-client error, taint, and secret-value behavior remain unproven. The three 12.0.0 audit rows remain evidence-required.
+
+## [2026-09-04] performance | Verify targeted startup prefork migration
+
+Independent verification for commit `a6924a8c9` recorded 6/6 completed-startup player, action-bar, dropdown, and chat-config behaviors passing, 8,366 integration cases, 2,011 prefork cases, zero overlap, and union 10,377. Pre-start channel-checkbox instrumentation remains ordinary integration. Six concurrent integration processes took 12.5426s versus one prefork process at 8.4078s (33.0% directional because methodology differs). `cargo fmt --check` and `cargo check` passed; the protected hash matched. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
+## [2026-09-04] performance | Verify Collection/Escape prefork migration
+
+Independent verification for commit `2c0441c22` recorded 7/7 passing, 8,372 integration cases, 2,005 prefork cases, and zero overlap. The 14.840s-to-5.799s runtime change is directional only because power mode changed after the baseline. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
+## [2026-09-04] performance | Verify WorldMap/GameMenu prefork migration
+
+Independent verification for commit `279bbb8d5` recorded 4/4 migrated behaviors passing, 8,379 integration cases, 1,998 prefork cases, and zero overlap. The standalone prefork run took 5.703 seconds versus a 4.325-second integration baseline because it includes shared preload; it does not establish a speedup. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No new page, test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
+## [2026-09-04] performance | Verify GroupFinder prefork migration
+
+Audited commit `465acd9da`. Independent verification recorded 2/2 post-start GroupFinder behaviors passing, 8,383 integration cases, 1,994 prefork cases, and zero overlap. The standalone prefork run took 6.245 seconds versus a 4.224-second integration baseline because it includes shared preload; it does not establish a speedup. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No new page, test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
+## [2026-09-04] performance | Move equivalent chat-frame startup tests to prefork
+
+Audited commit `2995da11d`; independent verification at docs-only HEAD `4de1361d9` recorded 8/8 migrated cases passing, 8,385 integration cases, 1,992 prefork cases, and zero overlap. Eight `chat_frame::test_chat_*` behaviors moved one-for-one into the existing full-retail prefork parent: timestamp formatting, background tint/batch surface, ChatFrame2 visibility, chat-window name/docked state, and voice-button surface. `test_chat_editbox_click_type_and_submit` remains ordinary integration because complete startup selects `CHANNEL` instead of its asserted `SAY`; `test_chat_editbox_text_color_after_activation` remains ordinary integration because complete startup selects orange instead of its asserted white. The comparable 13.1985s-to-6.326s runtime change is directional only because power mode changed. Updated [[prefork-test-harness]], its index summary, and the prefork spec. No new page, test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
+## [2026-09-04] system | Discover path-declared prefork test modules
+
+Audited commit `3ee0cd5d3`. `build.rs` now recursively follows literal `#[path = "..."] mod` declarations from discovered test sources, preserving module-qualified registry names and restoring generation of the six marked AddOnList cases behind `blizzard_ui_blizzard_addonlist::{surface_frames,surface_globals,surface_mixins}`. The generated target needs those modules to be `pub(crate)`; a prefork conformance case asserts exact listing of one path-declared marker. Later independent verification recorded 8,393 integration and 1,984 prefork cases, zero overlap, and 17/17 migrated cases passing. Updated [[prefork-test-harness]], its index summary, and the prefork spec; no new page, test execution, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
+## [2026-09-04] documentation | Record unverified startup-behavior prefork migration
+
+Audited commit `e7c1b8576`. Recorded 17 one-for-one `prefork_full_ui` marker migrations: two `Blizzard_AddOnList` frame-surface cases, three global-surface cases, one mixin-surface case, five micro-menu/game-menu behaviors, and six `ShowUIPanel`/`HideUIPanel` CharacterFrame behaviors. They assert normal complete retail startup plus child-local interaction; glue, partial-fixture, and other boundary cases in the same modules remain ordinary integration tests. Later independent verification recorded 8,393 integration and 1,984 prefork cases, zero overlap, and 17/17 migrated cases passing. Updated [[prefork-test-harness]] and its index summary; no new page, spec, test, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
+## [2026-09-04] performance | Move settled objective-tracker behaviors to prefork
+
+Audited commit `61d3d208c`. Updated [[prefork-test-harness]] and the prefork harness spec: five `objective_tracker_tree` cases moved one-for-one from ordinary integration into the existing full-retail prefork parent because they assert settled normal-startup state plus child-local frame mutation. Cumulative behavior migrations are 14 (nine party-frame plus five objective-tracker): prefork lists 1,965 cases (1,956 generated marker cases and 9 manual/nested), integration lists 8,412, and the ordinary-startup scan has 290 remaining cases with zero eligible. The comparable objective batch fell from 19.0040 seconds to 9.0833 seconds (52.2%). Index updated; no new page, code, test, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
+## [2026-09-04] performance | Move settled party-frame behaviors to prefork
+
+Audited commits `4d307e395` and `2e60fe026`. Updated [[prefork-test-harness]] and the prefork harness spec: nine `party_frame_tree` cases moved one-for-one from ordinary integration into the existing full-retail prefork parent because they assert only settled normal-startup state plus child-local party mutation. The prefork target now lists 1,960 cases (1,951 generated marker cases and 9 manual/nested); integration lists 8,417; the behavior-based ordinary-startup scan has 295 remaining cases and zero eligible. The comparable exact batch fell from 36.4509 seconds to 11.9914 seconds (67.1%). Index updated; no new page, code, test, manifest, vendor/cache, `PLAN.md`, or protected-file change was made by this documentation commit.
+
+## [2026-09-04] audit | Document deferred Housing dashboard response
+
+Audited commit `9756f71a3`. Updated [[lua-api]] and the maintained Lua API reference: the temporary `C_Housing.GetPlayerOwnedHouses` bridge schedules `PLAYER_HOUSE_LIST_UPDATED` with an empty table through `C_Timer.After(0)`, so the Housing dashboard observes its empty-owned-house response only after a timer tick. Owned-house service state, failures, and response-payload semantics remain unmodeled; retire the bridge when a housing service model owns the request. No spec, new page, index, vendor/cache/Blizzard, `PLAN.md`, or protected-file change was warranted.
+
+## [2026-09-03] audit | Document Settings panel opening API
+
+Audited commit `6a19aac5b`. Updated [[lua-api]] and the maintained Lua API reference: `C_SettingsUtil.OpenSettingsPanel(categoryID, scrollTarget)` forwards to `SettingsPanelMixin.OpenToCategory(SettingsPanel, categoryID, scrollTarget)`, defaults an absent category ID to `0`, returns no values, and does nothing when either required surface is absent. The temporary Settings defaults are additive-only: they preserve existing category IDs and `Settings.OpenToCategory`. `C_SettingsUtil.NotifySettingsLoaded` and category/element scrolling beyond forwarding remain unsupported. No new page, index update, spec, cache, manifest, vendor/Blizzard, `PLAN.md`, or protected-file change was warranted.
+
+## [2026-09-02] investigation | Preserve duplicate named region bindings
+
+Documented commit `601cde499`: duplicate sibling Texture/FontString regions with the same parent now keep the first `_G` binding while retaining both objects. Current `Blizzard_GMChatUI.xml` relies on this for its second `GMChatTabBG` texture to anchor to the first; last-writer replacement had produced a self-anchor error and aborted XML before `GMChatStatusFrame`, breaking Behavioral Messaging. Added [[duplicate-named-region-binding]], updated [[global-frame-index]], and recorded the related retail 12.1 Tiered Entrance enum, Transmog startup root, and `HasAccessConstraints` contracts in [[patch-12-1-api-audit]] and [[addon-loading]].
+
+## [2026-09-01] audit | Document retail 12.1 housing editor enums
+
+Audited commit `d18654fa0`. Updated [[patch-12-1-api-audit]]: generated `Enum.HousingPetBehaviorType` publishes `Stationary=0` and `Wander=1` with metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`; `Enum.HouseEditorPlayerType` publishes `None=0`, `Owner=1`, and `Visitor=2` with metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Current `Blizzard_HouseEditor` uses pet behavior for menu options; `Blizzard_HousingControls` uses player type for visibility and owner/visitor selection. Housing service behavior remains best-effort modeled. No new page, index update, spec, manifest, `PLAN.md`, vendor/cache/Blizzard, or protected-file change was warranted.
+
+## [2026-09-03] audit | Document RaidWarning secure replay
+
+Audited commits `702fe2b49` and `7a11ef3c8`. Updated [[addon-loading]] and the maintained addon-loading pipeline: `Blizzard_RaidWarning` is explicitly replayed into `__secureenv` because secure `Blizzard_PrivateAurasUI` resolves its declared dependency's `RaidWarningUtil` there for `RaidWarningUtil.MessageType` access. Focused coverage: `tests/blizzard_private_auras_ui_loads.rs::blizzard_private_auras_ui_reads_raid_warning_util_and_publishes_mixins_into_secure_env`. No new page, index, spec, cache, manifest, vendor/Blizzard, `PLAN.md`, or protected-file change was warranted.
+
+## [2026-09-01] audit | Document FrameXMLUtil secure replay
+
+Audited commit `93761fdb4`. Updated [[addon-loading]] and the maintained addon-loading pipeline: secure `Blizzard_AuraContainer` needs `AuraUtil.DefaultAuraCompare` and `AuraUtil.UnitFrameDebuffComparator`, so `Blizzard_FrameXMLUtil` is explicitly replayed into `__secureenv`. Public-only loading left secureenv stale, aborting TargetFrame aura initialization before `FocusFrame` creation. Focused coverage: `loader::tests::lua_loading::blizzard_frame_xml_util_replays_aura_comparators_into_secure_environment`. No new page, index update, spec, cache, manifest, vendor/Blizzard, `PLAN.md`, or protected-file change was warranted.
+
+## [2026-09-01] audit | Document partition-aware XML handlers and RestrictedAuraAPI
+
+Audited commits `391cd75ea` and `d994939bf`. Updated [[xml-template-system]], [[lua-api]], the maintained Lua API reference, and [[patch-12-1-api-audit]]: `__wow_bind_xml_method` resolves public then forbidden methods for private XML frames, while forbidden receivers forward public `FrameHandle` methods; this applies to precompiled intrinsic `OnLoad` and ordinary XML handlers. Retail 12.1 `GetBuildOption("RestrictedAuraAPI")` returns `true`; unknown options return `nil`, selecting the forbidden aura template path. No new page, index update, spec, cache, manifest, vendor/Blizzard, `PLAN.md`, or protected-file change was warranted.
+
+## [2026-09-01] audit | Document Macro/Trainer startup roots and TOC game types
+
+Audited commits `7f68e2f24`, `44d5ab8df`, `b5191265b`, `7b3dba413`, and `3fde8b80e`. Updated [[addon-loading]], the addon-loading pipeline, and the prefork harness spec: `Blizzard_MacroUI` and `Blizzard_TrainerUI` remain LoadOnDemand but are explicit Game-only startup roots, publishing `MacroFrame_LoadUI` and `ClassTrainerFrame_LoadUI` while staying excluded from glue screens. Inline `[AllowLoadGameType]` values now accept comma or whitespace separators, so current `vanilla tbc mainline` annotations retain retail LoadSystem files and nested template mixins. `[Bootstrap]` remains inline-only; no bootstrap pass, all-LoD load, or TOC reordering was introduced. No new page, index update, manifest, cache content, `PLAN.md`, vendor/Blizzard, or protected-file change was warranted.
+
+## [2026-09-01] audit | Load AchievementUI startup publisher
+
+Audited commit `f81596eb2`. Updated [[addon-loading]], the addon-loading pipeline, and the prefork harness spec: standalone Game-only LoD root `Blizzard_AchievementUI` loads its complete TOC before `AlertFrame` handles `ACHIEVEMENT_EARNED`, so `AchievementFrame_LoadUI` preserves the real achievement-toast queue path. AchievementUI remains LoadOnDemand by metadata and excluded from glue screens. This adds neither a bootstrap-only pass nor eager loading of unrelated LoD addons, and does not reorder TOC entries. No new page, index update, manifest, cache content, `PLAN.md`, vendor/Blizzard, or protected-file change was warranted.
+
+## [2026-09-01] audit | Load CombatLog startup publisher
+
+Audited commit `a5ce1b550`. Updated [[addon-loading]], the addon-loading pipeline, and the prefork harness spec: `Blizzard_CombatLog` remains `LoadOnDemand` by TOC metadata but is an explicit `Blizzard_Game` startup dependency, so its full TOC publishes `CombatLog_LoadUI` before `PLAYER_LOGIN`; declared `Blizzard_CombatLogBase` and `Blizzard_CombatLogProcessor` dependencies load first. This does not restore a bootstrap-only pass, load all LoD addons, or reorder TOC files. No new page, index update, manifest, cache content, `PLAN.md`, vendor/Blizzard, or protected-file change was warranted.
+
+## [2026-09-01] audit | Load startup publishers in dependency order
+
+Audited commits `50943cff0` and `34712c117`. Updated [[addon-loading]], the addon-loading pipeline, and the prefork harness spec: full game discovery adds only the LoD publishers required by current startup consumers. `Blizzard_Game` depends on `Blizzard_TimeManager`, `Blizzard_CooldownBroadcaster`, and `Blizzard_BoostTutorial`; LoD root `Blizzard_RaidUI` depends on `Blizzard_RaidFrame`, so RaidFrame loads first and RaidUI is ready before startup events. LoD keys in the implicit startup-dependency map are selected as roots. `[Bootstrap]` remains an inline TOC annotation, not a global LoD pass or reorder signal; unrelated LoD roots such as `Deprecated_PaperDoll` remain excluded. No new page, index update, manifest, cache content, `PLAN.md`, vendor/Blizzard, or protected-file change was warranted.
+
+## [2026-09-01] audit | Require retail CooldownBroadcaster bootstrap cache entry
+
+Audited commit `af410e4b7`. Updated [[addon-loading]] and the Blizzard UI patch-update runbook: current retail `12.1.0.69497` manifest and `Blizzard_CooldownBroadcaster` TOC require `Blizzard_CooldownBroadcaster_Bootstrap.lua`; stale PTR-only filtering skipped it during retail sync, allowing an incomplete completed cache. Retail and PTR now both include and require the entry. No new page, index update, manifest, cache content, spec, `PLAN.md`, vendor/Blizzard, or protected-file change was warranted.
+
+## [2026-09-01] audit | Document retail 12.1 SocialSystemType enum
+
+Audited commit `51b9243c5`. Updated [[patch-12-1-api-audit]]: generated retail `12.1.0.69497` `Enum.SocialSystemType` now publishes `Friends=0`, `QuickJoin=1`, `RaidList=2`, `RecruitAFriend=3`, and `RecentAllies=4`, with `MinValue=0`, `MaxValue=4`, and `NumValues=5` under the retail 12.1 epoch. Current `Blizzard_SocialUI` OnLoad reads all five for tab definitions; Social service behavior remains unmodeled. No new page, index update, spec, manifest, `PLAN.md`, vendor/cache/Blizzard, or protected-file change was warranted.
+
+## [2026-09-01] audit | Document PetBattle species/model-scene preload boundary
+
+Audited commits `eae094261` and `b08bd4cf7`. Updated [[patch-12-1-api-audit]]: current retail `12.1.0.69497` `PetBattleFrame_OnLoad` first passed a missing `C_PetBattles.GetPetSpeciesID` result into `C_PetJournal.GetPetModelSceneInfoBySpeciesID`; after the state-backed API was added, stale default IDs `1`/`2` still had no seeded Pet Journal records, so lookup returned no values and `TransitionToModelSceneID` received `nil`. Default battle-pet IDs now align with Journal seeds `39`/`87`; unknown owner/index remains `nil`. No new page, index update, spec, manifest, `PLAN.md`, vendor/cache/Blizzard, or protected-file change was warranted.
+
+## [2026-09-01] audit | Document temporary pet-battle breed quality
+
+Audited commit `7ecab542f`. Updated [[lua-api]] and the maintained Lua API reference: temporary Lua-owned pet-battle sample state seeds displayed pets with rare breed quality (`3`), while `C_PetBattles.GetBreedQuality(owner, petIndex)` returns that numeric seed or `0` for an absent sample pet, allowing current PetBattleFrame OnLoad rarity rendering. Pet ownership, breeding, capture, combat outcomes, and live battle data remain unmodeled. No spec, index, or new page was warranted; no code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document Blizzard dependency-root discovery
+
+Audited commit `d62832f08`. Updated [[addon-loading]], the maintained addon-loading pipeline, and the prefork harness spec: eligible non-LoadOnDemand `Blizzard_*` cache addons are startup roots, while the filtered candidate pool contributes only transitive hard TOC dependencies. Current `Blizzard_TutorialManager` therefore loads `middleclass` before itself; unrelated non-Blizzard directories such as `Deprecated_PaperDoll` remain excluded. LoadOnDemand addons are not roots merely because they are present in cache. No new page was warranted; no code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document retail 12.1 housing blueprint content-type enum
+
+Audited commit `665f5a31b`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: generated `Enum.HousingBlueprintContentType` now publishes all seven contiguous values (`None=0` through `Other=6`) with metadata under `retail-12-1-0`, allowing the final current `Blizzard_HousingData` content label table to load. Housing blueprint operations and strings remain unmodeled. No spec, changelog, index, or new page was warranted; no code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document retail 12.1 housing blueprint requirement flags
+
+Audited commit `432d357a1`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: generated `Enum.HousingBlueprintUnmetRequirementFlags` now publishes eight bitmask values (`InsufficientBudget=1` through `HouseSizeLocked=128`, with no `None`) plus metadata under `retail-12-1-0`, allowing current `Blizzard_HousingData` blueprint-requirement text tables to load. Housing blueprint validation, operations, and strings remain unmodeled. No spec, changelog, index, or new page was warranted; no code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document retail 12.1 HousingBlueprintType enum
+
+Audited commit `045c9fa19`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: generated `Enum.HousingBlueprintType` now publishes all five contiguous values (`None=0` through `Exterior=4`) with metadata under `retail-12-1-0`, allowing current `Blizzard_HousingData` blueprint-type label tables to load. Housing blueprint operations and strings remain unmodeled. No spec, changelog, index, or new page was warranted; no code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document retail 12.1 HouseSettingFlags enum
+
+Audited commit `db678a399`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: current wowt-global-dataset `Enum.HouseSettingFlags` now publishes all 16 bitmask values through `BlueprintExportParty=16384` with metadata under `retail-12-1-0` before the stale fallback. Current `Blizzard_HousingData` uses the four non-`Anyone` blueprint-export flags in `HousingAccessTypeStrings`; housing access/export behavior and strings remain unmodeled, and the pre-12.1 contract is unchanged. No spec, changelog, index, or new page was warranted; no code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document retail 12.1 HousingResult enum
+
+Audited commit `e3806caba`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: generated `Enum.HousingResult` now publishes all 112 values (`0..111`) with metadata under `retail-12-1-0` before the stale missing-enums fallback, allowing current `Blizzard_HousingTemplates` to build `HousingResultToErrorText`. Housing operations and result strings remain unmodeled; the pre-12.1 contract is unchanged. No spec, changelog, index, or new page was warranted; no code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document retail 12.1 external URL failure event registration
+
+Audited commit `fc833ab34`. Updated [[patch-12-1-api-audit]] and event-system docs: retail 12.1's strict registerable-event table now accepts `EXTERNAL_EVENT_LAUNCH_URL_FAILED`, allowing current `Blizzard_GameMenu` registration. No event producer, payload, or `C_ExternalEventURL` behavior is modeled; no spec, changelog, index, or new page was warranted.
+
+## [2026-09-01] audit | Document Recent Allies preload enums
+
+Audited commit `ec0e21537`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: `Enum.RecentAlliesFriendTag` (`0..5`) plus metadata and sparse `Enum.RolodexType.LegacyFriend=23` with preserved `21`/`22` gaps and metadata resolve independent `Blizzard_RecentAllies` preload tables. Recent Allies service/search behavior remains unmodeled; no spec, changelog, or new page was warranted. No code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document retail 12.1 custom AuraButton texture-style enum
+
+Audited commit `6eae179ff`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: generated `Enum.CustomAuraButtonDispelTypeTextureStyle` publishes five values (`0..4`) and metadata under `retail-12-1-0`, allowing `Blizzard_Deprecated/Deprecated_12_1_0.lua` to construct AuraButton border-style aliases when deprecation fallbacks load. Texture and rendering behavior remain unmodeled. No spec, changelog, or new page was warranted; no vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document raid dispel overlay enum
+
+Audited commit `4d90beffd`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: generated `Enum.RaidDispelOverlayType` (`Disabled=0`, `UseDebuffColor=1`, `UseBlack=2`) plus metadata satisfies the current `CompactUnitFrameOptions` lookup. The later `CompactUnitFrameUtil` `pairs(nil)` was downstream of that aborted options load; overlay rendering remains unmodeled. No spec, changelog, or new page was warranted. No code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document ChatFrame combat-audio command names
+
+Audited commit `abcfb395b`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: two retail-12.1-gated non-probe compatibility command names, `SLASH_CAA_WHEN_TARGET_DIES` and `SLASH_CAA_PLAY_SOUND`, bring the table from 68 to 70 strings. Current `TextToSpeechCommands.lua` passes them to `AddCommand`, which normalizes them with `string.lower` during preload. No command, CVar, or audio behavior is claimed; no spec, changelog, or new page was warranted. No code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document ChatFrame combat-audio format strings
+
+Audited commit `43075580b`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: seven retail-12.1-gated English compatibility format strings bring the table from 61 to 68 entries and satisfy unconditional `:format(min, max)` calls in `Blizzard_ChatFrame/Shared/TextToSpeechCommands.lua` preload. Their values were not captured by the existing live probe. No spec, changelog, or new page was warranted; no code, vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document retail 12.1 Cooldown Viewer sound enum
+
+Audited commit `9555a7649`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: retail-12.1-gated generated `Enum.CooldownViewerSound` now publishes all 94 values (`0..93`) with metadata, satisfying `Blizzard_ChatFrame/Shared/TextToSpeechCommands.lua` enum reads during preload. Source: cached `CooldownViewerConstantsDocumentation.lua` for retail `12.1.0.69497`. No spec, changelog, or new page was warranted; no vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] audit | Document retail 12.1 Social UI preload surface
+
+Audited commits `cfec8576b` and `8f070a410`. Updated [[patch-12-1-api-audit]] and [[lua-api]]: 16 retail-12.1-gated Social UI compatibility labels bring the table from 45 to 61 strings and keep `Blizzard_SocialUIShared` tag/presence tables populated; their English values were not captured by the existing 49-candidate live probe. Documented `Enum.SocialUIPresenceType`/metadata and `Enum.SocialUIBlockType`/metadata. No spec, changelog, or new page was warranted; Social UI service/state semantics remain unmodeled. No vendor, cache, Blizzard, manifest, `PLAN.md`, or protected-file changes.
+
+## [2026-09-01] investigation | Retire TransmogShared inventory-slot loader scope
+
+Refreshed the retail manifest from Gethe `live` build `12.1.0.69497` and found the prior scope was based on stale 12.0.7 source: current `Blizzard_TransmogShared` calls `C_PaperDollInfo.GetInventorySlotInfo` directly. Removed the target-scoped legacy-global loader mechanism and its stale restoration test while preserving retail public removal and TransmogUtil behavior coverage. Updated [[transmog-inventory-slot-scope]], [[addon-loading]], and [[lua-api]]; cache provenance refresh prevents the stale-source condition from recurring.
+
+## [2026-09-01] audit | Document timeout fixture capacity reservation
+
+Audited commit `d5e017f31`. Updated [[prefork-test-harness]] and the prefork spec: outer timeout conformance fixture subprocesses reserve the shared workload gate exclusively, while an inherited marker bypasses gate acquisition for descendants. Nested timeout children therefore retain the same global two-slot permit cap without deadlocking against their fixture reservation. No new page, index update, or changelog was warranted; protected `src/c_api/c_string_util.rs`, code, tests, `PLAN.md`, and vendor/cache/Blizzard paths were untouched.
+
+## [2026-08-31] system | Document bounded Linux timeout re-execution
+
+Updated [[prefork-test-harness]] and the prefork spec/system docs for ordinary Linux timeout re-execution: exact one-test children use a separate two-slot cross-process `flock` permit, acquired before spawn and held through timeout cleanup, output draining, handshake validation, and failure aggregation. Queueing remains outside the post-spawn 120-second budget; default Cargo parallelism and prefork accounting are unchanged. Updated timeout optimization evidence to remove a brittle focused-test count. No final acceptance or manifest refresh was claimed.
+
+## [2026-09-01] system | Refresh Blizzard UI profile caches by provenance
+
+Updated [[addon-loading]] for cache provenance schema 1: `wow-cli casc sync-blizzard-ui` compares active profile, CASC product, active `.build.info` version/build key, optional install key, and compiled manifest hash before retaining an existing profile cache. Mismatches remove only that profile's `AddOns` root before extraction; matching identity retains incremental repair behavior. Patch refreshes no longer require manual cache deletion.
+
+## [2026-08-31] audit | Document retail 12.1 housing Settings strings
+
+Audited commit `cc02aa287`. Updated [[patch-12-1-api-audit]], [[lua-api]], and the maintained Lua API reference with the 13 exact enUS housing Settings labels/tooltips pinned from retail `12.1.0.69497`; the versioned table now contains 45 strings. Recorded the root cause: missing values let the canonical Interface registrant assign category ID 7, then abort before registration. No spec, changelog, or new page was warranted; housing service/state semantics remain unsupported.
+
+## [2026-08-31] investigation | Document lazy model widget state
+
+Audited commit `2542135be111f53211ac66e39a19591abadde0d6` (2026-08-30). Updated [[widget-system]] and added [[widget-registry-storage]]: nine model-family state groups now use one lazy `Option<Box<ModelWidgetState>>`; absent payloads preserve defaults, mutations allocate on demand, and storage accounting includes boxed strings/vectors without double counting. The settled 45,002-frame estimate fell from 239,185,088 to 213,058,036 bytes under the unchanged 230,000,000-byte budget. Model rendering remains intentionally unsupported. No spec or changelog update was warranted; protected, code, test, manifest, vendor/cache, and `PLAN.md` paths were untouched.
+
+## [2026-08-30] audit | Update maintained rendering-order documentation
+
+Audited commits `dfd997a05` and `178c83bf0`. Updated [[rendering-pipeline]] plus the maintained `rendering-pipeline.md` and `hit-testing.md`: active `toplevel="true"` frames use a separate monotonic show-order sequence; emitted IDs group under the nearest active top-level ancestor across intermediate strata and remain contiguous; explicit `Raise()`/`Lower()` retain same-raw-level semantics. No rendering spec exists under `docs/specs/`, so no spec change was warranted. Protected, code, manifest, vendor/cache, and `PLAN.md` paths were untouched.
+
+## [2026-08-30] investigation | Separate top-level show ordering from explicit Raise
+
+Updated [[world-map-voice-chat-alerts]] for commit `dfd997a05`. The prior `UIParent`/`WorldFrame` boundary repair remained necessary but no longer sufficient after explicit `Raise()`/`Lower()` was correctly constrained to same raw levels: `set_frame_visible()` still reused that path for `toplevel=true`, leaving the low-level `WorldMapFrame` root and split cross-strata descendants around `ChatFrameChannelButton`. Added monotonic active top-level show order in `SimState`, nearest-active-ancestor grouping across intermediate strata, contiguous per-strata groups after regular content, deterministic nested ownership, and full regroup on top-level show. Focused proof is 8/8 state-render tests plus the exact live-like overlap regression 1/1. No spec or new page was needed; protected, vendor/cache, manifest, and `PLAN.md` paths were untouched.
+
+## [2026-08-30] audit | Document bounded profession specialization fixture
+
+Audited commits `f6b1077b8e1740c9efabd44ebda061fab1b5f0f6` and `6141fb0bdbcac4de70d8f85a66905334a1e12523`. Updated [[lua-api]] and the maintained Lua API reference: the temporary `C_ProfSpecs` fixture reports specialization only for modeled Blacksmithing skill line 164, unrelated 165 remains false, and authoritative path/tree semantics remain unsupported because `GetChildrenForPath()` and backing state are unmodeled. The full Professions specialization-panel test remains explicitly ignored; no spec, changelog, or new investigation page was warranted. Protected `src/c_api/c_string_util.rs` and concurrent code changes were untouched.
+
+## [2026-08-30] audit | Document EditMode base-alias initialization
+
+Audited commit `0caee6eb94d672bbadb37bc9bfbea4b84be59c18`. Updated [[frame-data-flow]] and the maintained frame data-flow reference: `EditModeSystemMixin` now seeds seven callable native `Base` aliases during mixin application, before prepended lifecycle handlers run; missing native methods propagate as template-application errors. Updated the index summary; no new page, spec, or changelog was warranted. Protected `src/c_api/c_string_util.rs` and concurrent worktree changes were untouched.
+
+## [2026-08-30] audit | Document Linux workload gating for prefork and performance tests
+
+Audited commits `39f4e1a39`, `82b2b927a`, and `5354fad5a`. Updated [[prefork-test-harness]] and the prefork spec/system docs: Linux test workloads use a poison-recovering process-local `RwLock` plus cross-process `flock`; ordinary timeout, prefork, and full-UI workloads acquire shared access, while performance measurements acquire exclusive access before timeout children and measured timing. The prefork target remains exactly 1,951 retail cases (1,942 marker-generated and 9 manual/nested), with two default workers and zero eligible remaining. Added workload-gate implementation/conformance references. No changelog or new page was warranted; protected, code, test, manifest, vendor, cache, and `PLAN.md` paths were untouched.
+
+## [2026-08-30] investigation | Document Blizzard_TransmogShared inventory-slot scope
+
+Audited commits `4f2d4b779` and `e831f1d98`. Added [[transmog-inventory-slot-scope]], updated [[lua-api]] and [[addon-loading]], and linked the maintained API/loader references: retail 12.1 keeps `GetInventorySlotInfo` nil publicly while `Blizzard_TransmogShared` receives the registered lookup through a retained target-scoped environment, with prior global/environment restoration after success or `LoadError`. No spec or changelog update was needed; protected, code, test, manifest, vendor, cache, and `PLAN.md` paths were untouched.
+
+## [2026-08-30] audit | Document idempotent SettingsPanel reconciliation
+
+Audited commit `5715008bb`. Updated [[lua-api]] and [[addon-loading]] plus the maintained API and loader docs: post-load workarounds reconcile replacement `_G.SettingsPanel`/`Settings` surfaces before category registration/opening and remain idempotent for the same panel identity. `C_SettingsUtil` APIs remain explicitly unsupported. No new page, spec, or changelog was warranted; protected `src/c_api/c_string_util.rs`, code/tests, manifest, vendor/cache, and active agent paths were untouched.
+
+## [2026-08-30] audit | Document retail Guild toggle ownership
+
+Audited commit `427ae6cca58327b02d95d73dc23732778269bbfa`. Updated [[lua-api]], the maintained Lua API reference, and `keybinding-system.md`: retail does not register a simulator `ToggleGuildFrame()` fallback, so `Blizzard_Communities` supplies the canonical implementation after load; non-retail keeps the fallback. Added source and focused-test references. No new page, spec, or changelog was warranted; protected `src/c_api/c_string_util.rs` and concurrent worktree changes were untouched.
+
+## [2026-08-30] investigation | Verify SharedMapDataProviders test-runtime optimization
+
+Audited verified code HEAD `e1f9b210b1790258a6f865cc3df0e85f6364e8e0` and finalized [[test-runtime-optimization]]. The bare root closure was invalid: 16/18 tests passed because top-level Lua relied on normal eager ambient order despite a dependency-free TOC; missing SharedXML color helpers and `CVarMapCanvasDataProviderMixin::Init` surfaced downstream as nil `DelveEntrancePinMixin`. The fix adds ordered `BlizzardAddonOverride` implicit dependencies `Blizzard_SharedXML`, then `Blizzard_MapCanvas`, while retaining a fresh environment and direct root load without panel/full UI or shared mutable state. Parallel proof is 18/18 in 0.83s libtest / 0.85s wall with 1,067,108 KiB RSS versus 6.01s / 6.083s / 6,412,848 KiB (wall −86.03%, RSS −83.36%); sequential proof is 18/18 in 2.96s / 2.97s with 535,624 KiB RSS versus 20.10s / 20.140s / 1,246,460 KiB (wall −85.25%, RSS −57.03%). Updated the index summary; no spec change was warranted. Fixed-run artifacts under `/tmp/pi-shared-map-fixed-*` remain ephemeral evidence.
+
+## [2026-08-29] audit | Correct typed diagnostic forwarding summary
+
+Audited the documentation added for commits `01026c8b6` and `3ecbc33fc`. Corrected the index and log summaries to distinguish nested diagnostic forwarding from top-level runtime diagnostic retention/draining, and linked the typed diagnostic record definitions in `src/lua_api/state_types/runtime.rs`. No API claims or unsupported behavior changed.
+
+## [2026-08-29] system | Separate typed addon-load diagnostics
+
+Updated [[addon-loading]] and its index summary for the typed diagnostic contract: actual loader/XML/Lua/runtime failures remain in `LoadResult.warnings`; regular nil-symbol accesses and missing `C_*` contracts retain addon/source/line/environment attribution in dedicated channels; nested runtime loads forward all three channels exactly once to their parent, while top-level runtime diagnostics remain in SimState until drained once. Startup health now gates only genuine failures while strict unsupported requirements remain inspectable. No unsupported API semantics or runtime-bootstrap hashes changed.
+
+## [2026-08-29] audit | Document active voice channel type query
+
+Audited commit `068ee317e27d6c850d331aaf422d98384e13b2bc`. Updated [[lua-api]] and the maintained Lua API reference: `C_VoiceChat.GetActiveChannelType()` returns the seeded active channel's numeric `ChatChannelType`, or one `nil` result for no/stale active channel IDs. Added source and focused test references. No new page, spec, index entry, code, generated, vendor, cache, `PLAN.md`, or protected-file change was warranted.
+
+## [2026-08-29] audit | Document retail/PTR Recruit-A-Friend surface distinction
+
+Audited commit `928243411`: retail 12.1 retains `C_RecruitAFriend.IsEnabled`, while PTR hides it after startup through `src/ptr/strict_removals.lua`, despite both profiles selecting API epoch 12.1. Updated [[client-profiles]], [[patch-12-1-api-audit]], the client-profile spec, and [StrictRemovalTimingProbe](../addons/StrictRemovalTimingProbe/README.md) so epoch-gated API guidance preserves this evidence-backed channel exception. No code, generated, vendor, cache, `PLAN.md`, or protected-file changes.
+
+## [2026-08-29] audit | Document modeled C_Item queries
+
+Audited commit `d38588beec834a2adb5ca1ea3f2f57a03469ff85`. Updated [[lua-api]] and the maintained Lua API reference to record that `C_Item.IsConsumableItem`, `C_Item.IsEquippableItem`, and `C_Item.IsItemInRange` are state-backed and share the existing legacy-global semantics. No new page, spec, changelog, or stub-inventory update was warranted; the protected C StringUtil file was not touched.
+
+## [2026-08-29] audit | Document backpack bag flag queries
+
+Audited commit `c17b32062`. Updated the maintained C_* capability references to mark `C_Container.GetBagSlotFlag`, `SetBagSlotFlag`, `GetBackpackAutosortDisabled`, and `GetBackpackSellJunkDisabled` as state-backed shared bag-slot queries, and added the C_Container surface to the Lua API references. No spec or new wiki page was warranted; protected `src/c_api/c_string_util.rs` was not touched.
+
+## [2026-08-29] audit | Document CVar-backed spell queue window
+
+Audited commit `8e8f23e05`. Updated [[lua-api]] and the maintained Lua API reference: `C_Spell.GetSpellQueueWindow()` reads the mutable `SpellQueueWindow` CVar, returns a numeric value when parseable, returns `nil` for unavailable/non-numeric values, and preserves identity for the two deprecated spell globals that alias it. No spec or separate page was warranted; protected `src/c_api/c_string_util.rs` was not touched.
+
+## [2026-08-29] system | Promote default retail to API epoch 12.1
+
+Audited commit `3a652e1b2`. Updated [[client-profiles]], [[patch-api-audit-manifest]], and the index: `client-retail` now selects cumulative `retail-12-1-0` / interface `120100`; `client-ptr` remains a separate PTR profile/cache at the same API epoch; historical `profile-retail` epoch selection remains available. Preserved the existing client-profile spec because it already records this contract. No code, Cargo, generated, vendor, cache, PLAN, or protected-file changes.
+
+## [2026-08-29] audit | Document syntactic-global versus explicit-_G nil diagnostics
+
+Audited wow-ui-sim commit `d149b2c8d` and rilua commits `1a7c9de` / `3630419`. Updated [[addon-loading]], [[lua-api]], and the addon-loading pipeline docs: direct syntactic global loads remain startup diagnostics; missing regular globals read through `_G.name` or `_G[name]` are optional probes excluded from nil-symbol records and the dedup cache; all `C_*` namespace/member gaps remain strict. Recorded that rilua scopes lookup provenance to VM execution state and exposes read-only `debug.isglobalindex()`, restoring state across nested lookups, errors, and coroutine swaps. No new page or spec was warranted; no code, generated, vendor, cache, `PLAN.md`, Cargo.lock, or protected file changes were made.
+
+## [2026-08-28] audit | Document live retail 12.1 GlobalStrings slice
+
+Audited commit `72f3ec342`. Updated [[patch-12-1-api-audit]] and [[lua-api]] with live enUS retail `12.1.0.69497` / interface `120100` evidence captured 2026-08-28: 32 exact string globals are registered only under `profile-retail` + `retail-12-1-0`, and 12 warning candidates proven raw `nil` remain unregistered. Added source/test references and the rationale against placeholder publication; private probe evidence remains outside the repository. Updated the existing index summary; no new page or spec was warranted. Protected `src/c_api/c_string_util.rs` was not touched.
+
+## [2026-08-28] investigation | Record live PlayerSpells panel replacement contract
+
+Updated [[playerspells-runtime-load]] from live artifact `/tmp/CharacterPlayerSpellsProbe-live-2026-08-28.lua` (SHA-256 `40dcf028acd5605d675810abbfc9eb8aa63147425ed5f8bb8b3b54b78c997595`). WoW 12.1.0 build 69497/interface 120100 shows successful direct `ShowUIPanel` and real `ToggleCharacter`/`ToggleSpellBookFrame` paths replacing CharacterFrame with PlayerSpells; CharacterFrame expands 338→540 when opened and returns to 338 when replaced. Recorded PlayerSpells panel attributes and marked empty `UIParent:GetUIPanel` slot captures inconclusive because the API belongs to private `FramePositionDelegate`. Documented that production behavior stayed unchanged and commit `38bc75892` uses dependency-aware `C_AddOns.LoadAddOn` in the fixture. Existing index entry remained sufficient; no code, test, spec, or manifest changes.
+
+## [2026-08-28] audit | Preserve top-level runtime addon warnings
+
+Audited commit `f6052114e74354276359d0f12da0c53cf4a5efe2`. Updated [[addon-loading]] and its index summary: finalized warnings from top-level `C_AddOns.LoadAddOn` calls now remain in SimState until the startup/test collector drains them exactly once, while nested warnings retain owner attribution and forward transitively to the immediate parent result. Added source/test references; no new page or spec was warranted.
+
+## [2026-08-28] audit | Document nested warning propagation and recorder encapsulation
+
+Audited commits `88cf327a7` and `8a6b5f61a`. Updated [[addon-loading]] and the top-level addon-loading pipeline documentation: nested runtime-addon warnings are finalized under the nested addon and forwarded exactly once to the immediate parent `LoadResult` (transitively for nested-nested loads, without raw-access reprocessing), while the global-publication recorder is captured in a bootstrap-local upvalue and removed from `_G` so addon Lua cannot forge publication events. Updated the existing index summary and added the runtime loader source link; no spec or new wiki page was warranted.
+
+## [2026-08-28] audit | Document same-addon nil-symbol publication reconciliation
+
+Audited commits `473031857` and `e2545a3d1`. Updated [[addon-loading]] and the top-level addon-loading pipeline documentation to record strict nil-symbol diagnostics with reconciliation limited to regular public globals explicitly published later by the same stable addon index through ordinary Lua assignment or named XML frame creation. Nested `C_AddOns.LoadAddOn` publications do not resolve the outer warning, cleared globals and all `C_*` gaps remain warned, and publication-ledger cleanup follows `LoadingAddonGuard`. Updated the existing index summary; no spec change was warranted.
+
+## [2026-08-28] audit | Document runtime-template lifecycle ordering
+
+Audited commits `0f0c3e40d` through `5189a14ef`. Updated [[xml-template-system]] and [[dropdown-intrinsic-script-chain]] plus the top-level XML template architecture doc. Documentation now records that inline `<Scripts>...</Scripts>` parsing preserves following siblings, XML `<KeyValues>` are initialized before deferred template-child `OnLoad`, intrinsic default scripts use precall dispatch ahead of ordinary style handlers, and animation-group mixins are applied before XML method-script binding and `OnLoad`. Corrected the dropdown regression reference to use real script dispatch rather than `GetScript()`'s normal-binding view. No spec or new index entry was warranted; existing page coverage and cross-links remain sufficient.
+
+## [2026-08-28] audit | Align runtime object contract documentation
+
+Audited commit `41205e19c`. Updated the FunctionContainer audit claims to match `tests/userdata_proxy.rs`: userdata type, method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys are covered; tostring formatting and broader identity, callback, timer, lifecycle, and metadata semantics remain unproven. Updated secureenv documentation for dynamically proven shallow table-reference sharing, and clarified that `debug.getfenv(frame)[1]` is a live per-instance field view via `tests/widget_misc_methods.rs::test_frame_debug_env_exposes_live_newindex_fields`.
+
+## [2026-08-27] audit | Default-suite repair slices
+
+Audited commits `5dfbd222c`, `2a876dc25`, `8adadc959`, `d301bd023`, and `af662c223`. No spec or changelog update was warranted: the QuestAsync TOC resolver, Mists-only test gate, duplicate fallback removal, and corrected fixture expectation are test/maintenance changes. Updated [[playerspells-runtime-load]], [[on-update-dirty]], and the index because the SpellBook helper now requires an observable-frame check before falling back, and the settled solo leave-instance path does not query instance/LFG state.
+
+## [2026-08-27] audit | Refresh patch evidence hashes and accept prefork test references
+
+Audited commits `85b00c5cb` and `da273a149`. Refreshed checkout-byte evidence hashes in the 12.0.0, 12.0.5, and 12.1 patch manifests. The patch-manifest validator now treats generated `prefork_full_ui_case!` marker cases as valid named test references alongside ordinary `#[test]` functions, while unmarked functions remain invalid. Updated the patch-manifest and prefork specs plus their wiki system pages; no evidence files or index summary required changes.
+
+## [2026-08-27] system | Migrate timeout-wrapped full-startup cases
+
+Audited commit `d548d0ffc`. Moved four StoreTree and one GuildMemberList normal-retail full-startup cases from ordinary `test_timeout!` libtest into the existing prefork target. The dedicated default-retail target now lists 1,951 cases: 1,941 migrated full-environment cases and 10 manual/nested prefork cases. The remaining ordinary startup-like scan contains 304 tests with zero eligible cases; the owned-timeout exclusion is removed. These cases retain the 120-second per-child timeout and process-tree cleanup.
+
+## [2026-08-27] audit | Finalize prefork eligibility coverage
+
+Updated [[prefork-test-harness]], the prefork spec, and index from `/tmp/prefork-final-eligibility.json` and `/tmp/prefork-final-registry-list.txt`. The dedicated default-retail target lists 1,946 tests: 1,936 migrated full-environment cases and 10 manual/nested prefork cases. The final ordinary startup-like scan contains 309 tests with zero eligible remaining. Exact exclusions: 75 pre-start custom, 9 non-equivalent lifecycle, 113 partial custom, 13 partial domain, 3 partial template, 55 partial thread-sensitive, 15 alternate-screen, 12 render custom, 5 owned-timeout, 7 profile-specific, 1 post-drop global-state, and 1 version-specific. The 211 partial/custom/glue/render/thread-sensitive setup-family cases and the 14 profile/version/owned-timeout/post-drop cases remain ordinary libtest; no code, tests, cargo commands, or commit were run.
+
+## [2026-08-27] system | Migrate generic post-start LoD cases
+
+Audited commits `3faf7ad57` and `9cd3988a7`. Updated [[prefork-test-harness]] and its index summary: 156 newly migrated default-retail post-start LoadOnDemand cases across 17 modules use borrowed-environment child setup with dependency order preserved. `Blizzard_SharedMapDataProviders` remains excluded because its nine-case fixture loads before post-load workarounds and omits startup events. Two PTR-only GuildBank/ItemUpgrade tests were restored to ordinary libtest with profile-specific full startup. GenericTraitUI listing includes three previously migrated cases, so conformance covers 159 listed cases while the unique new migration is 156. Conformance passed 1/1; `is_addon_loaded` passed 135/135; GenericTraitUI publication passed 4/4; each restored PTR test passed 1/1; no orphan processes remained. The generated ordinary full-UI aggregate is now 1,936 cases.
+
+## [2026-08-27] system | Migrate housing post-start LoD cases
+
+Audited commit `ee6f58cbf`. Updated [[prefork-test-harness]] to record 189 post-start housing LoadOnDemand cases across 13 modules migrated with child-only borrowed-environment setup, exact generated-registry conformance of 189, and the representative `is_addon_loaded` proof passing 119/119 with no orphan processes. The generated ordinary full-UI aggregate is now 1,780 cases. Normal-retail shared-preload cases remain distinct from custom child setup; pre-start, partial/custom, glue, and otherwise non-equivalent fixtures remain excluded.
+
+## [2026-08-27] system | Migrate SpellSearch and post-start explicit/LoD cases
+
+Audited commits `e05310123` and `054067c53`. Updated [[prefork-test-harness]] and its index summary: 15 SpellSearch cases now explicitly load `Blizzard_SpellSearch` in each child after normal preload; 96 additional post-start explicit/LoadOnDemand cases across ten modules use borrowed-environment child setup with dependency order preserved. Generated-registry conformance totals 111 cases including SpellSearch; the `is_addon_loaded` behavior filter passed 106/106, and no orphan processes remained. Pre-start or otherwise behaviorally non-equivalent custom fixtures remain excluded pending separate proof. The generated ordinary full-UI aggregate is 1,591 cases (1,480 + 15 + 96), while manual and fixture/conformance cases remain separately categorized.
+
+## [2026-08-27] system | Generate prefork full-UI case registry
+
+Audited commit `fe0d8f5a1`. Updated [[prefork-test-harness]] and the prefork spec to document explicit `prefork_full_ui_case!` marker bodies, `syn`/`quote` build-generated stable `<module>::<function>` registration, generated integration-tree reuse for mixed modules, and the nested registry/preloaded-startup fixture. The current registry contains 12 full-UI cases: 9 manual keybinding cases, 2 behavioral-messaging cases, and 1 nested fixture. Remaining eligible normal-retail full-environment tests are not yet migrated. The existing index entry remains current; no index change was needed.
+
+## [2026-08-26] audit | Document ItemButton runtime load ordering
+
+Audited commit `9b1ba9bcd`. Updated [[addon-load-order]], `docs/addon-load-order-investigation.md`, and the existing index summary to replace the obsolete claim that `ItemButtonUtil` remained unavailable until after `Blizzard_ItemButton`. `WowLuaEnv::new` does not publish it; loading `Blizzard_UIParent` dispatches `UIParent_OnShow`, which runtime-loads `Blizzard_AccountStore`; runtime `C_AddOns` loads the game foundation lane through `Blizzard_FrameXMLUtil`; and `ItemUtil.lua` publishes `ItemButtonUtil` before eager discovery reaches `Blizzard_ItemButton`. The removed intermediate-state test was obsolete; the production load-order snapshot remains unchanged and green. No new wiki page was required.
+
+## [2026-08-26] audit | Document shared-atlas headless rendering
+
+Audited commit `a3f12b265`. Updated [[rendering-pipeline]] and [[texture-atlas]] plus their source docs to record `render_batches_to_images`: union texture/glyph preloading and sequential rendering through one WGPU device, pipeline, target, and GPU atlas. Related before/after images must share that context to model the live persistent atlas and avoid packing-dependent bilinear/UV edge differences.
+
+## [2026-08-26] audit | Document ClearTarget boolean return
+
+Audited commit `f77dd9d7e`. Updated [[lua-api]] and `docs/lua-api.md` to record that global `ClearTarget()` returns `true` only when it clears an existing target, returns `false` otherwise, and preserves `PLAYER_TARGET_CHANGED`.
+
+## [2026-08-26] audit | Document BC-backed mask resolution
+
+Audited commit `c2647c005`. Updated [[mask-texture]], [[rendering-pipeline]], and [[texture-atlas]] plus their source docs to record that deferred mask requests resolve from either the RGBA tiers or BC1/BC3 atlases, remap UVs into the selected slot, and apply the correct mask coverage path. CircleMask-style BC masks no longer become unresolved pending masks and render unmasked.
+
+## [2026-08-26] audit | Clarify prefork cache-disabled contract
+
+Audited commits `4d8136fc4` through `880d58943` against the current prefork loader. Clarified that cache sealing applies only when bytecode caching is enabled; disabled caching remains a successful no-op, and sealing rejects initialized or populated cache state rather than any bypass API call. Added the related bytecode-cache growth cross-link.
+
+## [2026-08-26] system | Bypass bytecode pack during prefork preload
+
+Updated [[prefork-test-harness]] with process-local `ParentBypass` entered before the parent `WowLuaEnv` exists. Prefork preload now compiles source without reading or writing `pack.bin`, seals empty initialized cache state after startup, and transitions children to read-only without allowing them to reload the pack. Separate conformance preserves the warm read-only contract. The serial nine-case benchmark completed in 10.12 seconds; process maximum RSS fell 33.8% and process-tree PSS fell 12.5% against the retained baseline. Aggregate tree RSS rose because it double-counts shared copy-on-write pages.
+
+## [2026-08-26] performance | Release prefork parent bytecode memory
+
+Updated [[prefork-test-harness]] so the completed full-UI parent drops the bytecode cache's in-memory pack and index before forking while preserving disk state and later parent writes. Nine migrated cases pass; child-phase peak PSS fell 40.4% and final parent PSS fell 47.5%. Whole-command maximum RSS remains unchanged because preload allocates the pack before release.
+
+## [2026-08-26] fix | Skip zero-match prefork setup and propagate cleanup restore errors
+
+Updated [[prefork-test-harness]] so non-list filters selecting zero cases return a successful zero-test result without conformance or full-UI preload. The full-UI preload now propagates `Blizzard_EnvironmentCleanup` restoration failures through the result-returning loader API with explicit addon context.
+
+## [2026-08-26] system | Migrate world-map detail cases to full-UI prefork
+
+Updated [[prefork-test-harness]] with lazy argument selection, isolated conformance-before-preload execution, and the normal default-retail game startup snapshot. Nine `test_keybindings_panels_detail` cases now run as immutable 120-second prefork children with read-only bytecode-cache setup; listing bypasses conformance and preload, and the standard integration harness no longer registers those cases.
+
+## [2026-08-26] system | Add read-only prefork bytecode-cache children
+
+Updated [[prefork-test-harness]] with the generic child setup hook and the process-local one-way Lua bytecode-cache mode. Fresh-subprocess conformance now proves child-only setup state, unchanged parent-prewarmed cache bytes/metadata/directory contents across a unique child compile, and continued parent writability. Focused cache tests cover invalid and oversized removal suppression, torn-pack truncation suppression, legacy in-memory hits without file promotion/migration, and skipped append/replacement/temp-file paths.
+
+## [2026-08-26] fix | Make prefork setup and failure cleanup leak-free
+
+Updated [[prefork-test-harness]] after conformance exposed empty split skips and a real `RLIMIT_NOFILE` failure with active children. Parent-owned pipes and setup sockets now use ownership-based closure; a two-way setup handshake verifies the child process group before test release; every parent-side error kills active groups/direct children, reaps direct children, and drops remaining descriptors. Timeout escalation and grandchild-disappearance behavior remain unchanged.
+
+## [2026-08-26] system | Add prefork test harness core
+
+Added [[prefork-test-harness]] for the Linux-only custom test runner introduced by `prefork_full_ui`. The page records the single-thread pre-fork invariant, immutable parent-state borrowing, bounded process workers, structured child outcomes, capture modes, and process-group timeout escalation. Current proof is runner conformance only; real `WowLuaEnv` migration and benchmarking remain open.
+
+## [2026-08-26] audit | Document model no-op and texture identity contracts
+
+Audited commits `b062bab23`, `802516f34`, `847052f41`, `73caa97fe`, and `f79deb010`. Updated [[lua-api]] and [[widget-system]] to record the permanent model-family boundary: Lua-facing model methods such as `ClearFog` remain callable while 3D visual behavior is intentionally unimplemented. Clarified that known texture paths may expose numeric fileDataIDs through `GetTexture()`/`GetTextureFileID()`, while `GetTextureFilePath()` is the source-path assertion API. Updated existing `index.md` summaries; no new wiki page or feature spec was required. Routine fixture, cursor, ready-check, and quest-blob test changes required no documentation.
+
+## [2026-08-26] fix | Preserve widget-handler Lua tracebacks
+
+Updated [[lua-call-frame-restoration]] for commits `430ac3cb8`, `f32ae4470`, `9bcfa511a`, and `326bcf335`. Rust-driven widget dispatch now reaches `debug.traceback` through rilua's native `xpcall` before failed Lua frames unwind, while retaining variadic arguments, original-error fallback, and the existing policy that handled protected-call failures do not enter `lua_error_counts`. Focused `system_api::`, `error_handler::`, and `game_menu::` modules pass.
+
+## [2026-08-26] update | Document chat-window compatibility state
+
+Updated [[lua-api]] and [[post-load-workaround-audit]] for commit `98a48859f`: temporary `__wow_chat_window_state` now stores `SetChatWindowName()` and `SetChatWindowDocked()` values consumed by `GetChatWindowInfo()`. The fields are compatibility state, not saved-layout persistence, and should retire with a modeled chat-layout subsystem. Test-only third-wave changes required no documentation update.
+
+## [2026-08-25] update | Document final retail runtime recovery boundaries
+
+Updated [[lua-api]], [[taint-system]], and [[post-load-workaround-audit]] after the second-wave retail repairs. Documentation now records canonical Font object field precedence for inherited FontStrings; delimiter-receiver `string.split` handling for empty/equal-length inputs; no-profile `C_ClickBindings` behavior; local Encounter Journal numeric-string coercion; `DEFAULT_CHAT_FRAME` assignment without an edit box; and guarded gamepad cursor-global restoration required by the real Collections Escape close stack. No new page or index entry was needed.
+
+## [2026-08-25] update | Preserve final retail runtime compatibility contracts
+
+Audited the final fixes after `0bb44d828`: `2e06ddba7` and `51ea06091` now document `CreateWindow` as a minimal frame-backed external-tool window contract (size/minimum size, topmost, close, and owner attachment; title/focus are no-ops); `25285d13f` documents inert `Kiosk.GetKioskLoginInfo()` defaults; and `ffccfcb6e` documents preserve-mode EnvironmentCleanup restoration for missing UI strings/constants without clobbering Blizzard assignments. Updated [[lua-api]] and [[post-load-workaround-audit]]. No new page was required.
+
+## [2026-08-25] update | Preserve current loader, XML, and runtime-surface contracts
+
+Audited committed behavior from `a3d0f4f21` through `711f8e9c8` and updated [[addon-loading]], [[lua-api]], and [[xml-template-system]]. Documentation now records: loaded-addon idempotence preserving mutable registries such as `StaticPopupDialogs`; enum child-table reseeding that preserves Blizzard extensions; `toplevel="true"` XML frames retaining implicit UIParent so XML strata survives same-parent `OnLoad`; state-backed legacy Timerunning globals; retail `GetGuildTabardFiles`; `C_StringUtil.EscapeDecimalNonPrintables`; and Browser `NavigateTo`/`NavigateHome` no-result compatibility methods. TOC and symbol fixture refreshes were intentionally skipped. No new wiki page was required; existing system pages remain the SSOT.
+
+## [2026-08-25] update | Document rilua global-slot read modes
+
+Updated `design/track-3-global-slot-abi.md` after commit `f0f5312be` pinned the rilua slot-read fix. The default/no-shadow `GETGLOBAL_SLOT` path now documents current root `_G` coherence after bare assignment, `_G.Name = value`, `rawset`, and nil; the optional live-shadow/freeze mode retains frozen snapshot fallback with shadow overrides taking precedence. Added the design page to `index.md` and recorded the required mode-matrix parity proof.
+
+## [2026-08-25] fix | Bound Lua bytecode cache growth
+
+Commit `39caf2662` updates `investigations/bytecode-cache-growth.md`. A valid `WOWBC002` pack had reached **32,316,662,045 bytes** with **25,256,274 unique hashes**, stalling isolated addon loading because the cap applied only at the next load and `read_to_end` preceded the size check. The cache now checks metadata/bounded reads before parsing, enforces serialized size before append, compacts or rebuilds at the limit, and persists before replacing in-memory state. Focused `bytecode_cache` tests cover bounded oversized-pack rejection, compaction, rebuild, oversized entries, failed-append rollback, and legacy promotion. Added `[[bytecode-cache-growth]]` and cross-linked it to `[[track-3-global-slot-abi]]`.
+
+## [2026-08-24] fix | Run AuthChallenge export patch publicly
+
+Commit `b3324ad06` adds `LoaderEnv::exec_public()` for narrow loader code that must run in the public environment without weakening the loading addon's secure file execution. The addon-specific AuthChallenge workaround uses it to restore five callbacks to `_G`; this is not generic secure-to-public mirroring. Updated `[[lua-api]]`.
+
+## [2026-08-24] fix | Model Chromie Time empty state
+
+Commit `3fcfa7d31` adds the retail/PTR `C_ChromieTime` surface. Expansion-option queries return nil or fresh empty tables, while `CloseUI()` and `SelectChromieTimeOption()` are no-ops. Broader Chromie Time state, selection, and UI behavior remain unmodeled. Updated the Lua API architecture references.
+
+## [2026-08-24] fix | Model Catalog Shop virtual-currency product query
+
+Commit `f0396bb82` adds the modeled `C_CatalogShop.GetVCProductInfos()` surface. Each call returns a fresh empty table when no virtual-currency products are seeded; populated Catalog Shop data and broader purchase/catalog semantics remain unmodeled. Updated the Lua API architecture references.
+
+## [2026-08-24] fix | Replay selected Blizzard libraries into secure environment
+
+Commit `7dfc33c3d` expands the evidence-backed secure replay allowlist with `Blizzard_CombatLogBase` and `Blizzard_CatalogShopSharedUtil`. Their `CombatLogUtil` and `CatalogShopUtil` globals are now re-executed into `__secureenv`; the loader does not mirror `_G` generically. Focused tests verify both public and secure bindings. Updated `[[addon-loading]]` and `[[taint-system]]`.
+
+## [2026-08-24] fix | Reuse engine roots for XML definitions
+
+Commit `e5089fbeb2` makes XML definitions for pre-created `UIParent` and `WorldFrame` configure the existing root objects instead of creating replacements. XML mixins, scripts, event registrations, and lifecycle configuration therefore attach to the same objects later observed through `_G.UIParent` and `_G.WorldFrame`. The duplicate path stranded startup scripts and event registrations on the original UIParent and prevented CombatLog runtime loading. Implementation: `src/loader/xml_frame_codegen.rs`.
+
+## [2026-08-24] fix | Guard runtime addon load transactions
+
+Commit `ce67dc961` uses one `SimState`-owned RAII loading transaction for direct and runtime addon loads. Runtime dependency traversal enters the transaction before loading foundations or TOC dependencies; nested re-entry reports the addon as loading but not loaded until file loading and post-load workarounds complete and the owning transaction commits. Guard cleanup restores the previous loading owner after success or failure. Implementation: `src/c_api/c_addons_runtime.rs`, `src/loader/addon.rs`, and `src/lua_api/state.rs`.
+
+## [2026-08-24] correction | Retail manifest family inventory and texture identity
+
+Commits `f8a34a362` and `34a7f7d19` corrected stale tests and establish the current retail source/runtime boundary. The retail Blizzard manifest mirrors the complete Gethe `live` AddOns tree, including `Classic/` and `Mainline/` family variants; this is source completeness, not a second retail load path. Runtime TOC `[Family]` substitution selects `Mainline` for retail. Known resolved texture paths expose numeric fileDataIDs through `Texture:GetTexture()`: class circles `237669` and the question mark `134400`. This supersedes the 2026-07-13 note describing a filtered retail manifest.
+
+## [2026-08-24] investigation | Resolve default-retail startup error cascade
+
+At HEAD `20f141534`, `target/debug/wow-sim --no-addons --no-saved-vars lua-errors` emits `[]` (0 unique errors, 0 occurrences), artifact `/tmp/claude/wow-sim-lua-errors-after-editmode.out`. `ff01991aa` restored Lua call frames after direct errors; `6ac9e32ee` removed the obsolete exact-string retry; and `7d6051797`, `cb75dd007`, and `20f141534` corrected retail EditMode enum publication. The two missing retail members were `Enum.EditModeEncounterEventsSetting.TooltipAnchor=8` and `Enum.DamageMeterVisibility.InGroup=3`, with metadata boundaries `0/13/14` and `0/3/4`. Their absence aborted EditMode initialization. After the enum correction, the remaining EditMode, CooldownViewer, chat, MicroMenu, compact-raid, WorldFrame, ExtraAbility, and related records disappeared without local fixes, identifying them as startup cascades in this baseline.
+
+## [2026-08-13] investigation | Resolve retail 12.0.0 EventScheduler display-info slice
+
+Retail 12.0.0 EventScheduler proof commit `2d4a320cb50140d0fdf8065e81ffbaa8ac68e402` resolves seven occurrences as **best-effort/behavioral**: `C_EventScheduler.EventDisplayInfo.hideDescription`, `EventDisplayInfo.hideTimeLeft`, `EventDisplayInfo.overrideAtlas`, `EventDisplayInfo.overrideTooltipWidgetSetID`, `OngoingEventInfo.displayInfo`, `ScheduledEventInfo.displayInfo`, and `ScheduledEventInfo.eventID`. Focused proof is `src/lua_api/workarounds/temporary/event_scheduler_state.rs::installs_seeded_events_reminders_and_namespace_fallback`; current checkout-byte SHA-256 is `657720512980428bb72e3241ac5861618507919ece665a4acfed9a595d726f59`. Retail seeded ongoing/scheduled events publish displayInfo tables with `hideDescription=false`, `hideTimeLeft=false`, and nil optional overrides; scheduled event IDs are numeric `2001`/`2002`, remain stable after `RequestEvents`, and displayInfo remains populated after refresh. Claims exclude real scheduling/timing, persistence, filtering, UI/rendering, localization, producers outside seeded state, and broader lifecycle semantics. Current totals are **2240 best-effort, 1168 evidence-required, 2 exception-requested, and 0 untriaged rows** (3410 total).
+
+## [2026-08-13] investigation | Resolve retail 12.0.0 DamageMeter field/reset slice
+
+Retail 12.0.0 DamageMeter proof commits `2be7293ba4bcb2d9121bff725b2238a76823431c + 451b69e725df4be8d3ffe7ee8c8f131f57a55ae3 + 89fdfe290823a03215cfd2a26795fd5d60b1daae` resolve ten occurrences as **best-effort/behavioral**: `C_DamageMeter.DamageMeterAvailableCombatSession.name`; `DamageMeterCombatSource.amountPerSecond`, `.classFilename`, `.specIconID`; `DamageMeterCombatSpell.amountPerSecond`, `.totalAmount`; `DamageMeterCombatSpellUnitDetails.amount`, `.classification`, `.unitClassFilename`; and `C_DamageMeter.ResetAllCombatSessions`. Focused proof is `src/lua_api/workarounds/temporary/damage_meter_state.rs::patch_12_0_0_damage_meter_fields_and_reset`. It proves seeded populated values/types/relationships, exact reset state/query behavior including both source lookup APIs, and harmless repeated reset. No real combat aggregation, persistence, events, UI, multi-session lifecycle, or production data ingestion is claimed. Current totals are **2233 best-effort, 1175 evidence-required, 2 exception-requested, and 0 untriaged rows** (3410 total). Evidence uses checkout-byte hashes: source register `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863` and DamageMeter implementation/test `e261d39cd3f752e67eb6fb001a015703e3b2a03beb84b76970678e3835b4460f`.
+
+## [2026-08-13] investigation | Resolve retail 12.0.0 ColorUtil proof slice
+
+Retail 12.0.0 ColorUtil proof commit `d79c8510cbb8cd4b4d8c6f52159743e47115d23f` resolves five occurrences as **best-effort/behavioral**: `C_ColorUtil.ConvertHSLToHSV`, `C_ColorUtil.ConvertHSVToHSL`, `C_ColorUtil.ConvertHSVToRGB`, `C_ColorUtil.ConvertRGBToHSV`, and `C_ColorUtil.WrapTextInColor`. Focused proof is `src/lua_api/workarounds/temporary/color_defaults.rs::patch_12_0_0_color_util_conversions_and_wrapping`; it proves normalized conversion vectors, primary/fractional/achromatic/boundary behavior, exact three-number returns, the tested missing-argument clamping convention, and the exact direct RGB-table/empty-text wrap strings. No localization, untested out-of-range input contract, consumers, rendering, persistence, or broader color-system semantics are claimed. Current totals are **2223 best-effort, 1185 evidence-required, 2 exception-requested, and 0 untriaged rows** (3410 total). Evidence uses checkout-byte hashes: source register `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`, ColorUtil implementation/test `52410dca483d3dbcee8dab178fc76d3591eee110d96f64f6a1f5735821b27f86
+
+## [2026-08-13] investigation | Resolve retail 12.0.0 combat-log producer slice
+
+Retail 12.0.0 producer proof commit `6bcd6ded2ada37c5f78ba4b98387549f2430369c` resolves ten occurrences as **best-effort/behavioral**: events `COMBAT_LOG_APPLY_FILTER_SETTINGS`, `COMBAT_LOG_ENTRIES_CLEARED`, `COMBAT_LOG_MESSAGE`, `COMBAT_LOG_MESSAGE_LIMIT_CHANGED`, and `COMBAT_LOG_REFILTER_ENTRIES`; APIs `C_CombatLog.ApplyFilterSettings`, `C_CombatLog.ClearEntries`, `C_CombatLog.RefilterEntries`, `C_CombatLog.SetMessageLimit`, and `C_CombatLogSecure.CreateCombatLogMessage`. Focused proof is `src/lua_api/workarounds/temporary/combat_log_state.rs::patch_12_0_0_combat_log_producers_dispatch_exact_notifications`. It proves only exact synchronous producer notification, payload arity/types/values, corresponding temporary-state mutation where asserted, and one notification per repeated explicit call. `Frame:RegisterEventCallback` now retains supplied callbacks so restricted callback delivery is observable. No filtering algorithms/effects, retention, message-limit enforcement, secure/taint restrictions, UI/rendering, persistence, or broader lifecycle semantics are claimed. Current totals are **2218 best-effort, 1190 evidence-required, 2 exception-requested, and 0 untriaged rows** (3410 total). Evidence uses checkout-byte hashes: source register `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`, combat-log implementation/test `da7f5ecf1118b268dce86327d639c76cfc2e389385dfa8bc1d8ea848f8e463d8`, callback bridge `2b2c36966fe5fc1b554dcf781081606e60a441d2b7b73cba04fbffcda1125ba8`, and event registries `5c8daa7a3be7550d53b14733588aa0687f5bb23b2c608a3f13d1360595dac88e` / `a3c4acf8bf96423f3781a2615675c3fd16fa8d7eb597dadc78ca77b306f0028b`.
+
+## [2026-08-12] investigation | Classify 76 removed retail 12.0.0 CVars
+
+## [2026-08-12] investigation | Classify final 11 retail 12.0.0 occurrences
+
+Retail 12.0.0 final 11-row slice: `C_PerksActivities.PerksActivityRequirement.completed`, `C_PerksActivities.PerksActivityRequirement.requirementText`, `HOUSING_DECOR_NUDGE_STATUS_CHANGED`, `LEARNED_SPELL_IN_TAB`, `NewCraftingOrderInfo.reagentItems`, `RegularReagentInfo.itemID`, `math.huge`, and `math.pi` are **evidence-required/unsafe** with `commit: null`, `tests: []`, and exact populated-state/full-LoD or Lua-compatibility probes. `docs.extra_events.COMBAT_LOG_APPLY_FILTER_SETTINGS`, `docs.extra_events.COMBAT_LOG_REFILTER_ENTRIES`, and `docs.extra_script_objects.FrameAPITooltip` are **best-effort/provenance-only** with `commit: null`, `tests: []`, and `assertions: []`; claims are endpoint provenance only. Current totals are **2208 best-effort, 1200 evidence-required, 2 exception-requested, and 0 untriaged rows** (3410 total).
+
+Retail 12.0.0 removed CVar slice: 75 rows are **best-effort/behavioral**, bounded only to old-name `GetCVar` and `GetCVarDefault` absence. `activeCUFProfile` and `currencyTokensBackpack2` use proof commit `15a7936e69e00d3efd297a056e92218f717ed7a8`; the other 73 proven names use proof commit `16f4b6956`, all through `src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs::test_patch_12_0_0_removed_nameplate_cvars`, current test hash `b39e972d1cd9eb8401d9c9f7138804f6819ebd091b5f17b53cb7357cd5761292`. `nameplateShowFriendlyNPCs` is **evidence-required/unsafe**: source removes uppercase NPCs and adds lowercase Npcs, while simulator lookup lowercases keys and currently resolves the old spelling to the new entry; required proof must establish lowercase value/default, uppercase absence, and retail case sensitivity. No replacement/equivalence, domain/UI/rendering, mutation, persistence, consumer, producer, or lifecycle semantics are claimed. Current totals are **2205 best-effort, 1192 evidence-required, 2 exception-requested, and 11 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Classify removed 12.0.0 global constants
+
+Retail 12.0.0 removed globals `LE_FRAME_TUTORIAL_LINK_TRANSMOG_OUTFIT`, `LE_FRAME_TUTORIAL_TRANSMOG_OUTFIT_DROPDOWN`, `LE_WORLD_ELAPSED_TIMER_TYPE_CHALLENGE_MODE`, `LE_WORLD_ELAPSED_TIMER_TYPE_NONE`, and `LE_WORLD_ELAPSED_TIMER_TYPE_PROVING_GROUND` are **best-effort/behavioral** using proof commit `e385636fe` via `src/loader/tests/wow_api_globals/patch_12_0_0_removed_global_constants.rs::test_patch_12_0_0_removed_global_constants`. The focused test asserts `rawget(_G, name) == nil` for all five in the retail 12.0.0 epoch; runtime preserves shared definitions for excluded profiles through epoch-specific post-compat filtering. Claims are bounded to retail 12.0.0 startup global absence only; no replacement, tutorial, elapsed-timer, challenge/proving-ground, UI, producer, consumer, mutation, persistence, or lifecycle semantics are claimed. Current totals are **2130 best-effort, 1191 evidence-required, 2 exception-requested, and 87 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Classify changed raid, StatusBar, scrub, and string.trim rows
+
+Retail 12.0.0 exact-row update: `CanBeRaidTarget`, `ClearRaidMarker`, `IsRaidMarkerActive`, `PlaceRaidMarker`, `RemoveRaidTargets`, `SetRaidTarget`, and `StatusBar` are **evidence-required/unsafe** with `commit: null`, `tests: []`, and state-backed/full-LoD probes bounded to signatures, types, state, invalid inputs, errors, and observable delivery. `scrub` is **best-effort/provenance-only** with `commit: null`, `tests: []`, and `assertions: []`; it removes inaccurate metadata without a behavior claim. `string.trim` is **evidence-required/unsafe** with a probe for custom characters, defaults, wrong types, return values, errors, and publication. Raid registration or event firing alone is not behavior proof; current raid-marker state is missing, StatusBar still exposes old string/field behavior, and the bootstrap `string.trim` alias is not contract proof. Claims exclude unsupported producer, lifecycle, UI, rendering, mutation, persistence, and consumer semantics. Current totals are **2125 best-effort, 1191 evidence-required, 2 exception-requested, and 92 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Classify removed floating-combat-text CVars
+
+Retail 12.0.0 removes 26 rows in this slice: 25 floating-combat-text CVars plus `enablePetBattleFloatingCombatText` are **best-effort/behavioral** because focused proof commit `15a7936e69` via `src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs::test_patch_12_0_0_removed_nameplate_cvars` asserts both public getters return nil for each old name. `floatingCombatTextAuraFade` is **best-effort/provenance-only** with `commit: null`, `tests: []`, and `assertions: []`: its value `'0'` appears only in an intermediate snapshot and the name is absent at both endpoints. Claims are bounded to old-name getter/default absence for the 26 proven removals and endpoint provenance for AuraFade; no `_v2`/replacement equivalence, rendering, mutation, persistence, consumer, Pet Battle, or lifecycle semantics are claimed. Evidence uses the current source register, CVar defaults, generic CVar implementation, focused removal test, and discovery hashes. Current totals are **2119 best-effort, 1149 evidence-required, 2 exception-requested, and 140 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Classify Pet Journal, spell-overlay, and tracker CVar formatting
+
+Retail 12.0.0 changed CVar rows `petJournalFilters`, `petJournalSourceFilters`, `petJournalTypeFilters`, `spellActivationOverlayOpacity`, and `superTrackerDist` are **best-effort/behavioral**. Focused proof commit `8b64275a8` via `src/loader/tests/wow_api_globals/patch_12_0_0_pet_journal_overlay_tracker_cvar_values.rs::test_patch_12_0_0_pet_journal_overlay_tracker_cvar_values` asserts both `GetCVar` and `GetCVarDefault` return exact strings `0`, `0`, `0`, `0.650000`, and `0.750000` respectively. Runtime defaults already matched; only focused public getter proof was missing. Claims are bounded to startup getter/default publication only; no Pet Journal/filter, spell-overlay, tracker/rendering, mutation, persistence, consumer, or lifecycle semantics are claimed. Current totals are **2092 best-effort, 1149 evidence-required, 2 exception-requested, and 167 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Classify nameplate and party CVar formatting
+
+Retail 12.0.0 changed CVar rows nameplateLargerScale, nameplateMaxAlpha, nameplateMaxAlphaDistance, nameplateMaxDistance, nameplateMaxScale, nameplateMaxScaleDistance, nameplateMinAlpha, nameplateMinAlphaDistance, nameplateMinScale, nameplateMinScaleDistance, nameplateOccludedAlphaMult, nameplateOverlapH, nameplateOverlapV, nameplatePlayerLargerScale, nameplatePlayerMaxDistance, nameplateSelectedAlpha, nameplateSelectedScale, nameplateSelfAlpha, nameplateShowSelf, nameplateTargetBehindMaxDistance, partyBackgroundOpacity are **best-effort/behavioral**. Focused proof commit `17e13eb21` via `src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_cvar_changed_values.rs::test_patch_12_0_0_nameplate_cvar_changed_values` asserts both `GetCVar` and `GetCVarDefault` return the exact strings 1.200000, 1.000000, 40.000000, 60.000000, 1.000000, 10.000000, 0.600000, 10.000000, 0.800000, 10.000000, 0.400000, 0.800000, 1.100000, 1.800000, 60.000000, 1.000000, 1.200000, 0.750000, 0, 0.100000, 0.500000 respectively. Eighteen defaults already matched the current runtime; the proof commit added only the missing defaults `nameplateLargerScale='1.200000'`, `nameplatePlayerLargerScale='1.800000'`, and `nameplateSelfAlpha='0.750000'`. Claims are bounded to startup getter/default publication only; no nameplate/party rendering, scale, alpha, overlap, mutation, persistence, consumer, or lifecycle semantics are claimed. Evidence hashes: source register `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`, `src/cvars.yaml` `21dba80cc85568849bd9512b1c29b6007665fcf539e0ebb6622d2384490ddf10`, `src/cvars.rs` `e4a1e46a35988dd137b95c4afeab0c95f6e65516ef8401f25397f3f2a1a13e6d`, focused test `59ce30f69a07bfe3429a590599ac8485ebbdf3d110e83612f117badaf7beed00`, discovery `4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6`. Current totals are **2087 best-effort, 1149 evidence-required, 2 exception-requested, and 172 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Classify advanced-flight CVar formatting
+
+The five retail 12.0.0 advanced-flight CVar formatting changes `advFlyKeyboardMaxPitchFactor`, `advFlyKeyboardMaxTurnFactor`, `advFlyKeyboardMinPitchFactor`, `advFlyKeyboardMinTurnFactor`, and `advFlyPitchControlCameraChase` are **best-effort/behavioral**. Focused proof commit `71086bb79` via `patch_12_0_0_adv_fly_cvar_values.rs::test_patch_12_0_0_adv_fly_cvar_values` asserts both `GetCVar` and `GetCVarDefault` return the exact strings `5.000000`, `8.000000`, `2.500000`, `5.000000`, and `20.000000` respectively. Claims are bounded to startup getter/default publication; flight-control, camera, mutation, persistence, consumer, and semantic-equivalence behavior remain unclaimed. Current totals are **2062 best-effort, 1149 evidence-required, 2 exception-requested, and 197 untriaged rows** (3410 total).
+
+Retail 12.0.0 changed events `VOICE_CHAT_TTS_PLAYBACK_STARTED` and `VOICE_CHAT_TTS_PLAYBACK_FINISHED` are **evidence-required/unsafe**. STARTED reduces four payloads `(numConsumers, utteranceID, durationMS, destination)` to one numeric `utteranceID`; FINISHED reduces three `(numConsumers, utteranceID, destination)` to one numeric `utteranceID`, with removed fields absent rather than nullable placeholders. Runtime registers both events but has no TTS playback producer or queue. Full-LoD probes must trigger real playback, verify exact one-argument delivery, identity/timing, repeats/overlap/completion/failure, removed-field absence, and manual-vs-producer dispatch. Claims are bounded to source payload reduction and current producer gap; no TTS lifecycle semantics are claimed. Current totals are **2057 best-effort, 1149 evidence-required, 2 exception-requested, and 202 untriaged rows** (3410 total).
+
+Retail 12.0.0 changed EditModeAuraFrameSetting metadata rows `MaxValue` (7→10) and `NumValues` (8→11) are **best-effort/behavioral**. Focused proof commit `234d1163b` passed 1 test, 0 failed, 1545 filtered and asserts the aura metadata table with numeric `MinValue=0`, `MaxValue=10`, and `NumValues=11`; explicit members publish through `edit_mode.rs`, matching metadata comes from the guarded fallback. Claims are bounded to startup metadata publication only: no Edit Mode aura behavior or consumer semantics are claimed. Current totals are **2054 best-effort, 1147 evidence-required, 2 exception-requested, and 207 untriaged rows** (3410 total).
+
+Retail 12.0.0 changed startup values `EmitterCombatRange`, `NonEmitterCombatRange`, `LE_EXPANSION_LEVEL_CURRENT`, `LE_EXPANSION_LEVEL_PREVIOUS`, `NUM_LE_EXPANSION_LEVELS`, `NUM_LE_FRAME_TUTORIALS`, and `NUM_LE_PET_JOURNAL_FILTERS` are **best-effort/behavioral**. Proof commit `cb2c4abde` passed `1` test, `0` failed, `1545` filtered: globals are Lua numbers with exact values `CURRENT=11`, `PREVIOUS=10`, `NUM_EXPANSION=11`, `NUM_FRAME_TUTORIALS=163`, `NUM_PET_FILTERS=4`; both `GetCVar` and `GetCVarDefault` return `EmitterCombatRange=900.000000` and `NonEmitterCombatRange=6400.000000`. `LE_EXPANSION_LEVEL_CURRENT` uses explicit core-string publication; the other globals use guarded fallback; CVars use `src/cvars.yaml` and generic storage. Claims are bounded to startup numeric publication or exact current/default CVar strings; no expansion, Pet Journal, combat-range, consumer, mutation, or persistence semantics are claimed. Current totals are **2052 best-effort, 1147 evidence-required, 2 exception-requested, and 209 untriaged rows** (3410 total).
+
+Retail 12.0.0 changed `Enum.CraftingOrderResult` rows `MissingItem`, `MissingNpc`, `MissingOrder`, `MissingRecraftItem`, `NoAccountItems`, `NotClaimed`, `NotCrafted`, `NotInGuild`, `NotYetImplemented`, `OutOfPublicOrderCapacity`, `ServerIsNotAvailable`, `ThrottleViolation`, `TargetCannotCraft`, `TargetLocked`, `Timeout`, `TooManyItems`, and `WrongVersion` are **best-effort/behavioral**. Their authoritative numeric values change respectively from `30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46` to `31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,47,48`; guarded `missing_enums.lua` publication matches, with no competing explicit family publication. Focused proof commit `f6db33a61` passed `1` test, `0` failed, `1544` filtered and asserts exact Lua numeric members plus `MinValue=0`, `MaxValue=48`, `NumValues=49`. Claims are bounded to retail 12.0.0 startup enum publication only; no crafting-order production, interpretation, consumer, persistence, transition, or lifecycle semantics are claimed. Current totals are **2045 best-effort, 1147 evidence-required, 2 exception-requested, and 216 untriaged rows** (3410 total).
+
+The retail 12.0.0 changed C API rows `C_Item.CanItemTransmogAppearance`, `C_Item.GetItemInfo`, `C_ItemInteraction.ItemInteractionFrameInfo.flags`, `C_LFGList.DoesEntryTitleMatchPrebuiltTitle`, `C_LFGList.GetPlaystyleString`, `C_LFGList.SetEntryTitle`, `C_PerksActivities.PerksActivityInfo.criteriaList`, `C_PerksActivities.PerksActivityInfo.requirementsList`, `C_Reputation.GetFactionParagonInfo`, `C_SpecializationInfo.GetSpecializationInfo`, and `C_VoiceChat.SpeakText` are **evidence-required/unsafe**; `C_Reputation.IsFactionParagon` is **best-effort/provenance-only** because only its boolean output field name changes. Unsafe rows retain `commit=null` and `tests=[]` with exact full-LoD/state-backed probes for publication, arity, types, nullability, state, invalid inputs, and errors; the provenance-only rename has empty assertions and no behavior claim. Claims are bounded to authoritative source-contract changes and current simulator gaps; no item, LFG, perks, reputation, specialization, voice, or consumer semantics are claimed. Current totals are **2028 best-effort, 1147 evidence-required, 2 exception-requested, and 233 untriaged rows** (3410 total). The pre-update manifest SHA-256 used in these rows is `9e68c96fb0d22ad2f34177feefcae9cefd711cbd6e504021c4b09a0590ae9453`.
+
+Retail 12.0.0 exact-row update: `UnitCastingInfo`, `UnitChannelInfo`, `UnitFullName`, `UnitName`, `UnitNameUnmodified`, and `VOICE_CHAT_TTS_PLAYBACK_FAILED` are **evidence-required/unsafe** with `commit=null`, `tests=[]`, and full-LoD/state-backed probes bounded to output/event count, order, types, nullability, state, invalid inputs, and errors. `UnitIsUnit` is **best-effort/provenance-only** with `commit=null`, `tests=[]`, and `assertions=[]`: only parameter names change from `unitName1/unitName2` to `unit1/unit2`; no behavior claim is made. Current totals are **2027 best-effort, 1136 evidence-required, 2 exception-requested, and 245 untriaged rows** (3410 total). Source/runtime/discovery hashes are recorded on each manifest row; the pre-update manifest SHA-256 was `d171dbaf3ff34774328468dbedca478316efadb936667d54f6f2a07a65813f06`. Claims do not establish unit, naming, casting, channel, or TTS consumer/lifecycle semantics.
+
+The 15 retail 12.0.0 changed event rows TRANSMOG_OUTFITS_CHANGED, UNIT_SPELLCAST_CHANNEL_START, UNIT_SPELLCAST_CHANNEL_STOP, UNIT_SPELLCAST_CHANNEL_UPDATE, UNIT_SPELLCAST_DELAYED, UNIT_SPELLCAST_EMPOWER_START, UNIT_SPELLCAST_EMPOWER_STOP, UNIT_SPELLCAST_EMPOWER_UPDATE, UNIT_SPELLCAST_FAILED, UNIT_SPELLCAST_FAILED_QUIET, UNIT_SPELLCAST_INTERRUPTED, UNIT_SPELLCAST_SENT, UNIT_SPELLCAST_START, UNIT_SPELLCAST_STOP, and UNIT_SPELLCAST_SUCCEEDED are **evidence-required/unsafe**. Exact source contracts: TRANSMOG_OUTFITS_CHANGED changes `nil` to `(newOutfitID: number?)`; CHANNEL_START changes `(unitTarget, castGUID, spellID)` to those fields plus `castBarID: number?`; CHANNEL_STOP changes the same three fields to `(unitTarget, castGUID, spellID, interruptedBy: string, castBarID: number?)`; CHANNEL_UPDATE, DELAYED, EMPOWER_START, EMPOWER_UPDATE, FAILED, and FAILED_QUIET add nullable numeric `castBarID`; EMPOWER_STOP changes `(unitTarget, castGUID, spellID, complete: boolean)` to that tuple plus `interruptedBy: string` and `castBarID: number?`; INTERRUPTED changes the same three fields to `(unitTarget, castGUID, spellID, interruptedBy: string, castBarID: number?)`; SENT changes the first field from `unit: string` to `unitTarget: unit`; START, STOP, and SUCCEEDED declare `(unitTarget, castGUID, spellID, castBarID: number?)`. Current START producers emit only `player, spellID`; current STOP/SUCCEEDED producers emit only three arguments; the other rows have valid event registration but no dedicated producer/payload construction. Required full-LoD/state-backed probes cover real transitions, exact argument count/order/types/nullability, invalid and repeated transitions, GUID/timing, and manual-versus-producer dispatch. Registration and generic/manual dispatch are not behavior proof. Claims are bounded to these source contract changes and current simulator gaps; no spellcast or outfit lifecycle semantics are claimed. Current totals are **2026 best-effort, 1130 evidence-required, 2 exception-requested, and 252 untriaged rows** (3410 total).
+
+The retail 12.0.0 `LE_GAME_ERR_CHARTER_NEIGHBORHOOD_RENAME` change is **best-effort/behavioral**. Source value changes from 1223 to 1224; the prior runtime published 1225, and commit `5789c90d0` corrected the guarded fallback. Focused test `test_patch_12_0_0_le_game_err_charter_neighborhood_rename` observed RED before the correction and GREEN afterward, asserting Lua number 1224. Claims are bounded to startup numeric constant publication; no localized error-message or consumer semantics are claimed. Current totals are **2025 best-effort, 1115 evidence-required, 2 exception-requested, and 268 untriaged rows** (3410 total). Existing references to `src/lua_api/globals/enum_data/missing_constants.lua` were refreshed to SHA-256 `9ff5551f50aa8b3a52628eb2404312b38d41a0c9e242fbdb96665ad1e8b2a0ba`.
+
+The retail 12.0.0 `LE_GAME_ERR_GUILD_NEIGHBORHOOD_BUILT_HOUSE_S` change is **best-effort/behavioral**. Source value changes from 1219 to 1220; prior runtime/discovery published 1221, and commit `5d4c9bda2` corrected the guarded fallback. Focused RED/GREEN proof asserts Lua number 1220. Claims are bounded to startup numeric constant publication; no localized error-message or consumer semantics are claimed.
+
+The retail 12.0.0 `LE_GAME_ERR_GUILD_NEIGHBORHOOD_NEW_SUBDIVISION` change is **best-effort/behavioral**. Source value changes from 1221 to 1222; prior runtime/discovery published 1223, and commit `5d4c9bda2` corrected the guarded fallback. Focused RED/GREEN proof asserts Lua number 1222. Claims are bounded to startup numeric constant publication; no localized error-message or consumer semantics are claimed.
+
+The retail 12.0.0 `LE_GAME_ERR_GUILD_NEIGHBORHOOD_SOLD_HOUSE_S` change is **best-effort/behavioral**. Source value changes from 1220 to 1221; prior runtime/discovery published 1222, and commit `5d4c9bda2` corrected the guarded fallback. Focused RED/GREEN proof asserts Lua number 1221. Claims are bounded to startup numeric constant publication; no localized error-message or consumer semantics are claimed.
+
+The retail 12.0.0 `LE_GAME_ERR_GUILD_NEIGHBORHOOD_RENAME_S` change is **best-effort/behavioral**. Source value changes from 1222 to 1223; the prior runtime and independent discovery published 1224, and commit `2c765200d` corrected the guarded fallback. Focused RED/GREEN proof asserts Lua number 1223. Claims are bounded to startup numeric constant publication; no localized error-message or consumer semantics are claimed. Existing `missing_constants.lua` references use SHA-256 `9ff5551f50aa8b3a52628eb2404312b38d41a0c9e242fbdb96665ad1e8b2a0ba`. Current totals are **2057 best-effort, 1147 evidence-required, 2 exception-requested, and 204 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Classify restriction and transmog CVar additions
+
+The nine retail 12.0.0 CVar additions `petJournalFilterVersion`, `secretChallengeModeRestrictionsForced`, `secretCombatRestrictionsForced`, `secretEncounterRestrictionsForced`, `secretMapRestrictionsForced`, `secretPvPMatchRestrictionsForced`, `showAllItemsInTransmog`, `showCustomSetDetails`, and `trackedInitiativeTasks` are **best-effort/behavioral**. Focused proof is commit `417521854` via `src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs::test_patch_12_0_0_cvar_defaults`; it asserts both `GetCVar` and `GetCVarDefault` return each exact startup/default string, including the empty string for `trackedInitiativeTasks`. Claims are bounded to getter/default publication only: no UI, secret-restriction enforcement, transmog, initiative-task, mutation, persistence, consumer, or later-epoch semantics are claimed. The shared focused-test evidence hash was refreshed for every existing manifest row referencing that file. Current totals are **2014 best-effort, 1110 evidence-required, 2 exception-requested, and 284 untriaged rows** (3410 total).
+
+The retail 12.0.0 rows `COMBAT_LOG_EVENT`, `COMBAT_LOG_EVENT_UNFILTERED`, and `C_Housing.RequestHouseFinderNeighborhoodData` are **evidence-required/unsafe**. The combat-log declarations add callback/restricted metadata while retaining null payload metadata; the simulator models event classification and generic dispatch but lacks producer-backed payload and restricted-delivery proof. The housing API adds a required `neighborhoodName` string; the simulator temporary workaround accepts two arguments but ignores selection/validation and always schedules seeded data. Required full-LoD/state-backed probes cover registration rejection, callback delivery, producer transitions, exact payloads, restricted context, callback versus OnEvent precedence, invalid inputs, event spelling/timing, repeated requests, cancellation, and lifecycle. Claims are bounded to source declarations and current local behavior; no producer, payload, timing, restriction, or consumer semantics are claimed. Current totals are **2005 best-effort, 1110 evidence-required, 2 exception-requested, and 293 untriaged rows** (3410 total).
+
+The eight retail 12.0.0 transmog/LFG/faction CVar additions `lastTransmogCustomSetIDNoSpec, lastTransmogCustomSetIDSpec1, lastTransmogCustomSetIDSpec2, lastTransmogCustomSetIDSpec3, lastTransmogCustomSetIDSpec4, lastTransmogOutfitIDNoSpec, lfgListAdvancedFiltersVersion, majorFactionRenownMap` are **best-effort/behavioral**. Focused proof is commit `e2ac401f5` via `src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs::test_patch_12_0_0_cvar_defaults`; it asserts exact public getter/default strings. Claims are bounded to startup getter/default publication; no transmog, LFG, faction-renown, mutation, persistence, or consumer semantics are claimed. Current totals are **1993 best-effort, 1107 evidence-required, 2 exception-requested, and 308 untriaged rows** (3410 total).
+
+The retail 12.0.0 `floatingCombatTextAuraFade` row is **best-effort/provenance-only**: the source register records transient value `"0"` in an intermediate snapshot, but the CVar is absent at both patch endpoints and absent from `src/cvars.yaml`. The distinct `floatingCombatTextAuraFade_v2` CVar is not treated as equivalent. No test, commit proof, or runtime behavior is claimed. Current totals are **1985 best-effort, 1103 evidence-required, 2 exception-requested, and 320 untriaged rows** (3410 total).
+
+The ten retail 12.0.0 raid-frame/spell-diminish/transmog CVar additions `raidFramesCenterBigDefensive, raidFramesDispelIndicatorOverlay, raidFramesDispelIndicatorType, raidFramesDisplayLargerRoleSpecificDebuffs, raidFramesHealthBarColor, scriptWarnings, spellDiminishPVPEnemiesEnabled, spellDiminishPVPOnlyTriggerableByMe, transmogHideIgnoredSlots, transmogrifySetsFilters` are **best-effort/behavioral**. Focused proof is commit `f3ba9786d` via `src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs::test_patch_12_0_0_cvar_defaults`; it asserts exact public getter/default strings. Claims are bounded to startup getter/default publication; no raid-frame, spell-diminish, transmog, mutation, persistence, or consumer semantics are claimed. Current totals are **1984 best-effort, 1103 evidence-required, 2 exception-requested, and 321 untriaged rows** (3410 total).
+
+The ten retail 12.0.0 nameplate CVar additions `nameplateAuraScale, nameplateCastBarDisplay, nameplateDebuffPadding, nameplateEnemyPlayerAuraDisplay, nameplateFriendlyPlayerAuraDisplay, nameplateInfoDisplay, nameplateShowCastBars, nameplateShowClassColor, nameplateShowFriendlyClassColor, nameplateShowFriendlyNpcs` are **best-effort/behavioral**. Focused proof is commit `bd8ce82d2` via `src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs::test_patch_12_0_0_cvar_defaults`; it asserts exact public getter/default strings. Claims are bounded to startup getter/default publication; no nameplate rendering or consumer semantics are claimed. Current totals are **1984 best-effort, 1103 evidence-required, 2 exception-requested, and 321 untriaged rows** (3410 total).
+
+The four retail 12.0.0 docs-extra additions `CharCreateAnimTurnType`, `CharSectionCondition`, `COMBAT_LOG_EVENT_INTERNAL_UNFILTERED`, and `FrameAPITooltip` are **provenance-only**: source records transient/null entries with no declared behavior, so no runtime claims are made. The three docs-extra API/event rows `C_CombatLogInternal.GetCurrentEventInfo`, `COMBAT_LOG_APPLY_FILTER_SETTINGS`, and `COMBAT_LOG_REFILTER_ENTRIES` are **evidence-required/unsafe** because full-LoD namespace/callback publication, restriction, firing, and payload behavior remain unproven. Current totals are **1984 best-effort, 1103 evidence-required, 2 exception-requested, and 321 untriaged rows** (3410 total).
+
+The retail 12.0.0 `nameplateEnemyNpcAuraDisplay` CVar is **best-effort/behavioral**. Focused proof is commit `16687bd2a` via `src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs::test_patch_12_0_0_cvar_defaults`; it asserts both public getters return the authoritative two-byte string `0x02,C`. Claims are bounded to getter/default publication; no nameplate rendering or consumer semantics are claimed. Current totals are **1984 best-effort, 1103 evidence-required, 2 exception-requested, and 321 untriaged rows** (3410 total).
+
+The ten retail 12.0.0 floating-combat-text `_v2` CVar additions `floatingCombatTextEnergyGains_v2`, `floatingCombatTextFloatMode_v2`, `floatingCombatTextFriendlyHealers_v2`, `floatingCombatTextHonorGains_v2`, `floatingCombatTextLowManaHealth_v2`, `floatingCombatTextPeriodicEnergyGains_v2`, `floatingCombatTextPetMeleeDamage_v2`, `floatingCombatTextPetSpellDamage_v2`, `floatingCombatTextReactives_v2`, `floatingCombatTextRepChanges_v2` are **best-effort/behavioral**. Focused proof is commit `abee2e56bb` via `src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs::test_patch_12_0_0_cvar_defaults`; it asserts both `GetCVar` and `GetCVarDefault` exact startup/default strings. Claims are bounded to public getter/default publication; no rendering, mutation, persistence, consumer, or semantic-equivalence behavior is claimed. Current totals are **1984 best-effort, 1103 evidence-required, 2 exception-requested, and 321 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Mark security access APIs evidence-required
+
+The five retail 12.0.0 security APIs `canaccessallvalues`, `canaccesssecrets`, `canaccesstable`, `canaccessvalue`, and `dropsecretaccess` are **evidence-required/unsafe**. The simulator provides local shallow/deep access checks for some helpers, while `canaccesssecrets` and `dropsecretaccess` are missing; permissive taint fallbacks are not retail proof. Required probes cover mixed/direct/nested/tainted/zero-argument values, access-policy capability states, non-table inputs and fallback precedence, protected/propagated values, and an observable `dropsecretaccess` state mutation. Claims are bounded to declared signatures and current local/missing behavior, with no complete retail secret, taint, protected-value, propagation, or access-control semantics. Current totals are **1984 best-effort, 1103 evidence-required, 2 exception-requested, and 321 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Classify viewed transmog and TTS event gaps
+
+The seven retail 12.0.0 viewed-transmog/TTS event rows are **evidence-required/unsafe**: producer-backed transitions and exact handler delivery remain unproven. Required probes assert zero payload for the first four, numeric TransmogOutfitSlot/TransmogType/TransmogOutfitSlotOption for slot save, numeric TransmogOutfitSlot/TransmogOutfitSlotOption for weapon-option changes, and numeric utteranceID/string bookmarkName for TTS bookmarks. Claims are bounded to declarations and registerability; no firing, timing, ordering, lifecycle, transmog, or TTS semantics are claimed. Current totals are **1949 best-effort, 1095 evidence-required, 2 exception-requested, and 364 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Mark added unit APIs evidence-required
+
+The twenty retail 12.0.0 unit API/structure rows `UnitCastingDuration`, `UnitChannelDuration`, `UnitClassFromGUID`, `UnitEmpoweredChannelDuration`, `UnitEmpoweredStageDurations`, `UnitEmpoweredStagePercentages`, `UnitHealPredictionValues.totalHealAbsorbs`, `UnitHealthMissing`, `UnitHealthPercent`, `UnitIsLieutenant`, `UnitIsMinion`, `UnitIsNPCAsPlayer`, `UnitNameFromGUID`, `UnitPowerMissing`, `UnitPowerPercent`, `UnitSexBase`, `UnitShouldDisplaySpellTargetName`, `UnitSpellTargetClass`, `UnitSpellTargetName`, and `UnitThreatLeadSituation` are **evidence-required/unsafe**. Current runtime publication is absent, divergent, or temporary: `UnitHealthPercent` and `UnitPowerPercent` return legacy numeric percentages despite declared table results, while `UnitHealPredictionValues.totalHealAbsorbs` is only a synthetic numeric zero field. Required probes must establish state-backed return types, nilability, optional flags/curve/power-type behavior, active cast/channel/empowered states, GUID mappings, unknown-unit behavior, classification, spell-target state, and threat state. Adjacent APIs and synthetic tests do not prove these contracts. Claims are bounded to authoritative declarations and current runtime observations; no complete unit, prediction, cast, security, or lifecycle semantics are claimed. Current totals are **1921 best-effort, 1088 evidence-required, 2 exception-requested, and 399 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Mark added interaction APIs evidence-required
+
+The sixteen retail 12.0.0 added API rows `Region.SetVertexColorFromBoolean`, `RegisterEventCallback`, `RegisterUnitEventCallback`, `SetCursorPosition`, `SetTableSecurityOption`, `ShowCloak`, `ShowHelm`, `ShowingCloak`, `ShowingHelm`, `SimpleScriptRegionAPI.IsAnchoringSecret`, `SimulateMouseClick`, `SimulateMouseDown`, `SimulateMouseUp`, `SimulateMouseWheel`, `UnregisterEventCallback`, and `UnregisterUnitEventCallback` are **evidence-required/unsafe**. Current publication is absent, inert, external-only, or a local approximation; no focused proof establishes the requested observable branch, callback, cursor, table-security, transmog, anchoring, or mouse semantics. Required full-LoD probes are recorded per row; claims are bounded to the authoritative declarations and current runtime observations, with no claims about rendering, input, taint/security, transmog, callback, or retail anchoring semantics. Current totals are **1921 best-effort, 1068 evidence-required, 2 exception-requested, and 419 untriaged rows** (3410 total).
+
+The five retail 12.0.0 added rows `GetCollapsingStarCost`, `HouseExteriorTypeOption.houseExteriorTypeID`, `IsRaidMarkerSystemEnabled`, `NewCraftingOrderInfo.reagentInfos`, and `RegularReagentInfo.reagent` are **evidence-required/unsafe**. The first requires a full-LoD numeric return probe; the second requires a producer-backed returned option object with numeric `houseExteriorTypeID`, because temporary fixture data is not retail contract proof; the third requires a Retail callable boolean result and backing state, and the Mists-only false shim does not satisfy Retail; the last two require obtainable crafting-order objects with typed `reagentInfos` entries and typed `CraftingReagent` `reagent` fields. Claims are bounded to authoritative 12.0.0 declarations and current runtime gaps/unmodeled producers; no semantics, values, ordering, lifecycle, or checked-in-absence claims are made. Current totals are **1921 best-effort, 1034 evidence-required, 2 exception-requested, and 453 untriaged rows** (3410 total).
+
+The four retail 12.0.0 removed docs-extra API rows `docs.extra_apis.ShowCloak`, `docs.extra_apis.ShowHelm`, `docs.extra_apis.ShowingCloak`, and `docs.extra_apis.ShowingHelm` are **evidence-required/unsafe**. Source removal and absent checked-in registrations do not prove full-LoD runtime absence or replacement semantics; required probes must distinguish removed docs-extra entries from separate same-name added APIs. Claims are bounded to source removal only. Current totals are **1919 best-effort, 1029 evidence-required, 2 exception-requested, and 460 untriaged rows** (3410 total).
+
+The thirteen retail 12.0.0 removed WorldText CVars are best-effort/behavioral: focused proof commit 58aa3b8de asserts GetCVar and GetCVarDefault return nil for every old name. Distinct _v2 names are not claimed semantically equivalent; claims are bounded to old-name value/default absence. Current totals are **1919 best-effort, 1025 evidence-required, 2 exception-requested, and 464 untriaged rows** (3410 total).
+
+The five retail 12.0.0 removed CVars `ShowClassColorInFriendlyNameplate`, `ShowClassColorInNameplate`, `ShowNamePlateLoseAggroFlash`, `TerrainBlendBakeEnable`, and `TerrainUnlitShaderEnable` are **best-effort/behavioral**. Focused proof is commit `c6702c93d` via `patch_12_0_0_cvar_removals.rs`; it asserts both public `GetCVar` and `GetCVarDefault` return nil for each name. Retail profile filtering removes the Friendly nameplate CVar while preserving non-retail profiles; the other four are omitted. Claims are bounded to CVar/default absence, with no rendering, nameplate, terrain, or other CVar semantics. Current totals are **1906 best-effort, 1025 evidence-required, 2 exception-requested, and 477 untriaged rows** (3410 total).
+
+The four retail 12.0.0 `Enum.SendAddonMessageResult` rows `AddOnMessageLockdown=11`, `TargetOffline=12`, and metadata changes `MaxValue=10→12`, `NumValues=11→13` are **best-effort/behavioral**. Focused proof is commit `ed2345d36` via `patch_12_0_0_send_addon_message_result_enums.rs`; it asserts the complete 13-member Lua-number family, no extras, and metadata `MinValue=0`, `MaxValue=12`, `NumValues=13`. The guarded fallback is authoritative with no drift. Claims are bounded to startup publication and metadata changes; no addon-message transport or consumer semantics are claimed. Current totals are **1906 best-effort, 1025 evidence-required, 2 exception-requested, and 477 untriaged rows** (3410 total).
+
+The removed retail 12.0.0 `SHOW_DELVES_DISPLAY_UI` event is **best-effort/behavioral**. Focused proof is commit `df6f8a5a3`; it asserts registration rejects the removed event while `HOUSE_LEVEL_CHANGED` remains accepted. Claims are bounded to event-name rejection; no producer, payload, replacement, or Delves behavior is claimed.
+
+The ten retail 12.0.0 removed nameplate CVars `NamePlateClassificationScale`, `NamePlateHorizontalScale`, `NamePlateMaximumClassificationScale`, `NamePlateVerticalScale`, `NameplatePersonalClickThrough`, `NameplatePersonalHideDelayAlpha`, `NameplatePersonalHideDelaySeconds`, `NameplatePersonalShowAlways`, `NameplatePersonalShowInCombat`, and `NameplatePersonalShowWithTarget` are **best-effort/behavioral**. Focused proof is commit `64a811ad0` via `patch_12_0_0_cvar_removals.rs`; it asserts both public getters return nil for all ten names. Retail profile filtering removes the two scale CVars while Mists defaults remain unchanged. Claims are bounded to CVar/default absence, with no nameplate behavior or graphics semantics.
+
+The removed retail 12.0.0 CVar `ForceAllowAero` is **best-effort/behavioral**. Focused proof is commit `9431abb53` via `patch_12_0_0_cvar_removals.rs`; both `GetCVar("ForceAllowAero")` and `GetCVarDefault("ForceAllowAero")` return nil. The CVar defaults omit the removed name. Claims are bounded to CVar/default absence, with no graphics semantics. Current totals are **1906 best-effort, 1025 evidence-required, 2 exception-requested, and 477 untriaged rows** (3410 total).
+
+The removed retail 12.0.0 `HOUSING_CATALOG_SEARCHER_RELEASED` event is **best-effort/behavioral**. Focused proof is commit `41a4eeef8` via `housing_event_dispatch.rs`; it rejects RegisterEvent for the removed event while accepting `HOUSE_LEVEL_CHANGED` as a control. Claims are bounded to event-name registration rejection; no producer or replacement-event behavior is claimed.
+
+The six retail 12.0.0 removed `Enum.WMOExteriorID.Invalid=-1`, `DefaultAlliance=9`, `DefaultHorde=87`, and metadata `MaxValue=87`, `MinValue=-1`, `NumValues=3` are **evidence-required/unsafe**. The source register removes the namespace rows; checked-in runtime fallback and enum initialization provide no replacement, but text absence does not prove full-LoD runtime absence. Required proof is a namespace-safe Lua probe for the old namespace/metadata and any replacement. Claims are bounded to source removal only. Current totals are **1906 best-effort, 1025 evidence-required, 2 exception-requested, and 477 untriaged rows** (3410 total).
+
+The removed retail 12.0.0 `HOUSING_CATALOG_SEARCHER_RELEASED` event is **best-effort/behavioral**. Focused proof is commit `41a4eeef8` via `housing_event_dispatch.rs`; it rejects RegisterEvent for the removed event while accepting `HOUSE_LEVEL_CHANGED` as a control. Claims are bounded to event-name registration rejection; no producer or replacement-event behavior is claimed.
+
+The ten retail 12.0.0 removed `Enum.VoiceTtsDestination` members and metadata rows `RemoteTransmission`, `LocalPlayback`, `RemoteTransmissionWithLocalPlayback`, `QueuedRemoteTransmission`, `QueuedLocalPlayback`, `QueuedRemoteTransmissionWithLocalPlayback`, `ScreenReader`, and `Meta.MaxValue`, `MinValue`, `NumValues` are **evidence-required/unsafe**. The source register removes the namespace rows; checked-in fallback, enum initialization, and discovery show no replacement, but text absence does not prove full-LoD runtime absence. Required proof is a namespace-safe Lua probe for the old namespace/member and metadata plus any replacement. Claims are bounded to source removal only. Current totals are **1884 best-effort, 1019 evidence-required, 2 exception-requested, and 505 untriaged rows** (3410 total).
+
+The six retail 12.0.0 removed `Enum.ReportStorageProvider.Aws`, `Alibaba`, `Gcp`, and `Enum.ReportStorageProviderMeta.MaxValue`, `MinValue`, `NumValues` rows are **evidence-required/unsafe**. The source register removes the namespace rows; checked-in fallback, enum initialization, and discovery show no replacement, but text absence does not prove full-LoD runtime absence. Required proof is a namespace-safe Lua probe for both old namespaces and any replacement. Claims are bounded to source removal only. Current totals are **1884 best-effort, 1009 evidence-required, 2 exception-requested, and 515 untriaged rows** (3410 total).
+
+The five retail 12.0.0 removed `Enum.NeighbordhoodInitiativeCategory.Current`, `Legacy`, and `Enum.NeighbordhoodInitiativeCategoryMeta.MaxValue`, `MinValue`, `NumValues` are **evidence-required/unsafe**. The source register removes the misspelled namespace rows, while runtime enum data and discovery provide no full-LoD absence or corrected replacement proof. Required proof is a namespace-safe Lua probe for the old and any corrected `NeighborhoodInitiativeCategory`/`Meta` namespaces; claims are bounded to source removal only. Current totals are **1884 best-effort, 1003 evidence-required, 2 exception-requested, and 521 untriaged rows** (3410 total).
+
+The two retail 12.0.0 removed `C_PerksActivities.PerksActivityCriteria.criteriaID` and `requiredValue` numeric fields are **evidence-required/unsafe**. The source register records removal, but the temporary `C_PerksActivities` workaround does not model or return observable criteria structures. Required proof is a runtime probe obtaining the relevant criteria object, checking old-field absence and any replacement field/object; source-text absence alone is insufficient. Claims are bounded to source removal only. Current totals are **1884 best-effort, 994 evidence-required, 2 exception-requested, and 530 untriaged rows** (3410 total).
+
+The four retail 12.0.0 removed crafting structure fields `CraftingItemSlotModification.itemID`, `CraftingOrderReagentInfo.reagent`, `CraftingReagentInfo.itemID`, and `CraftingResourceReturnInfo.itemID` are **evidence-required/unsafe**. The source register records their removal, while current crafting state does not publish the affected structures; runtime object absence, replacement identity, and nested shape remain unproven. Required probes must obtain each relevant returned object, assert old-field absence, and characterize any replacement separately. Claims are bounded to source removal only. Current totals are **1884 best-effort, 998 evidence-required, 2 exception-requested, and 526 untriaged rows** (3410 total).
+
+The removed retail 12.0.0 `Enum.HousingCatalogEntrySubtype.MarketItem` row is **best-effort/behavioral**. Focused proof is commit `c400d31be` via `patch_12_0_0_housing_catalog_entry_subtype_enums.rs`; it asserts the exact current family `Invalid=0`, `Unowned=1`, `OwnedModifiedStack=2`, `OwnedUnmodifiedStack=3`, metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`, no extras, and `MarketItem` absence. The guarded fallback is authoritative with no drift. Claims are bounded to startup omission and current publication; no semantic replacement is claimed. Current totals are **1884 best-effort, 992 evidence-required, 2 exception-requested, and 532 untriaged rows** (3410 total).
+
+The two retail 12.0.0 removed `Enum.NpcCraftingOrderSetFlags.CraftingOrderFlagAllowMultiple` and `CraftingOrderFlagAllowDuplicate` rows are **best-effort/behavioral**. Focused proof is commit `3de997642` via `patch_12_0_0_npc_crafting_order_set_flags_enums.rs`; it asserts the shortened family `AllowMultiple=1, AllowDuplicate=2`, metadata `MinValue=1, MaxValue=2, NumValues=2`, no extras, and both removed prefixed aliases absent. The guarded fallback is authoritative with no drift. Claims are bounded to startup rename/removal publication; crafting-order flag semantics are not claimed. Current totals are **1883 best-effort, 992 evidence-required, 2 exception-requested, and 533 untriaged rows** (3410 total).
+
+The three retail 12.0.0 removed `Enum.CharCustomizationType` members `Outfit=9`, `Facepaint=10`, and `FacepaintColor=11` are **best-effort/behavioral**. Focused proof is commit `e08b83b6a` via `patch_12_0_0_char_customization_type_enums.rs`; it asserts the exact nine-member replacement family `Skin=0`, `Face=1`, `Hair=2`, `HairColor=3`, `FacialHair=4`, `CustomOptionTattoo=5`, `CustomOptionHorn=6`, `CustomOptionFacewear=7`, `CustomOptionTattooColor=8`, metadata `MinValue=0`, `MaxValue=8`, `NumValues=9`, no extras, and all three removed members absent. The guarded fallback is authoritative and shows no drift. Claims are bounded to startup omission/publication only; no customization or replacement semantics are claimed. Current totals are **1881 best-effort, 992 evidence-required, 2 exception-requested, and 535 untriaged rows** (3410 total).
+
+The four retail 12.0.0 removed `Enum.AccountDataUpdateStatus.AccountDataUpdateCorrupt`, `AccountDataUpdateFailed`, `AccountDataUpdateSuccess`, and `AccountDataUpdateToobig` rows are **best-effort/behavioral**. Focused proof is commit `0910f12fa` via `patch_12_0_0_audit_enums.rs`; it asserts replacement values `Corrupt=2`, `Failed=1`, `Success=0`, `Toobig=3`, metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`, no extras, and all old aliases absent. Claims are bounded to startup rename/removal publication; account-data semantics are not claimed. Current totals are **1878 best-effort, 992 evidence-required, 2 exception-requested, and 538 untriaged rows** (3410 total).
+
+The five retail 12.0.0 removed `C_HousingDecor.HousingLevelInfo` numeric fields `exteriorDecorPlacementBudget`, `exteriorFixtureBudget`, `interiorDecorPlacementBudget`, `level`, and `roomPlacementBudget` are **evidence-required/unsafe**. The source removes the old fields and adds same-named numeric fields under separate `HouseLevelInfo`, but the simulator models neither structure, so runtime identity, old-field absence, and replacement publication remain unproven. Required probe: rawget observable old and replacement objects/fields. Claims are bounded to source removal/replacement metadata only. Current totals are **1874 best-effort, 992 evidence-required, 2 exception-requested, and 542 untriaged rows** (3410 total).
+
+The removed retail 12.0.0 `C_HousingCatalog.HousingCatalogEntryInfo.numStored` row is **best-effort/behavioral**. Focused proof is commit `1e31a40dd` via `patch_12_0_0_housing_catalog_entry_info.rs`; it obtains a seeded catalog entry table, asserts `numStored == nil`, and verifies numeric `totalNumStored`, `totalNumPlaced`, and `destroyableInstanceCount` fields. Runtime seeded catalog state matches the source removal. Claims are bounded to removed field/table shape only; storage semantics remain unclaimed. Current totals are **1874 best-effort, 987 evidence-required, 2 exception-requested, and 547 untriaged rows** (3410 total).
+
+The five retail 12.0.0 removed `C_HousingBasicMode.InvalidPlacementInfo` boolean fields `anyRestrictions`, `invalidCollision`, `invalidTarget`, `notInRoom`, and `tooFar` are **evidence-required/unsafe**. Source metadata records removal, but no runtime object-shape or replacement proof exists; a full-LoD namespace-safe rawget probe is required. Claims are bounded to source removal only. Current totals are **1874 best-effort, 987 evidence-required, 2 exception-requested, and 547 untriaged rows** (3410 total).
+
+The four retail 12.0.0 changed housing events `HOUSE_LEVEL_CHANGED`, `HOUSING_BASIC_MODE_PLACEMENT_FLAGS_UPDATED`, `HOUSING_BASIC_MODE_SELECTED_TARGET_CHANGED`, and `HOUSING_DECOR_PLACE_SUCCESS` are best-effort/behavioral. Focused proof is commit `12d231522` via `housing_event_dispatch.rs`; it verifies event registration and generic dispatch of the exact after-payload arity, order, and Lua types: one representative table; numeric targetType plus numeric activeFlags; boolean hasSelectedTarget, numeric targetType, and boolean isPreview; and string decorGUID, numeric size, boolean isNew, and boolean isPreview. Root cause is registration/generic-dispatch coverage without modeled event producers. Claims are bounded to the startup/event registration contract and generic dispatch only; housing producers, payload fields beyond the tested representatives, timing, lifecycle, ordering, duplicates, and consumer behavior remain unclaimed. Current totals are **1874 best-effort, 987 evidence-required, 2 exception-requested, and 547 untriaged rows** (3410 total).
+
+The eight retail 12.0.0 `Enum.InitiativeMilestoneFlags.*`, `Enum.InitiativeMilestoneFlagsMeta.*`, `Enum.InitiativeRewardFlags.*`, and `Enum.InitiativeRewardFlagsMeta.*` rows are best-effort/behavioral: `FinalMilestone=1` and `PermanentWorldState=1`; both one-member families have metadata `MinValue=1`, `MaxValue=1`, `NumValues=1`. Focused proof is commit `ffb49321e` via `patch_12_0_0_initiative_flags_enums.rs`; it asserts exact complete member sets, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; milestone/reward semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1651 best-effort, 982 evidence-required, 2 exception-requested, and 775 untriaged rows** (3410 total).
+
+The five retail 12.0.0 `Enum.HousingRoomComponentFlags.*` and `Enum.HousingRoomComponentFlagsMeta.*` rows are best-effort/behavioral: `None=0`, `HiddenInLayoutMode=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`. Focused proof is commit `b0fd1c338` via the exact HousingRoomComponentFlags startup test; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; room-layout flag semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1641 best-effort, 982 evidence-required, 2 exception-requested, and 785 untriaged rows** (3410 total).
+
+The six retail 12.0.0 `Enum.HousingFavorUpdateType.*` and `Enum.HousingFavorUpdateTypeMeta.*` rows are best-effort/behavioral: `Add=0, InitiativeAdd=1, Set=2`; metadata `MinValue=0, MaxValue=2, NumValues=3`. Focused proof is commit `6fbe32520` via the exact HousingFavorUpdateType startup test; it asserts the complete member set, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; favor behavior, producers, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1636 best-effort, 982 evidence-required, 2 exception-requested, and 790 untriaged rows** (3410 total).
+
+The eleven retail 12.0.0 `Enum.HousingFavorUpdateSource.*` and `Enum.HousingFavorUpdateSourceMeta.*` rows are best-effort/behavioral: `Unknown=0, DecorCollection=1, DeferredRewards=2, RetroactiveDecor=3, NewHouseDecorFavor=4, InitiativeTask=5, InitiativeChest=6, Quest=7`; metadata `MinValue=0, MaxValue=7, NumValues=8`. Focused proof is commit `e5377de7c` via the exact HousingFavorUpdateSource startup test; it asserts the complete member set, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; housing-favor behavior, producers, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1636 best-effort, 982 evidence-required, 2 exception-requested, and 790 untriaged rows** (3410 total).
+
+The eight retail 12.0.0 `Enum.HousingDecorPlacementRestriction.*` rows are best-effort/behavioral: added `ChildOutsideBounds=8`, `OutsidePlotBounds=4`, `OutsideRoomBounds=2`; changed `InvalidTarget=4→16`, `InvalidCollision=8→32`, metadata `MaxValue=8→32`, `NumValues=4→6`; removed `NotInsideRoom` (prior value 2). Focused proof is commit `fe3ea6de9` via the exact placement-restriction startup test; it asserts the complete family, Lua numeric types, no extras, metadata `MinValue=1`, `MaxValue=32`, `NumValues=6`, and removed-member absence. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication, exact values/types/metadata, and absence; placement semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1619 best-effort, 982 evidence-required, 2 exception-requested, and 807 untriaged rows** (3410 total).
+
+The seven retail 12.0.0 `Enum.FrameTutorialAccount.*` and `Enum.FrameTutorialAccountMeta.*` rows are best-effort/behavioral: `TransmogOutfits=41`, `TransmogSets=42`, `TransmogCustomSets=43`, `TransmogSituations=44`, `TransmogWeaponOptions=45`; metadata `MinValue=1`, `MaxValue=45`, `NumValues=45` (changed from 40). Focused proof/fix is commit `6f00129a6` via the exact transmog startup test; it asserts the five values/types, exactly 45 unique numeric members in range 1..45, and metadata. Root cause: the guarded fallback is authoritative because `FRAME_TUTORIAL_ACCOUNT` is not included in `EXPLICIT_ENUMS`; fallback carried later-shape values 46/47 and metadata 47, corrected by the retail 12.0.0 override. Claims are bounded to startup publication and exact values/types/metadata; tutorial behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1611 best-effort, 982 evidence-required, 2 exception-requested, and 815 untriaged rows** (3410 total).
+
+The five retail 12.0.0 `Enum.FontStringScaleAnimationMode.*` and `Enum.FontStringScaleAnimationModeMeta.*` rows are best-effort/behavioral: `FontSize=0`, `Vertex=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`. Focused proof is commit `462b919fe` via the exact family startup test; it asserts complete member set, Lua numeric types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; scaling/animation semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1604 best-effort, 982 evidence-required, 2 exception-requested, and 822 untriaged rows** (3410 total).
+
+The four retail 12.0.0 `Enum.FragmentID.*` and `Enum.FragmentIDMeta.NumValues` rows are best-effort/behavioral: `FPlayerInitiativeInfo=37`, `FNeighborhoodStateData=38`, `FUnitAIGroupLink=39`; metadata `MinValue=0`, `MaxValue=255`, `NumValues=72` (changed from 69). Focused proof is commit `d42484e0a` via the exact additions startup test; it asserts the three numeric members and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; fragment semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1604 best-effort, 982 evidence-required, 2 exception-requested, and 822 untriaged rows** (3410 total).
+
+The retail 12.0.0 `Enum.UnitAuraSortRule.BigDefensive` row is best-effort/behavioral: numeric value `2`. Focused proof is commit `2bc686862`; claims are bounded to startup publication and exact numeric value, not aura-sort semantics or lifecycle. Current totals are **1595 best-effort, 982 evidence-required, 2 exception-requested, and 831 untriaged rows** (3410 total).
+
+The five retail 12.0.0 `Enum.UnitAuraSortDirection.*` rows are best-effort/behavioral: `Normal=0`, `Reverse=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`. Focused proof is commit `a3ae227f8`; claims are bounded to startup publication and exact values/types/metadata, not aura sorting semantics or lifecycle. Current totals are **1594 best-effort, 982 evidence-required, 2 exception-requested, and 832 untriaged rows** (3410 total).
+
+The five retail 12.0.0 `Enum.UICovenantDisplayInfoFlags.*` rows are best-effort/behavioral: `DisplayCovenantAsJourney=1`, `UseJourneyRewardTrack=2`; metadata `MinValue=1`, `MaxValue=2`, `NumValues=2`. Focused proof is commit `dcda2eea2` via the exact startup test; it asserts the exact two-member family, numeric types, no later extra member, and metadata. Root cause: shared fallback data contained later `UseJourneyUnlockToastText`; the retail 12.0.0 override corrects publication. Claims are bounded to startup publication and exact values/types/metadata; covenant display semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1589 best-effort, 982 evidence-required, 2 exception-requested, and 837 untriaged rows** (3410 total).
+
+The 41 retail 12.0.0 `Enum.TransmogSituation*` and `Enum.TransmogSituationTrigger*` rows are best-effort/behavioral across five exact families and matching metadata. Focused proof is commit `5f9dcaf31` via the exact situation-family startup test; it asserts complete family membership, Lua numeric types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; situation/trigger semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1584 best-effort, 982 evidence-required, 2 exception-requested, and 842 untriaged rows** (3410 total).
+
+The 24 retail 12.0.0 TransmogOutfit slot-save, slot-warning, transaction-flag metadata, and transaction-type rows are best-effort/behavioral. Focused proofs are commits `977b8c972`, `eaf96b3bb`, and `3519919b1`; they assert complete family membership, Lua numeric types, no extras, and exact metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; slot-save/warning semantics, transaction semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1543 best-effort, 982 evidence-required, 2 exception-requested, and 883 untriaged rows** (3410 total).
+
+The six retail 12.0.0 `Enum.TransmogOutfitSlotPosition.*` and `Enum.TransmogOutfitSlotPositionMeta.*` rows are best-effort/behavioral: `Left=0`, `Right=1`, `Bottom=2`; metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Focused proof is commit `b7bf42409` via the exact family startup test; it asserts the complete member set, Lua numeric types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; slot-position semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1519 best-effort, 982 evidence-required, 2 exception-requested, and 907 untriaged rows** (3410 total).
+
+The three retail 12.0.0 `Enum.TransmogOutfitSlotOptionMeta.*` rows are best-effort/behavioral: metadata `MinValue=0`, `MaxValue=11`, `NumValues=12` for the exact 12-member `TransmogOutfitSlotOption` family. Focused proof is commit `789800edf` via the exact family metadata startup test; it asserts numeric member types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; slot-option semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1513 best-effort, 982 evidence-required, 2 exception-requested, and 913 untriaged rows** (3410 total).
+
+The six retail 12.0.0 `Enum.TransmogOutfitSlotOptionFlags.*` and `Enum.TransmogOutfitSlotOptionFlagsMeta.*` rows are best-effort/behavioral: `IllusionNotAllowed=1`, `DynamicOptionName=2`, `DisablesOffhandSlot=4`; metadata `MinValue=1`, `MaxValue=4`, `NumValues=3`. Focused proof is commit `bcb3b459c` via the exact family startup test; it asserts the complete member set, Lua numeric types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; slot-option flag semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1510 best-effort, 982 evidence-required, 2 exception-requested, and 916 untriaged rows** (3410 total).
+
+The three retail 12.0.0 `Enum.TransmogOutfitSlotMeta.*` rows are best-effort/behavioral: metadata `MinValue=0`, `MaxValue=14`, `NumValues=15` for the exact 15-member `TransmogOutfitSlot` family. Focused proof is commit `f5b2eae12` via the exact family metadata startup test; it asserts numeric member types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; outfit-slot semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1504 best-effort, 982 evidence-required, 2 exception-requested, and 922 untriaged rows** (3410 total).
+
+The six retail 12.0.0 `Enum.TransmogOutfitSlotFlags.*` and `Enum.TransmogOutfitSlotFlagsMeta.*` rows are best-effort/behavioral: `CannotBeHidden=1`, `CanHaveIllusions=2`, `IsSecondarySlot=4`; metadata `MinValue=1`, `MaxValue=4`, `NumValues=3`. Focused proof is commit `86b0e4cb2` via the exact family startup test; it asserts the complete member set, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; slot-flag semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1501 best-effort, 982 evidence-required, 2 exception-requested, and 925 untriaged rows** (3410 total).
+
+The three retail 12.0.0 `Enum.TransmogOutfitSlotErrorMeta.*` rows are best-effort/behavioral: metadata `MinValue=0`, `MaxValue=14`, `NumValues=15` for the exact 15-member `TransmogOutfitSlotError` family. Focused proof is commit `0e81d67ea` via the exact family startup test; it asserts all numeric members, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; slot-error semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1495 best-effort, 982 evidence-required, 2 exception-requested, and 931 untriaged rows** (3410 total).
+
+The four retail 12.0.0 `Enum.TransmogOutfitDataFlags.*` and `Enum.TransmogOutfitDataFlagsMeta.*` rows are best-effort/behavioral: `IsCachedLocally=1`; metadata `MinValue=1`, `MaxValue=1`, `NumValues=1`. Focused proof is commit `2f67fd253` via the exact one-member family startup test; it asserts the numeric type, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; caching semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1492 best-effort, 982 evidence-required, 2 exception-requested, and 934 untriaged rows** (3410 total).
+
+The six retail 12.0.0 `Enum.TransmogOutfitSetType.*` and `Enum.TransmogOutfitSetTypeMeta.*` rows are best-effort/behavioral: Equipped=0, Outfit=1, CustomSet=2; metadata MinValue=0, MaxValue=2, NumValues=3. Focused proof is commit `c540bb029` via the exact family startup test; it asserts complete member set, Lua numeric types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; set-selection semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1488 best-effort, 982 evidence-required, 2 exception-requested, and 938 untriaged rows** (3410 total).
+The nine retail 12.0.0 `Enum.TransmogOutfitEquipAction.*` and `Enum.TransmogOutfitEquipActionMeta.*` rows are best-effort/behavioral: `Equip=0, EquipAndLock=1, Remove=2, RemoveAndLock=3, Unlock=4, Lock=5`; metadata `MinValue=0`, `MaxValue=5`, `NumValues=6`. Focused proof is commit `ad955a3a6` via the exact family startup test; it asserts complete member set, Lua numeric types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; equip/remove behavior, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1482 best-effort, 982 evidence-required, 2 exception-requested, and 944 untriaged rows** (3410 total).
+
+The six retail 12.0.0 `Enum.TransmogOutfitEntrySource.*` and `Enum.TransmogOutfitEntrySourceMeta.*` rows are best-effort/behavioral: `StampedSource=0`, `AutomaticallyAwarded=1`, `PlayerPurchased=2`; metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Focused proof is commit `320983281` via the exact family startup test; it asserts complete member sets, Lua numeric types, no extras, and metadata. No runtime drift; guarded `missing_enums.lua` is authoritative. Claims are bounded to startup publication and exact values/types/metadata; outfit-source semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1473 best-effort, 982 evidence-required, 2 exception-requested, and 953 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify tooltip and transmog outfit enum rows
+
+The 19 retail 12.0.0 TooltipDataLineType, TransmogOutfitDisplayType, and TransmogOutfitEntryFlags rows are best-effort/behavioral: TooltipDataLineType adds SpellPassive=43 and SpellDescription=44 with metadata MaxValue=44 and NumValues=45; TransmogOutfitDisplayType is Unassigned=0, Assigned=1, Equipped=2, Hidden=3 with metadata MinValue=0, MaxValue=3, NumValues=4; TransmogOutfitEntryFlags is AutomaticallyAwardedOnLogin=1, UseOverrideName=2, OnlyAvailableDuringEvent=4, SortedToTopOfList=8, UseOverrideCostModifier=16 with metadata MinValue=1, MaxValue=16, NumValues=5. Focused proof is commit 891617e4c via the three exact family startup tests; assertions cover complete member sets, Lua numeric types, no extras, and metadata. Root cause: shared fallback data reflected a later enum shape while the retail-12-0-0 override now publishes the exact authoritative 12.0.0 family. Claims are bounded to startup publication and exact values/types/metadata; enum semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1467 best-effort, 982 evidence-required, 2 exception-requested, and 959 untriaged** (3410 rows).
+
+The five retail 12.0.0 `Enum.StatusBarTimerDirection.*` and `Enum.StatusBarTimerDirectionMeta.*` rows are best-effort/behavioral: `ElapsedTime=0`, `RemainingTime=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`. Focused proof is at `7f3d2cf1511aa2b19fb6e20a6e200346af7df56c` and asserts the exact complete namespace, Lua numeric types, no extras, and metadata. Runtime is correct because guarded `missing_enums.lua` is authoritative; the reversed `STATUS_BAR_TIMER_DIRECTION` constant in `combat_system.rs` is omitted from `SEQUENTIAL_ENUMS` and therefore inactive. Claims are bounded to startup publication and exact values/metadata; timer direction behavior, consumers, persistence, transitions, and lifecycle are not claimed.
+The eight retail 12.0.0 `Enum.LFGEntryGeneralPlaystyle.*` and `Enum.LFGEntryGeneralPlaystyleMeta.*` rows are best-effort/behavioral: `None=0`, `Learning=1`, `FunRelaxed=2`, `FunSerious=3`, `Expert=4`; metadata `MinValue=0`, `MaxValue=4`, `NumValues=5`. Focused proof is commit `3a00e22f1` via `patch_12_0_0_lfg_entry_general_playstyle_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; playstyle behavior, consumers, persistence, transitions, and lifecycle are not claimed. Current manifest totals are **1659 best-effort, 982 evidence-required, 2 exception-requested, and 767 untriaged rows** (3410 total).
+The seven retail 12.0.0 `Enum.LimitedInputType.*` and `Enum.LimitedInputTypeMeta.*` rows are best-effort/behavioral: `MouseMove=0`, `MouseDown=1`, `MouseUp=2`, `MouseWheel=3`; metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`. Focused proof is commit `280ffd561` via `patch_12_0_0_limited_input_type_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; input-dispatch behavior, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1687 best-effort, 982 evidence-required, 2 exception-requested, and 739 untriaged rows** (3410 total).
+The seven retail 12.0.0 `Enum.NamePlateFriendlyPlayerAuraDisplay.*` and `Enum.NamePlateFriendlyPlayerAuraDisplayMeta.*` rows are best-effort/behavioral: `None=0`, `Buffs=1`, `Debuffs=2`, `LossOfControl=3`; metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`. Focused proof is commit `8859a6fa4` via `patch_12_0_0_nameplate_friendly_player_aura_display_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; nameplate aura rendering behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1687 best-effort, 982 evidence-required, 2 exception-requested, and 739 untriaged rows** (3410 total).
+The seven retail 12.0.0 `Enum.NamePlateInfoDisplay.*` and `Enum.NamePlateInfoDisplayMeta.*` rows are best-effort/behavioral: `None=0`, `CurrentHealthPercent=1`, `CurrentHealthValue=2`, `RarityIcon=3`; metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`. Focused proof is commit `295c3f811` via `patch_12_0_0_nameplate_info_display_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; nameplate display behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1687 best-effort, 982 evidence-required, 2 exception-requested, and 739 untriaged rows** (3410 total).
+The seven retail 12.0.0 `Enum.LuaCurveType.*` and `Enum.LuaCurveTypeMeta.*` rows are best-effort/behavioral: `Linear=0`, `Step=1`, `Cosine=2`, `Cubic=3`; metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`. Focused proof is commit `e016d4eeb` via `patch_12_0_0_lua_curve_type_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the `LUA_CURVE_TYPE` constant is not registered in `SEQUENTIAL_ENUMS`, so the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; curve interpolation behavior, consumers, persistence, transitions, and lifecycle are not claimed.
+The two retail 12.0.0 `Enum.ItemCreationContext.TimewalkerLevelUp` and `Enum.ItemCreationContext.TimewalkerMaxLevel` rows are best-effort/behavioral: `TimewalkerLevelUp=22` and `TimewalkerMaxLevel=186`; metadata is `MinValue=0`, `MaxValue=186`, `NumValues=187`. Focused proof is commit `9691f40af` via `patch_12_0_0_item_creation_context_additions.rs`, asserting Lua numeric types, exact values, and metadata. No runtime drift was found; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; item-creation semantics, consumers, persistence, transitions, and lifecycle remain unclaimed.
+
+The nine retail 12.0.0 `Enum.NeighborhoodInitiativeChestResult.*` and `Enum.NeighborhoodInitiativeChestResultMeta.*` rows are best-effort/behavioral: `NiSuccess=0, NiUnspecifiedFailure=1, NiNoHouseFound=2, NiNoRewards=3, NiThrottled=4, NiServiceDisabled=5`; metadata `MinValue=0, MaxValue=5, NumValues=6`. Focused proof is at `1c17a5e5c0afbee1358d2ad0cd237d1e12cfa659`; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/metadata; initiative chest reward/service behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1443 best-effort, 982 evidence-required, 2 exception-requested, and 983 untriaged** (3410 rows).
+## [2026-08-10] investigation | Classify neighborhood initiative neighborhood-type enums
+
+The five retail 12.0.0 `Enum.NeighborhoodInitiativeNeighborhoodTypes.*` and `Enum.NeighborhoodInitiativeNeighborhoodTypesMeta.*` rows are best-effort/behavioral: `NiNeighborhoodTypeSingleton=0`, `NiNeighborhoodTypePool=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`. Focused proof is at d02a9a8c94b7d2966b0f319f9f570fe4f23d2bff; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/metadata; Neighborhood initiative selection, assignment, behavior, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1429 best-effort, 982 evidence-required, 2 exception-requested, and 997 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify nameplate threat-display enums
+
+The seven retail 12.0.0 `Enum.NamePlateThreatDisplay.*` and `Enum.NamePlateThreatDisplayMeta.*` rows are best-effort/behavioral: `None=0`, `Progressive=1`, `Flash=2`, `HealthBarColor=3`; metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`. Focused proof is at `ad7cae26a`; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/metadata; nameplate threat rendering/display behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1434 best-effort, 982 evidence-required, 2 exception-requested, and 992 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify nameplate stack-type enums
+
+The six retail 12.0.0 `Enum.NamePlateStackType.*` and `Enum.NamePlateStackTypeMeta.*` rows are best-effort/behavioral: `None=0`, `Enemy=1`, `Friendly=2`; metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Focused proof is at `eece809a72b113d512b828e0d8163c4adb4296de`; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/metadata; nameplate stacking/layout/rendering, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1424 best-effort, 982 evidence-required, 2 exception-requested, and 1002 untriaged** (3410 rows).
+The five retail 12.0.0 `Enum.NamePlateType.*` and `Enum.NamePlateTypeMeta.*` rows are best-effort/behavioral: Friendly=0, Enemy=1; metadata MinValue=0, MaxValue=1, NumValues=2. Focused proof is at `ebc47b1665df258f2a9399f18555470e5fbce941`; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/metadata; nameplate type/rendering/selection, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1434 best-effort, 982 evidence-required, 2 exception-requested, and 992 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify nameplate style enums
+
+The nine retail 12.0.0 `Enum.NamePlateStyle.*` and `Enum.NamePlateStyleMeta.*` rows are best-effort/behavioral: `Modern=0`, `Thin=1`, `Block=2`, `HealthFocus=3`, `CastFocus=4`, `Legacy=5`; metadata `MinValue=0`, `MaxValue=5`, `NumValues=6`. Focused proof is at `e9564865c38688e2c6a59bdb70a739b2293be488`; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found; explicit member publication and matching fallback metadata are authoritative. Claims are bounded to startup publication and exact values/metadata; nameplate rendering/styling, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1411 best-effort, 982 evidence-required, 2 exception-requested, and 1015 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify encounter timeline track enums
+
+The eight retail 12.0.0 `Enum.EncounterTimelineTrack.*` and `Enum.EncounterTimelineTrackMeta.*` rows are best-effort/behavioral: `Queued=0`, `Short=1`, `Medium=2`, `Long=3`, `Indeterminate=4`; metadata `MinValue=0`, `MaxValue=4`, `NumValues=5`. Focused proof is at `1abf8c72f3adabf9c8f50c53870c2a2f643b9fb6`; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found. Claims are bounded to startup publication and exact values/metadata; queueing, timing, track behavior, ordering, consumers, persistence, and lifecycle remain unclaimed. Current totals are **1411 best-effort, 982 evidence-required, 2 exception-requested, and 1015 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify enemy-player nameplate aura-display enums
+
+The seven retail 12.0.0 `Enum.NamePlateEnemyPlayerAuraDisplay.*` and `Enum.NamePlateEnemyPlayerAuraDisplayMeta.*` rows are best-effort/behavioral: `None=0, Buffs=1, Debuffs=2, LossOfControl=3`; metadata `MinValue=0, MaxValue=3, NumValues=4`. Focused proof is at `cc2e085ff2e15b6a617df21e19833db20417524b`; it asserts the exact complete set, Lua numeric types, no extras, and metadata. No runtime drift was found. Claims are bounded to startup publication and exact values/metadata; nameplate aura rendering, cast-bar behavior, consumers, persistence, and lifecycle remain unclaimed. Current totals are **1372 best-effort, 982 evidence-required, 2 exception-requested, and 1054 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify enemy-NPC nameplate aura-display enums
+
+The seven retail 12.0.0 `Enum.NamePlateEnemyNpcAuraDisplay.*` and `Enum.NamePlateEnemyNpcAuraDisplayMeta.*` rows are best-effort/behavioral: `None=0, Buffs=1, Debuffs=2, CrowdControl=3`; metadata `MinValue=0, MaxValue=3, NumValues=4`. Focused proof is at `6f44ef24d370a7b292a389b6e2dc634d56746671`; it asserts the exact complete set, Lua numeric types, no extras, and metadata. No runtime drift was found. Claims are bounded to startup publication and exact values/metadata; nameplate aura rendering, cast-bar behavior, consumers, persistence, and lifecycle remain unclaimed. Current totals are **1372 best-effort, 982 evidence-required, 2 exception-requested, and 1054 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify nameplate cast-bar display enums
+
+The nine retail 12.0.0 `Enum.NamePlateCastBarDisplay.*` and `Enum.NamePlateCastBarDisplayMeta.*` rows are best-effort/behavioral: `None=0, SpellName=1, SpellIcon=2, SpellTarget=3, HighlightImportantCasts=4, HighlightWhenCastTarget=5`; metadata `MinValue=0, MaxValue=5, NumValues=6`. Focused proof is at `bc15bc6b4814c0bc7f28ebd815697454f4cc5f60`; it asserts the exact complete set, Lua numeric types, no extras, and metadata. No runtime drift was found. Claims are bounded to startup publication and exact values/metadata; nameplate rendering, cast-bar behavior, consumers, persistence, and lifecycle remain unclaimed. Current totals are **1372 best-effort, 982 evidence-required, 2 exception-requested, and 1054 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify encounter timeline icon-set enums
+
+The nine retail 12.0.0 `Enum.EncounterTimelineIconSet.*` and `Enum.EncounterTimelineIconSetMeta.*` rows are best-effort/behavioral: `TankAlert=1, HealerAlert=2, DamageAlert=3, Deadly=4, Dispel=5, Enrage=6`; metadata `MinValue=1, MaxValue=6, NumValues=6`. Focused proof is at `061aabfece4c8efb103100e343f1d1b648f5b151`; it asserts the exact complete set, Lua numeric types, no extras, and metadata. No runtime drift was found. Claims are bounded to startup publication and exact values/metadata; icon selection, rendering, timeline behavior, consumers, persistence, and lifecycle remain unclaimed. Current totals are **1372 best-effort, 982 evidence-required, 2 exception-requested, and 1054 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify encounter timeline event-source enums
+
+The seven retail 12.0.0 `Enum.EncounterTimelineEventState.*` rows are best-effort/behavioral: `Active=0`, `Paused=1`, `Finished=2`, `Canceled=3`; metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`. Focused proof is at `171ce8632e17cd4d0141a704daf3d7cc99c888e3`; it asserts the exact four-member set, Lua numeric types, and metadata. The runtime state enum matches retail 12.0.0 with no drift. Claims are bounded to startup publication and exact values/metadata; state transitions, timing, producers, consumers, persistence, and lifecycle remain unclaimed.
+
+The six retail 12.0.0 `Enum.EncounterTimelineEventSource.*` and `Enum.EncounterTimelineEventSourceMeta.*` rows are best-effort/behavioral: `Encounter=0`, `Script=1`, `EditMode=2`; metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Focused proof is at `4fd68742c715f44d43f2afc017816fa198cedc40`; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found. Claims are bounded to startup publication and exact values/metadata; source routing, event producers, ordering, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1372 best-effort, 982 evidence-required, 2 exception-requested, and 1054 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify encounter-timeline sort-direction enums
+
+The five retail 12.0.0 `Enum.EncounterTimelineEventSortDirection.*` rows are best-effort/behavioral: `Descending=0`, `Ascending=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`. Focused proof is at `16469db1abdc879db2d2c0617a49583d86a7b4b8`; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found. Claims are bounded to startup publication and exact values/metadata; sorting behavior, order semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1372 best-effort, 982 evidence-required, 2 exception-requested, and 1054 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify encounter events visibility enums
+
+The six retail 12.0.0 `Enum.EncounterEventsVisibility.*` and `Enum.EncounterEventsVisibilityMeta.*` rows are best-effort/behavioral: Always=0, InEncounter=1, DeprecatedHidden=2; metadata MinValue=0, MaxValue=2, NumValues=3. Evidence is bounded to startup publication, Lua numeric types, exact complete member set, and metadata. Focused proof is at bf17614b988cba98d936c789b30c919bf20f5952. No runtime drift was found. Encounter-event visibility behavior, transitions, consumers, persistence, and lifecycle remain unclaimed. Current totals are **1322 best-effort, 982 evidence-required, 2 exception-requested, and 1104 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify encounter-events orientation enums
+
+Classified exactly five retail 12.0.0 `Enum.EncounterEventsOrientation.*` rows as best-effort/behavioral: Horizontal=0, Vertical=1; metadata MinValue=0, MaxValue=1, NumValues=2. Evidence is bounded to startup publication, Lua numeric types, exact complete member set, and metadata. Focused proof is at f59d146fd340eddd9761c1828e00f672afcd4ba3. No runtime drift was found. Layout/orientation behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1316 best-effort, 982 evidence-required, 2 exception-requested, and 1110 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify encounter-event severity enums
+
+The seven retail 12.0.0 `Enum.EncounterEventsIconDirection.*` rows are best-effort/behavioral: `Top=0`, `Bottom=1`, `Left=0`, and `Right=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=4`. Focused proof is at `49b052e36826a5ab70241fd242f4031e23b57805`; it asserts the exact complete member set, Lua numeric types, no extras, and metadata. No runtime drift was found. Claims are bounded to startup publication and exact values/metadata; encounter layout/direction behavior, consumers, persistence, transitions, and lifecycle remain unclaimed.
+
+The six retail 12.0.0 `Enum.EncounterEventSeverity.*` rows are best-effort/behavioral: `Low=0`, `Medium=1`, `High=2`; metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Focused proof is at `6a0012bc8a670c04e8a5413a06903b35d4d5e090`; it asserts the exact complete member set, Lua numeric types, and metadata. The guarded runtime fallback matches retail 12.0.0 with no drift. Claims are bounded to startup publication and exact values/metadata; encounter severity interpretation, producers, consumers, ordering, transitions, persistence, and lifecycle remain unclaimed. Current totals are **1311 best-effort, 982 evidence-required, 2 exception-requested, and 1115 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify encounter event iconmask enums
+
+Classified exactly thirteen retail 12.0.0 `Enum.EncounterEventIconmask.*` and `Enum.EncounterEventIconmaskMeta.*` rows as best-effort/behavioral: DeadlyEffect=1, EnrageEffect=2, BleedEffect=4, MagicEffect=8, DiseaseEffect=16, CurseEffect=32, PoisonEffect=64, TankRole=128, HealerRole=256, DpsRole=512; metadata MinValue=1, MaxValue=512, NumValues=10. Evidence is bounded to startup publication, Lua numeric types, exact bitmask member values, and metadata. Focused proof is at `0de2bc41145abf8518ff9ec602c7428cc3afc728`. The guarded runtime fallback matches retail 12.0.0 with no drift. Icon-mask interpretation/operations, encounter behavior, consumers, persistence, ordering, transitions, and lifecycle remain unclaimed. Current totals are **1298 best-effort, 982 evidence-required, 2 exception-requested, and 1128 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify encounter-event cast-state enums
+
+The six retail 12.0.0 `Enum.EncounterEventCastState.*` and `Enum.EncounterEventCastStateMeta.*` rows are best-effort/behavioral: `Casting=1`, `NotCasting=2`, `Expired=3`; metadata `MinValue=1`, `MaxValue=3`, `NumValues=3`. Focused proof is at `23852ce7b301bffecc3688984eab8b615a6df02f`; it asserts the exact three-member set, Lua numeric types, and metadata. The guarded runtime fallback matches retail 12.0.0 with no drift. Claims are bounded to startup publication and exact values/metadata; encounter-event cast behavior, producers, transitions, consumers, persistence, ordering, and lifecycle remain unclaimed. Current totals are **1298 best-effort, 982 evidence-required, 2 exception-requested, and 1128 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify Edit Mode unit-frame settings
+
+The three retail 12.0.0 `Enum.EditModeUnitFrameSetting.*` rows are best-effort/behavioral: `AuraOrganizationType=18`, `IconSize=19`, and `Opacity=20`. Focused proof is at `509daf308b3e76d5f9768f8e694c887902190ca1`; it asserts startup table existence, Lua numeric types, exact values, absence of later `BigDefensiveIconSize`, and metadata `MinValue=0`, `MaxValue=20`, `NumValues=21`. Root cause: shared/current sequential enum data includes later `BigDefensiveIconSize=21` and fallback metadata `MaxValue=21`/`NumValues=22`; the retail 12.0.0 override removes that member and restores the metadata boundary without shifting the three target values. Claims are bounded to startup publication, type, exact values, and namespace boundary; unit-frame behavior, aura organization, sizing, opacity rendering, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1298 best-effort, 982 evidence-required, 2 exception-requested, and 1128 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify Edit Mode system enums
+
+Classified exactly three retail 12.0.0 `Enum.EditModeSystem.*` rows as best-effort/behavioral: `PersonalResourceDisplay=21`, `EncounterEvents=22`, and `DamageMeter=23`. Evidence is bounded to startup table publication, Lua numeric type, exact values, absence of later `TotemActionBar=24`, and metadata `MinValue=0`, `MaxValue=23`, `NumValues=24`. Focused proof is at `4d883c9647cf972d6b12b7b4982b9de634d293c5`. Root cause: shared sequential enum data included later `TotemActionBar=24`; the retail 12.0.0 override removes it without shifting the three classified values. Edit Mode behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1276 best-effort, 982 evidence-required, 2 exception-requested, and 1150 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify Edit Mode personal-resource settings
+
+The five retail 12.0.0 `Enum.EditModePersonalResourceDisplaySetting.*` and `Enum.EditModePersonalResourceDisplaySettingMeta.*` rows are best-effort/behavioral, bounded to startup exact namespace publication, Lua numeric type, and exact values (`HideHealthAndPower=0`, `OnlyShowInCombat=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`). Focused proof is at `d302a414f6392978a1ccec9997cedf14345907bc`. Root cause: shared runtime used a later fifteen-member namespace with different names (`HideHealth`, `DeprecatedOnlyShowInCombat`, etc.) and metadata `0/14/15`; retail 12.0.0 epoch initialization replaces it with the exact two-member namespace and metadata `0/1/2`. Display behavior, persistence, consumers, transitions, and lifecycle remain unclaimed. Current totals are **1273 best-effort, 982 evidence-required, 2 exception-requested, and 1153 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify Edit Mode encounter-events settings
+
+Classified exactly thirteen retail 12.0.0 `Enum.EditModeEncounterEventsSetting.*` and `Enum.EditModeEncounterEventsSettingMeta.*` rows as best-effort/behavioral: `Orientation=0`, `IconDirection=1`, `ShowSpellName=2`, `IconSize=3`, `OverallSize=4`, `BackgroundTransparency=5`, `Transparency=6`, `Visibility=7`, `ShowTooltips=8`, `ShowTimer=9`; metadata `MinValue=0`, `MaxValue=9`, `NumValues=10`. Proof is at `f08638e9fe2b4d0144091eeeb61ccd48647001ac`. Shared runtime leaked later `ViewType=10`, `FlipHorizontally=11`, `BarWidth=12`, and `Padding=13` with metadata `0/13/14`; an earlier member was `TooltipAnchor` rather than authoritative `ShowTooltips`. Commit `d75584c79` corrected `ShowTooltips`, and the retail 12.0.0 epoch override removes later members and restores `0/9/10`. Claims are bounded to startup enum/metadata publication, Lua numeric type, exact values, and non-12.0.0 member absence; setting behavior, persistence, consumers, transitions, and lifecycle remain unclaimed. Current totals are **1273 best-effort, 982 evidence-required, 2 exception-requested, and 1153 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify Edit Mode damage-meter settings
+
+Classified exactly sixteen retail 12.0.0 `Enum.EditModeDamageMeterSetting.*` and `Enum.EditModeDamageMeterSettingMeta.*` rows as best-effort/behavioral: `Visibility=0`, `Style=1`, `Numbers=2`, `FrameWidth=3`, `FrameHeight=4`, `Padding=5`, `Transparency=6`, `ObsoleteReuse1=7`, `ShowSpecIcon=8`, `ShowClassColor=9`, `BarHeight=10`, `TextSize=11`, `BackgroundTransparency=12`; metadata `MinValue=0`, `MaxValue=12`, `NumValues=13`. Focused proof is at `ce163833d2e0d984abd2baf0de6e498ca662f939`. Edit Mode damage-meter setting behavior, persistence, consumers, transitions, and lifecycle remain unclaimed. Current totals are **1255 best-effort, 982 evidence-required, 2 exception-requested, and 1171 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify Edit Mode account/aura setting enums
+
+Classified exactly six retail 12.0.0 `Enum.EditModeAccountSetting.*` rows as best-effort/behavioral: added `ShowPersonalResourceDisplay=29`, `ShowEncounterEvents=30`, `ShowDamageMeter=31`, and `ShowExternalDefensives=32`; changed metadata `MaxValue=28→32` and `NumValues=29→33`. The three `Enum.EditModeAuraFrameSetting.*` claims remain unchanged: `VisibleSetting=8`, `Opacity=9`, and `ShowDispelType=10`. Focused proof is at `0dfaa313be82192f753688ecc1dc2547df75bcea`. Root cause: shared sequential/current runtime included later `ShowTotemActionBar=33` and metadata `MaxValue=33`/`NumValues=34`; the retail 12.0.0 epoch override removes that member and restores metadata `MinValue=0`, `MaxValue=32`, `NumValues=33`. Claims are bounded to startup enum/metadata publication, Lua numeric type, exact values, and later-member absence; Edit Mode behavior, persistence, consumers, transitions, and lifecycle remain unclaimed. Current totals remain **1255 best-effort, 982 evidence-required, 2 exception-requested, and 1171 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DurationTimeModifier enums
+
+Classified exactly five retail 12.0.0 `Enum.DurationTimeModifier.*` and `Enum.DurationTimeModifierMeta.*` rows as best-effort/behavioral: `RealTime=0`, `BaseTime=1`; metadata `MinValue=0`, `MaxValue=1`, and `NumValues=2`. Evidence is bounded to startup enum/metadata publication, Lua numeric type, and exact values. Focused proof is at `b846f4833e508d4f440b5a89c3194cc91a5f0384`. Duration calculations, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1230 best-effort, 982 evidence-required, 2 exception-requested, and 1196 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DungeonEncounterXCreatureFlags enums
+
+Classified exactly six retail 12.0.0 `Enum.DungeonEncounterXCreatureFlags.*` and `Enum.DungeonEncounterXCreatureFlagsMeta.*` rows as best-effort/behavioral: `BossCreature=1`, `DropLootImmediately=2`, `DoNotDespawnOnSuccess=4`; metadata `MinValue=1`, `MaxValue=4`, and `NumValues=3`. Evidence is bounded to startup enum/metadata publication, Lua numeric type, and exact values. Focused proof is at `8cb0dda90867aed71a06eb707b2c836dcc2d872c`. Creature flag interpretation, loot timing, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1225 best-effort, 982 evidence-required, 2 exception-requested, and 1201 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DungeonEncounterTriggerType enums
+
+Classified exactly eight retail 12.0.0 `Enum.DungeonEncounterTriggerType.*` and `Enum.DungeonEncounterTriggerTypeMeta.*` rows as best-effort/behavioral: `Invalid=0`, `OnStart=1`, `OnComplete=2`, `OnEnd=3`, `PreviouslyCompleted=4`; metadata `MinValue=0`, `MaxValue=4`, and `NumValues=5`. Evidence is bounded to startup enum/metadata publication, Lua numeric type, and exact values. Focused proof is at `17cd655bc64490cb39b0377f669160d876ef8af8`. Dungeon-encounter trigger behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1219 best-effort, 982 evidence-required, 2 exception-requested, and 1207 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DungeonEncounterFlags enums
+
+Classified exactly thirteen retail 12.0.0 `Enum.DungeonEncounterFlags.*` and `Enum.DungeonEncounterFlagsMeta.*` rows as best-effort/behavioral: `StickyNews=1`, `GuildNews=2`, `RaidLockPlayers=4`, `AutoEnd=8`, `Cosmetic=16`, `Unused=32`, `HideUntilCompleted=64`, `NoAutoStart=128`, `IgnoreSpawnLimit=256`, `DisableEncounterEvents=512`; metadata `MinValue=1`, `MaxValue=512`, and `NumValues=10`. Evidence is bounded to startup enum/metadata publication, Lua numeric type, and exact values. Focused proof is at `9084f476893fd4be8275e05ac1c5f38e185bdb44`. Dungeon-encounter flag interpretation, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1211 best-effort, 982 evidence-required, 2 exception-requested, and 1215 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DamageMeterVisibility enums
+
+Classified exactly six retail 12.0.0 `Enum.DamageMeterVisibility.*` and `Enum.DamageMeterVisibilityMeta.*` rows as best-effort/behavioral: `Always=0`, `InCombat=1`, `Hidden=2`; metadata `MinValue=0`, `MaxValue=2`, and `NumValues=3`. Evidence is bounded to startup enum/metadata publication, Lua numeric type, and exact values. Focused proof is at `7652c9bbee3fe0f41a924ec47689ae311afa34a0`. Visibility behavior, combat transitions, consumers, persistence, and lifecycle remain unclaimed. Current totals are **1198 best-effort, 982 evidence-required, 2 exception-requested, and 1228 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DamageMeterType enums
+
+Classified exactly twelve retail 12.0.0 `Enum.DamageMeterType.*` and `Enum.DamageMeterTypeMeta.*` rows as best-effort/behavioral: `DamageDone=0`, `Dps=1`, `HealingDone=2`, `Hps=3`, `Absorbs=4`, `Interrupts=5`, `Dispels=6`, `DamageTaken=7`, `AvoidableDamageTaken=8`; metadata `MinValue=0`, `MaxValue=8`, and `NumValues=9`; later `Deaths` and `EnemyDamageTaken` are absent. Evidence is bounded to startup enum/metadata publication, Lua numeric type, exact values, and later-member absence. Focused proof is at `5395715a0ff9b71f8d66700cd0fb3eaf87322d42`. Root cause: shared sequential/runtime data also published the later members with `MaxValue=10`/`NumValues=11`; the retail 12.0.0 epoch override removes them and restores 12.0.0 metadata. Aggregation, calculations, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1192 best-effort, 982 evidence-required, 2 exception-requested, and 1234 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DamageMeterStorageType enums
+
+Classified exactly ten retail 12.0.0 `Enum.DamageMeterStorageType.*` and `Enum.DamageMeterStorageTypeMeta.*` rows as best-effort/behavioral: `Damage=0`, `HealingAndAbsorbs=1`, `Absorbs=2`, `Interrupts=3`, `Dispels=4`, `DamageTaken=5`, `AvoidableDamageTaken=6`; metadata `MinValue=0`, `MaxValue=6`, and `NumValues=7`; later `Deaths` and `EnemyDamageTaken` are absent. Evidence is bounded to startup enum/metadata publication, Lua numeric type, exact values, and later-member absence. Focused proof is at `786cbe81e73e50fbba65a53a50a461c80a536d40`. Root cause: shared generated runtime data also published the later members with `MaxValue=8`/`NumValues=9`; the retail 12.0.0 epoch override removes them and restores 12.0.0 metadata. Storage behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1180 best-effort, 982 evidence-required, 2 exception-requested, and 1246 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DamageMeterSpellDetailsDisplayType enums
+
+Classified exactly six retail 12.0.0 `Enum.DamageMeterSpellDetailsDisplayType.*` and `Enum.DamageMeterSpellDetailsDisplayTypeMeta.*` rows as best-effort/behavioral: `SpellCasted=0`, `UnitSpecificSpellCasted=1`, `SpellAffected=2`; metadata `MinValue=0`, `MaxValue=2`, and `NumValues=3`; later `Deaths` and `EnemyDamageTaken` are absent. Evidence is bounded to startup enum/metadata publication, Lua numeric type, exact values, and later-member absence. Focused proof is at `5fce4c9814293c336b3b580c868ee992a00c79f1`. Root cause: shared generated runtime data also published the later members with `MaxValue=4`/`NumValues=5`; the retail 12.0.0 epoch override removes them and restores 12.0.0 metadata. Spell-details display selection, formatting, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1180 best-effort, 982 evidence-required, 2 exception-requested, and 1246 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DamageMeterSessionType enums
+
+Classified exactly six retail 12.0.0 `Enum.DamageMeterSessionType.*` and `Enum.DamageMeterSessionTypeMeta.*` rows as best-effort/behavioral: `Overall=0`, `Current=1`, `Expired=2`; metadata `MinValue=0`, `MaxValue=2`, and `NumValues=3`. Evidence is bounded to startup enum/metadata publication, Lua numeric type, and exact values. Focused proof is at `319d5c3ee5837ffe5a7bf1b8ba92d0892a00a0bf`. Damage-meter session selection, aggregation, expiration, persistence, consumers, transitions, and lifecycle remain unclaimed. Current totals are **1164 best-effort, 982 evidence-required, 2 exception-requested, and 1262 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DamageMeterOverrideType enums
+
+Classified exactly eight retail 12.0.0 `Enum.DamageMeterOverrideType.*` and `Enum.DamageMeterOverrideTypeMeta.*` rows as best-effort/behavioral: `Ignore=0`, `AllowFriendlyFire=1`, `RedirectSourceToOwner=2`, `RedirectSourceToAuraCaster=3`, and `IgnoreForAbsorbSpell=4`; metadata `MinValue=0`, `MaxValue=4`, and `NumValues=5`. Evidence is bounded to startup enum/metadata publication, Lua numeric type, and exact values. Focused proof is at `cbbb9064bab0a7aebe4451834bbe77e89d5b951d`. Damage-meter override interpretation, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1158 best-effort, 982 evidence-required, 2 exception-requested, and 1268 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify DamageMeterNumbers enums
+
+Classified exactly six retail 12.0.0 `Enum.DamageMeterNumbers.*` and `Enum.DamageMeterNumbersMeta.*` rows as best-effort/behavioral: `Minimal=0`, `Compact=1`, `Complete=2`; metadata `MinValue=0`, `MaxValue=2`, and `NumValues=3`. Evidence is bounded to startup enum/metadata publication, Lua numeric type, and exact values. Focused proof is at `fdcfc288a2048f1c29eb541e6699018cb56804fe`. Damage-meter number formatting, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1150 best-effort, 982 evidence-required, 2 exception-requested, and 1276 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify crafting-order result enums
+
+Classified exactly two retail 12.0.0 `Enum.CraftingOrderResult.*` rows as best-effort/behavioral: `MissingCurrency=30` and `TooManyCurrencies=46`. Evidence is bounded to startup enum publication, Lua numeric type, and exact values. Focused proof is at `ac04f9fc55381073c01ba07d794d0ba0d06b0b91`. Crafting-order result production, interpretation, persistence, transitions, consumers, and lifecycle remain unclaimed. Current totals are **1144 best-effort, 982 evidence-required, 2 exception-requested, and 1282 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify ItemCreationContext removals
+
+Classified exactly two removed retail 12.0.0 `Enum.ItemCreationContext.*` rows as best-effort/behavioral: `Placeholder_12_0_0` (prior 186) and `Timewalker` (prior 22) are absent at startup. Focused proof is at `4919858d04ce4b3e4418ed334f4c228de8129daa`. Item-creation context selection, item provenance, consumers, transitions, and lifecycle remain unclaimed. Current totals are **1142 best-effort, 982 evidence-required, 2 exception-requested, and 1284 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify removed expansion landing-page enums
+
+Classified exactly six removed retail 12.0.0 `Enum.ExpansionLandingPageType.*` and `Enum.ExpansionLandingPageTypeMeta.*` rows as best-effort/behavioral. The retail-12.0.0 post-compat epoch override proves `None`, `Dragonflight`, `WarWithin`, `MinValue`, `MaxValue`, and `NumValues` are absent. Focused proof is at `54416879b5c6305ed956f347fe0a17e9fb2ccb28`; landing-page selection, UI behavior, transitions, and lifecycle remain unclaimed. Current totals are **1140 best-effort, 982 evidence-required, 2 exception-requested, and 1286 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify crafting-order item type
+
+Classified exactly seven retail 12.0.0 `Enum.CraftingOrderItemType.*` and `Enum.CraftingOrderItemTypeMeta.*` rows as best-effort/behavioral: added `Item=0`, `Deprecated=4`, and `Currency=5`; changed metadata `MaxValue=5` and `NumValues=6`; removed `NpcProvided` (prior value 4) and `Reagent` (prior value 0) are absent. Focused proof is at `a72ad8574f25a5e7ed6e58065ee5da615a1c2233`, with unchanged `Recraft=1`, `CraftedResult=2`, `RemoveReagent=3`, and metadata `MinValue=0` asserted as context. Crafting-order item classification, payload behavior, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1134 best-effort, 982 evidence-required, 2 exception-requested, and 1292 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify crafting-order item flags
+
+Classified exactly six retail 12.0.0 `Enum.CraftingOrderItemFlags.*` and `Enum.CraftingOrderItemFlagsMeta.*` rows as best-effort/behavioral, bounded to startup enum/metadata numeric publication and exact values (`None=0`, `NpcProvided=1`, `HasEnchantmentData=2`, `MinValue=0`, `MaxValue=2`, `NumValues=3`). Focused proof is at `3bacb64a269eecc6c1b74838f256b6e0a4473911`. Flag assignment, enchantment/NPC item semantics, order payload behavior, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1127 best-effort, 982 evidence-required, 2 exception-requested, and 1299 untriaged** (3410 rows).
+
+## [2026-08-10] architecture | Separate retail profile selection from API epochs
+
+Documented the internal `profile-retail` Cargo feature as the retail profile marker. It selects the retail Blizzard cache without forcing the current API epoch; public `client-retail` remains the current-retail bundle and enables `profile-retail` plus cumulative `retail-12-0-7`. `RetailApiEpoch` and `ACTIVE_RETAIL_API_EPOCH` select the highest enabled cumulative retail epoch. Historical 12.0.0 audit tests use `cargo test --no-default-features --features profile-retail,retail-12-0-0`, and profile-specific runtime behavior gates use `profile-retail` so historical retail tests retain retail semantics. No 12.1, 12.0.7, or 12.0.5 audit-status changes.
+
+## [2026-08-10] investigation | Classify cooldown-viewer alert-type enums
+
+Classified exactly five retail 12.0.0 `Enum.CooldownViewerAlertType.*` and `Enum.CooldownViewerAlertTypeMeta.*` rows as best-effort/behavioral, bounded to startup enum/metadata numeric publication and exact values (`Sound=1`, `Visual=2`, `MinValue=1`, `MaxValue=2`, `NumValues=2`). Focused final-runtime proof is at `5fe329d4d5d852365e81839df992d904d291305d`. Alert triggering, sound/visual effects, configuration, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1121 best-effort, 982 evidence-required, 2 exception-requested, and 1305 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-log message-order enums
+
+Classified exactly five retail 12.0.0 `Enum.CombatLogMessageOrder.*` and `Enum.CombatLogMessageOrderMeta.*` rows as best-effort/behavioral, bounded to startup enum/metadata numeric publication and exact values (`Newest=0`, `Oldest=1`, `MinValue=0`, `MaxValue=1`, `NumValues=2`). Focused proof is at `2d6495a732f7cb598cf67871eae507c28fc7c3bb`. Combat-log storage order, query behavior, persistence, UI consumers, transitions, and lifecycle remain unclaimed. Current totals are **1116 best-effort, 982 evidence-required, 2 exception-requested, and 1310 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-audio unit enums
+
+Classified exactly five retail 12.0.0 `Enum.CombatAudioAlertUnit.*` and `Enum.CombatAudioAlertUnitMeta.*` rows as best-effort/behavioral, bounded to startup enum/metadata numeric publication and exact values (`Player=0`, `Target=1`, `MinValue=0`, `MaxValue=1`, `NumValues=2`). Focused proof is at `5f5635e7b99954ae0f057deb93292e39ddba3bfa`. Unit selection, narration, configuration, sound side effects, transitions, and lifecycle remain unclaimed. Current totals are **1111 best-effort, 982 evidence-required, 2 exception-requested, and 1315 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-audio type enums
+
+Classified exactly five retail 12.0.0 `Enum.CombatAudioAlertType.*` and `Enum.CombatAudioAlertTypeMeta.*` rows as best-effort/behavioral, bounded to startup enum/metadata numeric publication and exact values (`Health=0`, `Cast=1`, `MinValue=0`, `MaxValue=1`, `NumValues=2`). Focused proof is at `0c51d4c32a8ae89fffdf3ca67bf80d03926496d2`. Health/cast classification behavior, narration, configuration, sound side effects, transitions, and lifecycle remain unclaimed. Current totals are **1106 best-effort, 982 evidence-required, 2 exception-requested, and 1320 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Correct and classify combat-audio throttle enums
+
+Classified exactly ten retail 12.0.0 `Enum.CombatAudioAlertThrottle.*` and `Enum.CombatAudioAlertThrottleMeta.*` rows as best-effort/behavioral, bounded to retail 12.0.0 startup enum/metadata Lua numeric publication, exact values (`Sample=0`, `PlayerHealth=1`, `TargetHealth=2`, `PlayerCast=3`, `TargetCast=4`, `PlayerResource1=5`, `PlayerResource2=6`; metadata `MinValue=0`, `MaxValue=6`, `NumValues=7`), and absence of later-epoch `PlayerHealthSamePercent`, `TargetHealthSamePercent`, `PlayerResource1SamePercent`, and `PlayerResource2SamePercent` members after the retail-12.0.0 override. Focused proof is at `8096cc84cb9e200840507937c0b379bb6f0ca656`. Throttle timing, coalescing, narration, configuration, sound side effects, transitions, and lifecycle remain unclaimed.
+
+Current totals are **1101 best-effort, 982 evidence-required, 2 exception-requested, and 1325 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-audio target-health format enums
+
+Classified exactly twelve retail 12.0.0 `Enum.CombatAudioAlertTargetHealthFormatValues.*` and `Enum.CombatAudioAlertTargetHealthFormatValuesMeta.*` rows as best-effort/behavioral. Focused startup proof at `3c320a56d387e716e299f114972e1c9746abc2f0` is limited to exact Lua numeric publication: `NoHealthFull=0`, `NoHealthNoPercent=1`, `NoHealthNoPercentDiv10=2`, `HealthFull=3`, `HealthNoPercent=4`, `HealthNoPercentDiv10=5`, `TargetFull=6`, `TargetNoPercent=7`, and `TargetNoPercentDiv10=8`, with metadata `MinValue=0`, `MaxValue=8`, and `NumValues=9`. Target-health state detection, percent/divisor formatting, narration, configuration, sound side effects, transitions, and lifecycle remain unclaimed. Current totals are **1091 best-effort, 982 evidence-required, 2 exception-requested, and 1335 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-audio target-death behavior enums
+
+Classified exactly five retail 12.0.0 `Enum.CombatAudioAlertTargetDeathBehavior.*` and `Enum.CombatAudioAlertTargetDeathBehaviorMeta.*` rows as best-effort/behavioral. Focused startup proof at `a9860867b49d156f3d84535843b7807cb1bf646b` is limited to exact Lua numeric publication: `Default=0`, `SayTargetDead=1`, with metadata `MinValue=0`, `MaxValue=1`, and `NumValues=2`. Target-death detection, narration, configuration, sound side effects, transitions, and lifecycle remain unclaimed. Current totals are **1079 best-effort, 982 evidence-required, 2 exception-requested, and 1347 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-audio target-cast format enums
+
+Classified exactly ten retail 12.0.0 `Enum.CombatAudioAlertTargetCastFormatValues.*` and `Enum.CombatAudioAlertTargetCastFormatValuesMeta.*` rows as best-effort/behavioral. Focused startup proof at `523c8cb79ebdb304c64884ff86a79a19d018d161` is limited to exact Lua numeric publication: `TargetCastingSpellname=0`, `TargetCastSpellname=1`, `CastingSpellname=2`, `CastSpellname=3`, `Casting=4`, `Cast=5`, `Spellname=6`, with metadata `MinValue=0`, `MaxValue=6`, and `NumValues=7`. Target/cast state detection, spell-name formatting, narration, configuration, sound side effects, transitions, and lifecycle remain unclaimed. Current totals are **1074 best-effort, 982 evidence-required, 2 exception-requested, and 1352 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Correct and classify combat-audio spec-setting enums
+
+Corrected the retail 12.0.0 `Enum.CombatAudioAlertSpecSetting` fallback by removing later-epoch `Resource1Voice`, `Resource1Volume`, `Resource2Voice`, and `Resource2Volume` members and restoring the checked-in values: `Resource1Percent=0`, `Resource1Format=1`, `Resource2Percent=2`, `Resource2Format=3`, and `SayIfTargeted=4`; metadata is `MinValue=0`, `MaxValue=4`, `NumValues=5`. Focused startup proof is committed at `5ff1d782f8c83aa8d972a608c31b62c6d89e92a6`. The eight rows are best-effort/behavioral, limited to exact numeric publication, metadata, and absence of those later-epoch members; combat-audio configuration persistence, narration, resource/target state, sound side effects, transitions, and lifecycle remain unclaimed. Current totals are **1064 best-effort, 982 evidence-required, 2 exception-requested, and 1362 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-audio targeted-state enums
+
+Classified the seven `Enum.CombatAudioAlertSayIfTargetedType.*` and `Enum.CombatAudioAlertSayIfTargetedTypeMeta.*` rows as best-effort/behavioral. Evidence is limited to exact startup enum/metadata numeric publication and values; aggro/target detection, narration, configuration, sound side effects, transitions, and lifecycle remain unclaimed. Current totals are **1056 best-effort, 982 evidence-required, 2 exception-requested, and 1370 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-audio player-resource format enums
+
+Classified the nine `Enum.CombatAudioAlertPlayerResourceFormatValues.*` and `Enum.CombatAudioAlertPlayerResourceFormatValuesMeta.*` rows as best-effort/behavioral. Evidence is limited to exact startup enum/metadata numeric publication and values; resource narration, percent/divisor formatting, resource selection, configuration, sound side effects, and lifecycle remain unclaimed. Current totals are **1049 best-effort, 982 evidence-required, 2 exception-requested, and 1377 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-audio player-health format enums
+
+Classified the nine `Enum.CombatAudioAlertPlayerHealthFormatValues.*` and `Enum.CombatAudioAlertPlayerHealthFormatValuesMeta.*` rows as best-effort/behavioral. Evidence is limited to exact startup enum/metadata numeric publication and values; health narration, percent/divisor formatting, configuration, sound side effects, and lifecycle remain unclaimed. Current totals are **1040 best-effort, 982 evidence-required, 2 exception-requested, and 1386 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-audio player-cast format enums
+
+Classified the eight `Enum.CombatAudioAlertPlayerCastFormatValues.*` and `Enum.CombatAudioAlertPlayerCastFormatValuesMeta.*` rows as best-effort/behavioral. Evidence is limited to exact startup enum/metadata numeric publication and values; narration, cast detection, spell-name formatting, configuration, sound side effects, and lifecycle remain unclaimed. Current totals are **1031 best-effort, 982 evidence-required, 2 exception-requested, and 1395 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify combat-audio party-percent enums
+
+Classified the 14 `Enum.CombatAudioAlertPartyPercentValues.*` and `Enum.CombatAudioAlertPartyPercentValuesMeta.*` rows, plus the nine `Enum.CombatAudioAlertPercentValues.*` and `Enum.CombatAudioAlertPercentValuesMeta.*` rows, as best-effort/behavioral. Evidence is limited to exact startup enum/metadata numeric publication and values; combat-audio threshold behavior, triggers, configuration, sound side effects, transitions, and lifecycle remain unclaimed. Current totals are **1023 best-effort, 982 evidence-required, 2 exception-requested, and 1403 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify chat-lockdown and combat-audio enums
+
+Classified the three `Enum.ChatMessagingLockdownReason.*`, three `Enum.ChatMessagingLockdownReasonMeta.*`, three `Enum.CombatAudioAlertCastState.*`, and three `Enum.CombatAudioAlertCastStateMeta.*` rows as best-effort/behavioral. Evidence is limited to exact startup enum/metadata numeric publication and values; chat-lockdown enforcement, secret/taint behavior, errors, and lifecycle; combat-audio triggers, configuration, sound side effects, and lifecycle remain unclaimed. Current totals are **1000 best-effort, 982 evidence-required, 2 exception-requested, and 1426 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify bulk purchase/refund enums
+
+Classified the 20 `Enum.BulkPurchaseResult*` and `Enum.BulkRefundResult*` rows as best-effort/behavioral. Evidence is limited to exact startup enum/metadata numeric publication and values; purchase/refund transaction state, services, side effects, errors, and lifecycle remain unclaimed. Current totals are **988 best-effort, 982 evidence-required, 2 exception-requested, and 1438 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify 12.0.0 enum rows
+
+Classified the four `Enum.AccountDataUpdateStatus.*`, three `Enum.AddOnRestrictionState.*`, three `Enum.AddOnRestrictionStateMeta.*`, five `Enum.AddOnRestrictionType.*`, three `Enum.AddOnRestrictionTypeMeta.*`, three `Enum.AuraFrameVisibleSetting.*`, and three `Enum.AuraFrameVisibleSettingMeta.*` rows as best-effort/behavioral. Evidence is bounded to exact startup enum/metadata numeric publication and values; restriction policy, enforcement, events, lifecycle, AuraContainer behavior, and visibility transitions remain unclaimed. Current totals are **968 best-effort, 982 evidence-required, 2 exception-requested, and 1458 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify UnitPowerSpellIDs constants
+
+Classified the five `Constants.UnitPowerSpellIDs` rows as best-effort/behavioral: focused exact type/value proof at `ce4ea294bff9f41401f74e3e9e5ca40d42ea4516` covers startup publication only; spell, aura, alternate-power, consumer, mutation, and lifecycle semantics remain unclaimed. Current totals are **944 best-effort, 982 evidence-required, 2 exception-requested, and 1482 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify Damage Meter events
+
+Classified `DAMAGE_METER_COMBAT_SESSION_UPDATED`, `DAMAGE_METER_CURRENT_SESSION_UPDATED`, and `DAMAGE_METER_RESET` as evidence-required/unsafe: event names are registered, but no Damage Meter session/reset producer or state/timing model exists. Payload/order/duplicates, UI refresh, persistence, and lifecycle semantics remain unresolved. Current totals are **939 best-effort, 982 evidence-required, 2 exception-requested, and 1487 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify encounter timeline events
+
+Classified `ENCOUNTER_STATE_CHANGED`, the eight `ENCOUNTER_TIMELINE_*` events, and `ENCOUNTER_WARNING` as evidence-required/unsafe: names are registered and addons load, but no encounter timeline/warning producer or state machine exists. Payloads, synchronous/unique/delayed timing, order, post-dispatch query state, UI refresh, persistence, and lifecycle semantics remain unresolved. Current totals are **939 best-effort, 982 evidence-required, 2 exception-requested, and 1487 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify criteria tracking fields
+
+Classified `CriteriaRequiredValue.criteriaID`, `.requiredValue`, `CriteriaRequirement.completed`, and `.requirementText` as evidence-required/unsafe: the tracking namespace emits nil/empty defaults and has no criteria/requirement payload producer; field/type/value/progress/completion/localization/event/persistence/lifecycle semantics remain unresolved. Current totals are **939 best-effort, 969 evidence-required, 2 exception-requested, and 1500 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify crafting structure fields
+
+Classified the 19 crafting structure fields from `CraftingItemSlotModification.reagent` through `CraftingVariableQuantities.reagent` as evidence-required/unsafe: no typed runtime producers cover reagent, quality/icon, variable-quantity, or resource-return fields; type/value/nesting/validation/update/event/persistence/lifecycle semantics remain unresolved. Current totals are **939 best-effort, 965 evidence-required, 2 exception-requested, and 1504 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify grouped constants
+
+Classified 38 grouped constants as best-effort/behavioral: six misc target/currency/item/profession/transmog constants, 12 EncounterTimeline constants, six TTS constants, 13 UICharacterClasses constants, and `UnitEventConstants.MAX_UNIT_TOKENS_IN_EVENT`. Focused grouped test proof at `1895cacebd8fa8f881f053694ec61de9a645824c` establishes startup Lua numeric type/value only; consumer, mutation, protection, and subsystem semantics remain unclaimed. Current totals are **939 best-effort, 946 evidence-required, 2 exception-requested, and 1523 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify WeeklyRewards progress rows
+
+Classified `C_WeeklyRewards.GetSortedProgressForActivity` and `WeeklyRewardActivityTierProgress.activityTierID`, `.difficulty`, and `.numPoints` as evidence-required/unsafe: the API is absent, and current Great Vault state lacks tier IDs, difficulty, points, and shared-difficulty sorting. Field/result/event/persistence/lifecycle semantics remain unresolved. Current totals are **901 best-effort, 946 evidence-required, 2 exception-requested, and 1561 untriaged** (3410 rows).
+
+## [2026-08-10] investigation | Classify Prey Hunt widget visualization
+
+Classified `C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo` and its 16 `PreyHuntProgressWidgetVisualizationInfo` fields as evidence-required/unsafe: the API is absent and no Prey Hunt widget state or payload producer exists. Widget lookup, typed fields, timer/progress/animation/tooltip/texture/model values, refresh, events, persistence, and lifecycle remain unresolved. Current totals are **901 best-effort, 942 evidence-required, 2 exception-requested, and 1565 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_Tutorial.GetCombatEventInfo
+
+Classified `C_Tutorial.GetCombatEventInfo` as evidence-required/unsafe: the explicit implementation is a zero-result no-op while the checked-in source provides no output schema; authoritative return semantics, combat state/producer/timing, persistence, and lifecycle remain unresolved. Current totals are **901 best-effort, 925 evidence-required, 2 exception-requested, and 1582 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify catalog and combat-log constants
+
+Classified `Constants.CatalogShopVirtualCurrencyConstants.HEARTHSTEEL_VC_CURRENCY_CODE` (`XVV`), `TRADERS_TENDER_VC_CURRENCY_CODE` (`XWP`), both `CombatLogMessageLimits` values (`300`, `1000`), and all five `CombatLogObjectMasks` values (`15`, `768`, `240`, `-65536`, `64512`) as best-effort/behavioral. Focused proof at `a5a3d167b3e0e747e02e7c711b4255efe0488cef` establishes startup Lua type/value only; consumer, mutation, protection, and broader semantics remain unclaimed. Current totals are **901 best-effort, 924 evidence-required, 2 exception-requested, and 1583 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_TransmogSets APIs
+
+Classified `C_TransmogSets.GetAvailableSets`, `GetSetsFilter`, `IsUsingDefaultSetsFilters`, `SetDefaultSetsFilters`, `SetSetsFilter`, and `C_TransmogSets.TransmogSetInfo.grantAsPrecedingVariant` as evidence-required/unsafe: the temporary surface has empty/default compatibility only, with no wardrobe set inventory, filter state, or variant relationship. API results/mutations/field/event/persistence/lifecycle semantics remain unresolved. Current totals are **892 best-effort, 924 evidence-required, 2 exception-requested, and 1592 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_TooltipComparison.CompareItem
+
+Classified `C_TooltipComparison.CompareItem` as evidence-required/unsafe: no native C_TooltipComparison implementation or comparison-data model exists. Protected-call behavior, item selection, tooltip rendering/anchors/deltas, cleanup, and lifecycle remain unresolved. Current totals are **892 best-effort, 918 evidence-required, 2 exception-requested, and 1598 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_TooltipInfo APIs
+
+Classified `C_TooltipInfo.GetOutfit`, `GetUnitAuraByAuraInstanceID`, `GetRecipeResultItem`, and `GetRecipeResultItemForOrder` as evidence-required/unsafe: GetOutfit is absent; aura implementation is player-only and ignores filter; recipe methods ignore reagent/order/recraft/level/quality inputs and return static output-item tooltips. Full payload/secret/lifecycle semantics remain unresolved. Current totals are **892 best-effort, 917 evidence-required, 2 exception-requested, and 1599 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_TaskQuest.GetQuestUIWidgetSetByType
+
+Classified `C_TaskQuest.GetQuestUIWidgetSetByType` as evidence-required/unsafe: explicit implementation produces synthetic widget-set IDs from static world-quest fixtures; authoritative per-quest/type mapping, enum/nil behavior, refresh/widget/event/persistence/lifecycle remain unresolved. Current totals are **892 best-effort, 913 evidence-required, 2 exception-requested, and 1603 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_Transmog.TransmogApplyWarningInfo fields
+
+Classified `C_Transmog.TransmogApplyWarningInfo.itemLink` and `.text` as evidence-required/unsafe: removed parent structure/fields lack runtime absence and exact removal/load timing proof; source-token coverage is insufficient. Current totals are **892 best-effort, 912 evidence-required, 2 exception-requested, and 1604 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_StableInfo.IsBonusPetSlotAvailable
+
+Classified `C_StableInfo.IsBonusPetSlotAvailable` as evidence-required/unsafe: implementation has `IsAtPetStable` only; no Beast Master Animal Companion or active-combat-configuration availability model exists. Boolean results, configuration transitions, stable UI refresh, events, persistence, and lifecycle remain unresolved. Current totals are **892 best-effort, 910 evidence-required, 2 exception-requested, and 1606 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_SpellBook lookup and duration APIs
+
+Classified `C_SpellBook.FindBaseSpellByID`, `FindFlyoutSlotBySpellID`, `FindSpellOverrideByID`, `GetSpellBookItemChargeDuration`, `GetSpellBookItemCooldownDuration`, and `GetSpellBookItemLossOfControlCooldownDuration` as evidence-required/unsafe: mapping fallbacks are nil/input-ID compatibility only and no flyout/override model exists; duration APIs lack slot/bank cooldown state and a LuaDurationObject producer. Known/unknown mappings, required/nilable results, valid slots/banks, timing/expiration, refresh, object lifetime, and lifecycle remain unproven. Current totals are **892 best-effort, 909 evidence-required, 2 exception-requested, and 1607 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_Sound.PlaySound
+
+Classified `C_Sound.PlaySound` as evidence-required/unsafe: the silent no-op fallback proves callability only and ignores inputs and returns; no-audio builds are not a scope exception. Input defaults, invalid IDs, success/failure, handles, duplicate suppression, finish callbacks, priority, backend behavior, and lifecycle remain unproven. Current totals are **892 best-effort, 903 evidence-required, 2 exception-requested, and 1613 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_SettingsUtil APIs
+
+Classified `C_SettingsUtil.NotifySettingsLoaded` and `C_SettingsUtil.OpenSettingsPanel` as evidence-required/unsafe: current settings defaults model partial Settings categories/panel helpers only; no C_SettingsUtil namespace, SETTINGS_LOADED dispatch, or category+element scrolling implementation exists. Event timing/order, nil/valid/unknown category and element targets, repeated opens, visibility/scrolling, and lifecycle remain unproven. Current totals are **892 best-effort, 902 evidence-required, 2 exception-requested, and 1614 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify secure transfer APIs
+
+Classified `C_SecureTransfer.Cancel`, `C_SecureTransfer.CompleteHousingPurchase`, `C_SecureTransfer.CompleteHousingVCPurchase`, `C_SecureTransfer.GetHousingPurchaseCost`, and `C_SecureTransfer.GetHousingVCPurchaseProductID` as evidence-required/unsafe: current temporary state exposes counters/lastAction and manually injected numeric query values only; no secure transaction, pricing/product producer, validation, authorization, purchase mutation, cancellation/rollback, callbacks/events exists. Exact costs/products and valid/invalid/repeated transaction lifecycle remain unproven. Current totals are **892 best-effort, 900 evidence-required, 2 exception-requested, and 1616 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify restricted-action policy APIs
+
+Classified `C_RestrictedActions.CheckAllowProtectedFunctions`, `C_RestrictedActions.GetAddOnRestrictionState`, and `C_RestrictedActions.IsAddOnRestrictionActive` as evidence-required/unsafe: constant-true and constant-Inactive defaults are compatibility scaffolding, the active query is absent, and no per-object protected-function policy or per-type restriction state machine exists. Object and silent semantics, enum types, transitions, taint/restriction enforcement, refresh, events, persistence, and lifecycle remain unproven. Current totals are **892 best-effort, 895 evidence-required, 2 exception-requested, and 1621 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify current-player faction paragon eligibility
+
+Classified `C_Reputation.IsFactionParagonForCurrentPlayer` as best-effort/behavioral: explicit faction-paragon state and focused tests prove registered eligible factions return true, while level-gated and missing factions return false. Live service population, refresh, events, persistence, malformed inputs, and lifecycle remain outside the claim. Current totals are **892 best-effort, 892 evidence-required, 2 exception-requested, and 1624 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify quest favor and active prey APIs
+
+Classified `C_QuestInfoSystem.GetQuestLogRewardFavor` and `C_QuestLog.GetActivePreyQuest` as evidence-required/unsafe: no quest-specific favor or cycle-cap model and no active-prey quest state exist; current quest surfaces cover other classification, log, and reward behavior only. Quest IDs, favor amounts and clamping, inactive nil and active prey IDs, transitions, refresh, events, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 892 evidence-required, 2 exception-requested, and 1625 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_PvP BattlegroundInfo and Training Grounds APIs
+
+Classified all 23 added C_PvP rows as evidence-required/unsafe: the simulator only has legacy positional battleground probes/state, not C_PvP.BattlegroundInfo or Training Grounds availability/catalog/rewards/queue/match/daily-win models. Required/nilable fields, structure-return contract, eligibility/reasons, lists/rewards, match/win transitions, join validation/events/persistence/lifecycle remain unproven. Current totals are **891 best-effort, 890 evidence-required, 2 exception-requested, and 1627 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_Ping.IsPingSystemEnabled
+
+Classified `C_Ping.IsPingSystemEnabled` as evidence-required/unsafe: the source requires a boolean enabled result, but temporary ping defaults have no ping availability state or explicit method; generic fallback does not model it. Enabled/disabled states, context changes, transitions, refresh, events, and lifecycle remain unproven. Current totals are **891 best-effort, 867 evidence-required, 2 exception-requested, and 1650 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative access, task-removal, request, and viewing APIs
+
+Classified `C_NeighborhoodInitiative.PlayerHasInitiativeAccess`, `C_NeighborhoodInitiative.PlayerMeetsRequiredLevel`, `C_NeighborhoodInitiative.RemoveTrackedInitiativeTask`, `C_NeighborhoodInitiative.RequestInitiativeActivityLog`, `C_NeighborhoodInitiative.RequestNeighborhoodInitiativeInfo`, `C_NeighborhoodInitiative.SetActiveNeighborhood`, and `C_NeighborhoodInitiative.SetViewingNeighborhood` as evidence-required/unsafe: access/level queries lack eligibility state and fallback nil; tracked-task removal is a no-op; request and active/viewing setters lack request/producers/context state. Boolean eligibility, valid/invalid IDs/GUIDs, mutations, request timing/results/events, transitions, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 866 evidence-required, 2 exception-requested, and 1651 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.NeighborhoodInitiativeInfo fields
+
+Classified `C_NeighborhoodInitiative.NeighborhoodInitiativeInfo` fields `currentCycleID`, `currentProgress`, `description`, `duration`, `initiativeID`, `isLoaded`, `milestones`, `neighborhoodGUID`, `playerTotalContribution`, `progressRequired`, `tasks`, and `title` as evidence-required/unsafe: the source requires 12 scalar/nested initiative payload fields, but no NeighborhoodInitiativeInfo model or populated producer exists; generic GetNeighborhoodInitiativeInfo fallback returns nil. Loaded/nil states, scalar values, ordered milestone/task arrays, progress/cycle/contribution transitions, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 859 evidence-required, 2 exception-requested, and 1658 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative tracked state and queries
+
+Classified `C_NeighborhoodInitiative.InitiativeTasksTracked.trackedIDs`, `C_NeighborhoodInitiative.IsInitiativeEnabled`, `C_NeighborhoodInitiative.IsPlayerInNeighborhoodGroup`, and `C_NeighborhoodInitiative.IsViewingActiveNeighborhood` as evidence-required/unsafe: trackedIDs currently proves only an empty table shape with no tracked state/add-remove synchronization; IsInitiativeEnabled is constant false scaffolding; group/view queries lack backing state and return fallback nil. Numeric IDs, query booleans, valid/invalid/duplicate transitions, ordering, context changes, refresh, persistence, events, and lifecycle remain unproven. Current totals are **891 best-effort, 847 evidence-required, 2 exception-requested, and 1670 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeTaskInfo fields
+
+Classified `C_NeighborhoodInitiative.InitiativeTaskInfo` fields `ID`, `completed`, `criteriaList`, `description`, `inProgress`, `progressContributionAmount`, `requirementsList`, `rewardQuestID`, `sortOrder`, `supersedes`, `taskName`, `taskType`, `timesCompleted`, and `tracked` as evidence-required/unsafe: the source requires 14 task fields including nested criteria/requirements arrays and a task-type enum, but no InitiativeTaskInfo model, task state, or populated producer exists; the explicit default returns nil and the current test proves nil only. Field types/values, absent/valid/unknown IDs, arrays/order, completion/progress/tracking transitions, refresh, persistence, events, and lifecycle remain unproven. Current totals are **891 best-effort, 843 evidence-required, 2 exception-requested, and 1674 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeMilestoneInfo.rewards and InitiativeMilestoneRewardInfo fields
+
+Classified `C_NeighborhoodInitiative.InitiativeMilestoneInfo.rewards` plus `C_NeighborhoodInitiative.InitiativeMilestoneRewardInfo.decorID`, `decorQuantity`, `description`, `favor`, `money`, `rewardQuestID`, and `title` as evidence-required/unsafe: the source defines a required reward array and seven required fields, but no InitiativeMilestoneInfo/InitiativeMilestoneRewardInfo runtime model or initiative payload producer exists; generic fallback produces no milestones. Reward arrays/order, entry shape/types/values, empty/populated milestones, updates, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 829 evidence-required, 2 exception-requested, and 1688 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeMilestoneInfo.requiredContributionAmount
+
+Classified `C_NeighborhoodInitiative.InitiativeMilestoneInfo.requiredContributionAmount` as evidence-required/unsafe: the source defines a required numeric requiredContributionAmount field, but no InitiativeMilestoneInfo runtime model or initiative payload producer exists; generic fallback produces no milestones. Contribution thresholds, empty/populated milestones, ordering/progress comparisons, updates, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 821 evidence-required, 2 exception-requested, and 1696 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeMilestoneInfo.milestoneOrderIndex
+
+Classified `C_NeighborhoodInitiative.InitiativeMilestoneInfo.milestoneOrderIndex` as evidence-required/unsafe: the source defines a required numeric milestoneOrderIndex field, but no InitiativeMilestoneInfo runtime model or initiative payload producer exists; generic fallback produces no milestones. Numeric indexes, ordering, empty/populated milestones, updates, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 820 evidence-required, 2 exception-requested, and 1697 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeActivityLogInfo.taskActivity
+
+Classified `C_NeighborhoodInitiative.InitiativeActivityLogInfo.taskActivity` as evidence-required/unsafe: the source defines a required array of InitiativeActivityLogEntry structures, but no activity-log info/entry model or producer exists; generic fallback produces no payload. Absent/present behavior, array shape/order, entry fields, updates, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 819 evidence-required, 2 exception-requested, and 1698 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeActivityLogInfo.neighborhoodGUID
+
+Classified `C_NeighborhoodInitiative.InitiativeActivityLogInfo.neighborhoodGUID` as evidence-required/unsafe: the source defines a required string neighborhoodGUID field, but no InitiativeActivityLogInfo runtime model or producer exists; generic fallback produces no payload. GUID presence and values, absent/present logs, refresh/update transitions, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 817 evidence-required, 2 exception-requested, and 1700 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeActivityLogInfo.nextUpdateTime
+
+Classified `C_NeighborhoodInitiative.InitiativeActivityLogInfo.nextUpdateTime` as evidence-required/unsafe: the source defines a required numeric nextUpdateTime field, but no InitiativeActivityLogInfo runtime model or producer exists; generic fallback produces no payload. Numeric timing presence and values, absent/present logs, update/refresh transitions, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 818 evidence-required, 2 exception-requested, and 1699 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeActivityLogInfo.isLoaded
+
+Classified `C_NeighborhoodInitiative.InitiativeActivityLogInfo.isLoaded` as evidence-required/unsafe: the source defines a required boolean isLoaded field, but no InitiativeActivityLogInfo runtime model or producer exists; generic fallback produces no payload. Loaded-state presence/values, absent/present logs, refresh/update transitions, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 816 evidence-required, 2 exception-requested, and 1701 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeActivityLogEntry.taskName
+
+Classified `C_NeighborhoodInitiative.InitiativeActivityLogEntry.taskName` as evidence-required/unsafe: the source defines a required string taskName field, but no InitiativeActivityLogEntry runtime model or activity-log producer exists; generic fallback produces no payload. String field presence/values, empty/present logs, updates, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 815 evidence-required, 2 exception-requested, and 1702 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeActivityLogEntry.taskID
+
+Classified `C_NeighborhoodInitiative.InitiativeActivityLogEntry.taskID` as evidence-required/unsafe: the source defines a required numeric taskID field, but no InitiativeActivityLogEntry runtime model or activity-log producer exists; generic fallback produces no payload. Numeric task-ID presence/values, invalid/unknown tasks, empty/present logs, updates, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 814 evidence-required, 2 exception-requested, and 1703 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeActivityLogEntry.playerName
+
+Classified `C_NeighborhoodInitiative.InitiativeActivityLogEntry.playerName` as evidence-required/unsafe: the source defines a required string playerName field, but no InitiativeActivityLogEntry runtime model or activity-log producer exists; generic fallback produces no payload. String field presence/values, empty/present logs, updates, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 813 evidence-required, 2 exception-requested, and 1704 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeActivityLogEntry.completionTime
+
+Classified `C_NeighborhoodInitiative.InitiativeActivityLogEntry.completionTime` as evidence-required/unsafe: the source defines a required numeric completionTime field, but no InitiativeActivityLogEntry runtime model or activity-log producer exists and generic fallback produces no payload. Numeric time presence/values, empty/present logs, updates, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 812 evidence-required, 2 exception-requested, and 1705 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.InitiativeActivityLogEntry.amount
+
+Classified `C_NeighborhoodInitiative.InitiativeActivityLogEntry.amount` as evidence-required/unsafe: the source defines a required numeric amount field, but no InitiativeActivityLogEntry runtime model or activity-log producer exists and generic fallback produces no payload. Numeric field presence/values, empty/present logs, updates, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 811 evidence-required, 2 exception-requested, and 1706 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.GetTrackedInitiativeTasks
+
+Classified `C_NeighborhoodInitiative.GetTrackedInitiativeTasks` as evidence-required/unsafe: the source returns InitiativeTasksTracked with numeric trackedIDs, but the fallback always returns an empty table shape and the focused probe proves only that shape. No tracked-task state exists, so add/remove, duplicate, invalid/unknown ID, ordering, refresh, persistence, events, and lifecycle remain unproven. Current totals are **891 best-effort, 810 evidence-required, 2 exception-requested, and 1707 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.GetRequiredLevel
+
+Classified `C_NeighborhoodInitiative.GetRequiredLevel` as evidence-required/unsafe: the source requires one numeric level, but no explicit method or initiative required-level state exists; namespace defaults omit it and generic fallback returns nil. No-initiative behavior, valid levels, transitions, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 809 evidence-required, 2 exception-requested, and 1708 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo
+
+Classified `C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo` as evidence-required/unsafe: the source returns a nilable NeighborhoodInitiativeInfo payload with progress, milestone, task, contribution, timing, and neighborhood fields, but no explicit method or state model exists, namespace defaults omit it, and generic fallback returns nil. Nil alone does not establish populated payloads, field types/values, transitions, refresh, persistence, or lifecycle. Current totals are **891 best-effort, 808 evidence-required, 2 exception-requested, and 1709 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.GetInitiativeTaskInfo
+
+Classified `C_NeighborhoodInitiative.GetInitiativeTaskInfo` as evidence-required/unsafe: the source returns a nilable InitiativeTaskInfo by numeric task ID, but the current explicit fallback always returns nil with no task records or payload model; the focused probe proves only nil for ID 1. Valid/unknown IDs, exact fields/types, updates, tracked-task interaction, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 807 evidence-required, 2 exception-requested, and 1710 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.GetInitiativeTaskChatLink
+
+Classified `C_NeighborhoodInitiative.GetInitiativeTaskChatLink` as evidence-required/unsafe: the source requires a string chat link by numeric task ID, but no explicit method or task/chat-link model exists, namespace defaults omit it, and generic fallback returns nil. Valid/unknown IDs, exact link format, absent-task behavior, updates, refresh, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 807 evidence-required, 2 exception-requested, and 1710 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.GetInitiativeActivityLogInfo
+
+Classified `C_NeighborhoodInitiative.GetInitiativeActivityLogInfo` as evidence-required/unsafe: the source returns a nilable InitiativeActivityLogInfo payload, but no explicit method or activity-log state model exists, namespace defaults omit it, and generic fallback returns nil. Nil alone does not establish absent/present behavior, payload fields/entries, update timing, refresh/events, persistence, or lifecycle. Current totals are **891 best-effort, 805 evidence-required, 2 exception-requested, and 1712 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.GetActiveNeighborhood
+
+Classified `C_NeighborhoodInitiative.GetActiveNeighborhood` as evidence-required/unsafe: the source requires one neighborhoodGUID string, but no explicit method or active-neighborhood model exists; namespace defaults omit it and generic fallback returns nil. No-active behavior, valid GUID output, state transitions, refresh, events, persistence, and lifecycle remain unproven. Current totals are **891 best-effort, 804 evidence-required, 2 exception-requested, and 1713 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_NeighborhoodInitiative.AddTrackedInitiativeTask
+
+Classified `C_NeighborhoodInitiative.AddTrackedInitiativeTask` as evidence-required/unsafe: the source accepts a numeric initiativeTaskID with no declared return, but the current temporary fallback is a no-op and `trackedIDs` stays empty; focused probes prove only callability and nil return. Task mutation, valid/unknown IDs, duplicate handling, ordering, removal interaction, task info, persistence, event dispatch, refresh, and lifecycle remain unproven. Current totals are **891 best-effort, 803 evidence-required, 2 exception-requested, and 1714 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_MajorFactions.ShouldUseJourneyRewardTrack
+
+Classified `C_MajorFactions.ShouldUseJourneyRewardTrack` as evidence-required/unsafe: the source requires a boolean by faction ID, but the temporary fallback is constant false with no per-faction journey reward-track model. Focused probes prove only fallback callability/default; positive/negative faction policy, unknown IDs, argument/security restrictions, transitions, refresh, and lifecycle remain unproven. Current totals are **891 best-effort, 802 evidence-required, 2 exception-requested, and 1715 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_MajorFactions.ShouldDisplayMajorFactionAsJourney
+
+Classified `C_MajorFactions.ShouldDisplayMajorFactionAsJourney` as evidence-required/unsafe: the source requires a boolean by faction ID, but the temporary fallback is constant false; an existing probe proves fallback only. Per-faction policy, positive cases, unknown IDs, argument/security restrictions, transitions, refresh, and lifecycle remain unproven. Current totals are **891 best-effort, 801 evidence-required, 2 exception-requested, and 1716 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_MajorFactions.RenownHighlightInfo.title
+
+Classified `C_MajorFactions.RenownHighlightInfo.title` as evidence-required/unsafe: the source requires a string, but no `RenownHighlightInfo` model or highlights producer exists and `GetMajorFactionData` omits highlights. Required titles, schema/order, empty/non-empty behavior, per-faction values, unknown behavior, refresh, and lifecycle remain unproven. Current totals are **891 best-effort, 800 evidence-required, 2 exception-requested, and 1717 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_MajorFactions.RenownHighlightInfo.level
+
+Classified `C_MajorFactions.RenownHighlightInfo.level` as evidence-required/unsafe: the source requires a number, but no `RenownHighlightInfo` model or highlights producer exists; existing `RenownLevelInfo.level` is a different structure. Numeric values, schema/order, empty/non-empty behavior, per-faction values, unknown behavior, refresh, and lifecycle remain unproven. Current totals are **891 best-effort, 799 evidence-required, 2 exception-requested, and 1718 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_MajorFactions.RenownHighlightInfo.description
+
+Classified `C_MajorFactions.RenownHighlightInfo.description` as evidence-required/unsafe: the source requires a string, but no `RenownHighlightInfo` model or highlights producer exists and `GetMajorFactionData` omits highlights. Required strings, element schema/order, empty/non-empty behavior, per-faction values, unknown behavior, refresh, and lifecycle remain unproven. Current totals are **891 best-effort, 798 evidence-required, 2 exception-requested, and 1719 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_MajorFactions.MajorFactionRenownRewardInfo.rewardType
+
+Classified `C_MajorFactions.MajorFactionRenownRewardInfo.rewardType` as evidence-required/unsafe: the source requires a nullable number, but no `MajorFactionRenownRewardInfo` model or producer exists and `C_MajorFactions.GetRenownRewardsForLevel` returns an empty table. Present/nil values, numeric meanings, per-level rewards, ordering, unknown behavior, refresh, and lifecycle remain unproven. Current totals are **891 best-effort, 797 evidence-required, 2 exception-requested, and 1720 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_MajorFactions.MajorFactionData.playerCompanionID
+
+Classified `C_MajorFactions.MajorFactionData.playerCompanionID` as evidence-required/unsafe: the source requires a nullable number, but current `MajorFactionData` has no companion association and `GetMajorFactionData` omits the field. Present/nil behavior, authoritative IDs, per-faction values, unknown behavior, mutation, refresh, and lifecycle remain unproven. Current totals are **891 best-effort, 796 evidence-required, 2 exception-requested, and 1721 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_MajorFactions.MajorFactionData.highlights
+
+Classified `C_MajorFactions.MajorFactionData.highlights` as evidence-required/unsafe: the source requires an array of `RenownHighlightInfo`, but the current `MajorFactionData` has no highlights state and `GetMajorFactionData` emits no array. Element schema/order, empty/non-empty behavior, per-faction values, mutation, refresh, and lifecycle remain unproven. Current totals are **891 best-effort, 795 evidence-required, 2 exception-requested, and 1722 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_MajorFactions.MajorFactionData.description
+
+Classified `C_MajorFactions.MajorFactionData.description` as evidence-required/unsafe: the source requires a string field, but the current state model lacks description and `GetMajorFactionData` omits it. Exact strings/defaults/per-faction values/unknown behavior/mutation/refresh/lifecycle remain unproven; `name` and `unlockDescription` are separate fields. Current totals are **891 best-effort, 794 evidence-required, 2 exception-requested, and 1723 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_LimitedInput.LimitedInputAllowed
+
+Classified `C_LimitedInput.LimitedInputAllowed` as evidence-required/unsafe: the source requires an `Enum.LimitedInputType` input and boolean result, but no allowance, budget, or policy state or namespace method exists; generic fallback returns nil. Authorization/taint rules, budget exhaustion, validation, boolean results, transitions, and lifecycle remain unproven. Current totals are **891 best-effort, 793 evidence-required, 2 exception-requested, and 1724 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_LFGList.LfgSearchResultData.generalPlaystyle
+
+Classified `C_LFGList.LfgSearchResultData.generalPlaystyle` as best-effort/behavioral, bounded to seeded `GetSearchResultInfo()` payload field presence and numeric publication. Nullable omission, exact enum validation, invalid values, mutation, serialization, filtering effects, persistence, refresh, and full retail lifecycle remain unclaimed. This search-result field is distinct from `C_LFGList.LfgEntryData.generalPlaystyle` and `C_LFGList.LfgListingCreateData.generalPlaystyle`. Current totals are **891 best-effort, 792 evidence-required, 2 exception-requested, and 1725 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_LFGList.LfgListingCreateData.generalPlaystyle
+
+Classified `C_LFGList.LfgListingCreateData.generalPlaystyle` as evidence-required/unsafe: the source requires an `Enum.LFGEntryGeneralPlaystyle` input with default 0, but current `C_LFGList` has no `CreateListing`/`UpdateListing` implementation; generic fallback returns nil and seeded `PremadeListing` output is a different contract. Input parsing/defaults, validation, create/update state, result propagation, errors, and lifecycle remain unproven. Current totals are **890 best-effort, 792 evidence-required, 2 exception-requested, and 1726 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_LFGList.LfgEntryData.generalPlaystyle
+
+Classified `C_LFGList.LfgEntryData.generalPlaystyle` as evidence-required/unsafe: the source field is nullable `Enum.LFGEntryGeneralPlaystyle`, but no active-listing model exists and `GetActiveEntryInfo()` always returns nil. The separate search-result `generalPlaystyle` field is a different structure; field presence, nilability, enum values, mutation, serialization, validation, and lifecycle remain unproven. Current totals are **890 best-effort, 791 evidence-required, 2 exception-requested, and 1727 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_LFGList generalPlaystyle4 field
+
+Classified `C_LFGList.AdvancedFilterOptions.generalPlaystyle4` as best-effort/behavioral, bounded to modeled boolean publication and exact false default through `C_LFGList.GetAdvancedFilter()`; the focused test proves it. Mutation, serialization, validation, search semantics, persistence, refresh, and broader retail LFG behavior remain unclaimed. Current totals are **890 best-effort, 790 evidence-required, 2 exception-requested, and 1728 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_LFGList generalPlaystyle3 field
+
+Classified `C_LFGList.AdvancedFilterOptions.generalPlaystyle3` as best-effort/behavioral, bounded to modeled boolean publication and exact false default through `C_LFGList.GetAdvancedFilter()`; the focused test proves it. Mutation, serialization, validation, search semantics, persistence, refresh, and broader retail LFG behavior remain unclaimed. Current totals are **889 best-effort, 790 evidence-required, 2 exception-requested, and 1729 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify LFG general playstyle fields
+
+Classified `C_LFGList.AdvancedFilterOptions.generalPlaystyle1` as best-effort/behavioral, bounded to `C_LFGList.GetAdvancedFilter()` publishing a boolean field with exact default false from modeled `LfgAdvancedFilter`; `tests/test_premade_groups.rs::get_advanced_filter_default_is_permissive` proves the default. Mutation, serialization, validation, search semantics, persistence, refresh, and broader retail LFG behavior remain unclaimed. Classified `C_LFGList.AdvancedFilterOptions.generalPlaystyle2` with the same bounded best-effort/behavioral claim: `GetAdvancedFilter()` publishes a boolean field with exact false default from modeled state, proven by the existing focused test; mutation, serialization, validation, search filtering, persistence, refresh, and broader retail LFG semantics remain unclaimed. Current totals are **888 best-effort, 790 evidence-required, 2 exception-requested, and 1730 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify two C_InstanceEncounter rows
+
+Classified `C_InstanceEncounter.IsEncounterInProgress` as best-effort/behavioral: its state-backed boolean query shares `world.encounter_in_progress` with the legacy global, and a focused test proves false by default and true when enabled; encounter producers, events, and lifecycle remain unclaimed. Classified `C_InstanceEncounter.IsEncounterLimitingResurrections` as evidence-required/unsafe because no resurrection-limiting state or explicit method is modeled, and the generic nil fallback does not satisfy the required boolean contract. Current totals are **886 best-effort, 787 evidence-required, 2 exception-requested, and 1735 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_Item account-binding row
+
+Classified `C_Item.IsItemBindToAccount` as evidence-required/unsafe: the target method is absent; related `IsBound` and `IsBoundToAccountUntilEquip` reuse constant false; current item records have numeric bonding metadata but no bonding 7 or 8 positive account-bound fixture; and generic missing-method fallback returns nil. ItemInfo parsing, true/false classification, unknown-item behavior, and binding fidelity remain unproven. Current totals are **886 best-effort, 790 evidence-required, 2 exception-requested, and 1732 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify two additional C_InstanceEncounter rows
+
+Classified `C_InstanceEncounter.IsEncounterSuppressingRelease` and `C_InstanceEncounter.ShouldShowTimelineForEncounter` as evidence-required/unsafe because no explicit methods or backing state exist, and generic nil fallback does not satisfy their required boolean contracts. Current totals are **886 best-effort, 789 evidence-required, 2 exception-requested, and 1733 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify six housing preview-state rows
+
+Classified `C_HousingDecor.EnterPreviewState`, `C_HousingDecor.ExitPreviewState`, `C_HousingDecor.GetNumPreviewDecor`, and `C_HousingDecor.IsPreviewState` as best-effort/behavioral only for focused temporary false/0 → true/1 → false/0 transitions; actual decor cardinality, placement/cleanup, events, persistence, refresh, and retail lifecycle remain unclaimed. Classified `C_HousingCustomizeMode.IsHouseExteriorDoorHovered` as evidence-required/unsafe because the method and door-hover state are absent. Classified `C_HousingDecor.IsModeDisabledForPreviewState` as evidence-required/unsafe because constant false ignores mode and lacks mode-aware state. Current totals are **885 best-effort, 786 evidence-required, 2 exception-requested, and 1737 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify four preview-cart/refund rows
+
+Classified `C_HousingCatalog.IsPreviewCartItemShown`, `C_HousingCatalog.PromotePreviewDecor`, and `C_HousingCatalog.SetPreviewCartItemShown` as best-effort/behavioral only for focused in-memory unknown=false, boolean setter true/false round-trip, promotion returning true, and shown-state mutation. No GUID/decor validation, failure/repeat behavior, events/refresh, persistence, or lifecycle claims are made. Classified `C_HousingCatalog.RequestHousingMarketRefundInfo` as evidence-required/unsafe because its no-op has no refund request/list state, population, repeated-request behavior, or `HOUSING_REFUND_LIST_UPDATED` lifecycle. Current totals are **881 best-effort, 784 evidence-required, 2 exception-requested, and 1743 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify eleven HousingPreviewItemData fields
+
+Classified `HousingPreviewItemData.bundleCatalogShopProductID`, `decorGUID`, `decorID`, `icon`, `id`, `isBundleChild`, `isBundleParent`, `name`, `price`, `productID`, and `salePrice` as evidence-required/unsafe. No typed `HousingPreviewItemData` producer exists; related catalog/decor/bundle fixture fields do not establish these specific fields, nullability, identities, bundle relationships, pricing, validation, event/preview-list production, refresh, persistence, or lifecycle. No approval or exception applies. Current totals are **878 best-effort, 783 evidence-required, 2 exception-requested, and 1747 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify three HousingCatalogEntryInfo fields
+
+Classified `HousingCatalogEntryInfo.isUniqueTrophy` and `HousingCatalogEntryInfo.itemID` as best-effort/behavioral only for focused seeded entry 1001 proof of boolean false and numeric 1001; exact trophy classification, nullable/missing item IDs, other entries, authoritative item data, validation, mutation, persistence, refresh, and lifecycle remain unclaimed. Classified `HousingCatalogEntryInfo.dyeIDs` as evidence-required/unsafe because the required numeric-array field is absent and no dye-ID state exists. Current totals are **878 best-effort, 772 evidence-required, 2 exception-requested, and 1758 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify two HousingBundleInfo fields
+
+Classified `HousingBundleInfo.canPreview` as best-effort/behavioral only for focused seeded bundle 5001 proof that the field is boolean true; dynamic preview eligibility, other-bundle behavior, mutation, validation, persistence, refresh, and lifecycle remain unclaimed. Classified `HousingBundleInfo.originalPrice` as evidence-required/unsafe because the current payload publishes nil only and lacks numeric original-price, discount, and currency semantics. Current totals are **876 best-effort, 771 evidence-required, 2 exception-requested, and 1761 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify four housing catalog rows
+
+Classified `GetBundleInfo` as best-effort/behavioral only for seeded bundle 5001 lookup, two entries, and `wasViewed` false→true proof; exact schema, unknown IDs, clone isolation, pricing/product semantics, validation, persistence, refresh, and lifecycle remain unclaimed. Classified `GetCartSizeLimit` as best-effort/behavioral only for callable publication and seeded value 20; dynamic enforcement/configuration, consumers, persistence, and lifecycle remain unclaimed. Classified `GetCatalogEntryRefundTimeStampByRecordID` as evidence-required/unsafe because it ignores arguments and always returns nil without keyed refund state/window semantics. Classified `HasFeaturedEntries` as evidence-required/unsafe because it hardcodes true rather than deriving from featured catalog contents/state transitions. Current totals are **875 best-effort, 770 evidence-required, 2 exception-requested, and 1763 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify three housing placement/cart gaps
+
+Classified `C_HousingBasicMode.SetFreePlaceEnabled`, `C_HousingBasicMode.StartPlacingPreviewDecor`, and `C_HousingCatalog.DeletePreviewCartDecor` as evidence-required/unsafe. All are published no-ops without mutable free-placement state, preview placement/decor/bundle state, or observable cart deletion; validation, repeated/unknown calls, requests/events, persistence, reset/isolation, and lifecycle remain unmodeled. Current totals are **873 best-effort, 768 evidence-required, 2 exception-requested, and 1767 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify three C_HouseExterior mutation/debug gaps
+
+Classified `C_HouseExterior.GetSelectedFixtureDebugInfo`, `SetHouseExteriorSize`, and `SetHouseExteriorType` as evidence-required/unsafe. The debug API retains only a name without signature/returns and lacks selected-fixture debug state; both setters are published no-ops that do not update getter-visible selected state, validate values, resolve names, persist, refresh, reset/isolate, or model lifecycle. Current totals are **873 best-effort, 765 evidence-required, 2 exception-requested, and 1770 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify two C_HouseExterior rows
+
+The bounded two-row `C_HouseExterior` slice classifies `GetHouseExteriorTypeOptions` as best-effort/behavioral only for focused callable publication, one returned table, `selectedExteriorType` 1, and tested `Cottage`/1 plus `Manor`/2 options; metadata, mutation, persistence, refresh, validation, and lifecycle semantics remain unclaimed. `GetHoveredFixtureDebugInfo` is evidence-required/unsafe because only its API name is retained, its signature and returns are unknown, and the nil fallback has no hovered-fixture debug state. Current totals are **873 best-effort, 762 evidence-required, 2 exception-requested, and 1773 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify three Delves/housing rows
+
+The bounded three-row 12.0.0 Delves/housing slice classifies `C_HouseExterior.GetHouseExteriorSizeOptions` as best-effort/behavioral only for focused proof of callable publication, one table return, `selectedSize` 3, and exactly Medium/3 plus Large/4 options; exact metadata, enum fidelity, mutation, persistence, refresh, validation, and lifecycle remain unclaimed. `C_DelvesUI.IsTraitTreeForCompanion` is evidence-required/unsafe because it is absent without trait-tree ownership/classification state. `C_Housing.OnHouseFinderClickPlot` is evidence-required/unsafe because it is absent without selected-plot request/event/state side effects or validation.
+
+## [2026-08-09] investigation | Classify four C_DelvesUI and housing unsafe rows
+
+Classified `C_DelvesUI.GetLockedTextForCompanion`, `C_HouseExterior.GetFixtureDebugInfoForGUID`, `C_Housing.IsHousingMarketShopEnabled`, and `C_HousingBasicMode.IsFreePlaceEnabled` as evidence-required/unsafe. `GetLockedTextForCompanion` is absent and lacks companion lock-state/text behavior; `GetFixtureDebugInfoForGUID` is absent, lacks GUID-indexed fixture-debug state, and the checked-in source preserves only its API name without signature/return semantics; `IsHousingMarketShopEnabled` is absent without dedicated boolean state; and `IsFreePlaceEnabled` hardcodes true while `SetFreePlaceEnabled` is a no-op, so mutable state and exact semantics are unmodeled. None has approval or an exception. Current totals are **872 best-effort, 761 evidence-required, 2 exception-requested, and 1775 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify four C_EventUtils, C_HouseExterior, C_CreatureInfo, and C_GameRules rows
+
+Classified `C_EventUtils.IsCallbackEvent` as best-effort/behavioral from focused positive `COMBAT_LOG_EVENT` and negative `PLAYER_LOGIN` proof; exact registry completeness, argument validation, dynamic behavior, and lifecycle remain unclaimed. Classified `C_HouseExterior.GetCurrentHouseExteriorType` as best-effort/behavioral only for callable publication and the seeded two-return shape/types/values `1` and `Sunspire Cottage`; retail selection, mutation, persistence, refresh, and lifecycle remain unclaimed. Classified `C_CreatureInfo.GetCreatureID` as evidence-required/unsafe because it is absent and lacks a GUID/creature identity model. Classified `C_GameRules.IsPersonalResourceDisplayEnabled` as evidence-required/unsafe because the current fallback returns nil rather than the required boolean and has no backing state. Current totals are **871 best-effort, 755 evidence-required, 2 exception-requested, and 1782 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify eight C_EventScheduler rows
+
+Classified `C_EventScheduler.CanShowEvents` as best-effort/behavioral only for simulator visibility derivation from explicit override, suppression, event-list state, and request repopulation; retail availability, refresh timing, persistence, full lifecycle, and edge semantics remain unclaimed. Classified `EventDisplayInfo.hideDescription`, `EventDisplayInfo.hideTimeLeft`, `EventDisplayInfo.overrideAtlas`, `EventDisplayInfo.overrideTooltipWidgetSetID`, `OngoingEventInfo.displayInfo`, `ScheduledEventInfo.displayInfo`, and `ScheduledEventInfo.eventID` as evidence-required/unsafe because temporary empty/seeded compatibility payloads do not establish documented typed field values, shape, producers, or lifecycle. Current totals are **869 best-effort, 753 evidence-required, 2 exception-requested, and 1786 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify three C_CooldownViewer gaps
+
+Classified `C_CooldownViewer.CooldownViewerCooldown.category`, `C_CooldownViewer.CooldownViewerCooldown.cooldownID`, and `C_CooldownViewer.GetValidAlertTypes` as `evidence-required`/`unsafe`. The current temporary surface returns nil/empty defaults and has no typed cooldown producer, category/ID records, ordered alert-type arrays, validation, routing, Settings UI behavior, or lifecycle. Current totals are **868 best-effort, 746 evidence-required, 2 exception-requested, and 1794 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify seven C_ChatInfo, C_CombatText, and C_Commentator API gaps
+
+Classified the seven-row `C_ChatInfo`/`C_CombatText`/`C_Commentator` API-gap slice as `evidence-required`/`unsafe`. Current fallbacks are absent, no-op, constant-false, or adjacent-state only and do not model lockdown, emote, active-unit, combat-text, or commentator event state, restrictions, result contracts, transitions, events, ordering, or lifecycle. Current totals are **868 best-effort, 743 evidence-required, 2 exception-requested, and 1797 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_CharacterServices.AssignFCMDistribution
+
+Classified `C_CharacterServices.AssignFCMDistribution` as `evidence-required`/`unsafe`. The source register provides no signature/result metadata, and the simulator has no FCM validation/assignment model; account/realm/character checks, validation-only behavior, exact results, state transitions, persistence, and events remain unproven. Current totals are **868 best-effort, 736 evidence-required, 2 exception-requested, and 1804 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify 23 C_CatalogShop API and structure rows
+
+Classified `C_CatalogShop.HasNewProducts` as `best-effort`/`behavioral` only for publication and the exact constant-false boolean result proven by `test_startup_service_namespaces_exist`. Classified the other 22 rows as `evidence-required`/`unsafe` because current CatalogShop state is absent, no-op, incomplete, seeded, wrong-typed, or untested and does not establish purchase, category/product, refundable-decor, currency, session, refresh, restriction, payload, event, or lifecycle semantics. Current totals are **868 best-effort, 735 evidence-required, 2 exception-requested, and 1805 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify three C_BattleNet mutation and transport APIs
+
+Classified `C_BattleNet.SendGameData`, `C_BattleNet.SendWhisper`, and `C_BattleNet.SetCustomMessage` as `evidence-required`/`unsafe`. No current registration, backing transport/state, restriction enforcement, result model, or focused side-effect proof exists; exact account/text validation, return values, persistence, events, and consumer behavior remain unproven. Current totals are **867 best-effort, 713 evidence-required, 2 exception-requested, and 1828 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify C_AdventureMap quest portrait info
+
+Classified the six-row `C_AdventureMap.GetQuestPortraitInfo` slice—the API plus five portrait fields—as bounded `best-effort`/`behavioral` claims from focused `tests/c_adventure_map/quests.rs` proof. Claims cover injected-state lookup, typed five-field publication, unknown/nonnumeric zero-value returns, nullable `modelSceneID`, and tested display-ID gating. Retail data population, localization, full validation/edge behavior, assets/rendering, and lifecycle remain unclaimed. `modelSceneID` is treated strictly as data under the existing permanent no-3D scope; no 3D implementation or new exception is requested. Current totals are **867 best-effort, 710 evidence-required, 2 exception-requested, and 1831 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify nine C_ActionBar charge/cooldown structure fields
+
+Classified the nine `C_ActionBar.ActionBarChargeInfo`/`ActionBarCooldownInfo` structure fields as `evidence-required`/`unsafe`. `GetActionCharges` returns static placeholder charge fields; `GetActionCooldown` returns a partial table with fixture-backed start/duration and constant enabled/mod-rate. Neither establishes authoritative typed payload fidelity, slot-dependent charges, field relationships, invalid-slot behavior, progression, secrets, or lifecycle. Current totals are **861 best-effort, 710 evidence-required, 2 exception-requested, and 1837 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify ten CatalogShop, encounter-chat, combat-log, and commentator events
+
+Classified the five combat-log producer/event occurrences `COMBAT_LOG_APPLY_FILTER_SETTINGS`, `COMBAT_LOG_ENTRIES_CLEARED`, `COMBAT_LOG_MESSAGE`, `COMBAT_LOG_MESSAGE_LIMIT_CHANGED`, and `COMBAT_LOG_REFILTER_ENTRIES`, plus `C_CombatLog.ApplyFilterSettings`, `C_CombatLog.ClearEntries`, `C_CombatLog.RefilterEntries`, `C_CombatLog.SetMessageLimit`, and `C_CombatLogSecure.CreateCombatLogMessage`, as `best-effort`/`behavioral` under proof commit `6bcd6ded2ada37c5f78ba4b98387549f2430369c`. Focused proof is limited to exact synchronous notification, payload arity/types/values, corresponding temporary-state mutation where asserted, and repeated explicit calls; filtering, retention, message-limit enforcement, secure/taint, UI, persistence, and broader lifecycle semantics remain unclaimed. The remaining CatalogShop, encounter-chat, and commentator rows remain `evidence-required`/`unsafe`. Current totals are **2218 best-effort, 1190 evidence-required, 2 exception-requested, and 0 untriaged rows** (3410 rows).
+
+## [2026-08-09] investigation | Classify six additional CAA CVar-default rows
+
+Classified six additional target-health, voice, and volume CAA CVar rows as bounded `best-effort`/`behavioral` claims using `test_patch_12_0_0_cvar_defaults`. Consolidated with the prior 27-row slice, the cumulative CAA CVar-default slice covers 33 rows. The focused test proves only startup `GetCVar`/`GetCVarDefault` exact string defaults; CAA behavior, UI/audio effects, mutation, persistence, events, flags, consumers, and later-epoch semantics remain unclaimed. Current totals are **861 best-effort, 691 evidence-required, 2 exception-requested, and 1856 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify 20 additional CAA CVar-default rows
+
+Classified 20 additional player-, resource-, speech-, and target-cast CAA CVar rows as bounded `best-effort`/`behavioral` claims using `test_patch_12_0_0_cvar_defaults`. Consolidated with the prior seven-row slice, the cumulative CAA CVar-default slice covers 27 rows. The focused test proves only startup `GetCVar`/`GetCVarDefault` exact string defaults; CAA behavior, UI/audio effects, mutation, persistence, events, flags, consumers, and later-epoch semantics remain unclaimed. Current totals are **855 best-effort, 691 evidence-required, 2 exception-requested, and 1862 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify two 12.0.0 event rows
+
+Classified `ADDON_RESTRICTION_STATE_CHANGED` and `BULK_PURCHASE_RESULT_RECEIVED` as `evidence-required`/`unsafe`. Registration and enum publication exist, but no modeled transition/purchase producer or focused proof establishes exact payload values/structures/arity, synchronous timing, ordering, duplicate behavior, lifecycle, or consumers. Current totals are **835 best-effort, 691 evidence-required, 2 exception-requested, and 1882 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify three global-utility rows
+
+Classified `AbbreviateLargeNumbers` and `AbbreviateNumbers` as `evidence-required`/`unsafe` because temporary fallbacks ignore `NumberAbbrevOptions` and do not model abbreviation, localization, or validation. Classified `AddSourceLocationExclude` as bounded `best-effort`/`behavioral` for nil-guarded global publication and successful string-argument no-op invocation through `installs_debug_environment_defaults`; exclusion, filtering, and debug semantics remain unclaimed. Current totals are **835 best-effort, 689 evidence-required, 2 exception-requested, and 1884 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify seven CAA CVar-default rows
+
+Classified `CAAEnabled`, `CAAInterruptCast`, `CAAInterruptCastSuccess`, `CAAPartyHealthFrequency`, `CAAPartyHealthPercent`, `CAAPlayerCastFormat`, and `CAAPlayerCastMinTime` as bounded `best-effort`/`behavioral` claims using `test_patch_12_0_0_cvar_defaults`. The focused test proves only startup `GetCVar`/`GetCVarDefault` exact string defaults; CAA behavior, UI/audio effects, mutation, persistence, events, flags, consumers, and later-epoch semantics remain unclaimed. Current totals are **834 best-effort, 687 evidence-required, 2 exception-requested, and 1887 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify 23 CVar-default rows
+
+Classified 23 added CVar-default rows as bounded `best-effort`/`behavioral` claims using `test_patch_12_0_0_cvar_defaults`. The focused test proves only startup `GetCVar`/`GetCVarDefault` exact string defaults; mutation, events, persistence, secure/read-only flags, consumers, and later-epoch behavior remain unclaimed. Current totals are **827 best-effort, 687 evidence-required, 2 exception-requested, and 1894 untriaged** (3410 rows).
+
+## [2026-08-09] investigation | Classify four unit/heal-prediction rows
+
+Classified `UnitCreatureID`, `UnitIsHumanPlayer`, `UnitIsSpellTarget`, and `UnitHealPredictionValues.totalDamageAbsorbs` as bounded `best-effort`/`behavioral` claims. Existing focused tests cover the token/GUID/vendor-shim cases; `unit_detailed_heal_prediction_populates_calculator` now asserts the numeric zero absorb field. Full retail semantics, invalid inputs, lifecycle, and untested states remain unclaimed. Current totals are **804 best-effort, 687 evidence-required, 2 exception-requested, and 1917 untriaged**.
+
+## [2026-08-09] investigation | Classify miscellaneous payload fields
+
+Classified eight ExpansionDisplayInfo, LuaColorCurvePoint, PrivateAuraIconInfo, and SpellCooldownInfo structure fields as `evidence-required`/`unsafe`. Current behavior is absent, nil-only, generic, or placeholder-backed and does not establish exact contracts, state/security, or consumer semantics; tests remain empty with null commit, approval, and scope exception. Current totals are **800 best-effort, 687 evidence-required, 2 exception-requested, and 1921 untriaged**.
+
+## [2026-08-09] investigation | Classify number-abbreviation fields
+
+Classified eight `NumberAbbrevData`/`NumberAbbrevOptions` structure fields as `evidence-required`/`unsafe`. Generic `AbbreviateConfig` proxy round-tripping does not establish typed contracts, defaults/nullability, validation, ordering, or formatting behavior; tests remain empty with null commit, approval, and scope exception. Current totals are **800 best-effort, 679 evidence-required, 2 exception-requested, and 1929 untriaged**.
+
+## [2026-08-08] investigation | Classify conflicting 12.0.0 error globals
+
+Classified 12 added `LE_GAME_ERR_*` globals as `evidence-required`/`unsafe` because checked-in 12.0.0 source-register values conflict with current nil-guarded fallback publication. Authoritative epoch/value reconciliation is required before changing runtime behavior; tests remain empty with null commit, approval, and scope exception. Current totals are **800 best-effort, 671 evidence-required, 2 exception-requested, and 1937 untriaged**.
+
+## [2026-08-09] investigation | Classify 12.0.0 tutorial and pet constants
+
+Classified five tutorial/pet globals as bounded `best-effort`/`behavioral` startup claims. `test_patch_12_0_0_ui_global_constant_values` proves numeric Lua publication and exact source-register values; tutorial and pet-journal behavior, consumers, lifecycle, and historical load timing remain unclaimed. Current totals are **800 best-effort, 659 evidence-required, 2 exception-requested, and 1949 untriaged**.
+
+## [2026-08-09] investigation | Classify 12.0.0 housing payload fields
+
+Classified 16 exterior size/type, house-level, and decor-refund structure fields as `evidence-required`/`unsafe`. Current temporary housing data is absent or fixture-backed and does not establish exact contracts, authoritative values, state transitions, ordering/localization, or consumer behavior; tests remain empty with null commit, approval, and scope exception. Current totals are **795 best-effort, 659 evidence-required, 2 exception-requested, and 1954 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 general events
+
+Classified nine faction, initiative, loot-rule, nameplate, and neighborhood events as `evidence-required`/`unsafe`. Retail registration exists, but no modeled producer or focused proof establishes each source payload contract, timing, lifecycle, ordering, or duplicate behavior; tests remain empty with null commit, approval, and scope exception. Current totals are **795 best-effort, 643 evidence-required, 2 exception-requested, and 1970 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 housing events
+
+Classified 12 added housing events as `evidence-required`/`unsafe`. The retail event registry accepts each name, but no modeled producer or focused proof establishes its source payload contract, timing, lifecycle, ordering, or duplicate behavior; tests remain empty with null commit, approval, and scope exception. Current totals are **795 best-effort, 634 evidence-required, 2 exception-requested, and 1979 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 VAS result enum
+
+Classified `Enum.VasTransactionPurchaseResult.DbHouseOwnerRestriction=20096` as a bounded `best-effort`/`behavioral` startup claim. `test_patch_12_0_0_vas_transaction_purchase_result_value` proves namespace publication, numeric Lua type, and the exact source-register value; VAS transaction behavior, validation, consumers, lifecycle, and historical load timing remain unclaimed. Current totals are **795 best-effort, 622 evidence-required, 2 exception-requested, and 1991 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 aura sort enums
+
+Classified nine `UnitAuraSortRule` member/metadata rows as bounded `best-effort`/`behavioral` startup claims. `test_patch_12_0_0_unit_aura_sort_rule_enum_values` proves namespace/metadata publication, numeric Lua types, and all exact source-register values; aura ordering, filtering, consumers, lifecycle, validation, and historical load timing remain unclaimed. Current totals are **794 best-effort, 622 evidence-required, 2 exception-requested, and 1992 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 heal-prediction enums
+
+Classified 21 `UnitDamageAbsorbClampMode`, `UnitHealAbsorbClampMode`, `UnitHealAbsorbMode`, and `UnitIncomingHealClampMode` member/metadata rows as bounded `best-effort`/`behavioral` startup claims. `test_patch_12_0_0_heal_prediction_enum_values` proves namespace/metadata publication, numeric Lua types, and all exact source-register values; heal prediction, absorb/clamp calculations, incoming-heal state, UI behavior, lifecycle, and consumer semantics remain unclaimed. Current totals are **785 best-effort, 622 evidence-required, 2 exception-requested, and 2001 untriaged**.
+
+## [2026-08-08] investigation | Fix and classify UI enum metadata epochs
+
+Added exact 12.0.0 startup coverage for 15 metadata rows across `CooldownViewerAddAlertStatusMeta`, `CooldownViewerAlertEventTypeMeta`, `DamageMeterStyleMeta`, `EditModeEncounterEventsSystemIndicesMeta`, and `HouseExteriorWMODataFlagsMeta`. Epoch fix `890ae4afd2b2f5a6c368c8601e332044937135d5` removes later `OnAuraApplied`/`OnAuraRemoved` members and restores `CooldownViewerAlertEventTypeMeta` to `MaxValue=4`, `MinValue=1`, `NumValues=4`. Updated the four existing CooldownViewerAlertEventType member rows to the corrected implementation and absence/metadata proof. Current totals are **764 best-effort, 622 evidence-required, 2 exception-requested, and 2022 untriaged**.
+
+## [2026-08-08] investigation | Classify cooldown, housing, and Edit Mode enums
+
+Classified 20 added `CooldownViewerAddAlertStatus`, `CooldownViewerAlertEventType`, `DamageMeterStyle`, `EditModeEncounterEventsSystemIndices`, and `HouseExteriorWMODataFlags` member rows as bounded `best-effort`/`behavioral` startup publication/value claims. A new focused 12.0.0 test covers the 12 cooldown/housing rows; the existing Edit Mode profile-option enum test covers the eight DamageMeter/Edit Mode rows. At that classification point the current CooldownViewerAlertEventType table still contained later members; epoch fix `890ae4afd2b2f5a6c368c8601e332044937135d5` subsequently removed them for 12.0.0 and added exact four-member membership proof. Consumer semantics remain unclaimed. Current totals are **749 best-effort, 622 evidence-required, 2 exception-requested, and 2037 untriaged**. Moved two existing classified-slice narratives before the inventory source/footer section.
+
+## [2026-08-08] investigation | Classify 12.0.0 replacement enum keys
+
+Added focused 12.0.0 startup coverage for five same-value enum replacements: `GossipNpcOption.TieredEntrance=66`, `ItemRecraftFlags.Invalid=1`, `PerksVendorCategoryType.RefundUnused=24`, `PlayerInteractionType.TieredEntrance=79`, and `QuestTagType.Prey=19`. Classified those five current names as bounded `best-effort`/`behavioral` publication/type/value claims. Their five paired old names remain `evidence-required`/`unsafe`; current bootstrap omission does not prove full-LoD dynamic absence, historical removal timing, alias compatibility, or semantic replacement identity. Current totals are **729 best-effort, 622 evidence-required, 2 exception-requested, and 2057 untriaged**.
+
+## [2026-08-08] investigation | Extend 12.0.0 enum metadata coverage
+
+Classified 10 account-state, HousingResult, TransmogSituation, and SecretAspect metadata rows as bounded `best-effort`/`behavioral` claims. Epoch override `31172606b3f3b8b61bea63a81c457219546789fa` removes the two 12.0.1 SecretAspect members from 12.0.0 and restores exact metadata while retaining later values. Focused tests now cover 98 account-state rows, 90 HousingResult rows, 25 TransmogSituation rows, and 43 ItemCollectionType/SecretAspect rows. Normalized 33 provenance-only structure inventory rows to the declared five-column table. Current totals are **724 best-effort, 617 evidence-required, 2 exception-requested, and 2067 untriaged**.
+
+## [2026-08-08] investigation | Fix EncounterEventFlags epoch drift
+
+Corrected the 12.0.0 runtime to publish the one-value `Enum.EncounterEventFlags` table while retaining the later two-value table from 12.0.5 onward. Focused tests prove `Disabled=1`, exact metadata, absence of later `IgnoreCastConsume` under 12.0.0, and preservation of later values. Classified those four rows plus 12 TooltipDataType, TraitNodeFlag, UICursorType, and UIWidgetVisualizationType rows as bounded `best-effort`/`behavioral` namespace/type/value claims. Current totals are **714 best-effort, 617 evidence-required, 2 exception-requested, and 2077 untriaged**.
+
+## [2026-08-08] investigation | Extend small 12.0.0 enum coverage
+
+Classified 15 added/changed CraftingReagentItemFlag, EditModeAuraFrameSystemIndices, HousingItemToastType, MapIconUIWidgetSetType, and SurveyDeliveryMoment rows as `best-effort`/`behavioral` by extending `src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_small_enum_values`. The test now covers 35 rows across 11 families with exact namespace, numeric-type, and source-register-value assertions. Consumer, server/state, bitwise composition, mutation/protection, lifecycle, and edge semantics remain unclaimed. Current totals are **698 best-effort, 617 evidence-required, 2 exception-requested, and 2093 untriaged**.
+
+## [2026-08-08] investigation | Classify six small 12.0.0 enum families
+
+Classified 20 added/changed AccountTransType, CurrencyDestroyReason, CurrencySource, EditModeCooldownViewerSetting, GameRule, and HousingDecorActionFlags rows as `best-effort`/`behavioral` using `src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_small_enum_values`. The focused retail 12.0.0 startup test asserts namespace publication, exact numeric Lua types, and exact source-register values. Claims exclude consumer, server/state, bitwise composition, mutation/protection, lifecycle, and edge semantics. Current totals are **683 best-effort, 617 evidence-required, 2 exception-requested, and 2108 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 CombatLogObject enums
+
+Classified 35 added `Enum.CombatLogObject`, `Enum.CombatLogObjectMeta`, `Enum.CombatLogObjectTarget`, and `Enum.CombatLogObjectTargetMeta` rows as `best-effort`/`behavioral` using `src/loader/tests/wow_api_globals/combat_log_object.rs::test_patch_12_0_0_combat_log_object_enum_values`. The focused retail 12.0.0 startup test asserts all four namespace tables, exact numeric Lua types, and exact source-register values, including positive high-bit `None` and `RaidNone`. Claims exclude combat-log bitmask operations, filter matching, consumers, signed host representations, mutation/protection, lifecycle, and edge semantics. Implementation ancestor is `b14f2a854ba`; current source/test hashes are recorded per row. Totals are now **663 best-effort, 617 evidence-required, 2 exception-requested, and 2128 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 TransmogSituation enum
+
+Classified all 22 added `Enum.TransmogSituation.*` rows as `best-effort`/`behavioral` using `src/loader/tests/wow_api_globals/transmog_situation.rs::test_patch_12_0_0_transmog_situation_enum_values`. The focused retail 12.0.0 startup test asserts namespace publication, exact numeric Lua type, and exact source-register value for every entry; transmog behavior, flags/combinations, consumers, validation, persistence, mutation/protection, and lifecycle remain unclaimed. Implementation ancestor is `339424faf1`; current source/test hashes are recorded per row. Totals are now **628 best-effort, 617 evidence-required, 2 exception-requested, and 2163 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 transmog outfit enums
+
+Classified 52 added `Enum.TransmogOutfitSlot`, `Enum.TransmogOutfitSlotError`, `Enum.TransmogOutfitSlotOption`, and `Enum.TransmogOutfitTransactionFlags` rows as `best-effort`/`behavioral` using `src/loader/tests/wow_api_globals/transmog_outfit_enums.rs::test_patch_12_0_0_transmog_outfit_enum_values`. The focused retail 12.0.0 test asserts startup namespace publication, exact numeric Lua type, and exact source-register value for all 52 entries. Claims exclude transmog operations, validation, slot compatibility, transaction semantics, persistence, mutation/protection, lifecycle, and edge semantics. Totals are now **606 best-effort, 617 evidence-required, 2 exception-requested, and 2185 untriaged**.
+
+## [2026-08-08] investigation | Classify ItemCollectionType and SecretAspect enums
+
+Classified 40 added/changed `Enum.ItemCollectionType`, `Enum.ItemCollectionTypeMeta`, and `Enum.SecretAspect` rows as `best-effort`/`behavioral` using `src/loader/tests/wow_api_globals/item_collection_secret_aspects.rs::test_patch_12_0_0_item_collection_and_secret_aspect_values`; claims are limited to startup namespace publication, numeric type, and exact value. Classified 13 removed ItemCollectionType aliases/meta rows as `evidence-required`/`unsafe`; bootstrap omission does not prove full runtime/dynamic publication absence, historical timing, replacement semantics, or all-LoD removal. Totals are now **554 best-effort, 617 evidence-required, 2 exception-requested, and 2237 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 HousingResult enum
+
+Classified 88 added/changed `Enum.HousingResult.*` rows as `best-effort`/`behavioral` using `src/loader/tests/wow_api_globals/housing_result.rs::test_patch_12_0_0_housing_result_values`; the focused retail 12.0.0 test asserts namespace publication, exact numeric Lua type, and exact source-register value. Claims exclude housing operations, result/error text mapping, consumers, persistence, mutation/protection, and lifecycle. Classified removed `FixtureNotOwned` and `MissingTheme` as `evidence-required`/`unsafe`; bootstrap omission does not prove full runtime/dynamic publication absence, historical timing, replacement semantics, or all-LoD absence. Totals are now **514 best-effort, 604 evidence-required, 2 exception-requested, and 2290 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 account-state enum families
+
+Classified 96 added `Enum.AccountStateLoadedFlags.*`/`Enum.CreateAllAccountData.*` rows as `best-effort`/`behavioral` using `src/loader/tests/wow_api_globals/account_state_flags.rs::test_patch_12_0_0_account_state_enum_values`. The focused retail 12.0.0 startup test asserts both namespaces, exact Lua string type, and exact source-register value for all 96 entries; bitflag combinations, consumers, mutation/protection, persistence, aliases, and lifecycle remain unclaimed. Classified 94 removed legacy alias rows as `evidence-required`/`unsafe`; bootstrap omission does not prove full runtime/dynamic publication absence, historical timing, replacement semantics, or all-LoD absence. Totals are now **426 best-effort, 602 evidence-required, 2 exception-requested, and 2380 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 HousingCatalog constant removals
+
+Classified the 16 removed `Constants.HousingCatalogConsts.*` rows as `evidence-required`/`unsafe` using checked-in 12.0.0 source-register evidence plus current `src/lua_api/globals/enum_data/constants_values.lua` bootstrap evidence. The simulator bootstrap omits the keys while retaining the namespace, but source/bootstrap absence is insufficient to prove full runtime or dynamic publication, historical load-order timing, replacement semantics, or exact 12.0.0 removal. Tests/assertions remain empty with null commit, approval, scope exception, load_addon, and provenance_only. Totals are now **330 best-effort, 508 evidence-required, 2 exception-requested, and 2570 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 CAA constants
+
+Classified exactly 32 added `Constants.CAAConstants` rows as `best-effort`/`behavioral` using `src/loader/tests/wow_api_globals/caa_constants.rs::test_patch_12_0_0_caa_constants_publish_exact_values`. The focused startup test asserts namespace publication, exact Lua type, and exact value for all 32 rows. Source implementation ancestor is `cf0908682a897f314da15dc3ae4f9c12c03cf6f0`; current source/test hashes are recorded per row. Claims exclude CVar linkage, UI behavior, localization, mutation/protection, and consumer semantics. Totals are now **330 best-effort, 492 evidence-required, 2 exception-requested, and 2586 untriaged**.
+
+## [2026-08-08] investigation | Classify remaining structure declarations
+
+Classified the nine remaining 12.0.0 structure declarations as `evidence-required`/`unsafe`: three added typed-structure rows (`LuaColorCurvePoint`, `NumberAbbrevData`, `NumberAbbrevOptions`) and six removed/removal-sensitive rows. Related proxy/curve tests do not prove exact added typed fields or payloads; source metadata, method absence, and auxiliary token checks do not prove removed structure/replacement/mixin identity. Tests/assertions remain empty with null commit, approval, and scope exception. Totals are now **298 best-effort, 492 evidence-required, 2 exception-requested, and 2618 untriaged**.
+
+## [2026-08-08] investigation | Migrate remaining pure structure declarations
+
+Migrated exactly 23 added structure declarations to best-effort/provenance-only. Their field/API rows remain separate; no runtime behavior is claimed. Nine structure declarations remain untriaged because they are behavior-linked or removal-sensitive. Totals are now **298 best-effort, 483 evidence-required, 2 exception-requested, and 2627 untriaged**.
+
+## [2026-08-08] Migrate 12.0.0 structure declaration provenance rows
+
+Migrated ten structure declarations to the machine-validated `best-effort`/`provenance-only` contract: the six `C_DamageMeter` declarations, `C_ActionBar.ActionBarChargeInfo`, `C_ActionBar.ActionBarCooldownInfo`, `C_CatalogShop.BulkPurchaseIndividualProductResult`, and `C_CatalogShop.RefundableDecorInfo`. Their field/API rows remain untriaged; no payload or runtime behavior is claimed. Totals are now **275 best-effort, 483 evidence-required, 2 exception-requested, and 2650 untriaged**.
+
+## [2026-08-08] investigation | Migrate 12.0.0 typedef provenance rows
+
+Migrated all 21 untriaged `typedef.*` rows to the machine-validated `best-effort`/`provenance-only` contract. Each retains owner/category and source-register evidence only, sets `provenance_only: true`, has empty runtime proof fields, and uses exact notes `Provenance-only: no runtime behavior claimed.` This bookkeeping status claims no simulator-visible runtime behavior and is completion-eligible without a commit. Totals are now **265 best-effort, 483 evidence-required, 2 exception-requested, and 2660 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 UnitHealPredictionCalculator luaobject methods
+
+Classified `added:UnitHealPredictionCalculator.GetDamageAbsorbClampMode` as `best-effort`/`behavioral` using `tests/userdata_proxy.rs::heal_prediction_set_get_roundtrip` and implementation ancestor `4d7dbe1da`; the claim is limited to the tested local setter/getter round-trip. Classified the other 13 currently untriaged UnitHealPredictionCalculator luaobject-method rows as `evidence-required`/`unsafe` with empty tests/assertions and null commit/approval/scope exception because the generic proxy does not establish exact absorb/mode/default/reset/predicted-payload, secret, lifecycle, validation, or edge semantics. All 68 luaobject-method rows are now non-untriaged. Totals are now **244 best-effort, 483 evidence-required, 2 exception-requested, and 2681 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 script-object rows
+
+Classified five added script-object rows as `best-effort`/`behavioral` using existing direct proxy/state tests: `script_object.AbbreviateConfigAPI`, `script_object.LuaColorCurveObjectAPI`, `script_object.LuaCurveObjectAPI`, `script_object.LuaDurationObjectAPI`, and `script_object.UnitHealPredictionCalculatorAPI`. Claims are limited to tested table/method shape, state round-trips, scalar evaluation/copy behavior, per-instance fields/tostring, duration identity, and fixture prediction state as recorded per row in `data/patch-api/12.0.0.json`; retail abbreviation/curve/timing/clock/secret/heal-prediction lifecycle and edge fidelity remain unproven. Classified `script_object.FrameAPITooltip` and `script_object.LuaCurveObjectBaseAPI` as `evidence-required`/`unsafe` because construction/base contracts remain unmodeled or incompletely tested; generated documentation and indirect concrete-object tests are not runtime proof. All seven script-object rows are now non-untriaged. Totals are now **243 best-effort, 470 evidence-required, 2 exception-requested, and 2695 untriaged**.
+
+## [2026-08-08] investigation | Classify remaining 12.0.0 UI-method rows
+
+Classified `changed:StatusBar.SetMinMaxValues` as `best-effort`/`behavioral` using `tests/widget_methods_colorselect.rs::test_statusbar_set_min_max_values_clamps_existing_value`. The test stores values before narrowing/shifting ranges and verifies `(10, 50)` clamps 80 to 50 and `(30, 40)` clamps 20 to 30; the claim excludes interpolation-target behavior, rendering/events, invalid/reversed ranges, and edge semantics. Classified `changed:StatusBar.GetFillStyle`, `changed:StatusBar.SetFillStyle`, and `added:TextureBase.SetSpriteSheetCell` as `evidence-required`/`unsafe`: the fill-style getter returns constant STANDARD and breaks nonstandard round-trips, while SetSpriteSheetCell is a no-op. Exact styles, validation, sprite-cell mapping, optional dimensions, rendering, and edge semantics remain unproven. Totals are now **238 best-effort, 468 evidence-required, 2 exception-requested, and 2702 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 secret/no-3D UI methods
+
+Classified `added:Model.SetUseGBuffer` as `exception-requested`/`impossible` under the already-decided permanent no-3D project scope; this is not a user approval request and no model-callability behavior is claimed. Classified `added:Region.IsAnchoringSecret`, `added:UIObject.HasAnySecretAspect`, `added:UIObject.HasSecretAspect`, `added:UIObject.HasSecretValues`, `added:UIObject.IsPreventingSecretValues`, and `added:UIObject.SetPreventSecretValues` as `evidence-required`/`unsafe`. Current local flag/aspect behavior and frame-state tests establish simulator consistency only, not authoritative secret/taint semantics, aspect mapping/aggregation, propagation, authorization, anchoring relationships, or lifecycle; tests remain empty with null commit, approval, and scope exception. Totals are now **237 best-effort, 465 evidence-required, 2 exception-requested, and 2706 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 UI-method state batch
+
+Classified `added:Frame.IsIgnoringChildrenForBounds`, `added:Frame.SetIgnoringChildrenForBounds`, and `added:Region.SetAlphaFromBoolean` as `best-effort`/`behavioral` using the focused frame-state and alpha tests. Claims are limited to false/true/false stored-state mutation, true/false alpha branch selection, and same-value no-op dirty behavior; actual bounds/layout effects, full alpha defaults/clamping/propagation, rendering, invalid arguments, lifecycle, and edge semantics remain unproven. Classified `added:Cooldown.SetPaused`, `added:FontString.GetScaleAnimationMode`, `added:FontString.SetScaleAnimationMode`, and `added:LayeredRegion.SetVertexColorFromBoolean` as `evidence-required`/`unsafe` because no matching simulator implementation/test was found; exact contracts require authoritative evidence or a correct model/test, with empty tests/assertions and null commit/approval/scope exception. The checked-in manifest records both FontString rows as `added` occurrences. Totals are now **237 best-effort, 459 evidence-required, 1 exception-requested, and 2713 untriaged**.
+
+## [2026-08-08] investigation | Correct ResetTexCoord audit evidence
+
+Updated `added:TextureBase.ResetTexCoord` after commit `090af1ec8` corrected `tests/texture_methods_port.rs::test_reset_tex_coord_restores_defaults` to assert WoW's eight-corner `GetTexCoord` result `(0,0, 0,1, 1,0, 1,1)` instead of the obsolete four-value contract. Refreshed the test hash and manifest wording; best-effort scope remains limited to SetTexCoord-then-ResetTexCoord default reset, with atlas-specific reset, rendering, invalid arguments, and edge semantics unproven.
+
+## [2026-08-08] investigation | Classify tested 12.0.0 UI method batch
+
+Classified six rows as `best-effort`/`behavioral` using existing direct tests: actual register IDs are `added:GameTooltip.GetLeftLine`, `added:GameTooltip.GetRightLine`, `added:TextureBase.ResetTexCoord`, `changed:StatusBar.SetValue`, `added:Frame.RegisterEventCallback`, and `added:Frame.RegisterUnitEventCallback`. The manifest records source/test SHA-256 hashes plus exact implementation ancestors `4ef55ce2cf0737da018279923edd49f075eda820`, `2591694d10dca666a09593cc5ffff121193171f9`, and `7a7a440402f4b03a89fe341956b6cb5e2051f465`; test ancestors are `fcc633ce286002f95b758635427fa1ba7720838a`, `c473e49cdaac6fbb882c43e4bb2a24456debe5e5`, `0c2c6a966d0d5351d42b8d227d1ee35747e92fde`, `7819ea6620139616fc208fc9d0b30d307adf636c`, and `118a2c9a3b56c5d700f0de0994edfac0df082e7f`. Claims are limited to tested tooltip line lookup, default texture-coordinate reset, StatusBar immediate/Smooth value state, and event/unit-callback dispatch. `added:TextureBase.SetSpriteSheetCell`, `changed:StatusBar.GetFillStyle`, `changed:StatusBar.SetFillStyle`, and `changed:StatusBar.SetMinMaxValues` remain untriaged because existing tests do not assert their contracts. Rendering/layout/animation, invalid/edge inputs, lifecycle/validation, and taint/security semantics remain unproven. Totals are now **234 best-effort, 455 evidence-required, 1 exception-requested, and 2720 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 GameTooltip.SetText
+
+Classified `GameTooltip.SetText` as `best-effort`/`behavioral` using `tests/tooltip_basic.rs::test_settext_clears_and_sets_first_line`. Implementation ancestor is `fa8cd0e2fc`; test-file ancestor is `fcc633ce28`; current evidence hashes are `src/lua_api/frame/methods/text_attribute_event/text.rs`=`ae628de726915e32c5a4c1472e9d0395c7a9253b1e9a546c900bcc6b911d90c2` and `tests/tooltip_basic.rs`=`a0ea03f766f01b53131a9eea7c18c2d55451faa60cf1c06b1ce8840598c001f9`. The claim is limited to clearing existing tooltip lines, inserting supplied text as the first line, and the focused `NumLines() == 1` assertion; formatting, wrapping, colors, localization, rendering, invalid arguments, and edge semantics remain unproven. Totals are now **228 best-effort, 455 evidence-required, 1 exception-requested, and 2726 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 TextureBase atlas methods
+
+Classified `TextureBase.GetTexCoord` and `TextureBase.SetAtlas` as `best-effort`/`behavioral` using the focused tests in `tests/methods_texture.rs`. The claim is limited to atlas remapping including partial UVs, known/unknown lookup, direct tile-slice selection, tiling flags and clearing, and render-preferred 2x path selection. Implementation ancestors are `50e028c9ef` for full-coordinate GetTexCoord behavior and `2591694d10` for the current atlas-method file; tiling and 2x path behavior are retained from `8bbadbf8c8` and `0c63d580ce`; test-file ancestor is `257f13c34e`. Current evidence hashes are `src/lua_api/frame/methods/widgets/texture/coords.rs`=`0aa45b65e0f427602ec88569039d3b5cc44ee5a4636f010aa51cdbc3c63f4d95`, `src/lua_api/frame/methods/widgets/texture/atlas.rs`=`ec7681bfe7e11c4692a1e5290423fd1c2332874555147964910bff488742a625`, and `tests/methods_texture.rs`=`419c30bfd97df89dbc9bb960de00690f769d6ab60e35354a3da9938a0e78361c`. Complete atlas fidelity, CASC/texture loading beyond these assertions, filtering/wrap edge cases, invalid arguments, and rendering correctness remain unproven. Totals are now **227 best-effort, 455 evidence-required, 1 exception-requested, and 2727 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 GameTooltip layout methods
+
+Classified `GameTooltip.GetMinimumWidth`, `GameTooltip.SetMinimumWidth`, `GameTooltip.GetPadding`, and `GameTooltip.SetPadding` as `best-effort`/`behavioral` using `tests/tooltip_basic.rs::test_setminimumwidth_and_getminimumwidth` and `tests/tooltip_basic.rs::test_setpadding_and_getpadding`. Implementation ancestor is `4a4621c2e`; test-file ancestor is `fcc633ce2`. Current evidence hashes are `src/lua_api/frame/methods/widgets/tooltip/line_data.rs`=`469dd6b58b37b0a47bc800a5e6fe08eb3b0a27b438b0365c193100ce3e7d28b2` and `tests/tooltip_basic.rs`=`a0ea03f766f01b53131a9eea7c18c2d55451faa60cf1c06b1ce8840598c001f9`. The claim is limited to setter/getter state round-trips for minimum width 150 and padding 8; tooltip rendering/layout effects, clamping, invalid arguments, and edge semantics remain unproven. Totals are now **225 best-effort, 455 evidence-required, 1 exception-requested, and 2729 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 Cooldown methods
+
+Classified `Cooldown.GetCountdownFontString`, `Cooldown.SetCooldownFromDurationObject`, and `Cooldown.SetCooldownFromExpirationTime` as `best-effort`/`behavioral` using `tests/cooldown_widget.rs::cooldown_widget_methods_persist_runtime_state`. Implementation ancestors are `d7a3cf21b` for countdown-font/expiration behavior and `a1f638733` for duration-object behavior. Current evidence hashes are `src/lua_api/frame/methods/widgets/cooldown.rs`=`527213c02fce0cda3bc7c6fd5f0874d3eea3d4e28dc59de2fb086cb32ac2e2b7` and `tests/cooldown_widget.rs`=`07a66162ff33fd6245879fc0d962ffa10cb9ca5026e8a9bf3fdcd651b4d19b8d`. The claim is limited to FontString creation/type, expiration-to-start/duration conversion, duration-object start/total-duration/mod-rate access, and zero-duration clearing; retail rendering, time progression, formatting, invalid arguments, and edge semantics remain unproven. Totals are now **221 best-effort, 455 evidence-required, 1 exception-requested, and 2733 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 StatusBar interpolation methods
+
+Classified `StatusBar.GetInterpolatedValue`, `StatusBar.IsInterpolating`, and `StatusBar.SetToTargetValue` as `best-effort`/`behavioral` using `tests/widget_methods_colorselect.rs::test_statusbar_interpolation_methods_track_target_and_displayed_value` and ancestor implementation commit `24e44f3f0`. The claim is limited to the tested interpolation state machine: Smooth target assignment leaves the displayed value unchanged, `GetValue` is target-facing, `GetInterpolatedValue` returns the displayed value, `IsInterpolating` reports target presence, and `SetToTargetValue` snaps and clears interpolation. Timing/animation progression, repeated-target behavior, invalid modes, render, and event fidelity remain unproven. Totals are now **218 best-effort, 455 evidence-required, 1 exception-requested, and 2736 untriaged**.
+
+## [2026-08-08] investigation | Classify 12.0.0 legacy combat-log cursor globals
+
+Classified `CombatLogAdvanceEntry` and `CombatLogSetCurrentEntry` as `evidence-required`/`unsafe`. The checked-in 12.0.0 register records both removals; pinned retail/PTR `Blizzard_DeprecatedCombatLog` sources do not publish them; the temporary simulator model retains fixture-only cursor mutation for Wrath/Mists `Blizzard_CombatLog` callers; and no equivalent replacement contract or authoritative legacy semantics is established. Tests remain empty with null commit, approval, and scope exception. Totals are now **215 best-effort, 455 evidence-required, 1 exception-requested, and 2739 untriaged**.
+
+## [2026-08-08] investigation | Prove 12.0.0 SpellGetVisibilityInfo vendor wrapper
+
+Classified `SpellGetVisibilityInfo` as `best-effort`/`vendor-present` using `patch-tests/patch_12_1/vendor_deprecated_chat_spell.rs::vendor_deprecated_chat_spell_globals_are_published_and_forward` at `ed3ad9d87`. The focused full-LoD proof checks publication under enabled `loadDeprecationFallbacks`, string-to-Enum translation for `RAID_INCOMBAT`, sentinel forwarding, and unknown visibility-name nil forwarding; it does not claim complete `C_Spell` visibility semantics. `CombatLogAdvanceEntry` and `CombatLogSetCurrentEntry` remain untriaged. Totals are now **215 best-effort, 453 evidence-required, 1 exception-requested, and 2741 untriaged**.
+
+## [2026-08-08] investigation | Prove 12.0.0 deprecated chat/spell globals
+
+Classified `CancelEmote`, `DoEmote`, `SpellIsPriorityAura`, and `SpellIsSelfBuff` as `best-effort`/`vendor-present` using `patch-tests/patch_12_1/vendor_deprecated_chat_spell.rs::vendor_deprecated_chat_spell_globals_are_published_and_forward` at `02db1895a`. The focused full-LoD proof checks publication under enabled `loadDeprecationFallbacks`, CancelEmote forwarding, DoEmote named and nil branches, and spell-wrapper forwarding; it does not claim complete legacy semantic fidelity. `CombatLogAdvanceEntry`, `CombatLogSetCurrentEntry`, and `SpellGetVisibilityInfo` remain untriaged. Totals are now **214 best-effort, 453 evidence-required, 1 exception-requested, and 2742 untriaged**.
+
+## [2026-08-08] investigation | Prove 12.0.0 simulator legacy compatibility globals
+
+Classified exactly seven removed globals (`FindBaseSpellByID`, `FindFlyoutSlotBySpellID`, `FindSpellOverrideByID`, `GetBattlegroundInfo`, `PlaySound`, `SetPortraitToTexture`, and `strtrim`) as `best-effort`/`compat` using the focused full-LoD proof `patch-tests/patch_12_1/legacy_compat.rs::simulator_legacy_compat_globals_preserve_tested_behavior` at `abba2bd2a`. The claim is limited to tested wrapper forwarding, seeded battleground and unknown-ID behavior, numeric sound acceptance without audio fidelity, portrait circular masking without duplicates, and default/custom trimming. `SpellGetVisibilityInfo` and the other unresolved simulator-published legacy globals remain untriaged. Totals are now **210 best-effort, 453 evidence-required, 1 exception-requested, and 2746 untriaged**.
+
+## [2026-08-08] investigation | Prove 12.0.0 vendor deprecated globals
+
+Classified exactly 56 removed legacy global API rows as `best-effort`/`vendor-present` using the committed full-LoD proof `patch-tests/patch_12_1/strict_removals.rs::vendor_deprecated_globals_are_published_and_forward` at `a26692e00`. The 35 ActionBar, 3 BattleNet, 10 CombatLog, 2 CombatText, 3 DeathRecap, and 3 InstanceEncounter wrappers are published by Blizzard deprecated addons when `loadDeprecationFallbacks` is enabled; representative forwarding/alias checks prove publication ownership, not complete legacy semantic fidelity. Fourteen other diagnosed published globals remain untriaged. Totals are now **203 best-effort, 453 evidence-required, 1 exception-requested, and 2753 untriaged**.
+
+## [2026-08-08] investigation | Prove 12.0.0 legacy global removals
+
+Classified exactly four removed legacy global API rows (`IsConsumableSpell`, `SetRaidTargetProtected`, `SpellIsAlwaysShown`, and `StripHyperlinks`) as `best-effort`/`behavioral` using the committed full-LoD `rawget(_G, name)` probe `patch-tests/patch_12_1/strict_removals.rs::removed_legacy_global_apis_are_absent_after_full_lod_load` at `3471c5a4c`. The claim is limited to current publication absence; no source-scanner, replacement-behavior, or historical timing claim is made. The other 70 diagnosed published removed globals remain untriaged pending vendor/simulator provenance. Totals are now **147 best-effort, 453 evidence-required, 1 exception-requested, and 2809 untriaged**.
+
+## [2026-08-08] investigation | Prove 12.0.0 C_Transmog removals
+
+Classified exactly 18 removed `C_Transmog` API rows as `best-effort`/`behavioral` using the committed full-LoD runtime probe `patch-tests/patch_12_1/strict_removals.rs::removed_transmog_methods_are_absent_after_full_lod_load` at `2975b0ad6`. The probe uses `rawget` to prove current publication absence while five retained C_Transmog APIs remain callable; source scanning is auxiliary only. Removed the two obsolete simulator registrations and obsolete direct test expectations. The three removed `TransmogApplyWarningInfo` structure/field rows remain untriaged because runtime rawget does not prove metadata removal; the 11 added/changed slot-visual rows remain evidence-required. Totals are now **124 best-effort, 453 evidence-required, 1 exception-requested, and 2832 untriaged**.
+
+## [2026-08-08] investigation | Prove 12.0.0 C_TransmogCollection removals
+
+Classified exactly 10 removed `C_TransmogCollection` outfit API rows as `best-effort`/`behavioral` using the committed full-LoD runtime probe `patch-tests/patch_12_1/strict_removals.rs::removed_transmog_collection_outfit_methods_are_absent_after_full_lod_load` at `c3ae90c26`. The probe uses `rawget` to prove current publication absence while retained appearance methods remain callable; source scanning is auxiliary only. Removed the three obsolete simulator outfit placeholders and their tests. The 23 added/changed custom-set and appearance-source rows remain evidence-required; custom-set replacement APIs are not claimed implemented, and no clean replacement surface, historical load-order timing, or broad scanner completeness is claimed. Totals are now **106 best-effort, 453 evidence-required, 1 exception-requested, and 2850 untriaged**.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_CombatLog slice
+
+Classified all 11 added `C_CombatLog` API rows as `evidence-required`/`unsafe` using checked-in source-register evidence and the shared permissive/fixture-backed `src/lua_api/workarounds/temporary/combat_log_state.rs` model. Tests remain empty with null commit, approval, and scope exception. Filter schema/matching, restriction state, retention/message-limit bounds, clear/refilter lifecycle, and entry semantics remain unproven; no approval can close these rows. Totals are now **77 best-effort, 453 evidence-required, 1 exception-requested, and 2879 untriaged**.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_CombatLogSecure slice
+
+Classified all nine added `C_CombatLogSecure` secure-only API rows as `evidence-required`/`unsafe` using checked-in source-register evidence and the permissive/fixture-backed `src/lua_api/workarounds/temporary/combat_log_state.rs` model. Tests remain empty with null commit, approval, and scope exception. Secure/taint enforcement, filtering rules, event/message payload shape, navigation semantics, and entry lifecycle remain unproven; no approval can close these rows.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_UnitAuras slice
+
+Classified exactly 10 added/changed `C_UnitAuras` API rows as `evidence-required`/`unsafe` using checked-in source-register evidence and the current `src/lua_api/globals/auras.rs` plus temporary `unit_auras_state.rs` seeded aura model. Tests remain empty with null commit, approval, and scope exception. Source signatures/defaults and adjacent seeded aura behavior do not establish defensive classification, expiration/display formatting, duration objects, refresh calculations, color curves, sorted instance IDs, private callback dispatch, or GetUnitAuras sort semantics; no approval can close these rows. Totals are now **77 best-effort, 433 evidence-required, 1 exception-requested, and 2899 untriaged**.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_UnitAurasPrivate slice
+
+Classified all 10 added/changed `C_UnitAurasPrivate` secure-only API rows as `evidence-required`/`unsafe` using checked-in source-register evidence and the current `src/lua_api/workarounds/temporary/private_aura_state.rs` permissive/partial model. Tests remain empty with null commit, approval, and scope exception. Secure enforcement, private-aura visibility, callback/anchor lifecycle, callback payloads, and the two absent APIs remain unproven; existing tests prove simulator-only seeded state/callback behavior and are intentionally not attached, so no approval can close these rows. Totals are now **77 best-effort, 423 evidence-required, 1 exception-requested, and 2909 untriaged**.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_SpellDiminish slice
+
+Classified exactly 14 added `C_SpellDiminish` API, structure, and structure-field rows as `evidence-required`/`unsafe` using checked-in source-register evidence and the current `src/c_api/c_spell_diminish.rs` static eight-category fixture. Tests remain empty with null commit, approval, and scope exception. The source register establishes signatures and field names only; the fixture and local tests do not establish authoritative 12.0.0 category contents, ruleset tracking semantics, or tracker payload fields, and no approval can close these rows. Totals are now **77 best-effort, 423 evidence-required, 1 exception-requested, and 2909 untriaged**.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_DeathRecap slice
+
+Classified exactly four added `C_DeathRecap` API/structure rows as `evidence-required`/`unsafe` using checked-in source-register evidence, pinned API documentation/vendor-consumer evidence, and the current `src/c_api/c_death_recap.rs`/`src/lua_api/state_types/mythic_plus_scenario.rs` killing-blow-only model. Tests remain empty with null commit, approval, and scope exception. Pinned retail/PTR/Wowless documentation exposes no `DeathRecapEventInfo` fields; vendor consumers reveal only partial amount/timestamp/sourceGUID usage; recap-event fields, link format, recap-ID selection, default/no-argument behavior, unknown-ID handling, and event-presence semantics remain unproven. `HasRecapEvents` is not classified best-effort by inference, and no approval can close these rows. Totals are now **77 best-effort, 399 evidence-required, 1 exception-requested, and 2933 untriaged**.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_TransmogCollection slice
+
+Classified exactly 23 added/changed `C_TransmogCollection` custom-set and appearance-source rows as `evidence-required`/`unsafe` using checked-in source-register evidence, the seeded/partial `src/lua_api/globals/missing_surface/transmog_collection.rs` surface, and `src/lua_api/state_types/collections.rs`; tests remain empty with null commit, approval, and scope exception. The 10 removed outfit rows remain untriaged because removal direction alone does not establish replacement behavior. Custom-set lifecycle, hyperlinks, persistence, validation, and exact `TransmogAppearanceSourceInfoData` semantics remain unproven, and related local tests do not establish authoritative retail 12.0.0 behavior; no approval can close these rows. Totals are now **77 best-effort, 395 evidence-required, 1 exception-requested, and 2937 untriaged**.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_TransmogOutfitInfo slice
+
+Classified exactly 115 added `C_TransmogOutfitInfo` API, structure, and structure-field rows as `evidence-required`/`unsafe` using checked-in source-register evidence and `src/lua_api/globals/transmog_outfit_info.rs`; tests remain empty with null commit, approval, and scope exception. The two present lock queries use only local state behavior, the other 113 rows are unmodeled, and local tests do not establish authoritative retail 12.0.0 semantics. Authoritative live evidence or a correct modeled transmog-outfit subsystem with focused tests is required, and no approval can close these rows. Totals are now **77 best-effort, 355 evidence-required, and 2978 untriaged**.
+
+# Wiki Log
+
+## [2026-09-27] audit | Record pending inline XML ScrollFrame arguments
+
+Updated [[xml-template-system]], [[widget-system]], [[lua-api]], index, and [Inline XML scroll arguments](../specs/xml-scroll-arguments.md) from `0c913d2ed` and tests-only `6b63be464`. Inline XML scroll bodies bind `offset` (horizontal/vertical), `xrange`/`yrange` (range), or `delta` (wheel) before their bodies, preserving varargs and globals; method/function bindings remain unchanged. RED is three silent wrong-value cases: global sentinels `901`–`904` leak into ordinary/runtime handlers and FauxScrollFrame is wrong at offset `37`; no Lua errors are recorded, while five prior binding controls pass. Cached FauxScrollFrame uses `offset`/`delta`; Mists CharacterCreate uses `yrange`. Independent verification remains pending. No physical-input, native, vendor/UI, code, test, Cargo, delegation, Bash, push, or deployment claim.
+
+## 2026-09-25 — Target aura private Count diagnosis
+
+Added [[target-aura-private-count]], indexed it, and updated the script-object partition contract. Full-startup target-player tick RED isolated the AuraButton's missing private Count child despite its public/Rust presence; XML parentKey publication fixes that boundary. GREEN after the independent rilua secret-number ordering pin is error-free; original `__tpl_25839` error label named the container.
+
+## 2026-09-07
+
+- Added the PTR ordered LoD bootstrap startup model to [systems/addon-loading](systems/addon-loading.md): eligible LoadOnDemand addons run only annotated bootstrap files in the ordinary startup dependency order, while full loading remains separate.
+
+## [2026-08-29] audit | Document secure nil-symbol publication and synthetic attribution fixes
+
+Audited commits `2da0dc1de` and `584b84c9e`. Updated [[addon-loading]] and [[lua-api]] plus the maintained addon-loading/Lua API references: same-addon nil-symbol reconciliation now records and resolves public and secure publications separately by stable addon index; secure assignments and secure frame exports cannot resolve public misses; precompiled lifecycle dispatch uses raw `_G.self` snapshot/restore; and post-cleanup `C_StoreSecure` restoration reads raw `_G` state to avoid attributing simulator bootstrap lookups to Blizzard code. No new page or spec was warranted; `docs/wiki/index.md` required no catalog change.\n\n## [2026-08-29] audit | Document state-backed C_GuildInfo management methods
+
+Audited commit `d64bbb8b3`. Updated [[lua-api]] and the maintained Lua API reference to record that `C_GuildInfo.Invite`, `Uninvite`, `Promote`, and `Leave` share the existing state-backed guild handlers and deprecated-global identity. Explicitly documented that `Demote`, `Disband`, `SetLeader`, and `RemoveFromGuild` remain unsupported because their distinct semantics are not modeled. No spec or new wiki page was warranted; protected `src/c_api/c_string_util.rs` was not touched.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_Transmog slice
+
+Classified exactly 11 non-removed `C_Transmog` structure/API rows as `evidence-required`/`unsafe` using checked-in source-register evidence and the current `src/lua_api/globals/missing_surface/transmog.rs` partial surface; tests remain empty with null commit, approval, and scope exception. The source records only names and the `GetSlotVisualInfo` signature transition, while no direct slot-visual/pending/apply state model or behavioral tests establish authoritative retail 12.0.0 semantics. The 21 removed C_Transmog rows remain untriaged because removal direction alone does not establish replacement behavior; no unrelated collection/outfit tests were used and no approval can close these rows. Totals are now **77 best-effort, 372 evidence-required, 1 exception-requested, and 2960 untriaged**.
+
+## [2026-08-08] investigation | Prove 12.0.0 C_NamePlate removals
+
+Classified six added 2D `C_NamePlate`/`C_NamePlateManager` APIs as `evidence-required`/`unsafe` because the current permanent shim has no modeled nameplate-manager state and exact 12.0.0 semantics remain unproven. Classified `C_NamePlateManager.IsNamePlateUnitBehindCamera` as `exception-requested`/`impossible` under the already-decided permanent no-3D project scope; this is not a user approval request. Classified all 19 removed `C_NamePlate` rows as `best-effort`/`behavioral` using the committed full-LoD runtime probe `patch-tests/patch_12_1/strict_removals.rs::removed_nameplate_methods_are_absent_after_full_lod_load` at `2c2c5ad1d`. The probe uses `rawget` to prove current publication absence while retained APIs remain callable; source scanning is auxiliary only and does not claim historical load-order timing or broad scanner completeness. Totals are now **96 best-effort, 453 evidence-required, 1 exception-requested, and 2860 untriaged**.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_EncounterTimeline slice
+
+Classified exactly 55 added `C_EncounterTimeline` API, structure, and structure-field rows as `evidence-required`/`unsafe` using checked-in source-register evidence and the current `src/lua_api/workarounds/temporary/encounter_state.rs` partial seeded fixture; tests remain empty with null commit, approval, and scope exception. Nine APIs are present only as fixture-backed behavior and 46 rows are absent; exact encounter state, script-event lifecycle, timers, feature flags, payload values, and structure-field semantics require authoritative live evidence or a correct modeled subsystem with focused tests, and no approval can close these rows. Totals are now **77 best-effort, 240 evidence-required, and 3093 untriaged**.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_PingSecure slice
+
+Classified exactly 15 changed `C_PingSecure` API rows as `evidence-required`/`unsafe` using checked-in source-register evidence and clean current `src/c_api/c_ping_secure.rs`; tests remain empty with null commit, approval, and scope exception. The source contract is secure-only while current behavior is no-op/inert callback storage/partial or absent; exact secure-call enforcement, targeting, frame/error/audio/UI dispatch, callback invocation, and `PingResult` semantics require authoritative live evidence or a correct ping/security model and direct tests, and no approval can close these rows. Totals are now **77 best-effort, 185 evidence-required, and 3148 untriaged**.
+
+## [2026-08-08] investigation | Bound 12.0.0 C_Secrets slice
+
+Classified exactly 23 added `C_Secrets` API rows as `evidence-required`/`unsafe` using checked-in source-register evidence and the examined current `src/lua_api/globals/register.rs` surface; tests remain empty with null commit, approval, and scope exception. Exact secrecy levels and action/aura/cooldown/totem/unit health/identity/power/cast restriction semantics require authoritative live evidence or a correct taint/security model and tests; secret behavior must not be guessed or approved closed. Totals are now **77 best-effort, 170 evidence-required, and 3163 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 C_EncounterWarnings slice
+
+Classified exactly 19 added `C_EncounterWarnings` structure/API rows as `evidence-required`/`unsafe` using checked-in source-register evidence and clean current `encounter_warnings.rs`; tests remain empty with null commit, approval, and scope exception. `GetEditModeWarningInfo`/current structure fields are fabricated preview/static payload behavior, `PlaySound` is a no-op, and the other three methods lack examined registration; exact state, payload meanings, feature flags, severity sound mapping, and audio playback require authoritative evidence or a correct modeled subsystem/test. Totals are now **77 best-effort, 147 evidence-required, and 3186 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 C_CombatAudioAlert slice
+
+Classified exactly 12 added `C_CombatAudioAlert` rows as `evidence-required`/`unsafe` using checked-in source-register evidence and the examined current `src/lua_api/globals/register.rs` surface; tests remain empty with null commit, approval, and scope exception. exact combat-audio settings, speech scheduling/audio output, and enable/throttle semantics require authoritative evidence or a correct modeled subsystem, and no approval can close the rows. Totals are now **77 best-effort, 128 evidence-required, and 3205 untriaged**.
+
+## [2026-08-07] investigation | Bound remaining 12.0.0 C_ActionBar runtime slice
+
+Classified four C_ActionBar rows as best-effort/behavioral using only source-register, current action-bar implementation/registration, and the named direct/end-to-end tests; claims are limited to exact tested seeded/empty/malformed profession quality, modeled action-slot presence/texture, and modeled outfit-lock slot behavior. The remaining 22 action queries/registration rows are evidence-required/unsafe with no approval path; the 11 ActionBarChargeInfo/ActionBarCooldownInfo structure/field rows remain untriaged. Totals are now **77 best-effort, 116 evidence-required, and 3217 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 C_ActionBar page/state-query slice
+
+Classified exactly 13 `C_ActionBar` page/state-query rows as `best-effort`/`behavioral` from the source register, current action-bar implementation/registration, ancestor commits `dacb23419`, `bdf741cf4`, `0859e07be`, `06bf6616a`, `5b9497307`, `6425b3f0b`, `080358cdb`, `6d13156ae`, and `167e23297`, and only the named page/state/default/transition tests; claims remain limited to tested state/default/transition behavior, with exact retail paging, vehicle/override/bonus precedence, skins, secure state, and lifecycle semantics unproven. Classified exactly three rows as `evidence-required`/`unsafe` with source-register and current implementation evidence, empty tests, and null commit/approval/scope exception; authoritative semantics or a correct model/test are required, and no approval can close them. Totals are now **73 best-effort, 94 evidence-required, and 3243 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 C_DamageMeter triage
+
+Classified exactly 19 C_DamageMeter rows as `best-effort`/`behavioral` from the source register, clean temporary seeded-state implementation, ancestor commit `e005f99e`, and only the named seeded/empty/zero-ID/unit-detail tests; claims remain limited to exact seeded/empty lookup and shape/type assertions, with no complete retail aggregation/lifecycle/secret fidelity. Classified exactly 10 rows as `evidence-required`/`unsafe` with source-register and current implementation evidence, empty tests, and null commit/approval/scope exception; seeded-but-unasserted fields and the unimplemented reset lifecycle require authoritative semantics or a correct model/test, and no approval can close them. Six metadata-only structure rows remain untriaged. Totals are now **60 best-effort, 91 evidence-required, and 3259 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 C_TradeSkillUI slice
+
+Classified `added:C_TradeSkillUI.GetDependentReagents` as `best-effort`/`behavioral` from source-register, current professions implementation/registration, exact tests, and ancestor commit `36f425fb2`; the claim is limited to table return/iteration safety and nil/malformed/unknown-reagent behavior. Classified exactly 11 quality/recraft/reagent-link rows as `evidence-required`/`unsafe` with source-register and current professions implementation/registration evidence, empty tests, and null commit/approval/scope exception; current evidence distinguishes absent methods, placeholder empty-table/true behavior, and unproven removal behavior. Authoritative profession semantics or a correct model/test are required, and no approval can close them. Totals are now **41 best-effort, 81 evidence-required, and 3288 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 C_Spell triage
+
+Classified exactly 12 added `C_Spell` rows as `evidence-required`/`unsafe` using only the checked-in source register and clean current `src/c_api/c_spell.rs` evidence. Duration lifecycle, spell metadata, and boolean semantics remain unproven; `IsSelfBuff` has a same-name internal implementation, but no matching 12.0.0 publication/behavioral contract is proven. All tests/assertions are empty with null commit, approval, and scope exception; no approval can close these rows. Totals are now **40 best-effort, 70 evidence-required, and 3300 untriaged**.
+
+Chronological record of wiki operations.
+
+## [2026-08-07] investigation | Bound 12.0.0 C_ColorUtil slice
+
+Classified `added:C_ColorUtil.GenerateTextColorCode` and `added:C_ColorUtil.WrapTextInColorCode` as best-effort behavioral from the checked-in source register, current color defaults, exact `installs_color_defaults` test, and ancestor commit `1abe6088d`; claims remain limited to tested RGB-to-`ffRRGGBB` conversion and explicit color-code wrapping. Classified four conversion rows and `added:C_ColorUtil.WrapTextInColor` as evidence-required unsafe with empty tests and no approval path. The register now totals **40 best-effort, 58 evidence-required, and 3312 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 C_Timer signature slice
+
+Classified `changed:C_Timer.NewTimer` and `changed:C_Timer.NewTicker` as best-effort behavioral from checked-in signatures, current timer/proxy paths, ancestor commits `330e521be`/`3d767dbd2`, and the five named timer-container tests; claims remain limited to function/container acceptance, returned container identity/proxy equality, cancellation, and independent ticker counts. Classified `changed:C_Timer.After` as evidence-required unsafe because only an ignored focused-looking test exists; callback/lifecycle semantics require a correct modeled implementation and executable behavioral proof, with no approval path. The register now totals **38 best-effort, 53 evidence-required, and 3319 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 C_StringUtil slice
+
+Classified `added:C_StringUtil.EscapeQuotedCodes` as best-effort behavioral from the checked-in source register, current `src/c_api/c_string_util.rs`, exact focused test, and ancestor commit `b3f579f70`; the claim is limited to quoted-code pipe escaping for tested plain/color-code cases. Classified eight unpublished `C_StringUtil` rows as evidence-required unsafe with no approval path. The register now totals **36 best-effort, 52 evidence-required, and 3322 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 curve-family triage
+
+Classified nine curve factory/object rows as best-effort behavioral from the checked-in source register, temporary proxy factory, ancestor commit `22ab64e5e`, and only the relevant `userdata_proxy` tests; claims remain limited to tested factory/table shape, scalar interpolation/copy behavior, and color-object/copy shape. Classified 23 unresolved curve contracts as evidence-required unsafe with empty tests and no approval path because the generic proxy omits or does not faithfully establish their contracts; they cannot be approved closed. 17 curve-family metadata rows remain untriaged. The register now totals **35 best-effort, 44 evidence-required, and 3331 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 duration-object audit slice
+
+Classified five duration/factory/StatusBar rows as best-effort behavioral from checked-in source, ancestor commits `35e39a58f`/`0a737bfbc`, and exact focused tests. Classified 21 duration-time/lifecycle/secret rows as evidence-required unsafe; current behavior is constant/no-op/incomplete and needs authoritative semantics or a correct modeled implementation, with no approval path. The register now totals **26 best-effort, 21 evidence-required, and 3363 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 FunctionContainer classification
+
+Classified `changed:C_FunctionContainers.CreateCallback` and four `LuaFunctionContainer` rows as best-effort behavioral from checked-in source-register/proxy evidence and the named `userdata_proxy` tests. Tested userdata type, method exposure, cancellation/invoke suppression, per-instance fields, and read-only keys are covered; exact retail callback validation, metatable/equality identity, tostring formatting, timer integration, lifecycle/GC, and API metadata fidelity remain unproven. The register now totals **21 best-effort and 3389 untriaged**.
+
+## [2026-08-07] investigation | Bound 12.0.0 classifications
+
+Classified four `AbbreviateConfig` rows and twelve `UnitHealPrediction` rows as best-effort from bounded, evidence-backed tests. The 12.0.0 register now totals **16 best-effort and 3394 untriaged** (3410 occurrences); these limited-fidelity classifications do not complete the audit or satisfy `--complete`.
+
+## [2026-08-07] architecture | Document 12.0.0 occurrence payloads
+
+Documented the current 12.0.0 generator/source-register change: categorized occurrence objects may preserve optional typed `before`/`after` payloads containing normalized value and metadata for exact enum, constant, signature, and structure triage. Added/removed/changed and transient lifecycle rows carry the corresponding sides; row identity remains `direction+symbol`, unknown fields remain rejected, and counts/statuses/source SHA are unchanged.
+
+## [2026-08-07] investigation | Document neutral 12.0.0 audit artifacts
+
+Added [[patch-12-0-0-api-audit]] for the reproducible wowless snapshot register: boundary 11.2.7 build `65299` → final explicit 12.0.0 build `65727`, six 12.0.0 snapshots, 8 transient lifecycle rows, 3410 total occurrences, and all rows untriaged. Recorded the explicit limit: wowless schema provenance only, with no historical 12.0.0 FrameXML or live runtime claim; the active retail cache manifest is validation metadata rather than historical provenance.
+
+## [2026-08-07] decision | Separate evidence-required from exception-requested
+
+Migrated the 12.1 behavior register to **33 best-effort, 21 evidence-required, 0 exception-requested, 0 untriaged** and the 12.0.5 probe register to **33 best-effort, 4 evidence-required, 1 approved provenance-only exception-requested, 0 untriaged**. `evidence-required` marks triaged unresolved unsafe/impossible behavior requiring item-specific authoritative/live evidence; it requires no approval, commit, or focused test and cannot pass `--complete`. The 12.0.7 repository-authorized no-3D exception remains unchanged.
+
+## [2026-08-07] investigation | Add strict-removal timing evidence guidance
+
+Audited commit `12ed1355b`. Documented `StrictRemovalTimingProbe` as a collector for addon-visible lifecycle timing. Its presence does not resolve or close any 12.1 behavior row; strict-removal timing gaps remain open until raw retail/PTR SavedVariables captures are obtained and interpreted. The existing `ForbiddenAspectsProbe` remains the live evidence path for all six forbidden-aspect restrictions.
+
+## [2026-08-07] investigation | Add private-object and forbidden-aspect probe guidance
+
+Documented `PrivateScriptObjectProbe` and `ForbiddenAspectsProbe` as addon-tainted live-evidence tools. Their corresponding 12.1 rows remain open until raw captures are retained and interpreted; neither proves secure-caller behavior or unsupported internal/input paths.
+
+## [2026-08-07] investigation | Add 12.1 live-client probe guidance
+
+Documented [UnitAuraSecretProbe](../addons/UnitAuraSecretProbe/README.md) and [DurationTextBindingProbe](../addons/DurationTextBindingProbe/README.md) as evidence paths. UnitAura constrains addon-tainted AuraData and `UNIT_AURA` behavior but cannot establish Blizzard-secure caller access; DurationTextBinding constrains representation, identity, and lifetime observations but cannot prove native finalization. Corresponding 12.1 rows remain open until raw retail/PTR SavedVariables captures are retained and interpreted.
+
+## [2026-08-07] decision | Reopen unverified 12.0.5 behavior exceptions
+
+Applied the correct-behavior-only policy: reopened `ScaleEventProbe.SameSizeDuplicatePair` and `StoreForbiddenProbe.ForbiddenDescendants` by clearing their approvals. Kept `XmlFrameLevelProbe.RawCaptureProvenance` approved as provenance-only because its behavior is independently regression-tested. The 12.0.5 audit remains open at 33 best-effort, 5 exception-requested, 0 untriaged: 1 approved provenance-only exception and 4 open behavior exceptions (1 impossible same-size boundary and 3 unsafe Store/security gaps).
+
+## [2026-08-07] investigation | Approve two 12.0.5 exceptions
+
+Recorded explicit approvals for `ScaleEventProbe.SameSizeDuplicatePair` and `XmlFrameLevelProbe.RawCaptureProvenance`. Both remain `exception-requested` with `impossible` resolution; the three unsafe Store exceptions remained unapproved at this point.
+
+## [2026-08-07] decision | Approve Store descendant exception
+
+Recorded explicit approval for `StoreForbiddenProbe.ForbiddenDescendants` as an unsafe exception because the retained probe never captured the `/sfp` descendant matrix. Two unsafe Store exceptions remain unapproved; the 12.0.5 register remains 33 best-effort, 5 exception-requested, and 0 untriaged.
+
+## [2026-08-07] investigation | Reclassify Texture radial progress rows
+
+Corrected the three 12.1 RadialProgress rows to Texture-backed behavioral best-effort contracts. Focused Texture surface/state proof covers method availability, receiver dispatch, defaults, setters/getters, visual mode, and Clear reset; exact retail clamping and visual rendering remain best-effort. The broader register now has 33 best-effort, 21 exception-requested, and 0 untriaged rows, with no impossible candidates.
+
+## [2026-08-07] investigation | Itemize remaining 12.1 exceptions
+
+Converted all 24 remaining 12.1 broader behavior rows to item-specific `exception-requested` entries: 21 unsafe and 3 impossible. Each row has current repository source evidence, empty tests/assertions, `commit: null`, and `approval_id: null`; no exception is approved. The broader register now has 30 best-effort, 24 exception-requested, and 0 untriaged rows.
+
+## [2026-08-07] investigation | 12.0.5 pending exception register
+
+Converted the five remaining 12.0.5 probe rows to item-specific `exception-requested` entries: three unsafe Store/protection gaps and two impossible window/provenance gaps. Each row has hashed repository evidence, `approval_id: null`, empty tests/assertions, and awaits separate informed approval or new live evidence. The register now has 33 best-effort, 5 exception-requested, and 0 untriaged rows.
+
+## [2026-08-07] investigation | TieredEntrance payload classification
+
+Corrected the final 12.1 safe candidate from a tiered-aura label to `TieredEntrance` after confirming pinned PTR exposes `C_DelvesUI` `TieredEntranceTierInfo` / `TieredEntranceRewardInfo` and no corresponding aura API. Focused proof classifies deterministic tier/reward rows as best-effort; live reward IDs, quantities, unlock timing, eligibility, and economics remain outside the claim. The broader register now has 30 best-effort and 24 untriaged rows, with zero safe-best-effort rows remaining.
+
+## [2026-08-07] investigation | Protected descendant-anchor probe replay
+
+Classified `IsProtectedProbe.DescendantAnchorPropagation` as best-effort from focused behavioral evidence. The directly protected root returns true/true; child, grandchild, frames anchored to the root or child, and the root-keyed anchored frame remain false/false. The 12.0.5 register now has 33 best-effort and 5 untriaged rows.
+
+## [2026-08-07] investigation | PlayerChoice and strict-load classification
+
+Classified the state-backed `C_PlayerChoice` payload and mutator-intent contract plus the pre-removal pinned-PTR load window as best-effort. Focused proof covers default and seeded nested choice payloads and confirms representative compatibility symbols remain callable after the complete all-LoD load. The broader register now has 23 best-effort and 31 untriaged rows.
+
+## [2026-08-07] architecture | PTR C_PlayerChoice local model
+
+Documented commit `c64472e6e`: patch 12.1 `C_PlayerChoice` uses `SimState.player_choice` for deterministic query payloads and mutator-intent markers, including nested choice options and currency/item/reputation rewards. Explicit boundary: no claim of retail timing, server validation, reroll economics, or live service values.
+
+## [2026-08-07] investigation | Cooldown, pet, and LFG payload classification
+
+Added focused 12.1 payload tests for active/inactive spell cooldowns, seeded/unknown pet species, and seeded/unknown LFG search results. Classified all three local compatibility contracts as best-effort; secret fields and server-backed semantics remain unmodeled. The broader register now has 21 best-effort and 33 untriaged rows.
+
+## [2026-08-07] investigation | Mouse-focus probe replay
+
+Added a GUI-path replay of the retained two-frame DIALOG scenario. `GetMouseFocus()` and `GetMouseFoci()[1]` both retain the higher raw-level frame before and after `Raise`/`Lower`, then clear when both frames hide. The 12.0.5 register now has 32 best-effort and 6 untriaged rows.
+
+## [2026-08-07] investigation | Battle.net service payload classification
+
+Classified three broader 12.1 Battle.net rows as best-effort from focused local-state tests: deduplicated verified friend invites and returned fields, title-friend names/tags/feature and presence state, and the explicitly unsupported deterministic unit-invite result. Exact service validation, persistence, events, and eligibility remain unmodeled. The broader register now has 18 best-effort and 36 untriaged rows.
+
+## [2026-08-07] investigation | Duration binding identity split
+
+Split stable Lua-table identity from unknown Blizzard representation fidelity. Focused reference-retention/identity proof classifies lifetime and stable identity as best-effort; exact type/metatable/finalization fidelity remains a separate unsafe candidate. The broader register now has 54 rows: 15 best-effort and 39 untriaged.
+
+## [2026-08-07] investigation | First 12.1 behavior classifications
+
+Classified 13 broader 12.1 rows only where exact existing tests directly prove the simulator contract: aura-frame creation, DurationTextBinding formatter/color/FontString behavior, Discord state, four housing models, Encounter Journal difficulty guesses, and post-startup strict removal. Forty rows remain untriaged.
+
+## [2026-08-07] investigation | 12.1 broader behavior register
+
+Created a separate 53-row machine register for non-FrameXML 12.1 fidelity boundaries. All rows remain neutral; candidate disposition is 30 safe best-effort, 20 unsafe, and 3 impossible, with family summaries no longer serving as approval units.
+
+## [2026-08-07] investigation | UI-scale CVar event ordering
+
+Modeled successful `SetCVar` event dispatch and the retail `uiScale`/`useUiScale` boundary: new effective scale first, then `DISPLAY_SIZE_CHANGED` and `UI_SCALE_CHANGED` while the old CVar remains visible, then storage and `CVAR_UPDATE`. The 12.0.5 register now contains 31 best-effort and 7 untriaged rows.
+
+## [2026-08-07] investigation | MessageFrame region replay
+
+Added focused MessageFrame and ScrollingMessageFrame owner, region, anchor, and TextInsets proof. The 12.0.5 register now contains 30 best-effort and 8 untriaged rows.
+
+## [2026-08-07] investigation | FontString size, anchor, and EditBox replays
+
+Added focused no-size/partial-size/full-size FontString checks, explicit TOP/BOTTOM/LEFT/RIGHT/TOPLEFT anchor controls, and no-size/sized/inset EditBox backing-region proof. The 12.0.5 register now contains 29 best-effort and 9 untriaged rows.
+
+## [2026-08-07] investigation | Frame-layer FontString anchor evidence
+
+Mapped the retained unanchored frame-layer `justifyH`/`justifyV` matrix to its exact regression test. The 12.0.5 register now contains 26 best-effort and 12 untriaged rows.
+
+## [2026-08-07] investigation | Panel pulse and DevTools dump replays
+
+Added exact two-panel `ShowUIPanel`/`CloseAllWindows` lifecycle proof and a loaded-Blizzard-UI `DevTools_Dump` frame-array metadata replay. The 12.0.5 register now contains 25 best-effort and 13 untriaged rows.
+
+## [2026-08-07] investigation | XML protected-frame replay
+
+Added an exact XML `protected="true"` frame replay covering protection, forbidden state, absent legacy setters, failing setter calls, and retained protection. The 12.0.5 register now contains 23 best-effort and 15 untriaged rows.
+
+## [2026-08-07] investigation | Retail protection probe replays
+
+Added focused checks for absent retail `CreateForbiddenFrame` and the complete plain-frame protection/forbidden/legacy-setter sequence. Both probe rows are now best-effort, bringing the 12.0.5 register to 22 best-effort and 16 untriaged rows.
+
+## [2026-08-07] correction | HookScript binding probe contract
+
+Corrected the 12.0.5 source register to the retained retail behavior: the normal binding slot succeeds and chains, while explicit slots 0 and 2 return false and remain absent from `GetScript`. Existing focused tests directly prove that contract; classification totals are unchanged.
+
+## [2026-08-07] investigation | Invalid SetAtlas argument evidence
+
+Classified the retained nil, no-argument, boolean, numeric, empty-string, and unknown-atlas matrix from three focused behavioral tests. The 12.0.5 register now contains 20 best-effort and 18 untriaged rows.
+
+## [2026-08-07] investigation | Identity and protection probe evidence
+
+Classified surrogate identity dispatch, absent legacy `Protect`/`SetProtected`, and secure-template protection from exact focused tests. The 12.0.5 register now contains 19 best-effort and 19 untriaged rows.
+
+## [2026-08-07] investigation | Animation script-handler probe replay
+
+Added a focused Frame/AnimationGroup/nine-animation-subtype handler-matrix regression. The initial RED exposed a test misunderstanding—unsupported `HasScript` returns false without error, while `SetScript` rejects—then the corrected test passed and classified `AnimScriptProbe.HandlerMatrix` as best-effort. Current 12.0.5 totals: 16 best-effort and 22 untriaged.
+
+## [2026-08-07] investigation | First evidence-backed 12.0.5 probe classifications
+
+Classified 15 probe rows as best-effort only where focused behavioral tests directly exercise the recorded contract: scalar attributes, forbidden state, unit-event filters, wildcard attributes, frame ordering/identity, HookScript bindings, ButtonText anchors, texture path/clear behavior, and XML frame-level semantics. Twenty-three rows remain neutral; broad subsystem or register-shape tests are not accepted as probe evidence.
+
+## [2026-08-07] investigation | 12.0.7 duration proof and conservative status correction
+
+Extracted a focused duration clock/object/text-binding regression that directly exercises the modeled method families and verifies the stale formatting-options/raw-value factories remain unavailable. Corrected five overclaimed additive rows to best-effort, classified `ModelSceneActorBase.GetModelUnitGUID` as an impossible no-3D scope exception candidate, and pinned the register at 29 implemented, 101 best-effort, one exception-requested, and zero untriaged rows.
+
+## [2026-08-07] system | repository scope exception for 12.0.7 no-3D gap
+
+Migrated `changed:ModelSceneActorBase.GetModelUnitGUID` from redundant user-chat approval to the repository scope-exception mechanism. The row remains `exception-requested`/`impossible`; `AGENTS.md#intentional-gaps` is the validated authority for the permanent no-3D project boundary.
+
+## [2026-08-06] system | Non-Lua exception evidence
+
+Allowed `unsafe` and `impossible` manifest rows to omit fabricated Lua-path assertions only when item-specific evidence concerns provenance or another non-Lua boundary. Item-specific evidence and unique per-row informed approval remain mandatory for completion.
+
+## [2026-08-06] investigation | 12.0.7 occurrence-level re-triage
+
+Classified all 131 named 12.0.7 occurrences: 34 implemented and 97 best-effort, with no untriaged or exception-requested rows. Focused profile-gated tests cover safe globals, duration methods, CVar defaults, event registration, widget compatibility, and retained/removed compatibility surfaces. Exact service payload, secrecy, and load-order fidelity limits remain explicit best-effort notes; unnamed crawler claims remain metadata.
+
+## [2026-08-06] investigation | 12.0.7 named CVar classification
+
+Classified the six CVar additions actually named by the checked-in 12.0.7 crawler source as implemented. `patch_12_0_7_cvar_defaults_match_retail` verifies each profile-gated runtime/default value. The register now contains six implemented and 125 untriaged rows; unnamed crawler claims remain source metadata outside row classification.
+
+## [2026-08-06] investigation | 12.0.7 approval-language correction
+
+Removed stale claims that unnamed CVar source gaps, stale duration extraction rows, and Minimap removals were already approved exceptions. The 131-row machine manifest remains fully neutral/untriaged. Crawler-omitted CVar claims stay source metadata, and potential unsafe/impossible rows remain candidates until evidence-backed classification is presented for informed approval.
+
+## [2026-08-06] investigation | Neutral 12.0.5 probe register
+
+Created the checked-in 38-row probe source, machine manifest, generated checklist, and human inventory. Prior documentation states are preserved as 30 resolved, four best-effort, and four unresolved, while every machine row remains neutral/untriaged pending item-specific evidence. Removed stale broad-approval wording: Store dropdown/descendant evidence and XmlFrameLevel provenance remain unresolved, while same-size window transitions are an unapproved impossible exception candidate.
+
+## [2026-08-06] system | Test-backed behavioral audit resolution
+
+Added a generic `behavioral` resolution for patch occurrences that are not truthfully observable as Lua global/table paths, including event registration, widget methods, CVar defaults, and probe outcomes. Behavioral rows require hashed test evidence plus a focused named test, allow implemented/best-effort status, forbid Lua presence assertions, and consume no synthetic runtime observation.
+
+## [2026-08-06] investigation | Neutral 12.0.7 occurrence register
+
+Created the checked-in 12.0.7 machine manifest, generated checklist, and human inventory from the categorized source register. All 131 named occurrences remain neutral/untriaged: 79 added, 29 changed, and 23 removed. Changed occurrences preserve valid normalized symbol paths plus exact change details; crawler-omitted CVar names remain unresolved metadata and are not invented.
+
+## [2026-08-06] system | Categorized 12.0.7 occurrence source
+
+Added a generic categorized patch-source format and the raw 12.0.7 occurrence register. The source contains 79 added, 29 changed, and 23 removed named occurrences (131 total), grouped from globals, script-object methods, events, widgets, and the six CVar additions actually named by the crawler excerpt. The unresolved claims for fourteen unnamed additions and five unnamed removals remain explicit metadata rather than invented symbols.
+
+## [2026-08-06] system | Generic changed-occurrence patch manifests
+
+Extended the patch-audit manifest schema to preserve `changed:symbol` occurrences alongside added and removed rows. Source JSON may include a `changed` array; manifest metadata records `changed_count`, defaulting to zero for the existing 12.1 added/removed-only register. Focused tests cover direction IDs, count mismatches, source ordering, and backward compatibility.
+
+## [2026-08-06] investigation | 12.1 broader fidelity re-triage
+
+Reconciled the completed 432-row FrameXML register with eight broader 12.1 fidelity families that are outside that manifest. Aura containers, DurationTextBinding, and service-backed structures retain explicit best-effort contracts. UnitAura secrecy, private/forbidden security enforcement, standalone RadialProgress construction, and strict-removal timing are individually identified as unapproved unsafe/impossible exception candidates. Removed contradictory wording that described the same candidates as both approved and pending; no approval was requested or recorded.
+
+## [2026-07-16] update | FrameStrata before/after observations
+
+Updated FrameStrata documentation from `/tmp/FrameStrataProbe-parent-retail.lua` (retail 12.0.7 build 68453, captured `2026-07-16T01:21:08`). During XML `OnLoad`, the actual parent and direct `PARENT` child both reported `DIALOG`, while the literal sibling reported `LOW`. Under an actual `DIALOG` parent, base `HIGH` reported `HIGH`, derived literal `LOW` reported `LOW`, and derived `PARENT` reported `HIGH`. After the tested parent-strata and reparent operations, every tested non-fixed child and grandchild reported `LOW`, including explicit XML `MEDIUM` fixtures. Documentation avoids claims about the client's internal resolution or propagation mechanism; the capture did not test `BLIZZARD`.
+
+## [2026-07-14] investigation | 12.0.7 widget compatibility matrix
+
+Focused 12.0.7 proof verifies six retained Minimap texture setters, four Button methods, four ScrollFrame methods, and five font-bearing `SetFont` methods. `ModelSceneActorBase:GetModelUnitGUID` is absent under the intentional permanent no-3D scope and remains an explicit exception candidate; no approval requested yet.
+
+## [2026-07-14] investigation | 12.0.7 removal and event matrix
+
+Added exact 12.0.7 startup proof for all 17 proposed global removals and 17 added/changed events. Eleven removed names are nil, six remain compatibility functions, and every event registers. This corrects the earlier blanket claim that all removed wrappers remained available.
+
+## [2026-07-14] investigation | 12.1 final publication matrix
+
+Closed the final 106 FrameXML rows with an exact all-LoD publication matrix: seven proposed additions remain nil and 99 proposed removals remain functions. Every mismatch reports symbol, expected type, and observed type. Full target: 15 tests passed in 22.35 seconds (26.048 seconds wall time). Final 12.1 FrameXML inventory: 1 implemented, 431 best-effort, 0 exception-requested, and 0 untriaged rows.
+
+## [2026-07-14] investigation | 12.1 conservative source-absence batch
+
+Classified 175 proposed additions individually as stale snapshot entries. Selection requires the bare method/global token to be absent from every PTR Lua/XML/TOC file; the focused generated test then loads the complete game-compatible addon closure, including LoD roots, and reports any exact global/namespace publication. Stronger source patterns cover dot, colon, bracket, and `rawset` forms for earlier namespace families. Some all-LoD addons emit recorded Lua errors, so this remains explicitly best-effort source-plus-runtime evidence rather than an exact fidelity claim. Full target: 14 tests passed in 21.82 seconds (24.836 seconds wall time). Current inventory: 1 implemented, 325 best-effort, 0 exception-requested, and 106 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 utility namespace and colon-publication audit
+
+Corrected source scanning to cover both `Namespace.Method` and `Namespace:Method` Lua publications. Earlier stale families remain absent under the stronger falsifier. Classified 29 utility additions as stale and `PingUtil.GetContextualPingTypeForUnit` as vendor-present with tested `C_Ping` forwarding. Current full target: 13 tests passed in 15.20 seconds (18.309 seconds wall time). Current inventory: 1 implemented, 150 best-effort, 0 exception-requested, and 281 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 GuildControl snapshot mismatch
+
+Classified ten proposed `GuildControlUI_*` additions as stale snapshot globals. Shared-corpus PTR source proof finds no occurrences and startup runtime keeps all ten nil. The first post-build target took 64.43 seconds wall time; the unchanged warm complete target passed 11 tests in 15.65 seconds (17.272 seconds wall time), satisfying the 60-second gate. Current inventory: 1 implemented, 120 best-effort, 0 exception-requested, and 311 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 Narration snapshot mismatch
+
+Classified all 14 proposed `NarrationUtil` additions as stale qualified names. Shared-corpus PTR source proof and startup runtime enumeration keep the namespace nil. Full grouped audit target: 10 tests passed in 13.82 seconds (20.495 seconds wall time). Current inventory: 1 implemented, 110 best-effort, 0 exception-requested, and 321 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 SocialUI snapshot mismatch and source-scan budget
+
+Classified all 13 proposed `SocialUIUtil` additions as stale qualified names. Exact-qualified PTR source proof and runtime enumeration keep the namespace nil. Adding a third recursive source scan first pushed complete-target wall time to 76.304 seconds; a shared `OnceLock` source corpus reduced the verified nine-test target to 14.49 seconds test time and 19.023 seconds wall time. Current inventory: 1 implemented, 96 best-effort, 0 exception-requested, and 335 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 friends-list snapshot mismatch
+
+Classified all 29 proposed `FriendsListUtil` additions as stale qualified names. The falsifier first caught similarly named `FriendsFrame_*` globals; corrected exact-qualified PTR source proof shows no `FriendsListUtil.*` publications, and runtime proof confirms the namespace remains nil. Full grouped audit target: 8 tests passed in 10.32 seconds (12.541 seconds wall time). Current inventory: 1 implemented, 83 best-effort, 0 exception-requested, and 348 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 combat audio snapshot mismatch
+
+Classified ten proposed `CombatAudioAlertUtil` interrupt/start/end/death additions as stale snapshot entries. Recursive PTR source proof scans Lua/XML/TOC files; runtime proof verifies the active namespace and representative real method exist while all ten proposed names remain nil. Full grouped audit target: 7 tests passed in 13.94 seconds (22.816 seconds wall time). Current inventory: 1 implemented, 54 best-effort, 0 exception-requested, and 377 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 retained UI geometry globals
+
+Classified the proposed removals of `UIDoFramesIntersect`, `GetNotchHeight`, and `GetUIParentOffset` as vendor-present. Focused PTR proof covers overlap/separation/edge-touch behavior, physical-to-UI notch normalization, and maximum debug-bar/notch offset selection. Full grouped audit target: 6 tests passed in 13.438 seconds. Current inventory: 1 implemented, 44 best-effort, 0 exception-requested, and 387 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 input utility snapshot reversal
+
+Classified five proposed `InputUtil` additions as stale snapshot namespace moves and four proposed global removals as vendor-present. Focused PTR proof verifies the namespace members remain nil while the legacy globals perform cursor scaling, frame-scale forwarding, mouse-offset forwarding, and inspect-cursor selection. Full grouped audit target: 5 tests passed in 9.232 seconds. Current inventory: 1 implemented, 41 best-effort, 0 exception-requested, and 390 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 screen-scale snapshot reversal
+
+Classified the proposed `InterfaceUtil.GetScreenHeightScale` and `InterfaceUtil.GetScreenWidthScale` additions as stale snapshot entries and the proposed global removals as vendor-present. Focused PTR proof verifies `InterfaceUtil` is absent, both globals remain functions, and a 1024×768 fixture returns `1.0` for each. Full grouped audit target: 4 tests passed in 10.873 seconds. Current inventory: 1 implemented, 32 best-effort, 0 exception-requested, and 399 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 PTRFeedback quest-progress helper
+
+Classified `GetTimeSinceLastQuestProgress` as vendor-present best-effort behavior. Focused PTR proof verifies publication by PTRFeedback and pins the current upstream nil-arithmetic invocation defect caused by undefined `lastProgressTime`; simulator adds no guessed correction. Full grouped audit target: 3 tests passed in 6.625 seconds. Current inventory: 1 implemented, 28 best-effort, 0 exception-requested, and 403 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 shake namespace mismatch
+
+Classified proposed legacy `ShakeFrame` and `ShakeFrameRandom` additions as stale snapshot entries. Focused PTR proof verifies both globals remain nil while the distinct `ScriptAnimationUtil` methods exist and return cancellation functions for safe no-op conditions. Full grouped audit target: 2 tests passed in 5.774 seconds. Current inventory: 1 implemented, 27 best-effort, 0 exception-requested, and 404 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 PlayerChoice toggle LoD lifecycle
+
+Classified both `PlayerChoiceToggle_TryShow` snapshot occurrences as best-effort load-on-demand vendor behavior. Focused PTR proof verifies absence before `Blizzard_PlayerChoice`, publication after explicit load, eligible-button visibility, explicit plus OnShow state updates, and nil return. Current inventory: 1 implemented, 25 best-effort, 0 exception-requested, and 406 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 smooth-progress snapshot reversal
+
+Classified the proposed `InterpolatorUtil.GetSmoothProgressChange` addition as a reversed snapshot and the proposed global `GetSmoothProgressChange` removal as vendor-present. Focused PTR proof verifies the namespace member remains nil, the global remains a function, and representative input returns `70`. Current inventory: 1 implemented, 23 best-effort, 0 exception-requested, and 408 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 Macro save lifecycle
+
+Classified both `MacroFrame_SaveMacro` snapshot occurrences as best-effort vendor-present behavior. Focused PTR proof verifies the eager UIParent no-op placeholder is harmless and explicit `Blizzard_MacroUI` loading replaces it with the `MacroFrame:SaveMacro()` delegate. Current inventory: 1 implemented, 21 best-effort, 0 exception-requested, and 410 neutral untriaged rows.
+
+## [2026-07-14] system | Active-TOC patch source reachability
+
+Added `--active-tocs` to the full-tree Lua publication index. The active compiled profile uses `find_toc_file` to select each addon's TOC, applies per-file environment rules, recursively follows XML script/include paths through the loader's addon-root fallback and case-insensitive resolver, records unresolved Lua/XML reference paths, and excludes source files selected only by other flavor TOCs. This corrects false candidate matches such as Mists-only helpers found by the raw all-files scan. Source selection remains candidate evidence; dependency order and LoD timing still require lifecycle tests.
+
+## [2026-07-14] system | Full-tree patch source candidates
+
+Added deterministic `--index-lua-tree` scanning with relative paths, per-file hashes, and first-directory addon ownership. Pre-lexer candidate counts were discarded after review exposed comment/string/local-scope false positives; corrected counts must come from a fresh scan. Results remain candidate-only. The later active-TOC entry applies active-profile source reachability; dependency order and LoD timing remain unapplied.
+
+## [2026-07-14] system | Patch source candidates and initialization observations
+
+Added `--observe-initialization`, which writes actual active-profile Lua observations and rejects manifest/profile mismatches. Added `--index-lua-source` for file/line direct-publication candidates plus explicit mixin/metatable/dynamic-global/factory ambiguity records. Candidate source evidence never changes final statuses automatically. Full manifest-driven post-load/LoD/reset orchestration remains open.
+
+## [2026-07-14] system | Patch observation primitive
+
+Added a production observation primitive that resolves actual Lua global/table paths in `WowLuaEnv` and records active profile, presence, and Lua type while carrying caller-supplied phase/addon labels. Focused coverage observes present and absent symbols, a real identity-matched TOC load transition, and exact manifest-byte hashing. A concrete post-reset runtime operation and full manifest-driven phase orchestration remain open.
+
+## [2026-07-14] investigation | Preserve 12.0.7 API-change source
+
+Moved the 12.0.7 Warcraft Wiki source snapshot from temporary storage into `data/patch-api/sources/12.0.7-api-changes.txt` and linked the patch audit to the checked-in evidence. The 12.0.7 manifest/register remains open work.
+
+## [2026-07-14] system | Patch API audit manifest
+
+Created `systems/patch-api-audit-manifest.md` and the 432-row `data/patch-api/12.1-framexml.json` register. Reviewer correction removed false blanket exception requests: 412 pending rows now have null status and neutral `untriaged` resolution. Repository validation recomputes source/evidence hashes, verifies tests and commit ancestry, and rejects checklist/inventory drift. Completion requires an exact-manifest observation artifact and per-item unsafe/impossible approval provenance; real per-row observation generation remains open.
+
+## [2026-07-14] investigation | 12.1 CustomerOrders hide-wrapper mismatch
+
+Updated the 12.1 FrameXML inventory after a recursive PTR source scan found no `HideProfessionsCustomerOrdersFrame` definition. A focused PTR test loads ProfessionsTemplates and AuctionHouse dependencies, explicitly loads `Blizzard_ProfessionsCustomerOrders`, verifies its frame exists, and confirms the snapshot-only wrapper remains nil. Current inventory: 1 implemented, 19 best-effort, 0 exception-requested, and 412 neutral untriaged rows.
+
+## [2026-07-14] investigation | 12.1 Garrison hide-wrapper mismatches
+
+Updated the 12.1 FrameXML inventory after confirming `HideGarrisonMissionFrames` and `HideGarrisonShipyardFrame` have no definitions in local PTR Blizzard sources. A focused PTR test loads `Blizzard_GarrisonUI` with its LoD dependencies and verifies both snapshot-only wrappers remain nil. At that intermediate stage, 1 row was implemented, 18 were best-effort, and 413 unresolved rows were still mislabeled as exception requests; the latest manifest entry corrects them to neutral untriaged state.
+
+## [2026-07-14] investigation | 12.1 BlackMarket hide-name mismatch
+
+Updated the 12.1 FrameXML inventory after confirming PTR defines `BlackMarketFrame_Hide` with `HideUIPanel(BlackMarketFrame)` plus close-sound behavior, while snapshot entry `HideBlackMarketFrame` is absent. A focused PTR test explicitly loads `Blizzard_BlackMarketUI`, verifies the authoritative helper, and confirms the reversed-name wrapper remains nil. At that intermediate stage, 1 row was implemented, 16 were best-effort, and 415 unresolved rows were still mislabeled as exception requests; the latest manifest entry corrects them to neutral untriaged state.
+
+## [2026-07-14] investigation | 12.1 ItemUpgrade hide-name mismatch
+
+Updated the 12.1 FrameXML inventory after confirming PTR defines `ItemUpgradeFrame_Hide` as the authoritative `HideUIPanel(ItemUpgradeFrame)` helper, while snapshot entry `HideItemUpgradeFrame` is absent. A focused PTR test explicitly loads `Blizzard_ItemUpgradeUI` and verifies the reversed-name wrapper remains nil. At that intermediate stage, 1 row was implemented, 15 were best-effort, and 416 unresolved rows were still mislabeled as exception requests; the latest manifest entry corrects them to neutral untriaged state.
+
+## [2026-07-14] investigation | 12.1 GuildBank hide wrapper mismatch
+
+Updated the 12.1 FrameXML inventory after confirming `HideGuildBankFrame` has no definition in local PTR Blizzard sources. A focused PTR test explicitly loads `Blizzard_GuildBankUI` and verifies the snapshot-only wrapper remains absent. At that intermediate stage, 1 row was implemented, 14 were best-effort, and 417 unresolved rows were still mislabeled as exception requests; the latest manifest entry corrects them to neutral untriaged state.
+
+## [2026-07-14] investigation | 12.1 AuctionHouse hide wrapper mismatch
+
+Updated the 12.1 FrameXML inventory after confirming `HideAuctionHouseFrame` has no definition in the local PTR Blizzard sources. A focused PTR runtime test loads `Blizzard_AuctionHouseUI` and verifies the snapshot-only wrapper remains absent instead of adding guessed close semantics. At that intermediate stage, 1 row was implemented, 13 were best-effort, and 418 unresolved rows were still mislabeled as exception requests; the latest manifest entry corrects them to neutral untriaged state.
+
+## [2026-07-14] investigation | 12.1 Mists-only time helper excluded
+
+Updated the 12.1 FrameXML inventory after proving `GetTimeStringFromSeconds` is defined only by `Mists/UIParent.lua` and excluded from the PTR mainline TOC. It is classified best-effort as cross-flavor snapshot contamination rather than implemented behavior. PTR tests verify absence during environment initialization, after Blizzard loading/post-load compatibility, and after startup events. At that intermediate stage, 1 row was implemented, 12 were best-effort, and 419 unresolved rows were still mislabeled as exception requests; the latest manifest entry corrects them to neutral untriaged state.
+
+## [2026-07-14] update | 12.1 DifficultyUtil delegates modeled
+
+Updated the 12.1 audit and FrameXML inventory after adding five epoch-scoped, post-load `DifficultyUtil` color delegates. The delegates dynamically call the authoritative vendor globals, preserving arguments, both return values, later hotfix replacement, and explicit missing-global errors. Focused tests cover namespace reset/preservation and dynamic dispatch; full PTR Game UI startup verifies vendor threshold behavior, while older-retail startup verifies non-exposure. Inventory now records 1 implemented, 11 best-effort, and 420 pending strict exception re-triage.
+
+## [2026-07-14] decision | Patch API audit exception approval superseded
+
+A broad approval for documented 12.1, 12.0.7, and 12.0.5 exceptions was recorded, then superseded after review found that the full itemized checklist was not presented in chat and 12.1 FrameXML entries were mass-deferred without individual unsafe/impossible justification. Audits remain open pending re-triage and informed per-item approval.
+
+## [2026-07-13] create | Mastery spells modeled, alias identity fix
+
+Created `systems/specialization-mastery-spells.md` and
+`investigations/deprecated-specialization-alias-identity.md` after modeling
+`C_SpecializationInfo.GetSpecializationMasterySpells` from ChrSpecialization.db2
+(retiring the empty-table temporary shim) and fixing three pre-existing test
+failures: deprecated alias identity broken by post-cleanup re-registration, and
+legacy specialization globals / UIWidgetContainerMixin duplicated in
+`c_api/c_spec.rs` after their move to the Lua globals layer.
+
+## [2026-07-13] update | Retail-only CASC isolation test
+
+Updated `systems/casc-asset-cache.md` after adding
+`scripts/test-retail-casc-isolation.py`. Documented Bubblewrap masking of all
+non-retail WoW flavor directories, isolated writable caches, preserved failure
+logs, exact missing-entry reporting, and the verified workflow for adding or
+removing retail manifest entries.
+
+## [2026-07-13] update | Docker headless release build
+
+Updated `reference/addon-compatibility.md` and `systems/rendering-pipeline.md` after
+Docker CI for v0.1.29 failed because the headless release build omitted the
+required `client-retail` profile and `frame_collect` depended on the GUI-only
+`hit_grid` module. Recorded the fixed build contract
+(`--no-default-features --features client-retail`) and the shared `HitOrderKey`
+ownership split; the next tag will carry the fix.
+
+## [2026-07-13] update | Retail Blizzard UI manifest curation
+
+Historical note superseded by the 2026-08-24 retail manifest correction above. The earlier 3,591-entry filtered snapshot and its legacy-profile exclusion claim are no longer the retail source-inventory contract.
+
+## [2026-07-09] investigation | Patch 12.0.5 API audit
+
+Created `investigations/patch-12-0-5-api-audit.md` to consolidate the probe-driven 12.0.5 work. Recorded that retail `12.0.5.67823` findings for forbidden frames, invalid unit-event filters, wildcard false attributes, Raise/Lower ordering, frame identity slot `[0]`, XML frame-level semantics, and display/scale event pairs are already modeled with focused tests. Documented that no `patch_12_0_5_inert_defaults` module exists and no obvious safe, already-backed 12.0.5 inert default remains unconverted. Updated with all 13 retained SavedVariables probe families, explicit best-effort boundaries, and exception requests for missing exact regressions, Store lifecycle evidence, XmlFrameLevel raw provenance, same-size window transitions, and the absent patch API-diff source.
+
+## [2026-07-06] investigation | Patch 12.0.7 API audit
+
+Created `investigations/patch-12-0-7-api-audit.md` after bridging compatible 12.0.7 API gaps and pausing exact-behavior work. Recorded additive/inert API bridges, verification logs, and blocked areas requiring live behavior: restricted unit-token returns, `ENCOUNTER_END` payloads, EncounterEvents color state, SimulateMouse taint/focus restrictions, debug secret propagation, secure raidtarget actions, M+ CalendarTime returns, aura security changes, widget secret aspects, and deprecated/removal timing. Updated after `C_BattleNet.InviteFriend` moved from inert bridge to modeled `SimState.bnet_friends` mutation. Updated again after ready-check behavior moved from inert `C_PartyInfo` bridge to modeled state: `DoReadyCheck`/`ReadyCheck`, `ConfirmReadyCheck`, `GetReadyCheckStatus`, `GetReadyCheckTimeLeft`, and immediate ready-check event dispatch. Updated after `C_UIFileAsset` moved from inert Lua defaults to best-effort limited-listfile lookup, after timeline event colors started mirroring the existing `C_EncounterEvents` color state, after `DurationTextBinding` gained documented non-secret state methods plus best-effort duration-object storage, after `GameTooltip_AddMoneyLine` started formatting money through `GetMoneyString` instead of appending raw copper, after `C_PartyInfo.IsGUIDInGroup` moved to the simulator party roster model, after C_PartyInfo leader/assistant mutators started updating simulator group-role state, after `C_PingSecure.ClearPendingPingOffScreenCallback` moved to the Rust shared callback table, after 12.0.7 CPU usage globals moved to the shared performance-metric defaults module, after `C_DurationUtil.CreateManualClock` moved to the Rust `C_DurationUtil` surface, after Delves/Housing/MerchantFrame/QuestHub trivial namespace defaults plus `C_PartyInfo.UninviteUnit` moved from the 12.0.7 Lua patch shim to Rust-backed best-effort/model-backed surfaces, after `C_EncounterTimeline.GetEventColor` moved to the Rust encounter-events surface while `GameTooltip_AddMoneyLine` moved to the shared formatting defaults, after secure pending button/ping/toggle callback globals moved to Rust-backed shared PingSecure callback storage, and after the recovered exact 12.0.7 CVar delta (17 adds, five removals, one default change) moved into profile-gated defaults with an explicit source-integrity exception for three unnamed claimed additions, and after `LuaDurationObject` gained best-effort clock storage plus deterministic `HasExpired`/`HasStarted`/`IsActive` methods for the documented 12.0.7 duration-object surface, and after the DurationText no-argument regression established that the stale `C_DurationUtil.CreateDurationTextFormattingOptions` / `CreateDurationTextRawValue` extraction names are universal-fallback nil functions rather than documented factories.
+
+## [2026-07-06] investigation | Patch 12.1 API audit
+
+Created `investigations/patch-12-1-api-audit.md` after bridging compatible 12.1 API gaps and pausing exact-behavior work. Recorded committed bridge points, verification logs, and the blocked areas that require live PTR behavior: UnitAura secrecy, Private Script Objects/Forbidden Partition, full ForbiddenAspect enforcement, AuraContainer/AuraButton/ManagedAuraContainer, DurationTextBinding/RadialProgress script objects, and exact structure payloads. Updated in the second pass to add an explicit implementation matrix and record 12.1 `DurationTextBinding` color-curve compatibility methods while leaving standalone `RadialProgress` paused. Updated again after Battle.net title-friend custom names/tags moved from inert Lua defaults to a best-effort `SimState.bnet_friends` model, after Encounter Journal difficulty helpers moved to generated-instance-data guesses, after `C_Discord.IsEnabled` started reflecting `discordClientEnabled`, after pending Battle.net friend invites gained a best-effort state model, after Battle.net feature probes started returning true for modeled friend-list/title-friend/tag support, after `C_Housing` owned-house/plot probes plus `ResetHouse` moved to local `SimState.housing` state pending replacement with probe-backed service semantics, and after safe `C_HousingBlueprint` share-code/import/export calls moved to local blueprint intent state pending exact PTR/service payload probes, and after housing editor/customize/decor/layout probes moved to local `SimState.housing` state with remaining blueprint availability calls itemized as pending exception requests until PTR/service payloads are known. Updated after `SetAppearOffline` moved to `SimState.bnet_appear_offline` and `BNCheckTitleFriendInviteToUnit` moved out of Lua inert defaults as a deterministic false best-effort probe pending title-friend service data. Updated again after Discord OAuth/link/settings/server/channel probes moved to local `SimState.discord` state and the final 12.1 Lua inert defaults were removed. Updated after housing blueprint availability probes moved from nil placeholders to local `SimState.housing` result codes pending exact service enum probes. Added explicit 12.1 exception requests for security-sensitive aura/private/forbidden/aspect behavior, standalone RadialProgress fidelity, full DurationTextBinding fidelity, exact service payloads, and strict-removal timing. Best-effort 12.1 bridges are explicitly temporary: keep them only while they are backed by existing simulator state and documented tests, then replace them with PTR/service probe-backed semantics once exact behavior is known. Updated after `LoadAddOnWithErrorHandling` was added as a tested canonical wrapper around `UIParentLoadAddOn`, and after the local 12.1 FrameXML snapshot was expanded into an exhaustive 320-added/112-removed inventory: the wrapper is implemented; the remaining 431 entries are explicit exception requests pending ownership/lifecycle evidence. Two names occur in both source lists, so the 432 entries represent 430 distinct names.
+
+## [2026-07-06] update | Retail API epoch features
+
+Updated `systems/client-profiles.md` after introducing cumulative retail API epoch features (`retail-12-0-7`, `retail-12-1-0`) alongside mutually-exclusive `client-*` profile features. Recorded that API surface gates belong on epoch features while PTR cache, CASC product, install paths, and vendor manifest behavior remain `client-ptr` profile concerns.
+
+## [2026-07-02] update | XML method binding timing
+
+Updated `systems/xml-template-system.md` after live PTR probing and simulator
+regressions clarified XML `method="..."` behavior: XML binding installs the
+currently composed method function as the script handler, object fields and
+`GetScript` storage diverge after `frame.X = ...` or `SetScript`, and private
+methods under `useForbiddenObjectTable` resolve from the forbidden object table
+for AuraContainer-style XML.
+
+## [2026-07-02] update | 12.1 XML partitioned mixins
+
+Updated `systems/xml-template-system.md` after implementing PTR 12.1
+`ScopedModifier useForbiddenObjectTable` and partitioned mixin semantics for
+AuraContainer-style XML. Recorded public vs forbidden frame partitions,
+partition-aware KeyValues, `targetPartition`, `inboundPartition` self
+substitution, and `secureDelegates` public delegate behavior.
+
+## [2026-07-02] update | Blizzard UI CDN missing chunks
+
+Updated `systems/casc-asset-cache.md`, `systems/addon-loading.md`, and `PLAN.md`
+after wiring Blizzard UI sync to fetch missing authoritative CASC chunks from
+Blizzard CDN by encoding key via public `Osso/casc-extract` when local streaming
+install archives are incomplete. Recorded that repo/source mirrors remain
+disabled and CDN archive indexes persist under `~/.cache/casc-extract/`.
+
+## [2026-07-01] update | Per-profile Blizzard UI manifests
+
+Updated `systems/addon-loading.md`, `systems/casc-asset-cache.md`, and `index.md`
+after splitting the Blizzard UI cache manifest into profile-specific files under
+`data/blizzard-ui-files/`. Recorded that the active `client-*` profile selects
+both the manifest and CASC product (`wow` vs `wowt`) so PTR-only addon files no
+longer have to be shoehorned into the retail manifest. Documented that Blizzard
+UI cache population has no repo-source fallback; tracked listfile overrides are
+used only to teach CASC path→FDID mappings until upstream listfiles catch up.
+
+## [2026-07-01] update | Bootstrap TOC semantics
+
+Updated `systems/addon-loading.md` after correcting `[Bootstrap]` semantics:
+annotated entries stay in normal TOC order, no standalone bootstrap pass runs,
+and LoadOnDemand addons execute those files only during normal `C_AddOns.LoadAddOn`.
+Updated `index.md` summary wording.
+
+## [2026-06-29] investigation | Retail/PTR full startup Lua errors
+
+Created `investigations/retail-ptr-full-startup-lua-errors.md` after full GUI
+startup logs exposed handler-time errors missed by `lua-errors`. Recorded the
+PVPUI API gaps (`C_WeeklyRewards`, `C_PvP`, legacy PVP role globals,
+`ClearBattlemaster`), PTR cursor gap, Store inbound nil `StoreFrame` fallback
+issue, and verification with clean retail/PTR startup logs. Updated `index.md`.
+
+## [2026-06-29] update | Mists 5.5.4 lua-errors cleanup
+
+Updated `investigations/mists-world-map-startup.md` after reducing Mists
+5.5.4 startup `lua-errors` to `[]`. Recorded the root causes: escaped
+`Interface/AddOns` XML paths, missing profile-cache manifest files
+(`Blizzard_UIParent/Classic/*`, `Blizzard_SharedXML/Classic/GameTooltipTemplate.lua`),
+`QuestUtil` being reset by `Blizzard_FrameXMLUtil/Classic/QuestUtils.lua`,
+Mists XML referencing unshipped `WorldStateProvingGrounds_*` helpers, missing
+native EditMode frame methods, and missing `UNIT_LEVEL_NON_ATTACKABLE` color.
+Updated `index.md`.
+
+## [2026-06-19] update | Bag button OnLoad load-order resolved
+
+Marked `investigations/addon-load-order.md` RESOLVED. The historical
+`PaperDollItemSlotButton_OnLoad`-before-definition failure no longer reproduces:
+OnLoad completes (verified via `CharacterBag0Slot` event registration and clean
+`lua-errors`), and the replay workaround was removed (`70fca4e25`, `d4f1287f9`).
+Fixed dead `workarounds_bags.rs` / `l.rs` path references in both the wiki page
+and the legacy `docs/addon-load-order-investigation.md`. Documented the root
+cause: transitive `LoadFirst` — `Blizzard_EnvironmentCleanup` (`LoadFirst: 1`)
+depends on `Blizzard_UIPanels_Game`, and the eager two-pass loader emits a
+LoadFirst addon's deps first, so the definer loads before the bag buttons.
+
+## [2026-06-19] update | PTR client profile
+
+Updated `systems/client-profiles.md` after adding the `client-ptr` profile for
+12.1 PTR. Documented the new `ptr` Blizzard UI cache scope, `120100` interface
+version, mainline TOC/game-type behavior, and fallback preference for the
+cache-managed `Gethe/wow-ui-source@ptr` archive before live/beta.
+Updated again after the first PTR cache sync investigation: PTR sync now selects
+the `wowt` CASC product automatically and filters legacy-profile manifest entries
+before cache-completeness checks.
+
+## [2026-06-19] update | Blizzard UI profile cache migration
+
+Updated `systems/addon-loading.md` after moving runtime Blizzard UI loading to
+profile-scoped user-cache roots under
+`~/.cache/wow-ui-sim/blizzard-ui/<profile>/AddOns`. Documented
+`wow-cli casc sync-blizzard-ui` as the canonical cache population path, the
+completion/provenance marker pair, and the setup-script compatibility wrappers.
+
+## [2026-06-12] investigation | Lib test failure sweep
+
+Created `investigations/lib-test-failure-sweep-2026-06.md` after root-causing
+nine accumulated `cargo test --lib` failures: runtime foundation order
+(Blizzard_ScriptErrors), the silently-refused
+`hooksecurefunc(C_AddOns, "LoadAddOn")` target (two workarounds rewired through
+`apply_blizzard_post_load_patches`; one dead hook remains in
+`runtime_surface_bootstrap.lua`), two more classic-rebase code losses, drifting
+duplicated Lua installers, and tests stale against deliberate semantic changes.
+Updated `index.md`.
+
+## [2026-06-10] investigation | Retail core behavior probes
+
+Created `investigations/retail-core-behavior-probes.md` after adding and
+installing `CoreBehaviorProbe`. Recorded the retail `12.0.5.67823`
+observations for `SetForbidden`, `CreateForbiddenFrame`, invalid
+`RegisterUnitEvent`, wildcard false attributes, and the improved Raise/Lower
+probe that needs a fresh live-client capture before simulator behavior changes.
+Updated it after the fresh reload capture: `Raise()` and `Lower()` succeeded,
+but simple shown sibling frames kept `GetFrameLevel()` at `1`/`10` and
+`GetRaisedFrameLevel()` at `0` before and after under both a private parent and
+`UIParent`.
+Updated it again after fixing wow-ui-sim so `GetRaisedFrameLevel()` returns the
+retail-observed `0` for the simple sibling probe while keeping internal
+`raise_order` as render/hit-order bookkeeping.
+Updated it again after adding explicit regression coverage for wildcard
+`GetAttribute(prefix, name, suffix)` preserving a stored false value.
+Updated it again after the hit-order capture showed the higher raw frame level
+kept mouse focus before and after `Raise()`/`Lower()`; wow-ui-sim now treats
+`raise_order` as a same-level tie-breaker instead of adding it to
+`frame_level`.
+
+## [2026-06-10] update | Frame identity token userdata
+
+Updated `investigations/frame-surrogate-identity-slot.md` after switching `frame[0]` from a tiny backed table to a `FrameIdentity` userdata token. Recorded that DevTools dumping also needs raw frame iteration plus `dumpobject` returning nil so `[0]` renders as opaque userdata.
+Updated it again after making `extract_frame_id` dispatch-aware and adding `native_frame_id_from_val` for the rare cases that need the original table backing.
+Updated it again after real-client and wowless duplicate-name probes showed replacement frames get fresh identity and do not migrate custom Lua fields; recorded the simulator fix that removed old-global field copying during `CreateFrame` registration.
+Updated `systems/addon-loading.md` after fixing third-party addon enable-state merging and startup keybinding import. Recorded that local `AddOns.txt` overlays real WTF state, required-dependency disables apply to default-enabled dependents, and `bindings-cache.wtf` imports before addon loading.
+Updated it again after extending the existing `ServerSnapshot` addon to capture AddOn List enable state and keybindings. Recorded that `ServerSnapshotDB` is the preferred live-client overlay for addon state because `AddOns.txt` alone is not reliable for the per-character UI state.
+
+## [2026-06-08] update | Mists 5.5.4 EditMode
+
+Updated `investigations/editmode-layout.md` after bumping the Mists Blizzard UI
+source pin to 5.5.4. Startup was clean with the existing `C_EditMode` fallback,
+but a real frame tick exposed missing `MIRRORTIMER_NUMTIMERS` in
+`WorldFrame_OnUpdate`; the mirror-timer Rust surface now publishes the constant.
+The update also records that Mists now loads `Blizzard_UIParentPanelManager`
+through its `_Classic.toc`, so the simulator no longer excludes that addon and
+the cache manifest now carries the Classic panel-manager files.
+
+## [2026-06-08] investigation | PlayerSpells runtime load
+
+Created `investigations/playerspells-runtime-load.md` after fixing the retail `TOGGLETALENTS` keybind path. The note records the `C_AddOns.LoadAddOn` call-frame preservation issue plus the temporary PlayerSpells ModelScene/PvP talent backfills needed for `Blizzard_PlayerSpells` demand-load.
+
+## [2026-06-08] investigation | ModelScene player actor stub
+
+Created `investigations/modelscene-player-actor-stub.md` after Collectionator's transmog recovery helper crashed while calling `GetPlayerActor():SetModelByUnit("player")`. Documented the compatibility boundary: 3D rendering remains intentionally stubbed, but ModelScene actor object methods must exist for addon probes.
+
+## [2026-06-08] update | FontString default anchors
+
+Updated `investigations/fontstring-default-anchors.md` after follow-up retail JustifyProbe data showed XML `ButtonText` uses the same `justifyH` implicit anchor as layer `FontString`, explicit vertical-only anchors suppress the default, and EditBox backing FontStrings remain unanchored even with XML `TextInsets`.
+
+## [2026-06-08] investigation | FontString default anchors
+
+Created `investigations/fontstring-default-anchors.md` after real-client testing showed unanchored XML `FontString` layer children use `justifyH` for their implicit anchor point. Updated `index.md` with the new investigation page.
+
+## [2026-05-28] investigation | action button icon mask coverage
+
+Created `investigations/action-button-icon-mask.md` after tracing vanished main
+action-bar icons to mask sampling, not action state. The prior minimap mask fix
+made the shader sample RGB mask intensity; action-bar icon masks store coverage
+in alpha, so their black visible regions went transparent. The renderer now
+marks alpha-backed masks with a shader flag while retaining RGB coverage for
+opaque black/white masks.
+
+## [2026-05-26] update | EditMode cache with no saved vars
+
+Updated `investigations/editmode-layout.md` with the `--no-saved-vars` status
+tracking regression. EditMode profile cache files are not Lua SavedVariables, so
+startup now loads them through a separate WTF cache path when Lua SavedVariables
+are disabled.
+
+## [2026-05-18] investigation | ElvUI tooltip skin ordering
+
+Updated `investigations/tooltip-double-shell.md` after tracing Character panel item tooltips under ElvUI to direct `GameTooltip` skin textures rendering after the tooltip frame's internal text emitter. `GameTooltip` now renders direct texture regions before the tooltip frame/text while still deferring direct FontStrings above it.
+
+## [2026-05-18] investigation | Mists full-addon login profile
+
+Updated `investigations/talent-performance.md` with a fresh full-addon Mists login profile. Startup is currently dominated by third-party Lua compilation (`16.73s` compile out of `25.64s` third-party addon load, bytecode cache `1/1395` hits), with AllTheThings and RaiderIO DB addons as the largest contributors.
+
+## [2026-05-17] investigation | Mists ElvUI startup compatibility
+
+Created `investigations/mists-elvui-startup-compat.md` after the full-addon Mists probe isolated ElvUI startup failures to trim aliases, overexposed MessageFrame methods on plain frames, Mists AuraUtil tuple shape, and unanchored Slider label fontstrings.
+Updated it after tracing ElvUI install text displacement and raid-control centering to fixed physical screen-size globals under `UIParent` scale; runtime screen-size changes now also dispatch display/scale events.
+Updated it again after fixing ElvUI Chat initialization: Mists now provides `RedockChatWindows`, and the shared runtime surface provides `GetPlayerInfoByGUID`.
+Updated it again after fixing ElvUI Tooltip font initialization: Font objects now share an object-type metatable, so ElvUI `FontTemplate` additions made through `GameFontNormal` are visible on `GameTooltipText`.
+Updated it again after adding `GetInventoryItemDurability`; ElvUI DataTexts now sees the expected inventory durability global and the full-addon probe no longer reports that startup error.
+Updated it again after tracing the ElvUI static-popup `OnUpdate` error to simulator-driven layout dirtying. The size/layout dirty path now snapshots and restores existing custom `OnUpdate` handlers across recursive layout-parent `MarkDirty()` calls, so `ElvUI_StaticPopup1` keeps ElvUI's handler after `E:StaticPopup_Show`.
+Updated it again after tracing the ElvUI Installation close-button click failure to unscaled `SetHitRectInsets` in hit-grid construction. Hit rectangles now scale insets by the frame's effective scale before subtracting them from scaled layout rects.
+Updated it again after finding the remaining ElvUI installer and raid-control placement issue: startup screen globals reported 1024x768 while `SimState`/`UIParent` still defaulted to 1600x1200, so ElvUI anchored a correctly sized parent inside the wrong root canvas.
+
+## [2026-05-17] update | SetAtlas empty clear semantics
+
+Updated `systems/texture-atlas.md` after tracing missing Character panel paper-doll elements to `SetAtlas("")` resolving the generated empty-name atlas entry (`Interface\castingbar\uicastingbarstandardflipbook`). Empty atlas names now clear texture/atlas state and clear propagated parent button slots, which restores ElvUI-stripped equipment slot rendering.
+
+## [2026-05-17] update | frame field environment numeric slot
+
+Updated `systems/frame-data-flow.md` after tracing the ElvUI/oUF aura `button:SetSize` startup error to frame field storage occupying raw numeric key `1`. Frame refs now keep addon array slots free while `debug.getfenv(frame)[1]` remains a compatibility view onto normal frame fields.
+
+## [2026-05-17] update | Mists talent first-open latency
+
+Updated `investigations/talent-performance.md` after tracing full-addon Mists talent first-open latency to a deferred AceAddon enable queue. BlizzMove's skipped `PLAYER_LOGIN` left 27 queued Ace addons until `ADDON_LOADED("Blizzard_TalentUI")`; allowing BlizzMove to receive login again makes the talent load itself sub-second, with remaining ElvUI login cost tracked separately.
+
+## [2026-05-17] investigation | Mists panel stack overflow layout cycle
+
+Created `investigations/mists-panel-stack-overflow-layout-cycle.md` after reproducing the Achievements/Talents abort through the real GUI click path. Documented that the root cause was active layout resolution re-entering through parent/anchor cycles, not the Lua open-panel path, and recorded the new `headless-click-probe` regression check.
+
+## [2026-05-17] investigation | unanchored frame render leak
+
+Created `investigations/unanchored-frame-render-leak.md` after tracing the startup stray editbox/dropdown to render-list fallback geometry for unanchored frames. The render path now matches Lua rect validity and skips descendants of unanchored frames too.
+
+## [2026-05-17] update | minimap mask clipping
+
+Updated `investigations/minimap-map-ring-alignment.md` after fixing minimap rendering to use the stored/default minimap mask texture instead of synthetic circle clipping. The shader now treats RGB mask intensity as coverage for opaque black/white masks.
+
+## [2026-05-17] investigation | minimap map/ring correction
+
+Created `investigations/minimap-map-ring-alignment.md` to record the correction that the active minimap bug is the map texture/mask/ring alignment, not the SimCommands minimap button. The note documents the reasoning error and directs future debugging at minimap mask/clip/ring geometry.
+
+## [2026-05-15] add | Mists heirloom tooltip
+
+Created `investigations/mists-heirloom-tooltip.md` after the Mists Collections
+heirloom button path threw on missing `GameTooltip:SetHeirloomByItemID`.
+Documented that the fix belongs on the tooltip widget/data surface and routes
+through `C_TooltipInfo.GetHeirloomByItemID`, reusing item tooltip data.
+
+## [2026-05-15] add | Mists addon-panel resume mistake
+
+Created `investigations/mists-addon-panel-resume-error.md` after incorrectly
+rerunning already-proven Mists addon panel rows from `AllTheThings`. The page
+records the direct rule: resume from the first unproven addon, which was
+`Plater` for this run, and use `--start-at` / stable artifact roots instead of
+discarding retained evidence. The resumed `Plater` and `SimpleItemLevel` rows
+now have retained pass artifacts under the shared cache audit root.
+
+## [2026-05-15] update | Mists backpack slot chrome
+
+Updated `investigations/backpack-background-texture.md` with the Mists-specific
+container path: bag ID 0 uses `UI-BackpackBackground` and its item buttons still
+keep the authored `UI-Quickslot2` normal texture. Documented that clearing those
+normal textures in post-load code is the wrong fix for Mists slot chrome.
+
+## [2026-05-14] add | Hybrid scrollbar thumb texture
+
+Created `investigations/hybrid-scrollbar-thumb-texture.md` after replacing the
+HybridScrollBar-specific placeholder fallback with XML-backed slider
+`<ThumbTexture>` application. Also documented the SharedXML test helper bug:
+tests were pointed at removed `Interface/BlizzardUI` instead of the simulator's
+Blizzard UI cache.
+
+## [2026-05-13] update | EditMode active profile fallback
+
+Updated `investigations/editmode-layout.md` with the C_EditMode active profile
+state bug: the bootstrap fallback always returned `activeLayout = 1` and had a
+no-op `SetActiveLayout()`, so Blizzard selected the first preset layout instead
+of a saved profile. Documented the in-memory fallback state model and regression
+coverage.
+
+Follow-up: documented the real WTF import path. EditMode layouts come from
+`edit-mode-cache-account.txt`; active per-spec selection comes from
+`edit-mode-cache-character.txt`. Startup now imports those cache files before
+Blizzard addons load, and Blizzard addons use the saved-variable-aware loader.
+
+Follow-up: documented the second-stage layout mapping bug. `C_EditMode` selected
+the saved layout, but `EditModeManagerFrame.layoutInfo` prepended presets and
+kept the old index, activating `Classic`; startup now remaps the active saved
+layout after prepending presets.
+
+Follow-up: documented the visible action-bar anchoring bug. The Widescreen
+layout was active and systemInfo was seeded, but action bars stayed at the
+temporary `TOPLEFT, 0, 0` anchor because the startup fast path skipped
+`ApplySystemAnchor`.
+
+Follow-up: documented main action-bar side art as the `HideBarArt` EditMode
+setting. Sparse saved layouts now merge missing defaults from Blizzard's modern
+preset map, and the action-bar bootstrap path applies those values without
+calling handlers that require an initialized `actionButtons` Lua array.
+
+Follow-up: documented broader action-bar saved setting replay. The startup
+fast path now applies safe runtime effects for saved visibility, icon
+count/scale/padding, page number visibility, show-grid state, and button art
+without repacking saved anchors.
+
+Follow-up: documented raw/display conversion for saved action-bar profile
+settings. The cache stores compact raw slider values, so the action-bar fast
+path now reads through Blizzard's `GetSettingValue()` before applying display
+values such as icon-size percentages.
+
+Follow-up: documented account-level EditMode setting application. Startup now
+invokes Blizzard's `InitializeAccountSettings()` after rebuilding layout info,
+so saved account toggles are applied rather than merely copied into
+`accountSettings`.
+
+Follow-up: documented sparse account cache reconciliation. Imported account
+settings now merge over defaults so older profiles still receive default values
+for newer account-level EditMode toggles before Blizzard initializes account
+settings.
+
+Follow-up: documented cast-bar lock fidelity. Startup no longer overwrites the
+active saved profile's `LockToPlayerFrame` / `CastBarUnderneath` settings.
+
+Follow-up: documented saved setting replay for seeded EditMode systems. Startup
+now applies saved settings for systems that skip full `UpdateSystem()`, while
+deferring unit-frame `BuffsOnTop` if the seeded frame has no `UpdateAuras()`
+method and would otherwise add a ScriptErrors entry.
+
+## [2026-05-13] update | CASC font path fallback
+
+Updated `investigations/casc-fdid-1579624-root-debug.md` after the standard
+font FDIDs (`615960`, `615958`, `615971`) failed through asset-resolver's
+path fallback with lowercase `fonts/...` paths. Documented the fix: preserve
+canonical `Fonts/...` casing in the bundled listfile, normalize lookup keys
+without losing entry path casing, and skip noisy `resolve_bytes(fdid)` calls
+when the CASC resolution cache has no font FDID entry.
+
+Follow-up: documented the real rendering failure after the noise fix. Skipping
+missing font FDIDs suppressed the error but selected a system fallback font.
+Font loading now reads standard font bytes from local CASC archives by
+path-to-encoding resolution or known encoding-key fallback.
+
+## [2026-05-09] update | Wrath vendor source switched to Gethe
+
+Updated `systems/addon-loading.md` and `systems/client-profiles.md` after
+standardizing the Wrath 3.3.5 source on `Gethe/wow-ui-source` tag `3.3.5`
+(`c4e0255f`). Documented that Wrath's symlink points at the checkout root
+because Gethe's 3.3.5 tag stores `AddOns/` and `FrameXML/` at repo root,
+unlike newer profiles that keep sources under `Interface/`.
+Recaptured the Wrath startup snapshot against the Gethe source (128 distinct
+startup messages). The snapshot file was later removed from the Mists-only
+merge scope.
+
+## [2026-05-08] update | Windows default GUI build and headless CI compile
+
+Updated `investigations/windows-port-build.md` after reproducing MSVC `LNK1189`
+in the default `cargo build --bin wow-sim` path. The root cause remains the
+local `iced-dynamic` DLL, but the current fix is to make `fast-build` opt-in
+rather than part of default features. Also documented the no-default test
+compile contract: GUI/render tests need `cfg(feature = "gui")`, GUI benchmark
+binaries need `required-features = ["gui"]`, and CASC examples need
+`required-features = ["casc"]`.
+
+## [2026-05-08] update | CASC Friz Quadrata root probe
+
+Updated `investigations/casc-fdid-1579624-root-debug.md` with known-good
+FDID `615960` / `fonts/frizqt__.ttf` resolution data, hashes, and extraction
+proof for Windows root parser debugging.
+
+## [2026-05-08] add | Windows CASC Blizzard taint
+
+Created `investigations/windows-casc-blizzard-taint.md` after fixing Windows
+startup against the CASC-synced Blizzard UI cache. Documented the TOC and
+`Blizzard_` folder-name taint semantics, plus the runtime `C_AddOns.LoadAddOn`
+stack-taint clearing needed for Blizzard/secure TOCs loaded under a tainted
+caller.
+
+## [2026-05-08] ingest | CASC FDID 1579624 root debug
+
+Created `investigations/casc-fdid-1579624-root-debug.md` with the verified
+FDID-to-path mapping, content key, encoding key, CRLF hash proof against Gethe
+`12.0.5`, extraction proof, local build caveat, and root parser debugging
+checklist.
+
+## [2026-05-08] update | CASC resolution cache location
+
+Updated `systems/casc-asset-cache.md` after moving generated CASC resolution
+metadata out of repo `data/casc` and into the asset-resolver user cache. The
+page now documents product/build-key scoped cache paths and automatic rebuild
+behavior for missing or stale `resolution.sqlite`.
+
+## [2026-05-03] add | PVE tabs direct offset
+
+Added `investigations/pve-tabs-direct-offset.md` after tracing the Dungeons &
+Raids bottom tab placement to XML direct `<Offset x="..." y="..."/>`
+attributes being ignored unless they used nested `<AbsDimension>`.
+
+## [2026-05-02] add | Root-region render order
+
+Added `investigations/root-region-render-order.md` after tracing an inverted
+root-region tie breaker. Documented that root-level regions should use ascending
+creation order inside the same draw layer, matching child regions, and that
+`Reverse(id)` made newer root regions draw underneath older ones.
+
+## [2026-05-02] update | Dropdown base mouse handling
+
+Updated `investigations/dropdown-intrinsic-script-chain.md` after shared input
+dispatch gained `RegisterForMouse` state and `SetPropagateMouseClicks` parent
+dispatch. Documented why dropdown-like widgets should not need per-dropdown
+click shims when the issue is physical mouse registration or child hit targets.
+
+## [2026-05-02] update | LFD queue verbs
+
+Updated `investigations/lfd-dungeon-list-empty.md` after the LFD join path got
+past the group-size gate and hit missing `ClearAllLFGDungeons`. Documented the
+new `ClearAllLFGDungeons` / `SetLFGDungeon` / `JoinLFG` / `GetLFGInfoServer`
+surface and queued-mode state through Blizzard's Lua `GetLFGMode`.
+
+## [2026-05-02] update | LFD normal dungeon group-size gate
+
+Updated `investigations/lfd-dungeon-list-empty.md` after a five-player party saw
+`You need a group of 1 players` when joining LFD. Documented that normal dungeon
+entries must return nil for `GetLFGDungeonInfo` slot 17 (`minPlayers`) because
+Blizzard treats a non-nil value as an exact group-size requirement.
+
+## [2026-05-02] update | LFD reward cap info missing
+
+Updated `investigations/lfd-dungeon-list-empty.md` after the Join as Party path
+advanced into `LFGRewardsFrame_EstimateRemainingCompletions()` and hit missing
+`GetLFGDungeonRewardCapInfo`. Documented the inert 11-nil return shape Blizzard
+uses as the no-cap path.
+
+## [2026-05-02] update | LFD Join as Party format error
+
+Updated `investigations/lfd-dungeon-list-empty.md` after clicking `Join as Party`
+raised `bad argument #2 to 'string.format' (number expected)`. Documented that
+`GetLFGDungeonInfo` returned `mapName` in Blizzard's `minPlayers` slot, so
+`ERR_LFG_MEMBERS_REQUIRED` received a dungeon name where `%d` expected a number.
+
+## [2026-05-02] add | Adventure Guide disabled tabs
+
+Added `investigations/adventure-guide-disabled-tabs.md` after tracing the
+apparently unclickable Adventure Guide abilities tab. Blizzard intentionally
+shows the tab disabled until a boss is selected, but simulator model stubs had
+overwritten the shared `SetDesaturated` / `SetDesaturation` implementation, so
+the disabled tab art stayed saturated and looked active.
+
+## [2026-05-01] update | Journeys breadcrumb overlap
+
+Updated `investigations/journeys-midnight-empty.md` with the later Midnight
+renown-card overlap root cause. The issue was XML property order:
+`setAllPoints=true` was applied after explicit `$parentInset` anchors, clearing
+them and stretching `EncounterJournalJourneysFrame` to the full parent.
+
+## [2026-05-01] update | EditBox child background render ordering
+
+Updated `investigations/editbox-render-text-cache.md` after tracing the SimCommands search box typed text to render ordering: the search box's opaque child `BACKGROUND` texture rendered after the EditBox frame, while the EditBox frame emitter owns the internal input text and caret. Documented the new EditBox-specific strata DFS rule that child regions render before the EditBox frame emitter.
+
+## [2026-05-01] update | Tooltip Lua NineSlice center fill
+
+Updated `investigations/tooltip-double-shell.md` after the Journeys renown-card tooltip showed underlying card text through the tooltip body. Documented that the Lua-owned tooltip `NineSlice` should suppress the Rust fallback border/shell, but not the solid center fill needed while the simulator does not have a renderable opaque Lua center.
+
+## [2026-05-01] ingest | Appearances Wardrobe API baseline
+
+Created `investigations/appearances-wardrobe-api.md` after opening Collections Journal > Appearances in the simulator and auditing Blizzard Wardrobe/Transmog call sites against the current `C_TransmogCollection`, `C_Transmog`, and `C_TransmogSets` surfaces. Documented that the panel opens with no Lua errors, but real browsing/filtering/search/favorite behavior needs stateful source, visual, filter, and search backing rather than no-op filter setters and empty Lua bootstrap fallbacks.
+
+## [2026-05-01] update | Wardrobe weapon slot switch crash
+
+Updated `investigations/appearances-wardrobe-api.md` with the root cause for the `Blizzard_Wardrobe.lua:687` nil-index crash. The simulator was reporting main/offhand appearance slot location metadata as weapon collection categories, which made Blizzard treat weapons as armor setup slots; weapon slot metadata now uses `Enum.TransmogCollectionType.None` so the weapon-category path handles them.
+
+## [2026-05-01] update | Wardrobe invalid appearance overlays
+
+Updated `investigations/appearances-wardrobe-api.md` after Wardrobe rendered every head appearance card with the red invalid overlay. Root cause was missing displayability/usability fields on simulator appearance rows; `canDisplayOnPlayer`, usability, source validity, hidden/favorite defaults, name, and quality now come from the `C_TransmogCollection` row backing instead of forcing Blizzard's invalid-card path.
+
+## [2026-05-01] ingest | Adventure Guide boss icon fallback
+
+Created `investigations/adventure-guide-boss-icons.md` after tracing blank Encounter Journal boss icons to `EJ_GetCreatureInfo` returning `0` for missing creature icon fileDataIDs. Documented that Blizzard's boss button Lua relies on nil to select `UI-EJ-BOSS-Default`; `0` is truthy and makes `SetTexture(0)` clear the texture.
+
+## [2026-05-13] update | asset-resolver cache root decoupled from game-engine
+
+Updated `systems/casc-asset-cache.md` after moving `asset-resolver` path selection behind an explicit resolver config. wow-ui-sim now constructs the resolver with `$ASSET_RESOLVER_CACHE_DIR` or the normal user cache root and no longer sets `GAME_ENGINE_SHARED_ROOT` or assumes a local game-engine checkout for CASC/listfile cache data.
+
+## [2026-05-01] update | Adventure Journal dungeon click stack overflow
+
+Updated `investigations/lfd-dungeon-list-empty.md` after reproducing the stack overflow from `EncounterJournal_DisplayInstance(1271)`. Documented the split between modern `C_EncounterJournal.GetInstanceInfo` slot 9 (`linkDungeonID`) and legacy `EJ_GetInstanceInfo` slot 9 (`shouldDisplayDifficulty`) plus the same-button `Button:Click()` reentry guard that prevents the programmatic overview-tab click loop from aborting the process.
+
+## [2026-05-01] update | LFD Join as Party leadership gating
+
+Updated `investigations/lfd-dungeon-list-empty.md` after `JOIN_AS_PARTY` was still greyed out with valid role and dungeon selection state. Documented that party-size fixtures had made `party1` the leader, causing Blizzard's `LFD_IsEmpowered()` to reject the local player; `A_Admin.SetPartySize` and GUI party-size changes now default to local-player leadership.
+
+## [2026-05-01] update | Adventure Journal LFD dungeon handoff
+
+Updated `investigations/lfd-dungeon-list-empty.md` after the Adventure Journal dungeon click path exposed another LFD id/state gap. Documented that `AJ_DUNGEON_ACTION` depends on `DungeonAppearsInRandomLFD` and on Encounter Journal `linkDungeonID` values using the LFD id family, not Encounter Journal instance ids.
+
+## [2026-05-01] update | Crafting cast duration
+
+Updated `investigations/crafting-cast-bar.md` after the crafting bar was found to finish too quickly. The simulator had reused a 1.5 second GCD-style duration for `C_TradeSkillUI.CraftRecipe`; normal profession crafts now use a 2.0 second default, with a regression in `tests/test_crafting.rs`.
+
+## [2026-04-30] ingest | CASC asset cache layers and measured costs
+
+Created `systems/casc-asset-cache.md` after measuring the three stacked caches end-to-end with `examples/casc_bench.rs`. The doc covers (a) the resolution sqlite shared with the game-engine repo via `GAME_ENGINE_SHARED_ROOT`, (b) the per-listfile-path BLP byte cache at `~/.cache/wow-ui-sim/casc-extract/`, and (c) the per-process `TextureManager` in-memory cache, with concrete timings (~300 ms one-time CASC init, ~10 ms steady-state extract, ~1 ms disk hit, ~2 µs mem hit). Records that `Installation::initialize` no longer parses `root.bin`/`encoding.bin` — that work is permanently delegated to the resolution sqlite — so the per-extract cost stays in the millisecond range.
+
+## [2026-04-29] ingest | Backpack body renders gray, not textured
+
+Created `investigations/backpack-background-texture.md`. User showed a retail
+screenshot of an open `Backpack` (combined-bags) window with a tan/brown
+textured body and reported the simulator was missing it. Render-time tracing
+confirmed the sim emits a solid `PANEL_BACKGROUND_COLOR` quad on the
+`Bg.TopSection`/`Bg.BottomEdge` textures — i.e. exactly what
+`FlatPanelBackgroundTemplate` authors. Both the pinned `12.0.5` vendor and the
+`Gethe/wow-ui-source` `live` HEAD (verified via WebFetch + Codex
+gpt-5.5/high) define `ContainerFrameCombinedBags` with no body atlas/file and
+a no-op `UpdateBackground`. Bank's tan body comes from a separate
+`bank-frame-background` atlas declared on `BankFrame` itself, not shared with
+the bag panel. Conclusion: the textured retail look is applied outside the
+public Blizzard source we have (addon overlay, unmirrored patch, or an
+unknown runtime path); closed without a sim-side change.
+
+## [2026-04-30] ingest | client-profiles system page
+
+Created `systems/client-profiles.md` documenting the five-profile cargo-feature layout (retail/wrath/mists/era/anniversary), vendor pinning, profile-aware TOC suffix and gametype tables, per-profile compat bootstraps (`src/wrath/`, `src/mists/`, `src/era/` shared by era + anniversary), wrath's synthetic FrameXML addon, and the CI matrix. Updated `systems/addon-loading.md` to fix the now-stale "Mainline-only TOC suffix" claims and link to the new page; updated `index.md` with a row in `systems/`. Source: PLAN.classic.md Phase 7.x landings (cargo features, profile-aware loader/toc, src/era/ bootstrap), commits 2915f2b9..6b320417.
+
+## [2026-04-30] update | addon-loading per-profile vendor structure
+
+Expanded `systems/addon-loading.md` with a new "Vendor sources & per-profile setup" section: documents the gitignored `Interface/BlizzardUI/<Profile>/` symlink layout, the `setup-blizzard-ui.sh <profile> [ref]` and `init-worktree.sh` scripts, and the canonical vendor-repo + pinned-SHA table. Added per-profile addon-set notes to "Blizzard Addon Load Order" (24 wrath + synthetic FrameXML, ~112 mists, ~35 era/anniversary discovered after `_Vanilla.toc` filtering), and listed `[[client-profiles]]` under See Also. Source: `scripts/setup-blizzard-ui.sh`, `scripts/init-worktree.sh`, vendor-pin commits 73ba3465..afc7189b.
+
+## [2026-04-28] ingest | Windows port build unblock
+
+Created `investigations/windows-port-build.md` after the Windows smoke pass. The root cause was the local `iced-dynamic` re-export crate forcing a huge `iced_dynamic.dll` link, which hit MSVC `LNK1189`; the build now depends on upstream `iced` directly. Verified `wow-sim`, `wow-cli`, GUI startup, and screenshot output on Windows. Updated the note after adding shared WoW resource discovery for install root, CASC `Data`, extracted Interface art, AddOns, and WTF. Live WTF is documented and tested as read-only import; simulator-local SavedVariables take precedence once present.
+
+## [2026-04-28] update | EditMode group-frame startup skip
+
+Updated `investigations/startup-createframe-profile.md` with the resolved
+remaining `apply_system_anchors` hotspot. File-based Lua profiling showed full
+`UpdateSystem()` on `CompactRaidFrameContainer`, `PartyFrame`, and
+`CompactArenaFrame` dominated the first pass; the workaround now seeds those
+frames and applies anchors without running full roster/unit layout work.
+
+## [2026-04-28] update | remaining EditMode startup hotspot narrowed
+
+Updated `investigations/startup-createframe-profile.md` with follow-up probes
+on the remaining post-load `apply_system_anchors` cost. `InitSystemAnchors`
+and the registered-system loop were effectively free; the cost stayed in
+`UpdateBottomActionBarPositions()` / managed-frame layout. Recorded the
+discarded forbidden-attribute no-op idea because it broke
+`tests/frame_positions.rs` by shifting `ObjectiveTrackerFrame`.
+
+## [2026-04-28] update | duplicate post-event EditMode pass
+
+Updated `investigations/startup-createframe-profile.md` with the startup
+workaround duplication found during dump-tree profiling. `PLAYER_ENTERING_WORLD`
+already ran post-event workarounds through `env_events.rs`, then
+`fire_startup_events()` and `settle_headless_startup()` ran the same pass again.
+Added one-shot state for `WowLuaEnv::apply_post_event_workarounds`; local
+dump-tree logs now show two `apply_system_anchors` passes instead of four.
+
+## [2026-04-28] ingest | three-slice button tiling
+
+Created `investigations/three-slice-button-tiling.md`. Escape menu red button
+stripes came from standard `HighlightTexture` children rendering while the
+buttons were not hovered. The red-button center atlas special case was removed;
+atlas tiling uses source size, and highlight children now render only when the
+parent button is hovered or highlight-locked. Additive overlays also skip the
+shader brightness boost so active highlights do not amplify low-alpha atlas edge
+pixels into visible stripes.
+
+## [2026-04-28] update | eager animation_frame_ids_for_group
+
+Updated `investigations/talent-performance.md` with the panel-open 1.3 FPS root
+cause. `advance_animation_group()` called `animation_frame_ids_for_group` on
+every group every tick (full linear scan of `anim_frame_to_anim`), but the
+result was only consumed inside the `if group_finished` branch. Moved the call
+into the conditional. Live-process flamegraph went from 63.9% CPU in that
+function to 0.00%; total animation-tick cost dropped from dominant to 3.5%.
+
+## [2026-04-28] update | talent strata repair skip
+
+Updated `investigations/talent-performance.md` with the discarded strata repair
+root cause. `set_frame_visible()` was building same-strata repair plans during
+talent frame show even when `strata_buckets` was `None`, so the work was thrown
+away. Added the guard in `try_repair_strata_buckets_after_show`; release
+`bench_talents` subsequent opens dropped from roughly 211-282ms to 112-150ms in
+this worktree.
+
+## [2026-04-28] ingest | menu pool SetToDefaults size/anchor reset
+
+Created `investigations/menu-pool-set-to-defaults.md`. Guild roster Mythic+ Rating dropdown rendered as a screen-spanning stripe because `Frame:SetToDefaults` did not reset size or clear anchors. `Menu.lua` `MeasureFrameExtents` reads `frame:GetSize()` from pooled element frames, so previous-user widths inflated each menu measurement. Two `SetToDefaults` registrations existed on the shared frame metatable; `map_frames::register_all` runs after `misc::register_all` so the map_frames version is the active one (the misc registration is dead code). Extended `map_frames::set_to_defaults` to call `frame.clear_all_points()`, `frame.set_size(0.0, 0.0)`, clear `width_is_text_auto`, clear `layout_rect`, and `remove_all_anchor_dependents_for(id)` — matching real WoW semantics documented in `Compositor.lua`. Verified: Guild dropdown now stays at 180×103 even after a 900px synthetic dropdown is opened first; previously it grew to 1036→1172. All 8 minimap_specialized tests still pass.
+
+## [2026-04-27] update | shallow `issecretvalue` for pool releases
+
+Updated `investigations/talent-performance.md` with a new "Spec→Talents Tab Switch (~3.5s)" section. The Spec→Talents tab switch was multiple seconds because `LoadTalentTreeInternal` rebuilds the tree on every Show (`refreshOnShow=true`), and `talentButtonCollection:ReleaseAll()` calls `issecretvalue(frame)` 3× per button. The Rust fallback recursed into the entire frame's table tree (~7.4ms/call). Added `value_is_secret_shallow` in `src/lua_api/globals/security/secret_values.rs` that only inspects direct slot taints on tables, used by `issecretvalue`/`canaccessvalue`/`canaccessallvalues`. `canaccesstable` keeps the deep walk so its accessibility semantics still detect nested secret strings. Result: ReleaseAll 2159ms → 2.6ms; tab switch 3500ms → ~90ms; all 45 security_api tests pass.
+
+## [2026-04-27] ingest | hero spec dialog anchor investigation
+
+Created `investigations/hero-spec-dialog-anchors.md` documenting two anchor resolution bugs in `HeroTalentsSelectionDialog`. (1) `xml_layer_batch.rs` emitted all textures before all fontstrings into the same Lua chunk, breaking XML document order so SpecImage's `relativeKey="$parent.SpecName"` ran before SpecName existed and fell back to the spec frame. (2) Runtime template path lacked the loader's `resolve_named_anchor_targets_for_frame` re-pass, leaving NodesContainer's `$parent.Description` anchor as an unresolved string. Both fixed; talent node icons now render inside their LIGHTSMITH/TEMPLAR panels instead of at the screen bottom.
+
+## [2026-04-27] update | CASC migration: textures and fonts
+
+Migrated texture and font loading off bundled extracts onto direct CASC reads from the live WoW install at `/syncthing/World of Warcraft/Data` (via the `asset-resolver` crate). Removed `./textures` (~1740 WebPs), the `~/Projects/wow/Interface` BLP fallback path, the `disk_cache_dir` field, and `src/texture_cache.rs`. `WowFontSystem::new()` became no-arg and pulled FRIZQT__/ARIALN/frizqt___cyr from CASC; a short-lived embedded FRIZ fallback was later replaced by CASC encoding-key fallback so the repo does not ship font bytes. Updated `docs/wiki/systems/texture-atlas.md`, `docs/texture-atlas-system.md`, `docs/rendering-pipeline.md`, `docs/wiki/reference/cli-commands.md`, and `docs/wiki/index.md` to drop references to the old curated paths and the now-obsolete `convert-texture` / `extract-textures` add-a-missing-texture flow. CASC is gated by the `casc` feature (default-on); set `WOW_SIM_CASC=0` to disable.
+
+## [2026-04-26] ingest | dropdown intrinsic script chain investigation
+
+Created `investigations/dropdown-intrinsic-script-chain.md` to document the ReputationFrame dropdown root cause: style dropdown templates replaced intrinsic `DropdownButton` scripts, so Blizzard's `OnMouseDown_Intrinsic` was not in the click path. Recorded the simulator-side fix, the fake menu fallback removal, and the two regression tests.
+
+## [2026-04-26] update | api-coverage refresh, FUTURE.md retired
+
+Folded `FUTURE.md` into `docs/wiki/reference/api-coverage.md` and deleted the root file. The old "three-layer" stub architecture (Hand-written / `c_stubs_api*.rs` / `generated_stubs.rs (~19K lines)`) has been replaced by per-namespace modules under `src/c_api/` with explicit `permanent_shims/` and `temporary_shims/` subtrees, matching the C-API boundary policy in CLAUDE.md. The wiki page now describes the actual module layout, calls out the shim sub-trees, and points to `wow-cli audit-api --gaps --format plan` as the live source of remaining work instead of a hand-curated task list. Removed the `FUTURE.md` source link.
+
+## [2026-04-26] update | architecture-overview refresh, DESIGN.md retired
+
+Folded `DESIGN.md` into `docs/wiki/design/architecture-overview.md` and deleted the root file. Corrected several stale claims: rilua provides native taint tracking (the previous "stubbed as always-secure" line was wrong — `issecure`/`issecurevariable` work; what's missing is `SetAttribute`/`SetForbidden` enforcement, now spelled out as a non-goal). Removed the dropped `generated_stubs.rs (~19K lines)` reference. Expanded the module diagram beyond `lua_api`/`widget`/`render` to also cover `c_api`, `iced_app`, `loader`, `event`, `xml`, `lua_bridge`, `texture`, and `sound`, with `c_api` called out as a peer of `lua_api` per CLAUDE.md. Updated `addon-compatibility.md` and `development-phases.md` to drop the fixed "127+ addons" number and reflect that the Blizzard UI tree under `Interface/BlizzardUI/` (`SharedXMLBase`/`SharedXML`/`SharedXMLGame`/`FrameXMLBase`/`FrameXMLUtil`/`FrameXML` + per-feature addons) loads, not just `SharedXML`. Removed source links to the deleted `DESIGN.md`.
+
+## [2026-04-26] update | scaling-coordinates refresh
+
+Verified `docs/wiki/design/scaling-coordinates.md` against current source and folded the standalone `SCALING.md` into the wiki page (root `SCALING.md` deleted). Most open items from the original note are done: `GetScreenWidth`/`GetScreenHeight`/`GetPhysicalScreenSize` are now installed dynamically by `install_screen_size_globals()` in `src/lua_api/env_runtime.rs` and re-run from `set_screen_size()`; the hardcoded `TOPLEFT (10, -10)` override in `main.rs` and the debug purple border are gone; layout `size` flows through `src/iced_app/render/rebuild.rs`. Updated file paths (`src/iced_app/` is a directory; `src/lua_api/globals.rs` no longer exists), clarified that the renderer runs in iced top-left Y-down with Y flipped in `Uniforms::new`, and trimmed open items to anchor Y-axis end-to-end docs and a `CENTER`-anchor resize regression.
+
+## [2026-04-24] add | achievement panel hide investigation
+
+Added `investigations/achievement-panel-hide.md` to document the achievement
+panel hide fix. The simulator workaround now delegates to Blizzard's real
+`AchievementFrame_ToggleAchievementFrame()` / managed `HideUIPanel` path, and
+animation advancement now fires child animation `OnFinished` handlers so XML
+outro hide scripts can run. Updated `index.md` with the new page.
+
+## [2026-04-24] update | taint-system doc refresh
+
+Updated `systems/taint-system.md` to match the current rilua implementation and added a Blizzard `issecure()` call-site matrix with test coverage references.
+SecureHandler APIs now document fallback frame-ref/snippet/wrap/unwrap behavior,
+state and attribute drivers now document shallow driver application,
+secret-value accessors now document marked/tainted value tracking, and source
+links now point at `security.rs` plus current frame-method helpers instead of
+removed `security_api.rs`, `secure_env.rs`, and `combat_lockdown.rs` paths.
+Refreshed the `index.md` summary.
+
+## [2026-04-24] update | spell description token resolver
+
+Updated `systems/lua-api.md` to record the shared spell-description token
+resolver used by both `C_Spell.GetSpellDescription()` and
+`C_TooltipInfo.GetSpellByID()`. The note covers the supported DB2 token
+families (`$s1`, `$<damage>`, `$<shield>`, `${...}`, `$STR`, `$INT`, `$AP`)
+and the reason for the shared path: keep spellbook/tooltips from exposing raw
+placeholders or drifting from the C API result. Refreshed the `index.md`
+`[[lua-api]]` summary.
+
+## [2026-04-24] update | SimulationCraft spell coefficients
+
+Updated `systems/lua-api.md` with the local SimulationCraft source used for
+spell-description coefficients and variables. Recorded the concrete formulas
+now mirrored by `src/spell_description_resolver.rs`: Avenger's Shield
+`1.55 * AP`, Crusader Strike `1.4 * AP`, Shield of the Righteous `0.95 * AP`,
+Eye Beam `$<dmg>` as `10 * 0.4026 * AP`, and Shield of Vengeance `$<shield>`
+as `30% max health * (1 + versatility damage)`.
+
+## [2026-04-23] add | quest scrollbar partial XML size investigation
+
+Added `investigations/quest-scrollbar-partial-size.md` to document the
+QuestScrollFrame scrollbar alignment bug. Root cause was the direct XML
+property path ignoring partial `<Size x="..."/>` / `<Size y="..."/>` values
+unless both dimensions were present. Updated `systems/xml-template-system.md`
+to record per-dimension size resolution and added the new investigation to
+`index.md`.
+
+## [2026-04-22] add | layout lock inventory reference page
+
+Added `reference/layout-lock-inventory.md` as the consolidated source of truth
+for UI layout lock coverage. The page inventories baseline frame rect locks
+(`tests/frame_positions.rs`) plus subsystem-specific lock tests for objective
+tracker, main action bar, status tracking bars, bag bar, micro menu, chat
+frame, compact raid manager, character/reputation panels, and buff
+icons/durations. Updated `index.md` with a new `[[layout-lock-inventory]]`
+entry under `reference/` for discoverability.
+
+## [2026-04-22] update | buff aura onupdate perf lock-down to 0.5ms
+
+Updated `investigations/on-update-dirty.md` with the AuraButton
+`OnUpdate <=0.5ms` lock-down pass. Recorded the focused perf harness
+(`tests/buff_aura_onupdate_perf.rs`), the pre-fix max (`~0.86ms`),
+the dominant hotspot (`SetFormattedText` inside `UpdateDuration`), and the
+post-fix max (`31.44us`). Documented the engine-side fixes:
+`SetFormattedText` width-hint no-op fast path,
+`securecall` direct multi-return fast path with protected fallback, and
+non-visual `FrameRef.__newindex` bookkeeping updates.
+
+## [2026-04-22] update | setpoint no-op fast-path optimization
+
+Updated `investigations/on-update-dirty.md` with the post-optimization
+`SetPoint` rerun after moving the same-anchor no-op bail-out to
+`set_point()` before `ensure_no_anchor_cycle(...)`. Recorded the measured
+before/after no-op totals (`3.626955us -> 1.392966us`, about `61.6%` lower)
+and updated the control-flow notes to reflect that cycle detection now runs
+only on real anchor changes.
+
+## [2026-04-22] update | formattedtext and fontobject no-op fast paths
+
+Updated `investigations/on-update-dirty.md` with the post-optimization
+measurements for `SetFormattedText` and `SetFontObject` after
+`text/formatting.rs` changes. Documented the new same-signature
+`SetFormattedText` cache guard (enabled only while global `format` matches the
+captured default), confirmed behavior parity for overridden `format`
+(`format_call_probe_same_text_calls=100`), and recorded the large
+`SetFontObject` no-op drop (`steady_same_total_us` from `6.104us` baseline to
+`1.201us` in the rerun).
+
+## [2026-04-22] update | setalpha no-op fast-path optimization
+
+Updated `investigations/on-update-dirty.md` with the `SetAlpha` fast-path
+optimization follow-up in `core_state/alpha.rs`. Recorded a post-change
+rerun of the existing `setalpha_bench.lua` microbenchmark and the key no-op
+delta metric (`same - get`) showing lower measured no-op overhead than the
+earlier baseline, plus the reminder that `noop_hot_setters` behavioral
+contracts still pass.
+
+## [2026-04-22] update | no-world-map retained trace after bc-negative cache
+
+Updated `investigations/world-map-texture-loading-budget.md` with a fresh
+no-world-map retained GUI trace captured after the BC-negative cache change.
+Recorded the exact command and before/after peak timings from the trace logs:
+`draw textures` dropped `482.2ms -> 283.2ms` and `bc_parse` dropped
+`240.6ms -> 139.2ms`. Refreshed the `index.md` summary row for
+`world-map-texture-loading-budget` with the new no-world-map baseline deltas.
+
+## [2026-04-22] update | setalpha no-op microbenchmark baseline
+
+Updated `investigations/on-update-dirty.md` with a pre-optimization
+`SetAlpha` microbenchmark baseline from a headless `--exec-lua` run. Recorded
+batch timings (`empty`, `GetAlpha`, same-value `SetAlpha(1)`, and alternating
+state-change `SetAlpha`) and the required split:
+Lua->Rust call overhead, same-value fast-path overhead, and real
+state-change overhead.
+
+## [2026-04-22] update | setformattedtext no-op microbenchmark baseline
+
+Updated `investigations/on-update-dirty.md` with a pre-optimization
+`SetFormattedText` microbenchmark baseline from a headless `--exec-lua` run.
+Recorded the three required splits (argument formatting/parsing cost,
+text-equality fast-path cost, and real text-change cost) and added a runtime
+probe proving global `format()` is still called on same-text no-op updates.
+
+## [2026-04-22] update | setpoint no-op microbenchmark baseline
+
+Updated `investigations/on-update-dirty.md` with a pre-optimization
+`SetPoint` differential microbenchmark baseline. Recorded split timings for
+implicit-noop parse baseline, explicit target normalization/lookup overhead,
+string target lookup overhead, a no-op equivalence-check proxy, and full
+relayout/dirty extra cost. Also documented the static control-flow ordering in
+`anchors.rs` proving anchor resolution and `ensure_no_anchor_cycle` run before
+the no-op `unchanged` bail-out in `apply_set_point`.
+
+## [2026-04-22] update | fontobject shown vertexcolor no-op baselines
+
+Updated `investigations/on-update-dirty.md` with measured no-op and change-path
+splits for `SetFontObject`, `SetShown`, and `SetVertexColor`
+(`dispatch`, `pre-bail`, `true state-change`). Recorded the steady-state
+comparison against the earlier `SetAlpha` baseline and pinned
+`SetFontObject` as the highest remaining no-op cost in this primitive set.
+
+## [2026-04-22] update | world-map Lua retry simplification
+
+Updated `investigations/world-map-texture-loading-budget.md` with the
+follow-up Lua pin retry cleanup after the request-handle refactor. The
+`MapExplorationPinMixin` workaround now keeps only one deferred refresh at a
+time instead of recursively re-arming the old timer loop, and the world-map
+detail tests still pass. Refreshed the `index.md` summary row for
+`world-map-texture-loading-budget` to mention the simplified Lua retry layer.
+
+## [2026-04-22] update | world-map live retained trace recapture
+
+Updated `investigations/world-map-texture-loading-budget.md` again with the
+current HEAD live-GUI recapture. Recorded the retained startup sequence from
+`ToggleWorldMap()` through `tick -> draw -> prepare -> present`, using the
+exact `iced-debug` socket emitted by the process for the screenshot burst. The
+first world-map tick was `dirty=0x1ff pending=true ready=6`; later draws
+advanced atlas-ready `6 -> 24 -> 33 -> 282 -> 335`; the first post-present
+world-map screenshot was already textured; and redraws continued after
+`pending=false` because `strata_dirty` remained `0x1c`. Refreshed the
+`index.md` summary row for `world-map-texture-loading-budget`.
+
+## [2026-04-22] update | world-map RedrawAll verification
+
+Updated `investigations/world-map-texture-loading-budget.md` with the
+timer-path `RedrawAll` verification from the same live retained-GUI repro.
+Recorded that the first post-warmup frame reached `draw -> prepare -> present`
+without any extra presentation gate after texture warmup, with
+`ready=38 -> 335` as `prepare()` drained the atlas backlog. Refreshed the
+`index.md` summary row for `world-map-texture-loading-budget` to mention the
+verified post-warmup frame path.
+
+## [2026-04-22] update | world-map atlas tier pressure audit
+
+Updated `investigations/world-map-texture-loading-budget.md` with the atlas
+tier pressure audit from the same live GUI repro. Recorded that every observed
+`prepare()` pass kept `retry=0` and `force_rgba_retry=0`, so there were zero
+RGBA fallback failures and zero BC upload rejections while the world-map tile
+paths drained queued work and reached atlas-ready completion. Refreshed the
+`index.md` summary row for `world-map-texture-loading-budget` with the
+no-rejection conclusion.
+
+## [2026-04-22] update | world-map retained GPU buffer reupload audit
+
+Updated `investigations/world-map-texture-loading-budget.md` with the retained
+GPU buffer reupload audit from the same live GUI repro. Recorded that
+`upload_strata` showed the dirty world-map strata being re-written with
+`pending_tex_vertices=0` and resolved sample `tex_index` / UVs, proving the
+first-open retained path was re-uploading the affected vertex buffers after the
+atlas transition. Refreshed the `index.md` summary row for
+`world-map-texture-loading-budget` with the buffer-reupload conclusion.
+
+## [2026-04-22] update | world-map retained texture display follow-up
+
+Updated `investigations/world-map-texture-loading-budget.md` with the latest
+live-GUI follow-up. Documented that the screenshot path could render the world
+map on first pass while the retained GUI still missed random tiles/overlays,
+then recorded the four later bugs behind that gap: wrong warmup request source,
+full-rebuild sentinel clobbering, inverted world-map request priority, and the
+remaining `textures_pending` ownership conflict between queued preload and
+draw-time retained recovery. Refreshed the `index.md` summary row for
+`world-map-texture-loading-budget`.
+
+Later that day, updated the same page again after the deeper state-model fix:
+`gpu_uploaded_textures` was only a draw-staging set populated before
+`prepare()`, not proof that a path was ready in the atlas. Recorded the new
+atlas-ready tracker populated from `WowUiPrimitive::prepare()` and the switch
+away from using the staging set for display-readiness checks.
+
+## [2026-04-22] update | buffframe slow onupdate interpretation
+
+Updated `investigations/on-update-dirty.md` with the current BuffFrame
+slow-handler interpretation. Documented that logs like
+`addon=Blizzard_BuffFrame handler=OnUpdate frame=#21946` map to anonymous
+`AuraButtonTemplate` children, not the named `BuffFrame` root, using the
+current `BuffFrame.lua` creation path, `handler_timing.rs` fallback formatting,
+and a live `dump-tree --filter-key BuffFrame --visible-only` run that showed
+five visible anonymous timed buff buttons. Also corrected the stale audit note
+to match the current `onupdate_handler_audit.rs` regression coverage.
+
+## [2026-04-21] update | world-map exploration non-current map surface
+
+Updated `investigations/world-map-fog-of-war-overlay-model.md` with a
+follow-up regression where `runtime_surface_bootstrap.lua` was still installing
+synthetic `C_MapExplorationInfo` handlers and limiting explored overlays to
+`currentMapID` / map `1`. Documented the new Rust-backed
+`src/c_api/c_map_exploration_info.rs` implementation, fallback-only bootstrap
+stubs, and focused non-current-map regressions in
+`tests/c_map_exploration_info.rs`. Refreshed the `index.md` summary row for
+`world-map-fog-of-war-overlay-model`.
+
+## [2026-04-21] add | class talents edge frame levels
+
+Added `investigations/class-talents-edge-frame-levels.md` documenting the
+class-talents edge-over-icon regression and the fix in
+`src/lua_api/workarounds.rs` that patches both the mixin and the live
+`PlayerSpellsFrame.TalentsFrame` method, then re-levels active edges.
+Recorded regression coverage in
+`test_class_talent_edges_render_below_visible_talent_buttons`
+(`tests/hero_talents.rs`) and updated `index.md`.
+
+## [2026-04-21] update | hero talents visibility and edges
+
+Updated `investigations/class-talents-trait-loadout-state.md` with the hero
+subtree rendering regression where only one node appeared and connector edges
+were missing. Documented root cause in
+`check_spec_conditions_met()` (`src/lua_api/globals/missing_surface/traits.rs`):
+spec-set conditions were treated as `AND` instead of `OR` across shared hero
+node groups. Recorded the fix and new regression test
+`test_active_hero_subtree_exposes_multiple_visible_nodes_and_edges` in
+`tests/hero_talents.rs`. Updated `index.md` summary for the investigation page.
+
+## [2026-04-20] investigate | tooltip layout timing
+
+Added `investigations/tooltip-layout-timing.md` to capture the tooltip
+one-frame mismatch caused by sizing after layout resolution. Documented that
+`update_tooltip_sizes()` runs too late in the live render path, so the current
+frame can render from stale `layout_rect` data even though tooltip line data is
+fresh.
+
+## [2026-04-20] ingest | tooltip double shell
+
+Added `investigations/tooltip-double-shell.md` to capture the duplicate
+tooltip chrome bug. Documented the two-layer root cause: a bootstrap-created
+fake `NineSlice` surface on the Lua side plus an unconditional Rust fallback
+tooltip background. Recorded the fix: remove the bootstrap injection, repair
+tooltip `NineSlice` post-load with the real template-backed surface, and gate
+the Rust fallback shell on whether the frame already owns `NineSlice`.
+
+## [2026-04-20] update | blizzard ui test lanes
+
+Added `reference/blizzard-ui-test-lanes.md` and updated
+`reference/addon-compatibility.md` to document the explicit split between
+Blizzard UI unit tests and addon-bootstrap coverage.
+
+## [2026-04-20] update | blizzard ui addon closure resolver
+
+Added `loader::discover_blizzard_addon_closure_for_screen()` and switched the
+render-order test helpers to use it. The resolver walks TOC `Dependencies` and
+`OptionalDeps` across the full screen-allowed Blizzard TOC set, so tests can
+resolve explicit closures for load-on-demand roots instead of relying on a fake
+monolithic Blizzard bundle.
+
+## [2026-04-20] update | blizzard ui smoke targets
+
+Updated `reference/blizzard-ui-test-lanes.md` with the first four explicit
+addon-bootstrap smoke targets: combat log, macro UI, world map, and
+settings panel. Added the shared smoke-target manifest and harness coverage in
+`tests/common/blizzard_addon_manifest.rs`,
+`tests/common/blizzard_addon_harness.rs`, and
+`tests/blizzard_addon_smoke_targets.rs`.
+
+## [2026-04-20] update | blizzard ui smoke target startup shape
+
+Updated the smoke-target lane so it asserts target startup shape instead of
+just "closure loads". The harness now preloads shared panel support, clears
+that preload noise, then loads only the target closure; each target asserts no
+recorded Lua errors, the expected global/frame pair, and one or two
+representative behaviors.
+
+## [2026-04-20] update | blizzard ui addon-bootstrap test home
+
+Documented that addon-bootstrap regressions stay in `cargo test`, while
+`wow-sim run-tests` remains the lane for addon-authored Lua suites. The key
+tradeoff is that the smoke harness needs direct Rust access to loader state,
+recorded Lua errors, and frame-tree assertions, which is easier to maintain in
+the normal Rust test binaries than in a Lua-only wrapper.
+
+## [2026-04-20] update | keybinding spellbook direct dispatch
+
+Updated `investigations/keybinding-system.md` with the spellbook follow-up.
+Documented that the simulator now routes `S` back to Blizzard-owned
+`PlayerSpellsUtil.ToggleSpellBookFrame()`, removes the bootstrap spellbook
+fallback wrapper, and dispatches simple zero-arg binding targets directly
+instead of always compiling a Lua chunk first. Recorded the key finding that
+raw Blizzard spellbook toggles were already correct and the remaining
+first-open regression only happened through binding dispatch.
+
+## [2026-04-20] add | class talents trait loadout state
+
+Added `investigations/class-talents-trait-loadout-state.md` to capture the
+remaining `C_Traits` restore that unblocked `PlayerSpells`. Documented the root
+cause (live talent state existed, but Blizzard-facing trait queries still
+returned placeholder config IDs / staged-change surfaces), the new
+working-vs-committed diff model exposed through `TalentState`, and the focused
+regression coverage for config mapping, purchase gating, and staged edits.
+Updated `index.md` with the new page.
+
+## [2026-04-20] ingest | partyframe portrait composition
+
+Added `investigations/partyframe-portrait-composition.md` to capture the
+party portrait sizing/composition result from live queries and Blizzard XML.
+Documented that the class icon is the `37x37` `Portrait` texture, while the
+visible ring/surround is not a separate widget and instead comes from the
+larger `UI-HUD-UnitFrame-Party-PortraitOn` frame-art texture (`120x49` in the
+live master GUI tree). Updated `index.md` with the new page.
+
+## [2026-04-19] ingest | partyframe status-bar texture drop
+
+Added `investigations/partyframe-statusbar-textures.md` to capture the root cause for the party health/mana bar `MISSING` render. The XML loader creates the bar child correctly, but `SetStatusBarTexture(bar)` passes a userdata frame into a setter that only accepts strings/numbers, so the status-bar source is cleared. Updated `index.md` with the new page.
+
+## [2026-04-18] update | Track 2 metatable handle threading
+
+Updated `investigations/track-2-intern-audit.md` with the current
+handle-threading progress: a shared `hot_metatable_key(...)` accessor
+now reuses the prewarmed registry handle for `__index` / `__newindex`
+lookups in `methods.rs`, `globals/create_frame/helpers.rs`,
+`globals/security.rs`, and `env_init/freeze_globals.rs`, with a static
+fallback for bootstrap-skipping tests.
+
+## [2026-04-17] ingest | rilua vs mlua gap audit
+
+Added `investigations/rilua-mlua-gap-audit.md` after comparing the current
+rilua registration path against `master`'s mlua-era Lua API surface. Recorded
+the highest-signal missing handling buckets: no-op sandbox cleanup in
+`env_init`, dropped `MessageFrame` method registration, unfinished
+attribute/event/text widget parity, and the unwired `patch_namespace_stubs()`
+runtime hook. Updated `index.md` with the new investigation page.
+
+## [2026-04-17] update | startup XML loader fast-path follow-up
+
+Updated `investigations/startup-createframe-profile.md` with the current XML
+loader fast-path state after the runtime `CreateFrame` work. Recorded the
+safe widening steps in `xml_frame/setup.rs` and the split
+`template_chain/` machinery, the current clean `xml fast path` counters
+(`hits=1868`, `slow=350`, `scripts=234`), the shared-worktree debug startup
+range (~`4.8s`-`5.8s` on `--no-addons --no-saved-vars`), and the failed
+generic global-method literal-arg experiment that still regresses real
+startup. Refreshed the `index.md` summary for the page.
+
+## [2026-04-16] update | intern_string perf re-profile correction
+
+Corrected the earlier PLAN/wiki summary for the post-migration interning
+profile. Fresh release `perf` on `wow-sim --no-saved-vars lua-errors` shows
+`Gc::intern_string` at 179.5M cycles (2.98%), `StringTable::intern_hashed`
+at 169.2M (2.81%), and inline `lua_hash` at only ~4.8M (0.08%). The original
+"lua_hash essentially flat" note was wrong; the hash primitive is no longer
+the bottleneck, and the remaining cost sits in bucket traversal / dedup work.
+
+## [2026-04-16] update | intern_string_static mid-cycle fix + migration landed
+
+Found the root cause of the earlier migration breakage. `intern_string_static`
+inserts into `static_intern_cache`, but `mark_gc_roots` only scans that cache
+at cycle start — a mid-Propagate insert is still pre-flip current-white, gets
+swept at cycle end, and the cache ends up pointing at a freed slot. Fixed in
+rilua by colouring the new ref Black during Propagate/Sweep/Finalize; added
+`intern_string_static_mid_cycle_survives_sweep` regression test.
+
+Applied the migration for `registry_get/set/table_or_create`, `registry_table`,
+`attach_frame_metatable`, and fan-out callers — intern counter 1,250,287 →
+1,096,266 (−12%), release startup 1.18s → 1.15s median (n=5). `frame_ref_cache`
+(the biggest single call site, 286K/startup) remains deferred: even with the
+GC fix, migrating that path cascades into "OnLoad (a nil value)" failures
+for ~300 addons and the root cause isn't yet understood.
+
+## [2026-04-16] ingest | intern_string call-site ranking
+
+Added `investigations/intern-string-ranking.md` and the rilua
+`intern-stats` feature. Startup runs 1.25M `intern_string` calls with
+top 5 literals accounting for 40%. Attempted migrating the
+registry/frame helpers to `intern_string_static` (counter dropped
+−74.5%) but release triggered 22 new Lua errors — frames lose their
+metatable methods when `registry_set` uses `intern_string_static`.
+Reverted the migration; filed as a rilua follow-up.
+
+## [2026-04-16] ingest | layout computation profile
+
+Added `investigations/layout-profile.md`. Release `perf` on `lua-errors`
+showed layout-attributed samples at 7.5% of total (470M of 6.3B), with
+the biggest single contributor being `LayoutCache::get` via siphash —
+the cache was a default `HashMap<u64, CachedFrameLayout>`. Swapped to
+`FxHashMap`. Layout 7.5% → 5.0%, total siphash 295M → 76M, release
+startup median 1.21s → 1.18s (n=10). Remaining layout cost is real
+anchor arithmetic and `resolve_parent_rect` recursion — no further
+easy wins.
+
+## [2026-04-16] update | table rehashing fix #2 declined
+
+Tried fix #2 (short-circuit `raw_set_impl` for sequential integer keys
+when hash is empty). Two variants both net-negative:
+- `array.push` (grow by 1): rehashes 69K → 86K (+25%), wall time tied.
+- `array.resize(next_power_of_two)`: rehashes 69K → 57K (−18%) but
+  wall time +30% from eager nil-fill on each boundary.
+
+Conclusion documented in `investigations/table-rehashing.md`: the
+existing rehash path's `compute_sizes` already does good amortization;
+naive replacements either skip the over-allocation (more rehashes
+later) or pay the over-allocation eagerly (worse wall time). Status
+quo retained.
+
+## [2026-04-16] update | table rehashing fix #1 applied
+
+Applied fix #1 from `investigations/table-rehashing.md`: rilua
+`OpCode::NewTable` now pre-allocates 4 hash slots when both size hints
+are zero. Measured: 97,340 → 69,105 rehashes (−29%); release startup
+median 1.31s → 1.21s (−8%, n=5 each). All 685 rilua tests pass (includes
+new `op_newtable_empty_hint_preallocates_hash_to_avoid_first_rehash`).
+
+## [2026-04-16] ingest | table rehashing investigation
+
+Added `investigations/table-rehashing.md`. Profiled startup rehash counts via a
+new `rehash-stats` feature in rilua. Found 97K rehashes — 98% from non-frame
+tables (`OP_NEWTABLE(0,0)` from addon `local t = {}` pattern), 81% landing at
+hash size ≤ 16. Frame-table pre-sizing (64 slots) is working: only 1.6K frame
+rehashes. Documented three candidate fixes; none applied in this card.
+
+## [2026-04-14] ingest | world-map exploration seed follow-up
+
+Updated `investigations/world-map-fog-of-war-overlay-model.md` with the current
+map exploration follow-up. After removing synthetic fog, Isle of Dorn still
+showed fully explored because every default-visible overlay was treated as
+discovered. Documented the temporary seed that leaves one real overlay chunk
+(`WorldMapOverlay.ID = 4885`, The Three Shields / Skolzgal Mill) unexplored
+until per-character exploration state exists, and refreshed the `index.md`
+summary.
+
+## [2026-04-14] ingest | world-map fog-of-war overlay model correction
+
+Updated `investigations/world-map-fog-of-war-overlay-model.md` to correct the
+previous diagnosis. The current world map does not have a `UiMapFogOfWar` DB
+row, so the bug was not a wrong irregular fog shape; it was the simulator
+inventing fog for any map art and rendering synthetic geometry from exploration
+overlay gaps. Documented the DB-backed fog lookup, the removal of the synthetic
+renderer, and the new API/render regressions. Updated `index.md` with the
+corrected summary.
+
+## [2026-04-14] ingest | world-map fog-of-war overlay model
+
+Created `investigations/world-map-fog-of-war-overlay-model.md` for the third
+world-map fog bug: exploration APIs were already using real irregular overlay
+chunks, but the fog renderer still assumed a synthetic half-map model.
+Documented the root cause, the `FogOfWarFrame` `uiMapID` plumbing, the new
+overlay-complement fog geometry, and the focused API/render regressions.
+Updated `index.md` with the new investigation page.
+
+## [2026-04-14] ingest | world-map texture loading budget follow-up
+
+Updated `investigations/world-map-texture-loading-budget.md` with a first-frame
+world-map follow-up: BC-preloaded tiles were landing in `bc_cache`, but
+`TextureManager::is_cached()` only consulted the RGBA cache. That caused
+budgeted draw to pause early after the first BC upload and could make the
+world map open with an apparent quarter-map fog/exploration artifact. Added
+the BC-cache root cause, fix, and regression coverage to the investigation
+page.
+
+## [2026-04-14] ingest | world-map fog-of-war first-open size
+
+Created `investigations/world-map-fog-of-war-first-open-size.md` for the fog
+overlay bug where first-open world-map fog could keep a stale size even though
+the map tiles were already correct. Documented the missing
+`FogOfWarPinMixin:OnCanvasSizeChanged()` handling, the simulator-side
+workaround that patches both the mixin and existing fog pins, and the focused
+regression tests. Updated `index.md` with the new investigation page.
+
+## [2026-04-14] investigations | world map 90s OnUpdate recapture
+
+Updated `investigations/world-map-onupdate-hover-polling.md` with the fresh
+90s world-map profile after the recent OnUpdate fixes. Recorded the new
+`/tmp/worldmap-onupdate-20260414.log` numbers (`485` total `fire_on_update`
+spikes, `31` steady-state handlers, `64.73ms` post-90s average), added the
+new `world_map_onupdate_inventory` handler-ceiling regression test, and
+refreshed the `index.md` summary for the page.
+
+## [2026-04-14] investigations | startup XML lifecycle frame-id threading
+
+Updated `investigations/startup-createframe-profile.md` with the loader
+follow-up that removes repeated `name -> id -> frame_ref` lifecycle resolution
+during XML finalize. Recorded the new `xml_frame.rs` / `xml_lifecycle.rs`
+threaded-frame-id path, the focused regression test that fires lifecycle
+handlers with a wrong display name but the correct frame id, and refreshed the
+`index.md` summary for the page.
+
+## [2026-04-14] investigations | world map UIParent empty worklist follow-up
+
+Updated `investigations/world-map-onupdate-hover-polling.md` with the
+`UIParent_OnUpdate` fan-out follow-up: `FCF_OnUpdate`, `ButtonPulse_OnUpdate`,
+and `AnimatedShine_OnUpdate` were still doing empty-list Lua dispatch every
+tick. Recorded the new post-load wrappers in `workarounds.rs`, the focused
+`uiparent_onupdate_worklists` regression tests, and refreshed the `index.md`
+summary for the page.
+
+## [2026-04-14] investigations | on-update dirty GameTimeFrame calendar atlas follow-up
+
+Updated `investigations/on-update-dirty.md` with the `GameTimeFrame_SetDate()`
+follow-up: same-day calendar atlas updates were still dirtying render because
+the plain button texture setter took visual mutable borrows before checking for
+real changes. Recorded the new no-op fast path in
+`apply_set_button_texture_path()`, the focused atlas-backed button regression
+test, the full-UI `GameTimeFrame_SetDate()` regression test, and refreshed the
+`index.md` summary for the page.
+
+## [2026-04-14] investigations | on-update dirty handler audit follow-up
+
+Updated `investigations/on-update-dirty.md` with focused handler-audit results:
+`LeaveInstanceGroupButton` now shows pure query/dispatch cost once its mutators
+settle, while the remaining BuffFrame button cost comes from
+`AuraButtonMixin:OnUpdate` doing duration formatting and font-threshold work on
+every tick before the no-op setters bail out. Refreshed the `index.md` summary
+for the page.
+
+## [2026-04-14] investigations | on-update dirty solo compact raid manager follow-up
+
+Updated `investigations/on-update-dirty.md` with the compact-raid follow-up:
+`A_Admin.SetPartySize(0)` now fires `GROUP_ROSTER_UPDATE`, so solo transitions
+hide `CompactRaidFrameManager` and remove `LeaveInstanceGroupButton` from the
+visible `OnUpdate` handler set. Refreshed the `index.md` summary for the page.
+
+## [2026-04-14] investigations | startup CreateFrame profiling ActionButtonTemplate regions
+
+Updated `investigations/startup-createframe-profile.md` with the direct
+`ActionButtonTemplate` layer/fontstring/button-texture fast path: the new
+Rust-side region creation in `template/elements*.rs`, the focused regression
+test that proves the hot path avoids Lua region fallback, and isolated
+`WOW_SIM_PROFILE_CREATE_FRAME` numbers showing another `-27.36%` drop in
+explicit template time across the profiled action-bar button families.
+
+## [2026-04-14] investigations | startup CreateFrame profiling nested SpellFX follow-up
+
+Updated `investigations/startup-createframe-profile.md` with the nested `ActionButtonSpellFXTemplate` follow-up: the remaining `ActionButtonInterruptTemplate` / `ActionButtonCastingAnimFrameTemplate` child creation fallback, the widened direct-child selector in `template/children.rs`, and new `WOW_SIM_PROFILE_CREATE_FRAME` numbers showing another `-28.6%` drop in explicit template time across action-bar button families.
+
+## [2026-04-14] investigations | startup CreateFrame profiling MinimalScrollBar recursive fast path
+
+Updated `investigations/startup-createframe-profile.md` with the `MinimalScrollBar` follow-up: the missed `Track -> Thumb` Lua `CreateFrame` fallback inside `apply_inline_frame_content()`, the recursive direct-child propagation change, the new focused regression test, and the smaller but measurable no-addons startup improvement after the fix.
+
+## [2026-04-13] ingest | startup CreateFrame profiling
+
+Created `investigations/startup-createframe-profile.md` to record runtime `CreateFrame` profiling results for Blizzard startup. Documented the new `WOW_SIM_PROFILE_CREATE_FRAME` instrumentation, the measured dominance of action-bar button template expansion (~4.1s across 34 runtime-created buttons), and the link to the planned pure-Rust template child creation work. Updated `index.md` with the new investigation page.
+
+## [2026-04-13] ingest | world map preload API follow-up
+
+Updated `investigations/world-map-texture-loading-budget.md` with the remaining explored-overlay delay root cause: Blizzard's `MapTexturePreloader.lua` was calling `C_Map.RequestPreloadMap()`, but the simulator stubbed that API as a no-op. Recorded the new queued preload path for map art + exploration overlays, the focused `request_preload_map_warms_map_art_and_overlay_textures` regression test, and refreshed the `index.md` summary for that page.
+
+## [2026-04-13] ingest | chat frame scrollbar anchor reapply
+
+Created `investigations/chatframe-scrollbar-anchor-reapply.md` to document the `ChatFrame1` scrollbar/edit-box layout bug. Recorded the real root cause in `reapply_inline_anchors()`: inherited child-frame anchors were resolving `$parent...` against the child name instead of the actual parent frame name, which broke `relativeTo="$parentBackground"` lookups and pushed the resize/scrollbar chain to screen-relative layout. Updated `index.md` with the new investigation page.
+
+## [2026-04-13] ingest | world map texture loading budget follow-up
+
+Updated `investigations/world-map-texture-loading-budget.md` with the second root cause behind the remaining world-map stalls: preload cleared `textures_pending` after CPU cache warmup even while the GPU atlas still lacked most tiles. Recorded the new `gpu_uploaded_textures`-based pending check, the focused `budgeted_preload` regression tests, and refreshed the `index.md` summary for that page.
+
+## [2026-05-01] investigation | crafting cast bar
+
+Created `investigations/crafting-cast-bar.md` to document the missing professions spellbar root cause. `C_TradeSkillUI.CraftRecipe` performed inventory changes but never started player casting or fired `UNIT_SPELLCAST_START`; successful crafts now populate `SimState.casting`, notify spellcast listeners, and emit `UPDATE_TRADESKILL_CAST_STOPPED` on completion. Updated `index.md` with the new investigation page.
+
+## [2026-04-13] ingest | world map CreateTexture sublevel investigation
+
+Created `investigations/world-map-create-texture-sublevel.md` to document the follow-up world-map open ordering churn: `CreateTexture(..., subLevel)` ignored its fourth argument, pooled textures started at sublevel 0, and Blizzard immediately repaired them with `SetDrawLayer()`. Recorded the new regressions for `CreateTexture(..., subLevel)` and no-op `SetDrawLayer()`, plus the traced repro where post-open `SetDrawLayer()` invalidations dropped from 150 to 0. Updated `index.md` with the new investigation page.
+
+## [2026-04-13] ingest | world map voice chat alert investigation
+
+## [2026-05-01] investigation | Journeys Midnight empty
+
+Created `investigations/journeys-midnight-empty.md` to document the empty Journeys tab on Midnight. Root cause: current expansion constants were 11, but default major-faction data only seeded War Within expansion 10 rows, so Blizzard's `JourneysFrameMixin:Refresh()` received an empty `C_MajorFactions.GetMajorFactionIDs(11)` result. Updated `index.md` with the new investigation page.
+
+Created `investigations/world-map-voice-chat-alerts.md` to document the reduced-stack world-map overlay where voice prompt frames appeared above the panel. Recorded the two harness prerequisites behind it: `Blizzard_Channels` needs `Blizzard_SocialToast` for `SocialToastTemplate hidden="true"`, and alert positioning needs the real chat-alert addons instead of the `ChatAlertFrame` stub. Updated `index.md` with the new investigation page.
+
+## [2026-04-27] investigation | explicit XML parent anchors
+
+Created `investigations/explicit-xml-parent-anchors.md` to document the PaperDoll sidebar tab positioning bug. Root cause: nested XML frame creation preferred the containing frame over an explicit child `parent="..."`, so implicit anchors resolved to `PaperDollFrame` instead of `CharacterFrameInsetRight`. Added the page to `index.md`.
+
+## [2026-04-13] ingest | world map OnUpdate hover polling investigation
+
+Created `investigations/world-map-onupdate-hover-polling.md` to document the post-texture-fix `UIParent_OnUpdate` cost: `FCF_OnUpdate` hover polling, the unnecessary mutable borrow in `IsMouseOver()`, the new immutable-borrow regression test, and the runtime repro where verbose OnUpdate logs stayed quiet after startup. Updated `index.md` with the new investigation page.
+
+## [2026-05-02] investigation | Adventure Guide layout
+
+Created `investigations/adventure-guide-layout.md` for the Suggested Content overlap bug. Root cause: `resolve_rect_if_dirty` fast-path geometry queries recomputed only the queried resized frame, leaving sibling frames anchored to it with stale cached rects. The fix now recomputes anchor dependents for direct dirty roots and dirty ancestor roots, and queues those moved dependents for hit-grid updates; regression coverage is `querying_resized_anchor_target_updates_dependent_siblings`.
+
+Updated `investigations/adventure-guide-layout.md` with the follow-up Suggested Content text overlap root cause: tooltip `GetNumLines` overwrote the shared FrameRef method slot, so regular FontStrings returned zero lines. FontStrings now compute wrapped line count from measured text height while GameTooltip keeps tooltip-backed line counts; regression coverage is `fontstring_get_num_lines_reports_wrapped_line_count`.
+
+## [2026-05-02] investigation | Adventure Guide SimpleHTML markup
+
+Created `investigations/adventure-guide-simplehtml-markup.md` for the boss
+overview text rendering raw `|c...|Hspell...|h...|r` and `|n` escapes. Root
+cause: Encounter Journal uses `SimpleHTML`, whose stripped-text path only
+removed HTML tags and bypassed WoW markup cleanup. Updated `index.md` with the
+new investigation page.
+
+## [2026-04-13] ingest | world map texture loading budget investigation
+
+Created `investigations/world-map-texture-loading-budget.md` to document the post-rebuild-fix world-map stalls: hidden BC tile uploads, preload/draw source-cache mismatch, the new BC cache in `TextureManager`, and the smaller draw/tick texture budgets. Updated `index.md` with the new investigation page.
+
+## [2026-05-03] investigation | LFD role icon slowness
+
+Created `investigations/lfd-role-icon-slowness.md` for the LFD load pause around role selection icons. Root cause: role icons/backgrounds are button atlas crops from `Interface\lfgframe\uilfgprompts`, and crop extraction decoded the full 2048x2048 BLP before producing small sub-regions. Documented the persistent crop cache added in `TextureManager::load_sub_region` and updated `index.md`.
+
+## [2026-04-13] ingest | world map frame-level rebuild investigation
+
+## [2026-04-13] investigations | startup CreateFrame profiling follow-up
+
+Updated `investigations/startup-createframe-profile.md` with section-level template profiling, the method-only XML script fast path, widened direct-child creation for `ActionButtonSpellFXTemplate` / `MinimalScrollBar`, and current shared-worktree startup numbers showing `36.79s -> 28.89s` on `--no-addons --no-saved-vars`.
+
+Created `investigations/world-map-frame-level-rebuilds.md` to document the world-map performance bug where map pins repeatedly called `SetFrameLevel()` with the same value, forcing unnecessary `strata_buckets` invalidation and bucket rebuilds. Updated `index.md` with the new investigation page.
+
+## [2026-04-29] investigation | LFD dungeon list empty
+
+Created `investigations/lfd-dungeon-list-empty.md` for the Dungeons & Raids panel populating empty when "Specific Dungeons" was selected. Root causes: missing `GetLFDChoiceCollapseState`/`GetLFDChoiceEnabledState`/`GetLFGLockList` globals breaking `LFGDungeonList_Setup`; `LFG_UPDATE_RANDOM_INFO` never fired at startup so `LFDQueueFrame.Specific` stayed hidden and `OnShow=LFDQueueFrame_Update` never ran; `is_random=true` on the negative-id header in `default_lfd_dungeons` routed `GetRandomDungeonBestChoice` to `-1`. Updated `index.md` with the new investigation page.
+
+## [2026-04-25] ingest | micro-menu atlas revert investigation
+
+Created `investigations/micro-menu-atlas-revert.md` to document the micro-menu hover/leave icon disappearance root cause: button atlas setters populated child `tex_coords` but not `atlas_tex_coords`, so restored normal textures could miss the atlas-crop render path. Updated `index.md` with the new investigation page.
+
+## [2026-05-02] update | Adventure Guide portrait masks and icons
+
+Updated `investigations/adventure-guide-layout.md` with the follow-up Adventure Guide portrait bug: `Texture:SetMask` was still a no-op, so card icons did not clip to the gold portrait rings, and two seeded Adventure Journal icon paths did not resolve. Documented the mask wiring and manifest-backed icon replacements.
+
+## [2026-05-28] ingest | Paladin aura stance bar
+
+Created `investigations/paladin-aura-stance-bar.md` to document the root cause behind the missing Paladin aura bar: default Paladin state had zero shapeshift forms, so Blizzard `StanceBarMixin:Update()` hid the bar before rendering. Added the state-backed fix and regression coverage notes for the raw shapeshift globals and Blizzard StanceBar layer.
+
+## [2026-05-08] update | Blizzard UI cache-only runtime
+
+Simplified the Blizzard UI runtime model: `data/blizzard-ui-files.txt` is the committed file list, CASC is the extraction source, and `~/.cache/wow-ui-sim/blizzard-ui` is the only runtime Blizzard UI addon root. Removed the old runtime discovery language for `Interface/BlizzardUI`, `vendor/wow-ui-source`, and local `BlizzardInterfaceCode` fallback.
+
+## [2026-05-08] update | Blizzard UI CASC source cache
+
+Updated `systems/casc-asset-cache.md` and `reference/cli-commands.md` for `wow-cli casc sync-blizzard-ui`, the `~/.cache/wow-ui-sim/blizzard-ui` source cache, and GUI startup fallback behavior when the GitHub checkout is missing.
+
+## [2026-04-29] ingest | dialog background DXT3 stripes
+
+Created `investigations/dialog-background-dxt3-stripes.md` to document the escape-menu background stripe root cause: DXT3 BLPs were incorrectly mapped to BC3 on the raw compressed upload path. Updated `index.md` with the new investigation page.
+
+## [2026-06-09] update | Mists 5.5.4 EditMode action-bar and UnitIsCivilian
+
+Updated `investigations/editmode-layout.md` with the Mists 5.5.4 action-bar root cause: default managed action bars can remain at Blizzard's temporary `TOPLEFT UIParent` anchor when the manual EditMode layout pass aborts before clearing `layoutApplyInProgress`. Documented the Rust-side finalizer that clears the guard and replays `UpdateActionBarPositions()`, the modeled `UnitIsCivilian` fallback for Classic TargetFrame, and the ObjectiveTracker phantom duplicate root cause: bundled-addon startup exposed legacy `WatchFrame` alongside modern `ObjectiveTrackerFrame`.
+
+## [2026-06-09] investigation | frame surrogate identity slot
+
+Created `investigations/frame-surrogate-identity-slot.md` after replacing the simulator-only frame surrogate `[1]` dispatch path with a `[0]` identity token model. Updated `index.md` with the new investigation page.
+
+## [2026-05-01] ingest | editbox render text cache investigation
+
+Created `investigations/editbox-render-text-cache.md` to document the SimCommands search-box input bug: keyboard input updated `Frame.text` but left `text_stripped` stale after `SetText("")`, causing glyph rendering to shape an empty string. Updated `index.md` with the new investigation page.
+
+## [2026-05-01] ingest | LFD checkbox and role-state follow-up
+
+Updated `investigations/lfd-dungeon-list-empty.md` with the follow-up Group Finder bug where Specific Dungeons populated but dungeon selections were empty and `GetLFGRoles` was still a false stub, leaving "Join as Party" disabled. Documented the state-backed role and LFD checkbox fix plus regression coverage.
+
+## [2026-05-01] update | Wardrobe filter click dispatch
+
+Updated `investigations/appearances-wardrobe-api.md` with the follow-up Wardrobe filter bug where menu descriptions and callbacks were valid, but clicks could be swallowed by decorative child regions during GUI hit testing. Documented the fix: final mouse targets must be mouse-enabled frames, while decorative children only guide hit-test descent.
+
+## [2026-05-01] update | Wardrobe class dropdown and set fallback
+
+## [2026-05-18] investigation | ElvUI tooltip scale clipping
+
+## [2026-06-08] ingest | ServerSnapshot action bar import
+
+Created `systems/server-snapshot-action-bars.md` after adding startup import for action-bar spell slots captured by the ServerSnapshot addon. Updated `index.md` with the new systems page.
+
+Updated `investigations/tooltip-double-shell.md` with the follow-up ElvUI tooltip clipping root cause. Tooltip frame bounds were scaled by ElvUI effective scale, but internal `GameTooltip` glyph emission was not; tooltip text now scales font size, line spacing, and text insets with the frame effective scale.
+
+Updated `investigations/appearances-wardrobe-api.md` with the Wardrobe class dropdown casing/color contract and the `C_TransmogSets.GetBaseSets()` nil fallback stack overflow. Documented that class display names come from localized `className`, colors from uppercase `classFile`, and empty set surfaces must return tables.
+
+## [2026-06-11] create | Class talent edge lines
+
+Created `investigations/class-talents-edge-lines.md`. Talent connector lines were missing because `IsRectValid()` reported dirty-but-resolvable talent buttons as invalid, causing Blizzard's edge positioning to skip `Line:SetStartPoint()` / `SetEndPoint()`. A second render-list gate also filtered endpoint-positioned `Line` widgets and arrowhead textures under anchorless edge-frame parents. Fixed by resolving dirty rects inside `IsRectValid()` and allowing parent-independent line/anchor geometry through render-list filtering while preserving the ordinary unanchored-parent guard.
+
+## [2026-04-12] ingest | transparent wrapper render-order investigation
+
+Created `investigations/transparent-wrapper-render-order.md` for the world map / quest log render-order fix. Updated it after a follow-up regression to document the depth-aware transparent-wrapper hoist in `state_render.rs`, including both world-map visibility coverage (`world_map_tiles_render_after_tiled_background`) and world-quest pin ordering coverage.
+
+## [2026-04-09] ingest | systems/ pages created (10 pages)
+
+Created all 10 systems/ pages from source docs in docs/:
+
+- systems/layout-system.md — from layout-system.md + anchor-resolution.md
+- systems/rendering-pipeline.md — from rendering-pipeline.md
+- systems/widget-system.md — from widget-system.md + button-text-rendering.md
+- systems/lua-api.md — from lua-api.md
+- systems/event-system.md — from event-system.md
+- systems/xml-template-system.md — from xml-template-system.md
+- systems/addon-loading.md — from addon-loading-pipeline.md
+- systems/texture-atlas.md — from texture-atlas-system.md
+- systems/frame-data-flow.md — from frame-data-flow.md
+- systems/taint-system.md — from protected-frame-enforcement.md + src/lua_api/frame/methods/methods_helpers.rs + src/lua_api/globals/security.rs + tests/protected_frame_enforcement.rs + tests/secure_handler_fallback.rs + tests/security_api.rs
+
+Updated index.md systems/ table.
+
+## [2026-05-28] ingest | Mists WorldMap startup failure cluster
+
+Created `investigations/mists-world-map-startup.md` after fixing Mists startup errors around `WorldMapFrame`, `WorldMapTrackQuest`, `UpdateUIPanelPositions`, `FogOfWarFrameMixin`, and MapCanvas provider `OnAdded` defaults. Updated `index.md` with the new investigation page.
+
+## [2026-04-10] ingest | Initial bulk ingest from 30+ existing docs
+
+Bootstrapped wiki from root-level documentation files. Created pages across systems/, design/, investigations/, and reference/ categories.
+
+## [2026-04-09] ingest | design/ and reference/ pages created
+
+Created 7 pages from DESIGN.md, SCALING.md, docs/debug-tools.md, FUTURE.md, docs/c-api-signature-audit.md, docs/c-api-stub-audit.md, AGENTS.md, and PLAN.md.
+
+Pages created:
+- design/architecture-overview.md
+- design/scaling-coordinates.md
+- design/debug-tools.md
+- reference/api-coverage.md
+- reference/cli-commands.md
+- reference/addon-compatibility.md
+- reference/development-phases.md
+## [2026-05-16] ingest | addon startup Settings and item-load investigation
+
+Created `investigations/addon-startup-settings-and-item-load.md` to capture the root causes behind addon startup errors: registered Settings canvases must start hidden, forbidden attribute delegates need secure dispatch, item subclasses must return enUS keyword-compatible names or nil, and positive live item IDs need synthetic placeholder item info so item-load callbacks terminate.
+
+## [2026-06-19] create | Retail Store secure pool constructor mismatch
+
+Created `investigations/store-secure-pool-constructors.md` after fixing the retail Store blank/red card state. Root cause: Store code runs in `__secureenv`, whose `CreateFramePoolCollection` still pointed at the simulator fallback after `Blizzard_SharedXMLBase` installed Blizzard's proxy-backed constructor in `_G`. The fix syncs real pool/factory constructors into `__secureenv` after SharedXMLBase loads and pins the behavior with Store tree, pool surface, and text-cache corruption tests.
+
+## [2026-05-26] update | C API temporary shim module retired
+
+Updated `reference/api-coverage.md` after moving the last `src/c_api/temporary_shims` surface (`C_TransmogOutfitInfo` slot/outfit defaults) into `src/lua_api/workarounds/temporary/` and deleting the empty C API temporary-shim module. Temporary unmodeled `C_*` defaults now belong in Lua workaround modules; `src/c_api/permanent_shims/` remains only for intentional unsupported domains.
+
+## [2026-05-23] update | transmog sets shim boundary
+
+Updated `investigations/appearances-wardrobe-api.md` after moving `C_TransmogSets` empty/default set APIs out of `runtime_surface_bootstrap.lua` and into `src/c_api/temporary_shims/c_transmog_sets.rs`. The investigation still records the same wardrobe contract: `GetBaseSets()` and related set APIs must return empty tables rather than nil until real set inventory state exists.
+
+## [2026-05-29] ingest | Mists Syndicator and Baganator startup cleanup
+
+Created `investigations/mists-syndicator-baganator-startup.md` after fixing full-profile Mists startup errors. The investigation records the Mists-gated item taxonomy overrides needed by Syndicator and the minimal CharacterFrame/TokenUI bootstrap path needed by Baganator.
+
+## [2026-06-10] update | class talent config-scoped visibility
+
+Updated `investigations/class-talents-trait-loadout-state.md` after fixing a full-addon/SavedVariables talent panel regression where `C_Traits.GetNodeInfo(configID, nodeID)` discarded `configID` and evaluated Protection nodes against a stale view spec.
+
+## [2026-06-11] ingest | CASC root v2 misparse dropped 89% of fdids
+
+Created `investigations/casc-root-v2-parsing-missing-textures.md` after the magic-dispel debuff border atlas resolved correctly but its texture (`interface/hud/uidebuffframes.blp`) could not be extracted. cascette-rs 0d0e79a misparsed 12.0.5 TSFM v2 root blocks (split content-flags fields, wrong NoNameHash bit), silently dropping 2.8M of 3.19M root records. Fixed by pinning cascette-rs c5de2b9 / asset-resolver 3ab8a14 (wow-ui-sim 598a29909), rebuilding the resolution cache (346K → 1.88M entries), and clearing 904 stale `.missing` markers.
+
+## [2026-06-11] update | EditMode first-apply dirtiness + player debuff modeling
+
+Updated `investigations/casc-root-v2-parsing-missing-textures.md` with parts 2-3: the dispel swirly was also blocked by the EditMode startup workaround seeding frames before UpdateSystem (destroying first-apply setting dirtiness, so ShowDispelType never applied), and by the absence of any player-debuff modeling. Fixed in c527f05fa (lookup-then-UpdateSystem flow mirroring EditModeManagerFrameMixin) and 2ac3057b6 (A_Admin.AddDebuff + UNIT_AURA isFullUpdate payloads + nilable dispelName).
+
+## [2026-06-11] create | XML scale attribute ignored
+
+Created `investigations/xml-scale-attribute.md`. The hero talents box didn't encompass its node buttons: `FrameXml` had no `@scale` field, so all 127 `scale="..."` attributes in Blizzard XML were silently dropped — including `HeroTalentsTreeNodesContainerTemplate`'s `scale="0.85"`, whose absence left only 212 of the needed 272 local units inside the fixed 284×362 backplate. Fixed in 91835d898 by parsing `@scale` and applying it through the template chain in both the XML loader and runtime CreateFrame paths, mirroring alpha.
+
+## [2026-06-11] ingest | Journeys renown card text anchor fallback
+
+Created `investigations/journeys-renown-card-text-anchor.md`. Reported as text z-ordering, but the Journeys "Renowns" card name/level FontStrings were anchored to the wrong target: their `relativeKey="$parent.IconFrame"` failed eager resolution (loader creates Layers before child Frames) and SetPoint silently fell back to the parent card, pushing the text under the adjacent column. Fixed in 7c0c0f987 by storing unresolved $parent key expressions on the anchor for the existing post-children lazy resolution pass.
+
+## [2026-06-11] ingest | Mouse dead at frozen 50 FPS (probe blockers + idle tick stall)
+
+Created `investigations/mouse-dead-probe-blockers-idle-ticks.md`. CoreBehaviorProbe (loaded from a renamed `.disabled` folder) left two full-screen mouse-enabled DIALOG blockers over UIParent because its 3-deep C_Timer.After cleanup chain stalls: pending C_Timers do not wake the tick loop once the app idles (open bug), and the frozen tick loop also freezes the FPS display at its last value. Loader fixed in b580ea005 to only accept TOCs naming their folder.
+
+## [2026-06-11] update | tick-subscription churn root cause fixed
+
+Updated `investigations/mouse-dead-probe-blockers-idle-ticks.md`: the idle timer stall was subscription churn — compute_tick_interval returned the raw shrinking remaining-time of the next C_Timer, changing the iced time::every identity on every update, so continuous input (mouse moves) recreated the tick stream before it could fire. Fixed in 397742569 with quantized interval buckets.
+
+## [2026-06-12] create | DISPLAY_SIZE_CHANGED / UI_SCALE_CHANGED firing conditions
+
+Created `investigations/display-size-ui-scale-events.md`. A live retail probe (`docs/addons/ScaleEventProbe`, 12.0.5.67823) disproved the sim's "resize never fires UI_SCALE_CHANGED" assumption: retail fires the two events as an ordered pair (display-first) on every display/scale recalculation — drag resize emits repeated ordered pairs during the drag, maximize/restore and resolution/fullscreen transitions can emit double-pairs even when dimensions are unchanged, scale slider and useUiScale changes also emit the pair, and startup fires the pair twice pre-PLAYER_LOGIN. Events fire before CVAR_UPDATE with GetEffectiveScale() already updated. Fixed `set_screen_size` to fire the pair and inverted the resize regression test to assert order. Startup ordering (sim fires post-login) and no-op dedupe remain divergent.
+
+## [2026-06-12] update | Startup display/scale event ordering matched to retail
+
+Updated `investigations/display-size-ui-scale-events.md`. Moved the `DISPLAY_SIZE_CHANGED`/`UI_SCALE_CHANGED` pair from `fire_post_login_events` into `fire_login_sequence` (after `VARIABLES_LOADED`, before `PLAYER_LOGIN`) — retail fires both pairs pre-login and none post-login. With the `set_screen_size` pair during GUI canvas startup this yields two pre-login pairs, matching the probe capture. Same-size window transitions reclassified as an observability limit (iced exposes no OS window-state signal). Verified: lib failure set unchanged, `lua-errors` clean with and without addons; new regression test pins pair-before-login ordering.
+
+## [2026-06-12] update | hit-grid ordered insertion (the core mouse-freeze fix)
+
+Updated `investigations/mouse-dead-probe-blockers-idle-ticks.md` with cause 4: full hit-grid rebuilds per hover transition (180-470ms each) saturated the main thread; the rebuilds were themselves a workaround for append-only HitGrid::insert breaking render order. Fixed with per-frame render-order keys + binary insertion, producer coverage for level/strata/raise changes, hover-time coalescing, and dev opt-level 1 (a7b131f65, telemetry 0c2668a3a).
+
+## [2026-06-12] create | Mount Journal clicks never switched selection
+
+Created `investigations/mount-journal-click-selection.md`. Real mouse clicks on mount rows fired OnMouseDown/OnMouseUp but never OnClick while `row:Click()` worked, because the startup-XML fast path's `parse_single_string_literal` stripped only the outer quotes — the generic MethodWithStringArg parser fused `RegisterForClicks("LeftButtonUp", "RightButtonUp")` into one garbage registration entry that no click edge can match. Fixed by rejecting interior quotes so multi-arg calls fall through to the dedicated parser. Added a `headless-click-probe mounts` panel (dotted-path frame resolution for anonymous ScrollBox rows + post-click `verify_lua`) and a `WOW_SIM_DEBUG_CLICK_DISPATCH=1` dispatch trace.
+
+## [2026-06-12] create | Micro menu clicks missed from stale quadrant anchor
+
+Created `investigations/micro-menu-click-offset.md`. GUI clicks on micro-menu buttons (LFD/Group Finder) did nothing: MicroMenuMixin:Layout anchors the menu inside MicroMenuContainer by screen quadrant, but the sim ran it before saved anchors and the real window size were applied, so the first press snapped the whole bar one QueueStatusButton slot (~46.5px) between mouse-down and mouse-up and the same-frame guard skipped OnClick. Fixed by replaying Blizzard's `InvokeOnAnyEditModeSystemAnchorChanged(force)` at the end of init_edit_mode_layout and from set_screen_size after the DISPLAY_SIZE_CHANGED/UI_SCALE_CHANGED pair. Added `headless-click-probe micromenu` regression panel.
+
+## [2026-06-19] create | Post-load workaround audit
+
+Created `investigations/post-load-workaround-audit.md` while auditing retail post-load hooks. The page records duplicate loader-side hooks retired for AccountStore, MapCanvas, and FrameXMLUtil, and classifies the remaining sampled hooks with current temporary rationale plus retirement paths.
+
+## [2026-06-20] update | Third-party addon metadata pre-registration
+
+Updated `systems/addon-loading.md` after fixing `!BugGrabber`'s false no-display warning when `BugSack` is present. The system page now records the invariant that discovered third-party addon metadata must be registered in `C_AddOns` before eager third-party Lua executes, while actual file loading still follows enabled, non-`LoadOnDemand`, dependency-sorted order.
+
+## [2026-06-21] update | secureenv no-fallback retail probe
+
+Updated `systems/taint-system.md` and `investigations/store-secure-pool-constructors.md` after a retail PrivateAurasUI cooldown-wrapper probe showed secure code does not hit late `_G` overrides. The simulator now models secureenv as a separate shallow copy without `__index = _G`; `Blizzard_SharedXMLBase` Lua is replayed into secureenv to populate shared secure symbols directly instead of copying constructors from `_G` after load.
+
+## [2026-06-30] update | Initial TOC `[Bootstrap]` support
+
+Added parser and loader support for TOC entries annotated with `[Bootstrap]`, motivated by LoD bootstrap glue such as `Blizzard_CooldownBroadcaster_Bootstrap.lua`. This was later corrected on 2026-07-01 after a live-client third-party probe showed `[Bootstrap]` does not reorder TOC files.
+
+## [2026-07-01] correction | `[Bootstrap]` preserves TOC order
+
+Updated `systems/addon-loading.md` after live-client probes showed `[Bootstrap]` is not a separate pass and must not move files out of TOC order. `TocFile` now keeps annotated files in `files` and records a per-file bootstrap flag. Startup loads full TOCs for non-LoD addons and only annotated bootstrap files for LoD addons, preserving addon order; runtime `LoadAddOn` skips already-executed bootstrap files and a self `LoadAddOn(thisAddon)` call from bootstrap remains a benign reentrancy no-op.
+
+## [2026-08-08] investigation | Prove remaining 12.0.0 removed runtime APIs
+
+Classified exactly 19 removed runtime API rows as `best-effort`/`behavioral` using the committed full-LoD namespace-safe rawget batch `patch-tests/patch_12_1/strict_removals.rs::removed_remaining_runtime_apis_are_absent_after_full_lod_load` at `ec9ffbc0b`. Three obsolete simulator publications were removed (`C_CatalogShop.OpenCatalogShopInteraction`, `C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer`, and `C_StorePublic.IsDisabledByParentalControls`); the other 16 rows were already absent. Source scanning is auxiliary, no replacement behavior is inferred, and the 143/453/1/2813 totals are current.
+
+The six retail 12.0.0 `Enum.EncounterTimelineTrackType.*` rows are best-effort/behavioral: Hidden=0, Sorted=1, Linear=2; metadata MinValue=0, MaxValue=2, NumValues=3. Focused proof is at `77fe621bb45a34b8618577e495aef3b83a7b96c1` and asserts the exact member set, Lua numeric types, and metadata. Claims are bounded to startup publication; sorting/linear behavior, ordering, consumers, persistence, and lifecycle remain unclaimed.
+
+## [2026-08-10] investigation | Classify ExpansionLevel enums
+
+The 16 retail 12.0.0 `Enum.ExpansionLevel.*` and `Enum.ExpansionLevelMeta.*` rows are best-effort/behavioral: `None=0, BurningCrusade=1, Northrend=2, Cataclysm=3, MistsOfPandaria=4, Draenor=5, Legion=6, BattleForAzeroth=7, Shadowlands=8, Dragonflight=9, WarWithin=10, Midnight=11, LastTitan=12`; metadata `MinValue=0`, `MaxValue=12`, `NumValues=13`. Focused proof is at `fd593d5fb9dc3ad14114da7e9fff0709a345e7ea` and asserts Lua numeric types, the exact complete 13-member set, no extras, and exact metadata. Root cause: no runtime drift; the guarded `missing_enums.lua` fallback is authoritative because no competing `ExpansionLevel` publication exists. Claims are bounded to retail 12.0.0 startup publication and exact values/types/metadata; expansion progression, availability, gameplay behavior, consumers, persistence, transitions, and lifecycle remain unclaimed.
+The five retail 12.0.0 `Enum.NamePlateSimplifiedType.*` rows are best-effort/behavioral: `None=0, Minion=1, MinusMob=2, FriendlyPlayer=3, FriendlyNpc=4`; metadata `MinValue=0`, `MaxValue=4`, `NumValues=5`. Focused proof is commit `22193d885` via `src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_simplified_type_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; nameplate behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1692 best-effort, 982 evidence-required, 2 exception-requested, and 734 untriaged rows** (3410 total).
+The eight retail 12.0.0 `Enum.NamePlateSize.*` and `Enum.NamePlateSizeMeta.*` rows are best-effort/behavioral: `Small=1, Medium=2, Large=3, ExtraLarge=4, Huge=5`; metadata `MinValue=1`, `MaxValue=5`, `NumValues=5`. Focused proof is commit `936135046` via `patch_12_0_0_nameplate_size_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; explicit `widget.rs` member data is authoritative and guarded fallback metadata matches. Claims are bounded to startup publication and exact values/types/metadata; nameplate sizing behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1700 best-effort, 982 evidence-required, 2 exception-requested, and 726 untriaged rows** (3410 total).
+The six retail 12.0.0 `Enum.NeighborhoodInitiativeFlags.*` and `Enum.NeighborhoodInitiativeFlagsMeta.*` rows are best-effort/behavioral: `Disabled=1, NoAbandon=2, NoRepeat=4`; metadata `MinValue=1`, `MaxValue=4`, `NumValues=3`. Focused proof is commit `a3b138e77` via `patch_12_0_0_neighborhood_initiative_flags_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; neighborhood-initiative flag semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1706 best-effort, 982 evidence-required, 2 exception-requested, and 720 untriaged rows** (3410 total).
+The six retail 12.0.0 `Enum.NeighborhoodInitiativeTaskType.*` and `Enum.NeighborhoodInitiativeTaskTypeMeta.*` rows are best-effort/behavioral: `Single=0, RepeatableFinite=1, RepeatableInfinite=2`; metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Focused proof is commit `1a6b066ec` via `patch_12_0_0_neighborhood_initiative_task_type_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; neighborhood-initiative task semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1712 best-effort, 982 evidence-required, 2 exception-requested, and 714 untriaged rows** (3410 total).
+The seven retail 12.0.0 `Enum.NeighborhoodInitiativeUpdateStatus.*` and `Enum.NeighborhoodInitiativeUpdateStatusMeta.*` rows are best-effort/behavioral: `Started=0, MilestoneCompleted=1, Completed=2, Failed=3`; metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`. Focused proof is commit `e0d63997b` via `patch_12_0_0_neighborhood_initiative_update_status_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; neighborhood-initiative update semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1719 best-effort, 982 evidence-required, 2 exception-requested, and 707 untriaged rows** (3410 total).
+The six retail 12.0.0 `Enum.NeighborhoodInitiativesCompletionStates.*` and `Enum.NeighborhoodInitiativesCompletionStatesMeta.*` rows are best-effort/behavioral: `NiCompletionStateNotCompleted=0, NiCompletionStatePlayerCompleted=1, NiCompletionStateSystemAbandoned=2`; metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Focused proof is commit `fc49fecf8` via `patch_12_0_0_neighborhood_initiatives_completion_states_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; neighborhood completion semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1725 best-effort, 982 evidence-required, 2 exception-requested, and 701 untriaged rows** (3410 total).
+The two retail 12.0.0 `Enum.NpcCraftingOrderSetFlags.*` rows are best-effort/behavioral: `AllowMultiple=1, AllowDuplicate=2`; matching metadata is `MinValue=1, MaxValue=2, NumValues=2`. Focused proof is commit `979724441` via `patch_12_0_0_npc_crafting_order_set_flags_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; crafting-order flag semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1727 best-effort, 982 evidence-required, 2 exception-requested, and 699 untriaged rows** (3410 total).
+The four retail 12.0.0 `Enum.PlayerCompanionInfoFlags.*` and `Enum.PlayerCompanionInfoFlagsMeta.*` rows are best-effort/behavioral: `IgnoreSeasonInScenarios=1`; metadata `MinValue=1`, `MaxValue=1`, `NumValues=1`. Focused proof is commit `d53ae8a89` via `patch_12_0_0_player_companion_info_flags_enums.rs`; it asserts the exact member, Lua numeric type, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; player-companion flag semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1731 best-effort, 982 evidence-required, 2 exception-requested, and 695 untriaged rows** (3410 total).
+The seven retail 12.0.0 `Enum.PreyHuntProgressState.*` and `Enum.PreyHuntProgressStateMeta.*` rows are best-effort/behavioral: `Cold=0, Warm=1, Hot=2, Final=3`; metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`. Focused proof is commit `f4ddf6457` via `patch_12_0_0_prey_hunt_progress_state_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; explicit combat-system enum data is authoritative for members and guarded fallback metadata matches. Claims are bounded to startup publication and exact values/types/metadata; prey-hunt progression semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1738 best-effort, 982 evidence-required, 2 exception-requested, and 688 untriaged rows** (3410 total).
+The six retail 12.0.0 `Enum.ProceduralSpawnInteractionMode.*` and `Enum.ProceduralSpawnInteractionModeMeta.*` rows are best-effort/behavioral: `None=0, Paint=1, Manipulate=2`; metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Focused proof is commit `9302f3017` via `patch_12_0_0_procedural_spawn_interaction_mode_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; procedural-spawn interaction semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1744 best-effort, 982 evidence-required, 2 exception-requested, and 682 untriaged rows** (3410 total).
+The five retail 12.0.0 `Enum.ProceduralSpawnVolumeChunkFlags.*` and `Enum.ProceduralSpawnVolumeChunkFlagsMeta.*` rows are best-effort/behavioral: `None=0, AllSubChunksSet=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`. Focused proof is commit `ae20de74a` via `patch_12_0_0_procedural_spawn_volume_chunk_flags_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; procedural-spawn chunk flag semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1749 best-effort, 982 evidence-required, 2 exception-requested, and 677 untriaged rows** (3410 total).
+The six retail 12.0.0 `Enum.RaidAuraOrganizationType.*` and `Enum.RaidAuraOrganizationTypeMeta.*` rows are best-effort/behavioral: `Legacy=0, BuffsTopDebuffsBottom=1, BuffsRightDebuffsLeft=2`; metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Focused proof is commit `769c96cd6` via `patch_12_0_0_raid_aura_organization_type_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; explicit edit-mode enum data is authoritative for members and guarded fallback metadata matches. Claims are bounded to startup publication and exact values/types/metadata; raid-aura organization behavior, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1755 best-effort, 982 evidence-required, 2 exception-requested, and 671 untriaged rows** (3410 total).
+The six retail 12.0.0 `Enum.RaidDispelDisplayType.*` and `Enum.RaidDispelDisplayTypeMeta.*` rows are best-effort/behavioral: `Disabled=0, DispellableByMe=1, DisplayAll=2`; metadata `MinValue=0, MaxValue=2, NumValues=3`. Focused proof is commit `a1e8065e7` via `src/loader/tests/wow_api_globals/patch_12_0_0_raid_dispel_display_type_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; explicit combat-system enum data is authoritative for members and guarded fallback metadata matches. Claims are bounded to startup publication and exact values/types/metadata; raid-dispel display behavior, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1775 best-effort, 982 evidence-required, 2 exception-requested, and 651 untriaged rows** (3410 total).
+
+The fourteen retail 12.0.0 `Enum.RcoCloseReason` rename rows are best-effort/behavioral: replacement values Fulfill=0, Expire=1, Cancel=2, Reject=3, GmCancel=4, CrafterFulfill=5, Invalid=6; metadata `MinValue=0`, `MaxValue=6`, `NumValues=7`; focused proof is commit `41dc7f43e` via `patch_12_0_0_rco_close_reason_enums.rs`, asserting numeric types, no extras, and absence of every old `RcoClose*` alias. Guarded fallback is authoritative with no drift; the rename preserves numeric values. Claims are bounded to startup publication and alias absence; order-processing behavior, consumers, persistence, transitions, and lifecycle are not claimed.
+
+The thirteen retail 12.0.0 `Enum.RenownRewardDisplayType.*` and `Enum.RenownRewardDisplayTypeMeta.*` rows are best-effort/behavioral: None=0, Item=1, Spell=2, Mount=3, Transmog=4, TransmogSet=5, TransmogIllusion=6, Title=7, GarrFollower=8, Currency=9; metadata `MinValue=0`, `MaxValue=9`, `NumValues=10`. Focused proof is commit `3e113702a` via `patch_12_0_0_renown_reward_display_type_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; renown reward-display behavior, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1788 best-effort, 982 evidence-required, 2 exception-requested, and 638 untriaged rows** (3410 total).
+
+The seven retail 12.0.0 `Enum.RenownRewardsFlags.*` and `Enum.RenownRewardsFlagsMeta.*` rows are best-effort/behavioral: `Milestone=1`, `Capstone=2`, `Hidden=4`, `AccountUnlock=8`; metadata `MinValue=1`, `MaxValue=8`, `NumValues=4`. Focused proof is commit `d773ff6e8` via `patch_12_0_0_renown_rewards_flags_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; renown-reward flag semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1811 best-effort, 982 evidence-required, 2 exception-requested, and 615 untriaged rows** (3410 total).
+
+The eight retail 12.0.0 `Enum.SimpleOrderStatus.*` and `Enum.SimpleOrderStatusMeta.*` rows are best-effort/behavioral: `Invalid=0`, `Creating=1`, `InProgress=2`, `Success=3`, `Failed=4`; metadata `MinValue=0`, `MaxValue=4`, `NumValues=5`. Focused proof is commit `bedbdabb1` via `patch_12_0_0_simple_order_status_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; order-status semantics, consumers, persistence, transitions, and lifecycle remain unclaimed.
+
+The eight retail 12.0.0 `Enum.SleevesGeoRange.*` and `Enum.SleevesGeoRangeMeta.*` rows are best-effort/behavioral: `None=0`, `Default=1`, `Flared=2`, `Puffy=3`, `PandaCollar=4`; metadata `MinValue=0`, `MaxValue=4`, `NumValues=5`. Focused proof is commit `1ed7b3764` via `patch_12_0_0_sleeves_geo_range_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; sleeves-geometry semantics, consumers, persistence, transitions, and lifecycle remain unclaimed.
+The three retail 12.0.0 `Enum.NamePlateSimplifiedTypeMeta.*` rows are best-effort/behavioral: metadata `MinValue=0`, `MaxValue=4`, `NumValues=5` for the numeric family `None=0, Minion=1, MinusMob=2, FriendlyPlayer=3, FriendlyNpc=4`. Focused proof is commit `22193d885` via `patch_12_0_0_nameplate_simplified_type_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; nameplate behavior, consumers, persistence, transitions, and lifecycle remain unclaimed. The six retail 12.0.0 `Enum.SpellAuraVisibilityType.*` and `Enum.SpellAuraVisibilityTypeMeta.*` rows are best-effort/behavioral: `RaidInCombat=0, RaidOutOfCombat=1, EnemyTarget=2`; metadata `MinValue=0, MaxValue=2, NumValues=3`. Focused proof is commit `8f5e7bca1` via `patch_12_0_0_spell_aura_visibility_type_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; explicit combat-system enum data is authoritative for members and guarded fallback metadata matches. Claims are bounded to startup publication and exact values/types/metadata; aura-visibility behavior, consumers, persistence, transitions, and lifecycle are not claimed. The six retail 12.0.0 `Enum.SecrecyLevel.*` and `Enum.SecrecyLevelMeta.*` rows are best-effort/behavioral: `NeverSecret=0, AlwaysSecret=1, ContextuallySecret=2`; metadata `MinValue=0, MaxValue=2, NumValues=3`. Focused proof is commit `bf190ef99` via `patch_12_0_0_secrecy_level_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; secrecy semantics, consumers, persistence, transitions, and lifecycle are not claimed. The eleven retail 12.0.0 `Enum.SpellDiminishCategory.*` and `Enum.SpellDiminishCategoryMeta.*` rows are best-effort/behavioral: `Root=0, Taunt=1, Stun=2, AoEKnockback=3, Incapacitate=4, Disorient=5, Silence=6, Disarm=7`; metadata `MinValue=0, MaxValue=7, NumValues=8`. Focused proof is commit `be42e3899` via `patch_12_0_0_spell_diminish_category_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; diminishing-return behavior, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1837 best-effort, 982 evidence-required, 2 exception-requested, and 589 untriaged rows** (3410 total).
+
+The six retail 12.0.0 `Enum.SpellDiminishRuleset.*` and `Enum.SpellDiminishRulesetMeta.*` rows are best-effort/behavioral: `None=0, PvE=1, PvP=2`; metadata `MinValue=0, MaxValue=2, NumValues=3`. Focused proof is commit `b9c450f09` via `patch_12_0_0_spell_diminish_ruleset_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; diminishing-ruleset semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1843 best-effort, 982 evidence-required, 2 exception-requested, and 583 untriaged rows** (3410 total).
+The seven retail 12.0.0 `Enum.StatusBarFillStyle.*` and `Enum.StatusBarFillStyleMeta.*` rows are best-effort/behavioral: `Standard=0`, `StandardNoRangeFill=1`, `Center=2`, `Reverse=3`; metadata `MinValue=0`, `MaxValue=3`, `NumValues=4`. Focused proof is commit `2a9422810` via `patch_12_0_0_status_bar_fill_style_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; explicit combat-system enum data is authoritative for members and guarded fallback metadata matches. Claims are bounded to startup publication and exact values/types/metadata; status-bar rendering behavior, consumers, persistence, transitions, and lifecycle are not claimed. The five retail 12.0.0 `Enum.StatusBarInterpolation.*` and `Enum.StatusBarInterpolationMeta.*` rows are best-effort/behavioral: `Immediate=0`, `ExponentialEaseOut=1`; metadata `MinValue=0`, `MaxValue=1`, `NumValues=2`. Focused proof is commit `940e85e7c` via `patch_12_0_0_status_bar_interpolation_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; interpolation behavior, consumers, persistence, transitions, and lifecycle are not claimed. The six retail 12.0.0 `Enum.TableSecurityOption.*` and `Enum.TableSecurityOptionMeta.*` rows are best-effort/behavioral: `DisallowTaintedAccess=0`, `DisallowSecretKeys=1`, `SecretWrapContents=2`; metadata `MinValue=0`, `MaxValue=2`, `NumValues=3`. Focused proof is commit `4b8cd7c16` via `patch_12_0_0_table_security_option_enums.rs`; it asserts the complete exact family, Lua numeric types, no extras, and metadata. No runtime drift; guarded fallback is authoritative. Claims are bounded to startup publication and exact values/types/metadata; table-security semantics, consumers, persistence, transitions, and lifecycle are not claimed. Current totals are **1861 best-effort, 982 evidence-required, 2 exception-requested, and 565 untriaged rows** (3410 total).
+
+The four retail 12.0.0 `Enum.TraitNodeEntryType.SpendCapstoneCircle`, `Enum.TraitNodeEntryType.SpendCapstoneSquare`, `Enum.TraitNodeEntryTypeMeta.MaxValue`, and `Enum.TraitNodeEntryTypeMeta.NumValues` rows are best-effort/behavioral: SpendCapstoneCircle=13, SpendCapstoneSquare=14; metadata MinValue=0, MaxValue=14, NumValues=15. Focused proof is commit `5ecf52224` via `patch_12_0_0_trait_node_entry_type_enums.rs`; it asserts the complete 15-member family, Lua numeric types, no extras, and metadata. No runtime drift; explicit addon_system.rs member data and guarded fallback metadata match. Claims are bounded to startup publication and exact changed values/types/metadata; trait-node entry semantics, consumers, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1865 best-effort, 982 evidence-required, 2 exception-requested, and 561 untriaged rows** (3410 total).
+
+The three retail 12.0.0 `Enum.VasTransactionPurchaseResult` changed rows are best-effort/behavioral: `EndDbErrors=20096→20097`, metadata `MaxValue=20096→20097`, and `NumValues=144→145`. Focused proof is commit `f0d18a70b` via `patch_12_0_0_ui_enum_metadata.rs`; it asserts `DbHouseOwnerRestriction=20096`, `EndDbErrors=20097`, and the exact numeric metadata. No runtime drift; the guarded fallback is authoritative. Claims are bounded to startup publication and exact changed values/types; VAS transaction semantics, consumers, validation, persistence, transitions, and lifecycle remain unclaimed. Current totals are **1868 best-effort, 982 evidence-required, 2 exception-requested, and 558 untriaged rows** (3410 total).
+
+The retail 12.0.0 changed `GetRaidTargetIndex` row is best-effort/behavioral: startup publishes callable `GetRaidTargetIndex(unit)` and returns nil for `player` when no raid marker is assigned. Focused proof is commit `492c4a189` via `tests/startup_api_stubs.rs`; it asserts the function is callable with a unit and returns nil without an assigned marker. Runtime publication is in `src/lua_api/globals/targeting_verbs.rs`; the current unmodeled marker state is the bounded root cause, with no drift for this contract. Claims are bounded to function publication and nil-without-marker; assigned-marker behavior and raid-target semantics remain unclaimed. Current totals are **1869 best-effort, 982 evidence-required, 2 exception-requested, and 557 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Classify FCT EnergyGains CVar removals
+
+Classified exactly `removed:floatingCombatTextEnergyGains` and `removed:floatingCombatTextPeriodicEnergyGains` as best-effort/behavioral. Focused proof is commit `15a7936e6`, test `src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs::test_patch_12_0_0_removed_nameplate_cvars`, asserting `GetCVar` and `GetCVarDefault` return nil for each old name. No drift: old names are absent from `src/cvars.yaml`; distinct `_v2` replacements exist without a semantic-equivalence claim. Evidence hashes: register `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`, defaults `e3241b1accf60051739f786962739dd7362d6f69f48ae5e134b5c4115280275c`, runtime `e4a1e46a35988dd137b95c4afeab0c95f6e65516ef8401f25397f3f2a1a13e6d`, focused test `1fb711dd4a77849a44d52f2f8f6850aeb3ae496a089ec2b936b7afb2c204598e`, discovery `4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6`. Bounded claim: public getter absence only. Totals: **1921 / 1029 / 2 / 458 / 3410**.
+
+## [2026-08-12] investigation | Classify added event producer gaps
+
+The eighteen retail 12.0.0 added event rows PARTY_KILL, PLAYER_TARGET_DIED, REMOVE_NEIGHBORHOOD_CHARTER_SIGNATURE, SECURE_TRANSFER_CONFIRM_HOUSING_PURCHASE, SECURE_TRANSFER_HOUSING_CURRENCY_PURCHASE_CONFIRMATION, SETTINGS_PANEL_OPEN, SET_SEEN_PRODUCTS, SHOW_JOURNEYS_UI, SHOW_NEW_PRODUCT_NOTIFICATION, TOOLTIP_SHOW_ITEM_COMPARISON, TRAINING_GROUNDS_ENABLED_STATUS_UPDATED, TRANSMOG_CUSTOM_SETS_CHANGED, TRANSMOG_DISPLAYED_OUTFIT_CHANGED, TUTORIAL_COMBAT_EVENT, UNIT_DIED, UNIT_LOOT, UNIT_SPELL_DIMINISH_CATEGORY_STATE_UPDATED, and UPDATE_BULLETIN_BOARD_MEMBER_TYPE are evidence-required/unsafe. Runtime registration exists, but producer-backed firing, exact handler delivery, and payload semantics are unproven; TOOLTIP_SHOW_ITEM_COMPARISON requires callback-event probing and TUTORIAL_COMBAT_EVENT additionally requires restricted-event probing. Claims are bounded to authoritative event declarations and current registerability, with no spontaneous firing, ordering, lifecycle, or payload-semantic claims. Current totals are **1921 best-effort, 1052 evidence-required, 2 exception-requested, and 435 untriaged rows** (3410 total).
+
+
+## [2026-08-12] investigation | Classify added retail CVar defaults
+
+The thirteen retail 12.0.0 added CVars `enablePetBattleFloatingCombatText_v2`, `encounterTimelineEnabled`, `encounterTimelineHideForOtherRoles`, `encounterTimelineHideLongCountdowns`, `encounterTimelineHideQueuedCountdowns`, `encounterTimelineIconographyEnabled`, `encounterTimelineIconographyHiddenMask`, `encounterWarningsDefaultMessageDuration`, `encounterWarningsEnabled`, `encounterWarningsHideIfNotTargetingPlayer`, `encounterWarningsLevel`, `endeavorInitiativesLastPoints`, and `equipmentManager` are **best-effort/behavioral** for startup public getter/default publication only. Focused proof is commit `575893319` via `src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs::test_patch_12_0_0_cvar_defaults`; it asserts both GetCVar and GetCVarDefault exact strings (`1`, `0`, `3500`, or one-byte `string.char(1)` as applicable). No mutation, persistence, consumer, UI, initiative, equipment-manager, or replacement semantics are claimed; `enablePetBattleFloatingCombatText_v2` is not asserted equivalent to the removed old name. Evidence hashes: register `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735b53e22c50b49a67`, defaults `e3241b1accf60051739f786962739dd7362d6f69f48ae5e134b5c4115280275c`, runtime `e4a1e46a35988dd137b95c4afeab0c95f6e65516ef8401f25397f3f2a1a13e6d`, test `c15ff01eb5f6beb08eeaed2a8417aef16a5255d549423adab003aa8c76c4aa8c`, discovery `4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6`. Current totals are **1934 best-effort, 1088 evidence-required, 2 exception-requested, and 386 untriaged rows** (3410 total).
+
+## [2026-08-12] investigation | Classify 15 additional added retail CVar defaults
+
+Classified `externalDefensivesEnabled` and 14 floating-combat-text `_v2` CVar additions as best-effort/behavioral. Proof commit `a5a1a343a` and focused `src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs::test_patch_12_0_0_cvar_defaults` assert exact `GetCVar`/`GetCVarDefault` strings. Claims are bounded to startup getter/default publication; no rendering, mutation, persistence, consumer, or old-name equivalence semantics are claimed. Totals: **1984 / 1103 / 2 / 321 / 3410**.
+
+The four retail 12.0.0 added APIs `hasanysecretvalues`, `issecrettable`, `issecretvalue`, and `mapvalues` are **evidence-required/unsafe**. The first two are not published; `issecretvalue` uses guarded local shallow-secret logic without proof of full retail semantics; `mapvalues` uses guarded shared/temporary fallbacks with only basic mapping behavior. Required state-backed/full-LoD probes cover secret API publication, zero/nil/primitives, direct/nested/mixed/tainted/protected/propagated values, non-table and empty-table inputs, boolean return types, and for mapvalues zero inputs, nils, callback arity/multiple returns/errors, result order/count, and Lua packing. Claims are bounded to current publication and model observations; no aliases or equivalence are claimed. Current totals are **1993 best-effort, 1107 evidence-required, 2 exception-requested, and 308 untriaged rows** (3410 total).
+
+[2026-08-12] investigation | Classify twelve added nameplate CVar defaults
+
+The twelve retail 12.0.0 nameplate CVar additions `nameplateShowFriendlyPlayerGuardians`, `nameplateShowFriendlyPlayerMinions`, `nameplateShowFriendlyPlayerPets`, `nameplateShowFriendlyPlayerTotems`, `nameplateShowFriendlyPlayers`, `nameplateShowOffscreen`, `nameplateShowOnlyNameForFriendlyPlayerUnits`, `nameplateSimplifiedTypes`, `nameplateSize`, `nameplateStackingTypes`, `nameplateStyle`, and `nameplateThreatDisplay` are **best-effort/behavioral**. Focused proof is commit `5d35250e5` via `src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs::test_patch_12_0_0_cvar_defaults`; it asserts both public getters return each exact startup/default string, including one-byte `0x02` values for `nameplateSimplifiedTypes`, `nameplateStackingTypes`, and `nameplateThreatDisplay`. Claims are bounded to startup getter/default publication; no rendering, UI, mutation, persistence, consumer, or later-epoch semantics are claimed. Current totals are **2005 best-effort, 1107 evidence-required, 2 exception-requested, and 296 untriaged rows** (3410 total).
+
+The five retail 12.0.0 API additions `scrubsecretvalues`, `secretunwrap`, `secretwrap`, `securecallmethod`, and `string.concat` are **evidence-required/unsafe**. The first three are local pass-through or identity compatibility helpers with retail secret, taint, protected-value, nested-value, and variadic semantics unmodeled; `securecallmethod` is a permissive local dispatcher whose lookup, self/argument order, result packing, errors, and secure/taint boundary remain unproven; `string.concat` is absent and legacy `strconcat` is not an established alias. Required full-LoD/state-backed probes cover exact publication, zero/nil/primitives/multiple/nested/direct-secret/tainted/protected values, output count/order/types, errors, direct and `__index` method lookup, invalid receivers/names, secure boundaries, and string-concat coercion/error rules. Claims are bounded to source declarations and current local/missing behavior; no pass-through, alias, secret, taint, protected-value, or consumer semantics are claimed. Current totals are **2014 best-effort, 1115 evidence-required, 2 exception-requested, and 279 untriaged rows** (3410 total).
+
+The ten retail 12.0.0 changed enum rows CharCustomizationTypeMeta.MaxValue/NumValues, EditModeSystemMeta.MaxValue/NumValues, EditModeUnitFrameSettingMeta.MaxValue/NumValues, HousingCatalogEntrySubtype.OwnedModifiedStack/OwnedUnmodifiedStack, and HousingCatalogEntrySubtypeMeta.MaxValue/NumValues are **best-effort/behavioral**. Existing focused startup tests prove exact post-change numeric publication and metadata; proof commits are e08b83b6a, 4d883c964, 509daf308, and c400d31be, all ancestors. Claims are bounded to startup enum/metadata values and types; no customization, Edit Mode, housing behavior, replacement semantics, or consumers are claimed. Current totals are **2024 best-effort, 1115 evidence-required, 2 exception-requested, and 269 untriaged rows** (3410 total).
+
+The four retail 12.0.0 changed CVar rows `mountJournalGeneralFilters`, `mountJournalSourcesFilter`, `mountJournalTypeFilter`, and `nameplateGameObjectMaxDistance` are **best-effort/behavioral**. Focused proof is commit `896289b75` via `src/loader/tests/wow_api_globals/patch_12_0_0_mount_journal_nameplate_cvar_values.rs::test_patch_12_0_0_mount_journal_nameplate_cvar_values`; it passed 1 test, 0 failed, 1548 filtered and asserts both `GetCVar` and `GetCVarDefault` return exact strings: `0`, `0`, `0`, and `30.000000` respectively. Claims are bounded to startup getter/default publication; no Mount Journal/nameplate behavior, mutation, persistence, consumer, or semantic-equivalence claims are made. Evidence hashes: register `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`, defaults `e3241b1accf60051739f786962739dd7362d6f69f48ae5e134b5c4115280275c`, runtime `e4a1e46a35988dd137b95c4afeab0c95f6e65516ef8401f25397f3f2a1a13e6d`, focused test `271d73176d9cb53dd9f91a75ad76a49c2ec8fb9a3b834c44bffb22baa378d625`, discovery `4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6`. Current totals are **2066 best-effort, 1149 evidence-required, 2 exception-requested, and 193 untriaged rows** (3410 total).
+
+The 34 retail 12.0.0 removed housing Expert Gizmos rotation/translation CVar rows from `housingExpertGizmos_Rotation_BaseOrbScale` through `housingExpertGizmos_Translation_XRayLightAlpha` are **evidence-required/unsafe**. Checked-in `src/cvars.yaml` omission matches source removal, but public `GetCVar` and `GetCVarDefault` absence is not proven; each row requires a full-LoD nil/nil getter probe. Claims are bounded to source removal and checked-in omission only: no housing-gizmo, rendering, replacement, mutation, persistence, consumer, or lifecycle semantics are claimed. Current totals are **2119 best-effort, 1183 evidence-required, 2 exception-requested, and 106 untriaged rows** (3410 total).
+
+The two retail 12.0.0 changed enum metadata rows `Enum.CraftingOrderResultMeta.MaxValue` and `Enum.CraftingOrderResultMeta.NumValues` are **best-effort/behavioral**: `MaxValue=46→48` and `NumValues=47→49`. Focused proof is commit `f6db33a61` via `src/loader/tests/wow_api_globals/patch_12_0_0_crafting_order_result_changed_enums.rs::test_patch_12_0_0_crafting_order_result_enum_changed_values`; it asserts both Lua numeric metadata values, the complete changed family, and `MinValue=0`, `MaxValue=48`, `NumValues=49`. Evidence hashes: source/register `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`, runtime `60a333e293bcc26af280e487e3b546231330e3cd9feb51c77aecb258dab3f3a6`, focused test `b5f52fb3534a7f508f8731261e7c79b3efe972b1636178ca5d1d8606c49c2f7b`, discovery `4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6`. Claims are bounded to retail 12.0.0 startup Lua numeric metadata publication only; no crafting-order producer, interpretation, consumer, mutation, persistence, transition, or lifecycle semantics are claimed. Current totals are **2121 best-effort, 1183 evidence-required, 2 exception-requested, and 104 untriaged rows** (3410 total).
+
+The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPANSION_ACCESS`, `LE_GAME_ERR_HOUSING_RESULT_PERMISSION_DENIED`, and `LE_GAME_ERR_RECENT_ALLY_PIN_SERVER_ERROR` are **best-effort/behavioral**. Focused proof is commit `0df65552d` via `src/loader/tests/wow_api_globals/patch_12_0_0_housing_recent_ally_error_constants.rs::test_patch_12_0_0_housing_recent_ally_error_constants`; it asserts Lua numbers `1218`, `1219`, and `1233` respectively. Evidence hashes: source/register `6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863`, runtime `a92516cfb211c4674410ff3c7767c0421677f9a48ad31772b392df08b550deca`, focused test `1f7bc4f0300c9ee4dd61085335b5b1f8018112d41843cc8ad4b6cc9353582c4c`, discovery `4cd7ba572f01c0abf7308fe218230fe004983b0b49d4a752cdfedcf672e4a5e6`. Claims are bounded to retail 12.0.0 startup numeric global publication; no housing, guild/neighborhood, recent-ally, error production/interpretation, consumer, mutation, persistence, transition, UI, or lifecycle semantics are claimed. Current totals are **2124 best-effort, 1183 evidence-required, 2 exception-requested, and 101 untriaged rows** (3410 total).
+
+## [2026-08-23] investigation | Resolve C_LootHistory empty-state slice
+
+Promoted the retail/PTR `C_LootHistory` read surface from generated fallback behavior to a bounded state-backed model. Empty state returns fresh encounter/drop tables, explicit nil lookup results, and `GetLootHistoryTime() == 0.0`; the real `GroupLootHistoryFrame` can load and show its empty state with zero new Lua errors during `Show()`. Populated encounters, drops, rolls, event producers, persistence, and timer progression remain unmodeled. The generated-stubs audit now tracks five unresolved priorities.
+
+## [2026-08-24] investigation | Restore Lua call frames after errors
+
+Documented commit `ff01991aa`: direct `call_function_state`/`call_function_state_multi` calls now save and restore `LuaState` frame state (`top`, `base`, `ci`, and overflow status) when Lua execution fails. The focused `direct_state_call_restores_call_frame_after_lua_error` regression proves a failed call leaves `ci == 0` and a subsequent direct call returns `42`. This prevents the later `expected Lua closure in execute` cascade; remaining default-retail startup errors are not resolved by this slice.
+
+## [2026-08-26] update | Document limited listfile canonical casing
+
+Updated [`updating-blizzard-ui-to-a-new-patch`](../../updating-blizzard-ui-to-a-new-patch.md), [`casc-loading`](../specs/casc-loading.md), and [[casc-asset-cache]] for commit `2f88b2cab`. Ordinary community rows remain normalized lowercase; `data/listfile-overrides.csv` authoritatively replaces source display paths for normalized path and FDID resolution while preserving slash-normalized canonical casing. Generated rows sort by normalized path. Existing `index.md` catalog text remains accurate; no index change was needed.
+
+## [2026-08-28] audit | Document timeout re-exec and current PartyFrame contract
+
+Audited commit `e5947420e` and current PartyFrame commits `d86832096`/`87701437d`. Updated the prefork spec and system page to distinguish Linux ordinary `test_timeout!`/`with_timeout` exact-test re-exec from the prefork runner, including sibling-preserving assertion failures, process-tree timeout cleanup, visible-output forwarding, and the unchanged 120-second normal limit (1 second only in conformance). Clarified the PartyFrame investigation's hidden `PowerBarAlt` descendants after `87701437d`; its index summary remains accurate, so no index change was needed.
+
+## [2026-08-27] update | Correct transparent-wrapper frame-level contract
+
+Updated `investigations/transparent-wrapper-render-order.md` after current retail XML and bucket ordering showed the old opaque level-100 border regression was invalid. Documented that only regionless wrappers hoist descendants, wrappers with owned regions retain frame-level boundaries, and higher raw frame levels render after lower levels.
+
+## [2026-08-27] update | Refresh PartyFrame tree against current retail XML
+
+Updated `investigations/partyframe-tree.md` and its index summary. Current `EditModeSystemSelectionBaseTemplate` explicitly uses frame level 1000, so PartyFrame Selection/highlight/corner dump expectations are 1000/1001/1002 rather than the historical master LOW:3/4/5 values. Preserved the startup-hang root causes and recorded resolved sizing/coordinate follow-ups.
+
+## [2026-08-28] update | Verify PartyFrame region draw-layer contract
+
+Updated `investigations/partyframe-tree.md`, its index summary, and focused coverage. Portrait remains `BACKGROUND`/0; Flash and Name remain `ARTWORK`/0 through `GetDrawLayer()`. Texture and FontString raw dump strata/levels remain simulator diagnostics rather than client API assertions.
+
+## [2026-08-28] fix | Handle nested timeout re-exec guards
+
+Audited commit `14bfc8eb0`. Updated [[prefork-test-harness]] and the prefork spec to document that nested `with_timeout` calls execute in the guarded child with one handshake and no second re-exec boundary, and that multi-shard same-process tests use one outer timeout around the complete sequence with inner shard bodies unwrapped. The existing index summary and related timeout documentation remain accurate; no index change was needed.
+
+## [2026-08-28] correction | Audit current PartyFrame portrait texture identity
+
+Audited commit `640aa7fbb` against current retail portrait evidence. Updated [[partyframe-tree]], [[partyframe-portrait-composition]], and their index summaries: player and party portraits expose `GetAtlas() == nil` and numeric `GetTexture() == 237669`; `GetTextureFilePath()` resolves the authored `Interface\\TargetingFrame\\UI-Classes-Circles` path. Removed the stale legacy fallback claim; no code, test, PLAN.md, vendor, cache, or protected-file changes were made.
+
+## [2026-09-11] audit | Credit PTR timed-cast delay and failure inputs
+
+Audited `70e681266` against the pinned 12.1.5 event/query register and current source/test/spec/admin documentation. Credited only `UNIT_SPELLCAST_DELAYED`, `UNIT_SPELLCAST_FAILED`, and `UNIT_SPELLCAST_FAILED_QUIET`: public `A_Admin` inputs mutate or take real timed-cast state before shared four-field payload dispatch; failure pairs with STOP, old casts do not complete, and callbacks may retain replacements. Focused current PTR/earlier-retail proof includes query identity/delay state and real Blizzard cast-bar duration/failure handling. Reconciled the six cast/channel query rows: casting slot 7 is synthetic string `Cast-Sim-<id>` for the PTR `WOWGUID` field; numeric castBarID is unchanged at casting slot 10 and channel slot 11. Refreshed stale source/test hashes on all four older producer rows. The pending-specialization fix remains narrowly limited to failed existing specialization activation, with no actor/action redesign. Totals: 427 best-effort, 22 evidence-required, 0 untriaged. Native failure source/order/actor, GUID/type semantics, and security remain unverified.
+
+## [2026-09-11] audit | Credit PTR spellcast self-cancel interruption
+
+`c89d475e1` and proof record `6278d87a9` credit only `UNIT_SPELLCAST_INTERRUPTED` for modeled `SpellStopCasting()` self-cancel. Focused real producer tests cover captured state clear, five fields including resolved player GUID, paired STOP, repeat false/no notifications, no later completion/effect, and interruption/STOP callback replacement casts. `INTERRUPTED`→`STOP` ordering and self attribution remain simulator policy; enemy/native/security semantics and every other unimplemented spellcast event remain unresolved. Totals: 424 best-effort, 25 evidence-required, 0 untriaged. See [spellcast payloads](../specs/spellcast-event-payloads.md) and [[patch-12-1-5-api-audit]].
+
+## [2026-09-30] ingest | Expand 12.0.5 source-audit boundary
+
+Updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]], and index links after source-retention commit `7ff275fd3`. Expanded audit is IN PROGRESS: retained plaintext page/provenance and working inventory distinguish 244 consolidated delta rows / 186 subjects from 118 chronological prose rows (including narrative), with 0 CVar entries. The historical 38 native-probe subfindings do not establish full-page coverage. User-requested best-supported guesses remain explicitly guessed and track concrete future probes; no completed behavior or native-verification claim.
+
+## [2026-09-30] audit | Record bounded 12.0.5 batch4 development proof
+
+[[patch-12-0-5-api-audit#Batch4 bounded development proof]] records compiled revision `9a50d8a5cc20d0adf0b7c529d237fc043ef57532` and actual binary runs: FontString six, common duration four, abbreviated four and numeric-rule seven PASS. Scenario host-result adoption `6eace49d5` has prior four-case development GREEN. Corrected stale page-coverage scenario/common claims and linked only exact smooth-scaling/common-formatter prose rows. Native Seconds duration-unit RED, renderer/native limits and independent final gate remain explicit; whole page IN PROGRESS. [[patch-12-0-5-probe-inventory]] remains 38 subfindings with unchanged classifications. Owned specs and PLAN gates untouched.
+
+## [2026-09-30] audit | Record batch5 bounded 12.0.5 development proof
+
+`e0a46d691` default integration build and actual binary runs establish stat restriction 4 PASS (40 supported API outputs), UnitIsUnit 6 PASS, ignoreGCD 6 PASS, common formatter 5 PASS including curve taint, Seconds format/config/native controls 7/7/3 PASS including cached garden consumer. Missing stats 10 FAIL, charge 1 PASS/3 FAIL, countdown formatter 8 FAIL remain agent-owned implementation work. Exact argv/log references are retained in `/tmp/patch-12.0.5-batch5-runs.json`. Native-enabled simulator output supersedes prior pending claims, not native parity. Verifier 76, final Rust gates and other-main Forever profile compilation remain pending. Page coverage preserves all 362 IDs/classifications and probe register unchanged; full audit IN PROGRESS. See [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]], [[duration-core]].
+
+## [2026-09-30] implementation | Correct bounded current-retail enum publication
+
+`e8ebb47c1` corrects source-backed current-retail enum additions/removals/rename and related shifted values, with actual-member metadata refreshed after shared compatibility publication. [[patch-12-0-5-api-audit]] links the [enum spec](../specs/patch-12-0-5-enum-additions.md#retained-source--proof-matrix), the sole exact accounting/proof matrix. Parent RED is retained; GREEN/final checks pending. Historical/PTR publications, native/domain semantics and later unrelated members remain outside new claims.
+
+## [2026-10-01] ingest | Bounded secret-string formatting runtime proof
+
+Added [contract](../specs/secret-string-formatting.md), exact line-40 coverage and runtime revision metadata; updated [[patch-12-0-5-api-audit]], [[patch-12-0-5-probe-inventory]] and index. Runtime `6044544` independent 6+2 PASS and fmt/check with pre-existing strlen warning; simulator pin `c5ba89ae3`, old-pin RED 1/5, new-pin batch7 compilation pending. Tainted opaque permission inferred; SetFormattedText/other domains and native parity unproven. All source IDs/classifications retained; full page IN PROGRESS and 38-row probe register unchanged.
+
+## [2026-10-01] audit | Record bounded batch7 observed proof
+
+[[patch-12-0-5-api-audit#Batch7 observed proof — 2026-10-01]] records snapshot `c5ba89ae3` with rilua `6044544b`: twelve integration filters 111 PASS, configured countdown library 6 PASS / 2 FAIL; post-snapshot GC/fixture GREEN and independent audit pending. Coverage preserves 362 source IDs and unrelated classifications; linked rows are not completion. [[spell-charge-state]] and [[duration-core]] retain native/earlier-profile limits.
+
+## [2026-10-01] audit | Record bounded batch8/9 cooldown and query proof
+
+[[patch-12-0-5-api-audit#Batch8/9 bounded capability update — 2026-10-01]] links independent cooldown proof and observed query/UnitName evidence, exact retained source links, partial propagator failures and pending producer/final/startup gates. Specs own behavior and native-inference limits; all 362 source IDs remain, with no whole-page completion.
+
+
+## [2026-10-01] audit | Reconcile bounded batch9/10 source proof
+
+[[patch-12-0-5-api-audit#Batch10 bounded follow-up]] links the propagator contract SSOT and separately records charge-policy failures; completed source-scoped batch9 audit replaces stale pending text. Coverage retains 362 IDs; only prose 173 moves from partial-development-green to bounded-coverage, not completed. Acceptance/default gates were pending at this entry; current bounded outcomes are linked in [[patch-12-0-5-api-audit#Batch10 bounded follow-up]] and the [restriction proof SSOT](../specs/cooldown-restriction.md#tests-asserting-this-spec). Empty-data/type-input rule, unrelated statuses, charge spec and production files unchanged.
+
+## [2026-10-01] evidence | Record batch11 charge policy and independent XML proof
+
+[[patch-12-0-5-api-audit#Batch11 bounded charge policy — 2026-10-01]] and [[spell-charge-state]] link bounded policy/controls 24 PASS and startup `[]` at `d8a93bec3`. Three charge-table source IDs gain partial capability links; all 362 IDs and unrelated statuses preserved. XML verifier 124 confirms five declarative/getter cases. Verifier 126 artifacts were absent at this entry; the [current restriction proof SSOT](../specs/cooldown-restriction.md#tests-asserting-this-spec) now records independent bounded confirmation and default fmt/check PASS with revision/source limits. Startup remains historical, not current-binary proof; secret spell identifiers, older-profile execution and whole-page completion remain unclaimed.
+
+## [2026-10-01] reconciliation | Correct stale charge-policy and XML status links
+
+Updated index and [[spell-charge-state]] to link current proof SSOT rather than repeat pending charge/default-gate claims; batch10 links completed bounded XML getter/inheritance acceptance. Historical entries retain their context with superseding outcome links. All 362 classifications unchanged; no native, whole-page or current-binary acceptance added. Docs-only; no code edits or test execution.
+
+## [2026-10-01] evidence | Reconcile independent party acceptance
+
+[Party contract](../specs/party-connection.md#tests-asserting-this-spec) owns independent 55/55 reuse, wiring/readability PASS and snapshot-scoped default fmt/check. Exact `prose-2026-03-31-182`/`party-connection` accounting retains 362 IDs and unrelated statuses. Parent startup exit 0, `[]`, 7.85s remains separately attributed; no current whole-worktree, native/network/profile or whole-page claim.
+
+## [2026-10-01] implementation | Replace seeded DamageMeter producer
+
+[Structure contract/proof](../specs/damage-meter-combat-source.md#tests-asserting-this-spec) owns predecessor parent RED 0/6, current C API registration/lookup/reset and stack-rooted snapshots. [[patch-12-0-5-api-audit#DamageMeter input only — pending RED]] retains source accounting; old heading is historical. Seeded Lua producer removed without fallback; nine grouped fixtures await parent compilation/GREEN. Applicable combat annotation enforcement absent in inspected surfaces: all four combat getters explicitly blocked, secret selectors rejected without unwrapping. No native, earlier-profile, broad security or source-row completion credit.
+
+## [2026-10-01] evidence | Reconcile 30 current-Retail enum contracts
+
+[[patch-12-0-5-api-audit#Current-Retail enums — bounded independent PASS]] links the [durable contract/proof](../specs/patch-12-0-5-enum-additions.md#reconciled-bounded-proof--2026-10-01): exact 30 pending rows accepted from unchanged-source saved batch7 20/20 PASS. External publication/removal/rename/member metadata only; no downstream domain requirement. 362 IDs/source hash and concurrent housing accounting preserved; current totals 278 pending / 70 bounded / 14 partial. Historical numbering, PTR/native/all-profile/current-binary execution unproved. No rerun or page closure.
+
+## [2026-10-01] evidence | Reconcile batch39 altered-form parent GREEN
+
+Updated [altered-form proof](../specs/unit-aura-altered-form.md#reconciled-batch39-parent-proof--2026-10-01), [[lua-api]] and index from saved parent artifacts. Proof table owns RED exit limitations, GREEN provenance and bounded coverage; supersedes the earlier pending-GREEN checkpoint only. Broader controls/startup/independent checks/acceptance remain pending. Docs only; no runtime commands or accounting changes.
+
+## [2026-10-02] evidence | Reconcile batch48 saved parent GREEN
+
+[Classification proof SSOT](../specs/aura-spell-classification-identifiers.md#reconciled-batch48-parent-green--2026-10-02) records16 new +210 controls +18 private anchors =244 unique PASS/all16 exits0, startup0 `[]`, exact runtime71.3813190951477735s and dirty-source-bound provenance. Historical RED retained; shared cooldown14 refreshed. Policies remain inferred; native permissions/result secrecy/catalog/acquisition unknown. Independent381 and source361/363/359 pending; no checked requirements, coverage/accounting or private-anchor acceptance.
+
+## [2026-10-02] evidence | Accept exact batch48 classification and Add restriction rows
+
+[Classification acceptance SSOT](../specs/aura-spell-classification-identifiers.md#independent-bounded-acceptance--2026-10-02) and [exact Add359 SSOT](../specs/private-aura-anchors.md#exact-add359-bounded-acceptance--2026-10-02) record parent-accepted independent381. Only359/361/363 promote;387 regression unchanged. Inferred classification/identifier/security policies and ordinary-public tainted live Add only; native gaps stay open. Parent owns postcommit validation; earlier pending checkpoints historical.
+
+## [2026-10-03] evidence | B74 and LoC final bounded acceptance
+
+Reconciled [B74 acceptance SSOT](../specs/ambiguate-context.md#b74-independent-bounded-acceptance--2026-10-03), [LoC fixture SSOT](../specs/spell-book-loss-of-control-outputs.md#test-only-loc-fixture-repair--2026-10-03), [audit](investigations/patch-12-0-5-api-audit.md#batch74--ambiguate-inputs-only-checkpoint) and index from supplied625 proof and644 accounting. Checked only satisfied B74 bounded boxes; B75 older-checkpoint39/39 and scoped equivalence retained. Two saved d11 LoC results accepted without reruns; immutable original596 counts and residual bookkeeping remain distinct. Historical pending entries above are checkpoints, superseded only within linked acceptance scopes. Retail-stat spec changed only stale B74 pending line; exterior unchanged. No source/aura inspection, scans, runtime gates, delegation or commit.
+
+## [2026-10-03] docs | B76 accepted annotations and B77 pending producer
+
+Updated [B76 SSOT](../specs/unit-stat-output-restriction.md#b76-existing-model-bounded-acceptance--2026-10-03), mount [inventory/proof only](../specs/mount-spell-identifier.md#implementation-inventory), [audit](investigations/patch-12-0-5-api-audit.md#batch76--existing-model-output-annotations-accepted) and index from supplied evidence. Accepted642 four saved stat PASS/exact430432458460; dataec7386f86/accounting64731/31 PASS,167/174/14/7,362 IDs/81 capabilities. B77 inputs23e38bee4 compiled actual callable generic-nil RED16=1 PASS/15 FAIL; producer22ea15a23 GREEN/check/desktop startup/independent PENDING. No real provider does not mean absent API. Native AllowedWhenTainted UNMODELED; same-host Ubuntu WSL/no-bundle workflow and asynchronous local existing-target tests recorded without desktop execution. B74 acceptance docs646 pending main commit and existing shared-wiki WIP preserved. Five owned docs only; no code/aura/source scans, builds/tests, delegation or commit.
+
+
+## [2026-10-03] docs | Native desktop/local workflow
+
+[Workflow SSOT](../remote-builds.md) and [build-host contract](../specs/build-host.md) document selected-host normal runs, filtered checks/tests, native dependencies, lifetime and state boundaries. Reported build evidence remains separate from pending runtime acceptance; no new tests or runtime proof.
+
+
+## 2026-10-04 — 12.0.7 party slice development proof
+
+Updated [[patch-12-0-7-api-audit]] to link [party slice contract/proof](../specs/party-12-0-7-audit.md): individual roles, authenticated mutations, explicit solo GROUP_FORMED and conditional marker/cached-click behavior. Native/historical claims remain excluded; page ledger untouched.

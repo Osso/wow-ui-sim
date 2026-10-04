@@ -1,5 +1,5 @@
 #![cfg(feature = "retail-12-0-7")]
-//! Authored only: all cases remain uncompiled/unrun until integration.
+//! Public-API behavioral proof for bounded 12.0.7 party, solo and marker state.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 

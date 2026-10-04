@@ -164,7 +164,7 @@ The occurrence-level checklist has no untriaged rows. One impossible exception-r
 - **DurationTextBinding formatting** — the 12.0.7 patch bootstrap supplies a documented best-effort binding object for non-secret state, duration-object storage, formatter/text-format storage, and font-string update hooks. Exact Blizzard formatting/component semantics and secret-value handling still need live probes.
 - **Tooltip money line formatting** — `GameTooltip_AddMoneyLine` uses the existing `GetMoneyString` fallback with thousands grouping and optional prefix text. Exact embedded-atlas/MoneyFormatter output remains a later fidelity improvement if addon screenshots require it.
 - **Party GUID membership** — `C_PartyInfo.IsGUIDInGroup` treats the local player and synthetic party member GUIDs as in-group only while `SimState.party_group_active` is true. Exact instance-party category filtering and cross-realm GUID details remain future fidelity work if addons depend on them.
-- **Party role mutators** — `C_PartyInfo` leader/assistant mutators write the existing simulator group-role fields. Individual assistant tracking is not modeled yet, so `PromoteToAssistant` and `DemoteAssistant` map to the coarse `everyone_assistant` flag until a per-member assistant model is needed.
+- **Party role mutators** — under `retail-12-0-7`, individual roles now use explicit member-name sets and exclusions rather than toggling the coarse everyone flag. Live restrictions, GUID-category inputs, solo formation and conditional markers have bounded default-Retail development proof. [Party slice contract and proof](../../specs/party-12-0-7-audit.md) owns behavior and exclusions; native permissions/identity/timing and historical-cache parity remain unverified.
 
 ### Paused / blocked items
 
@@ -175,9 +175,9 @@ Security/error-shape-sensitive items still need live Blizzard behavior, generate
 - **Encounter Events color event semantics** — `C_EncounterEvents` color state and timeline color reads are best-effort bridged, but exact five-second-warning custom-color behavior, persistence rules, and `ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED` firing need live behavior.
 - **SimulateMouse taint and focus restrictions** — 12.0.7 changed taint propagation and imposed forbidden/locked/script-inaccessible/protected focus restrictions. This overlaps secure input and combat lockdown; implement only after exact behavior is known.
 - **debugstack/debuglocals secret propagation** — returning secret values based on current/caller stack secret access requires rilua secret-value semantics, not a simple Lua stub.
-- **Secure `raidtarget` `set-unmarked` and `/tm ~N` behavior** — secure action and macro execution behavior needs real secure-state tests.
+- **Secure `raidtarget` `set-unmarked` and `/tm ~N` behavior** — [bounded public marker and cached-click proof](../../specs/party-12-0-7-audit.md) now passes. Native secure-click authorization and `SetRaidTarget` secret-argument policy remain unproved.
 - **C_MythicPlus CalendarTime return structs** — `GetRunHistory`, `GetWeeklyBestForMap`, and `GetSeasonBestForMap` changed return struct shape. Need backing M+ data and exact CalendarTime fields.
-- **GROUP_FORMED solo follower dungeon/delve behavior** — needs group/follower-dungeon state, not just a registerable event.
+- **GROUP_FORMED solo follower dungeon/delve behavior** — [explicit host-input tick producer](../../specs/party-12-0-7-audit.md) now proves entry/reentry payload and latch behavior. Actual server join input, stable identities and unobserved between-tick transitions remain unproved.
 - **AuraData vehicle ownership and AddPrivateAuraAppliedSound allowance** — aura state/security behavior needs real aura model and M+ combat state.
 - **SetFrameStrata secret-value error fix** — secret argument behavior needs live tests before changing method guards.
 - **Button/scroll secret aspects and font asset validation** — focused 12.0.7 proof verifies current method availability, but exact secret aspect and asset-validation semantics remain best-effort and need probes.

@@ -1,6 +1,6 @@
 # Retail 12.0.7 party operations, solo formation and conditional target markers
 
-B11 replaces raid-wide assistant shortcuts with member-specific inputs; B25 publishes solo formation from explicit host entry state; B26 adds `/tm ~marker`. Source: [12.0.7 retained excerpt](../../data/patch-api/sources/12.0.7-api-changes.txt), rows 039/041/042/043/044/045 and prose015/017. Cached retail declarations may postdate 12.0.7: they establish candidate signatures, not historical/native execution proof. All requirements remain unchecked because this slice is authored, not integrated or run.
+B11 replaces raid-wide assistant shortcuts with member-specific inputs; B25 publishes solo formation from explicit host entry state; B26 adds `/tm ~marker`. Source: [12.0.7 retained excerpt](../../data/patch-api/sources/12.0.7-api-changes.txt), rows 039/041/042/043/044/045 and prose015/017. Cached retail declarations may postdate 12.0.7: they establish candidate signatures, not historical/native execution proof. Default-Retail integration proves the bounded behaviors below; historical/native parity and alternate epochs remain unverified.
 
 | Source ID suffix | API / behavior | Live input | Returns |
 |---|---|---|---|
@@ -16,29 +16,29 @@ B11 replaces raid-wide assistant shortcuts with member-specific inputs; B25 publ
 
 ### Party roles and membership
 
-- [ ] New behavior is gated on `retail-12-0-7`; older epochs keep their existing paths. New role sets and category map default empty; new restriction and follower flags default false; solo payload and latch default absent. These defaults are INFERRED simulator policy.
-- [ ] Individual promotion/demotion affects only the resolved roster member or player. Unknown or ambiguous short names do not change roles or leader. INFERRED: full names compare exactly; non-exact short names match the name before the realm separator; unit tokens resolve against current roster.
-- [ ] `UnitIsGroupAssistant` and `UnitLeadsAnyGroup` read per-member role inputs live. INFERRED: individual demotion overrides the everyone toggle through an exclusion set; changing that toggle clears exclusions but retains explicit promotions. Inactive-group assistant queries return false.
-- [ ] Leader promotion reads current roster, leaves unknown targets unchanged, and notifies `PARTY_LEADER_CHANGED` after mutation. INFERRED: repeated assignment emits no event.
-- [ ] Everyone toggle returns exactly one public boolean. INFERRED: `updated` is true only for an effective flag change in an active group, false for duplicate or inactive requests.
-- [ ] Uninvite validates optional reason and exact-name selector, removes one resolved member, clears that member's roles, rebases a surviving leader index, and synchronously notifies `GROUP_ROSTER_UPDATE` with the new roster visible. INFERRED: removing the leader selects local-player leadership; self-uninvite is a no-op.
-- [ ] Home membership reads the existing active roster and its existing synthetic GUID convention; category 2 reads only explicit host GUID membership. Unconfigured category 2 returns false. INFERRED: nil category routes to home; only 1/2 are accepted. No fabricated category-2 membership or fallback to home.
-- [ ] Explicit host restriction rejects mutations atomically and permits recovery when cleared. INFERRED: restrictions are not derived automatically from combat or leadership. Membership remains readable under the flag.
-- [ ] Host input changes are read on every operation/query; inputs and mutations remain environment-local. Leaving the roster clears role sets.
+- [x] New behavior is gated on `retail-12-0-7`; older epochs keep their existing paths. New role sets and category map default empty; new restriction and follower flags default false; solo payload and latch default absent. These defaults are INFERRED simulator policy.
+- [x] Individual promotion/demotion affects only the resolved roster member or player. Unknown or ambiguous short names do not change roles or leader. INFERRED: full names compare exactly; non-exact short names match the name before the realm separator; unit tokens resolve against current roster.
+- [x] `UnitIsGroupAssistant` and `UnitLeadsAnyGroup` read per-member role inputs live. INFERRED: individual demotion overrides the everyone toggle through an exclusion set; changing that toggle clears exclusions but retains explicit promotions. Inactive-group assistant queries return false.
+- [x] Leader promotion reads current roster, leaves unknown targets unchanged, and notifies `PARTY_LEADER_CHANGED` after mutation. INFERRED: repeated assignment emits no event.
+- [x] Everyone toggle returns exactly one public boolean. INFERRED: `updated` is true only for an effective flag change in an active group, false for duplicate or inactive requests.
+- [x] Uninvite validates optional reason and exact-name selector, removes one resolved member, clears that member's roles, rebases a surviving leader index, and synchronously notifies `GROUP_ROSTER_UPDATE` with the new roster visible. INFERRED: removing the leader selects local-player leadership; self-uninvite is a no-op.
+- [x] Home membership reads the existing active roster and its existing synthetic GUID convention; category 2 reads only explicit host GUID membership. Unconfigured category 2 returns false. INFERRED: nil category routes to home; only 1/2 are accepted. No fabricated category-2 membership or fallback to home.
+- [x] Explicit host restriction rejects mutations atomically and permits recovery when cleared. INFERRED: restrictions are not derived automatically from combat or leadership. Membership remains readable under the flag.
+- [x] Host input changes are read on every operation/query; inputs and mutations remain environment-local. Leaving the roster clears role sets.
 
 ### Secret arguments and taint
 
-- [ ] Every B11 party API authenticates **all** arguments, including ignored extras, with `rilua::table_security::unwrap_secret` before validating any argument or accessing model state. Secure callers may pass genuine secrets; tainted callers may pass public inputs but every secret position/extra rejects without mutation.
-- [ ] Original secret wrappers and caller taint are preserved. Public output policy is INFERRED; no host booleans are wrapped constants.
-- [ ] `C_Macro.RunMacroText` authenticates text, button and all extras before validating text. INFERRED: nil button stays accepted because existing cached/host callers omit it; supplied button must be a UTF-8 string. Tainted secret extras take precedence over earlier invalid input. No output-restriction parity is claimed.
+- [x] Every B11 party API authenticates **all** arguments, including ignored extras, with `rilua::table_security::unwrap_secret` before validating any argument or accessing model state. Secure callers may pass genuine secrets; tainted callers may pass public inputs but every secret position/extra rejects without mutation.
+- [x] Original secret wrappers and caller taint are preserved. Public output policy is INFERRED; no host booleans are wrapped constants.
+- [x] `C_Macro.RunMacroText` authenticates text, button and all extras before validating text. INFERRED: nil button stays accepted because existing cached/host callers omit it; supplied button must be a UTF-8 string. Tainted secret extras take precedence over earlier invalid input. No output-restriction parity is claimed.
 
 ### Solo formation and markers
 
-- [ ] On the existing shared `fire_on_update` boundary, a solo active Delve or explicit follower-dungeon entry emits `GROUP_FORMED(category, partyGUID)` only when the host supplies category 1/2 and a nonempty GUID. No identity is synthesized. Listener sees existing instance state after mutation, with exactly two public payload values.
-- [ ] INFERRED: identical entry identity emits once; an observed exit resets the latch; a changed category/GUID or observed reentry emits again. Ordinary solo instances, grouped entries, incomplete payloads and defaults do not emit.
-- [ ] `/tm ~n` uses the existing macro condition/selected-unit machinery and marker map. A valid unmarked target is assigned; a marked target is unchanged and emits no marker update. Existing numeric commands remain unchanged.
-- [ ] INFERRED: invalid/out-of-range or repeated prefixes are atomic no-ops; `~0` does not clear an existing marker and performs the existing zero assignment on an unmarked target. Collision handling remains the existing `SetRaidTarget` policy.
-- [ ] Execute the entire unmodified cached `SecureTemplates.lua`, then invoke its real `SECURE_ACTIONS.raidtarget` with `action='set-unmarked'`: assign once, preserve an existing marker on a second call. No copied approximation, vendor patch or source-substring assertion.
+- [x] On the existing shared `fire_on_update` boundary, a solo active Delve or explicit follower-dungeon entry emits `GROUP_FORMED(category, partyGUID)` only when the host supplies category 1/2 and a nonempty GUID. No identity is synthesized. Listener sees existing instance state after mutation, with exactly two public payload values.
+- [x] INFERRED: identical entry identity emits once; an observed exit resets the latch; a changed category/GUID or observed reentry emits again. Ordinary solo instances, grouped entries, incomplete payloads and defaults do not emit.
+- [x] `/tm ~n` uses the existing macro condition/selected-unit machinery and marker map. A valid unmarked target is assigned; a marked target is unchanged and emits no marker update. Existing numeric commands remain unchanged.
+- [x] INFERRED: invalid/out-of-range or repeated prefixes are atomic no-ops; `~0` does not clear an existing marker and performs the existing zero assignment on an unmarked target. Collision handling remains the existing `SetRaidTarget` policy.
+- [x] Execute the entire unmodified cached `SecureTemplates.lua`, then invoke `SecureActionButton_OnClick` with type `raidtarget`, unit `player` and action `set-unmarked`: its lexical `SECURE_ACTIONS.raidtarget` assigns once and preserves an existing marker on a second click. No copied approximation, vendor patch or source-substring assertion.
 
 ## How it works
 
@@ -62,13 +62,32 @@ B11 replaces raid-wide assistant shortcuts with member-specific inputs; B25 publ
 - `tests/party_1207_audit.rs` — 11 behavioral cases: defaults/arity, roles/live inputs, leader/event state, removal/rebase/event state, category membership/live inputs, isolation, secure secrets, tainted positional/extras authentication priority, invalid/restricted atomicity/recovery, solo-entry lifecycle, conditional slash plus actual cached secure action.
 - Existing test-support anchors update `src/loader/tests/wow_api_globals/startup_globals.rs`, `tests/unit_relation_probes.rs`, and `tests/group_verbs.rs` to stop asserting global-role shortcuts and cover cleanup.
 
+## Development proof — 2026-10-04
+
+Base `63b32995d`; producer `68572cce2`; cached-dispatch/import correction `74e6e9067`. Default-Retail local helper commands used exclusive target `~/.cache/wow-ui-sim-target-b100`, four jobs and one filter per invocation. Logs: `~/.cache/wow-ui-sim-audit/r5-{RED,GREEN}-*.log`; detailed ledger: `p1207-r5-result.md` beside them.
+
+| Filter | RED pass/fail | GREEN pass/fail |
+|---|---|---|
+| `party_1207_audit::` | 0/11 | 11/0 |
+| `group_verbs::` | — | 11/0 |
+| `admin_party_api::` | — | 28/0 |
+| `patch_12_0_7_removed_native_surface::` | — | 30/0 |
+| `unit_relation_probes::` | — | 19/0 |
+| `mouse_tm_commands::` | — | 5/0 |
+| `c_party_info_probes::` | — | 11/0 |
+| `delve_instance_state::` | — | 5/0 |
+| `chat_lockdown_ready_checks::` | — | 6/0 |
+| lib `startup_globals::test_patch_12_0_7_safe_global_bridges` | — | 1/0 |
+
+First GREEN was 10/1: test incorrectly accessed global `SECURE_ACTIONS`, which is lexical in the cached consumer. Correction exercises its real public click dispatcher; no vendor mutation. Checked requirements describe bounded simulator behavior only, not native acceptance. No page coverage JSON was edited.
+
 ## Known gaps (current cycle)
 
-- [ ] No compilation, RED/GREEN, startup or consumer runtime proof: prohibited by authoring request. Integrator must establish it before checking requirements or awarding page credit.
+- [x] Default-Retail tests compiled and ran: original producers failed all 11 new cases; integrated producers passed all 11. Full cached secure-click consumer passed. Whole startup CLI, historical epoch and alternate-profile proof remain excluded.
 - [ ] Cached Lua is not authenticated build 68182. Native restriction derivation, exact errors, role-event timing and identity semantics remain inferred.
 - [ ] Solo producer needs explicit host category/GUID/follower input. No game/server join source is integrated. No inferred empty-default payload is proposed.
 - [ ] Existing home GUIDs are position-derived and can renumber after removal. Stable member identity, category-2 roster mutations and aliases outside supported tokens are not modeled.
-- [ ] Loading full cached SecureTemplates may expose missing bootstrap dependencies. The authored test requires that cache; no shim or substitute is authorized.
+- [x] Full cached SecureTemplates loads and its secure-click dispatcher executes in the integration fixture. The cache remains required; no shim or substitute is authorized.
 
 ## Out of scope
 
