@@ -36,10 +36,10 @@ mod state_drivers;
 mod value_access;
 
 pub use loader_env::{compile_chunk_rilua, exec_chunk_rilua};
-pub(crate) use secure_env::set_secure_env_key_state;
 pub use secure_env::{
     create_secure_environment, mark_secure, mark_secure_state, set_in_both_envs_rilua,
 };
+pub(crate) use secure_env::{secure_env_table, set_secure_env_key_state};
 
 #[cfg(feature = "retail-12-1-0")]
 pub(crate) use secret_values::register_retail_secret_values;

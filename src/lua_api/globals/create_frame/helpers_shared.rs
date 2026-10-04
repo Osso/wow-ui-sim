@@ -35,7 +35,7 @@ pub fn create_frame_instance(
 
     let preserve_existing_name_binding = should_preserve_existing_root_frame_name(state, &name)?;
     let frame_id = frame.id;
-    register_and_attach_parent(
+    let replaced_placeholder = register_and_attach_parent(
         state,
         frame,
         parent_id,
@@ -50,7 +50,15 @@ pub fn create_frame_instance(
             state, frame_id,
         )?;
     }
-    register_global_name(state, name, frame_id, preserve_existing_name_binding)?;
+    register_global_name(
+        state,
+        name.as_deref(),
+        frame_id,
+        preserve_existing_name_binding,
+    )?;
+    if let (Some(name), Some(placeholder)) = (name.as_deref(), replaced_placeholder) {
+        rebind_secure_env_placeholder(state, name, placeholder, frame_id)?;
+    }
 
     Ok(frame_id)
 }
@@ -186,7 +194,7 @@ fn register_and_attach_parent(
     parent_explicit: bool,
     frame_id: u64,
     preserve_existing_name_binding: bool,
-) -> LuaResult<()> {
+) -> LuaResult<Option<u64>> {
     let mut sim = borrow_state_mut(state)?;
     let replaced_frame_id =
         find_replaced_placeholder_id(&sim, &frame, frame_id, preserve_existing_name_binding);
@@ -199,12 +207,35 @@ fn register_and_attach_parent(
         retire_replaced_named_frame(&mut sim, replaced_frame_id, frame_id);
     }
     let Some(parent_id) = parent_id else {
-        return Ok(());
+        return Ok(replaced_frame_id);
     };
     sim.widgets.add_child(parent_id, frame_id);
     inherit_parent_render_state(&mut sim, frame_id, parent_id, parent_explicit);
     sim.invalidate_strata_buckets();
-    Ok(())
+    Ok(replaced_frame_id)
+}
+
+/// The secure environment snapshots `_G` at startup, so it can still hold a
+/// simulator placeholder that XML has since replaced (e.g. EditModeManagerFrame).
+/// Secure code must see the replacement, as it would without a placeholder.
+fn rebind_secure_env_placeholder(
+    state: &mut LuaState,
+    name: &str,
+    placeholder_id: u64,
+    frame_id: u64,
+) -> LuaResult<()> {
+    let Ok(secureenv) = crate::lua_api::globals::security::secure_env_table(state) else {
+        return Ok(());
+    };
+    let key = state.gc.intern_string(name.as_bytes());
+    let secure_value = state.gc.tables.get(secureenv).map_or(Val::Nil, |table| {
+        table.get(Val::Str(key), &state.gc.string_arena)
+    });
+    if crate::lua_api::methods::extract_frame_id(state, secure_value) != Some(placeholder_id) {
+        return Ok(());
+    }
+    let frame_val = frame_ref(state, frame_id)?;
+    crate::lua_api::globals::security::set_secure_env_key_state(state, name, frame_val)
 }
 
 fn find_replaced_placeholder_id(
@@ -303,7 +334,7 @@ fn retire_replaced_named_frame(sim: &mut SimState, old_frame_id: u64, new_frame_
 
 fn register_global_name(
     state: &mut LuaState,
-    name: Option<String>,
+    name: Option<&str>,
     frame_id: u64,
     preserve_existing_name_binding: bool,
 ) -> LuaResult<()> {
@@ -328,11 +359,11 @@ fn register_global_name(
             let _ = globals.raw_set(Val::Str(key), frame_val, &state.gc.string_arena);
         }
         state.gc.barrier_back(global);
-        crate::lua_api::global_slots::refresh_installed_slots_for_name(state, &name);
-        crate::lua_api::globals::compat_overrides::record_public_global_publication(state, &name)?;
+        crate::lua_api::global_slots::refresh_installed_slots_for_name(state, name);
+        crate::lua_api::globals::compat_overrides::record_public_global_publication(state, name)?;
     }
     if add_to_secure_env {
-        crate::lua_api::globals::security::set_secure_env_key_state(state, &name, frame_val)?;
+        crate::lua_api::globals::security::set_secure_env_key_state(state, name, frame_val)?;
     }
     Ok(())
 }
