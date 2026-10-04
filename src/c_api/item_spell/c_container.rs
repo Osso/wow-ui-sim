@@ -115,6 +115,7 @@ fn c_container_get_num_free_slots(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
+/// INFERRED: sums bags 0..=5 regardless of bag family; extra arguments are ignored unread.
 fn c_container_calculate_total_number_of_free_bag_slots(state: &mut LuaState) -> LuaResult<u32> {
     let free_slots = {
         let sim = borrow_state(state)?;

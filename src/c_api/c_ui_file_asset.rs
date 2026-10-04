@@ -28,6 +28,7 @@ pub(crate) fn register_c_ui_file_asset(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
+/// INFERRED: the result is public and authenticated extra arguments are ignored.
 #[cfg(feature = "retail-12-0-7")]
 fn c_ui_file_asset_get_file_id(state: &mut LuaState) -> LuaResult<u32> {
     let asset = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
