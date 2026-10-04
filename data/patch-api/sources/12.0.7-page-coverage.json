@@ -268,6 +268,22 @@
       "compiled_revision": "2f551ce7e",
       "proof": "main-confirmed GREEN; independent source-read review ACCEPT WITH QUALIFICATIONS; partial",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/round-6-master-green.log.txt"
+    },
+    {
+      "id": "widget-secret-aspects-12-0-7",
+      "symbols": [
+        "Button:GetButtonState/IsEnabled/SetButtonState/SetEnabled",
+        "ScrollFrame:Get/SetHorizontalScroll, Get/SetVerticalScroll"
+      ],
+      "scope": "Secret origin carried on button state/enabled and scroll offsets with all arguments authenticated before decoding; public zero-origin behavior unchanged by source comparison. Native aspect lifecycle, Enable/Disable/Click clearing, secret arithmetic in cached consumers and callback disclosure unproved.",
+      "spec": "docs/specs/widget-secret-aspects-12-0-7.md",
+      "tests": [
+        "tests/patch_12_0_7_widget_secret_aspects.rs"
+      ],
+      "implementation": "092ff1824+701dbcc3b+c4f2eb7da",
+      "compiled_revision": "372f40db1",
+      "proof": "main-confirmed GREEN (integration and startup; lib rerun pending); independent source-read review ACCEPT WITH QUALIFICATIONS; partial",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/round-7-master-green.log.txt"
     }
   ],
   "source_rows": [
@@ -1123,51 +1139,59 @@
     },
     {
       "source_id": "widgets-Button-GetButtonState-129",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "widget-secret-aspects-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Live token and both origins; host mutation; secure payload, tainted opaque output; one-result arity Unproved: Native historical aspect lifecycle; Enable/Disable/Click clearing; full cached secret consumers"
     },
     {
       "source_id": "widgets-Button-IsEnabled-130",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "widget-secret-aspects-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Live __enabled attribute and both origins; host mutation; secure payload, tainted opaque output; one-result arity Unproved: Native historical aspect lifecycle and protected behavior; full cached secret consumers"
     },
     {
       "source_id": "widgets-Button-SetButtonState-131",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "widget-secret-aspects-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Authenticate receiver/token/lock/extras before decoding; secret token and lock acceptance; tainted denial atomicity; per-input inferred origin; equal-value clearing Unproved: Native lock semantics and extra-origin/clearing policy; invalid-token semantics outside existing decoding"
     },
     {
       "source_id": "widgets-Button-SetEnabled-132",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "widget-secret-aspects-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Authenticate receiver/enabled/extras; secure secret bool; denial without mutation/dispatch; origin before change-only callbacks; inferred equal-value clearing Unproved: Native protection and missing/nil coercion; Enable/Disable/Click origin clearing; historical extra-origin policy"
     },
     {
       "source_id": "widgets-EditBox-SetFont-133",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked, no credit. Authentication prerequisite only: five-receiver secure secret path/height/flags, tainted denial (including ignored extras and nil-path boundary); existing public storage/returns preserved Missing: RequiresValidFontAsset + RequiresValidFontHeight; authoritative host validity catalog, native bounds/failure/return policy (FontAsset domain additionally unresolved for FontString)"
     },
     {
       "source_id": "widgets-Font-SetFont-134",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked, no credit. Authentication prerequisite only: five-receiver secure secret path/height/flags, tainted denial (including ignored extras and nil-path boundary); existing public storage/returns preserved Missing: RequiresValidFontAsset + RequiresValidFontHeight; authoritative host validity catalog, native bounds/failure/return policy (FontAsset domain additionally unresolved for FontString)"
     },
     {
       "source_id": "widgets-FontString-SetFont-135",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked, no credit. Authentication prerequisite only: five-receiver secure secret path/height/flags, tainted denial (including ignored extras and nil-path boundary); existing public storage/returns preserved Missing: RequiresValidFontAsset + RequiresValidFontHeight; authoritative host validity catalog, native bounds/failure/return policy (FontAsset domain additionally unresolved for FontString)"
     },
     {
       "source_id": "widgets-MessageFrame-SetFont-136",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked, no credit. Authentication prerequisite only: five-receiver secure secret path/height/flags, tainted denial (including ignored extras and nil-path boundary); existing public storage/returns preserved Missing: RequiresValidFontAsset + RequiresValidFontHeight; authoritative host validity catalog, native bounds/failure/return policy (FontAsset domain additionally unresolved for FontString)"
     },
     {
       "source_id": "widgets-ModelSceneActorBase-GetModelUnitGUID-137",
@@ -1177,33 +1201,41 @@
     },
     {
       "source_id": "widgets-ScrollFrame-GetHorizontalScroll-138",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "widget-secret-aspects-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Live horizontal offset and both axis origins; host mutation; exact secure payload and tainted opacity; one-result arity Unproved: Native aspect lifecycle; secret-number arithmetic through cached InputBox/ScrollUtil; callback non-disclosure"
     },
     {
       "source_id": "widgets-ScrollFrame-GetVerticalScroll-139",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "widget-secret-aspects-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Live vertical offset and both axis origins; host mutation; exact secure payload and tainted opacity; one-result arity Unproved: Native aspect lifecycle; secret-number arithmetic through cached InputBox/ScrollUtil; callback non-disclosure"
     },
     {
       "source_id": "widgets-ScrollFrame-SetHorizontalScroll-140",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "widget-secret-aspects-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Authenticate receiver/offset/extras before conversion; actual secret input; atomic denial; inferred axis origin; same-value clearing; commit-before-callback Unproved: Native protected access, extra-origin/clearing policy; secret event payload policy; cached secret-offset UI path"
     },
     {
       "source_id": "widgets-ScrollFrame-SetVerticalScroll-141",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "widget-secret-aspects-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Authenticate receiver/offset/extras before conversion; actual secret input; atomic denial; inferred axis origin; same-value clearing; commit-before-callback Unproved: Native protected access, extra-origin/clearing policy; secret event payload policy; cached secret-offset UI path"
     },
     {
       "source_id": "widgets-SimpleHTML-SetFont-142",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked, no credit. Authentication prerequisite only: five-receiver secure secret path/height/flags, tainted denial (including ignored extras and nil-path boundary); existing public storage/returns preserved Missing: RequiresValidFontAsset + RequiresValidFontHeight; authoritative host validity catalog, native bounds/failure/return policy (FontAsset domain additionally unresolved for FontString)"
     },
     {
       "source_id": "source-context-144",

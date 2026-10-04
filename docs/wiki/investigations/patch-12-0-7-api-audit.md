@@ -21,6 +21,16 @@ Patch 12.0.7 API work in wow-ui-sim separates safe additive compatibility bridge
 
 
 
+
+## Round 7 accounted — 2026-10-04
+
+Seventeen capabilities; **59 pending / 46 bounded / 48 partial / 13 metadata** of 166 IDs.
+
+- Partial, 8 rows: `Button` state/enabled and `ScrollFrame` scroll-offset getters and setters carry secret origin with authenticated arguments.
+- Five `SetFont` rows stay pending: only the authentication prerequisite landed; no authoritative source for valid font assets and heights.
+
+Proof: master run at `372f40db1`, new module 8 passed / 0 failed, startup `lua-errors` `[]`, `cargo fmt --check` exit 0 ([log](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/round-7-master-green.log.txt)). The lib-test compile was killed by memory pressure and not rerun at accounting time. [Review](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r7-review.md): ACCEPT WITH QUALIFICATIONS — ordinary public behavior unchanged by source comparison, authentication precedes mutation and dispatch. [Result](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r7-result.md).
+
 ## Round 6 accounted — 2026-10-04
 
 Sixteen capabilities; **67 pending / 46 bounded / 40 partial / 13 metadata** of 166 IDs.
