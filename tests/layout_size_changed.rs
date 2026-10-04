@@ -98,7 +98,7 @@ fn size_queried_mid_script_is_still_reported_by_the_next_layout_pass() {
 
 #[cfg(feature = "retail-12-1-0")]
 #[test]
-fn untrusted_layout_aspect_suppresses_addon_size_handlers_on_frames_anchored_to_it() {
+fn untrusted_layout_aspect_suppresses_addon_size_handlers_on_frame_children_and_anchored() {
     let env = env_with_helpers();
     env.exec(
         r#"
@@ -115,10 +115,12 @@ fn untrusted_layout_aspect_suppresses_addon_size_handlers_on_frames_anchored_to_
         anchored:SetPoint('TOPLEFT', guarded, 'BOTTOMLEFT')
         anchored:SetPoint('TOPRIGHT', guarded, 'BOTTOMRIGHT')
         anchored:SetHeight(8)
+        local child = CreateFrame('Frame', 'SizeGuardedChild', guarded)
+        child:SetAllPoints()
         local plain = CreateFrame('Frame', 'SizePlain', UIParent)
         plain:SetPoint('CENTER')
         plain:SetSize(5, 5)
-        for _, frame in ipairs({guarded, anchored, plain}) do
+        for _, frame in ipairs({guarded, anchored, child, plain}) do
             local name = frame:GetName()
             frame:SetScript('OnSizeChanged', AddonFn(RecordSize(name .. ':addon')))
             frame:HookScript('OnSizeChanged', RecordSize(name .. ':secure'))
@@ -128,12 +130,12 @@ fn untrusted_layout_aspect_suppresses_addon_size_handlers_on_frames_anchored_to_
     .unwrap();
     assert_eq!(
         tick_and_take(&env),
-        "SizeGuarded:secure=40x40,SizeAnchored:secure=40x8,SizePlain:addon=5x5,SizePlain:secure=5x5"
+        "SizeGuarded:secure=40x40,SizeAnchored:secure=40x8,SizeGuardedChild:secure=40x40,SizePlain:addon=5x5,SizePlain:secure=5x5"
     );
     env.exec("SizeGuarded:SetWidth(90)").unwrap();
     assert_eq!(
         tick_and_take(&env),
-        "SizeGuarded:secure=90x40,SizeAnchored:secure=90x8",
-        "an addon cannot observe the guarded frame's size through its own or anchored handlers"
+        "SizeGuarded:secure=90x40,SizeAnchored:secure=90x8,SizeGuardedChild:secure=90x40",
+        "an addon cannot observe the guarded frame's size through its own, child, or anchored handlers"
     );
 }
