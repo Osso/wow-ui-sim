@@ -323,7 +323,9 @@ fn authenticate_activity_modifier(state: &LuaState) -> LuaResult<()> {
 }
 
 fn query(state: &mut LuaState, kind: Query) -> LuaResult<u32> {
-    if matches!(kind, Query::Started | Query::Active) {
+    if matches!(kind, Query::Started | Query::Active)
+        || (cfg!(feature = "retail-12-0-7") && matches!(kind, Query::Expired))
+    {
         authenticate_activity_modifier(state)?;
     }
     let object = stack_val(state, 1);

@@ -10,11 +10,16 @@ use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
+mod state;
+
 const SCHEDULER_KEY: &str = "__duration_text_binding_scheduler";
 
 const DURATION_TEXT_BINDING_LUA: &str = r#"
 do
     local isPatch121, hasSecretInput, readSecretInput, wrapSecretOutput, reportUpdateError = ...
+    local isPatch1207, createSettings, readSetting, writeSetting, authenticateArguments, validateDuration, sampleRemaining = select(6, ...)
+    local scalarFields = {enabled = true, updateInterval = true, timeModifier = true}
+    local unpackArguments = unpack
     -- Capture host bootstrap functions, not later addon replacements.
     local secretType, secretToString, secretToNumber, secretStringFormat = type, tostring, tonumber, string.format
     local function ensure_namespace(name)
@@ -22,29 +27,14 @@ do
         return _G[name]
     end
 
-    local function set_default(namespace, key, fn)
-        if rawget(namespace, key) == nil then
-            namespace[key] = fn
-        end
-    end
-
     local durationUtil = ensure_namespace("C_DurationUtil")
     local function create_duration_clock(initialTime)
-        local clock = { time = initialTime or 0 }
-        function clock:GetTime() return self.time end
-        function clock:SetTime(time) self.time = time or 0 end
-        function clock:AdvanceTime(delta) self.time = self.time + (delta or 0) end
-        function clock:RewindTime(delta) self.time = self.time - (delta or 0) end
-        function clock:ResetTime() self.time = 0 end
-        return clock
+        return durationUtil.CreateManualClock(initialTime)
     end
     local function create_duration_value(initialTime)
-        if type(durationUtil.CreateDuration) == "function" then
-            local duration = durationUtil.CreateDuration()
-            duration.value = initialTime or 0
-            return duration
-        end
-        return { value = initialTime or 0 }
+        local duration = durationUtil.CreateDuration()
+        duration.value = initialTime or 0
+        return duration
     end
     local function duration_value_to_text(duration)
         if type(duration) == "number" then
@@ -117,11 +107,9 @@ do
     end
     local function create_duration_text_binding(duration, fontString)
         local configuration = {
-            duration = duration ~= nil and duration or create_duration_value(0),
+            -- INFERRED: nil default configuration follows later reset declaration.
+            duration = duration,
             fontString = fontString,
-            enabled = true,
-            updateInterval = 1,
-            timeModifier = 0,
             expiredText = nil,
             zeroDurationText = nil,
             formatter = nil,
@@ -133,9 +121,18 @@ do
         local binding = newproxy(true)
         local metatable = getmetatable(binding)
         local schedule = {dirty = true, elapsed = 0}
-        metatable.__index = configuration
+        local settings = createSettings()
+        if not isPatch1207 and duration == nil then configuration.duration = create_duration_value(0) end
+        metatable.__index = function(_, key)
+            if scalarFields[key] then return readSetting(settings, key) end
+            return configuration[key]
+        end
         metatable.__newindex = function(_, key, value)
-            configuration[key] = value
+            if scalarFields[key] then
+                writeSetting(settings, key, value)
+            else
+                configuration[key] = value
+            end
             if scheduledFields[key] then schedule.dirty = true end
         end
         bindings[binding] = schedule
@@ -152,8 +149,31 @@ do
             copy:Assign(self)
             return copy
         end
-        function binding:CanFormatText() return true end
-        function binding:CanUpdateFontString() return self.fontString ~= nil and type(self.fontString.SetText) == "function" end
+        local function has_text(value)
+            return hasSecretInput(value) or value ~= nil
+        end
+        local function protect_text(text, secret)
+            -- INFERRED: source timing secrecy also protects zero/expired text selection.
+            if secret and not hasSecretInput(text) then return wrapSecretOutput(text) end
+            return text
+        end
+        local function can_format(binding)
+            -- INFERRED: fallback text suffices for unconfigured/zero/expired state;
+            -- a nonzero active duration requires a configured NumericFormatter.
+            local duration = binding.duration
+            if duration == nil then return has_text(binding.zeroDurationText) end
+            if hasSecretInput(duration) then duration = readSecretInput(duration) end
+            if duration:IsZero() then return has_text(binding.zeroDurationText) end
+            if duration:HasExpired() and has_text(binding.expiredText) then return true end
+            return type(binding.formatter) == "userdata" and type(binding.formatter.FormatNumber) == "function"
+        end
+        function binding:CanFormatText()
+            if isPatch1207 then return can_format(self) end
+            return true
+        end
+        function binding:CanUpdateFontString()
+            return self:CanFormatText() and self.fontString ~= nil and type(self.fontString.SetText) == "function"
+        end
         function binding:Disable() self:SetEnabled(false) end
         function binding:Enable() self:SetEnabled(true) end
         function binding:GetClock() return self.clock end
@@ -161,6 +181,25 @@ do
         function binding:GetExpiredText() return self.expiredText end
         function binding:GetFontString() return self.fontString end
         function binding:GetFormattedText()
+            if isPatch1207 then
+                if not can_format(self) then error("DurationTextBinding is not configured for formatting", 2) end
+                local duration = self.duration
+                if duration == nil then return self.zeroDurationText end
+                local secret = hasSecretInput(duration)
+                if secret then duration = readSecretInput(duration) end
+                -- INFERRED: zero-duration text takes precedence over expiration text.
+                if duration:IsZero() then return protect_text(self.zeroDurationText, secret) end
+                if duration:HasExpired() and has_text(self.expiredText) then return protect_text(self.expiredText, secret) end
+                local value = sampleRemaining(settings, duration)
+                -- INFERRED: sampled secret timing is handed to the formatter as a VM secret.
+                if secret then value = wrapSecretOutput(value) end
+                local text = self.formatter:FormatNumber(value)
+                local decodedText = text
+                if hasSecretInput(text) then decodedText = readSecretInput(text) end
+                if type(decodedText) ~= "string" then error("DurationTextBinding formatter must return string", 2) end
+                if self.textFormat ~= nil then text = secretStringFormat(self.textFormat, text) end
+                return protect_text(text, secret)
+            end
             local duration = self.duration
             if hasSecretInput(duration) then return format_secret_duration(self, duration) end
             local text = duration_value_to_text(duration)
@@ -188,7 +227,10 @@ do
         function binding:IsActive() return self.enabled end
         function binding:IsEnabled() return self.enabled end
         function binding:SetClock(clock) self.clock = clock end
-        function binding:SetDuration(value) self.duration = value ~= nil and value or create_duration_value(0) end
+        function binding:SetDuration(value)
+            if isPatch1207 then validateDuration(value) end
+            self.duration = value ~= nil and value or create_duration_value(0)
+        end
         function binding:SetEnabled(value) self.enabled = not not value end
         function binding:SetExpiredText(text) self.expiredText = text end
         function binding:SetFontString(value) self.fontString = value end
@@ -199,7 +241,10 @@ do
         end
         function binding:SetTimeModifier(value) self.timeModifier = value or 0 end
         function binding:SetToDefaults()
-            self.duration = create_duration_value(0)
+            -- INFERRED: cleared default fields are not authenticated for build 68182.
+            self.duration = nil
+            if not isPatch1207 then self.duration = create_duration_value(0) end
+            if isPatch1207 then self.fontString = nil end
             self.enabled = true
             self.updateInterval = 1
             self.timeModifier = 0
@@ -216,7 +261,7 @@ do
             if self:CanUpdateFontString() then
                 local secret = hasSecretInput(self.duration)
                 local text = self:GetFormattedText()
-                if secret then text = wrapSecretOutput(text) end
+                if secret and not hasSecretInput(text) then text = wrapSecretOutput(text) end
                 self.fontString:SetText(text)
             end
         end
@@ -232,9 +277,44 @@ do
                 self.textColorProperty = property
             end
         end
+        if isPatch1207 then
+            -- INFERRED: strict noncoercing validation; scalar/reference wrappers normalize,
+            -- while text wrappers remain opaque. Native coercion/identity policy is unproven.
+            local setters = {"SetDuration", "SetFontString", "SetExpiredText", "SetZeroDurationText",
+                "SetTimeModifier", "SetUpdateInterval", "SetEnabled", "SetFormatter", "SetClock", "Assign"}
+            for _, name in ipairs(setters) do
+                local original = binding[name]
+                binding[name] = function(self, ...)
+                    local count = 1 + select('#', ...)
+                    local decoded = {authenticateArguments(self, ...)}
+                    require_binding(decoded[1])
+                    local value = decoded[2]
+                    if name == "SetExpiredText" or name == "SetZeroDurationText" then
+                        if value ~= nil and type(value) ~= "string" then error("text must be string or nil", 2) end
+                        -- Keep VM secret wrappers rooted; do not publish decoded secret text.
+                        if value ~= nil then decoded[2] = select(1, ...) end
+                    elseif name == "SetTimeModifier" then
+                        if value ~= 0 and value ~= 1 then error("DurationTimeModifier expected", 2) end
+                    elseif name == "SetUpdateInterval" then
+                        if type(value) ~= "number" or value ~= value or value < 0 or value == math.huge then
+                            error("finite nonnegative update interval expected", 2)
+                        end
+                    elseif name == "SetEnabled" then
+                        if type(value) ~= "boolean" then error("enabled must be boolean", 2) end
+                    elseif name == "SetFontString" then
+                        if value == nil or type(value.GetObjectType) ~= "function" or value:GetObjectType() ~= "FontString" then
+                            error("FontString expected", 2)
+                        end
+                    elseif name == "SetFormatter" then
+                        if type(value) ~= "userdata" or type(value.FormatNumber) ~= "function" then error("NumericFormatter expected", 2) end
+                    end
+                    return original(unpackArguments(decoded, 1, count))
+                end
+            end
+        end
         return binding
     end
-    set_default(durationUtil, "CreateDurationTextBinding", create_duration_text_binding)
+    durationUtil.CreateDurationTextBinding = create_duration_text_binding
 
     -- This closure is retained only in the host registry, not a Lua global.
     -- Cadence uses engine elapsed time; duration objects retain their own clocks.
@@ -283,6 +363,25 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
             state,
             "DurationBinding.ReportUpdateError",
             report_update_error,
+        ),
+        Val::Bool(cfg!(feature = "retail-12-0-7")),
+        secret_callback(state, "DurationBinding.CreateSettings", self::state::create),
+        secret_callback(state, "DurationBinding.ReadSetting", self::state::read),
+        secret_callback(state, "DurationBinding.WriteSetting", self::state::write),
+        secret_callback(
+            state,
+            "DurationBinding.Authenticate",
+            self::state::authenticate,
+        ),
+        secret_callback(
+            state,
+            "DurationBinding.ValidateDuration",
+            self::state::validate_duration,
+        ),
+        secret_callback(
+            state,
+            "DurationBinding.SampleRemaining",
+            self::state::sample_remaining,
         ),
     ];
     let callback = lua.call_function(&bootstrap, &arguments)?;
@@ -359,11 +458,17 @@ mod tests {
                 local binding = type(factory) == 'function' and factory() or nil
                 if binding then
                     local label = CreateFrame('Frame'):CreateFontString()
-                    binding:SetDuration(12)
+                    local duration = C_DurationUtil.CreateDuration()
+                    duration:SetClock(C_DurationUtil.CreateManualClock(0))
+                    duration:SetTimeFromStart(0, 12)
+                    binding:SetDuration(duration)
                     binding:SetFontString(label)
-                    binding:SetFormatter({Format=function(_, value) return 'value:' .. value end})
+                    local formatter = C_StringUtil.CreateSecondsFormatter()
+                    formatter:SetDefaultAbbreviation(Enum.SecondsFormatterAbbreviation.OneLetter)
+                    formatter:SetStripIntervalWhitespace(Enum.SecondsFormatterIntervalWhitespace.Strip)
+                    binding:SetFormatter(formatter)
                     binding:UpdateFontString()
-                    assert(label:GetText() == 'value:12')
+                    assert(label:GetText() == '12s')
                     assert(binding:Copy():GetFontString() == label)
                 end
                 return select(4, GetBuildInfo()), binding ~= nil,

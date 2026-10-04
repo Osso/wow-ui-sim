@@ -108,31 +108,36 @@ fn test_patch_12_0_7_duration_objects_and_text_binding() {
             if durationObject:GetClock() ~= nil then return "DurationObject.GetClock default" end
             durationObject:SetClock(clock)
             if durationObject:GetClock() ~= clock then return "DurationObject.SetClock" end
-            if durationObject:HasExpired() ~= false then return "DurationObject.HasExpired" end
+            if durationObject:HasExpired() ~= true then return "DurationObject.HasExpired" end
             if durationObject:HasStarted() ~= false then return "DurationObject.HasStarted" end
             if durationObject:IsActive() ~= false then return "DurationObject.IsActive" end
 
             local binding = C_DurationUtil.CreateDurationTextBinding()
-            if binding:GetDuration() == nil then return "DurationTextBinding.GetDuration default" end
-            if binding:CanFormatText() ~= true then return "DurationTextBinding.CanFormatText" end
+            if binding:GetDuration() ~= nil then return "DurationTextBinding.GetDuration default" end
+            if binding:CanFormatText() ~= false then return "DurationTextBinding.CanFormatText" end
             if binding:CanUpdateFontString() ~= false then return "DurationTextBinding.CanUpdateFontString default" end
             if binding:GetExpiredText() ~= nil then return "DurationTextBinding.GetExpiredText default" end
             if binding:GetFontString() ~= nil then return "DurationTextBinding.GetFontString default" end
-            if binding:GetFormattedText() ~= "0" then return "DurationTextBinding.GetFormattedText default" end
+            if pcall(binding.GetFormattedText, binding) then return "DurationTextBinding.GetFormattedText unconfigured" end
             if binding:GetTimeModifier() ~= 0 then return "DurationTextBinding.GetTimeModifier default" end
             if binding:GetUpdateInterval() ~= 1 then return "DurationTextBinding.GetUpdateInterval default" end
             if binding:GetZeroDurationText() ~= nil then return "DurationTextBinding.GetZeroDurationText default" end
             if binding:IsEnabled() ~= true then return "DurationTextBinding.IsEnabled default" end
 
-            binding:SetDuration(10)
-            if binding:GetDuration() ~= 10 then return "DurationTextBinding.SetDuration" end
-            if binding:GetFormattedText() ~= "10" then return "DurationTextBinding.GetFormattedText" end
+            durationObject:SetTimeFromStart(0, 10)
+            binding:SetDuration(durationObject)
+            local formatter = C_StringUtil.CreateSecondsFormatter()
+            formatter:SetDefaultAbbreviation(Enum.SecondsFormatterAbbreviation.OneLetter)
+            formatter:SetStripIntervalWhitespace(Enum.SecondsFormatterIntervalWhitespace.Strip)
+            binding:SetFormatter(formatter)
+            if binding:GetDuration() ~= durationObject then return "DurationTextBinding.SetDuration" end
+            if binding:GetFormattedText() ~= "10s" then return "DurationTextBinding.GetFormattedText" end
             binding:SetExpiredText("expired")
             if binding:GetExpiredText() ~= "expired" then return "DurationTextBinding.SetExpiredText" end
             binding:SetZeroDurationText("zero")
             if binding:GetZeroDurationText() ~= "zero" then return "DurationTextBinding.SetZeroDurationText" end
-            binding:SetTimeModifier(1.5)
-            if binding:GetTimeModifier() ~= 1.5 then return "DurationTextBinding.SetTimeModifier" end
+            binding:SetTimeModifier(1)
+            if binding:GetTimeModifier() ~= 1 then return "DurationTextBinding.SetTimeModifier" end
             binding:SetUpdateInterval(0.25)
             if binding:GetUpdateInterval() ~= 0.25 then return "DurationTextBinding.SetUpdateInterval" end
             binding:SetClock(clock)
@@ -159,9 +164,9 @@ fn test_patch_12_0_7_duration_objects_and_text_binding() {
             binding:SetFontString(fontString)
             if binding:GetFontString() ~= fontString then return "DurationTextBinding.SetFontString" end
             if binding:CanUpdateFontString() ~= true then return "DurationTextBinding.CanUpdateFontString" end
-            binding:SetDuration(7)
+            durationObject:SetTimeFromStart(0, 7)
             binding:UpdateFontString()
-            if fontString:GetText() ~= "7" then return "DurationTextBinding.UpdateFontString" end
+            if fontString:GetText() ~= "7s" then return "DurationTextBinding.UpdateFontString" end
 
             binding:SetDuration(durationObject)
             if binding:GetDuration() ~= durationObject then return "DurationTextBinding duration object" end
