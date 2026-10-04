@@ -378,13 +378,13 @@
       "source_id": "prose-undated-013",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: needs a limited-input (gamepad action) model and forbidden/locked/protected mouse-focus rules in combat; neither exists. No credit."
     },
     {
       "source_id": "prose-undated-014",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: debugstack/debuglocals secrecy depends on the VM tracking secret access per call frame, which rilua does not expose. No credit."
     },
     {
       "source_id": "prose-undated-015",
@@ -622,7 +622,7 @@
       "source_id": "global api-C_QuestHub-GetDragonridingRacesForAreaPOI-048",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: producer returns an unconditional empty table; no cached declaration for arguments, result schema or secret policy. No credit."
     },
     {
       "source_id": "global api-C_UIFileAsset-GetFileID-049",
@@ -1092,49 +1092,49 @@
       "source_id": "scriptobjects-DurationTextFormattingOptions-GetAddRemainingText-111",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: no cached declaration for this receiver or method (only the DurationTextBindingFormatOptions structure exists); constructor, arity, nilability and secrecy unknown. No credit."
     },
     {
       "source_id": "scriptobjects-DurationTextFormattingOptions-GetDurationType-112",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: no cached declaration for this receiver or method (only the DurationTextBindingFormatOptions structure exists); constructor, arity, nilability and secrecy unknown. No credit."
     },
     {
       "source_id": "scriptobjects-DurationTextFormattingOptions-SetAddRemainingText-113",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: no cached declaration for this receiver or method (only the DurationTextBindingFormatOptions structure exists); constructor, arity, nilability and secrecy unknown. No credit."
     },
     {
       "source_id": "scriptobjects-DurationTextFormattingOptions-SetDurationType-114",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: no cached declaration for this receiver or method (only the DurationTextBindingFormatOptions structure exists); constructor, arity, nilability and secrecy unknown. No credit."
     },
     {
       "source_id": "scriptobjects-DurationTextRawValue-GetMilliseconds-115",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: no cached declaration for DurationTextRawValue; how a raw value is obtained, its arity and secrecy are unknown. No credit."
     },
     {
       "source_id": "scriptobjects-DurationTextRawValue-GetSeconds-116",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: no cached declaration for DurationTextRawValue; how a raw value is obtained, its arity and secrecy are unknown. No credit."
     },
     {
       "source_id": "scriptobjects-DurationTextRawValue-SetMilliseconds-117",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: no cached declaration for DurationTextRawValue; how a raw value is obtained, its arity and secrecy are unknown. No credit."
     },
     {
       "source_id": "scriptobjects-DurationTextRawValue-SetSeconds-118",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: no cached declaration for DurationTextRawValue; how a raw value is obtained, its arity and secrecy are unknown. No credit."
     },
     {
       "source_id": "source-context-120",
@@ -1398,31 +1398,31 @@
       "source_id": "events-CLUB_MEMBER_ADDED-158",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: payload type becomes ClubMemberOpaqueId; simulator member IDs are roster row indices with no opaque identity model or host event source. Event name is registerable only. No credit."
     },
     {
       "source_id": "events-CLUB_MEMBER_PRESENCE_UPDATED-159",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: payload type becomes ClubMemberOpaqueId; simulator member IDs are roster row indices with no opaque identity model or host event source. Event name is registerable only. No credit."
     },
     {
       "source_id": "events-CLUB_MEMBER_REMOVED-160",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: payload type becomes ClubMemberOpaqueId; simulator member IDs are roster row indices with no opaque identity model or host event source. Event name is registerable only. No credit."
     },
     {
       "source_id": "events-CLUB_MEMBER_ROLE_UPDATED-161",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: payload type becomes ClubMemberOpaqueId; simulator member IDs are roster row indices with no opaque identity model or host event source. Event name is registerable only. No credit."
     },
     {
       "source_id": "events-CLUB_MEMBER_UPDATED-162",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Blocked: payload type becomes ClubMemberOpaqueId; simulator member IDs are roster row indices with no opaque identity model or host event source. Event name is registerable only. No credit."
     },
     {
       "source_id": "events-ENCOUNTER_END-163",
