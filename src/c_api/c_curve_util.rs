@@ -1,6 +1,7 @@
 //! Native-identity curve handles used by C_CurveUtil and secure aura options.
 
 const CURVES_LUA: &str = r#"
+local readCurveInput, wrapCurveOutput = ...
 local objects = setmetatable({}, {__mode='k'})
 debug.getregistry().__wow_curve_objects = objects
 local nextId = 0
@@ -19,14 +20,15 @@ local function interpolate(left, right, fraction, isColor)
         left.a + (right.a - left.a) * fraction)
 end
 
-local function evaluate_color_step(points, target)
-    if target < points[1].x then error('Color curve lower extrapolation is not modeled', 2) end
+-- INFERRED: numeric step curves hold the first point's value below it.
+local function evaluate_step(points, target, isColor)
+    if isColor and target < points[1].x then error('Color curve lower extrapolation is not modeled', 2) end
     local value = points[1].y
     for index = 2, #points do
         if target < points[index].x then break end
         value = points[index].y
     end
-    return copy_value(value, true)
+    return copy_value(value, isColor)
 end
 
 local function evaluate_linear(points, target, isColor)
@@ -49,8 +51,8 @@ local function evaluate_curve(s, x, isColor)
     end
     if #points == 1 then return copy_value(points[1].y, isColor) end
     local target = x or 0
-    if isColor and s.curveType == 1 then
-        return evaluate_color_step(points, target)
+    if s.curveType == 1 then
+        return evaluate_step(points, target, isColor)
     end
     if isColor and s.curveType ~= 0 then error('Color curve interpolation type is not modeled', 2) end
     if isColor and target < points[1].x then error('Color curve lower extrapolation is not modeled', 2) end
@@ -90,7 +92,12 @@ local function install_curve_methods(methods, state, create, isColor)
         return result
     end
     function methods:Evaluate(x)
-        return evaluate_curve(state(self), x, isColor)
+        if isColor then return evaluate_curve(state(self), x, true) end
+        -- Secret inputs evaluate on their payload and yield a secret result.
+        local input, secret = readCurveInput(x)
+        local value = evaluate_curve(state(self), input, false)
+        if secret then return wrapCurveOutput(value) end
+        return value
     end
 end
 
@@ -184,10 +191,48 @@ end
 "#;
 
 pub(crate) fn register(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(CURVES_LUA)?;
+    use rilua::LuaApiMut;
+    let install = lua.load_bytes(CURVES_LUA.as_bytes(), "@curve-util-bootstrap")?;
+    let state = lua.state_mut();
+    let arguments = [
+        host_function(state, "CurveUtil.ReadInput", read_curve_input),
+        host_function(state, "CurveUtil.WrapOutput", wrap_curve_output),
+    ];
+    lua.call_function(&install, &arguments)?;
     #[cfg(feature = "retail-12-0-0")]
     lua.exec(BOOLEAN_SELECTION_LUA)?;
     Ok(())
+}
+
+fn host_function(
+    state: &mut rilua::vm::state::LuaState,
+    name: &'static str,
+    function: rilua::RustFn,
+) -> rilua::Val {
+    use rilua::vm::closure::{Closure, RustClosure};
+    rilua::Val::Function(
+        state
+            .gc
+            .alloc_closure(Closure::Rust(RustClosure::new(function, name))),
+    )
+}
+
+/// `(plain, isSecret)` for a curve input. Documented `AllowedWhenUntainted`:
+/// only untainted callers may pass secrets.
+fn read_curve_input(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<u32> {
+    let value = crate::lua_bridge::stack_val(state, 1);
+    let secret = rilua::table_security::is_secret_value(state, value);
+    let plain = rilua::table_security::unwrap_secret(state, value)?;
+    state.push(plain);
+    state.push(rilua::Val::Bool(secret));
+    Ok(2)
+}
+
+/// INFERRED: a secret input yields a secret result.
+fn wrap_curve_output(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<u32> {
+    let value = rilua::table_security::wrap_secret(state, crate::lua_bridge::stack_val(state, 1))?;
+    state.push(value);
+    Ok(1)
 }
 
 pub(crate) fn evaluate_curve_value(
