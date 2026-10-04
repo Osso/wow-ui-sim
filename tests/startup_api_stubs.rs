@@ -481,6 +481,7 @@ fn startup_quest_link_and_date_helpers_are_callable() {
     assert_eq!(calendar_year_type, "number");
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 #[test]
 fn startup_legacy_auto_complete_realms_global_matches_namespace() {
     let env = env();
@@ -678,4 +679,16 @@ fn is_character_newly_boosted_returns_false() {
         !boosted,
         "boosted-character help flow is not simulated, so the probe should stay false"
     );
+}
+
+#[cfg(feature = "retail-12-0-7")]
+#[test]
+fn autocomplete_namespace_remains_live_without_retired_native_globals() {
+    let env = env();
+    env.exec(r#"
+        assert(rawget(_G, "GetAutoCompleteRealms") == nil)
+        assert(rawget(_G, "GetAutoCompleteResults") == nil)
+        assert(type(C_AutoComplete.GetAutoCompleteRealms) == "function")
+        assert(#C_AutoComplete.GetAutoCompleteRealms() == 0)
+    "#).unwrap();
 }

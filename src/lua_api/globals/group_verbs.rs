@@ -231,6 +231,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "DeclineGroup", decline_group)?;
     LuaApiMut::register_function(lua, "LeaveParty", leave_party)?;
     LuaApiMut::register_function(lua, "RemoveFromParty", remove_from_party)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     LuaApiMut::register_function(lua, "UninviteUnit", uninvite_unit)?;
     LuaApiMut::register_function(lua, "KickUnit", kick_unit)?;
     LuaApiMut::register_function(lua, "ReadyCheck", ready_check)?;

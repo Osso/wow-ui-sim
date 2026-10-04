@@ -259,8 +259,15 @@ fn click_bindings_default_profile_reports_interaction_but_execute_remains_inert(
         let env = env();
         env.exec("ClearTarget()").expect("ClearTarget");
 
+        #[cfg(not(feature = "retail-12-0-7"))]
+        let modifiers = "C_ClickBindings.MakeModifiers()";
+        #[cfg(feature = "retail-12-0-7")]
+        let modifiers = {
+            env.exec("assert(rawget(C_ClickBindings, 'MakeModifiers') == nil)").unwrap();
+            "MakeModifiers()"
+        };
         let binding_type: i32 = env
-            .eval("return C_ClickBindings.GetBindingType('LeftButton', C_ClickBindings.MakeModifiers())")
+            .eval(&format!("return C_ClickBindings.GetBindingType('LeftButton', {modifiers})"))
             .unwrap();
         assert_eq!(binding_type, 3, "default left click should be an interaction");
 

@@ -2,22 +2,25 @@
 //!
 //! Realm completion data is not modeled yet, so realm probes return an empty
 //! list. Character/name completion is modeled in `c_api::c_auto_complete`; this
-//! bootstrap only exposes the deprecated global forwarder in raw `WowLuaEnv`
-//! tests where Blizzard_DeprecatedAutoComplete has not been loaded.
+//! bootstrap retains legacy globals before Retail 12.0.7. At 12.0.7+, only
+//! Blizzard_DeprecatedAutoComplete owns those globals when its CVar permits them.
+
+use rilua::LuaApiMut;
 
 const AUTO_COMPLETE_DEFAULTS_LUA: &str = r#"
+local publishLegacyNative = ...
 C_AutoComplete = C_AutoComplete or __wow_namespace()
 if rawget(C_AutoComplete, "GetAutoCompleteRealms") == nil then
     function C_AutoComplete.GetAutoCompleteRealms()
         return {}
     end
 end
-if GetAutoCompleteRealms == nil then
+if publishLegacyNative and GetAutoCompleteRealms == nil then
     function GetAutoCompleteRealms()
         return C_AutoComplete.GetAutoCompleteRealms()
     end
 end
-if GetAutoCompleteResults == nil then
+if publishLegacyNative and GetAutoCompleteResults == nil then
     function GetAutoCompleteResults(name, numResults, cursorPosition, allowFullMatch, includeFlags, excludeFlags)
         return C_AutoComplete.GetAutoCompleteResults(name, numResults, cursorPosition, not not allowFullMatch, includeFlags, excludeFlags)
     end
@@ -25,7 +28,14 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(AUTO_COMPLETE_DEFAULTS_LUA)?;
+    let bootstrap = lua.load_bytes(
+        AUTO_COMPLETE_DEFAULTS_LUA.as_bytes(),
+        "@auto-complete-defaults",
+    )?;
+    lua.call_function(
+        &bootstrap,
+        &[rilua::Val::Bool(!cfg!(feature = "retail-12-0-7"))],
+    )?;
     Ok(())
 }
 
@@ -33,6 +43,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(feature = "retail-12-0-7"))]
     #[test]
     fn installs_empty_realm_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -51,6 +62,7 @@ mod tests {
         assert_eq!(global_count, 0);
     }
 
+    #[cfg(not(feature = "retail-12-0-7"))]
     #[test]
     fn installs_legacy_results_forwarder() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
@@ -75,6 +87,21 @@ mod tests {
             .expect("legacy autocomplete result function should forward to C_AutoComplete");
 
         assert_eq!(result, "coerced");
+    }
+
+    #[cfg(feature = "retail-12-0-7")]
+    #[test]
+    fn bootstrap_keeps_retired_globals_absent_and_namespace_callable() {
+        let env = WowLuaEnv::new().unwrap();
+        super::apply_bootstrap(&mut env.rilua_mut()).unwrap();
+        env.exec(
+            r#"
+            assert(rawget(_G, "GetAutoCompleteRealms") == nil)
+            assert(rawget(_G, "GetAutoCompleteResults") == nil)
+            assert(#C_AutoComplete.GetAutoCompleteRealms() == 0)
+        "#,
+        )
+        .unwrap();
     }
 
     #[test]

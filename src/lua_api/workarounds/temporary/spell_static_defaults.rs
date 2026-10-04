@@ -5,7 +5,10 @@
 //! override, visibility, and Maw power-border state until those domains are
 //! modeled.
 
+use rilua::LuaApiMut;
+
 const SPELL_STATIC_DEFAULTS_LUA: &str = r#"
+local publishLegacyNative = ...
 C_Spell = C_Spell or __wow_namespace()
 
 if rawget(C_Spell, "GetOverrideSpell") == nil then
@@ -20,7 +23,7 @@ if rawget(C_Spell, "GetVisibilityInfo") == nil then
     end
 end
 
-if rawget(C_Spell, "GetMawPowerBorderAtlasBySpellID") == nil then
+if publishLegacyNative and rawget(C_Spell, "GetMawPowerBorderAtlasBySpellID") == nil then
     function C_Spell.GetMawPowerBorderAtlasBySpellID(_spellID)
         return nil
     end
@@ -28,7 +31,14 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(SPELL_STATIC_DEFAULTS_LUA)?;
+    let bootstrap = lua.load_bytes(
+        SPELL_STATIC_DEFAULTS_LUA.as_bytes(),
+        "@spell-static-defaults",
+    )?;
+    lua.call_function(
+        &bootstrap,
+        &[rilua::Val::Bool(!cfg!(feature = "retail-12-0-7"))],
+    )?;
     Ok(())
 }
 
@@ -40,6 +50,7 @@ mod tests {
     fn installs_spell_static_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
+        #[cfg(not(feature = "retail-12-0-7"))]
         let (override_id, maw_atlas_is_nil, charge_is_nil): (i64, bool, bool) = env
             .eval(
                 r#"
@@ -51,9 +62,21 @@ mod tests {
             )
             .expect("spell static defaults should be callable");
 
-        assert_eq!(override_id, 116);
-        assert!(maw_atlas_is_nil);
-        assert!(charge_is_nil);
+        #[cfg(not(feature = "retail-12-0-7"))]
+        {
+            assert_eq!(override_id, 116);
+            assert!(maw_atlas_is_nil);
+            assert!(charge_is_nil);
+        }
+        #[cfg(feature = "retail-12-0-7")]
+        env.exec(
+            r#"
+            assert(C_Spell.GetOverrideSpell(116) == 116)
+            assert(rawget(C_Spell, "GetMawPowerBorderAtlasBySpellID") == nil)
+            assert(C_Spell.GetSpellCharges(116) == nil)
+        "#,
+        )
+        .unwrap();
     }
 
     #[test]

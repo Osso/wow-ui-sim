@@ -318,7 +318,7 @@ fn test_patch_12_0_7_safe_global_bridges() {
     assert_eq!(result, "ok");
 }
 
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(feature = "retail-12-0-5")]
 #[test]
 fn test_patch_12_0_7_removal_and_event_surface() {
     let env = WowLuaEnv::new().unwrap();
@@ -347,7 +347,12 @@ fn test_patch_12_0_7_removal_and_event_surface() {
             local removalTypes = {}
             for _, name in ipairs(retained) do
                 local namespaceName, methodName = string.match(name, "^([^.]+)%.(.+)$")
-                local value = namespaceName and _G[namespaceName][methodName] or _G[name]
+                local value
+                if namespaceName then
+                    value = rawget(_G[namespaceName], methodName)
+                else
+                    value = rawget(_G, name)
+                end
                 table.insert(removalTypes, name .. "=" .. type(value))
             end
 
@@ -380,16 +385,26 @@ fn test_patch_12_0_7_removal_and_event_surface() {
         )
         .unwrap();
 
+    #[cfg(not(feature = "retail-12-0-7"))]
     assert_eq!(
         result,
         "BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=function,C_ClickBindings.MakeModifiers=function,C_Spell.GetMawPowerBorderAtlasBySpellID=function,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=function,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=function,GetAutoCompleteRealms=function,IsRecognizedName=nil"
     );
+    #[cfg(feature = "retail-12-0-7")]
+    assert_eq!(
+        result,
+        "BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=nil,C_ClickBindings.MakeModifiers=nil,C_Spell.GetMawPowerBorderAtlasBySpellID=nil,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=nil,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=nil,GetAutoCompleteRealms=nil,IsRecognizedName=nil"
+    );
 }
 
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(feature = "retail-12-0-5")]
 #[test]
 fn test_patch_12_0_7_widget_compatibility_surface() {
     let env = WowLuaEnv::new().unwrap();
+    #[cfg(not(feature = "retail-12-0-7"))]
+    env.exec("MinimapExpectedType = 'function'").unwrap();
+    #[cfg(feature = "retail-12-0-7")]
+    env.exec("MinimapExpectedType = 'nil'").unwrap();
     let result: String = env
         .eval(
             r#"
@@ -403,7 +418,7 @@ fn test_patch_12_0_7_widget_compatibility_surface() {
                 "SetStaticPOIArrowTexture",
             }
             for _, method in ipairs(minimapMethods) do
-                if type(minimap[method]) ~= "function" then return "Minimap:" .. method end
+                if type(minimap[method]) ~= MinimapExpectedType then return "Minimap:" .. method end
             end
 
             local button = CreateFrame("Button")

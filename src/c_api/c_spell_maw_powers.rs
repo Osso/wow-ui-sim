@@ -6,8 +6,10 @@ use std::collections::HashMap;
 
 use crate::lua_api::methods::{borrow_state, create_string};
 use crate::lua_bridge::table_set_rust_fn_static;
+use rilua::LuaResult;
+#[cfg(not(feature = "retail-12-0-7"))]
+use rilua::Val;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
 
 #[derive(Default)]
 pub struct MawPowers {
@@ -19,6 +21,7 @@ pub struct MawPowers {
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_Spell")?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     table_set_rust_fn_static(
         state,
         namespace,
@@ -33,6 +36,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     )
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn get_maw_power_border_atlas_by_spell_id(state: &mut LuaState) -> LuaResult<u32> {
     let atlas = match super::c_spell::read_public_spell_identifier_at(
         state,

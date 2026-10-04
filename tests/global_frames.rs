@@ -71,13 +71,7 @@ fn test_map_frame_method_surface_is_registered() {
             "SetPlayerPingScale",
             "StartPlayerPing",
             "StopPlayerPing",
-            "SetBlipTexture",
             "SetMaskTexture",
-            "SetIconTexture",
-            "SetPOIArrowTexture",
-            "SetCorpsePOIArrowTexture",
-            "SetStaticPOIArrowTexture",
-            "SetPlayerTexture",
             "SetQuestBlobInsideTexture",
             "SetQuestBlobInsideAlpha",
             "SetQuestBlobOutsideTexture",
@@ -605,4 +599,17 @@ fn test_auction_house_frame_is_load_on_demand() {
         !exists,
         "AuctionHouseFrame is a load-on-demand panel and must not exist before Blizzard_AuctionHouseUI loads"
     );
+}
+
+#[test]
+fn test_minimap_retired_texture_method_surface_follows_epoch() {
+    let env = env();
+    #[cfg(not(feature = "retail-12-0-7"))]
+    let expected = "function";
+    #[cfg(feature = "retail-12-0-7")]
+    let expected = "nil";
+    for method in ["SetBlipTexture","SetIconTexture","SetPOIArrowTexture","SetCorpsePOIArrowTexture","SetStaticPOIArrowTexture","SetPlayerTexture"] {
+        let actual: String = env.eval(&format!("return type(Minimap['{method}'])")).unwrap();
+        assert_eq!(actual, expected, "{method}");
+    }
 }

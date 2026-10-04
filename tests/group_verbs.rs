@@ -126,7 +126,11 @@ fn remove_from_party_unknown_name_is_noop() {
 fn uninvite_unit_by_party_token_removes_indexed_member() {
     let env = env();
     let first_name = env.state().borrow().party_members[0].name.clone();
+    #[cfg(not(feature = "retail-12-0-7"))]
     env.exec(r#"UninviteUnit("party1")"#).unwrap();
+    #[cfg(feature = "retail-12-0-7")]
+    env.exec(r#"assert(rawget(_G, "UninviteUnit") == nil); C_PartyInfo.UninviteUnit("party1")"#)
+        .unwrap();
     assert!(
         env.state()
             .borrow()
@@ -140,7 +144,11 @@ fn uninvite_unit_by_party_token_removes_indexed_member() {
 fn uninvite_unit_by_name_removes_matching_member() {
     let env = env();
     let second_name = env.state().borrow().party_members[1].name.clone();
+    #[cfg(not(feature = "retail-12-0-7"))]
     env.exec(&format!(r#"UninviteUnit("{second_name}")"#))
+        .unwrap();
+    #[cfg(feature = "retail-12-0-7")]
+    env.exec(&format!(r#"assert(rawget(_G, "UninviteUnit") == nil); C_PartyInfo.UninviteUnit("{second_name}")"#))
         .unwrap();
     assert!(
         env.state()

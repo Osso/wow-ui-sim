@@ -10,15 +10,35 @@ const SECOND_LINK: &str = "|Hmawpower:202|h[Second Fixture]|h";
 
 fn fixture_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create Maw power environment");
+    #[cfg(not(feature = "retail-12-0-7"))]
     env.exec(
         r#"
-        function CheckMaw(identifier, atlas, link)
+        function CheckMawAtlas(identifier, atlas)
             local function checkAtlas(...)
                 assert(select('#', ...) == 1, 'INFERRED one nullable atlas')
                 local value = ...
                 assert(value == atlas and not issecretvalue(value), 'exact public atlas')
                 if atlas ~= nil then assert(type(value) == 'string') end
             end
+            checkAtlas(C_Spell.GetMawPowerBorderAtlasBySpellID(identifier))
+        end
+        MawQueryNames = {'GetMawPowerBorderAtlasBySpellID', 'GetMawPowerLinkBySpellID'}
+        "#,
+    )
+    .expect("preserve older native atlas behavior");
+    #[cfg(feature = "retail-12-0-7")]
+    env.exec(
+        r#"
+        function CheckMawAtlas()
+            assert(rawget(C_Spell, 'GetMawPowerBorderAtlasBySpellID') == nil)
+        end
+        MawQueryNames = {'GetMawPowerLinkBySpellID'}
+        "#,
+    )
+    .expect("retired native atlas must be absent");
+    env.exec(
+        r#"
+        function CheckMaw(identifier, atlas, link)
             local function checkLink(...)
                 if link == nil then
                     assert(select('#', ...) == 0, 'INFERRED zero results on link miss')
@@ -29,11 +49,11 @@ fn fixture_env() -> WowLuaEnv {
                     assert(not issecretvalue(value), 'INFERRED public link')
                 end
             end
-            checkAtlas(C_Spell.GetMawPowerBorderAtlasBySpellID(identifier))
+            CheckMawAtlas(identifier, atlas)
             checkLink(C_Spell.GetMawPowerLinkBySpellID(identifier))
         end
         function RejectMaw(...)
-            for _, name in ipairs({'GetMawPowerBorderAtlasBySpellID', 'GetMawPowerLinkBySpellID'}) do
+            for _, name in ipairs(MawQueryNames) do
                 local query = C_Spell[name]
                 assert(type(query) == 'function', 'registered provider required')
                 local ok, err = pcall(query, ...)

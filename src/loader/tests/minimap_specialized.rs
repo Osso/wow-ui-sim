@@ -1,6 +1,7 @@
 //! Tests for Minimap, UnitPositionFrame, and FogOfWarFrame widget methods.
 use super::*;
 
+#[cfg(not(feature = "retail-12-0-7"))]
 #[test]
 fn test_minimap_texture_setters_persist_asset_state() {
     let env = WowLuaEnv::new().unwrap();
@@ -56,10 +57,15 @@ fn test_minimap_texture_setters_persist_asset_state() {
 #[test]
 fn test_minimap_player_texture_and_defaults_follow_runtime_state() {
     let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"MinimapDefaultStateFrame = CreateFrame("Minimap", "MinimapDefaultStateFrame", UIParent)"#).unwrap();
+    #[cfg(not(feature = "retail-12-0-7"))]
+    env.exec(r#"MinimapDefaultStateFrame:SetPlayerTexture("Interface\\Minimap\\MinimapArrow")"#)
+        .unwrap();
+    #[cfg(feature = "retail-12-0-7")]
+    env.exec("assert(MinimapDefaultStateFrame.SetPlayerTexture == nil)")
+        .unwrap();
     env.exec(
         r#"
-        MinimapDefaultStateFrame = CreateFrame("Minimap", "MinimapDefaultStateFrame", UIParent)
-        MinimapDefaultStateFrame:SetPlayerTexture("Interface\\Minimap\\MinimapArrow")
         MinimapDefaultStateFrame:SetZoom(4)
         MinimapDefaultStateFrame:PingLocation(0.25, 0.75)
     "#,
@@ -77,10 +83,13 @@ fn test_minimap_player_texture_and_defaults_follow_runtime_state() {
             .get(minimap_id)
             .expect("minimap frame should be readable");
 
+        #[cfg(not(feature = "retail-12-0-7"))]
         assert_eq!(
             minimap.minimap_player_texture.as_deref(),
             Some("Interface\\Minimap\\MinimapArrow")
         );
+        #[cfg(feature = "retail-12-0-7")]
+        assert_eq!(minimap.minimap_player_texture, None);
         assert_eq!(minimap.minimap_ping_position, Some((0.25, 0.75)));
     }
 
@@ -406,4 +415,31 @@ fn test_fog_of_war_frame_allows_clearing_optional_atlases() {
     assert_eq!(background_atlas, None);
     assert_eq!(mask_atlas, None);
     assert!((mask_scalar - 1.0).abs() < f64::EPSILON);
+}
+
+#[cfg(feature = "retail-12-0-7")]
+#[test]
+fn test_minimap_mask_texture_remains_live_after_retired_texture_setters() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        MinimapTextureStateFrame = CreateFrame("Minimap", "MinimapTextureStateFrame", UIParent)
+        MinimapTextureStateFrame:SetMaskTexture("Interface\\Minimap\\UI-Minimap-Background")
+        for _, method in ipairs({"SetBlipTexture", "SetIconTexture", "SetPOIArrowTexture",
+            "SetCorpsePOIArrowTexture", "SetStaticPOIArrowTexture", "SetPlayerTexture"}) do
+            assert(MinimapTextureStateFrame[method] == nil)
+        end
+    "#,
+    )
+    .unwrap();
+    let state = env.state().borrow();
+    let id = state
+        .widgets
+        .get_id_by_name("MinimapTextureStateFrame")
+        .unwrap();
+    let minimap = state.widgets.get(id).unwrap();
+    assert_eq!(
+        minimap.minimap_mask_texture.as_deref(),
+        Some("Interface\\Minimap\\UI-Minimap-Background")
+    );
 }

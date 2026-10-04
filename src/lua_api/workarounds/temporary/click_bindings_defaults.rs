@@ -1,6 +1,9 @@
 //! Temporary `C_ClickBindings` gaps outside the modeled interaction profile.
 
+use rilua::LuaApiMut;
+
 const CLICK_BINDINGS_DEFAULTS_LUA: &str = r#"
+local publishLegacyNative = ...
 C_ClickBindings = C_ClickBindings or __wow_namespace()
 
 if rawget(C_ClickBindings, "CanSpellBeClickBound") == nil then
@@ -24,7 +27,7 @@ if rawget(_G, "GetStringFromModifiers") == nil then
     end
 end
 
-if rawget(C_ClickBindings, "GetStringFromModifiers") == nil then
+if publishLegacyNative and rawget(C_ClickBindings, "GetStringFromModifiers") == nil then
     function C_ClickBindings.GetStringFromModifiers(modifiers)
         return GetStringFromModifiers(modifiers)
     end
@@ -52,7 +55,7 @@ if rawget(_G, "MakeModifiers") == nil then
     end
 end
 
-if rawget(C_ClickBindings, "MakeModifiers") == nil then
+if publishLegacyNative and rawget(C_ClickBindings, "MakeModifiers") == nil then
     function C_ClickBindings.MakeModifiers()
         return MakeModifiers()
     end
@@ -65,7 +68,14 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    lua.exec(CLICK_BINDINGS_DEFAULTS_LUA)?;
+    let bootstrap = lua.load_bytes(
+        CLICK_BINDINGS_DEFAULTS_LUA.as_bytes(),
+        "@click-bindings-defaults",
+    )?;
+    lua.call_function(
+        &bootstrap,
+        &[rilua::Val::Bool(!cfg!(feature = "retail-12-0-7"))],
+    )?;
     Ok(())
 }
 

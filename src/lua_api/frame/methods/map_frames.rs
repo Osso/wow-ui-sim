@@ -59,12 +59,18 @@ const MAP_FRAME_METHODS: &[MethodBinding] = &[
     method!("SetPlayerPingScale", set_player_ping_scale),
     method!("StartPlayerPing", start_player_ping),
     method!("StopPlayerPing", stop_player_ping),
+    #[cfg(not(feature = "retail-12-0-7"))]
     method!("SetBlipTexture", set_blip_texture),
     method!("SetMaskTexture", set_minimap_mask_texture),
+    #[cfg(not(feature = "retail-12-0-7"))]
     method!("SetIconTexture", set_minimap_icon_texture),
+    #[cfg(not(feature = "retail-12-0-7"))]
     method!("SetPOIArrowTexture", set_poi_arrow_texture),
+    #[cfg(not(feature = "retail-12-0-7"))]
     method!("SetCorpsePOIArrowTexture", set_corpse_poi_arrow_texture),
+    #[cfg(not(feature = "retail-12-0-7"))]
     method!("SetStaticPOIArrowTexture", set_static_poi_arrow_texture),
+    #[cfg(not(feature = "retail-12-0-7"))]
     method!("SetPlayerTexture", set_minimap_player_texture),
     method!("SetQuestBlobInsideTexture", set_quest_blob_inside_texture),
     method!("SetQuestBlobInsideAlpha", set_quest_blob_inside_alpha),
@@ -410,6 +416,7 @@ fn stop_player_ping(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn set_blip_texture(state: &mut LuaState) -> LuaResult<u32> {
     set_minimap_texture_field(state, |frame, texture| frame.minimap_blip_texture = texture)
 }
@@ -418,28 +425,33 @@ fn set_minimap_mask_texture(state: &mut LuaState) -> LuaResult<u32> {
     set_minimap_texture_field(state, |frame, texture| frame.minimap_mask_texture = texture)
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn set_minimap_icon_texture(state: &mut LuaState) -> LuaResult<u32> {
     set_minimap_texture_field(state, |frame, texture| frame.minimap_icon_texture = texture)
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn set_minimap_player_texture(state: &mut LuaState) -> LuaResult<u32> {
     set_minimap_texture_field(state, |frame, texture| {
         frame.minimap_player_texture = texture
     })
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn set_poi_arrow_texture(state: &mut LuaState) -> LuaResult<u32> {
     set_minimap_texture_field(state, |frame, texture| {
         frame.minimap_poi_arrow_texture = texture
     })
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn set_corpse_poi_arrow_texture(state: &mut LuaState) -> LuaResult<u32> {
     set_minimap_texture_field(state, |frame, texture| {
         frame.minimap_corpse_poi_arrow_texture = texture
     })
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn set_static_poi_arrow_texture(state: &mut LuaState) -> LuaResult<u32> {
     set_minimap_texture_field(state, |frame, texture| {
         frame.minimap_static_poi_arrow_texture = texture
