@@ -58,6 +58,14 @@ macro_rules! build_empty_sim_state {
             garrison_talents: GarrisonTalentState::default(),
             clipboard: ClipboardState::default(),
             chat_edit_open_state: None,
+            #[cfg(feature = "retail-12-0-7")]
+            host_chat_inputs: crate::lua_api::host_chat_inputs::HostChatInputs::default(),
+            #[cfg(feature = "retail-12-0-7")]
+            performance_inputs: crate::lua_api::performance_inputs::PerformanceInputs::default(),
+            #[cfg(feature = "retail-12-0-7")]
+            url_texture_inputs: crate::c_api::url_texture_inputs::UrlTextureInputs::default(),
+            #[cfg(feature = "retail-12-0-7")]
+            unsupported_unit_tokens: HashSet::new(),
             #[cfg(feature = "retail-12-0-5")]
             chat_messaging_lockdown: false,
             #[cfg(feature = "retail-12-0-5")]

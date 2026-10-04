@@ -46,23 +46,6 @@ if GetFrameCPUUsage == nil then
   end
 end
 
-if GetEventCPUUsage == nil then
-  function GetEventCPUUsage(_event)
-    return 0
-  end
-end
-
-if GetFunctionCPUUsage == nil then
-  function GetFunctionCPUUsage(_fn, _includeSubroutines)
-    return 0, 0
-  end
-end
-
-if GetScriptCPUUsage == nil then
-  function GetScriptCPUUsage(_frame, _script, _includeChildren)
-    return 0, 0
-  end
-end
 
 if GetDownloadedPercentage == nil then
   function GetDownloadedPercentage()
@@ -85,8 +68,32 @@ if GetProtocolTypes == nil then
 end
 "#;
 
+#[cfg(not(feature = "retail-12-0-7"))]
+const LEGACY_PROFILING_DEFAULTS_LUA: &str = r#"
+if GetEventCPUUsage == nil then
+  function GetEventCPUUsage(_event)
+    return 0
+  end
+end
+
+if GetFunctionCPUUsage == nil then
+  function GetFunctionCPUUsage(_fn, _includeSubroutines)
+    return 0, 0
+  end
+end
+
+if GetScriptCPUUsage == nil then
+  function GetScriptCPUUsage(_frame, _script, _includeChildren)
+    return 0, 0
+  end
+end
+
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(PERFORMANCE_METRIC_DEFAULTS_LUA)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
+    lua.exec(LEGACY_PROFILING_DEFAULTS_LUA)?;
     Ok(())
 }
 
@@ -97,6 +104,13 @@ mod tests {
     #[test]
     fn installs_performance_metric_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        let script_arity = if cfg!(feature = "retail-12-0-7") {
+            1
+        } else {
+            2
+        };
+        env.exec(&format!("ExpectedScriptArity = {script_arity}"))
+            .expect("set profile-specific script metric arity");
 
         let result: String = env
             .eval(
@@ -113,7 +127,7 @@ mod tests {
                 local fnUsage, fnSubroutines = GetFunctionCPUUsage(function() end, true)
                 if fnUsage ~= 0 or fnSubroutines ~= 0 then return "function_cpu" end
                 local scriptUsage, scriptChildren = GetScriptCPUUsage(UIParent, "OnShow", true)
-                if scriptUsage ~= 0 or scriptChildren ~= 0 then return "script_cpu" end
+                if scriptUsage ~= 0 or select('#', GetScriptCPUUsage(UIParent, "OnShow", true)) ~= ExpectedScriptArity then return "script_cpu" end
                 if GetDownloadedPercentage() ~= 1 then return "downloaded" end
                 local inProgress, downloaded, total = GetMovieDownloadProgress(1)
                 if inProgress or downloaded ~= 0 or total ~= 0 then return "movie_download" end

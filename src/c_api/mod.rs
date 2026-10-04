@@ -147,6 +147,7 @@ pub(crate) mod class_talent_commands;
 pub mod equipment_set_command;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7_inputs;
+pub mod url_texture_inputs;
 #[cfg(feature = "retail-12-0-5")]
 pub use c_transmog_collection::IllusionInfo;
 #[cfg(feature = "retail-12-0-5")]

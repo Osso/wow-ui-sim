@@ -55,6 +55,8 @@ pub(super) fn init_lua_state(
     #[cfg(feature = "retail-12-1-0")]
     super::globals::security::register_retail_secret_values(lua)?;
     crate::lua_api::workarounds::apply_permanent_bootstrap(lua)?;
+    #[cfg(feature = "retail-12-0-7")]
+    super::globals::real::performance_inputs::register(lua)?;
     crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
     crate::c_api::c_click_bindings::register(lua)?;
     #[cfg(feature = "retail-12-0-5")]

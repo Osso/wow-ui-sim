@@ -46,6 +46,8 @@ pub(crate) mod nameplate_display;
 #[cfg(feature = "client-wowforever")]
 pub mod neighborhood_invites;
 pub mod net_stats;
+#[cfg(feature = "retail-12-0-7")]
+pub(crate) mod performance_inputs;
 pub mod pet_bar;
 pub mod pet_stats;
 #[cfg(feature = "client-wowforever")]

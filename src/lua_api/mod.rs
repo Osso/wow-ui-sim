@@ -24,6 +24,12 @@ pub(crate) mod game_data;
 pub(crate) mod global_slots;
 pub mod globals;
 pub(crate) mod handler_timing;
+#[cfg(feature = "retail-12-0-7")]
+mod host_chat_events;
+#[cfg(feature = "retail-12-0-7")]
+pub mod host_chat_inputs;
+#[cfg(feature = "retail-12-0-7")]
+mod host_url_texture_events;
 #[allow(dead_code)] // Track 1 sub-item 1: pure data, consumers land in sub-items 2-4
 pub(crate) mod hot_literals;
 mod key_dispatch;
@@ -33,6 +39,8 @@ pub mod message_frame;
 #[allow(dead_code)] // Phase 3 infrastructure — callers added during VM switch
 pub(crate) mod methods;
 pub(crate) mod on_update;
+#[cfg(feature = "retail-12-0-7")]
+pub mod performance_inputs;
 pub(crate) mod rect_geometry;
 #[allow(dead_code)] // Phase 3 infrastructure — callers added during VM switch
 pub(crate) mod script_helpers;
@@ -40,6 +48,8 @@ pub(crate) mod script_helpers;
 mod script_object_transfer;
 pub(crate) mod sim_substates;
 pub mod simple_html;
+#[cfg(feature = "retail-12-0-7")]
+mod unsupported_unit_inputs;
 #[cfg(feature = "retail-12-0-5")]
 pub use cast_success::CastSuccess;
 pub(crate) mod spellcast_events;

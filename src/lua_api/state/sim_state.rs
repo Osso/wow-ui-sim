@@ -44,6 +44,16 @@ pub struct SimState {
     pub garrison_talents: GarrisonTalentState,
     pub clipboard: ClipboardState,
     pub chat_edit_open_state: Option<ChatEditOpenState>,
+    /// INFERRED explicit host ingress; empty per environment.
+    #[cfg(feature = "retail-12-0-7")]
+    pub host_chat_inputs: crate::lua_api::host_chat_inputs::HostChatInputs,
+    #[cfg(feature = "retail-12-0-7")]
+    pub performance_inputs: crate::lua_api::performance_inputs::PerformanceInputs,
+    #[cfg(feature = "retail-12-0-7")]
+    pub url_texture_inputs: crate::c_api::url_texture_inputs::UrlTextureInputs,
+    /// INFERRED unsupported-token set; empty default preserves modeled units.
+    #[cfg(feature = "retail-12-0-7")]
+    pub unsupported_unit_tokens: HashSet<String>,
     /// Explicit chat restriction input; false default is simulator policy, not a native producer.
     #[cfg(feature = "retail-12-0-5")]
     pub chat_messaging_lockdown: bool,

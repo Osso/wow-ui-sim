@@ -137,14 +137,30 @@ pub(super) fn power_type_name(power_type: i32) -> &'static str {
 // ── Unit stat functions ──────────────────────────────────────────────────────
 
 fn unit_health(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "retail-12-0-7")]
+    let unit = crate::lua_api::unsupported_unit_inputs::authenticate_unit_arguments(state)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
+    #[cfg(feature = "retail-12-0-7")]
+    if crate::lua_api::unsupported_unit_inputs::is_unsupported(state, &unit)? {
+        state.push(Val::Num(0.0));
+        return Ok(1);
+    }
     let vitals = lookup_unit_vitals(state, &unit);
     state.push(Val::Num(vitals.health as f64));
     Ok(1)
 }
 
 fn unit_health_max(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "retail-12-0-7")]
+    let unit = crate::lua_api::unsupported_unit_inputs::authenticate_unit_arguments(state)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
+    #[cfg(feature = "retail-12-0-7")]
+    if crate::lua_api::unsupported_unit_inputs::is_unsupported(state, &unit)? {
+        state.push(Val::Num(0.0));
+        return Ok(1);
+    }
     let vitals = lookup_unit_vitals(state, &unit);
     state.push(Val::Num(vitals.health_max as f64));
     Ok(1)
@@ -175,7 +191,15 @@ fn unit_health_percent(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn unit_power(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "retail-12-0-7")]
+    let unit = crate::lua_api::unsupported_unit_inputs::authenticate_unit_arguments(state)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
+    #[cfg(feature = "retail-12-0-7")]
+    if crate::lua_api::unsupported_unit_inputs::is_unsupported(state, &unit)? {
+        state.push(Val::Num(0.0));
+        return Ok(1);
+    }
     let vitals = lookup_unit_vitals(state, &unit);
     let power = requested_power_values(state, &unit, &vitals).current;
     state.push(Val::Num(power as f64));
@@ -219,7 +243,15 @@ fn read_power_capability_type(state: &LuaState) -> LuaResult<i32> {
 }
 
 fn unit_power_max(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "retail-12-0-7")]
+    let unit = crate::lua_api::unsupported_unit_inputs::authenticate_unit_arguments(state)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     let unit = val_to_string(state, stack_val(state, 1)).unwrap_or_else(|| "player".to_string());
+    #[cfg(feature = "retail-12-0-7")]
+    if crate::lua_api::unsupported_unit_inputs::is_unsupported(state, &unit)? {
+        state.push(Val::Num(0.0));
+        return Ok(1);
+    }
     let vitals = lookup_unit_vitals(state, &unit);
     let power_max = requested_power_values(state, &unit, &vitals).max;
     state.push(Val::Num(power_max as f64));

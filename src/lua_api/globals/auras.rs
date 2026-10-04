@@ -622,9 +622,18 @@ fn unit_debuff(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn unit_aura(state: &mut LuaState) -> LuaResult<u32> {
+    // INFERRED AllowedWhenUntainted for this undeclared legacy global.
+    #[cfg(feature = "retail-12-0-7")]
+    let unit = crate::lua_api::unsupported_unit_inputs::authenticate_unit_arguments(state)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let index = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;
     let filter_str = Option::<String>::from_stack(state, 3)?.unwrap_or_default();
+    #[cfg(feature = "retail-12-0-7")]
+    if crate::lua_api::unsupported_unit_inputs::is_unsupported(state, &unit)? {
+        state.push(Val::Nil);
+        return Ok(1);
+    }
     let aura = collect_visible_unit_auras(state, &unit, filter_from_str(&filter_str))
         .into_iter()
         .nth(index.saturating_sub(1) as usize);

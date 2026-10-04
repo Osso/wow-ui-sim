@@ -142,7 +142,15 @@ fn unit_class_base(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn unit_guid(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "retail-12-0-7")]
+    let unit = crate::lua_api::unsupported_unit_inputs::authenticate_unit_arguments(state)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    #[cfg(feature = "retail-12-0-7")]
+    if crate::lua_api::unsupported_unit_inputs::is_unsupported(state, &unit)? {
+        state.push(Val::Nil);
+        return Ok(1);
+    }
     let guid = {
         let Ok(sim) = borrow_state(state) else {
             return Ok(0);
