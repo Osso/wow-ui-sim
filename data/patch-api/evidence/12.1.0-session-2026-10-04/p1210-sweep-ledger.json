@@ -24,16 +24,16 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-cvars-auctionDisplayOnCharacter-1338": {
-    "recommended_status": "audit-pending",
-    "note": "cvar: value/default queried; value='0'; default='0'"
+    "recommended_status": "bounded-coverage",
+    "note": "Absent on the default build (sweep)."
   },
   "wt-cvars-auctionSortByBuyoutPrice-1339": {
-    "recommended_status": "audit-pending",
-    "note": "cvar: value/default queried; value='0'; default='0'"
+    "recommended_status": "bounded-coverage",
+    "note": "Absent on the default build (sweep)."
   },
   "wt-cvars-auctionSortByUnitPrice-1340": {
-    "recommended_status": "audit-pending",
-    "note": "cvar: value/default queried; value='0'; default='0'"
+    "recommended_status": "bounded-coverage",
+    "note": "Absent on the default build (sweep)."
   },
   "wt-cvars-discordClientEnabled-1318": {
     "recommended_status": "partial-development-green",
@@ -96,20 +96,20 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-cvars-tooltipShowAuraSpellIDs-1332": {
-    "recommended_status": "audit-pending",
-    "note": "cvar: value/default queried; value=None; default=None"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-cvars-userFontScaleGlue-1333": {
     "recommended_status": "partial-development-green",
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-cvars-worldMapShowCursorCoords-1334": {
-    "recommended_status": "audit-pending",
-    "note": "cvar: value/default queried; value=None; default=None"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-cvars-worldMapShowPlayerCoords-1335": {
-    "recommended_status": "audit-pending",
-    "note": "cvar: value/default queried; value=None; default=None"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-events-BATTLETAG_INVITE_SHOW-1296": {
     "recommended_status": "bounded-coverage",
@@ -164,12 +164,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-events-FULLSCREEN_BROWSER_SPINNER_HIDE-1262": {
-    "recommended_status": "audit-pending",
-    "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"FULLSCREEN_BROWSER_SPINNER_HIDE\"; registered=false"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-events-FULLSCREEN_BROWSER_SPINNER_SHOW-1263": {
-    "recommended_status": "audit-pending",
-    "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"FULLSCREEN_BROWSER_SPINNER_SHOW\"; registered=false"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-events-GROUP_BUFF_VISUAL_ALERTS_CHANGED-1264": {
     "recommended_status": "partial-development-green",
@@ -248,12 +248,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-events-HOUSING_LAYOUT_NUM_FLOORS_CHANGED-1297": {
-    "recommended_status": "audit-pending",
-    "note": "event: pcall=true; return=true; registered=true"
+    "recommended_status": "bounded-coverage",
+    "note": "Absent on the default build (sweep)."
   },
   "wt-events-HOUSING_LAYOUT_OCCUPIED_FLOOR_RANGE_CHANGED-1283": {
-    "recommended_status": "audit-pending",
-    "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"HOUSING_LAYOUT_OCCUPIED_FLOOR_RANGE_CHANGED\"; registered=false"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-events-HOUSING_NEW_DECOR_PLACE_COMPLETE-1284": {
     "recommended_status": "partial-development-green",
@@ -308,8 +308,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-AddBehavioralMessagingTrayToStatusFrames-626": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-AddFrameLock-963": {
     "recommended_status": "bounded-coverage",
@@ -320,20 +320,20 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-AddGMChatStatusFrameToStatusFrames-628": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-AddTicketStatusFrameToStatusFrames-629": {
     "recommended_status": "partial-development-green",
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-AddWowSurveyStatusFrameToStatusFrames-630": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-AlliedRacesFrame_TryShow-631": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-AnchorUtil.ApplyFlowLayout-632": {
     "recommended_status": "partial-development-green",
@@ -356,20 +356,20 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ArchaeologyFrame_ToggleUI-635": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ArcheologyDigsiteProgressBar_OnSurveyCast-636": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ArdenwealdGardening_LoadUI-637": {
     "recommended_status": "partial-development-green",
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ArtifactFrame_OnTraitsRefunded-638": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-AuraUtil.AuraInstanceIDOnlyAuraCompare-639": {
     "recommended_status": "partial-development-green",
@@ -416,12 +416,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-AzeriteEmpoweredItemUI_LoadUI-650": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-AzeriteEssenceUI_LoadUI-651": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-BFAMissionFrame_EscapePressed-968": {
     "recommended_status": "bounded-coverage",
@@ -452,16 +452,16 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-BattlefieldMap_ToggleUI-652": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-BehavioralMessagingTray_OnNotification-654": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-BehavioralMessaging_LoadUI-653": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-BetterDate-967": {
     "recommended_status": "bounded-coverage",
@@ -516,8 +516,8 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-ChallengeModeCompleteBanner_OnChallengeModeCompleted-664": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ChatAdditionalColor_OpenColorPicker-665": {
     "recommended_status": "partial-development-green",
@@ -592,8 +592,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-CombatText_LoadUI-680": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-CommunitiesFrame_IsEnabled-980": {
     "recommended_status": "bounded-coverage",
@@ -644,8 +644,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ContributionCollectionFrame_LoadUI-689": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ConvertRGBtoColorString-984": {
     "recommended_status": "bounded-coverage",
@@ -708,12 +708,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-CovenantCallings_LoadUI-704": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-DebugTools_LoadUI-705": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-DifficultyUtil.GetCreatureDifficultyColor-706": {
     "recommended_status": "partial-development-green",
@@ -748,8 +748,8 @@
     "note": "global: raw=nil; lookup=nil"
   },
   "wt-framexml-EventTrace_LoadUI-713": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-EventUtil.AreVariablesLoaded-986": {
     "recommended_status": "audit-pending",
@@ -760,8 +760,8 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-ExpansionTrial_LoadUI-714": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-FadingFrame_CopyTextScalingTime-715": {
     "recommended_status": "partial-development-green",
@@ -936,8 +936,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-GMChatFrame_OnWhisperFromGM-767": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-GameMenuFrame_EscapePressed-752": {
     "recommended_status": "partial-development-green",
@@ -1120,32 +1120,32 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-HideAuctionHouseFrame-785": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HideBarberShopFrame-786": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HideBlackMarketFrame-787": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HideGarrisonMissionFrames-788": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HideGarrisonShipyardFrame-789": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HideGossipFrame-790": {
     "recommended_status": "partial-development-green",
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HideGuildBankFrame-791": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HideInstanceBootDialog-792": {
     "recommended_status": "partial-development-green",
@@ -1156,32 +1156,32 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HideItemUpgradeFrame-794": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HideProfessionsCustomerOrdersFrame-795": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HideSummonConfirmationDialogs-796": {
     "recommended_status": "partial-development-green",
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HouseFinderFrame_LoadUI-797": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HousingBulletinBoardFrame_LoadUI-798": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HousingControlsUtil.CanActivateHousingControls-1007": {
     "recommended_status": "bounded-coverage",
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-HousingControls_LoadUI-799": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-HousingFramesUtil.IsBlueprintCollectionAvailable-800": {
     "recommended_status": "partial-development-green",
@@ -1216,8 +1216,8 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-HybridMinimap_LoadUI-807": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-InputBoxInstructions_OnEnter-808": {
     "recommended_status": "partial-development-green",
@@ -1280,8 +1280,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-IsPlayerAtEffectiveMaxLevel-1012": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=function; lookup=function"
+    "recommended_status": "bounded-coverage",
+    "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-IsSummonConfirmationDialogVisible-821": {
     "recommended_status": "partial-development-green",
@@ -1296,8 +1296,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-IslandsPartyPoseFrame_TryShow-819": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ItemUtil.DisplayEquipSlotTooltip-824": {
     "recommended_status": "partial-development-green",
@@ -1324,12 +1324,12 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-KioskFrame_HandlePlayerEnteringWorld-830": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-Kiosk_LoadUI-829": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-LFGListApplicationViewerRemoveEntryButton_OnClick-833": {
     "recommended_status": "partial-development-green",
@@ -1340,8 +1340,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-LandingSoulbinds_LoadUI-831": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-LoadAddOnWithErrorHandling-834": {
     "recommended_status": "partial-development-green",
@@ -1400,8 +1400,8 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-MovePad_LoadUI-842": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-NPETutorial_AttemptToBegin-1021": {
     "recommended_status": "bounded-coverage",
@@ -1412,8 +1412,8 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-NPE_InitializeIfLoaded-857": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-NarrationUtil.CreateNarrationInfo-843": {
     "recommended_status": "partial-development-green",
@@ -1480,24 +1480,24 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-OpenEncounterJournalToJourney-859": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-OpenEncounterJournalToTieredEntrance-860": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-OpenMapToUserWaypoint-861": {
     "recommended_status": "partial-development-green",
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-OpenOrderHallTalentUI-862": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-OpenPlayerSpellsToGlyphTarget-863": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-OrderHallMissionFrame_EscapePressed-1023": {
     "recommended_status": "bounded-coverage",
@@ -1512,8 +1512,8 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-PVPUI_LoadUI-869": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-PhotoSharingFrame_EscapePressed-864": {
     "recommended_status": "partial-development-green",
@@ -1532,16 +1532,16 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-PlayerChoiceFrame_TryShow-867": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-PlayerChoiceToggle_TryShow-1027": {
-    "recommended_status": "bounded-coverage",
+    "recommended_status": "audit-pending",
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-PlayerChoiceToggle_TryShow-868": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-QuickJoin_JoinQueueButtonOnClick-1028": {
     "recommended_status": "bounded-coverage",
@@ -1656,8 +1656,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-RestoreGMChatFrameSession-881": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ReverseQuestObjective-1045": {
     "recommended_status": "bounded-coverage",
@@ -1740,60 +1740,60 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowAdventureMapFrameForFollowerType-890": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowArtifactFrame-891": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowArtifactRelicForgeFrame-892": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowAuctionHouseFrame-893": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowBarberShopFrame-894": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowBlackMarketFrame-895": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowChallengesKeystoneFrame-896": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowFlightMapFrame-897": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowGarrisonCapacitiveDisplayFrame-898": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowGarrisonMissionFrameForFollowerType-899": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowGarrisonRecruiterFrame-900": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowGarrisonShipyardFrame-901": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowGuildBankFrame-902": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowHeirloomsJournalToClosestUpgradeablePage-903": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowInstanceBootDialog-904": {
     "recommended_status": "partial-development-green",
@@ -1804,36 +1804,36 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowItemSocketingFrame-906": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowItemUpgradeFrame-907": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowMatchCelebrationPartyPoseFrame-908": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowPendingPlayerChoiceResponseUI-909": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowPerksProgramFrame-910": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowProfessionEquipmentHelpTip-911": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowProfessionsCustomerOrdersFrame-912": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowProfessionsFrame-913": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowQuestSessionGroupInviteConfirmation-914": {
     "recommended_status": "partial-development-green",
@@ -1844,16 +1844,16 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowRemixArtifactFrame-916": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowResurrectRequest-1057": {
     "recommended_status": "bounded-coverage",
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-ShowRuneforgeFrame-917": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-ShowSummonConfirmationDialog-918": {
     "recommended_status": "partial-development-green",
@@ -1932,8 +1932,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-SoulbindViewer_LoadUI-935": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-SpellFlyout_EscapePressed-936": {
     "recommended_status": "partial-development-green",
@@ -2008,12 +2008,12 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-TryShowAnimaDiversionFrame-945": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-TryShowCovenantPreviewFrame-946": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-UIDoFramesIntersect-1069": {
     "recommended_status": "bounded-coverage",
@@ -2044,8 +2044,8 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-UIParent_ManageFramePositions-1070": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=function; lookup=function"
+    "recommended_status": "bounded-coverage",
+    "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-UIParent_OnEvent-1071": {
     "recommended_status": "bounded-coverage",
@@ -2112,8 +2112,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-WarfrontsPartyPoseFrame_TryShow-958": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-WoWHackSpellsUI_LoadUI-1084": {
     "recommended_status": "bounded-coverage",
@@ -2128,8 +2128,8 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-framexml-WowSurveyStatusFrame_OnSurveyDelivered-959": {
-    "recommended_status": "audit-pending",
-    "note": "global: raw=nil; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-framexml-assertf-960": {
     "recommended_status": "partial-development-green",
@@ -2208,8 +2208,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_BattleNet.CanToggleHighResTexturesWithoutClientReload-427": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_BattleNet.GetCustomTitleFriendName-428": {
     "recommended_status": "partial-development-green",
@@ -2228,12 +2228,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_BattleNet.SearchFriends-432": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_BattleNet.SendTitleFriendInviteByName-433": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_BattleNet.SendVerifiedBattleNetFriendInvite-434": {
     "recommended_status": "partial-development-green",
@@ -2252,8 +2252,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_Browser.CloseFullscreenBrowser-438": {
-    "recommended_status": "audit-pending",
-    "note": "member: parent raw-absent; raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_CVar.AreCVarsLoaded-439": {
     "recommended_status": "partial-development-green",
@@ -2264,8 +2264,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_Club.SendTitleFriendRequest-441": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_CombatAudioAlert.SpeakText-586": {
     "recommended_status": "partial-development-green",
@@ -2284,16 +2284,16 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_DelvesUI.HasActiveLFGLair-445": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_DelvesUI.HasActiveLair-446": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_DelvesUI.IsInLair-447": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_Discord.Authorize-448": {
     "recommended_status": "partial-development-green",
@@ -2308,8 +2308,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_Discord.GetDiscordUserName-451": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_Discord.GetDisplayNameType-452": {
     "recommended_status": "partial-development-green",
@@ -2436,12 +2436,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_HousingBlueprint.CanExportRoom-480": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_HousingBlueprint.CanExportTypeFromCurrentLocation-481": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_HousingBlueprint.CanImportTypeFromCurrentLocation-482": {
     "recommended_status": "partial-development-green",
@@ -2508,8 +2508,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_HousingBlueprint.UpdateBlueprintStringFromInput-498": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_HousingCustomizeMode.ApplyPetToSelectedDecor-499": {
     "recommended_status": "partial-development-green",
@@ -2524,12 +2524,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_HousingDecor.GetAllMaxPlacementBudgets-502": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_HousingDecor.GetAllSpentPlacementBudgets-503": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_HousingDecor.GetDecorAssignedPetName-504": {
     "recommended_status": "partial-development-green",
@@ -2560,12 +2560,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_HousingLayout.GetHighestOccupiedFloorIndex-509": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_HousingLayout.GetLowestOccupiedFloorIndex-510": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_HousingLayout.GetNumFloors-568": {
     "recommended_status": "audit-pending",
@@ -2592,16 +2592,16 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_HousingLayout.RoomHasStairs-514": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_Item.DoesItemMatchSpellItemCondition-515": {
     "recommended_status": "partial-development-green",
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_LFGInfo.IsInMatchmadeRaidWithoutRoleRequirements-516": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_LFGList.ConfirmCensoredActiveEntry-517": {
     "recommended_status": "partial-development-green",
@@ -2628,12 +2628,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_NeighborhoodInitiative.GetInitiativeTaskRewardScaling-523": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_PaperDollInfo.CancelTemporaryEnchantment-524": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_PaperDollInfo.GetInventorySlotInfo-526": {
     "recommended_status": "partial-development-green",
@@ -2664,28 +2664,28 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_PvP.JoinRandomTrainingGround-570": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "bounded-coverage",
+    "note": "Absent on the default build (sweep)."
   },
   "wt-global-api-C_PvP.JoinRandomTrainingGroundArena-530": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_PvP.JoinRandomTrainingGroundBattleground-531": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_QuestHub.IsAreaPOICurrentlyRelatedToHub-532": {
     "recommended_status": "partial-development-green",
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_QuestHub.IsQuestCurrentlyRelatedToHub-602": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_RecentAllies.SearchRecentAllies-533": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_RecruitAFriend.CanSummonFriend-604": {
     "recommended_status": "partial-development-green",
@@ -2708,12 +2708,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_Roleset.GetActiveAllowedRolesets-537": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_Roleset.GetActiveBlockedRolesets-538": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_SocialQueue.IsSystemEnabled-539": {
     "recommended_status": "partial-development-green",
@@ -2744,12 +2744,12 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-global-api-C_Spell.GetLastCategoryCooldownSource-545": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_Spell.GetSpellDescriptionForItemLocation-546": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_Spell.GetSpellTexture-610": {
     "recommended_status": "partial-development-green",
@@ -2764,12 +2764,12 @@
     "note": "Absent on the default build (sweep)."
   },
   "wt-global-api-C_TransmogOutfitInfo.CanPlayerTransmogSlot-548": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_TransmogOutfitInfo.IsTransmogEnabled-549": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_UnitAuras.AddAuraSound-550": {
     "recommended_status": "partial-development-green",
@@ -2780,8 +2780,8 @@
     "note": "member: raw=function; lookup=function"
   },
   "wt-global-api-C_UnitAuras.CancelAuraByInstanceID-551": {
-    "recommended_status": "audit-pending",
-    "note": "member: raw=nil; lookup=function"
+    "recommended_status": "partial-development-green",
+    "note": "Published (sweep); contract-shape behavior test, not native parity."
   },
   "wt-global-api-C_UnitAuras.GetGroupBuffVisualAlerts-552": {
     "recommended_status": "partial-development-green",
@@ -2880,8 +2880,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-scriptobjects-SecondsFormatter:GetRounding-1103": {
-    "recommended_status": "audit-pending",
-    "note": "object-method: SecondsFormatter; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-scriptobjects-SecondsFormatter:SetRounding-1104": {
     "recommended_status": "partial-development-green",
@@ -2912,8 +2912,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-FontString:SetDesaturateEmbeddedTextures-1128": {
-    "recommended_status": "audit-pending",
-    "note": "object-method: FontString; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-Frame:AddRoleset-1146": {
     "recommended_status": "partial-development-green",
@@ -2932,8 +2932,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-Frame:IsRolesetFiltered-1150": {
-    "recommended_status": "audit-pending",
-    "note": "object-method: Frame; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-Frame:RemoveRoleset-1151": {
     "recommended_status": "partial-development-green",
@@ -2964,8 +2964,8 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-FrameScriptObject:CanBeAccessedInContext-1120": {
-    "recommended_status": "audit-pending",
-    "note": "object-method: FrameScriptObject; lookup=nil"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-FrameScriptObject:GetAccessRestrictions-1121": {
     "recommended_status": "partial-development-green",
@@ -3004,20 +3004,20 @@
     "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-RadialProgress:GetFromPercent-1142": {
-    "recommended_status": "audit-pending",
-    "note": "unprobeable: factory: (string):68: RadialProgress factory returned Animation"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-RadialProgress:GetToPercent-1143": {
-    "recommended_status": "audit-pending",
-    "note": "unprobeable: factory: (string):68: RadialProgress factory returned Animation"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-RadialProgress:SetFromPercent-1144": {
-    "recommended_status": "audit-pending",
-    "note": "unprobeable: factory: (string):68: RadialProgress factory returned Animation"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-RadialProgress:SetToPercent-1145": {
-    "recommended_status": "audit-pending",
-    "note": "unprobeable: factory: (string):68: RadialProgress factory returned Animation"
+    "recommended_status": "partial-development-green",
+    "note": "Publication only (sweep); behavior unproved."
   },
   "wt-widgets-ScriptRegion:ClearScripts-1216": {
     "recommended_status": "partial-development-green",

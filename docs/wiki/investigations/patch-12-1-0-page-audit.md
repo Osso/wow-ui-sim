@@ -30,3 +30,24 @@ One data-driven test over the 778 inventory symbols ([spec](../../specs/patch-12
 - 147 gaps stay pending and are baselined in `tests/data/patch_12_1_0_sweep_known_gaps.json`, so the test fails on any change to the gap set. Roughly: 85 FrameXML helpers not found (many `*_LoadUI` / `Show…Frame` functions, possibly a load-on-demand bootstrap loading gap), 35 missing Global API functions, 20 removed symbols still published, 15 widget methods, events and CVars.
 
 Master: sweep test passed, startup `lua-errors` `[]`, `cargo fmt --check` exit 0 ([log](../../../data/patch-api/evidence/12.1.0-session-2026-10-04/round-2-master-green.log.txt)). Per-symbol output: [result](../../../data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-sweep-result.json). No independent review.
+
+## Round 3 — closing sweep gaps — 2026-10-04
+
+**265 pending / 157 bounded / 625 partial / 64 metadata.**
+
+Sweep gaps 147 → 21 at `616bf37ab` ([result](../../../data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-r3-sweep-result.json)). 127 rows credited by the round 2 rule; `PlayerChoiceToggle_TryShow-1027` dropped back to pending.
+
+- **FrameXML helpers (75):** root cause was the test preload helper (`tests/common/prefork_full_ui_preload.rs`), which skipped load-on-demand `[Bootstrap]` files that real startup runs. It now uses startup discovery. `IsPlayerAtEffectiveMaxLevel` and `UIParent_ManageFramePositions` are no longer published natively under 12.1.0.
+- **Added Global API (31):** implemented over existing state, with behavior tests in `tests/patch_12_1_0_added_globals.rs`. Guessed behaviors are marked `INFERRED` in code. `C_Browser.CloseFullscreenBrowser` is a permanent no-op. The roleset workaround was replaced by a Rust `C_Roleset`.
+- **Widgets, events, CVars (18):** `RadialProgress` animation type, `SecondsFormatter:GetRounding`, CVar adds/removals (new CVar defaults of `"0"` are guesses), new events.
+- **`C_PvP.JoinRandomTrainingGround`:** now marked removed.
+
+Remaining 21 gaps:
+- 8 removed Global API and `RaidNotice_*`, `getglobal`, `setglobal` (14 total): Blizzard's own deprecated files (`Deprecated_12_1_0.lua`, `Blizzard_DeprecatedBattleNet`, `Blizzard_DeprecatedRaidWarning`) republish them because `loadDeprecationFallbacks` defaults to 1. Likely the real client too; the sweep's "absent" expectation may be too strict.
+- `PlayerChoiceToggle_TryShow-1027`: the page lists it as both added (868) and removed.
+- `EventUtil.AreVariablesLoaded`: defined by the simulator's `shared_bootstrap.lua` and survives Blizzard's `EventUtil = {}`; not traced.
+- `MacroFrame_SaveMacro`: `Blizzard_MacroUI` loads at startup.
+- `EncounterJournal_OpenToTieredEntrance`: only in the full LoD addon. `ShouldDisplaySpellCooldown`: only a mixin method.
+- `Frame:ResizeToBoundsRect`: undocumented behavior. `CHAT_MSG_*`: wildcard, unprobeable.
+
+Not caused by this round, still failing: `c_spell_static_fallbacks` (expects a function retail removed in 12.0.7), `wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles`, `on_update_modes_process_actual_managed_aura_dirty_phases`. No independent review.
