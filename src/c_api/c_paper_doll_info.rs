@@ -42,23 +42,84 @@ pub(crate) fn register_c_paper_doll_info_surface(state: &mut LuaState) -> LuaRes
         "CancelTemporaryEnchantment",
         cancel_temporary_enchantment,
     )?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "GetTemporaryEnchantmentInfo",
+        get_temporary_enchantment_info,
+    )?;
     Ok(())
 }
 
-/// Removes temporary enchants from the main-hand (16), off-hand (17), or
-/// ranged (18) inventory slot; permanent enchants and other slots are untouched.
+/// Weapon enchant index for the main-hand (16), off-hand (17), or ranged (18)
+/// inventory slot.
+#[cfg(feature = "retail-12-1-0")]
+fn weapon_enchant_slot(inventory_slot: i32) -> Option<usize> {
+    match inventory_slot {
+        16 => Some(0),
+        17 => Some(1),
+        18 => Some(2),
+        _ => None,
+    }
+}
+
+/// Removes temporary enchants from a weapon slot; permanent enchants and other
+/// slots are untouched. INFERRED: a removal reports WEAPON_ENCHANT_CHANGED.
 #[cfg(feature = "retail-12-1-0")]
 fn cancel_temporary_enchantment(state: &mut LuaState) -> LuaResult<u32> {
-    let slot = i32::from_stack(state, 1)?;
-    let weapon_slot = match slot {
-        16 => 0,
-        17 => 1,
-        18 => 2,
-        _ => return Ok(0),
+    let Some(weapon_slot) = weapon_enchant_slot(i32::from_stack(state, 1)?) else {
+        return Ok(0);
     };
-    crate::lua_api::methods::borrow_state_mut(state)?.weapon_enchants[weapon_slot]
-        .retain(|enchant| enchant.enchant_type != super::weapon_enchants::TEMPORARY_ENCHANT_TYPE);
+    let removed = {
+        let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
+        let enchants = &mut sim.weapon_enchants[weapon_slot];
+        let before = enchants.len();
+        enchants.retain(|enchant| {
+            enchant.enchant_type != super::weapon_enchants::TEMPORARY_ENCHANT_TYPE
+        });
+        enchants.len() != before
+    };
+    if removed {
+        crate::lua_api::script_helpers::fire_named_event_state(
+            state,
+            "WEAPON_ENCHANT_CHANGED",
+            &[],
+        );
+    }
     Ok(0)
+}
+
+/// `TemporaryItemEnchantInfo` for the slot's temporary enchant, or nothing.
+/// INFERRED: enchants without remaining time have no expiration time.
+#[cfg(feature = "retail-12-1-0")]
+fn get_temporary_enchantment_info(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(weapon_slot) = weapon_enchant_slot(i32::from_stack(state, 1)?) else {
+        return Ok(0);
+    };
+    let enchant = borrow_state(state)?.weapon_enchants[weapon_slot]
+        .iter()
+        .find(|enchant| enchant.enchant_type == super::weapon_enchants::TEMPORARY_ENCHANT_TYPE)
+        .cloned();
+    let Some(enchant) = enchant else {
+        return Ok(0);
+    };
+    let info = crate::lua_api::methods::create_table(state);
+    for (key, value) in [
+        ("enchantID", f64::from(enchant.enchant_id)),
+        ("remainingTimeMs", enchant.time_left),
+        ("chargesRemaining", f64::from(enchant.charges)),
+    ] {
+        crate::lua_api::methods::table_set(state, info, key, Val::Num(value));
+    }
+    crate::lua_api::methods::table_set(
+        state,
+        info,
+        "hasExpirationTime",
+        Val::Bool(enchant.time_left > 0.0),
+    );
+    state.push(info);
+    Ok(1)
 }
 
 fn register_inventory_slot_methods(
