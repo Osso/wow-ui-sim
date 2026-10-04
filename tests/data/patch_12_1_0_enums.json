@@ -1,0 +1,965 @@
+{
+  "source": "~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated",
+  "enums": {
+    "ClubStreamType": {
+      "doc": "ClubDocumentation.lua:1731",
+      "meta": {
+        "NumValues": 5,
+        "MinValue": 0,
+        "MaxValue": 4
+      },
+      "values": {
+        "General": 0,
+        "Guild": 1,
+        "Officer": 2,
+        "Discord": 3,
+        "Other": 4
+      }
+    },
+    "CompanionConfigSlotTypes": {
+      "doc": "DelvesConstantsDocumentation.lua:6",
+      "meta": {
+        "NumValues": 4,
+        "MinValue": 0,
+        "MaxValue": 3
+      },
+      "values": {
+        "Role": 0,
+        "Utility": 1,
+        "Combat": 2,
+        "Flavor": 3
+      }
+    },
+    "CooldownViewerCategory": {
+      "doc": "CooldownViewerConstantsDocumentation.lua:71",
+      "meta": {
+        "NumValues": 9,
+        "MinValue": 0,
+        "MaxValue": 8
+      },
+      "values": {
+        "Essential": 0,
+        "Utility": 1,
+        "TrackedBuff": 2,
+        "TrackedBar": 3,
+        "GroupBuff": 4,
+        "SpecAgnosticEssential": 5,
+        "SpecAgnosticTracked": 6,
+        "EquipSlotEssential": 7,
+        "EquipSlotTracked": 8
+      },
+      "blizzard_lua": {
+        "source": "Blizzard_CooldownViewer/CooldownViewerSettingsConstants.lua:4-5",
+        "values": {
+          "HiddenActive": -1,
+          "HiddenPassive": -2
+        }
+      }
+    },
+    "EditModeAccountSetting": {
+      "doc": "EditModeManagerConstantsDocumentation.lua:202",
+      "meta": {
+        "NumValues": 36,
+        "MinValue": 0,
+        "MaxValue": 35
+      },
+      "values": {
+        "ShowGrid": 0,
+        "GridSpacing": 1,
+        "SettingsExpanded": 2,
+        "ShowTargetAndFocus": 3,
+        "ShowStanceBar": 4,
+        "ShowPetActionBar": 5,
+        "ShowPossessActionBar": 6,
+        "ShowCastBar": 7,
+        "ShowEncounterBar": 8,
+        "ShowExtraAbilities": 9,
+        "ShowBuffsAndDebuffs": 10,
+        "DeprecatedShowDebuffFrame": 11,
+        "ShowPartyFrames": 12,
+        "ShowRaidFrames": 13,
+        "ShowTalkingHeadFrame": 14,
+        "ShowVehicleLeaveButton": 15,
+        "ShowBossFrames": 16,
+        "ShowArenaFrames": 17,
+        "ShowLootFrame": 18,
+        "ShowHudTooltip": 19,
+        "ShowStatusTrackingBar2": 20,
+        "ShowDurabilityFrame": 21,
+        "EnableSnap": 22,
+        "EnableAdvancedOptions": 23,
+        "ShowPetFrame": 24,
+        "ShowTimerBars": 25,
+        "ShowVehicleSeatIndicator": 26,
+        "ShowArchaeologyBar": 27,
+        "ShowCooldownViewer": 28,
+        "ShowPersonalResourceDisplay": 29,
+        "ShowEncounterEvents": 30,
+        "ShowDamageMeter": 31,
+        "ShowExternalDefensives": 32,
+        "ShowRaidWarning": 33,
+        "ShowTotemActionBar": 34,
+        "ShowLossOfControl": 35
+      }
+    },
+    "EditModeMinimapSetting": {
+      "doc": "EditModeManagerConstantsDocumentation.lua:522",
+      "meta": {
+        "NumValues": 4,
+        "MinValue": 0,
+        "MaxValue": 3
+      },
+      "values": {
+        "HeaderUnderneath": 0,
+        "RotateMinimap": 1,
+        "Size": 2,
+        "IconScale": 3
+      }
+    },
+    "EditModeSystem": {
+      "doc": "EditModeManagerConstantsDocumentation.lua:636",
+      "meta": {
+        "NumValues": 27,
+        "MinValue": 0,
+        "MaxValue": 26
+      },
+      "values": {
+        "ActionBar": 0,
+        "CastBar": 1,
+        "Minimap": 2,
+        "UnitFrame": 3,
+        "EncounterBar": 4,
+        "ExtraAbilities": 5,
+        "AuraFrame": 6,
+        "TalkingHeadFrame": 7,
+        "ChatFrame": 8,
+        "VehicleLeaveButton": 9,
+        "LootFrame": 10,
+        "HudTooltip": 11,
+        "ObjectiveTracker": 12,
+        "MicroMenu": 13,
+        "Bags": 14,
+        "StatusTrackingBar": 15,
+        "DurabilityFrame": 16,
+        "TimerBars": 17,
+        "VehicleSeatIndicator": 18,
+        "ArchaeologyBar": 19,
+        "CooldownViewer": 20,
+        "PersonalResourceDisplay": 21,
+        "EncounterEvents": 22,
+        "DamageMeter": 23,
+        "RaidWarning": 24,
+        "TotemActionBar": 25,
+        "LossOfControl": 26
+      }
+    },
+    "EditModeUnitFrameSetting": {
+      "doc": "EditModeManagerConstantsDocumentation.lua:684",
+      "meta": {
+        "NumValues": 23,
+        "MinValue": 0,
+        "MaxValue": 22
+      },
+      "values": {
+        "HidePortrait": 0,
+        "CastBarUnderneath": 1,
+        "BuffsOnTop": 2,
+        "UseLargerFrame": 3,
+        "UseRaidStylePartyFrames": 4,
+        "ShowPartyFrameBackground": 5,
+        "UseHorizontalGroups": 6,
+        "CastBarOnSide": 7,
+        "ShowCastTime": 8,
+        "ViewRaidSize": 9,
+        "FrameWidth": 10,
+        "FrameHeight": 11,
+        "DisplayBorder": 12,
+        "RaidGroupDisplayType": 13,
+        "SortPlayersBy": 14,
+        "RowSize": 15,
+        "FrameSize": 16,
+        "ViewArenaSize": 17,
+        "AuraOrganizationType": 18,
+        "DebuffIconSize": 19,
+        "Opacity": 20,
+        "BigDefensiveIconSize": 21,
+        "BuffIconSize": 22
+      }
+    },
+    "FragmentID": {
+      "doc": "WowCSConstantsDocumentation.lua:6",
+      "meta": {
+        "NumValues": 77,
+        "MinValue": 0,
+        "MaxValue": 255
+      },
+      "values": {
+        "MirrorState": 0,
+        "EntityPosition": 1,
+        "CgObject": 2,
+        "JamDispatcher": 3,
+        "HeartbeatData": 4,
+        "FTransportLink": 5,
+        "ClientObservablesData": 6,
+        "TimerQueues": 7,
+        "TransferSuspensionData": 8,
+        "DeferredMessages": 9,
+        "FPersistableJamServers": 10,
+        "FPlayerJamServers": 11,
+        "FLootObjectList": 12,
+        "FPlayerOwnershipLink": 13,
+        "FUnitAreaTriggerLink": 14,
+        "Actor": 15,
+        "FPhaseShiftData": 16,
+        "FVendor": 17,
+        "MirroredObjectC": 18,
+        "FMeshObjectData": 19,
+        "FHousingDecor": 20,
+        "FHousingRoom": 21,
+        "FHousingRoomComponentMesh": 22,
+        "FHousingPlayerHouse": 23,
+        "FHousingHouseDecorSet": 24,
+        "FHousingHouseRoomSet": 25,
+        "FHousingDecorProxy": 26,
+        "FJamHousingCornerstone": 27,
+        "FHousingDecorActor": 28,
+        "FHousingPlotAreaTrigger": 29,
+        "FNeighborhoodMirrorData": 30,
+        "FMirroredPositionData": 31,
+        "FPlayerHouseInfo": 32,
+        "FHousingStorageMirrorData": 33,
+        "FHousingFixture": 34,
+        "FHousingHouseFixtureSet": 35,
+        "Timer": 36,
+        "FPlayerInitiativeInfo": 37,
+        "FNeighborhoodStateData": 38,
+        "FUnitAIGroupLink": 39,
+        "FPathingDynamicLinks": 40,
+        "FPathingDoor": 41,
+        "FWorldStateListenerData": 42,
+        "FMapObject": 43,
+        "TagItem": 200,
+        "TagContainer": 201,
+        "TagAzeriteEmpoweredItem": 202,
+        "TagAzeriteItem": 203,
+        "TagUnit": 204,
+        "TagPlayer": 205,
+        "TagGameObject": 206,
+        "TagDynamicObject": 207,
+        "TagCorpse": 208,
+        "TagAreaTrigger": 209,
+        "TagSceneObject": 210,
+        "TagConversation": 211,
+        "TagAIGroup": 212,
+        "TagScenario": 213,
+        "TagLootObject": 214,
+        "TagActivePlayer": 215,
+        "TagActiveClientS": 216,
+        "TagActiveObjectC": 217,
+        "TagVisibleObjectC": 218,
+        "TagUnitVehicle": 219,
+        "TagHousingRoom": 220,
+        "TagMeshObject": 221,
+        "TagHousingSubdivisionObject": 222,
+        "TagHousingPoolObject": 223,
+        "TagHouseExteriorPiece": 224,
+        "TagHouseExteriorRoot": 225,
+        "TagHousingDecorProxyGameObject": 226,
+        "TestFragment_1": 250,
+        "TestFragment_2": 251,
+        "TestFragment_3": 252,
+        "TestFragment_4": 253,
+        "TestFragment_5": 254,
+        "ReservedArchetypeSeparator": 255
+      }
+    },
+    "FrameTutorialAccount": {
+      "doc": "TutorialDocumentation.lua:83",
+      "meta": {
+        "NumValues": 50,
+        "MinValue": 1,
+        "MaxValue": 50
+      },
+      "values": {
+        "HudRevampBagChanges": 1,
+        "PerksProgramActivitiesIntro": 2,
+        "EditModeManager": 3,
+        "TransmogSetsTab": 4,
+        "MountCollectionDragonriding": 5,
+        "LFGList": 6,
+        "HeirloomJournalLevel": 7,
+        "TimerunnersAdvantage": 8,
+        "AccountWideReputation": 9,
+        "TransferableCurrencies": 10,
+        "BindToAccountUntilEquip": 11,
+        "CompletedQuestsFilter": 12,
+        "CompletedQuestsFilterSeen": 13,
+        "ConcentrationCurrency": 14,
+        "MapLegendOpened": 15,
+        "NpcCraftingOrders": 16,
+        "NpcCraftingOrderCreateButton": 17,
+        "NpcCraftingOrderTabNew": 18,
+        "LocalStoriesFilterSeen": 19,
+        "EventSchedulerTabSeen": 20,
+        "AssistedCombatRotationDragSpell": 21,
+        "AssistedCombatRotationActionButton": 22,
+        "HousingDecorCleanup": 23,
+        "HousingDecorPlace": 24,
+        "HousingDecorClippingGrid": 25,
+        "HousingDecorCustomization": 26,
+        "HousingDecorLayout": 27,
+        "HousingHouseFinderMap": 28,
+        "HousingHouseFinderVisitHouse": 29,
+        "HousingItemAcquisition": 30,
+        "HousingNewPip": 31,
+        "PerksProgramActivitiesOpen": 32,
+        "EnconterJournalTutorialsTabSeen": 33,
+        "HousingMarketTab": 34,
+        "HousingTeleportButton": 35,
+        "RPETalentStarterBuild": 36,
+        "HousingInvalidCollision": 37,
+        "HousingModesUnlocked": 38,
+        "HousingExpertMode": 39,
+        "HousingCleanupMode": 40,
+        "TransmogOutfits": 41,
+        "TransmogSets": 42,
+        "TransmogCustomSets": 43,
+        "TransmogSituations": 44,
+        "TransmogWeaponOptions": 45,
+        "TransmogTrialOfStyle": 46,
+        "TransmogCustomSetsMigration": 47,
+        "HousingEndeavorsTabSeen": 48,
+        "RunesOfPower": 49,
+        "HousingPetBeds": 50
+      }
+    },
+    "HouseFinderSuggestionReason": {
+      "doc": "PlayerHousingConstantsDocumentation.lua:52",
+      "meta": {
+        "NumValues": 9,
+        "MinValue": 0,
+        "MaxValue": 128
+      },
+      "values": {
+        "None": 0,
+        "Owner": 1,
+        "CharterInvite": 2,
+        "Guild": 4,
+        "BNetFriends": 8,
+        "PartySync": 16,
+        "Random": 32,
+        "HomeOwner": 64,
+        "Relinquished": 128
+      }
+    },
+    "HousingResult": {
+      "doc": "PlayerHousingConstantsDocumentation.lua:260",
+      "meta": {
+        "NumValues": 112,
+        "MinValue": 0,
+        "MaxValue": 111
+      },
+      "values": {
+        "Success": 0,
+        "AccountBanned": 1,
+        "ActionLockedByCombat": 2,
+        "BlueprintCodeInvalid": 3,
+        "BlueprintDyeFailed": 4,
+        "BlueprintGenericExportError": 5,
+        "BlueprintGenericImportError": 6,
+        "BlueprintLocationInvalid": 7,
+        "BlueprintNameInvalid": 8,
+        "BlueprintNotFound": 9,
+        "BlueprintRequirementsUnmet": 10,
+        "BlueprintRoomPlacementRequired": 11,
+        "BlueprintTypeInvalid": 12,
+        "BlueprintTypeLocationInvalid": 13,
+        "BlueprintStorageLimit": 14,
+        "BlueprintVersionInvalid": 15,
+        "BoundsFailureChildren": 16,
+        "BoundsFailurePlot": 17,
+        "BoundsFailureRoom": 18,
+        "BoundToStartingArea": 19,
+        "CannotAfford": 20,
+        "CharterComplete": 21,
+        "CollisionInvalid": 22,
+        "DbError": 23,
+        "DecorCannotBeRedeemed": 24,
+        "DecorItemNotDestroyable": 25,
+        "DecorNotFound": 26,
+        "DecorNotFoundInStorage": 27,
+        "DuplicateCharterSignature": 28,
+        "FilterRejected": 29,
+        "FixtureCantDeleteDoor": 30,
+        "FixtureHookEmpty": 31,
+        "FixtureHookOccupied": 32,
+        "FixtureHouseTypeMismatch": 33,
+        "FixtureNotFound": 34,
+        "FixtureSizeMismatch": 35,
+        "FixtureTypeMismatch": 36,
+        "GenericFailure": 37,
+        "GuildMoreAccountsNeeded": 38,
+        "GuildMoreActivePlayersNeeded": 39,
+        "GuildNotLoaded": 40,
+        "HouseEditLockFailed": 41,
+        "HouseExteriorAlreadyThatSize": 42,
+        "HouseExteriorAlreadyThatType": 43,
+        "HouseExteriorRootNotFound": 44,
+        "HouseExteriorTypeNeighborhoodMismatch": 45,
+        "HouseExteriorTypeNotFound": 46,
+        "HouseExteriorTypeSizeMismatch": 47,
+        "HouseExteriorSizeNotAvailable": 48,
+        "HookNotChildOfFixture": 49,
+        "HouseNotFound": 50,
+        "IncorrectFaction": 51,
+        "InvalidDecorItem": 52,
+        "InvalidDistance": 53,
+        "InvalidExteriorDocument": 54,
+        "InvalidGuild": 55,
+        "InvalidHouse": 56,
+        "InvalidInstance": 57,
+        "InvalidInteraction": 58,
+        "InvalidInteriorDocument": 59,
+        "InvalidLightOverlap": 60,
+        "InvalidMap": 61,
+        "InvalidNeighborhoodName": 62,
+        "InvalidRoomLayout": 63,
+        "InsufficientRoomBudget": 64,
+        "LockedByOtherPlayer": 65,
+        "LockOperationFailed": 66,
+        "MaxPlacedDecorReached": 67,
+        "MaxPetDecorReached": 68,
+        "MaxPreviewDecorReached": 69,
+        "MaxStorageDecorReached": 70,
+        "MissingCoreFixture": 71,
+        "MissingDye": 72,
+        "MissingExpansionAccess": 73,
+        "MissingFactionMap": 74,
+        "MissingPrivateNeighborhoodInvite": 75,
+        "MoreHouseSlotsNeeded": 76,
+        "MoreSignaturesNeeded": 77,
+        "NeighborhoodNotFound": 78,
+        "NoNeighborhoodOwnershipRequests": 79,
+        "NotInDecorEditMode": 80,
+        "NotInFixtureEditMode": 81,
+        "NotInLayoutEditMode": 82,
+        "NotInsideHouse": 83,
+        "NotOnOwnedPlot": 84,
+        "OperationAborted": 85,
+        "OwnerNotInGuild": 86,
+        "PermissionDenied": 87,
+        "PlacementTargetInvalid": 88,
+        "PlayerNotFound": 89,
+        "PlayerNotInInstance": 90,
+        "PlotNotFound": 91,
+        "PlotNotVacant": 92,
+        "PlotReservationCooldown": 93,
+        "PlotReserved": 94,
+        "RoomNotFound": 95,
+        "RoomPlacementOutOfBounds": 96,
+        "RoomUpdateFailed": 97,
+        "RpcFailure": 98,
+        "ServiceNotAvailable": 99,
+        "StaticDataNotFound": 100,
+        "TimeoutLimit": 101,
+        "TimerunningNotAllowed": 102,
+        "TokenRequired": 103,
+        "TooManyRequests": 104,
+        "TransactionFailure": 105,
+        "UncollectedExteriorFixture": 106,
+        "UncollectedHouseType": 107,
+        "UncollectedRoom": 108,
+        "UncollectedRoomMaterial": 109,
+        "UncollectedRoomTheme": 110,
+        "UnlockOperationFailed": 111
+      }
+    },
+    "NamePlateStyle": {
+      "doc": "NamePlateConstantsDocumentation.lua:121",
+      "meta": {
+        "NumValues": 7,
+        "MinValue": 0,
+        "MaxValue": 6
+      },
+      "values": {
+        "Modern": 0,
+        "Thin": 1,
+        "Block": 2,
+        "HealthFocus": 3,
+        "CastFocus": 4,
+        "Legacy": 5,
+        "Classic": 6
+      }
+    },
+    "PingResult": {
+      "doc": "PingConstantsDocumentation.lua:18",
+      "meta": {
+        "NumValues": 9,
+        "MinValue": 0,
+        "MaxValue": 8
+      },
+      "values": {
+        "Success": 0,
+        "FailedGeneric": 1,
+        "FailedSpamming": 2,
+        "FailedDisabledByLeader": 3,
+        "FailedDisabledBySettings": 4,
+        "FailedOutOfPingArea": 5,
+        "FailedSquelched": 6,
+        "FailedUnspecified": 7,
+        "FailedSilent": 8
+      }
+    },
+    "PingSubjectType": {
+      "doc": "PingConstantsDocumentation.lua:50",
+      "meta": {
+        "NumValues": 10,
+        "MinValue": 0,
+        "MaxValue": 9
+      },
+      "values": {
+        "Attack": 0,
+        "Warning": 1,
+        "Assist": 2,
+        "OnMyWay": 3,
+        "AlertThreat": 4,
+        "AlertNotThreat": 5,
+        "ActionReady": 6,
+        "ActionOnCooldown": 7,
+        "ActionUnavailable": 8,
+        "ActionNotReady": 9
+      }
+    },
+    "SecretAspect": {
+      "doc": "SecretAspectConstantsDocumentation.lua:6",
+      "meta": {
+        "NumValues": 30,
+        "MinValue": 1,
+        "MaxValue": 8388608
+      },
+      "values": {
+        "ObjectDebug": 1,
+        "ObjectName": 1,
+        "ObjectType": 1,
+        "ObjectSecrets": 1,
+        "ObjectSecurity": 1,
+        "Attributes": 1,
+        "Hierarchy": 1,
+        "ID": 2,
+        "Toplevel": 4,
+        "Text": 8,
+        "SecureText": 16,
+        "Shown": 32,
+        "Scale": 64,
+        "Alpha": 128,
+        "FrameLevel": 256,
+        "ScrollRange": 512,
+        "Cursor": 1024,
+        "VertexColor": 2048,
+        "Desaturation": 4096,
+        "TexCoords": 8192,
+        "BarValue": 16384,
+        "Cooldown": 32768,
+        "Rotation": 65536,
+        "MinimumWidth": 131072,
+        "Padding": 262144,
+        "CooldownStyle": 524288,
+        "TooltipTexture": 1048576,
+        "ButtonState": 2097152,
+        "ScrollOffset": 4194304,
+        "RadialProgress": 8388608
+      }
+    },
+    "TieredEntranceType": {
+      "doc": "DelvesConstantsDocumentation.lua:56",
+      "meta": {
+        "NumValues": 5,
+        "MinValue": 0,
+        "MaxValue": 4
+      },
+      "values": {
+        "Invalid": 0,
+        "Delve": 1,
+        "Sites": 2,
+        "WorldTier": 3,
+        "Lairs": 4
+      }
+    },
+    "TooltipDataLineType": {
+      "doc": "TooltipInfoSharedDocumentation.lua:27",
+      "meta": {
+        "NumValues": 50,
+        "MinValue": 0,
+        "MaxValue": 49
+      },
+      "values": {
+        "None": 0,
+        "Blank": 1,
+        "UnitName": 2,
+        "GemSocket": 3,
+        "AzeriteEssenceSlot": 4,
+        "AzeriteEssencePower": 5,
+        "LearnableSpell": 6,
+        "UnitThreat": 7,
+        "QuestObjective": 8,
+        "AzeriteItemPowerDescription": 9,
+        "RuneforgeLegendaryPowerDescription": 10,
+        "SellPrice": 11,
+        "ProfessionCraftingQuality": 12,
+        "SpellName": 13,
+        "CurrencyTotal": 14,
+        "ItemEnchantmentPermanent": 15,
+        "UnitOwner": 16,
+        "QuestTitle": 17,
+        "QuestPlayer": 18,
+        "NestedBlock": 19,
+        "ItemBinding": 20,
+        "EquipSlot": 21,
+        "ItemName": 22,
+        "Separator": 23,
+        "ToyName": 24,
+        "ToyText": 25,
+        "ToyEffect": 26,
+        "ToyDuration": 27,
+        "ToyDescription": 28,
+        "ToySource": 29,
+        "GemSocketEnchantment": 30,
+        "ItemLevel": 31,
+        "ItemUpgradeLevel": 32,
+        "SpellPassive": 33,
+        "SpellDescription": 34,
+        "ItemQuality": 35,
+        "TradeTimeRemaining": 36,
+        "FlavorText": 37,
+        "ItemSpellTriggerLearn": 38,
+        "LearnTransmogSet": 39,
+        "LearnTransmogIllusion": 40,
+        "ErrorLine": 41,
+        "DisabledLine": 42,
+        "UsageRequirement": 43,
+        "ItemSpellTriggerOnUse": 44,
+        "ItemSpellTriggerOnEquip": 45,
+        "ItemSpellTriggerOnProc": 46,
+        "UnitLevel": 47,
+        "UnitType": 48,
+        "UnitDead": 49
+      }
+    }
+  },
+  "rows": [
+    {
+      "source_id": "enumerations-Enum-ClubStreamType-268",
+      "enum": "ClubStreamType"
+    },
+    {
+      "source_id": "enumerations-Enum-ClubStreamType-269",
+      "enum": "ClubStreamType",
+      "member": "Discord",
+      "value": 3
+    },
+    {
+      "source_id": "enumerations-Enum-CompanionConfigSlotTypes-270",
+      "enum": "CompanionConfigSlotTypes"
+    },
+    {
+      "source_id": "enumerations-Enum-CompanionConfigSlotTypes-271",
+      "enum": "CompanionConfigSlotTypes",
+      "member": "Flavor",
+      "value": 3
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-272",
+      "enum": "CooldownViewerCategory"
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-273",
+      "enum": "CooldownViewerCategory",
+      "member": "GroupBuff",
+      "value": 4
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-274",
+      "enum": "CooldownViewerCategory",
+      "member": "SpecAgnosticEssential",
+      "value": 5
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-275",
+      "enum": "CooldownViewerCategory",
+      "member": "SpecAgnosticTracked",
+      "value": 6
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-276",
+      "enum": "CooldownViewerCategory",
+      "member": "EquipSlotEssential",
+      "value": 7
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerCategory-277",
+      "enum": "CooldownViewerCategory",
+      "member": "EquipSlotTracked",
+      "value": 8
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-278",
+      "enum": "EditModeAccountSetting"
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-279",
+      "enum": "EditModeAccountSetting",
+      "member": "ShowRaidWarning",
+      "value": 33
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeMinimapSetting-280",
+      "enum": "EditModeMinimapSetting"
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeMinimapSetting-281",
+      "enum": "EditModeMinimapSetting",
+      "member": "IconScale",
+      "value": 3
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-282",
+      "enum": "EditModeSystem"
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-283",
+      "enum": "EditModeSystem",
+      "member": "RaidWarning",
+      "value": 24
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeUnitFrameSetting-284",
+      "enum": "EditModeUnitFrameSetting"
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeUnitFrameSetting-285",
+      "enum": "EditModeUnitFrameSetting",
+      "member": "IconSize",
+      "value": null
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeUnitFrameSetting-286",
+      "enum": "EditModeUnitFrameSetting",
+      "member": "BuffIconSize",
+      "value": 22
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeUnitFrameSetting-287",
+      "enum": "EditModeUnitFrameSetting",
+      "member": "DebuffIconSize",
+      "value": 19
+    },
+    {
+      "source_id": "enumerations-Enum-FragmentID-288",
+      "enum": "FragmentID"
+    },
+    {
+      "source_id": "enumerations-Enum-FragmentID-289",
+      "enum": "FragmentID",
+      "member": "FMapObject",
+      "value": 43
+    },
+    {
+      "source_id": "enumerations-Enum-FragmentID-290",
+      "enum": "FragmentID",
+      "member": "FWorldStateListenerData",
+      "value": 42
+    },
+    {
+      "source_id": "enumerations-Enum-FrameTutorialAccount-291",
+      "enum": "FrameTutorialAccount"
+    },
+    {
+      "source_id": "enumerations-Enum-FrameTutorialAccount-292",
+      "enum": "FrameTutorialAccount",
+      "member": "HousingPetBeds",
+      "value": 50
+    },
+    {
+      "source_id": "enumerations-Enum-HouseFinderSuggestionReason-293",
+      "enum": "HouseFinderSuggestionReason"
+    },
+    {
+      "source_id": "enumerations-Enum-HouseFinderSuggestionReason-294",
+      "enum": "HouseFinderSuggestionReason",
+      "member": "Relinquished",
+      "value": 128
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-295",
+      "enum": "HousingResult"
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-296",
+      "enum": "HousingResult",
+      "member": "BlueprintGenericImportError",
+      "value": 6
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-297",
+      "enum": "HousingResult",
+      "member": "BlueprintStorageLimit",
+      "value": 14
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-298",
+      "enum": "HousingResult",
+      "member": "BlueprintTypeInvalid",
+      "value": 12
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-299",
+      "enum": "HousingResult",
+      "member": "BlueprintNotFound",
+      "value": 9
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-300",
+      "enum": "HousingResult",
+      "member": "InvalidExteriorDocument",
+      "value": 54
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-301",
+      "enum": "HousingResult",
+      "member": "BlueprintGenericExportError",
+      "value": 5
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-302",
+      "enum": "HousingResult",
+      "member": "InvalidInteriorDocument",
+      "value": 59
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-303",
+      "enum": "HousingResult",
+      "member": "BlueprintRequirementsUnmet",
+      "value": 10
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-304",
+      "enum": "HousingResult",
+      "member": "RoomPlacementOutOfBounds",
+      "value": 96
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-305",
+      "enum": "HousingResult",
+      "member": "BlueprintCodeInvalid",
+      "value": 3
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-306",
+      "enum": "HousingResult",
+      "member": "InsufficientRoomBudget",
+      "value": 64
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-307",
+      "enum": "HousingResult",
+      "member": "BlueprintLocationInvalid",
+      "value": 7
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-308",
+      "enum": "HousingResult",
+      "member": "BlueprintNameInvalid",
+      "value": 8
+    },
+    {
+      "source_id": "enumerations-Enum-HousingResult-309",
+      "enum": "HousingResult",
+      "member": "BlueprintVersionInvalid",
+      "value": 15
+    },
+    {
+      "source_id": "enumerations-Enum-NamePlateStyle-310",
+      "enum": "NamePlateStyle"
+    },
+    {
+      "source_id": "enumerations-Enum-NamePlateStyle-311",
+      "enum": "NamePlateStyle",
+      "member": "Classic",
+      "value": 6
+    },
+    {
+      "source_id": "enumerations-Enum-PingResult-312",
+      "enum": "PingResult"
+    },
+    {
+      "source_id": "enumerations-Enum-PingResult-313",
+      "enum": "PingResult",
+      "member": "FailedSilent",
+      "value": 8
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-314",
+      "enum": "PingSubjectType"
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-315",
+      "enum": "PingSubjectType",
+      "member": "ActionReady",
+      "value": 6
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-316",
+      "enum": "PingSubjectType",
+      "member": "ActionOnCooldown",
+      "value": 7
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-317",
+      "enum": "PingSubjectType",
+      "member": "ActionUnavailable",
+      "value": 8
+    },
+    {
+      "source_id": "enumerations-Enum-SecretAspect-318",
+      "enum": "SecretAspect"
+    },
+    {
+      "source_id": "enumerations-Enum-SecretAspect-319",
+      "enum": "SecretAspect",
+      "member": "RadialProgress",
+      "value": 8388608
+    },
+    {
+      "source_id": "enumerations-Enum-TieredEntranceType-320",
+      "enum": "TieredEntranceType"
+    },
+    {
+      "source_id": "enumerations-Enum-TieredEntranceType-321",
+      "enum": "TieredEntranceType",
+      "member": "Lairs",
+      "value": 4
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-322",
+      "enum": "TooltipDataLineType"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-323",
+      "enum": "TooltipDataLineType",
+      "member": "ItemSpellTriggerOnUse",
+      "value": 44
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-324",
+      "enum": "TooltipDataLineType",
+      "member": "ItemSpellTriggerOnEquip",
+      "value": 45
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-325",
+      "enum": "TooltipDataLineType",
+      "member": "ItemSpellTriggerOnProc",
+      "value": 46
+    }
+  ]
+}
