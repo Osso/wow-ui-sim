@@ -1,0 +1,16 @@
+{
+  "patch": "12.1.0",
+  "title": "Patch 12.1.0/API changes",
+  "page_id": 679840,
+  "source_url": "https://warcraft.wiki.gg/wiki/Patch_12.1.0/API_changes",
+  "retrieved": "2026-10-04",
+  "method": "MediaWiki query prop=extracts explaintext=1; full plaintext page extract",
+  "sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
+  "scope": "Entire plaintext page extract; not raw wikitext/link graph",
+  "audit_status": "source-captured",
+  "prior_registers": [
+    "12.1-behaviors.json",
+    "12.1-framexml.json",
+    "12.1.0-ptr-cache-manifest.txt"
+  ]
+}
