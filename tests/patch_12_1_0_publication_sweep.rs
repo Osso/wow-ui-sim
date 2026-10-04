@@ -42,6 +42,21 @@ local function matches_type(raw, lookup)
     if removed then return raw == 'nil' and lookup == 'nil' end
     return raw == 'function' or raw == 'table'
 end
+-- Removed symbols may be republished by cached Blizzard deprecation fallbacks
+-- (loadDeprecationFallbacks defaults on); a native alias has no Lua source and stays a gap.
+local function deprecated_fallback_source(value)
+    if type(value) ~= 'function' then return nil end
+    local source = debug.getinfo(value, 'S').source or ''
+    if string.find(source, 'Deprecated', 1, true) then return source end
+    return nil
+end
+local function removed_result(kind, detail, raw_value, raw, lookup)
+    local source = deprecated_fallback_source(raw_value)
+    if source then
+        return result(kind, detail .. '; deprecated-fallback=' .. source, true)
+    end
+    return result(kind, detail, matches_type(raw, lookup))
+end
 local function resolve_raw_path(path)
     local value = _G
     for part in string.gmatch(path, '[^.]+') do
@@ -61,10 +76,13 @@ end
 local function probe_publication()
     local parent_path, member = string.match(symbol, '^(.*)[.:]([^.:]+)$')
     if not parent_path then
-        local raw = type(rawget(_G, symbol))
+        local raw_value = rawget(_G, symbol)
+        local raw = type(raw_value)
         local lookup_ok, lookup_value = pcall(function() return _G[symbol] end)
         local lookup = lookup_ok and type(lookup_value) or 'lookup-error'
-        return result('global', 'raw=' .. raw .. '; lookup=' .. lookup, matches_type(raw, lookup))
+        local detail = 'raw=' .. raw .. '; lookup=' .. lookup
+        if removed then return removed_result('global', detail, raw_value, raw, lookup) end
+        return result('global', detail, matches_type(raw, lookup))
     end
     local parent = resolve_raw_path(parent_path)
     if parent == nil then
@@ -81,9 +99,9 @@ local function probe_publication()
     local lookup_ok, lookup_value = pcall(function() return parent[member] end)
     local raw = type(raw_value)
     local lookup = lookup_ok and type(lookup_value) or 'lookup-error'
-    local ok = matches_type(raw, lookup)
-    if not removed then ok = raw == 'function' end
-    return result('member', 'raw=' .. raw .. '; lookup=' .. lookup, ok)
+    local detail = 'raw=' .. raw .. '; lookup=' .. lookup
+    if removed then return removed_result('member', detail, raw_value, raw, lookup) end
+    return result('member', detail, raw == 'function')
 end
 local function create_object(owner)
     local frame = CreateFrame('Frame')

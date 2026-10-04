@@ -6,6 +6,7 @@ A data-driven breadth probe covers all 778 entries in the [wikitext register](..
 
 - [x] Probe every unique source ID across global-api, framexml, scriptobjects, widgets, events and cvars, for added, removed and changed directions, in one fully loaded cached Game environment.
 - [x] Classify raw global publication; raw namespace/mixin member publication; normal method resolution on objects made by real widget/scriptobject factories. Added/changed members must resolve to functions without accepting fabricated namespace fallbacks. Removed namespace/mixin members must be nil under both raw and ordinary lookup.
+- [x] Accept a removed global or member whose raw value is a Lua function defined in a cached Blizzard deprecation file (`debug.getinfo` source contains `Deprecated`), because the client republishes it with the default `loadDeprecationFallbacks=1`. Native aliases assigned by those files have no Lua source and stay non-ok.
 - [x] Probe concrete events through a real frame's `RegisterEvent` and registration state, preserving return/error details. Restricted-event false returns do not mean absence if the frame registered the event.
 - [x] Query CVar current and default values: both nonnil for added/changed and both nil for removed. Report page-default mismatches separately without changing publication success.
 - [x] Emit per-ID `{expected, observed, ok}` JSON to `P1210_SWEEP_OUT`, when set, before comparing the actual non-ok ID set with the committed known-gap list. Both newly failing and newly successful known-gap rows require review; the test never updates its own expectations.
@@ -41,12 +42,14 @@ A data-driven breadth probe covers all 778 entries in the [wikitext register](..
 
 No per-symbol exceptions. Widget method lookup proves reachability, not owner restrictions.
 
-Default Retail sweep: GREEN against the reviewed gap set, 778 observations (726 OK, 52 non-OK). GREEN proves the gap set is unchanged, not that all symbols work. Three negative controls were non-OK. Cached UI provenance reports Retail `12.1.0.69933`; this is provenance metadata, not native-client authentication.
+Default Retail sweep: GREEN against the reviewed gap set, 778 observations (767 OK, 11 non-OK). GREEN proves the gap set is unchanged, not that all symbols work. Three negative controls were non-OK. Cached UI provenance reports Retail `12.1.0.69933`; this is provenance metadata, not native-client authentication.
 
 ## Known gaps (current cycle)
 
-- [ ] Default Game startup has 52 non-ok rows: 39 global-api (30 added rows owned by a separate pass), 11 framexml, one widget method and one event family. These are startup-surface gaps, not proof of native-client absence. All remain non-ok even when the exact-set regression test passes.
-- [ ] Removed rows republished by cached Blizzard Lua with the default `loadDeprecationFallbacks=1` stay non-ok: `getglobal`, `setglobal`, `GetWeaponEnchantInfo`, `CancelItemTempEnchantment`, `GetInspectSpecialization`, `C_UnitAuras.Add/RemovePrivateAuraAppliedSound`, `C_HousingLayout.GetNumFloors`, `C_DyeColor.GetDyeColorForItem[Location]`, `C_Housing.IsInsideOwnHouse`, `C_SuperTrack.GetNextWaypointForMap` (`Blizzard_Deprecated` 12.1.0 files), `BNGetFriendInviteInfo`, `BNSendVerifiedBattleTagInvite` (`Blizzard_DeprecatedBattleNet`), `RaidNotice_*` (`Blizzard_DeprecatedRaidWarning`). `MacroFrame_SaveMacro` comes from `Blizzard_MacroUI`, which startup loads.
+- [ ] Default Game startup has 11 non-ok rows. These are startup-surface gaps, not proof of native-client absence.
+- [ ] Removed rows that cached deprecation files republish as native aliases stay non-ok (no Lua source to attribute): `C_Housing.IsInsideOwnHouse`, `C_SuperTrack.GetNextWaypointForMap`, `C_UnitAuras.RemovePrivateAuraAppliedSound`, `GetInspectSpecialization`.
+- [ ] Removed but still defined by startup code: `EventUtil.AreVariablesLoaded` (simulator `shared_bootstrap.lua`, survives Blizzard's `EventUtil = {}` reset, not traced), `MacroFrame_SaveMacro` (`Blizzard_MacroUI` loads at startup).
+- [ ] Added but not published at startup: `EncounterJournal_OpenToTieredEntrance` (full LoD Encounter Journal only), `ShouldDisplaySpellCooldown` (CooldownViewer mixin method, never global).
 - [ ] `Frame:ResizeToBoundsRect` is unpublished: its native semantics are undocumented and the simulator's `GetBoundsRect` returns only the frame's own rect.
 - [ ] `PlayerChoiceToggle_TryShow` appears as both added (868) and removed (1027) in the source page; the cached 12.1.0 bootstrap publishes it, so the removed row stays non-ok.
 - [ ] `CHAT_MSG_*` describes a family, not one registerable event; its row remains non-ok without an authoritative concrete expansion.
