@@ -184,6 +184,7 @@ pub mod c_xml_util;
 pub mod charge_state;
 pub(crate) mod container_inventory;
 pub(crate) mod cooldown_duration;
+pub(crate) mod duration_clock;
 pub(crate) mod duration_text_binding;
 #[cfg(feature = "retail-12-0-5")]
 pub mod intl_native;

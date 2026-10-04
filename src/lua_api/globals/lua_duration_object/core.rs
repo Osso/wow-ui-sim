@@ -313,7 +313,19 @@ fn duration_value(
     Ok(duration * scale)
 }
 
+fn authenticate_activity_modifier(state: &LuaState) -> LuaResult<()> {
+    crate::c_api::duration_clock::authenticate_arguments(state)?;
+    let modifier = unwrap_secret(state, stack_val(state, 2))?;
+    match modifier {
+        Val::Nil | Val::Num(0.0) | Val::Num(1.0) => Ok(()),
+        _ => Err(rilua::runtime_error("unknown DurationTimeModifier")),
+    }
+}
+
 fn query(state: &mut LuaState, kind: Query) -> LuaResult<u32> {
+    if matches!(kind, Query::Started | Query::Active) {
+        authenticate_activity_modifier(state)?;
+    }
     let object = stack_val(state, 1);
     let timing = read_timing(state, object)?;
     let value = match kind {

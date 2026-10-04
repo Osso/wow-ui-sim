@@ -343,7 +343,8 @@ fn duration_percent_rejects_invalid_bound_clock_without_mutation() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
-        local clock = C_DurationUtil.CreateManualClock(15)
+        -- Deliberately malformed generic clock, not a writable manual-clock instance.
+        local clock = {time=15, SetTime=function(self, time) self.time=time end}
         local d = C_DurationUtil.CreateDuration()
         d:SetClock(clock)
         d:SetTimeFromStart(10, 20, 2)
@@ -883,6 +884,9 @@ fn duration_curve_invalid_bound_clock_preserves_duration_and_curve_state() {
     duration_curve_env()
         .exec(
             r#"
+        -- Keep the invalid-clock query boundary without mutating host-owned manual state.
+        clock = {time=15}
+        duration:SetClock(clock)
         for _, badTime in ipairs({math.huge, 'not a time'}) do
             clock.time = badTime
             for _, entry in ipairs(methods) do
