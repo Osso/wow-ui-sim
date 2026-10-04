@@ -176,14 +176,14 @@
       "symbols": [
         "778 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication (added/changed) or absence (removed, raw and ordinary lookup) in a fully loaded default-Retail environment. Publication only: no signature, behavior, security or payload proof. 21 known gaps baselined in tests/data/patch_12_1_0_sweep_known_gaps.json.",
+      "scope": "Data-driven publication (added/changed) or absence (removed, raw and ordinary lookup) in a fully loaded default-Retail environment. Publication only: no signature, behavior, security or payload proof. 25 known gaps baselined in tests/data/patch_12_1_0_sweep_known_gaps.json.",
       "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_1_0_publication_sweep.rs"
       ],
       "implementation": "test only",
-      "compiled_revision": "616bf37ab",
-      "proof": "integrator GREEN with three negative controls detected; main-confirmed GREEN, startup clean; no independent review; round 3 re-run GREEN at 616bf37ab (757 ok / 21 baselined), evidence p1210-r3-sweep-result.json",
+      "compiled_revision": "b5b31ee5b",
+      "proof": "integrator GREEN with three negative controls detected; main-confirmed GREEN, startup clean; no independent review; round 3 re-run GREEN at 616bf37ab (757 ok / 21 baselined), evidence p1210-r3-sweep-result.json; strict-removals fix re-run GREEN at b5b31ee5b (753 ok / 25 baselined), evidence p1210-r4-sweep-result.json",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-sweep-ledger.json"
     },
     {
@@ -234,13 +234,13 @@
       "symbols": [
         "getglobal, setglobal, BNSendVerifiedBattleTagInvite, BNGetFriendInviteInfo, RaidNotice_AddMessage, RaidNotice_Clear, SecureAuraHeaderTemplate, SecureGroupHeaderTemplate"
       ],
-      "scope": "After full Game load with default loadDeprecationFallbacks, old functions come from cached deprecated Lua and delegate to new APIs; SecureAuraHeader absent and SecureGroupHeader present in retail. Native getglobal/setglobal still registered (fallbacks-off absence not modeled). Dye wrappers 390/391 excluded: strict removals deletes them.",
+      "scope": "After full Game load with default loadDeprecationFallbacks, old functions come from cached deprecated Lua and delegate to new APIs; SecureAuraHeader absent and SecureGroupHeader present in retail. Native getglobal/setglobal still registered (fallbacks-off absence not modeled). Dye wrappers 390/391 included since strict removals fix (b5b31ee5b).",
       "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_1_0_deprecated_wrappers.rs"
       ],
       "implementation": "test only",
-      "compiled_revision": "10118708c",
+      "compiled_revision": "b5b31ee5b",
       "proof": "main-thread GREEN on master 10118708c (filter run alone); no independent review"
     },
     {
@@ -2513,15 +2513,19 @@
     },
     {
       "source_id": "deprecated api-C_DyeColor-GetDyeColorForItem-390",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached singular-to-plural dye wrappers exist, but plural native queries return empty compatibility lists because item/dye data is unmodeled. Model an explicit item/location-to-color catalog, then prove first-result/nil legacy forwarding. INFERRED: deterministic local catalog and invalid-location policy."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates (patch_12_1_0_deprecated_wrappers), after strict removals fix."
     },
     {
       "source_id": "deprecated api-C_DyeColor-GetDyeColorForItemLocation-391",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached singular-to-plural dye wrappers exist, but plural native queries return empty compatibility lists because item/dye data is unmodeled. Model an explicit item/location-to-color catalog, then prove first-result/nil legacy forwarding. INFERRED: deterministic local catalog and invalid-location policy."
+      "capabilities": [
+        "deprecated-wrappers-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached deprecated wrapper installed and delegates (patch_12_1_0_deprecated_wrappers), after strict removals fix."
     },
     {
       "source_id": "source-context-393",
@@ -3765,27 +3769,21 @@
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorForItemLocation-565",
-      "capabilities": [
-        "publication-sweep-12-1-0"
-      ],
-      "status": "bounded-coverage",
-      "note": "Absent on the default build (sweep)."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Republished by cached Blizzard_Deprecated Mainline/Deprecated_12_1_0.lua (loadDeprecationFallbacks default 1); sweep expects absence. Was wrongly absent before strict removals fix."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorForItem-566",
-      "capabilities": [
-        "publication-sweep-12-1-0"
-      ],
-      "status": "bounded-coverage",
-      "note": "Absent on the default build (sweep)."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Republished by cached Blizzard_Deprecated Mainline/Deprecated_12_1_0.lua (loadDeprecationFallbacks default 1); sweep expects absence. Was wrongly absent before strict removals fix."
     },
     {
       "source_id": "wt-global-api-C_Housing.IsInsideOwnHouse-567",
-      "capabilities": [
-        "publication-sweep-12-1-0"
-      ],
-      "status": "bounded-coverage",
-      "note": "Absent on the default build (sweep)."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Republished by cached Blizzard_Deprecated Mainline/Deprecated_12_1_0.lua (loadDeprecationFallbacks default 1); sweep expects absence. Was wrongly absent before strict removals fix."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.GetNumFloors-568",
@@ -3819,11 +3817,9 @@
     },
     {
       "source_id": "wt-global-api-C_SuperTrack.GetNextWaypointForMap-572",
-      "capabilities": [
-        "publication-sweep-12-1-0"
-      ],
-      "status": "bounded-coverage",
-      "note": "Absent on the default build (sweep)."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Republished by cached Blizzard_Deprecated Mainline/Deprecated_12_1_0.lua (loadDeprecationFallbacks default 1); sweep expects absence. Was wrongly absent before strict removals fix."
     },
     {
       "source_id": "wt-global-api-C_UnitAuras.AddPrivateAuraAppliedSound-573",

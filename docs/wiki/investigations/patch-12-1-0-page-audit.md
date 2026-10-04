@@ -56,7 +56,7 @@ Not caused by this round, still failing: `c_spell_static_fallbacks` (expects a f
 
 ## Round 4 — extract rows: enums, structs, deprecated wrappers — 2026-10-04
 
-**156 pending / 224 bounded / 652 partial / 79 metadata.**
+**149 pending / 225 bounded / 658 partial / 79 metadata** (after roleset/CVar/singles credits and the strict-removals fix).
 
 Plan: [extract scout](../../../data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-extract-scout.md) classified the 244 non-sweep pending rows into 15 batches.
 
@@ -64,6 +64,8 @@ Plan: [extract scout](../../../data/patch-api/evidence/12.1.0-session-2026-10-04
 - **Enums (58, bounded):** `tests/patch_12_1_0_enums.rs` checks exact values and Meta against cached generated docs. 11 values were wrong because `__wow_fill_enum` assigned max+1 (broke flag enums and mid-table inserts); 12 enums now publish explicit doc pairs from `src/c_api/patch_12_1_0_enums.rs`.
 - **Structs (26, partial):** `tests/patch_12_1_0_struct_shapes.rs` checks field presence/type against cached docs. Producer fixes: `hideAnswerArt`, `canAttachPet`, `friendLevel`, `classFilename` from class ID, `overrideTooltipSpellID`. `TieredEntranceTierInfo` uses `queueAsLFG` (cached docs; no Blizzard consumer reads either name).
 - **Deprecated wrappers (9, bounded):** `tests/patch_12_1_0_deprecated_wrappers.rs` (prefork_full_ui) proves cached deprecated Lua installs and delegates.
-- **Open bug:** `apply_strict_removals` (`src/ptr/strict_removals.lua`) runs after startup and deletes wrappers cached Blizzard Lua installs (`C_DyeColor.GetDyeColorForItem[Location]`, `C_Housing.IsInsideOwnHouse`, `C_SuperTrack.GetNextWaypointForMap`, likely `GetInventorySlotInfo`). Rows 390/391 stay pending.
+- **Strict removals fixed (`b5b31ee5b`):** `strict_removals.lua` ran after startup and deleted wrappers cached `Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua` installs. Root cause: generic `C_*` namespace fallbacks (runtime surface and a copy in `housing_catalog_state.lua`) fabricated removed keys, plus three still-registered natives. Removed keys are now marked at namespace setup (`mark_namespace_keys_removed`), natives unregistered, the post-startup deletion deleted. Dye wrappers 390/391 credited; 4 sweep rows (`C_DyeColor.GetDyeColorForItem[Location]`, `C_Housing.IsInsideOwnHouse`, `C_SuperTrack.GetNextWaypointForMap`) now join the Blizzard-republished gaps (sweep 25 gaps).
+- **Open:** `GetInventorySlotInfo` comes from `Deprecated_PaperDoll` (same folder name in the exported UI source); the simulator never loads it because the folder lacks the `Blizzard_` prefix. Unknown whether the real client loads it.
 
 Master `10118708c`: sweep, enum, struct, added-globals, surface-closures and deprecated-wrapper tests GREEN, each run alone. Pre-existing failures noted by the enums agent, unchanged by this round: `test_patch_12_0_0_transmog_situation_enum_values`, `edit_mode_profile_option_enums_match_blizzard_docs`, `unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size`. No independent review.
+- **Roleset, CVar scope, singles (9):** roleset filtering drives visibility (two INFERRED semantics); session-only `tooltipShowAuraSpellIDs`; `CreateFrame("WorldFrame")` now rejected (real bug). Blocked: 19-arg chat filter (cached Blizzard Lua passes 14), VectorGraphics method absence (needs per-type dispatch).
