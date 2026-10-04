@@ -7,7 +7,9 @@ Bounded host-backed model of [retained 12.0.5 prose](../../data/patch-api/source
 - [ ] Host-declared instance context makes existing attackable and friendly nongroup visitor name/GUID outputs secret. Attackability is not a secrecy input; this same test supplies line 198's historical contrast without emulating the obsolete policy.
 - [ ] Active host-owned party roster membership follows resolved GUID aliases across party/target/focus getters; player-owned GUID aliases are explicitly declared by the host. The seeded local player remains public under the map rule.
 - [ ] Host-recorded mind control neither removes an ally exemption nor creates a visitor exemption, even when the actual UnitCanAttack result changes.
-- [ ] UnitName, UnitNameUnmodified, GetUnitName, UnitPVPName, UnitFullName and UnitGUID share the bounded identity policy while preserving current return arity and public payloads.
+- [ ] UnitName, UnitNameUnmodified, GetUnitName, UnitPVPName, UnitFullName, UnitGUID and cached GetRaidRosterInfo names share the bounded identity policy while preserving current return arity and public payloads. Roster index 1 uses the existing player identity; index n > 1 uses party(n - 1), not an unmodeled raid-token GUID.
+- [ ] Scoped GetRaidRosterInfo cached names use independent trusted host-secret results, so retained and newly created equal ordinary strings stay public; clearing classification makes new outputs public without declassifying retained results. All twelve returns and the eleven non-name fields are unchanged.
+- [ ] Uncached roster names retain the public localized UNKNOWN sentinel regardless of classification; cache arrival applies the current cached-name policy live. See [roster cache contract](raid-roster-unknown-name.md).
 - [ ] INFERRED: leaving the instance changes new getter results to public without declassifying retained secret results or poisoning equal ordinary literals and realm strings.
 - [ ] INFERRED: the sibling host-owned identity_secret_guids set remains independent and overrides map exemptions. Secure and tainted callers receive the same classification without altering caller taint. No input unwrapping or caller-security bypass is added.
 
@@ -31,6 +33,7 @@ INFERRED policies: false/empty default map/player-owned/control context; existin
 - `tests/instanced_identity.rs`: six behavioral cases in the existing auto-discovered integration binary.
 - `tests/security_api.rs`: three existing secrecy tests explicitly classify their fixture GUID instead of assuming every party token is secret.
 - `tests/unit_name_secret_tokens.rs`: accepted input-authentication precedent; no changes proposed.
+- `tests/raid_roster_identity_followups.rs`: authored roster public/group exemptions, explicit party/player GUID classification, equal-literal isolation, retained-output lifetime and cache transitions with twelve-result tuple controls. Round-100 execution: 0/5 RED before the producer; 5/5 GREEN after it, on ce418cbe4 plus this follow-up.
 
 ## Development proof and independent bounded acceptance — 2026-10-03
 
@@ -42,15 +45,15 @@ Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT 
 
 ## Known gaps (current cycle)
 
-- [ ] Apply staged edits and run behavioral RED with only state/type/test changes, then GREEN with producers. No compilation or runtime evidence obtained by this authoring task.
+- [x] Round-100 roster follow-ups: 0/5 RED with tests only on ce418cbe4; 5/5 GREEN after the shared predicate/wrapper producer. All eleven tuple-tail fields and localized UNKNOWN controls retained.
 - [ ] Native-client classification, exemption precedence and output-lifetime proof remain absent.
 - [ ] Raid, pet and vehicle GUID producers are not currently modeled by existing_guid_for_unit/guid_for_unit; no implementation credit for their identity categories. Their existing name outputs are not proof of independent identities.
 - [ ] Quest NPC, arena, boss, nameplate and other token categories without actual resolved GUIDs remain unmodeled here.
 
 ## Out of scope
 
-Other identity producers such as GetRaidRosterInfo retain their current registry marking; pre-existing marks from them are not cleared. Automatic world/roster acquisition, pet/vehicle/raid GUID synthesis, control spell mechanics, restoring historical attackable-only behavior, reverse-token policy redesign, other identity consumers, vendor edits and broader native-parity claims. Missing native identities cannot honestly be supplied by wrapping fixture constants or parsing token names.
+Pre-existing registry marks are not cleared; older/non-scoped profiles preserve cached roster-name registry marking and existing identity policy. Automatic world/roster acquisition, pet/vehicle/raid GUID synthesis, control spell mechanics, restoring historical attackable-only behavior, reverse-token policy redesign, other identity consumers, vendor edits and broader native-parity claims. Missing native identities cannot honestly be supplied by wrapping fixture constants or parsing token names.
 
 ## Existing-caller behavior change
 
-Within the scoped retail epoch, party names are no longer automatically secret solely because of token spelling. Ordinary party/raid names outside instances become public absent explicit classification (raid aliases lack resolved GUIDs and remain a stated gap). Active roster membership supplies the group exemption without a duplicate membership set. Host must declare player-owned GUID aliases explicitly. Classified/instanced nongroup target/focus names and GUIDs become VM-owned secret outputs. Equal public literals are no longer incidentally marked by an identity getter, and retained secret outputs remain secret after context changes. Other profiles preserve their previous name/GUID behavior. Existing security tests are adjusted by explicit fixture state; accepted UnitName token-input tests and sibling reverse-party suppression stay unchanged.
+Within the scoped retail epoch, party names are no longer automatically secret solely because of token spelling. Ordinary party/raid names outside instances become public absent explicit classification (raid aliases lack resolved GUIDs and remain a stated gap). Active roster membership supplies the group exemption without a duplicate membership set. Host must declare player-owned GUID aliases explicitly. Classified/instanced nongroup target/focus names and GUIDs become VM-owned secret outputs. Equal public literals are no longer incidentally marked by an identity getter, and retained secret outputs remain secret after context changes. Scoped cached GetRaidRosterInfo names now follow the same explicit GUID classification instead of marking every cached name secret. Unclassified player and party roster names become public; uncached UNKNOWN remains public. Other profiles preserve their previous name/GUID and cached-roster-name behavior. Existing security tests are already adjusted by explicit fixture state; accepted UnitName token-input tests and sibling reverse-party suppression stay unchanged.

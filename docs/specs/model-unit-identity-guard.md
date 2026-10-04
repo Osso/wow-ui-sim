@@ -4,13 +4,14 @@ Bounded non-3D observable behavior for retail 12.0.5 `prose-2026-04-10-194` and 
 
 ## What it must do
 
-- [ ] ModelSceneActor:SetModelByUnit and Model:SetUnit deny an existing unit identity classified secret by explicit host state.
+- [ ] ModelSceneActor:SetModelByUnit and Model/PlayerModel/DressUpModel/CinematicModel/TabardModel/ModelScene:SetUnit deny an existing unit identity classified secret by explicit host state.
 - [ ] Denied calls return exactly one public nil without throwing, preserving the previous stored unit binding.
 - [ ] Classify the resolved identity GUID, not party-token spelling; target aliases of a secret identity remain denied.
-- [ ] Both methods store a public existing unit token as a non-rendering binding and return one true for that assignment. **INFERRED**: this boolean measures simulated binding assignment, not successful native model loading.
+- [ ] These model methods store a public existing unit token as a non-rendering binding and return one true for that assignment. **INFERRED**: this boolean measures simulated binding assignment, not successful native model loading.
 - [ ] A missing unit identity returns one false without mutation. **INFERRED** simulator policy; native missing-unit behavior is not established here.
 - [ ] Clearing host classification permits subsequent assignment; independent environments do not share classification or bindings.
 - [ ] Ordinary public tokens whose identities are secret return nil for both secure and genuinely tainted addon callers, without changing caller taint.
+- [ ] GameTooltip:SetUnit remains on the tooltip path: public player content, displayed unit, visibility and one OnTooltipSetUnit callback; no model binding.
 
 ## How it works
 
@@ -29,6 +30,8 @@ Bounded non-3D observable behavior for retail 12.0.5 `prose-2026-04-10-194` and 
 
 - `tests/cast_events_identity.rs`: both real methods, prior binding, exact pcall arity, GUID alias, host recovery, missing unit, genuine addon taint, environment isolation, and instance-map restriction with ownership/map-exit recovery.
 
+- `tests/model_set_unit_identity_followups.rs`: authored actual PlayerModel, DressUpModel, CinematicModel, TabardModel and ModelScene SetUnit contracts (public/missing/secret results, exact arity and stored bindings), plus tooltip dispatch control. Round-100 execution: 6/6 passed on ce418cbe4 plus this follow-up.
+
 ## Development proof and independent bounded acceptance — 2026-10-03
 
 Commit `a4cce2db1`. RED: 1 PASS / 5 FAIL model cases. GREEN: 6/6 model cases inside a 404/404 run with control suites; `cargo fmt --check` exit0; startup `lua-errors` `[]`. This section supersedes any wording above that describes the slice as staged, unapplied or unrun.
@@ -40,7 +43,8 @@ Main accepts an independent GPT-6.1-sol source review (no test rerun): **ACCEPT 
 ## Known gaps (current cycle)
 
 - [x] Model `SetUnit` was overwritten by the later GameTooltip registration on the shared frame metatable; fixed by a widget-type dispatcher in `widgets/mod.rs`.
-- [ ] No test drives a PlayerModel/DressUpModel frame through `SetUnit`; row 534 stays partial.
+- [x] Round-100 actual frame follow-ups passed 6/6; roster follow-ups passed 5/5 after observed 0/5 RED. Row 534 accounting remains partial pending acceptance-evidence reconciliation; no native-parity claim.
+- [ ] Legacy-profile SetUnit routing remains untested; scoped tests do not establish older-profile guard behavior.
 
 ## Out of scope
 

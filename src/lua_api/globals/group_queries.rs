@@ -20,7 +20,6 @@ mod relationships;
 
 use super::unit_misc::identity_output;
 use crate::lua_api::game_data::CLASS_LABELS;
-use crate::lua_api::globals::security::mark_secret_value;
 use crate::lua_api::methods::{
     borrow_state, create_string, create_string_static, create_table, table_get, table_set,
 };
@@ -275,7 +274,7 @@ fn get_raid_roster_info(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(12);
     };
 
-    push_raid_roster_info(state, index, &member);
+    push_raid_roster_info(state, index, &member)?;
     Ok(12)
 }
 
@@ -329,20 +328,46 @@ fn push_empty_raid_roster_info(state: &mut LuaState) {
     }
 }
 
-fn read_raid_roster_name(state: &mut LuaState, member: &PartyMember) -> Val {
-    if member.name_cached {
-        let name = create_string(state, &member.name);
-        mark_secret_value(state, name);
-        name
-    } else {
+fn read_raid_roster_name(
+    state: &mut LuaState,
+    index: usize,
+    member: &PartyMember,
+) -> LuaResult<Val> {
+    if !member.name_cached {
         // INFERRED: the post's "Unknown" uses the existing localized UNKNOWN global.
         let global = Val::Table(state.global);
-        table_get(state, global, "UNKNOWN")
+        return Ok(table_get(state, global, "UNKNOWN"));
     }
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    let secret = {
+        // The roster provider puts the player first, then the existing party identities.
+        let unit = if index == 1 {
+            "player".to_owned()
+        } else {
+            format!("party{}", index - 1)
+        };
+        super::unit_misc::unit_identity_is_secret(state, &unit)?
+    };
+    #[cfg(not(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    )))]
+    let secret = {
+        let _ = index;
+        true
+    };
+    Ok(identity_output(state, &member.name, secret))
 }
 
-fn push_raid_roster_info(state: &mut LuaState, index: usize, member: &PartyMember) {
-    let name = read_raid_roster_name(state, member);
+fn push_raid_roster_info(
+    state: &mut LuaState,
+    index: usize,
+    member: &PartyMember,
+) -> LuaResult<()> {
+    let name = read_raid_roster_name(state, index, member)?;
     let rank = if member.is_leader { 2.0 } else { 0.0 };
     let subgroup = ((index - 1) / 5 + 1) as f64;
     let (class_name, class_file, _) = class_info(member.class_index);
@@ -363,6 +388,7 @@ fn push_raid_roster_info(state: &mut LuaState, index: usize, member: &PartyMembe
     state.push(Val::Nil);
     state.push(Val::Nil);
     state.push(assigned_role);
+    Ok(())
 }
 
 fn get_party_assignment(state: &mut LuaState) -> LuaResult<u32> {
