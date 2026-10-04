@@ -90,7 +90,7 @@ fn test_patch_12_1_frame_texture_statusbar_method_surface() {
             r#"
             local frame = CreateFrame("Frame")
             frame:AddForbiddenAspects(Enum.ForbiddenAspect.UntrustedScriptExecution)
-            frame:SetRolesets("combat", "healer")
+            frame:SetRolesets("combat,healer")
             frame:SetOnUpdateMode(Enum.OnUpdateMode.RunAlways)
 
             local tex = frame:CreateTexture(nil, "ARTWORK")

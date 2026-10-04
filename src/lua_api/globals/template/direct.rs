@@ -425,6 +425,30 @@ pub fn apply_xml_toplevel(
     }
 }
 
+/// Resolve and apply roleset tags from template chain + instance XML.
+pub fn apply_xml_roleset(
+    state: &Rc<RefCell<SimState>>,
+    frame_id: u64,
+    frame: &FrameXml,
+    inherits: &str,
+) {
+    let roleset = frame.roleset.clone().or_else(|| {
+        if inherits.is_empty() {
+            return None;
+        }
+        crate::xml::get_template_chain(inherits)
+            .iter()
+            .find_map(|e| e.frame.roleset.clone())
+    });
+    let Some(roleset) = roleset else {
+        return;
+    };
+    let names = crate::c_api::c_roleset::split_roleset_list(&roleset);
+    crate::c_api::c_roleset::update_frame_rolesets(&mut state.borrow_mut(), frame_id, |rolesets| {
+        *rolesets = names;
+    });
+}
+
 /// Resolve and apply alpha from template chain + instance XML.
 pub fn apply_xml_alpha(
     state: &Rc<RefCell<SimState>>,

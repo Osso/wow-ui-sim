@@ -22,6 +22,8 @@ macro_rules! frame_defaults {
             anchors: Vec::new(),
             xml_set_all_points: false,
             visible: true,
+            rolesets: Vec::new(),
+            roleset_filtered: false,
             secret_shown: false,
             secret_text: false,
             secret_timing: false,

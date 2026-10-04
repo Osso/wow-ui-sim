@@ -205,6 +205,9 @@ pub struct FrameXml {
     pub protected: Option<bool>,
     #[serde(rename = "@onUpdateMode")]
     pub on_update_mode: Option<String>,
+    /// Comma-separated roleset tags (UI.xsd `roleset`).
+    #[serde(rename = "@roleset")]
+    pub roleset: Option<String>,
     /// Initial EditBox MaxLetters value from XML.
     #[serde(rename = "@letters")]
     pub letters: Option<i32>,

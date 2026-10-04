@@ -573,7 +573,8 @@ impl WidgetRegistry {
     /// Check if a frame and all its ancestors are visible (shown).
     ///
     /// Matches WoW's `IsVisible()` semantics: a frame is visible when its
-    /// own `visible` flag is true AND all ancestors are visible. Alpha does
+    /// own `visible` flag is true AND all ancestors are visible. A roleset-
+    /// filtered frame is never visible, regardless of its shown state. Alpha does
     /// NOT affect visibility — a frame with alpha=0 is still "visible" and
     /// receives OnUpdate, events, etc.
     pub fn is_ancestor_visible(&self, id: u64) -> bool {
@@ -582,7 +583,7 @@ impl WidgetRegistry {
             let Some(f) = self.widgets.get(&current_id) else {
                 return false;
             };
-            if !f.visible {
+            if !f.is_displayed() {
                 return false;
             }
             match f.parent_id {
@@ -604,7 +605,7 @@ impl WidgetRegistry {
         let Some(f) = self.widgets.get_mut(&id) else {
             return;
         };
-        let eff = if f.visible {
+        let eff = if f.is_displayed() {
             if f.ignore_parent_alpha {
                 f.alpha
             } else {

@@ -496,9 +496,32 @@ impl SimState {
     /// Set a frame's visibility and eagerly propagate effective_alpha.
     /// Surgically updates strata_buckets: inserts on show, removes on hide.
     pub fn set_frame_visible(&mut self, id: u64, visible: bool) {
-        let was_visible = self.widgets.get(id).map(|f| f.visible).unwrap_or(false);
+        let was_displayed = self.is_frame_displayed(id);
         self.widgets.set_visible(id, visible);
-        if was_visible == visible {
+        self.apply_display_change(id, was_displayed);
+    }
+
+    /// Set whether active roleset filters hide a frame, keeping its shown state.
+    pub fn set_frame_roleset_filtered(&mut self, id: u64, filtered: bool) {
+        let was_displayed = self.is_frame_displayed(id);
+        let Some(frame) = self.widgets.get_mut(id) else {
+            return;
+        };
+        if frame.roleset_filtered == filtered {
+            return;
+        }
+        frame.roleset_filtered = filtered;
+        self.widgets.mark_visual_dirty(id);
+        self.apply_display_change(id, was_displayed);
+    }
+
+    fn is_frame_displayed(&self, id: u64) -> bool {
+        self.widgets.get(id).is_some_and(|f| f.is_displayed())
+    }
+
+    fn apply_display_change(&mut self, id: u64, was_displayed: bool) {
+        let visible = self.is_frame_displayed(id);
+        if was_displayed == visible {
             return;
         }
         let toplevel_order_changed = self.update_toplevel_show_order(id, visible);

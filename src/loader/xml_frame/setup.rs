@@ -355,6 +355,7 @@ fn apply_xml_properties_direct(
     direct::apply_xml_frame_level(state, frame_id, frame, inherits);
     direct::apply_xml_hidden(state, frame_id, frame, inherits);
     direct::apply_xml_toplevel(state, frame_id, frame, inherits);
+    direct::apply_xml_roleset(state, frame_id, frame, inherits);
     direct::apply_xml_alpha(state, frame_id, frame, inherits);
     direct::apply_xml_scale(state, frame_id, frame, inherits);
     direct::apply_xml_enable_mouse(state, frame_id, frame, inherits);

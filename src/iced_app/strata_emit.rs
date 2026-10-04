@@ -41,7 +41,7 @@ fn chain_effective_alpha_from(
         let Some(frame) = registry.get(current_id) else {
             return 0.0;
         };
-        if !frame.visible {
+        if !frame.is_displayed() {
             return 0.0;
         }
         alpha *= frame.alpha;

@@ -44,6 +44,11 @@ pub struct Frame {
     /// pooled template instances.
     pub xml_set_all_points: bool,
     pub visible: bool,
+    /// Roleset tags from `AddRoleset`/`SetRolesets`/XML `roleset`, in add order.
+    pub rolesets: Vec<String>,
+    /// Hidden by the active `C_Roleset` filters (or `alwaysBlocked`) while
+    /// `visible` keeps the frame's own shown state.
+    pub roleset_filtered: bool,
     /// Derived only from authenticated secret inputs, not declared secret aspects.
     pub secret_shown: bool,
     pub secret_text: bool,
@@ -623,6 +628,11 @@ impl Frame {
         let selection = self.editbox_selection();
         self.editbox_highlight_range = None;
         selection
+    }
+
+    /// Own shown state after roleset filtering; ancestors are not consulted.
+    pub fn is_displayed(&self) -> bool {
+        self.visible && !self.roleset_filtered
     }
 
     pub fn model_state(&self) -> &ModelWidgetState {
