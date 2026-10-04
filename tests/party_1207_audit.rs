@@ -491,13 +491,16 @@ fn p1207_conditional_tm_and_cached_secure_action_observe_live_marker_state() {
     env.exec(
         r#"
         local button = CreateFrame('Button')
+        button:SetAttribute('type', 'raidtarget')
+        button:SetAttribute('unit', 'player')
+        button:SetAttribute('useOnKeyDown', false)
         button:SetAttribute('action', 'set-unmarked')
         button:SetAttribute('marker', 5)
-        SECURE_ACTIONS.raidtarget(button, 'player', 'LeftButton')
+        assert(SecureActionButton_OnClick(button, 'LeftButton', false, false, true))
         assert(GetRaidTargetIndex('player') == 5)
         local before = markerEvents
         button:SetAttribute('marker', 8)
-        SECURE_ACTIONS.raidtarget(button, 'player', 'LeftButton')
+        assert(SecureActionButton_OnClick(button, 'LeftButton', false, false, true))
         assert(GetRaidTargetIndex('player') == 5 and markerEvents == before)
     "#,
     )
