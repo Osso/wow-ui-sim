@@ -90,6 +90,15 @@ pub const ACTIVE_INTERFACE_VERSION: u32 = 11507;
 pub const ACTIVE_INTERFACE_VERSION: u32 = 16001;
 
 impl ClientProfile {
+    /// Disable Midnight secrets on the four official Classic profiles.
+    /// Forever retains its separate existing compatibility policy.
+    pub const fn uses_secret_values(self) -> bool {
+        match self {
+            Self::Retail | Self::Ptr | Self::WowForever => true,
+            Self::Wrath | Self::Mists | Self::Era | Self::Anniversary => false,
+        }
+    }
+
     /// Forever Classic identity is an inferred cached-addon compatibility policy,
     /// not a native-client measurement. Preserve other profiles' existing values.
     pub const fn current_expansion_level(self) -> i32 {

@@ -71,7 +71,6 @@ macro_rules! build_empty_sim_state {
             blocked_auras_by_unit: $collections.blocked_auras_by_unit,
             #[cfg(feature = "client-wowforever")]
             auras_secret_in_context: false,
-            #[cfg(feature = "retail-12-0-5")]
             unit_stats_restricted: false,
             #[cfg(feature = "client-retail")]
             weapon_attack_power: ::std::collections::HashMap::new(),

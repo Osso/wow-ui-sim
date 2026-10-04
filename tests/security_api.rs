@@ -771,14 +771,19 @@ fn test_secure_map_rejects_secret_keys_and_values() {
         )
         .unwrap();
 
-    assert!(
-        key_error.contains("attempted to store a secret key in a SecureMap"),
-        "secret key should be rejected, got: {key_error}"
-    );
-    assert!(
-        value_error.contains("attempted to store a secret value in a SecureMap"),
-        "secret value should be rejected, got: {value_error}"
-    );
+    if wow_ui_sim::client_profile::ACTIVE.uses_secret_values() {
+        assert!(
+            key_error.contains("attempted to store a secret key in a SecureMap"),
+            "secret key should be rejected, got: {key_error}"
+        );
+        assert!(
+            value_error.contains("attempted to store a secret value in a SecureMap"),
+            "secret value should be rejected, got: {value_error}"
+        );
+    } else {
+        assert_eq!(key_error, "", "Classic tainted function key is not secret");
+        assert_eq!(value_error, "", "Classic tainted function value is not secret");
+    }
     assert_eq!(stored_value, "stored");
 }
 
@@ -805,7 +810,11 @@ fn test_issecretvalue_tainted() {
             "#,
         )
         .unwrap();
-    assert!(result, "loadstring result should be secret");
+    assert_eq!(
+        result,
+        wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
+        "loadstring secrecy follows the profile without removing closure taint"
+    );
 }
 
 #[test]
@@ -827,7 +836,11 @@ fn test_canaccessvalue_tainted() {
             "#,
         )
         .unwrap();
-    assert!(!result, "loadstring result should not be accessible");
+    assert_eq!(
+        result,
+        !wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
+        "loadstring secret access follows the profile"
+    );
 }
 
 #[test]
@@ -851,7 +864,11 @@ fn test_canaccessallvalues_one_tainted() {
             "#,
         )
         .unwrap();
-    assert!(!result, "mixed values should fail access check");
+    assert_eq!(
+        result,
+        !wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
+        "mixed secret access follows the profile"
+    );
 }
 
 #[test]
@@ -881,11 +898,9 @@ fn test_party_roster_name_is_secret_value() {
     let (secret, accessible): (bool, bool) = env
         .eval("local name = UnitName('party1'); return issecretvalue(name), canaccessvalue(name)")
         .unwrap();
-    assert!(secret, "party roster identity should be secret");
-    assert!(
-        !accessible,
-        "party roster identity should not be directly accessible"
-    );
+    let expected_secret = wow_ui_sim::client_profile::ACTIVE.uses_secret_values();
+    assert_eq!(secret, expected_secret, "party roster identity secrecy");
+    assert_eq!(accessible, !expected_secret, "party roster identity access");
 }
 
 #[test]
@@ -899,12 +914,10 @@ fn test_party_full_name_marks_name_and_realm_secret() {
             "#,
         )
         .unwrap();
-    assert!(name_secret, "party full-name identity should be secret");
-    assert!(realm_secret, "party realm identity should be secret");
-    assert!(
-        !all_accessible,
-        "secret full-name fields should block bulk access"
-    );
+    let expected_secret = wow_ui_sim::client_profile::ACTIVE.uses_secret_values();
+    assert_eq!(name_secret, expected_secret, "party full-name secrecy");
+    assert_eq!(realm_secret, expected_secret, "party realm secrecy");
+    assert_eq!(all_accessible, !expected_secret, "party bulk access");
 }
 
 #[test]
@@ -913,9 +926,10 @@ fn test_table_containing_party_identity_is_not_accessible() {
     let accessible: bool = env
         .eval("local t = { name = UnitName('party1') }; return canaccesstable(t)")
         .unwrap();
-    assert!(
-        !accessible,
-        "tables containing secret identities should be secret"
+    assert_eq!(
+        accessible,
+        !wow_ui_sim::client_profile::ACTIVE.uses_secret_values(),
+        "nested party identity access follows the profile"
     );
 }
 

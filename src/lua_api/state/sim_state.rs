@@ -65,7 +65,6 @@ pub struct SimState {
     #[cfg(feature = "client-wowforever")]
     pub auras_secret_in_context: bool,
     /// Explicit stat-output policy input; no combat or aura activation inference.
-    #[cfg(feature = "retail-12-0-5")]
     pub unit_stats_restricted: bool,
     /// Explicit weapon contributions keyed by existing unit GUID; rows do not create units.
     #[cfg(feature = "client-retail")]

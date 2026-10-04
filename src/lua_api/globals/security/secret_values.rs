@@ -70,6 +70,9 @@ fn secretunwrap_passthrough(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub(crate) fn mark_secret_value(state: &mut LuaState, value: Val) {
+    if !crate::client_profile::ACTIVE.uses_secret_values() {
+        return;
+    }
     let Some(key) = secret_registry_key(state, value) else {
         return;
     };
@@ -164,8 +167,9 @@ fn function_is_secret(
     state: &mut LuaState,
     func_ref: rilua::vm::gc::arena::GcRef<rilua::vm::closure::Closure>,
 ) -> bool {
-    rilua::stdlib::taint::get_closure_taint(state, func_ref).as_deref()
-        == Some(LOADSTRING_SECRET_TAINT_MARKER)
+    crate::client_profile::ACTIVE.uses_secret_values()
+        && rilua::stdlib::taint::get_closure_taint(state, func_ref).as_deref()
+            == Some(LOADSTRING_SECRET_TAINT_MARKER)
 }
 
 pub(super) fn table_is_secret(
