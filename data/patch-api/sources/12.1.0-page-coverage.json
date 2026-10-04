@@ -266,7 +266,7 @@
       "source_id": "prose-undated-013",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "HasAccessConstraints reads native flags, but CanBeAccessedInContext is registered only under client-wowforever. Retail needs its context-access query and aura restriction policy, not a copied Forever availability claim."
+      "note": "CanBeAccessedInContext is registered on retail since round 3 (forbidden-aspects feature, access_restrictions.rs). Still pending: automatic aura-secret activation and the aura restriction policy are unmodeled."
     },
     {
       "source_id": "prose-undated-014",
@@ -1172,7 +1172,7 @@
       "source_id": "prose-2026-07-21-183",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "HasAccessConstraints reads native flags, but CanBeAccessedInContext is registered only under client-wowforever. Retail needs its context-access query and aura restriction policy, not a copied Forever availability claim."
+      "note": "CanBeAccessedInContext is registered on retail since round 3 (forbidden-aspects feature, access_restrictions.rs). Still pending: automatic aura-secret activation and the aura restriction policy are unmodeled."
     },
     {
       "source_id": "prose-2026-07-21-184",
@@ -1332,7 +1332,7 @@
       "source_id": "prose-2026-07-23-213",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "HasAccessConstraints reads native flags, but CanBeAccessedInContext is registered only under client-wowforever. Retail needs its context-access query and aura restriction policy, not a copied Forever availability claim."
+      "note": "CanBeAccessedInContext is registered on retail since round 3 (forbidden-aspects feature, access_restrictions.rs). Still pending: automatic aura-secret activation and the aura restriction policy are unmodeled."
     },
     {
       "source_id": "prose-2026-07-23-214",
