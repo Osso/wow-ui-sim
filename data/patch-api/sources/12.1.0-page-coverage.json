@@ -176,14 +176,14 @@
       "symbols": [
         "778 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication (added/changed) or absence (removed, raw and ordinary lookup) in a fully loaded default-Retail environment. Publication only: no signature, behavior, security or payload proof. 25 known gaps baselined in tests/data/patch_12_1_0_sweep_known_gaps.json.",
+      "scope": "Data-driven publication (added/changed) or absence (removed, raw and ordinary lookup) in a fully loaded default-Retail environment. Publication only: no signature, behavior, security or payload proof. 11 known gaps baselined in tests/data/patch_12_1_0_sweep_known_gaps.json. Removed symbols accepted when the value is a Lua function from a cached Blizzard deprecation file.",
       "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_1_0_publication_sweep.rs"
       ],
       "implementation": "test only",
       "compiled_revision": "b5b31ee5b",
-      "proof": "integrator GREEN with three negative controls detected; main-confirmed GREEN, startup clean; no independent review; round 3 re-run GREEN at 616bf37ab (757 ok / 21 baselined), evidence p1210-r3-sweep-result.json; strict-removals fix re-run GREEN at b5b31ee5b (753 ok / 25 baselined), evidence p1210-r4-sweep-result.json",
+      "proof": "integrator GREEN with three negative controls detected; main-confirmed GREEN, startup clean; no independent review; round 3 re-run GREEN at 616bf37ab (757 ok / 21 baselined), evidence p1210-r3-sweep-result.json; strict-removals fix re-run GREEN at b5b31ee5b (753 ok / 25 baselined), evidence p1210-r4-sweep-result.json; deprecation-fallback rule GREEN (767 ok / 11 baselined)",
       "ledger": "data/patch-api/evidence/12.1.0-session-2026-10-04/p1210-sweep-ledger.json"
     },
     {
@@ -3757,27 +3757,35 @@
     },
     {
       "source_id": "wt-global-api-BNGetFriendInviteInfo-563",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua (sweep)."
     },
     {
       "source_id": "wt-global-api-BNSendVerifiedBattleTagInvite-564",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua (sweep)."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorForItemLocation-565",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Republished by cached Blizzard_Deprecated Mainline/Deprecated_12_1_0.lua (loadDeprecationFallbacks default 1); sweep expects absence. Was wrongly absent before strict removals fix."
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua (sweep)."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorForItem-566",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Republished by cached Blizzard_Deprecated Mainline/Deprecated_12_1_0.lua (loadDeprecationFallbacks default 1); sweep expects absence. Was wrongly absent before strict removals fix."
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua (sweep)."
     },
     {
       "source_id": "wt-global-api-C_Housing.IsInsideOwnHouse-567",
@@ -3787,9 +3795,11 @@
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.GetNumFloors-568",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua (sweep)."
     },
     {
       "source_id": "wt-global-api-C_Ping.GetContextualPingTypeForUnit-569",
@@ -3823,9 +3833,11 @@
     },
     {
       "source_id": "wt-global-api-C_UnitAuras.AddPrivateAuraAppliedSound-573",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua (sweep)."
     },
     {
       "source_id": "wt-global-api-C_UnitAuras.RemovePrivateAuraAppliedSound-574",
@@ -3851,9 +3863,11 @@
     },
     {
       "source_id": "wt-global-api-CancelItemTempEnchantment-577",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua (sweep)."
     },
     {
       "source_id": "wt-global-api-GetInspectSpecialization-578",
@@ -3871,9 +3885,11 @@
     },
     {
       "source_id": "wt-global-api-GetWeaponEnchantInfo-580",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua (sweep)."
     },
     {
       "source_id": "wt-global-api-SetTableSecurityOption-581",
@@ -7219,9 +7235,11 @@
     },
     {
       "source_id": "wt-framexml-RaidNotice_AddMessage-1032",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua (sweep)."
     },
     {
       "source_id": "wt-framexml-RaidNotice_ClearSlot-1033",
@@ -7233,15 +7251,19 @@
     },
     {
       "source_id": "wt-framexml-RaidNotice_Clear-1034",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua (sweep)."
     },
     {
       "source_id": "wt-framexml-RaidNotice_FadeInit-1035",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua (sweep)."
     },
     {
       "source_id": "wt-framexml-RaidNotice_OnUpdate-1036",
@@ -7261,9 +7283,11 @@
     },
     {
       "source_id": "wt-framexml-RaidNotice_UpdateSlot-1038",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua (sweep)."
     },
     {
       "source_id": "wt-framexml-RaidWarningFrame_OnEvent-1039",
@@ -7635,15 +7659,19 @@
     },
     {
       "source_id": "wt-framexml-getglobal-1085",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua (sweep)."
     },
     {
       "source_id": "wt-framexml-setglobal-1086",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished only by cached Blizzard deprecation fallback Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua (sweep)."
     },
     {
       "source_id": "wt-scriptobjects-DurationTextBinding:Assign-1097",

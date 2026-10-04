@@ -6640,11 +6640,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-framexml-RaidNotice_Clear-1034": {
     "expected": {
@@ -6657,11 +6657,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-framexml-RaidNotice_ClearSlot-1033": {
     "expected": {
@@ -6691,11 +6691,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-framexml-RaidNotice_OnUpdate-1036": {
     "expected": {
@@ -6742,11 +6742,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-framexml-RaidWarningFrame_OnEvent-1039": {
     "expected": {
@@ -9088,11 +9088,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-framexml-setglobal-1086": {
     "expected": {
@@ -9105,11 +9105,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-BNGetFriendInviteInfo-563": {
     "expected": {
@@ -9122,11 +9122,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-BNSendVerifiedBattleTagInvite-564": {
     "expected": {
@@ -9139,11 +9139,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ActionBar.ForceUpdateAction-584": {
     "expected": {
@@ -10108,11 +10108,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DyeColor.GetDyeColorForItemLocation-565": {
     "expected": {
@@ -10125,11 +10125,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DyeColor.GetDyeColorsForItem-469": {
     "expected": {
@@ -10924,11 +10924,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingLayout.GetRoomPlacementBudget-593": {
     "expected": {
@@ -11808,11 +11808,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_UnitAuras.CancelAuraByInstanceID-551": {
     "expected": {
@@ -11978,11 +11978,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CreateSecureDelegate-612": {
     "expected": {
@@ -12063,11 +12063,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-SetTableSecurityOption-581": {
     "expected": {
