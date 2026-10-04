@@ -1,6 +1,6 @@
 //! State-backed action cooldown and texture queries.
 
-use super::cooldown_duration::{read_ignore_gcd, select_cooldown_duration_times};
+use super::cooldown_duration::{read_untainted_ignore_gcd, select_cooldown_duration_times};
 use crate::lua_api::globals::lua_duration_object::push_timed_duration_object;
 use crate::lua_api::methods::{borrow_state, create_table_with_capacity, table_set};
 use crate::lua_bridge::stack_val;
@@ -78,7 +78,7 @@ fn read_action_cooldown_with_gcd(state: &LuaState, ignore_gcd: bool) -> LuaResul
 }
 
 pub(crate) fn get_action_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
-    let ignore_gcd = read_ignore_gcd(state, 2);
+    let ignore_gcd = read_untainted_ignore_gcd(state, 2)?;
     let (start, seconds) = read_action_cooldown_with_gcd(state, ignore_gcd)?;
     push_timed_duration_object(state, start, seconds)
 }

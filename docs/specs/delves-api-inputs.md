@@ -70,7 +70,7 @@ Main accepts an independent GPT-6.1-sol review: **ACCEPT WITH QUALIFICATIONS** (
 
 ## Out of scope
 
-- Row 260 and all other Delves methods: unchanged.
+- Row 260 is specified separately in [Tiered entrance PDEID](tiered-entrance-pdeid.md); all other Delves methods remain outside this input slice.
 - Native acquisition of curio links or active-delve state, native link encoding, eligibility results/tooltips, response timing and events: no backing evidence or request authorization.
 - Native secret spell identifier permission, missing-record behavior, numeric domain limits and exact error wording: unverified; inferred policies above are simulator bounds only.
 - Older-profile/native parity and accounting updates: not asserted or changed here.

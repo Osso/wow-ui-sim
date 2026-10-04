@@ -71,9 +71,22 @@ fn has_spell_action_buttons(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn is_on_bar_or_special_bar(state: &mut LuaState) -> LuaResult<u32> {
-    // Special-bar membership and native AllowedWhenTainted access remain unmodeled.
-    let has_slots = query_public_direct_spell_membership(state, "C_ActionBar.IsOnBarOrSpecialBar")?;
-    state.push(Val::Bool(has_slots));
+    // AllowedWhenTainted is NOT AllowedWhenUntainted: retain the bounded public reader.
+    // Native secret-input permission/result secrecy remain unmodeled.
+    let spell_id = super::c_spell::read_public_spell_identifier_at(
+        state,
+        1,
+        "C_ActionBar.IsOnBarOrSpecialBar",
+    )?;
+    let is_on_bar = match spell_id {
+        Some(id) => {
+            let sim = borrow_state(state)?;
+            // INFERRED union of effective direct slots and explicit special membership.
+            effective_spell_slots(&sim, id).next().is_some() || sim.special_bar_spells.contains(&id)
+        }
+        None => false,
+    };
+    state.push(Val::Bool(is_on_bar));
     Ok(1)
 }
 

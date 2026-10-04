@@ -150,6 +150,8 @@ impl<'a> LoaderEnv<'a> {
 
     pub fn fire_event_with_args(&self, event: &str, args: &[Val]) -> Result<()> {
         let listeners = self.with_state(|state| {
+            #[cfg(feature = "retail-12-0-5")]
+            crate::c_api::aura_entry::apply_entry_event(state, event)?;
             Ok::<Vec<u64>, crate::Error>(crate::lua_api::script_helpers::get_event_listeners(
                 state, event,
             ))

@@ -91,7 +91,7 @@ Independent389 is parent-accepted for exact403/328 bounded development only; the
 ## Known gaps (current cycle)
 
 - [x] Parent accepted independent389 for the minimal producer and existing space-limit behavior; bounded development only, not native or whole-page/goal acceptance.
-- [ ] Add acquisition remains unmodeled; host-seeded removal does not establish Add-to-Remove lifecycle.
+- [ ] Separate [Add context model](private-aura-sound-add-context.md) awaits parent proof/acceptance; historical host-seeded removal proof does not establish acquisition or Add-to-Remove lifecycle.
 
 ## Out of scope
 

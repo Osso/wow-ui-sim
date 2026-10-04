@@ -86,7 +86,7 @@ pub(super) fn remove_fixture(
     Ok((SUCCESS, stored))
 }
 
-fn update_attachments(
+pub(super) fn update_attachments(
     housing: &mut HousingState,
     affected: &[String],
     action: AttachedDecorAction,
@@ -119,7 +119,7 @@ fn validate_removal(housing: &HousingState) -> LuaResult<u32> {
     Ok(point.owner_hash)
 }
 
-fn validate_host(housing: &HousingState, api: &str) -> LuaResult<()> {
+pub(super) fn validate_host(housing: &HousingState, api: &str) -> LuaResult<()> {
     if !housing.inside_owned_plot || housing.active_house_editor_mode != EXTERIOR_CUSTOMIZATION_MODE
     {
         return Err(runtime_error(format!(
@@ -196,7 +196,7 @@ fn fixture_owner(housing: &HousingState, change: ExteriorChange) -> Option<u32> 
     }
 }
 
-fn find_affected_placements(housing: &HousingState, owner: Option<u32>) -> Vec<String> {
+pub(super) fn find_affected_placements(housing: &HousingState, owner: Option<u32>) -> Vec<String> {
     housing
         .exterior
         .decor

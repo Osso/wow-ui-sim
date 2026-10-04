@@ -14,6 +14,10 @@ pub mod action_macros;
 mod addon_messages;
 #[cfg(feature = "retail-12-0-5")]
 pub mod aura_duration;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod aura_entry;
+#[cfg(feature = "retail-12-0-5")]
+pub mod aura_entry_ids;
 pub mod bag_info;
 pub mod c_account_services;
 pub(crate) mod c_action_bar;
@@ -70,6 +74,7 @@ pub(crate) mod c_encounter_timeline;
 pub(crate) mod c_encounter_warnings;
 pub mod c_glue;
 pub mod c_housing;
+pub mod c_housing_bundles;
 #[cfg(feature = "client-wowforever")]
 pub mod c_input_interface_style;
 pub mod c_instance_encounter;
@@ -85,6 +90,8 @@ pub mod c_merchant_frame;
 pub(crate) mod c_mount_spell_lookup;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_nameplate_manager;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_navigation;
 mod c_neighborhood_initiative;
 pub mod c_paper_doll_info;
 pub mod c_party_info;
@@ -231,6 +238,8 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_loot_history::register_c_loot_history(state)?;
     #[cfg(feature = "retail-12-0-5")]
     c_chat_info::register(state)?;
+    #[cfg(feature = "retail-12-0-5")]
+    c_navigation::register(state)?;
     c_weather::register(state)?;
     c_damage_meter::register(state)?;
     #[cfg(feature = "retail-12-1-5")]

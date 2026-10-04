@@ -28,10 +28,6 @@ installNavigationDefault("GetDistance", function()
     return 0
 end)
 
-installNavigationDefault("GetNearestPartyMemberToken", function()
-    return nil
-end)
-
 installNavigationDefault("GetFrame", function()
     return nil
 end)
@@ -56,7 +52,7 @@ mod tests {
     fn installs_safe_empty_navigation_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
-        let result: (bool, i32, bool, i32, bool, bool) = env
+        let result: (bool, i32, bool, i32, bool) = env
             .eval(
                 r#"
                 return
@@ -64,13 +60,12 @@ mod tests {
                     C_Navigation.GetTargetState(),
                     C_Navigation.HasValidScreenPosition(),
                     C_Navigation.GetDistance(),
-                    C_Navigation.GetNearestPartyMemberToken() == nil,
                     C_Navigation.GetFrame() == nil
                 "#,
             )
             .expect("navigation defaults should be callable");
 
-        assert_eq!(result, (false, 0, false, 0, true, true));
+        assert_eq!(result, (false, 0, false, 0, true));
     }
 
     #[test]

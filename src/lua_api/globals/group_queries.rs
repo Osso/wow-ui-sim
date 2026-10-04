@@ -644,6 +644,12 @@ fn unit_creature_type(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-5")]
+fn unit_treat_as_player_for_display(state: &mut LuaState) -> LuaResult<u32> {
+    super::real::nameplate_display::unit_treat_as_player_for_display(state)
+}
+
+#[cfg(not(feature = "retail-12-0-5"))]
 fn unit_treat_as_player_for_display(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let treat_as_player = {

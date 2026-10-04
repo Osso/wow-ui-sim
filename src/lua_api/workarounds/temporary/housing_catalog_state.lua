@@ -122,21 +122,6 @@ local __wow_housing_seeded_featured_small_products = {
   },
 }
 
-local __wow_housing_seeded_bundle_state = {
-  [5001] = {
-    productID = 5001,
-    price = 500,
-    originalPrice = nil,
-    entryIDs = { 1001, 1002 },
-    decorEntries = {
-      { decorID = 1001, quantity = 1 },
-      { decorID = 1002, quantity = 1 },
-    },
-    nonDecorProducts = {},
-    canPreview = true,
-    wasViewed = false,
-  },
-}
 
 local __wow_housing_seeded_market_state = {
   [1001] = { price = 100, productID = 91001, bundleIDs = { 5001 }, isInCart = false, cartCount = 0, wasViewedInStore = false },
@@ -523,20 +508,6 @@ local function __wow_housing_copy_featured_small_products()
   return infos
 end
 
-local function __wow_housing_copy_bundle_info(bundle_product_id)
-  local bundle = __wow_housing_seeded_bundle_state[bundle_product_id]
-  if not bundle then
-    return nil
-  end
-  local info = __wow_housing_clone_table(bundle)
-  info.entryIDs = __wow_housing_clone_table(bundle.entryIDs)
-  info.decorEntries = {}
-  for index, decor_entry in ipairs(bundle.decorEntries) do
-    info.decorEntries[index] = __wow_housing_clone_table(decor_entry)
-  end
-  info.nonDecorProducts = __wow_housing_clone_table(bundle.nonDecorProducts)
-  return info
-end
 
 local function __wow_housing_copy_market_info(decor_id)
   local market = __wow_housing_seeded_market_state[decor_id]
@@ -896,7 +867,6 @@ C_HouseExterior = __wow_merge_namespace(C_HouseExterior, {
   end,
   IsAnyDecorAttachedToDoor = function() return true end,
   IsExteriorDecorHidden = function() return __wow_housing_exterior_state.decorHidden end,
-  SelectCoreFixtureOption = __wow_noop,
   SetExteriorDecorHidden = function(decorHidden)
     __wow_housing_exterior_state.decorHidden = not not decorHidden
   end,
@@ -904,17 +874,10 @@ C_HouseExterior = __wow_merge_namespace(C_HouseExterior, {
 C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
   DeletePreviewCartDecor = __wow_noop,
   GetAllFilterTagGroups = function() return {} end,
-  GetBundleInfo = function(bundleCatalogShopProductID)
-    return __wow_housing_copy_bundle_info(bundleCatalogShopProductID)
-  end,
   GetCartSizeLimit = function() return 20 end,
   GetCatalogEntryRefundTimeStampByRecordID = function() return nil end,
   GetDecorMaxOwnedCount = function() return 99 end,
   GetDecorTotalOwnedCount = function() return 2, 0 end,
-  GetFeaturedBundles = function()
-    local featured = { __wow_housing_copy_bundle_info(5001) }
-    return featured
-  end,
   GetFeaturedSmallProducts = function()
     return __wow_housing_copy_featured_small_products()
   end,
@@ -941,14 +904,6 @@ C_HousingCatalog = __wow_merge_namespace(C_HousingCatalog, {
       return false
     end
     market.cartCount = 0
-    return true
-  end,
-  HousingMarketActionViewBundle = function(bundleProductID)
-    local bundle = __wow_housing_seeded_bundle_state[bundleProductID]
-    if not bundle then
-      return false
-    end
-    bundle.wasViewed = true
     return true
   end,
   HousingMarketActionViewInStore = function(productID)

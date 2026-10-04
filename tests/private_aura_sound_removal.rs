@@ -255,6 +255,7 @@ fn host_replacement_changes_the_current_removal_set() {
     assert_ids(&env, &[202]);
     env.state().borrow_mut().private_aura_sound_registrations = PrivateAuraSoundRegistrations {
         live_ids: HashSet::from([101, 303]),
+        ..Default::default()
     };
     env.exec("RemoveSound(202)").unwrap();
     assert_ids(&env, &[101, 303]);

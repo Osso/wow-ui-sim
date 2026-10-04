@@ -24,12 +24,32 @@ use super::catalog::HousingCatalogEntryVariantID;
 
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct HouseExteriorState {
+    /// Host-selected core family; empty unless explicitly supplied.
+    pub core_fixture: Option<ExteriorCoreFixture>,
     pub selected_size: Option<i32>,
     pub selected_type_id: Option<u32>,
     pub size_options: Vec<ExteriorSizeOption>,
     pub type_options: Vec<ExteriorTypeOption>,
     pub selected_fixture_point: Option<ExteriorFixturePoint>,
     pub decor: BTreeMap<String, ExteriorDecorPlacement>,
+}
+
+/// One explicit core selection and its eligible replacements; no native population.
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExteriorCoreFixture {
+    pub selected_fixture_id: u32,
+    pub options: Vec<ExteriorCoreFixtureOption>,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExteriorCoreFixtureOption {
+    pub fixture_id: u32,
+    /// Attachment parent identity in ExteriorDecorPlacement, supplied by the host.
+    pub owner_hash: u32,
+    /// Shared group means variants of the same style; None never implies equivalence.
+    pub recolor_group: Option<u32>,
+    pub is_locked: bool,
+    pub is_invalid: bool,
 }
 
 #[derive(Clone, Debug, PartialEq)]

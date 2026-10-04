@@ -34,3 +34,13 @@
 ## Out of scope
 
 - Pet book entries, macro spell resolution, dynamic spellbook redesign, numeric spellbook-cooldown modernization, charges/loss-of-control, secrecy/security, vendor behavior, and non-default rates.
+
+## Authored follow-up for prose 2026-03-25-114 (not executed)
+
+- [ ] Query-selected objects from action/spell/spellbook drive actual Cooldown widgets; removing the individual interval clears new ignoreGCD=true objects, while false retains GCD and old true snapshots remain usable.
+- [ ] On retail12.0.5+, action/book ignoreGCD uses VM authentication per cached AllowedWhenUntainted: secure secret booleans select the same intervals as plain booleans; tainted secret flags error without clearing caller taint.
+- [ ] Authenticate book ignoreGCD before invalid-entry nil return; secure invalid-entry queries still return nil.
+
+Tests: `tests/retail_12_0_5_partial_104_114.rs`. INFERRED: retain the prior literal-true-only public conversion policy and earlier-epoch argument-ignore policy; this is not native type/coercion validation. Interval selection remains the existing inferred later-end/individual-only model. No additional SimState fields.
+
+Scope is only the new flag for action/book and ordinary widget consumption for all three APIs. Action-slot and book slot/bank secret authentication remain unmodeled by these duration producers. Spell's distinct cached AllowedWhenTainted policy is unresolved and deliberately unchanged: applying the untainted-only helper there would misrepresent its contract. Restricted-output secrecy, pet book entries, native behavior, real Blizzard consumers, earlier-epoch proof and independent acceptance remain open. Row114 stays partial; these authored additions carry no execution credit.

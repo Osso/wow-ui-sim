@@ -4,6 +4,8 @@
 
 Cached declaration: `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ActionBarFrameDocumentation.lua`, lines826–837, declares `SpellIdentifier`, `SecretArguments = "AllowedWhenTainted"`, and one non-nil bool. It does not define special-bar membership, native alias grammar, or result secrecy. Declaration metadata is not native behavioral proof.
 
+The acceptance below records the earlier direct-only slice. [Explicit special-bar membership](action-bar-special-membership.md) specifies the subsequent host-state extension; it does not grant native security or acquisition credit.
+
 ## What it must do
 
 The checked requirements below passed eleven public model tests; they remain **inferred simulator policy**, not native parity. Existing fixtures exercise public identifiers only; they prescribe neither native result secrecy nor special-bar semantics.
@@ -73,12 +75,12 @@ New membership secret/wrong-type behavior has source reasoning only; neighboring
 
 ## Known gaps (current cycle)
 - [ ] Public validation and conservative secret rejection reuse existing helper policy; native `AllowedWhenTainted` semantics remain UNMODELED. Public-only fixtures establish no native permission, rejection, taint propagation, or result secrecy.
-- [ ] Special-bar membership has no defined contract/model in this slice. Direct assignment coverage cannot close row245 or establish special-bar behavior.
+- [ ] Native special-bar acquisition/classification remains undefined. [Explicit special-bar membership](action-bar-special-membership.md) adds an INFERRED host set; direct assignment coverage alone cannot close row245 or establish native special-bar behavior.
 
 ## Out of scope
 
 - New production state/fixtures/datasets, Cargo targets and vendor overrides: unnecessary for this existing-model slice.
-- Special bars, active page/visibility, vehicle/possess/pet/stance/bonus/override/temporary-bar membership: no bounded model or native definition supplied.
+- Native special-bar acquisition, active page/visibility, and vehicle/possess/pet/stance/bonus/override/temporary-bar classification: no native definition supplied. Explicit host membership is specified by the companion extension.
 - Native alias grammar, base/override normalization, assignment acquisition, full catalog and profile parity: public simulator fixtures provide no such evidence.
 - Native secret-input permissions and result secrecy: `AllowedWhenTainted` metadata alone is insufficient; no native security credit.
 - Native wrong-type/domain validation parity: reused public validator is inferred simulator policy, not native evidence; shared identifier and slot-query contracts remain unchanged.

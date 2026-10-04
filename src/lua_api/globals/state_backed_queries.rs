@@ -65,6 +65,8 @@ pub(crate) fn dispatch_event_now(
     event_name: &str,
     args: &[Val],
 ) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-5")]
+    crate::c_api::aura_entry::apply_entry_event(state, event_name)?;
     #[cfg(feature = "retail-12-0-0")]
     super::real::event_callbacks::dispatch_event_callbacks(state, event_name, args)?;
     let listeners = get_event_listeners(state, event_name);

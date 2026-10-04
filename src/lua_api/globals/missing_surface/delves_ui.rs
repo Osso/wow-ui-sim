@@ -285,7 +285,8 @@ fn get_tiered_entrance_optional_affix_trait_tree_id(state: &mut LuaState) -> Lua
 }
 
 fn get_tiered_entrance_pde_id(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(77011.0));
+    let pde_id = crate::lua_api::methods::borrow_state(state)?.tiered_entrance_pde_id;
+    state.push(Val::Num(f64::from(pde_id)));
     Ok(1)
 }
 

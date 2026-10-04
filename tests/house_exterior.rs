@@ -173,6 +173,7 @@ mod modern_fixture {
 
     fn exterior_fixture() -> HouseExteriorState {
         HouseExteriorState {
+            core_fixture: None,
             selected_size: Some(3),
             selected_type_id: Some(1),
             size_options: vec![size_option(3, "Medium"), size_option(4, "Large")],

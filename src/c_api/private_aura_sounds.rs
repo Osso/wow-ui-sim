@@ -1,19 +1,16 @@
-//! INFERRED host-declared sound registrations; native acquisition and playback unknown.
+//! INFERRED sound registration/removal model; no native acquisition or playback parity.
 
-use std::collections::HashSet;
+mod inputs;
+pub use inputs::{AuraSoundRegistration, PrivateAuraSoundRegistrations};
 
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
-const API_NAME: &str = "C_UnitAuras.RemovePrivateAuraAppliedSound";
+mod add;
 
-#[derive(Default)]
-pub struct PrivateAuraSoundRegistrations {
-    /// Explicit live IDs only. The ID domain and removal policies are simulator inferences.
-    pub live_ids: HashSet<u32>,
-}
+const API_NAME: &str = "C_UnitAuras.RemovePrivateAuraAppliedSound";
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = super::ensure_namespace(state, "C_UnitAuras")?;
@@ -23,6 +20,14 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         "RemovePrivateAuraAppliedSound",
         remove_private_aura_applied_sound,
     )?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "AddPrivateAuraAppliedSound",
+        add::add_private,
+    )?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(state, namespace, "AddAuraSound", add::add_modern)?;
     // The cached 12.1 deprecated chunk aliases legacy to modern after bootstrap.
     #[cfg(feature = "retail-12-1-0")]
     table_set_rust_fn_static(
@@ -59,9 +64,9 @@ fn read_public_sound_id(state: &LuaState) -> LuaResult<u32> {
 
 fn remove_private_aura_applied_sound(state: &mut LuaState) -> LuaResult<u32> {
     let id = read_public_sound_id(state)?;
-    borrow_state_mut(state)?
-        .private_aura_sound_registrations
-        .live_ids
-        .remove(&id);
+    let mut sim = borrow_state_mut(state)?;
+    let sounds = &mut sim.private_aura_sound_registrations;
+    sounds.live_ids.remove(&id);
+    sounds.registrations.remove(&id);
     Ok(0)
 }

@@ -115,6 +115,10 @@ pub struct SimState {
     pub account_store_categories: HashMap<i64, AccountStoreCategoryInfo>,
     pub account_store_items: HashMap<i64, AccountStoreItemInfo>,
     pub action_bars: HashMap<u32, u32>,
+    /// INFERRED host-declared resolved spell IDs on special bars; empty by default.
+    /// Independent of direct assignments and bar visibility.
+    #[cfg(feature = "retail-12-0-5")]
+    pub special_bar_spells: HashSet<u32>,
     /// Explicit slot-keyed use counts; stored spell identity must match the current binding.
     #[cfg(feature = "retail-12-0-5")]
     pub action_use_counts: HashMap<u32, crate::c_api::ActionUseCountInfo>,
@@ -196,6 +200,8 @@ pub struct SimState {
     pub maw_powers: crate::c_api::c_spell_maw_powers::MawPowers,
     /// Explicit host active-delve state, independent of undeclared query arguments.
     pub has_active_delve: bool,
+    /// Explicit host entrance PDEID; INFERRED zero default, not a native sentinel.
+    pub tiered_entrance_pde_id: u32,
     /// INFERRED observable request input only; no eligibility response or event model.
     pub last_delve_eligibility_map_id: Option<i32>,
     /// Explicit host links keyed by resolved spell ID and rarity; no fabricated links.
@@ -250,6 +256,10 @@ pub struct SimState {
     pub current_target: Option<TargetInfo>,
     pub previous_target: Option<TargetInfo>,
     pub current_focus: Option<TargetInfo>,
+    /// Explicit host NPC-follower identities for player-style display.
+    /// INFERRED: no followers until host input; does not change human identity.
+    #[cfg(feature = "retail-12-0-5")]
+    pub npc_follower_guids: std::collections::HashSet<String>,
     /// Soft interaction selection aliases an existing target/focus/enemy token.
     pub soft_interact_target: Option<String>,
     /// Preferred gamepad interaction identity; independent of target aliases.
@@ -320,6 +330,12 @@ pub struct SimState {
     pub global_show_hide_depth: u32,
     pub anim_sync_times: HashMap<String, std::time::Duration>,
 
+    /// Explicit host-selected nearest party token; no roster/distance inference.
+    #[cfg(feature = "retail-12-0-5")]
+    pub nearest_party_member_token: Option<String>,
+    /// Host-provided identifiers for the next encounter/M+/PvP entry.
+    #[cfg(feature = "retail-12-0-5")]
+    pub aura_entry_ids: crate::c_api::aura_entry_ids::AuraEntryIds,
     pub player: PlayerState,
     pub player_xp: PlayerXpState,
     pub bind_location: String,
@@ -343,6 +359,8 @@ pub struct SimState {
     pub housing: HousingState,
     /// Explicit catalog shop product/display records; empty until host-seeded.
     pub catalog_shop_products: crate::c_api::c_catalog_shop_products::CatalogShopProducts,
+    /// One bundle record store; preserves the existing simulator storefront seed.
+    pub housing_bundles: crate::c_api::c_housing_bundles::HousingBundles,
     pub pet_battles: PetBattleState,
     pub pet: PetState,
     pub lfg_list_counts: LfgListCounts,

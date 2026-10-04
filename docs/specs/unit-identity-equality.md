@@ -65,3 +65,9 @@ Saved690 default check (exit0, zero diagnostics,16.881922s) and a282 startup (`[
 ## Out of scope
 
 Adding pet/vehicle/raid/remote identities, changing `UnitExists` or GUID generation, token normalization, general coercion/error redesign, other secret-value API rules and all-profile/native parity. Tokens without a modeled GUID do not compare equal, even where another compatibility query reports presence; this correction does not invent identities for those unsupported domains.
+
+## Authored follow-up for prose 2026-03-25-104 (not executed)
+
+- [ ] `tests/retail_12_0_5_partial_104_114.rs::unit_permissions_compare_distinct_guids_despite_identical_names`: existing target/focus snapshots with identical names and distinct GUIDs compare false symmetrically; public FocusUnit restores same-GUID equality. No additional token identities or permission rules.
+
+The introductory March 25 row remains partial, consistent with March 31 prose141. Existing base/group/residual matrices are bounded, not native/all-token/all-profile proof. Canonical token bounds, lexical compound/nameplate classification, missing/nil behavior and zero-return arity remain inferred simulator policies. March 25 prose088's earlier secret-result proposal is superseded by prose104–107 / March31 prose141–144; do not reinstate it.

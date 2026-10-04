@@ -468,11 +468,11 @@ fn c_spell_book_get_spell_book_item_charge_duration(state: &mut LuaState) -> Lua
 
 #[cfg(feature = "retail-12-0-0")]
 fn c_spell_book_get_spell_book_item_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
+    let ignore_gcd = super::cooldown_duration::read_untainted_ignore_gcd(state, 3)?;
     let Some(spell_id) = read_duration_spellbook_entry(state) else {
         state.push(Val::Nil);
         return Ok(1);
     };
-    let ignore_gcd = super::cooldown_duration::read_ignore_gcd(state, 3);
     let (start, seconds) = {
         let sim = borrow_state(state)?;
         let now = sim.start_time.elapsed().as_secs_f64();

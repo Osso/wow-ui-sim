@@ -1,5 +1,7 @@
 //! Retail exterior action boundary; native coercion and failure mapping remain unproved.
 
+#[path = "core.rs"]
+mod core;
 #[path = "mutation.rs"]
 mod mutation;
 #[path = "queries.rs"]
@@ -22,6 +24,10 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         (
             "RemoveFixtureFromSelectedPoint",
             remove_fixture_from_selected_point as rilua::RustFn,
+        ),
+        (
+            "SelectCoreFixtureOption",
+            select_core_fixture_option as rilua::RustFn,
         ),
         (
             "SelectFixtureOption",
@@ -75,6 +81,21 @@ fn remove_fixture_from_selected_point(state: &mut LuaState) -> LuaResult<u32> {
     )
 }
 
+fn select_core_fixture_option(state: &mut LuaState) -> LuaResult<u32> {
+    let (target, action) = read_arguments(state, core::API)?;
+    let (response, stored_variants) = {
+        let mut sim = borrow_state_mut(state)?;
+        core::update_core_fixture(&mut sim.housing, target, action)?
+    };
+    // INFERRED: share the existing fixture-response and storage publication policy.
+    publish_exterior_response(
+        state,
+        ExteriorChange::Fixture.event(),
+        response,
+        stored_variants,
+    )
+}
+
 fn select_fixture_option(state: &mut LuaState) -> LuaResult<u32> {
     change_exterior(state, ExteriorChange::Fixture)
 }
@@ -88,7 +109,7 @@ fn set_house_exterior_type(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn change_exterior(state: &mut LuaState, change: ExteriorChange) -> LuaResult<u32> {
-    let (target, action) = read_arguments(state, change)?;
+    let (target, action) = read_arguments(state, change.api())?;
     let (response, stored_variants) = {
         let mut sim = borrow_state_mut(state)?;
         mutation::update_exterior(&mut sim.housing, change, target, action)?
@@ -110,15 +131,12 @@ fn publish_exterior_response(
     Ok(0)
 }
 
-fn read_arguments(
-    state: &LuaState,
-    change: ExteriorChange,
-) -> LuaResult<(u32, AttachedDecorAction)> {
+fn read_arguments(state: &LuaState, api: &str) -> LuaResult<(u32, AttachedDecorAction)> {
     // Authenticate BOTH originals before type checks, defaults, or model access.
-    let target = authenticate(state, stack_val(state, 1), change.api(), 1)?;
-    let action = authenticate(state, stack_val(state, 2), change.api(), 2)?;
-    let target = read_target(target, change)?;
-    let action = read_action(action, change.api(), 2)?;
+    let target = authenticate(state, stack_val(state, 1), api, 1)?;
+    let action = authenticate(state, stack_val(state, 2), api, 2)?;
+    let target = read_target(target, api)?;
+    let action = read_action(action, api, 2)?;
     Ok((target, action))
 }
 
@@ -143,12 +161,11 @@ fn is_positive_integral_u32(number: f64) -> bool {
     integral && in_range
 }
 
-fn read_target(value: Val, change: ExteriorChange) -> LuaResult<u32> {
+fn read_target(value: Val, api: &str) -> LuaResult<u32> {
     match value {
         Val::Num(number) if is_positive_integral_u32(number) => Ok(number as u32),
         _ => Err(runtime_error(format!(
-            "{}: argument 1 must be a positive integral u32 number",
-            change.api()
+            "{api}: argument 1 must be a positive integral u32 number"
         ))),
     }
 }

@@ -132,6 +132,8 @@ macro_rules! build_empty_sim_state {
             bonus_bar_index: 0,
             action_bars: $collections.action_bars,
             #[cfg(feature = "retail-12-0-5")]
+            special_bar_spells: HashSet::new(),
+            #[cfg(feature = "retail-12-0-5")]
             action_use_counts: HashMap::new(),
             action_outfits: $collections.action_outfits,
             action_macros: $collections.action_macros,
@@ -187,6 +189,7 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             maw_powers: Default::default(),
             has_active_delve: false,
+            tiered_entrance_pde_id: 0,
             last_delve_eligibility_map_id: None,
             curio_links: HashMap::new(),
             #[cfg(feature = "retail-12-0-5")]
@@ -228,6 +231,8 @@ macro_rules! build_empty_sim_state {
             current_target: $runtime.current_target,
             previous_target: None,
             current_focus: $runtime.current_focus,
+            #[cfg(feature = "retail-12-0-5")]
+            npc_follower_guids: HashSet::new(),
             soft_interact_target: None,
             preferred_gamepad_interact_guid: None,
             enemy_pool: Vec::new(),
@@ -286,6 +291,10 @@ macro_rules! build_empty_sim_state {
             runtime_addon_diagnostics: LoadDiagnostics::default(),
             global_show_hide_depth: 0,
             anim_sync_times: $collections.anim_sync_times,
+            #[cfg(feature = "retail-12-0-5")]
+            nearest_party_member_token: None,
+            #[cfg(feature = "retail-12-0-5")]
+            aura_entry_ids: crate::c_api::aura_entry_ids::AuraEntryIds::default(),
             player: PlayerState::seeded(),
             player_xp: PlayerXpState::default(),
             bind_location: "Stormwind City".into(),
@@ -307,6 +316,7 @@ macro_rules! build_empty_sim_state {
             housing_service_enabled: true,
             housing: HousingState::default(),
             catalog_shop_products: Default::default(),
+            housing_bundles: Default::default(),
             pet_battles: PetBattleState::default(),
             pet: PetState::default(),
             lfg_list_counts: LfgListCounts::default(),

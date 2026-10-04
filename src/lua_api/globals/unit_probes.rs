@@ -65,7 +65,7 @@ fn push_unit_is_player(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn resolve_unit_is_player(sim: &SimState, token: &str) -> bool {
+pub(crate) fn resolve_unit_is_player(sim: &SimState, token: &str) -> bool {
     if token.eq_ignore_ascii_case("player") || token.eq_ignore_ascii_case("self") {
         return true;
     }
