@@ -316,6 +316,21 @@
       "compiled_revision": "2136907ab",
       "proof": "main-confirmed GREEN; independent source-read re-review ACCEPT WITH QUALIFICATIONS (p1207-r9-r10-review.md); bounded per-row narrow scopes",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-9-10-master-green.log.txt"
+    },
+    {
+      "id": "quest-hub-dragonriding-races-12-0-7",
+      "symbols": [
+        "C_QuestHub.GetDragonridingRacesForAreaPOI"
+      ],
+      "scope": "INFERRED contract (no cached declaration or caller): one required numeric areaPoiID authenticated like the sibling IsAreaPOICurrentlyRelatedToHub; returns one detached array of numeric race POI IDs from per-POI host state, shape taken from GetDragonridingRacesForMap. Native argument and result shape unverified.",
+      "spec": "docs/specs/quest-hub-dragonriding-races-12-0-7.md",
+      "tests": [
+        "tests/p1207_dragonriding_races.rs"
+      ],
+      "implementation": "96777f96f",
+      "compiled_revision": "96777f96f",
+      "proof": "integrator RED 6 fail then GREEN 7/7; main-confirmed GREEN 7/7, startup clean; no independent review; partial",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/round-11-master-green.log.txt"
     }
   ],
   "source_rows": [
@@ -635,9 +650,11 @@
     },
     {
       "source_id": "global api-C_QuestHub-GetDragonridingRacesForAreaPOI-048",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: producer returns an unconditional empty table; no cached declaration for arguments, result schema or secret policy. No credit."
+      "capabilities": [
+        "quest-hub-dragonriding-races-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Inferred contract by owner decision (2026-10-04): numeric race POI IDs per host-declared POI, authenticated selector. Native shape unverified."
     },
     {
       "source_id": "global api-C_UIFileAsset-GetFileID-049",

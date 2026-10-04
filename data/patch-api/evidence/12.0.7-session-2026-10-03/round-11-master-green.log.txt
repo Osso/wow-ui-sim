@@ -1,0 +1,18 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 32s
+     Running tests/integration.rs (target/debug/deps/integration-8ea324359263a4d2)
+
+running 7 tests
+test p1207_dragonriding_races::distinct_pois_preserve_declared_order_and_unknown_is_empty ... ok
+test p1207_dragonriding_races::empty_default_returns_exactly_one_empty_table ... ok
+test p1207_dragonriding_races::environments_are_isolated ... ok
+test p1207_dragonriding_races::missing_and_invalid_selectors_are_rejected ... ok
+test p1207_dragonriding_races::replacement_and_removal_are_read_live ... ok
+test p1207_dragonriding_races::secure_secrets_are_accepted_and_all_tainted_secrets_precede_validation ... ok
+test p1207_dragonriding_races::snapshots_are_detached ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 10454 filtered out; finished in 0.63s
+
+
+EXIT 0
