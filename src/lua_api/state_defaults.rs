@@ -83,6 +83,10 @@ pub(super) fn default_pets() -> Vec<PetData> {
             level,
             quality,
             is_collected: collected,
+            custom_name: None,
+            is_favorite: false,
+            can_attach_to_decor: false,
+            creature_model_scale: Some(1.0),
         }
     };
     vec![

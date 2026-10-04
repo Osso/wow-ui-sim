@@ -4,6 +4,7 @@ use crate::lua_api::methods::{
     borrow_state, create_string, create_string_static, create_table, table_set, table_set_num,
     val_to_string,
 };
+use crate::lua_api::state_types::PetData;
 use crate::lua_bridge::{FromStack, IntoStack, TableBuilder, stack_val};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
@@ -20,6 +21,16 @@ const UNKNOWN_PET_ABILITY_ICON: u32 = 134400;
 const PET_ABILITY_LEVELS: [i32; 3] = [1, 2, 4];
 const DEFAULT_PET_CARD_MODEL_SCENE_ID: i32 = 596;
 const DEFAULT_PET_LOADOUT_MODEL_SCENE_ID: i32 = 596;
+// INFERRED: pet experience is not modeled; every owned pet reports 0/100.
+const PET_XP: f64 = 0.0;
+const PET_MAX_XP: f64 = 100.0;
+
+fn custom_name_val(state: &mut LuaState, pet: &PetData) -> Val {
+    match &pet.custom_name {
+        Some(name) => create_string(state, name),
+        None => Val::Nil,
+    }
+}
 
 fn pet_get_num_pets(state: &mut LuaState) -> LuaResult<u32> {
     let st = borrow_state(state)?;
@@ -46,42 +57,16 @@ fn pet_get_num_collected_info(state: &mut LuaState) -> LuaResult<u32> {
     (collected, total).into_stack(state)
 }
 
-#[derive(Clone)]
-struct PetInfoSnapshot {
-    pet_id: String,
-    species_id: u32,
-    name: String,
-    icon: u32,
-    pet_type: i32,
-    level: i32,
-    quality: i32,
-    is_collected: bool,
-}
-
-impl PetInfoSnapshot {
-    fn from_pet(pet: &crate::lua_api::state_types::PetData) -> Self {
-        Self {
-            pet_id: pet.pet_id.clone(),
-            species_id: pet.species_id,
-            name: pet.name.clone(),
-            icon: pet.icon,
-            pet_type: pet.pet_type,
-            level: pet.level,
-            quality: pet.quality,
-            is_collected: pet.is_collected,
-        }
-    }
-}
-
-fn push_pet_info_by_index(state: &mut LuaState, pet: &PetInfoSnapshot) -> u32 {
+fn push_pet_info_by_index(state: &mut LuaState, pet: &PetData) -> u32 {
     let pet_id = create_string(state, &pet.pet_id);
     let name = create_string(state, &pet.name);
+    let custom_name = custom_name_val(state, pet);
     state.push(pet_id);
     state.push(Val::Num(pet.species_id as f64));
     state.push(Val::Bool(pet.is_collected));
-    state.push(Val::Nil);
+    state.push(custom_name);
     state.push(Val::Num(pet.level as f64));
-    state.push(Val::Bool(false));
+    state.push(Val::Bool(pet.is_favorite));
     state.push(Val::Bool(false));
     state.push(name);
     state.push(Val::Num(pet.icon as f64));
@@ -89,16 +74,17 @@ fn push_pet_info_by_index(state: &mut LuaState, pet: &PetInfoSnapshot) -> u32 {
     10
 }
 
-fn push_pet_info_by_pet_id(state: &mut LuaState, pet: &PetInfoSnapshot) -> u32 {
+fn push_pet_info_by_pet_id(state: &mut LuaState, pet: &PetData) -> u32 {
     let name = create_string(state, &pet.name);
     let empty = create_string_static(state, "");
+    let custom_name = custom_name_val(state, pet);
     state.push(Val::Num(pet.species_id as f64));
-    state.push(Val::Nil);
+    state.push(custom_name);
     state.push(Val::Num(pet.level as f64));
-    state.push(Val::Num(0.0));
-    state.push(Val::Num(100.0));
+    state.push(Val::Num(PET_XP));
+    state.push(Val::Num(PET_MAX_XP));
     state.push(Val::Num(pet.species_id as f64));
-    state.push(Val::Bool(false));
+    state.push(Val::Bool(pet.is_favorite));
     state.push(name);
     state.push(Val::Num(pet.icon as f64));
     state.push(Val::Num(pet.pet_type as f64));
@@ -112,7 +98,7 @@ fn push_pet_info_by_pet_id(state: &mut LuaState, pet: &PetInfoSnapshot) -> u32 {
     17
 }
 
-fn push_pet_info_by_species_id(state: &mut LuaState, pet: &PetInfoSnapshot) -> u32 {
+fn push_pet_info_by_species_id(state: &mut LuaState, pet: &PetData) -> u32 {
     let name = create_string(state, &pet.name);
     let empty = create_string_static(state, "");
     state.push(name);
@@ -130,28 +116,28 @@ fn push_pet_info_by_species_id(state: &mut LuaState, pet: &PetInfoSnapshot) -> u
     12
 }
 
-fn find_pet_by_index(state: &LuaState, index: i32) -> Option<PetInfoSnapshot> {
+fn find_pet_by_index(state: &LuaState, index: i32) -> Option<PetData> {
     let st = borrow_state(state).ok()?;
     let pet_index = (index - 1) as usize;
-    st.world.pets.get(pet_index).map(PetInfoSnapshot::from_pet)
+    st.world.pets.get(pet_index).cloned()
 }
 
-fn find_pet_by_pet_id(state: &LuaState, pet_id: &str) -> Option<PetInfoSnapshot> {
+fn find_pet_by_pet_id(state: &LuaState, pet_id: &str) -> Option<PetData> {
     let st = borrow_state(state).ok()?;
     st.world
         .pets
         .iter()
         .find(|pet| pet.pet_id == pet_id)
-        .map(PetInfoSnapshot::from_pet)
+        .cloned()
 }
 
-fn find_pet_by_species_id(state: &LuaState, species_id: u32) -> Option<PetInfoSnapshot> {
+fn find_pet_by_species_id(state: &LuaState, species_id: u32) -> Option<PetData> {
     let st = borrow_state(state).ok()?;
     st.world
         .pets
         .iter()
         .find(|pet| pet.species_id == species_id)
-        .map(PetInfoSnapshot::from_pet)
+        .cloned()
 }
 
 fn pet_get_info_by_index(state: &mut LuaState) -> LuaResult<u32> {
@@ -205,39 +191,75 @@ fn pet_get_info_by_species_id(state: &mut LuaState) -> LuaResult<u32> {
     Ok(push_pet_info_by_species_id(state, &pet))
 }
 
+/// `PetJournalPetInfo` for one pet. Species queries leave the owned-pet
+/// fields (customName, petLevel, xp, maxXP, isFavorite, isWild) nil.
+#[cfg(feature = "retail-12-1-0")]
+fn push_pet_info_table(state: &mut LuaState, pet: &PetData, owned: bool) -> u32 {
+    let info = create_table(state);
+    state.push(info);
+    let name = create_string(state, &pet.name);
+    table_set(state, info, "name", name);
+    // INFERRED: no display/creature/source data is modeled; the legacy
+    // GetPetInfoByPetID returns use speciesID and empty strings the same way.
+    for field in ["sourceText", "description"] {
+        let empty = create_string_static(state, "");
+        table_set(state, info, field, empty);
+    }
+    for (field, value) in [
+        ("speciesID", f64::from(pet.species_id)),
+        ("displayID", f64::from(pet.species_id)),
+        ("creatureID", f64::from(pet.species_id)),
+        ("icon", f64::from(pet.icon)),
+        ("petType", f64::from(pet.pet_type)),
+    ] {
+        table_set(state, info, field, Val::Num(value));
+    }
+    for (field, value) in [
+        ("canBattle", pet.quality > 0),
+        // INFERRED: trade/uniqueness flags are not modeled per species.
+        ("tradable", false),
+        ("unique", false),
+        ("obtainable", true),
+        ("canAttachToDecor", pet.can_attach_to_decor),
+    ] {
+        table_set(state, info, field, Val::Bool(value));
+    }
+    if let Some(scale) = pet.creature_model_scale {
+        table_set(state, info, "creatureModelScale", Val::Num(scale));
+    }
+    if owned {
+        let custom_name = custom_name_val(state, pet);
+        table_set(state, info, "customName", custom_name);
+        for (field, value) in [
+            ("petLevel", f64::from(pet.level)),
+            ("xp", PET_XP),
+            ("maxXP", PET_MAX_XP),
+        ] {
+            table_set(state, info, field, Val::Num(value));
+        }
+        table_set(state, info, "isFavorite", Val::Bool(pet.is_favorite));
+        // INFERRED: only owned, non-wild pets are modeled.
+        table_set(state, info, "isWild", Val::Bool(false));
+    }
+    1
+}
+
 #[cfg(feature = "retail-12-1-0")]
 fn pet_get_info_table_by_species_id(state: &mut LuaState) -> LuaResult<u32> {
     let species_id = u32::from_stack(state, 1)?;
     let Some(pet) = find_pet_by_species_id(state, species_id) else {
-        state.push(Val::Nil);
-        return Ok(1);
+        return Ok(0);
     };
+    Ok(push_pet_info_table(state, &pet, false))
+}
 
-    let info = create_table(state);
-    let name = create_string(state, &pet.name);
-    table_set(state, info.clone(), "name", name);
-    table_set(state, info.clone(), "icon", Val::Num(pet.icon as f64));
-    table_set(
-        state,
-        info.clone(),
-        "petType",
-        Val::Num(pet.pet_type as f64),
-    );
-    table_set(
-        state,
-        info.clone(),
-        "speciesID",
-        Val::Num(pet.species_id as f64),
-    );
-    table_set(state, info.clone(), "isWild", Val::Bool(false));
-    table_set(state, info.clone(), "canBattle", Val::Bool(pet.quality > 0));
-    table_set(state, info.clone(), "isTradeable", Val::Bool(false));
-    table_set(state, info.clone(), "isUnique", Val::Bool(false));
-    table_set(state, info.clone(), "obtainable", Val::Bool(true));
-    table_set(state, info.clone(), "canAttachToDecor", Val::Bool(false));
-    table_set(state, info.clone(), "creatureModelScale", Val::Num(1.0));
-    state.push(info);
-    Ok(1)
+#[cfg(feature = "retail-12-1-0")]
+fn pet_get_info_table_by_pet_id(state: &mut LuaState) -> LuaResult<u32> {
+    let pet_id = String::from_stack(state, 1)?;
+    let Some(pet) = find_pet_by_pet_id(state, &pet_id) else {
+        return Ok(0);
+    };
+    Ok(push_pet_info_table(state, &pet, true))
 }
 
 #[cfg(feature = "retail-12-1-0")]
@@ -245,7 +267,8 @@ fn register_patch_12_1_pet_info_stubs(tb: TableBuilder) -> LuaResult<TableBuilde
     tb.set_function(
         "GetPetInfoTableBySpeciesID",
         pet_get_info_table_by_species_id,
-    )
+    )?
+    .set_function("GetPetInfoTableByPetID", pet_get_info_table_by_pet_id)
 }
 
 #[cfg(not(feature = "retail-12-1-0"))]
@@ -266,7 +289,7 @@ fn pet_get_model_scene_info_by_species_id(state: &mut LuaState) -> LuaResult<u32
         .into_stack(state)
 }
 
-fn find_pet_by_stack_arg(state: &LuaState, index: i32) -> Option<PetInfoSnapshot> {
+fn find_pet_by_stack_arg(state: &LuaState, index: i32) -> Option<PetData> {
     match stack_val(state, index) {
         Val::Str(value) => {
             let pet_id = val_to_string(state, Val::Str(value))?;

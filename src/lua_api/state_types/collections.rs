@@ -45,6 +45,13 @@ pub struct PetData {
     pub level: i32,
     pub quality: i32,
     pub is_collected: bool,
+    /// Player-assigned name; `None` shows the species name.
+    pub custom_name: Option<String>,
+    pub is_favorite: bool,
+    /// Species may be assigned to housing decor (12.1.0 `canAttachToDecor`).
+    pub can_attach_to_decor: bool,
+    /// Species model scale (12.1.0 `creatureModelScale`); `None` when unset.
+    pub creature_model_scale: Option<f64>,
 }
 
 /// A toy in the toy box.

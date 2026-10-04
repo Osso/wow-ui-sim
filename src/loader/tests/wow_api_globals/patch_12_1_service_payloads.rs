@@ -535,8 +535,8 @@ fn test_patch_12_1_pet_and_lfg_payloads() {
             if type(pet) ~= "table" then return "pet-type" end
             if pet.name ~= "Mechanical Squirrel" then return "pet-name" end
             if pet.icon ~= 132932 or pet.petType ~= 9 or pet.speciesID ~= 39 then return "pet-identity" end
-            if pet.isWild ~= false or pet.canBattle ~= true then return "pet-battle" end
-            if pet.isTradeable ~= false or pet.isUnique ~= false or pet.obtainable ~= true then return "pet-flags" end
+            if pet.isWild ~= nil or pet.canBattle ~= true then return "pet-battle" end
+            if pet.tradable ~= false or pet.unique ~= false or pet.obtainable ~= true then return "pet-flags" end
             if pet.canAttachToDecor ~= false or pet.creatureModelScale ~= 1 then return "pet-12-1" end
             if C_PetJournal.GetPetInfoTableBySpeciesID(999999) ~= nil then return "pet-unknown" end
 
