@@ -283,8 +283,8 @@
     {
       "source_id": "prose-undated-016",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: simulator does not publish ManifestInterfaceData/exportinterfacefiles art; need authenticated pre/post-patch DB/export snapshots to prove filename retention and absence of new names. No implementation batch."
+      "status": "metadata-only",
+      "note": "No runtime contract: client DB/export tooling; simulator reads CASC listfile, no addon-observable contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "source-context-019",
@@ -307,8 +307,8 @@
     {
       "source_id": "prose-2026-06-18-025",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+      "status": "metadata-only",
+      "note": "No runtime contract: author-facing rationale/rollout; no runtime contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "source-context-026",
@@ -319,14 +319,14 @@
     {
       "source_id": "prose-2026-06-18-027",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+      "status": "metadata-only",
+      "note": "No runtime contract: author-facing rationale/rollout; no runtime contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "prose-2026-06-18-028",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+      "status": "metadata-only",
+      "note": "No runtime contract: author-facing rationale/rollout; no runtime contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "source-context-029",
@@ -337,8 +337,8 @@
     {
       "source_id": "prose-2026-06-18-030",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+      "status": "metadata-only",
+      "note": "No runtime contract: author-facing rationale/rollout; no runtime contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "source-context-031",
@@ -387,8 +387,8 @@
     {
       "source_id": "prose-2026-06-18-039",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: PTR1 five-button AddAuraFrame example is removed by later PTR4 text; exact original PTR1 addon/native surface is absent from current Retail. Current managed groups do not prove the historical example."
+      "status": "metadata-only",
+      "note": "No runtime contract: PTR1 example superseded by L118 (AddAuraFrame removed) (p1210-extract-scout.md)."
     },
     {
       "source_id": "source-context-040",
@@ -423,20 +423,20 @@
     {
       "source_id": "prose-2026-06-18-045",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+      "status": "metadata-only",
+      "note": "No runtime contract: author-facing rationale/rollout; no runtime contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "prose-2026-06-18-046",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+      "status": "metadata-only",
+      "note": "No runtime contract: author-facing rationale/rollout; no runtime contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "prose-2026-06-18-047",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+      "status": "metadata-only",
+      "note": "No runtime contract: author-facing rationale/rollout; no runtime contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "source-context-049",
@@ -447,8 +447,8 @@
     {
       "source_id": "prose-2026-06-18-050",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: simulator does not publish ManifestInterfaceData/exportinterfacefiles art; need authenticated pre/post-patch DB/export snapshots to prove filename retention and absence of new names. No implementation batch."
+      "status": "metadata-only",
+      "note": "No runtime contract: client DB/export tooling; simulator reads CASC listfile, no addon-observable contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "source-context-051",
@@ -577,8 +577,8 @@
     {
       "source_id": "prose-2026-06-23-073",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: historical rollout/security rationale or author-facing communication is not an executable Retail contract; exact PTR build/native historical evidence is missing. Preserve the statement without runtime credit."
+      "status": "metadata-only",
+      "note": "No runtime contract: author-facing rationale/rollout; no runtime contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "source-context-074",
@@ -791,8 +791,8 @@
     {
       "source_id": "prose-2026-07-07-115",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: narrative progress/exploit rationale has no specified observable Retail result; exact historical/native evidence is missing. No implementation batch."
+      "status": "metadata-only",
+      "note": "No runtime contract: narrative; no observable contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "prose-2026-07-07-117",
@@ -1001,14 +1001,14 @@
     {
       "source_id": "prose-2026-07-07-149",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: PTR4 AuraContainer-in-combat crash/error was superseded by PTR7 allowing creation; current Retail cannot prove the original PTR4 native failure. Exact original build/native trace is missing."
+      "status": "metadata-only",
+      "note": "No runtime contract: PTR4 behavior superseded by L207 (combat creation allowed, credited in C01) (p1210-extract-scout.md)."
     },
     {
       "source_id": "prose-2026-07-07-150",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: PTR4 AuraContainer-in-combat crash/error was superseded by PTR7 allowing creation; current Retail cannot prove the original PTR4 native failure. Exact original build/native trace is missing."
+      "status": "metadata-only",
+      "note": "No runtime contract: PTR4 behavior superseded by L207 (combat creation allowed, credited in C01) (p1210-extract-scout.md)."
     },
     {
       "source_id": "prose-2026-07-07-151",
@@ -1079,8 +1079,8 @@
     {
       "source_id": "prose-2026-07-14-165",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: narrative progress/exploit rationale has no specified observable Retail result; exact historical/native evidence is missing. No implementation batch."
+      "status": "metadata-only",
+      "note": "No runtime contract: narrative; no observable contract (p1210-extract-scout.md)."
     },
     {
       "source_id": "prose-2026-07-14-166",
@@ -1206,9 +1206,11 @@
     },
     {
       "source_id": "prose-2026-07-21-189",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retail ApplyRolesetFilters is a temporary no-op; GetActiveBlockedRolesets/GetActiveAllowedRolesets/IsRolesetFiltered have no source producer. Model allowed/blocked sets, alwaysBlocked and effective visibility from current declarations."
+      "capabilities": [
+        "added-globals-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "GetActiveAllowed/BlockedRolesets return the lists stored by ApplyRolesetFilters (tests/patch_12_1_0_added_globals.rs); frame filtering not modeled."
     },
     {
       "source_id": "prose-2026-07-21-190",
