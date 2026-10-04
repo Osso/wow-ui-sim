@@ -541,8 +541,10 @@ fn build_tier_info(state: &mut LuaState, row: TierInfoRow) -> Val {
 fn set_patch_12_1_tier_info_fields(state: &mut LuaState, entry: Val) {
     let rewards = build_tier_rewards(state);
     table_set(state, entry, "rewards", rewards);
-    table_set(state, entry, "overrideTooltipSpellID", Val::Nil);
-    table_set(state, entry, "isLFG", Val::Bool(false));
+    // 0 = no tooltip override; the field is Nilable=false in cached docs.
+    table_set(state, entry, "overrideTooltipSpellID", Val::Num(0.0));
+    // Cached DelvesUIDocumentation.lua names this queueAsLFG (page: isLFG).
+    table_set(state, entry, "queueAsLFG", Val::Bool(false));
 }
 
 #[cfg(feature = "retail-12-1-0")]

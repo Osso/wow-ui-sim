@@ -5,6 +5,7 @@
 use std::path::PathBuf;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::state::PlayerChoiceInfo;
 
 struct DocField {
     name: String,
@@ -28,6 +29,28 @@ struct ShapeCase {
 }
 
 fn no_seed(_: &WowLuaEnv) {}
+
+fn seed_player_choice(env: &WowLuaEnv) {
+    env.state().borrow_mut().player_choice.current = Some(PlayerChoiceInfo {
+        choice_id: 77,
+        hide_answer_art: true,
+        ..Default::default()
+    });
+}
+
+fn seed_pet_attachable_decor(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    state.housing.pet_attachable_decor_guids = vec!["Decor-Selection-2001".into()];
+}
+
+fn seed_bnet_title_friend(env: &WowLuaEnv) {
+    let mut state = env.state().borrow_mut();
+    let friend = &mut state.bnet_friends[0];
+    friend.friend_level = 3;
+    let account = &mut friend.game_accounts[0];
+    account.class_id = 6;
+    account.class_name = "Death Knight".into();
+}
 
 fn doc_path(doc_file: &str) -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
@@ -252,6 +275,87 @@ const CASES: &[ShapeCase] = &[
         added: &["discordInfo"],
         removed: &[],
         values: r#"return info.discordInfo == nil and "ok" or "discord""#,
+    },
+    ShapeCase {
+        source_ids: &[
+            "structures-PlayerChoiceInfo-365",
+            "structures-PlayerChoiceInfo-366",
+        ],
+        doc_file: "PlayerChoiceDocumentation.lua",
+        struct_name: "PlayerChoiceInfo",
+        seed: seed_player_choice,
+        getter: "return C_PlayerChoice.GetCurrentPlayerChoiceInfo()",
+        added: &["hideAnswerArt"],
+        removed: &[],
+        values: r#"return info.choiceID == 77 and info.hideAnswerArt == true and "ok" or "hideAnswerArt""#,
+    },
+    ShapeCase {
+        source_ids: &[
+            "structures-HousingDecorInstanceInfo-347",
+            "structures-HousingDecorInstanceInfo-348",
+        ],
+        doc_file: "HousingDecorSharedDocumentation.lua",
+        struct_name: "HousingDecorInstanceInfo",
+        seed: seed_pet_attachable_decor,
+        getter: "return C_HousingBasicMode.GetSelectedDecorInfo()",
+        added: &["canAttachPet"],
+        removed: &[],
+        values: r#"
+            if info.decorGUID ~= "Decor-Selection-2001" or info.canAttachPet ~= true then
+                return "attachable"
+            end
+            local chair = C_HousingDecor.GetDecorInstanceInfoForGUID("Decor-Selection-1001")
+            if chair.canAttachPet ~= false then return "not-attachable" end
+            return "ok"
+        "#,
+    },
+    ShapeCase {
+        // The page lists isLFG; cached DelvesUIDocumentation.lua names the
+        // field queueAsLFG and no cached Blizzard Lua reads either name.
+        source_ids: &[
+            "structures-TieredEntranceTierInfo-367",
+            "structures-TieredEntranceTierInfo-368",
+            "structures-TieredEntranceTierInfo-369",
+        ],
+        doc_file: "DelvesUIDocumentation.lua",
+        struct_name: "TieredEntranceTierInfo",
+        seed: no_seed,
+        getter: "return C_DelvesUI.GetActiveDelveTier()",
+        added: &["overrideTooltipSpellID", "queueAsLFG"],
+        removed: &["isLFG"],
+        values: r#"return info.queueAsLFG == false and "ok" or "queueAsLFG""#,
+    },
+    ShapeCase {
+        source_ids: &[
+            "structures-BNetAccountInfo-334",
+            "structures-BNetAccountInfo-335",
+            "structures-BNetAccountInfo-336",
+        ],
+        doc_file: "BattleNetDocumentation.lua",
+        struct_name: "BNetAccountInfo",
+        seed: seed_bnet_title_friend,
+        getter: "return C_BattleNet.GetFriendAccountInfo(1)",
+        added: &["friendLevel", "friendTags"],
+        removed: &[],
+        values: r#"
+            if info.friendLevel ~= Enum.BattleNetFriendLevel.Title then return "friendLevel" end
+            local other = C_BattleNet.GetFriendAccountInfo(2)
+            if other.friendLevel ~= Enum.BattleNetFriendLevel.BattleTag then return "default-level" end
+            return "ok"
+        "#,
+    },
+    ShapeCase {
+        source_ids: &[
+            "structures-BNetGameAccountInfo-337",
+            "structures-BNetGameAccountInfo-338",
+        ],
+        doc_file: "BattleNetDocumentation.lua",
+        struct_name: "BNetGameAccountInfo",
+        seed: seed_bnet_title_friend,
+        getter: "return C_BattleNet.GetFriendAccountInfo(1).gameAccountInfo",
+        added: &["classFilename"],
+        removed: &[],
+        values: r#"return info.classFilename == "DEATHKNIGHT" and "ok" or tostring(info.classFilename)"#,
     },
 ];
 

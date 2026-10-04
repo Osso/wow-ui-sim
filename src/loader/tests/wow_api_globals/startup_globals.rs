@@ -831,8 +831,8 @@ fn test_patch_12_1_safe_global_bridges() {
             end
             local delveTierInfo = C_DelvesUI.GetActiveDelveTier()
             if type(delveTierInfo) == "table" then
-                if delveTierInfo.overrideTooltipSpellID ~= nil then return "delve-override-tooltip" end
-                if delveTierInfo.isLFG ~= false then return "delve-is-lfg" end
+                if delveTierInfo.overrideTooltipSpellID ~= 0 then return "delve-override-tooltip" end
+                if delveTierInfo.queueAsLFG ~= false then return "delve-queue-as-lfg" end
             end
             local lfgInfo = C_LFGList.GetSearchResultInfo(7)
             if type(lfgInfo) == "table" and lfgInfo.censored ~= false then return "lfg-censored-field" end

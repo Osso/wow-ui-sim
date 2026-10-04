@@ -464,6 +464,7 @@ fn invited_bnet_friend(name: &str, friend_index: i32, account_id: i32) -> BnetFr
         custom_message_time: 0,
         appear_offline: false,
         is_battle_tag_friend: true,
+        friend_level: 1,
         is_friend: true,
         is_favorite: false,
         is_afk: false,
@@ -690,7 +691,12 @@ fn write_account_status_fields(state: &mut LuaState, t: Val, friend: &BnetFriend
 #[cfg(feature = "retail-12-1-0")]
 fn write_patch_12_1_account_fields(state: &mut LuaState, t: Val, friend: &BnetFriend) {
     let friend_tags = create_friend_tags_table(state, &friend.friend_tags);
-    table_set(state, t, "friendLevel", Val::Num(0.0));
+    table_set(
+        state,
+        t,
+        "friendLevel",
+        Val::Num(friend.friend_level as f64),
+    );
     table_set(state, t, "friendTags", friend_tags);
 }
 
@@ -699,8 +705,14 @@ fn write_patch_12_1_account_fields(_state: &mut LuaState, _t: Val, _friend: &Bne
 
 #[cfg(feature = "retail-12-1-0")]
 fn write_patch_12_1_game_account_fields(state: &mut LuaState, t: Val, ga: &BnetGameAccount) {
-    let class_filename = create_string(state, &ga.class_name.to_uppercase());
-    table_set(state, t, "classFilename", class_filename);
+    // Class token from the class ID; non-WoW accounts (class_id 0) leave it nil.
+    let token = usize::try_from(ga.class_id - 1)
+        .ok()
+        .and_then(|index| crate::lua_api::game_data::CLASS_FILES.get(index));
+    if let Some(token) = token {
+        let class_filename = create_string(state, token);
+        table_set(state, t, "classFilename", class_filename);
+    }
 }
 
 #[cfg(not(feature = "retail-12-1-0"))]

@@ -38,6 +38,8 @@ pub struct BnetFriend {
     pub appear_offline: bool,
     /// Whether this is a BattleTag friend (vs. RealID).
     pub is_battle_tag_friend: bool,
+    /// `Enum.BattleNetFriendLevel` (1 BattleTag, 2 RealID, 3 Title).
+    pub friend_level: i32,
     /// Whether this entry represents a real friend vs. a pending request.
     pub is_friend: bool,
     /// Whether the friend is marked as a favorite.

@@ -479,6 +479,20 @@ local function __wow_housing_clone_table(source)
   return copy
 end
 
+-- canAttachPet comes from HousingState via the 12.1 Rust query; rawget skips
+-- the namespace's missing-method stub on profiles without it.
+local function __wow_housing_decor_instance_info(info)
+  if not info then
+    return nil
+  end
+  local copy = __wow_housing_clone_table(info)
+  local canAttachPet = rawget(C_HousingDecor, "GetDecorCanAttachPet")
+  if canAttachPet then
+    copy.canAttachPet = canAttachPet(copy.decorGUID)
+  end
+  return copy
+end
+
 local function __wow_housing_copy_core_fixture_info(info)
   if not info then
     return nil
@@ -702,14 +716,14 @@ C_HousingDecor = __wow_merge_namespace(C_HousingDecor, {
     return __wow_housing_decor_icon_by_id[decorID] or 0
   end,
   GetDecorInstanceInfoForGUID = function(decorGUID)
-    return __wow_housing_decor_info_by_guid[decorGUID] and __wow_housing_clone_table(__wow_housing_decor_info_by_guid[decorGUID]) or nil
+    return __wow_housing_decor_instance_info(__wow_housing_decor_info_by_guid[decorGUID])
   end,
   GetDecorName = function(decorID)
     return __wow_housing_decor_name_by_id[decorID] or ""
   end,
   GetHoveredDecorInfo = function()
     local decorGUID = __wow_housing_decor_state.hoveredDecorGUID
-    return decorGUID and __wow_housing_decor_info_by_guid[decorGUID] and __wow_housing_clone_table(__wow_housing_decor_info_by_guid[decorGUID]) or nil
+    return __wow_housing_decor_instance_info(decorGUID and __wow_housing_decor_info_by_guid[decorGUID])
   end,
   GetHoveredDecorDebugInfo = function()
     return C_HousingDecor.GetHoveredDecorInfo()
@@ -721,7 +735,7 @@ C_HousingDecor = __wow_merge_namespace(C_HousingDecor, {
   GetRecentlyUsedDyes = function() return {} end,
   GetSelectedDecorInfo = function()
     local decorGUID = __wow_housing_decor_state.selectedDecorGUID
-    return decorGUID and __wow_housing_decor_info_by_guid[decorGUID] and __wow_housing_clone_table(__wow_housing_decor_info_by_guid[decorGUID]) or nil
+    return __wow_housing_decor_instance_info(decorGUID and __wow_housing_decor_info_by_guid[decorGUID])
   end,
   GetSpentPlacementBudget = function() return 20 end,
   HasMaxPlacementBudget = function() return false end,
@@ -747,7 +761,7 @@ C_HousingCustomizeMode = __wow_merge_namespace(C_HousingCustomizeMode, {
   GetRecentlyUsedThemeSets = function() return { 1 } end,
   GetRecentlyUsedWallpapers = function() return { 1 } end,
   GetSelectedDecorInfo = function()
-    return __wow_housing_clone_table(__wow_housing_customize_mode_selected_decor)
+    return __wow_housing_decor_instance_info(__wow_housing_customize_mode_selected_decor)
   end,
   GetSelectedRoomComponentInfo = function() return nil end,
   GetThemeSetInfo = function(themeSetID)

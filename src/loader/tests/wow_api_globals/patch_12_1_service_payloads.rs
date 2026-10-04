@@ -585,6 +585,7 @@ fn test_patch_12_1_player_choice_payload_and_mutator_intent() {
         keep_open_after_choice: true,
         show_choices_as_list: true,
         requires_selection: true,
+        hide_answer_art: false,
         show_choices_as_grid: false,
         options: vec![PlayerChoiceOptionInfo {
             id: 7,

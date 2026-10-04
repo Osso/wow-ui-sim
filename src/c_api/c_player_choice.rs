@@ -172,6 +172,12 @@ fn write_player_choice_layout_fields(state: &mut LuaState, table: Val, info: &Pl
     table_set(
         state,
         table,
+        "hideAnswerArt",
+        Val::Bool(info.hide_answer_art),
+    );
+    table_set(
+        state,
+        table,
         "showChoicesAsGrid",
         Val::Bool(info.show_choices_as_grid),
     );

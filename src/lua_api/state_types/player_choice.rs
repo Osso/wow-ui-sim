@@ -22,6 +22,7 @@ pub struct PlayerChoiceInfo {
     pub keep_open_after_choice: bool,
     pub show_choices_as_list: bool,
     pub requires_selection: bool,
+    pub hide_answer_art: bool,
     pub show_choices_as_grid: bool,
     pub options: Vec<PlayerChoiceOptionInfo>,
     pub sound_kit_id: Option<i32>,

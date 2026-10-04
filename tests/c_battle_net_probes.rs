@@ -153,6 +153,7 @@ fn bnet_friends_reflect_sim_state_mutation() {
             custom_message_time: 0,
             appear_offline: false,
             is_battle_tag_friend: true,
+            friend_level: 1,
             is_friend: true,
             is_favorite: false,
             is_afk: false,
