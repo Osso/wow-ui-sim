@@ -193,6 +193,7 @@ fn allocate_id(sounds: &mut PrivateAuraSoundRegistrations) -> Option<u32> {
 
 fn register_sound(state: &mut LuaState, registration: AuraSoundRegistration) -> LuaResult<u32> {
     check_context(state)?;
+    super::playback::observe_unit(state, &registration.unit_token);
     let id = {
         let mut sim = borrow_state_mut(state)?;
         let sounds = &mut sim.private_aura_sound_registrations;

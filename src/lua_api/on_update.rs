@@ -58,6 +58,7 @@ pub(crate) fn fire(
     }
 
     crate::c_api::duration_text_binding::tick(&mut env.rilua_mut(), elapsed)?;
+    crate::c_api::private_aura_sounds::playback::tick(env.rilua_mut().state_mut());
 
     let started = Instant::now();
     advance_animation_groups(env, elapsed)?;

@@ -1,7 +1,9 @@
-//! INFERRED sound registration/removal model; no native acquisition or playback parity.
+//! INFERRED sound registration/removal model with tick-diffed aura-change playback.
 
 mod inputs;
+pub(crate) mod playback;
 pub use inputs::{AuraSoundRegistration, PrivateAuraSoundRegistrations};
+pub use playback::AuraSoundPlayback;
 
 use crate::lua_api::methods::borrow_state_mut;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};

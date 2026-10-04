@@ -1,4 +1,4 @@
-//! INFERRED registration inputs; no sound playback or native acquisition parity.
+//! INFERRED registration inputs and observed aura state for sound playback.
 
 use std::collections::{HashMap, HashSet};
 
@@ -18,6 +18,10 @@ pub struct PrivateAuraSoundRegistrations {
     pub registrations: HashMap<u32, AuraSoundRegistration>,
     /// INFERRED allocator: monotonic nonzero IDs; None means exhausted.
     pub next_id: Option<u32>,
+    /// Last aura snapshot per registered unit, diffed each tick.
+    pub observed: HashMap<String, super::playback::UnitAuraSnapshot>,
+    /// Every aura sound played, in order.
+    pub playbacks: Vec<super::playback::AuraSoundPlayback>,
 }
 
 impl Default for PrivateAuraSoundRegistrations {
@@ -26,6 +30,8 @@ impl Default for PrivateAuraSoundRegistrations {
             live_ids: HashSet::new(),
             registrations: HashMap::new(),
             next_id: Some(1),
+            observed: HashMap::new(),
+            playbacks: Vec::new(),
         }
     }
 }
