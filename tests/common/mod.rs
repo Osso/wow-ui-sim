@@ -1,6 +1,8 @@
 //! Shared test helpers.
 
 pub mod addon_coverage_baseline;
+#[cfg(feature = "retail-12-1-0")]
+pub mod aura_container_harness;
 pub mod blizzard_addon_harness;
 pub mod blizzard_addon_manifest;
 mod event_helpers;
