@@ -20,6 +20,18 @@ Patch 12.0.7 API work in wow-ui-sim separates safe additive compatibility bridge
 
 
 
+
+## Round 6 accounted — 2026-10-04
+
+Sixteen capabilities; **67 pending / 46 bounded / 40 partial / 13 metadata** of 166 IDs.
+
+- Partial, 20 rows: vehicle aura marker, Mythic+ sound permission, `IsKnownFile`/`IsLooseFile`, nine `CHAT_MSG_*` events, `URL_TEXTURE_REQUEST_RESULT`, three CPU-usage getters, unsupported-unit defaults.
+- Pending with notes: the "important" aura filter (cached Lua republishes it) and frame strata (cached policy is `NotAllowed`).
+
+Proof: master run at `2f551ce7e`, 56 passed / 0 failed, startup `lua-errors` `[]`, `cargo fmt --check` exit 0 ([log](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/round-6-master-green.log.txt)). [Review](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r6-review.md): ACCEPT WITH QUALIFICATIONS; [result](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r6-result.md).
+
+Behavior changes: asset predicates answer from a host catalog (empty means false) instead of the filesystem; six core unit queries validate selectors more strictly; CPU-usage getters changed arity and reject secret arguments. Chat tests prove a four-field projection, not the cached 18-field payload.
+
 ## Rounds 4–5 accounted — 2026-10-04
 
 Fourteen capabilities; **87 pending / 46 bounded / 20 partial / 13 metadata** of 166 IDs.

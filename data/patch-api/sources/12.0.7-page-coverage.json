@@ -231,6 +231,43 @@
       "compiled_revision": "3557d5f1d",
       "proof": "main-confirmed GREEN; independent source-read review ACCEPT WITH QUALIFICATIONS; partial",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-4-5-master-green.log.txt"
+    },
+    {
+      "id": "vehicle-aura-sound-asset-12-0-7",
+      "symbols": [
+        "vehicle aura marker",
+        "Mythic+ private-aura sound permission",
+        "C_UIFileAsset.IsKnownFile/IsLooseFile"
+      ],
+      "scope": "Host-revocable vehicle aura marker, epoch-gated Mythic+ sound permission matrix, and known/loose asset predicates over explicit host catalogs (empty means false). No loader catalog acquisition, native sound playback or ownership acquisition.",
+      "spec": "docs/specs/patch-12-0-7-vehicle-sound-assets.md",
+      "tests": [
+        "tests/patch_12_0_7_b23_b28.rs",
+        "tests/private_aura_sound_add_context.rs",
+        "tests/ui_file_assets.rs"
+      ],
+      "implementation": "62dd0d95a",
+      "compiled_revision": "2f551ce7e",
+      "proof": "main-confirmed GREEN; independent source-read review ACCEPT WITH QUALIFICATIONS; partial",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/round-6-master-green.log.txt"
+    },
+    {
+      "id": "host-events-and-defaults-12-0-7",
+      "symbols": [
+        "nine CHAT_MSG_* events",
+        "URL_TEXTURE_REQUEST_RESULT",
+        "GetEventCPUUsage/GetFunctionCPUUsage/GetScriptCPUUsage",
+        "core unit queries on unsupported units"
+      ],
+      "scope": "Explicit host queues dispatch chat (four-field projection, not the cached 18-field payload) and URL texture results; profiling getters read host snapshots; six core unit queries honour a host unsupported-unit override with authenticated arguments. No native ingress, request lifecycle or timing.",
+      "spec": "docs/specs/patch-12-0-7-host-events-and-defaults.md",
+      "tests": [
+        "tests/patch_1207_b39_b44.rs"
+      ],
+      "implementation": "76a0a138b",
+      "compiled_revision": "2f551ce7e",
+      "proof": "main-confirmed GREEN; independent source-read review ACCEPT WITH QUALIFICATIONS; partial",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/round-6-master-green.log.txt"
     }
   ],
   "source_rows": [
@@ -250,7 +287,7 @@
       "source_id": "source-context-004",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "No credit. Cached AuraUtil overwrites table and publishes Important; pinned epoch/vendor reconciliation required."
     },
     {
       "source_id": "source-context-006",
@@ -268,9 +305,11 @@
     },
     {
       "source_id": "prose-undated-008",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Core six: GUID, health/max, power/max and legacy UnitAura; live host unsupported override returns nil/zero, preserves populated data, unknown-token controls, all secrets/extras authenticated before validation/defaults. Unproved: Other C_UnitAuras/percent/missing/health/power entry points, automatic PvP set, historical return tuples, secret output annotations; legacy policy INFERRED."
     },
     {
       "source_id": "prose-undated-009",
@@ -288,15 +327,19 @@
     },
     {
       "source_id": "prose-undated-011",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "vehicle-aura-sound-asset-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Existing GetFileID preserved; namespace known/loose predicates use empty explicit host catalogs. Unproved: Complete namespace/native catalog, historical declarations, loader acquisition/preload/root reconciliation."
     },
     {
       "source_id": "prose-undated-012",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Live host snapshots for all three getters; zero defaults, exact declared arity, independent fields/environment isolation; inferred NeverSecret rejects all extras for every caller. Unproved: Native timing/attribution/reset and addon availability; historical no-argument signature, units and extra-policy authentication."
     },
     {
       "source_id": "prose-undated-013",
@@ -336,21 +379,25 @@
     },
     {
       "source_id": "prose-undated-018",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "vehicle-aura-sound-asset-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Live vehicle source membership sets marker for slot/index/instance queries; preserves stored player/pet flag, host revocation and isolation, public addon output. Unproved: Ownership acquisition, GUID aliases, token reuse/history, native timing."
     },
     {
       "source_id": "prose-undated-019",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "vehicle-aura-sound-asset-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: 32 secure/addon \u00d7 encounter \u00d7 M+ \u00d7 PvP \u00d7 combat contexts; out-of-combat M+ permission, atomic denial/live transitions, secret arguments/extras and cached 12.1 forwarding/removal. Unproved: Strict earlier/current-only feature builds; native concurrent encounter/PvP policy and actual sound playback."
     },
     {
       "source_id": "prose-undated-020",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "No credit. Cached NotAllowed/protected declaration conflicts with guessed permission; historical/native valid/invalid clean/tainted/protected-combat/child-propagation matrix required."
     },
     {
       "source_id": "prose-undated-021",
@@ -550,33 +597,43 @@
     },
     {
       "source_id": "global api-C_UIFileAsset-IsKnownFile-050",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "vehicle-aura-sound-asset-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: One public boolean; live shipped/loose membership, empty false, host revocation/isolation, no IO, all authentic arguments/extras authenticated first. Unproved: Native catalog acquisition/availability, selected addon roots, strict historical type/domain policy."
     },
     {
       "source_id": "global api-C_UIFileAsset-IsLooseFile-051",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "vehicle-aura-sound-asset-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: One public boolean; registered loose paths, shipped precedence, registered absent file survives deletion, unregistered physical file false, exact normalized membership and secrets. Unproved: Loader registry acquisition/root reconciliation, full catalog, native normalization/domain policy."
     },
     {
       "source_id": "global api-GetEventCPUUsage-052",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Live host snapshots for event time/count; zero defaults, exact declared arity, independent fields/environment isolation; inferred NeverSecret rejects all extras for every caller. Unproved: Native timing/attribution/reset and addon availability; historical no-argument signature, units and extra-policy authentication."
     },
     {
       "source_id": "global api-GetFunctionCPUUsage-053",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Live host snapshots for function time/count; zero defaults, exact declared arity, independent fields/environment isolation; inferred NeverSecret rejects all extras for every caller. Unproved: Native timing/attribution/reset and addon availability; historical no-argument signature, units and extra-policy authentication."
     },
     {
       "source_id": "global api-GetScriptCPUUsage-054",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Live host snapshots for script scalar; zero defaults, exact declared arity, independent fields/environment isolation; inferred NeverSecret rejects all extras for every caller. Unproved: Native timing/attribution/reset and addon availability; historical no-argument signature, units and extra-policy authentication."
     },
     {
       "source_id": "global api-GetSecurePendingButtonCallback-055",
@@ -1162,9 +1219,11 @@
     },
     {
       "source_id": "events-URL_TEXTURE_REQUEST_RESULT-146",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Explicit empty host queue dispatches real texture identity and Found/NotFound/Requested/NotAllowed enum once; environment isolation and invalid/missing receiver rejection. Unproved: SetURLTexture request lifecycle, restrictions, network/cancellation/completion, actual pixels, native source events."
     },
     {
       "source_id": "source-context-148",
@@ -1174,57 +1233,75 @@
     },
     {
       "source_id": "events-CHAT_MSG_COMBAT_FACTION_CHANGE-149",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Host queue \u2192 public OnEvent: exact four-value projection in both lockdown states; empty/isolation controls. Nine exemptions retain independent source secrecy; SAY restricted control; sampled NeverSecret denial. Unproved: Complete 18-field/DiscordChatInfo payload, native ingress and other dispatch paths, all NeverSecret positions, nested dispatch/GC behavioral stress."
     },
     {
       "source_id": "events-CHAT_MSG_COMBAT_HONOR_GAIN-150",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Host queue \u2192 public OnEvent: exact four-value projection in both lockdown states; empty/isolation controls. Nine exemptions retain independent source secrecy; SAY restricted control; sampled NeverSecret denial. Unproved: Complete 18-field/DiscordChatInfo payload, native ingress and other dispatch paths, all NeverSecret positions, nested dispatch/GC behavioral stress."
     },
     {
       "source_id": "events-CHAT_MSG_COMBAT_MISC_INFO-151",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Host queue \u2192 public OnEvent: exact four-value projection in both lockdown states; empty/isolation controls. Nine exemptions retain independent source secrecy; SAY restricted control; sampled NeverSecret denial. Unproved: Complete 18-field/DiscordChatInfo payload, native ingress and other dispatch paths, all NeverSecret positions, nested dispatch/GC behavioral stress."
     },
     {
       "source_id": "events-CHAT_MSG_COMBAT_XP_GAIN-152",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Host queue \u2192 public OnEvent: exact four-value projection in both lockdown states; empty/isolation controls. Nine exemptions retain independent source secrecy; SAY restricted control; sampled NeverSecret denial. Unproved: Complete 18-field/DiscordChatInfo payload, native ingress and other dispatch paths, all NeverSecret positions, nested dispatch/GC behavioral stress."
     },
     {
       "source_id": "events-CHAT_MSG_CURRENCY-153",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Host queue \u2192 public OnEvent: exact four-value projection in both lockdown states; empty/isolation controls. Nine exemptions retain independent source secrecy; SAY restricted control; sampled NeverSecret denial. Unproved: Complete 18-field/DiscordChatInfo payload, native ingress and other dispatch paths, all NeverSecret positions, nested dispatch/GC behavioral stress."
     },
     {
       "source_id": "events-CHAT_MSG_FILTERED-154",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Host queue \u2192 public OnEvent: exact four-value projection in both lockdown states; empty/isolation controls. Nine exemptions retain independent source secrecy; SAY restricted control; sampled NeverSecret denial. Unproved: Complete 18-field/DiscordChatInfo payload, native ingress and other dispatch paths, all NeverSecret positions, nested dispatch/GC behavioral stress."
     },
     {
       "source_id": "events-CHAT_MSG_LOOT-155",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Host queue \u2192 public OnEvent: exact four-value projection in both lockdown states; empty/isolation controls. Nine exemptions retain independent source secrecy; SAY restricted control; sampled NeverSecret denial. Unproved: Complete 18-field/DiscordChatInfo payload, native ingress and other dispatch paths, all NeverSecret positions, nested dispatch/GC behavioral stress."
     },
     {
       "source_id": "events-CHAT_MSG_MONEY-156",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Host queue \u2192 public OnEvent: exact four-value projection in both lockdown states; empty/isolation controls. Nine exemptions retain independent source secrecy; SAY restricted control; sampled NeverSecret denial. Unproved: Complete 18-field/DiscordChatInfo payload, native ingress and other dispatch paths, all NeverSecret positions, nested dispatch/GC behavioral stress."
     },
     {
       "source_id": "events-CHAT_MSG_RESTRICTED-157",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "host-events-and-defaults-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: Host queue \u2192 public OnEvent: exact four-value projection in both lockdown states; empty/isolation controls. Nine exemptions retain independent source secrecy; SAY restricted control; sampled NeverSecret denial. Unproved: Complete 18-field/DiscordChatInfo payload, native ingress and other dispatch paths, all NeverSecret positions, nested dispatch/GC behavioral stress."
     },
     {
       "source_id": "events-CLUB_MEMBER_ADDED-158",
