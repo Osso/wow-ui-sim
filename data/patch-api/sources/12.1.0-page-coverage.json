@@ -316,6 +316,20 @@
       "implementation": "src/c_api/unit_aura_access.rs",
       "compiled_revision": "c7ea1eca1",
       "proof": "agent-run GREEN; no independent review"
+    },
+    {
+      "id": "forbidden-aspects-12-1-0",
+      "symbols": [
+        "UntrustedScriptExecution, UntrustedLayoutScriptExecution, ScriptedInput, QueryFocus, AlwaysPropagateInput, EventRegistrations, Shown secret auto-focus"
+      ],
+      "scope": "Aspect gates reject tainted (addon) callers only; dispatch skips tainted handlers (incl. HookScript chains) on restricted hierarchies; AuraContainer intrinsic owns EventRegistrations; AlwaysPropagateInput forces click/keyboard propagation; auto-focus skipped under Shown secret. INFERRED: handler taint = closure taint; Shown secret on any ancestor blocks auto-focus. Not modeled: layout-driven OnSizeChanged, mouse-motion pass-through, ScriptedInput/QueryFocus 'or its children', XML autoFocus, AddsForbiddenAspects doc annotations.",
+      "spec": "docs/specs/forbidden-aspect-script-execution.md",
+      "tests": [
+        "tests/forbidden_aspect_enforcement.rs"
+      ],
+      "implementation": "forbidden_aspects.rs, get_dispatch_script, propagation.rs, mouse.rs, editbox.rs",
+      "compiled_revision": "4a303f6d0",
+      "proof": "agent-run GREEN; main-thread re-run of forbidden_aspect/taint/secure/hook/focus/keyboard/propagat/editbox filters and lib forbidden_aspect+mouse GREEN on master 4a303f6d0; no independent review"
     }
   ],
   "source_rows": [
@@ -481,15 +495,19 @@
     },
     {
       "source_id": "prose-2026-06-18-034",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+      "capabilities": [
+        "forbidden-aspects-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Addon handlers skipped on restricted hierarchy (OnShow/OnEvent/OnEnter, inherited child, HookScript mix). (forbidden_aspect_enforcement)"
     },
     {
       "source_id": "prose-2026-06-18-035",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+      "capabilities": [
+        "forbidden-aspects-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Same test as -034. (forbidden_aspect_enforcement)"
     },
     {
       "source_id": "source-context-036",
@@ -747,15 +765,17 @@
     },
     {
       "source_id": "prose-2026-06-23-081",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+      "capabilities": [
+        "forbidden-aspects-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Same test as -034. (forbidden_aspect_enforcement)"
     },
     {
       "source_id": "prose-2026-06-23-082",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+      "note": "Filter proven via fire_script_handler, but the sim never fires OnSizeChanged on layout size change (size.rs)."
     },
     {
       "source_id": "prose-2026-06-23-083",
@@ -767,39 +787,51 @@
     },
     {
       "source_id": "prose-2026-06-23-084",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Click/focus guards and keyboard propagation exist; reconcile the complete mouse+keyboard contract, child inheritance and secure callers rather than treating isolated probes as all-input proof."
+      "capabilities": [
+        "forbidden-aspects-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Click and keyboard propagation forced; mouse-motion pass-through not modeled. (forbidden_aspect_enforcement)"
     },
     {
       "source_id": "prose-2026-06-23-085",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Click/focus guards and keyboard propagation exist; reconcile the complete mouse+keyboard contract, child inheritance and secure callers rather than treating isolated probes as all-input proof."
+      "capabilities": [
+        "forbidden-aspects-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Secure callers only; \"or its children\" not enforced (own mask). (forbidden_aspect_enforcement)"
     },
     {
       "source_id": "prose-2026-06-23-086",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Click/focus guards and keyboard propagation exist; reconcile the complete mouse+keyboard contract, child inheritance and secure callers rather than treating isolated probes as all-input proof."
+      "capabilities": [
+        "forbidden-aspects-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Secure callers only; \"or its children\" not enforced (own mask). (forbidden_aspect_enforcement)"
     },
     {
       "source_id": "prose-2026-06-23-087",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+      "capabilities": [
+        "forbidden-aspects-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "AuraButton aspects block addon handlers and input on button and children. (forbidden_aspect_enforcement)"
     },
     {
       "source_id": "prose-2026-06-23-088",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "No credit. No intrinsic enforcement proof; actual mask0 finding Unproved: Intrinsic AuraContainer lacks mask (0 observed) (audit-pending; reclassify modelable)"
+      "capabilities": [
+        "forbidden-aspects-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "AuraContainer intrinsic EventRegistrations blocks addons, not Blizzard. (forbidden_aspect_enforcement)"
     },
     {
       "source_id": "prose-2026-06-23-089",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "EditBox focus APIs exist, but visibility-driven auto-focus must respect the Shown secret aspect, including inherited state."
+      "capabilities": [
+        "forbidden-aspects-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Auto-focus skipped under Shown secret (SetAutoFocus only; XML autoFocus not parsed). (forbidden_aspect_enforcement)"
     },
     {
       "source_id": "prose-2026-06-23-090",
