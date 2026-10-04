@@ -31,6 +31,8 @@ enum Presence {
     Optional,
     Number(f64),
     Bool(bool),
+    /// Absent structures are filled from their field defaults.
+    Defaulted,
 }
 
 type Field = (&'static str, Kind, Presence);
@@ -73,20 +75,35 @@ const BACKDROP: &[Field] = &[
     ("backdropInfo", Structure(BACKDROP_INFO), Required),
     ("borderColor", Kind::Color(true), Optional),
     ("centerColor", Kind::Color(true), Optional),
-    ("anchorOffsets", Structure(ANCHOR_OFFSETS), Optional),
+    // INFERRED: Blizzard tooltip styling indexes anchorOffsets unconditionally.
+    (
+        "anchorOffsets",
+        Structure(ANCHOR_OFFSETS),
+        Presence::Defaulted,
+    ),
 ];
 const NINE_SLICE: &[Field] = &[
     ("layoutName", Text, Required),
     ("borderColor", Kind::Color(true), Optional),
     ("centerColor", Kind::Color(true), Optional),
-    ("anchorOffsets", Structure(ANCHOR_OFFSETS), Optional),
+    // INFERRED: Blizzard tooltip styling indexes anchorOffsets unconditionally.
+    (
+        "anchorOffsets",
+        Structure(ANCHOR_OFFSETS),
+        Presence::Defaulted,
+    ),
 ];
 const TEXTURE_SLICE: &[Field] = &[
     ("asset", Texture, Required),
     ("sliceMargins", Structure(SLICE_MARGINS), Optional),
     ("sliceMode", Enum(1), Optional),
     ("color", Kind::Color(true), Optional),
-    ("anchorOffsets", Structure(ANCHOR_OFFSETS), Optional),
+    // INFERRED: Blizzard tooltip styling indexes anchorOffsets unconditionally.
+    (
+        "anchorOffsets",
+        Structure(ANCHOR_OFFSETS),
+        Presence::Defaulted,
+    ),
     ("drawLayer", DrawLayer, Optional),
     ("drawLayerSublevel", Number, Presence::Number(0.0)),
 ];
@@ -275,6 +292,7 @@ fn normalize_field(
         Optional => Ok(Val::Nil),
         Presence::Number(value) => Ok(Val::Num(value)),
         Presence::Bool(value) => Ok(Val::Bool(value)),
+        Presence::Defaulted => normalize_value(state, Val::Nil, kind, path),
     }
 }
 
