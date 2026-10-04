@@ -4,12 +4,12 @@ A data-driven breadth probe covers all 778 entries in the [wikitext register](..
 
 ## What it must do
 
-- [ ] Probe every unique source ID across global-api, framexml, scriptobjects, widgets, events and cvars, for added, removed and changed directions, in one fully loaded cached Game environment.
-- [ ] Classify raw global publication; raw namespace/mixin member publication; normal method resolution on objects made by real widget/scriptobject factories. Added/changed members must resolve to functions without accepting fabricated namespace fallbacks. Removed namespace/mixin members must be nil under both raw and ordinary lookup.
-- [ ] Probe concrete events through a real frame's `RegisterEvent` and registration state, preserving return/error details. Restricted-event false returns do not mean absence if the frame registered the event.
-- [ ] Query CVar current and default values: both nonnil for added/changed and both nil for removed. Report page-default mismatches separately without changing publication success.
-- [ ] Emit per-ID `{expected, observed, ok}` JSON to `P1210_SWEEP_OUT`, when set, before comparing the actual non-ok ID set with the committed known-gap list. Both newly failing and newly successful known-gap rows require review; the test never updates its own expectations.
-- [ ] Preserve unsupported factories, malformed symbols, wildcard inventory occurrences and probe errors as explicit non-ok observations rather than silently granting coverage. Reject missing/duplicate inventory rows and invalid section/direction data.
+- [x] Probe every unique source ID across global-api, framexml, scriptobjects, widgets, events and cvars, for added, removed and changed directions, in one fully loaded cached Game environment.
+- [x] Classify raw global publication; raw namespace/mixin member publication; normal method resolution on objects made by real widget/scriptobject factories. Added/changed members must resolve to functions without accepting fabricated namespace fallbacks. Removed namespace/mixin members must be nil under both raw and ordinary lookup.
+- [x] Probe concrete events through a real frame's `RegisterEvent` and registration state, preserving return/error details. Restricted-event false returns do not mean absence if the frame registered the event.
+- [x] Query CVar current and default values: both nonnil for added/changed and both nil for removed. Report page-default mismatches separately without changing publication success.
+- [x] Emit per-ID `{expected, observed, ok}` JSON to `P1210_SWEEP_OUT`, when set, before comparing the actual non-ok ID set with the committed known-gap list. Both newly failing and newly successful known-gap rows require review; the test never updates its own expectations.
+- [x] Preserve unsupported factories, malformed symbols, wildcard inventory occurrences and probe errors as explicit non-ok observations rather than silently granting coverage. Reject missing/duplicate inventory rows and invalid section/direction data.
 
 ## How it works
 
@@ -40,6 +40,8 @@ A data-driven breadth probe covers all 778 entries in the [wikitext register](..
 | DurationTextBinding, SecondsFormatter | `C_DurationUtil` / `C_StringUtil` constructors |
 
 No per-symbol exceptions. Widget method lookup proves reachability, not owner restrictions.
+
+Default Retail sweep: GREEN against the reviewed gap set, 778 observations (631 OK, 147 non-OK). GREEN proves the gap set is unchanged, not that all symbols work. Three negative controls were non-OK. Cached UI provenance reports Retail `12.1.0.69933`; this is provenance metadata, not native-client authentication.
 
 ## Known gaps (current cycle)
 
