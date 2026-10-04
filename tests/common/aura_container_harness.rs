@@ -41,6 +41,7 @@ const PRELUDE: &str = r#"
             for _, group in ipairs(groups or {}) do
                 local options = group[3] or {}
                 options.initializeFrame = options.initializeFrame or AuditInitIcon
+                debug.setobjecttaint(options.initializeFrame, AUDIT_ADDON)
                 container:AddAuraGroup(group[1], group[2], options)
             end
             return container
@@ -141,6 +142,18 @@ pub fn settle(env: &WowLuaEnv) {
 pub fn icons(env: &WowLuaEnv, container: &str, key: &str) -> String {
     env.eval::<String>(&format!("return AuditIcons({container}, '{key}')"))
         .unwrap()
+}
+
+/// Native widget id of the frame a Lua expression evaluates to.
+pub fn frame_id(env: &WowLuaEnv, expression: &str) -> u64 {
+    let debug_name = env
+        .eval::<String>(&format!("return ({expression}):GetDebugName()"))
+        .unwrap();
+    debug_name
+        .rsplit(':')
+        .next()
+        .and_then(|id| id.parse().ok())
+        .unwrap_or_else(|| panic!("{expression} has no unnamed debug id: {debug_name}"))
 }
 
 pub fn assert_no_lua_errors(env: &WowLuaEnv) {
