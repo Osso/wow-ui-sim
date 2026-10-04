@@ -162,6 +162,7 @@ mod tests {
             hide_from_global_env: None,
             full_lockdown: None,
             use_forbidden_object_table: None,
+            allow_untainted_creation: None,
             elements: Vec::new(),
         };
 

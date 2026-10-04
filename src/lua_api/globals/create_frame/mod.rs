@@ -39,6 +39,7 @@ pub fn create_frame(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn create_frame_from_args(state: &mut LuaState, mut args: CreateFrameArgs) -> LuaResult<u32> {
+    ensure_untainted_creation_allowed(state, &args.frame_type)?;
     let (parent_id, parent_explicit) =
         resolve_parent_id(state, args.parent_val, args.default_parent_allowed)?;
     let runtime_inherits = build_runtime_inherits(&args.frame_type, args.inherits.as_deref());
@@ -275,6 +276,29 @@ fn resolve_parent_id(
         sim.widgets.get_id_by_name("UIParent").unwrap_or_default()
     };
     Ok((parent_id, parent_explicit))
+}
+
+/// 12.1.0: "Addons no longer create AuraButtons directly." INFERRED: an intrinsic
+/// declared inside a `useForbiddenObjectTable` ScopedModifier without
+/// `allowUntaintedCreation="true"` (AuraButton, unlike AuraContainer) can only be
+/// created by untainted callers.
+fn ensure_untainted_creation_allowed(state: &LuaState, frame_type: &str) -> LuaResult<()> {
+    let Some(intrinsic) =
+        crate::xml::widget_type_for_tag(frame_type).and_then(|(_, intrinsic)| intrinsic)
+    else {
+        return Ok(());
+    };
+    let restricted = crate::xml::get_template(intrinsic).is_some_and(|entry| {
+        entry.frame.intrinsic == Some(true)
+            && entry.frame.use_forbidden_object_table
+            && !entry.frame.allow_untainted_creation
+    });
+    if restricted && !rilua::api::state_is_secure(state) {
+        return Err(runtime_error(format!(
+            "CreateFrame: {frame_type} cannot be created by addons"
+        )));
+    }
+    Ok(())
 }
 
 fn build_runtime_inherits(frame_type: &str, explicit_inherits: Option<&str>) -> Option<String> {

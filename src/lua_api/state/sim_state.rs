@@ -374,6 +374,9 @@ pub struct SimState {
     pub loading_add_to_secure_env: bool,
     pub loading_hide_from_global_env: bool,
     pub loading_use_forbidden_object_table: bool,
+    /// ScopedModifier `allowUntaintedCreation`: intrinsics declared in a forbidden-object-table
+    /// scope without it reject CreateFrame from tainted callers.
+    pub loading_allow_untainted_creation: bool,
     pub app_frame_metrics: AppFrameMetrics,
     pub addon_performance_messages_shown: HashSet<AddonPerformanceMessageKey>,
     pub talents: crate::lua_api::talent_state::TalentState,

@@ -38,6 +38,8 @@ pub struct ScopedModifierXml {
     pub full_lockdown: Option<bool>,
     #[serde(rename = "@useForbiddenObjectTable", default)]
     pub use_forbidden_object_table: Option<bool>,
+    #[serde(rename = "@allowUntaintedCreation", default)]
+    pub allow_untainted_creation: Option<bool>,
     #[serde(rename = "$value", default)]
     pub elements: Vec<XmlElement>,
 }
@@ -217,6 +219,8 @@ pub struct FrameXml {
 
     #[serde(skip)]
     pub use_forbidden_object_table: bool,
+    #[serde(skip)]
+    pub allow_untainted_creation: bool,
 
     // Child elements collected via $value to allow multiples
     #[serde(rename = "$value", default)]

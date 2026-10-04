@@ -79,8 +79,11 @@ pub(super) fn register_virtual_or_intrinsic(
         // Prepend intrinsic base to inherits so the template chain includes
         // the intrinsic mixin (e.g. DropdownButton → DropdownButtonMixin).
         let mut registered = frame.clone();
-        registered.use_forbidden_object_table =
-            env.state().borrow().loading_use_forbidden_object_table;
+        {
+            let state = env.state().borrow();
+            registered.use_forbidden_object_table = state.loading_use_forbidden_object_table;
+            registered.allow_untainted_creation = state.loading_allow_untainted_creation;
+        }
         if let Some(base) = intrinsic_base {
             registered.inherits = Some(match &registered.inherits {
                 Some(existing) if !existing.is_empty() => format!("{base}, {existing}"),

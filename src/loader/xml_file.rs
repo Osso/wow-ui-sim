@@ -186,6 +186,7 @@ struct SavedScopedModifier {
     add_to_secure_env: bool,
     hide_from_global_env: bool,
     use_forbidden_object_table: bool,
+    allow_untainted_creation: bool,
 }
 
 fn enter_scoped_modifier(
@@ -200,6 +201,7 @@ fn enter_scoped_modifier(
         add_to_secure_env: state.loading_add_to_secure_env,
         hide_from_global_env: state.loading_hide_from_global_env,
         use_forbidden_object_table: state.loading_use_forbidden_object_table,
+        allow_untainted_creation: state.loading_allow_untainted_creation,
     };
     if scoped.forbidden.unwrap_or(false) || scoped.full_lockdown.unwrap_or(false) {
         state.loading_forbidden = true;
@@ -215,6 +217,7 @@ fn enter_scoped_modifier(
     }
     if scoped.use_forbidden_object_table.unwrap_or(false) {
         state.loading_use_forbidden_object_table = true;
+        state.loading_allow_untainted_creation = scoped.allow_untainted_creation.unwrap_or(false);
     }
     saved
 }
@@ -226,6 +229,7 @@ fn restore_scoped_modifier(env: &LoaderEnv<'_>, saved: SavedScopedModifier) {
     state.loading_add_to_secure_env = saved.add_to_secure_env;
     state.loading_hide_from_global_env = saved.hide_from_global_env;
     state.loading_use_forbidden_object_table = saved.use_forbidden_object_table;
+    state.loading_allow_untainted_creation = saved.allow_untainted_creation;
 }
 
 fn set_loading_forbidden_object_table_global(
