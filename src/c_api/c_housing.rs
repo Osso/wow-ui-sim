@@ -40,6 +40,14 @@ const ROOM_BLUEPRINT_CODE_PREFIX: &str = "wow-ui-sim:room-blueprint:";
 const BLUEPRINT_TYPE_HOUSE: i32 = 1;
 #[cfg(feature = "retail-12-1-0")]
 const BLUEPRINT_TYPE_ROOM: i32 = 2;
+#[cfg(feature = "retail-12-1-0")]
+const BLUEPRINT_TYPE_INTERIOR: i32 = 3;
+#[cfg(feature = "retail-12-1-0")]
+const BLUEPRINT_TYPE_EXTERIOR: i32 = 4;
+#[cfg(feature = "retail-12-1-0")]
+const BUDGET_TYPE_DECOR: i32 = 1;
+#[cfg(feature = "retail-12-1-0")]
+const BUDGET_TYPE_PET_DECOR: i32 = 2;
 
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
     // Replaces an unconditional temporary surface, including non-retail profiles.
@@ -143,6 +151,19 @@ fn register_blueprint_methods(state: &mut LuaState, blueprints: NamespaceTable) 
         blueprints,
         "CanImportTypeFromCurrentLocation",
         can_import_type_from_current_location,
+    )?;
+    table_set_rust_fn_static(state, blueprints, "CanExportRoom", can_export_room)?;
+    table_set_rust_fn_static(
+        state,
+        blueprints,
+        "CanExportTypeFromCurrentLocation",
+        can_export_type_from_current_location,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        blueprints,
+        "UpdateBlueprintStringFromInput",
+        update_blueprint_string_from_input,
     )?;
     table_set_rust_fn_static(state, blueprints, "DeleteBlueprint", delete_blueprint)?;
     table_set_rust_fn_static(state, blueprints, "ExportBlueprint", export_blueprint)?;
@@ -293,6 +314,18 @@ fn register_decor_methods(state: &mut LuaState, decor: NamespaceTable) -> LuaRes
     table_set_rust_fn_static(
         state,
         decor,
+        "GetAllMaxPlacementBudgets",
+        get_all_max_placement_budgets,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        decor,
+        "GetAllSpentPlacementBudgets",
+        get_all_spent_placement_budgets,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        decor,
         "GetBothMaxPlacementBudgets",
         get_both_max_placement_budgets,
     )?;
@@ -331,7 +364,20 @@ fn register_decor_methods(state: &mut LuaState, decor: NamespaceTable) -> LuaRes
 #[cfg(feature = "retail-12-1-0")]
 fn register_layout_methods(state: &mut LuaState, layout: NamespaceTable) -> LuaResult<()> {
     table_set_rust_fn_static(state, layout, "GetBaseRoomFloor", get_base_room_floor)?;
+    table_set_rust_fn_static(
+        state,
+        layout,
+        "GetHighestOccupiedFloorIndex",
+        get_highest_occupied_floor_index,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        layout,
+        "GetLowestOccupiedFloorIndex",
+        get_lowest_occupied_floor_index,
+    )?;
     table_set_rust_fn_static(state, layout, "GetRoomPlayerIsIn", get_room_player_is_in)?;
+    table_set_rust_fn_static(state, layout, "RoomHasStairs", room_has_stairs)?;
     table_set_rust_fn_static(
         state,
         layout,
@@ -689,6 +735,184 @@ fn has_selected_blueprint_floorplan(state: &mut LuaState) -> LuaResult<u32> {
         .is_some();
     state.push(Val::Bool(has_floorplan));
     Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn get_highest_occupied_floor_index(state: &mut LuaState) -> LuaResult<u32> {
+    let (_, highest) = occupied_floor_range(state)?;
+    state.push(Val::Num(f64::from(highest)));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn get_lowest_occupied_floor_index(state: &mut LuaState) -> LuaResult<u32> {
+    let (lowest, _) = occupied_floor_range(state)?;
+    state.push(Val::Num(f64::from(lowest)));
+    Ok(1)
+}
+
+/// `(lowest, highest)` floor holding a modeled room; an empty layout occupies only floor 0.
+#[cfg(feature = "retail-12-1-0")]
+fn occupied_floor_range(state: &LuaState) -> LuaResult<(i32, i32)> {
+    let sim = borrow_state(state)?;
+    let floors = sim.housing.base_room_floors.values().copied();
+    let lowest = floors.clone().min().unwrap_or(0);
+    let highest = floors.max().unwrap_or(0);
+    Ok((lowest, highest))
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn room_has_stairs(state: &mut LuaState) -> LuaResult<u32> {
+    // Documented: invalid room GUIDs return false.
+    let has_stairs = match room_arg(state) {
+        Some(room) => borrow_state(state)?.housing.stairwell_rooms.contains(&room),
+        None => false,
+    };
+    state.push(Val::Bool(has_stairs));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn can_export_room(state: &mut LuaState) -> LuaResult<u32> {
+    // INFERRED from Blizzard_HouseEditorLayoutModePin: a false result shows
+    // ERR_HOUSING_LAYOUT_RESTRICTION_BASE_ROOM, so the base room is the refusal case.
+    let can_export = room_arg(state).is_some_and(|room| {
+        borrow_state(state).is_ok_and(|sim| {
+            sim.housing.inside_owned_house
+                && sim.housing.base_room_floors.contains_key(&room)
+                && sim.housing.base_room != Some(room)
+        })
+    });
+    state.push(Val::Bool(can_export));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn can_export_type_from_current_location(state: &mut LuaState) -> LuaResult<u32> {
+    let blueprint_type = Option::<i32>::from_stack(state, 1)?;
+    let location_valid = {
+        let housing = &borrow_state(state)?.housing;
+        // INFERRED: interior-scoped types need the owned house, exterior the owned
+        // plot, and a room export needs the player standing in a room.
+        match blueprint_type {
+            Some(BLUEPRINT_TYPE_HOUSE) => housing.inside_owned_house || housing.inside_owned_plot,
+            Some(BLUEPRINT_TYPE_ROOM) => {
+                housing.inside_owned_house && housing.room_player_is_in.is_some()
+            }
+            Some(BLUEPRINT_TYPE_INTERIOR) => housing.inside_owned_house,
+            Some(BLUEPRINT_TYPE_EXTERIOR) => housing.inside_owned_plot,
+            _ => false,
+        }
+    };
+    state.push(Val::Bool(location_valid));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn update_blueprint_string_from_input(state: &mut LuaState) -> LuaResult<u32> {
+    let input = string_arg_or_empty(state, 1)?;
+    // INFERRED: pasted blueprint hyperlinks normalize to their bare share code.
+    let code = share_code_from_input(&input);
+    if code.is_empty() {
+        return Ok(0);
+    }
+    push_string(state, code);
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn share_code_from_input(input: &str) -> &str {
+    let trimmed = input.trim();
+    trimmed
+        .split_once("|Hhousingblueprint:")
+        .and_then(|(_, link)| link.split_once("|h"))
+        .map_or(trimmed, |(code, _)| code)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn get_all_max_placement_budgets(state: &mut LuaState) -> LuaResult<u32> {
+    let budgets = {
+        let housing = &borrow_state(state)?.housing;
+        owned_location(housing).then(|| {
+            (
+                [
+                    (BUDGET_TYPE_DECOR, housing.max_indoor_placement_budget),
+                    (BUDGET_TYPE_PET_DECOR, housing.max_pet_placement_budget),
+                ],
+                [(BUDGET_TYPE_DECOR, housing.max_outdoor_placement_budget)],
+            )
+        })
+    };
+    push_budget_maps(state, budgets)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn get_all_spent_placement_budgets(state: &mut LuaState) -> LuaResult<u32> {
+    let budgets = {
+        let housing = &borrow_state(state)?.housing;
+        owned_location(housing).then(|| {
+            (
+                [
+                    (BUDGET_TYPE_DECOR, housing.spent_indoor_placement_budget),
+                    (BUDGET_TYPE_PET_DECOR, housing.spent_pet_placement_budget),
+                ],
+                [(BUDGET_TYPE_DECOR, housing.spent_outdoor_placement_budget)],
+            )
+        })
+    };
+    push_budget_maps(state, budgets)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn owned_location(housing: &HousingState) -> bool {
+    housing.inside_owned_house || housing.inside_owned_plot
+}
+
+/// Pushes `(interior, exterior)` HousingBudgetType maps, or two nils outside an
+/// owned house/plot. Budget types the simulator does not track stay absent.
+#[cfg(feature = "retail-12-1-0")]
+fn push_budget_maps(
+    state: &mut LuaState,
+    budgets: Option<([(i32, Option<i32>); 2], [(i32, Option<i32>); 1])>,
+) -> LuaResult<u32> {
+    let Some((interior, exterior)) = budgets else {
+        state.push(Val::Nil);
+        state.push(Val::Nil);
+        return Ok(2);
+    };
+    let interior = budget_map(state, &interior);
+    let exterior = budget_map(state, &exterior);
+    state.push(interior);
+    state.push(exterior);
+    Ok(2)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn budget_map(state: &mut LuaState, entries: &[(i32, Option<i32>)]) -> Val {
+    let map = create_table(state);
+    let Val::Table(table) = map else {
+        unreachable!("create_table must return a table");
+    };
+    for (budget_type, amount) in entries {
+        if let Some(amount) = amount {
+            crate::lua_api::methods::table_set_num(
+                state,
+                table,
+                f64::from(*budget_type),
+                Val::Num(f64::from(*amount)),
+            );
+        }
+    }
+    map
+}
+
+/// Room identifiers are the simulator's numeric room keys; anything else is invalid.
+#[cfg(feature = "retail-12-1-0")]
+fn room_arg(state: &LuaState) -> Option<i32> {
+    match crate::lua_bridge::stack_val(state, 1) {
+        Val::Num(room) if room.fract() == 0.0 => Some(room as i32),
+        _ => None,
+    }
 }
 
 #[cfg(feature = "retail-12-1-0")]

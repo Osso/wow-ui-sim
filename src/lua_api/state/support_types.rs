@@ -296,6 +296,9 @@ pub struct HousingState {
     #[cfg(feature = "retail-12-0-7")]
     pub room_connection_door_types: HashMap<(String, i32), std::collections::HashSet<i32>>,
     pub base_room_floors: HashMap<i32, i32>,
+    /// The house's undeletable base room; never exportable as a room blueprint.
+    pub base_room: Option<i32>,
+    pub stairwell_rooms: Vec<i32>,
     #[cfg(feature = "retail-12-0-7")]
     pub viewed_floor_permissions: HashMap<i32, bool>,
     pub room_player_is_in: Option<i32>,
