@@ -197,11 +197,13 @@ fn test_patch_12_1_duration_binding_reference_lifetime_and_identity() {
             if first == second then return "distinct" end
             if type(first.SetDuration) ~= "function" then return "method" end
 
-            first:SetDuration(17)
+            local duration = C_DurationUtil.CreateDuration()
+            duration:SetTimeFromStart(0, 17)
+            first:SetDuration(duration)
             local retained = { first }
             first = nil
             collectgarbage("collect")
-            if retained[1]:GetDuration() ~= 17 then return "retained" end
+            if retained[1]:GetDuration() ~= duration then return "retained" end
             if retained[1] ~= retained[1] then return "identity" end
             return "ok"
             "#,
