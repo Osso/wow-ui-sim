@@ -21,6 +21,7 @@
 
 use super::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{borrow_state, create_string, create_table, table_set};
+#[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::MythicPlusWeeklyBest;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
@@ -69,7 +70,10 @@ pub(super) fn register_mythic_plus_surface(state: &mut LuaState) -> LuaResult<()
 fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "GetCurrentAffixes", get_current_affixes)?;
     table_set_rust_fn_static(state, ns, "GetCurrentSeason", get_current_season)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     table_set_rust_fn_static(state, ns, "GetRunHistory", get_run_history)?;
+    #[cfg(feature = "retail-12-0-7")]
+    crate::c_api::c_mythic_plus_calendar::register(state, ns)?;
     table_set_rust_fn_static(
         state,
         ns,
@@ -83,6 +87,7 @@ fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -
         get_weekly_chest_reward_level,
     )?;
     table_set_rust_fn_static(state, ns, "GetOwnedKeystoneLevel", get_owned_keystone_level)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     table_set_rust_fn_static(state, ns, "GetWeeklyBestForMap", get_weekly_best_for_map)?;
     Ok(())
 }
@@ -263,6 +268,7 @@ fn get_current_season(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn get_run_history(state: &mut LuaState) -> LuaResult<u32> {
     // Args: includePreviousWeeks, includeIncompleteRuns, currentSeasonOnly
     // We ignore the filter args and return all seeded runs.
@@ -322,6 +328,7 @@ fn get_owned_keystone_level(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn get_weekly_best_for_map(state: &mut LuaState) -> LuaResult<u32> {
     let map_id = i32::from_stack(state, 1)?;
     let best: Option<MythicPlusWeeklyBest> = borrow_state(state)?

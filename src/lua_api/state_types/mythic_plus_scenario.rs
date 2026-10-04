@@ -24,6 +24,12 @@ pub struct MythicPlusWeeklyBest {
     pub duration_sec: i32,
     /// Mythic+ score contribution for this run.
     pub score: f64,
+    #[cfg(feature = "retail-12-0-7")]
+    pub completion_date: Option<crate::c_api::c_mythic_plus_calendar::CalendarTime>,
+    #[cfg(feature = "retail-12-0-7")]
+    pub affix_ids: Vec<i32>,
+    #[cfg(feature = "retail-12-0-7")]
+    pub members: Vec<crate::c_api::c_mythic_plus_calendar::MythicPlusMember>,
 }
 
 /// One completed or in-progress Mythic+ run. Drives
@@ -44,6 +50,8 @@ pub struct MythicPlusRun {
     pub this_week: bool,
     /// Completion time in seconds.
     pub duration_sec: i32,
+    #[cfg(feature = "retail-12-0-7")]
+    pub completion_date: Option<crate::c_api::c_mythic_plus_calendar::CalendarTime>,
 }
 
 /// Backing state for `C_MythicPlus.*` probes.
@@ -60,6 +68,9 @@ pub struct MythicPlusState {
     pub run_history: Vec<MythicPlusRun>,
     /// Per-map weekly best, keyed by mapChallengeModeID.
     pub weekly_best_per_map: HashMap<i32, MythicPlusWeeklyBest>,
+    #[cfg(feature = "retail-12-0-7")]
+    pub season_best_per_map:
+        HashMap<i32, (Option<MythicPlusWeeklyBest>, Option<MythicPlusWeeklyBest>)>,
     /// Whether a Mythic+ run is currently in progress.
     pub is_active: bool,
     /// Whether the weekly Mythic+ reward is available to claim.
@@ -77,6 +88,8 @@ impl Default for MythicPlusState {
             owned_keystone_level: 0,
             run_history: Vec::new(),
             weekly_best_per_map: HashMap::new(),
+            #[cfg(feature = "retail-12-0-7")]
+            season_best_per_map: HashMap::new(),
             is_active: false,
             is_weekly_reward_available: false,
         }

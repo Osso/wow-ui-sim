@@ -90,10 +90,10 @@ pub mod c_major_factions;
 pub mod c_map;
 pub mod c_map_exploration_info;
 pub mod c_merchant_frame;
-#[cfg(feature = "retail-12-0-7")]
-pub(crate) mod patch_12_0_7_inputs;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_mount_spell_lookup;
+#[cfg(feature = "retail-12-0-7")]
+pub mod c_mythic_plus_calendar;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_nameplate_manager;
 #[cfg(feature = "retail-12-0-5")]
@@ -145,6 +145,8 @@ pub(crate) mod c_transmog_collection;
 pub(crate) mod class_talent_commands;
 #[cfg(feature = "retail-12-0-5")]
 pub mod equipment_set_command;
+#[cfg(feature = "retail-12-0-7")]
+pub(crate) mod patch_12_0_7_inputs;
 #[cfg(feature = "retail-12-0-5")]
 pub use c_transmog_collection::IllusionInfo;
 #[cfg(feature = "retail-12-0-5")]

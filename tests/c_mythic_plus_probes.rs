@@ -210,6 +210,10 @@ fn get_run_history_returns_seeded_runs() {
             run_score: 150.0,
             this_week: true,
             duration_sec: 1800,
+            #[cfg(feature = "retail-12-0-7")]
+            completion_date: Some(wow_ui_sim::c_api::c_mythic_plus_calendar::CalendarTime {
+                month_day: 3, month: 10, weekday: 7, year: 2026, hour: 12, minute: 34,
+            }),
         }];
     }
     let (count, map_id, level, completed): (i32, i32, i32, bool) = env
@@ -320,6 +324,14 @@ fn get_weekly_best_for_map_returns_seeded_data() {
                 level: 12,
                 duration_sec: 1500,
                 score: 180.0,
+                #[cfg(feature = "retail-12-0-7")]
+                completion_date: Some(wow_ui_sim::c_api::c_mythic_plus_calendar::CalendarTime {
+                    month_day: 3, month: 10, weekday: 7, year: 2026, hour: 12, minute: 34,
+                }),
+                #[cfg(feature = "retail-12-0-7")]
+                affix_ids: vec![],
+                #[cfg(feature = "retail-12-0-7")]
+                members: vec![],
             },
         );
     }
