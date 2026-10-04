@@ -10,3 +10,7 @@ Sweep gaps 147 → 21: LoD bootstrap preload fix, 31 added Global API functions,
 ## [2026-10-04] docs | 12.1.0 extract rows round 4
 
 Enum values fixed and proven (58), struct shapes (26), deprecated wrappers (9). [Audit page](investigations/patch-12-1-0-page-audit.md#round-4--extract-rows-enums-structs-deprecated-wrappers--2026-10-04); 156 pending /224 bounded /652 partial /79 metadata.
+
+## [2026-10-04] docs | 12.1.0 strict removals fix and deprecation-fallback sweep rule
+
+Post-startup strict removals deleted Blizzard deprecation wrappers; fixed at namespace setup. Sweep accepts deprecation-file fallbacks for removed symbols (gaps 25 → 11). [Audit page](investigations/patch-12-1-0-page-audit.md); 135 pending /239 bounded /658 partial /79 metadata.
