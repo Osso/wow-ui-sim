@@ -845,6 +845,7 @@ local function install_legacy_exterior()
     IsAnyDecorAttachedToHouseExterior = function() return true end,
     IsAnyDecorAttachedToSelectedFixturePoint = function() return true end,
     RemoveFixtureFromSelectedPoint = __wow_noop,
+    SelectCoreFixtureOption = __wow_noop,
     SelectFixtureOption = __wow_noop,
     SetHouseExteriorSize = __wow_noop,
     SetHouseExteriorType = __wow_noop,

@@ -39,8 +39,20 @@ if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120100 then
 end
 "#;
 
+/// Epochs before the host-backed `c_navigation` provider keep the inert default.
+const LEGACY_NEAREST_PARTY_TOKEN_LUA: &str = r#"
+if rawget(C_Navigation, "GetNearestPartyMemberToken") == nil then
+    C_Navigation.GetNearestPartyMemberToken = function()
+        return nil
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(NAVIGATION_DEFAULTS_LUA)?;
+    if !cfg!(feature = "retail-12-0-5") {
+        lua.exec(LEGACY_NEAREST_PARTY_TOKEN_LUA)?;
+    }
     Ok(())
 }
 

@@ -32,9 +32,7 @@ fn collect_live_ids(sim: &SimState) -> Vec<i32> {
 
 fn validate_replacements(sim: &SimState, live_ids: &[i32]) -> LuaResult<()> {
     let Some(replacements) = &sim.aura_entry_ids.pending else {
-        return Err(runtime_error(
-            "aura entry requires host-supplied replacement IDs",
-        ));
+        return Ok(());
     };
     if replacements.len() != live_ids.len() {
         return Err(runtime_error(
@@ -56,7 +54,8 @@ fn validate_replacements(sim: &SimState, live_ids: &[i32]) -> LuaResult<()> {
 
 fn rekey_aura_instance_ids(sim: &mut SimState) -> LuaResult<()> {
     let live_ids = collect_live_ids(sim);
-    if live_ids.is_empty() && sim.aura_entry_ids.pending.is_none() {
+    // No staged host batch: the entry event is delivered with IDs unchanged.
+    if sim.aura_entry_ids.pending.is_none() {
         return Ok(());
     }
     // Validate the entire batch before changing any ID or consuming host input.

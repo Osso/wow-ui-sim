@@ -212,8 +212,14 @@ fn aura_entry_invalid_plan_is_atomic_and_does_not_deliver_entry_event() {
                 .unwrap()
         );
     }
+    // Without a staged batch the entry event is delivered and IDs stay as they are.
     env.state().borrow_mut().aura_entry_ids.pending = None;
-    assert!(env.fire_event("ENCOUNTER_START").is_err());
+    env.fire_event("ENCOUNTER_START").unwrap();
+    assert_player_aura_queries(&env, &[41, 72], &[907, 301]);
+    assert_eq!(
+        env.eval::<String>("return EntryObserver.event").unwrap(),
+        "ENCOUNTER_START"
+    );
     queue_ids(&env, &[702, 811]);
     env.fire_event("ENCOUNTER_START").unwrap();
     assert_player_aura_queries(&env, &[41, 72, 907, 301], &[702, 811]);
