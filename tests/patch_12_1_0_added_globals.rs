@@ -411,3 +411,162 @@ fn transmog_enabled_reads_account_availability() {
     assert!(enabled);
     assert!(!disabled);
 }
+
+#[test]
+fn roleset_filters_round_trip_through_active_lists() {
+    let env = WowLuaEnv::new().unwrap();
+    eval_ok(
+        &env,
+        r#"
+        if #C_Roleset.GetActiveBlockedRolesets() ~= 0 then return "initial-blocked" end
+        if #C_Roleset.GetActiveAllowedRolesets() ~= 0 then return "initial-allowed" end
+        C_Roleset.ApplyRolesetFilters({ "minimap", "microMenu" }, { "encounterUI" })
+        local blocked = C_Roleset.GetActiveBlockedRolesets()
+        local allowed = C_Roleset.GetActiveAllowedRolesets()
+        if table.concat(blocked, ",") ~= "minimap,microMenu" then return "blocked" end
+        if table.concat(allowed, ",") ~= "encounterUI" then return "allowed" end
+        blocked[1] = "mutated"
+        if C_Roleset.GetActiveBlockedRolesets()[1] ~= "minimap" then return "copy" end
+        C_Roleset.ApplyRolesetFilters({}, { "unitFrames" })
+        if #C_Roleset.GetActiveBlockedRolesets() ~= 0 then return "cleared" end
+        if C_Roleset.GetActiveAllowedRolesets()[1] ~= "unitFrames" then return "replaced" end
+        return "ok"
+        "#,
+    );
+}
+
+#[test]
+fn recent_allies_search_filters_text_status_and_interests() {
+    use wow_ui_sim::c_api::c_recent_allies::{
+        RecentAllyCharacterData, RecentAllyData, RecentAllyInteractionData, RecentAllyStateData,
+    };
+    let ally = |name: &str, online: bool, dnd: bool, note: Option<&str>| RecentAllyData {
+        state_data: RecentAllyStateData {
+            is_online: online,
+            is_dnd: dnd,
+            is_afk: false,
+            is_converted_legacy_friend: false,
+            pin_expiration_date: None,
+            friend_request_sent_this_session: false,
+            current_location: None,
+        },
+        character_data: RecentAllyCharacterData {
+            guid: format!("Player-1-{name}"),
+            name: name.to_string(),
+            full_name: format!("{name}-Realm"),
+            realm_name: "Realm".to_string(),
+            level: 80,
+            class_id: 2,
+            race_id: 1,
+            sex: 2,
+        },
+        interaction_data: RecentAllyInteractionData {
+            interactions: Vec::new(),
+            note: note.map(str::to_string),
+        },
+    };
+    let env = WowLuaEnv::new().unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.recent_allies.enabled = true;
+        state.recent_allies.entries = vec![
+            ally("Aster", true, false, Some("tank for keys")),
+            ally("Birch", false, false, None),
+            ally("Cedar", true, true, None),
+        ];
+    }
+    let search = |fields: &str| -> String {
+        env.eval(&format!(
+            r#"
+            local info = {{ searchText = "", isOnline = false, isDND = false, isAFK = false,
+                isOffline = false, interests = {{}} }}
+            for key, value in pairs({{ {fields} }}) do info[key] = value end
+            local names = {{}}
+            for _, ally in ipairs(C_RecentAllies.SearchRecentAllies(info)) do
+                names[#names + 1] = ally.characterData.name
+            end
+            return table.concat(names, ",")
+            "#
+        ))
+        .unwrap()
+    };
+    assert_eq!(search(""), "Aster,Birch,Cedar");
+    assert_eq!(search(r#"searchText = "TANK""#), "Aster");
+    assert_eq!(search(r#"searchText = "birch-realm""#), "Birch");
+    assert_eq!(search("isOffline = true"), "Birch");
+    assert_eq!(search("isDND = true, isOffline = true"), "Birch,Cedar");
+    assert_eq!(search("interests = { 1 }"), "");
+    env.state().borrow_mut().recent_allies.enabled = false;
+    assert_eq!(search(""), "");
+}
+
+#[test]
+fn quest_hub_relation_reads_hub_quests() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state()
+        .borrow_mut()
+        .quest_hub_related_quests
+        .insert(7001, [84001, 84002].into_iter().collect());
+    eval_ok(
+        &env,
+        r#"
+        if C_QuestHub.IsQuestCurrentlyRelatedToHub(84001, 7001) ~= true then return "related" end
+        if C_QuestHub.IsQuestCurrentlyRelatedToHub(84003, 7001) ~= false then return "other-quest" end
+        if C_QuestHub.IsQuestCurrentlyRelatedToHub(84001, 7002) ~= false then return "other-hub" end
+        return "ok"
+        "#,
+    );
+}
+
+#[test]
+fn initiative_task_reward_scaling_applies_task_scale() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state()
+        .borrow_mut()
+        .neighborhood_task_reward_scales
+        .insert(55, 1.5);
+    eval_ok(
+        &env,
+        r#"
+        if C_NeighborhoodInitiative.GetInitiativeTaskRewardScaling(55, 10) ~= 15 then return "scaled" end
+        if C_NeighborhoodInitiative.GetInitiativeTaskRewardScaling(55, 3) ~= 4 then return "floor" end
+        if C_NeighborhoodInitiative.GetInitiativeTaskRewardScaling(56, 10) ~= 10 then return "unscaled" end
+        return "ok"
+        "#,
+    );
+}
+
+#[test]
+fn random_training_ground_joins_queue_battlefield() {
+    let env = WowLuaEnv::new().unwrap();
+    eval_ok(
+        &env,
+        r#"
+        C_PvP.JoinRandomTrainingGroundBattleground()
+        local status, name = GetBattlefieldStatus(1)
+        if status ~= "queued" or name ~= "Random Training Ground" then return "bg:" .. tostring(name) end
+        C_PvP.JoinRandomTrainingGroundArena()
+        status, name = GetBattlefieldStatus(1)
+        if status ~= "queued" or name ~= "Random Training Ground Arena" then return "arena" end
+        return "ok"
+        "#,
+    );
+    let queued_updates = env
+        .state()
+        .borrow()
+        .events
+        .pending()
+        .iter()
+        .filter(|event| event.name == "UPDATE_BATTLEFIELD_STATUS")
+        .count();
+    assert_eq!(queued_updates, 2);
+}
+
+#[test]
+fn close_fullscreen_browser_is_callable_without_browser() {
+    let env = WowLuaEnv::new().unwrap();
+    let returned: i32 = env
+        .eval("return select('#', C_Browser.CloseFullscreenBrowser())")
+        .unwrap();
+    assert_eq!(returned, 0);
+}

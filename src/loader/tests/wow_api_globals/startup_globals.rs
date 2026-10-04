@@ -849,7 +849,7 @@ fn test_patch_12_1_safe_global_bridges() {
             if C_RecruitAFriend.IsSystemSupported() ~= false then return "raf-supported" end
             local canSummon, summonReason = C_RecruitAFriend.CanSummonFriend("player")
             if canSummon ~= false or summonReason ~= nil then return "raf-summon" end
-            if C_Roleset.ApplyRolesetFilters({}) ~= true then return "roleset" end
+            if select('#', C_Roleset.ApplyRolesetFilters({}, {})) ~= 0 then return "roleset" end
             if C_SocialQueue.IsSystemEnabled() ~= false then return "social-queue-enabled" end
             if C_SocialQueue.IsSystemSupported() ~= false then return "social-queue-supported" end
             if C_FriendList.IsLegacyFriendSystemEnabled() ~= false then return "legacy-friends" end

@@ -1,4 +1,4 @@
-use super::permanent_shims::{c_fog_of_war, c_nameplate};
+use super::permanent_shims::{c_browser, c_fog_of_war, c_nameplate};
 use super::{
     c_allied_races, c_ardenweald_gardening, c_arrow_callout_manager, c_artifact_relic_forge_ui,
     c_artifact_ui, c_azerite_empowered_item, c_azerite_essence, c_azerite_item, c_barber_shop,
@@ -56,6 +56,7 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     #[cfg(feature = "retail-12-0-0")]
     super::c_combat_text::register(state)?;
     super::c_neighborhood_initiative::register(state)?;
+    super::c_roleset::register(state)?;
     #[cfg(all(
         feature = "retail-12-0-5",
         any(feature = "profile-retail", feature = "client-ptr")
@@ -69,6 +70,8 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_transmog_outfit_info::register(state)?;
     c_ardenweald_gardening::register_c_ardenweald_gardening_surface(state)?;
     c_arrow_callout_manager::register_c_arrow_callout_manager_surface(state)?;
+    #[cfg(feature = "retail-12-1-0")]
+    c_browser::register_c_browser_surface(state)?;
     c_player_interaction_manager::register_c_player_interaction_manager_surface(state)
 }
 

@@ -90,7 +90,35 @@ fn query_training_ground(state: &mut LuaState, kind: TrainingGroundKind) -> LuaR
 fn register_patch_12_1_c_pvp_surface(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
     // 12.1.0 split the random Training Grounds join into arena/battleground calls.
     crate::c_api::mark_namespace_keys_removed(state, ns, &["JoinRandomTrainingGround"]);
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "JoinRandomTrainingGroundArena",
+        join_random_training_ground_arena,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "JoinRandomTrainingGroundBattleground",
+        join_random_training_ground_battleground,
+    )?;
     table_set_rust_fn_static(state, ns, "CanSurrenderArena", can_surrender_arena)
+}
+
+/// Random training-ground queues occupy the single modeled battlefield slot,
+/// named after the PVPUI queue option that issues them.
+#[cfg(feature = "retail-12-1-0")]
+fn join_random_training_ground_arena(state: &mut LuaState) -> LuaResult<u32> {
+    let name = "Random Training Ground Arena".to_string();
+    crate::lua_api::globals::battlefield_verbs::queue_battlefield(state, 1, name)?;
+    Ok(0)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn join_random_training_ground_battleground(state: &mut LuaState) -> LuaResult<u32> {
+    let name = "Random Training Ground".to_string();
+    crate::lua_api::globals::battlefield_verbs::queue_battlefield(state, 1, name)?;
+    Ok(0)
 }
 
 #[cfg(not(feature = "retail-12-1-0"))]

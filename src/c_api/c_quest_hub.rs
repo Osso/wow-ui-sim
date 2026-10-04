@@ -26,7 +26,28 @@ fn register_patch_12_0_7_quest_hub_surface(
         quest_hub,
         "GetDragonridingRacesForAreaPOI",
         get_dragonriding_races_for_area_poi,
-    )
+    )?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(
+        state,
+        quest_hub,
+        "IsQuestCurrentlyRelatedToHub",
+        is_quest_currently_related_to_hub,
+    )?;
+    Ok(())
+}
+
+#[cfg(feature = "retail-12-1-0")]
+fn is_quest_currently_related_to_hub(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let quest_id = i32::from_stack(state, 1)?;
+    let hub_area_poi_id = i32::from_stack(state, 2)?;
+    let related = borrow_state(state)?
+        .quest_hub_related_quests
+        .get(&hub_area_poi_id)
+        .is_some_and(|quests| quests.contains(&quest_id));
+    state.push(Val::Bool(related));
+    Ok(1)
 }
 
 #[cfg(not(any(feature = "retail-12-0-7", feature = "retail-12-1-0")))]

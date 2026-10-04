@@ -204,6 +204,10 @@ macro_rules! build_empty_sim_state {
             spell_cooldown_categories: HashMap::new(),
             spell_cooldown_item_sources: HashMap::new(),
             transmog_enabled: true,
+            active_blocked_rolesets: Vec::new(),
+            active_allowed_rolesets: Vec::new(),
+            quest_hub_related_quests: HashMap::new(),
+            neighborhood_task_reward_scales: HashMap::new(),
             #[cfg(feature = "retail-12-0-7")]
             delve_entrance_title: None,
             #[cfg(feature = "retail-12-0-7")]

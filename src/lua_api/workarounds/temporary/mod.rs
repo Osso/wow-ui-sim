@@ -136,7 +136,6 @@ pub(crate) mod quest_objective_defaults;
 pub(crate) mod reincarnation_defaults;
 pub(crate) mod reputation_state;
 pub(crate) mod restricted_actions_defaults;
-pub(crate) mod roleset_defaults;
 pub(crate) mod scenario_defaults;
 pub(crate) mod script_bucket_throttle_limits;
 pub(crate) mod scripted_animation_effect_defaults;

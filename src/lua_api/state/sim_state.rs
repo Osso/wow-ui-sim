@@ -224,6 +224,14 @@ pub struct SimState {
     pub spell_cooldown_item_sources: HashMap<u32, i32>,
     /// Account-level transmog availability; the simulator enables it.
     pub transmog_enabled: bool,
+    /// `C_Roleset.ApplyRolesetFilters` blocklist, in applied order.
+    pub active_blocked_rolesets: Vec<String>,
+    /// `C_Roleset.ApplyRolesetFilters` allowlist, in applied order.
+    pub active_allowed_rolesets: Vec<String>,
+    /// Quests currently tied to each quest hub, keyed by hub area POI ID.
+    pub quest_hub_related_quests: HashMap<i32, HashSet<i32>>,
+    /// Host reward multipliers for neighborhood initiative tasks; absent is unscaled.
+    pub neighborhood_task_reward_scales: HashMap<i32, f64>,
     /// Host-owned entrance title; None is no title, not a synthetic location.
     #[cfg(feature = "retail-12-0-7")]
     pub delve_entrance_title: Option<String>,

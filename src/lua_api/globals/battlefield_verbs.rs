@@ -55,14 +55,19 @@ fn stack_truthy(state: &mut LuaState, index: i32) -> bool {
 /// distinguish party/group join flavour; sim has one queue slot).
 pub(super) fn join_battlefield(state: &mut LuaState) -> LuaResult<u32> {
     let index = stack_i32(state, 1).unwrap_or(1);
+    queue_battlefield(state, index, format!("Battleground {index}"))?;
+    Ok(0)
+}
+
+/// Places the player in the single modeled battlefield queue slot.
+pub(crate) fn queue_battlefield(state: &mut LuaState, index: i32, name: String) -> LuaResult<()> {
     {
         let mut st = borrow_state_mut(state)?;
         st.battlefield_queue.status = BattlefieldStatus::Queued;
         st.battlefield_queue.index = index;
-        st.battlefield_queue.name = format!("Battleground {index}");
+        st.battlefield_queue.name = name;
     }
-    push_event(state, "UPDATE_BATTLEFIELD_STATUS")?;
-    Ok(0)
+    push_event(state, "UPDATE_BATTLEFIELD_STATUS")
 }
 
 /// `AcceptBattlefieldPort(index, accept)` — accept/decline the port

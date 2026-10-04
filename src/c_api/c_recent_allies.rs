@@ -68,6 +68,8 @@ pub struct RecentAllyInteractionContextData {
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_RecentAllies")?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(state, namespace, "SearchRecentAllies", search_recent_allies)?;
     table_set_rust_fn_static(state, namespace, "GetRecentAllies", get_recent_allies)
 }
 
@@ -79,13 +81,116 @@ fn get_recent_allies(state: &mut LuaState) -> LuaResult<u32> {
         }
         sim.recent_allies.entries.clone()
     };
+    push_ally_sequence(state, &entries);
+    Ok(1)
+}
+
+/// `RecentAlliesSearchInfo`: checked status flags are alternatives (the social
+/// view ORs its filter options); text, status, and interests must all match.
+/// Disabled Recent Allies yields an empty list for the non-nilable result.
+#[cfg(feature = "retail-12-1-0")]
+fn search_recent_allies(state: &mut LuaState) -> LuaResult<u32> {
+    let search = AllySearch::read(state, crate::lua_bridge::stack_val(state, 1));
+    let entries: Vec<RecentAllyData> = {
+        let sim = borrow_state(state)?;
+        let allies = &sim.recent_allies;
+        if allies.enabled {
+            allies
+                .entries
+                .iter()
+                .filter(|ally| search.matches(ally))
+                .cloned()
+                .collect()
+        } else {
+            Vec::new()
+        }
+    };
+    push_ally_sequence(state, &entries);
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-1-0")]
+struct AllySearch {
+    text: String,
+    statuses: [bool; 4],
+    has_interests: bool,
+}
+
+#[cfg(feature = "retail-12-1-0")]
+impl AllySearch {
+    fn read(state: &mut LuaState, info: Val) -> Self {
+        use crate::lua_api::methods::{table_get, val_to_string};
+        if !matches!(info, Val::Table(_)) {
+            return Self {
+                text: String::new(),
+                statuses: [false; 4],
+                has_interests: false,
+            };
+        }
+        let mut flag = |key| matches!(table_get(state, info, key), Val::Bool(true));
+        let statuses = [
+            flag("isOnline"),
+            flag("isOffline"),
+            flag("isDND"),
+            flag("isAFK"),
+        ];
+        let interests = table_get(state, info, "interests");
+        let has_interests = match interests {
+            Val::Table(table) => state
+                .gc
+                .tables
+                .get(table)
+                .is_some_and(|table| !matches!(table.get_int(1), Val::Nil)),
+            _ => false,
+        };
+        let text = table_get(state, info, "searchText");
+        Self {
+            text: val_to_string(state, text)
+                .unwrap_or_default()
+                .to_lowercase(),
+            statuses,
+            has_interests,
+        }
+    }
+
+    fn matches(&self, ally: &RecentAllyData) -> bool {
+        // INFERRED: ally interests are not modeled, so no ally carries a
+        // requested interest.
+        !self.has_interests && self.matches_text(ally) && self.matches_status(&ally.state_data)
+    }
+
+    fn matches_text(&self, ally: &RecentAllyData) -> bool {
+        let character = &ally.character_data;
+        let note = ally.interaction_data.note.as_deref().unwrap_or("");
+        self.text.is_empty()
+            || [character.name.as_str(), character.full_name.as_str(), note]
+                .iter()
+                .any(|field| field.to_lowercase().contains(&self.text))
+    }
+
+    fn matches_status(&self, status: &RecentAllyStateData) -> bool {
+        let holds = [
+            status.is_online,
+            !status.is_online,
+            status.is_dnd,
+            status.is_afk,
+        ];
+        !self.statuses.contains(&true)
+            || self
+                .statuses
+                .iter()
+                .zip(holds)
+                .any(|(requested, holds)| *requested && holds)
+    }
+}
+
+fn push_ally_sequence(state: &mut LuaState, entries: &[RecentAllyData]) {
     let sequence = push_snapshot_table(state);
     for (index, ally) in entries.iter().enumerate() {
         let row = push_ally_table(state, ally);
         set_table_array(state, sequence, (index + 1) as i64, row);
         state.top -= 1;
     }
-    Ok(1)
 }
 
 /// Builders leave one table on the VM stack, rooted across all child allocations.

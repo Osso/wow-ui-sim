@@ -1,4 +1,5 @@
-//! Tracked initiative membership only; task records and events remain unmodeled.
+//! Tracked initiative membership and host task reward scales; task records and
+//! events remain unmodeled.
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{
@@ -33,7 +34,34 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "RemoveTrackedInitiativeTask",
         remove_tracked_task,
-    )
+    )?;
+    if cfg!(feature = "retail-12-1-0") {
+        table_set_rust_fn_static(
+            state,
+            namespace,
+            "GetInitiativeTaskRewardScaling",
+            get_task_reward_scaling,
+        )?;
+    }
+    Ok(())
+}
+
+/// Applies the task's host reward multiplier to a reward count. INFERRED:
+/// scaled counts round down so a reward never exceeds its multiplied amount.
+fn get_task_reward_scaling(state: &mut LuaState) -> LuaResult<u32> {
+    let id = task_id(state)?;
+    let Val::Num(num_items) = stack_val(state, 2) else {
+        return Err(rilua::runtime_error(
+            "GetInitiativeTaskRewardScaling requires a numeric item count",
+        ));
+    };
+    let scale = borrow_state(state)?
+        .neighborhood_task_reward_scales
+        .get(&id)
+        .copied()
+        .unwrap_or(1.0);
+    state.push(Val::Num((num_items * scale).floor()));
+    Ok(1)
 }
 
 fn task_id(state: &LuaState) -> LuaResult<i32> {
