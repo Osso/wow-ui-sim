@@ -288,6 +288,34 @@
       "implementation": "resolve_runtime_widget_type",
       "compiled_revision": "851e5a3db",
       "proof": "agent-run GREEN on branch; no independent review"
+    },
+    {
+      "id": "aura-filters-12-1-0",
+      "symbols": [
+        "aura filter strings: HELPFUL|RAID, !, DISPELLABLE, IMPORTANT, RAID_PLAYER_DISPELLABLE"
+      ],
+      "scope": "GetUnitAuraInstanceIDs and IsAuraFilteredOutByInstanceID parse filter components (| or space, case-insensitive, ! negation) against seeded aura state and aura_filter_facts. INFERRED: IMPORTANT is spell-level; no-polarity means helpful; CANCELABLE/CROWD_CONTROL/BIG_DEFENSIVE/RAID_IN_COMBAT/INCLUDE_NAME_PLATE_ONLY impose nothing. GetAuraSlots/GetAuraDataByIndex/GetUnitAuras keep legacy polarity-only selection.",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_1_0_aura_filters.rs"
+      ],
+      "implementation": "src/c_api/aura_filter.rs",
+      "compiled_revision": "c7ea1eca1",
+      "proof": "agent-run GREEN; no independent review"
+    },
+    {
+      "id": "aura-secret-context-12-1-0",
+      "symbols": [
+        "RequiresUnitAuraAccess APIs, AuraData, UNIT_AURA payload"
+      ],
+      "scope": "Under unit_auras_restricted (12.1.0), RequiresUnitAuraAccess APIs in C_UnitAuras/C_TooltipInfo error for tainted callers; AuraData and UNIT_AURA update info secret-wrapped; spell-keyed APIs callable, never-secret spells plain. Not modeled: secret vector from GetUnitAuras, scalar SecretWhenUnitAuraRestricted outputs, legacy UnitAura/UnitBuff/UnitDebuff gating.",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_1_0_aura_secret_context.rs"
+      ],
+      "implementation": "src/c_api/unit_aura_access.rs",
+      "compiled_revision": "c7ea1eca1",
+      "proof": "agent-run GREEN; no independent review"
     }
   ],
   "source_rows": [
@@ -503,9 +531,11 @@
     },
     {
       "source_id": "prose-2026-06-18-043",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+      "capabilities": [
+        "aura-secret-context-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Index/slot/instance errors and secret AuraData proven; \"GetUnitAuras returns a secret vector\" not modeled (docs mark it RequiresUnitAuraAccess; rilua has no host-side table wrap)."
     },
     {
       "source_id": "source-context-044",
@@ -799,27 +829,35 @@
     },
     {
       "source_id": "prose-2026-06-30-097",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+      "capabilities": [
+        "aura-secret-context-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Aura secret context proven (patch_12_1_0_aura_secret_context)."
     },
     {
       "source_id": "prose-2026-06-30-098",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+      "capabilities": [
+        "aura-secret-context-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Aura secret context proven (patch_12_1_0_aura_secret_context)."
     },
     {
       "source_id": "prose-2026-06-30-099",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+      "capabilities": [
+        "aura-secret-context-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Aura secret context proven (patch_12_1_0_aura_secret_context)."
     },
     {
       "source_id": "prose-2026-06-30-100",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+      "capabilities": [
+        "aura-secret-context-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Aura secret context proven (patch_12_1_0_aura_secret_context)."
     },
     {
       "source_id": "prose-2026-06-30-101",
@@ -945,9 +983,11 @@
     },
     {
       "source_id": "prose-2026-07-07-124",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current native filter parser handles polarity and PLAYER only. Add negation, DISPELLABLE/IMPORTANT and raid-dispel eligibility using explicit aura/raid state; do not return plausible defaults."
+      "capabilities": [
+        "aura-filters-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Filter component proven through GetUnitAuraInstanceIDs (patch_12_1_0_aura_filters); INFERRED semantics recorded in capability."
     },
     {
       "source_id": "prose-2026-07-07-125",
@@ -1081,15 +1121,19 @@
     },
     {
       "source_id": "prose-2026-07-07-146",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current native filter parser handles polarity and PLAYER only. Add negation, DISPELLABLE/IMPORTANT and raid-dispel eligibility using explicit aura/raid state; do not return plausible defaults."
+      "capabilities": [
+        "aura-filters-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Filter component proven through GetUnitAuraInstanceIDs (patch_12_1_0_aura_filters); INFERRED semantics recorded in capability."
     },
     {
       "source_id": "prose-2026-07-07-147",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Existing aura queries/filtering do not supply complete Retail caller-sensitive secret vectors, restricted index/slot/instance access, fully secret AuraData and UNIT_AURA payloads. Model these outputs and error boundaries over explicit aura-secret context."
+      "capabilities": [
+        "aura-secret-context-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Aura secret context proven (patch_12_1_0_aura_secret_context)."
     },
     {
       "source_id": "prose-2026-07-07-148",
@@ -1151,21 +1195,27 @@
     },
     {
       "source_id": "prose-2026-07-14-160",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current native filter parser handles polarity and PLAYER only. Add negation, DISPELLABLE/IMPORTANT and raid-dispel eligibility using explicit aura/raid state; do not return plausible defaults."
+      "capabilities": [
+        "aura-filters-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Filter component proven through GetUnitAuraInstanceIDs (patch_12_1_0_aura_filters); INFERRED semantics recorded in capability."
     },
     {
       "source_id": "prose-2026-07-14-161",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current native filter parser handles polarity and PLAYER only. Add negation, DISPELLABLE/IMPORTANT and raid-dispel eligibility using explicit aura/raid state; do not return plausible defaults."
+      "capabilities": [
+        "aura-filters-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Filter component proven through GetUnitAuraInstanceIDs (patch_12_1_0_aura_filters); INFERRED semantics recorded in capability."
     },
     {
       "source_id": "prose-2026-07-14-162",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current native filter parser handles polarity and PLAYER only. Add negation, DISPELLABLE/IMPORTANT and raid-dispel eligibility using explicit aura/raid state; do not return plausible defaults."
+      "capabilities": [
+        "aura-filters-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Filter component proven through GetUnitAuraInstanceIDs (patch_12_1_0_aura_filters); INFERRED semantics recorded in capability."
     },
     {
       "source_id": "prose-2026-07-14-163",
