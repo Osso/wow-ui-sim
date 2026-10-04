@@ -289,6 +289,18 @@ fn fire_visibility_bindings(
     frame_id: u64,
     handler_name: &str,
 ) -> LuaResult<()> {
+    run_visibility_handlers(state, frame_id, handler_name)?;
+    if handler_name == "OnShow" {
+        crate::lua_api::frame::methods::widgets::auto_focus_shown_editbox(state, frame_id)?;
+    }
+    Ok(())
+}
+
+fn run_visibility_handlers(
+    state: &mut LuaState,
+    frame_id: u64,
+    handler_name: &str,
+) -> LuaResult<()> {
     let handlers = get_scripts_for_dispatch(state, frame_id, handler_name);
     if handlers.is_empty() {
         return Ok(());

@@ -6,16 +6,18 @@ Patch 12.1 names `EventRegistrations` and `AlwaysPropagateInput` in `Enum.Forbid
 
 ### Event registration — modeled policy
 
-- [x] Reject `RegisterEvent`, `RegisterUnitEvent`, `RegisterAllEvents`, `RegisterEventCallback`, `RegisterUnitEventCallback`, `UnregisterEvent`, and `UnregisterAllEvents` when the receiver has `EventRegistrations`.
-- [x] Reject before changing membership, unit filters, all-event listeners, callback storage, or dispatch indexes. Existing registrations and callbacks continue to deliver events; queries remain available.
-- [x] Apply the restriction uniformly, without a caller-taint exemption. Unrestricted frames retain existing validation, return values, registration, and delivery behavior. Engine-owned cleanup is not a Lua registration mutation.
+- [x] Reject `RegisterEvent`, `RegisterUnitEvent`, `RegisterAllEvents`, `RegisterEventCallback`, `RegisterUnitEventCallback`, `UnregisterEvent`, `UnregisterAllEvents`, and `IsEventRegistered` (all annotated `ChecksForbiddenAspects`) when a tainted caller targets a receiver with `EventRegistrations`.
+- [x] Reject before changing membership, unit filters, all-event listeners, callback storage, or dispatch indexes. Existing registrations and callbacks continue to deliver events; secure callers keep queries and mutations.
+- [x] Secure callers are exempt: Blizzard's `AuraContainerPrivateMixin` registers events on AuraContainers, which carry `EventRegistrations`. Unrestricted frames retain existing validation, return values, registration, and delivery behavior. Engine-owned cleanup is not a Lua registration mutation.
+- [x] The `AuraContainer` intrinsic natively owns `EventRegistrations` (its XML declares none; 12.1.0: "Aura Containers have had the EventRegistrations Forbidden Aspect applied").
 
-### Keyboard propagation — modeled policy
+### Keyboard and mouse propagation — modeled policy
 
 - [x] A frame carrying `AlwaysPropagateInput` reports effective keyboard propagation as true, including an inherited mask and a mask added after propagation was disabled.
-- [x] Reject disabling propagation on such a frame without changing state; explicitly enabling it remains allowed.
+- [x] Reject disabling propagation from tainted callers without changing state; explicitly enabling it remains allowed, and a secure disable cannot hide the forced value.
 - [x] The existing parent-chain `OnKeyDown` dispatcher uses effective propagation after the handler returns, including a mask added by that handler.
 - [x] Zero-mask frames and earlier profiles retain ordinary propagation behavior and key-dispatch ordering.
+- [x] Physical mouse clicks propagate to parents from frames carrying `AlwaysPropagateInput` (inherited by children); `CanPropagateMouseClicks`/`CanPropagateMouseMotion` report the forced value. INFERRED: tainted `SetPropagateMouseClicks(false)`/`SetPropagateMouseMotion(false)` reject like the keyboard setter; mouse-motion pass-through is not modeled.
 
 ## How it works
 
@@ -32,6 +34,8 @@ Patch 12.1 names `EventRegistrations` and `AlwaysPropagateInput` in `Enum.Forbid
 ## Tests asserting this spec
 
 - `tests/forbidden_aspect_creation.rs` — five `event_registration_aspect_` tests cover mutation rejection, existing delivery, callback replacement, and zero-mask controls. Ordinary/unit/all listeners use the Rust event producer; callbacks use public `FireEvent`.
+- `tests/forbidden_aspect_enforcement.rs` — `aura_container_intrinsic_event_registrations_block_addons_not_blizzard`.
+- `src/iced_app/mouse_tests/forbidden_aspects.rs` — `forbidden_aspect_always_propagate_input_forces_inherited_child_click_propagation`.
 - `tests/keyboard.rs` — three `always_propagate_input_` tests cover state, inherited restrictions, and handler-time mask changes through real `send_key_press` parent routing.
 
 ## Known gaps (current cycle)
@@ -42,4 +46,4 @@ A pre-change fixture exposed an unrelated producer difference: public `FireEvent
 
 ## Out of scope
 
-Secret values, caller-taint/security enforcement, VM changes, native error wording and timing, mouse propagation, `OnKeyUp`, and changing keybinding/EditBox priority. This policy does not establish universal input propagation or Blizzard-private caller privileges. The separately scoped, still-unproven `ScriptedInput` and `QueryFocus` method policy is specified in [forbidden-aspect scripted input and focus queries](forbidden-aspect-scripted-input-query-focus.md).
+Secret values, VM changes, native error wording and timing, mouse-motion propagation, `OnKeyUp`, and changing keybinding/EditBox priority. This policy does not establish universal input propagation or Blizzard-private caller privileges. The separately scoped, still-unproven `ScriptedInput` and `QueryFocus` method policy is specified in [forbidden-aspect scripted input and focus queries](forbidden-aspect-scripted-input-query-focus.md).

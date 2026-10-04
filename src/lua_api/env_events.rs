@@ -7,8 +7,8 @@ use crate::lua_api::methods::{
     call_function as call_rilua_function, create_string, frame_ref, val_to_string,
 };
 use crate::lua_api::script_helpers::{
-    call_error_handler, event_matches_unit_filter, get_event_listeners, get_script,
-    protected_lua_pcall_state,
+    call_error_handler, event_matches_unit_filter, get_dispatch_script, get_event_listeners,
+    get_script, protected_lua_pcall_state,
 };
 use rilua::{LuaApi, LuaApiMut, Val};
 use std::cell::RefCell;
@@ -375,7 +375,7 @@ impl WowLuaEnv {
 
     fn on_event_handler(&self, lua: &mut rilua::Lua, widget_id: u64) -> Option<Val> {
         let state = lua.state_mut();
-        get_script(state, widget_id, "OnEvent")
+        get_dispatch_script(state, widget_id, "OnEvent")
     }
 
     fn log_event_dispatch(&self, trace_label: &Option<EventTraceLabel>, event: &str, phase: &str) {

@@ -15,9 +15,9 @@ The same source does not annotate `Region:IsMouseOver`; no global focus query is
 
 ## What it must do
 
-### Uniform policy assumption
+### Caller policy
 
-- [x] Apply all six gates uniformly, without caller-taint, caller-identity, or privileged-caller exceptions. This is a simulator policy assumption, not native security conformance.
+- [x] Gates apply to tainted (addon) callers only; secure callers keep every operation. 12.1.0 notes: Forbidden Aspects "prevent addons from using certain functionality", and "addons are not allowed to call input-related APIs" / "addons cannot query" focus.
 - [x] Reject a gated method when its receiver carries the relevant aspect.
 - [x] Reject before any state mutation, click-depth transition, cursor change, focus-script callback, or click callback.
 - [x] Preserve ordinary validation, return values, state changes, and callbacks for zero-mask receivers and receivers without the relevant aspect.
@@ -46,4 +46,4 @@ Seven retail tests cover the six gates and actual GUI/keyboard input. Independen
 
 ## Out of scope
 
-Native error wording/timing, native authority or taint semantics, secrets, VM/rilua changes, other forbidden aspects, global focus APIs, `IsMouseOver`, and text-method restrictions.
+Native error wording/timing, secrets, VM/rilua changes, other forbidden aspects, global focus APIs, `IsMouseOver`, and text-method restrictions.

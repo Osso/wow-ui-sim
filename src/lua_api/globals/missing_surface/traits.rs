@@ -4,7 +4,7 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, create_table,
     create_table_with_capacity, frame_ref, table_set,
 };
-use crate::lua_api::script_helpers::{get_event_listeners, get_script};
+use crate::lua_api::script_helpers::{get_dispatch_script, get_event_listeners};
 use crate::lua_api::talent_state;
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use crate::specializations;
@@ -37,7 +37,7 @@ pub(super) fn register_trait_surfaces(state: &mut LuaState) -> LuaResult<()> {
 
 fn fire_named_event_with_arg(state: &mut LuaState, event_name: &str, arg: Val) {
     for widget_id in get_event_listeners(state, event_name) {
-        let Some(handler) = get_script(state, widget_id, "OnEvent") else {
+        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
             continue;
         };
         let Ok(frame) = frame_ref(state, widget_id) else {

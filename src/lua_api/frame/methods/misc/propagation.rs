@@ -1,5 +1,6 @@
 //! Mouse click/motion and hyperlink propagation methods.
 
+use crate::lua_api::frame::methods::forbidden_aspects;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack};
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use crate::widget::Frame;
@@ -41,7 +42,34 @@ const PROPAGATION_METHODS: &[(&str, RustFn)] = &[
 ];
 
 pub fn can_propagate_mouse_clicks(state: &mut LuaState) -> LuaResult<u32> {
-    push_frame_bool(state, |frame| frame.propagate_mouse_clicks)
+    push_forced_mouse_propagation(state, |frame| frame.propagate_mouse_clicks)
+}
+
+/// AlwaysPropagateInput forces propagation without rewriting the stored preference.
+fn push_forced_mouse_propagation(
+    state: &mut LuaState,
+    read: impl FnOnce(&Frame) -> bool,
+) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let requested = borrow_state(state)?.widgets.get(id).is_some_and(read);
+    let propagate = requested || forbidden_aspects::input_propagation_forced(state, id)?;
+    state.push(Val::Bool(propagate));
+    Ok(1)
+}
+
+/// Clearing propagation is rejected under AlwaysPropagateInput.
+/// INFERRED: mirrors SetPropagateKeyboardInput(false); the mouse setters are unannotated.
+fn ensure_mouse_propagation_clearable(state: &mut LuaState, method_name: &str) -> LuaResult<()> {
+    let id = frame_id_from_stack(state, 1)?;
+    if bool::from_stack(state, 2)? {
+        return Ok(());
+    }
+    forbidden_aspects::ensure_forbidden_aspect_absent(
+        state,
+        id,
+        "AlwaysPropagateInput",
+        method_name,
+    )
 }
 
 fn push_frame_bool(state: &mut LuaState, read: impl FnOnce(&Frame) -> bool) -> LuaResult<u32> {
@@ -56,7 +84,7 @@ fn push_frame_bool(state: &mut LuaState, read: impl FnOnce(&Frame) -> bool) -> L
 }
 
 pub fn can_propagate_mouse_motion(state: &mut LuaState) -> LuaResult<u32> {
-    push_frame_bool(state, |frame| frame.propagate_mouse_motion)
+    push_forced_mouse_propagation(state, |frame| frame.propagate_mouse_motion)
 }
 
 pub fn does_hyperlink_propagate_to_parent(state: &mut LuaState) -> LuaResult<u32> {
@@ -64,6 +92,13 @@ pub fn does_hyperlink_propagate_to_parent(state: &mut LuaState) -> LuaResult<u32
 }
 
 pub fn set_hyperlink_propagate_to_parent(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    forbidden_aspects::ensure_forbidden_aspect_absent(
+        state,
+        id,
+        "UntrustedScriptExecution",
+        "SetHyperlinkPropagateToParent",
+    )?;
     set_frame_bool(state, |frame, value| {
         frame.propagate_hyperlinks_to_parent = value
     })
@@ -80,9 +115,11 @@ fn set_frame_bool(state: &mut LuaState, apply: impl FnOnce(&mut Frame, bool)) ->
 }
 
 pub fn set_propagate_mouse_clicks(state: &mut LuaState) -> LuaResult<u32> {
+    ensure_mouse_propagation_clearable(state, "SetPropagateMouseClicks")?;
     set_frame_bool(state, |frame, value| frame.propagate_mouse_clicks = value)
 }
 
 pub fn set_propagate_mouse_motion(state: &mut LuaState) -> LuaResult<u32> {
+    ensure_mouse_propagation_clearable(state, "SetPropagateMouseMotion")?;
     set_frame_bool(state, |frame, value| frame.propagate_mouse_motion = value)
 }

@@ -16,7 +16,7 @@ use std::ops::Range;
 
 use crate::Result;
 use crate::lua_api::methods::{call_function, create_string, frame_ref};
-use crate::lua_api::script_helpers::get_script;
+use crate::lua_api::script_helpers::get_dispatch_script;
 use rilua::{LuaApiMut, Val};
 
 use super::env::WowLuaEnv;
@@ -323,7 +323,7 @@ impl WowLuaEnv {
         handler_name: &str,
     ) -> Result<bool> {
         let mut lua = self.lua.borrow_mut();
-        let handler = get_script(lua.state_mut(), widget_id, handler_name);
+        let handler = get_dispatch_script(lua.state_mut(), widget_id, handler_name);
         let Some(handler) = handler else {
             return Ok(false);
         };

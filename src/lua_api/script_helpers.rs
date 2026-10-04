@@ -279,6 +279,7 @@ const DISPATCH_BINDINGS: [ScriptBinding; 3] = [
 /// installed mid-pass still applies to later frames.
 pub(super) struct ScriptHandlerLookup {
     handler_key: GcRef<LuaString>,
+    layout_handler: bool,
     binding_tables: [Option<GcRef<Table>>; 3],
 }
 
@@ -286,6 +287,7 @@ impl ScriptHandlerLookup {
     pub(super) fn new(state: &mut LuaState, handler_name: &str) -> Self {
         Self {
             handler_key: script_handler_key_ref(state, handler_name),
+            layout_handler: is_layout_script_handler(handler_name),
             binding_tables: [None; 3],
         }
     }
@@ -309,6 +311,7 @@ impl ScriptHandlerLookup {
                 handler => found.push(ScriptDispatchHandler { binding, handler }),
             }
         }
+        retain_trusted_dispatch_handlers(state, widget_id, self.layout_handler, &mut found);
         found
     }
 
@@ -355,7 +358,49 @@ pub fn get_script_handlers_for_dispatch(
             });
         }
     }
+    let layout_handler = is_layout_script_handler(handler_name);
+    retain_trusted_dispatch_handlers(state, widget_id, layout_handler, &mut scripts);
     scripts
+}
+
+/// The normal-binding handler that engine dispatch would run, after forbidden-aspect
+/// filtering. `get_script` stays unfiltered for script-binding queries.
+pub fn get_dispatch_script(
+    state: &mut LuaState,
+    widget_id: u64,
+    handler_name: &str,
+) -> Option<Val> {
+    let handler = get_script(state, widget_id, handler_name)?;
+    let mut handlers = vec![ScriptDispatchHandler {
+        binding: ScriptBinding::Normal,
+        handler,
+    }];
+    let layout_handler = is_layout_script_handler(handler_name);
+    retain_trusted_dispatch_handlers(state, widget_id, layout_handler, &mut handlers);
+    handlers.pop().map(|handler| handler.handler)
+}
+
+pub(crate) fn is_layout_script_handler(handler_name: &str) -> bool {
+    handler_name == "OnSizeChanged"
+}
+
+fn retain_trusted_dispatch_handlers(
+    state: &mut LuaState,
+    widget_id: u64,
+    layout_handler: bool,
+    handlers: &mut Vec<ScriptDispatchHandler>,
+) {
+    use crate::lua_api::frame::methods::forbidden_aspects;
+    if handlers.is_empty() {
+        return;
+    }
+    match forbidden_aspects::suppresses_untrusted_handler(state, widget_id, layout_handler) {
+        Ok(false) => {}
+        Ok(true) => handlers.retain(|handler| {
+            !forbidden_aspects::is_addon_installed_handler(state, handler.handler)
+        }),
+        Err(error) => call_error_handler_state(state, &error.to_string()),
+    }
 }
 
 fn sync_on_update_cache(state: &mut LuaState, widget_id: u64, handler_name: &str) {

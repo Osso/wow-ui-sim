@@ -7,7 +7,7 @@ use crate::lua_api::methods::{
     create_table_with_capacity, frame_ref, table_set_num, table_set_static,
 };
 use crate::lua_api::script_helpers::{
-    call_error_handler_state, get_event_listeners, get_script, protected_lua_pcall_state,
+    call_error_handler_state, get_dispatch_script, get_event_listeners, protected_lua_pcall_state,
 };
 use crate::lua_api::state::{SpellFlyoutInfo, SpellFlyoutSlot};
 use crate::lua_api::state_types::CursorInfo;
@@ -342,7 +342,7 @@ fn spell_power_costs_table(state: &mut LuaState, spell_id: u32) -> Option<Val> {
 
 fn fire_cursor_changed(state: &mut LuaState) {
     for widget_id in get_event_listeners(state, "CURSOR_CHANGED") {
-        let Some(handler) = get_script(state, widget_id, "OnEvent") else {
+        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
             continue;
         };
         if !matches!(handler, Val::Function(_)) {

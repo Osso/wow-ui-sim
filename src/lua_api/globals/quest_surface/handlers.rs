@@ -4,7 +4,7 @@ use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, create_string_static,
     create_table, frame_ref, table_set,
 };
-use crate::lua_api::script_helpers::{get_event_listeners, get_script};
+use crate::lua_api::script_helpers::{get_dispatch_script, get_event_listeners};
 use crate::lua_bridge::FromStack;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
@@ -209,7 +209,7 @@ pub(super) fn push_optional_bool(state: &mut LuaState, value: Option<bool>) {
 
 pub(super) fn fire_event_with_args(state: &mut LuaState, event_name: &'static str, args: &[Val]) {
     for widget_id in get_event_listeners(state, event_name) {
-        let Some(handler) = get_script(state, widget_id, "OnEvent") else {
+        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
             continue;
         };
         let Ok(frame) = frame_ref(state, widget_id) else {

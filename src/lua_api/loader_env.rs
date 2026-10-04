@@ -158,8 +158,9 @@ impl<'a> LoaderEnv<'a> {
         })?;
         for widget_id in listeners {
             let result: std::result::Result<(), crate::Error> = self.with_state(|state| {
-                let handler =
-                    crate::lua_api::script_helpers::get_script(state, widget_id, "OnEvent");
+                let handler = crate::lua_api::script_helpers::get_dispatch_script(
+                    state, widget_id, "OnEvent",
+                );
                 let Some(handler) = handler else {
                     return Ok(());
                 };

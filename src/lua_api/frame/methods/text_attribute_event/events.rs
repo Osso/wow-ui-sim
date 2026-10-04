@@ -148,6 +148,7 @@ pub(super) fn register_all_events(state: &mut LuaState) -> LuaResult<u32> {
 }
 pub(super) fn is_event_registered(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
+    ensure_forbidden_aspect_absent(state, id, "EventRegistrations", "IsEventRegistered")?;
     let event = val_to_string(state, stack_val(state, 2)).unwrap_or_default();
     let sim = borrow_state(state)?;
     let frame = sim.widgets.get(id);
@@ -299,7 +300,7 @@ pub(super) fn hook_script(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     }
     let old = get_rilua_script_binding(state, frame_id, &handler_name, binding).unwrap_or(Val::Nil);
-    let chained = binding_args::build_hooked_script(state, old, hook)?;
+    let chained = binding_args::build_hooked_script(state, frame_id, &handler_name, old, hook)?;
     set_rilua_script_binding(state, frame_id, &handler_name, binding, chained);
     imply_mouse_enabled_for_mouse_handler(state, frame_id, &handler_name)?;
     state.push(Val::Bool(true));

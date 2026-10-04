@@ -151,8 +151,10 @@ fn aura_button_icon_and_overlay_border_follow_real_initializer_order() {
     });
 }
 
+/// Tainted (addon) callers are rejected; secure callers keep access, as Blizzard's
+/// AuraContainerPrivateMixin registers events on EventRegistrations-restricted containers.
 #[test]
-fn event_registration_aspect_rejects_all_mutations_without_caller_exception() {
+fn event_registration_aspect_rejects_addon_callers_and_permits_secure_callers() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
         local operations = {
@@ -163,8 +165,9 @@ fn event_registration_aspect_rejects_all_mutations_without_caller_exception() {
             {'RegisterUnitEventCallback', 'UNIT_HEALTH', function() end, 'player'},
             {'UnregisterEvent', 'PLAYER_LOGIN'},
             {'UnregisterAllEvents'},
+            {'IsEventRegistered', 'PLAYER_LOGIN'},
         }
-        local accepted = {}
+        local outcomes = {}
         for _, taint in ipairs({false, 'EventRegistrationProbe'}) do
             for _, operation in ipairs(operations) do
                 local frame = CreateFrame('Frame')
@@ -175,15 +178,18 @@ fn event_registration_aspect_rejects_all_mutations_without_caller_exception() {
                 end
                 if taint then debug.setobjecttaint(invoke, taint) end
                 local ok, err = pcall(invoke)
-                if ok then
-                    accepted[#accepted + 1] = operation[1] .. ':' .. tostring(taint)
-                else
-                    assert(type(err) == 'string', 'rejection must report an error')
-                end
+                assert(ok or type(err) == 'string', 'rejection must report an error')
+                outcomes[#outcomes + 1] = operation[1] .. ':' .. tostring(taint) .. '=' .. tostring(ok)
             end
         end
-        assert(#accepted == 0, 'aspect accepted mutations: ' .. table.concat(accepted, ', '))
-    "#).expect("the modeled aspect rejects all seven mutations for both caller contexts");
+        local expected = {}
+        for _, taint in ipairs({false, 'EventRegistrationProbe'}) do
+            for _, operation in ipairs(operations) do
+                expected[#expected + 1] = operation[1] .. ':' .. tostring(taint) .. '=' .. tostring(not taint)
+            end
+        end
+        assert(table.concat(outcomes, ' ') == table.concat(expected, ' '), table.concat(outcomes, ' '))
+    "#).expect("addon callers are rejected for all eight operations while secure callers pass");
 }
 
 #[test]
@@ -214,10 +220,16 @@ fn event_registration_aspect_preserves_existing_listener_delivery() {
         for _, frame in ipairs({state.individualFrame, state.unitFrame, state.allFrame}) do
             frame:AddForbiddenAspects(Enum.ForbiddenAspect.EventRegistrations)
         end
-        state.unregister = pcall(state.individualFrame.UnregisterEvent, state.individualFrame, 'PLAYER_LOGIN')
-        state.unitClear = pcall(state.unitFrame.UnregisterAllEvents, state.unitFrame)
-        state.allClear = pcall(state.allFrame.UnregisterAllEvents, state.allFrame)
-        state.unitReplace = pcall(state.unitFrame.RegisterUnitEvent, state.unitFrame, 'UNIT_HEALTH', 'target')
+        local function addonCall(method, frame, ...)
+            local args = {...}
+            local function invoke() return frame[method](frame, unpack(args)) end
+            debug.setobjecttaint(invoke, 'EventAspectProbe')
+            return pcall(invoke)
+        end
+        state.unregister = addonCall('UnregisterEvent', state.individualFrame, 'PLAYER_LOGIN')
+        state.unitClear = addonCall('UnregisterAllEvents', state.unitFrame)
+        state.allClear = addonCall('UnregisterAllEvents', state.allFrame)
+        state.unitReplace = addonCall('RegisterUnitEvent', state.unitFrame, 'UNIT_HEALTH', 'target')
     "#).expect("prepare individual, unit-filtered, and all-event registrations before restriction");
     env.fire_event("PLAYER_LOGIN").unwrap();
     env.fire_event_with_args("UNIT_HEALTH", &[env.lua_string("target")])
@@ -255,11 +267,17 @@ fn event_registration_aspect_preserves_callbacks_when_replacement_is_rejected() 
         state.ordinaryFrame:AddForbiddenAspects(Enum.ForbiddenAspect.EventRegistrations)
         state.unitFrame:AddForbiddenAspects(Enum.ForbiddenAspect.EventRegistrations)
         local function replacement() state.replacement = state.replacement + 1 end
-        state.clearOrdinary = pcall(state.ordinaryFrame.UnregisterAllEvents, state.ordinaryFrame)
-        state.clearUnit = pcall(state.unitFrame.UnregisterEvent, state.unitFrame, 'UNIT_HEALTH')
-        state.replaceOrdinary = pcall(state.ordinaryFrame.RegisterEventCallback,
+        local function addonCall(method, frame, ...)
+            local args = {...}
+            local function invoke() return frame[method](frame, unpack(args)) end
+            debug.setobjecttaint(invoke, 'EventAspectProbe')
+            return pcall(invoke)
+        end
+        state.clearOrdinary = addonCall('UnregisterAllEvents', state.ordinaryFrame)
+        state.clearUnit = addonCall('UnregisterEvent', state.unitFrame, 'UNIT_HEALTH')
+        state.replaceOrdinary = addonCall('RegisterEventCallback',
             state.ordinaryFrame, 'MINIMAP_PING', replacement)
-        state.replaceUnit = pcall(state.unitFrame.RegisterUnitEventCallback,
+        state.replaceUnit = addonCall('RegisterUnitEventCallback',
             state.unitFrame, 'UNIT_HEALTH', replacement, 'target')
     "#).expect("prepare callback listeners and attempt replacement after adding the aspect");
     env.exec(r#"
@@ -361,7 +379,9 @@ fn scripted_focus_aspect_rejects_click_before_checkbutton_or_handler_changes() {
         local restrictedCalls = 0
         restricted:SetScript('OnClick', function() restrictedCalls = restrictedCalls + 1 end)
         restricted:AddForbiddenAspects(Enum.ForbiddenAspect.ScriptedInput)
-        local ok, err = pcall(restricted.Click, restricted)
+        local function addonClick() return restricted:Click() end
+        debug.setobjecttaint(addonClick, 'ScriptedInputProbe')
+        local ok, err = pcall(addonClick)
         assert(not ok and type(err) == 'string', 'ScriptedInput must reject Click')
         assert(not restricted:GetChecked(), 'rejected click must not toggle checked state')
         assert(restrictedCalls == 0, 'rejected click must not invoke OnClick')
@@ -395,7 +415,9 @@ fn scripted_focus_aspect_preserves_focus_and_cursor_while_engine_typing_continue
         local accepted = {}
         for _, operation in ipairs(operations) do
             local receiver = operation[2]
-            local ok, err = pcall(receiver[operation[1]], receiver, unpack(operation, 3))
+            local function invoke() return receiver[operation[1]](receiver, unpack(operation, 3)) end
+            debug.setobjecttaint(invoke, 'ScriptedInputProbe')
+            local ok, err = pcall(invoke)
             if ok then
                 accepted[#accepted + 1] = operation[1]
             else
@@ -426,9 +448,11 @@ fn scripted_focus_aspect_query_rejection_preserves_real_keyboard_focus() {
         QueryFocusBox:SetCursorPosition(1)
         QueryFocusBox:SetFocus()
         assert(QueryFocusBox:HasFocus() and not QueryIdleBox:HasFocus())
+        QueryFocusAddonHasFocus = function(box) return box:HasFocus() end
+        debug.setobjecttaint(QueryFocusAddonHasFocus, 'QueryFocusProbe')
         for _, box in ipairs({QueryFocusBox, QueryIdleBox}) do
             box:AddForbiddenAspects(Enum.ForbiddenAspect.QueryFocus)
-            local ok, err = pcall(box.HasFocus, box)
+            local ok, err = pcall(QueryFocusAddonHasFocus, box)
             assert(not ok and type(err) == 'string', 'QueryFocus must reject HasFocus')
         end
         assert(QueryFocusBox:GetCursorPosition() == 1)
@@ -439,7 +463,8 @@ fn scripted_focus_aspect_query_rejection_preserves_real_keyboard_focus() {
         assert(QueryFocusBox:GetText() == 'axb')
         assert(QueryFocusBox:GetCursorPosition() == 2)
         assert(QueryIdleBox:GetText() == '')
-        assert(not pcall(QueryFocusBox.HasFocus, QueryFocusBox))
+        assert(not pcall(QueryFocusAddonHasFocus, QueryFocusBox))
+        assert(QueryFocusBox:HasFocus(), 'secure callers keep the focus query')
     "#).expect("query rejection does not clear focus or block engine typing");
 }
 

@@ -44,9 +44,15 @@ fn forbidden_aspect_mouse_editbox_focus_and_typing_survive_scripted_rejections()
         assert(AspectClickedBox:HasFocus() and not AspectOtherBox:HasFocus())
         assert(AspectFocusGained == 1 and AspectFocusLost == 0)
         assert(AspectClickedBox:GetCursorPosition() == 2)
-        assert(not pcall(AspectOtherBox.SetFocus, AspectOtherBox))
-        assert(not pcall(AspectClickedBox.ClearFocus, AspectClickedBox))
-        assert(not pcall(AspectClickedBox.SetCursorPosition, AspectClickedBox, 0))
+        local function addonCall(method, frame, ...)
+            local args = {...}
+            local function invoke() return frame[method](frame, unpack(args)) end
+            debug.setobjecttaint(invoke, 'AspectMouseProbe')
+            return pcall(invoke)
+        end
+        assert(not addonCall('SetFocus', AspectOtherBox))
+        assert(not addonCall('ClearFocus', AspectClickedBox))
+        assert(not addonCall('SetCursorPosition', AspectClickedBox, 0))
         assert(AspectClickedBox:HasFocus() and not AspectOtherBox:HasFocus())
         assert(AspectClickedBox:GetCursorPosition() == 2)
         assert(AspectClickedBox:GetText() == 'ab')
@@ -105,7 +111,9 @@ fn forbidden_aspect_mouse_scripted_click_rejects_lua_but_preserves_physical_clic
             r#"
             assert(AspectMouseClicks == 2, 'unrestricted physical click must dispatch')
             AspectMouseButton:AddForbiddenAspects(Enum.ForbiddenAspect.ScriptedInput)
-            AspectMouseScriptAccepted = pcall(function() AspectMouseButton:Click() end)
+            local function addonClick() AspectMouseButton:Click() end
+            debug.setobjecttaint(addonClick, 'AspectMouseProbe')
+            AspectMouseScriptAccepted = pcall(addonClick)
             AspectMouseAfterScript = AspectMouseClicks
             "#,
         )
@@ -158,9 +166,10 @@ fn forbidden_aspect_mouse_query_focus_rejects_only_annotated_query() {
             assert(AspectMouseEnters == 1 and AspectMouseLeaves == 0)
             assert(AspectMouseFrame:IsMouseMotionFocus(), 'ordinary focus query must work')
             AspectMouseFrame:AddForbiddenAspects(Enum.ForbiddenAspect.QueryFocus)
-            AspectMouseQueryAccepted = pcall(function()
-                return AspectMouseFrame:IsMouseMotionFocus()
-            end)
+            local function addonQuery() return AspectMouseFrame:IsMouseMotionFocus() end
+            debug.setobjecttaint(addonQuery, 'AspectMouseProbe')
+            AspectMouseQueryAccepted = pcall(addonQuery)
+            assert(AspectMouseFrame:IsMouseMotionFocus(), 'secure callers keep the focus query')
             assert(GetMouseFocus() == AspectMouseFrame)
             assert(GetMouseFoci()[1] == AspectMouseFrame)
             assert(AspectMouseFrame:IsMouseOver(), 'unannotated geometry query stays available')
@@ -192,4 +201,55 @@ fn forbidden_aspect_mouse_query_focus_rejects_only_annotated_query() {
             "#,
         )
         .expect("restricted queries do not consume physical hover transitions");
+}
+
+#[test]
+fn forbidden_aspect_always_propagate_input_forces_inherited_child_click_propagation() {
+    let mut app = build_test_app(ScreenKind::Game);
+    app.env
+        .borrow()
+        .exec(
+            r#"
+            AspectPropagationDowns = {}
+            local function makePair(name, x, aspect)
+                local parent = CreateFrame('Button', name .. 'Parent', UIParent)
+                parent:SetSize(100, 100)
+                parent:SetPoint('TOPLEFT', UIParent, 'TOPLEFT', x, -100)
+                parent:SetFrameStrata('TOOLTIP')
+                parent:SetScript('OnMouseDown', function()
+                    AspectPropagationDowns[#AspectPropagationDowns + 1] = name .. 'Parent'
+                end)
+                if aspect then parent:AddForbiddenAspects(aspect) end
+                local child = CreateFrame('Button', name .. 'Child', parent)
+                child:SetAllPoints(parent)
+                child:SetScript('OnMouseDown', function()
+                    AspectPropagationDowns[#AspectPropagationDowns + 1] = name .. 'Child'
+                end)
+                return child
+            end
+            local forced = makePair('Forced', 100, Enum.ForbiddenAspect.AlwaysPropagateInput)
+            local plain = makePair('Plain', 300, nil)
+            assert(forced:CanPropagateMouseClicks() and forced:CanPropagateMouseMotion())
+            assert(forced:GetPropagateKeyboardInput(), 'keyboard propagation is forced too')
+            assert(not plain:CanPropagateMouseClicks() and not plain:GetPropagateKeyboardInput())
+            local function addonClear() forced:SetPropagateMouseClicks(false) end
+            debug.setobjecttaint(addonClear, 'AspectPropagationProbe')
+            assert(not pcall(addonClear), 'addons cannot clear forced mouse propagation')
+            forced:SetPropagateMouseClicks(false)
+            assert(forced:CanPropagateMouseClicks(), 'stored preference never hides the forced aspect')
+            "#,
+        )
+        .expect("create forced and plain parent/child pairs");
+    rebuild_hittable_cache(&app);
+    for x in [150.0, 350.0] {
+        let point = Point::new(x, 150.0);
+        app.handle_mouse_down(point);
+        app.handle_mouse_up(point);
+    }
+    let downs: String = app
+        .env
+        .borrow()
+        .eval("return table.concat(AspectPropagationDowns, ',')")
+        .expect("read dispatched mouse downs");
+    assert_eq!(downs, "ForcedChild,ForcedParent,PlainChild");
 }

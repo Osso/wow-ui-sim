@@ -34,7 +34,7 @@ use crate::event::Event;
 use crate::lua_api::game_data::{PartyMember, TargetInfo};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, frame_ref};
 use crate::lua_api::script_helpers::{
-    call_error_handler_state, get_event_listeners, get_script, protected_lua_pcall_state,
+    call_error_handler_state, get_dispatch_script, get_event_listeners, protected_lua_pcall_state,
 };
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::LuaResult;
@@ -192,7 +192,7 @@ fn push_focus_changed(state: &mut LuaState) -> LuaResult<()> {
 
 fn fire_event_now(state: &mut LuaState, event_name: &str, args: &[rilua::Val]) {
     for widget_id in get_event_listeners(state, event_name) {
-        let Some(handler) = get_script(state, widget_id, "OnEvent") else {
+        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
             continue;
         };
         if !matches!(handler, rilua::Val::Function(_)) {

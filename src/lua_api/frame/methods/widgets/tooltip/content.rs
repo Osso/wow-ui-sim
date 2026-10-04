@@ -8,7 +8,7 @@ use crate::lua_api::methods::{
     create_table, frame_id_from_stack, frame_ref, table_get, table_set, table_set_num,
     val_to_string,
 };
-use crate::lua_api::script_helpers::{call_void_function_state, get_script};
+use crate::lua_api::script_helpers::{call_void_function_state, get_dispatch_script};
 use crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID;
 use crate::lua_api::tooltip::TooltipLine;
 use crate::lua_bridge::stack_val;
@@ -198,7 +198,7 @@ fn parse_link_id(text: &str, prefix: &str) -> Option<u32> {
 }
 
 pub(super) fn fire_tooltip_script(state: &mut LuaState, tooltip_id: u64, script_name: &str) {
-    let Some(handler) = get_script(state, tooltip_id, script_name) else {
+    let Some(handler) = get_dispatch_script(state, tooltip_id, script_name) else {
         return;
     };
     let Ok(self_ref) = frame_ref(state, tooltip_id) else {
@@ -213,7 +213,7 @@ pub(super) fn fire_tooltip_script_with_args(
     script_name: &str,
     args: &[Val],
 ) {
-    let Some(handler) = get_script(state, tooltip_id, script_name) else {
+    let Some(handler) = get_dispatch_script(state, tooltip_id, script_name) else {
         return;
     };
     let Ok(self_ref) = frame_ref(state, tooltip_id) else {

@@ -233,8 +233,12 @@ fn always_propagate_input_forces_state_and_rejects_disabling() {
         assert(not PropagationChild:GetPropagateKeyboardInput())
         PropagationChild:AddForbiddenAspects(Enum.ForbiddenAspect.AlwaysPropagateInput)
         assert(PropagationChild:GetPropagateKeyboardInput(), 'aspect must override stored false')
-        assert(not pcall(PropagationChild.SetPropagateKeyboardInput, PropagationChild, false))
+        local function addonDisable() PropagationChild:SetPropagateKeyboardInput(false) end
+        debug.setobjecttaint(addonDisable, 'PropagationProbe')
+        assert(not pcall(addonDisable), 'addon callers cannot disable forced propagation')
         assert(PropagationChild:GetPropagateKeyboardInput(), 'rejected disable must preserve propagation')
+        PropagationChild:SetPropagateKeyboardInput(false)
+        assert(PropagationChild:GetPropagateKeyboardInput(), 'secure disable cannot hide the aspect')
         PropagationChild:SetPropagateKeyboardInput(true)
         assert(PropagationChild:GetPropagateKeyboardInput())
         "#,
@@ -252,7 +256,9 @@ fn always_propagate_input_inherited_by_new_child_forces_key_route() {
         PropagationParent:AddForbiddenAspects(Enum.ForbiddenAspect.AlwaysPropagateInput)
         CreatePropagationChild()
         assert(PropagationChild:GetPropagateKeyboardInput(), 'new child must inherit forced propagation')
-        assert(not pcall(PropagationChild.SetPropagateKeyboardInput, PropagationChild, false))
+        local function addonDisable() PropagationChild:SetPropagateKeyboardInput(false) end
+        debug.setobjecttaint(addonDisable, 'PropagationProbe')
+        assert(not pcall(addonDisable))
         assert(PropagationChild:GetPropagateKeyboardInput())
         "#,
     )

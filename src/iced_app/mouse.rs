@@ -1,7 +1,7 @@
 //! Mouse event handlers for the iced application.
 
 use iced::Point;
-use rilua::Val;
+use rilua::{LuaApiMut, Val};
 
 use super::app::App;
 use super::mouse_drag::{
@@ -503,15 +503,16 @@ impl App {
 
     fn propagated_mouse_targets(&self, frame_id: u64, button_name: &str, down: bool) -> Vec<u64> {
         let env = self.env.borrow();
-        let state = env.state().borrow();
         let mut targets = Vec::new();
         let mut current_id = frame_id;
 
         loop {
+            let forced = mouse_propagation_forced(&env, current_id);
+            let state = env.state().borrow();
             let Some(current) = state.widgets.get(current_id) else {
                 break;
             };
-            if !current.propagate_mouse_clicks {
+            if !current.propagate_mouse_clicks && !forced {
                 break;
             }
             let Some(parent_id) = current.parent_id else {
@@ -737,6 +738,19 @@ fn mark_button_state_visuals_dirty(state: &mut crate::lua_api::SimState, frame_i
             state.widgets.mark_visual_dirty(*child_id);
         }
     }
+}
+
+/// AlwaysPropagateInput forces click propagation regardless of SetPropagateMouseClicks.
+fn mouse_propagation_forced(env: &crate::lua_api::WowLuaEnv, frame_id: u64) -> bool {
+    let mut lua = env.rilua_mut();
+    crate::lua_api::frame::methods::forbidden_aspects::input_propagation_forced(
+        lua.state_mut(),
+        frame_id,
+    )
+    .unwrap_or_else(|error| {
+        eprintln!("forbidden-aspect propagation check failed for frame {frame_id}: {error}");
+        false
+    })
 }
 
 #[cfg(test)]

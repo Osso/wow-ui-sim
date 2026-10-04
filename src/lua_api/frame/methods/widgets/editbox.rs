@@ -25,6 +25,41 @@ use rilua::{LuaResult, Val};
 pub(super) fn set_focus(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     ensure_forbidden_aspect_absent(state, id, "ScriptedInput", "SetFocus")?;
+    acquire_editbox_focus(state, id)?;
+    Ok(0)
+}
+
+/// Engine auto-focus when an autoFocus EditBox becomes visible. 12.1.0: skipped while the
+/// Shown secret aspect applies. INFERRED: the aspect counts on the box or any ancestor,
+/// matching the IsVisible readability rule; focus is taken after OnShow handlers run.
+pub(crate) fn auto_focus_shown_editbox(state: &mut LuaState, id: u64) -> LuaResult<()> {
+    let wants_focus = {
+        let sim = borrow_state(state)?;
+        let Some(frame) = sim.widgets.get(id) else {
+            return Ok(());
+        };
+        frame.widget_type == WidgetType::EditBox
+            && frame.editbox_auto_focus
+            && !has_secret_shown_in_chain(&sim.widgets, id)
+    };
+    if wants_focus {
+        acquire_editbox_focus(state, id)?;
+    }
+    Ok(())
+}
+
+fn has_secret_shown_in_chain(widgets: &crate::widget::WidgetRegistry, id: u64) -> bool {
+    let mut current = Some(id);
+    while let Some(frame) = current.and_then(|id| widgets.get(id)) {
+        if frame.secret_shown {
+            return true;
+        }
+        current = frame.parent_id;
+    }
+    false
+}
+
+fn acquire_editbox_focus(state: &mut LuaState, id: u64) -> LuaResult<()> {
     let old_focus = replace_editbox_focus(state, id)?;
     if old_focus != Some(id) {
         if let Some(old_id) = old_focus {
@@ -34,7 +69,7 @@ pub(super) fn set_focus(state: &mut LuaState) -> LuaResult<u32> {
             fire_focus_script(state, id, "OnEditFocusGained")?;
         }
     }
-    Ok(0)
+    Ok(())
 }
 
 fn replace_editbox_focus(state: &mut LuaState, id: u64) -> LuaResult<Option<u64>> {

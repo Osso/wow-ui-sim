@@ -9,7 +9,7 @@ use crate::event::{Event, EventArg};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, call_function_state, create_string, frame_ref,
 };
-use crate::lua_api::script_helpers::get_script;
+use crate::lua_api::script_helpers::get_dispatch_script;
 use crate::lua_bridge::FromStack;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -240,7 +240,7 @@ fn fire_achievement_earned(state: &mut LuaState, achievement_id: i32) {
         .map(|sim| sim.widgets.get_event_listeners("ACHIEVEMENT_EARNED"))
         .unwrap_or_default();
     for widget_id in listeners {
-        let Some(handler) = get_script(state, widget_id, "OnEvent") else {
+        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
             continue;
         };
         let Ok(frame) = frame_ref(state, widget_id) else {

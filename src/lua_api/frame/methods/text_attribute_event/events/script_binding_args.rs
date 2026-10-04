@@ -1,6 +1,11 @@
-use crate::lua_api::script_helpers::{ScriptBinding, protected_lua_pcall_state};
+use crate::lua_api::frame::methods::forbidden_aspects::hooked_script_component_allowed;
+use crate::lua_api::script_helpers::{
+    ScriptBinding, is_layout_script_handler, protected_lua_pcall_state, registry_value,
+    set_registry_value,
+};
 use crate::lua_api::taint::{clear_active_stack_taint, restore_active_stack_taint};
 use crate::lua_bridge::stack_val;
+use rilua::vm::closure::{Closure, RustClosure};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val, runtime_error};
 
@@ -30,27 +35,64 @@ fn parse_script_binding(raw: f64) -> LuaResult<ScriptBinding> {
     )))
 }
 
-pub(super) fn build_hooked_script(state: &mut LuaState, old: Val, hook: Val) -> LuaResult<Val> {
+const HOOK_GATE_KEY: &str = "__wow_hooked_script_component_gate";
+
+/// Chains run each component through the forbidden-aspect gate, so an addon hook on a
+/// secure handler (or the reverse) is suppressed without dropping the other component.
+pub(super) fn build_hooked_script(
+    state: &mut LuaState,
+    frame_id: u64,
+    handler_name: &str,
+    old: Val,
+    hook: Val,
+) -> LuaResult<Val> {
     let func = state.load(
         r#"
-        local old, hook = ...
+        local old, hook, frameId, layout, allowed = ...
         if old == nil then
             return hook
         end
         return function(...)
-            old(...)
-            hook(...)
+            if allowed(frameId, layout, old) then old(...) end
+            if allowed(frameId, layout, hook) then hook(...) end
         end
     "#,
     )?;
+    let gate = hook_gate(state);
+    let args = [
+        old,
+        hook,
+        Val::Num(frame_id as f64),
+        Val::Bool(is_layout_script_handler(handler_name)),
+        gate,
+    ];
     let saved_taints = clear_active_stack_taint(state);
-    let result = protected_lua_pcall_state(state, Val::Function(func.gc_ref()), &[old, hook]);
+    let result = protected_lua_pcall_state(state, Val::Function(func.gc_ref()), &args);
     restore_active_stack_taint(state, saved_taints);
     result
         .map_err(runtime_error)?
         .into_iter()
         .next()
         .ok_or_else(|| runtime_error("HookScript factory returned no handler"))
+}
+
+fn hook_gate(state: &mut LuaState) -> Val {
+    let existing = registry_value(state, HOOK_GATE_KEY);
+    if matches!(existing, Val::Function(_)) {
+        return existing;
+    }
+    let gate = Closure::Rust(RustClosure::new(
+        hooked_script_component_allowed,
+        "HookScriptGate",
+    ));
+    let gate = Val::Function(state.gc.alloc_closure(gate));
+    let stack_slot = state.top;
+    state.ensure_stack(stack_slot + 1);
+    state.stack_set(stack_slot, gate);
+    state.top = stack_slot + 1;
+    set_registry_value(state, HOOK_GATE_KEY, gate);
+    state.top = stack_slot;
+    gate
 }
 
 pub(super) fn reject_unsupported_hook_binding(
