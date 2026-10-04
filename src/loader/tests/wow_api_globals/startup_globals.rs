@@ -457,8 +457,11 @@ fn test_patch_12_0_7_widget_compatibility_surface() {
 
             local scene = CreateFrame("ModelScene")
             local actor = scene:CreateActor("patch-12-0-7")
-            if actor.GetModelUnitGUID ~= nil then
-                return "ModelSceneActorBase:GetModelUnitGUID=" .. type(actor.GetModelUnitGUID)
+            if actor:GetModelUnitGUID() ~= "" then
+                return "ModelSceneActorBase:GetModelUnitGUID unbound default"
+            end
+            if select('#', actor:GetModelUnitGUID()) ~= 1 then
+                return "ModelSceneActorBase:GetModelUnitGUID arity"
             end
             return "ok"
             "#,
