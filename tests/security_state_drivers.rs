@@ -254,20 +254,23 @@ fn test_securecallmethod_missing_method() {
 // ============================================================================
 
 #[test]
-fn test_create_secure_delegate_is_identity() {
+fn test_create_secure_delegate_runs_with_secure_taint() {
     let env = env();
-    let result: bool = env
+    let result: String = env
         .eval(
             r#"
-            local function myFunc() return 42 end
+            local function myFunc(a, b) return a + b, tostring(issecure()) end
             local delegate = CreateSecureDelegate(myFunc)
-            return delegate == myFunc
+            local function addon() return delegate(40, 2) end
+            debug.setobjecttaint(addon, 'DelegateProbe')
+            local sum, secure = addon()
+            return tostring(delegate ~= myFunc) .. ':' .. sum .. ':' .. secure
             "#,
         )
         .unwrap();
-    assert!(
-        result,
-        "CreateSecureDelegate should return the function as-is"
+    assert_eq!(
+        result, "true:42:true",
+        "delegates pass values through and execute securely for tainted callers"
     );
 }
 
@@ -296,7 +299,7 @@ fn test_create_secure_delegate_survives_nil() {
             r#"
             local function myFunc() return 42 end
             local delegate = CreateSecureDelegate(myFunc)
-            return delegate == myFunc
+            return delegate() == 42
             "#,
         )
         .unwrap();

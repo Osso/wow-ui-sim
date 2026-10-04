@@ -10,10 +10,10 @@ if AddSourceLocationExclude == nil then
   end
 end
 
-if CreateSecureDelegate == nil then
-  function CreateSecureDelegate(fn)
-    return fn
-  end
+-- Blizzard_EnvironmentCleanup removes the bootstrap CreateSecureDelegate from
+-- _G; the secure environment keeps the same function.
+if CreateSecureDelegate == nil and type(__secureenv) == "table" then
+  CreateSecureDelegate = rawget(__secureenv, "CreateSecureDelegate")
 end
 
 if GetButtonMetatable == nil then
