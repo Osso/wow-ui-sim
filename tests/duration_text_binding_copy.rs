@@ -137,9 +137,29 @@ fn duration_binding_secret_formatting_does_not_use_addon_conversion_overrides() 
     "#).expect("bootstrap conversions keep decoded timing away from later addon overrides");
 }
 
+const BINDING_FIXTURES: &str = r#"
+    function CreateBindingDuration(value)
+        local duration = C_DurationUtil.CreateDuration()
+        duration:SetClock(C_DurationUtil.CreateManualClock(0))
+        duration:SetTimeFromStart(0, value)
+        return duration
+    end
+    function CreateBindingFormatter(format)
+        local formatter = C_StringUtil.CreateNumericRuleFormatter()
+        formatter:SetBreakpoints({{threshold=0, format=format}})
+        return formatter
+    end
+"#;
+
+fn binding_environment() -> WowLuaEnv {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(BINDING_FIXTURES).unwrap();
+    env
+}
+
 #[test]
 fn duration_binding_userdata_copy_retains_resources_through_collection() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = binding_environment();
     env.exec(
         r#"
         local source = C_DurationUtil.CreateDurationTextBinding()
@@ -150,7 +170,7 @@ fn duration_binding_userdata_copy_retains_resources_through_collection() {
         local duration = C_DurationUtil.CreateDuration()
         local clock = C_DurationUtil.CreateManualClock(12)
         local label = CreateFrame('Frame'):CreateFontString()
-        local formatter = {Format=function(_, value) return 'retained:' .. value end}
+        local formatter = CreateBindingFormatter('retained:%.0f')
         local curve = C_CurveUtil.CreateColorCurve()
         source:SetDuration(duration)
         source:SetClock(clock)
@@ -171,10 +191,10 @@ fn duration_binding_userdata_copy_retains_resources_through_collection() {
         assert(retained:GetTextColorCurve() == resources[5])
         retained:GetClock():SetTime(29)
         assert(resources[2]:GetTime() == 29)
-        retained:SetDuration(17)
+        retained:SetDuration(CreateBindingDuration(17))
         retained:UpdateFontString()
         assert(resources[3]:GetText() == 'retained:17')
-        resources[4].Format = function(_, value) return 'shared:' .. value end
+        resources[4]:SetBreakpoints({{threshold=0, format='shared:%.0f'}})
         retained:UpdateFontString()
         assert(resources[3]:GetText() == 'shared:17')
         "#,
@@ -184,7 +204,7 @@ fn duration_binding_userdata_copy_retains_resources_through_collection() {
 
 #[test]
 fn duration_binding_assign_preserves_receiver_and_configuration_handles() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = binding_environment();
     env.exec(
         r#"
         local source = C_DurationUtil.CreateDurationTextBinding()
@@ -219,7 +239,7 @@ fn duration_binding_assign_preserves_receiver_and_configuration_handles() {
         assert(not target:IsEnabled())
         target:Enable()
         assert(target:IsEnabled() and not source:IsEnabled())
-        target:SetDuration(8.2)
+        target:SetDuration(CreateBindingDuration(8.2))
         target:UpdateFontString()
         assert(label:GetText() == '9')
         formatter:SetBreakpoints({{threshold=0, format='%.1f'}})
@@ -232,13 +252,13 @@ fn duration_binding_assign_preserves_receiver_and_configuration_handles() {
 
 #[test]
 fn duration_binding_survives_secure_option_copy_without_losing_handle_identity() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = binding_environment();
     env.exec(
         r#"
         local source = C_DurationUtil.CreateDurationTextBinding()
         local label = CreateFrame('Frame'):CreateFontString()
         source:SetFontString(label)
-        source:SetDuration(7)
+        source:SetDuration(CreateBindingDuration(7))
         local options = {binding=source, textFormat={formatString='%s', components={}}}
         local copied = securecopy(options)
         assert(copied ~= options and copied.textFormat ~= options.textFormat)
@@ -257,7 +277,7 @@ fn duration_binding_survives_secure_option_copy_without_losing_handle_identity()
 
 #[test]
 fn duration_binding_copy_updates_text_with_independent_configuration() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = binding_environment();
     env.exec(
         r#"
         local source = C_DurationUtil.CreateDurationTextBinding()
@@ -284,14 +304,14 @@ fn duration_binding_copy_updates_text_with_independent_configuration() {
 
         copy:Enable()
         copy:SetFontString(secondLabel)
-        copy:SetDuration(3.2)
+        copy:SetDuration(CreateBindingDuration(3.2))
         copy:UpdateFontString()
         assert(secondLabel:GetText() == '4')
         assert(source:GetFontString() == firstLabel and not source:IsEnabled())
-        source:SetDuration(8.2)
+        source:SetDuration(CreateBindingDuration(8.2))
         source:UpdateFontString()
         assert(firstLabel:GetText() == '9' and secondLabel:GetText() == '4')
-        source:SetFormatter({Format=function(_, value) return 'source:' .. value end})
+        source:SetFormatter(CreateBindingFormatter('source:%.0f'))
         source:SetExpiredText('changed')
         source:ClearTextColorCurve()
         assert(copy:GetFormattedText() == '4' and copy:GetExpiredText() == 'expired')
@@ -306,7 +326,7 @@ fn duration_binding_copy_updates_text_with_independent_configuration() {
 
 #[test]
 fn duration_binding_copies_mutable_format_components_without_cloning_formatter_handles() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = binding_environment();
     env.exec(
         r#"
         local source = C_DurationUtil.CreateDurationTextBinding()
@@ -315,7 +335,7 @@ fn duration_binding_copies_mutable_format_components_without_cloning_formatter_h
         formatter:SetBreakpoints({{threshold=0, format='%.0f'}})
         local property = Enum.DurationTextBindingProperty.RemainingDuration
         local components = {{property=property, formatter=formatter}}
-        source:SetDuration(7)
+        source:SetDuration(CreateBindingDuration(7))
         source:SetFormatter(formatter)
         source:SetTextFormat('remaining %s', components)
         assigned:Assign(source)
@@ -342,24 +362,26 @@ fn duration_binding_copies_mutable_format_components_without_cloning_formatter_h
 
 #[test]
 fn duration_binding_assign_validates_atomically_clears_absent_values_and_handles_self_assignment() {
-    let env = WowLuaEnv::new().unwrap();
+    let env = binding_environment();
     env.exec(
         r#"
         local binding = C_DurationUtil.CreateDurationTextBinding()
         local label = CreateFrame('Frame'):CreateFontString()
-        binding:SetDuration(6)
+        local duration = CreateBindingDuration(6)
+        binding:SetDuration(duration)
+        binding:SetFormatter(CreateBindingFormatter('%.0f'))
         binding:SetFontString(label)
         binding:SetTextFormat('kept %s', {})
         binding:SetExpiredText('expired')
         binding:SetZeroDurationText('zero')
         assert(select('#', binding:Assign(binding)) == 0)
-        assert(binding:GetDuration() == 6 and binding:GetFontString() == label)
+        assert(binding:GetDuration() == duration and binding:GetFontString() == label)
         assert(binding:GetFormattedText() == 'kept 6')
         local invalid = {17, 'invalid', {}, {GetDuration=function() return 99 end}}
         assert(not pcall(binding.Assign, binding, nil))
         for _, value in ipairs(invalid) do
             assert(not pcall(binding.Assign, binding, value))
-            assert(binding:GetDuration() == 6 and binding:GetFormattedText() == 'kept 6')
+            assert(binding:GetDuration() == duration and binding:GetFormattedText() == 'kept 6')
         end
         assert(not pcall(binding.Assign, {}, binding), 'receiver must also be a binding')
         assert(not pcall(binding.Copy, {}), 'Copy validates its receiver')
@@ -372,7 +394,9 @@ fn duration_binding_assign_validates_atomically_clears_absent_values_and_handles
         assert(binding:GetFontString() == nil and not binding:CanUpdateFontString())
         assert(binding:GetExpiredText() == nil and binding:GetZeroDurationText() == nil)
         assert(binding:GetTextColorCurve() == nil)
-        assert(binding:GetFormattedText() == empty:GetFormattedText())
+        assert(not binding:CanFormatText() and not empty:CanFormatText())
+        assert(not pcall(binding.GetFormattedText, binding))
+        assert(not pcall(empty.GetFormattedText, empty))
         "#,
     )
     .expect("invalid assignments leave state intact and empty configuration replaces old values");
@@ -385,13 +409,14 @@ fn duration_binding_assignment_supports_actual_custom_aura_button_duration_text(
             &["Blizzard_AuraContainer"],
             &[],
             |env, _| {
+                env.exec(BINDING_FIXTURES).unwrap();
                 env.exec(
                     r#"
                     local formatter = C_StringUtil.CreateNumericRuleFormatter()
                     formatter:SetBreakpoints({{threshold=0, step=1, rounding=Enum.NumericRuleFormatRounding.Up, format='%.0f'}})
                     local originalLabel = CreateFrame('Frame'):CreateFontString()
                     local source = C_DurationUtil.CreateDurationTextBinding()
-                    source:SetDuration(2.2)
+                    source:SetDuration(CreateBindingDuration(2.2))
                     source:SetFontString(originalLabel)
                     source:SetFormatter(formatter)
                     source:SetUpdateInterval(0.25)
@@ -415,7 +440,7 @@ fn duration_binding_assignment_supports_actual_custom_aura_button_duration_text(
                             assert(r == 1 and g == 1 and b == 1 and a == 1)
                             r,g,b,a = curve:Evaluate(60):GetRGBA()
                             assert(r == 1 and math.abs(g - 0.82) < 0.00001 and b == 0 and a == 1)
-                            ownedBinding:SetDuration(8.2)
+                            ownedBinding:SetDuration(CreateBindingDuration(8.2))
                             ownedBinding:UpdateFontString()
                             assert(label:GetText() == '9')
                             source:UpdateFontString()
