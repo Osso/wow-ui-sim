@@ -11,10 +11,12 @@ pub use brawl_info::PvpBrawlInfo;
 use crate::c_api::ensure_namespace;
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_bridge::table_set_rust_fn_static;
+use rilua::LuaResult;
+#[cfg(feature = "retail-12-1-0")]
+use rilua::Val;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaResult, Val};
 
 /// Catalog classification, independent of queue membership or active match state.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
