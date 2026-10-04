@@ -18,6 +18,19 @@ Read-only preparation executed no builds/tests or runtime gates. No repo files c
 
 Patch 12.0.7 API work in wow-ui-sim separates safe additive compatibility bridges from security, taint, and secret-value behavior that must be proven with live Blizzard observations before implementation.
 
+
+## Rounds 1–3 accounted — 2026-10-04
+
+Ten capabilities; **100 pending / 46 bounded / 7 partial / 13 metadata** of 166 IDs ([ledger](../../../data/patch-api/sources/12.0.7-page-coverage.json)).
+
+- Bounded: 27 removal and deprecation-forwarding rows, `GetFileID`, bag free total, delve entrance title, manual clocks and duration predicates (8 rows), `GameTooltip_AddMoneyLine`, `ENCOUNTER_END` payload, six CVars.
+- Partial: Battle.net invite (2), `GetClock`/`SetClock` (no clock type check), namespace ping setter, two prose rows.
+- Left pending with reasons: world-tier difficulty (constant), eight legacy pending-callback rows (Lua-table storage), warning colours and `GetEventColor` (contradict the cached declaration).
+
+Proof: master run at `d8aaad4f6`, 166 passed / 0 failed over 13 filters, startup `lua-errors` `[]`, `cargo fmt --check` exit 0 ([log](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt)). Lib `startup_globals::` 25 passed / 1 failed: the zero-span `HasExpired` assertion, failing since before this audit. Reviews (source read, no reruns): [round 2 record](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/round-2-record.md), [round 1 review](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-r1-review.md). Both reviews said REJECT against the strict standard; the blocking namespace-lookup finding was fixed (`9ce93bb12`), and the rest is reflected as partial or pending rows above. The CVar slice has no independent review and no RED, since its producers pre-existed.
+
+Limits: default feature set only; strict 12.0.7 and older-epoch branches unexecuted. Round 1 and 2 integrator logs were lost in a host crash; the master run above is the surviving execution evidence.
+
 ## Content
 
 ### Source scope

@@ -5,7 +5,167 @@
   "source_sha256": "389e3b19174bf77c3646028f764cf186ccfe1b7dddaca2a3b3fcba75e3bdec60",
   "audit_status": "in-progress",
   "proof_policy": "Development tests are not independent final acceptance. Linked prose can contain multiple capabilities; one link does not satisfy the whole statement. Historical/narrative source rows require explicit classification before completion.",
-  "capabilities": [],
+  "capabilities": [
+    {
+      "id": "removed-native-surface-12-0-7",
+      "symbols": [
+        "17 retired globals/namespace members",
+        "6 Minimap texture setters",
+        "4 cached deprecation files"
+      ],
+      "scope": "Default-build absence (raw, ordinary lookup and call failure) of the retired symbols and forwarding through the unmodified cached deprecation wrappers. Older-epoch branches unexecuted; eleven globals had no historical producer; replacement backends not proved.",
+      "spec": "docs/specs/removed-native-surface-12-0-7.md",
+      "tests": [
+        "tests/patch_12_0_7_removed_native_surface.rs"
+      ],
+      "implementation": "e4fde2ceb+9ce93bb12+6e5a3dd48",
+      "compiled_revision": "d8aaad4f6",
+      "proof": "main-confirmed GREEN on master; independent source-read review",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    },
+    {
+      "id": "asset-id-12-0-7",
+      "symbols": [
+        "C_UIFileAsset.GetFileID"
+      ],
+      "scope": "Numeric and bundled-listfile path resolution with all arguments authenticated before validation. Input is the bundled catalog, not mutable host state; numeric domain and public output INFERRED.",
+      "spec": "docs/specs/asset-id-12-0-7.md",
+      "tests": [
+        "tests/patch_12_0_7_b01_b04.rs"
+      ],
+      "implementation": "9d40163da+54d237a91",
+      "compiled_revision": "d8aaad4f6",
+      "proof": "main-confirmed GREEN on master; independent source-read review",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    },
+    {
+      "id": "bnet-invite-input-12-0-7",
+      "symbols": [
+        "C_BattleNet.InviteFriend",
+        "BNInviteFriend"
+      ],
+      "scope": "Authenticated numeric request capture with zero returns and no fabricated friend; cached wrapper forwarding. No delivery, rejection or events.",
+      "spec": "docs/specs/bnet-invite-input-12-0-7.md",
+      "tests": [
+        "tests/patch_12_0_7_b01_b04.rs"
+      ],
+      "implementation": "9d40163da",
+      "compiled_revision": "d8aaad4f6",
+      "proof": "main-confirmed GREEN; partial",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    },
+    {
+      "id": "bag-free-total-12-0-7",
+      "symbols": [
+        "C_Container.CalculateTotalNumberOfFreeBagSlots"
+      ],
+      "scope": "Live sum over bags 0..=5 from capacity and occupancy; bank and out-of-range excluded. Seeded default bag capacity predates this work; family eligibility INFERRED.",
+      "spec": "docs/specs/bag-free-total-12-0-7.md",
+      "tests": [
+        "tests/patch_12_0_7_b01_b04.rs"
+      ],
+      "implementation": "9d40163da+54d237a91",
+      "compiled_revision": "d8aaad4f6",
+      "proof": "main-confirmed GREEN on master; independent source-read review",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    },
+    {
+      "id": "delve-entrance-title-12-0-7",
+      "symbols": [
+        "C_DelvesUI.GetDelveEntranceTitleString"
+      ],
+      "scope": "One optional host string, nil by default, live replacement and removal, per environment. No location, localization or picker interaction.",
+      "spec": "docs/specs/delves-entrance-inputs-12-0-7.md",
+      "tests": [
+        "tests/patch_12_0_7_b01_b04.rs"
+      ],
+      "implementation": "9d40163da+54d237a91",
+      "compiled_revision": "d8aaad4f6",
+      "proof": "main-confirmed GREEN on master; independent source-read review",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    },
+    {
+      "id": "duration-manual-clocks-12-0-7",
+      "symbols": [
+        "C_DurationUtil.CreateManualClock",
+        "DurationClock:GetTime",
+        "DurationManualClock:AdvanceTime/ResetTime/RewindTime/SetTime",
+        "DurationObject:GetClock/SetClock/HasStarted/IsActive"
+      ],
+      "scope": "Host-owned manual clock userdata, finite authenticated mutators, clock rebinding and activity predicates with all-argument authentication. SetClock stores any decoded value (no clock type check), so GetClock/SetClock are partial. Shared by all profiles; older profiles unexecuted. Numeric policies INFERRED.",
+      "spec": "docs/specs/duration-core.md",
+      "tests": [
+        "tests/patch_12_0_7_duration_clocks.rs",
+        "tests/duration_core.rs"
+      ],
+      "implementation": "56dcf5613",
+      "compiled_revision": "d8aaad4f6",
+      "proof": "main-confirmed GREEN on master; independent source-read review",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    },
+    {
+      "id": "pending-ping-callback-auth-12-0-7",
+      "symbols": [
+        "C_PingSecure.SetPendingPingOffScreenCallback"
+      ],
+      "scope": "Namespace setter authenticates all arguments, requires a function and stores atomically. Storage is still an addon-visible Lua table; SecureOnly environment and restrictions not enforced.",
+      "spec": "docs/specs/pending-secure-callback-storage.md",
+      "tests": [
+        "tests/p1207_pending_callbacks.rs"
+      ],
+      "implementation": "698da07a0",
+      "compiled_revision": "d8aaad4f6",
+      "proof": "main-confirmed GREEN; partial",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    },
+    {
+      "id": "tooltip-money-line-12-0-7",
+      "symbols": [
+        "GameTooltip_AddMoneyLine"
+      ],
+      "scope": "Loaded cached helper formats copper amounts, colour choice and append order. No producer change; removal of old SetTooltipMoney usages not tested.",
+      "spec": "docs/specs/p1207-b14-tooltip.md",
+      "tests": [
+        "tests/p1207_b14_tooltip.rs"
+      ],
+      "implementation": "99da9b006",
+      "compiled_revision": "d8aaad4f6",
+      "proof": "main-confirmed GREEN on master; independent source-read review",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    },
+    {
+      "id": "encounter-end-status-12-0-7",
+      "symbols": [
+        "ENCOUNTER_END"
+      ],
+      "scope": "Six-value payload with a detached public status list built from explicitly supplied boss rows. No automatic engaged-boss tracking or defeat lifecycle.",
+      "spec": "docs/specs/p1207-b15-encounter-end.md",
+      "tests": [
+        "tests/p1207_b15_encounter_end.rs"
+      ],
+      "implementation": "99da9b006",
+      "compiled_revision": "d8aaad4f6",
+      "proof": "main-confirmed GREEN on master; independent source-read review",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    },
+    {
+      "id": "cvars-12-0-7",
+      "symbols": [
+        "assistedCombatReduceHighlights",
+        "developerLogFilterDebug/Error/Fatal/Normal/Spam"
+      ],
+      "scope": "Default, mutation, reset and isolation through the shared CVar storage and APIs. Producers pre-existed, so no RED; defaults INFERRED; strict-epoch publication unexecuted.",
+      "spec": "docs/specs/patch-12-0-7-cvars.md",
+      "tests": [
+        "tests/patch_12_0_7_cvars.rs",
+        "tests/set_cvar_global.rs"
+      ],
+      "implementation": "d8aaad4f6",
+      "compiled_revision": "d8aaad4f6",
+      "proof": "main-confirmed GREEN; no independent review",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/rounds-1-3-master-green.log.txt"
+    }
+  ],
   "source_rows": [
     {
       "source_id": "source-context-001",
@@ -33,9 +193,11 @@
     },
     {
       "source_id": "prose-undated-007",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-money-line-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Money-line helper behavior only; removal of old usages and MoneyFormatter breadth unproved."
     },
     {
       "source_id": "prose-undated-008",
@@ -45,15 +207,17 @@
     },
     {
       "source_id": "prose-undated-009",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "encounter-end-status-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Supplied snapshot only; no automatic tracking of all engaged bosses."
     },
     {
       "source_id": "prose-undated-010",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Colour state is Lua-table backed; no timer trigger or notification. No credit."
     },
     {
       "source_id": "prose-undated-011",
@@ -117,9 +281,11 @@
     },
     {
       "source_id": "prose-undated-021",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "bnet-invite-input-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Cached wrapper forwards to numeric request capture; delivery, rejection and events unmodeled."
     },
     {
       "source_id": "prose-undated-022",
@@ -141,27 +307,33 @@
     },
     {
       "source_id": "global api-C_BattleNet-InviteFriend-027",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "bnet-invite-input-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Authenticated numeric request capture, zero returns; no invitation delivery or events."
     },
     {
       "source_id": "global api-C_Container-CalculateTotalNumberOfFreeBagSlots-028",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "bag-free-total-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Live total from bag capacity and occupancy; seeded default capacity, family eligibility inferred."
     },
     {
       "source_id": "global api-C_DelvesUI-GetDelveEntranceTitleString-029",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "delve-entrance-title-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact optional host string; no location or localization service."
     },
     {
       "source_id": "global api-C_DelvesUI-GetWorldTierDifficultyForActivePlayer-030",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Returns a constant; a none-default error would break cached InstanceDifficulty/DifficultyUtil consumers. No credit."
     },
     {
       "source_id": "global api-C_DurationUtil-CreateDurationTextBinding-031",
@@ -171,15 +343,17 @@
     },
     {
       "source_id": "global api-C_DurationUtil-CreateManualClock-032",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-manual-clocks-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Host-owned manual clock and authenticated duration predicates; numeric policies inferred, older profiles unexecuted."
     },
     {
       "source_id": "global api-C_EncounterTimeline-GetEventColor-033",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Returns four numbers where the cached declaration says a ColorMixin with NotAllowed secret arguments. No credit."
     },
     {
       "source_id": "global api-C_HousingCatalog-GetCatalogCategoryAndSubcategoryNames-034",
@@ -257,13 +431,15 @@
       "source_id": "global api-C_PingSecure-ClearPendingPingOffScreenCallback-046",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Clears the shared slot in an addon-visible Lua table; no host-owned state or native consumer. Tests pass on the pre-change code."
     },
     {
       "source_id": "global api-C_PingSecure-SetPendingPingOffScreenCallback-047",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "pending-ping-callback-auth-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Argument authentication and function-only validation; Lua-table storage, no SecureOnly or restriction enforcement."
     },
     {
       "source_id": "global api-C_QuestHub-GetDragonridingRacesForAreaPOI-048",
@@ -273,9 +449,11 @@
     },
     {
       "source_id": "global api-C_UIFileAsset-GetFileID-049",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "asset-id-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bundled-catalog and numeric resolution with authenticated arguments; whole client catalog and native coercion unproved."
     },
     {
       "source_id": "global api-C_UIFileAsset-IsKnownFile-050",
@@ -311,43 +489,45 @@
       "source_id": "global api-GetSecurePendingButtonCallback-055",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
     },
     {
       "source_id": "global api-GetSecurePendingPingOffScreenCallback-056",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
     },
     {
       "source_id": "global api-GetSecurePendingToggleRunCallback-057",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
     },
     {
       "source_id": "global api-GameTooltip_AddMoneyLine-058",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "tooltip-money-line-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Loaded cached helper formatting, colour and append order."
     },
     {
       "source_id": "global api-SetSecurePendingButtonCallback-059",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
     },
     {
       "source_id": "global api-SetSecurePendingPingOffScreenCallback-060",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
     },
     {
       "source_id": "global api-SetSecurePendingToggleRunCallback-061",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
     },
     {
       "source_id": "source-context-063",
@@ -357,105 +537,139 @@
     },
     {
       "source_id": "global api-BNInviteFriend-064",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-C_ClickBindings-GetStringFromModifiers-065",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-C_ClickBindings-MakeModifiers-066",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-C_Spell-GetMawPowerBorderAtlasBySpellID-067",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-ConfirmReadyCheck-068",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-DemoteAssistant-069",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-DoReadyCheck-070",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-GetMerchantCurrencies-071",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-IsGUIDInGroup-072",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-PromoteToAssistant-073",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-PromoteToLeader-074",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-SetEveryoneIsAssistant-075",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-UninviteUnit-076",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-GetAutoCompletePresenceID-077",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-GetAutoCompleteResults-078",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-GetAutoCompleteRealms-079",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "global api-IsRecognizedName-080",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "source-context-082",
@@ -465,39 +679,51 @@
     },
     {
       "source_id": "scriptobjects-DurationClock-GetTime-083",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-manual-clocks-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Host-owned manual clock and authenticated duration predicates; numeric policies inferred, older profiles unexecuted."
     },
     {
       "source_id": "scriptobjects-DurationManualClock-AdvanceTime-084",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-manual-clocks-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Host-owned manual clock and authenticated duration predicates; numeric policies inferred, older profiles unexecuted."
     },
     {
       "source_id": "scriptobjects-DurationManualClock-ResetTime-085",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-manual-clocks-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Host-owned manual clock and authenticated duration predicates; numeric policies inferred, older profiles unexecuted."
     },
     {
       "source_id": "scriptobjects-DurationManualClock-RewindTime-086",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-manual-clocks-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Host-owned manual clock and authenticated duration predicates; numeric policies inferred, older profiles unexecuted."
     },
     {
       "source_id": "scriptobjects-DurationManualClock-SetTime-087",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-manual-clocks-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Host-owned manual clock and authenticated duration predicates; numeric policies inferred, older profiles unexecuted."
     },
     {
       "source_id": "scriptobjects-DurationObject-GetClock-088",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-manual-clocks-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Clock identity, unbinding and authenticated rebinding; SetClock accepts non-clock values, contrary to the cached LuaDurationClock type."
     },
     {
       "source_id": "scriptobjects-DurationObject-HasExpired-089",
@@ -507,21 +733,27 @@
     },
     {
       "source_id": "scriptobjects-DurationObject-HasStarted-090",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-manual-clocks-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Host-owned manual clock and authenticated duration predicates; numeric policies inferred, older profiles unexecuted."
     },
     {
       "source_id": "scriptobjects-DurationObject-IsActive-091",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-manual-clocks-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Host-owned manual clock and authenticated duration predicates; numeric policies inferred, older profiles unexecuted."
     },
     {
       "source_id": "scriptobjects-DurationObject-SetClock-092",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "duration-manual-clocks-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Clock identity, unbinding and authenticated rebinding; SetClock accepts non-clock values, contrary to the cached LuaDurationClock type."
     },
     {
       "source_id": "scriptobjects-DurationTextBinding-CanFormatText-093",
@@ -687,39 +919,51 @@
     },
     {
       "source_id": "widgets-Minimap-SetBlipTexture-121",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "widgets-Minimap-SetCorpsePOIArrowTexture-122",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "widgets-Minimap-SetIconTexture-123",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "widgets-Minimap-SetPOIArrowTexture-124",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "widgets-Minimap-SetPlayerTexture-125",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "widgets-Minimap-SetStaticPOIArrowTexture-126",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Retired symbol absent on the default build and reachable only through the cached deprecation wrapper; older-epoch branches unexecuted."
     },
     {
       "source_id": "source-context-128",
@@ -921,9 +1165,11 @@
     },
     {
       "source_id": "events-ENCOUNTER_END-163",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "encounter-end-status-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Six-value payload with detached public status list from supplied rows."
     },
     {
       "source_id": "source-context-165",
@@ -933,45 +1179,57 @@
     },
     {
       "source_id": "cvars-assistedCombatReduceHighlights-166",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cvars-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Default, mutation, reset and isolation through shared CVar APIs; default value inferred."
     },
     {
       "source_id": "cvars-developerLogFilterDebug-167",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cvars-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Default, mutation, reset and isolation through shared CVar APIs; default value inferred."
     },
     {
       "source_id": "cvars-developerLogFilterError-168",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cvars-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Default, mutation, reset and isolation through shared CVar APIs; default value inferred."
     },
     {
       "source_id": "cvars-developerLogFilterFatal-169",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cvars-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Default, mutation, reset and isolation through shared CVar APIs; default value inferred."
     },
     {
       "source_id": "cvars-developerLogFilterNormal-170",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cvars-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Default, mutation, reset and isolation through shared CVar APIs; default value inferred."
     },
     {
       "source_id": "cvars-developerLogFilterSpam-171",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "cvars-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Default, mutation, reset and isolation through shared CVar APIs; default value inferred."
     },
     {
       "source_id": "source-context-172",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Excerpt says 20 added, 5 removed but names only six additions; the full page or a build diff is needed."
     },
     {
       "source_id": "deprecated-api-174",
@@ -981,27 +1239,35 @@
     },
     {
       "source_id": "deprecated-api-175",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Forwarding through the unmodified cached wrapper file; replacement backend semantics and chronology not proved."
     },
     {
       "source_id": "deprecated-api-176",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Forwarding through the unmodified cached wrapper file; replacement backend semantics and chronology not proved."
     },
     {
       "source_id": "deprecated-api-177",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Forwarding through the unmodified cached wrapper file; replacement backend semantics and chronology not proved."
     },
     {
       "source_id": "deprecated-api-178",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "removed-native-surface-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Forwarding through the unmodified cached wrapper file; replacement backend semantics and chronology not proved."
     }
   ]
 }

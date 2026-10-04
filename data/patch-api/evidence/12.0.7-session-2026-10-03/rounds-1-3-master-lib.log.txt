@@ -1,0 +1,63 @@
+native source=/home/osso-test/Projects/wow/wow-ui-sim target=/home/osso-test/Projects/wow/wow-ui-sim/target scope=['/home/osso-test/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+   Compiling wow-ui-sim v0.1.0 (/home/osso-test/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 52s
+     Running unittests src/lib.rs (target/debug/deps/wow_ui_sim-d92e30b171b2bc31)
+
+running 26 tests
+test loader::tests::wow_api_globals::startup_globals::debugstack_uses_wow_bracketed_file_locations ... ok
+test loader::tests::wow_api_globals::startup_globals::test_addon_startup_frame_scale_and_merchant_namespaces_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_addon_startup_table_time_and_string_helpers_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_addon_startup_time_and_difficulty_globals_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_old_stack_power_lfg_and_cleanup_globals_exist_on_rilua_path ... ok
+test loader::tests::wow_api_globals::startup_globals::test_old_stack_startup_globals_exist_on_rilua_path ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_duration_objects_and_text_binding ... FAILED
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_removal_and_event_surface ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_safe_global_bridges ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_widget_compatibility_surface ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_battle_net_presence_state ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_cvars_and_enums_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_discord_state_surface ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_duration_binding_reference_lifetime_and_identity ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_housing_blueprint_availability_state ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_housing_blueprint_best_effort_state ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_housing_editor_decor_layout_state ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_housing_inside_owned_state_and_reset ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_safe_global_bridges ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_strict_removed_symbols_are_hidden ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_cursor_surface_accepts_texture_paths ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_pvp_queue_surfaces_are_safe ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_service_globals_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_social_and_lfg_globals_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_time_and_service_globals_exist ... ok
+test loader::tests::wow_api_globals::startup_globals::test_startup_utility_globals_exist ... ok
+
+failures:
+
+---- loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_duration_objects_and_text_binding stdout ----
+[  0.544s] [Startup] WowLuaEnv::new begin
+[  0.545s] [Startup] SimState::default complete in 1.02ms
+[  0.545s] [Startup] rilua VM created in 63.00µs
+[  0.545s] [Startup] builtin frames initialized in 27.29µs
+[  0.545s] [Startup] template registry cleared in 3.52µs
+[  0.545s] [Startup] intrinsic templates registered in 4.98µs
+[  0.545s] [Startup] initial app_data lua handle installed in 230.00ns
+[  0.617s] [Startup] init_lua_state complete in 71.46ms
+[  0.617s] [Startup] final app_data lua handle installed in 99.00ns
+[  0.617s] [Startup] initial screen globals installed in 99.48µs
+[  0.617s] [Startup] WowLuaEnv::new complete
+
+thread 'loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_duration_objects_and_text_binding' (61258) panicked at src/loader/tests/wow_api_globals/startup_globals.rs:179:5:
+assertion `left == right` failed
+  left: "DurationObject.HasExpired"
+ right: "ok"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    loader::tests::wow_api_globals::startup_globals::test_patch_12_0_7_duration_objects_and_text_binding
+
+test result: FAILED. 25 passed; 1 failed; 0 ignored; 0 measured; 1949 filtered out; finished in 2.06s
+
+error: test failed, to rerun pass `--lib`
+
+EXIT 101
