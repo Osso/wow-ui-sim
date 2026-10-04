@@ -464,6 +464,22 @@ macro_rules! build_empty_sim_state {
             open_panels: ::std::collections::HashSet::new(),
             is_party_lfg: false,
             everyone_assistant: false,
+            #[cfg(feature = "retail-12-0-7")]
+            party_assistants: HashSet::new(),
+            #[cfg(feature = "retail-12-0-7")]
+            party_assistant_exclusions: HashSet::new(),
+            #[cfg(feature = "retail-12-0-7")]
+            party_operations_restricted: false,
+            #[cfg(feature = "retail-12-0-7")]
+            party_category_guids: HashMap::new(),
+            #[cfg(feature = "retail-12-0-7")]
+            solo_follower_dungeon: false,
+            #[cfg(feature = "retail-12-0-7")]
+            solo_group_category: None,
+            #[cfg(feature = "retail-12-0-7")]
+            solo_group_guid: None,
+            #[cfg(feature = "retail-12-0-7")]
+            solo_group_last: None,
             party_leader_index: None,
             ready_check: ReadyCheckState::default(),
             voice_chat: VoiceChatState::default(),

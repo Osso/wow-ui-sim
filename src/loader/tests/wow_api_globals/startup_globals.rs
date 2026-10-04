@@ -271,9 +271,9 @@ fn test_patch_12_0_7_safe_global_bridges() {
             C_PartyInfo.SetEveryoneIsAssistant(true)
             if IsEveryoneAssistant() ~= true then return "party-everyone-assistant" end
             C_PartyInfo.DemoteAssistant("player")
-            if IsEveryoneAssistant() ~= false then return "party-demote-assistant" end
+            if IsEveryoneAssistant() ~= true or UnitIsGroupAssistant("player") ~= false then return "party-demote-assistant" end
             C_PartyInfo.PromoteToAssistant("party1")
-            if IsEveryoneAssistant() ~= true then return "party-promote-assistant" end
+            if UnitIsGroupAssistant("party1") ~= true or UnitIsGroupAssistant("player") ~= false then return "party-promote-assistant" end
             C_PartyInfo.PromoteToLeader("party1")
             if IsGroupLeader() ~= false or UnitIsGroupLeader("party1") ~= true then return "party-promote-leader" end
             C_PartyInfo.PromoteToLeader("player")

@@ -101,6 +101,11 @@ pub(crate) fn clear_party_roster(state: &mut LuaState) -> LuaResult<()> {
     st.party_leader_index = None;
     st.is_party_lfg = false;
     st.everyone_assistant = false;
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        st.party_assistants.clear();
+        st.party_assistant_exclusions.clear();
+    }
     Ok(())
 }
 

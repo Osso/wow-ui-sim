@@ -10,6 +10,7 @@
 use crate::c_api::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::globals::group_queries::active_party_count;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_table};
+#[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID;
 use crate::lua_bridge::FromStack;
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -24,6 +25,10 @@ pub(crate) mod countdown;
 mod loot_method;
 #[cfg(feature = "retail-12-0-5")]
 mod ping_restrictions;
+#[cfg(feature = "retail-12-0-7")]
+pub(crate) mod roles_1207;
+#[cfg(feature = "retail-12-0-7")]
+pub(crate) mod solo_1207;
 
 const AVAILABLE_LOOT_METHODS: [i32; 5] = [0, 1, 2, 3, 4];
 
@@ -164,25 +169,33 @@ fn c_party_info_is_party_full(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_party_info_is_guid_in_group(state: &mut LuaState) -> LuaResult<u32> {
-    let guid = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let is_member = {
-        let sim = borrow_state(state)?;
-        sim.party_group_active
-            && (guid == SEEDED_LOCAL_CHARACTER_GUID
-                || sim
-                    .party_members
-                    .iter()
-                    .enumerate()
-                    .any(|(index, _)| party_member_guid(index) == guid))
-    };
-    state.push(Val::Bool(is_member));
-    Ok(1)
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        roles_1207::is_guid_in_group(state)
+    }
+    #[cfg(not(feature = "retail-12-0-7"))]
+    {
+        let guid = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+        let is_member = {
+            let sim = borrow_state(state)?;
+            sim.party_group_active
+                && (guid == SEEDED_LOCAL_CHARACTER_GUID
+                    || sim
+                        .party_members
+                        .iter()
+                        .enumerate()
+                        .any(|(index, _)| party_member_guid(index) == guid))
+        };
+        state.push(Val::Bool(is_member));
+        Ok(1)
+    }
 }
 
 fn party_member_guid(index: usize) -> String {
     format!("Player-0000-000000{:02}", index + 2)
 }
 
+#[cfg(not(feature = "retail-12-0-7"))]
 fn party_member_index_from_unit(state: &mut LuaState, unit: &str) -> LuaResult<Option<usize>> {
     if unit == "player" {
         return Ok(None);
@@ -204,49 +217,84 @@ fn c_party_info_leave_party(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_party_info_uninvite_unit(state: &mut LuaState) -> LuaResult<u32> {
-    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let removed = {
-        let mut sim = borrow_state_mut(state)?;
-        if let Some(index) = crate::lua_api::globals::unit_api::parse_party_index(&unit)
-            && index < sim.party_members.len()
-        {
-            sim.party_members.remove(index);
-            true
-        } else {
-            let before = sim.party_members.len();
-            sim.party_members.retain(|member| member.name != unit);
-            before != sim.party_members.len()
-        }
-    };
-    if removed {
-        crate::lua_api::globals::group_verbs::push_event(state, "GROUP_ROSTER_UPDATE")?;
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        roles_1207::uninvite_unit(state)
     }
-    Ok(0)
+    #[cfg(not(feature = "retail-12-0-7"))]
+    {
+        let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+        let removed = {
+            let mut sim = borrow_state_mut(state)?;
+            if let Some(index) = crate::lua_api::globals::unit_api::parse_party_index(&unit)
+                && index < sim.party_members.len()
+            {
+                sim.party_members.remove(index);
+                true
+            } else {
+                let before = sim.party_members.len();
+                sim.party_members.retain(|member| member.name != unit);
+                before != sim.party_members.len()
+            }
+        };
+        if removed {
+            crate::lua_api::globals::group_verbs::push_event(state, "GROUP_ROSTER_UPDATE")?;
+        }
+        Ok(0)
+    }
 }
 
 fn c_party_info_demote_assistant(state: &mut LuaState) -> LuaResult<u32> {
-    let _unit = Option::<String>::from_stack(state, 1)?;
-    borrow_state_mut(state)?.everyone_assistant = false;
-    Ok(0)
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        roles_1207::demote_assistant(state)
+    }
+    #[cfg(not(feature = "retail-12-0-7"))]
+    {
+        let _unit = Option::<String>::from_stack(state, 1)?;
+        borrow_state_mut(state)?.everyone_assistant = false;
+        Ok(0)
+    }
 }
 
 fn c_party_info_promote_to_assistant(state: &mut LuaState) -> LuaResult<u32> {
-    let _unit = Option::<String>::from_stack(state, 1)?;
-    borrow_state_mut(state)?.everyone_assistant = true;
-    Ok(0)
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        roles_1207::promote_to_assistant(state)
+    }
+    #[cfg(not(feature = "retail-12-0-7"))]
+    {
+        let _unit = Option::<String>::from_stack(state, 1)?;
+        borrow_state_mut(state)?.everyone_assistant = true;
+        Ok(0)
+    }
 }
 
 fn c_party_info_promote_to_leader(state: &mut LuaState) -> LuaResult<u32> {
-    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
-    let leader_index = party_member_index_from_unit(state, &unit)?;
-    borrow_state_mut(state)?.party_leader_index = leader_index;
-    Ok(0)
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        roles_1207::promote_to_leader(state)
+    }
+    #[cfg(not(feature = "retail-12-0-7"))]
+    {
+        let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+        let leader_index = party_member_index_from_unit(state, &unit)?;
+        borrow_state_mut(state)?.party_leader_index = leader_index;
+        Ok(0)
+    }
 }
 
 fn c_party_info_set_everyone_is_assistant(state: &mut LuaState) -> LuaResult<u32> {
-    let enabled = Option::<bool>::from_stack(state, 1)?.unwrap_or(false);
-    borrow_state_mut(state)?.everyone_assistant = enabled;
-    Ok(0)
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        roles_1207::set_everyone_is_assistant(state)
+    }
+    #[cfg(not(feature = "retail-12-0-7"))]
+    {
+        let enabled = Option::<bool>::from_stack(state, 1)?.unwrap_or(false);
+        borrow_state_mut(state)?.everyone_assistant = enabled;
+        Ok(0)
+    }
 }
 
 fn c_party_info_do_ready_check(state: &mut LuaState) -> LuaResult<u32> {

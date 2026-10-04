@@ -188,6 +188,10 @@ fn unit_is_group_assistant_requires_everyone_assistant_flag() {
         .unwrap();
     assert!(!b);
     env.state().borrow_mut().everyone_assistant = true;
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        env.state().borrow_mut().party_group_active = true;
+    }
     let b: bool = env
         .eval(r#"return UnitIsGroupAssistant("player")"#)
         .unwrap();

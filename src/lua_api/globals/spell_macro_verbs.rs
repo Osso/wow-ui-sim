@@ -148,7 +148,36 @@ fn stop_macro(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `C_Macro.RunMacroText(text [, button])` — execute the supported secure macro
 /// slash commands through the same globals SecureTemplates would have called.
+#[cfg(feature = "retail-12-0-7")]
+fn read_authenticated_macro_text(state: &LuaState) -> LuaResult<String> {
+    // Authenticate all declared inputs and extras before validating text.
+    for value in state.stack.iter().take(state.top).skip(state.base) {
+        rilua::table_security::unwrap_secret(state, *value)?;
+    }
+    let text = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let button = rilua::table_security::unwrap_secret(state, stack_val(state, 2))?;
+    // INFERRED: nil button remains accepted for existing cached/host callers.
+    if !matches!(button, Val::Nil) {
+        read_macro_string(state, button)?;
+    }
+    read_macro_string(state, text)
+}
+
+#[cfg(feature = "retail-12-0-7")]
+fn read_macro_string(state: &LuaState, value: Val) -> LuaResult<String> {
+    if !matches!(value, Val::Str(_)) {
+        return Err(rilua::runtime_error(
+            "C_Macro.RunMacroText: expected string",
+        ));
+    }
+    crate::lua_api::methods::val_to_string(state, value)
+        .ok_or_else(|| rilua::runtime_error("C_Macro.RunMacroText: expected UTF-8 string"))
+}
+
 fn run_macro_text(state: &mut LuaState) -> LuaResult<u32> {
+    #[cfg(feature = "retail-12-0-7")]
+    let text = read_authenticated_macro_text(state)?;
+    #[cfg(not(feature = "retail-12-0-7"))]
     let Some(text) = stack_string(state, 1) else {
         return Ok(0);
     };
@@ -195,13 +224,29 @@ fn run_target_marker_command(state: &mut LuaState, argument: &str) -> LuaResult<
     let Some((marker, unit)) = selected else {
         return Ok(());
     };
-    // INFERRED: invalid/out-of-range numeric input is an atomic no-op.
-    // Native numeric coercion and !/~ marker prefixes are not modeled here.
+    // INFERRED: invalid/out-of-range input is an atomic no-op; ! is unmodeled.
+    #[cfg(feature = "retail-12-0-7")]
+    let (marker, only_unmarked) = match marker.strip_prefix('~') {
+        Some(number) => (number, true),
+        None => (marker.as_str(), false),
+    };
+    #[cfg(not(feature = "retail-12-0-7"))]
+    let marker = marker.as_str();
     let Ok(marker) = marker.parse::<u8>() else {
         return Ok(());
     };
     if marker > 8 {
         return Ok(());
+    }
+    #[cfg(feature = "retail-12-0-7")]
+    if only_unmarked {
+        let sim = borrow_state(state)?;
+        let Some(target) = super::targeting_verbs::resolve_unit_snapshot(&sim, &unit) else {
+            return Ok(());
+        };
+        if sim.unit_raid_target_icons.contains_key(&target.guid) {
+            return Ok(());
+        }
     }
     let function = LuaApiMut::get_global_val(state, "SetRaidTarget");
     let unit = create_string(state, &unit);

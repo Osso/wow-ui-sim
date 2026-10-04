@@ -76,6 +76,12 @@ fn leave_party_clears_roster_and_fires_event() {
         st.party_leader_index = Some(0);
         st.is_party_lfg = true;
         st.everyone_assistant = true;
+        #[cfg(feature = "retail-12-0-7")]
+        {
+            st.party_assistants.insert("Ada-Realm".into());
+            let player_name = st.player.name.clone();
+            st.party_assistant_exclusions.insert(player_name);
+        }
     }
     env.exec("LeaveParty()").unwrap();
     let st = env.state().borrow();
@@ -84,6 +90,11 @@ fn leave_party_clears_roster_and_fires_event() {
     assert_eq!(st.party_leader_index, None);
     assert!(!st.is_party_lfg);
     assert!(!st.everyone_assistant);
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        assert!(st.party_assistants.is_empty());
+        assert!(st.party_assistant_exclusions.is_empty());
+    }
     drop(st);
     if had_members {
         assert!(fired(&env, "GROUP_ROSTER_UPDATE"));
@@ -126,6 +137,10 @@ fn remove_from_party_unknown_name_is_noop() {
 fn uninvite_unit_by_party_token_removes_indexed_member() {
     let env = env();
     let first_name = env.state().borrow().party_members[0].name.clone();
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        env.state().borrow_mut().party_group_active = true;
+    }
     #[cfg(not(feature = "retail-12-0-7"))]
     env.exec(r#"UninviteUnit("party1")"#).unwrap();
     #[cfg(feature = "retail-12-0-7")]
@@ -144,6 +159,10 @@ fn uninvite_unit_by_party_token_removes_indexed_member() {
 fn uninvite_unit_by_name_removes_matching_member() {
     let env = env();
     let second_name = env.state().borrow().party_members[1].name.clone();
+    #[cfg(feature = "retail-12-0-7")]
+    {
+        env.state().borrow_mut().party_group_active = true;
+    }
     #[cfg(not(feature = "retail-12-0-7"))]
     env.exec(&format!(r#"UninviteUnit("{second_name}")"#))
         .unwrap();

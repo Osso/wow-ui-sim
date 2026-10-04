@@ -31,6 +31,9 @@ pub(crate) fn fire(
     env: &super::env::WowLuaEnv,
     elapsed: f64,
 ) -> crate::Result<OnUpdateStageTimings> {
+    #[cfg(feature = "retail-12-0-7")]
+    crate::c_api::c_party_info::solo_1207::tick(env.rilua_mut().state_mut())?;
+
     let total_started = Instant::now();
     let mut timings = OnUpdateStageTimings::default();
 

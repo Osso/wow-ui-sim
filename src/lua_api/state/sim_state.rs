@@ -506,6 +506,27 @@ pub struct SimState {
     pub open_panels: ::std::collections::HashSet<String>,
     pub is_party_lfg: bool,
     pub everyone_assistant: bool,
+    /// INFERRED explicit per-member roles; empty by default, names match roster identity.
+    #[cfg(feature = "retail-12-0-7")]
+    pub party_assistants: HashSet<String>,
+    #[cfg(feature = "retail-12-0-7")]
+    pub party_assistant_exclusions: HashSet<String>,
+    /// INFERRED explicit restriction input; false, not inferred from combat or rank.
+    #[cfg(feature = "retail-12-0-7")]
+    pub party_operations_restricted: bool,
+    /// Explicit non-home category GUID membership; empty default, no invented GUIDs.
+    #[cfg(feature = "retail-12-0-7")]
+    pub party_category_guids: HashMap<i32, HashSet<String>>,
+    /// Explicit solo-entry inputs; incomplete payload never publishes GROUP_FORMED.
+    #[cfg(feature = "retail-12-0-7")]
+    pub solo_follower_dungeon: bool,
+    #[cfg(feature = "retail-12-0-7")]
+    pub solo_group_category: Option<i32>,
+    #[cfg(feature = "retail-12-0-7")]
+    pub solo_group_guid: Option<String>,
+    /// INFERRED identity latch reset on observed exit, not a server formation epoch.
+    #[cfg(feature = "retail-12-0-7")]
+    pub(crate) solo_group_last: Option<(i32, String)>,
     pub party_leader_index: Option<usize>,
     pub ready_check: ReadyCheckState,
     pub voice_chat: VoiceChatState,

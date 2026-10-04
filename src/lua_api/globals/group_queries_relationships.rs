@@ -238,6 +238,12 @@ pub(super) fn unit_is_group_leader(state: &mut LuaState) -> LuaResult<u32> {
 /// or the player.
 pub(super) fn unit_is_group_assistant(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    #[cfg(feature = "retail-12-0-7")]
+    let assistant = {
+        let sim = borrow_state(state)?;
+        crate::c_api::c_party_info::roles_1207::is_assistant(&sim, &unit)
+    };
+    #[cfg(not(feature = "retail-12-0-7"))]
     let assistant = {
         let st = borrow_state(state)?;
         if !st.everyone_assistant {
@@ -255,12 +261,16 @@ pub(super) fn unit_leads_any_group(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let leads = {
         let st = borrow_state(state)?;
+        #[cfg(feature = "retail-12-0-7")]
+        let assistant = crate::c_api::c_party_info::roles_1207::is_assistant(&st, &unit);
+        #[cfg(not(feature = "retail-12-0-7"))]
+        let assistant = st.everyone_assistant;
         if !st.party_group_active || st.party_members.is_empty() {
             false
         } else if matches!(unit.as_str(), "player" | "pet" | "vehicle") {
-            st.party_leader_index.is_none() || st.everyone_assistant
+            st.party_leader_index.is_none() || assistant
         } else if let Some(idx) = resolve_unit_party_index(&st, &unit) {
-            st.party_leader_index == Some(idx) || st.everyone_assistant
+            st.party_leader_index == Some(idx) || assistant
         } else {
             false
         }
