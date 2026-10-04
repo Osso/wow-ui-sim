@@ -7,6 +7,8 @@ mod model_scene_actors;
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 mod model_unit;
+#[cfg(feature = "retail-12-0-7")]
+mod model_unit_guid;
 
 use super::shared::{opt_bool, val_to_f64};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, frame_id_from_stack};
@@ -648,6 +650,8 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("SetCreature", set_creature),
     ("ClearModel", clear_model),
     ("GetModelFileID", get_model_file_id),
+    #[cfg(feature = "retail-12-0-7")]
+    ("GetModelUnitGUID", model_unit_guid::get_model_unit_guid),
     ("SetModelAlpha", set_model_alpha),
     ("GetModelAlpha", get_model_alpha),
     ("SetShadowEffect", set_shadow_effect),

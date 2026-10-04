@@ -1,6 +1,6 @@
 # Retail 12.0.7 remaining audit rows
 
-Eighteen source rows in the [12.0.7 retained excerpt](../../data/patch-api/sources/12.0.7-api-changes.txt) cover duration helper objects, race discovery, model-unit identity, club events, timeline notification, mouse simulation and debugger secrecy. This is an unintegrated authoring proposal against master `fbe3e20404ceb1285be23a6abe24b0f8aa91221b`, not passing proof. Later cached declarations are contract context, not authenticated build-68182 execution evidence. One row is modeled, one has an existing later producer needing proof, sixteen require missing authority/capability before implementation.
+Eighteen source rows in the [12.0.7 retained excerpt](../../data/patch-api/sources/12.0.7-api-changes.txt) cover duration helper objects, race discovery, model-unit identity, club events, timeline notification, mouse simulation and debugger secrecy. Round 10 integrates only rows 137 and 145 against master `55eb92602a379496a6de9d4fa4d90215c97c2f7d`; proof remains bounded by the feature set and inferred policies below. Later cached declarations are contract context, not authenticated build-68182 execution evidence. One row is modeled, one has an existing later producer needing proof, sixteen require missing authority/capability before implementation.
 
 | Source suffix | Decision | Bounded contract |
 |---|---|---|
@@ -65,7 +65,7 @@ Eighteen source rows in the [12.0.7 retained excerpt](../../data/patch-api/sourc
 
 ## Known gaps (current cycle)
 
-- [ ] No compilation, tests, simulator execution or independent review authorized for this authoring task; all assertions are unverified.
+- [ ] Integration verification is limited to default-Retail targeted tests and compiler/format checks. The four timeline tests require `retail-12-1-5`, disabled by default; they remain authored but unrun. No alternate profiles, startup CLI or native execution are included.
 - [ ] Row 137's default, token-versus-snapshot choice and input policy are INFERRED, not native conformance. ClearModel/rebinding lifecycle parity is not established by this getter proposal.
 - [ ] Row 145's strict-12.0.7 lifecycle is missing. Existing 12.1.5 notifications do not supply that proof; color-setter/alpha/native UniqueEvent coalescing are not covered by these tests.
 - [ ] Sixteen blocked rows retain audit-pending with exact missing-evidence notes in the authoring handoff. No tests should falsely close them by asserting absence, wrapped constants or name registration.
