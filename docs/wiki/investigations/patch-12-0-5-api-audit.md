@@ -1,5 +1,9 @@
 # Patch 12.0.5 API Audit
 
+### Round 100 — review follow-ups
+
+Commits `942833a04` and `8828f7394`, integrated and proven in a worktree (RED 0/10 on the new behavior, GREEN 347 selected tests there, 140/140 on master, startup `[]`), reviewed and accepted with qualifications ([report](../../../data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md)). `GetRaidRosterInfo` names follow the shared identity predicate; model `SetUnit` is now tested on real PlayerModel-family frames, so exact534 becomes bounded; `SecureCmdOptionParse` returns the selected unit and the unchanged cached `/tm` handler honors it; viewed outfit is host state with a real `ChangeViewedOutfit`. Other rows keep their status with updated notes. Four tests that fail on master were shown, by building the session-start commit, to have failed before this session ([report](../../../data/patch-api/evidence/12.0.5-session-2026-10-03/baseline-failures.md)). **131 capabilities/362 IDs; 28 pending /270 bounded /29 partial /35 metadata**; audit **IN PROGRESS**.
+
 ### Batch99 and Classic — twelve capabilities, one rejected slice fixed
 
 Commits `4d142e325` (eight slices), `ce418cbe4` (Classic secret policy, built and run under `client-mists` in a worktree) and `fcdcf43c6` (review fixes). B99 RED 6 PASS / 63 FAIL, GREEN 381/381 with control suites, startup `[]`.

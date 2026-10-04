@@ -1,3 +1,7 @@
+## [2026-10-03] docs | Round 100 follow-ups accounted
+
+Exact534 bounded; roster names, selected-unit parsing and viewed outfit recorded on their rows. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#round-100--review-follow-ups); 131 capabilities/362 IDs; 28 pending /270 bounded /29 partial /35 metadata.
+
 ## [2026-10-03] docs | B99 and Classic accounted; table.freeze epoch proven
 
 Seven rows bounded, nine partial; a rejected aura-rekey defect fixed. [Audit follow-up](investigations/patch-12-0-5-api-audit.md#batch99-and-classic--twelve-capabilities-one-rejected-slice-fixed); 131 capabilities/362 IDs; 28 pending /269 bounded /30 partial /35 metadata.

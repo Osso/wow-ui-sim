@@ -2555,7 +2555,7 @@
         "target-marker-macro-command"
       ],
       "status": "bounded-coverage",
-      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 5/5). Macro-runner path only; vendor slash handler compatibility not earned. Bounded simulator proof, not native parity."
+      "note": "Round 100 (8828f7394): SecureCmdOptionParse returns the explicitly selected unit as a second value (nil without a selector, inferred); the unchanged cached SlashCommands TARGET_MARKER handler marks the selected unit (RED 0/2, GREEN 2/2). The parser change is ungated and untested on older profiles. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 5/5). Macro-runner path only; vendor slash handler compatibility not earned. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-099",
@@ -2609,7 +2609,7 @@
         "outfit-action-command"
       ],
       "status": "bounded-coverage",
-      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
+      "note": "Round 100 (8828f7394): viewed outfit is host state with an authenticated ChangeViewedOutfit setter, getter and synchronous payload-free refresh event; Lua viewed storage removed for this epoch (RED 0/3, GREEN 3/3). Miss/repeat/pending policies inferred; duplicate-ID case untested. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-112",
@@ -2678,7 +2678,7 @@
         "outfit-action-command"
       ],
       "status": "bounded-coverage",
-      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
+      "note": "Round 100 (8828f7394): viewed outfit is host state with an authenticated ChangeViewedOutfit setter, getter and synchronous payload-free refresh event; Lua viewed storage removed for this epoch (RED 0/3, GREEN 3/3). Miss/repeat/pending policies inferred; duplicate-ID case untested. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-25-123",
@@ -2832,7 +2832,7 @@
         "outfit-action-command"
       ],
       "status": "bounded-coverage",
-      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
+      "note": "Round 100 (8828f7394): viewed outfit is host state with an authenticated ChangeViewedOutfit setter, getter and synchronous payload-free refresh event; Lua viewed storage removed for this epoch (RED 0/3, GREEN 3/3). Miss/repeat/pending policies inferred; duplicate-ID case untested. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-168",
@@ -2911,7 +2911,7 @@
         "outfit-action-command"
       ],
       "status": "bounded-coverage",
-      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
+      "note": "Round 100 (8828f7394): viewed outfit is host state with an authenticated ChangeViewedOutfit setter, getter and synchronous payload-free refresh event; Lua viewed storage removed for this epoch (RED 0/3, GREEN 3/3). Miss/repeat/pending policies inferred; duplicate-ID case untested. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 7/7). Vendor handler is called directly, not through the simulator click pipeline; duplicate-index policy and ClearOutfit arity untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-03-31-180",
@@ -2997,7 +2997,7 @@
         "instanced-identity"
       ],
       "status": "partial-development-green",
-      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6). Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Bounded simulator proof, not native parity."
+      "note": "Round 100 (942833a04): GetRaidRosterInfo names now use the shared identity predicate and host-secret wrappers instead of marking interned strings (RED 0/5, GREEN 5/5); raid identities remain a large party, not independent raid tokens. Still partial. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6). Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-04-10-198",
@@ -3005,7 +3005,7 @@
         "instanced-identity"
       ],
       "status": "partial-development-green",
-      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6). Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Bounded simulator proof, not native parity."
+      "note": "Round 100 (942833a04): GetRaidRosterInfo names now use the shared identity predicate and host-secret wrappers instead of marking interned strings (RED 0/5, GREEN 5/5); raid identities remain a large party, not independent raid tokens. Still partial. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6). Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-04-10-199",
@@ -3013,7 +3013,7 @@
         "instanced-identity"
       ],
       "status": "partial-development-green",
-      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6). Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Bounded simulator proof, not native parity."
+      "note": "Round 100 (942833a04): GetRaidRosterInfo names now use the shared identity predicate and host-secret wrappers instead of marking interned strings (RED 0/5, GREEN 5/5); raid identities remain a large party, not independent raid tokens. Still partial. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6). Partial: raid/pet/vehicle identities unmodeled and precedence inferred; default party names changed from secret to public on retail 12.0.5. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "prose-2026-04-10-200",
@@ -4323,8 +4323,8 @@
       "capabilities": [
         "model-unit-identity-guard"
       ],
-      "status": "partial-development-green",
-      "note": "B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6 model cases). Row 534 partial (PlayerModel itself untested); success/missing-unit returns inferred; other-profile SetUnit routing changed and untested. Bounded simulator proof, not native parity."
+      "status": "bounded-coverage",
+      "note": "Round 100 (942833a04): six tests drive real PlayerModel, DressUpModel, CinematicModel, TabardModel and ModelScene frames through SetUnit — one public nil with binding preserved for a secret identity, false for a missing one, true and stored otherwise — plus a tooltip SetUnit control; they pass on the existing guard, so this is coverage of existing behavior. Optional arguments, model loading and other profiles unproven. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6 model cases). Row 534 partial (PlayerModel itself untested); success/missing-unit returns inferred; other-profile SetUnit routing changed and untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "widgets-Cooldown-GetMinimumCountdownDuration-536",
