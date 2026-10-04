@@ -69,3 +69,5 @@ Plan: [extract scout](../../../data/patch-api/evidence/12.1.0-session-2026-10-04
 
 Master `10118708c`: sweep, enum, struct, added-globals, surface-closures and deprecated-wrapper tests GREEN, each run alone. Pre-existing failures noted by the enums agent, unchanged by this round: `test_patch_12_0_0_transmog_situation_enum_values`, `edit_mode_profile_option_enums_match_blizzard_docs`, `unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size`. No independent review.
 - **Roleset, CVar scope, singles (9):** roleset filtering drives visibility (two INFERRED semantics); session-only `tooltipShowAuraSpellIDs`; `CreateFrame("WorldFrame")` now rejected (real bug). Blocked: 19-arg chat filter (cached Blizzard Lua passes 14), VectorGraphics method absence (needs per-type dispatch).
+
+Master `b5b31ee5b`: sweep, enum, bootstrap, 45 `patch_12_1_0_` integration and 49 `test_patch_12_1_` lib tests GREEN; `prefork_full_ui` 2,011 passed / 7 failed, the same 7 pre-existing failures as round 3.
