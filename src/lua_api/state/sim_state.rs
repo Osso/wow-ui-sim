@@ -546,6 +546,9 @@ pub struct SimState {
     pub bnet_friends: Vec<BnetFriend>,
     pub bnet_friend_invites: Vec<BnetFriendInvite>,
     pub bnet_appear_offline: bool,
+    /// INFERRED local broadcast input; no network service or persistence.
+    #[cfg(feature = "retail-12-0-0")]
+    pub bnet_custom_message: String,
     pub social_friends: Vec<SocialFriend>,
     pub auction_browse_results: Vec<AuctionBrowseResult>,
     pub auction_replicate_items: Vec<AuctionReplicateItem>,

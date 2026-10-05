@@ -473,6 +473,8 @@ macro_rules! build_empty_sim_state {
             bnet_friends: default_bnet_friends(),
             bnet_friend_invites: Vec::new(),
             bnet_appear_offline: false,
+            #[cfg(feature = "retail-12-0-0")]
+            bnet_custom_message: String::new(),
             social_friends: default_social_friends(),
             auction_browse_results: default_auction_browse_results(),
             auction_replicate_items: default_auction_replicate_items(),
