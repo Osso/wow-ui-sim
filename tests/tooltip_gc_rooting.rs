@@ -40,7 +40,7 @@ fn action_parent_survives_binding_color_collection() {
         end
         local t = C_TooltipInfo.GetAction(5)
         CheckTip(t, 'Flash of Light')
-        assert(t.lines[#t.lines].leftText:find('Press'))
+        assert(t.lines[#t.lines].leftText == 'Key bound: 5')
     "#).unwrap();
 }
 
@@ -69,6 +69,7 @@ fn toy_parent_survives_color_collection() {
 #[test]
 fn aura_parent_survives_color_collection() {
     let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().player.buffs.clear();
     env.exec("A_Admin.AddBuff(19750, 'Audit Aura', 136243, 60, 1)").unwrap();
     collect_in_colors(&env);
     env.exec("local t = C_TooltipInfo.GetUnitAura('player', 1, 'HELPFUL'); CheckTip(t, 'Audit Aura'); assert(#t.lines == 3)").unwrap();
