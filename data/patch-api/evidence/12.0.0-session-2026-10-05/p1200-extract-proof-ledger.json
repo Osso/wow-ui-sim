@@ -1,0 +1,79 @@
+{
+  "verified_revision": "0eea9791d5654a0ef0b1a663ad5eac59e7134df6",
+  "base_revision": "3fa805ef78a2ad4a42f1963ae926ca251e19960b",
+  "proof_level": "data/extractor validation, source-derived scout and historical test references; no Rust/runtime execution",
+  "checks": [
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract/tools/extract_patch_non_inventory.py --self-test",
+      "revision": "2a52a4d10",
+      "scope": "extractor behavioral fixtures",
+      "result": "PASS",
+      "later_changes_invalidate": false
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract/tools/extract_patch_non_inventory.py --check",
+      "revision": "2a52a4d10",
+      "scope": "plaintext bytes, generated supplemental row objects, unique IDs and counts",
+      "result": "PASS",
+      "later_changes_invalidate": false
+    },
+    {
+      "command": "Pyrun: git show base ledger; JSON equality, source-line/set/count, report-row, existing test-name, cached-document SHA and authorized git diff assertions",
+      "revision": "0eea9791d5654a0ef0b1a663ad5eac59e7134df6",
+      "scope": "all supplemental data/doc paths and preserved original inventory/register outputs",
+      "result": "PASS",
+      "later_changes_invalidate": false
+    }
+  ],
+  "inventory_rows_unchanged": 1010,
+  "inventory_objects_sha256": "35728c447fd43226a3c6f1bca42ea0c2316e75aae25640a5c38c3b26243701a0",
+  "new_rows": 143,
+  "new_status_counts": {
+    "metadata-only": 31,
+    "audit-pending": 112
+  },
+  "total_status_counts": {
+    "partial-development-green": 641,
+    "bounded-coverage": 293,
+    "metadata-only": 45,
+    "audit-pending": 174
+  },
+  "class_counts": {
+    "METADATA": 31,
+    "PROSE-MODELABLE": 24,
+    "ENUM": 32,
+    "STRUCT": 56
+  },
+  "batch_counts": {
+    "B11": 1,
+    "B12": 1,
+    "B01": 28,
+    "B07": 4,
+    "B02": 11,
+    "B09": 4,
+    "B06": 6,
+    "B08": 14,
+    "B10": 4,
+    "B05": 11,
+    "B04": 6,
+    "B03": 22
+  },
+  "historical_field_scopes_with_recorded_tests": 26,
+  "historical_parent_scopes_with_test_assertions": 2,
+  "additional_body_inspected_row_scopes": 4,
+  "scout_complete": true,
+  "unique_ids": 1153,
+  "cache_declarations_checked": 35,
+  "plaintext_sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+  "changed_paths": [
+    "data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-doc-comparison.json",
+    "data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-row-scout.json",
+    "data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md",
+    "data/patch-api/sources/12.0.0-api-changes.txt",
+    "data/patch-api/sources/12.0.0-page-coverage.json",
+    "docs/wiki/index.md",
+    "docs/wiki/investigations/patch-12-0-0-api-audit.md",
+    "docs/wiki/log.md",
+    "tools/extract_patch_non_inventory.py"
+  ]
+}
