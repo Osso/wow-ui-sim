@@ -27,10 +27,27 @@ use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val};
 
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct CustomSets {
+    pub max_sets: usize,
     last_id: i32,
     records: BTreeMap<i32, CustomSet>,
+}
+
+impl Default for CustomSets {
+    fn default() -> Self {
+        // INFERRED local capacity, not a verified native limit.
+        Self {
+            max_sets: 30,
+            last_id: 0,
+            records: BTreeMap::new(),
+        }
+    }
+}
+
+pub(crate) fn valid_name(name: &str) -> bool {
+    // INFERRED: nonblank names of at most 128 characters, no control characters.
+    !name.trim().is_empty() && name.chars().count() <= 128 && !name.chars().any(char::is_control)
 }
 
 #[derive(Debug, Clone)]
@@ -66,6 +83,8 @@ pub(crate) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<(
         ("ModifyCustomSet", modify_custom_set),
         ("RenameCustomSet", rename_custom_set),
         ("DeleteCustomSet", delete_custom_set),
+        ("GetNumMaxCustomSets", get_max_custom_sets),
+        ("IsValidCustomSetName", is_valid_custom_set_name),
     ] {
         table_set_rust_fn_static(state, table, name, handler)?;
     }
@@ -118,10 +137,16 @@ fn read_items(state: &mut LuaState, index: i32) -> LuaResult<Vec<ItemTransmogInf
 fn new_custom_set(state: &mut LuaState) -> LuaResult<u32> {
     let name = String::from_stack(state, 1)?;
     let icon = i32::from_stack(state, 2)?;
+    if !valid_name(&name) {
+        return Err(rilua::runtime_error("invalid custom set name"));
+    }
     let items = read_items(state, 3)?;
     let id = {
         let mut sim = borrow_state_mut(state)?;
         let sets = &mut sim.transmog_custom_sets;
+        if sets.records.len() >= sets.max_sets {
+            return Err(rilua::runtime_error("custom set capacity reached"));
+        }
         let id = sets
             .last_id
             .checked_add(1)
@@ -201,6 +226,18 @@ fn get_custom_set_items(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn get_max_custom_sets(state: &mut LuaState) -> LuaResult<u32> {
+    let count = borrow_state(state)?.transmog_custom_sets.max_sets;
+    state.push(Val::Num(count as f64));
+    Ok(1)
+}
+
+fn is_valid_custom_set_name(state: &mut LuaState) -> LuaResult<u32> {
+    let name = String::from_stack(state, 1)?;
+    state.push(Val::Bool(valid_name(&name)));
+    Ok(1)
+}
+
 fn missing_set(id: i32) -> rilua::LuaError {
     rilua::runtime_error(format!("unknown custom set ID {id}"))
 }
@@ -220,6 +257,9 @@ fn modify_custom_set(state: &mut LuaState) -> LuaResult<u32> {
 fn rename_custom_set(state: &mut LuaState) -> LuaResult<u32> {
     let id = i32::from_stack(state, 1)?;
     let name = String::from_stack(state, 2)?;
+    if !valid_name(&name) {
+        return Err(rilua::runtime_error("invalid custom set name"));
+    }
     borrow_state_mut(state)?
         .transmog_custom_sets
         .records

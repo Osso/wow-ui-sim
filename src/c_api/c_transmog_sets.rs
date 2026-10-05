@@ -9,7 +9,28 @@ use rilua::{LuaResult, Val};
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogSets")?;
     table_set_rust_fn_static(state, namespace, "GetSetsFilter", get_sets_filter)?;
-    table_set_rust_fn_static(state, namespace, "SetSetsFilter", set_sets_filter)
+    table_set_rust_fn_static(state, namespace, "SetSetsFilter", set_sets_filter)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsUsingDefaultSetsFilters",
+        is_using_defaults,
+    )?;
+    table_set_rust_fn_static(state, namespace, "SetDefaultSetsFilters", set_defaults)
+}
+
+fn is_using_defaults(state: &mut LuaState) -> LuaResult<u32> {
+    let defaults = borrow_state(state)?
+        .transmog_set_filters
+        .values()
+        .all(|value| *value);
+    state.push(Val::Bool(defaults));
+    Ok(1)
+}
+
+fn set_defaults(state: &mut LuaState) -> LuaResult<u32> {
+    borrow_state_mut(state)?.transmog_set_filters.clear();
+    Ok(0)
 }
 
 fn filter_index(state: &LuaState) -> LuaResult<i32> {
@@ -25,9 +46,11 @@ fn get_sets_filter(state: &mut LuaState) -> LuaResult<u32> {
         .transmog_set_filters
         .get(&index)
         .copied();
-    let Some(value) = value else {
-        // Simulator unset policy; native defaults remain unverified.
-        return Ok(0);
+    // INFERRED: collected/uncollected/PvE/PvP filters default checked.
+    let value = match value {
+        Some(value) => value,
+        None if (1..=4).contains(&index) => true,
+        None => return Ok(0),
     };
     state.push(Val::Bool(value));
     Ok(1)

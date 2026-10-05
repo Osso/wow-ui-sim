@@ -44,8 +44,4 @@ impl Default for OutfitState {
     }
 }
 
-pub(crate) fn valid_name(name: &str) -> bool {
-    // INFERRED: reject blank/control-containing names and cap at 128 characters;
-    // duplicate names remain allowed, matching the documented lookup ambiguity.
-    !name.trim().is_empty() && name.chars().count() <= 128 && !name.chars().any(char::is_control)
-}
+pub(crate) use super::super::c_transmog_collection::valid_name;

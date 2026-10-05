@@ -39,6 +39,8 @@ mod lifecycle;
 mod pending;
 #[cfg(feature = "retail-12-0-5")]
 mod situations;
+#[cfg(feature = "retail-12-0-5")]
+mod slots;
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
@@ -56,6 +58,8 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     pending::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
     situations::register(state, namespace)?;
+    #[cfg(feature = "retail-12-0-5")]
+    slots::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
     catalog::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
