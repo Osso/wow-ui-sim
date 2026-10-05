@@ -1,4 +1,6 @@
 //! Club membership state. IDs are opaque strings, never roster positions.
+//! INFERRED: string token representation; cached docs name an opaque type but do
+//! not prescribe its Lua representation. Numeric selectors are not retained.
 use std::collections::BTreeMap;
 
 use crate::lua_api::state::GuildMember;
@@ -133,6 +135,8 @@ pub struct ClubState {
     pub initialized: bool,
     pub restriction_reason: u8,
     next_id: u64,
+    pub(crate) guild_message_authors: BTreeMap<String, Member>,
+    pub(crate) guild_seed_author_ids: Vec<String>,
 }
 
 impl Default for ClubState {
@@ -142,6 +146,8 @@ impl Default for ClubState {
             initialized: true,
             restriction_reason: 0,
             next_id: 0,
+            guild_message_authors: BTreeMap::new(),
+            guild_seed_author_ids: Vec::new(),
         }
     }
 }
@@ -165,24 +171,21 @@ impl ClubState {
             return;
         };
         let old = self.clubs.remove(GUILD_ID);
-        let old_members = old
-            .as_ref()
-            .map(|club| club.members.as_slice())
-            .unwrap_or_default();
-        let members = roster
+        let is_initial = old.is_none();
+        let mut by_name: BTreeMap<_, _> = old
+            .into_iter()
+            .flat_map(|club| club.members)
+            .map(|member| (member.name.clone(), member))
+            .collect();
+        let members: Vec<Member> = roster
             .iter()
             .enumerate()
             .map(|(index, entry)| {
-                let previous = old_members.iter().find(|member| member.name == entry.name);
-                let mut member = previous.cloned().unwrap_or_else(|| {
-                    let id = self.allocate_id("member");
-                    Member::new(&id, &entry.name, MEMBER, old.is_none() && index == 0)
-                });
-                member.presence = if entry.online { 1 } else { 3 };
-                member.guild_rank = Some(entry.rank_index);
-                member
+                let previous = by_name.remove(&entry.name);
+                self.project_guild_member(entry, previous, is_initial && index == 0)
             })
             .collect();
+        self.archive_guild_authors(&members);
         self.clubs.insert(
             GUILD_ID.into(),
             Club {
@@ -196,5 +199,38 @@ impl ClubState {
                 invitations: Vec::new(),
             },
         );
+    }
+
+    fn project_guild_member(
+        &mut self,
+        entry: &GuildMember,
+        previous: Option<Member>,
+        is_self: bool,
+    ) -> Member {
+        let mut member = previous.unwrap_or_else(|| {
+            let id = self.allocate_id("member");
+            Member::new(&id, &entry.name, MEMBER, is_self)
+        });
+        // Preserve explicit host Away/Mobile/Busy presence while the legacy
+        // roster's online bit remains true.
+        member.presence = if !entry.online && member.presence != 0 {
+            3
+        } else if entry.online && (member.presence == 3 || member.presence == 0) {
+            1
+        } else {
+            member.presence
+        };
+        member.guild_rank = Some(entry.rank_index);
+        member
+    }
+
+    fn archive_guild_authors(&mut self, members: &[Member]) {
+        if self.guild_seed_author_ids.is_empty() {
+            self.guild_seed_author_ids = members.iter().map(|member| member.id.clone()).collect();
+        }
+        for member in members {
+            self.guild_message_authors
+                .insert(member.id.clone(), member.clone());
+        }
     }
 }

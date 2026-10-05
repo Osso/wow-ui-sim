@@ -54,9 +54,12 @@ fn string_arg(state: &mut LuaState, index: i32) -> LuaResult<String> {
         .ok_or_else(|| runtime_error("C_Club: club/member ID must be a nonempty opaque string"))
 }
 
-pub(super) fn member_arg(state: &mut LuaState) -> LuaResult<Option<Member>> {
+pub(super) fn guild_member_arg(state: &mut LuaState) -> LuaResult<Option<Member>> {
     let club_id = string_arg(state, 1)?;
     let member_id = string_arg(state, 2)?;
+    if club_id != super::club_model::GUILD_ID {
+        return Ok(None);
+    }
     sync_guild(state)?;
     Ok(borrow_state(state)?
         .clubs
@@ -334,14 +337,21 @@ fn create_club(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn assign_role(state: &mut LuaState) -> LuaResult<u32> {
+fn read_management_target(state: &mut LuaState) -> LuaResult<Option<(Club, String)>> {
     if !authorize_mutation(state)? {
-        return Ok(0);
+        return Ok(None);
     }
     let Some(club) = read_club(state)? else {
-        return Ok(0);
+        return Ok(None);
     };
     let id = string_arg(state, 2)?;
+    Ok(Some((club, id)))
+}
+
+fn assign_role(state: &mut LuaState) -> LuaResult<u32> {
+    let Some((club, id)) = read_management_target(state)? else {
+        return Ok(0);
+    };
     let role = i32::from_stack(state, 3)?;
     let Ok(role) = u8::try_from(role) else {
         return Ok(0);
@@ -387,13 +397,9 @@ fn update_role(state: &LuaState, club_id: &str, id: &str, role: u8) -> LuaResult
 }
 
 fn kick(state: &mut LuaState) -> LuaResult<u32> {
-    if !authorize_mutation(state)? {
-        return Ok(0);
-    }
-    let Some(club) = read_club(state)? else {
+    let Some((club, id)) = read_management_target(state)? else {
         return Ok(0);
     };
-    let id = string_arg(state, 2)?;
     let Some(member) = club.member(&id) else {
         return Ok(0);
     };
@@ -412,13 +418,9 @@ fn kick(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn set_note(state: &mut LuaState) -> LuaResult<u32> {
-    if !authorize_mutation(state)? {
-        return Ok(0);
-    }
-    let Some(club) = read_club(state)? else {
+    let Some((club, id)) = read_management_target(state)? else {
         return Ok(0);
     };
-    let id = string_arg(state, 2)?;
     let note = String::from_stack(state, 3)?;
     let Some(member) = club.member(&id) else {
         return Ok(0);
@@ -445,13 +447,9 @@ fn set_note(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn send_invitation(state: &mut LuaState) -> LuaResult<u32> {
-    if !authorize_mutation(state)? {
-        return Ok(0);
-    }
-    let Some(club) = read_club(state)? else {
+    let Some((club, id)) = read_management_target(state)? else {
         return Ok(0);
     };
-    let id = string_arg(state, 2)?;
     if !club.privilege("canSendInvitation")
         || club.member(&id).is_some()
         || club
@@ -485,13 +483,9 @@ fn send_invitation(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn revoke_invitation(state: &mut LuaState) -> LuaResult<u32> {
-    if !authorize_mutation(state)? {
-        return Ok(0);
-    }
-    let Some(club) = read_club(state)? else {
+    let Some((club, id)) = read_management_target(state)? else {
         return Ok(0);
     };
-    let id = string_arg(state, 2)?;
     let Some(invitation) = club
         .invitations
         .iter()

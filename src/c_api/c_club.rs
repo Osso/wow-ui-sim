@@ -1,4 +1,5 @@
 //! Guild club streams/messages and opaque community membership.
+pub use super::club_inputs::{receive_member, receive_member_removal};
 use super::helpers::{ensure_namespace, set_table_array};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_get, table_set,
@@ -10,10 +11,9 @@ use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 const GUILD_CLUB_ID: &str = "guild-0";
-const GUILD_CLUB_TYPE: f64 = 2.0;
 const GUILD_CLUB_CAPACITY: f64 = 1000.0;
 const GUILD_STREAM_ID: f64 = 1.0;
 const GUILD_STREAM_TYPE: f64 = 1.0;
@@ -47,10 +47,7 @@ pub(crate) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
 /// member; acceptance is a server decision the simulator does not fabricate.
 #[cfg(feature = "retail-12-0-7")]
 fn c_club_send_battle_tag_friend_request(state: &mut LuaState) -> LuaResult<u32> {
-    if !is_guild_club_arg(state) {
-        return Ok(0);
-    }
-    let member = super::club_members::member_arg(state)?;
+    let member = super::club_members::guild_member_arg(state)?;
     let name = member
         .filter(|member| !member.is_self)
         .map(|member| member.name);
@@ -66,10 +63,7 @@ fn c_club_send_battle_tag_friend_request(state: &mut LuaState) -> LuaResult<u32>
 /// Sends an in-game friend request to a guild club member, by their roster name.
 #[cfg(feature = "retail-12-1-0")]
 fn c_club_send_title_friend_request(state: &mut LuaState) -> LuaResult<u32> {
-    if !is_guild_club_arg(state) {
-        return Ok(0);
-    }
-    let member = super::club_members::member_arg(state)?;
+    let member = super::club_members::guild_member_arg(state)?;
     let name = member
         .filter(|member| !member.is_self)
         .map(|member| member.name);
@@ -200,7 +194,7 @@ fn c_club_get_message_info(state: &mut LuaState) -> LuaResult<u32> {
     let messages = resolved_guild_messages(state)?;
     match messages.iter().find(|message| message.id == message_id) {
         Some(message) => {
-            let message_info = build_message_info_table(state, message);
+            let message_info = build_message_info_table(state, message)?;
             state.push(message_info);
         }
         None => state.push(Val::Nil),
@@ -212,12 +206,10 @@ fn c_club_get_message_ranges(state: &mut LuaState) -> LuaResult<u32> {
     let ranges = create_table(state);
     if is_guild_stream_arg(state) {
         let messages = resolved_guild_messages(state)?;
-        let range = build_message_range_table(
-            state,
-            messages.first().expect("seeded guild messages"),
-            messages.last().expect("seeded guild messages"),
-        );
-        set_table_array(state, ranges, 1, range);
+        if let (Some(first), Some(last)) = (messages.first(), messages.last()) {
+            let range = build_message_range_table(state, first, last);
+            set_table_array(state, ranges, 1, range);
+        }
     }
     state.push(ranges);
     Ok(1)
@@ -237,7 +229,7 @@ fn c_club_get_messages_before(state: &mut LuaState) -> LuaResult<u32> {
     let messages = messages_before(&all_messages, newest, count);
     let array = create_table(state);
     for (index, message) in messages.iter().enumerate() {
-        let message_info = build_message_info_table(state, message);
+        let message_info = build_message_info_table(state, message)?;
         set_table_array(state, array, index as i64 + 1, message_info);
     }
     state.push(array);
@@ -267,10 +259,20 @@ fn c_club_send_message(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
 
+    super::club_members::sync_guild(state)?;
+    let author_member_id = borrow_state(state)?
+        .clubs
+        .clubs
+        .get(GUILD_CLUB_ID)
+        .and_then(|club| club.self_member())
+        .map(|member| member.id.clone());
+    let Some(author_member_id) = author_member_id else {
+        return Ok(0);
+    };
     let new_index = {
         let mut sim = borrow_state_mut(state)?;
         sim.world.guild_chat_messages.push(GuildChatMessage {
-            author_member_id: 1,
+            author_member_id,
             content: text,
         });
         sim.world.guild_chat_messages.len() - 1
@@ -366,16 +368,10 @@ fn stream_table_from_stack(state: &mut LuaState) -> Option<Val> {
     }
 }
 
-fn index_from_member_id(member_id: i64) -> Option<usize> {
-    member_id
-        .checked_sub(1)
-        .and_then(|zero_based| usize::try_from(zero_based).ok())
-}
-
 #[derive(Clone)]
 struct ResolvedMessage {
     id: MessageId,
-    author_member_id: i64,
+    author_member_id: String,
     content: String,
 }
 
@@ -385,38 +381,43 @@ struct MessageId {
     position: i64,
 }
 
-const STATIC_GUILD_MESSAGES: &[(i64, &str)] = &[
+const STATIC_GUILD_MESSAGES: &[(usize, &str)] = &[
     (
-        1,
+        0,
         "Welcome to Heroes of Azeroth. Repairs are open for raid night.",
     ),
     (
-        1,
+        0,
         "Mythic plus keys start after reset. Bring flasks if you have them.",
     ),
-    (2, "I put extra feasts and vantus runes in the guild bank."),
+    (1, "I put extra feasts and vantus runes in the guild bank."),
     (
-        1,
+        0,
         "Transmog run on Sunday. Invites go out ten minutes early.",
     ),
 ];
 
 fn resolved_guild_messages(state: &LuaState) -> LuaResult<Vec<ResolvedMessage>> {
+    super::club_members::sync_guild(state)?;
+    let sim = borrow_state(state)?;
+    // INFERRED static conversation fixture binds authors at initial projection,
+    // not at each read. Reordering/removal never changes a message's author ID.
     let mut messages: Vec<ResolvedMessage> = STATIC_GUILD_MESSAGES
         .iter()
         .enumerate()
-        .map(|(index, (author, content))| ResolvedMessage {
-            id: message_id_at(index),
-            author_member_id: *author,
-            content: (*content).to_string(),
+        .filter_map(|(index, (author_index, content))| {
+            let id = sim.clubs.guild_seed_author_ids.get(*author_index)?;
+            Some(ResolvedMessage {
+                id: message_id_at(index),
+                author_member_id: id.clone(),
+                content: (*content).into(),
+            })
         })
         .collect();
-
-    let sim = borrow_state(state)?;
     for (index, msg) in sim.world.guild_chat_messages.iter().enumerate() {
         messages.push(ResolvedMessage {
             id: dynamic_message_id(index),
-            author_member_id: msg.author_member_id,
+            author_member_id: msg.author_member_id.clone(),
             content: msg.content.clone(),
         });
     }
@@ -508,18 +509,18 @@ fn build_message_range_table(
     range
 }
 
-fn build_message_info_table(state: &mut LuaState, message: &ResolvedMessage) -> Val {
+fn build_message_info_table(state: &mut LuaState, message: &ResolvedMessage) -> LuaResult<Val> {
     let info = create_table(state);
     let message_id = build_message_id_table(state, message.id);
     let content = create_string(state, &message.content);
-    let author = build_message_author_table(state, message.author_member_id);
+    let author = build_message_author_table(state, &message.author_member_id)?;
     table_set(state, info, "messageId", message_id);
     table_set(state, info, "content", content);
     table_set(state, info, "author", author);
     table_set(state, info, "destroyer", Val::Nil);
     table_set(state, info, "destroyed", Val::Bool(false));
     table_set(state, info, "edited", Val::Bool(false));
-    info
+    Ok(info)
 }
 
 fn build_message_id_table(state: &mut LuaState, message_id: MessageId) -> Val {
@@ -534,16 +535,16 @@ fn build_message_id_table(state: &mut LuaState, message_id: MessageId) -> Val {
     table
 }
 
-fn build_message_author_table(state: &mut LuaState, member_id: i64) -> Val {
-    super::club_members::sync_guild(state).expect("club model state");
-    let member = borrow_state(state)
-        .expect("club model state")
+fn build_message_author_table(state: &mut LuaState, member_id: &str) -> LuaResult<Val> {
+    let member = borrow_state(state)?
         .clubs
-        .clubs
-        .get(super::club_model::GUILD_ID)
-        .and_then(|club| index_from_member_id(member_id).and_then(|index| club.members.get(index)))
-        .cloned();
-    let member = member
-        .unwrap_or_else(|| super::club_model::Member::new("unknown-author", "Unknown", 4, false));
-    super::club_members::build_member_info(state, &member, 2)
+        .guild_message_authors
+        .get(member_id)
+        .cloned()
+        .ok_or_else(|| {
+            runtime_error(format!(
+                "C_Club message: missing author snapshot {member_id}"
+            ))
+        })?;
+    Ok(super::club_members::build_member_info(state, &member, 2))
 }

@@ -637,7 +637,7 @@ pub struct GuildChallenge {
 /// the message's index in `WorldState::guild_chat_messages`.
 #[derive(Debug, Clone)]
 pub struct GuildChatMessage {
-    pub author_member_id: i64,
+    pub author_member_id: String,
     pub content: String,
 }
 

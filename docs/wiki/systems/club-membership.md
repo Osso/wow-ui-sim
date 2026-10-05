@@ -10,6 +10,12 @@ Community creation installs the player as owner. INFERRED policy: owner manages 
 
 Successful changed notes emit MEMBER_UPDATED; role/kick operations emit documented role/removal payloads. Local invitation changes emit INVITATIONS_RECEIVED_FOR_CLUB. Local completion, change-only event policy and role privilege mapping are INFERRED, not native service claims.
 
+## Host events and messages
+
+`c_club::receive_member` and `receive_member_removal` apply explicit host snapshots/departures before dispatching synchronous callbacks. New IDs emit ADDED; changed presence/role emit their detailed events; changed names/notes emit UPDATED. Membership arrival clears pending invitations. Repeated snapshots/departures emit nothing. Guild host inputs also update the legacy roster producer so subsequent queries cannot undo them.
+
+Guild chat stores opaque author IDs and retains historical author snapshots. Seeded conversations bind authors once, not by current roster order. Missing author snapshots report errors rather than fabricating Unknown members. String representation, projection-time fixture binding and initial missing guild rank 1 are INFERRED.
+
 ## Sources
 
 - [Contract](../../specs/club-membership.md).

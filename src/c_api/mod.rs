@@ -153,6 +153,7 @@ pub(crate) mod c_tooltip_info_spell_mount;
 pub(crate) mod c_transmog_collection;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod class_talent_commands;
+mod club_inputs;
 mod club_members;
 pub mod club_model;
 #[cfg(feature = "retail-12-0-5")]

@@ -217,10 +217,11 @@ fn title_friend_requests_record_by_name_and_club_member() {
         C_BattleNet.SendTitleFriendInviteByName("  Varian ")
         C_BattleNet.SendTitleFriendInviteByName("varian")
         C_BattleNet.SendTitleFriendInviteByName("")
-        C_Club.SendTitleFriendRequest("guild-0", 2)
-        C_Club.SendTitleFriendRequest("guild-0", 1)
-        C_Club.SendTitleFriendRequest("guild-0", 9)
-        C_Club.SendTitleFriendRequest("other-club", 2)
+        local ids = C_Club.GetClubMembers('guild-0')
+        C_Club.SendTitleFriendRequest("guild-0", ids[2])
+        C_Club.SendTitleFriendRequest("guild-0", ids[1])
+        C_Club.SendTitleFriendRequest("guild-0", 'missing-member')
+        C_Club.SendTitleFriendRequest("other-club", ids[2])
         "#,
     )
     .unwrap();

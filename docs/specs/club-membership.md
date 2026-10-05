@@ -19,7 +19,8 @@
 
 - `src/c_api/club_model.rs`: club/member/invitation state and role policy.
 - `src/c_api/club_members.rs`: Lua getters and management/event boundary.
-- `src/c_api/c_club.rs`: registration, guild streams/messages and host inputs.
+- `src/c_api/c_club.rs`: registration and guild streams/messages.
+- `src/c_api/club_inputs.rs`: synchronous host member snapshots and departures.
 - `src/lua_api/state{,/sim_state}.rs`: stores club state.
 
 ## Tests asserting this spec
@@ -30,7 +31,7 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Finish host inputs and concrete management/event proof.
+- [ ] Verify host inputs and concrete management/event proof.
 - [ ] Run required regression and startup checks.
 
 ## Out of scope

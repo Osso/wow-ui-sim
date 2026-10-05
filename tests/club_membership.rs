@@ -17,7 +17,7 @@ fn club_opaque_ids_survive_roster_reordering() {
         assert(C_Club.GetMemberInfo('guild-0', ids[2]).name == secondName)
         local ranges = C_Club.GetMessageRanges('guild-0', 1)
         local message = C_Club.GetMessageInfo('guild-0', 1, ranges[1].oldestMessageId)
-        assert(type(message.author.memberId) == 'string')
+        assert(message.author.memberId == ids[1])
     "#).unwrap();
 }
 
@@ -249,4 +249,160 @@ fn club_restrictions_and_initialization_deny_privileged_mutations() {
     assert!(club.members[1].note.is_empty());
     assert!(club.invitations.is_empty());
     assert!(sim.lua_errors.is_empty());
+}
+
+
+#[test]
+fn club_host_inputs_publish_added_presence_updated_and_removed_with_same_id() {
+    use wow_ui_sim::c_api::{c_club, club_model::Member};
+    let (env, club) = community();
+    env.exec(r#"
+        received = {}
+        local listener = CreateFrame('Frame')
+        for _, event in ipairs({'CLUB_MEMBER_ADDED', 'CLUB_MEMBER_PRESENCE_UPDATED',
+            'CLUB_MEMBER_UPDATED', 'CLUB_MEMBER_ROLE_UPDATED', 'CLUB_MEMBER_REMOVED'}) do
+            listener:RegisterEvent(event)
+        end
+        listener:SetScript('OnEvent', function(_, event, club, id, detail)
+            assert(club == clubId and id == 'opaque:server/Jaina-4')
+            local info = C_Club.GetMemberInfo(club, id)
+            if event == 'CLUB_MEMBER_REMOVED' then assert(info == nil) else
+                assert(info.memberId == id)
+                if event == 'CLUB_MEMBER_PRESENCE_UPDATED' then assert(info.presence == detail) end
+                if event == 'CLUB_MEMBER_ROLE_UPDATED' then assert(info.role == detail) end
+            end
+            received[#received + 1] = {event, id, detail}
+        end)
+    "#).unwrap();
+    let mut member = Member::new("opaque:server/Jaina-4", "Jaina", 4, false);
+    c_club::receive_member(&env, &club, member.clone()).unwrap();
+    env.exec("assert(#received == 1 and received[1][1] == 'CLUB_MEMBER_ADDED')").unwrap();
+    c_club::receive_member(&env, &club, member.clone()).unwrap();
+    env.exec("assert(#received == 1)").unwrap();
+    member.presence = 2;
+    c_club::receive_member(&env, &club, member.clone()).unwrap();
+    env.exec("assert(#received == 2 and received[2][1] == 'CLUB_MEMBER_PRESENCE_UPDATED' and received[2][3] == 2)").unwrap();
+    member.name = "Jaina-Proudmoore".into();
+    member.note = "Frost mage".into();
+    c_club::receive_member(&env, &club, member.clone()).unwrap();
+    env.exec(r#"
+        assert(#received == 3 and received[3][1] == 'CLUB_MEMBER_UPDATED')
+        local info = C_Club.GetMemberInfo(clubId, received[3][2])
+        assert(info.name == 'Jaina-Proudmoore' and info.memberNote == 'Frost mage')
+    "#).unwrap();
+    member.role = 3;
+    c_club::receive_member(&env, &club, member.clone()).unwrap();
+    env.exec("assert(#received == 4 and received[4][1] == 'CLUB_MEMBER_ROLE_UPDATED' and received[4][3] == 3)").unwrap();
+    c_club::receive_member_removal(&env, &club, &member.id).unwrap();
+    c_club::receive_member_removal(&env, &club, &member.id).unwrap();
+    env.exec("assert(#received == 5 and received[5][1] == 'CLUB_MEMBER_REMOVED')").unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn club_host_join_retires_pending_invitation_before_added_callback() {
+    use wow_ui_sim::c_api::{c_club, club_model::Member};
+    let (env, club) = community();
+    let candidate = Member::new("server:Khadgar", "Khadgar", 4, false);
+    env.state().borrow_mut().clubs.clubs.get_mut(&club).unwrap()
+        .candidates.insert(candidate.id.clone(), candidate.clone());
+    env.exec(r#"
+        C_Club.SendInvitation(clubId, 'server:Khadgar')
+        assert(#C_Club.GetInvitationsForClub(clubId) == 1)
+        joined = false
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('CLUB_MEMBER_ADDED')
+        listener:SetScript('OnEvent', function(_, _, club, member)
+            assert(member == 'server:Khadgar' and #C_Club.GetInvitationsForClub(club) == 0)
+            assert(C_Club.GetMemberInfo(club, member).name == 'Khadgar')
+            joined = true
+        end)
+    "#).unwrap();
+    c_club::receive_member(&env, &club, candidate).unwrap();
+    env.exec("assert(joined and #C_Club.GetClubMembers(clubId) == 2)").unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn club_host_invalid_input_preserves_members_and_sends_no_event() {
+    use wow_ui_sim::c_api::{c_club, club_model::Member};
+    let (env, club) = community();
+    env.exec(r#"
+        received = 0
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('CLUB_MEMBER_ADDED')
+        listener:SetScript('OnEvent', function() received = received + 1 end)
+    "#).unwrap();
+    assert!(c_club::receive_member(&env, &club, Member::new("", "Invalid", 4, false)).is_err());
+    assert!(c_club::receive_member(&env, "missing-club", Member::new("missing:1", "Invalid", 4, false)).is_err());
+    assert!(c_club::receive_member(&env, &club, Member::new("invalid:1", "Invalid", 9, false)).is_err());
+    env.exec("assert(received == 0 and #C_Club.GetClubMembers(clubId) == 1)").unwrap();
+}
+
+
+#[test]
+fn club_guild_host_presence_and_departure_preserve_message_author_identity() {
+    use wow_ui_sim::c_api::{c_club, club_model::Member};
+    let env = WowLuaEnv::new().unwrap();
+    let member_id: String = env.eval("return C_Club.GetClubMembers('guild-0')[2]").unwrap();
+    env.exec(r#"
+        guildEvents = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('CLUB_MEMBER_PRESENCE_UPDATED')
+        listener:RegisterEvent('CLUB_MEMBER_REMOVED')
+        listener:SetScript('OnEvent', function(_, event, club, id, presence)
+            guildEvents[#guildEvents + 1] = {event, id, presence}
+            if event == 'CLUB_MEMBER_PRESENCE_UPDATED' then
+                assert(C_Club.GetMemberInfo(club, id).presence == presence)
+            else assert(C_Club.GetMemberInfo(club, id) == nil) end
+        end)
+        local range = C_Club.GetMessageRanges('guild-0', 1)[1]
+        historical = C_Club.GetMessagesBefore('guild-0', 1, range.newestMessageId, 20)[3]
+        assert(historical.author.name == 'Jaina')
+    "#).unwrap();
+    let mut member = Member::new(&member_id, "Jaina", 4, false);
+    member.presence = 2;
+    c_club::receive_member(&env, "guild-0", member.clone()).unwrap();
+    c_club::receive_member(&env, "guild-0", member).unwrap();
+    env.exec("assert(#guildEvents == 1 and guildEvents[1][3] == 2)").unwrap();
+    c_club::receive_member_removal(&env, "guild-0", &member_id).unwrap();
+    env.exec(r#"
+        assert(#guildEvents == 2 and guildEvents[2][2] == historical.author.memberId)
+        local message = C_Club.GetMessageInfo('guild-0', 1, historical.messageId)
+        assert(message.author.memberId == historical.author.memberId and message.author.name == 'Jaina')
+        assert(#C_Club.GetClubMembers('guild-0') == 1)
+        C_Club.SendMessage('guild-0', 1, 'Still raiding')
+        local range = C_Club.GetMessageRanges('guild-0', 1)[1]
+        local latest = C_Club.GetMessageInfo('guild-0', 1, range.newestMessageId)
+        assert(latest.author.memberId == C_Club.GetMemberInfoForSelf('guild-0').memberId)
+    "#).unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn club_revocation_distinguishes_own_and_other_invitations() {
+    use wow_ui_sim::c_api::club_model::{Invitation, Member};
+    let (env, club) = community();
+    let own_id = env.state().borrow().clubs.clubs.get(&club).unwrap().members[0].id.clone();
+    {
+        let mut sim = env.state().borrow_mut();
+        let club = sim.clubs.clubs.get_mut(&club).unwrap();
+        club.members[0].role = 4;
+        club.members.push(Member::new("member:Owner", "Uther", 1, false));
+        for (id, inviter) in [("candidate:Own", own_id.as_str()), ("candidate:Other", "member:Owner")] {
+            club.invitations.push(Invitation { id: format!("invite:{id}"),
+                invitee: Member::new(id, id, 4, false), inviter_id: inviter.into() });
+        }
+    }
+    env.exec(r#"
+        local p = C_Club.GetClubPrivileges(clubId)
+        assert(p.canRevokeOwnInvitation and not p.canRevokeOtherInvitation)
+        assert(#C_Club.GetInvitationsForClub(clubId) == 2)
+        C_Club.RevokeInvitation(clubId, 'candidate:Other')
+        assert(#C_Club.GetInvitationsForClub(clubId) == 2)
+        C_Club.RevokeInvitation(clubId, 'candidate:Own')
+        local remaining = C_Club.GetInvitationsForClub(clubId)
+        assert(#remaining == 1 and not remaining[1].isMyInvitation)
+        assert(remaining[1].invitee.memberId == 'candidate:Other')
+    "#).unwrap();
 }

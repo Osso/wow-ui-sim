@@ -30,3 +30,7 @@ Crawler register missed 216 of 363 collapsed-table symbols; sweep 306 OK / 57 ga
 ## 2026-10-04 | Club membership model
 
 Added [club membership](systems/club-membership.md) and contract; retired temporary management defaults. Verification pending.
+
+## 2026-10-05 | Club host inputs
+
+Added synchronous member snapshots/departures and stable historical chat authors to [club membership](systems/club-membership.md). New proof pending.
