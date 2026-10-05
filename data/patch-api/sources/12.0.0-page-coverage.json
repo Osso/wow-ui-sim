@@ -11,7 +11,7 @@
       "symbols": [
         "1010 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 76 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
+      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 62 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
       "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_0_publication_sweep.rs",
@@ -81,6 +81,20 @@
       "implementation": "epoch-gated removals; unit/cloak/threat/secret globals",
       "compiled_revision": "12d7fb16b",
       "proof": "Sol worker GREEN; main-thread four sweeps + combat_log 10/death_recap 9/secret 276/unit 614 (1 pre-existing)/cloak 2/threat 6; no independent review"
+    },
+    {
+      "id": "mixed-surface-12-0-0",
+      "symbols": [
+        "12.0.0 events/CVars, C_StringUtil integer formatting, C_ActionBar.UnregisterActionUIButton, spell/spellbook loss-of-control durations, C_CombatAudioAlert spec settings/throttles"
+      ],
+      "scope": "Registerable 12.0.0 events and mutable CVars; integer string formatting; action UI button unregistration; rate-adjusted LoC cooldown durations; per-spec combat audio settings and shared throttles (INFERRED unset zero).",
+      "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
+      "tests": [
+        "tests/p1200_mixed.rs"
+      ],
+      "implementation": "commits 3aa2a1a61..a414dce7d (rebased)",
+      "compiled_revision": "HEAD",
+      "proof": "Sol worker (stopped early, auth expired) + main-thread completion; four sweeps, p1200_mixed 6, action_bar 123, cvar 55, string_util 23, combat_audio 2, spell (3 pre-existing); no independent review"
     }
   ],
   "source_rows": [
@@ -1894,9 +1908,12 @@
     },
     {
       "source_id": "wt-cvars-minimapTrackedInfov2-925",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "cvar: value/default queried"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-cvars-nameplateAuraScale-926",
@@ -2370,9 +2387,12 @@
     },
     {
       "source_id": "wt-cvars-useCompactPartyFrames-962",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "cvar: value/default queried"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-cvars-watchFrameBaseAlpha-1115",
@@ -2440,15 +2460,21 @@
     },
     {
       "source_id": "wt-events-CHAT_MSG_ENCOUNTER_EVENT-739",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_ENCOUNTER_EVENT\"; registered=false"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-events-COMBAT_LOG_APPLY_FILTER_SETTINGS-740",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_APPLY_FILTER_SETTINGS\"; registered=false"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-events-COMBAT_LOG_ENTRIES_CLEARED-741",
@@ -2460,9 +2486,12 @@
     },
     {
       "source_id": "wt-events-COMBAT_LOG_EVENT_INTERNAL_UNFILTERED-742",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_EVENT_INTERNAL_UNFILTERED\"; registered=false"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-events-COMBAT_LOG_MESSAGE-744",
@@ -2482,9 +2511,12 @@
     },
     {
       "source_id": "wt-events-COMBAT_LOG_REFILTER_ENTRIES-745",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_REFILTER_ENTRIES\"; registered=false"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-events-COMMENTATOR_COMBAT_EVENT-746",
@@ -2900,9 +2932,12 @@
     },
     {
       "source_id": "wt-events-TOOLTIP_SHOW_ITEM_COMPARISON-792",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"TOOLTIP_SHOW_ITEM_COMPARISON\"; registered=false"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-events-TRAINING_GROUNDS_ENABLED_STATUS_UPDATED-793",
@@ -3456,9 +3491,12 @@
     },
     {
       "source_id": "wt-global-api-C_ActionBar.UnregisterActionUIButton-86",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-global-api-C_AdventureMap.GetQuestPortraitInfo-87",
@@ -3750,15 +3788,21 @@
     },
     {
       "source_id": "wt-global-api-C_CombatAudioAlert.SetSpecSetting-124",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-global-api-C_CombatAudioAlert.SetThrottle-125",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-global-api-C_CombatAudioAlert.SpeakText-126",
@@ -5460,9 +5504,12 @@
     },
     {
       "source_id": "wt-global-api-C_Spell.GetSpellLossOfControlCooldownDuration-303",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-global-api-C_Spell.GetSpellMaxCumulativeAuraApplications-304",
@@ -5562,9 +5609,12 @@
     },
     {
       "source_id": "wt-global-api-C_SpellBook.GetSpellBookItemLossOfControlCooldownDuration-317",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-global-api-C_SpellDiminish.GetAllSpellDiminishCategories-318",
@@ -5638,9 +5688,12 @@
     },
     {
       "source_id": "wt-global-api-C_StringUtil.FloorToNearestString-326",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-global-api-C_StringUtil.RemoveContiguousSpaces-327",
@@ -5652,9 +5705,12 @@
     },
     {
       "source_id": "wt-global-api-C_StringUtil.RoundToNearestString-328",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "mixed-surface-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published from simulator state (p1200_mixed)."
     },
     {
       "source_id": "wt-global-api-C_StringUtil.StripHyperlinks-329",

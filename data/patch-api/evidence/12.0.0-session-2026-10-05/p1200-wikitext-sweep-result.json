@@ -4077,13 +4077,13 @@
       "symbol": "minimapTrackedInfov2"
     },
     "observed": {
-      "default": null,
+      "default": "0",
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": null
+      "value": "0"
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-nameplateAuraScale-926": {
     "expected": {
@@ -5157,13 +5157,13 @@
       "symbol": "useCompactPartyFrames"
     },
     "observed": {
-      "default": null,
+      "default": "0",
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": null
+      "value": "0"
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-watchFrameBaseAlpha-1115": {
     "expected": {
@@ -5321,11 +5321,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_ENCOUNTER_EVENT\"; registered=false",
+      "detail": "pcall=true; return=true; registered=true",
       "kind": "event",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-events-COMBAT_LOG_APPLY_FILTER_SETTINGS-740": {
     "expected": {
@@ -5339,11 +5339,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_APPLY_FILTER_SETTINGS\"; registered=false",
+      "detail": "pcall=true; return=false; registered=true",
       "kind": "event",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-events-COMBAT_LOG_ENTRIES_CLEARED-741": {
     "expected": {
@@ -5375,11 +5375,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_EVENT_INTERNAL_UNFILTERED\"; registered=false",
+      "detail": "pcall=true; return=true; registered=true",
       "kind": "event",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-events-COMBAT_LOG_MESSAGE-744": {
     "expected": {
@@ -5429,11 +5429,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_REFILTER_ENTRIES\"; registered=false",
+      "detail": "pcall=true; return=false; registered=true",
       "kind": "event",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-events-COMMENTATOR_COMBAT_EVENT-746": {
     "expected": {
@@ -6383,11 +6383,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"TOOLTIP_SHOW_ITEM_COMPARISON\"; registered=false",
+      "detail": "pcall=true; return=true; registered=true",
       "kind": "event",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-events-TRAINING_GROUNDS_ENABLED_STATUS_UPDATED-793": {
     "expected": {
@@ -7661,11 +7661,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_AdventureMap.GetQuestPortraitInfo-87": {
     "expected": {
@@ -8363,11 +8363,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CombatAudioAlert.SetThrottle-125": {
     "expected": {
@@ -8381,11 +8381,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CombatAudioAlert.SpeakText-126": {
     "expected": {
@@ -12269,11 +12269,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Spell.GetSpellMaxCumulativeAuraApplications-304": {
     "expected": {
@@ -12521,11 +12521,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_SpellDiminish.GetAllSpellDiminishCategories-318": {
     "expected": {
@@ -12701,11 +12701,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_StringUtil.RemoveContiguousSpaces-327": {
     "expected": {
@@ -12737,11 +12737,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_StringUtil.StripHyperlinks-329": {
     "expected": {
