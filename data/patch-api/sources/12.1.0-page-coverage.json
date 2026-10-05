@@ -176,7 +176,7 @@
       "symbols": [
         "778 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication (added/changed) or absence (removed, raw and ordinary lookup) in a fully loaded default-Retail environment. Publication only: no signature, behavior, security or payload proof. 9 known gaps baselined in tests/data/patch_12_1_0_sweep_known_gaps.json. Removed symbols accepted when the value is a Lua function from a cached Blizzard deprecation file.",
+      "scope": "Data-driven publication (added/changed) or absence (removed, raw and ordinary lookup) in a fully loaded default-Retail environment. Publication only: no signature, behavior, security or payload proof. 5 known gaps baselined in tests/data/patch_12_1_0_sweep_known_gaps.json. Removed symbols accepted when the value is a Lua function from a cached Blizzard deprecation file.",
       "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_1_0_publication_sweep.rs"
@@ -4123,9 +4123,11 @@
     },
     {
       "source_id": "wt-global-api-C_Housing.IsInsideOwnHouse-567",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Republished by cached Blizzard_Deprecated Mainline/Deprecated_12_1_0.lua (loadDeprecationFallbacks default 1); sweep expects absence. Was wrongly absent before strict removals fix."
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias, verified by exact cached assignment and runtime target identity (sweep)."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.GetNumFloors-568",
@@ -4161,9 +4163,11 @@
     },
     {
       "source_id": "wt-global-api-C_SuperTrack.GetNextWaypointForMap-572",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Republished by cached Blizzard_Deprecated Mainline/Deprecated_12_1_0.lua (loadDeprecationFallbacks default 1); sweep expects absence. Was wrongly absent before strict removals fix."
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias, verified by exact cached assignment and runtime target identity (sweep)."
     },
     {
       "source_id": "wt-global-api-C_UnitAuras.AddPrivateAuraAppliedSound-573",
@@ -4175,9 +4179,11 @@
     },
     {
       "source_id": "wt-global-api-C_UnitAuras.RemovePrivateAuraAppliedSound-574",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias, verified by exact cached assignment and runtime target identity (sweep)."
     },
     {
       "source_id": "wt-global-api-C_UnitAuras.TriggerPrivateAuraShowDispelType-575",
@@ -4205,9 +4211,11 @@
     },
     {
       "source_id": "wt-global-api-GetInspectSpecialization-578",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias, verified by exact cached assignment and runtime target identity (sweep)."
     },
     {
       "source_id": "wt-global-api-GetInventorySlotInfo-579",

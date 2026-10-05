@@ -5,6 +5,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "AftermathShaderDebug"
     },
     "observed": {
@@ -22,6 +23,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "SlugSupersampling"
     },
     "observed": {
@@ -39,6 +41,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "accessibilityScreenNarrationEnabled"
     },
     "observed": {
@@ -56,6 +59,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "accessibilityScreenNarrationSpeechRate"
     },
     "observed": {
@@ -73,6 +77,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "accessibilityScreenNarrationSpeechVolume"
     },
     "observed": {
@@ -90,6 +95,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "accessibilityScreenNarrationVoice"
     },
     "observed": {
@@ -107,6 +113,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "auctionDisplayOnCharacter"
     },
     "observed": {
@@ -124,6 +131,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "auctionSortByBuyoutPrice"
     },
     "observed": {
@@ -141,6 +149,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "auctionSortByUnitPrice"
     },
     "observed": {
@@ -158,6 +167,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "discordClientEnabled"
     },
     "observed": {
@@ -175,6 +185,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "discordDisplayName"
     },
     "observed": {
@@ -192,6 +203,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "lastLockedDelvesCompanionAbilities"
     },
     "observed": {
@@ -209,6 +221,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "nameplateCheckDistanceForTarget"
     },
     "observed": {
@@ -226,6 +239,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "nameplateForceShowUnitName"
     },
     "observed": {
@@ -243,6 +257,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "nameplateNotSelectedAlpha"
     },
     "observed": {
@@ -260,6 +275,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "nameplatePlayRemovalAnimation"
     },
     "observed": {
@@ -277,6 +293,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "nameplateShowAllPersonalAuras"
     },
     "observed": {
@@ -294,6 +311,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "nameplateShowFriendlyRealmName"
     },
     "observed": {
@@ -311,6 +329,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "nameplateShowFriends"
     },
     "observed": {
@@ -328,6 +347,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "pingTarget"
     },
     "observed": {
@@ -345,6 +365,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "raidFramesDispelIndicatorOverlayAnimation"
     },
     "observed": {
@@ -362,6 +383,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "showPingsOnRaidFrames"
     },
     "observed": {
@@ -379,6 +401,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "showScreenNarrationDialog"
     },
     "observed": {
@@ -396,6 +419,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "taintLogObjectSecrets"
     },
     "observed": {
@@ -413,6 +437,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "tooltipShowAuraSpellIDs"
     },
     "observed": {
@@ -430,6 +455,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "userFontScaleGlue"
     },
     "observed": {
@@ -447,6 +473,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "worldMapShowCursorCoords"
     },
     "observed": {
@@ -464,6 +491,7 @@
       "page_default": null,
       "publication": "published",
       "section": "cvars",
+      "superseded_by": null,
       "symbol": "worldMapShowPlayerCoords"
     },
     "observed": {
@@ -481,6 +509,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "events",
+      "superseded_by": null,
       "symbol": "BATTLETAG_INVITE_SHOW"
     },
     "observed": {
@@ -498,6 +527,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "BATTLE_NET_FRIEND_TAG_ENABLED_STATUS_UPDATED"
     },
     "observed": {
@@ -515,6 +545,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "BATTLE_NET_TITLE_FRIEND_CUSTOM_NAME_ENABLED_STATUS_UPDATED"
     },
     "observed": {
@@ -532,6 +563,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "CHAT_MSG_*"
     },
     "observed": {
@@ -549,6 +581,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "CHAT_MSG_GUILD_DISCORD"
     },
     "observed": {
@@ -566,6 +599,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "CONFIRM_BATTLE_NET_FRIEND_INVITE_SHOW"
     },
     "observed": {
@@ -583,6 +617,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "DISCORD_GUILD_ACHIEVEMENT"
     },
     "observed": {
@@ -600,6 +635,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "DISCORD_GUILD_LOBBY_UPDATE"
     },
     "observed": {
@@ -617,6 +653,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "DISCORD_GUILD_SETTINGS_UPDATE"
     },
     "observed": {
@@ -634,6 +671,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "DISCORD_LINK_UPDATE"
     },
     "observed": {
@@ -651,6 +689,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "DISCORD_SERVER_LIST_UPDATE"
     },
     "observed": {
@@ -668,6 +707,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "DISCORD_STATUS_UPDATE"
     },
     "observed": {
@@ -685,6 +725,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "EXTERNAL_EVENT_LAUNCH_URL_FAILED"
     },
     "observed": {
@@ -702,6 +743,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "FULLSCREEN_BROWSER_SPINNER_HIDE"
     },
     "observed": {
@@ -719,6 +761,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "FULLSCREEN_BROWSER_SPINNER_SHOW"
     },
     "observed": {
@@ -736,6 +779,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "GROUP_BUFF_VISUAL_ALERTS_CHANGED"
     },
     "observed": {
@@ -753,6 +797,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "GUILD_RANKS_UPDATE_ACTIVE_PLAYER"
     },
     "observed": {
@@ -770,6 +815,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HIDDEN_GROUP_BUFFS_CHANGED"
     },
     "observed": {
@@ -787,6 +833,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSE_RESET_COMPLETED"
     },
     "observed": {
@@ -804,6 +851,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSE_RESET_FAILED"
     },
     "observed": {
@@ -821,6 +869,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINTS_AVAILABILITY_CHANGED"
     },
     "observed": {
@@ -838,6 +887,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_COLLECTION_FAILURE"
     },
     "observed": {
@@ -855,6 +905,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_COLLECTION_RECEIVED"
     },
     "observed": {
@@ -872,6 +923,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_CONTENTS_FAILURE"
     },
     "observed": {
@@ -889,6 +941,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_CONTENTS_RECEIVED"
     },
     "observed": {
@@ -906,6 +959,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_DELETE_FAILURE"
     },
     "observed": {
@@ -923,6 +977,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_DELETE_SUCCESS"
     },
     "observed": {
@@ -940,6 +995,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_EXPORT_FAILURE"
     },
     "observed": {
@@ -957,6 +1013,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_EXPORT_SUCCESS"
     },
     "observed": {
@@ -974,6 +1031,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_IMPORT_FAILURE"
     },
     "observed": {
@@ -991,6 +1049,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_IMPORT_STARTED"
     },
     "observed": {
@@ -1008,6 +1067,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_IMPORT_SUCCESS"
     },
     "observed": {
@@ -1025,6 +1085,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_RENAME_FAILURE"
     },
     "observed": {
@@ -1042,6 +1103,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_BLUEPRINT_RENAME_SUCCESS"
     },
     "observed": {
@@ -1059,6 +1121,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_LAYOUT_NUM_FLOORS_CHANGED"
     },
     "observed": {
@@ -1076,6 +1139,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_LAYOUT_OCCUPIED_FLOOR_RANGE_CHANGED"
     },
     "observed": {
@@ -1093,6 +1157,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "HOUSING_NEW_DECOR_PLACE_COMPLETE"
     },
     "observed": {
@@ -1110,6 +1175,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "IGNORE_NEIGHBORHOOD_RESPONSE"
     },
     "observed": {
@@ -1127,6 +1193,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "LEGACY_FRIEND_SYSTEM_STATUS_UPDATED"
     },
     "observed": {
@@ -1144,6 +1211,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "LFG_LIST_CENSORED_ACTIVE_ENTRY_UPDATE"
     },
     "observed": {
@@ -1161,6 +1229,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "LFG_LIST_REVEALED_CENSORED_ACTIVE_ENTRY"
     },
     "observed": {
@@ -1178,6 +1247,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "SOCIAL_UI_FRIENDS_LIST_SYSTEM_STATUS_UPDATED"
     },
     "observed": {
@@ -1195,6 +1265,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "SOCIAL_UI_SOCIAL_QUEUE_SYSTEM_STATUS_UPDATED"
     },
     "observed": {
@@ -1212,6 +1283,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "SOCIAL_UI_SYSTEM_STATUS_UPDATED"
     },
     "observed": {
@@ -1229,6 +1301,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "SPELL_UPDATE_COOLDOWN"
     },
     "observed": {
@@ -1246,6 +1319,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "UNIT_PING_PIN_ADDED"
     },
     "observed": {
@@ -1263,6 +1337,7 @@
       "page_default": null,
       "publication": "published",
       "section": "events",
+      "superseded_by": null,
       "symbol": "UNIT_PING_PIN_REMOVED"
     },
     "observed": {
@@ -1280,6 +1355,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AchievementFrame_RefreshBackButton"
     },
     "observed": {
@@ -1297,6 +1373,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AchievementFrame_SetComparisonMode"
     },
     "observed": {
@@ -1314,6 +1391,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AddBehavioralMessagingTrayToStatusFrames"
     },
     "observed": {
@@ -1331,6 +1409,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AddFrameLock"
     },
     "observed": {
@@ -1348,6 +1427,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AddFriendFrame_Show"
     },
     "observed": {
@@ -1365,6 +1445,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AddGMChatStatusFrameToStatusFrames"
     },
     "observed": {
@@ -1382,6 +1463,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AddTicketStatusFrameToStatusFrames"
     },
     "observed": {
@@ -1399,6 +1481,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AddWowSurveyStatusFrameToStatusFrames"
     },
     "observed": {
@@ -1416,6 +1499,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AlliedRacesFrame_TryShow"
     },
     "observed": {
@@ -1433,6 +1517,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AnchorUtil.ApplyFlowLayout"
     },
     "observed": {
@@ -1450,6 +1535,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AnchorUtil.CreateFlowLayout"
     },
     "observed": {
@@ -1467,6 +1553,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AnimateTexCoords"
     },
     "observed": {
@@ -1484,6 +1571,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AnimatedShine_OnUpdate"
     },
     "observed": {
@@ -1501,6 +1589,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ApplySecureDelegatesToTable"
     },
     "observed": {
@@ -1518,6 +1607,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ArchaeologyFrame_ToggleUI"
     },
     "observed": {
@@ -1535,6 +1625,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ArcheologyDigsiteProgressBar_OnSurveyCast"
     },
     "observed": {
@@ -1552,6 +1643,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ArdenwealdGardening_LoadUI"
     },
     "observed": {
@@ -1569,6 +1661,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ArtifactFrame_OnTraitsRefunded"
     },
     "observed": {
@@ -1586,6 +1679,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.AuraInstanceIDOnlyAuraCompare"
     },
     "observed": {
@@ -1603,6 +1697,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.ExpirationAuraCompare"
     },
     "observed": {
@@ -1620,6 +1715,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.ExpirationOnlyAuraCompare"
     },
     "observed": {
@@ -1637,6 +1733,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.GetAuraBorderColor"
     },
     "observed": {
@@ -1654,6 +1751,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.GetAuraDispelTypeIcon"
     },
     "observed": {
@@ -1671,6 +1769,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.GetUnitAuras"
     },
     "observed": {
@@ -1688,6 +1787,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.ImportantOnlyAuraCompare"
     },
     "observed": {
@@ -1705,6 +1805,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.IsValidFilterString"
     },
     "observed": {
@@ -1722,6 +1823,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.NameAuraCompare"
     },
     "observed": {
@@ -1739,6 +1841,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.NameOnlyAuraCompare"
     },
     "observed": {
@@ -1756,6 +1859,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AuraUtil.SetAuraDispelTypeIcon"
     },
     "observed": {
@@ -1773,6 +1877,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AzeriteEmpoweredItemUI_LoadUI"
     },
     "observed": {
@@ -1790,6 +1895,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "AzeriteEssenceUI_LoadUI"
     },
     "observed": {
@@ -1807,6 +1913,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BFAMissionFrame_EscapePressed"
     },
     "observed": {
@@ -1824,6 +1931,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BNet_GetBattleTagComponents"
     },
     "observed": {
@@ -1841,6 +1949,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BNet_GetBattleTagSelf"
     },
     "observed": {
@@ -1858,6 +1967,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BNet_GetBroadcastTextSelf"
     },
     "observed": {
@@ -1875,6 +1985,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BNet_GetFriendLevelRank"
     },
     "observed": {
@@ -1892,6 +2003,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BNet_IsFriendLevelEqualOrHigher"
     },
     "observed": {
@@ -1909,6 +2021,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BattleTagInviteFrame_Show"
     },
     "observed": {
@@ -1926,6 +2039,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BattlefieldMap_ToggleUI"
     },
     "observed": {
@@ -1943,6 +2057,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BehavioralMessagingTray_OnNotification"
     },
     "observed": {
@@ -1960,6 +2075,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BehavioralMessaging_LoadUI"
     },
     "observed": {
@@ -1977,6 +2093,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BetterDate"
     },
     "observed": {
@@ -1994,6 +2111,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "Blizzard_HousingCatalogUtil.AddDecorEntryTooltipTrackingText"
     },
     "observed": {
@@ -2011,6 +2129,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "Blizzard_HousingCatalogUtil.TrackHousingDecorID"
     },
     "observed": {
@@ -2028,6 +2147,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BoostTutorial_AttemptLoad"
     },
     "observed": {
@@ -2045,6 +2165,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BoostTutorial_LoadUI"
     },
     "observed": {
@@ -2062,6 +2183,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BuildColoredListString"
     },
     "observed": {
@@ -2079,6 +2201,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BuildIconArray"
     },
     "observed": {
@@ -2096,6 +2219,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BuildListString"
     },
     "observed": {
@@ -2113,6 +2237,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BuildMultilineTooltip"
     },
     "observed": {
@@ -2130,6 +2255,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "BuildNewLineListString"
     },
     "observed": {
@@ -2147,6 +2273,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ButtonPulse_OnUpdate"
     },
     "observed": {
@@ -2164,6 +2291,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CDMDebugGetDebugger"
     },
     "observed": {
@@ -2181,6 +2309,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CanAccessObject"
     },
     "observed": {
@@ -2198,6 +2327,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ChallengeModeCompleteBanner_OnChallengeModeCompleted"
     },
     "observed": {
@@ -2215,6 +2345,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ChatAdditionalColor_OpenColorPicker"
     },
     "observed": {
@@ -2232,6 +2363,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ChatFrameUtil.DiscordNameColorize"
     },
     "observed": {
@@ -2249,6 +2381,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ChatFrameUtil.FormatDiscordMessage"
     },
     "observed": {
@@ -2266,6 +2399,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ChatFrameUtil.GetNameForDiscordMessage"
     },
     "observed": {
@@ -2283,6 +2417,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CheckActiveStoreForFree"
     },
     "observed": {
@@ -2300,6 +2435,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ClassTrainerFrame_Hide"
     },
     "observed": {
@@ -2317,6 +2453,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ClassTrainerFrame_Show"
     },
     "observed": {
@@ -2334,6 +2471,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CloseCalendarMenus"
     },
     "observed": {
@@ -2351,6 +2489,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatAudioAlertUtil.EnumerateInterruptCastInfo"
     },
     "observed": {
@@ -2368,6 +2507,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatAudioAlertUtil.EnumerateInterruptCastSuccessInfo"
     },
     "observed": {
@@ -2385,6 +2525,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatAudioAlertUtil.EnumerateSayCombatEndInfo"
     },
     "observed": {
@@ -2402,6 +2543,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatAudioAlertUtil.EnumerateSayCombatStartInfo"
     },
     "observed": {
@@ -2419,6 +2561,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatAudioAlertUtil.EnumeratetWhenTargetDiesInfo"
     },
     "observed": {
@@ -2436,6 +2579,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatAudioAlertUtil.GetInterruptCastInfo"
     },
     "observed": {
@@ -2453,6 +2597,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatAudioAlertUtil.GetInterruptCastSuccessInfo"
     },
     "observed": {
@@ -2470,6 +2615,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatAudioAlertUtil.GetSayCombatEndInfo"
     },
     "observed": {
@@ -2487,6 +2633,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatAudioAlertUtil.GetSayCombatStartInfo"
     },
     "observed": {
@@ -2504,6 +2651,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatAudioAlertUtil.GetWhenTargetDiesInfo"
     },
     "observed": {
@@ -2521,6 +2669,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CombatText_LoadUI"
     },
     "observed": {
@@ -2538,6 +2687,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CommunitiesFrame_IsEnabled"
     },
     "observed": {
@@ -2555,6 +2705,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CompactUnitFrameLayoutTemplates_LayoutFrameElement"
     },
     "observed": {
@@ -2572,6 +2723,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CompactUnitFrameUtil.ApplyConfig"
     },
     "observed": {
@@ -2589,6 +2741,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CompactUnitFrameUtil.GenerateNewConfig"
     },
     "observed": {
@@ -2606,6 +2759,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CompactUnitFrame_GetOptionDispelIndicatorOverlayAnimation"
     },
     "observed": {
@@ -2623,6 +2777,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CompactUnitFrame_GetOptionDispelIndicatorOverlayType"
     },
     "observed": {
@@ -2640,6 +2795,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CompactUnitFrame_GetOptionDisplayOnlyHealerPowerBars"
     },
     "observed": {
@@ -2657,6 +2813,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CompactUnitFrame_GetOptionDisplayPowerBar"
     },
     "observed": {
@@ -2674,6 +2831,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CompactUnitFrame_GetOptionShowDispelIndicatorOverlay"
     },
     "observed": {
@@ -2691,6 +2849,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ConfirmDisenchantRollDialog_Show"
     },
     "observed": {
@@ -2708,6 +2867,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ConfirmLootRollDialog_Show"
     },
     "observed": {
@@ -2725,6 +2885,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ConfirmTalentWipeDialog_Show"
     },
     "observed": {
@@ -2742,6 +2903,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ContributionCollectionFrame_LoadUI"
     },
     "observed": {
@@ -2759,6 +2921,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ConvertRGBtoColorString"
     },
     "observed": {
@@ -2776,6 +2939,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownManagerLayout_GetGroupBuffVisualAlerts"
     },
     "observed": {
@@ -2793,6 +2957,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownManagerLayout_GetHiddenGroupBuffs"
     },
     "observed": {
@@ -2810,6 +2975,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownManagerLayout_SetGroupBuffVisualAlerts"
     },
     "observed": {
@@ -2827,6 +2993,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownManagerLayout_SetHiddenGroupBuffs"
     },
     "observed": {
@@ -2844,6 +3011,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownViewerContextMenu_AddAlertEntryButton"
     },
     "observed": {
@@ -2861,6 +3029,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownViewerContextMenu_AddNewAlertButton"
     },
     "observed": {
@@ -2878,6 +3047,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownViewerDraggedItem_Clear"
     },
     "observed": {
@@ -2895,6 +3065,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownViewerDraggedItem_Pickup"
     },
     "observed": {
@@ -2912,6 +3083,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownViewerDraggedItem_SetIsLegalTarget"
     },
     "observed": {
@@ -2929,6 +3101,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownViewerUtil.AddSoundAlertRadio"
     },
     "observed": {
@@ -2946,6 +3119,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownViewerUtil.BuildSoundMenus"
     },
     "observed": {
@@ -2963,6 +3137,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownViewerUtil.GetSoundTypeSoundKit"
     },
     "observed": {
@@ -2980,6 +3155,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownViewerUtil.GetSoundTypeText"
     },
     "observed": {
@@ -2997,6 +3173,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CooldownViewer_MarkAuraCacheDirty"
     },
     "observed": {
@@ -3014,6 +3191,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "CovenantCallings_LoadUI"
     },
     "observed": {
@@ -3031,6 +3209,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "DebugTools_LoadUI"
     },
     "observed": {
@@ -3048,6 +3227,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "DifficultyUtil.GetCreatureDifficultyColor"
     },
     "observed": {
@@ -3065,6 +3245,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "DifficultyUtil.GetDifficultyColor"
     },
     "observed": {
@@ -3082,6 +3263,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "DifficultyUtil.GetQuestDifficultyColor"
     },
     "observed": {
@@ -3099,6 +3281,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "DifficultyUtil.GetRelativeDifficultyColor"
     },
     "observed": {
@@ -3116,6 +3299,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "DifficultyUtil.GetScalingQuestDifficultyColor"
     },
     "observed": {
@@ -3133,6 +3317,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "DisplayTypeUnassignedSupported"
     },
     "observed": {
@@ -3150,6 +3335,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "EditModeManagerFrame_EscapePressed"
     },
     "observed": {
@@ -3167,6 +3353,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "EncounterJournal_OpenToTieredEntrance"
     },
     "observed": {
@@ -3184,6 +3371,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "EventTrace_LoadUI"
     },
     "observed": {
@@ -3201,6 +3389,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "EventUtil.AreVariablesLoaded"
     },
     "observed": {
@@ -3218,6 +3407,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ExpansionTrial_CheckLoadUI"
     },
     "observed": {
@@ -3235,6 +3425,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ExpansionTrial_LoadUI"
     },
     "observed": {
@@ -3252,6 +3443,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FadingFrame_CopyTextScalingTime"
     },
     "observed": {
@@ -3269,6 +3461,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FadingFrame_GetTextScalingMinHeight"
     },
     "observed": {
@@ -3286,6 +3479,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FadingFrame_InitSlot"
     },
     "observed": {
@@ -3303,6 +3497,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FadingFrame_SetTextScaling"
     },
     "observed": {
@@ -3320,6 +3515,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FadingFrame_StartTextScaling"
     },
     "observed": {
@@ -3337,6 +3533,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FadingFrame_StopTextScaling"
     },
     "observed": {
@@ -3354,6 +3551,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FadingFrame_UpdateTextScaling"
     },
     "observed": {
@@ -3371,6 +3569,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsFrameAddFriendButton_OnClick"
     },
     "observed": {
@@ -3388,6 +3587,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsFrame_CloseQuickJoinHelpTip"
     },
     "observed": {
@@ -3405,6 +3605,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsFrame_HideAllPotentialSubFrames"
     },
     "observed": {
@@ -3422,6 +3623,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsFriendsButton_SetSelected"
     },
     "observed": {
@@ -3439,6 +3641,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsFriendsFrame_Close"
     },
     "observed": {
@@ -3456,6 +3659,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsFriends_InitButton"
     },
     "observed": {
@@ -3473,6 +3677,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsFriends_SetSelection"
     },
     "observed": {
@@ -3490,6 +3695,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.BuildCharacterClassDisplayText"
     },
     "observed": {
@@ -3507,6 +3713,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.BuildCharacterLevelDisplayText"
     },
     "observed": {
@@ -3524,6 +3731,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.BuildCharacterNameDisplayText"
     },
     "observed": {
@@ -3541,6 +3749,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.BuildFriendNameDisplayText"
     },
     "observed": {
@@ -3558,6 +3767,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.BuildLocationDisplayText"
     },
     "observed": {
@@ -3575,6 +3785,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.BuildTooltipBroadcastText"
     },
     "observed": {
@@ -3592,6 +3803,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GameStateUsesFactions"
     },
     "observed": {
@@ -3609,6 +3821,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetBattleNetFriendGameAccountInfoIfExactlyOneDirectInviteTargetExists"
     },
     "observed": {
@@ -3626,6 +3839,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetBattleNetFriendInviteInfo"
     },
     "observed": {
@@ -3643,6 +3857,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetBattleNetFriendInviteTypeLabel"
     },
     "observed": {
@@ -3660,6 +3875,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetBattleNetFriendPartyInviteRestriction"
     },
     "observed": {
@@ -3677,6 +3893,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetBattleNetFriendPartyInviteRestrictionText"
     },
     "observed": {
@@ -3694,6 +3911,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetFormattedCharacterName"
     },
     "observed": {
@@ -3711,6 +3929,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetFriendAccountNameText"
     },
     "observed": {
@@ -3728,6 +3947,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetFriendNameColorForFriendType"
     },
     "observed": {
@@ -3745,6 +3965,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetFriendNameDisplayColor"
     },
     "observed": {
@@ -3762,6 +3983,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetFriendNameOfflineDisplayColor"
     },
     "observed": {
@@ -3779,6 +4001,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetGameAccountPartyInviteRestriction"
     },
     "observed": {
@@ -3796,6 +4019,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetLastOnlineText"
     },
     "observed": {
@@ -3813,6 +4037,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetRegionName"
     },
     "observed": {
@@ -3830,6 +4055,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.GetRelativeTimeText"
     },
     "observed": {
@@ -3847,6 +4073,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.HasMultipleGameAccounts"
     },
     "observed": {
@@ -3864,6 +4091,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.InviteOrRequestToJoin"
     },
     "observed": {
@@ -3881,6 +4109,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.IsPlayingDifferentWoWProject"
     },
     "observed": {
@@ -3898,6 +4127,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.IsPlayingSameWoWProject"
     },
     "observed": {
@@ -3915,6 +4145,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.IsPlayingWoW"
     },
     "observed": {
@@ -3932,6 +4163,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.IsRequestInviteType"
     },
     "observed": {
@@ -3949,6 +4181,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.IsTitleFriend"
     },
     "observed": {
@@ -3966,6 +4199,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "FriendsListUtil.ShouldShowRichPresenceOnly"
     },
     "observed": {
@@ -3983,6 +4217,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GMChatFrame_OnWhisperFromGM"
     },
     "observed": {
@@ -4000,6 +4235,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GameMenuFrame_EscapePressed"
     },
     "observed": {
@@ -4017,6 +4253,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GameMenuFrame_IsShown"
     },
     "observed": {
@@ -4034,6 +4271,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GameMenuFrame_Show"
     },
     "observed": {
@@ -4051,6 +4289,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GameRulesUtil.IsPlayerAtEffectiveMaxLevel"
     },
     "observed": {
@@ -4068,6 +4307,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetBottomManagedFrameContainer"
     },
     "observed": {
@@ -4085,6 +4325,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetChatAdditionalColor"
     },
     "observed": {
@@ -4102,6 +4343,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetDiscordUserCommunityLink"
     },
     "observed": {
@@ -4119,6 +4361,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetDiscordUserLink"
     },
     "observed": {
@@ -4136,6 +4379,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetDungeonNameWithDifficulty"
     },
     "observed": {
@@ -4153,6 +4397,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetGarrisonMissionFrameNameForFollowerType"
     },
     "observed": {
@@ -4170,6 +4415,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetGarrisonTypeForFollowerType"
     },
     "observed": {
@@ -4187,6 +4433,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetNotchHeight"
     },
     "observed": {
@@ -4204,6 +4451,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetPlayerBottomManagedFrameContainer"
     },
     "observed": {
@@ -4221,6 +4469,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetPlayerKeyState"
     },
     "observed": {
@@ -4238,6 +4487,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetRightManagedFrameContainer"
     },
     "observed": {
@@ -4255,6 +4505,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetScaledCursorDelta"
     },
     "observed": {
@@ -4272,6 +4523,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetScaledCursorPosition"
     },
     "observed": {
@@ -4289,6 +4541,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetScaledCursorPositionForFrame"
     },
     "observed": {
@@ -4306,6 +4559,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetScreenHeightScale"
     },
     "observed": {
@@ -4323,6 +4577,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetScreenWidthScale"
     },
     "observed": {
@@ -4340,6 +4595,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetSmoothProgressChange"
     },
     "observed": {
@@ -4357,6 +4613,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetSocialColoredName"
     },
     "observed": {
@@ -4374,6 +4631,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetSortedSelfResurrectOptions"
     },
     "observed": {
@@ -4391,6 +4649,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetTimeStringFromSeconds"
     },
     "observed": {
@@ -4408,6 +4667,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetUIPanelLayoutAttribute"
     },
     "observed": {
@@ -4425,6 +4685,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetUIPanelLayoutFrame"
     },
     "observed": {
@@ -4442,6 +4703,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GetUIParentOffset"
     },
     "observed": {
@@ -4459,6 +4721,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GossipConfirmDialog_Show"
     },
     "observed": {
@@ -4476,6 +4739,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlDiscord_Loaded_OnEvent"
     },
     "observed": {
@@ -4493,6 +4757,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlDiscord_Loaded_OnLoad"
     },
     "observed": {
@@ -4510,6 +4775,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlDiscord_SetGuildSettingsCheckboxes"
     },
     "observed": {
@@ -4527,6 +4793,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlRankDiscord_OnLoad"
     },
     "observed": {
@@ -4544,6 +4811,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlUI_DiscordFrame_OnLoad"
     },
     "observed": {
@@ -4561,6 +4829,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlUI_Discord_HideAll"
     },
     "observed": {
@@ -4578,6 +4847,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlUI_Discord_Update"
     },
     "observed": {
@@ -4595,6 +4865,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlUI_LoadUI"
     },
     "observed": {
@@ -4612,6 +4883,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlUI_OnShow"
     },
     "observed": {
@@ -4629,6 +4901,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlUI_Setup"
     },
     "observed": {
@@ -4646,6 +4919,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlUI_SetupDiscord"
     },
     "observed": {
@@ -4663,6 +4937,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlUI_SetupSelected"
     },
     "observed": {
@@ -4680,6 +4955,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlUI_Show"
     },
     "observed": {
@@ -4697,6 +4973,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "GuildControlUI_UnlinkDiscord"
     },
     "observed": {
@@ -4714,6 +4991,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HandleQuestSessionInviteToPartyConfirmation"
     },
     "observed": {
@@ -4731,6 +5009,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HelpFrame_EscapePressed"
     },
     "observed": {
@@ -4748,6 +5027,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HelpPlatesSupported"
     },
     "observed": {
@@ -4765,6 +5045,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideAuctionHouseFrame"
     },
     "observed": {
@@ -4782,6 +5063,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideBarberShopFrame"
     },
     "observed": {
@@ -4799,6 +5081,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideBlackMarketFrame"
     },
     "observed": {
@@ -4816,6 +5099,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideGarrisonMissionFrames"
     },
     "observed": {
@@ -4833,6 +5117,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideGarrisonShipyardFrame"
     },
     "observed": {
@@ -4850,6 +5135,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideGossipFrame"
     },
     "observed": {
@@ -4867,6 +5153,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideGuildBankFrame"
     },
     "observed": {
@@ -4884,6 +5171,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideInstanceBootDialog"
     },
     "observed": {
@@ -4901,6 +5189,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideInstanceLockDialog"
     },
     "observed": {
@@ -4918,6 +5207,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideItemUpgradeFrame"
     },
     "observed": {
@@ -4935,6 +5225,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideProfessionsCustomerOrdersFrame"
     },
     "observed": {
@@ -4952,6 +5243,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HideSummonConfirmationDialogs"
     },
     "observed": {
@@ -4969,6 +5261,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HouseFinderFrame_LoadUI"
     },
     "observed": {
@@ -4986,6 +5279,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingBulletinBoardFrame_LoadUI"
     },
     "observed": {
@@ -5003,6 +5297,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingControlsUtil.CanActivateHousingControls"
     },
     "observed": {
@@ -5020,6 +5315,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingControls_LoadUI"
     },
     "observed": {
@@ -5037,6 +5333,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingFramesUtil.IsBlueprintCollectionAvailable"
     },
     "observed": {
@@ -5054,6 +5351,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingFramesUtil.IsBlueprintOperationInProgress"
     },
     "observed": {
@@ -5071,6 +5369,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingFramesUtil.ShowBlueprintExport"
     },
     "observed": {
@@ -5088,6 +5387,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingFramesUtil.ShowBlueprintImport"
     },
     "observed": {
@@ -5105,6 +5405,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingFramesUtil.ShowBlueprintRoomExport"
     },
     "observed": {
@@ -5122,6 +5423,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingFramesUtil.TryOpenBlueprintCollection"
     },
     "observed": {
@@ -5139,6 +5441,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingTutorialUtil.HousingDecorQuestTutorialComplete"
     },
     "observed": {
@@ -5156,6 +5459,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HousingTutorialUtil.HousingQuestTutorialComplete"
     },
     "observed": {
@@ -5173,6 +5477,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "HybridMinimap_LoadUI"
     },
     "observed": {
@@ -5190,6 +5495,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InputBoxInstructions_OnEnter"
     },
     "observed": {
@@ -5207,6 +5513,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InputBoxInstructions_OnLeave"
     },
     "observed": {
@@ -5224,6 +5531,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InputBoxInstructions_ShowTooltipIfTruncated"
     },
     "observed": {
@@ -5241,6 +5549,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InputUtil.CursorOnUpdate"
     },
     "observed": {
@@ -5258,6 +5567,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InputUtil.CursorUpdate"
     },
     "observed": {
@@ -5275,6 +5585,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InputUtil.GetCursorDelta"
     },
     "observed": {
@@ -5292,6 +5603,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InputUtil.IsMouseOver"
     },
     "observed": {
@@ -5309,6 +5621,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InputUtil.ShowInspectCursor"
     },
     "observed": {
@@ -5326,6 +5639,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InterfaceUtil.GetScreenHeightScale"
     },
     "observed": {
@@ -5343,6 +5657,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InterfaceUtil.GetScreenWidthScale"
     },
     "observed": {
@@ -5360,6 +5675,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "InterpolatorUtil.GetSmoothProgressChange"
     },
     "observed": {
@@ -5377,6 +5693,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "IsFrameLockActive"
     },
     "observed": {
@@ -5394,6 +5711,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "IsFrameSmartShown"
     },
     "observed": {
@@ -5411,6 +5729,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "IsLevelAtEffectiveMaxLevel"
     },
     "observed": {
@@ -5428,6 +5747,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "IsMouseoverCastSupported"
     },
     "observed": {
@@ -5445,6 +5765,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "IsPlayerAtEffectiveMaxLevel"
     },
     "observed": {
@@ -5462,6 +5783,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "IsSummonConfirmationDialogVisible"
     },
     "observed": {
@@ -5479,6 +5801,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "IsTypeAdditionalChatColor"
     },
     "observed": {
@@ -5496,6 +5819,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "IsUnseenNewSettingInCurrentVersion"
     },
     "observed": {
@@ -5513,6 +5837,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "IslandsPartyPoseFrame_TryShow"
     },
     "observed": {
@@ -5530,6 +5855,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ItemUtil.DisplayEquipSlotTooltip"
     },
     "observed": {
@@ -5547,6 +5873,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ItemUtil.GetEmptyEquipSlotTooltip"
     },
     "observed": {
@@ -5564,6 +5891,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ItemUtil.GetEmptyEquipSlotTooltipForSlotName"
     },
     "observed": {
@@ -5581,6 +5909,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ItemUtil.GetEquipSlotTexture"
     },
     "observed": {
@@ -5598,6 +5927,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ItemUtil.GetValidatedItemLocation"
     },
     "observed": {
@@ -5615,6 +5945,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "KeyBindingFrame_LoadUI"
     },
     "observed": {
@@ -5632,6 +5963,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "KioskFrame_HandlePlayerEnteringWorld"
     },
     "observed": {
@@ -5649,6 +5981,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "Kiosk_LoadUI"
     },
     "observed": {
@@ -5666,6 +5999,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LFGListApplicationViewerRemoveEntryButton_OnClick"
     },
     "observed": {
@@ -5683,6 +6017,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LFGListApplicationViewer_OpenEditMode"
     },
     "observed": {
@@ -5700,6 +6035,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LandingSoulbinds_LoadUI"
     },
     "observed": {
@@ -5717,6 +6053,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LoadAddOnWithErrorHandling"
     },
     "observed": {
@@ -5734,6 +6071,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LocaleUtil.GetLocaleDisplayName"
     },
     "observed": {
@@ -5751,6 +6089,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LocalizePlayerFrame"
     },
     "observed": {
@@ -5768,6 +6107,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LocalizePlayerFrame_zhCN"
     },
     "observed": {
@@ -5785,6 +6125,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LocalizePlayerFrame_zhTW"
     },
     "observed": {
@@ -5802,6 +6143,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LocalizezhCN"
     },
     "observed": {
@@ -5819,6 +6161,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LocalizezhTW"
     },
     "observed": {
@@ -5836,6 +6179,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "LootFrame_EscapePressed"
     },
     "observed": {
@@ -5853,6 +6197,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "MacroFrame_SaveMacro"
     },
     "observed": {
@@ -5870,6 +6215,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "MacroFrame_SaveMacro"
     },
     "observed": {
@@ -5887,6 +6233,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "MajorFactions_LoadUI"
     },
     "observed": {
@@ -5904,6 +6251,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ManageFramePositions"
     },
     "observed": {
@@ -5921,6 +6269,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "MenuUtil.CreateHighlightButton"
     },
     "observed": {
@@ -5938,6 +6287,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "MouseIsOver"
     },
     "observed": {
@@ -5955,6 +6305,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "MovePad_LoadUI"
     },
     "observed": {
@@ -5972,6 +6323,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NPETutorial_AttemptToBegin"
     },
     "observed": {
@@ -5989,6 +6341,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NPE_CheckTutorials"
     },
     "observed": {
@@ -6006,6 +6359,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NPE_InitializeIfLoaded"
     },
     "observed": {
@@ -6023,6 +6377,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.CreateNarrationInfo"
     },
     "observed": {
@@ -6040,6 +6395,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.GetCheckboxContext"
     },
     "observed": {
@@ -6057,6 +6413,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.MakeIndexInfo"
     },
     "observed": {
@@ -6074,6 +6431,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.MakeNarrationString"
     },
     "observed": {
@@ -6091,6 +6449,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.MakeNarrationStringForMoney"
     },
     "observed": {
@@ -6108,6 +6467,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.MakeNarrationStringFromIndexInfo"
     },
     "observed": {
@@ -6125,6 +6485,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.MakeNarrationStringFromInfo"
     },
     "observed": {
@@ -6142,6 +6503,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.NarrateCurrentScreen"
     },
     "observed": {
@@ -6159,6 +6521,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.RegionToNarrationInfo"
     },
     "observed": {
@@ -6176,6 +6539,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.ResolveForwardedRegion"
     },
     "observed": {
@@ -6193,6 +6557,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.SetStaticDescription"
     },
     "observed": {
@@ -6210,6 +6575,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.SetStaticName"
     },
     "observed": {
@@ -6227,6 +6593,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.ShouldBeEnabled"
     },
     "observed": {
@@ -6244,6 +6611,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "NarrationUtil.ShouldRegionNavigationSkipTooltips"
     },
     "observed": {
@@ -6261,6 +6629,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "OpacityFrame_EscapePressed"
     },
     "observed": {
@@ -6278,6 +6647,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "OpenAchievementFrameToAchievement"
     },
     "observed": {
@@ -6295,6 +6665,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "OpenEncounterJournalToJourney"
     },
     "observed": {
@@ -6312,6 +6683,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "OpenEncounterJournalToTieredEntrance"
     },
     "observed": {
@@ -6329,6 +6701,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "OpenMapToUserWaypoint"
     },
     "observed": {
@@ -6346,6 +6719,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "OpenOrderHallTalentUI"
     },
     "observed": {
@@ -6363,6 +6737,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "OpenPlayerSpellsToGlyphTarget"
     },
     "observed": {
@@ -6380,6 +6755,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "OrderHallMissionFrame_EscapePressed"
     },
     "observed": {
@@ -6397,6 +6773,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "OrderHallTalentFrame_EscapePressed"
     },
     "observed": {
@@ -6414,6 +6791,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "OutfitterUI_LoadUI"
     },
     "observed": {
@@ -6431,6 +6809,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "PVPUI_LoadUI"
     },
     "observed": {
@@ -6448,6 +6827,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "PhotoSharingFrame_EscapePressed"
     },
     "observed": {
@@ -6465,6 +6845,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "PingUtil.GetContextualPingTypeForUnit"
     },
     "observed": {
@@ -6482,6 +6863,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "PingUtil.SendMacroPing"
     },
     "observed": {
@@ -6499,6 +6881,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "PingUtil.TogglePingTarget"
     },
     "observed": {
@@ -6516,6 +6899,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "PlayerChoiceFrame_TryShow"
     },
     "observed": {
@@ -6533,6 +6917,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "PlayerChoiceToggle_TryShow"
     },
     "observed": {
@@ -6550,6 +6935,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "PlayerChoiceToggle_TryShow"
     },
     "observed": {
@@ -6567,6 +6953,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "QuickJoin_JoinQueueButtonOnClick"
     },
     "observed": {
@@ -6584,6 +6971,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidBossEmoteFrame_OnEvent"
     },
     "observed": {
@@ -6601,6 +6989,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidBossEmoteFrame_OnLoad"
     },
     "observed": {
@@ -6618,6 +7007,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidBrowser_IsEmpowered"
     },
     "observed": {
@@ -6635,6 +7025,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidNotice_AddMessage"
     },
     "observed": {
@@ -6652,6 +7043,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidNotice_Clear"
     },
     "observed": {
@@ -6669,6 +7061,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidNotice_ClearSlot"
     },
     "observed": {
@@ -6686,6 +7079,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidNotice_FadeInit"
     },
     "observed": {
@@ -6703,6 +7097,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidNotice_OnUpdate"
     },
     "observed": {
@@ -6720,6 +7115,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidNotice_SetSlot"
     },
     "observed": {
@@ -6737,6 +7133,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidNotice_UpdateSlot"
     },
     "observed": {
@@ -6754,6 +7151,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidWarningFrame_OnEvent"
     },
     "observed": {
@@ -6771,6 +7169,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidWarningFrame_OnLoad"
     },
     "observed": {
@@ -6788,6 +7187,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidWarningUtil.AddMessage"
     },
     "observed": {
@@ -6805,6 +7205,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidWarningUtil.ClearBossEmotes"
     },
     "observed": {
@@ -6822,6 +7223,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RaidWarningUtil.UpdateCenterScreenAnchors"
     },
     "observed": {
@@ -6839,6 +7241,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RecentAlliesUtil.GetBestSocialUIPresenceTypeForStateData"
     },
     "observed": {
@@ -6856,6 +7259,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RecentTimeDate"
     },
     "observed": {
@@ -6873,6 +7277,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RecruitAFriendFrameSocialViewInitializeAADC"
     },
     "observed": {
@@ -6890,6 +7295,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RefreshAuras"
     },
     "observed": {
@@ -6907,6 +7313,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RegionUtil.GetTopLeftMost"
     },
     "observed": {
@@ -6924,6 +7331,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RegionUtil.SortByTopLeft"
     },
     "observed": {
@@ -6941,6 +7349,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RegisterGameMenuEscHandler"
     },
     "observed": {
@@ -6958,6 +7367,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RegisterNewFrameLock"
     },
     "observed": {
@@ -6975,6 +7385,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RegisterPlayerInteraction"
     },
     "observed": {
@@ -6992,6 +7403,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RemoveFrameLock"
     },
     "observed": {
@@ -7009,6 +7421,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ReportFrame_EscapePressed"
     },
     "observed": {
@@ -7026,6 +7439,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ResetDiscordSettings"
     },
     "observed": {
@@ -7043,6 +7457,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "RestoreGMChatFrameSession"
     },
     "observed": {
@@ -7060,6 +7475,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ReverseQuestObjective"
     },
     "observed": {
@@ -7077,6 +7493,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SecureAuraHeader_GetUnit"
     },
     "observed": {
@@ -7094,6 +7511,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SecureAuraHeader_OnAttributeChanged"
     },
     "observed": {
@@ -7111,6 +7529,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SecureAuraHeader_OnEvent"
     },
     "observed": {
@@ -7128,6 +7547,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SecureAuraHeader_OnHide"
     },
     "observed": {
@@ -7145,6 +7565,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SecureAuraHeader_OnLoad"
     },
     "observed": {
@@ -7162,6 +7583,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SecureAuraHeader_OnShow"
     },
     "observed": {
@@ -7179,6 +7601,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SecureAuraHeader_OnUpdate"
     },
     "observed": {
@@ -7196,6 +7619,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SecureAuraHeader_Update"
     },
     "observed": {
@@ -7213,6 +7637,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SecureAuraHeader_UpdateEventRegistrations"
     },
     "observed": {
@@ -7230,6 +7655,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SetDesaturation"
     },
     "observed": {
@@ -7247,6 +7673,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SetFrameLock"
     },
     "observed": {
@@ -7264,6 +7691,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SetGhostFrameShown"
     },
     "observed": {
@@ -7281,6 +7709,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SetPlayerInteractionConditions"
     },
     "observed": {
@@ -7298,6 +7727,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SetUIPanelLayoutAttribute"
     },
     "observed": {
@@ -7315,6 +7745,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SettingsPanel_EscapePressed"
     },
     "observed": {
@@ -7332,6 +7763,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShakeFrame"
     },
     "observed": {
@@ -7349,6 +7781,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShakeFrameRandom"
     },
     "observed": {
@@ -7366,6 +7799,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShouldDisplaySpellCooldown"
     },
     "observed": {
@@ -7383,6 +7817,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowAchievementFrameForAchievement"
     },
     "observed": {
@@ -7400,6 +7835,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowAdventureMapFrameForFollowerType"
     },
     "observed": {
@@ -7417,6 +7853,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowArtifactFrame"
     },
     "observed": {
@@ -7434,6 +7871,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowArtifactRelicForgeFrame"
     },
     "observed": {
@@ -7451,6 +7889,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowAuctionHouseFrame"
     },
     "observed": {
@@ -7468,6 +7907,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowBarberShopFrame"
     },
     "observed": {
@@ -7485,6 +7925,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowBlackMarketFrame"
     },
     "observed": {
@@ -7502,6 +7943,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowChallengesKeystoneFrame"
     },
     "observed": {
@@ -7519,6 +7961,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowFlightMapFrame"
     },
     "observed": {
@@ -7536,6 +7979,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowGarrisonCapacitiveDisplayFrame"
     },
     "observed": {
@@ -7553,6 +7997,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowGarrisonMissionFrameForFollowerType"
     },
     "observed": {
@@ -7570,6 +8015,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowGarrisonRecruiterFrame"
     },
     "observed": {
@@ -7587,6 +8033,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowGarrisonShipyardFrame"
     },
     "observed": {
@@ -7604,6 +8051,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowGuildBankFrame"
     },
     "observed": {
@@ -7621,6 +8069,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowHeirloomsJournalToClosestUpgradeablePage"
     },
     "observed": {
@@ -7638,6 +8087,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowInstanceBootDialog"
     },
     "observed": {
@@ -7655,6 +8105,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowInstanceLockDialog"
     },
     "observed": {
@@ -7672,6 +8123,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowItemSocketingFrame"
     },
     "observed": {
@@ -7689,6 +8141,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowItemUpgradeFrame"
     },
     "observed": {
@@ -7706,6 +8159,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowMatchCelebrationPartyPoseFrame"
     },
     "observed": {
@@ -7723,6 +8177,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowPendingPlayerChoiceResponseUI"
     },
     "observed": {
@@ -7740,6 +8195,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowPerksProgramFrame"
     },
     "observed": {
@@ -7757,6 +8213,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowProfessionEquipmentHelpTip"
     },
     "observed": {
@@ -7774,6 +8231,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowProfessionsCustomerOrdersFrame"
     },
     "observed": {
@@ -7791,6 +8249,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowProfessionsFrame"
     },
     "observed": {
@@ -7808,6 +8267,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowQuestSessionGroupInviteConfirmation"
     },
     "observed": {
@@ -7825,6 +8285,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowQuestSessionGroupInviteReceivedConfirmation"
     },
     "observed": {
@@ -7842,6 +8303,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowRemixArtifactFrame"
     },
     "observed": {
@@ -7859,6 +8321,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowResurrectRequest"
     },
     "observed": {
@@ -7876,6 +8339,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowRuneforgeFrame"
     },
     "observed": {
@@ -7893,6 +8357,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowSummonConfirmationDialog"
     },
     "observed": {
@@ -7910,6 +8375,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ShowTaxiMapFrame"
     },
     "observed": {
@@ -7927,6 +8393,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SimpleCheckout_EscapePressed"
     },
     "observed": {
@@ -7944,6 +8411,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SmartHide"
     },
     "observed": {
@@ -7961,6 +8429,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SmartShow"
     },
     "observed": {
@@ -7978,6 +8447,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIContactsFrameInitializeAADC"
     },
     "observed": {
@@ -7995,6 +8465,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.AddSeparatorToTooltip"
     },
     "observed": {
@@ -8012,6 +8483,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.GetBattleNetFriendTagInterestsUIOrder"
     },
     "observed": {
@@ -8029,6 +8501,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.GetBattleNetFriendTagRoleUIOrder"
     },
     "observed": {
@@ -8046,6 +8519,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.GetBlockedName"
     },
     "observed": {
@@ -8063,6 +8537,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.GetIconForPresenceType"
     },
     "observed": {
@@ -8080,6 +8555,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.GetLabelForBattleNetFriendTag"
     },
     "observed": {
@@ -8097,6 +8573,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.GetLabelForPresenceType"
     },
     "observed": {
@@ -8114,6 +8591,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.GetPresenceTypeForBattleNetAccountInfo"
     },
     "observed": {
@@ -8131,6 +8609,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.GetPresenceTypeSelf"
     },
     "observed": {
@@ -8148,6 +8627,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.InitializeUserScaledDropdownButton"
     },
     "observed": {
@@ -8165,6 +8645,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.InitializeUserScaledDropdownMainTitle"
     },
     "observed": {
@@ -8182,6 +8663,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.InitializeUserScaledDropdownTitle"
     },
     "observed": {
@@ -8199,6 +8681,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SocialUIUtil.SetBattleNetPresenceFromSocialUIPresence"
     },
     "observed": {
@@ -8216,6 +8699,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SoulbindViewer_LoadUI"
     },
     "observed": {
@@ -8233,6 +8717,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SpellFlyout_EscapePressed"
     },
     "observed": {
@@ -8250,6 +8735,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "SplashFrame_EscapePressed"
     },
     "observed": {
@@ -8267,6 +8753,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "StoreEscapePressed"
     },
     "observed": {
@@ -8284,6 +8771,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "StringUtil.JoinAlternatingConditionalColor"
     },
     "observed": {
@@ -8301,6 +8789,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "TalentFrame_LoadUI"
     },
     "observed": {
@@ -8318,6 +8807,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "TargetFrame_UpdateBuffAnchor"
     },
     "observed": {
@@ -8335,6 +8825,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "TargetFrame_UpdateDebuffAnchor"
     },
     "observed": {
@@ -8352,6 +8843,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "TextureUtil.AnimateTexCoords"
     },
     "observed": {
@@ -8369,6 +8861,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "TimeUtil.BetterDate"
     },
     "observed": {
@@ -8386,6 +8879,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "TimeUtil.GetRecentTimeDate"
     },
     "observed": {
@@ -8403,6 +8897,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ToggleLFGFrame"
     },
     "observed": {
@@ -8420,6 +8915,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ToggleRAFPanel"
     },
     "observed": {
@@ -8437,6 +8933,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ToggleRafPanel"
     },
     "observed": {
@@ -8454,6 +8951,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ToggleRaidBrowser"
     },
     "observed": {
@@ -8471,6 +8969,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ToggleSocialUI"
     },
     "observed": {
@@ -8488,6 +8987,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "ToggleWoWHackCharacterUI"
     },
     "observed": {
@@ -8505,6 +9005,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "TokenFrame_LoadUI"
     },
     "observed": {
@@ -8522,6 +9023,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "TrialAccountCapReached_Inform"
     },
     "observed": {
@@ -8539,6 +9041,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "TryShowAnimaDiversionFrame"
     },
     "observed": {
@@ -8556,6 +9059,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "TryShowCovenantPreviewFrame"
     },
     "observed": {
@@ -8573,6 +9077,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIDoFramesIntersect"
     },
     "observed": {
@@ -8590,6 +9095,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIModeUtil.CreateExtendedBlocklist"
     },
     "observed": {
@@ -8607,6 +9113,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIModeUtil.CreateModifiedBlocklist"
     },
     "observed": {
@@ -8624,6 +9131,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIModeUtil.IsModeActive"
     },
     "observed": {
@@ -8641,6 +9149,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIModeUtil.RegisterMode"
     },
     "observed": {
@@ -8658,6 +9167,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIModeUtil.SetModeActive"
     },
     "observed": {
@@ -8675,6 +9185,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIParentLoadAddOn"
     },
     "observed": {
@@ -8692,6 +9203,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIParent_ManageFramePositions"
     },
     "observed": {
@@ -8709,6 +9221,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIParent_OnEvent"
     },
     "observed": {
@@ -8726,6 +9239,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIParent_OnHide"
     },
     "observed": {
@@ -8743,6 +9257,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIParent_OnLoad"
     },
     "observed": {
@@ -8760,6 +9275,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIParent_OnShow"
     },
     "observed": {
@@ -8777,6 +9293,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIParent_Shared_OnEvent"
     },
     "observed": {
@@ -8794,6 +9311,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIParent_Shared_OnLoad"
     },
     "observed": {
@@ -8811,6 +9329,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UIParent_UpdateTopFramePositions"
     },
     "observed": {
@@ -8828,6 +9347,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UnitHasMana"
     },
     "observed": {
@@ -8845,6 +9365,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UnitPopupSharedUtil.IsFriendshipUpgrade"
     },
     "observed": {
@@ -8862,6 +9383,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UpdateFrameLock"
     },
     "observed": {
@@ -8879,6 +9401,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UpdateQuestAcceptLogFullDialog"
     },
     "observed": {
@@ -8896,6 +9419,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "UpdateUIElementsForClientScene"
     },
     "observed": {
@@ -8913,6 +9437,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "VisualAlertData_ForEach"
     },
     "observed": {
@@ -8930,6 +9455,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "VisualAlert_GetTypeTemplate"
     },
     "observed": {
@@ -8947,6 +9473,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "VisualAlert_GetTypeText"
     },
     "observed": {
@@ -8964,6 +9491,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "VisualAlerts_RegisterAll"
     },
     "observed": {
@@ -8981,6 +9509,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "WarfrontsPartyPoseFrame_TryShow"
     },
     "observed": {
@@ -8998,6 +9527,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "WoWHackSpellsUI_LoadUI"
     },
     "observed": {
@@ -9015,6 +9545,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "WorldFrame_OnLoad"
     },
     "observed": {
@@ -9032,6 +9563,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "WorldFrame_OnUpdate"
     },
     "observed": {
@@ -9049,6 +9581,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "WowSurveyStatusFrame_OnSurveyDelivered"
     },
     "observed": {
@@ -9066,6 +9599,7 @@
       "page_default": null,
       "publication": "published",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "assertf"
     },
     "observed": {
@@ -9083,6 +9617,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "getglobal"
     },
     "observed": {
@@ -9100,6 +9635,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "framexml",
+      "superseded_by": null,
       "symbol": "setglobal"
     },
     "observed": {
@@ -9117,6 +9653,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "BNGetFriendInviteInfo"
     },
     "observed": {
@@ -9134,6 +9671,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "BNSendVerifiedBattleTagInvite"
     },
     "observed": {
@@ -9151,6 +9689,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_ActionBar.ForceUpdateAction"
     },
     "observed": {
@@ -9168,6 +9707,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_AuraContainerUtil.ProcessAuraTooltipBackdropOptions"
     },
     "observed": {
@@ -9185,6 +9725,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_AuraContainerUtil.ProcessAuraTooltipNineSliceOptions"
     },
     "observed": {
@@ -9202,6 +9743,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_AuraContainerUtil.ProcessAuraTooltipTextureSliceOptions"
     },
     "observed": {
@@ -9219,6 +9761,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_AuraContainerUtil.ProcessCustomAuraButtonApplicationBarOptions"
     },
     "observed": {
@@ -9236,6 +9779,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_AuraContainerUtil.ProcessCustomAuraButtonApplicationCountOptions"
     },
     "observed": {
@@ -9253,6 +9797,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_AuraContainerUtil.ProcessCustomAuraButtonDispelTypeTextOptions"
     },
     "observed": {
@@ -9270,6 +9815,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_AuraContainerUtil.ProcessCustomAuraButtonDispelTypeTextureOptions"
     },
     "observed": {
@@ -9287,6 +9833,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_AuraContainerUtil.ProcessCustomAuraButtonDurationBarOptions"
     },
     "observed": {
@@ -9304,6 +9851,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_AuraContainerUtil.ProcessCustomAuraButtonDurationTextOptions"
     },
     "observed": {
@@ -9321,6 +9869,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.AreFriendTagsEnabled"
     },
     "observed": {
@@ -9338,6 +9887,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.AreTitleFriendCustomNamesEnabled"
     },
     "observed": {
@@ -9355,6 +9905,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.AreTitleFriendsEnabled"
     },
     "observed": {
@@ -9372,6 +9923,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.BNCheckTitleFriendInviteToUnit"
     },
     "observed": {
@@ -9389,6 +9941,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.CanToggleHighResTexturesWithoutClientReload"
     },
     "observed": {
@@ -9406,6 +9959,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.GetCustomTitleFriendName"
     },
     "observed": {
@@ -9423,6 +9977,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.GetFriendInviteInfo"
     },
     "observed": {
@@ -9440,6 +9995,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.IsBattleNetFriendsListEnabled"
     },
     "observed": {
@@ -9457,6 +10013,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.IsBattleNetFriendsListSupported"
     },
     "observed": {
@@ -9474,6 +10031,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.SearchFriends"
     },
     "observed": {
@@ -9491,6 +10049,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.SendTitleFriendInviteByName"
     },
     "observed": {
@@ -9508,6 +10067,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.SendVerifiedBattleNetFriendInvite"
     },
     "observed": {
@@ -9525,6 +10085,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.SetAppearOffline"
     },
     "observed": {
@@ -9542,6 +10103,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.SetCustomTitleFriendName"
     },
     "observed": {
@@ -9559,6 +10121,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_BattleNet.SetFriendTags"
     },
     "observed": {
@@ -9576,6 +10139,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Browser.CloseFullscreenBrowser"
     },
     "observed": {
@@ -9593,6 +10157,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_CVar.AreCVarsLoaded"
     },
     "observed": {
@@ -9610,6 +10175,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_ClientScene.IsSceneTypeActive"
     },
     "observed": {
@@ -9627,6 +10193,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Club.SendTitleFriendRequest"
     },
     "observed": {
@@ -9644,6 +10211,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_CombatAudioAlert.SpeakText"
     },
     "observed": {
@@ -9661,6 +10229,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_CooldownViewer.GetGroupBuffItems"
     },
     "observed": {
@@ -9678,6 +10247,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_DelvesUI.GetFlavorNodeForCompanion"
     },
     "observed": {
@@ -9695,6 +10265,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_DelvesUI.GetFlavorNodeNameForCompanion"
     },
     "observed": {
@@ -9712,6 +10283,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_DelvesUI.HasActiveLFGLair"
     },
     "observed": {
@@ -9729,6 +10301,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_DelvesUI.HasActiveLair"
     },
     "observed": {
@@ -9746,6 +10319,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_DelvesUI.IsInLair"
     },
     "observed": {
@@ -9763,6 +10337,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.Authorize"
     },
     "observed": {
@@ -9780,6 +10355,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GetDiscordChannelName"
     },
     "observed": {
@@ -9797,6 +10373,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GetDiscordUserID"
     },
     "observed": {
@@ -9814,6 +10391,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GetDiscordUserName"
     },
     "observed": {
@@ -9831,6 +10409,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GetDisplayNameType"
     },
     "observed": {
@@ -9848,6 +10427,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GetGuildLinkStatus"
     },
     "observed": {
@@ -9865,6 +10445,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GetNumDiscordChannels"
     },
     "observed": {
@@ -9882,6 +10463,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GetNumDiscordServers"
     },
     "observed": {
@@ -9899,6 +10481,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GetServerLinkableChannels"
     },
     "observed": {
@@ -9916,6 +10499,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GetServerName"
     },
     "observed": {
@@ -9933,6 +10517,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GuildLink"
     },
     "observed": {
@@ -9950,6 +10535,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.GuildUnlink"
     },
     "observed": {
@@ -9967,6 +10553,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.IsEnabled"
     },
     "observed": {
@@ -9984,6 +10571,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.IsGuildChannelLinked"
     },
     "observed": {
@@ -10001,6 +10589,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.IsGuildSettingSet"
     },
     "observed": {
@@ -10018,6 +10607,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.IsUserOAuthed"
     },
     "observed": {
@@ -10035,6 +10625,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.RefreshAuth"
     },
     "observed": {
@@ -10052,6 +10643,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.SetGuildSetting"
     },
     "observed": {
@@ -10069,6 +10661,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.UpdateDiscordServers"
     },
     "observed": {
@@ -10086,6 +10679,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Discord.UpdateGuildLobby"
     },
     "observed": {
@@ -10103,6 +10697,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_DyeColor.GetDyeColorForItem"
     },
     "observed": {
@@ -10120,6 +10715,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_DyeColor.GetDyeColorForItemLocation"
     },
     "observed": {
@@ -10137,6 +10733,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_DyeColor.GetDyeColorsForItem"
     },
     "observed": {
@@ -10154,6 +10751,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_DyeColor.GetDyeColorsForItemLocation"
     },
     "observed": {
@@ -10171,6 +10769,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_EncounterJournal.GetBaseDifficultyID"
     },
     "observed": {
@@ -10188,6 +10787,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_EncounterJournal.InstanceHasDifficultyID"
     },
     "observed": {
@@ -10205,6 +10805,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_FriendList.IsLegacyFriendSystemEnabled"
     },
     "observed": {
@@ -10222,6 +10823,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_GuildInfo.IsDiscordStreamSeparate"
     },
     "observed": {
@@ -10239,6 +10841,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HouseEditor.GetHouseEditorPlayerType"
     },
     "observed": {
@@ -10256,6 +10859,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Housing.HouseFinderIgnoreNeighborhood"
     },
     "observed": {
@@ -10273,16 +10877,17 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Housing.IsInsideOwnHouse"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua; alias=C_Housing.IsInsideOwnedHouse",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Housing.IsInsideOwnedHouse-477": {
     "expected": {
@@ -10290,6 +10895,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Housing.IsInsideOwnedHouse"
     },
     "observed": {
@@ -10307,6 +10913,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Housing.IsInsideOwnedHouseOrPlot"
     },
     "observed": {
@@ -10324,6 +10931,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Housing.IsInsideOwnedPlot"
     },
     "observed": {
@@ -10341,6 +10949,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Housing.ResetHouse"
     },
     "observed": {
@@ -10358,6 +10967,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.CanExportRoom"
     },
     "observed": {
@@ -10375,6 +10985,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.CanExportTypeFromCurrentLocation"
     },
     "observed": {
@@ -10392,6 +11003,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.CanImportTypeFromCurrentLocation"
     },
     "observed": {
@@ -10409,6 +11021,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.DeleteBlueprint"
     },
     "observed": {
@@ -10426,6 +11039,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.ExportBlueprint"
     },
     "observed": {
@@ -10443,6 +11057,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.ExportRoomBlueprint"
     },
     "observed": {
@@ -10460,6 +11075,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.GetBlueprintHyperlink"
     },
     "observed": {
@@ -10477,6 +11093,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.GetBlueprintTypeForCode"
     },
     "observed": {
@@ -10494,6 +11111,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.GetExportAvailability"
     },
     "observed": {
@@ -10511,6 +11129,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.GetFeatureAvailability"
     },
     "observed": {
@@ -10528,6 +11147,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.GetImportAvailability"
     },
     "observed": {
@@ -10545,6 +11165,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.ImportBlueprint"
     },
     "observed": {
@@ -10562,6 +11183,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.IsShareCodeValid"
     },
     "observed": {
@@ -10579,6 +11201,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.RenameBlueprint"
     },
     "observed": {
@@ -10596,6 +11219,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.RequestBlueprintCollection"
     },
     "observed": {
@@ -10613,6 +11237,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.RequestBlueprintContents"
     },
     "observed": {
@@ -10630,6 +11255,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.RequestBlueprintContentsForContext"
     },
     "observed": {
@@ -10647,6 +11273,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.StartImportRoomBlueprint"
     },
     "observed": {
@@ -10664,6 +11291,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingBlueprint.UpdateBlueprintStringFromInput"
     },
     "observed": {
@@ -10681,6 +11309,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingCustomizeMode.ApplyPetToSelectedDecor"
     },
     "observed": {
@@ -10698,6 +11327,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingCustomizeMode.GetSelectedDecorPetInfo"
     },
     "observed": {
@@ -10715,6 +11345,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingDecor.AnyDecorPlacedInRoom"
     },
     "observed": {
@@ -10732,6 +11363,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingDecor.GetAllMaxPlacementBudgets"
     },
     "observed": {
@@ -10749,6 +11381,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingDecor.GetAllSpentPlacementBudgets"
     },
     "observed": {
@@ -10766,6 +11399,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingDecor.GetDecorAssignedPetName"
     },
     "observed": {
@@ -10783,6 +11417,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingDecor.GetDecorCanAttachPet"
     },
     "observed": {
@@ -10800,6 +11435,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingDecor.GetMaxPetPlacementBudget"
     },
     "observed": {
@@ -10817,6 +11453,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingDecor.GetMaxPlacementBudget"
     },
     "observed": {
@@ -10834,6 +11471,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingDecor.GetSpentPetPlacementBudget"
     },
     "observed": {
@@ -10851,6 +11489,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingDecor.GetSpentPlacementBudget"
     },
     "observed": {
@@ -10868,6 +11507,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingLayout.GetBaseRoomFloor"
     },
     "observed": {
@@ -10885,6 +11525,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingLayout.GetHighestOccupiedFloorIndex"
     },
     "observed": {
@@ -10902,6 +11543,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingLayout.GetLowestOccupiedFloorIndex"
     },
     "observed": {
@@ -10919,6 +11561,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingLayout.GetNumFloors"
     },
     "observed": {
@@ -10936,6 +11579,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingLayout.GetRoomPlacementBudget"
     },
     "observed": {
@@ -10953,6 +11597,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingLayout.GetRoomPlayerIsIn"
     },
     "observed": {
@@ -10970,6 +11615,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingLayout.GetSelectedBlueprintFloorplan"
     },
     "observed": {
@@ -10987,6 +11633,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingLayout.GetSpentPlacementBudget"
     },
     "observed": {
@@ -11004,6 +11651,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingLayout.HasSelectedBlueprintFloorplan"
     },
     "observed": {
@@ -11021,6 +11669,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_HousingLayout.RoomHasStairs"
     },
     "observed": {
@@ -11038,6 +11687,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Item.DoesItemMatchSpellItemCondition"
     },
     "observed": {
@@ -11055,6 +11705,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_LFGInfo.IsInMatchmadeRaidWithoutRoleRequirements"
     },
     "observed": {
@@ -11072,6 +11723,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_LFGList.ConfirmCensoredActiveEntry"
     },
     "observed": {
@@ -11089,6 +11741,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_LFGList.DoesCensoredTextMatch"
     },
     "observed": {
@@ -11106,6 +11759,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_LFGList.IsCensoredActiveEntryUnresolved"
     },
     "observed": {
@@ -11123,6 +11777,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_LFGList.RevealCensoredActiveEntry"
     },
     "observed": {
@@ -11140,6 +11795,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_LFGList.RevealCensoredSearchResult"
     },
     "observed": {
@@ -11157,6 +11813,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Navigation.GetNextWaypointForMap"
     },
     "observed": {
@@ -11174,6 +11831,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_NeighborhoodInitiative.GetInitiativeTaskRewardScaling"
     },
     "observed": {
@@ -11191,6 +11849,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_PaperDollInfo.CancelTemporaryEnchantment"
     },
     "observed": {
@@ -11208,6 +11867,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_PaperDollInfo.GetInventorySlotInfo"
     },
     "observed": {
@@ -11225,6 +11885,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_PaperDollInfo.GetInventorySlotInfoForInvSlot"
     },
     "observed": {
@@ -11242,6 +11903,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_PaperDollInfo.GetTemporaryEnchantmentInfo"
     },
     "observed": {
@@ -11259,6 +11921,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_PetJournal.GetPetInfoTableBySpeciesID"
     },
     "observed": {
@@ -11276,6 +11939,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Ping.GetContextualPingTypeForUnit"
     },
     "observed": {
@@ -11293,6 +11957,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Ping.SendMacroPing"
     },
     "observed": {
@@ -11310,6 +11975,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_PvP.CanSurrenderArena"
     },
     "observed": {
@@ -11327,6 +11993,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_PvP.JoinRandomTrainingGround"
     },
     "observed": {
@@ -11344,6 +12011,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_PvP.JoinRandomTrainingGroundArena"
     },
     "observed": {
@@ -11361,6 +12029,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_PvP.JoinRandomTrainingGroundBattleground"
     },
     "observed": {
@@ -11378,6 +12047,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_QuestHub.IsAreaPOICurrentlyRelatedToHub"
     },
     "observed": {
@@ -11395,6 +12065,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_QuestHub.IsQuestCurrentlyRelatedToHub"
     },
     "observed": {
@@ -11412,6 +12083,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_RecentAllies.SearchRecentAllies"
     },
     "observed": {
@@ -11429,6 +12101,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_RecruitAFriend.CanSummonFriend"
     },
     "observed": {
@@ -11446,6 +12119,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_RecruitAFriend.IsEnabled"
     },
     "observed": {
@@ -11463,6 +12137,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_RecruitAFriend.IsSystemEnabled"
     },
     "observed": {
@@ -11480,6 +12155,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_RecruitAFriend.IsSystemSupported"
     },
     "observed": {
@@ -11497,6 +12173,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Roleset.ApplyRolesetFilters"
     },
     "observed": {
@@ -11514,6 +12191,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Roleset.GetActiveAllowedRolesets"
     },
     "observed": {
@@ -11531,6 +12209,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Roleset.GetActiveBlockedRolesets"
     },
     "observed": {
@@ -11548,6 +12227,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_SocialQueue.IsSystemEnabled"
     },
     "observed": {
@@ -11565,6 +12245,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_SocialQueue.IsSystemSupported"
     },
     "observed": {
@@ -11582,6 +12263,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_SocialRestrictions.IsFriendsDisabled"
     },
     "observed": {
@@ -11599,6 +12281,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_SocialUI.IsSystemEnabled"
     },
     "observed": {
@@ -11616,6 +12299,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Sound.PlaySound"
     },
     "observed": {
@@ -11633,6 +12317,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Sound.PlaySoundWithOptions"
     },
     "observed": {
@@ -11650,6 +12335,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_SpecializationInfo.GetInspectSpecialization"
     },
     "observed": {
@@ -11667,6 +12353,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Spell.GetLastCategoryCooldownSource"
     },
     "observed": {
@@ -11684,6 +12371,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Spell.GetSpellDescriptionForItemLocation"
     },
     "observed": {
@@ -11701,6 +12389,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Spell.GetSpellTexture"
     },
     "observed": {
@@ -11718,6 +12407,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_Spell.TargetSpellChecksItemCondition"
     },
     "observed": {
@@ -11735,16 +12425,17 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_SuperTrack.GetNextWaypointForMap"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua; alias=C_Navigation.GetNextWaypointForMap",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_TransmogOutfitInfo.CanPlayerTransmogSlot-548": {
     "expected": {
@@ -11752,6 +12443,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_TransmogOutfitInfo.CanPlayerTransmogSlot"
     },
     "observed": {
@@ -11769,6 +12461,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_TransmogOutfitInfo.IsTransmogEnabled"
     },
     "observed": {
@@ -11786,6 +12479,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_UnitAuras.AddAuraSound"
     },
     "observed": {
@@ -11803,6 +12497,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_UnitAuras.AddPrivateAuraAppliedSound"
     },
     "observed": {
@@ -11820,6 +12515,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_UnitAuras.CancelAuraByInstanceID"
     },
     "observed": {
@@ -11837,6 +12533,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_UnitAuras.GetGroupBuffVisualAlerts"
     },
     "observed": {
@@ -11854,6 +12551,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_UnitAuras.GetHiddenGroupBuffs"
     },
     "observed": {
@@ -11871,6 +12569,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_UnitAuras.RemoveAuraSound"
     },
     "observed": {
@@ -11888,16 +12587,17 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_UnitAuras.RemovePrivateAuraAppliedSound"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua; alias=C_UnitAuras.RemoveAuraSound",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_UnitAuras.SetGroupBuffVisualAlerts-555": {
     "expected": {
@@ -11905,6 +12605,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_UnitAuras.SetGroupBuffVisualAlerts"
     },
     "observed": {
@@ -11922,6 +12623,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_UnitAuras.SetHiddenGroupBuffs"
     },
     "observed": {
@@ -11939,6 +12641,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "C_UnitAuras.TriggerPrivateAuraShowDispelType"
     },
     "observed": {
@@ -11956,6 +12659,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "CanSurrenderArena"
     },
     "observed": {
@@ -11973,6 +12677,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "CancelItemTempEnchantment"
     },
     "observed": {
@@ -11990,6 +12695,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "CreateSecureDelegate"
     },
     "observed": {
@@ -12007,16 +12713,17 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "GetInspectSpecialization"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua; alias=C_SpecializationInfo.GetInspectSpecialization",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GetInventorySlotInfo-579": {
     "expected": {
@@ -12024,12 +12731,13 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "GetInventorySlotInfo"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Deprecated_PaperDoll/Deprecated_PaperDoll.lua; alias=C_PaperDollInfo.GetInventorySlotInfo",
       "kind": "global",
       "value": null
     },
@@ -12041,6 +12749,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "GetSpecializationSystem"
     },
     "observed": {
@@ -12058,6 +12767,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "GetWeaponEnchantInfo"
     },
     "observed": {
@@ -12075,6 +12785,7 @@
       "page_default": null,
       "publication": "absent",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "SetTableSecurityOption"
     },
     "observed": {
@@ -12092,6 +12803,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "UnitIsPlayerControlledOrGroupMember"
     },
     "observed": {
@@ -12109,6 +12821,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "securecopy"
     },
     "observed": {
@@ -12126,6 +12839,7 @@
       "page_default": null,
       "publication": "published",
       "section": "global-api",
+      "superseded_by": null,
       "symbol": "settablesecurity"
     },
     "observed": {
@@ -12143,6 +12857,7 @@
       "page_default": null,
       "publication": "published",
       "section": "scriptobjects",
+      "superseded_by": null,
       "symbol": "DurationTextBinding:Assign"
     },
     "observed": {
@@ -12160,6 +12875,7 @@
       "page_default": null,
       "publication": "published",
       "section": "scriptobjects",
+      "superseded_by": null,
       "symbol": "DurationTextBinding:ClearTextColorCurve"
     },
     "observed": {
@@ -12177,6 +12893,7 @@
       "page_default": null,
       "publication": "published",
       "section": "scriptobjects",
+      "superseded_by": null,
       "symbol": "DurationTextBinding:Copy"
     },
     "observed": {
@@ -12194,6 +12911,7 @@
       "page_default": null,
       "publication": "published",
       "section": "scriptobjects",
+      "superseded_by": null,
       "symbol": "DurationTextBinding:GetFormattedTextColor"
     },
     "observed": {
@@ -12211,6 +12929,7 @@
       "page_default": null,
       "publication": "published",
       "section": "scriptobjects",
+      "superseded_by": null,
       "symbol": "DurationTextBinding:GetTextColorCurve"
     },
     "observed": {
@@ -12228,6 +12947,7 @@
       "page_default": null,
       "publication": "published",
       "section": "scriptobjects",
+      "superseded_by": null,
       "symbol": "DurationTextBinding:SetTextColorCurve"
     },
     "observed": {
@@ -12245,6 +12965,7 @@
       "page_default": null,
       "publication": "published",
       "section": "scriptobjects",
+      "superseded_by": null,
       "symbol": "SecondsFormatter:GetRounding"
     },
     "observed": {
@@ -12262,6 +12983,7 @@
       "page_default": null,
       "publication": "published",
       "section": "scriptobjects",
+      "superseded_by": null,
       "symbol": "SecondsFormatter:SetRounding"
     },
     "observed": {
@@ -12279,6 +13001,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Animation:GetScript"
     },
     "observed": {
@@ -12296,6 +13019,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Animation:HookScript"
     },
     "observed": {
@@ -12313,6 +13037,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Animation:SetScript"
     },
     "observed": {
@@ -12330,6 +13055,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "AnimationGroup:GetScript"
     },
     "observed": {
@@ -12347,6 +13073,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "AnimationGroup:HookScript"
     },
     "observed": {
@@ -12364,6 +13091,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "AnimationGroup:SetScript"
     },
     "observed": {
@@ -12381,6 +13109,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FontString:SetDesaturateEmbeddedTextures"
     },
     "observed": {
@@ -12398,6 +13127,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Frame:AddRoleset"
     },
     "observed": {
@@ -12415,6 +13145,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Frame:CreateVectorGraphics"
     },
     "observed": {
@@ -12432,6 +13163,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Frame:GetOnUpdateMode"
     },
     "observed": {
@@ -12449,6 +13181,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Frame:GetRolesetNames"
     },
     "observed": {
@@ -12466,6 +13199,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Frame:IsRolesetFiltered"
     },
     "observed": {
@@ -12483,6 +13217,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Frame:RemoveRoleset"
     },
     "observed": {
@@ -12500,6 +13235,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Frame:ResizeToBoundsRect"
     },
     "observed": {
@@ -12517,6 +13253,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Frame:SetOnUpdateMode"
     },
     "observed": {
@@ -12534,6 +13271,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Frame:SetRolesets"
     },
     "observed": {
@@ -12551,6 +13289,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:AddAccessRestrictions"
     },
     "observed": {
@@ -12568,6 +13307,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:AddForbiddenAspects"
     },
     "observed": {
@@ -12585,6 +13325,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:AddSecretAspect"
     },
     "observed": {
@@ -12602,6 +13343,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:CanBeAccessedInContext"
     },
     "observed": {
@@ -12619,6 +13361,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:GetAccessRestrictions"
     },
     "observed": {
@@ -12636,6 +13379,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:GetForbiddenAspects"
     },
     "observed": {
@@ -12653,6 +13397,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:GetInheritableForbiddenAspects"
     },
     "observed": {
@@ -12670,6 +13415,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:GetObjectTable"
     },
     "observed": {
@@ -12687,6 +13433,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:HasAccessConstraints"
     },
     "observed": {
@@ -12704,6 +13451,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:HasAnyAccessRestrictions"
     },
     "observed": {
@@ -12721,6 +13469,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:HasAnyForbiddenAspects"
     },
     "observed": {
@@ -12738,6 +13487,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "FrameScriptObject:SetToDefaults"
     },
     "observed": {
@@ -12755,6 +13505,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "Minimap:SetIconScale"
     },
     "observed": {
@@ -12772,6 +13523,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "RadialProgress:GetFromPercent"
     },
     "observed": {
@@ -12789,6 +13541,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "RadialProgress:GetToPercent"
     },
     "observed": {
@@ -12806,6 +13559,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "RadialProgress:SetFromPercent"
     },
     "observed": {
@@ -12823,6 +13577,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "RadialProgress:SetToPercent"
     },
     "observed": {
@@ -12840,6 +13595,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "ScriptRegion:ClearScripts"
     },
     "observed": {
@@ -12857,6 +13613,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "ScriptRegion:GetScript"
     },
     "observed": {
@@ -12874,6 +13631,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "ScriptRegion:HookScript"
     },
     "observed": {
@@ -12891,6 +13649,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "ScriptRegion:SetScript"
     },
     "observed": {
@@ -12908,6 +13667,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "StatusBar:GetRenderMode"
     },
     "observed": {
@@ -12925,6 +13685,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "StatusBar:SetRenderMode"
     },
     "observed": {
@@ -12942,6 +13703,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:ClearRadialProgressBar"
     },
     "observed": {
@@ -12959,6 +13721,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:ClearSVG"
     },
     "observed": {
@@ -12976,6 +13739,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:GetRadialProgressBarEndOffset"
     },
     "observed": {
@@ -12993,6 +13757,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:GetRadialProgressBarFeather"
     },
     "observed": {
@@ -13010,6 +13775,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:GetRadialProgressBarPercent"
     },
     "observed": {
@@ -13027,6 +13793,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:GetRadialProgressBarReverse"
     },
     "observed": {
@@ -13044,6 +13811,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:GetRadialProgressBarStartOffset"
     },
     "observed": {
@@ -13061,6 +13829,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:SetRadialProgressBarEndOffset"
     },
     "observed": {
@@ -13078,6 +13847,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:SetRadialProgressBarFeather"
     },
     "observed": {
@@ -13095,6 +13865,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:SetRadialProgressBarPercent"
     },
     "observed": {
@@ -13112,6 +13883,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:SetRadialProgressBarReverse"
     },
     "observed": {
@@ -13129,6 +13901,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:SetRadialProgressBarStartOffset"
     },
     "observed": {
@@ -13146,6 +13919,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "TextureBase:SetSVG"
     },
     "observed": {
@@ -13163,6 +13937,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "VectorGraphics:ClearSVG"
     },
     "observed": {
@@ -13180,6 +13955,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "VectorGraphics:GetSVGFileID"
     },
     "observed": {
@@ -13197,6 +13973,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "VectorGraphics:HasSVG"
     },
     "observed": {
@@ -13214,6 +13991,7 @@
       "page_default": null,
       "publication": "published",
       "section": "widgets",
+      "superseded_by": null,
       "symbol": "VectorGraphics:SetSVG"
     },
     "observed": {

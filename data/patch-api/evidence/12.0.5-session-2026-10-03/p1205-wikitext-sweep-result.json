@@ -3791,11 +3791,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua; alias=C_UnitAuras.RemoveAuraSound",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_UnitAuras.ResetAuraDataProvider-323": {
     "expected": {

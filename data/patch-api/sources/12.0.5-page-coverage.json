@@ -2329,7 +2329,7 @@
       "symbols": [
         "363 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted for removed symbols, supersession against 12.0.7 and 12.1.0 wikitext registers. Publication only. 12 known gaps baselined in tests/data/patch_12_0_5_sweep_known_gaps.json.",
+      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted for removed symbols, supersession against 12.0.7 and 12.1.0 wikitext registers. Publication only. 11 known gaps baselined in tests/data/patch_12_0_5_sweep_known_gaps.json.",
       "spec": "docs/specs/patch-12-0-5-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_5_publication_sweep.rs",
@@ -6819,9 +6819,11 @@
     },
     {
       "source_id": "wt-global-api-C_UnitAuras.RemovePrivateAuraAppliedSound-526",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=function; lookup=function (superseded_by wt-global-api-C_UnitAuras.RemovePrivateAuraAppliedSound-574)"
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias, verified by exact cached assignment and runtime target identity (sweep)."
     },
     {
       "source_id": "wt-global-api-C_UnitAuras.ResetAuraDataProvider-323",
