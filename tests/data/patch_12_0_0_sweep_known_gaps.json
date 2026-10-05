@@ -36,8 +36,6 @@
   "wt-global-api-C_TooltipComparison.CompareItem-333",
   "wt-global-api-C_TooltipInfo.GetOutfit-334",
   "wt-global-api-C_TradeSkillUI.GetEnchantItems-643",
-  "wt-global-api-C_TradeSkillUI.GetRecipeItemQualityInfo-339",
-  "wt-global-api-C_TradeSkillUI.GetRecipeQualityReagentLink-340",
   "wt-global-api-C_TradeSkillUI.IsRecraftReagentValid-647",
   "wt-global-api-C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo-414",
   "wt-global-api-C_WeeklyRewards.GetSortedProgressForActivity-424",

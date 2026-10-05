@@ -129,6 +129,8 @@ pub struct SimState {
     pub spell_classifications: crate::c_api::c_spell_classification::SpellClassifications,
     #[cfg(feature = "retail-12-0-0")]
     pub nameplate_configuration: crate::c_api::c_nameplate_manager::NamePlateConfiguration,
+    #[cfg(feature = "retail-12-0-0")]
+    pub recipe_quality_inputs: crate::c_api::c_trade_skill_quality::RecipeQualityInputs,
     pub action_bars: HashMap<u32, u32>,
     /// INFERRED host-declared resolved spell IDs on special bars; empty by default.
     /// Independent of direct assignments and bar visibility.
