@@ -1,9 +1,9 @@
 //! Synthetic Edit Mode previews only; no encounter warning producer or store.
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
-fn warning_preview_ptr_has_complete_independent_records() {
+fn warning_preview_has_complete_independent_records() {
     let env = WowLuaEnv::new().unwrap();
     for _ in 0..2 {
         env.exec(r#"
@@ -51,9 +51,9 @@ fn warning_preview_ptr_has_complete_independent_records() {
     }
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
-fn warning_preview_ptr_rejects_invalid_severity_without_state() {
+fn warning_preview_rejects_invalid_severity_without_state() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
         for _, severity in ipairs({-1, 3, 0.5, math.huge, -math.huge, 0/0, "1", false, {}}) do
@@ -67,7 +67,7 @@ fn warning_preview_ptr_rejects_invalid_severity_without_state() {
     "#).unwrap();
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(all(feature = "profile-retail", not(feature = "retail-12-1-0")))]
 #[test]
 fn warning_preview_preserves_earlier_retail_record() {
     let env = WowLuaEnv::new().unwrap();
@@ -95,7 +95,36 @@ fn warning_preview_preserves_earlier_retail_record() {
     }
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
+#[test]
+fn severity_color_matches_preview_and_is_fresh_per_call() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local expected = {
+            [Enum.EncounterEventSeverity.Low] = {1, 1, 1},
+            [Enum.EncounterEventSeverity.Medium] = {1, 0.75, 0.1},
+            [Enum.EncounterEventSeverity.High] = {1, 0.15, 0.05},
+        }
+        for severity, rgb in pairs(expected) do
+            assert(select('#', C_EncounterWarnings.GetColorForSeverity(severity)) == 1)
+            local color = C_EncounterWarnings.GetColorForSeverity(severity)
+            local r, g, b, a = color:GetRGBA()
+            assert(r == rgb[1] and g == rgb[2] and b == rgb[3] and a == 1, "severity " .. severity)
+            local pr, pg, pb, pa = C_EncounterWarnings.GetEditModeWarningInfo(severity).color:GetRGBA()
+            assert(r == pr and g == pg and b == pb and a == pa, "preview uses the severity color")
+            color.r, color.g, color.b, color.a = 0, 0, 0, 0
+            r, g, b, a = C_EncounterWarnings.GetColorForSeverity(severity):GetRGBA()
+            assert(r == rgb[1] and g == rgb[2] and b == rgb[3] and a == 1, "fresh color per call")
+        end
+        for _, severity in ipairs({-1, 3, 0.5, "1"}) do
+            local ok, err = pcall(C_EncounterWarnings.GetColorForSeverity, severity)
+            assert(not ok and tostring(err):find("severity"), tostring(err))
+        end
+        assert(not pcall(C_EncounterWarnings.GetColorForSeverity))
+    "#).unwrap();
+}
+
+#[cfg(feature = "retail-12-1-0")]
 fn load_warning_view() -> WowLuaEnv {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path().unwrap();
     let (env, loaded) = crate::common::blizzard_addon_harness::build_blizzard_addon_closure_env(
@@ -106,7 +135,7 @@ fn load_warning_view() -> WowLuaEnv {
     env
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn warning_preview_uses_loaded_blizzard_color_mixin() {
     let env = load_warning_view();
@@ -122,7 +151,7 @@ fn warning_preview_uses_loaded_blizzard_color_mixin() {
     "#).unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 fn expire_warning_timer(env: &WowLuaEnv, id: u64) {
     env.state().borrow_mut().rilua_timers.iter_mut().find(|timer| timer.id == id)
         .expect("queued warning timer").fire_at = std::time::Instant::now();
@@ -130,7 +159,7 @@ fn expire_warning_timer(env: &WowLuaEnv, id: u64) {
     env.fire_on_update(0.5).unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn warning_preview_real_blizzard_frame_expires_cancels_and_reuses() {
     let env = load_warning_view();

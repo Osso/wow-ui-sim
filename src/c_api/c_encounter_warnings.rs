@@ -1,4 +1,4 @@
-//! Synthetic Edit Mode previews, not encounter warning storage or dispatch.
+//! Severity colors and synthetic Edit Mode previews, not encounter warning storage or dispatch.
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
 use rilua::{LuaResult, Val, runtime_error};
 
@@ -9,7 +9,40 @@ const PREVIEW_DURATION_SECONDS: f64 = 5.0;
 const PREVIEW_ICON_FILE_ID: f64 = 136122.0;
 
 pub(crate) fn register_preview(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "GetColorForSeverity", color_for_severity)?;
     table_set_rust_fn_static(state, namespace, "GetEditModeWarningInfo", preview)
+}
+
+/// Simulator palette (white, amber, red); the native client's colors are not documented.
+fn severity_rgb(severity: u8) -> (f64, f64, f64) {
+    match severity {
+        0 => (1.0, 1.0, 1.0),
+        1 => (1.0, 0.75, 0.1),
+        _ => (1.0, 0.15, 0.05),
+    }
+}
+
+/// Fresh ColorMixin per call so callers can mutate their copy.
+fn create_severity_color(state: &mut LuaState, severity: u8) -> LuaResult<Val> {
+    let (red, green, blue) = severity_rgb(severity);
+    let factory = crate::c_api::global_val(state, "CreateColor");
+    call_function_state(
+        state,
+        factory,
+        &[
+            Val::Num(red),
+            Val::Num(green),
+            Val::Num(blue),
+            Val::Num(1.0),
+        ],
+    )
+}
+
+fn color_for_severity(state: &mut LuaState) -> LuaResult<u32> {
+    let severity = read_severity(state)?;
+    let color = create_severity_color(state, severity)?;
+    state.push(color);
+    Ok(1)
 }
 
 fn read_severity(state: &LuaState) -> LuaResult<u8> {
@@ -25,22 +58,12 @@ fn read_severity(state: &LuaState) -> LuaResult<u8> {
 
 fn preview(state: &mut LuaState) -> LuaResult<u32> {
     let severity = read_severity(state)?;
-    let (text, green, blue) = match severity {
-        0 => ("Simulated Low Warning", 1.0, 1.0),
-        1 => ("Simulated Medium Warning", 0.75, 0.1),
-        _ => ("Simulated High Warning", 0.15, 0.05),
+    let text = match severity {
+        0 => "Simulated Low Warning",
+        1 => "Simulated Medium Warning",
+        _ => "Simulated High Warning",
     };
-    let factory = crate::c_api::global_val(state, "CreateColor");
-    let color = call_function_state(
-        state,
-        factory,
-        &[
-            Val::Num(1.0),
-            Val::Num(green),
-            Val::Num(blue),
-            Val::Num(1.0),
-        ],
-    )?;
+    let color = create_severity_color(state, severity)?;
     let info = create_table(state);
     publish_preview_identity(state, info, text);
     publish_preview_display(state, info, severity);

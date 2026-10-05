@@ -7,9 +7,9 @@ use rilua::vm::state::LuaState;
 
 pub(super) fn register_encounter_warnings_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_EncounterWarnings")?;
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "retail-12-1-0")]
     crate::c_api::c_encounter_warnings::register_preview(state, ns)?;
-    #[cfg(not(feature = "retail-12-1-5"))]
+    #[cfg(not(feature = "retail-12-1-0"))]
     table_set_rust_fn_static(
         state,
         ns,
@@ -24,7 +24,7 @@ fn play_sound(_state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-#[cfg(not(feature = "retail-12-1-5"))]
+#[cfg(not(feature = "retail-12-1-0"))]
 mod legacy {
     use super::*;
     use crate::lua_api::globals::font_strings_collection::colors::make_rilua_color_table;
@@ -90,7 +90,7 @@ mod legacy {
     }
 }
 
-#[cfg(all(test, not(feature = "retail-12-1-5")))]
+#[cfg(all(test, not(feature = "retail-12-1-0")))]
 mod tests {
     use super::*;
     use crate::lua_api::WowLuaEnv;

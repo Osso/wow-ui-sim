@@ -79,7 +79,7 @@ pub mod c_discord;
 mod c_edit_mode;
 #[cfg(feature = "retail-12-1-0")]
 pub(crate) mod c_encounter_timeline;
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "retail-12-1-0")]
 pub(crate) mod c_encounter_warnings;
 pub mod c_glue;
 pub mod c_housing;
