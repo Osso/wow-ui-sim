@@ -1,6 +1,6 @@
 ## [2026-10-05] investigation | Host Lua rooting audit
 
-[Audit](investigations/gc-rooting-audit.md): 40 recorded candidates, 17 fixed sites, 23 false positives. Forced-GC DTO/event/cast negatives, 172 targeted passes, startup `[]`; full lib 1,971 pass/six baseline-reproduced failures. Original duration-flake cause remains unproven.
+[Audit](investigations/gc-rooting-audit.md): 41 recorded candidates, 18 fixed sites, 23 false positives. Forced-GC DTO/event/cast/token negatives, 173 targeted passes, startup `[]`; final lib 1,972 pass/six baseline-reproduced failures. Original duration-flake cause remains unproven.
 
 ## [2026-10-05] investigation | Tooltip GC regression
 

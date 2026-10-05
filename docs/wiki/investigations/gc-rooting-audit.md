@@ -36,7 +36,7 @@ This proves a cast-completion rooting vulnerability, not the cause of the origin
 
 Final pass found `fire_unit_aura_full_update` interning the unit token before evaluating a Lua table constructor. Arbitrary non-static tokens can be collected in that evaluation, before the event dispatcher has a chance to root them. Allocate the token after payload evaluation/secret wrapping instead.
 
-`unit_aura_token_survives_collection_during_payload_construction` forces a complete incremental cycle at the VM allocation safe point (`gc_threshold=0`, `gc_stepmul=1_000_000`) and checks a dynamic token's prefix/numeric suffix, without accidentally rooting its full spelling in Lua constants. Before the fix, delivery fails in `string.sub` on the collected token. This late source change invalidates the earlier full-lib/check/startup proof; final verification must rerun those scopes once after this fix.
+`unit_aura_token_survives_collection_during_payload_construction` forces a complete incremental cycle at the VM allocation safe point (`gc_threshold=0`, `gc_stepmul=1_000_000`) and checks a dynamic token's prefix/numeric suffix, without accidentally rooting its full spelling in Lua constants. Before the fix, delivery fails in `string.sub` on the collected token. This late source change invalidated the earlier full-lib/check/startup proof. Final verification reran those scopes after this fix: 1,972 lib passes/six baseline failures, check/fmt pass, startup `[]`.
 
 ## Recorded candidate matrix
 
@@ -46,7 +46,7 @@ Raw `state.gc` arena allocation/interning and raw table setters accrue allocatio
 
 ### Fixed sites
 
-Paths are relative to `src/`; line numbers at code revision `42d257700`. Tooltip test names below are in `tests/tooltip_gc_rooting.rs`; event payload tests are in `tests/event_gc_rooting.rs`.
+Paths are relative to `src/`; line numbers at final Rust revision `0d2e4bfca`. Tooltip test names below are in `tests/tooltip_gc_rooting.rs`; event payload tests are in `tests/event_gc_rooting.rs`.
 
 | Site | Rooting fix | Regression test |
 |---|---|---|
@@ -64,7 +64,7 @@ Paths are relative to `src/`; line numbers at code revision `42d257700`. Tooltip
 | `lua_api/globals/missing_surface/tooltip_info/probes.rs:224` | Root pet parent | `pet_parent_survives_markup_color_collection` |
 | `lua_api/globals/missing_surface/tooltip_info/probes.rs:509` | Push achievement result before line fill | `achievement_parent_survives_markup_color_collection` |
 | `lua_api/globals/missing_surface/tooltip_info/probes.rs:603` | Push shapeshift result before line fill | `markup_segments_and_shapeshift_parent_survive_color_collection` |
-| `lua_api/env_events.rs:231` | Allocate unit token after collecting Lua payload construction | lib `unit_aura_token_survives_collection_during_payload_construction` |
+| `lua_api/env_events.rs:233` | Allocate unit token after collecting Lua payload construction | lib `unit_aura_token_survives_collection_during_payload_construction` |
 | `lua_api/env_events.rs:245` | Root payload across all listeners/error handlers | `host_event_payload_survives_collection_in_error_handler`; lib `completion_arguments_survive_collection_in_stop_error_handler` |
 | `lua_api/script_helpers/event_dispatch.rs:50` | Root native payload across dispatch/error handlers | `native_aura_event_payload_survives_collection_in_error_handler` |
 | `lua_api/loader_env.rs:151` | Root loader payload across dispatch/error handlers | `loader_event_payload_survives_collection_in_error_handler` |
@@ -101,7 +101,7 @@ No changes made at these sites.
 
 ## Proof ledger
 
-Code revision `42d257700`; later documentation does not invalidate code proof. All tests/check/builds used local host, default retail debug, existing `target/`.
+Final integrated Rust revision `0d2e4bfca`; per-subsystem revisions recorded below. Documentation-only follow-ups do not invalidate proof. All tests/check/builds used local host, default retail debug, existing `target/`.
 
 Command prefix for tests: `python3 /home/osso/.worktrees/wow-ui-sim-gc-rooting-audit/scripts/build-host.py --build-host local --test`.
 
@@ -111,18 +111,19 @@ Command prefix for tests: `python3 /home/osso/.worktrees/wow-ui-sim-gc-rooting-a
 | `--test integration c_artifact_ui_panel:: -- --nocapture` | 42/42; unchanged C API source since `7f6d28454`. |
 | `--test integration c_major_factions_globals:: -- --nocapture` | 14/14; unchanged C API source since `7f6d28454`. |
 | `--test integration tooltip_gc_rooting:: -- --nocapture` | 10/10 at `42d257700`. |
-| `--test integration event_gc_rooting:: -- --nocapture` | 3/3 at `d29deee68`; later change only seeds action test fixture. |
+| `--test integration event_gc_rooting:: -- --nocapture` | 3/3 at `0d2e4bfca`. |
 | `--test integration tooltip_item_context:: -- --nocapture` | 25/25. |
 | `--test integration tooltip_spell_mount_identifiers:: -- --nocapture` | 22/22. |
 | `--test integration admin_event_api:: -- --nocapture` | 19/19. |
-| `--test integration patch_12_1_0_aura_secret_context:: -- --nocapture` | 4/4. |
+| `--test integration patch_12_1_0_aura_secret_context:: -- --nocapture` | 4/4 at `0d2e4bfca`. |
 | `--test integration aura_table_shape:: -- --nocapture` | 7/7. |
 | `--lib -- lua_api::cast_completion:: --nocapture` | 13/13, including original duration test and corrected GUID forced-GC regression. |
-| `--lib` (once) | 1,971 pass / six fail, 51.67s. |
+| `--lib -- unit_aura_token_survives --nocapture` | 1/1 at `0d2e4bfca`; failed on pre-fix code under forced incremental collection. |
+| `--lib` (final integration) | 1,972 pass / six fail, 29.42s, at `0d2e4bfca`. Earlier run at `42d257700` was superseded by the late unit-token source fix; no redundant rerun on unchanged code. |
 | Six failing lib tests on baseline | All six fail identically with `src/` byte-identical to master base `16682b415`; original sources restored afterward. |
-| `cargo fmt --manifest-path <worktree>/Cargo.toml -- --check` | Exit 0. |
-| `python3 <worktree>/scripts/build-host.py --build-host local --check` | Exit 0; six pre-existing iced manifest warnings, no new code warnings. |
-| Local debug wow-sim build, then `timeout 90 python3 <worktree>/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors` | Exit 0, startup `[]`. |
+| `cargo fmt --manifest-path <worktree>/Cargo.toml -- --check` | Exit 0 at `0d2e4bfca`. |
+| `python3 <worktree>/scripts/build-host.py --build-host local --check` | Exit 0 at `0d2e4bfca`; six pre-existing iced manifest warnings, no new code warnings. |
+| Local debug wow-sim build, then `timeout 90 python3 <worktree>/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors` | Exit 0 at `0d2e4bfca`, startup `[]`. |
 
 Full-lib failures: `test_patch_12_0_0_transmog_situation_enum_values`, `installs_debug_environment_defaults`, `installs_seeded_housing_catalog_surface`, `apply_system_anchors_replays_player_frame_size_without_cast_bar_side_effect`, `apply_system_anchors_falls_back_to_minus_one_for_nil_singletons`, `apply_system_anchors_batches_compact_unit_frame_startup_refreshes`. Out of scope; unchanged.
 
