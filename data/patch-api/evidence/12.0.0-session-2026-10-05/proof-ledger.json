@@ -187,5 +187,66 @@
     "new_gap": "wt-cvars-nameplateShowFriendlyNpcs-931",
     "result": "Rejected: case-insensitive getters cannot remove old casing without breaking added spelling. Reverted at d32f69b1a; exact baseline includes old removal observation.",
     "invalidated_by_later_changes": true
+  },
+  {
+    "scope": "final generator and data integrity",
+    "revision": "4e115aea09ad7c7aa5ede494ed14ce1ab1e9ebb2",
+    "fixture_exit_code": 0,
+    "byte_comparisons": [
+      {
+        "patch": "12.0.0",
+        "command": [
+          "python3",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/tools/gen_patch_wikitext_register.py",
+          "12.0.0",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/data/patch-api/sources/12.0.0-api-changes.wikitext",
+          "6747189",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/data/patch-api/evidence/12.0.0-session-2026-10-05/12.0.0-verification.json"
+        ],
+        "sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d",
+        "byte_identical": true
+      },
+      {
+        "patch": "12.0.5",
+        "command": [
+          "python3",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/tools/gen_patch_wikitext_register.py",
+          "12.0.5",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/data/patch-api/sources/12.0.5-api-changes.wikitext",
+          "6747894",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/data/patch-api/evidence/12.0.0-session-2026-10-05/12.0.5-verification.json"
+        ],
+        "sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23",
+        "byte_identical": true
+      },
+      {
+        "patch": "12.0.7",
+        "command": [
+          "python3",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/tools/gen_patch_wikitext_register.py",
+          "12.0.7",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/data/patch-api/sources/12.0.7-api-changes.wikitext",
+          "6794100",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/data/patch-api/evidence/12.0.0-session-2026-10-05/12.0.7-verification.json"
+        ],
+        "sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7",
+        "byte_identical": true
+      },
+      {
+        "patch": "12.1.0",
+        "command": [
+          "python3",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/tools/gen_patch_wikitext_register.py",
+          "12.1.0",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/data/patch-api/sources/12.1.0-api-changes.wikitext",
+          "6886719",
+          "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/data/patch-api/evidence/12.0.0-session-2026-10-05/12.1.0-verification.json",
+          "--inventory-only"
+        ],
+        "sha256": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311",
+        "byte_identical": true
+      }
+    ],
+    "result": "All source hashes/header counts, 198 exact review/baseline IDs and one-gap negative-control artifacts validated. Rust/runtime sources unchanged since d32f69b1a; isolated sweeps/check/build/startup proof remains valid."
   }
 ]
