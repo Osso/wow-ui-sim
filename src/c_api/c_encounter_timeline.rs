@@ -1,4 +1,4 @@
-//! PTR timeline state, deterministic tracks, filters, and owned Edit Mode previews.
+//! Retail 12.1+ timeline state, deterministic tracks, filters, and owned Edit Mode previews.
 mod filter;
 mod layout;
 mod model;

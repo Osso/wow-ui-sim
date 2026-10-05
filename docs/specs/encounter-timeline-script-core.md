@@ -1,6 +1,6 @@
 # EncounterTimeline script-event core
 
-PTR `C_EncounterTimeline` owns script events rather than the former Flash of Light demo. The source boundary is Gethe `a89e9d0ceb7f6cd31e8fc5ca7df1a338ac0b1b58` → `49b69918fcdc77e109813281e4f537d45ec7dcbf`, `EncounterTimelineDocumentation.lua` and `EncounterTimelineConstantsDocumentation.lua`. Changed request/info fields are also recorded in the [pinned register](../../data/patch-api/sources/12.1.5-register.json).
+Retail 12.1.0+ (`retail-12-1-0`, the default Retail epoch) and PTR `C_EncounterTimeline` own script events rather than the former Flash of Light demo; the cached Retail 12.1.0 `EncounterTimelineDocumentation.lua` declares the same function, event and table names as PTR. The source boundary is Gethe `a89e9d0ceb7f6cd31e8fc5ca7df1a338ac0b1b58` → `49b69918fcdc77e109813281e4f537d45ec7dcbf`, `EncounterTimelineDocumentation.lua` and `EncounterTimelineConstantsDocumentation.lua`. Changed request/info fields are also recorded in the [pinned register](../../data/patch-api/sources/12.1.5-register.json).
 
 ## What it must do
 
@@ -11,7 +11,7 @@ PTR `C_EncounterTimeline` owns script events rather than the former Flash of Lig
 - [x] Commit state before dispatching added/state/removed notifications. Callbacks can query or mutate events without holding a SimState borrow. Cancel-all operates on its original ID set, so events created by callbacks survive.
 - [x] Retain terminal data until at least one subsequent game tick has run its OnUpdate/OnPostUpdate callbacks. Remove before notifying `ENCOUNTER_TIMELINE_EVENT_REMOVED`; ID queries then return no result.
 - [x] Return ordinary LuaDurationObject wrappers sharing an event-owned clock. Existing wrappers follow pauses/resumes and freeze after termination/removal; changing one wrapper's duration fields does not mutate events or another wrapper.
-- [x] Earlier retail retains its actual seeded demo and 12.5-second placeholder timer. PTR excludes that demo entirely.
+- [x] Retail epochs before 12.1.0 retain the seeded demo and 12.5-second placeholder timer. Retail 12.1.0+ and PTR exclude that demo entirely, including after the post-load compat bootstrap.
 
 ## Modeled choices and boundaries
 
@@ -38,7 +38,7 @@ The dependent [track/view model](encounter-timeline-tracks.md) implements a boun
 
 - `tests/encounter_timeline_script.rs`: public API lifecycle, callbacks, clock progression, retained timers, validation, isolation and earlier-retail baseline.
 - `tests/duration_core.rs`: existing duration/manual-clock behavior.
-- `tests/system_api_seeded.rs`: unchanged earlier-profile seeded timeline expectations; PTR uses the new lifecycle tests.
+- `tests/system_api_seeded.rs`: seeded timeline expectations for epochs before 12.1.0; Retail 12.1.0+ and PTR use the lifecycle tests.
 - `startup_globals::test_patch_12_0_7_safe_global_bridges`: existing encounter color/customization consumer.
 
 ### Audit credit

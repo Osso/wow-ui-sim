@@ -1,4 +1,4 @@
-#![cfg(feature = "client-ptr")]
+#![cfg(feature = "retail-12-1-0")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn load_view() -> WowLuaEnv {

@@ -1,6 +1,6 @@
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 fn environment() -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
@@ -14,7 +14,7 @@ fn environment() -> WowLuaEnv {
     env
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_tracks_queue_hold_and_transition_callbacks() {
     let env = environment();
@@ -67,7 +67,7 @@ fn encounter_tracks_queue_hold_and_transition_callbacks() {
     env.exec("assert(T.GetEventInfo(id)==nil and timer:GetElapsedDuration()==16)").unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_tracks_filter_limits_ties_capacity_pause_and_view() {
     let env=environment();
@@ -113,7 +113,7 @@ fn encounter_tracks_filter_limits_ties_capacity_pause_and_view() {
     env.exec("assert(T.GetSortedEventList(1,4)[1]==b); assert(#T.GetSortedEventList(nil,4)==1)").unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_tracks_preview_refresh_and_script_ownership() {
     let env=environment();
@@ -139,7 +139,7 @@ fn encounter_tracks_preview_refresh_and_script_ownership() {
     env.exec("assert(T.AddEditModeEvents()==30); assert(T.GetEventCountBySource(2)==3)").unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_tracks_reentrant_changes_and_queued_pause() {
     let env=environment();
@@ -160,7 +160,7 @@ fn encounter_tracks_reentrant_changes_and_queued_pause() {
     env.exec("assert(T.GetEventState(id)==2)").unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_tracks_queued_capacity_and_reentrant_view_updates() {
     let env=environment();
@@ -188,7 +188,7 @@ fn encounter_tracks_queued_capacity_and_reentrant_view_updates() {
     "#).unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_tracks_preview_refresh_preserves_terminal_removal() {
     let env=environment();

@@ -3,7 +3,7 @@
 //! Encounter timeline and event customization are seeded startup fixtures. Keep
 //! them explicit until the simulator has a real encounter-event model.
 
-#[cfg(not(feature = "retail-12-1-5"))]
+#[cfg(not(feature = "retail-12-1-0"))]
 const TIMELINE_DEMO_LUA: &str = r#"
 if type(C_EncounterTimeline) ~= "table" then
     C_EncounterTimeline = {}
@@ -236,13 +236,13 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
-    #[cfg(not(feature = "retail-12-1-5"))]
+    #[cfg(not(feature = "retail-12-1-0"))]
     lua.exec(TIMELINE_DEMO_LUA)?;
     lua.exec(ENCOUNTER_STATE_LUA)?;
     Ok(())
 }
 
-#[cfg(all(test, not(feature = "retail-12-1-5")))]
+#[cfg(all(test, not(feature = "retail-12-1-0")))]
 mod tests {
     use crate::lua_api::WowLuaEnv;
 

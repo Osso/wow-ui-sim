@@ -1,6 +1,6 @@
-#![cfg(feature = "retail-12-1-5")]
+#![cfg(feature = "retail-12-1-0")]
 
-//! Existing later timeline producer proof only; not strict-12.0.7 availability proof.
+//! Retail 12.1.0-surface producer proof; not a strict 12.0.7-epoch availability proof.
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn color_event_environment() -> WowLuaEnv {

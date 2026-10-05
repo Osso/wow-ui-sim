@@ -1,7 +1,7 @@
 //! Public script-event producer proof; track/filter/EditMode behavior is separate.
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 fn environment() -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
@@ -11,12 +11,12 @@ fn environment() -> WowLuaEnv {
             for k,v in pairs(extra or {}) do request[k] = v end
             return timeline.AddScriptEvent(request)
         end
-        assert(#timeline.GetEventList() == 0, "PTR demo must be absent")
+        assert(#timeline.GetEventList() == 0, "Retail 12.1 demo must be absent")
     "#).unwrap();
     env
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_script_defaults_info_and_atomic_validation() {
     let env = environment();
@@ -52,7 +52,7 @@ fn encounter_script_defaults_info_and_atomic_validation() {
     "#).unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_script_clock_pause_resume_and_retained_timer() {
     let env = environment();
@@ -92,7 +92,7 @@ fn encounter_script_clock_pause_resume_and_retained_timer() {
     "#).unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_script_terminal_callbacks_observe_consistent_tick_state() {
     let env = environment();
@@ -127,7 +127,7 @@ fn encounter_script_terminal_callbacks_observe_consistent_tick_state() {
     env.exec("assert(log[3] == 'removed' and #log == 3 and observations == 2); assert(not timeline.HasAnyEvents() and saved:GetElapsedDuration() == 1)").unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_script_cancel_all_reentrancy_and_initial_pause() {
     let env = environment();
@@ -154,24 +154,30 @@ fn encounter_script_cancel_all_reentrancy_and_initial_pause() {
     other.exec("assert(not timeline.HasAnyEvents() and #timeline.GetEventList() == 0)").unwrap();
 }
 
-#[cfg(feature = "client-retail")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
-fn encounter_script_preserves_retail_demo_baseline() {
+fn encounter_script_retail_has_no_demo_and_survives_post_load() {
     let env = WowLuaEnv::new().unwrap();
-    for _ in 0..2 {
-        env.exec(r#"
-            assert(C_EncounterTimeline.GetEventList()[1] == 1)
-            assert(C_EncounterTimeline.GetEventInfo(1).spellName == "Flash of Light")
-            assert(C_EncounterTimeline.GetEventTimer(1):GetRemainingDuration() == 12.5)
-            assert(C_EncounterTimeline.HasActiveEvents())
-            assert(Enum.EncounterTimelineViewType.None==0)
-            assert(Enum.EncounterTimelineViewType.Timeline==1 and Enum.EncounterTimelineViewType.Bars==2)
-        "#).unwrap();
-        wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
-    }
+    env.exec(
+        r#"
+        assert(#C_EncounterTimeline.GetEventList() == 0 and not C_EncounterTimeline.HasActiveEvents())
+        RetailScriptID = C_EncounterTimeline.AddScriptEvent({spellID=19750, iconFileID=135907, duration=8})
+        assert(Enum.EncounterTimelineViewType.Timeline==1 and Enum.EncounterTimelineViewType.Bars==2)
+    "#,
+    )
+    .unwrap();
+    wow_ui_sim::ptr::compat_bootstrap::apply_post_load(&env);
+    env.exec(
+        r#"
+        local list = C_EncounterTimeline.GetEventList()
+        assert(#list == 1 and list[1] == RetailScriptID)
+        assert(C_EncounterTimeline.GetEventTimer(RetailScriptID):GetRemainingDuration() == 8)
+    "#,
+    )
+    .unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo() {
     let env = environment();
@@ -199,7 +205,7 @@ fn encounter_script_zero_duration_and_bootstrap_do_not_reseed_demo() {
     "#).unwrap();
 }
 
-#[cfg(feature = "client-ptr")]
+#[cfg(feature = "retail-12-1-0")]
 #[test]
 fn encounter_script_timer_supports_blizzard_event_frame_consumer() {
     let env = environment();

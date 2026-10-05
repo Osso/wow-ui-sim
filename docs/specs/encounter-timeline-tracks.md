@@ -1,6 +1,6 @@
 # Encounter Timeline tracks, filters, views, and previews
 
-The PTR timeline uses the script lifecycle model plus deterministic track placement. Contracts come from pinned generated EncounterTimeline documentation; numerical layout choices below are simulator assumptions, not native values. See [script lifecycle](encounter-timeline-script-core.md).
+The Retail 12.1.0+ and PTR timeline uses the script lifecycle model plus deterministic track placement. Contracts come from pinned generated EncounterTimeline documentation; numerical layout choices below are simulator assumptions, not native values. See [script lifecycle](encounter-timeline-script-core.md).
 
 ## What it must do
 
@@ -25,7 +25,7 @@ The PTR timeline uses the script lifecycle model plus deterministic track placem
 - `src/c_api/c_encounter_timeline/model.rs`: event source, clocks, queue holds, positions, and view state.
 - `src/c_api/c_encounter_timeline/layout.rs`: deterministic placement, capacity, and highlight policy.
 - `src/c_api/c_encounter_timeline/{tracks,filter,view,preview,visuals,notifications}.rs`: public queries, preview producer, visual data, and post-mutation callbacks.
-- `src/lua_api/globals/missing_surface/encounter_events.rs`: preserves earlier-retail color-component compatibility without overwriting the modeled PTR ColorMixin query.
+- `src/lua_api/globals/missing_surface/encounter_events.rs`: preserves pre-12.1.0 color-component compatibility without overwriting the modeled 12.1.0+ ColorMixin query.
 
 ## Tests asserting this spec
 

@@ -56,7 +56,7 @@ fn warning_rgba_overrides_are_live_detached_and_environment_local() {
 
 // This is the existing 12.0.7 bridge's tuple contract, not the later cached
 // ColorMixin/trigger contract. Do not promote it as current-cache conformance.
-#[cfg(not(feature = "retail-12-1-5"))]
+#[cfg(not(feature = "retail-12-1-0"))]
 #[test]
 fn legacy_timeline_bridge_reflects_warning_override_alpha_changes() {
     let env = WowLuaEnv::new().unwrap();

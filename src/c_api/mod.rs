@@ -77,7 +77,7 @@ pub(crate) mod c_delves_entrance;
 pub mod c_discord;
 #[cfg(feature = "client-wowforever")]
 mod c_edit_mode;
-#[cfg(feature = "retail-12-1-5")]
+#[cfg(feature = "retail-12-1-0")]
 pub(crate) mod c_encounter_timeline;
 #[cfg(feature = "retail-12-1-5")]
 pub(crate) mod c_encounter_warnings;
@@ -269,7 +269,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_navigation::register(state)?;
     c_weather::register(state)?;
     c_damage_meter::register(state)?;
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "retail-12-1-0")]
     c_encounter_timeline::register(state)?;
     c_intl::register(state)?;
     #[cfg(feature = "aura-containers")]

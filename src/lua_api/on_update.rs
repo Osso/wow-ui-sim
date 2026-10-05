@@ -45,7 +45,7 @@ pub(crate) fn fire(
     #[cfg(feature = "player-cast-durations")]
     super::channeling::tick(env.rilua_mut().state_mut())?;
 
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "retail-12-1-0")]
     crate::c_api::c_encounter_timeline::begin_tick(env.rilua_mut().state_mut(), elapsed)?;
 
     reconcile_runtime_cache(env);
@@ -73,7 +73,7 @@ pub(crate) fn fire(
     #[cfg(feature = "retail-12-0-5")]
     super::frame::methods::widgets::tick_countdown_formatters(env.rilua_mut().state_mut())?;
 
-    #[cfg(feature = "retail-12-1-5")]
+    #[cfg(feature = "retail-12-1-0")]
     crate::c_api::c_encounter_timeline::end_tick(env.rilua_mut().state_mut())?;
 
     let started = Instant::now();
