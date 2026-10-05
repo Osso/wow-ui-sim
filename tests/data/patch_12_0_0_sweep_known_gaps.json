@@ -18,7 +18,6 @@
   "wt-global-api-C_PvP.GetRandomTrainingGroundRewards-262",
   "wt-global-api-C_RestrictedActions.IsAddOnRestrictionActive-273",
   "wt-global-api-C_TooltipComparison.CompareItem-333",
-  "wt-global-api-C_TooltipInfo.GetOutfit-334",
   "wt-global-api-C_TradeSkillUI.GetEnchantItems-643",
   "wt-global-api-C_TradeSkillUI.IsRecraftReagentValid-647",
   "wt-global-api-dropsecretaccess-470",

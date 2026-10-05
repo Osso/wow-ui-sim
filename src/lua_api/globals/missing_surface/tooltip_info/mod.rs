@@ -48,7 +48,10 @@ pub(super) fn register_pet_info_surface(state: &mut LuaState) -> LuaResult<()> {
 fn register_c_tooltip_info(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_TooltipInfo")?;
     #[cfg(feature = "retail-12-0-5")]
-    crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
+    {
+        crate::c_api::c_tooltip_info_item_context::register(state, table_ref)?;
+        crate::c_api::c_tooltip_info_outfit::register(state, table_ref)?;
+    }
     register_item_spell_aura_methods(state, table_ref)?;
     register_spell_aura_unit_methods(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]

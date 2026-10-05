@@ -156,6 +156,8 @@ pub(crate) mod c_tooltip_info_indexed_aura;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_item_context;
 #[cfg(feature = "retail-12-0-5")]
+pub(crate) mod c_tooltip_info_outfit;
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_trade_skill_quality;
