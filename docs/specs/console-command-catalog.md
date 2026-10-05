@@ -32,7 +32,26 @@ The baseline empty-table test was stale since `2c78bff73` introduced state-backe
 
 ## Tests asserting this spec
 
+- `tests/c_system_api.rs`: live runtime registration and concrete Command records, nil CVar/default queries for commands.
+- `tests/common/publication_sweep.rs`: shared command publication classifier; three patch sweeps verify reconciled gap sets.
 - `tests/console_commands.rs`: built-in catalog, metadata, ordering, registration lifecycle, snapshots, overrides and environment isolation (2/2 in `/tmp/forever-addon-audit/console-tests-green-bm5izhjq/ledger.json`).
+
+## Development proof — 2026-10-05
+
+Retail debug, local build helper, master base `2a7915d14`:
+
+| Scope | Baseline | Registry implementation |
+|---|---|---|
+| Integration `console` | 11 pass / 1 fail: stale empty test | 13 pass / 0 fail |
+| Integration `cvar` | 53 pass / 0 fail | 54 pass / 0 fail (new registration test also matches filter) |
+| Concrete command RED | 0 Command records, expected 2 | Both typed Command; CVar/default nil |
+| 12.0.5 / 12.0.7 / 12.1.0 sweeps | Not run at base | Each 1 pass, isolated with `--test-threads=1` |
+| Startup Lua errors | Not remeasured at base | `[]`, exit 0 |
+| Formatting / local cargo check | Not remeasured at base | Both exit 0 |
+
+At `d7cd90d3d`, 12.0.7 sweep reported exactly the two command IDs as resolved/stale, with no new gaps. `2235dbc44` removes those IDs; three remaining unrelated gaps are unchanged. 12.0.5 and 12.1.0 fixtures require no edits because neither register contains command rows. Changed Rust lines manually reviewed for readability; no new suppression or nested production logic introduced.
+
+This is simulator behavioral/publication evidence, not native-client metadata or execution parity. No push or merge performed.
 
 ## Known gaps (current cycle)
 
