@@ -264,7 +264,7 @@ fn artifact_relic_detection_supports_item_ids_and_links() {
                    C_ItemSocketInfo.IsArtifactRelicItem("item:12345::::::::70:::::::"),
                    C_ItemSocketInfo.IsArtifactRelicItem({ itemID = 12345 }),
                    not C_ItemSocketInfo.IsArtifactRelicItem(99999),
-                   IsArtifactRelicItem("item:12345::::::::70:::::::")
+                   C_ItemSocketInfo.IsArtifactRelicItem("|Hitem:12345::::::::70:::::::|h[Test Relic]|h")
             "#,
         )
         .unwrap();

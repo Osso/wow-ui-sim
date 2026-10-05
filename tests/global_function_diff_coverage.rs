@@ -20,7 +20,6 @@ const CURATED_EXTRA_GLOBALS: &[&str] = &[
     "GetItemID",
     "GetPlayerAuraBySpellID",
     "GetTradeSkillTexture",
-    "IsArtifactRelicItem",
     "UnitAura",
     "UnitBuff",
     "UnitDebuff",

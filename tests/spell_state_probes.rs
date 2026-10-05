@@ -146,13 +146,13 @@ fn is_item_in_range_follows_unit_reachability() {
 fn is_usable_spell_true_when_known_and_no_cooldown() {
     let env = env();
     env.state().borrow_mut().known_spells.insert(99);
-    let (usable, no_mana): (bool, bool) = env.eval("return IsUsableSpell(99)").unwrap();
+    let (usable, no_mana): (bool, bool) = env.eval("return C_Spell.IsSpellUsable(99)").unwrap();
     assert!(usable);
     assert!(!no_mana);
 }
 
 #[test]
-fn is_usable_spell_false_on_cooldown() {
+fn spell_readiness_false_on_cooldown() {
     let env = env();
     {
         use wow_ui_sim::lua_api::state::SpellCooldownState;
@@ -166,8 +166,12 @@ fn is_usable_spell_false_on_cooldown() {
             },
         );
     }
-    let (usable, _): (bool, bool) = env.eval("return IsUsableSpell(10)").unwrap();
-    assert!(!usable);
+    // Usability and cooldown readiness are separate successor observables.
+    let (usable, active): (bool, bool) = env
+        .eval("return C_Spell.IsSpellUsable(10), C_Spell.GetSpellCooldown(10).isActive")
+        .unwrap();
+    assert!(usable);
+    assert!(active);
 }
 
 // ── IsHarmfulSpell / IsHelpfulSpell ───────────────────────────────────────────

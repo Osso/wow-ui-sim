@@ -226,11 +226,12 @@ fn test_get_spell_icon_unknown() {
 #[test]
 fn test_get_spell_cooldown() {
     let env = env();
-    let (start, duration, enabled): (f64, f64, i32) =
-        env.eval("return GetSpellCooldown(100)").unwrap();
+    let (start, duration, enabled): (f64, f64, bool) = env
+        .eval("local info = C_Spell.GetSpellCooldown(100); return info.startTime, info.duration, info.isEnabled")
+        .unwrap();
     assert_eq!(start, 0.0);
     assert_eq!(duration, 0.0);
-    assert_eq!(enabled, 1);
+    assert!(enabled);
 }
 
 #[test]

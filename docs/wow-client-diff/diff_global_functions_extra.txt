@@ -4,7 +4,6 @@ GetContainerNumSlots
 GetItemID
 GetPlayerAuraBySpellID
 GetTradeSkillTexture
-IsArtifactRelicItem
 UnitAura
 UnitBuff
 UnitDebuff

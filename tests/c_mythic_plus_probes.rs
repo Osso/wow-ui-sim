@@ -368,6 +368,7 @@ fn is_mythic_plus_active_toggle() {
 
 // ── IsWeeklyRewardAvailable ───────────────────────────────────────────────────
 
+#[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn is_weekly_reward_available_false_by_default() {
     let env = env();
@@ -377,6 +378,7 @@ fn is_weekly_reward_available_false_by_default() {
     assert!(!available);
 }
 
+#[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn is_weekly_reward_available_toggle() {
     let env = env();

@@ -153,11 +153,12 @@ fn cooldown_set_paused_preserves_immediate_cooldown_times() {
 #[test]
 fn get_spell_cooldown_zero_when_no_cooldown() {
     let env = env();
-    let (start, duration, enable, mod_rate): (f64, f64, i32, f64) =
-        env.eval("return GetSpellCooldown(12345)").unwrap();
+    let (start, duration, enabled, mod_rate): (f64, f64, bool, f64) = env
+        .eval("local info = C_Spell.GetSpellCooldown(12345); return info.startTime, info.duration, info.isEnabled, info.modRate")
+        .unwrap();
     assert_eq!(start, 0.0);
     assert_eq!(duration, 0.0);
-    assert_eq!(enable, 1);
+    assert!(enabled);
     assert_eq!(mod_rate, 1.0);
 }
 
@@ -172,8 +173,10 @@ fn get_spell_cooldown_reads_spell_cooldowns_entry() {
             duration: 30.0,
         },
     );
-    let (start, duration, _enable, _mod): (f64, f64, i32, f64) =
-        env.eval("return GetSpellCooldown(12345)").unwrap();
+    let (start, duration, enabled, active): (f64, f64, bool, bool) = env
+        .eval("local info = C_Spell.GetSpellCooldown(12345); return info.startTime, info.duration, info.isEnabled, info.isActive")
+        .unwrap();
+    assert!(enabled && active);
     assert!(
         (start - now).abs() < 0.5,
         "start should match the seeded cooldown"

@@ -34,37 +34,33 @@ fn get_talent_info_by_specialization_returns_nil() {
 // ── Spellbook tabs ────────────────────────────────────────────────────────────
 
 #[test]
-fn get_num_spell_tabs_returns_one() {
+fn get_num_spell_book_skill_lines_returns_seeded_lines() {
     let env = env();
-    let n: i32 = env.eval("return GetNumSpellTabs()").unwrap();
-    assert_eq!(n, 1);
+    let n: i32 = env.eval("return C_SpellBook.GetNumSpellBookSkillLines()").unwrap();
+    assert_eq!(n, 7);
 }
 
 #[test]
-fn get_spell_tab_info_returns_class_name_and_spec_id() {
+fn get_spell_book_skill_line_info_returns_class_and_spec_data() {
     let env = env();
-    // Seeded player is Paladin (class_index 2), Retribution spec
-    // (active_spec_index 2) by default — set Retribution specifically.
-    env.state().borrow_mut().player.active_spec_index = 70;
-    let (name, _icon, offset, num_spells, is_guild, spec_id): (
-        String,
-        String,
-        i32,
-        i32,
-        bool,
-        i32,
-    ) = env.eval("return GetSpellTabInfo(1)").unwrap();
+    let (name, offset, num_spells, spec_name, spec_id): (String, i32, i32, String, i32) = env
+        .eval(r#"
+            local class = C_SpellBook.GetSpellBookSkillLineInfo(2)
+            local spec = C_SpellBook.GetSpellBookSkillLineInfo(5)
+            return class.name, class.itemIndexOffset, class.numSpellBookItems, spec.name, spec.specID
+        "#)
+        .unwrap();
     assert_eq!(name, "Paladin");
-    assert_eq!(offset, 0);
-    assert_eq!(num_spells, 0);
-    assert!(!is_guild);
+    assert_eq!(offset, 3);
+    assert_eq!(num_spells, 25);
+    assert_eq!(spec_name, "Retribution");
     assert_eq!(spec_id, 70);
 }
 
 #[test]
-fn get_spell_tab_info_nil_for_out_of_range_index() {
+fn get_spell_book_skill_line_info_nil_for_out_of_range_index() {
     let env = env();
-    let v: Option<String> = env.eval("return GetSpellTabInfo(5)").unwrap();
+    let v: Option<String> = env.eval("return C_SpellBook.GetSpellBookSkillLineInfo(9999)").unwrap();
     assert_eq!(v, None);
 }
 

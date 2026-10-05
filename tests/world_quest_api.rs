@@ -120,6 +120,7 @@ fn test_have_quest_data_returns_true_for_seeded() {
     );
 }
 
+#[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn test_get_quests_for_player_by_map_id_matches_get_quests_on_map() {
     let env = env();

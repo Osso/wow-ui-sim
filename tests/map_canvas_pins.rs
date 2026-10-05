@@ -23,7 +23,7 @@ fn test_default_map_is_isle_of_dorn() {
 fn test_isle_of_dorn_has_seeded_world_quests() {
     let env = env();
     let count: i32 = env
-        .eval(r#"return #C_TaskQuest.GetQuestsForPlayerByMapID(2248)"#)
+        .eval(r#"return #C_TaskQuest.GetQuestsOnMap(2248)"#)
         .unwrap();
     assert_eq!(
         count, 2,
@@ -38,7 +38,7 @@ fn test_default_map_has_world_quests() {
         .eval(
             r#"
             local mapID = C_Map.GetCurrentMapID()
-            return #C_TaskQuest.GetQuestsForPlayerByMapID(mapID)
+            return #C_TaskQuest.GetQuestsOnMap(mapID)
         "#,
         )
         .unwrap();
