@@ -1,3 +1,7 @@
+## [2026-10-05] investigation | Plain-global publication attribution
+
+[Investigation](investigations/plain-global-publication.md) records why direct cached Blizzard aliases lack Deprecated debug sources. [Contract](../specs/patch-12-0-0-publication-sweep.md#plain-global-closure-contract) owns state, epoch gates and two pinned-VM blockers; page-coverage files unchanged.
+
 ## [2026-10-05] system | C_Secrets publication queries
 
 [Shared queries](systems/secrets-publication-queries.md): original selector authentication, same aura/cooldown/identity predicates as outputs, explicit INFERRED public defaults for absent backing models. [Final proof](../specs/secrets-publication-queries.md#verification--2026-10-05): six behavioral tests pass, four isolated publication sweeps pass, startup `[]`; unchanged pre-change master filter failures retained. Source page-coverage ledgers unchanged.

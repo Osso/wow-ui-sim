@@ -14,6 +14,10 @@
 
 [Console registry](systems/console-command-registry.md): live CVars plus two 12.0.7 Command records, shared publication probing and stale empty-test root cause. [Contract](../specs/console-command-catalog.md).
 
+## [2026-10-05] investigation | Plain-global deprecation attribution
+
+[Investigation](investigations/plain-global-publication.md) links the 37-global closure contract, exact alias identity proof and pinned-VM blockers. Verification ledger stays in the sweep spec.
+
 ## [2026-10-05] evidence | 12.0.0 wikitext supplement
 
 [Supplement](investigations/patch-12-0-0-api-audit.md#wikitext-supplement): 1,010 rows, 812 publication/absence OK, 198 exact reviewed gaps; 64 fabricated removed members retired. Four isolated sweeps pass, negative control adds exactly one gap, startup `[]`. Old register is Wowless-history-based; 39 literal / four normalized missing names. Behavioral ledger unchanged.

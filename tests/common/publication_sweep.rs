@@ -30,15 +30,15 @@ struct Register {
 }
 
 #[derive(Deserialize)]
-struct Entry {
-    id: String,
-    section: String,
-    direction: String,
-    symbol: String,
+pub(crate) struct Entry {
+    pub(crate) id: String,
+    pub(crate) section: String,
+    pub(crate) direction: String,
+    pub(crate) symbol: String,
     #[serde(default, alias = "default")]
-    page_default: Option<String>,
+    pub(crate) page_default: Option<String>,
     #[serde(default)]
-    kind: Option<String>,
+    pub(crate) kind: Option<String>,
 }
 
 /// Expected publication after applying later-patch supersession.
@@ -51,7 +51,7 @@ type ProbeResult = (String, String, bool, Option<String>, Option<String>);
 
 // One classifier; constructor choices are per object kind, never per source symbol.
 const CLASSIFIER: &str = r#"
-local section, symbol, removed, entryKind = ...
+local section, symbol, removed, entryKind, aliasTarget, aliasSource = ...
 local function result(kind, detail, ok, value, default)
     return kind, detail, ok, value, default
 end
@@ -60,11 +60,20 @@ local function matches_type(raw, lookup)
     return raw == 'function' or raw == 'table'
 end
 -- Removed symbols may be republished by cached Blizzard deprecation fallbacks
--- (loadDeprecationFallbacks defaults on); a native alias has no Lua source and stays a gap.
+-- (loadDeprecationFallbacks defaults on). Direct aliases retain the destination's
+-- source, so loaded cached assignments also need exact target identity proof.
 local function deprecated_fallback_source(value)
     if type(value) ~= 'function' then return nil end
     local source = debug.getinfo(value, 'S').source or ''
     if string.find(source, 'Deprecated', 1, true) then return source end
+    if aliasTarget ~= '' and GetCVarBool('loadDeprecationFallbacks') then
+        local target = _G
+        for part in string.gmatch(aliasTarget, '[^.]+') do
+            if type(target) ~= 'table' then return nil end
+            target = rawget(target, part)
+        end
+        if rawequal(value, target) then return aliasSource .. '; alias=' .. aliasTarget end
+    end
     return nil
 end
 local function removed_result(kind, detail, raw_value, raw, lookup)
@@ -236,20 +245,33 @@ fn quote_lua(value: &str) -> String {
     format!("\"{escaped}\"")
 }
 
-fn probe_entry(env: &WowLuaEnv, entry: &Entry, removed: bool) -> ProbeResult {
+pub(crate) fn probe_entry(
+    env: &WowLuaEnv,
+    entry: &Entry,
+    removed: bool,
+    aliases: &BTreeMap<String, (String, String)>,
+) -> ProbeResult {
+    let (target, source) = aliases.get(&entry.symbol).cloned().unwrap_or_default();
     let code = format!(
-        "return (function(...) {CLASSIFIER} end)({}, {}, {}, {})",
+        "return (function(...) {CLASSIFIER} end)({}, {}, {}, {}, {}, {})",
         quote_lua(&entry.section),
         quote_lua(&entry.symbol),
         removed,
         quote_lua(entry.kind.as_deref().unwrap_or("")),
+        quote_lua(&target),
+        quote_lua(&source),
     );
     env.eval::<ProbeResult>(&code)
         .unwrap_or_else(|error| ("probe-error".into(), error.to_string(), false, None, None))
 }
 
-fn classify_entry(env: &WowLuaEnv, entry: &Entry, expectation: &Expectation) -> Value {
-    let (kind, detail, ok, value, default) = probe_entry(env, entry, expectation.removed);
+fn classify_entry(
+    env: &WowLuaEnv,
+    entry: &Entry,
+    expectation: &Expectation,
+    aliases: &BTreeMap<String, (String, String)>,
+) -> Value {
+    let (kind, detail, ok, value, default) = probe_entry(env, entry, expectation.removed, aliases);
     let default_mismatch = entry.section == "cvars"
         && entry.kind.as_deref() != Some("command")
         && !expectation.removed
@@ -283,7 +305,11 @@ fn parse_register(source: &str, row_count: Option<usize>) -> Register {
     let ids: BTreeSet<_> = register.entries.iter().map(|entry| &entry.id).collect();
     assert_eq!(ids.len(), register.entries.len(), "duplicate source IDs");
     if let Some(row_count) = row_count {
-        assert_eq!(register.entries.len(), row_count, "register row count changed");
+        assert_eq!(
+            register.entries.len(),
+            row_count,
+            "register row count changed"
+        );
     }
     for entry in &register.entries {
         assert!(matches!(
@@ -328,7 +354,10 @@ fn expectation_for<'a>(entry: &Entry, later: &'a BTreeMap<String, Entry>) -> Exp
             removed: !own_removed,
             superseded_by: Some(&newer.id),
         },
-        _ => Expectation { removed: own_removed, superseded_by: None },
+        _ => Expectation {
+            removed: own_removed,
+            superseded_by: None,
+        },
     }
 }
 
@@ -340,6 +369,47 @@ fn write_results_if_requested(out_env: &str, results: &BTreeMap<String, Value>) 
     }
 }
 
+/// Attribute only assignments from the loaded, unmodified cached deprecation
+/// publisher. No hand-maintained symbol whitelist, and no source rewrite.
+pub(crate) fn read_deprecated_aliases(env: &WowLuaEnv) -> BTreeMap<String, (String, String)> {
+    let loaded: bool = env
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_DeprecatedCombatLog')")
+        .expect("query deprecated publisher load state");
+    if !loaded {
+        return BTreeMap::new();
+    }
+    let root =
+        wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("resolve cached Blizzard UI");
+    let path = root.join("Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua");
+    let source = std::fs::read_to_string(&path)
+        .unwrap_or_else(|error| panic!("read {}: {error}", path.display()));
+    source
+        .lines()
+        .filter_map(|line| parse_deprecated_alias(line, &path.to_string_lossy()))
+        .collect()
+}
+
+fn parse_deprecated_alias(line: &str, source: &str) -> Option<(String, (String, String))> {
+    let (name, target) = line.trim().trim_end_matches(';').split_once('=')?;
+    let name = name.trim();
+    let target = target.trim();
+    let is_identifier = |value: &str| {
+        !value.is_empty()
+            && value
+                .bytes()
+                .all(|byte| byte.is_ascii_alphanumeric() || byte == b'_')
+    };
+    let (namespace, member) = target.split_once('.')?;
+    if !is_identifier(name)
+        || !namespace.starts_with("C_")
+        || !is_identifier(namespace)
+        || !is_identifier(member)
+    {
+        return None;
+    }
+    Some((name.into(), (target.into(), source.into())))
+}
+
 /// Probe every register row in one cached Game environment and require the non-ok
 /// ID set to equal the reviewed known-gap set exactly.
 pub(crate) fn run_publication_sweep(spec: &SweepSpec) {
@@ -349,12 +419,16 @@ pub(crate) fn run_publication_sweep(spec: &SweepSpec) {
         serde_json::from_str(spec.known_gaps).expect("parse known-gap IDs");
     let results = crate::common::with_exclusive_workload(|| {
         let env = full_ui::preload_full_game_ui().expect("load the full cached Game UI");
+        let aliases = read_deprecated_aliases(&env);
         register
             .entries
             .iter()
             .map(|entry| {
                 let expectation = expectation_for(entry, &later);
-                (entry.id.clone(), classify_entry(&env, entry, &expectation))
+                (
+                    entry.id.clone(),
+                    classify_entry(&env, entry, &expectation, &aliases),
+                )
             })
             .collect::<BTreeMap<_, _>>()
     });
