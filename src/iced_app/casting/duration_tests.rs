@@ -19,14 +19,16 @@ fn completion_arguments_survive_collection_in_stop_error_handler() {
         frame:RegisterEvent('UNIT_SPELLCAST_SUCCEEDED')
         frame:SetScript('OnEvent', function(_, event, unit, guid, spell)
             if event == 'UNIT_SPELLCAST_STOP' then error('audit cast stop') end
-            assert(unit == 'player' and guid == 'Cast-Sim-1' and spell == 19750)
+            assert(unit == 'player' and spell == 19750)
+            -- Do not intern the full expected GUID in this closure's constants.
+            assert(guid:sub(1, 9) == 'Cast-Sim-' and tonumber(guid:sub(10)) == 98765432)
             assert(select('#', UnitCastingDuration('player')) == 0)
             completionDeliveries = completionDeliveries + 1
         end)
     "#,
     )
     .unwrap();
-    fire_cast_complete_events(&env, 1, 19750);
+    fire_cast_complete_events(&env, 98765432, 19750);
     env.exec("assert(completionErrors == 1 and completionDeliveries == 1)")
         .unwrap();
 }

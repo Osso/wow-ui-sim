@@ -26,7 +26,11 @@ C API subsystem filters at `7f6d28454`: allied races 13/13, artifact panel 42/42
 
 `host_event_payload_survives_collection_in_error_handler` reproduces the host path with a nested payload. `native_aura_event_payload_survives_collection_in_error_handler` reproduces the native path through `A_Admin.AddBuff`. Both failed with `table has been collected` in the second listener before the fix.
 
-Cast completion uses strings and numbers, not tables. `completion_arguments_survive_collection_in_stop_error_handler` already passes before the dispatch fix: forced collection during STOP error reporting preserves the SUCCEEDED arguments. No evidence that the reported one-in-three duration test flake is this rooting bug. Its one-second live deadline plus an immediate `extract_completed_cast().is_none()` assertion is scheduling-sensitive; no speculative production or timing change was made.
+`LoaderEnv::fire_event_with_args` has the same listener/error-handler window; `loader_event_payload_survives_collection_in_error_handler` reproduced it after the other two dispatchers were fixed. The loader now roots payloads for its entire dispatch.
+
+Cast completion's dynamic GUID also dies in STOP error reporting, then gets reused by SUCCEEDED. `completion_arguments_survive_collection_in_stop_error_handler` fails against baseline dispatch with `string.sub` rejecting a collected string. Rooting the host dispatcher fixes this caller too. Crucial negative-control detail: a literal full expected GUID in the test closure accidentally roots the interned string, hiding the bug. The regression checks prefix and numeric suffix instead.
+
+This proves a cast-completion rooting vulnerability, not the cause of the original one-in-three duration-test failure: that test has no failing handler/error callback and does not read the GUID. Its one-second live deadline plus an immediate `extract_completed_cast().is_none()` assertion is scheduling-sensitive; no speculative production or timing change was made.
 
 ## Sources
 

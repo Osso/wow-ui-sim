@@ -149,6 +149,21 @@ impl<'a> LoaderEnv<'a> {
     }
 
     pub fn fire_event_with_args(&self, event: &str, args: &[Val]) -> Result<()> {
+        let saved_top = self.with_state(|state| {
+            let saved_top = state.top;
+            for value in args {
+                state.push(*value);
+            }
+            Ok::<_, crate::Error>(saved_top)
+        })?;
+        let result = self.fire_rooted_event(event, args);
+        self.with_state(|state| {
+            state.top = saved_top;
+            result
+        })
+    }
+
+    fn fire_rooted_event(&self, event: &str, args: &[Val]) -> Result<()> {
         let listeners = self.with_state(|state| {
             #[cfg(feature = "retail-12-0-5")]
             crate::c_api::aura_entry::apply_entry_event(state, event)?;

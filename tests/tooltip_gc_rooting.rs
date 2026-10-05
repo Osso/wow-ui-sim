@@ -31,9 +31,10 @@ fn action_parent_survives_binding_color_collection() {
     collect_in_colors(&env);
     env.exec(r#"
         local original = CreateColor
+        GREEN_FONT_COLOR = {r=0.25, g=0.75, b=0.5}
         CreateColor = function(r, g, b, a)
             -- Only collect in the final binding line, not the base spell DTO.
-            if r == 0.1 and g == 1 and b == 0.1 then
+            if r == 0.25 and g == 0.75 and b == 0.5 then
                 return original(r, g, b, a)
             end
             return {r=r, g=g, b=b, a=a}

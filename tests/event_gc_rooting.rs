@@ -28,6 +28,15 @@ fn native_aura_event_payload_survives_collection_in_error_handler() {
 
 #[test]
 fn host_event_payload_survives_collection_in_error_handler() {
+    assert_host_event_payload(false);
+}
+
+#[test]
+fn loader_event_payload_survives_collection_in_error_handler() {
+    assert_host_event_payload(true);
+}
+
+fn assert_host_event_payload(loader: bool) {
     let env = WowLuaEnv::new().unwrap();
     env.exec(r#"
         errors = 0
@@ -48,6 +57,11 @@ fn host_event_payload_survives_collection_in_error_handler() {
         end)
     "#).unwrap();
     let payload: Val = env.eval("return {marker=41, child={text='audit-child'}}").unwrap();
-    env.fire_event_with_args("UNIT_AURA", &[env.lua_string("audit-unit"), payload]).unwrap();
+    let args = [env.lua_string("audit-unit"), payload];
+    if loader {
+        env.loader_env().fire_event_with_args("UNIT_AURA", &args).unwrap();
+    } else {
+        env.fire_event_with_args("UNIT_AURA", &args).unwrap();
+    }
     env.exec("assert(deliveries == 1 and errors == 1)").unwrap();
 }
