@@ -22,6 +22,7 @@ Publication/absence breadth evidence for the [raw wikitext register](../../data/
 - `tests/common/publication_sweep.rs`: shared classification and exact gap comparison.
 - `tests/patch_12_0_0_publication_sweep.rs`: source inputs and three later registers.
 - `tests/data/patch_12_0_0_sweep_known_gaps.json`: 111 retained reviewed non-OK source IDs after housing/initiative publication closure; historical counts below retain their original proof scope.
+- `tests/data/patch_12_0_0_sweep_known_gaps.json`: 93 retained reviewed non-OK source IDs after transmog, C_Secrets and this 35-row plain-global closure.
 - `src/c_api/patch_retired_members.rs`: 64 exact removed namespace keys gated from `retail-12-0-0`; later removals retain later epoch gates.
 
 ## Tests asserting this spec
@@ -31,17 +32,17 @@ Publication/absence breadth evidence for the [raw wikitext register](../../data/
 
 ## Known gaps (current cycle)
 
-Original baseline: 812 OK / 198 reviewed non-OK. The transmog implementation retires exactly the 50 assigned fixture IDs; [final isolated proof](#transmog-verification--2026-10-05) observes 862 OK / 148 reviewed non-OK. [Evidence and row-by-row review](../../data/patch-api/evidence/12.0.0-session-2026-10-05/) record all observations and proposed statuses; older ledger stays unchanged.
+Original baseline: 812 OK / 198 reviewed non-OK. The transmog implementation retires exactly 50 IDs; [historical proof](#transmog-verification--2026-10-05) observes 862 OK / 148 reviewed non-OK. C_Secrets then retired 20 IDs: base `a10d55822` has 128 gaps. This plain-global closure retires exactly 35 more: [final proof](#plain-global-verification--2026-10-05) observes 917 OK / 93 reviewed non-OK. [Evidence and row-by-row review](../../data/patch-api/evidence/12.0.0-session-2026-10-05/) record observations; older page-coverage ledger stays unchanged.
 
-- [ ] 148 raw-absent autostub-only API entries and 19 absent added globals/members need actual publication/backing semantics.
-- [ ] 19 removed globals remain raw functions without Deprecated-file attribution; successor/alias and loaded-consumer review is needed before deletion.
+- [ ] Remaining raw-absent autostub-only namespaces/members need publication/backing semantics; two assigned plain globals remain blocked by pinned rilua.
+- [x] Nineteen removed globals reviewed: four absent after epoch-gating simulator publishers; 15 legitimate cached Blizzard aliases attributed by exact identity. Cached CombatLog and DeathRecap consumers pass.
 - [ ] Five callback/no-script/internal event rows lack a supported probe path; registration/delivery eligibility remains unproven.
 - [ ] Four event removals are also listed as additions by the page. Preserve both rows as metadata conflicts, not runtime removals.
 - [ ] Two added CVars lack getter/default publication; one removed CVar is a case-only scope rename resolved by case-insensitive getters. No default or scope semantics were invented.
 
 ## Plain-global closure contract
 
-Assigned 37 global IDs are investigated only in `p1200-globals`. Simulator legacy combat-log aliases/navigation, `GetBattlegroundInfo` and `SetPortraitToTexture` stop publication at `retail-12-0-0`; earlier profiles retain their surface. Cached Blizzard deprecation aliases remain legitimate client publications, including direct references whose native/Lua destination source lacks `Deprecated`. The sweep parses simple `C_*` assignments from the loaded cached `Deprecated_CombatLog.lua`, checks exact function identity and records both source and destination. Unrelated replacements remain gaps. This closes 15 alias rows without modifying Blizzard Lua; four other removed globals are absent. Sixteen added globals have real registrations; `dropsecretaccess` and `issecrettable` retain their fixture IDs. Expected current fixture: 113 reviewed gaps after removing exactly 35 assigned IDs.
+Assigned 37 global IDs are investigated only in `p1200-globals`. Simulator legacy combat-log aliases/navigation, `GetBattlegroundInfo` and `SetPortraitToTexture` stop publication at `retail-12-0-0`; earlier profiles retain their surface. Cached Blizzard deprecation aliases remain legitimate client publications, including direct references whose native/Lua destination source lacks `Deprecated`. The sweep parses simple `C_*` assignments from the loaded cached `Deprecated_CombatLog.lua`, checks exact function identity and records both source and destination. Unrelated replacements remain gaps. This closes 15 alias rows without modifying Blizzard Lua; four other removed globals are absent. Sixteen added globals have real registrations; `dropsecretaccess` and `issecrettable` retain their fixture IDs. Current fixture: 93 reviewed gaps after removing exactly 35 assigned IDs from the 128-gap base.
 
 Player cost and raid-marker enablement read explicit host inputs. Cloak/helm visibility is independent and reversible. No existing simulator clothing state exists at base `a10d55822` (the earlier `cloak_helm_transition.lua` is a native-probe fixture, not simulator state); these globals share one new state. Defaults are inferred, not native evidence; no persistence or 3D effects are claimed. Clothing setters authenticate VM-secret arguments before applying Lua truthiness (inferred conversion), so tainted callers cannot turn an opaque secret false into true.
 
@@ -50,6 +51,36 @@ Player cost and raid-marker enablement read explicit host inputs. Cloak/helm vis
 Unit role flags are explicit known-unit GUID sets; missing units cannot acquire roles through dangling input records. Spell-target class uses the actual player cast recipient GUID plus explicit class metadata, not the selected target; target-name display uses an explicit recipient on that cast. Channels/other casters remain outside the existing cast model. Empowered stage objects span successive stage boundaries and include the final hold interval. Threat lead reads explicit unit/mob GUID pair snapshots; nonleaders return red, unknown pairs return nil, restricted results stay VM-secret. Thresholds and display policy remain inferred.
 
 `SetCursorPosition` updates simulator mouse input coordinates; it does not warp the OS pointer. Untainted calls are allowed, addon calls consume an explicit one-use gamepad grant; no hardware source is fabricated. Coordinates use the existing unscaled screen mapping (inferred). Rejected calls do not mutate input.
+
+## Plain-global verification — 2026-10-05
+
+Code revision: `a631b3e7b758560dd0d73b3426e65c39b341f03c`. [Per-ID outcomes](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-globals-outcomes.json) retain all 37 original IDs, publisher paths and final observations. [Proof ledger](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-globals-proof.json) retains exact commands, scopes, revisions and results. Later documentation/data-only commits do not invalidate code proof.
+
+All helper invocations used `python3 /home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py --build-host local`; default debug retail, existing target directory only. No housing/vendor/Wowless/page-coverage edits, pushes, merges or delegation.
+
+| Integration filter | Before at master base `a10d55822` | After |
+|---|---|---|
+| combat_log | 11 passed | 10 passed; obsolete native-global test retained only for earlier epochs |
+| death_recap | 9 passed | 9 passed |
+| secret | 271 passed | 276 passed |
+| unit | 609 passed / 1 failed | 614 passed / same 1 failed |
+| cloak | 0 matched | 2 passed |
+| threat | 4 passed | 6 passed |
+
+The unchanged failure is `edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size`: both runs observe 22 metadata entries versus expected 21. It was reproduced before implementation on the starting master revision, not attributed to this change. No adjacent enum fix was made.
+
+Additional proof: `p1200_` 13 passed; alias-attribution test 1 passed (15 exact cached aliases plus unrelated-replacement negative control); `pvp_info` 8 passed; `methods_texture` 53 passed; lib `combat_log` 3 passed. Cached full-UI prefork consumers: combat_log 31 passed, death_recap 8 passed. These exercise actual cached Blizzard loads, not replacement vendor Lua.
+
+| Isolated sweep (`--test-threads=1`) | Rows | OK | Reviewed non-OK | Result |
+|---|---:|---:|---:|---|
+| patch_12_0_0_publication_sweep | 1,010 | 917 | 93 | Pass |
+| patch_12_0_5_publication_sweep | 363 | 351 | 12 | Pass |
+| patch_12_0_7_publication_sweep | 174 | 171 | 3 | Pass |
+| patch_12_1_0_publication_sweep | 778 | 768 | 10 | Pass |
+
+12.0.0 output: `/home/osso/.cache/wow-ui-sim-audit/p1200-globals-sweep.json`. Exactly 35 assigned IDs were removed from the fixture; `dropsecretaccess-470` and `issecrettable-472` remain reviewed gaps, with VM evidence above. Earlier-profile preservation is source-gate reviewed, not runtime-tested (retail-only build constraint).
+
+`cargo fmt --check`, direct `rustfmt --check` on changed test modules and local `--check` pass. Manual changed-Rust readability audit split stage-vector emission and threat-category calculation; no warning suppression was added. Six pre-existing iced vendor manifest-key deprecations remain, also present in baseline builds. Separate local build followed by `timeout 90` around `--no-build --run -- --no-addons --no-saved-vars lua-errors` exits 0 with `[]`, zero unique/total errors.
 
 ## Transmog outfit closure contract
 

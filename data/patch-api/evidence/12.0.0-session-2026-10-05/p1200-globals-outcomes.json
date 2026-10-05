@@ -1,0 +1,1007 @@
+{
+  "code_revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+  "assigned": 37,
+  "closed": 35,
+  "blocked": 2,
+  "rows": [
+    {
+      "id": "wt-global-api-CombatLogAddFilter-553",
+      "symbol": "CombatLogAddFilter",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": "C_CombatLog.AddEventFilter",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogAddFilter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.AddEventFilter",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLogAdvanceEntry-554",
+      "symbol": "CombatLogAdvanceEntry",
+      "closed": true,
+      "outcome": "simulator Lua publisher epoch-gated; absent after cached Game load",
+      "publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogAdvanceEntry"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLogClearEntries-555",
+      "symbol": "CombatLogClearEntries",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": "C_CombatLog.ClearEntries",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogClearEntries"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.ClearEntries",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLogGetCurrentEntry-556",
+      "symbol": "CombatLogGetCurrentEntry",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": "C_CombatLog.GetCurrentEntryInfo",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogGetCurrentEntry"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.GetCurrentEntryInfo",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLogGetCurrentEventInfo-557",
+      "symbol": "CombatLogGetCurrentEventInfo",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": "C_CombatLog.GetCurrentEventInfo",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogGetCurrentEventInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.GetCurrentEventInfo",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLogGetNumEntries-558",
+      "symbol": "CombatLogGetNumEntries",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": "C_CombatLog.GetEntryCount",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogGetNumEntries"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.GetEntryCount",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLogGetRetentionTime-559",
+      "symbol": "CombatLogGetRetentionTime",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": "C_CombatLog.GetEntryRetentionTime",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogGetRetentionTime"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.GetEntryRetentionTime",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLogResetFilter-560",
+      "symbol": "CombatLogResetFilter",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": "C_CombatLog.ClearEventFilters",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogResetFilter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.ClearEventFilters",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLogSetCurrentEntry-561",
+      "symbol": "CombatLogSetCurrentEntry",
+      "closed": true,
+      "outcome": "simulator Lua publisher epoch-gated; absent after cached Game load",
+      "publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogSetCurrentEntry"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLogSetRetentionTime-562",
+      "symbol": "CombatLogSetRetentionTime",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": "C_CombatLog.SetEntryRetentionTime",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogSetRetentionTime"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.SetEntryRetentionTime",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLogShowCurrentEntry-563",
+      "symbol": "CombatLogShowCurrentEntry",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": "C_CombatLog.ShouldShowCurrentEntry",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLogShowCurrentEntry"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.ShouldShowCurrentEntry",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatLog_Object_IsA-564",
+      "symbol": "CombatLog_Object_IsA",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": "src/lua_api/workarounds/temporary/combat_log_state.rs",
+      "alias_target": "C_CombatLog.DoesObjectMatchFilter",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatLog_Object_IsA"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.DoesObjectMatchFilter",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-CombatTextSetActiveUnit-565",
+      "symbol": "CombatTextSetActiveUnit",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": null,
+      "alias_target": "C_CombatText.SetActiveUnit",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CombatTextSetActiveUnit"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatText.SetActiveUnit",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-DeathRecap_GetEvents-566",
+      "symbol": "DeathRecap_GetEvents",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": null,
+      "alias_target": "C_DeathRecap.GetRecapEvents",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "DeathRecap_GetEvents"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_DeathRecap.GetRecapEvents",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-DeathRecap_HasEvents-567",
+      "symbol": "DeathRecap_HasEvents",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": null,
+      "alias_target": "C_DeathRecap.HasRecapEvents",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "DeathRecap_HasEvents"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_DeathRecap.HasRecapEvents",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-GetBattlegroundInfo-580",
+      "symbol": "GetBattlegroundInfo",
+      "closed": true,
+      "outcome": "native publisher epoch-gated; absent after cached Game load",
+      "publisher": "src/lua_api/globals/pvp_probes.rs",
+      "simulator_previous_publisher": "src/lua_api/globals/pvp_probes.rs",
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetBattlegroundInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-GetCollapsingStarCost-427",
+      "symbol": "GetCollapsingStarCost",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetCollapsingStarCost"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-GetCurrentCombatTextEventInfo-583",
+      "symbol": "GetCurrentCombatTextEventInfo",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": null,
+      "alias_target": "C_CombatText.GetCurrentEventInfo",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetCurrentCombatTextEventInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatText.GetCurrentEventInfo",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-GetDeathRecapLink-584",
+      "symbol": "GetDeathRecapLink",
+      "closed": true,
+      "outcome": "legitimate cached Blizzard direct alias; simulator publisher epoch-gated where present",
+      "publisher": "Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua",
+      "simulator_previous_publisher": null,
+      "alias_target": "C_DeathRecap.GetRecapLink",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetDeathRecapLink"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_DeathRecap.GetRecapLink",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-IsRaidMarkerSystemEnabled-428",
+      "symbol": "IsRaidMarkerSystemEnabled",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "IsRaidMarkerSystemEnabled"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-SetCursorPosition-431",
+      "symbol": "SetCursorPosition",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "SetCursorPosition"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-SetPortraitToTexture-612",
+      "symbol": "SetPortraitToTexture",
+      "closed": true,
+      "outcome": "simulator Lua publisher epoch-gated; absent after cached Game load",
+      "publisher": "src/lua_api/env_init/shared_bootstrap.lua",
+      "simulator_previous_publisher": "src/lua_api/env_init/shared_bootstrap.lua",
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "SetPortraitToTexture"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-ShowCloak-433",
+      "symbol": "ShowCloak",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "ShowCloak"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-ShowHelm-434",
+      "symbol": "ShowHelm",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "ShowHelm"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-ShowingCloak-435",
+      "symbol": "ShowingCloak",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "ShowingCloak"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-ShowingHelm-436",
+      "symbol": "ShowingHelm",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "ShowingHelm"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-UnitEmpoweredStageDurations-446",
+      "symbol": "UnitEmpoweredStageDurations",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UnitEmpoweredStageDurations"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-UnitIsLieutenant-452",
+      "symbol": "UnitIsLieutenant",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UnitIsLieutenant"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-UnitIsMinion-453",
+      "symbol": "UnitIsMinion",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UnitIsMinion"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-UnitIsNPCAsPlayer-454",
+      "symbol": "UnitIsNPCAsPlayer",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UnitIsNPCAsPlayer"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-UnitShouldDisplaySpellTargetName-460",
+      "symbol": "UnitShouldDisplaySpellTargetName",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UnitShouldDisplaySpellTargetName"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-UnitSpellTargetClass-461",
+      "symbol": "UnitSpellTargetClass",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UnitSpellTargetClass"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-UnitThreatLeadSituation-463",
+      "symbol": "UnitThreatLeadSituation",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UnitThreatLeadSituation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-canaccesssecrets-467",
+      "symbol": "canaccesssecrets",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "canaccesssecrets"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-dropsecretaccess-470",
+      "symbol": "dropsecretaccess",
+      "closed": false,
+      "outcome": "VM blocker: no per-caller secret-access revocation primitive",
+      "publisher": null,
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "dropsecretaccess"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "id": "wt-global-api-hasanysecretvalues-471",
+      "symbol": "hasanysecretvalues",
+      "closed": true,
+      "outcome": "implemented; state/security behavior covered by p1200 tests",
+      "publisher": "modeled simulator registration",
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "hasanysecretvalues"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "id": "wt-global-api-issecrettable-472",
+      "symbol": "issecrettable",
+      "closed": false,
+      "outcome": "VM blocker: secret payload-kind accessor is private; tainted unwrapping forbidden; SecretWrapContents unsupported",
+      "publisher": null,
+      "simulator_previous_publisher": null,
+      "alias_target": null,
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "issecrettable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    }
+  ]
+}

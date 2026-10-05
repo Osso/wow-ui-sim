@@ -1,0 +1,515 @@
+[
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "combat_log",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 10676 filtered out; finished in 0.50s"
+    ],
+    "scope": "combat_log",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "death_recap",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 10677 filtered out; finished in 0.32s"
+    ],
+    "scope": "death_recap",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "secret",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 276 passed; 0 failed; 0 ignored; 0 measured; 10410 filtered out; finished in 12.58s"
+    ],
+    "scope": "secret",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "unit",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 101,
+    "summary": [
+      "test result: FAILED. 614 passed; 1 failed; 0 ignored; 0 measured; 10071 filtered out; finished in 78.67s"
+    ],
+    "scope": "unit",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "cloak",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10684 filtered out; finished in 0.96s"
+    ],
+    "scope": "cloak",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "threat",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 10680 filtered out; finished in 0.50s"
+    ],
+    "scope": "threat",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "pvp_info",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 10678 filtered out; finished in 0.37s"
+    ],
+    "scope": "pvp_info",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "methods_texture",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 53 passed; 0 failed; 0 ignored; 0 measured; 10633 filtered out; finished in 2.33s"
+    ],
+    "scope": "methods_texture",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "combat_log"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "scope": "cached consumers combat_log",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "death_recap"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "scope": "cached consumers death_recap",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--lib",
+      "--",
+      "combat_log",
+      "--nocapture"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "scope": "lib combat_log",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--check"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "scope": "check",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "scope": "build",
+    "valid": true
+  },
+  {
+    "argv": [
+      "timeout",
+      "90",
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--no-build",
+      "--run",
+      "--",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "scope": "startup",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "patch_12_0_0_publication_sweep",
+      "--",
+      "--test-threads=1",
+      "--nocapture"
+    ],
+    "env": {
+      "P1200_SWEEP_OUT": "/home/osso/.cache/wow-ui-sim-audit/p1200-globals-sweep.json"
+    },
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "scope": "sweep 12_0_0",
+    "counts": {
+      "rows": 1010,
+      "ok": 917,
+      "non_ok": 93
+    },
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "patch_12_0_5_publication_sweep",
+      "--",
+      "--test-threads=1",
+      "--nocapture"
+    ],
+    "env": {
+      "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1200-globals/p1205-final-sweep.json"
+    },
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "scope": "sweep 12_0_5",
+    "counts": {
+      "rows": 363,
+      "ok": 351,
+      "non_ok": 12
+    },
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "patch_12_0_7_publication_sweep",
+      "--",
+      "--test-threads=1",
+      "--nocapture"
+    ],
+    "env": {
+      "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1200-globals/p1207-final-sweep.json"
+    },
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "scope": "sweep 12_0_7",
+    "counts": {
+      "rows": 174,
+      "ok": 171,
+      "non_ok": 3
+    },
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "patch_12_1_0_publication_sweep",
+      "--",
+      "--test-threads=1",
+      "--nocapture"
+    ],
+    "env": {
+      "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1200-globals/p1210-final-sweep.json"
+    },
+    "revision": "a631b3e7b758560dd0d73b3426e65c39b341f03c",
+    "exit_code": 0,
+    "scope": "sweep 12_1_0",
+    "counts": {
+      "rows": 778,
+      "ok": 768,
+      "non_ok": 10
+    },
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "combat_log",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a10d55822",
+    "scope": "baseline combat_log",
+    "exit_code": 0,
+    "summary": "test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 10664 filtered out; finished in 0.57s",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "death_recap",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a10d55822",
+    "scope": "baseline death_recap",
+    "exit_code": 0,
+    "summary": "test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 10666 filtered out; finished in 0.48s",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "secret",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a10d55822",
+    "scope": "baseline secret",
+    "exit_code": 0,
+    "summary": "test result: ok. 271 passed; 0 failed; 0 ignored; 0 measured; 10404 filtered out; finished in 10.13s",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "unit",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a10d55822",
+    "scope": "baseline unit",
+    "exit_code": 101,
+    "summary": "test result: FAILED. 609 passed; 1 failed; 0 ignored; 0 measured; 10065 filtered out; finished in 46.80s",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "cloak",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a10d55822",
+    "scope": "baseline cloak",
+    "exit_code": 0,
+    "summary": "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10675 filtered out; finished in 0.00s",
+    "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "threat",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "a10d55822",
+    "scope": "baseline threat",
+    "exit_code": 0,
+    "summary": "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 10671 filtered out; finished in 0.26s",
+    "valid": true
+  },
+  {
+    "scope": "new behavior tests p1200_",
+    "revision": "a631b3e7b",
+    "exit_code": 0,
+    "summary": "13 passed, 0 failed",
+    "valid": true
+  },
+  {
+    "scope": "cached deprecated alias attribution and replacement negative control",
+    "revision": "74a2e57c5",
+    "exit_code": 0,
+    "summary": "1 passed, 0 failed",
+    "valid": true,
+    "validity_note": "Later code changes do not intersect alias publication, classifier or cache parsing"
+  },
+  {
+    "scope": "cargo fmt --check and rustfmt --check on changed test modules",
+    "revision": "a631b3e7b",
+    "exit_code": 0,
+    "valid": true
+  },
+  {
+    "scope": "manual Rust readability audit",
+    "revision": "a631b3e7b",
+    "result": "Changed Rust inspected; stage-vector emission and threat-category calculation extracted; no warning suppressions added",
+    "valid": true
+  }
+]
