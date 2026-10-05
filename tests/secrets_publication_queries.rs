@@ -136,8 +136,58 @@ fn secrets_publication_identity_reads_live_classification_and_exemptions() {
 }
 
 #[test]
+#[cfg(feature = "retail-12-0-5")]
+fn secrets_publication_identity_queries_follow_map_group_and_owned_guid_changes() {
+    let env = probe_env();
+    env.exec("A_Admin.SetTarget('Secret Visitor', 63, 1, true)")
+        .unwrap();
+    let visitor: String = env.eval("return UnitGUID('target')").unwrap();
+    env.state().borrow_mut().party_group_active = true;
+    let member: String = env.eval("return UnitGUID('party1')").unwrap();
+    for (map, owned, group_alias, group, override_secret) in [
+        (false, false, false, false, false),
+        (true, false, false, false, false),
+        (true, true, false, false, false),
+        (true, false, true, true, false),
+        (true, false, true, false, false),
+        (true, true, false, false, true),
+        (false, false, false, false, false),
+    ] {
+        {
+            let mut sim = env.state().borrow_mut();
+            let guid = if group_alias { &member } else { &visitor };
+            sim.current_target.as_mut().unwrap().guid = guid.clone();
+            sim.party_group_active = group;
+            sim.instance_identity.on_instanced_map = map;
+            sim.instance_identity.player_owned_guids.clear();
+            sim.identity_secret_guids.clear();
+            if owned {
+                sim.instance_identity.player_owned_guids.insert(guid.clone());
+            }
+            if override_secret {
+                sim.identity_secret_guids.insert(guid.clone());
+            }
+        }
+        let expected = override_secret || (map && !owned && !(group_alias && group));
+        env.exec(&format!(
+            "AddonProbe(function() local flag = C_Secrets.ShouldUnitIdentityBeSecret('target'); \
+             assert(flag == {expected}); assert(issecretvalue(UnitGUID('target')) == flag); \
+             assert(not issecretvalue(flag)) end)"
+        ))
+        .unwrap();
+    }
+    env.state().borrow_mut().current_target = None;
+    env.exec("assert(not C_Secrets.ShouldUnitIdentityBeSecret('target')); assert(UnitGUID('target') == nil)")
+        .unwrap();
+}
+
+#[test]
 fn secrets_publication_unmodeled_aspects_match_public_existing_outputs() {
     let env = probe_env();
+    env.exec("A_Admin.SetCasting(19750, 'Flash of Light', 'cast-icon', 20)")
+        .unwrap();
+    env.exec("assert(UnitCastingInfo('player') == 'Flash of Light')")
+        .unwrap();
     // Unrelated restriction inputs must not invent missing power, health,
     // comparison, foreign-cast or active-totem secrecy policies.
     for restricted in [false, true, false] {
