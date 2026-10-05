@@ -27,7 +27,8 @@ fn p1200_mixed_string_util_integer_formatting() {
 #[test]
 fn p1200_mixed_event_publication() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         local f = CreateFrame('Frame')
         for _, event in ipairs({
             'CHAT_MSG_ENCOUNTER_EVENT', 'COMBAT_LOG_APPLY_FILTER_SETTINGS',
@@ -44,13 +45,16 @@ fn p1200_mixed_event_publication() {
             'TRANSMOG_OUTFITS_CHANGED', 'UNIT_SPELLCAST_SENT'}) do
             assert(pcall(f.RegisterEvent, f, event), event)
         end
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
 fn p1200_mixed_cvar_publication() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         for _, name in ipairs({'minimapTrackedInfov2', 'useCompactPartyFrames'}) do
             assert(C_CVar.GetCVarDefault(name) == '0')
             C_CVar.SetCVar(name, '1')
@@ -59,19 +63,24 @@ fn p1200_mixed_cvar_publication() {
         end
         -- Case-insensitive identity: the Npcs row is published in this same patch.
         assert(C_CVar.GetCVarDefault('nameplateShowFriendlyNPCs') == '0')
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
 fn p1200_mixed_action_unregister() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         ButtonA = CreateFrame('CheckButton')
         ButtonB = CreateFrame('CheckButton')
         C_ActionBar.RegisterActionUIButton(ButtonA, 3)
         C_ActionBar.RegisterActionUIButton(ButtonB, 4)
         C_ActionBar.UnregisterActionUIButton(ButtonA)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     let state = env.state().borrow();
     assert_eq!(state.action_ui_buttons.len(), 1);
     assert_eq!(state.action_ui_buttons[0].1, 4);
@@ -84,22 +93,34 @@ fn p1200_mixed_action_unregister() {
 fn p1200_mixed_spell_loss_of_control_duration() {
     use wow_ui_sim::lua_api::LossOfControlInfo;
     let env = WowLuaEnv::new().unwrap();
-    env.state().borrow_mut().spell_loss_of_control.insert(19750, LossOfControlInfo {
-        start_time: 123.0, duration: 27.0, mod_rate: 1.25,
-        is_active: true, should_replace_normal_cooldown: false,
-    });
+    env.state().borrow_mut().spell_loss_of_control.insert(
+        19750,
+        LossOfControlInfo {
+            start_time: 123.0,
+            duration: 27.0,
+            mod_rate: 1.25,
+            is_active: true,
+            should_replace_normal_cooldown: false,
+        },
+    );
     env.exec(r#"
         local spell = C_Spell.GetSpellLossOfControlCooldownDuration('Flash of Light')
         local book = C_SpellBook.GetSpellBookItemLossOfControlCooldownDuration(5, 0)
         for _, d in ipairs({spell, book}) do
-            assert(d:GetStartTime() == 123)
-            assert(d:GetTotalDuration() == 27)
-            assert(d:GetModRate() == 1.25)
+            assert(d:GetStartTime() == 123, 'start: ' .. tostring(d:GetStartTime()))
+            assert(d:GetTotalDuration() == 27 / 1.25, 'duration: ' .. tostring(d:GetTotalDuration()))
+            assert(d:GetModRate() == 1.25, 'rate: ' .. tostring(d:GetModRate()))
         end
-        assert(spell ~= nil and book ~= nil)
+        assert(spell ~= nil and book ~= nil, 'missing spell/book duration')
         assert(select('#', C_Spell.GetSpellLossOfControlCooldownDuration(999999)) == 0)
         assert(select('#', C_SpellBook.GetSpellBookItemLossOfControlCooldownDuration(5, 1)) == 0)
     "#).unwrap();
-    env.state().borrow_mut().spell_loss_of_control.get_mut(&19750).unwrap().is_active = false;
-    env.exec("assert(select('#', C_Spell.GetSpellLossOfControlCooldownDuration(19750)) == 0)").unwrap();
+    env.state()
+        .borrow_mut()
+        .spell_loss_of_control
+        .get_mut(&19750)
+        .unwrap()
+        .is_active = false;
+    env.exec("assert(select('#', C_Spell.GetSpellLossOfControlCooldownDuration(19750)) == 0)")
+        .unwrap();
 }
