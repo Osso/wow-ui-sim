@@ -31,7 +31,7 @@ Publication/absence breadth evidence for the [raw wikitext register](../../data/
 
 ## Known gaps (current cycle)
 
-Original baseline: 812 OK / 198 reviewed non-OK. The transmog implementation retires 50 assigned fixture IDs; final isolated sweep proof is recorded in the follow-up report. [Evidence and row-by-row review](../../data/patch-api/evidence/12.0.0-session-2026-10-05/) record all observations and proposed statuses; older ledger stays unchanged.
+Original baseline: 812 OK / 198 reviewed non-OK. The transmog implementation retires exactly the 50 assigned fixture IDs; [final isolated proof](#transmog-verification--2026-10-05) observes 862 OK / 148 reviewed non-OK. [Evidence and row-by-row review](../../data/patch-api/evidence/12.0.0-session-2026-10-05/) record all observations and proposed statuses; older ledger stays unchanged.
 
 - [ ] 148 raw-absent autostub-only API entries and 19 absent added globals/members need actual publication/backing semantics.
 - [ ] 19 removed globals remain raw functions without Deprecated-file attribution; successor/alias and loaded-consumer review is needed before deletion.
@@ -56,6 +56,34 @@ Set catalogs and slot-source membership are explicit simulator inputs; imports s
 Situation UI categories/groups/options are explicit host metadata; option values must reflect pending and saved outfit selections. Equipped weapon-option queries inspect actual equipped item inventory types, not viewed-option preferences. No automatic native situation catalog or artifact option is fabricated.
 
 Tests: `tests/transmog_outfit_visuals.rs`, `tests/transmog_outfit_situation_catalog.rs`, `tests/transmog_outfit_lifecycle.rs`, `tests/transmog_outfit_slots.rs`, `tests/transmog_outfit_transactions.rs`, `tests/transmog_outfit_catalog_inputs.rs`. Implementation: `src/c_api/c_transmog_outfit_info/`, `c_transmog_collection.rs`, `c_transmog_sets.rs`.
+
+## Transmog verification — 2026-10-05
+
+Proof scope: code revision `85f738227510e7c95cd1ae524932f8d4b6c10395`; comparison master `3b4f660c4b83a25ed0d7dd2c84f37ce07cb17c74`, checked detached inside the same worktree, then restored to `p1200-transmog`. Later documentation changes do not invalidate these results. All builds used local debug retail and the existing target directory. No vendor, secrets or page-coverage files changed.
+
+Command prefix: `python3 /home/osso/.worktrees/wow-ui-sim-p1200-transmog/scripts/build-host.py --build-host local`.
+
+| Command suffix | Result at code revision |
+|---|---|
+| `--test --test integration transmog` | 139 passed, 0 failed; includes visual inventory/secondary/illusion selectors and catalog eligibility/filter behavior |
+| `--test --test integration wardrobe` | 2 passed, 0 failed |
+| `--test --test integration collections` | 47 passed, 0 failed |
+| `--test --test integration outfit` | 50 passed, 0 failed; overlaps transmog filter |
+| `--test --test prefork_full_ui -- transmog` | 8 passed, 0 failed; cached full UI |
+| `--test --test prefork_full_ui -- wardrobe` | 7 passed, 0 failed; master: 3 passed, 4 failed with `itemModifiedAppearanceID requires a number` |
+| `--test --test integration patch_12_0_0_publication_sweep -- --test-threads=1 --nocapture` | Isolated pass; 1,010 rows, 862 OK / 148 exact known non-OK |
+| `--test --test integration patch_12_0_5_publication_sweep -- --test-threads=1 --nocapture` | Isolated pass; 363 rows, 351 OK / 12 exact known non-OK |
+| `--test --test integration patch_12_0_7_publication_sweep -- --test-threads=1 --nocapture` | Isolated pass; 174 rows, 171 OK / 3 exact known non-OK |
+| `--test --test integration patch_12_1_0_publication_sweep -- --test-threads=1 --nocapture` | Isolated pass; 778 rows, 768 OK / 10 exact known non-OK |
+| `--test --lib` | Full suite once: 1,969 passed, 7 failed; all seven names fail in focused master comparisons |
+| `--check` | Exit 0 |
+| bare prefix, then `--no-build --run -- --no-addons --no-saved-vars lua-errors` under `timeout 90` | Build exit 0; startup exit 0, `[]`, zero unique/total Lua errors |
+
+`cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1200-transmog/Cargo.toml` and subsequent `--check` exit 0. Six existing deprecated Clippy manifest-key warnings in `iced-wgpu-patched/Cargo.toml` also appear on master; no suppression or vendor edits.
+
+Master failure comparisons use prefix plus `--test --lib FILTER`, with filters `transmog_situation`, `debug_environment_defaults`, `housing_catalog_state`, `apply_system_anchors`, and `unit_cast_duration_clears_before_completion_callbacks`. Exact failures: transmog situation enum (`metadata.NumValues=32`), debug defaults (calling userdata), housing searcher (`bad_searcher`), three anchor tests (missing `InitSystemAnchors`), and cast-duration clearing (assertion failure). The duration test's source differs on current master, but the same named test fails there too. No transmog regression is attributed to these failures.
+
+All 50 assigned IDs are removed from the known-gap fixture, with no other fixture removal. Their closure is **closed-modeled**: registered C API implementations backed by simulator state or explicit slot/codec policies, not temporary defaults. This is bounded simulator behavior plus publication proof, not native pricing, eligibility, codec or persistence parity. Other unassigned set-relation and sheathe defaults remain temporary workarounds.
 
 ## Out of scope
 

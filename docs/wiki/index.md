@@ -20,7 +20,7 @@
 
 ## [2026-10-05] implementation | Retail transmog outfit state
 
-[Outfit system](systems/transmog-outfits.md) describes per-outfit saved and pending state, slot topology, collections/set imports, cursor actions and visual structures. [Closure contract](../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) owns behavior and proof limitations.
+[Outfit system](systems/transmog-outfits.md) describes per-outfit saved and pending state, slot topology, collections/set imports, cursor actions and visual structures. [Closure contract](../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) owns behavior and proof limitations. [Final proof](../specs/patch-12-0-0-publication-sweep.md#transmog-verification--2026-10-05) covers cached selector decoding, 50 modeled publication closures and master failure comparisons.
 
 ## [2026-10-04] evidence | 12.0.5 pending non-sweep follow-up
 

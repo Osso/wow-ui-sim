@@ -6,6 +6,10 @@
 
 [Investigation](investigations/patch-12-0-0-api-audit.md#tooltip-gc-regression-exposed-by-retirement-registration) records original failure, unchanged host line order, retirement-only allocation control, and forced-color-callback GC RED. Root item DTO/line tables across Lua callbacks; keep API retirements and stat assertions.
 
+## [2026-10-05] evidence | Transmog selector and final proof
+
+[Proof ledger](../specs/patch-12-0-0-publication-sweep.md#transmog-verification--2026-10-05) records integration/prefork filters, four isolated sweeps, startup `[]` and seven lib failures reproduced on master. [Consumer boundary](systems/transmog-outfits.md#consumer-boundary) distinguishes cached inventory selectors from outfit construction data. Page-coverage JSON unchanged.
+
 ## [2026-10-05] implementation | Retail transmog outfit state
 
 [Outfit system](systems/transmog-outfits.md) documents catalog/pending/situation state, enum-slot topology, set imports, cursor actions and structured visual successors. [Contract](../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) separates modeled behavior from inferred/native-unverified choices. Publication and final proof reconciliation remain pending at this entry.

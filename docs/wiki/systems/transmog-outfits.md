@@ -12,7 +12,7 @@ Rich appearance-source inputs and the existing compact world source catalog shar
 
 ## Consumer boundary
 
-Slot locations use `Enum.TransmogOutfitSlot`, which differs from zero-based inventory slots. Both shoulder locations exist for TransmogUtil caching; displayed slot groups hide the left shoulder until split is enabled. Equipped option queries read actual item inventory type. `C_Transmog.GetSlotVisualInfo` returns one structured value with numeric source/visual identities, not the retired tuple API. No Blizzard Lua or namespace retirement rules are patched.
+Slot locations use `Enum.TransmogOutfitSlot`, which differs from zero-based inventory slots. Both shoulder locations exist for TransmogUtil caching; displayed slot groups hide the left shoulder until split is enabled. Equipped option queries read actual item inventory type. `C_Transmog.GetSlotVisualInfo` decodes the inventory-indexed `slotID/type/modification` payload from cached `TransmogLocationMixin:GetData()`, not its outfit-indexed construction fields. Secondary shoulder modification selects the left shoulder; weapon type keeps appearance and illusion pending entries separate. It returns one structured value with numeric source/visual identities, not the retired tuple API. Set availability reads eligible catalog membership independently of UI filters; the filtered list remains separate. No Blizzard Lua or namespace retirement rules are patched.
 
 Native prices/caps, artifact/spec restrictions, binding/race/form eligibility, automatic situation metadata, and native hyperlink interoperability are not verified. Simulator choices are marked `INFERRED` at their implementation sites.
 
