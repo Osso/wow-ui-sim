@@ -144,14 +144,14 @@ fn secrets_publication_identity_queries_follow_map_group_and_owned_guid_changes(
     let visitor: String = env.eval("return UnitGUID('target')").unwrap();
     env.state().borrow_mut().party_group_active = true;
     let member: String = env.eval("return UnitGUID('party1')").unwrap();
-    for (map, owned, group_alias, group, override_secret) in [
-        (false, false, false, false, false),
-        (true, false, false, false, false),
-        (true, true, false, false, false),
-        (true, false, true, true, false),
-        (true, false, true, false, false),
-        (true, true, false, false, true),
-        (false, false, false, false, false),
+    for (map, owned, group_alias, group, override_secret, expected) in [
+        (false, false, false, false, false, false),
+        (true, false, false, false, false, true),
+        (true, true, false, false, false, false),
+        (true, false, true, true, false, false),
+        (true, false, true, false, false, true),
+        (true, true, false, false, true, true),
+        (false, false, false, false, false, false),
     ] {
         {
             let mut sim = env.state().borrow_mut();
@@ -168,7 +168,6 @@ fn secrets_publication_identity_queries_follow_map_group_and_owned_guid_changes(
                 sim.identity_secret_guids.insert(guid.clone());
             }
         }
-        let expected = override_secret || (map && !owned && !(group_alias && group));
         env.exec(&format!(
             "AddonProbe(function() local flag = C_Secrets.ShouldUnitIdentityBeSecret('target'); \
              assert(flag == {expected}); assert(issecretvalue(UnitGUID('target')) == flag); \
