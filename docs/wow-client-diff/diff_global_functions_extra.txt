@@ -1,9 +1,3 @@
-CombatLogAddFilter
-CombatLogAdvanceEntry
-CombatLogGetCurrentEntry
-CombatLogGetCurrentEventInfo
-CombatLogGetNumEntries
-CombatLogSetCurrentEntry
 GetContainerItemID
 GetContainerItemLink
 GetContainerNumSlots
