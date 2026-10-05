@@ -100,23 +100,36 @@ pub(super) fn create_int_sequence_table(state: &mut LuaState, ids: &[i32]) -> Va
 }
 
 pub(super) fn build_artifact_art_info_table(state: &mut LuaState, art: &ArtifactArtInfo) -> Val {
+    let saved_top = state.top;
+    let table = create_table(state);
+    state.push(table);
     let texture_kit_val = create_string(state, &art.texture_kit);
     let title_name_val = create_string(state, &art.title_name);
-    let title_color_val = create_color_mixin(state, &art.title_color);
-    let bar_connected_val = create_color_mixin(state, &art.bar_connected_color);
-    let bar_disconnected_val = create_color_mixin(state, &art.bar_disconnected_color);
-    create_table_with_fields(
+    table_set(state, table, "textureKit", texture_kit_val);
+    table_set(state, table, "titleName", title_name_val);
+    // Attach each callback result before the next CreateColor can collect it.
+    for (key, color) in [
+        ("titleColor", &art.title_color),
+        ("barConnectedColor", &art.bar_connected_color),
+        ("barDisconnectedColor", &art.bar_disconnected_color),
+    ] {
+        let value = create_color_mixin(state, color);
+        table_set(state, table, key, value);
+    }
+    table_set(
         state,
-        &[
-            ("textureKit", texture_kit_val),
-            ("titleName", title_name_val),
-            ("titleColor", title_color_val),
-            ("barConnectedColor", bar_connected_val),
-            ("barDisconnectedColor", bar_disconnected_val),
-            ("uiModelSceneID", Val::Num(art.ui_model_scene_id as f64)),
-            ("spellVisualKitID", Val::Num(art.spell_visual_kit_id as f64)),
-        ],
-    )
+        table,
+        "uiModelSceneID",
+        Val::Num(art.ui_model_scene_id as f64),
+    );
+    table_set(
+        state,
+        table,
+        "spellVisualKitID",
+        Val::Num(art.spell_visual_kit_id as f64),
+    );
+    state.top = saved_top;
+    table
 }
 
 pub(super) fn build_power_info_table(state: &mut LuaState, power: &ArtifactPowerInfo) -> Val {

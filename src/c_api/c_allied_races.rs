@@ -67,6 +67,9 @@ fn get_all_racial_abilities_from_id(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn build_allied_race_info_table(state: &mut LuaState, info: &AlliedRaceInfo) -> Val {
+    // Run the collecting Lua callback before creating host-held DTO values.
+    let (r, g, b) = info.banner_color;
+    let banner_color = create_color_mixin(state, r, g, b);
     let male_name = create_string(state, &info.male_name);
     let female_name = create_string(state, &info.female_name);
     let description = create_string(state, &info.description);
@@ -74,8 +77,6 @@ fn build_allied_race_info_table(state: &mut LuaState, info: &AlliedRaceInfo) -> 
     let crest_atlas = create_string(state, &info.crest_atlas);
     let model_background_atlas = create_string(state, &info.model_background_atlas);
     let achievement_ids = build_achievement_id_sequence(state, &info.achievement_ids);
-    let (r, g, b) = info.banner_color;
-    let banner_color = create_color_mixin(state, r, g, b);
     create_table_with_fields(
         state,
         &[

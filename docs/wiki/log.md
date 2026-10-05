@@ -1,3 +1,7 @@
+## [2026-10-05] investigation | Host Lua rooting audit
+
+[Audit](investigations/gc-rooting-audit.md): three C API DTO builders reproduced under forced callback collection; root intermediate results or execute callback before construction.
+
 ## [2026-10-05] investigation | Tooltip GC regression
 
 [Investigation](investigations/patch-12-0-0-api-audit.md#tooltip-gc-regression-exposed-by-retirement-registration) records original failure, unchanged host line order, retirement-only allocation control, and forced-color-callback GC RED. Root item DTO/line tables across Lua callbacks; keep API retirements and stat assertions.

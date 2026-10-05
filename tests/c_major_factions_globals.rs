@@ -51,6 +51,25 @@ fn sample_renown_levels(faction_id: i64) -> Vec<RenownLevelInfo> {
 }
 
 #[test]
+fn faction_data_survives_collection_in_color_callback() {
+    let env = WowLuaEnv::new().expect("env");
+    env.state().borrow_mut().major_factions.insert(2507, sample_faction(2507));
+    env.exec(r#"
+        local original = CreateColor
+        CreateColor = function(...)
+            collectgarbage('collect')
+            return original(...)
+        end
+        local info = C_MajorFactions.GetMajorFactionData(2507)
+        assert(info.factionID == 2507 and info.renownLevel == 7)
+        assert(info.name == 'Dream Wardens')
+        assert(info.textureKit == 'majorfactions_dreamwardens')
+        assert(info.unlockDescription == 'Reach Honored to unlock.')
+        assert(type(info.factionFontColor.color.GetRGB) == 'function')
+    "#).unwrap();
+}
+
+#[test]
 fn get_major_faction_data_returns_nil_when_unknown() {
     let env = WowLuaEnv::new().expect("env");
     let nil: bool = env

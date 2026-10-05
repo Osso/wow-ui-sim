@@ -30,6 +30,29 @@ fn race_id_for(file_string: &str) -> i64 {
 }
 
 #[test]
+fn race_info_survives_collection_in_color_callback() {
+    let env = WowLuaEnv::new().expect("env");
+    let id = race_id_for("lightforgeddraenei");
+    env.exec(&format!(
+        r#"
+        local original = CreateColor
+        CreateColor = function(...)
+            collectgarbage('collect')
+            return original(...)
+        end
+        local info = C_AlliedRaces.GetRaceInfoByID({id})
+        assert(info.maleName == 'Lightforged Draenei')
+        assert(info.femaleName == 'Lightforged Draenei')
+        assert(info.raceFileString == 'lightforgeddraenei')
+        assert(info.crestAtlas == 'alliedraces-icon-lightforgeddraenei')
+        assert(type(info.description) == 'string' and #info.description > 0)
+        assert(type(info.achievementIds) == 'table' and #info.achievementIds > 0)
+        assert(type(info.bannerColor.GetRGB) == 'function')
+        "#
+    )).unwrap();
+}
+
+#[test]
 fn unknown_race_id_returns_nil() {
     let env = WowLuaEnv::new().expect("env");
     let nil: bool = env

@@ -52,6 +52,33 @@ fn seed_artifact(env: &WowLuaEnv) {
 }
 
 #[test]
+fn artifact_art_survives_collection_in_each_color_callback() {
+    let env = WowLuaEnv::new().expect("env");
+    seed_artifact(&env);
+    {
+        let mut state = env.state().borrow_mut();
+        state.viewed_artifact.art_info.texture_kit = "audit-kit".into();
+        state.viewed_artifact.art_info.title_name = "Audit Artifact".into();
+    }
+    env.exec(r#"
+        local original = CreateColor
+        local calls = 0
+        CreateColor = function(...)
+            calls = calls + 1
+            collectgarbage('collect')
+            return original(...)
+        end
+        local art = C_ArtifactUI.GetArtifactArtInfo()
+        assert(calls == 3)
+        assert(art.textureKit == 'audit-kit' and art.titleName == 'Audit Artifact')
+        for _, color in ipairs({art.titleColor, art.barConnectedColor, art.barDisconnectedColor}) do
+            assert(type(color.GetRGBA) == 'function')
+            assert(select('#', color:GetRGBA()) == 4)
+        end
+    "#).unwrap();
+}
+
+#[test]
 fn c_artifact_ui_panel_methods_are_registered() {
     let env = WowLuaEnv::new().expect("env");
     for fn_name in [

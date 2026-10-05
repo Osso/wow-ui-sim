@@ -109,9 +109,12 @@ fn get_renown_levels(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn build_major_faction_data_table(state: &mut LuaState, data: &MajorFactionData) -> Val {
+    let saved_top = state.top;
     let table = create_table(state);
+    state.push(table);
     set_major_faction_numbers(state, table, data);
     set_major_faction_descriptive_fields(state, table, data);
+    state.top = saved_top;
     table
 }
 
@@ -119,11 +122,11 @@ fn set_major_faction_descriptive_fields(state: &mut LuaState, table: Val, data: 
     let name = create_string(state, &data.name);
     let texture_kit = create_string(state, &data.texture_kit);
     let unlock_description = optional_string_val(state, data.unlock_description.as_ref());
-    let faction_font_color = create_faction_font_color(state, data);
     table_set_static(state, table, "name", name);
     table_set_static(state, table, "isUnlocked", Val::Bool(data.is_unlocked));
     table_set_static(state, table, "unlockDescription", unlock_description);
     table_set_static(state, table, "textureKit", texture_kit);
+    let faction_font_color = create_faction_font_color(state, data);
     table_set_static(state, table, "factionFontColor", faction_font_color);
 }
 
