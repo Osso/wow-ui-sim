@@ -286,7 +286,7 @@ fn deliver_activity_log(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn take_request(state: &mut LuaState) -> LuaResult<Option<String>> {
-    let id = u64::from_stack(state, 1)?;
+    let id = f64::from_stack(state, 1)? as u64;
     Ok(borrow_state_mut(state)?
         .housing
         .initiative

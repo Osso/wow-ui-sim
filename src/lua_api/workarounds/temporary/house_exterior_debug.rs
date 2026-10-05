@@ -5,7 +5,7 @@
 //! GUID-indexed/selected fixture diagnostic model are available. Do not make
 //! this permanent merely because fixture meshes are outside 2D rendering.
 
-use crate::c_api::helpers::ensure_namespace;
+use crate::c_api::ensure_namespace;
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::{LuaApiMut, LuaResult, Val, vm::state::LuaState};
 
