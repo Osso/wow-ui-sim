@@ -25,6 +25,14 @@ Patch 12.0.7 API work in wow-ui-sim separates safe additive compatibility bridge
 
 
 
+## Wikitext completeness check and publication sweep — 2026-10-04
+
+The page's raw wikitext (revid 6794100, [retained](../../../data/patch-api/sources/12.0.7-api-changes.wikitext)) holds five collapsed consolidated tables (Global API, ScriptObjects, Widgets, Events, CVars) with **174** entries; header counts equal parsed counts in every section. **65** are missing from the crawler register: 10 added and 4 removed globals, all 20 changed globals (C_Club opaque member IDs, C_CombatText, C_DelvesUI, C_EncounterEvents trigger/alpha, C_EncounterWarnings, `GetInstanceInfo` ret11, `SimulateMouse*`), 8 added and 4 changed script-object methods, and 14 added / 5 removed CVars (2 are console commands). This resolves row 172's unnamed CVars.
+
+Conversely, **22** crawler-register symbols appear in no consolidated table of the current revision, the 12.0.7 (68182) revision 6745177, or the PTR (67669) revision 6733756: the `Get/SetSecurePending*Callback` globals, `C_PingSecure.Clear/SetPendingPingOffScreenCallback`, `C_QuestHub.GetDragonridingRacesForAreaPOI`, eight `DurationTextFormattingOptions`/`DurationTextRawValue` methods, `GameTooltip_AddMoneyLine` (blue-post prose only) and the four `GetAutoComplete*`/`IsRecognizedName` removals (Deprecated API prose only). Their origin is unverified; only `C_PingSecure.SetPendingPingOffScreenCallback` is declared by the cached Retail docs.
+
+The [publication sweep](../../specs/patch-12-0-7-publication-sweep.md) probes all 174 rows on default Retail: 147 OK, 27 reviewed gaps. It retired four removed members the autostub still fabricated. No row has a later 12.1.0 add/remove, so supersession applies to none today.
+
 ## Re-review promotes 21 rows — 2026-10-04
 
 **37 pending / 67 bounded / 49 partial / 13 metadata** of 166 IDs.

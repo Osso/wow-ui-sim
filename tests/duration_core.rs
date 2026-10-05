@@ -475,7 +475,7 @@ fn duration_core_default_clock_and_instances() {
         std::time::Instant::now() - std::time::Duration::from_secs(40);
     env.exec(
         r#"
-        local before = C_DurationUtil.GetCurrentTime()
+        local before = GetTime()
         local d = C_DurationUtil.CreateDuration()
         assert(type(d) == 'table' and getmetatable(d) == false)
         d:SetTimeFromStart(30, 30)

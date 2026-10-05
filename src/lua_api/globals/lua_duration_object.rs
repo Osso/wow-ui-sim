@@ -70,8 +70,8 @@ const META_NAMES: &[&str] = &["__eq", "__index", "__metatable", "__newindex", "_
 
 // ── Public entry point ────────────────────────────────────────────────────────
 
-/// Register `C_DurationUtil.CreateDuration` and `C_DurationUtil.GetCurrentTime`
-/// in the Lua globals.
+/// Register `C_DurationUtil.CreateDuration` and, before Retail 12.0.7,
+/// `C_DurationUtil.GetCurrentTime` in the Lua globals.
 ///
 /// If `C_DurationUtil` already exists as a table it is reused; otherwise a new
 /// one is created.  `GetCurrentTime` is only written if the key is currently
@@ -108,9 +108,9 @@ pub fn register_lua_duration_object(lua: &mut rilua::Lua) -> crate::Result<()> {
     );
     table_set_static(state, ns, "CreateManualClock", create_clock_fn);
 
-    // Install GetCurrentTime only if missing.
+    // Install GetCurrentTime only if missing; Retail 12.0.7 removed it.
     let existing = crate::lua_api::methods::table_get(state, ns, "GetCurrentTime");
-    if existing == Val::Nil {
+    if existing == Val::Nil && !cfg!(feature = "retail-12-0-7") {
         let get_time_fn = make_closure(state, "C_DurationUtil.GetCurrentTime", get_current_time);
         table_set_static(state, ns, "GetCurrentTime", get_time_fn);
     }

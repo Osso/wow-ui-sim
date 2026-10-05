@@ -1,0 +1,514 @@
+{{apichanges|12.0.7|prev=12.0.5|next=12.1.0}}
+
+==Resources==
+* TOC: <code>120007</code>
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24244888/revelations-content-update-notes#item19 Revelations Content Update Notes]
+<div class="noexcerpt">
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/12.0.5..12.0.7 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/12.0.5..12.0.7 BlizzardInterfaceResources]
+</div>
+
+==Undocumented changes==
+* Removed <code>IMPORTANT</code> from [[API_types/AuraFilters|AuraFilters]].
+* Bug: [[TOC format|TOC]] files will skip loading all directives if the first line starts with a comment (a single #).
+
+==Blue posts==
+===2026-04-30===
+[https://discord.com/channels/327414731654692866/1499463604121112707 {{apisummary.title|Midnight 12.0.7 and Classic PTR Changes I}}]
+<blockquote {{apisummary.blizzquote}}>
+Hello again from Blizzard! With 12.0.7 PTR starting up soon, here is a list of the addon API changes you can expect to see.
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon-facing API and security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+</blockquote>
+<details open>
+{{apisummary.header|Coming in 12.0.7 PTR 1}}
+{{text|blizz|Tooltip Money Display}}
+* Added a new {{tlygo|GameTooltip_AddMoneyLine}} API, which uses embedded atlases to render money (via a new MoneyFormatter utility) rather than MoneyFrame.
+** Addons are advised to use the new API to avoid issues with secret values in tooltips.
+** All usages of {{tlygo|SetTooltipMoney}} in our code have been removed.
+
+{{text|blizz|Unit Identity}}
+* APIs that restrict certain unit token types (such as {{api|UnitGUID}}, {{api|C_UnitAuras.GetAuraDataByIndex|UnitAura}}, and health/power APIs when called with [[UnitToken#UnitTokenPvPRestrictedForAddOns|PvP-restricted tokens]]) will no longer raise Lua errors when fed an unsupported token. They will instead return nil or an appropriate default value.
+
+{{text|blizz|Encounter Events}}
+* {{api|t=e|ENCOUNTER_END}} now includes an additional payload: a list of EncounterUnitStatus tables for all boss units that were engaged during the encounter.
+** Each entry contains the unit's <code>creatureID</code>, <code>creatureName</code>, and <code>remainingHealthPercent</code> (as non-secrets) at the time they were killed/disengaged (or, when the encounter ended).
+* {{api.system|EncounterEvents|C_EncounterEvents}} now allows configuration of different colors for text warnings and timeline events.
+** Additionally, a custom color can be defined for when a timeline event reaches the 5 seconds remaining mark, signaled via {{api|t=e|ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED}}.
+* C_EncounterEvents now accepts alpha values for its color APIs.
+
+{{text|blizz|File Asset APIs}}
+* Added a new C_UIFileAsset namespace with the following APIs to help addons validate font and texture paths before using them:
+** {{api|C_UIFileAsset.GetFileID(asset)}} - returns the numeric file ID for a given path or file ID, or nil if the asset is not known to the client.
+** {{api|C_UIFileAsset.IsKnownFile(asset)}} - returns true if the asset is present in the shipped client data or is a known local loose file.
+** {{api|C_UIFileAsset.IsLooseFile(asset)}} - returns true if the asset is a locally known loose (non-shipped) file.
+
+{{text|blizz|Profiling APIs}}
+* The following profiling APIs have been made available to addons again: {{api|GetEventCPUUsage}}, {{api|GetFunctionCPUUsage}}, and {{api|GetScriptCPUUsage}}.
+
+{{text|blizz|Gamepad / SimulateMouse}}
+* SimulateMouse APIs (eg. {{api|SimulateMouseDown}}, {{api|SimulateMouseClick}}) no longer carry taint when used.
+** In order to allow them to run taint-free, these APIs have been restricted to only function when all current mouse foci are not forbidden, locked down, script inaccessible, or protected frames (while in combat).
+** They are still restricted to only being used via a gamepad action.
+
+{{text|blizz|Debug APIs}}
+* {{api|debugstack}} and {{api|debuglocals}} will now return secret values if the current function — or any caller up the stack — has accessed a secret value.
+
+{{text|blizz|Misc}}
+* Fixed various issues with secrets causing issues when present in regions displayed in scrollboxes.
+* {{api|C_ScenarioInfo.GetUnitCriteriaProgressValues}} now returns its second value (a percentage) in the range [0, 1] rather than [0, 100].
+* The default script error reporter dialog will no longer display a blank frame if there are non-printable characters such as null bytes in the text.
+* Chat events for currency, honor, loot, money, reputation, and XP gains are no longer secret.
+* Support has been added for per-directive conditionals in addon toc files (e.g. <code>## Dep: Addon_X [AllowLoadGameType classic]</code>).
+* {{api|t=w|FontInstance:SetFont|SetFont}} has more informative error messaging when supplied invalid font flag names.
+</details>
+<details open>
+{{apisummary.header|Coming in upcoming Classic PTR builds}}
+* Most secret-related fields have been removed from the autogenerated Lua API documentation in Classic builds.
+** Fields such as <code>SecretArguments</code>, <code>ConditionalSecret</code>, <code>SecretPayloads</code>, and secret predicate documentation will no longer appear in the Classic API docs, since these concepts don't apply there.
+* The {{api|RemoveRaidTargets}} API has been added to Classic.
+* Various APIs for obtaining missing health and powers that operate on {{api|t=sc|CurveObjectBase|curves}} (and {{api|t=sc|UnitHealPredictionCalculator}}) have been added to Classic.
+* Minimap pings are no longer restricted in Classic.
+* Raid target marker throttles are significantly relaxed in Classic.
+* Macro-initiated chat and chat channel commands are no longer restricted in Classic.
+* APIs that take limited subsets of unit tokens from tainted code are no longer restricted in Classic (this doesn't apply to [[UnitToken#UnitTokenNamePlate|UnitTokenNameplate]]).
+</details><br>
+
+===2026-05-28===
+[https://discord.com/channels/327414731654692866/1509594073680449650 {{apisummary.title|Midnight 12.0.7 PTR Changes II}}]
+<blockquote {{apisummary.blizzquote}}>
+Hello again from Blizzard! Today's 12.0.7 PTR build is our first 12.0.7 RC (there may be more), so here is a list of the addon API changes in this build, along with a review of some of the changes that went into recent 12.0.7 PTR builds since our last update. And then finally a short note with some timeline info about the upcoming Aura refactor.
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon-facing API and security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+</blockquote>
+<details open>
+{{apisummary.header|New in 12.0.7 RC 1}}
+* Added a new {{api.inline|"set-unmarked"}} option for the <code>raidtarget</code> secure action that will set a raid marker on the player's target if they don't currently have a marker on them.
+** The [[MACRO targetmarker|/tm]] command now supports this same behavior by using <code>~</code> preceding the marker index (e.g. <code>/tm ~4</code>).
+* The following C_MythicPlus APIs now return CalendarTime structs instead of MythicPlusDate structs: {{api|C_MythicPlus.GetRunHistory|GetRunHistory}}, {{api|C_MythicPlus.GetWeeklyBestForMap|GetWeeklyBestForMap}}, and {{api|C_MythicPlus.GetSeasonBestForMap|GetSeasonBestForMap}}.
+* The {{api|t=e|GROUP_FORMED}} event now gets correctly sent when the player joins a follower dungeon or delve on their own.
+* The <code>isFromPlayerOrPlayerPet</code> bool in [[Structure_AuraData|AuraData]] structs is now set to true if the aura came from a player-controlled vehicle.
+* Addons are now allowed to call {{api|C_UnitAuras.AddPrivateAuraAppliedSound}} during an active M+ as long as the player isn't in combat.
+* Fixed a bug that caused secret value errors in the {{api|t=w|Frame:SetFrameStrata|SetFrameStrata}} API (often in chat-related code).
+</details>
+<details open>
+{{apisummary.header|Changes in other recent 12.0.7 PTR builds}}
+* The identity of units with the {{api.inline|"npc"}} unit token are no longer secret when the player is in an active item interaction with them.
+* The {{api|BNInviteFriend}} API has been migrated to {{api|C_BattleNet.InviteFriend}} (and an occasions secrets-related Lua error was fixed as a result).
+* Added a new {{api|t=sc|DurationTextBinding}} script object type. This allows addons to bind a duration value directly to a font string, causing the string to update automatically based on the duration.
+
+Example usage:
+<syntaxhighlight lang=lua>
+local duration = C_DurationUtil.CreateDuration();
+duration:SetTimeSpan(GetTime() - 10, GetTime() + 20);
+local secondsFormatter = C_StringUtil.CreateSecondsFormatter();
+secondsFormatter:SetDefaultAbbreviation(Enum.SecondsFormatterAbbreviation.OneLetter);
+secondsFormatter:SetStripIntervalWhitespace(Enum.SecondsFormatterIntervalWhitespace.Strip);
+secondsFormatter:SetMillisecondsThreshold(5);
+
+local binding = C_DurationUtil.CreateDurationTextBinding();
+binding:SetFontString(PlayerName);
+binding:SetDuration(duration);
+binding:SetFormatter(secondsFormatter);
+binding:SetExpiredText("Done!");
+binding:SetZeroDurationText("");
+binding:SetEnabled(true);
+</syntaxhighlight>
+</details>
+<details open>
+{{apisummary.header|Timeline for the Aura Refactor}}
+As previously mentioned in past posts, we are working on a refactor of how we expose auras to addons. The high level goal of this refactor is to make auras much more secure while still allowing addons to create their own filtered aura displays and customize the way they are displayed. We are not quite ready to announce the technical details but are ready to tell you that we are currently targeting the 12.1.0 patch for these changes (subject to change as needed of course). We will be giving a full technical breakdown of the changes once they are solidified and reaching out to gather thoughts and feedback from several of you individually well before then, so stay tuned!
+</details>
+
+==Consolidated changes==
+: <font color="pink">12.0.5 (67602)</font> &rarr; <font color="lightgreen">12.0.7 (68182)</font> Jun 12 2026
+
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(35)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(17)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_BattleNet.InviteFriend}}
+: {{api|t=a|C_Container.CalculateTotalNumberOfFreeBagSlots}}
+: {{api|t=a|C_DelvesUI.GetDelveEntranceTitleString}}
+: {{api|t=a|C_DelvesUI.GetWorldTierDifficultyForActivePlayer}}
+: {{api|t=a|C_DurationUtil.CreateDurationTextBinding}}
+: {{api|t=a|C_DurationUtil.CreateManualClock}}
+: {{api|t=a|C_EncounterTimeline.GetEventColor}}
+: {{api|t=a|C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames}}
+: {{api|t=a|C_HousingCustomizeMode.RoomConnectionSupportsDoorType}}
+: {{api|t=a|C_HousingLayout.CanSetViewedFloor}}
+: {{api|t=a|C_MerchantFrame.GetMerchantCurrencies}}
+: {{api|t=a|C_PartyInfo.ConfirmReadyCheck}}
+: {{api|t=a|C_PartyInfo.DemoteAssistant}}
+: {{api|t=a|C_PartyInfo.DoReadyCheck}}
+: {{api|t=a|C_PartyInfo.IsGUIDInGroup}}
+: {{api|t=a|C_PartyInfo.PromoteToAssistant}}
+: {{api|t=a|C_PartyInfo.PromoteToLeader}}
+: {{api|t=a|C_PartyInfo.SetEveryoneIsAssistant}}
+: {{api|t=a|C_PartyInfo.UninviteUnit}}
+: {{api|t=a|C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer}}
+: {{api|t=a|C_QuestInfoSystem.GetQuestHasShortExpirationWarning}}
+: {{api|t=a|C_ScenarioInfo.GetScenarioIconInfo}}
+: {{api|t=a|C_Spell.GetMawPowerRarityInfoBySpellID}}
+: {{api|t=a|C_StringUtil.EscapeDecimalNonPrintables}}
+: {{api|t=a|C_UIFileAsset.GetFileID}}
+: {{api|t=a|C_UIFileAsset.IsKnownFile}}
+: {{api|t=a|C_UIFileAsset.IsLooseFile}}
+: {{api|t=a|GetBaseDifficultyID}}
+: {{api|t=a|GetBuildOption}}
+: {{api|t=a|GetEventCPUUsage}}
+: {{api|t=a|GetFunctionCPUUsage}}
+: {{api|t=a|GetProtocolTypes}}
+: {{api|t=a|GetScriptCPUUsage}}
+: {{api|t=a|GetStringFromModifiers}}
+: {{api|t=a|MakeModifiers}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|BNInviteFriend}}
+: {{api|t=a|C_ClickBindings.GetStringFromModifiers}}
+: {{api|t=a|C_ClickBindings.MakeModifiers}}
+: {{api|t=a|C_DurationUtil.GetCurrentTime}}
+: {{api|t=a|C_HousingLayout.IsDraggingStairwell}}
+: {{api|t=a|C_Minimap.GetObjectIconTextureCoords}}
+: {{api|t=a|C_Scenario.GetScenarioIconInfo}}
+: {{api|t=a|C_Spell.GetMawPowerBorderAtlasBySpellID}}
+: {{api|t=a|ConfirmReadyCheck}}
+: {{api|t=a|DemoteAssistant}}
+: {{api|t=a|DoReadyCheck}}
+: {{api|t=a|GetMerchantCurrencies}}
+: {{api|t=a|IsGUIDInGroup}}
+: {{api|t=a|PromoteToAssistant}}
+: {{api|t=a|PromoteToLeader}}
+: {{api|t=a|SetEveryoneIsAssistant}}
+: {{api|t=a|UninviteUnit}}
+</div>
+|}
+ {{api|t=a|C_Club.AssignMemberRole}}
+   # <font color="#ecbc2a">arg2.Type number -> ClubMemberOpaqueId</font>
+ {{api|t=a|C_Club.GetAssignableRoles}}
+   # <font color="#ecbc2a">arg2.Type number -> ClubMemberOpaqueId</font>
+ {{api|t=a|C_Club.GetClubMembers}}
+   # <font color="#ecbc2a">ret1.InnerType number -> ClubMemberOpaqueId</font>
+ {{api|t=a|C_Club.GetMemberInfo}}
+   # <font color="#ecbc2a">arg2.Type number -> ClubMemberOpaqueId</font>
+ {{api|t=a|C_Club.KickMember}}
+   # <font color="#ecbc2a">arg2.Type number -> ClubMemberOpaqueId</font>
+ {{api|t=a|C_Club.RevokeInvitation}}
+   # <font color="#ecbc2a">arg2.Type number -> ClubMemberOpaqueId</font>
+ {{api|t=a|C_Club.SendBattleTagFriendRequest}}
+   # <font color="#ecbc2a">arg2.Type number -> ClubMemberOpaqueId</font>
+ {{api|t=a|C_Club.SendInvitation}}
+   # <font color="#ecbc2a">arg2.Type number -> ClubMemberOpaqueId</font>
+ {{api|t=a|C_Club.SetClubMemberNote}}
+   # <font color="#ecbc2a">arg2.Type number -> ClubMemberOpaqueId</font>
+ {{api|t=a|C_CombatText.GetActiveUnit}}
+   - <font color="#ff6767">ret1.ConditionalSecret</font>
+   # <font color="#ecbc2a">ret1.Nilable true -> false</font>
+   + <font color="#00b400">MayReturnNothing</font>
+ {{api|t=a|C_CombatText.SetActiveUnit}}
+   + <font color="#00b400">RequiresDeclassifiedUnitIdentity</font>
+ {{api|t=a|C_DelvesUI.GetTieredEntranceType}}
+   # <font color="#ecbc2a">ret1.Type number -> TieredEntranceType</font>
+ {{api|t=a|C_EncounterEvents.GetEventColor}}
+   # <font color="#ecbc2a">ret1.Type colorRGB -> colorRGBA</font>
+   + <font color="#00b400">arg2 = trigger</font>
+ {{api|t=a|C_EncounterEvents.SetEventColor}}
+   + <font color="#00b400">arg3 = trigger</font>
+ {{api|t=a|C_EncounterWarnings.GetColorForSeverity}}
+   # <font color="#ecbc2a">ret1.Type colorRGB -> colorRGBA</font>
+ {{api|t=a|GetInstanceInfo}}
+   + <font color="#00b400">ret11 = hasWorldTier</font>
+ {{api|t=a|SimulateMouseClick}}
+   + <font color="#00b400">MouseFocusValidForLimitedInput</font>
+ {{api|t=a|SimulateMouseDown}}
+   + <font color="#00b400">MouseFocusValidForLimitedInput</font>
+ {{api|t=a|SimulateMouseUp}}
+   + <font color="#00b400">MouseFocusValidForLimitedInput</font>
+ {{api|t=a|SimulateMouseWheel}}
+   + <font color="#00b400">MouseFocusValidForLimitedInput</font>
+
+===ScriptObjects===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-scriptobject-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(36)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-scriptobject-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apilink|t=w|noparens=1|DurationClock:GetTime}}
+: {{apilink|t=w|noparens=1|DurationManualClock:AdvanceTime}}
+: {{apilink|t=w|noparens=1|DurationManualClock:ResetTime}}
+: {{apilink|t=w|noparens=1|DurationManualClock:RewindTime}}
+: {{apilink|t=w|noparens=1|DurationManualClock:SetTime}}
+: {{apilink|t=w|noparens=1|DurationObject:GetClock}}
+: {{apilink|t=w|noparens=1|DurationObject:HasExpired}}
+: {{apilink|t=w|noparens=1|DurationObject:HasStarted}}
+: {{apilink|t=w|noparens=1|DurationObject:IsActive}}
+: {{apilink|t=w|noparens=1|DurationObject:SetClock}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:CanFormatText}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:CanUpdateFontString}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:Disable}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:Enable}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:GetDuration}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:GetExpiredText}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:GetFontString}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:GetFormattedText}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:GetTimeModifier}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:GetUpdateInterval}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:GetZeroDurationText}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:HasSecretValues}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:IsEnabled}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:SetDuration}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:SetEnabled}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:SetExpiredText}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:SetFontString}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:SetFormatter}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:SetTextFormat}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:SetTimeModifier}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:SetToDefaults}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:SetUpdateInterval}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:SetZeroDurationText}}
+: {{apilink|t=w|noparens=1|DurationTextBinding:UpdateFontString}}
+: {{apilink|t=w|noparens=1|HousingLayoutPinFrame:IsConnectedToDraggingRoom}}
+: {{apilink|t=w|noparens=1|HousingLayoutPinFrame:IsPartOfDraggingRoom}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|t=w|noparens=1|SecondsFormatter:Format}}
+   # <font color="#ecbc2a">arg2.Type SecondsFormatterAbbrevation -> SecondsFormatterAbbreviation</font>
+ {{api|t=w|noparens=1|SecondsFormatter:FormatZero}}
+   # <font color="#ecbc2a">arg1.Type SecondsFormatterAbbrevation -> SecondsFormatterAbbreviation</font>
+ {{api|t=w|noparens=1|SecondsFormatter:GetDefaultAbbreviation}}
+   # <font color="#ecbc2a">ret1.Type SecondsFormatterAbbrevation -> SecondsFormatterAbbreviation</font>
+ {{api|t=w|noparens=1|SecondsFormatter:SetDefaultAbbreviation}}
+   # <font color="#ecbc2a">arg1.Type SecondsFormatterAbbrevation -> SecondsFormatterAbbreviation</font>
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(0)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(6)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apilink|t=w|noparens=1|Minimap:SetBlipTexture}}
+: {{apilink|t=w|noparens=1|Minimap:SetCorpsePOIArrowTexture}}
+: {{apilink|t=w|noparens=1|Minimap:SetIconTexture}}
+: {{apilink|t=w|noparens=1|Minimap:SetPOIArrowTexture}}
+: {{apilink|t=w|noparens=1|Minimap:SetPlayerTexture}}
+: {{apilink|t=w|noparens=1|Minimap:SetStaticPOIArrowTexture}}
+</div>
+|}
+ {{api|t=w|noparens=1|Button:GetButtonState}}
+   + <font color="#00b400">SecretReturnsForAspect</font>
+ {{api|t=w|noparens=1|Button:IsEnabled}}
+   + <font color="#00b400">SecretReturnsForAspect</font>
+ {{api|t=w|noparens=1|Button:SetButtonState}}
+   + <font color="#00b400">SecretArgumentsAddAspect</font>
+ {{api|t=w|noparens=1|Button:SetEnabled}}
+   + <font color="#00b400">SecretArgumentsAddAspect</font>
+   # <font color="#ecbc2a">SecretArguments NotAllowed -> AllowedWhenUntainted</font>
+ {{api|t=w|noparens=1|EditBox:SetFont}}
+   + <font color="#00b400">RequiresValidFontHeight</font>
+   + <font color="#00b400">RequiresValidFontAsset</font>
+ {{api|t=w|noparens=1|Font:SetFont}}
+   + <font color="#00b400">RequiresValidFontHeight</font>
+   + <font color="#00b400">RequiresValidFontAsset</font>
+ {{api|t=w|noparens=1|FontString:SetFont}}
+   + <font color="#00b400">RequiresValidFontHeight</font>
+   + <font color="#00b400">RequiresValidFontAsset</font>
+   # <font color="#ecbc2a">arg2.Type number -> uiFontHeight</font>
+ {{api|t=w|noparens=1|MessageFrame:SetFont}}
+   + <font color="#00b400">RequiresValidFontHeight</font>
+   + <font color="#00b400">RequiresValidFontAsset</font>
+ {{api|t=w|noparens=1|ModelSceneActorBase:GetModelUnitGUID}}
+   - <font color="#ff6767">ret1.ConditionalSecret</font>
+ {{api|t=w|noparens=1|ScrollFrame:GetHorizontalScroll}}
+   + <font color="#00b400">SecretReturnsForAspect</font>
+ {{api|t=w|noparens=1|ScrollFrame:GetVerticalScroll}}
+   + <font color="#00b400">SecretReturnsForAspect</font>
+ {{api|t=w|noparens=1|ScrollFrame:SetHorizontalScroll}}
+   # <font color="#ecbc2a">SecretArguments NotAllowed -> AllowedWhenUntainted</font>
+   + <font color="#00b400">SecretArgumentsAddAspect</font>
+ {{api|t=w|noparens=1|ScrollFrame:SetVerticalScroll}}
+   # <font color="#ecbc2a">SecretArguments NotAllowed -> AllowedWhenUntainted</font>
+   + <font color="#00b400">SecretArgumentsAddAspect</font>
+ {{api|t=w|noparens=1|SimpleHTML:SetFont}}
+   + <font color="#00b400">RequiresValidFontHeight</font>
+   + <font color="#00b400">RequiresValidFontAsset</font>
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(2)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED}}
+: {{api|t=e|URL_TEXTURE_REQUEST_RESULT}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|t=e|CHAT_MSG_COMBAT_FACTION_CHANGE}}
+   - <font color="#ff6767">SecretInChatMessagingLockdown</font>
+ {{api|t=e|CHAT_MSG_COMBAT_HONOR_GAIN}}
+   - <font color="#ff6767">SecretInChatMessagingLockdown</font>
+ {{api|t=e|CHAT_MSG_COMBAT_MISC_INFO}}
+   - <font color="#ff6767">SecretInChatMessagingLockdown</font>
+ {{api|t=e|CHAT_MSG_COMBAT_XP_GAIN}}
+   - <font color="#ff6767">SecretInChatMessagingLockdown</font>
+ {{api|t=e|CHAT_MSG_CURRENCY}}
+   - <font color="#ff6767">SecretInChatMessagingLockdown</font>
+ {{api|t=e|CHAT_MSG_FILTERED}}
+   - <font color="#ff6767">SecretInChatMessagingLockdown</font>
+ {{api|t=e|CHAT_MSG_LOOT}}
+   - <font color="#ff6767">SecretInChatMessagingLockdown</font>
+ {{api|t=e|CHAT_MSG_MONEY}}
+   - <font color="#ff6767">SecretInChatMessagingLockdown</font>
+ {{api|t=e|CHAT_MSG_RESTRICTED}}
+   - <font color="#ff6767">SecretInChatMessagingLockdown</font>
+ {{api|t=e|CLUB_MEMBER_ADDED}}
+   # <font color="#ecbc2a">[2](memberId).Type number -> ClubMemberOpaqueId</font>
+ {{api|t=e|CLUB_MEMBER_PRESENCE_UPDATED}}
+   # <font color="#ecbc2a">[2](memberId).Type number -> ClubMemberOpaqueId</font>
+ {{api|t=e|CLUB_MEMBER_REMOVED}}
+   # <font color="#ecbc2a">[2](memberId).Type number -> ClubMemberOpaqueId</font>
+ {{api|t=e|CLUB_MEMBER_ROLE_UPDATED}}
+   # <font color="#ecbc2a">[2](memberId).Type number -> ClubMemberOpaqueId</font>
+ {{api|t=e|CLUB_MEMBER_UPDATED}}
+   # <font color="#ecbc2a">[2](memberId).Type number -> ClubMemberOpaqueId</font>
+ {{api|t=e|ENCOUNTER_END}}
+   + <font color="#00b400">encounterUnitStatus</font>
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(20)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(5)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=assistedCombatReduceHighlights|default=1|scope=Character|cat=4|desc=Reduces spell alert animations when Single-Button Assistant is on an action bar}}
+: {{apitooltip|type=cvar|name=developerLogFilterDebug|default=0|cat=0|desc=Show Debug messages in Developer Log - 0: Disabled (default), 1: Enabled.}}
+: {{apitooltip|type=cvar|name=developerLogFilterError|default=1|cat=0|desc=Show Error messages in Developer Log - 0: Disabled, 1: Enabled (default).}}
+: {{apitooltip|type=cvar|name=developerLogFilterFatal|default=1|cat=0|desc=Show Fatal messages in Developer Log - 0: Disabled, 1: Enabled (default).}}
+: {{apitooltip|type=cvar|name=developerLogFilterNormal|default=1|cat=0|desc=Show Normal messages in Developer Log - 0: Disabled, 1: Enabled (default).}}
+: {{apitooltip|type=cvar|name=developerLogFilterSpam|default=0|cat=0|desc=Show Spam messages in Developer Log - 0: Disabled (default), 1: Enabled.}}
+: {{apitooltip|type=cvar|name=developerLogFilterWarning|default=1|cat=0|desc=Show Warning messages in Developer Log - 0: Disabled, 1: Enabled (default).}}
+: {{apitooltip|type=cvar|name=developerLogWriteToFile|default=1|cat=0|desc=Enables Developer Log Write to File - 0: Disabled, 1: Enabled (default).}}
+: {{apitooltip|type=cvar|name=developerLog|default=0|cat=0|desc=Enables Developer Log - 0: Disabled (default), 1: Enabled.}}
+: {{apitooltip|type=cvar|name=housingDecorLightRadiusIndicatorsEnabled|default=1|scope=Account|cat=4|desc=Whether or not the light radius indicators in decor edit modes are visible}}
+: {{apitooltip|type=cvar|name=housingOtherDecorLightRadiusIndicatorType|default=1|scope=Account|cat=4|desc=Choose how light radius indicator is shown for non-selected decor}}
+: {{apitooltip|type=cvar|name=housingSelectedDecorLightRadiusIndicatorType|default=1|scope=Account|cat=4|desc=Choose how light radius indicator is shown for selected decor}}
+: {{apitooltip|type=cvar|name=ThreadPoolPerThreadAllocator|default=1|cat=10|desc=0=Disabled, 1=Allow, 2=Force (around 12% faster but uses ~300MB more memory)}}
+: {{apitooltip|type=cvar|name=unlockedExpansionLandingPages|cat=4|desc=Bitfield for which expansion landing pages have been unlocked/seen by the user}}
+: {{apitooltip|type=cvar|name=useBLEEP|default=0|cat=6|desc=Client override to always prefer BLEEP, when available}}
+: ''{{apitooltip|type=command|name=fetchBleepProxies}}''
+: {{Test-inline}} {{apitooltip|type=cvar|name=Aftermath|default=1|desc=Enables NVIDIA Aftermath, if available}}
+: {{Test-inline}} {{apitooltip|type=cvar|name=AftermathCallstacks|default=0|desc=Enables NVIDIA Aftermath callstack capturing (high CPU cost)}}
+: {{Test-inline}} {{apitooltip|type=cvar|name=enableMemoryTrap|default=1|cat=0|desc=Whether memory access trapping is enabled.  Disabling may slightly improve performance, but at the cost of less information when memory access violations occur.}}
+: {{Test-inline}} ''{{apitooltip|type=command|name=MemUsageStackTrace|cat=4}}''
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=debugGameEvents|default=0|cat=0|desc=Show additional information about game events}}
+: {{apitooltip|type=cvar|name=frontendMatchingModes_WowLabs|default=1|cat=4|desc=0=All,1=DuoOnly,2=TrioOnly,3=DuoAndTrio}}
+: {{apitooltip|type=cvar|name=last_matchmaking_party_size|default=0|cat=4|desc=0=Solo,1=Duo,2=Trio}}
+: {{apitooltip|type=cvar|name=lastCharacterGuid|default=0|cat=4|desc=Last character selected's guid}}
+: {{apitooltip|type=cvar|name=skipStartGear|default=0|cat=4|desc=Whether we should show starter gear on character create}}
+</div>
+|}
+
+===Enumerations===
+ [[Enum.BnetAccountFlag]]
+   + <font color="#00b400">MopQuestLogFlagsFixUp</font>
+ [[Enum.CurrencyDestroyReason]]
+   + <font color="#00b400">AccountServerConversion</font>
+ [[Enum.CurrencySource]]
+   # <font color="#ecbc2a">PhBuffer_63 -> AccountServerConversion</font>
+ [[Enum.DamageMeterVisibility]]
+   + <font color="#00b400">InGroup</font>
+ [[Enum.EditModePersonalResourceDisplaySetting]]
+   # <font color="#ecbc2a">HideHealthAndPower -> HideHealth</font>
+   # <font color="#ecbc2a">OnlyShowInCombat -> DeprecatedOnlyShowInCombat</font>
+   + <font color="#00b400">HidePower</font>
+   + <font color="#00b400">HideClassInfo</font>
+   + <font color="#00b400">HealthBarHeight</font>
+   + <font color="#00b400">PowerBarHeight</font>
+   + <font color="#00b400">Padding</font>
+   + <font color="#00b400">Opacity</font>
+   + <font color="#00b400">VisibleSetting</font>
+   + <font color="#00b400">Size</font>
+   + <font color="#00b400">HideClassInfoOnPlayerFrame</font>
+   + <font color="#00b400">ShowClassColor</font>
+   + <font color="#00b400">BarWidth</font>
+   + <font color="#00b400">ShowBarText</font>
+   + <font color="#00b400">HideAltPower</font>
+ [[Enum.FragmentID]]
+   + <font color="#00b400">FPathingDoor</font>
+ [[Enum.FrameTutorialAccount]]
+   + <font color="#00b400">RunesOfPower</font>
+ [[Enum.SecretAspect]] <small>({{apilink|t=Function|FrameScriptObject:HasSecretAspect|noparens=1}})</small>
+   + <font color="#00b400">ButtonState</font>
+   + <font color="#00b400">ScrollOffset</font>
+ [[Enum.TieredEntranceType]] <small>({{apilink|t=Function|C_DelvesUI.GetTieredEntranceType|noparens=1}})</small>
+   # <font color="#ecbc2a">[4].Name Reserved -> WorldTier</font>
+ [[Enum.UIActionType]] <small>({{apilink|t=Event|HANDLE_UI_ACTION}})</small>
+   + <font color="#00b400">Reserved1</font>
+
+===Structures===
+ [[Structure CatalogShopProductInfo|CatalogShopProductInfo]] <small>({{apilink|t=Function|C_CatalogShop.GetProductInfo|noparens=1}})</small>
+   + <font color="#00b400">isMystery</font>
+ [[Structure ClubInvitationCandidateInfo|ClubInvitationCandidateInfo]] <small>({{apilink|t=Function|C_Club.GetInvitationCandidates|noparens=1}})</small>
+   # <font color="#ecbc2a">memberId.Type number -> ClubMemberOpaqueId</font>
+ [[Structure ClubMemberInfo|ClubMemberInfo]] <small>({{apilink|t=Function|C_Club.GetInfoFromLastCommunityChatLine|noparens=1}}, {{apilink|t=Function|C_Club.GetInvitationInfo|noparens=1}}, {{apilink|t=Function|C_Club.GetInvitationsForClub|noparens=1}}, {{apilink|t=Function|C_Club.GetInvitationsForSelf|noparens=1}}, {{apilink|t=Function|C_Club.GetMemberInfo|noparens=1}}, {{apilink|t=Function|C_Club.GetMemberInfoForSelf|noparens=1}}, {{apilink|t=Function|C_Club.GetMessageInfo|noparens=1}}, {{apilink|t=Function|C_Club.GetMessagesBefore|noparens=1}}, {{apilink|t=Function|C_Club.GetMessagesInRange|noparens=1}}, {{apilink|t=Function|C_Club.GetTickets|noparens=1}}, {{apilink|t=Event|CLUB_INVITATION_ADDED_FOR_SELF}}, {{apilink|t=Event|CLUB_TICKET_CREATED}})</small>
+   # <font color="#ecbc2a">memberId.Type number -> ClubMemberOpaqueId</font>
+ [[Structure DamageMeterCombatSource|DamageMeterCombatSource]] <small>({{apilink|t=Function|C_DamageMeter.GetCombatSessionFromID|noparens=1}}, {{apilink|t=Function|C_DamageMeter.GetCombatSessionFromType|noparens=1}})</small>
+   + <font color="#00b400">factionGroup</font>
+ [[Structure EncounterEventInfo|EncounterEventInfo]] <small>({{apilink|t=Function|C_EncounterEvents.GetEventInfo|noparens=1}})</small>
+   - <font color="#ff6767">color</font>
+ [[Structure EncounterTimelineEventInfo|EncounterTimelineEventInfo]] <small>({{apilink|t=Function|C_EncounterTimeline.GetEventInfo|noparens=1}}, {{apilink|t=Event|ENCOUNTER_TIMELINE_EVENT_ADDED}})</small>
+   - <font color="#ff6767">color</font>
+ [[Structure EncounterWarningInfo|EncounterWarningInfo]] <small>({{apilink|t=Function|C_EncounterWarnings.GetEditModeWarningInfo|noparens=1}}, {{apilink|t=Event|ENCOUNTER_WARNING}})</small>
+   # <font color="#ecbc2a">color.Type colorRGB -> colorRGBA</font>
+ [[Structure InstanceInfo|InstanceInfo]]
+   + <font color="#00b400">hasWorldTier</font>
+ [[Structure PlayerChoiceInfo|PlayerChoiceInfo]] <small>({{apilink|t=Function|C_PlayerChoice.GetCurrentPlayerChoiceInfo|noparens=1}})</small>
+   + <font color="#00b400">showChoicesAsGrid</font>
+
+==Deprecated API==
+Deprecations were added for the current and previous patches. See [https://github.com/Gethe/wow-ui-source/blob/12.0.7/Interface/AddOns/Blizzard_DeprecatedHousingCatalog/Deprecated_HousingCatalog.lua Deprecated_HousingCatalog.lua] for a summary of 12.0.5 housing changes.
+ 12.0.7
+ ''Deprecated_12_0_7.lua''
+ - {{api|t=a|C_ClickBindings.MakeModifiers}} -> {{api|t=a|MakeModifiers}}
+ - {{api|t=a|C_ClickBindings.GetStringFromModifiers}} -> {{api|t=a|GetStringFromModifiers}}
+ - {{api|t=a|C_Spell.GetMawPowerBorderAtlasBySpellID}} -> {{api|t=a|C_Spell.GetMawPowerRarityInfoBySpellID}}
+ - {{api|t=a|GetMerchantCurrencies}} -> {{api|t=a|C_MerchantFrame.GetMerchantCurrencies}}
+ ''Deprecated_BattleNet.lua''
+ - {{api|t=a|BNInviteFriend}} -> {{api|t=a|C_BattleNet.InviteFriend}}
+ ''Deprecated_PartyInfo.lua''
+ - {{api|t=a|ConfirmReadyCheck}} -> {{api|t=a|C_PartyInfo.ConfirmReadyCheck}}
+ - {{api|t=a|DemoteAssistant}} -> {{api|t=a|C_PartyInfo.DemoteAssistant}}
+ - {{api|t=a|DoReadyCheck}} -> {{api|t=a|C_PartyInfo.DoReadyCheck}}
+ - {{api|t=a|PromoteToAssistant}} -> {{api|t=a|C_PartyInfo.PromoteToAssistant}}
+ - {{api|t=a|PromoteToLeader}} -> {{api|t=a|C_PartyInfo.PromoteToLeader}}
+ - {{api|t=a|SetEveryoneIsAssistant}} -> {{api|t=a|C_PartyInfo.SetEveryoneIsAssistant}}
+ - {{api|t=a|UninviteUnit}} -> {{api|t=a|C_PartyInfo.UninviteUnit}}
+ - {{api|t=a|IsGUIDInGroup}} -> {{api|t=a|C_PartyInfo.IsGUIDInGroup}}
+
+ 12.0.5
+ ''Deprecated_AutoComplete.lua''
+ - {{api|t=a|GetAutoCompletePresenceID}} -> {{api|t=a|C_AutoComplete.GetAutoCompletePresenceID}}
+ - {{api|t=a|GetAutoCompleteResults}} -> {{api|t=a|C_AutoComplete.GetAutoCompleteResults}}
+ - {{api|t=a|GetAutoCompleteRealms}} -> {{api|t=a|C_AutoComplete.GetAutoCompleteRealms}}
+ - {{api|t=a|IsRecognizedName}} -> {{api|t=a|C_AutoComplete.IsRecognizedName}}
+
+ 12.0.1
+ ''Deprecated_12_0_1.lua''
+ - {{api|t=a|C_SpellBook.GetSpellBookItemLossOfControlCooldown}} -> {{api|t=a|C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo}}
+ ''Deprecated_ActionBar.lua''
+ - {{api|t=a|C_ActionBar.GetActionLossOfControlCooldown}} -> {{api|t=a|C_ActionBar.GetActionLossOfControlCooldownInfo}}
+ ''Deprecated_SpellScript.lua''
+ - {{api|t=a|C_Spell.GetSpellLossOfControlCooldown}} -> {{api|t=a|C_Spell.GetSpellLossOfControlCooldownInfo}}

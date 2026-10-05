@@ -20,7 +20,8 @@ A data-driven breadth probe covers all 778 entries in the [wikitext register](..
 
 ## Implementation inventory
 
-- `tests/patch_12_1_0_publication_sweep.rs` — register-driven classifier and one environment per sweep.
+- `tests/patch_12_1_0_publication_sweep.rs` — 12.1.0 inputs for the shared sweep.
+- `tests/common/publication_sweep.rs` — register-driven classifier and one environment per sweep, shared with the [12.0.7 sweep](patch-12-0-7-publication-sweep.md).
 - `tests/data/patch_12_1_0_sweep_known_gaps.json` — reviewed exact set of non-ok IDs; membership grants no coverage.
 - `tests/common/prefork_full_ui_preload.rs` — full cached Game preload using the same startup discovery as `wow-sim`, including LoD `[Bootstrap]`-only nodes (bootstrap files run; the addon stays unloaded and gets no `ADDON_LOADED`).
 
