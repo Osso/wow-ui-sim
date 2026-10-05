@@ -513,13 +513,13 @@
       "symbol": "unlockedExpansionLandingPages"
     },
     "observed": {
-      "default": null,
+      "default": "0",
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": null
+      "value": "0"
     },
-    "ok": false
+    "ok": true
   },
   "wt-events-AJ_PVP_TRAINING_GROUNDS_ACTION-775": {
     "expected": {

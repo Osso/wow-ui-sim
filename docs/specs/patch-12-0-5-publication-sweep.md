@@ -38,7 +38,7 @@ Five rows are superseded: `lastLockedDelvesCompanionAbilities` (removed again in
 - Added globals as workarounds: the seven `C_PhotoSharing` service members (OAuth flow, capture, upload) are permanent shims, because the simulator has no external service. `GetCurrentCinematicSummary` (no cinematic playback model) and `C_Commentator.SendAddonMessageLogged` (no commentator comms model) are temporary inert defaults.
 - Methods: the 16 `SecondsFormatter` getters, curve setters, `Reset` and `FormatZero`; promotion and lowercase settings drive `Format`. `DurationObject:EvaluateTotalDuration` and `FontString:GetUnboundedStringWidthForText` (real text measurement in the font string's font) are also published. `ModelSceneActor:SetSheathedCategory`/`UseUnitSheatheCategory` and `ModelSceneActorBase:SetGradientMaskWithDyes` are permanent 3D no-ops.
 
-Default Retail sweep: GREEN against the reviewed gap set. 363 observations: 350 OK, 13 non-OK. Results are in [the sweep result file](../../data/patch-api/evidence/12.0.5-session-2026-10-03/p1205-wikitext-sweep-result.json).
+Default Retail sweep: GREEN against the reviewed gap set. 363 observations: 351 OK, 12 non-OK. Results are in [the sweep result file](../../data/patch-api/evidence/12.0.5-session-2026-10-03/p1205-wikitext-sweep-result.json).
 
 ## Known gaps (current cycle)
 
@@ -47,7 +47,7 @@ These are startup-surface gaps, not proof of native-client absence. The cached R
 - [ ] `NamePlate` hit-test methods (5): nameplates are host-created per unit and have no Lua factory, so these rows are unprobeable.
 - [ ] Removed methods that deprecation files republish as aliases of current native methods, with no Deprecated source to attribute: `HousingCatalogSearcher:IsOwnedOnlyActive`, `SetOwnedOnly`, `ToggleOwnedOnly` (`Deprecated_12_0_5.lua`), and `C_UnitAuras.RemovePrivateAuraAppliedSound` (the same gap exists in the 12.1.0 sweep).
 - [ ] `CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX`, `..._SPECIALIZATION_BY_INDEX` and `..._SPECIALIZATION_BY_NAME` are `callback: true, noscript: true` events in Wowless `events.yaml`. `RegisterEvent` rejects them, and the classifier has no callback-event probe. `..._LOADOUT_BY_NAME` registers through `RegisterEvent` because `src/event/valid_events_a.rs` lists it in the registerable `EVENTS_A` table, out of sort order, while Wowless and the cached `ClassTalentsDocumentation.lua` (`CallbackEvent = true`) treat all four alike. That inconsistency is unreviewed.
-- [ ] CVar `unlockedExpansionLandingPages` (re-added in 12.0.7) has no value/default. The same gap exists in the 12.0.7 sweep.
+- [x] CVar `unlockedExpansionLandingPages` (re-added in 12.0.7) is published with an INFERRED `0` default.
 
 ## Out of scope
 

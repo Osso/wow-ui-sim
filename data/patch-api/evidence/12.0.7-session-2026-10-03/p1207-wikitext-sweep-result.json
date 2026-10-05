@@ -9,13 +9,13 @@
       "symbol": "Aftermath"
     },
     "observed": {
-      "default": null,
-      "default_mismatch": true,
+      "default": "1",
+      "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": null
+      "value": "1"
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-AftermathCallstacks-411": {
     "expected": {
@@ -27,13 +27,13 @@
       "symbol": "AftermathCallstacks"
     },
     "observed": {
-      "default": null,
-      "default_mismatch": true,
+      "default": "0",
+      "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": null
+      "value": "0"
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-MemUsageStackTrace-413": {
     "expected": {
@@ -261,13 +261,13 @@
       "symbol": "enableMemoryTrap"
     },
     "observed": {
-      "default": null,
-      "default_mismatch": true,
+      "default": "1",
+      "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": null
+      "value": "1"
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-fetchBleepProxies-409": {
     "expected": {
@@ -423,13 +423,13 @@
       "symbol": "unlockedExpansionLandingPages"
     },
     "observed": {
-      "default": null,
+      "default": "0",
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": null
+      "value": "0"
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-useBLEEP-408": {
     "expected": {
@@ -839,11 +839,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Club.GetAssignableRoles-190": {
     "expected": {
@@ -857,11 +857,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Club.GetClubMembers-192": {
     "expected": {
@@ -911,11 +911,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Club.RevokeInvitation-198": {
     "expected": {
@@ -929,11 +929,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Club.SendBattleTagFriendRequest-200": {
     "expected": {
@@ -947,11 +947,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Club.SendInvitation-202": {
     "expected": {
@@ -965,11 +965,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Club.SetClubMemberNote-204": {
     "expected": {
@@ -983,11 +983,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CombatText.GetActiveUnit-206": {
     "expected": {
@@ -1217,11 +1217,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames-139": {
     "expected": {
@@ -1505,11 +1505,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Scenario.GetScenarioIconInfo-175": {
     "expected": {
@@ -1577,11 +1577,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_StringUtil.EscapeDecimalNonPrintables-155": {
     "expected": {
@@ -1721,11 +1721,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GetBuildOption-160": {
     "expected": {
@@ -1973,11 +1973,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-SimulateMouseDown-225": {
     "expected": {
@@ -1991,11 +1991,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-SimulateMouseUp-227": {
     "expected": {
@@ -2009,11 +2009,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-SimulateMouseWheel-229": {
     "expected": {
@@ -2027,11 +2027,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-UninviteUnit-185": {
     "expected": {
