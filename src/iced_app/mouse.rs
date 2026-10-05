@@ -665,6 +665,41 @@ impl App {
         false
     }
 
+    /// Replay accepted `SimulateMouse*` input at the current cursor through the same
+    /// handlers as physical input. Input queued by these handlers waits for the next tick.
+    #[cfg(feature = "retail-12-0-7")]
+    pub(super) fn dispatch_simulated_mouse_inputs(&mut self) {
+        use crate::lua_api::globals::real::simulate_mouse::{
+            SimulatedMouseButton::{Left, Right},
+            SimulatedMouseInput::{Down, Up, Wheel},
+        };
+        let inputs = std::mem::take(
+            &mut self
+                .env
+                .borrow()
+                .state()
+                .borrow_mut()
+                .simulated_mouse_inputs,
+        );
+        // Without a cursor there is no mouse focus to receive the input.
+        let Some(pos) = self.mouse_position else {
+            return;
+        };
+        for input in inputs {
+            match input {
+                Down(Left) => self.handle_mouse_down(pos),
+                Up(Left) => self.handle_mouse_up(pos),
+                Down(Right) => self.handle_right_mouse_down(pos),
+                Up(Right) => self.handle_right_mouse_up(pos),
+                Wheel(delta) => {
+                    if self.fire_mouse_wheel(delta) {
+                        self.invalidate_after_lua_mutation();
+                    }
+                }
+            }
+        }
+    }
+
     fn motion_scripts_allowed(&self, frame_id: u64) -> bool {
         let env = self.env.borrow();
         let state = env.state().borrow();

@@ -413,6 +413,12 @@ const PATCH_12_0_7_CVARS: &[(&str, &str)] = &[
     ("ThreadPoolPerThreadAllocator", "1"),
     ("useBLEEP", "0"),
     ("gxWindowedResolution", "auto"),
+    // INFERRED simulator default (no landing page unlocked); the page lists none.
+    ("unlockedExpansionLandingPages", "0"),
+    // {{Test-inline}} rows, published like 12.1.0 AftermathShaderDebug.
+    ("Aftermath", "1"),
+    ("AftermathCallstacks", "0"),
+    ("enableMemoryTrap", "1"),
 ];
 
 #[cfg(feature = "retail-12-1-0")]

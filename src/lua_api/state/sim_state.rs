@@ -218,6 +218,9 @@ pub struct SimState {
     pub active_lair_is_lfg: bool,
     /// Outgoing in-game ("title") friend requests by character name.
     pub title_friend_requests: Vec<String>,
+    /// Guild club member names sent a Battle.net friend request via `C_Club`.
+    #[cfg(feature = "retail-12-0-7")]
+    pub club_battle_tag_friend_requests: Vec<String>,
     /// Host spell data: cooldown category of each spell that has one.
     pub spell_cooldown_categories: HashMap<u32, i32>,
     /// Item whose use started a spell's current cooldown, keyed by spell ID.
@@ -417,6 +420,10 @@ pub struct SimState {
     pub modifier_keys: ModifierKeys,
     pub pressed_keys: HashSet<String>,
     pub mouse_buttons: MouseButtons,
+    /// Accepted `SimulateMouse*` input awaiting the GUI mouse dispatcher.
+    #[cfg(feature = "retail-12-0-7")]
+    pub simulated_mouse_inputs:
+        VecDeque<crate::lua_api::globals::real::simulate_mouse::SimulatedMouseInput>,
     pub game_rules: GameRulesState,
     pub discord: DiscordState,
     pub player_choice: PlayerChoiceState,
@@ -467,6 +474,9 @@ pub struct SimState {
     /// Explicit host quest favor records and nil-query context; empty by default.
     #[cfg(feature = "retail-12-0-5")]
     pub quest_favor: crate::c_api::c_quest_info_system::QuestFavorState,
+    /// Host-flagged quests whose expiration warning uses the critical threshold.
+    #[cfg(feature = "retail-12-0-7")]
+    pub quest_short_expiration_warnings: HashSet<u32>,
     pub abandon_quest_id: Option<u32>,
     pub tracked_achievements: HashSet<i32>,
     pub bank_frame_open: bool,

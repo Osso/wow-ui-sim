@@ -54,7 +54,36 @@ pub(super) fn register_club_info_surface(state: &mut LuaState) -> LuaResult<()> 
         "SendTitleFriendRequest",
         c_club_send_title_friend_request,
     )?;
+    #[cfg(feature = "retail-12-0-7")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "SendBattleTagFriendRequest",
+        c_club_send_battle_tag_friend_request,
+    )?;
     Ok(())
+}
+
+/// Records a Battle.net friend request to a guild club member's account, once per
+/// member; acceptance is a server decision the simulator does not fabricate.
+#[cfg(feature = "retail-12-0-7")]
+fn c_club_send_battle_tag_friend_request(state: &mut LuaState) -> LuaResult<u32> {
+    if !is_guild_club_arg(state) {
+        return Ok(0);
+    }
+    let member_id = i64::from_stack(state, 2)?;
+    let mut sim = borrow_state_mut(state)?;
+    // Member 1 is the player; befriending yourself is not a request.
+    let name = index_from_member_id(member_id)
+        .filter(|index| *index != 0)
+        .and_then(|index| sim.world.guild_members.get(index))
+        .map(|member| member.name.clone());
+    if let Some(name) = name
+        && !sim.club_battle_tag_friend_requests.contains(&name)
+    {
+        sim.club_battle_tag_friend_requests.push(name);
+    }
+    Ok(0)
 }
 
 /// Sends an in-game friend request to a guild club member, by their roster name.

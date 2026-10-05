@@ -11,6 +11,10 @@ mod forbidden_aspects;
 #[path = "mouse_tests/aura_tooltip_motion.rs"]
 mod aura_tooltip_motion;
 
+#[cfg(feature = "retail-12-0-7")]
+#[path = "mouse_tests/simulate_mouse.rs"]
+mod simulate_mouse;
+
 #[test]
 fn mouse_focus_order_tracks_gui_hover_after_raise_and_lower() {
     let mut app = build_test_app(ScreenKind::Game);

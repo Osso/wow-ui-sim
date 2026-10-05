@@ -148,8 +148,24 @@ if GetDifficultyInfo == nil then
 end
 "#;
 
+/// Retail 12.0.7 `GetBaseDifficultyID`. Missing backing system: Difficulty.db2
+/// variant-to-base relationships; until modeled every ID is its own base.
+#[cfg(feature = "retail-12-0-7")]
+const BASE_DIFFICULTY_DEFAULTS_LUA: &str = r#"
+if GetBaseDifficultyID == nil then
+    function GetBaseDifficultyID(difficultyID)
+        if type(difficultyID) ~= "number" then
+            error("GetBaseDifficultyID: difficultyID must be a number", 2)
+        end
+        return difficultyID
+    end
+end
+"#;
+
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(DIFFICULTY_PVP_UTIL_DEFAULTS_LUA)?;
+    #[cfg(feature = "retail-12-0-7")]
+    lua.exec(BASE_DIFFICULTY_DEFAULTS_LUA)?;
     Ok(())
 }
 
@@ -185,6 +201,11 @@ mod tests {
                 if instanceType ~= 0 then return "difficulty_info_instance_type" end
                 if isHeroic ~= false or isChallengeMode ~= false then return "difficulty_info_flags" end
                 if displayHeroic ~= false or displayMythic ~= false then return "difficulty_info_display" end
+
+                if GetBaseDifficultyID and GetBaseDifficultyID(DifficultyUtil.ID.PrimaryRaidHeroic) ~= 15 then
+                    return "base_difficulty"
+                end
+                if GetBaseDifficultyID and pcall(GetBaseDifficultyID, "15") then return "base_difficulty_type" end
 
                 if PVPUtil.GetTierName(1) ~= "" then return "tier_name" end
                 if PVPUtil.GetTierDescription(1) ~= "" then return "tier_description" end

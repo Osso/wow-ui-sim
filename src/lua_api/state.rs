@@ -201,6 +201,8 @@ macro_rules! build_empty_sim_state {
             has_active_lair: false,
             active_lair_is_lfg: false,
             title_friend_requests: Vec::new(),
+            #[cfg(feature = "retail-12-0-7")]
+            club_battle_tag_friend_requests: Vec::new(),
             spell_cooldown_categories: HashMap::new(),
             spell_cooldown_item_sources: HashMap::new(),
             transmog_enabled: true,
@@ -246,6 +248,8 @@ macro_rules! build_empty_sim_state {
             active_drag_frame: $runtime.active_drag_frame,
             active_slider_thumb_drag_frame: $runtime.active_slider_thumb_drag_frame,
             mouse_buttons: $runtime.mouse_buttons,
+            #[cfg(feature = "retail-12-0-7")]
+            simulated_mouse_inputs: ::std::collections::VecDeque::new(),
             next_report_token: $runtime.next_report_token,
             party_members: $collections.party_members,
             party_group_active: $runtime.party_group_active,
@@ -399,6 +403,8 @@ macro_rules! build_empty_sim_state {
             selected_quest_log_id: None,
             #[cfg(feature = "retail-12-0-5")]
             quest_favor: Default::default(),
+            #[cfg(feature = "retail-12-0-7")]
+            quest_short_expiration_warnings: ::std::collections::HashSet::new(),
             abandon_quest_id: None,
             tracked_achievements: ::std::collections::HashSet::new(),
             bank_frame_open: false,

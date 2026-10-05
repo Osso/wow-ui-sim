@@ -437,6 +437,8 @@ impl App {
         timings.layout = t_layout.elapsed();
 
         timings.on_update = self.fire_on_update();
+        #[cfg(feature = "retail-12-0-7")]
+        self.dispatch_simulated_mouse_inputs();
         let (m2, ids2) = self.take_render_dirty_with_ids();
 
         let started = std::time::Instant::now();
