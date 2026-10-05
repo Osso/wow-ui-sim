@@ -12,7 +12,7 @@
 
 ## [2026-10-05] investigation | Host Lua GC rooting
 
-[GC rooting audit](investigations/gc-rooting-audit.md): forced collection in Lua callbacks reproduces unrooted DTOs; stack/parent roots protect host-built results.
+[GC rooting audit](investigations/gc-rooting-audit.md): 40 recorded candidates, 17 fixed sites, 23 false positives; forced callback/error-handler collection covers DTOs and cast GUIDs. Startup `[]`; six full-lib failures reproduce at master base `16682b415`.
 
 ## [2026-10-04] system | Club membership
 

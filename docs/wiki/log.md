@@ -1,6 +1,6 @@
 ## [2026-10-05] investigation | Host Lua rooting audit
 
-[Audit](investigations/gc-rooting-audit.md): three C API DTO builders reproduced under forced callback collection; root intermediate results or execute callback before construction.
+[Audit](investigations/gc-rooting-audit.md): 40 recorded candidates, 17 fixed sites, 23 false positives. Forced-GC DTO/event/cast negatives, 172 targeted passes, startup `[]`; full lib 1,971 pass/six baseline-reproduced failures. Original duration-flake cause remains unproven.
 
 ## [2026-10-05] investigation | Tooltip GC regression
 
