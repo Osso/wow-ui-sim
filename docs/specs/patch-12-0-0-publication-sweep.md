@@ -21,7 +21,7 @@ Publication/absence breadth evidence for the [raw wikitext register](../../data/
 - `tools/test_gen_patch_wikitext_register.py`: uncollapsed script-object table fixture.
 - `tests/common/publication_sweep.rs`: shared classification and exact gap comparison.
 - `tests/patch_12_0_0_publication_sweep.rs`: source inputs and three later registers.
-- `tests/data/patch_12_0_0_sweep_known_gaps.json`: 148 retained reviewed non-OK source IDs after the 50-row transmog implementation.
+- `tests/data/patch_12_0_0_sweep_known_gaps.json`: 111 retained reviewed non-OK source IDs after housing/initiative publication closure; historical counts below retain their original proof scope.
 - `src/c_api/patch_retired_members.rs`: 64 exact removed namespace keys gated from `retail-12-0-0`; later removals retain later epoch gates.
 
 ## Tests asserting this spec
@@ -98,3 +98,28 @@ Initiative getters expose active/viewing GUID identity, documented info/tasks/mi
 INFERRED policies: empty string denotes unset active GUID; default required level is 1 and entitlement/group/shop flags are unconfigured false; missing requested initiative records use choosing-stage ID zero; task links are active-neighborhood host strings, unknown links empty; stale-view reply notifications are suppressed; plot clicks record selection without purchase/teleport/event. No service acquisition, native progression, persistence or native default policy is claimed.
 
 Tests: `tests/housing.rs`, covering concrete neighborhood/task/milestone/activity data, callback ordering, same-write reentry, detached results, view-switch reply identity, host level/access/group/shop gates and environment isolation. [Runtime model](../wiki/systems/neighborhood-initiatives.md).
+
+## Housing/initiative verification — 2026-10-05
+
+Code revision `daa2476ac`; base/master comparison `a10d55822`, tested before production edits in this same worktree. All commands use local debug Retail and this worktree's existing target directory. No vendor, Wowless, other worktree, plain-global or page-coverage changes. No agents/models, push or merge.
+
+Command prefix: `python3 /home/osso/.worktrees/wow-ui-sim-p1200-housing/scripts/build-host.py --build-host local`.
+
+| Command suffix | Base/master | Final code |
+|---|---|---|
+| `--test --test integration housing -- --nocapture` | 281 passed | 287 passed, zero failed |
+| `--test --test integration neighborhood -- --nocapture` | 14 passed | 18 passed, zero failed |
+| `--test --test integration initiative -- --nocapture` | 3 passed | 7 passed, zero failed |
+| `--test --test prefork_full_ui -- housing` | 201 passed / 2 failed | 201 passed / same 2 failed |
+| `--test --test integration patch_12_0_0_publication_sweep -- --test-threads=1 --nocapture` | fixture: 128 known gaps | isolated pass: 1,010 rows, 899 OK / 111 exact known non-OK |
+| `--test --test integration patch_12_0_5_publication_sweep -- --test-threads=1 --nocapture` | not rerun at base | isolated pass: 363 rows, 351 OK / 12 exact known non-OK |
+| `--test --test integration patch_12_0_7_publication_sweep -- --test-threads=1 --nocapture` | not rerun at base | isolated pass: 174 rows, 171 OK / 3 exact known non-OK |
+| `--test --test integration patch_12_1_0_publication_sweep -- --test-threads=1 --nocapture` | not rerun at base | isolated pass: 778 rows, 768 OK / 10 exact known non-OK |
+| `--check` | focused tests compiled base | exit 0 |
+| bare prefix, then `timeout 90` + prefix + `--no-build --run -- --no-addons --no-saved-vars lua-errors` | not rerun at base | build/run exit 0, `[]`, zero unique/total errors |
+
+The unchanged prefork failures are `blizzard_deprecated_housing_catalog_loads::blizzard_deprecated_housing_catalog_wraps_category_info_with_legacy_field` and `blizzard_deprecated_housing_catalog_loads::blizzard_deprecated_housing_catalog_wraps_get_catalog_entry_info_with_legacy_fields`. Their deprecated category/entry field assertions failed at base before implementation.
+
+`cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1200-housing/Cargo.toml -- --check` and `rustfmt --edition 2024 --check /home/osso/.worktrees/wow-ui-sim-p1200-housing/tests/housing.rs` exit 0. Manual changed-Rust review covers model wiring, field names, borrow lifetimes across callbacks, timer neighborhood identity, table rooting and explicit diagnostic limitations. Six pre-existing deprecated Clippy manifest-key warnings from `iced-wgpu-patched/Cargo.toml` appear in base and final commands; no new compiler warnings or suppressions.
+
+All 17 assigned observations are `ok: true`, `raw=function; lookup=function` in `/home/osso/.cache/wow-ui-sim-audit/p1200-housing-sweep.json`. Exactly those 17 IDs, no others, were removed from the fixture. Logs reside in this worktree's `target/p1200-final-*.log`; documentation-only proof recording does not invalidate code-revision results.
