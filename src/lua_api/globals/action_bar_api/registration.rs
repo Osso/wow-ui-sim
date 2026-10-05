@@ -83,6 +83,13 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     register_pet_slot_methods(state, table_ref)?;
     register_stateful_methods(state, table_ref)?;
     register_slot_mutation_methods(state, table_ref)?;
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "UnregisterActionUIButton",
+        crate::c_api::c_action_bar::unregister_action_ui_button,
+    )?;
     crate::c_api::action_macros::register(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_action_bar_spell_slots::register(state, table_ref)?;

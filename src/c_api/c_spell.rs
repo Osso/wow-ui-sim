@@ -55,6 +55,13 @@ const SPELL_COOLDOWN_HASH_FIELDS: usize = 5;
 
 pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_Spell")?;
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "GetSpellLossOfControlCooldownDuration",
+        get_spell_loss_of_control_duration,
+    )?;
     register_spell_methods(state, ns, SPELL_QUERY_METHODS)?;
     register_spell_methods(state, ns, SPELL_BOOLEAN_METHODS)?;
     if cfg!(feature = "client-mists") {
@@ -793,6 +800,35 @@ fn get_spell_loss_of_control_cooldown_info(state: &mut LuaState) -> LuaResult<u3
         return Ok(1);
     };
     push_spell_loss_of_control_snapshot(state, spell_id)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn get_spell_loss_of_control_duration(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(spell_id) = numeric_spell_id(state, 1) else {
+        return Ok(0);
+    };
+    push_spell_loss_of_control_duration(state, spell_id)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) fn push_spell_loss_of_control_duration(
+    state: &mut LuaState,
+    spell_id: u32,
+) -> LuaResult<u32> {
+    let info = borrow_state(state)?
+        .spell_loss_of_control
+        .get(&spell_id)
+        .cloned();
+    // INFERRED: host is_active determines presence; wall-clock expiry does not rewrite it.
+    let Some(info) = info.filter(|info| info.is_active) else {
+        return Ok(0);
+    };
+    crate::lua_api::globals::lua_duration_object::push_timed_duration_object_with_rate(
+        state,
+        info.start_time,
+        info.duration,
+        f64::from(info.mod_rate),
+    )
 }
 
 pub(crate) fn push_spell_loss_of_control_snapshot(

@@ -155,6 +155,13 @@ fn register_spell_book_item_status_queries(
     state: &mut LuaState,
     table_ref: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetSpellBookItemLossOfControlCooldownDuration",
+        get_book_loss_of_control_duration,
+    )?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -174,6 +181,16 @@ fn register_spell_book_item_status_queries(
         cooldown_query::get_loss_of_control,
     )?;
     Ok(())
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn get_book_loss_of_control_duration(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, 1))?;
+    let bank = rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, 2))?;
+    let Some(spell_id) = cooldown_spell_for_book_entry(slot, bank) else {
+        return Ok(0);
+    };
+    crate::c_api::c_spell::push_spell_loss_of_control_duration(state, spell_id)
 }
 
 fn register_spell_book_item_actions(

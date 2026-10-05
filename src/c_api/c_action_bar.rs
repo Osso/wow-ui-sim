@@ -15,6 +15,19 @@ const HAS_ACTIVE_FIELD: bool = cfg!(any(
 ));
 const ACTION_COOLDOWN_HASH_FIELDS: usize = 4 + HAS_ACTIVE_FIELD as usize;
 
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) fn unregister_action_ui_button(state: &mut LuaState) -> LuaResult<u32> {
+    let Some(id) = crate::lua_api::methods::extract_frame_id(state, stack_val(state, 1)) else {
+        return Err(rilua::runtime_error(
+            "UnregisterActionUIButton requires a frame",
+        ));
+    };
+    crate::lua_api::methods::borrow_state_mut(state)?
+        .action_ui_buttons
+        .retain(|(button, _)| *button != id);
+    Ok(0)
+}
+
 pub(crate) fn action_texture_path(sim: &crate::lua_api::SimState, slot: u32) -> Option<String> {
     if let Some(macro_id) = sim.action_macros.get(&slot) {
         let index = macro_id.checked_sub(1)? as usize;
