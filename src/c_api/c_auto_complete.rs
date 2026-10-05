@@ -40,7 +40,54 @@ pub(crate) fn register_c_auto_complete_surface(state: &mut LuaState) -> LuaResul
         table_ref,
         "GetAutoCompleteResults",
         c_auto_complete_get_results,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "IsRecognizedName",
+        c_auto_complete_is_recognized_name,
+    )?;
+    table_set_rust_fn_static(
+        state,
+        table_ref,
+        "GetAutoCompletePresenceID",
+        c_auto_complete_get_presence_id,
     )
+}
+
+/// INFERRED: a name is recognized when a flag-filtered candidate matches it
+/// exactly, ignoring ASCII case like the result search does.
+fn c_auto_complete_is_recognized_name(state: &mut LuaState) -> LuaResult<u32> {
+    let name = String::from_stack(state, 1)?;
+    let include_flags = flags_from_stack(state, 2, FLAG_ALL)?;
+    let exclude_flags = flags_from_stack(state, 3, 0)?;
+    let recognized = collect_candidates(state)?.iter().any(|candidate| {
+        matches_flags(candidate, include_flags, exclude_flags)
+            && candidate.name.eq_ignore_ascii_case(&name)
+    });
+    state.push(Val::Bool(recognized));
+    Ok(1)
+}
+
+/// Resolves a Battle.net friend by account name or by BattleTag without its
+/// `#1234` suffix (Blizzard `BNet_GetBNetIDAccount`), returning the account id.
+fn c_auto_complete_get_presence_id(state: &mut LuaState) -> LuaResult<u32> {
+    let name = String::from_stack(state, 1)?;
+    let presence_id = borrow_state(state)?
+        .bnet_friends
+        .iter()
+        .find(|friend| bnet_friend_has_name(friend, &name))
+        .map(|friend| friend.bnet_account_id);
+    state.push(presence_id.map_or(Val::Nil, |id| Val::Num(f64::from(id))));
+    Ok(1)
+}
+
+fn bnet_friend_has_name(friend: &BnetFriend, name: &str) -> bool {
+    let tag_name = friend
+        .battle_tag
+        .split_once('#')
+        .map_or(friend.battle_tag.as_str(), |(tag_name, _)| tag_name);
+    friend.account_name.eq_ignore_ascii_case(name) || tag_name.eq_ignore_ascii_case(name)
 }
 
 fn c_auto_complete_get_results(state: &mut LuaState) -> LuaResult<u32> {

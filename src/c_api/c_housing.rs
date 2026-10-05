@@ -10,6 +10,8 @@
 mod basic_mode;
 pub mod catalog;
 pub mod exterior;
+#[cfg(feature = "retail-12-0-5")]
+pub mod inspect_mode;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7;
 
@@ -56,6 +58,8 @@ pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> 
     basic_mode::register_pending(state)?;
     #[cfg(feature = "retail-12-0-0")]
     basic_mode::register(state)?;
+    #[cfg(feature = "retail-12-0-5")]
+    inspect_mode::register(state)?;
     let housing = ensure_namespace(state, "C_Housing")?;
     let blueprints = ensure_namespace(state, "C_HousingBlueprint")?;
     let house_editor = ensure_namespace(state, "C_HouseEditor")?;

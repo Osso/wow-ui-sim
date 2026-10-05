@@ -240,6 +240,10 @@ pub struct SimState {
     pub last_bnet_invite_game_account_id: Option<i32>,
     /// Explicit host entrance PDEID; INFERRED zero default, not a native sentinel.
     pub tiered_entrance_pde_id: u32,
+    /// Host `Enum.TieredEntranceType` of the entrance in use; INFERRED Delve
+    /// default, matching the seeded delve entrance surface.
+    #[cfg(feature = "retail-12-0-5")]
+    pub tiered_entrance_type: i32,
     /// INFERRED source-token ownership and live aura-query timing; empty by default.
     #[cfg(feature = "retail-12-0-7")]
     pub player_controlled_vehicle_sources: HashSet<String>,

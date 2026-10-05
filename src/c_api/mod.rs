@@ -72,7 +72,7 @@ pub mod c_cursor;
 pub mod c_curve_util;
 pub mod c_damage_meter;
 pub mod c_death_recap;
-#[cfg(feature = "retail-12-0-7")]
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;
 #[cfg(feature = "client-wowforever")]
@@ -107,6 +107,7 @@ mod c_neighborhood_initiative;
 pub mod c_paper_doll_info;
 pub mod c_party_info;
 pub mod c_pet_battles;
+pub mod c_photo_sharing;
 pub mod c_ping_secure;
 pub mod c_player_choice;
 pub mod c_player_interaction_manager;

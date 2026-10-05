@@ -188,7 +188,7 @@ static NAMESPACE_FALSE_STUBS: &[NsStub] = &[
     // C_PartyInfo probes are registered in c_api/c_party_info.rs.
     // C_PvP.IsMatchConsideredArena is registered in
     // missing_surface/small_namespaces.rs, not a stub.
-    // C_PhotoSharing.IsAuthorized / IsEnabled are SimState-backed in photo_sharing.rs.
+    // C_PhotoSharing is registered in c_api/c_photo_sharing.rs.
     // C_PlayerInfo probes are registered in missing_surface/player_info.rs.
     // C_QuestLog probes are registered in missing_surface/quest_log.rs.
     // C_Spell GetVisibilityInfo / IsPriorityAura / IsSelfBuff / IsSpellUsable /

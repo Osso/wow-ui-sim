@@ -160,3 +160,32 @@ fn secret_duration_and_breakpoints_preserve_access_boundaries() {
     "#,
     );
 }
+
+#[test]
+fn default_abbreviation_breakpoints_match_new_formatter_rows() {
+    execute(
+        r#"
+        local defaults = C_StringUtil.GetDefaultAbbreviationBreakpoints()
+        assert(#defaults == 6)
+        local first, last = defaults[1], defaults[6]
+        assert(first.breakpoint == 1000 and first.abbreviation == 'k')
+        assert(first.significandDivisor == 100 and first.fractionDivisor == 10)
+        assert(first.abbreviationIsGlobal == false)
+        assert(last.breakpoint == 10000000000 and last.abbreviation == 'b')
+        assert(last.significandDivisor == 1000000000 and last.fractionDivisor == 1)
+        local rows = formatter:GetBreakpoints()
+        for index, row in ipairs(rows) do
+            for key, value in pairs(row) do assert(defaults[index][key] == value) end
+        end
+        assert(#C_StringUtil.GetDefaultAbbreviationBreakpoints('enGB') == 6)
+        -- Returned rows are copies; editing them leaves the defaults intact.
+        defaults[1].abbreviation = 'x'
+        assert(C_StringUtil.GetDefaultAbbreviationBreakpoints()[1].abbreviation == 'k')
+        local custom = C_StringUtil.CreateAbbreviatedNumberFormatter()
+        custom:SetBreakpoints(C_StringUtil.GetDefaultAbbreviationBreakpoints('enUS'))
+        assert(custom:FormatNumber(1234) == '1.2k')
+        assert(not pcall(C_StringUtil.GetDefaultAbbreviationBreakpoints, 'xxXX'))
+        assert(not pcall(C_StringUtil.GetDefaultAbbreviationBreakpoints, 1))
+    "#,
+    );
+}

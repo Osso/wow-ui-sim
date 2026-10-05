@@ -62,6 +62,8 @@ fn get_scenario_info_returns_seeded_scenario() {
             scenario_type: 1,
             texture_kit: "violethold".into(),
             is_tiered_entrance: false,
+            tiered_entrance_active_spells: Vec::new(),
+            display_theme_color: None,
             steps: Vec::new(),
         };
     }
@@ -94,6 +96,8 @@ fn get_scenario_step_info_returns_current_step() {
             scenario_type: 0,
             texture_kit: String::new(),
             is_tiered_entrance: false,
+            tiered_entrance_active_spells: Vec::new(),
+            display_theme_color: None,
             steps: vec![ScenarioStep {
                 step_id: 1,
                 title: "Kill the boss".into(),
@@ -132,6 +136,8 @@ fn get_scenario_step_info_by_explicit_step_id() {
             scenario_type: 0,
             texture_kit: String::new(),
             is_tiered_entrance: false,
+            tiered_entrance_active_spells: Vec::new(),
+            display_theme_color: None,
             steps: vec![
                 ScenarioStep {
                     step_id: 1,
@@ -175,6 +181,8 @@ fn get_scenario_bonus_step_reward_returns_nil_for_non_bonus() {
             scenario_type: 0,
             texture_kit: String::new(),
             is_tiered_entrance: false,
+            tiered_entrance_active_spells: Vec::new(),
+            display_theme_color: None,
             steps: vec![ScenarioStep {
                 step_id: 1,
                 title: "Normal Step".into(),
@@ -207,6 +215,8 @@ fn get_scenario_bonus_step_reward_returns_quest_id_for_bonus() {
             scenario_type: 0,
             texture_kit: String::new(),
             is_tiered_entrance: false,
+            tiered_entrance_active_spells: Vec::new(),
+            display_theme_color: None,
             steps: vec![
                 ScenarioStep {
                     step_id: 1,
@@ -266,6 +276,8 @@ fn is_bonus_step_field_populated_in_step_info() {
             scenario_type: 0,
             texture_kit: String::new(),
             is_tiered_entrance: false,
+            tiered_entrance_active_spells: Vec::new(),
+            display_theme_color: None,
             steps: vec![ScenarioStep {
                 step_id: 1,
                 title: "Bonus Step".into(),

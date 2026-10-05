@@ -130,7 +130,7 @@ where
     sequence
 }
 
-fn create_color_mixin(state: &mut LuaState, r: f64, g: f64, b: f64) -> Val {
+pub(crate) fn create_color_mixin(state: &mut LuaState, r: f64, g: f64, b: f64) -> Val {
     let create_color_key = state.gc.intern_string(b"CreateColor");
     let create_color = state
         .gc

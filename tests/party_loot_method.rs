@@ -454,3 +454,19 @@ fn actual_secret_enum_and_master_reject_for_secure_and_tainted_callers() {
     assert_seeded_master(&env);
     assert_change_events(&env, 0);
 }
+
+#[test]
+fn loot_method_style_is_mainline_across_method_changes() {
+    let env = loot_env();
+    env.exec(
+        r#"
+        assert(select('#', C_PartyInfo.GetLootMethodStyle()) == 1)
+        assert(Enum.LootMethodStyles.Mainline == 0)
+        assert(C_PartyInfo.GetLootMethodStyle() == Enum.LootMethodStyles.Mainline)
+        assert(C_PartyInfo.SetLootMethod(0))
+        assert(C_PartyInfo.GetLootMethod() == 0)
+        assert(C_PartyInfo.GetLootMethodStyle() == Enum.LootMethodStyles.Mainline)
+        "#,
+    )
+    .expect("the Retail loot ruleset reports the Mainline style");
+}

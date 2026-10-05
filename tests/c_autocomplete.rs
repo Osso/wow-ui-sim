@@ -87,3 +87,58 @@ fn get_auto_complete_results_respects_exclude_and_limit() {
     assert_eq!(excluded_count, 0);
     assert_eq!(limited_count, 1);
 }
+
+#[test]
+fn is_recognized_name_matches_exact_flag_filtered_candidates() {
+    let env = WowLuaEnv::new().expect("lua env should initialize");
+
+    let (exact, folded, prefix, excluded, bnet, unknown): (bool, bool, bool, bool, bool, bool) =
+        env.eval(
+            r#"
+            local friend = Enum.AutoCompleteEntryFlag.Friend
+            local includeAll = 2^32 - 1
+            return C_AutoComplete.IsRecognizedName("Arthax", friend, 0),
+                C_AutoComplete.IsRecognizedName("arTHAX", friend, 0),
+                C_AutoComplete.IsRecognizedName("Arth", friend, 0),
+                C_AutoComplete.IsRecognizedName("Arthax", friend, friend),
+                C_AutoComplete.IsRecognizedName("Thrall", includeAll, 0),
+                C_AutoComplete.IsRecognizedName("DefinitelyNotAName", includeAll, 0)
+            "#,
+        )
+        .expect("IsRecognizedName should be callable");
+
+    assert!(exact && folded);
+    assert!(!prefix, "a prefix is not a recognized name");
+    assert!(!excluded, "excluded flags hide the friend");
+    assert!(bnet, "Battle.net account names are candidates");
+    assert!(!unknown);
+}
+
+#[test]
+fn get_auto_complete_presence_id_resolves_bnet_account_names() {
+    let env = WowLuaEnv::new().expect("lua env should initialize");
+
+    let (thrall, folded, uther, full_tag, character): (f64, f64, f64, bool, bool) = env
+        .eval(
+            r#"
+            return C_AutoComplete.GetAutoCompletePresenceID("Thrall"),
+                C_AutoComplete.GetAutoCompletePresenceID("thrall"),
+                C_AutoComplete.GetAutoCompletePresenceID("Uther"),
+                C_AutoComplete.GetAutoCompletePresenceID("Uther#1000") == nil,
+                C_AutoComplete.GetAutoCompletePresenceID("Arthax") == nil
+            "#,
+        )
+        .expect("GetAutoCompletePresenceID should be callable");
+
+    assert_eq!(thrall, 100002.0);
+    assert_eq!(folded, 100002.0);
+    assert_eq!(uther, 100001.0);
+    assert!(
+        full_tag,
+        "INFERRED: the numbered BattleTag is not a presence name"
+    );
+    assert!(
+        character,
+        "character-only friends have no Battle.net presence"
+    );
+}

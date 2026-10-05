@@ -138,6 +138,12 @@ pub struct ScenarioState {
     /// Whether this is a tiered entrance scenario. Drives
     /// `C_ScenarioInfo.IsTieredEntranceScenario`.
     pub is_tiered_entrance: bool,
+    /// Active challenge spells of a tiered entrance scenario. Drives
+    /// `C_ScenarioInfo.GetTieredEntranceActiveSpells`.
+    pub tiered_entrance_active_spells: Vec<i32>,
+    /// Scenario theme color (r, g, b); None means the scenario has no
+    /// display info. Drives `C_ScenarioInfo.GetDisplayInfo`.
+    pub display_theme_color: Option<(f64, f64, f64)>,
     /// Ordered list of steps. Indexed by `step_id - 1`.
     pub steps: Vec<ScenarioStep>,
     /// Supplied per-token Enemy Forces credit; absent rows have no result.
@@ -155,6 +161,8 @@ impl Default for ScenarioState {
             scenario_type: 0,
             texture_kit: String::new(),
             is_tiered_entrance: false,
+            tiered_entrance_active_spells: Vec::new(),
+            display_theme_color: None,
             steps: Vec::new(),
             unit_criteria: HashMap::new(),
         }

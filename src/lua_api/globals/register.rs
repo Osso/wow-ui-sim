@@ -205,7 +205,7 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::housing::register_all(lua)?;
     super::transmog_outfit_info::register_all(lua)?;
     super::pet_battles::register_all(lua)?;
-    super::photo_sharing::register_all(lua)?;
+    crate::c_api::c_photo_sharing::register_all(lua)?;
     super::wowlabs::register_all(lua)?;
     super::adventure_map::register_all(lua)?;
     Ok(())

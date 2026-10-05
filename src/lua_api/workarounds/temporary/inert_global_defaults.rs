@@ -2,7 +2,7 @@
 //!
 //! These functions are startup compatibility fallbacks. The simulator does not
 //! model world-entry state, battleground queues, social restrictions,
-//! commentator mode, or group role composition yet, so keep the defaults
+//! commentator mode, cinematic playback, or group role composition yet, so keep the defaults
 //! explicit in the workaround layer.
 
 const INERT_GLOBAL_DEFAULTS_LUA: &str = r#"
@@ -71,6 +71,19 @@ end
 if rawget(C_Commentator, "SendAddonMessage") == nil then
     function C_Commentator.SendAddonMessage(_prefix, _message, _channel)
         return Enum and Enum.SendAddonMessageResult and Enum.SendAddonMessageResult.Success or 0
+    end
+end
+-- No cinematic ever plays (InCinematic is a false stub), so there is no summary;
+-- the documented result is a non-nil string. Replace with cinematic playback state.
+if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
+        and GetCurrentCinematicSummary == nil then
+    function GetCurrentCinematicSummary() return "" end
+end
+-- 12.0.5 logged variant; mirrors SendAddonMessage until commentator comms are modeled.
+if type(GetBuildInfo) == "function" and select(4, GetBuildInfo()) >= 120005
+        and rawget(C_Commentator, "SendAddonMessageLogged") == nil then
+    function C_Commentator.SendAddonMessageLogged(_prefix, _message, _chatType, _target)
+        return C_Commentator.SendAddonMessage(_prefix, _message, _chatType)
     end
 end
 

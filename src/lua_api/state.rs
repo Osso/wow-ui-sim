@@ -213,6 +213,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-7")]
             last_bnet_invite_game_account_id: None,
             tiered_entrance_pde_id: 0,
+            #[cfg(feature = "retail-12-0-5")]
+            tiered_entrance_type: crate::c_api::c_delves_entrance::TIERED_ENTRANCE_TYPE_DELVE,
             #[cfg(feature = "retail-12-0-7")]
             player_controlled_vehicle_sources: HashSet::new(),
             #[cfg(feature = "retail-12-0-7")]

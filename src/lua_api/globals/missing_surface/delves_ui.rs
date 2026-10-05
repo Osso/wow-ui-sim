@@ -45,6 +45,13 @@ pub(super) fn register_delves_ui_surface(state: &mut LuaState) -> LuaResult<()> 
     for (name, func) in LAIR_METHODS {
         table_set_rust_fn_static(state, ns, name, func)?;
     }
+    #[cfg(feature = "retail-12-0-5")]
+    table_set_rust_fn_static(
+        state,
+        ns,
+        "GetTieredEntranceType",
+        crate::c_api::c_delves_entrance::get_tiered_entrance_type,
+    )?;
     store_active_tier(state, DEFAULT_ACTIVE_TIER);
     Ok(())
 }

@@ -311,11 +311,11 @@ fn valid_lfg_queue_pop_delay(delay: f64) -> f64 {
 fn register_photo_sharing(b: TableBuilder) -> LuaResult<TableBuilder> {
     b.set_function(
         "SetPhotoSharingAuthorized",
-        super::photo_sharing::admin_set_photo_sharing_authorized,
+        crate::c_api::c_photo_sharing::admin_set_photo_sharing_authorized,
     )?
     .set_function(
         "SetPhotoSharingEnabled",
-        super::photo_sharing::admin_set_photo_sharing_enabled,
+        crate::c_api::c_photo_sharing::admin_set_photo_sharing_enabled,
     )
 }
 

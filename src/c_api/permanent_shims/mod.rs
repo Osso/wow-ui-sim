@@ -5,4 +5,6 @@ pub mod c_login;
 pub mod c_map_api;
 pub mod c_model_info;
 pub mod c_nameplate;
+#[cfg(feature = "retail-12-0-5")]
+pub mod c_photo_sharing_service;
 pub mod c_ui;

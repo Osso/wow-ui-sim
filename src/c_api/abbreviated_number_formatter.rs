@@ -17,7 +17,13 @@ struct AbbreviatedNumberFormatter {
 }
 
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
-    table_set_rust_fn_static(state, namespace, "CreateAbbreviatedNumberFormatter", create)
+    table_set_rust_fn_static(state, namespace, "CreateAbbreviatedNumberFormatter", create)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetDefaultAbbreviationBreakpoints",
+        get_default_breakpoints,
+    )
 }
 
 fn push_formatter(state: &mut LuaState, object: AbbreviatedNumberFormatter) -> LuaResult<u32> {
@@ -53,12 +59,33 @@ fn default_rows(state: &mut LuaState) -> LuaResult<Vec<Breakpoint>> {
     let locale = call_function_state(state, getter, &[])?;
     let locale = val_to_string(state, locale)
         .ok_or_else(|| runtime_error("GetLocale must return a string"))?;
-    match locale.as_str() {
+    locale_default_rows(&locale)
+}
+
+fn locale_default_rows(locale: &str) -> LuaResult<Vec<Breakpoint>> {
+    match locale {
         "enUS" | "enGB" => Ok(model::english_defaults()),
         _ => Err(runtime_error(format!(
             "abbreviation defaults are not modeled for locale {locale}"
         ))),
     }
+}
+
+/// The breakpoints new formatters start from; nil locale means `GetLocale()`.
+/// INFERRED: WowLocale arguments are locale strings such as "enUS".
+fn get_default_breakpoints(state: &mut LuaState) -> LuaResult<u32> {
+    let rows = match stack_val(state, 1) {
+        Val::Nil => default_rows(state)?,
+        locale @ Val::Str(_) => {
+            let locale = val_to_string(state, locale)
+                .ok_or_else(|| runtime_error("locale must be a UTF-8 string"))?;
+            locale_default_rows(&locale)?
+        }
+        _ => return Err(runtime_error("locale must be a string or nil")),
+    };
+    let result = config::write_rows(state, &rows)?;
+    state.push(result);
+    Ok(1)
 }
 
 fn create(state: &mut LuaState) -> LuaResult<u32> {

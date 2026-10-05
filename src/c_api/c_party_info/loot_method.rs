@@ -21,9 +21,24 @@ const TOKENS: [&str; 6] = [
     "personalloot",
 ];
 
+/// Enum.LootMethodStyles.Mainline: TOKENS is the Mainline method set, the only
+/// loot ruleset this Retail-epoch model carries (Vanilla rulesets are unmodeled).
+const MAINLINE_LOOT_METHOD_STYLE: f64 = 0.0;
+
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetLootMethod", get_loot_method)?;
-    table_set_rust_fn_static(state, namespace, "SetLootMethod", set_loot_method)
+    table_set_rust_fn_static(state, namespace, "SetLootMethod", set_loot_method)?;
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetLootMethodStyle",
+        get_loot_method_style,
+    )
+}
+
+fn get_loot_method_style(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Num(MAINLINE_LOOT_METHOD_STYLE));
+    Ok(1)
 }
 
 fn get_loot_method(state: &mut LuaState) -> LuaResult<u32> {
