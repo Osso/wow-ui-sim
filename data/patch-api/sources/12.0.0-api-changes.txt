@@ -1,0 +1,160 @@
+Patch 12.0.0 API changes
+
+== Summary ==
+* Addon apocalypse.
+* COMBAT_LOG_EVENT and COMBAT_LOG_EVENT_UNFILTERED will error when trying to register them.
+
+== Resources ==
+* TOC: 120000
+* Official patch notes: Midnight Pre-Expansion Content Update Notes
+
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official restriction changes:  Planned API changes
+* Deprecated APIs:
+** Deprecated_BattleNet.lua
+** Deprecated_ChatInfo.lua
+** Deprecated_ChatFrame.lua
+** Deprecated_CombatLog.lua
+** Deprecated_SpellBook.lua
+** Deprecated_InstanceEncounter.lua
+** Deprecated_SpellScript.lua
+
+
+== AddOn security changes ==
+
+API changes have been introduced with an aim to limit the ability for addons to perform complex logic and decision making based off combat information.
+
+The changes are not intended to prevent "look and feel" customization of UI elements. As part of this, Blizzard have avoided outright restricting many APIs and moving frames into the secure environment but instead have introduced new technology termed as Secret Values.
+
+=== Secret values ===
+Secret values are a new mechanism that restrict the ability for addons to perform some operations on Lua values on tainted execution paths.
+
+== Consolidated changes ==
+: 11.2.7 (64978) → 12.0.0 (65655) Jan 28 2026
+
+=== Enumerations ===
+ Enum.CraftingOrderResult
+   + MissingCurrency
+   + TooManyCurrencies
+ Enum.EditModeAccountSetting
+   + ShowPersonalResourceDisplay
+   + ShowEncounterEvents
+   + ShowDamageMeter
+   + ShowExternalDefensives
+ Enum.EditModeSystem
+   + PersonalResourceDisplay
+   + EncounterEvents
+   + DamageMeter
+ Enum.PlayerInteractionType
+   # PlaceholderType79 -> TieredEntrance
+ Enum.QuestTagType
+   # Placeholder_1 -> Prey
+ Enum.SendAddonMessageResult
+   + AddOnMessageLockdown
+   + TargetOffline
+ Enum.SurveyDeliveryMoment
+   + MythicPlusCompleted
+ Enum.TooltipDataLineType
+   + SpellPassive
+   + SpellDescription
+ Enum.TooltipDataType
+   + Outfit
+ Enum.TradeskillRecipeType
+   - Recraft
+ Enum.UICursorType
+   + Outfit
+ Enum.UIWidgetVisualizationType
+   + PreyHuntProgress
+
+=== Structures ===
+ AdvancedFilterOptions
+   + generalPlaystyle1
+   + generalPlaystyle2
+   + generalPlaystyle3
+   + generalPlaystyle4
+ CatalogShopCategoryInfo
+   + showPersistentRefundButton
+ CatalogShopProductInfo
+   +  consumableQuantity
+ CooldownViewerCooldown
+   + cooldownID
+   + category
+ CraftingItemSlotModification
+   + itemID -> reagent
+ CraftingOrderReagentInfo
+   # reagent -> reagentInfo
+ CraftingReagentInfo
+   + itemID -> reagent
+ CraftingReagentSlotSchematic
+   + variableQuantities
+ CraftingResourceReturnInfo
+   + itemID -> reagent
+ ExpansionDisplayInfo
+   + glueAmbianceSoundKit
+   + glueMusicSoundKit
+   + glueCreditsSoundKit
+ ItemInteractionFrameInfo
+   # flags, Type: number -> UIItemInteractionFlags
+ LfgEntryData
+   + generalPlaystyle
+ LfgListingCreateData
+   + generalPlaystyle
+ LfgSearchResultData
+   + generalPlaystyle
+ MajorFactionData
+   + description
+   + highlights
+   + playerCompanionID
+ MajorFactionRenownRewardInfo
+   + rewardType
+ NewCraftingOrderInfo
+   # reagentItems -> reagentInfos
+ PrivateAuraIconInfo
+   + borderScale
+ RegularReagentInfo
+   + itemID -> reagent
+ ScheduledEventInfo
+   + eventID
+   + displayInfo
+ SpellCooldownInfo
+   + timeUntilEndOfStartRecovery
+   + isOnGCD
+ TransmogAppearanceSourceInfoData
+   + itemSubClass -> itemSubclass
+ TransmogSetInfo
+   + grantAsPrecedingVariant
+
+== Deprecated 11.x API ==
+These API functions were deprecated in the 11.x patches from the previous expansion and have been removed.
+Deprecated_11_0_0.lua
+: GetSpellInfo → C_Spell.GetSpellInfo
+: GetNumSpellTabs → C_SpellBook.GetNumSpellBookSkillLines
+: GetSpellTabInfo → C_SpellBook.GetSpellBookSkillLineInfo
+: GetSpellCooldown → C_Spell.GetSpellCooldown
+: GetSpellBookItemName → C_SpellBook.GetSpellBookItemName
+: GetSpellTexture → C_Spell.GetSpellTexture
+: GetSpellCharges → C_Spell.GetSpellCharges
+: GetSpellDescription → C_Spell.GetSpellDescription
+: GetSpellCount → C_Spell.GetSpellCastCount
+: IsUsableSpell → C_Spell.IsSpellUsable
+
+Deprecated_11_0_5.lua
+: C_TaskQuest.GetQuestsForPlayerByMapID → C_TaskQuest.GetQuestsOnMap
+: GetMerchantItemInfo → C_MerchantFrame.GetItemInfo
+: C_ChallengeMode.GetCompletionInfo → C_ChallengeMode.GetChallengeCompletionInfo
+: C_MythicPlus.IsWeeklyRewardAvailable
+
+Deprecated_11_0_7.lua
+: IsActiveQuestLegendary → C_QuestInfoSystem.GetQuestClassification
+: C_QuestLog.IsLegendaryQuest → C_QuestInfoSystem.GetQuestClassification
+: C_QuestLog.IsQuestRepeatableType → C_QuestLog.IsRepeatableQuest
+
+Deprecated_11_1_5.lua
+: ConsolePrint → C_Log.LogMessage
+: message → SetBasicMessageDialogText
+
+Deprecated_11_2_0.lua
+: IsSpellOverlayed → C_SpellActivationOverlay.IsSpellOverlayed
+
+Deprecated_11_2_5.lua
+: IsArtifactRelicItem → C_ItemSocketInfo.IsArtifactRelicItem
