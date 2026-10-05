@@ -11,7 +11,7 @@
       "symbols": [
         "1010 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 128 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
+      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 111 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
       "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_0_publication_sweep.rs",
@@ -50,6 +50,22 @@
       "implementation": "shared secrecy predicates + C_Secrets",
       "compiled_revision": "90a2b865b",
       "proof": "Sol worker GREEN; main-thread four sweeps + secret/aura/unit/cooldown/spell filters (pre-existing failures only); no independent review"
+    },
+    {
+      "id": "neighborhood-initiative-12-0-0",
+      "symbols": [
+        "C_NeighborhoodInitiative (13)",
+        "C_Housing.IsHousingMarketShopEnabled/OnHouseFinderClickPlot",
+        "C_HouseExterior fixture debug info (temporary)"
+      ],
+      "scope": "Active/viewing neighborhood, initiative info/tasks/milestones/progress, activity log, required level vs player level, group membership and access from simulator state; Request* deferred with update events. Fixture debug-info functions are temporary nil workarounds (publication only). INFERRED defaults listed in docs/specs/patch-12-0-0-publication-sweep.md.",
+      "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
+      "tests": [
+        "housing/neighborhood/initiative integration filters"
+      ],
+      "implementation": "src/c_api/c_neighborhood_initiative.rs, housing state; workarounds/temporary/house_exterior_debug.rs",
+      "compiled_revision": "81384c16d",
+      "proof": "Sol worker GREEN; main-thread four sweeps + housing 287/neighborhood 18/initiative 7; no independent review"
     }
   ],
   "source_rows": [
@@ -4305,9 +4321,12 @@
     },
     {
       "source_id": "wt-global-api-C_HouseExterior.GetFixtureDebugInfoForGUID-198",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; temporary nil workaround (no documented contract)."
     },
     {
       "source_id": "wt-global-api-C_HouseExterior.GetHouseExteriorSizeOptions-199",
@@ -4335,9 +4354,12 @@
     },
     {
       "source_id": "wt-global-api-C_HouseExterior.GetSelectedFixtureDebugInfo-202",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; temporary nil workaround (no documented contract)."
     },
     {
       "source_id": "wt-global-api-C_HouseExterior.SetHouseExteriorSize-203",
@@ -4357,15 +4379,21 @@
     },
     {
       "source_id": "wt-global-api-C_Housing.IsHousingMarketShopEnabled-205",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_Housing.OnHouseFinderClickPlot-206",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_Housing.RequestHouseFinderNeighborhoodData-621",
@@ -4844,21 +4872,30 @@
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.GetActiveNeighborhood-241",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.GetInitiativeActivityLogInfo-242",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.GetInitiativeTaskChatLink-243",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.GetInitiativeTaskInfo-244",
@@ -4870,15 +4907,21 @@
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo-245",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.GetRequiredLevel-246",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.GetTrackedInitiativeTasks-247",
@@ -4898,27 +4941,39 @@
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.IsPlayerInNeighborhoodGroup-249",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.IsViewingActiveNeighborhood-250",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.PlayerHasInitiativeAccess-251",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.PlayerMeetsRequiredLevel-252",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.RemoveTrackedInitiativeTask-253",
@@ -4930,27 +4985,39 @@
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.RequestInitiativeActivityLog-254",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.RequestNeighborhoodInitiativeInfo-255",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.SetActiveNeighborhood-256",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.SetViewingNeighborhood-257",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "neighborhood-initiative-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by neighborhood/housing state."
     },
     {
       "source_id": "wt-global-api-C_Ping.IsPingSystemEnabled-258",
