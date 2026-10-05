@@ -46,31 +46,40 @@ fn can_item_transmog_appearance(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
-fn read_location(state: &mut LuaState) -> LuaResult<(i32, i32, i32)> {
+fn read_location_number(state: &mut LuaState, location: Val, key: &str) -> LuaResult<i32> {
+    let Val::Num(number) = table_get(state, location, key) else {
+        return Err(rilua::runtime_error(format!(
+            "transmogLocation.{key} requires a number"
+        )));
+    };
+    Ok(number as i32)
+}
+
+fn read_location(state: &mut LuaState) -> LuaResult<Option<(i32, i32, i32)>> {
     let location = stack_val(state, 1);
     if !matches!(location, Val::Table(_)) {
         return Err(rilua::runtime_error("transmogLocation requires a table"));
     }
-    let Val::Num(slot) = table_get(state, location, "slot") else {
-        return Err(rilua::runtime_error(
-            "transmogLocation.slot requires a number",
-        ));
+    // TransmogLocationMixin:GetData() is an inventory-indexed API payload,
+    // not the outfit-indexed locationData used to construct that mixin.
+    let inventory_slot = read_location_number(state, location, "slotID")?;
+    let kind = read_location_number(state, location, "type")?;
+    let modification = read_location_number(state, location, "modification")?;
+    let Some(primary) = super::slots::outfit_slot_from_inventory(inventory_slot - 1) else {
+        return Ok(None);
     };
-    let Val::Num(inventory_slot) = table_get(state, location, "slotID") else {
-        return Err(rilua::runtime_error(
-            "transmogLocation.slotID requires a number",
-        ));
+    let slot = if primary == 1 && modification == 1 {
+        2
+    } else {
+        primary
     };
-    let Val::Num(kind) = table_get(state, location, "transmogType") else {
-        return Err(rilua::runtime_error(
-            "transmogLocation.transmogType requires a number",
-        ));
-    };
-    Ok((slot as i32, inventory_slot as i32, kind as i32))
+    Ok(Some((slot, inventory_slot, kind)))
 }
 
 fn get_slot_visual_info(state: &mut LuaState) -> LuaResult<u32> {
-    let (slot, inventory_slot, kind) = read_location(state)?;
+    let Some((slot, inventory_slot, kind)) = read_location(state)? else {
+        return Ok(0);
+    };
     if !(0..=14).contains(&slot) || !(0..=1).contains(&kind) {
         return Ok(0);
     }

@@ -1,7 +1,8 @@
 //! Temporary C_TransmogSets empty/default surface.
 //!
-//! Wardrobe set inventory is not modeled yet. These defaults keep Blizzard's
-//! set tab on an empty-data path until transmog set state exists.
+//! Available-set inventory, eligibility and filters are modeled in C API state.
+//! Variant/base/primary-appearance details remain empty defaults; retire this
+//! module when those catalog relations and their queries are modeled.
 
 const TRANSMOG_SETS_DEFAULTS_LUA: &str = r#"
 C_TransmogSets = C_TransmogSets or __wow_namespace()
@@ -44,12 +45,6 @@ end
 
 if rawget(C_TransmogSets, "GetUsableSets") == nil then
     C_TransmogSets.GetUsableSets = emptyTable
-end
-
-if rawget(C_TransmogSets, "HasAvailableSets") == nil then
-    function C_TransmogSets.HasAvailableSets()
-        return false
-    end
 end
 
 if rawget(C_TransmogSets, "IsBaseSetCollected") == nil then

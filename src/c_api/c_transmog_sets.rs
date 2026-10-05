@@ -12,6 +12,7 @@ use rilua::{LuaResult, Val};
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogSets")?;
     table_set_rust_fn_static(state, namespace, "GetAvailableSets", catalog::get_available)?;
+    table_set_rust_fn_static(state, namespace, "HasAvailableSets", catalog::has_available)?;
     table_set_rust_fn_static(state, namespace, "GetSetsFilter", get_sets_filter)?;
     table_set_rust_fn_static(state, namespace, "SetSetsFilter", set_sets_filter)?;
     table_set_rust_fn_static(

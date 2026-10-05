@@ -26,7 +26,8 @@ fn env() -> WowLuaEnv {
 fn transmog_outfit_visuals_shape_tracks_equipped_pending_and_applied_sources() {
     let env = env();
     env.eval::<()>(r#"
-        local location = {slot=0,slotID=1,transmogType=0,isSecondary=false}
+        -- TransmogLocationMixin:GetData() payload from cached Blizzard_TransmogShared.
+        local location = {slotID=1,type=0,modification=0}
         local visual = C_Transmog.GetSlotVisualInfo(location)
         assert(visual.baseSourceID == 190000 and visual.baseVisualID == 90000)
         assert(visual.appliedSourceID == 0 and visual.pendingSourceID == 0)
@@ -41,6 +42,31 @@ fn transmog_outfit_visuals_shape_tracks_equipped_pending_and_applied_sources() {
         visual = C_Transmog.GetSlotVisualInfo(location)
         assert(visual.appliedSourceID == 190001 and visual.appliedVisualID == 90001)
         assert(visual.pendingSourceID == 0)
+    "#).unwrap();
+}
+
+#[test]
+fn transmog_outfit_visuals_inventory_selectors_distinguish_shoulders_and_weapon_types() {
+    let env = env();
+    env.eval::<()>(r#"
+        local api = C_TransmogOutfitInfo
+        api.SetPendingTransmog(1,0,0,190011,1)
+        api.SetPendingTransmog(2,0,0,190012,1)
+        api.SetViewedWeaponOptionForSlot(12,1)
+        api.SetViewedWeaponOptionForSlot(13,5)
+        api.SetPendingTransmog(12,0,1,190013,1)
+        api.SetPendingTransmog(12,1,1,190014,1)
+        api.SetPendingTransmog(13,0,5,190015,1)
+        local function pending(slotID, kind, modification)
+            return C_Transmog.GetSlotVisualInfo({slotID=slotID,type=kind,modification=modification}).pendingSourceID
+        end
+        assert(pending(3,0,0) == 190011)
+        assert(pending(3,0,1) == 190012)
+        assert(pending(16,0,0) == 190013)
+        assert(pending(16,1,0) == 190014)
+        assert(pending(17,0,0) == 190015)
+        assert(C_Transmog.GetSlotVisualInfo({slotID=2,type=0,modification=0}) == nil)
+        assert(not pcall(C_Transmog.GetSlotVisualInfo, {slot=0,slotID=1,transmogType=0,isSecondary=false}))
     "#).unwrap();
 }
 

@@ -50,10 +50,7 @@ pub(super) fn get_available(state: &mut LuaState) -> LuaResult<u32> {
                         .copied()
                         .unwrap_or(true)
                 };
-                entry.valid_for_character
-                    && (!entry.hidden_until_collected || entry.collected)
-                    && checked(collection_filter)
-                    && checked(content_filter)
+                is_available(entry) && checked(collection_filter) && checked(content_filter)
             })
             .cloned()
             .collect::<Vec<_>>()
@@ -67,6 +64,22 @@ pub(super) fn get_available(state: &mut LuaState) -> LuaResult<u32> {
         table_set_num(state, table, (index + 1) as f64, row);
     }
     state.push(array);
+    Ok(1)
+}
+
+fn is_available(entry: &TransmogSetInfo) -> bool {
+    entry.valid_for_character && (!entry.hidden_until_collected || entry.collected)
+}
+
+pub(super) fn has_available(state: &mut LuaState) -> LuaResult<u32> {
+    // INFERRED: availability ignores UI filters, so a zero-result filter does
+    // not hide the controls needed to recover the player's available sets.
+    let available = borrow_state(state)?
+        .transmog_sets
+        .entries
+        .iter()
+        .any(is_available);
+    state.push(Val::Bool(available));
     Ok(1)
 }
 

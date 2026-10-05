@@ -651,18 +651,25 @@ fn party_info_instance_abandon_defaults_are_not_c_api_temporary_shims() {
 }
 
 #[test]
-fn transmog_sets_empty_inventory_defaults_are_not_c_api_temporary_shims() {
-    let temporary_shims = c_api_temporary_shims_source();
-    let c_api = include_str!("../src/c_api/mod.rs");
-
-    assert!(
-        !temporary_shims.contains("c_transmog_sets"),
-        "unmodeled C_TransmogSets empty wardrobe-set defaults belong in lua_api::workarounds::temporary"
-    );
-    assert!(
-        !c_api.contains("c_transmog_sets"),
-        "C_TransmogSets empty inventory defaults should not be wired through c_api registration"
-    );
+#[cfg(feature = "retail-12-0-0")]
+fn transmog_sets_availability_tracks_character_eligibility_and_collection() {
+    use wow_ui_sim::c_api::c_transmog_sets::TransmogSetInfo;
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().transmog_sets.entries.push(TransmogSetInfo {
+        set_id: 99, name: "Hidden Plate".into(), hidden_until_collected: true,
+        ..Default::default()
+    });
+    assert!(!env.eval::<bool>("return C_TransmogSets.HasAvailableSets()").unwrap());
+    env.state().borrow_mut().transmog_sets.entries[0].valid_for_character = true;
+    assert!(!env.eval::<bool>("return C_TransmogSets.HasAvailableSets()").unwrap());
+    env.state().borrow_mut().transmog_sets.entries[0].collected = true;
+    env.eval::<()>(r#"
+        assert(C_TransmogSets.HasAvailableSets())
+        assert(#C_TransmogSets.GetAvailableSets() == 1)
+        for filter=1,4 do C_TransmogSets.SetSetsFilter(filter,false) end
+        assert(#C_TransmogSets.GetAvailableSets() == 0)
+        assert(C_TransmogSets.HasAvailableSets(), 'filter controls must remain available to restore hidden results')
+    "#).unwrap();
 }
 
 #[test]
