@@ -166,3 +166,7 @@ The unchanged prefork failures are `blizzard_deprecated_housing_catalog_loads::b
 `cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1200-housing/Cargo.toml -- --check` and `rustfmt --edition 2024 --check /home/osso/.worktrees/wow-ui-sim-p1200-housing/tests/housing.rs` exit 0. Manual changed-Rust review covers model wiring, field names, borrow lifetimes across callbacks, timer neighborhood identity, table rooting and explicit diagnostic limitations. Six pre-existing deprecated Clippy manifest-key warnings from `iced-wgpu-patched/Cargo.toml` appear in base and final commands; no new compiler warnings or suppressions.
 
 All 17 assigned observations are `ok: true`, `raw=function; lookup=function` in `/home/osso/.cache/wow-ui-sim-audit/p1200-housing-sweep.json`. Exactly those 17 IDs, no others, were removed from the fixture. Logs reside in this worktree's `target/p1200-final-*.log`; documentation-only proof recording does not invalidate code-revision results.
+
+## Mixed namespace closure contract — 2026-10-05
+
+`C_StringUtil.FloorToNearestString` and `RoundToNearestString` format finite numeric inputs as integer strings. INFERRED: rounding ties toward positive infinity; nonnumeric/nonfinite inputs error; negative zero formats as `0`. Cached StringUtilDocumentation supplies the one-number/one-string contract, not native tie/coercion/secrecy parity. Concrete signed fractional cases exercise both producers in `tests/p1200_mixed.rs`.

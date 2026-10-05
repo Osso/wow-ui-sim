@@ -62,8 +62,6 @@
   "wt-global-api-C_Spell.IsSpellImportant-311",
   "wt-global-api-C_SpellBook.GetSpellBookItemLossOfControlCooldownDuration-317",
   "wt-global-api-C_StableInfo.IsBonusPetSlotAvailable-322",
-  "wt-global-api-C_StringUtil.FloorToNearestString-326",
-  "wt-global-api-C_StringUtil.RoundToNearestString-328",
   "wt-global-api-C_TooltipComparison.CompareItem-333",
   "wt-global-api-C_TooltipInfo.GetOutfit-334",
   "wt-global-api-C_TradeSkillUI.GetEnchantItems-643",

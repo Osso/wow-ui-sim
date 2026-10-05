@@ -63,6 +63,21 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
         "StripHyperlinks",
         c_string_util_strip_hyperlinks,
     )?;
+    #[cfg(feature = "retail-12-0-0")]
+    {
+        table_set_rust_fn_static(
+            state,
+            c_string_util_ref,
+            "FloorToNearestString",
+            floor_to_nearest_string,
+        )?;
+        table_set_rust_fn_static(
+            state,
+            c_string_util_ref,
+            "RoundToNearestString",
+            round_to_nearest_string,
+        )?;
+    }
     #[cfg(feature = "numeric-rule-formatters")]
     super::numeric_rule_formatter::register(state, c_string_util_ref)?;
     #[cfg(feature = "retail-12-0-5")]
@@ -194,6 +209,38 @@ fn truncate_ascii_space_runs(input: &[u8], max_spaces: usize) -> Vec<u8> {
             true
         })
         .collect()
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn floor_to_nearest_string(state: &mut LuaState) -> LuaResult<u32> {
+    format_integer(state, f64::floor)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn round_to_nearest_string(state: &mut LuaState) -> LuaResult<u32> {
+    // INFERRED: nearest integer with ties toward positive infinity, like floor(n + .5).
+    format_integer(state, |number| (number + 0.5).floor())
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn format_integer(state: &mut LuaState, round: fn(f64) -> f64) -> LuaResult<u32> {
+    let number = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let Val::Num(number) = number else {
+        return Err(runtime_error("integer formatting requires a number"));
+    };
+    // INFERRED: reject nonfinite inputs; native invalid-input policy is unverified.
+    if !number.is_finite() {
+        return Err(runtime_error("integer formatting requires a finite number"));
+    }
+    let rounded = round(number);
+    let text = if rounded == 0.0 {
+        "0".to_owned()
+    } else {
+        format!("{rounded:.0}")
+    };
+    let result = create_string(state, &text);
+    state.push(result);
+    Ok(1)
 }
 
 fn transform_string_bytes(state: &mut LuaState, transform: fn(&[u8]) -> Vec<u8>) -> LuaResult<u32> {
