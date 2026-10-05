@@ -1,0 +1,684 @@
+{
+  "enums": {
+    "CraftingOrderResult": {
+      "source": "ProfessionConstantsDocumentation.lua:78",
+      "sha256": "4537d8bae961bdde5263d47eed1a605c87d17f6583c4fe34a11861660291b1df",
+      "meta": {
+        "NumValues": 49,
+        "MinValue": 0,
+        "MaxValue": 48
+      },
+      "values": {
+        "Ok": 0,
+        "Aborted": 1,
+        "AlreadyClaimed": 2,
+        "AlreadyCrafted": 3,
+        "CannotBeOrdered": 4,
+        "CannotCancel": 5,
+        "CannotClaim": 6,
+        "CannotClaimOwnOrder": 7,
+        "CannotCraft": 8,
+        "CannotCreate": 9,
+        "CannotFulfill": 10,
+        "CannotRecraft": 11,
+        "CannotReject": 12,
+        "CannotRelease": 13,
+        "CrafterIsIgnored": 14,
+        "DatabaseError": 15,
+        "Expired": 16,
+        "Locked": 17,
+        "InvalidDuration": 18,
+        "InvalidMinQuality": 19,
+        "InvalidNotes": 20,
+        "InvalidReagent": 21,
+        "InvalidRealm": 22,
+        "InvalidRecipe": 23,
+        "InvalidRecraftItem": 24,
+        "InvalidSort": 25,
+        "InvalidTarget": 26,
+        "InvalidType": 27,
+        "MaxOrdersReached": 28,
+        "MissingCraftingTable": 29,
+        "MissingCurrency": 30,
+        "MissingItem": 31,
+        "MissingNpc": 32,
+        "MissingOrder": 33,
+        "MissingRecraftItem": 34,
+        "NoAccountItems": 35,
+        "NotClaimed": 36,
+        "NotCrafted": 37,
+        "NotInGuild": 38,
+        "NotYetImplemented": 39,
+        "OutOfPublicOrderCapacity": 40,
+        "ServerIsNotAvailable": 41,
+        "ThrottleViolation": 42,
+        "TargetCannotCraft": 43,
+        "TargetLocked": 44,
+        "Timeout": 45,
+        "TooManyCurrencies": 46,
+        "TooManyItems": 47,
+        "WrongVersion": 48
+      }
+    },
+    "EditModeAccountSetting": {
+      "source": "EditModeManagerConstantsDocumentation.lua:202",
+      "sha256": "13071bcd83a9bced2f02616608f15f6662a04ccafecb2834452c1e4e80135dfe",
+      "meta": {
+        "NumValues": 36,
+        "MinValue": 0,
+        "MaxValue": 35
+      },
+      "values": {
+        "ShowGrid": 0,
+        "GridSpacing": 1,
+        "SettingsExpanded": 2,
+        "ShowTargetAndFocus": 3,
+        "ShowStanceBar": 4,
+        "ShowPetActionBar": 5,
+        "ShowPossessActionBar": 6,
+        "ShowCastBar": 7,
+        "ShowEncounterBar": 8,
+        "ShowExtraAbilities": 9,
+        "ShowBuffsAndDebuffs": 10,
+        "DeprecatedShowDebuffFrame": 11,
+        "ShowPartyFrames": 12,
+        "ShowRaidFrames": 13,
+        "ShowTalkingHeadFrame": 14,
+        "ShowVehicleLeaveButton": 15,
+        "ShowBossFrames": 16,
+        "ShowArenaFrames": 17,
+        "ShowLootFrame": 18,
+        "ShowHudTooltip": 19,
+        "ShowStatusTrackingBar2": 20,
+        "ShowDurabilityFrame": 21,
+        "EnableSnap": 22,
+        "EnableAdvancedOptions": 23,
+        "ShowPetFrame": 24,
+        "ShowTimerBars": 25,
+        "ShowVehicleSeatIndicator": 26,
+        "ShowArchaeologyBar": 27,
+        "ShowCooldownViewer": 28,
+        "ShowPersonalResourceDisplay": 29,
+        "ShowEncounterEvents": 30,
+        "ShowDamageMeter": 31,
+        "ShowExternalDefensives": 32,
+        "ShowRaidWarning": 33,
+        "ShowTotemActionBar": 34,
+        "ShowLossOfControl": 35
+      }
+    },
+    "EditModeSystem": {
+      "source": "EditModeManagerConstantsDocumentation.lua:636",
+      "sha256": "13071bcd83a9bced2f02616608f15f6662a04ccafecb2834452c1e4e80135dfe",
+      "meta": {
+        "NumValues": 27,
+        "MinValue": 0,
+        "MaxValue": 26
+      },
+      "values": {
+        "ActionBar": 0,
+        "CastBar": 1,
+        "Minimap": 2,
+        "UnitFrame": 3,
+        "EncounterBar": 4,
+        "ExtraAbilities": 5,
+        "AuraFrame": 6,
+        "TalkingHeadFrame": 7,
+        "ChatFrame": 8,
+        "VehicleLeaveButton": 9,
+        "LootFrame": 10,
+        "HudTooltip": 11,
+        "ObjectiveTracker": 12,
+        "MicroMenu": 13,
+        "Bags": 14,
+        "StatusTrackingBar": 15,
+        "DurabilityFrame": 16,
+        "TimerBars": 17,
+        "VehicleSeatIndicator": 18,
+        "ArchaeologyBar": 19,
+        "CooldownViewer": 20,
+        "PersonalResourceDisplay": 21,
+        "EncounterEvents": 22,
+        "DamageMeter": 23,
+        "RaidWarning": 24,
+        "TotemActionBar": 25,
+        "LossOfControl": 26
+      }
+    },
+    "PlayerInteractionType": {
+      "source": "PlayerInteractionManagerConstantsDocumentation.lua:6",
+      "sha256": "2379e62e1a9c86177dd3094a01a6a985a05d8e678005478f8ac68236694dfbe4",
+      "meta": {
+        "NumValues": 80,
+        "MinValue": 0,
+        "MaxValue": 79
+      },
+      "values": {
+        "None": 0,
+        "TradePartner": 1,
+        "Item": 2,
+        "Gossip": 3,
+        "QuestGiver": 4,
+        "Merchant": 5,
+        "TaxiNode": 6,
+        "Trainer": 7,
+        "Banker": 8,
+        "AlliedRaceDetailsGiver": 9,
+        "GuildBanker": 10,
+        "Registrar": 11,
+        "Vendor": 12,
+        "PetitionVendor": 13,
+        "GuildTabardVendor": 14,
+        "TalentMaster": 15,
+        "SpecializationMaster": 16,
+        "MailInfo": 17,
+        "SpiritHealer": 18,
+        "AreaSpiritHealer": 19,
+        "Binder": 20,
+        "Auctioneer": 21,
+        "StableMaster": 22,
+        "BattleMaster": 23,
+        "Transmogrifier": 24,
+        "LFGDungeon": 25,
+        "VoidStorageBanker": 26,
+        "BlackMarketAuctioneer": 27,
+        "AdventureMap": 28,
+        "WorldMap": 29,
+        "GarrArchitect": 30,
+        "GarrTradeskill": 31,
+        "GarrMission": 32,
+        "ShipmentCrafter": 33,
+        "GarrRecruitment": 34,
+        "GarrTalent": 35,
+        "Trophy": 36,
+        "PlayerChoice": 37,
+        "ArtifactForge": 38,
+        "ObliterumForge": 39,
+        "ScrappingMachine": 40,
+        "ContributionCollector": 41,
+        "AzeriteRespec": 42,
+        "IslandQueue": 43,
+        "ItemInteraction": 44,
+        "ChromieTime": 45,
+        "CovenantPreview": 46,
+        "AnimaDiversion": 47,
+        "LegendaryCrafting": 48,
+        "WeeklyRewards": 49,
+        "Soulbind": 50,
+        "CovenantSanctum": 51,
+        "NewPlayerGuide": 52,
+        "ItemUpgrade": 53,
+        "AdventureJournal": 54,
+        "Renown": 55,
+        "AzeriteForge": 56,
+        "PerksProgramVendor": 57,
+        "ProfessionsCraftingOrder": 58,
+        "Professions": 59,
+        "ProfessionsCustomerOrder": 60,
+        "TraitSystem": 61,
+        "BarbersChoice": 62,
+        "JailersTowerBuffs": 63,
+        "MajorFactionRenown": 64,
+        "PersonalTabardVendor": 65,
+        "ForgeMaster": 66,
+        "CharacterBanker": 67,
+        "AccountBanker": 68,
+        "ProfessionRespec": 69,
+        "CornerstoneInteraction": 70,
+        "RenameNeighborhood": 71,
+        "HousingBulletinBoard": 72,
+        "HousingPedestal": 73,
+        "CreateGuildNeighborhood": 74,
+        "NeighborhoodCharter": 75,
+        "GuildRename": 76,
+        "OpenNeighborhoodCharterConfirmation": 77,
+        "OpenHouseFinder": 78,
+        "TieredEntrance": 79
+      }
+    },
+    "QuestTagType": {
+      "source": "QuestConstantsDocumentation.lua:87",
+      "sha256": "3768bc82cf7f84f0b00de238837ee80ffad10d58505ae8a0a058a626310b09ad",
+      "meta": {
+        "NumValues": 20,
+        "MinValue": 0,
+        "MaxValue": 19
+      },
+      "values": {
+        "Tag": 0,
+        "Profession": 1,
+        "Normal": 2,
+        "PvP": 3,
+        "PetBattle": 4,
+        "Bounty": 5,
+        "Dungeon": 6,
+        "Invasion": 7,
+        "Raid": 8,
+        "Contribution": 9,
+        "RatedReward": 10,
+        "InvasionWrapper": 11,
+        "FactionAssault": 12,
+        "Islands": 13,
+        "Threat": 14,
+        "CovenantCalling": 15,
+        "DragonRiderRacing": 16,
+        "Capstone": 17,
+        "WorldBoss": 18,
+        "Prey": 19
+      }
+    },
+    "SendAddonMessageResult": {
+      "source": "ChatConstantsDocumentation.lua:144",
+      "sha256": "cc5cfa3aa947b5e611faad38bc8ca59e981cdcde2b3da9c87e204e4c806afc05",
+      "meta": {
+        "NumValues": 13,
+        "MinValue": 0,
+        "MaxValue": 12
+      },
+      "values": {
+        "Success": 0,
+        "InvalidPrefix": 1,
+        "InvalidMessage": 2,
+        "AddonMessageThrottle": 3,
+        "InvalidChatType": 4,
+        "NotInGroup": 5,
+        "TargetRequired": 6,
+        "InvalidChannel": 7,
+        "ChannelThrottle": 8,
+        "GeneralError": 9,
+        "NotInGuild": 10,
+        "AddOnMessageLockdown": 11,
+        "TargetOffline": 12
+      }
+    },
+    "SurveyDeliveryMoment": {
+      "source": "WowSurveyConstantsDocumentation.lua:18",
+      "sha256": "7ba4e75dd1c50f42941dd8f015a4d1b57f1bf22d24d28f9458311d7770d6f9aa",
+      "meta": {
+        "NumValues": 6,
+        "MinValue": 0,
+        "MaxValue": 5
+      },
+      "values": {
+        "Login": 0,
+        "ProfessionTable": 1,
+        "QuestTurnIn": 2,
+        "ChestLooted": 3,
+        "MythicPlusCompleted": 4,
+        "EncounterEnd": 5
+      }
+    },
+    "TooltipDataLineType": {
+      "source": "TooltipInfoSharedDocumentation.lua:27",
+      "sha256": "3cae18d4c643bae07c2d4aad7f333ae1d3d47c502f737ceec73b3ee566dba1e3",
+      "meta": {
+        "NumValues": 50,
+        "MinValue": 0,
+        "MaxValue": 49
+      },
+      "values": {
+        "None": 0,
+        "Blank": 1,
+        "UnitName": 2,
+        "GemSocket": 3,
+        "AzeriteEssenceSlot": 4,
+        "AzeriteEssencePower": 5,
+        "LearnableSpell": 6,
+        "UnitThreat": 7,
+        "QuestObjective": 8,
+        "AzeriteItemPowerDescription": 9,
+        "RuneforgeLegendaryPowerDescription": 10,
+        "SellPrice": 11,
+        "ProfessionCraftingQuality": 12,
+        "SpellName": 13,
+        "CurrencyTotal": 14,
+        "ItemEnchantmentPermanent": 15,
+        "UnitOwner": 16,
+        "QuestTitle": 17,
+        "QuestPlayer": 18,
+        "NestedBlock": 19,
+        "ItemBinding": 20,
+        "EquipSlot": 21,
+        "ItemName": 22,
+        "Separator": 23,
+        "ToyName": 24,
+        "ToyText": 25,
+        "ToyEffect": 26,
+        "ToyDuration": 27,
+        "ToyDescription": 28,
+        "ToySource": 29,
+        "GemSocketEnchantment": 30,
+        "ItemLevel": 31,
+        "ItemUpgradeLevel": 32,
+        "SpellPassive": 33,
+        "SpellDescription": 34,
+        "ItemQuality": 35,
+        "TradeTimeRemaining": 36,
+        "FlavorText": 37,
+        "ItemSpellTriggerLearn": 38,
+        "LearnTransmogSet": 39,
+        "LearnTransmogIllusion": 40,
+        "ErrorLine": 41,
+        "DisabledLine": 42,
+        "UsageRequirement": 43,
+        "ItemSpellTriggerOnUse": 44,
+        "ItemSpellTriggerOnEquip": 45,
+        "ItemSpellTriggerOnProc": 46,
+        "UnitLevel": 47,
+        "UnitType": 48,
+        "UnitDead": 49
+      }
+    },
+    "TooltipDataType": {
+      "source": "TooltipInfoSharedDocumentation.lua:87",
+      "sha256": "3cae18d4c643bae07c2d4aad7f333ae1d3d47c502f737ceec73b3ee566dba1e3",
+      "meta": {
+        "NumValues": 28,
+        "MinValue": 0,
+        "MaxValue": 27
+      },
+      "values": {
+        "Item": 0,
+        "Spell": 1,
+        "Unit": 2,
+        "Corpse": 3,
+        "Object": 4,
+        "Currency": 5,
+        "BattlePet": 6,
+        "UnitAura": 7,
+        "AzeriteEssence": 8,
+        "CompanionPet": 9,
+        "Mount": 10,
+        "PetAction": 11,
+        "Achievement": 12,
+        "EnhancedConduit": 13,
+        "EquipmentSet": 14,
+        "InstanceLock": 15,
+        "PvPBrawl": 16,
+        "RecipeRankInfo": 17,
+        "Totem": 18,
+        "Toy": 19,
+        "CorruptionCleanser": 20,
+        "MinimapMouseover": 21,
+        "Flyout": 22,
+        "Quest": 23,
+        "QuestPartyProgress": 24,
+        "Macro": 25,
+        "Debug": 26,
+        "Outfit": 27
+      }
+    },
+    "TradeskillRecipeType": {
+      "source": "TradeSkillUITypesDocumentation.lua:70",
+      "sha256": "ab079389cf9f96ba458e9fa98ab68255b5c2007d666d4b1684245fe043efe2ed",
+      "meta": {
+        "NumValues": 4,
+        "MinValue": 1,
+        "MaxValue": 4
+      },
+      "values": {
+        "Item": 1,
+        "Salvage": 2,
+        "Enchant": 3,
+        "Gathering": 4
+      }
+    },
+    "UICursorType": {
+      "source": "CursorConstDocumentation.lua:120",
+      "sha256": "833fb715a0e66ceffdc40fa86c9eb3b8a356fa9c5425e0b2004ed27171b63f3d",
+      "meta": {
+        "NumValues": 22,
+        "MinValue": 0,
+        "MaxValue": 21
+      },
+      "values": {
+        "Default": 0,
+        "Item": 1,
+        "Money": 2,
+        "Spell": 3,
+        "PetAction": 4,
+        "Merchant": 5,
+        "ActionBar": 6,
+        "Macro": 7,
+        "AmmoObsolete": 8,
+        "Pet": 9,
+        "GuildBank": 10,
+        "GuildBankMoney": 11,
+        "EquipmentSet": 12,
+        "Currency": 13,
+        "Flyout": 14,
+        "VoidItem": 15,
+        "BattlePet": 16,
+        "Mount": 17,
+        "Toy": 18,
+        "ConduitCollectionItem": 19,
+        "PerksProgramVendorItem": 20,
+        "Outfit": 21
+      }
+    },
+    "UIWidgetVisualizationType": {
+      "source": "UIWidgetManagerSharedDocumentation.lua:128",
+      "sha256": "ea67d75f63fd12072cabc7fc7615675b9ba814a85202e7c43ddf2178e079169d",
+      "meta": {
+        "NumValues": 32,
+        "MinValue": 0,
+        "MaxValue": 31
+      },
+      "values": {
+        "IconAndText": 0,
+        "CaptureBar": 1,
+        "StatusBar": 2,
+        "DoubleStatusBar": 3,
+        "IconTextAndBackground": 4,
+        "DoubleIconAndText": 5,
+        "StackedResourceTracker": 6,
+        "IconTextAndCurrencies": 7,
+        "TextWithState": 8,
+        "HorizontalCurrencies": 9,
+        "BulletTextList": 10,
+        "ScenarioHeaderCurrenciesAndBackground": 11,
+        "TextureAndText": 12,
+        "SpellDisplay": 13,
+        "DoubleStateIconRow": 14,
+        "TextureAndTextRow": 15,
+        "ZoneControl": 16,
+        "CaptureZone": 17,
+        "TextureWithAnimation": 18,
+        "DiscreteProgressSteps": 19,
+        "ScenarioHeaderTimer": 20,
+        "TextColumnRow": 21,
+        "Spacer": 22,
+        "UnitPowerBar": 23,
+        "FillUpFrames": 24,
+        "TextWithSubtext": 25,
+        "MapPinAnimation": 26,
+        "ItemDisplay": 27,
+        "TugOfWar": 28,
+        "ScenarioHeaderDelves": 29,
+        "ButtonHeader": 30,
+        "PreyHuntProgress": 31
+      }
+    }
+  },
+  "rows": {
+    "enumerations-Enum-CraftingOrderResult-036": {
+      "enum": "CraftingOrderResult",
+      "member": null,
+      "value": null
+    },
+    "enumerations-Enum-CraftingOrderResult-037": {
+      "enum": "CraftingOrderResult",
+      "member": "MissingCurrency",
+      "value": 30
+    },
+    "enumerations-Enum-CraftingOrderResult-038": {
+      "enum": "CraftingOrderResult",
+      "member": "TooManyCurrencies",
+      "value": 46
+    },
+    "enumerations-Enum-EditModeAccountSetting-039": {
+      "enum": "EditModeAccountSetting",
+      "member": null,
+      "value": null,
+      "superseded_by": "12.0.5 and 12.1.0"
+    },
+    "enumerations-Enum-EditModeAccountSetting-040": {
+      "enum": "EditModeAccountSetting",
+      "member": "ShowPersonalResourceDisplay",
+      "value": 29
+    },
+    "enumerations-Enum-EditModeAccountSetting-041": {
+      "enum": "EditModeAccountSetting",
+      "member": "ShowEncounterEvents",
+      "value": 30
+    },
+    "enumerations-Enum-EditModeAccountSetting-042": {
+      "enum": "EditModeAccountSetting",
+      "member": "ShowDamageMeter",
+      "value": 31
+    },
+    "enumerations-Enum-EditModeAccountSetting-043": {
+      "enum": "EditModeAccountSetting",
+      "member": "ShowExternalDefensives",
+      "value": 32
+    },
+    "enumerations-Enum-EditModeSystem-044": {
+      "enum": "EditModeSystem",
+      "member": null,
+      "value": null,
+      "superseded_by": "12.0.5 and 12.1.0"
+    },
+    "enumerations-Enum-EditModeSystem-045": {
+      "enum": "EditModeSystem",
+      "member": "PersonalResourceDisplay",
+      "value": 21
+    },
+    "enumerations-Enum-EditModeSystem-046": {
+      "enum": "EditModeSystem",
+      "member": "EncounterEvents",
+      "value": 22
+    },
+    "enumerations-Enum-EditModeSystem-047": {
+      "enum": "EditModeSystem",
+      "member": "DamageMeter",
+      "value": 23
+    },
+    "enumerations-Enum-PlayerInteractionType-048": {
+      "enum": "PlayerInteractionType",
+      "member": null,
+      "value": null,
+      "absent": [
+        "PlaceholderType79"
+      ]
+    },
+    "enumerations-Enum-PlayerInteractionType-049": {
+      "enum": "PlayerInteractionType",
+      "member": "TieredEntrance",
+      "value": 79,
+      "absent": [
+        "PlaceholderType79"
+      ]
+    },
+    "enumerations-Enum-QuestTagType-050": {
+      "enum": "QuestTagType",
+      "member": null,
+      "value": null
+    },
+    "enumerations-Enum-QuestTagType-051": {
+      "enum": "QuestTagType",
+      "member": "Prey",
+      "value": 19,
+      "absent": [
+        "Placeholder_1"
+      ]
+    },
+    "enumerations-Enum-SendAddonMessageResult-052": {
+      "enum": "SendAddonMessageResult",
+      "member": null,
+      "value": null
+    },
+    "enumerations-Enum-SendAddonMessageResult-053": {
+      "enum": "SendAddonMessageResult",
+      "member": "AddOnMessageLockdown",
+      "value": 11
+    },
+    "enumerations-Enum-SendAddonMessageResult-054": {
+      "enum": "SendAddonMessageResult",
+      "member": "TargetOffline",
+      "value": 12
+    },
+    "enumerations-Enum-SurveyDeliveryMoment-055": {
+      "enum": "SurveyDeliveryMoment",
+      "member": null,
+      "value": null,
+      "superseded_by": "12.0.5"
+    },
+    "enumerations-Enum-SurveyDeliveryMoment-056": {
+      "enum": "SurveyDeliveryMoment",
+      "member": "MythicPlusCompleted",
+      "value": 4
+    },
+    "enumerations-Enum-TooltipDataLineType-057": {
+      "enum": "TooltipDataLineType",
+      "member": null,
+      "value": null,
+      "superseded_by": "12.1.0 cached surface (earlier renumbering patch not established)"
+    },
+    "enumerations-Enum-TooltipDataLineType-058": {
+      "enum": "TooltipDataLineType",
+      "member": "SpellPassive",
+      "value": 33,
+      "superseded_by": "12.1.0 cached surface (earlier renumbering patch not established)"
+    },
+    "enumerations-Enum-TooltipDataLineType-059": {
+      "enum": "TooltipDataLineType",
+      "member": "SpellDescription",
+      "value": 34,
+      "superseded_by": "12.1.0 cached surface (earlier renumbering patch not established)"
+    },
+    "enumerations-Enum-TooltipDataType-060": {
+      "enum": "TooltipDataType",
+      "member": null,
+      "value": null
+    },
+    "enumerations-Enum-TooltipDataType-061": {
+      "enum": "TooltipDataType",
+      "member": "Outfit",
+      "value": 27
+    },
+    "enumerations-Enum-TradeskillRecipeType-062": {
+      "enum": "TradeskillRecipeType",
+      "member": null,
+      "value": null
+    },
+    "enumerations-Enum-TradeskillRecipeType-063": {
+      "enum": "TradeskillRecipeType",
+      "member": "Recraft",
+      "value": null
+    },
+    "enumerations-Enum-UICursorType-064": {
+      "enum": "UICursorType",
+      "member": null,
+      "value": null
+    },
+    "enumerations-Enum-UICursorType-065": {
+      "enum": "UICursorType",
+      "member": "Outfit",
+      "value": 21
+    },
+    "enumerations-Enum-UIWidgetVisualizationType-066": {
+      "enum": "UIWidgetVisualizationType",
+      "member": null,
+      "value": null,
+      "absent": [
+        "ControlZone",
+        "SpellWithChargesDisplay"
+      ]
+    },
+    "enumerations-Enum-UIWidgetVisualizationType-067": {
+      "enum": "UIWidgetVisualizationType",
+      "member": "PreyHuntProgress",
+      "value": 31
+    }
+  }
+}
