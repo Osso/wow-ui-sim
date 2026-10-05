@@ -28,6 +28,7 @@ fn spell_parent_survives_color_collection() {
 #[test]
 fn action_parent_survives_binding_color_collection() {
     let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().action_bars.insert(5, 19750);
     collect_in_colors(&env);
     env.exec(r#"
         local original = CreateColor
