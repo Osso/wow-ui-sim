@@ -16,6 +16,8 @@ pub(super) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "UnitCastingDuration", casting)?;
     LuaApiMut::register_function(lua, "UnitChannelDuration", channel)?;
     LuaApiMut::register_function(lua, "UnitEmpoweredChannelDuration", empowered)?;
+    #[cfg(feature = "retail-12-0-0")]
+    LuaApiMut::register_function(lua, "UnitEmpoweredStageDurations", stage_durations)?;
     LuaApiMut::register_function(lua, "UnitEmpoweredStagePercentages", stage_percentages)
 }
 
@@ -60,6 +62,39 @@ fn stage_percentages(state: &mut LuaState) -> LuaResult<u32> {
         );
     }
     state.push(Val::Table(percentages));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn stage_durations(state: &mut LuaState) -> LuaResult<u32> {
+    let unit = rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, 1))?;
+    if !matches!(unit, Val::Str(_)) {
+        return Err(rilua::runtime_error(
+            "UnitEmpoweredStageDurations requires a unit token",
+        ));
+    }
+    if crate::lua_api::methods::val_to_string(state, unit).as_deref() != Some("player") {
+        return Ok(0);
+    }
+    let timing = borrow_state(state)?
+        .channeling
+        .as_ref()
+        .and_then(|cast| cast.empower.clone().map(|timing| (cast.start_time, timing)));
+    let Some((mut start, timing)) = timing else {
+        return Ok(0);
+    };
+    let mut sections = timing.stage_durations;
+    sections.push(timing.hold_at_max);
+    let durations = state.gc.alloc_table(rilua::vm::table::Table::new());
+    state.push(Val::Table(durations));
+    for (index, seconds) in sections.into_iter().enumerate() {
+        // INFERRED: each object's clock starts at its stage boundary.
+        push_timed_duration_object(state, start, seconds)?;
+        let duration = state.stack_get(state.top - 1);
+        table_set_num(state, durations, (index + 1) as f64, duration);
+        state.pop();
+        start += seconds;
+    }
     Ok(1)
 }
 

@@ -27,6 +27,37 @@ fn get_cursor_position(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
+#[cfg(feature = "retail-12-0-0")]
+fn set_cursor_position(state: &mut LuaState) -> LuaResult<u32> {
+    let x = read_cursor_coordinate(state, 1)?;
+    let y = read_cursor_coordinate(state, 2)?;
+    let secure = rilua::api::state_is_secure(state);
+    let mut sim = crate::lua_api::methods::borrow_state_mut(state)?;
+    if !secure {
+        if !sim.plain_global_inputs.gamepad_cursor_input_available {
+            // INFERRED refused calls return nothing, matching SimulateMouse*.
+            return Ok(0);
+        }
+        sim.plain_global_inputs.gamepad_cursor_input_available = false;
+    }
+    // INFERRED uiUnit mapping: current unscaled screen coordinates. This
+    // updates simulator input state, not the operating system pointer.
+    sim.mouse_position = Some((x, sim.screen_height - y));
+    Ok(0)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn read_cursor_coordinate(state: &LuaState, index: i32) -> LuaResult<f32> {
+    let value =
+        rilua::table_security::unwrap_secret(state, crate::lua_bridge::stack_val(state, index))?;
+    match value {
+        Val::Num(value) if value.is_finite() && (value as f32).is_finite() => Ok(value as f32),
+        _ => Err(rilua::runtime_error(
+            "SetCursorPosition requires finite coordinates",
+        )),
+    }
+}
+
 fn get_mouse_focus(state: &mut LuaState) -> LuaResult<u32> {
     let hovered_id = { borrow_state(state)?.hovered_frame };
     match hovered_id {
@@ -63,6 +94,8 @@ fn is_mouse_button_down(state: &mut LuaState) -> LuaResult<u32> {
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetCursorPosition", get_cursor_position)?;
+    #[cfg(feature = "retail-12-0-0")]
+    LuaApiMut::register_function(lua, "SetCursorPosition", set_cursor_position)?;
     LuaApiMut::register_function(lua, "GetMouseFocus", get_mouse_focus)?;
     LuaApiMut::register_function(lua, "GetMouseFoci", get_mouse_foci)?;
     LuaApiMut::register_function(lua, "IsMouseButtonDown", is_mouse_button_down)?;

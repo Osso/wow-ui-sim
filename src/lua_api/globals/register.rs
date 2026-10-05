@@ -320,6 +320,8 @@ fn register_world_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::mouse_probes::register_all(lua)?;
     #[cfg(feature = "retail-12-0-0")]
     super::real::publication_12_0_0::register_all(lua)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::real::publication_unit_12_0_0::register_all(lua)?;
     #[cfg(feature = "retail-12-0-7")]
     super::real::simulate_mouse::register_all(lua)?;
     super::movement_probes::register_all(lua)?;

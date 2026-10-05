@@ -30,49 +30,7 @@ use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 use std::collections::HashSet;
 
-struct SpecificBattlegroundInfo {
-    name: &'static str,
-    bg_id: i32,
-    map_id: i32,
-    max_players: i32,
-    game_type: &'static str,
-    icon_texture: &'static str,
-}
-
-const SPECIFIC_BATTLEGROUND_ROWS: &[SpecificBattlegroundInfo] = &[
-    SpecificBattlegroundInfo {
-        name: "Warsong Gulch",
-        bg_id: 2,
-        map_id: 489,
-        max_players: 10,
-        game_type: "Capture the Flag",
-        icon_texture: "Interface\\Icons\\Achievement_BG_winWSG",
-    },
-    SpecificBattlegroundInfo {
-        name: "Arathi Basin",
-        bg_id: 3,
-        map_id: 529,
-        max_players: 15,
-        game_type: "Resource Race",
-        icon_texture: "Interface\\Icons\\Achievement_BG_winAB",
-    },
-    SpecificBattlegroundInfo {
-        name: "Eye of the Storm",
-        bg_id: 7,
-        map_id: 566,
-        max_players: 15,
-        game_type: "Capture and Hold",
-        icon_texture: "Interface\\Icons\\Achievement_BG_winEOS",
-    },
-    SpecificBattlegroundInfo {
-        name: "Silvershard Mines",
-        bg_id: 14,
-        map_id: 727,
-        max_players: 10,
-        game_type: "Payload Race",
-        icon_texture: "Interface\\Icons\\Achievement_BG_KillFlagCarriers_grabFlag_CapIt",
-    },
-];
+const SPECIFIC_BATTLEGROUND_COUNT: usize = 4;
 
 fn stack_i32(state: &LuaState, index: i32) -> Option<i32> {
     match stack_val(state, index) {
@@ -321,7 +279,7 @@ fn push_random_bg_info(state: &mut LuaState, info: RandomBGInfo) -> LuaResult<u3
 
 fn get_num_battleground_types(state: &mut LuaState) -> LuaResult<u32> {
     let world_rows = borrow_state(state)?.world.world_pvp_areas.len();
-    let row_count = world_rows + SPECIFIC_BATTLEGROUND_ROWS.len();
+    let row_count = world_rows + SPECIFIC_BATTLEGROUND_COUNT;
     state.push(Val::Num(row_count as f64));
     Ok(1)
 }
@@ -329,6 +287,49 @@ fn get_num_battleground_types(state: &mut LuaState) -> LuaResult<u32> {
 #[cfg(not(feature = "retail-12-0-0"))]
 mod legacy_battleground {
     use super::*;
+    struct SpecificBattlegroundInfo {
+        name: &'static str,
+        bg_id: i32,
+        map_id: i32,
+        max_players: i32,
+        game_type: &'static str,
+        icon_texture: &'static str,
+    }
+
+    const SPECIFIC_BATTLEGROUND_ROWS: &[SpecificBattlegroundInfo; SPECIFIC_BATTLEGROUND_COUNT] = &[
+        SpecificBattlegroundInfo {
+            name: "Warsong Gulch",
+            bg_id: 2,
+            map_id: 489,
+            max_players: 10,
+            game_type: "Capture the Flag",
+            icon_texture: "Interface\\Icons\\Achievement_BG_winWSG",
+        },
+        SpecificBattlegroundInfo {
+            name: "Arathi Basin",
+            bg_id: 3,
+            map_id: 529,
+            max_players: 15,
+            game_type: "Resource Race",
+            icon_texture: "Interface\\Icons\\Achievement_BG_winAB",
+        },
+        SpecificBattlegroundInfo {
+            name: "Eye of the Storm",
+            bg_id: 7,
+            map_id: 566,
+            max_players: 15,
+            game_type: "Capture and Hold",
+            icon_texture: "Interface\\Icons\\Achievement_BG_winEOS",
+        },
+        SpecificBattlegroundInfo {
+            name: "Silvershard Mines",
+            bg_id: 14,
+            map_id: 727,
+            max_players: 10,
+            game_type: "Payload Race",
+            icon_texture: "Interface\\Icons\\Achievement_BG_KillFlagCarriers_grabFlag_CapIt",
+        },
+    ];
 
     pub(super) fn get_battleground_info(state: &mut LuaState) -> LuaResult<u32> {
         let index = stack_i32(state, 1).unwrap_or(0);
