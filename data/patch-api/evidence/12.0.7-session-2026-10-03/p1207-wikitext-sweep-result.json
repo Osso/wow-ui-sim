@@ -47,11 +47,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "console command; no Lua publication probe",
-      "kind": "unprobeable",
+      "detail": "Command record present=true",
+      "kind": "command",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-ThreadPoolPerThreadAllocator-406": {
     "expected": {
@@ -281,11 +281,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "console command; no Lua publication probe",
-      "kind": "unprobeable",
+      "detail": "Command record present=true",
+      "kind": "command",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-frontendMatchingModes_WowLabs-417": {
     "expected": {

@@ -337,7 +337,7 @@
       "symbols": [
         "174 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication (added/changed) or absence (removed; deprecation-file fallbacks accepted) in a fully loaded default-Retail environment (12.1.0 surface). Rows a later patch removes again are expected absent (superseded_by). Publication only. 5 known gaps baselined in tests/data/patch_12_0_7_sweep_known_gaps.json.",
+      "scope": "Data-driven publication (added/changed) or absence (removed; deprecation-file fallbacks accepted) in a fully loaded default-Retail environment (12.1.0 surface). Rows a later patch removes again are expected absent (superseded_by). Publication only. 3 known gaps baselined in tests/data/patch_12_0_7_sweep_known_gaps.json.",
       "spec": "docs/specs/patch-12-0-7-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_7_publication_sweep.rs",
@@ -380,6 +380,20 @@
       "implementation": "src/c_api club state; retired workarounds/temporary/club_management_defaults.rs",
       "compiled_revision": "5e4e6b26a",
       "proof": "Sol worker GREEN; main-thread on master 5e4e6b26a: club 45, guild 192, communities 11, bnet 3, chat 157 (1 pre-existing), p1207_gap_closures 6, 12.0.7 sweep, lua-errors []; no independent review"
+    },
+    {
+      "id": "console-command-registry",
+      "symbols": [
+        "C_Console.GetAllCommands command records"
+      ],
+      "scope": "GetAllCommands builds records from live CVar storage (commandType Cvar, incl. runtime RegisterCVar) plus epoch-scoped console commands (commandType Command; GetCVar stays nil). INFERRED: case-insensitive ordering, category None, empty metadata strings. Macro/script records and command execution not modeled.",
+      "spec": "docs/specs/console-command-catalog.md",
+      "tests": [
+        "tests/c_system_api.rs"
+      ],
+      "implementation": "console registry (commit d7cd90d3d rebased)",
+      "compiled_revision": "305e919c4",
+      "proof": "Sol worker GREEN; main-thread on rebased branch: four sweeps, console 13, cvar 54, c_system_api 62; no independent review"
     }
   ],
   "source_rows": [
@@ -1651,9 +1665,12 @@
     },
     {
       "source_id": "wt-cvars-MemUsageStackTrace-413",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "unprobeable: console command; no Lua publication probe"
+      "capabilities": [
+        "publication-sweep-12-0-7",
+        "console-command-registry"
+      ],
+      "status": "partial-development-green",
+      "note": "Console command record (commandType Command) published via C_Console.GetAllCommands; execution not modeled."
     },
     {
       "source_id": "wt-cvars-ThreadPoolPerThreadAllocator-406",
@@ -1753,9 +1770,12 @@
     },
     {
       "source_id": "wt-cvars-fetchBleepProxies-409",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "unprobeable: console command; no Lua publication probe"
+      "capabilities": [
+        "publication-sweep-12-0-7",
+        "console-command-registry"
+      ],
+      "status": "partial-development-green",
+      "note": "Console command record (commandType Command) published via C_Console.GetAllCommands; execution not modeled."
     },
     {
       "source_id": "wt-cvars-frontendMatchingModes_WowLabs-417",
