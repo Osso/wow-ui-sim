@@ -172,8 +172,8 @@ fn test_startup_publishers_load_before_consumers() {
         }
 
         assert!(
-            !names.contains(&"Deprecated_PaperDoll"),
-            "unrelated load-on-demand addons must remain excluded"
+            names.contains(&"Deprecated_PaperDoll"),
+            "built-in non-LoD Deprecated_PaperDoll is a Game startup addon"
         );
     }
 }
@@ -418,6 +418,7 @@ fn test_blizzard_addon_load_order_snapshot() {
             "Blizzard_WeeklyRewardsUtil",
             "Blizzard_WorldMap",
             "Blizzard_ZoneAbility",
+            "Deprecated_PaperDoll",
         ];
 
         assert_eq!(
