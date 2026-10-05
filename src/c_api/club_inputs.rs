@@ -3,7 +3,7 @@ use super::club_members::{fire_member_event, sync_guild};
 use super::club_model::{GUILD_ID, MEMBER, Member, OWNER};
 use crate::lua_api::WowLuaEnv;
 use crate::lua_api::state::{GuildMember, SimState};
-use rilua::{LuaResult, runtime_error};
+use rilua::{LuaApiMut, LuaResult, runtime_error};
 
 type MemberEvent = (&'static str, Option<u8>);
 
