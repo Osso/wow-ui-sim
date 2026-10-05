@@ -45,3 +45,208 @@ fn club_creation_grants_owner_privileges_and_own_note_events() {
         assert(updatedId == owner.memberId)
     "#).unwrap();
 }
+
+
+fn community() -> (WowLuaEnv, String) {
+    let env = WowLuaEnv::new().unwrap();
+    let club: String = env.eval(r#"
+        C_Club.CreateClub('Friday Raiders', 'Raid', 'Progression', 1, 42)
+        for _, club in ipairs(C_Club.GetSubscribedClubs()) do
+            if club.name == 'Friday Raiders' then return club.clubId end
+        end
+    "#).unwrap();
+    env.exec(&format!("clubId = '{club}'")).unwrap();
+    (env, club)
+}
+
+#[test]
+fn club_roles_notes_kicks_have_opaque_payloads_and_updated_state() {
+    use wow_ui_sim::c_api::club_model::Member;
+    let (env, club) = community();
+    env.state().borrow_mut().clubs.clubs.get_mut(&club).unwrap().members.push(
+        Member::new("character:Jaina-99", "Jaina", 4, false));
+    env.exec(r#"
+        local id = 'character:Jaina-99'
+        local seen = {}
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('CLUB_MEMBER_ROLE_UPDATED')
+        listener:RegisterEvent('CLUB_MEMBER_UPDATED')
+        listener:RegisterEvent('CLUB_MEMBER_REMOVED')
+        listener:SetScript('OnEvent', function(_, event, club, member, role)
+            assert(club == clubId and member == id)
+            seen[#seen + 1] = event
+            if event == 'CLUB_MEMBER_REMOVED' then
+                assert(C_Club.GetMemberInfo(club, member) == nil)
+            elseif event == 'CLUB_MEMBER_ROLE_UPDATED' then
+                assert(role == 3 and C_Club.GetMemberInfo(club, member).role == role)
+            else
+                assert(C_Club.GetMemberInfo(club, member).memberNote == 'Healer alt')
+            end
+        end)
+        local roles = C_Club.GetAssignableRoles(clubId, id)
+        assert(#roles == 4 and roles[1] == 1 and roles[4] == 4)
+        assert(select('#', C_Club.AssignMemberRole(clubId, id, 3)) == 0)
+        assert(seen[1] == 'CLUB_MEMBER_ROLE_UPDATED')
+        C_Club.AssignMemberRole(clubId, id, 3)
+        assert(#seen == 1)
+        C_Club.SetClubMemberNote(clubId, id, 'Healer alt')
+        assert(seen[2] == 'CLUB_MEMBER_UPDATED')
+        C_Club.SetClubMemberNote(clubId, id, 'Healer alt')
+        assert(#seen == 2)
+        C_Club.KickMember(clubId, id)
+        assert(seen[3] == 'CLUB_MEMBER_REMOVED' and #C_Club.GetClubMembers(clubId) == 1)
+        C_Club.KickMember(clubId, id)
+        assert(#seen == 3)
+        assert(not pcall(C_Club.GetMemberInfo, clubId, 2))
+    "#).unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn club_invitations_are_pending_and_revoke_uses_member_identity() {
+    use wow_ui_sim::c_api::club_model::Member;
+    let (env, club) = community();
+    let candidate = Member::new("account:Khadgar-84", "Khadgar", 4, false);
+    env.state().borrow_mut().clubs.clubs.get_mut(&club).unwrap()
+        .candidates.insert(candidate.id.clone(), candidate);
+    env.exec(r#"
+        local changed = 0
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('CLUB_INVITATIONS_RECEIVED_FOR_CLUB')
+        listener:SetScript('OnEvent', function(_, _, club)
+            assert(club == clubId)
+            changed = changed + 1
+        end)
+        local id = 'account:Khadgar-84'
+        C_Club.SendInvitation(clubId, 'not-a-candidate')
+        assert(changed == 0)
+        C_Club.SendInvitation(clubId, id)
+        local pending = C_Club.GetInvitationsForClub(clubId)
+        assert(changed == 1 and #pending == 1)
+        assert(type(pending[1].invitationId) == 'string' and pending[1].isMyInvitation)
+        assert(pending[1].invitee.memberId == id and pending[1].invitee.name == 'Khadgar')
+        assert(C_Club.GetMemberInfo(clubId, id) == nil and #C_Club.GetClubMembers(clubId) == 1)
+        C_Club.SendInvitation(clubId, id)
+        assert(changed == 1)
+        C_Club.RequestInvitationsForClub(clubId)
+        assert(changed == 2)
+        C_Club.RevokeInvitation(clubId, id)
+        assert(changed == 3 and #C_Club.GetInvitationsForClub(clubId) == 0)
+        C_Club.RevokeInvitation(clubId, id)
+        assert(changed == 3)
+    "#).unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn club_owner_transfer_is_atomic_and_required_owner_cannot_be_removed() {
+    use wow_ui_sim::c_api::club_model::Member;
+    let (env, club) = community();
+    env.state().borrow_mut().clubs.clubs.get_mut(&club).unwrap().members.push(
+        Member::new("member:Uther", "Uther", 4, false));
+    env.exec(r#"
+        local self = C_Club.GetMemberInfoForSelf(clubId)
+        local count = 0
+        local listener = CreateFrame('Frame')
+        listener:RegisterEvent('CLUB_MEMBER_ROLE_UPDATED')
+        listener:SetScript('OnEvent', function()
+            count = count + 1
+            assert(C_Club.GetMemberInfo(clubId, 'member:Uther').role == 1)
+            assert(C_Club.GetMemberInfoForSelf(clubId).role == 2)
+        end)
+        assert(#C_Club.GetAssignableRoles(clubId, self.memberId) == 0)
+        C_Club.AssignMemberRole(clubId, self.memberId, 4)
+        C_Club.KickMember(clubId, self.memberId)
+        assert(C_Club.GetMemberInfoForSelf(clubId).role == 1 and count == 0)
+        C_Club.AssignMemberRole(clubId, 'member:Uther', 1)
+        assert(count == 2)
+        assert(#C_Club.GetAssignableRoles(clubId, 'member:Uther') == 0)
+        C_Club.KickMember(clubId, 'member:Uther')
+        C_Club.AssignMemberRole(clubId, 'member:Uther', 4)
+        assert(C_Club.GetMemberInfo(clubId, 'member:Uther').role == 1 and count == 2)
+    "#).unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn club_denied_management_has_no_side_effects() {
+    use wow_ui_sim::c_api::club_model::Member;
+    let (env, club) = community();
+    {
+        let mut sim = env.state().borrow_mut();
+        let club = sim.clubs.clubs.get_mut(&club).unwrap();
+        club.members[0].role = 4;
+        club.members.push(Member::new("member:Uther", "Uther", 1, false));
+        let candidate = Member::new("candidate:Jaina", "Jaina", 4, false);
+        club.candidates.insert(candidate.id.clone(), candidate);
+    }
+    env.exec(r#"
+        local count = 0
+        local listener = CreateFrame('Frame')
+        for _, event in ipairs({'CLUB_MEMBER_ROLE_UPDATED', 'CLUB_MEMBER_REMOVED',
+            'CLUB_MEMBER_UPDATED', 'CLUB_INVITATIONS_RECEIVED_FOR_CLUB'}) do listener:RegisterEvent(event) end
+        listener:SetScript('OnEvent', function() count = count + 1 end)
+        local p = C_Club.GetClubPrivileges(clubId)
+        assert(not p.canSendInvitation and not p.canSetOtherMemberNote and #p.kickableRoleIds == 0)
+        C_Club.AssignMemberRole(clubId, 'member:Uther', 4)
+        C_Club.KickMember(clubId, 'member:Uther')
+        C_Club.SetClubMemberNote(clubId, 'member:Uther', 'Denied')
+        C_Club.SendInvitation(clubId, 'candidate:Jaina')
+        C_Club.RevokeInvitation(clubId, 'candidate:Jaina')
+        assert(count == 0 and #C_Club.GetClubMembers(clubId) == 2)
+        assert(C_Club.GetMemberInfo(clubId, 'member:Uther').role == 1)
+        assert(C_Club.GetMemberInfo(clubId, 'member:Uther').memberNote == '')
+        assert(#C_Club.GetInvitationsForClub(clubId) == 0)
+        local self = C_Club.GetMemberInfoForSelf(clubId)
+        C_Club.SetClubMemberNote(clubId, self.memberId, 'Own note allowed')
+        assert(count == 1 and C_Club.GetMemberInfoForSelf(clubId).memberNote == 'Own note allowed')
+    "#).unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty());
+}
+
+#[test]
+fn club_restrictions_and_initialization_deny_privileged_mutations() {
+    use wow_ui_sim::c_api::club_model::Member;
+    let (env, club) = community();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.clubs.clubs.get_mut(&club).unwrap().members.push(Member::new("member:Jaina", "Jaina", 4, false));
+        let candidate = Member::new("candidate:Uther", "Uther", 4, false);
+        sim.clubs.clubs.get_mut(&club).unwrap().candidates.insert(candidate.id.clone(), candidate);
+        sim.clubs.restriction_reason = 1;
+    }
+    env.exec(r#"
+        events = 0
+        local listener = CreateFrame('Frame')
+        for _, event in ipairs({'CLUB_ADDED', 'CLUB_MEMBER_ROLE_UPDATED', 'CLUB_MEMBER_REMOVED',
+            'CLUB_MEMBER_UPDATED', 'CLUB_INVITATIONS_RECEIVED_FOR_CLUB'}) do listener:RegisterEvent(event) end
+        listener:SetScript('OnEvent', function() events = events + 1 end)
+        function attemptMutations()
+            C_Club.AssignMemberRole(clubId, 'member:Jaina', 3)
+            C_Club.KickMember(clubId, 'member:Jaina')
+            C_Club.SetClubMemberNote(clubId, 'member:Jaina', 'Denied')
+            C_Club.SendInvitation(clubId, 'candidate:Uther')
+            C_Club.RevokeInvitation(clubId, 'candidate:Uther')
+            C_Club.CreateClub('Denied', nil, '', 1, 0)
+        end
+        assert(C_Club.IsRestricted() == 1)
+        attemptMutations()
+        assert(events == 0 and #C_Club.GetClubMembers(clubId) == 2)
+        assert(C_Club.GetMemberInfo(clubId, 'member:Jaina').role == 4)
+        assert(C_Club.GetMemberInfo(clubId, 'member:Jaina').memberNote == '')
+        assert(#C_Club.GetInvitationsForClub(clubId) == 0)
+    "#).unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        sim.clubs.restriction_reason = 0;
+        sim.clubs.initialized = false;
+    }
+    env.exec("attemptMutations(); assert(events == 0 and not C_Club.AreMembersReady(clubId))").unwrap();
+    let sim = env.state().borrow();
+    let club = sim.clubs.clubs.get(&club).unwrap();
+    assert_eq!(club.members.len(), 2);
+    assert_eq!(club.members[1].role, 4);
+    assert!(club.members[1].note.is_empty());
+    assert!(club.invitations.is_empty());
+    assert!(sim.lua_errors.is_empty());
+}
