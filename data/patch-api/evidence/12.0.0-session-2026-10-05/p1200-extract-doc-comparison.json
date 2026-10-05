@@ -1,0 +1,3995 @@
+{
+  "revision": "3fa805ef78a2ad4a42f1963ae926ca251e19960b",
+  "cache_root": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated",
+  "enum_comparisons": [
+    {
+      "enum": "CraftingOrderResult",
+      "cached": {
+        "file": "ProfessionConstantsDocumentation.lua",
+        "line": 78,
+        "sha256": "4537d8bae961bdde5263d47eed1a605c87d17f6583c4fe34a11861660291b1df",
+        "fields": [
+          {
+            "name": "Ok",
+            "type": "CraftingOrderResult",
+            "value": 0
+          },
+          {
+            "name": "Aborted",
+            "type": "CraftingOrderResult",
+            "value": 1
+          },
+          {
+            "name": "AlreadyClaimed",
+            "type": "CraftingOrderResult",
+            "value": 2
+          },
+          {
+            "name": "AlreadyCrafted",
+            "type": "CraftingOrderResult",
+            "value": 3
+          },
+          {
+            "name": "CannotBeOrdered",
+            "type": "CraftingOrderResult",
+            "value": 4
+          },
+          {
+            "name": "CannotCancel",
+            "type": "CraftingOrderResult",
+            "value": 5
+          },
+          {
+            "name": "CannotClaim",
+            "type": "CraftingOrderResult",
+            "value": 6
+          },
+          {
+            "name": "CannotClaimOwnOrder",
+            "type": "CraftingOrderResult",
+            "value": 7
+          },
+          {
+            "name": "CannotCraft",
+            "type": "CraftingOrderResult",
+            "value": 8
+          },
+          {
+            "name": "CannotCreate",
+            "type": "CraftingOrderResult",
+            "value": 9
+          },
+          {
+            "name": "CannotFulfill",
+            "type": "CraftingOrderResult",
+            "value": 10
+          },
+          {
+            "name": "CannotRecraft",
+            "type": "CraftingOrderResult",
+            "value": 11
+          },
+          {
+            "name": "CannotReject",
+            "type": "CraftingOrderResult",
+            "value": 12
+          },
+          {
+            "name": "CannotRelease",
+            "type": "CraftingOrderResult",
+            "value": 13
+          },
+          {
+            "name": "CrafterIsIgnored",
+            "type": "CraftingOrderResult",
+            "value": 14
+          },
+          {
+            "name": "DatabaseError",
+            "type": "CraftingOrderResult",
+            "value": 15
+          },
+          {
+            "name": "Expired",
+            "type": "CraftingOrderResult",
+            "value": 16
+          },
+          {
+            "name": "Locked",
+            "type": "CraftingOrderResult",
+            "value": 17
+          },
+          {
+            "name": "InvalidDuration",
+            "type": "CraftingOrderResult",
+            "value": 18
+          },
+          {
+            "name": "InvalidMinQuality",
+            "type": "CraftingOrderResult",
+            "value": 19
+          },
+          {
+            "name": "InvalidNotes",
+            "type": "CraftingOrderResult",
+            "value": 20
+          },
+          {
+            "name": "InvalidReagent",
+            "type": "CraftingOrderResult",
+            "value": 21
+          },
+          {
+            "name": "InvalidRealm",
+            "type": "CraftingOrderResult",
+            "value": 22
+          },
+          {
+            "name": "InvalidRecipe",
+            "type": "CraftingOrderResult",
+            "value": 23
+          },
+          {
+            "name": "InvalidRecraftItem",
+            "type": "CraftingOrderResult",
+            "value": 24
+          },
+          {
+            "name": "InvalidSort",
+            "type": "CraftingOrderResult",
+            "value": 25
+          },
+          {
+            "name": "InvalidTarget",
+            "type": "CraftingOrderResult",
+            "value": 26
+          },
+          {
+            "name": "InvalidType",
+            "type": "CraftingOrderResult",
+            "value": 27
+          },
+          {
+            "name": "MaxOrdersReached",
+            "type": "CraftingOrderResult",
+            "value": 28
+          },
+          {
+            "name": "MissingCraftingTable",
+            "type": "CraftingOrderResult",
+            "value": 29
+          },
+          {
+            "name": "MissingCurrency",
+            "type": "CraftingOrderResult",
+            "value": 30
+          },
+          {
+            "name": "MissingItem",
+            "type": "CraftingOrderResult",
+            "value": 31
+          },
+          {
+            "name": "MissingNpc",
+            "type": "CraftingOrderResult",
+            "value": 32
+          },
+          {
+            "name": "MissingOrder",
+            "type": "CraftingOrderResult",
+            "value": 33
+          },
+          {
+            "name": "MissingRecraftItem",
+            "type": "CraftingOrderResult",
+            "value": 34
+          },
+          {
+            "name": "NoAccountItems",
+            "type": "CraftingOrderResult",
+            "value": 35
+          },
+          {
+            "name": "NotClaimed",
+            "type": "CraftingOrderResult",
+            "value": 36
+          },
+          {
+            "name": "NotCrafted",
+            "type": "CraftingOrderResult",
+            "value": 37
+          },
+          {
+            "name": "NotInGuild",
+            "type": "CraftingOrderResult",
+            "value": 38
+          },
+          {
+            "name": "NotYetImplemented",
+            "type": "CraftingOrderResult",
+            "value": 39
+          },
+          {
+            "name": "OutOfPublicOrderCapacity",
+            "type": "CraftingOrderResult",
+            "value": 40
+          },
+          {
+            "name": "ServerIsNotAvailable",
+            "type": "CraftingOrderResult",
+            "value": 41
+          },
+          {
+            "name": "ThrottleViolation",
+            "type": "CraftingOrderResult",
+            "value": 42
+          },
+          {
+            "name": "TargetCannotCraft",
+            "type": "CraftingOrderResult",
+            "value": 43
+          },
+          {
+            "name": "TargetLocked",
+            "type": "CraftingOrderResult",
+            "value": 44
+          },
+          {
+            "name": "Timeout",
+            "type": "CraftingOrderResult",
+            "value": 45
+          },
+          {
+            "name": "TooManyCurrencies",
+            "type": "CraftingOrderResult",
+            "value": 46
+          },
+          {
+            "name": "TooManyItems",
+            "type": "CraftingOrderResult",
+            "value": 47
+          },
+          {
+            "name": "WrongVersion",
+            "type": "CraftingOrderResult",
+            "value": 48
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/missing_enums.lua",
+      "source_derived_values": {
+        "Aborted": 1,
+        "AlreadyClaimed": 2,
+        "AlreadyCrafted": 3,
+        "CannotBeOrdered": 4,
+        "CannotCancel": 5,
+        "CannotClaim": 6,
+        "CannotClaimOwnOrder": 7,
+        "CannotCraft": 8,
+        "CannotCreate": 9,
+        "CannotFulfill": 10,
+        "CannotRecraft": 11,
+        "CannotReject": 12,
+        "CannotRelease": 13,
+        "CrafterIsIgnored": 14,
+        "DatabaseError": 15,
+        "Expired": 16,
+        "InvalidDuration": 18,
+        "InvalidMinQuality": 19,
+        "InvalidNotes": 20,
+        "InvalidReagent": 21,
+        "InvalidRealm": 22,
+        "InvalidRecipe": 23,
+        "InvalidRecraftItem": 24,
+        "InvalidSort": 25,
+        "InvalidTarget": 26,
+        "InvalidType": 27,
+        "Locked": 17,
+        "MaxOrdersReached": 28,
+        "MissingCraftingTable": 29,
+        "MissingCurrency": 30,
+        "MissingItem": 31,
+        "MissingNpc": 32,
+        "MissingOrder": 33,
+        "MissingRecraftItem": 34,
+        "NoAccountItems": 35,
+        "NotClaimed": 36,
+        "NotCrafted": 37,
+        "NotInGuild": 38,
+        "NotYetImplemented": 39,
+        "Ok": 0,
+        "OutOfPublicOrderCapacity": 40,
+        "ServerIsNotAvailable": 41,
+        "TargetCannotCraft": 43,
+        "TargetLocked": 44,
+        "ThrottleViolation": 42,
+        "Timeout": 45,
+        "TooManyCurrencies": 46,
+        "TooManyItems": 47,
+        "WrongVersion": 48
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {},
+      "extra": {},
+      "wrong": {}
+    },
+    {
+      "enum": "EditModeAccountSetting",
+      "cached": {
+        "file": "EditModeManagerConstantsDocumentation.lua",
+        "line": 202,
+        "sha256": "13071bcd83a9bced2f02616608f15f6662a04ccafecb2834452c1e4e80135dfe",
+        "fields": [
+          {
+            "name": "ShowGrid",
+            "type": "EditModeAccountSetting",
+            "value": 0
+          },
+          {
+            "name": "GridSpacing",
+            "type": "EditModeAccountSetting",
+            "value": 1
+          },
+          {
+            "name": "SettingsExpanded",
+            "type": "EditModeAccountSetting",
+            "value": 2
+          },
+          {
+            "name": "ShowTargetAndFocus",
+            "type": "EditModeAccountSetting",
+            "value": 3
+          },
+          {
+            "name": "ShowStanceBar",
+            "type": "EditModeAccountSetting",
+            "value": 4
+          },
+          {
+            "name": "ShowPetActionBar",
+            "type": "EditModeAccountSetting",
+            "value": 5
+          },
+          {
+            "name": "ShowPossessActionBar",
+            "type": "EditModeAccountSetting",
+            "value": 6
+          },
+          {
+            "name": "ShowCastBar",
+            "type": "EditModeAccountSetting",
+            "value": 7
+          },
+          {
+            "name": "ShowEncounterBar",
+            "type": "EditModeAccountSetting",
+            "value": 8
+          },
+          {
+            "name": "ShowExtraAbilities",
+            "type": "EditModeAccountSetting",
+            "value": 9
+          },
+          {
+            "name": "ShowBuffsAndDebuffs",
+            "type": "EditModeAccountSetting",
+            "value": 10
+          },
+          {
+            "name": "DeprecatedShowDebuffFrame",
+            "type": "EditModeAccountSetting",
+            "value": 11
+          },
+          {
+            "name": "ShowPartyFrames",
+            "type": "EditModeAccountSetting",
+            "value": 12
+          },
+          {
+            "name": "ShowRaidFrames",
+            "type": "EditModeAccountSetting",
+            "value": 13
+          },
+          {
+            "name": "ShowTalkingHeadFrame",
+            "type": "EditModeAccountSetting",
+            "value": 14
+          },
+          {
+            "name": "ShowVehicleLeaveButton",
+            "type": "EditModeAccountSetting",
+            "value": 15
+          },
+          {
+            "name": "ShowBossFrames",
+            "type": "EditModeAccountSetting",
+            "value": 16
+          },
+          {
+            "name": "ShowArenaFrames",
+            "type": "EditModeAccountSetting",
+            "value": 17
+          },
+          {
+            "name": "ShowLootFrame",
+            "type": "EditModeAccountSetting",
+            "value": 18
+          },
+          {
+            "name": "ShowHudTooltip",
+            "type": "EditModeAccountSetting",
+            "value": 19
+          },
+          {
+            "name": "ShowStatusTrackingBar2",
+            "type": "EditModeAccountSetting",
+            "value": 20
+          },
+          {
+            "name": "ShowDurabilityFrame",
+            "type": "EditModeAccountSetting",
+            "value": 21
+          },
+          {
+            "name": "EnableSnap",
+            "type": "EditModeAccountSetting",
+            "value": 22
+          },
+          {
+            "name": "EnableAdvancedOptions",
+            "type": "EditModeAccountSetting",
+            "value": 23
+          },
+          {
+            "name": "ShowPetFrame",
+            "type": "EditModeAccountSetting",
+            "value": 24
+          },
+          {
+            "name": "ShowTimerBars",
+            "type": "EditModeAccountSetting",
+            "value": 25
+          },
+          {
+            "name": "ShowVehicleSeatIndicator",
+            "type": "EditModeAccountSetting",
+            "value": 26
+          },
+          {
+            "name": "ShowArchaeologyBar",
+            "type": "EditModeAccountSetting",
+            "value": 27
+          },
+          {
+            "name": "ShowCooldownViewer",
+            "type": "EditModeAccountSetting",
+            "value": 28
+          },
+          {
+            "name": "ShowPersonalResourceDisplay",
+            "type": "EditModeAccountSetting",
+            "value": 29
+          },
+          {
+            "name": "ShowEncounterEvents",
+            "type": "EditModeAccountSetting",
+            "value": 30
+          },
+          {
+            "name": "ShowDamageMeter",
+            "type": "EditModeAccountSetting",
+            "value": 31
+          },
+          {
+            "name": "ShowExternalDefensives",
+            "type": "EditModeAccountSetting",
+            "value": 32
+          },
+          {
+            "name": "ShowRaidWarning",
+            "type": "EditModeAccountSetting",
+            "value": 33
+          },
+          {
+            "name": "ShowTotemActionBar",
+            "type": "EditModeAccountSetting",
+            "value": 34
+          },
+          {
+            "name": "ShowLossOfControl",
+            "type": "EditModeAccountSetting",
+            "value": 35
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/edit_mode.rs",
+      "source_derived_values": {
+        "ShowGrid": 0,
+        "GridSpacing": 1,
+        "SettingsExpanded": 2,
+        "ShowTargetAndFocus": 3,
+        "ShowStanceBar": 4,
+        "ShowPetActionBar": 5,
+        "ShowPossessActionBar": 6,
+        "ShowCastBar": 7,
+        "ShowEncounterBar": 8,
+        "ShowExtraAbilities": 9,
+        "ShowBuffsAndDebuffs": 10,
+        "DeprecatedShowDebuffFrame": 11,
+        "ShowPartyFrames": 12,
+        "ShowRaidFrames": 13,
+        "ShowTalkingHeadFrame": 14,
+        "ShowVehicleLeaveButton": 15,
+        "ShowBossFrames": 16,
+        "ShowArenaFrames": 17,
+        "ShowLootFrame": 18,
+        "ShowHudTooltip": 19,
+        "ShowStatusTrackingBar2": 20,
+        "ShowDurabilityFrame": 21,
+        "EnableSnap": 22,
+        "EnableAdvancedOptions": 23,
+        "ShowPetFrame": 24,
+        "ShowTimerBars": 25,
+        "ShowVehicleSeatIndicator": 26,
+        "ShowArchaeologyBar": 27,
+        "ShowCooldownViewer": 28,
+        "ShowPersonalResourceDisplay": 29,
+        "ShowEncounterEvents": 30,
+        "ShowDamageMeter": 31,
+        "ShowExternalDefensives": 32,
+        "ShowRaidWarning": 33,
+        "ShowTotemActionBar": 34,
+        "ShowLossOfControl": 35
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {},
+      "extra": {},
+      "wrong": {}
+    },
+    {
+      "enum": "EditModeSystem",
+      "cached": {
+        "file": "EditModeManagerConstantsDocumentation.lua",
+        "line": 636,
+        "sha256": "13071bcd83a9bced2f02616608f15f6662a04ccafecb2834452c1e4e80135dfe",
+        "fields": [
+          {
+            "name": "ActionBar",
+            "type": "EditModeSystem",
+            "value": 0
+          },
+          {
+            "name": "CastBar",
+            "type": "EditModeSystem",
+            "value": 1
+          },
+          {
+            "name": "Minimap",
+            "type": "EditModeSystem",
+            "value": 2
+          },
+          {
+            "name": "UnitFrame",
+            "type": "EditModeSystem",
+            "value": 3
+          },
+          {
+            "name": "EncounterBar",
+            "type": "EditModeSystem",
+            "value": 4
+          },
+          {
+            "name": "ExtraAbilities",
+            "type": "EditModeSystem",
+            "value": 5
+          },
+          {
+            "name": "AuraFrame",
+            "type": "EditModeSystem",
+            "value": 6
+          },
+          {
+            "name": "TalkingHeadFrame",
+            "type": "EditModeSystem",
+            "value": 7
+          },
+          {
+            "name": "ChatFrame",
+            "type": "EditModeSystem",
+            "value": 8
+          },
+          {
+            "name": "VehicleLeaveButton",
+            "type": "EditModeSystem",
+            "value": 9
+          },
+          {
+            "name": "LootFrame",
+            "type": "EditModeSystem",
+            "value": 10
+          },
+          {
+            "name": "HudTooltip",
+            "type": "EditModeSystem",
+            "value": 11
+          },
+          {
+            "name": "ObjectiveTracker",
+            "type": "EditModeSystem",
+            "value": 12
+          },
+          {
+            "name": "MicroMenu",
+            "type": "EditModeSystem",
+            "value": 13
+          },
+          {
+            "name": "Bags",
+            "type": "EditModeSystem",
+            "value": 14
+          },
+          {
+            "name": "StatusTrackingBar",
+            "type": "EditModeSystem",
+            "value": 15
+          },
+          {
+            "name": "DurabilityFrame",
+            "type": "EditModeSystem",
+            "value": 16
+          },
+          {
+            "name": "TimerBars",
+            "type": "EditModeSystem",
+            "value": 17
+          },
+          {
+            "name": "VehicleSeatIndicator",
+            "type": "EditModeSystem",
+            "value": 18
+          },
+          {
+            "name": "ArchaeologyBar",
+            "type": "EditModeSystem",
+            "value": 19
+          },
+          {
+            "name": "CooldownViewer",
+            "type": "EditModeSystem",
+            "value": 20
+          },
+          {
+            "name": "PersonalResourceDisplay",
+            "type": "EditModeSystem",
+            "value": 21
+          },
+          {
+            "name": "EncounterEvents",
+            "type": "EditModeSystem",
+            "value": 22
+          },
+          {
+            "name": "DamageMeter",
+            "type": "EditModeSystem",
+            "value": 23
+          },
+          {
+            "name": "RaidWarning",
+            "type": "EditModeSystem",
+            "value": 24
+          },
+          {
+            "name": "TotemActionBar",
+            "type": "EditModeSystem",
+            "value": 25
+          },
+          {
+            "name": "LossOfControl",
+            "type": "EditModeSystem",
+            "value": 26
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/edit_mode.rs",
+      "source_derived_values": {
+        "ActionBar": 0,
+        "CastBar": 1,
+        "Minimap": 2,
+        "UnitFrame": 3,
+        "EncounterBar": 4,
+        "ExtraAbilities": 5,
+        "AuraFrame": 6,
+        "TalkingHeadFrame": 7,
+        "ChatFrame": 8,
+        "VehicleLeaveButton": 9,
+        "LootFrame": 10,
+        "HudTooltip": 11,
+        "ObjectiveTracker": 12,
+        "MicroMenu": 13,
+        "Bags": 14,
+        "StatusTrackingBar": 15,
+        "DurabilityFrame": 16,
+        "TimerBars": 17,
+        "VehicleSeatIndicator": 18,
+        "ArchaeologyBar": 19,
+        "CooldownViewer": 20,
+        "PersonalResourceDisplay": 21,
+        "EncounterEvents": 22,
+        "DamageMeter": 23,
+        "RaidWarning": 24,
+        "TotemActionBar": 25,
+        "LossOfControl": 26
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {},
+      "extra": {},
+      "wrong": {}
+    },
+    {
+      "enum": "PlayerInteractionType",
+      "cached": {
+        "file": "PlayerInteractionManagerConstantsDocumentation.lua",
+        "line": 6,
+        "sha256": "2379e62e1a9c86177dd3094a01a6a985a05d8e678005478f8ac68236694dfbe4",
+        "fields": [
+          {
+            "name": "None",
+            "type": "PlayerInteractionType",
+            "value": 0
+          },
+          {
+            "name": "TradePartner",
+            "type": "PlayerInteractionType",
+            "value": 1
+          },
+          {
+            "name": "Item",
+            "type": "PlayerInteractionType",
+            "value": 2
+          },
+          {
+            "name": "Gossip",
+            "type": "PlayerInteractionType",
+            "value": 3
+          },
+          {
+            "name": "QuestGiver",
+            "type": "PlayerInteractionType",
+            "value": 4
+          },
+          {
+            "name": "Merchant",
+            "type": "PlayerInteractionType",
+            "value": 5
+          },
+          {
+            "name": "TaxiNode",
+            "type": "PlayerInteractionType",
+            "value": 6
+          },
+          {
+            "name": "Trainer",
+            "type": "PlayerInteractionType",
+            "value": 7
+          },
+          {
+            "name": "Banker",
+            "type": "PlayerInteractionType",
+            "value": 8
+          },
+          {
+            "name": "AlliedRaceDetailsGiver",
+            "type": "PlayerInteractionType",
+            "value": 9
+          },
+          {
+            "name": "GuildBanker",
+            "type": "PlayerInteractionType",
+            "value": 10
+          },
+          {
+            "name": "Registrar",
+            "type": "PlayerInteractionType",
+            "value": 11
+          },
+          {
+            "name": "Vendor",
+            "type": "PlayerInteractionType",
+            "value": 12
+          },
+          {
+            "name": "PetitionVendor",
+            "type": "PlayerInteractionType",
+            "value": 13
+          },
+          {
+            "name": "GuildTabardVendor",
+            "type": "PlayerInteractionType",
+            "value": 14
+          },
+          {
+            "name": "TalentMaster",
+            "type": "PlayerInteractionType",
+            "value": 15
+          },
+          {
+            "name": "SpecializationMaster",
+            "type": "PlayerInteractionType",
+            "value": 16
+          },
+          {
+            "name": "MailInfo",
+            "type": "PlayerInteractionType",
+            "value": 17
+          },
+          {
+            "name": "SpiritHealer",
+            "type": "PlayerInteractionType",
+            "value": 18
+          },
+          {
+            "name": "AreaSpiritHealer",
+            "type": "PlayerInteractionType",
+            "value": 19
+          },
+          {
+            "name": "Binder",
+            "type": "PlayerInteractionType",
+            "value": 20
+          },
+          {
+            "name": "Auctioneer",
+            "type": "PlayerInteractionType",
+            "value": 21
+          },
+          {
+            "name": "StableMaster",
+            "type": "PlayerInteractionType",
+            "value": 22
+          },
+          {
+            "name": "BattleMaster",
+            "type": "PlayerInteractionType",
+            "value": 23
+          },
+          {
+            "name": "Transmogrifier",
+            "type": "PlayerInteractionType",
+            "value": 24
+          },
+          {
+            "name": "LFGDungeon",
+            "type": "PlayerInteractionType",
+            "value": 25
+          },
+          {
+            "name": "VoidStorageBanker",
+            "type": "PlayerInteractionType",
+            "value": 26
+          },
+          {
+            "name": "BlackMarketAuctioneer",
+            "type": "PlayerInteractionType",
+            "value": 27
+          },
+          {
+            "name": "AdventureMap",
+            "type": "PlayerInteractionType",
+            "value": 28
+          },
+          {
+            "name": "WorldMap",
+            "type": "PlayerInteractionType",
+            "value": 29
+          },
+          {
+            "name": "GarrArchitect",
+            "type": "PlayerInteractionType",
+            "value": 30
+          },
+          {
+            "name": "GarrTradeskill",
+            "type": "PlayerInteractionType",
+            "value": 31
+          },
+          {
+            "name": "GarrMission",
+            "type": "PlayerInteractionType",
+            "value": 32
+          },
+          {
+            "name": "ShipmentCrafter",
+            "type": "PlayerInteractionType",
+            "value": 33
+          },
+          {
+            "name": "GarrRecruitment",
+            "type": "PlayerInteractionType",
+            "value": 34
+          },
+          {
+            "name": "GarrTalent",
+            "type": "PlayerInteractionType",
+            "value": 35
+          },
+          {
+            "name": "Trophy",
+            "type": "PlayerInteractionType",
+            "value": 36
+          },
+          {
+            "name": "PlayerChoice",
+            "type": "PlayerInteractionType",
+            "value": 37
+          },
+          {
+            "name": "ArtifactForge",
+            "type": "PlayerInteractionType",
+            "value": 38
+          },
+          {
+            "name": "ObliterumForge",
+            "type": "PlayerInteractionType",
+            "value": 39
+          },
+          {
+            "name": "ScrappingMachine",
+            "type": "PlayerInteractionType",
+            "value": 40
+          },
+          {
+            "name": "ContributionCollector",
+            "type": "PlayerInteractionType",
+            "value": 41
+          },
+          {
+            "name": "AzeriteRespec",
+            "type": "PlayerInteractionType",
+            "value": 42
+          },
+          {
+            "name": "IslandQueue",
+            "type": "PlayerInteractionType",
+            "value": 43
+          },
+          {
+            "name": "ItemInteraction",
+            "type": "PlayerInteractionType",
+            "value": 44
+          },
+          {
+            "name": "ChromieTime",
+            "type": "PlayerInteractionType",
+            "value": 45
+          },
+          {
+            "name": "CovenantPreview",
+            "type": "PlayerInteractionType",
+            "value": 46
+          },
+          {
+            "name": "AnimaDiversion",
+            "type": "PlayerInteractionType",
+            "value": 47
+          },
+          {
+            "name": "LegendaryCrafting",
+            "type": "PlayerInteractionType",
+            "value": 48
+          },
+          {
+            "name": "WeeklyRewards",
+            "type": "PlayerInteractionType",
+            "value": 49
+          },
+          {
+            "name": "Soulbind",
+            "type": "PlayerInteractionType",
+            "value": 50
+          },
+          {
+            "name": "CovenantSanctum",
+            "type": "PlayerInteractionType",
+            "value": 51
+          },
+          {
+            "name": "NewPlayerGuide",
+            "type": "PlayerInteractionType",
+            "value": 52
+          },
+          {
+            "name": "ItemUpgrade",
+            "type": "PlayerInteractionType",
+            "value": 53
+          },
+          {
+            "name": "AdventureJournal",
+            "type": "PlayerInteractionType",
+            "value": 54
+          },
+          {
+            "name": "Renown",
+            "type": "PlayerInteractionType",
+            "value": 55
+          },
+          {
+            "name": "AzeriteForge",
+            "type": "PlayerInteractionType",
+            "value": 56
+          },
+          {
+            "name": "PerksProgramVendor",
+            "type": "PlayerInteractionType",
+            "value": 57
+          },
+          {
+            "name": "ProfessionsCraftingOrder",
+            "type": "PlayerInteractionType",
+            "value": 58
+          },
+          {
+            "name": "Professions",
+            "type": "PlayerInteractionType",
+            "value": 59
+          },
+          {
+            "name": "ProfessionsCustomerOrder",
+            "type": "PlayerInteractionType",
+            "value": 60
+          },
+          {
+            "name": "TraitSystem",
+            "type": "PlayerInteractionType",
+            "value": 61
+          },
+          {
+            "name": "BarbersChoice",
+            "type": "PlayerInteractionType",
+            "value": 62
+          },
+          {
+            "name": "JailersTowerBuffs",
+            "type": "PlayerInteractionType",
+            "value": 63
+          },
+          {
+            "name": "MajorFactionRenown",
+            "type": "PlayerInteractionType",
+            "value": 64
+          },
+          {
+            "name": "PersonalTabardVendor",
+            "type": "PlayerInteractionType",
+            "value": 65
+          },
+          {
+            "name": "ForgeMaster",
+            "type": "PlayerInteractionType",
+            "value": 66
+          },
+          {
+            "name": "CharacterBanker",
+            "type": "PlayerInteractionType",
+            "value": 67
+          },
+          {
+            "name": "AccountBanker",
+            "type": "PlayerInteractionType",
+            "value": 68
+          },
+          {
+            "name": "ProfessionRespec",
+            "type": "PlayerInteractionType",
+            "value": 69
+          },
+          {
+            "name": "CornerstoneInteraction",
+            "type": "PlayerInteractionType",
+            "value": 70
+          },
+          {
+            "name": "RenameNeighborhood",
+            "type": "PlayerInteractionType",
+            "value": 71
+          },
+          {
+            "name": "HousingBulletinBoard",
+            "type": "PlayerInteractionType",
+            "value": 72
+          },
+          {
+            "name": "HousingPedestal",
+            "type": "PlayerInteractionType",
+            "value": 73
+          },
+          {
+            "name": "CreateGuildNeighborhood",
+            "type": "PlayerInteractionType",
+            "value": 74
+          },
+          {
+            "name": "NeighborhoodCharter",
+            "type": "PlayerInteractionType",
+            "value": 75
+          },
+          {
+            "name": "GuildRename",
+            "type": "PlayerInteractionType",
+            "value": 76
+          },
+          {
+            "name": "OpenNeighborhoodCharterConfirmation",
+            "type": "PlayerInteractionType",
+            "value": 77
+          },
+          {
+            "name": "OpenHouseFinder",
+            "type": "PlayerInteractionType",
+            "value": 78
+          },
+          {
+            "name": "TieredEntrance",
+            "type": "PlayerInteractionType",
+            "value": 79
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/game_system.rs",
+      "source_derived_values": {
+        "None": 0,
+        "TradePartner": 1,
+        "Item": 2,
+        "Gossip": 3,
+        "QuestGiver": 4,
+        "Merchant": 5,
+        "TaxiNode": 6,
+        "Trainer": 7,
+        "Banker": 8,
+        "AlliedRaceDetailsGiver": 9,
+        "GuildBanker": 10,
+        "Registrar": 11,
+        "Vendor": 12,
+        "PetitionVendor": 13,
+        "GuildTabardVendor": 14,
+        "TalentMaster": 15,
+        "SpecializationMaster": 16,
+        "MailInfo": 17,
+        "SpiritHealer": 18,
+        "AreaSpiritHealer": 19,
+        "Binder": 20,
+        "Auctioneer": 21,
+        "StableMaster": 22,
+        "BattleMaster": 23,
+        "Transmogrifier": 24,
+        "LFGDungeon": 25,
+        "VoidStorageBanker": 26,
+        "BlackMarketAuctioneer": 27,
+        "AdventureMap": 28,
+        "WorldMap": 29,
+        "GarrArchitect": 30,
+        "GarrTradeskill": 31,
+        "GarrMission": 32,
+        "ShipmentCrafter": 33,
+        "GarrRecruitment": 34,
+        "GarrTalent": 35,
+        "Trophy": 36,
+        "PlayerChoice": 37,
+        "ArtifactForge": 38,
+        "ObliterumForge": 39,
+        "ScrappingMachine": 40,
+        "ContributionCollector": 41,
+        "AzeriteRespec": 42,
+        "IslandQueue": 43,
+        "ItemInteraction": 44,
+        "ChromieTime": 45,
+        "CovenantPreview": 46,
+        "AnimaDiversion": 47,
+        "LegendaryCrafting": 48,
+        "WeeklyRewards": 49,
+        "Soulbind": 50,
+        "CovenantSanctum": 51,
+        "NewPlayerGuide": 52,
+        "ItemUpgrade": 53,
+        "AdventureJournal": 54,
+        "Renown": 55,
+        "AzeriteForge": 56,
+        "PerksProgramVendor": 57,
+        "ProfessionsCraftingOrder": 58,
+        "Professions": 59,
+        "ProfessionsCustomerOrder": 60,
+        "TraitSystem": 61,
+        "BarbersChoice": 62,
+        "JailersTowerBuffs": 63,
+        "MajorFactionRenown": 64,
+        "PersonalTabardVendor": 65,
+        "ForgeMaster": 66,
+        "CharacterBanker": 67,
+        "AccountBanker": 68,
+        "ProfessionRespec": 69,
+        "CornerstoneInteraction": 70,
+        "RenameNeighborhood": 71,
+        "HousingBulletinBoard": 72,
+        "HousingPedestal": 73,
+        "CreateGuildNeighborhood": 74,
+        "NeighborhoodCharter": 75,
+        "GuildRename": 76,
+        "OpenNeighborhoodCharterConfirmation": 77,
+        "OpenHouseFinder": 78,
+        "PlaceholderType79": 79
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {
+        "TieredEntrance": 79
+      },
+      "extra": {
+        "PlaceholderType79": 79
+      },
+      "wrong": {}
+    },
+    {
+      "enum": "QuestTagType",
+      "cached": {
+        "file": "QuestConstantsDocumentation.lua",
+        "line": 87,
+        "sha256": "3768bc82cf7f84f0b00de238837ee80ffad10d58505ae8a0a058a626310b09ad",
+        "fields": [
+          {
+            "name": "Tag",
+            "type": "QuestTagType",
+            "value": 0
+          },
+          {
+            "name": "Profession",
+            "type": "QuestTagType",
+            "value": 1
+          },
+          {
+            "name": "Normal",
+            "type": "QuestTagType",
+            "value": 2
+          },
+          {
+            "name": "PvP",
+            "type": "QuestTagType",
+            "value": 3
+          },
+          {
+            "name": "PetBattle",
+            "type": "QuestTagType",
+            "value": 4
+          },
+          {
+            "name": "Bounty",
+            "type": "QuestTagType",
+            "value": 5
+          },
+          {
+            "name": "Dungeon",
+            "type": "QuestTagType",
+            "value": 6
+          },
+          {
+            "name": "Invasion",
+            "type": "QuestTagType",
+            "value": 7
+          },
+          {
+            "name": "Raid",
+            "type": "QuestTagType",
+            "value": 8
+          },
+          {
+            "name": "Contribution",
+            "type": "QuestTagType",
+            "value": 9
+          },
+          {
+            "name": "RatedReward",
+            "type": "QuestTagType",
+            "value": 10
+          },
+          {
+            "name": "InvasionWrapper",
+            "type": "QuestTagType",
+            "value": 11
+          },
+          {
+            "name": "FactionAssault",
+            "type": "QuestTagType",
+            "value": 12
+          },
+          {
+            "name": "Islands",
+            "type": "QuestTagType",
+            "value": 13
+          },
+          {
+            "name": "Threat",
+            "type": "QuestTagType",
+            "value": 14
+          },
+          {
+            "name": "CovenantCalling",
+            "type": "QuestTagType",
+            "value": 15
+          },
+          {
+            "name": "DragonRiderRacing",
+            "type": "QuestTagType",
+            "value": 16
+          },
+          {
+            "name": "Capstone",
+            "type": "QuestTagType",
+            "value": 17
+          },
+          {
+            "name": "WorldBoss",
+            "type": "QuestTagType",
+            "value": 18
+          },
+          {
+            "name": "Prey",
+            "type": "QuestTagType",
+            "value": 19
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/missing_enums.lua",
+      "source_derived_values": {
+        "Bounty": 5,
+        "Capstone": 17,
+        "Contribution": 9,
+        "CovenantCalling": 15,
+        "DragonRiderRacing": 16,
+        "Dungeon": 6,
+        "FactionAssault": 12,
+        "Invasion": 7,
+        "InvasionWrapper": 11,
+        "Islands": 13,
+        "Normal": 2,
+        "PetBattle": 4,
+        "Prey": 19,
+        "Profession": 1,
+        "PvP": 3,
+        "Raid": 8,
+        "RatedReward": 10,
+        "Tag": 0,
+        "Threat": 14,
+        "WorldBoss": 18
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {},
+      "extra": {},
+      "wrong": {}
+    },
+    {
+      "enum": "SendAddonMessageResult",
+      "cached": {
+        "file": "ChatConstantsDocumentation.lua",
+        "line": 144,
+        "sha256": "cc5cfa3aa947b5e611faad38bc8ca59e981cdcde2b3da9c87e204e4c806afc05",
+        "fields": [
+          {
+            "name": "Success",
+            "type": "SendAddonMessageResult",
+            "value": 0
+          },
+          {
+            "name": "InvalidPrefix",
+            "type": "SendAddonMessageResult",
+            "value": 1
+          },
+          {
+            "name": "InvalidMessage",
+            "type": "SendAddonMessageResult",
+            "value": 2
+          },
+          {
+            "name": "AddonMessageThrottle",
+            "type": "SendAddonMessageResult",
+            "value": 3
+          },
+          {
+            "name": "InvalidChatType",
+            "type": "SendAddonMessageResult",
+            "value": 4
+          },
+          {
+            "name": "NotInGroup",
+            "type": "SendAddonMessageResult",
+            "value": 5
+          },
+          {
+            "name": "TargetRequired",
+            "type": "SendAddonMessageResult",
+            "value": 6
+          },
+          {
+            "name": "InvalidChannel",
+            "type": "SendAddonMessageResult",
+            "value": 7
+          },
+          {
+            "name": "ChannelThrottle",
+            "type": "SendAddonMessageResult",
+            "value": 8
+          },
+          {
+            "name": "GeneralError",
+            "type": "SendAddonMessageResult",
+            "value": 9
+          },
+          {
+            "name": "NotInGuild",
+            "type": "SendAddonMessageResult",
+            "value": 10
+          },
+          {
+            "name": "AddOnMessageLockdown",
+            "type": "SendAddonMessageResult",
+            "value": 11
+          },
+          {
+            "name": "TargetOffline",
+            "type": "SendAddonMessageResult",
+            "value": 12
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/missing_enums.lua",
+      "source_derived_values": {
+        "AddOnMessageLockdown": 11,
+        "AddonMessageThrottle": 3,
+        "ChannelThrottle": 8,
+        "GeneralError": 9,
+        "InvalidChannel": 7,
+        "InvalidChatType": 4,
+        "InvalidMessage": 2,
+        "InvalidPrefix": 1,
+        "NotInGroup": 5,
+        "NotInGuild": 10,
+        "Success": 0,
+        "TargetOffline": 12,
+        "TargetRequired": 6
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {},
+      "extra": {},
+      "wrong": {}
+    },
+    {
+      "enum": "SurveyDeliveryMoment",
+      "cached": {
+        "file": "WowSurveyConstantsDocumentation.lua",
+        "line": 18,
+        "sha256": "7ba4e75dd1c50f42941dd8f015a4d1b57f1bf22d24d28f9458311d7770d6f9aa",
+        "fields": [
+          {
+            "name": "Login",
+            "type": "SurveyDeliveryMoment",
+            "value": 0
+          },
+          {
+            "name": "ProfessionTable",
+            "type": "SurveyDeliveryMoment",
+            "value": 1
+          },
+          {
+            "name": "QuestTurnIn",
+            "type": "SurveyDeliveryMoment",
+            "value": 2
+          },
+          {
+            "name": "ChestLooted",
+            "type": "SurveyDeliveryMoment",
+            "value": 3
+          },
+          {
+            "name": "MythicPlusCompleted",
+            "type": "SurveyDeliveryMoment",
+            "value": 4
+          },
+          {
+            "name": "EncounterEnd",
+            "type": "SurveyDeliveryMoment",
+            "value": 5
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/missing_enums.lua",
+      "source_derived_values": {
+        "ChestLooted": 3,
+        "Login": 0,
+        "MythicPlusCompleted": 4,
+        "ProfessionTable": 1,
+        "QuestTurnIn": 2,
+        "EncounterEnd": 5
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {},
+      "extra": {},
+      "wrong": {}
+    },
+    {
+      "enum": "TooltipDataLineType",
+      "cached": {
+        "file": "TooltipInfoSharedDocumentation.lua",
+        "line": 27,
+        "sha256": "3cae18d4c643bae07c2d4aad7f333ae1d3d47c502f737ceec73b3ee566dba1e3",
+        "fields": [
+          {
+            "name": "None",
+            "type": "TooltipDataLineType",
+            "value": 0
+          },
+          {
+            "name": "Blank",
+            "type": "TooltipDataLineType",
+            "value": 1
+          },
+          {
+            "name": "UnitName",
+            "type": "TooltipDataLineType",
+            "value": 2
+          },
+          {
+            "name": "GemSocket",
+            "type": "TooltipDataLineType",
+            "value": 3
+          },
+          {
+            "name": "AzeriteEssenceSlot",
+            "type": "TooltipDataLineType",
+            "value": 4
+          },
+          {
+            "name": "AzeriteEssencePower",
+            "type": "TooltipDataLineType",
+            "value": 5
+          },
+          {
+            "name": "LearnableSpell",
+            "type": "TooltipDataLineType",
+            "value": 6
+          },
+          {
+            "name": "UnitThreat",
+            "type": "TooltipDataLineType",
+            "value": 7
+          },
+          {
+            "name": "QuestObjective",
+            "type": "TooltipDataLineType",
+            "value": 8
+          },
+          {
+            "name": "AzeriteItemPowerDescription",
+            "type": "TooltipDataLineType",
+            "value": 9
+          },
+          {
+            "name": "RuneforgeLegendaryPowerDescription",
+            "type": "TooltipDataLineType",
+            "value": 10
+          },
+          {
+            "name": "SellPrice",
+            "type": "TooltipDataLineType",
+            "value": 11
+          },
+          {
+            "name": "ProfessionCraftingQuality",
+            "type": "TooltipDataLineType",
+            "value": 12
+          },
+          {
+            "name": "SpellName",
+            "type": "TooltipDataLineType",
+            "value": 13
+          },
+          {
+            "name": "CurrencyTotal",
+            "type": "TooltipDataLineType",
+            "value": 14
+          },
+          {
+            "name": "ItemEnchantmentPermanent",
+            "type": "TooltipDataLineType",
+            "value": 15
+          },
+          {
+            "name": "UnitOwner",
+            "type": "TooltipDataLineType",
+            "value": 16
+          },
+          {
+            "name": "QuestTitle",
+            "type": "TooltipDataLineType",
+            "value": 17
+          },
+          {
+            "name": "QuestPlayer",
+            "type": "TooltipDataLineType",
+            "value": 18
+          },
+          {
+            "name": "NestedBlock",
+            "type": "TooltipDataLineType",
+            "value": 19
+          },
+          {
+            "name": "ItemBinding",
+            "type": "TooltipDataLineType",
+            "value": 20
+          },
+          {
+            "name": "EquipSlot",
+            "type": "TooltipDataLineType",
+            "value": 21
+          },
+          {
+            "name": "ItemName",
+            "type": "TooltipDataLineType",
+            "value": 22
+          },
+          {
+            "name": "Separator",
+            "type": "TooltipDataLineType",
+            "value": 23
+          },
+          {
+            "name": "ToyName",
+            "type": "TooltipDataLineType",
+            "value": 24
+          },
+          {
+            "name": "ToyText",
+            "type": "TooltipDataLineType",
+            "value": 25
+          },
+          {
+            "name": "ToyEffect",
+            "type": "TooltipDataLineType",
+            "value": 26
+          },
+          {
+            "name": "ToyDuration",
+            "type": "TooltipDataLineType",
+            "value": 27
+          },
+          {
+            "name": "ToyDescription",
+            "type": "TooltipDataLineType",
+            "value": 28
+          },
+          {
+            "name": "ToySource",
+            "type": "TooltipDataLineType",
+            "value": 29
+          },
+          {
+            "name": "GemSocketEnchantment",
+            "type": "TooltipDataLineType",
+            "value": 30
+          },
+          {
+            "name": "ItemLevel",
+            "type": "TooltipDataLineType",
+            "value": 31
+          },
+          {
+            "name": "ItemUpgradeLevel",
+            "type": "TooltipDataLineType",
+            "value": 32
+          },
+          {
+            "name": "SpellPassive",
+            "type": "TooltipDataLineType",
+            "value": 33
+          },
+          {
+            "name": "SpellDescription",
+            "type": "TooltipDataLineType",
+            "value": 34
+          },
+          {
+            "name": "ItemQuality",
+            "type": "TooltipDataLineType",
+            "value": 35
+          },
+          {
+            "name": "TradeTimeRemaining",
+            "type": "TooltipDataLineType",
+            "value": 36
+          },
+          {
+            "name": "FlavorText",
+            "type": "TooltipDataLineType",
+            "value": 37
+          },
+          {
+            "name": "ItemSpellTriggerLearn",
+            "type": "TooltipDataLineType",
+            "value": 38
+          },
+          {
+            "name": "LearnTransmogSet",
+            "type": "TooltipDataLineType",
+            "value": 39
+          },
+          {
+            "name": "LearnTransmogIllusion",
+            "type": "TooltipDataLineType",
+            "value": 40
+          },
+          {
+            "name": "ErrorLine",
+            "type": "TooltipDataLineType",
+            "value": 41
+          },
+          {
+            "name": "DisabledLine",
+            "type": "TooltipDataLineType",
+            "value": 42
+          },
+          {
+            "name": "UsageRequirement",
+            "type": "TooltipDataLineType",
+            "value": 43
+          },
+          {
+            "name": "ItemSpellTriggerOnUse",
+            "type": "TooltipDataLineType",
+            "value": 44
+          },
+          {
+            "name": "ItemSpellTriggerOnEquip",
+            "type": "TooltipDataLineType",
+            "value": 45
+          },
+          {
+            "name": "ItemSpellTriggerOnProc",
+            "type": "TooltipDataLineType",
+            "value": 46
+          },
+          {
+            "name": "UnitLevel",
+            "type": "TooltipDataLineType",
+            "value": 47
+          },
+          {
+            "name": "UnitType",
+            "type": "TooltipDataLineType",
+            "value": 48
+          },
+          {
+            "name": "UnitDead",
+            "type": "TooltipDataLineType",
+            "value": 49
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/missing_enums.lua",
+      "source_derived_values": {
+        "AzeriteEssencePower": 5,
+        "AzeriteEssenceSlot": 4,
+        "AzeriteItemPowerDescription": 9,
+        "Blank": 1,
+        "CurrencyTotal": 14,
+        "DisabledLine": 42,
+        "EquipSlot": 21,
+        "ErrorLine": 41,
+        "FlavorText": 37,
+        "GemSocket": 3,
+        "GemSocketEnchantment": 30,
+        "ItemBinding": 20,
+        "ItemEnchantmentPermanent": 15,
+        "ItemLevel": 31,
+        "ItemName": 22,
+        "ItemQuality": 35,
+        "ItemSpellTriggerLearn": 38,
+        "ItemUpgradeLevel": 32,
+        "LearnTransmogIllusion": 40,
+        "LearnTransmogSet": 39,
+        "LearnableSpell": 6,
+        "NestedBlock": 19,
+        "None": 0,
+        "ProfessionCraftingQuality": 12,
+        "QuestObjective": 8,
+        "QuestPlayer": 18,
+        "QuestTitle": 17,
+        "RuneforgeLegendaryPowerDescription": 10,
+        "SellPrice": 11,
+        "Separator": 23,
+        "SpellDescription": 34,
+        "SpellName": 13,
+        "SpellPassive": 33,
+        "ToyDescription": 28,
+        "ToyDuration": 27,
+        "ToyEffect": 26,
+        "ToyName": 24,
+        "ToySource": 29,
+        "ToyText": 25,
+        "TradeTimeRemaining": 36,
+        "UnitName": 2,
+        "UnitOwner": 16,
+        "UnitThreat": 7,
+        "UsageRequirement": 43,
+        "ItemSpellTriggerOnUse": 44,
+        "ItemSpellTriggerOnEquip": 45,
+        "ItemSpellTriggerOnProc": 46,
+        "UnitLevel": 47,
+        "UnitType": 48,
+        "UnitDead": 49
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {},
+      "extra": {},
+      "wrong": {}
+    },
+    {
+      "enum": "TooltipDataType",
+      "cached": {
+        "file": "TooltipInfoSharedDocumentation.lua",
+        "line": 87,
+        "sha256": "3cae18d4c643bae07c2d4aad7f333ae1d3d47c502f737ceec73b3ee566dba1e3",
+        "fields": [
+          {
+            "name": "Item",
+            "type": "TooltipDataType",
+            "value": 0
+          },
+          {
+            "name": "Spell",
+            "type": "TooltipDataType",
+            "value": 1
+          },
+          {
+            "name": "Unit",
+            "type": "TooltipDataType",
+            "value": 2
+          },
+          {
+            "name": "Corpse",
+            "type": "TooltipDataType",
+            "value": 3
+          },
+          {
+            "name": "Object",
+            "type": "TooltipDataType",
+            "value": 4
+          },
+          {
+            "name": "Currency",
+            "type": "TooltipDataType",
+            "value": 5
+          },
+          {
+            "name": "BattlePet",
+            "type": "TooltipDataType",
+            "value": 6
+          },
+          {
+            "name": "UnitAura",
+            "type": "TooltipDataType",
+            "value": 7
+          },
+          {
+            "name": "AzeriteEssence",
+            "type": "TooltipDataType",
+            "value": 8
+          },
+          {
+            "name": "CompanionPet",
+            "type": "TooltipDataType",
+            "value": 9
+          },
+          {
+            "name": "Mount",
+            "type": "TooltipDataType",
+            "value": 10
+          },
+          {
+            "name": "PetAction",
+            "type": "TooltipDataType",
+            "value": 11
+          },
+          {
+            "name": "Achievement",
+            "type": "TooltipDataType",
+            "value": 12
+          },
+          {
+            "name": "EnhancedConduit",
+            "type": "TooltipDataType",
+            "value": 13
+          },
+          {
+            "name": "EquipmentSet",
+            "type": "TooltipDataType",
+            "value": 14
+          },
+          {
+            "name": "InstanceLock",
+            "type": "TooltipDataType",
+            "value": 15
+          },
+          {
+            "name": "PvPBrawl",
+            "type": "TooltipDataType",
+            "value": 16
+          },
+          {
+            "name": "RecipeRankInfo",
+            "type": "TooltipDataType",
+            "value": 17
+          },
+          {
+            "name": "Totem",
+            "type": "TooltipDataType",
+            "value": 18
+          },
+          {
+            "name": "Toy",
+            "type": "TooltipDataType",
+            "value": 19
+          },
+          {
+            "name": "CorruptionCleanser",
+            "type": "TooltipDataType",
+            "value": 20
+          },
+          {
+            "name": "MinimapMouseover",
+            "type": "TooltipDataType",
+            "value": 21
+          },
+          {
+            "name": "Flyout",
+            "type": "TooltipDataType",
+            "value": 22
+          },
+          {
+            "name": "Quest",
+            "type": "TooltipDataType",
+            "value": 23
+          },
+          {
+            "name": "QuestPartyProgress",
+            "type": "TooltipDataType",
+            "value": 24
+          },
+          {
+            "name": "Macro",
+            "type": "TooltipDataType",
+            "value": 25
+          },
+          {
+            "name": "Debug",
+            "type": "TooltipDataType",
+            "value": 26
+          },
+          {
+            "name": "Outfit",
+            "type": "TooltipDataType",
+            "value": 27
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/missing_enums.lua",
+      "source_derived_values": {
+        "Achievement": 12,
+        "AzeriteEssence": 8,
+        "BattlePet": 6,
+        "CompanionPet": 9,
+        "Corpse": 3,
+        "CorruptionCleanser": 20,
+        "Currency": 5,
+        "Debug": 26,
+        "EnhancedConduit": 13,
+        "EquipmentSet": 14,
+        "Flyout": 22,
+        "InstanceLock": 15,
+        "Item": 0,
+        "Macro": 25,
+        "MinimapMouseover": 21,
+        "Mount": 10,
+        "Object": 4,
+        "Outfit": 27,
+        "PetAction": 11,
+        "PvPBrawl": 16,
+        "Quest": 23,
+        "QuestPartyProgress": 24,
+        "RecipeRankInfo": 17,
+        "Spell": 1,
+        "Totem": 18,
+        "Toy": 19,
+        "Unit": 2,
+        "UnitAura": 7
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {},
+      "extra": {},
+      "wrong": {}
+    },
+    {
+      "enum": "TradeskillRecipeType",
+      "cached": {
+        "file": "TradeSkillUITypesDocumentation.lua",
+        "line": 70,
+        "sha256": "ab079389cf9f96ba458e9fa98ab68255b5c2007d666d4b1684245fe043efe2ed",
+        "fields": [
+          {
+            "name": "Item",
+            "type": "TradeskillRecipeType",
+            "value": 1
+          },
+          {
+            "name": "Salvage",
+            "type": "TradeskillRecipeType",
+            "value": 2
+          },
+          {
+            "name": "Enchant",
+            "type": "TradeskillRecipeType",
+            "value": 3
+          },
+          {
+            "name": "Gathering",
+            "type": "TradeskillRecipeType",
+            "value": 4
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/missing_enums.lua",
+      "source_derived_values": {
+        "Enchant": 3,
+        "Gathering": 4,
+        "Item": 1,
+        "Salvage": 2
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {},
+      "extra": {},
+      "wrong": {}
+    },
+    {
+      "enum": "UICursorType",
+      "cached": {
+        "file": "CursorConstDocumentation.lua",
+        "line": 120,
+        "sha256": "833fb715a0e66ceffdc40fa86c9eb3b8a356fa9c5425e0b2004ed27171b63f3d",
+        "fields": [
+          {
+            "name": "Default",
+            "type": "UICursorType",
+            "value": 0
+          },
+          {
+            "name": "Item",
+            "type": "UICursorType",
+            "value": 1
+          },
+          {
+            "name": "Money",
+            "type": "UICursorType",
+            "value": 2
+          },
+          {
+            "name": "Spell",
+            "type": "UICursorType",
+            "value": 3
+          },
+          {
+            "name": "PetAction",
+            "type": "UICursorType",
+            "value": 4
+          },
+          {
+            "name": "Merchant",
+            "type": "UICursorType",
+            "value": 5
+          },
+          {
+            "name": "ActionBar",
+            "type": "UICursorType",
+            "value": 6
+          },
+          {
+            "name": "Macro",
+            "type": "UICursorType",
+            "value": 7
+          },
+          {
+            "name": "AmmoObsolete",
+            "type": "UICursorType",
+            "value": 8
+          },
+          {
+            "name": "Pet",
+            "type": "UICursorType",
+            "value": 9
+          },
+          {
+            "name": "GuildBank",
+            "type": "UICursorType",
+            "value": 10
+          },
+          {
+            "name": "GuildBankMoney",
+            "type": "UICursorType",
+            "value": 11
+          },
+          {
+            "name": "EquipmentSet",
+            "type": "UICursorType",
+            "value": 12
+          },
+          {
+            "name": "Currency",
+            "type": "UICursorType",
+            "value": 13
+          },
+          {
+            "name": "Flyout",
+            "type": "UICursorType",
+            "value": 14
+          },
+          {
+            "name": "VoidItem",
+            "type": "UICursorType",
+            "value": 15
+          },
+          {
+            "name": "BattlePet",
+            "type": "UICursorType",
+            "value": 16
+          },
+          {
+            "name": "Mount",
+            "type": "UICursorType",
+            "value": 17
+          },
+          {
+            "name": "Toy",
+            "type": "UICursorType",
+            "value": 18
+          },
+          {
+            "name": "ConduitCollectionItem",
+            "type": "UICursorType",
+            "value": 19
+          },
+          {
+            "name": "PerksProgramVendorItem",
+            "type": "UICursorType",
+            "value": 20
+          },
+          {
+            "name": "Outfit",
+            "type": "UICursorType",
+            "value": 21
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/missing_enums.lua",
+      "source_derived_values": {
+        "ActionBar": 6,
+        "AmmoObsolete": 8,
+        "BattlePet": 16,
+        "ConduitCollectionItem": 19,
+        "Currency": 13,
+        "Default": 0,
+        "EquipmentSet": 12,
+        "Flyout": 14,
+        "GuildBank": 10,
+        "GuildBankMoney": 11,
+        "Item": 1,
+        "Macro": 7,
+        "Merchant": 5,
+        "Money": 2,
+        "Mount": 17,
+        "Outfit": 21,
+        "PerksProgramVendorItem": 20,
+        "Pet": 9,
+        "PetAction": 4,
+        "Spell": 3,
+        "Toy": 18,
+        "VoidItem": 15
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {},
+      "extra": {},
+      "wrong": {}
+    },
+    {
+      "enum": "UIWidgetVisualizationType",
+      "cached": {
+        "file": "UIWidgetManagerSharedDocumentation.lua",
+        "line": 128,
+        "sha256": "ea67d75f63fd12072cabc7fc7615675b9ba814a85202e7c43ddf2178e079169d",
+        "fields": [
+          {
+            "name": "IconAndText",
+            "type": "UIWidgetVisualizationType",
+            "value": 0
+          },
+          {
+            "name": "CaptureBar",
+            "type": "UIWidgetVisualizationType",
+            "value": 1
+          },
+          {
+            "name": "StatusBar",
+            "type": "UIWidgetVisualizationType",
+            "value": 2
+          },
+          {
+            "name": "DoubleStatusBar",
+            "type": "UIWidgetVisualizationType",
+            "value": 3
+          },
+          {
+            "name": "IconTextAndBackground",
+            "type": "UIWidgetVisualizationType",
+            "value": 4
+          },
+          {
+            "name": "DoubleIconAndText",
+            "type": "UIWidgetVisualizationType",
+            "value": 5
+          },
+          {
+            "name": "StackedResourceTracker",
+            "type": "UIWidgetVisualizationType",
+            "value": 6
+          },
+          {
+            "name": "IconTextAndCurrencies",
+            "type": "UIWidgetVisualizationType",
+            "value": 7
+          },
+          {
+            "name": "TextWithState",
+            "type": "UIWidgetVisualizationType",
+            "value": 8
+          },
+          {
+            "name": "HorizontalCurrencies",
+            "type": "UIWidgetVisualizationType",
+            "value": 9
+          },
+          {
+            "name": "BulletTextList",
+            "type": "UIWidgetVisualizationType",
+            "value": 10
+          },
+          {
+            "name": "ScenarioHeaderCurrenciesAndBackground",
+            "type": "UIWidgetVisualizationType",
+            "value": 11
+          },
+          {
+            "name": "TextureAndText",
+            "type": "UIWidgetVisualizationType",
+            "value": 12
+          },
+          {
+            "name": "SpellDisplay",
+            "type": "UIWidgetVisualizationType",
+            "value": 13
+          },
+          {
+            "name": "DoubleStateIconRow",
+            "type": "UIWidgetVisualizationType",
+            "value": 14
+          },
+          {
+            "name": "TextureAndTextRow",
+            "type": "UIWidgetVisualizationType",
+            "value": 15
+          },
+          {
+            "name": "ZoneControl",
+            "type": "UIWidgetVisualizationType",
+            "value": 16
+          },
+          {
+            "name": "CaptureZone",
+            "type": "UIWidgetVisualizationType",
+            "value": 17
+          },
+          {
+            "name": "TextureWithAnimation",
+            "type": "UIWidgetVisualizationType",
+            "value": 18
+          },
+          {
+            "name": "DiscreteProgressSteps",
+            "type": "UIWidgetVisualizationType",
+            "value": 19
+          },
+          {
+            "name": "ScenarioHeaderTimer",
+            "type": "UIWidgetVisualizationType",
+            "value": 20
+          },
+          {
+            "name": "TextColumnRow",
+            "type": "UIWidgetVisualizationType",
+            "value": 21
+          },
+          {
+            "name": "Spacer",
+            "type": "UIWidgetVisualizationType",
+            "value": 22
+          },
+          {
+            "name": "UnitPowerBar",
+            "type": "UIWidgetVisualizationType",
+            "value": 23
+          },
+          {
+            "name": "FillUpFrames",
+            "type": "UIWidgetVisualizationType",
+            "value": 24
+          },
+          {
+            "name": "TextWithSubtext",
+            "type": "UIWidgetVisualizationType",
+            "value": 25
+          },
+          {
+            "name": "MapPinAnimation",
+            "type": "UIWidgetVisualizationType",
+            "value": 26
+          },
+          {
+            "name": "ItemDisplay",
+            "type": "UIWidgetVisualizationType",
+            "value": 27
+          },
+          {
+            "name": "TugOfWar",
+            "type": "UIWidgetVisualizationType",
+            "value": 28
+          },
+          {
+            "name": "ScenarioHeaderDelves",
+            "type": "UIWidgetVisualizationType",
+            "value": 29
+          },
+          {
+            "name": "ButtonHeader",
+            "type": "UIWidgetVisualizationType",
+            "value": 30
+          },
+          {
+            "name": "PreyHuntProgress",
+            "type": "UIWidgetVisualizationType",
+            "value": 31
+          }
+        ]
+      },
+      "simulator_source": "src/lua_api/globals/enum_data/widget.rs",
+      "source_derived_values": {
+        "IconAndText": 0,
+        "CaptureBar": 1,
+        "StatusBar": 2,
+        "DoubleStatusBar": 3,
+        "IconTextAndBackground": 4,
+        "DoubleIconAndText": 5,
+        "StackedResourceTracker": 6,
+        "IconTextAndCurrencies": 7,
+        "TextWithState": 8,
+        "HorizontalCurrencies": 9,
+        "BulletTextList": 10,
+        "ScenarioHeaderCurrenciesAndBackground": 11,
+        "TextureAndText": 12,
+        "SpellDisplay": 13,
+        "DoubleStateIconRow": 14,
+        "TextureAndTextRow": 15,
+        "ZoneControl": 16,
+        "CaptureZone": 17,
+        "TextureWithAnimation": 18,
+        "DiscreteProgressSteps": 19,
+        "ScenarioHeaderTimer": 20,
+        "TextColumnRow": 21,
+        "Spacer": 22,
+        "UnitPowerBar": 23,
+        "FillUpFrames": 24,
+        "TextWithSubtext": 25,
+        "MapPinAnimation": 26,
+        "ItemDisplay": 27,
+        "TugOfWar": 28,
+        "ControlZone": 29,
+        "SpellWithChargesDisplay": 30
+      },
+      "proof_level": "source-derived default retail initialization, not a runtime/loaded-UI observation",
+      "missing": {
+        "ScenarioHeaderDelves": 29,
+        "ButtonHeader": 30,
+        "PreyHuntProgress": 31
+      },
+      "extra": {
+        "ControlZone": 29,
+        "SpellWithChargesDisplay": 30
+      },
+      "wrong": {}
+    }
+  ],
+  "structure_declarations": {
+    "AdvancedFilterOptions": {
+      "file": "LFGListInfoDocumentation.lua",
+      "line": 826,
+      "sha256": "c8c660af3f1b85c88225a2174f0d9010682517eb7eac67781ea0ce5726d52126",
+      "fields": [
+        {
+          "name": "needsTank",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "needsHealer",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "needsDamage",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "needsMyClass",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "hasTank",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "hasHealer",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "activities",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "minimumRating",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "difficultyNormal",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "difficultyHeroic",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "difficultyMythic",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "difficultyMythicPlus",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "generalPlaystyle1",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "generalPlaystyle2",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "generalPlaystyle3",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "generalPlaystyle4",
+          "type": "bool",
+          "nilable": false
+        }
+      ]
+    },
+    "CatalogShopCategoryInfo": {
+      "file": "CatalogShopDocumentation.lua",
+      "line": 673,
+      "sha256": "b58da3cba95d908b14ddcfb50235a69fd82f99665822c28f901a2c8c95e6ac1a",
+      "fields": [
+        {
+          "name": "ID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "displayName",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "iconTexture",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "linkTag",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "isDisabled",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "showPersistentRefundButton",
+          "type": "bool",
+          "nilable": false
+        }
+      ]
+    },
+    "CatalogShopProductInfo": {
+      "file": "CatalogShopDocumentation.lua",
+      "line": 727,
+      "sha256": "b58da3cba95d908b14ddcfb50235a69fd82f99665822c28f901a2c8c95e6ac1a",
+      "fields": [
+        {
+          "name": "catalogShopProductID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "iconTexture",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "isFullyOwned",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "isPurchasePending",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "refundable",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "price",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "originalPrice",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "discountPercentage",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "itemID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "mountID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "mountTypeName",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "speciesID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "transmogSetID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "itemModifiedAppearanceID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "subItems",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "subItemsLoaded",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "backgroundTexture",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "foregroundTexture",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "smallCardBGTexture",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "smallCardFGTexture",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "wideCardBGTexture",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "wideCardFGTexture",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "previewIconTexture",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "optionalWideCardBackgroundTexture",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "isBundle",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "bundleChildrenSize",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "licenseTermType",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "licenseTermDuration",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "virtualCurrencies",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "isHidden",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "isMystery",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "hasPendingOrders",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "numBundleDetailCards",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "isDynamicallyDiscounted",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "shouldShowOriginalPrice",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "wideCardBGOverrideProductURL",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "previewBGOverrideProductURL",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "previewSmallBGOverrideProductURL",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "decorQuantity",
+          "type": "DecorQuantity",
+          "nilable": true
+        },
+        {
+          "name": "isVCProduct",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "containsHousingItem",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "deferredGameTimeDays",
+          "type": "number",
+          "nilable": false
+        }
+      ]
+    },
+    "CooldownViewerCooldown": {
+      "file": "CooldownViewerDocumentation.lua",
+      "line": 127,
+      "sha256": "106527f9cd46202739d49c4494863621ed508925033233fe5e27888d69cf8095",
+      "fields": [
+        {
+          "name": "cooldownID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "spellID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "spellCategoryID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "overrideSpellID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "overrideTooltipSpellID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "equipSlot",
+          "type": "luaIndex",
+          "nilable": true
+        },
+        {
+          "name": "buffSlot",
+          "type": "luaIndex",
+          "nilable": true
+        },
+        {
+          "name": "linkedSpellIDs",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "selfAura",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "hasAura",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "charges",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "isKnown",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "isInvisible",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "flags",
+          "type": "CooldownSetSpellFlags",
+          "nilable": false
+        },
+        {
+          "name": "category",
+          "type": "CooldownViewerCategory",
+          "nilable": false
+        }
+      ]
+    },
+    "CraftingItemSlotModification": {
+      "file": "TradeSkillUITypesDocumentation.lua",
+      "line": 149,
+      "sha256": "ab079389cf9f96ba458e9fa98ab68255b5c2007d666d4b1684245fe043efe2ed",
+      "fields": [
+        {
+          "name": "dataSlotIndex",
+          "type": "luaIndex",
+          "nilable": false
+        },
+        {
+          "name": "reagent",
+          "type": "CraftingReagent",
+          "nilable": false
+        }
+      ]
+    },
+    "CraftingOrderReagentInfo": {
+      "file": "CraftingOrderUISharedDocumentation.lua",
+      "line": 169,
+      "sha256": "87b0bc5e88b851e3dee78bb57c2c6a6e3fab25420c8709ece59efc38d0dc695b",
+      "fields": [
+        {
+          "name": "reagentInfo",
+          "type": "CraftingReagentInfo",
+          "nilable": false
+        },
+        {
+          "name": "slotIndex",
+          "type": "luaIndex",
+          "nilable": false
+        },
+        {
+          "name": "source",
+          "type": "CraftingOrderReagentSource",
+          "nilable": false
+        },
+        {
+          "name": "isBasicReagent",
+          "type": "bool",
+          "nilable": false
+        }
+      ]
+    },
+    "CraftingReagentInfo": {
+      "file": "TradeSkillUITypesDocumentation.lua",
+      "line": 223,
+      "sha256": "ab079389cf9f96ba458e9fa98ab68255b5c2007d666d4b1684245fe043efe2ed",
+      "fields": [
+        {
+          "name": "reagent",
+          "type": "CraftingReagent",
+          "nilable": false
+        },
+        {
+          "name": "dataSlotIndex",
+          "type": "luaIndex",
+          "nilable": false
+        },
+        {
+          "name": "quantity",
+          "type": "number",
+          "nilable": false
+        }
+      ]
+    },
+    "CraftingReagentSlotSchematic": {
+      "file": "TradeSkillUITypesDocumentation.lua",
+      "line": 243,
+      "sha256": "ab079389cf9f96ba458e9fa98ab68255b5c2007d666d4b1684245fe043efe2ed",
+      "fields": [
+        {
+          "name": "reagents",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "reagentType",
+          "type": "CraftingReagentType",
+          "nilable": false
+        },
+        {
+          "name": "variableQuantities",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "quantityRequired",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "slotInfo",
+          "type": "CraftingReagentSlotInfo",
+          "nilable": true
+        },
+        {
+          "name": "dataSlotType",
+          "type": "TradeskillSlotDataType",
+          "nilable": false
+        },
+        {
+          "name": "dataSlotIndex",
+          "type": "luaIndex",
+          "nilable": false
+        },
+        {
+          "name": "slotIndex",
+          "type": "luaIndex",
+          "nilable": false
+        },
+        {
+          "name": "orderSource",
+          "type": "CraftingOrderReagentSource",
+          "nilable": true
+        },
+        {
+          "name": "required",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "hiddenInCraftingForm",
+          "type": "bool",
+          "nilable": false
+        }
+      ]
+    },
+    "CraftingResourceReturnInfo": {
+      "file": "TradeSkillUITypesDocumentation.lua",
+      "line": 308,
+      "sha256": "ab079389cf9f96ba458e9fa98ab68255b5c2007d666d4b1684245fe043efe2ed",
+      "fields": [
+        {
+          "name": "reagent",
+          "type": "CraftingReagent",
+          "nilable": false
+        },
+        {
+          "name": "quantity",
+          "type": "number",
+          "nilable": false
+        }
+      ]
+    },
+    "ExpansionDisplayInfo": {
+      "file": "ExpansionDocumentation.lua",
+      "line": 297,
+      "sha256": "432136d274fb7b31b740e3100ab3a806c98cebfad2a7b3c3d46ead9d3248449b",
+      "fields": [
+        {
+          "name": "logo",
+          "type": "fileID",
+          "nilable": false
+        },
+        {
+          "name": "banner",
+          "type": "textureAtlas",
+          "nilable": false
+        },
+        {
+          "name": "features",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "highResBackgroundID",
+          "type": "fileID",
+          "nilable": false
+        },
+        {
+          "name": "lowResBackgroundID",
+          "type": "fileID",
+          "nilable": false
+        },
+        {
+          "name": "textureKit",
+          "type": "textureKit",
+          "nilable": false
+        },
+        {
+          "name": "glueAmbianceSoundKit",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "glueMusicSoundKit",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "glueCreditsSoundKit",
+          "type": "number",
+          "nilable": true
+        }
+      ]
+    },
+    "ItemInteractionFrameInfo": {
+      "file": "ItemInteractionUIDocumentation.lua",
+      "line": 132,
+      "sha256": "e325ca873f1c9597001ee100f80683cdbe793f2fbca7bff4cf606e530cb2139e",
+      "fields": [
+        {
+          "name": "textureKit",
+          "type": "textureKit",
+          "nilable": false
+        },
+        {
+          "name": "openSoundKitID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "closeSoundKitID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "titleText",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "tutorialText",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "buttonText",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "interactionType",
+          "type": "UIItemInteractionType",
+          "nilable": false
+        },
+        {
+          "name": "flags",
+          "type": "UIItemInteractionFlags",
+          "nilable": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "buttonTooltip",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "confirmationDescription",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "slotTooltip",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "cost",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "currencyTypeId",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "dropInSlotSoundKitId",
+          "type": "number",
+          "nilable": true
+        }
+      ]
+    },
+    "LfgEntryData": {
+      "file": "LFGListInfoDocumentation.lua",
+      "line": 923,
+      "sha256": "c8c660af3f1b85c88225a2174f0d9010682517eb7eac67781ea0ce5726d52126",
+      "fields": [
+        {
+          "name": "activityIDs",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "requiredItemLevel",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "requiredHonorLevel",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "name",
+          "type": "kstringLfgListApplicant",
+          "nilable": false
+        },
+        {
+          "name": "comment",
+          "type": "kstringLfgListApplicant",
+          "nilable": false
+        },
+        {
+          "name": "voiceChat",
+          "type": "kstringLfgListApplicant",
+          "nilable": false
+        },
+        {
+          "name": "censored",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "duration",
+          "type": "time_t",
+          "nilable": false
+        },
+        {
+          "name": "autoAccept",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "privateGroup",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "questID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "requiredDungeonScore",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "requiredPvpRating",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "playstyle",
+          "type": "LFGEntryPlaystyle",
+          "nilable": true
+        },
+        {
+          "name": "generalPlaystyle",
+          "type": "LFGEntryGeneralPlaystyle",
+          "nilable": true
+        },
+        {
+          "name": "isCrossFactionListing",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "newPlayerFriendly",
+          "type": "bool",
+          "nilable": false
+        }
+      ]
+    },
+    "LfgListingCreateData": {
+      "file": "LFGListInfoDocumentation.lua",
+      "line": 947,
+      "sha256": "c8c660af3f1b85c88225a2174f0d9010682517eb7eac67781ea0ce5726d52126",
+      "fields": [
+        {
+          "name": "activityIDs",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "questID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "isAutoAccept",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "isCrossFactionListing",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "isPrivateGroup",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "newPlayerFriendly",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "playstyle",
+          "type": "LFGEntryPlaystyle",
+          "nilable": false
+        },
+        {
+          "name": "generalPlaystyle",
+          "type": "LFGEntryGeneralPlaystyle",
+          "nilable": false
+        },
+        {
+          "name": "requiredDungeonScore",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "requiredItemLevel",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "requiredPvpRating",
+          "type": "number",
+          "nilable": false
+        }
+      ]
+    },
+    "LfgSearchResultData": {
+      "file": "LFGListInfoDocumentation.lua",
+      "line": 965,
+      "sha256": "c8c660af3f1b85c88225a2174f0d9010682517eb7eac67781ea0ce5726d52126",
+      "fields": [
+        {
+          "name": "searchResultID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "activityIDs",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "leaderName",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "name",
+          "type": "kstringLfgListSearch",
+          "nilable": false
+        },
+        {
+          "name": "comment",
+          "type": "kstringLfgListSearch",
+          "nilable": false
+        },
+        {
+          "name": "voiceChat",
+          "type": "kstringLfgListSearch",
+          "nilable": false
+        },
+        {
+          "name": "censored",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "requiredItemLevel",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "requiredHonorLevel",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "hasSelf",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "numMembers",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "numBNetFriends",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "numCharFriends",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "numGuildMates",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "isDelisted",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "autoAccept",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "isWarMode",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "age",
+          "type": "time_t",
+          "nilable": false
+        },
+        {
+          "name": "questID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "leaderOverallDungeonScore",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "leaderDungeonScoreInfo",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "leaderBestDungeonScoreInfo",
+          "type": "BestDungeonScoreMapInfo",
+          "nilable": true
+        },
+        {
+          "name": "leaderPvpRatingInfo",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "requiredDungeonScore",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "requiredPvpRating",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "playstyle",
+          "type": "LFGEntryPlaystyle",
+          "nilable": true
+        },
+        {
+          "name": "generalPlaystyle",
+          "type": "LFGEntryGeneralPlaystyle",
+          "nilable": true
+        },
+        {
+          "name": "crossFactionListing",
+          "type": "bool",
+          "nilable": true
+        },
+        {
+          "name": "leaderFactionGroup",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "newPlayerFriendly",
+          "type": "bool",
+          "nilable": true
+        },
+        {
+          "name": "partyGUID",
+          "type": "WOWGUID",
+          "nilable": false
+        }
+      ]
+    },
+    "MajorFactionData": {
+      "file": "MajorFactionsDocumentation.lua",
+      "line": 228,
+      "sha256": "88f241be9f192af3337b0a241b20c659db2f5e819c61f563de41aae9c2e1ec36",
+      "fields": [
+        {
+          "name": "name",
+          "type": "cstring",
+          "nilable": false
+        },
+        {
+          "name": "description",
+          "type": "cstring",
+          "nilable": false
+        },
+        {
+          "name": "highlights",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "factionID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "expansionID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "bountySetID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "isUnlocked",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "useJourneyUnlockToast",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "unlockDescription",
+          "type": "cstring",
+          "nilable": true
+        },
+        {
+          "name": "uiPriority",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "renownLevel",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "maxLevel",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "renownReputationEarned",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "renownLevelThreshold",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "textureKit",
+          "type": "textureKit",
+          "nilable": false
+        },
+        {
+          "name": "celebrationSoundKit",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "renownFanfareSoundKitID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "factionFontColor",
+          "type": "DBColorExport",
+          "nilable": true
+        },
+        {
+          "name": "renownTrackLevelEffectID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "playerCompanionID",
+          "type": "number",
+          "nilable": true
+        }
+      ]
+    },
+    "MajorFactionRenownRewardInfo": {
+      "file": "MajorFactionsDocumentation.lua",
+      "line": 277,
+      "sha256": "88f241be9f192af3337b0a241b20c659db2f5e819c61f563de41aae9c2e1ec36",
+      "fields": [
+        {
+          "name": "renownRewardID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "uiOrder",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "isAccountUnlock",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "itemID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "spellID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "mountID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "transmogID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "transmogSetID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "titleMaskID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "transmogIllusionSourceID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "icon",
+          "type": "fileID",
+          "nilable": true
+        },
+        {
+          "name": "name",
+          "type": "cstring",
+          "nilable": true
+        },
+        {
+          "name": "description",
+          "type": "cstring",
+          "nilable": true
+        },
+        {
+          "name": "toastDescription",
+          "type": "cstring",
+          "nilable": true
+        },
+        {
+          "name": "rewardType",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "isCollected",
+          "type": "bool",
+          "nilable": true
+        }
+      ]
+    },
+    "NewCraftingOrderInfo": {
+      "file": "CraftingOrderUISharedDocumentation.lua",
+      "line": 199,
+      "sha256": "87b0bc5e88b851e3dee78bb57c2c6a6e3fab25420c8709ece59efc38d0dc695b",
+      "fields": [
+        {
+          "name": "skillLineAbilityID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "orderType",
+          "type": "CraftingOrderType",
+          "nilable": false
+        },
+        {
+          "name": "orderDuration",
+          "type": "CraftingOrderDuration",
+          "nilable": false
+        },
+        {
+          "name": "tipAmount",
+          "type": "WOWMONEY",
+          "nilable": false
+        },
+        {
+          "name": "customerNotes",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "reagentInfos",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "craftingReagentItems",
+          "type": "table",
+          "nilable": false
+        },
+        {
+          "name": "minCraftingQualityID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "orderTarget",
+          "type": "string",
+          "nilable": true
+        },
+        {
+          "name": "recraftItem",
+          "type": "WOWGUID",
+          "nilable": true
+        }
+      ]
+    },
+    "PrivateAuraIconInfo": {
+      "file": "UnitConstantsDocumentation.lua",
+      "line": 32,
+      "sha256": "44180c692ea5ef4e03729bc7f5b690c590e943d370f9060ed7b7c5c0cd882aeb",
+      "fields": [
+        {
+          "name": "iconAnchor",
+          "type": "AnchorBinding",
+          "nilable": false
+        },
+        {
+          "name": "iconWidth",
+          "type": "uiUnit",
+          "nilable": false
+        },
+        {
+          "name": "iconHeight",
+          "type": "uiUnit",
+          "nilable": false
+        },
+        {
+          "name": "borderScale",
+          "type": "uiUnit",
+          "nilable": true
+        }
+      ]
+    },
+    "RegularReagentInfo": {
+      "file": "TradeSkillUITypesDocumentation.lua",
+      "line": 379,
+      "sha256": "ab079389cf9f96ba458e9fa98ab68255b5c2007d666d4b1684245fe043efe2ed",
+      "fields": [
+        {
+          "name": "reagent",
+          "type": "CraftingReagent",
+          "nilable": false
+        },
+        {
+          "name": "quantity",
+          "type": "number",
+          "nilable": false
+        }
+      ]
+    },
+    "ScheduledEventInfo": {
+      "file": "EventSchedulerUIDocumentation.lua",
+      "line": 168,
+      "sha256": "388a0d46c772123d19977875a2f89c99eb6819053525f3bab0b887e10321898c",
+      "fields": [
+        {
+          "name": "eventKey",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "eventID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "areaPoiID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "startTime",
+          "type": "time_t",
+          "nilable": false
+        },
+        {
+          "name": "endTime",
+          "type": "time_t",
+          "nilable": false
+        },
+        {
+          "name": "duration",
+          "type": "time_t",
+          "nilable": false
+        },
+        {
+          "name": "hasReminder",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "rewardsClaimed",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "displayInfo",
+          "type": "EventDisplayInfo",
+          "nilable": false
+        }
+      ]
+    },
+    "SpellCooldownInfo": {
+      "file": "SpellSharedDocumentation.lua",
+      "line": 19,
+      "sha256": "4ebe8d82b50faa906300f646d9bba4e85ea820b7614947624c8816f19e0d6b68",
+      "fields": [
+        {
+          "name": "startTime",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "duration",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "isEnabled",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "isActive",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "modRate",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "activeCategory",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "timeUntilEndOfStartRecovery",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "isOnGCD",
+          "type": "bool",
+          "nilable": true
+        }
+      ]
+    },
+    "TransmogAppearanceSourceInfoData": {
+      "file": "TransmogItemsDocumentation.lua",
+      "line": 1163,
+      "sha256": "9fa05f40ee8638a12ae7926bce11eb7af4f77ffb99edc9504acac869b088c18f",
+      "fields": [
+        {
+          "name": "category",
+          "type": "TransmogCollectionType",
+          "nilable": false
+        },
+        {
+          "name": "itemAppearanceID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "canHaveIllusion",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "icon",
+          "type": "fileID",
+          "nilable": false
+        },
+        {
+          "name": "isCollected",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "itemLink",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "transmoglink",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "sourceType",
+          "type": "luaIndex",
+          "nilable": true
+        },
+        {
+          "name": "itemSubclass",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "ignoreModelAttachmentChecksForIllusion",
+          "type": "bool",
+          "nilable": false
+        }
+      ]
+    },
+    "TransmogSetInfo": {
+      "file": "TransmogSetsDocumentation.lua",
+      "line": 511,
+      "sha256": "aba4c1bcd3a4212ce7becfd93f49a7d3a1819e5f6a75f81de3b53286bb7fe013",
+      "fields": [
+        {
+          "name": "setID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "nilable": false
+        },
+        {
+          "name": "baseSetID",
+          "type": "number",
+          "nilable": true
+        },
+        {
+          "name": "description",
+          "type": "cstring",
+          "nilable": true
+        },
+        {
+          "name": "label",
+          "type": "cstring",
+          "nilable": true
+        },
+        {
+          "name": "expansionID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "patchID",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "uiOrder",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "classMask",
+          "type": "number",
+          "nilable": false
+        },
+        {
+          "name": "hiddenUntilCollected",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "requiredFaction",
+          "type": "cstring",
+          "nilable": true
+        },
+        {
+          "name": "collected",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "favorite",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "limitedTimeSet",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "validForCharacter",
+          "type": "bool",
+          "nilable": false
+        },
+        {
+          "name": "grantAsPrecedingVariant",
+          "type": "bool",
+          "nilable": false
+        }
+      ]
+    }
+  }
+}
