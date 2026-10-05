@@ -56,6 +56,8 @@ fn register_size(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, mt, "GetHeight", get_height)?;
     table_set_rust_fn_static(state, mt, "GetSize", get_size)?;
     table_set_rust_fn_static(state, mt, "SetSize", set_size)?;
+    #[cfg(feature = "retail-12-1-0")]
+    table_set_rust_fn_static(state, mt, "ResizeToBoundsRect", size::resize_to_bounds_rect)?;
     table_set_rust_fn_static(state, mt, "SetFixedSize", set_fixed_size)?;
     table_set_rust_fn_static(state, mt, "SetWidth", set_width)?;
     table_set_rust_fn_static(state, mt, "SetHeight", set_height)?;

@@ -99,10 +99,68 @@ pub fn set_size(state: &mut LuaState) -> LuaResult<u32> {
 
     apply_explicit_size(&mut sim, id, width, height);
     drop(sim);
+    finish_explicit_resize(state, id)?;
+    Ok(0)
+}
+
+fn finish_explicit_resize(state: &mut LuaState, id: u64) -> LuaResult<()> {
     refresh_auto_text_height_after_width_change(state, id);
     mark_nearest_layout_parent_dirty(state, id);
-    super::super::widgets::refresh_scroll_frames_for_resized_frame(state, id)?;
+    super::super::widgets::refresh_scroll_frames_for_resized_frame(state, id)
+}
+
+/// 12.1.0 `ResizeToBoundsRect()`: "resize a frame to match the bounds of its children".
+/// INFERRED: the bounds are the union of the resolved rects of shown descendant frames and
+/// regions with nonzero area; only the size changes (anchors and position are kept), and a
+/// frame without such descendants is left unchanged.
+#[cfg(feature = "retail-12-1-0")]
+pub fn resize_to_bounds_rect(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id(state, 1)?;
+    if !can_change_protected_state_for(state, id) {
+        emit_addon_action_blocked(state, id, "ResizeToBoundsRect");
+        return Ok(0);
+    }
+    let mut sim = borrow_state_mut(state)?;
+    sim.ensure_layout_rects();
+    let Some((width, height)) = descendant_bounds_size(&sim.widgets, id) else {
+        return Ok(0);
+    };
+    apply_explicit_size(&mut sim, id, width, height);
+    drop(sim);
+    finish_explicit_resize(state, id)?;
     Ok(0)
+}
+
+/// Frame-unit size of the union of `id`'s shown descendants' rects.
+#[cfg(feature = "retail-12-1-0")]
+fn descendant_bounds_size(widgets: &crate::widget::WidgetRegistry, id: u64) -> Option<(f32, f32)> {
+    let frame = widgets.get(id)?;
+    let eff_scale = frame.effective_scale.max(1e-6);
+    let mut pending = frame.children.clone();
+    let mut bounds: Option<(f32, f32, f32, f32)> = None;
+    while let Some(child_id) = pending.pop() {
+        let Some(child) = widgets.get(child_id) else {
+            continue;
+        };
+        if !child.visible {
+            continue;
+        }
+        pending.extend(child.children.iter().copied());
+        let Some(rect) = child
+            .layout_rect
+            .filter(|r| r.width > 0.0 && r.height > 0.0)
+        else {
+            continue;
+        };
+        let (left, top, right, bottom) =
+            (rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+        bounds = Some(match bounds {
+            None => (left, top, right, bottom),
+            Some((l, t, r, b)) => (l.min(left), t.min(top), r.max(right), b.max(bottom)),
+        });
+    }
+    bounds
+        .map(|(left, top, right, bottom)| ((right - left) / eff_scale, (bottom - top) / eff_scale))
 }
 
 pub fn set_fixed_size(state: &mut LuaState) -> LuaResult<u32> {
