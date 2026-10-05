@@ -292,6 +292,12 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-0")]
             prey_inputs: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
+            combat_log_restricted: false,
+            #[cfg(feature = "retail-12-0-0")]
+            pet_bonus_slot_available: false,
+            #[cfg(feature = "retail-12-0-0")]
+            limited_input_allowed: [false; 4],
+            #[cfg(feature = "retail-12-0-0")]
             encounter_policy: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             encounter_warning_settings: Default::default(),

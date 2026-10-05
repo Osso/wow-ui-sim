@@ -135,6 +135,13 @@ pub struct SimState {
     pub pvp_catalog: crate::c_api::c_pvp::catalog::PvpCatalog,
     #[cfg(feature = "retail-12-0-0")]
     pub prey_inputs: crate::c_api::c_prey::PreyInputs,
+    /// INFERRED host policy snapshots, initially inactive; not combat-derived.
+    #[cfg(feature = "retail-12-0-0")]
+    pub combat_log_restricted: bool,
+    #[cfg(feature = "retail-12-0-0")]
+    pub pet_bonus_slot_available: bool,
+    #[cfg(feature = "retail-12-0-0")]
+    pub limited_input_allowed: [bool; 4],
     pub action_bars: HashMap<u32, u32>,
     /// INFERRED host-declared resolved spell IDs on special bars; empty by default.
     /// Independent of direct assignments and bar visibility.

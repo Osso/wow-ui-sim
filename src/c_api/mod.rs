@@ -62,7 +62,7 @@ pub(crate) mod c_click_bindings_spell;
 pub mod c_club;
 #[cfg(feature = "retail-12-0-0")]
 mod c_combat_audio_alert;
-#[cfg(feature = "client-wowforever")]
+#[cfg(feature = "retail-12-0-0")]
 mod c_combat_log;
 #[cfg(feature = "retail-12-0-0")]
 mod c_combat_text;
@@ -80,7 +80,7 @@ pub mod c_discord;
 mod c_edit_mode;
 #[cfg(feature = "retail-12-1-0")]
 pub(crate) mod c_encounter_timeline;
-#[cfg(feature = "retail-12-1-0")]
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_encounter_warnings;
 pub mod c_glue;
 pub mod c_housing;
@@ -90,6 +90,8 @@ pub mod c_input_interface_style;
 pub mod c_instance_encounter;
 pub mod c_intl;
 pub mod c_lfg_info;
+#[cfg(feature = "retail-12-0-0")]
+mod c_limited_input;
 pub mod c_login;
 pub mod c_loot_history;
 pub mod c_major_factions;
@@ -100,7 +102,7 @@ pub mod c_merchant_frame;
 pub(crate) mod c_mount_spell_lookup;
 #[cfg(feature = "retail-12-0-7")]
 pub mod c_mythic_plus_calendar;
-#[cfg(feature = "retail-12-0-5")]
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_nameplate_manager;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_navigation;

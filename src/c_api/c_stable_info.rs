@@ -17,6 +17,12 @@ pub(crate) fn register_c_stable_info_surface(state: &mut LuaState) -> LuaResult<
         "IsAtPetStable",
         c_stable_info_is_at_pet_stable,
     )?;
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(state, stable_info, "IsBonusPetSlotAvailable", |s| {
+        let available = borrow_state(s)?.pet_bonus_slot_available;
+        s.push(Val::Bool(available));
+        Ok(1)
+    })?;
     #[cfg(feature = "client-wowforever")]
     forever::register(state)?;
     Ok(())

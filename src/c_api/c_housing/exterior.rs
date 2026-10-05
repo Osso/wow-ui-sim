@@ -11,6 +11,23 @@ pub(crate) const MODELED: bool = cfg!(all(
 ));
 
 pub(super) fn register(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<()> {
+    #[cfg(feature = "retail-12-0-0")]
+    {
+        let ns = crate::c_api::ensure_namespace(state, "C_HousingCustomizeMode")?;
+        crate::lua_bridge::table_set_rust_fn_static(
+            state,
+            ns,
+            "IsHouseExteriorDoorHovered",
+            |s| {
+                let hovered = crate::lua_api::methods::borrow_state(s)?
+                    .housing
+                    .exterior
+                    .entry_door_hovered;
+                s.push(rilua::Val::Bool(hovered));
+                Ok(1)
+            },
+        )?;
+    }
     if MODELED {
         runtime::register(state)
     } else {
@@ -26,6 +43,8 @@ use super::catalog::HousingCatalogEntryVariantID;
 pub struct HouseExteriorState {
     /// Host-selected core family; empty unless explicitly supplied.
     pub core_fixture: Option<ExteriorCoreFixture>,
+    /// INFERRED host cursor snapshot; no world hit testing is synthesized.
+    pub entry_door_hovered: bool,
     pub selected_size: Option<i32>,
     pub selected_type_id: Option<u32>,
     pub size_options: Vec<ExteriorSizeOption>,

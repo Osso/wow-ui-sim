@@ -15,6 +15,8 @@ use rilua::{LuaResult, Val};
 pub struct CatalogShopProducts {
     pub products: HashMap<i32, CatalogShopProductInfo>,
     pub displays: HashMap<i32, CatalogShopProductDisplayInfo>,
+    /// INFERRED host "new" labels in display order, independent of ownership.
+    pub new_product_ids: Vec<i32>,
 }
 
 #[derive(Clone, Debug, Default)]
@@ -127,6 +129,19 @@ pub struct DecorQuantity {
 
 pub(crate) fn register_c_catalog_shop_products(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CatalogShop")?;
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(state, namespace, "GetNewProducts", |s| {
+        let ids = borrow_state(s)?
+            .catalog_shop_products
+            .new_product_ids
+            .clone();
+        let result = create_table(s);
+        s.push(result);
+        for (index, id) in ids.iter().enumerate() {
+            set_table_array(s, result, index as i64 + 1, Val::Num(f64::from(*id)));
+        }
+        Ok(1)
+    })?;
     table_set_rust_fn_static(state, namespace, "GetProductInfo", product_info)?;
     table_set_rust_fn_static(
         state,
