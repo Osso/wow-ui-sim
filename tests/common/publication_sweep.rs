@@ -126,6 +126,12 @@ local function create_object(owner)
         Frame = function() return frame end,
         FrameScriptObject = function() return frame end,
         ScriptRegion = function() return frame end,
+        Region = function() return frame:CreateTexture() end,
+        ColorCurveObject = function() return C_CurveUtil.CreateColorCurve() end,
+        CurveObject = function() return C_CurveUtil.CreateCurve() end,
+        -- CurveObjectBase is the interface implemented by the scalar curve.
+        CurveObjectBase = function() return C_CurveUtil.CreateCurve() end,
+        UnitHealPredictionCalculator = function() return CreateUnitHealPredictionCalculator() end,
         FontString = function() return frame:CreateFontString() end,
         TextureBase = function() return frame:CreateTexture() end,
         VectorGraphics = function() return frame:CreateVectorGraphics() end,
@@ -164,7 +170,14 @@ local function create_object(owner)
 end
 local function probe_object()
     local owner, method = string.match(symbol, '^([^:]+):([^:]+)$')
-    if not owner then return result('unprobeable', 'object symbol has no colon', false) end
+    if not owner then
+        local created, object = pcall(create_object, symbol)
+        local object_type = type(object)
+        local published = created and (object_type == 'table' or object_type == 'userdata')
+        local ok = published
+        if removed then ok = not published end
+        return result('object-kind', 'factory=' .. tostring(created) .. '; type=' .. object_type, ok)
+    end
     local created, object = pcall(create_object, owner)
     if not created or object == nil then
         return result('unprobeable', 'factory: ' .. tostring(object), false)

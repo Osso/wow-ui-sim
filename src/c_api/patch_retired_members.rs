@@ -1,10 +1,104 @@
-//! Namespace members (and whole namespaces) the Patch 12.0.5 / 12.0.7
+//! Namespace members (and whole namespaces) the Patch 12.0.0 / 12.0.5 / 12.0.7
 //! consolidated API tables list as removed that no other module retires.
 //! Marking keeps the namespace `__index` autostub from fabricating them on
 //! ordinary lookup.
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
+const RETIRED_12_0_0_MEMBERS: &[(&str, &[&str])] = &[
+    ("C_CatalogShop", &["OpenCatalogShopInteraction"]),
+    ("C_EventUtils", &["NotifySettingsLoaded"]),
+    ("C_HouseExterior", &["GetCurrentHouseExteriorTypeName"]),
+    ("C_HousingBasicMode", &["IsNudgeEnabled", "SetNudgeEnabled"]),
+    ("C_HousingDecor", &["GetMaxDecorPlaced"]),
+    (
+        "C_NamePlate",
+        &[
+            "GetNamePlateEnemyClickThrough",
+            "GetNamePlateEnemyPreferredClickInsets",
+            "GetNamePlateEnemySize",
+            "GetNamePlateFriendlyClickThrough",
+            "GetNamePlateFriendlyPreferredClickInsets",
+            "GetNamePlateFriendlySize",
+            "GetNamePlateSelfClickThrough",
+            "GetNamePlateSelfPreferredClickInsets",
+            "GetNamePlateSelfSize",
+            "GetNumNamePlateMotionTypes",
+            "SetNamePlateEnemyClickThrough",
+            "SetNamePlateEnemyPreferredClickInsets",
+            "SetNamePlateEnemySize",
+            "SetNamePlateFriendlyClickThrough",
+            "SetNamePlateFriendlyPreferredClickInsets",
+            "SetNamePlateFriendlySize",
+            "SetNamePlateSelfClickThrough",
+            "SetNamePlateSelfPreferredClickInsets",
+            "SetNamePlateSelfSize",
+        ],
+    ),
+    ("C_PlayerInfo", &["CanPlayerUseEventScheduler"]),
+    (
+        "C_PvP",
+        &[
+            "CanDisplayDamage",
+            "CanDisplayHealing",
+            "CanDisplayKillingBlows",
+        ],
+    ),
+    ("C_StorePublic", &["IsDisabledByParentalControls"]),
+    (
+        "C_TaskQuest",
+        &["GetQuestIconUIWidgetSet", "GetQuestTooltipUIWidgetSet"],
+    ),
+    ("C_TooltipInfo", &["GetTransmogrifyItem"]),
+    (
+        "C_TradeSkillUI",
+        &[
+            "GetReagentRequirementItemIDs",
+            "GetRecipeFixedReagentItemLink",
+            "GetRecipeQualityReagentItemLink",
+        ],
+    ),
+    (
+        "C_Transmog",
+        &[
+            "ApplyAllPending",
+            "CanTransmogItem",
+            "CanTransmogItemWithItem",
+            "ClearAllPending",
+            "ClearPending",
+            "Close",
+            "GetApplyCost",
+            "GetApplyWarnings",
+            "GetBaseCategory",
+            "GetCreatureDisplayIDForSource",
+            "GetPending",
+            "GetSlotEffectiveCategory",
+            "GetSlotInfo",
+            "GetSlotUseError",
+            "IsSlotBeingCollapsed",
+            "IsTransmogEnabled",
+            "LoadOutfit",
+            "SetPending",
+        ],
+    ),
+    (
+        "C_TransmogCollection",
+        &[
+            "DeleteOutfit",
+            "GetItemTransmogInfoListFromOutfitHyperlink",
+            "GetNumMaxOutfits",
+            "GetOutfitHyperlinkFromItemTransmogInfoList",
+            "GetOutfitInfo",
+            "GetOutfitItemTransmogInfoList",
+            "GetOutfits",
+            "ModifyOutfit",
+            "NewOutfit",
+            "RenameOutfit",
+        ],
+    ),
+];
+
+#[cfg(feature = "retail-12-0-5")]
 const RETIRED_12_0_5_MEMBERS: &[(&str, &[&str])] = &[
     (
         "C_GossipInfo",
@@ -14,6 +108,7 @@ const RETIRED_12_0_5_MEMBERS: &[(&str, &[&str])] = &[
 ];
 
 /// Removed whole; its members moved to `C_PhotoSharing`.
+#[cfg(feature = "retail-12-0-5")]
 const RETIRED_12_0_5_NAMESPACES: &[&str] = &["C_HousingPhotoSharing"];
 
 #[cfg(feature = "retail-12-0-7")]
@@ -25,8 +120,12 @@ const RETIRED_12_0_7_MEMBERS: &[(&str, &[&str])] = &[
 ];
 
 pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
-    mark_members(state, RETIRED_12_0_5_MEMBERS)?;
-    mark_namespaces_absent(state, RETIRED_12_0_5_NAMESPACES)?;
+    mark_members(state, RETIRED_12_0_0_MEMBERS)?;
+    #[cfg(feature = "retail-12-0-5")]
+    {
+        mark_members(state, RETIRED_12_0_5_MEMBERS)?;
+        mark_namespaces_absent(state, RETIRED_12_0_5_NAMESPACES)?;
+    }
     #[cfg(feature = "retail-12-0-7")]
     mark_members(state, RETIRED_12_0_7_MEMBERS)?;
     Ok(())
@@ -40,6 +139,7 @@ fn mark_members(state: &mut LuaState, retired: &[(&'static str, &[&str])]) -> Lu
     Ok(())
 }
 
+#[cfg(feature = "retail-12-0-5")]
 fn mark_namespaces_absent(state: &mut LuaState, names: &[&'static str]) -> LuaResult<()> {
     let absent = super::ensure_namespace(state, "__wow_absent_namespaces")?;
     for name in names {

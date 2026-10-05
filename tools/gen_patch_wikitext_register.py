@@ -7,10 +7,11 @@ inventories; this parses them from the raw wikitext instead.
 Usage: gen_patch_wikitext_register.py PATCH WIKITEXT REVID OUT
 """
 
+import argparse
 import hashlib
 import json
 import re
-import sys
+from pathlib import Path
 
 SECTIONS = {
     "Global API": "global-api",
@@ -68,6 +69,8 @@ def parse_section(section, lines):
     for line_no, text in lines:
         if text.startswith("! "):
             headers += [int(n) for n in COUNT.findall(text)]
+        elif text.startswith('| <font') and FONT.sub('', text).strip('| ').lower() in ('added', 'removed'):
+            mode = FONT.sub('', text).strip('| ').lower()
         elif text.startswith('| valign="top"'):
             columns += 1
             mode = "added" if columns == 1 else "removed"
@@ -111,18 +114,29 @@ def split_sections(text):
 
 
 def main():
-    patch, path, revid, out = sys.argv[1:]
-    raw = open(path, "rb").read()
+    parser = argparse.ArgumentParser(description=__doc__)
+    for name in ("patch", "path", "revid", "out"):
+        parser.add_argument(name)
+    parser.add_argument("--inventory-only", action="store_true",
+                        help="Omit optional metadata for legacy inventory-only registers")
+    args = parser.parse_args()
+    patch, path, revid, out = args.patch, args.path, args.revid, args.out
+    raw = Path(path).read_bytes()
     buckets = split_sections(raw.decode("utf-8"))
     entries, counts = [], []
     for section in SECTIONS.values():
         section_entries, section_counts = parse_section(section, buckets.get(section, []))
         entries += section_entries
         counts += section_counts
+    if args.inventory_only:
+        for entry in entries:
+            for key in ("kind", "page_default", "test_inline"):
+                entry.pop(key, None)
+    source_path = str(Path(path).resolve().relative_to(Path(__file__).resolve().parent.parent))
     register = {
         "schema": "patch-api-wikitext-register/v1",
         "patch": patch,
-        "source": {"path": path, "revid": int(revid), "sha256": hashlib.sha256(raw).hexdigest()},
+        "source": {"path": source_path, "revid": int(revid), "sha256": hashlib.sha256(raw).hexdigest()},
         "header_counts": counts,
         "entries": entries,
     }
