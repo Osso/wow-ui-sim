@@ -25,8 +25,8 @@ Command prefix: `python3 /home/osso/.worktrees/wow-ui-sim-cast-flake/scripts/bui
 | Base + diagnostics: `--test --lib`, eight runs | Duration test passed all eight; six known failures each time. First run additionally failed `gui_resolution_cache_preparation`: its cold child exceeded 60 seconds. No asset code changed; subsequent seven baseline and all three final runs pass that test. |
 | Base + diagnostics: `--test --lib unit_cast_duration_clears_before_completion_callbacks`, three runs | Two pass; third captures the precise failing total above. |
 | Base + deterministic fixture: `--test --lib unit_cast_duration_preserves_span_across_rounded_deadline` | RED, then GREEN 1/1 after the span-storage fix. |
-| `--test --lib unit_cast_duration_clears_before_completion_callbacks` | 1/1 pass; original assertion unchanged. |
-| `--test --lib lua_api::cast_completion::` | 14/14 pass, including delay, reentrancy, spec/crafting completion and forced-GC control. |
+| `--test --lib unit_cast_duration_clears_before_completion_callbacks`, three final runs | 1/1 pass each; original assertion unchanged. |
+| `--test --lib lua_api::cast_completion::`, three final runs | 14/14 pass each, including delay, reentrancy, spec/crafting completion and forced-GC control. |
 | `--test --lib`, three final parallel runs | Each 1,971 pass / six known fail (54.84s, 71.75s, 72.33s); both duration tests pass every run. |
 | `--test --test integration <filter>` | 95/95 across `unit_cast_durations::` (7), `channel_lifecycle::` (4), `channel_reentrancy::` (3), `cast_bar_id::` (2), `spell_casting::` (19), `unit_spell_target_name::` (10), `c_vehicle_possession_globals::` (22), `c_spell_flyout_probes::` (14), `p1200_plain_globals::` (8), `secure_aura_header_helpers::` (6). Compilation also covers every migrated integration fixture. |
 | `--check`; `cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-cast-flake/Cargo.toml -- --check` | Both exit 0. Changed-line readability review finds shallow explicit timing mutations, no duplicated mutable deadline or new warning suppression. |
