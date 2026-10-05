@@ -1,6 +1,6 @@
 ## [2026-10-05] system | C_Secrets publication queries
 
-[Shared queries](systems/secrets-publication-queries.md): original selector authentication, same aura/cooldown/identity predicates as outputs, explicit INFERRED public defaults for absent backing models. Source page-coverage ledgers unchanged.
+[Shared queries](systems/secrets-publication-queries.md): original selector authentication, same aura/cooldown/identity predicates as outputs, explicit INFERRED public defaults for absent backing models. [Final proof](../specs/secrets-publication-queries.md#verification--2026-10-05): six behavioral tests pass, four isolated publication sweeps pass, startup `[]`; unchanged pre-change master filter failures retained. Source page-coverage ledgers unchanged.
 
 ## [2026-10-05] investigation | Host Lua rooting audit
 

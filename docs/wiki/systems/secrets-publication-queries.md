@@ -20,6 +20,10 @@ Queries authenticate original selectors, then compute public booleans/enums with
 
 Cached contract is `~/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SecretPredicateAPIDocumentation.lua`, with `SecretPredicatesDocumentation.lua` and `SecretWrapperConstantsDocumentation.lua`. The supplied `SecretsDocumentation.lua` path is absent. Existing cast readers support only player data; health/power outputs are public; `UnitIsUnit` implements comparability without a secret-output policy; `GetTotemInfo` has only an empty active-slot default.
 
+## Verification
+
+[Final proof](../../specs/secrets-publication-queries.md#verification--2026-10-05) owns the six behavioral tests, before/after master comparison, four isolated sweep counts, startup `[]`, formatting/check and inferred-model boundaries. Publication closure is 20/20; native model gaps remain explicit.
+
 ## Sources
 
 - [Contract](../../specs/secrets-publication-queries.md)
