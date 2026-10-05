@@ -15,7 +15,10 @@ pub(crate) fn init_shared_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     let bootstrap = lua.load_bytes(SHARED_BOOTSTRAP_LUA.as_bytes(), "@shared-bootstrap")?;
     lua.call_function(
         &bootstrap,
-        &[Val::Bool(cfg!(feature = "forbidden-aspects"))],
+        &[
+            Val::Bool(cfg!(feature = "forbidden-aspects")),
+            Val::Bool(cfg!(feature = "retail-12-0-0")),
+        ],
     )?;
     #[cfg(feature = "client-wowforever")]
     lua.exec(include_str!("texture_metatable.lua"))?;

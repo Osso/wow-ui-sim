@@ -326,113 +326,118 @@ fn get_num_battleground_types(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn get_battleground_info(state: &mut LuaState) -> LuaResult<u32> {
-    let index = stack_i32(state, 1).unwrap_or(0);
-    if index <= 0 {
-        return Ok(0);
-    }
-    let row_index = (index - 1) as usize;
+#[cfg(not(feature = "retail-12-0-0"))]
+mod legacy_battleground {
+    use super::*;
 
-    let world_rows = borrow_state(state)?.world.world_pvp_areas.len();
-    if row_index < world_rows {
-        push_world_battleground_info(state, row_index)
-    } else {
-        let specific_index = row_index - world_rows;
-        let Some(row) = SPECIFIC_BATTLEGROUND_ROWS.get(specific_index) else {
+    pub(super) fn get_battleground_info(state: &mut LuaState) -> LuaResult<u32> {
+        let index = stack_i32(state, 1).unwrap_or(0);
+        if index <= 0 {
+            return Ok(0);
+        }
+        let row_index = (index - 1) as usize;
+
+        let world_rows = borrow_state(state)?.world.world_pvp_areas.len();
+        if row_index < world_rows {
+            push_world_battleground_info(state, row_index)
+        } else {
+            let specific_index = row_index - world_rows;
+            let Some(row) = SPECIFIC_BATTLEGROUND_ROWS.get(specific_index) else {
+                return Ok(0);
+            };
+            push_specific_battleground_info(state, row)
+        }
+    }
+
+    fn push_world_battleground_info(state: &mut LuaState, row_index: usize) -> LuaResult<u32> {
+        let Some(area) = borrow_state(state)?
+            .world
+            .world_pvp_areas
+            .get(row_index)
+            .cloned()
+        else {
             return Ok(0);
         };
-        push_specific_battleground_info(state, row)
+        push_battleground_info(
+            state,
+            BattlegroundInfoValues {
+                name: &area.name,
+                can_enter: area.can_enter,
+                is_holiday: false,
+                is_random: false,
+                bg_id: area.bg_id,
+                description: "Outdoor PvP zone",
+                map_id: area.bg_id,
+                max_players: 40,
+                game_type: "World PvP",
+                icon_texture: DEFAULT_BATTLEGROUND_ICON,
+                has_controlling_holiday: 1,
+            },
+        )
     }
-}
 
-fn push_world_battleground_info(state: &mut LuaState, row_index: usize) -> LuaResult<u32> {
-    let Some(area) = borrow_state(state)?
-        .world
-        .world_pvp_areas
-        .get(row_index)
-        .cloned()
-    else {
-        return Ok(0);
-    };
-    push_battleground_info(
-        state,
-        BattlegroundInfoValues {
-            name: &area.name,
-            can_enter: area.can_enter,
-            is_holiday: false,
-            is_random: false,
-            bg_id: area.bg_id,
-            description: "Outdoor PvP zone",
-            map_id: area.bg_id,
-            max_players: 40,
-            game_type: "World PvP",
-            icon_texture: DEFAULT_BATTLEGROUND_ICON,
-            has_controlling_holiday: 1,
-        },
-    )
-}
+    fn push_specific_battleground_info(
+        state: &mut LuaState,
+        row: &SpecificBattlegroundInfo,
+    ) -> LuaResult<u32> {
+        push_battleground_info(
+            state,
+            BattlegroundInfoValues {
+                name: row.name,
+                can_enter: true,
+                is_holiday: false,
+                is_random: false,
+                bg_id: row.bg_id,
+                description: row.game_type,
+                map_id: row.map_id,
+                max_players: row.max_players,
+                game_type: row.game_type,
+                icon_texture: row.icon_texture,
+                has_controlling_holiday: 0,
+            },
+        )
+    }
 
-fn push_specific_battleground_info(
-    state: &mut LuaState,
-    row: &SpecificBattlegroundInfo,
-) -> LuaResult<u32> {
-    push_battleground_info(
-        state,
-        BattlegroundInfoValues {
-            name: row.name,
-            can_enter: true,
-            is_holiday: false,
-            is_random: false,
-            bg_id: row.bg_id,
-            description: row.game_type,
-            map_id: row.map_id,
-            max_players: row.max_players,
-            game_type: row.game_type,
-            icon_texture: row.icon_texture,
-            has_controlling_holiday: 0,
-        },
-    )
-}
+    const DEFAULT_BATTLEGROUND_ICON: &str = "Interface\\PVPFrame\\RandomPVPIcon";
 
-const DEFAULT_BATTLEGROUND_ICON: &str = "Interface\\PVPFrame\\RandomPVPIcon";
+    struct BattlegroundInfoValues<'a> {
+        name: &'a str,
+        can_enter: bool,
+        is_holiday: bool,
+        is_random: bool,
+        bg_id: i32,
+        description: &'a str,
+        map_id: i32,
+        max_players: i32,
+        game_type: &'a str,
+        icon_texture: &'a str,
+        has_controlling_holiday: i32,
+    }
 
-struct BattlegroundInfoValues<'a> {
-    name: &'a str,
-    can_enter: bool,
-    is_holiday: bool,
-    is_random: bool,
-    bg_id: i32,
-    description: &'a str,
-    map_id: i32,
-    max_players: i32,
-    game_type: &'a str,
-    icon_texture: &'a str,
-    has_controlling_holiday: i32,
-}
-
-fn push_battleground_info(
-    state: &mut LuaState,
-    values: BattlegroundInfoValues<'_>,
-) -> LuaResult<u32> {
-    let name = create_string(state, values.name);
-    state.push(name);
-    state.push(Val::Bool(values.can_enter));
-    state.push(Val::Bool(values.is_holiday));
-    state.push(Val::Bool(values.is_random));
-    state.push(Val::Num(values.bg_id as f64));
-    let description = create_string(state, values.description);
-    state.push(description);
-    state.push(Val::Num(values.map_id as f64));
-    state.push(Val::Num(values.max_players as f64));
-    let game_type = create_string(state, values.game_type);
-    state.push(game_type);
-    let icon_texture = create_string(state, values.icon_texture);
-    state.push(icon_texture);
-    state.push(Val::Nil);
-    state.push(Val::Nil);
-    state.push(Val::Num(values.has_controlling_holiday as f64));
-    Ok(13)
-}
+    fn push_battleground_info(
+        state: &mut LuaState,
+        values: BattlegroundInfoValues<'_>,
+    ) -> LuaResult<u32> {
+        let name = create_string(state, values.name);
+        state.push(name);
+        state.push(Val::Bool(values.can_enter));
+        state.push(Val::Bool(values.is_holiday));
+        state.push(Val::Bool(values.is_random));
+        state.push(Val::Num(values.bg_id as f64));
+        let description = create_string(state, values.description);
+        state.push(description);
+        state.push(Val::Num(values.map_id as f64));
+        state.push(Val::Num(values.max_players as f64));
+        let game_type = create_string(state, values.game_type);
+        state.push(game_type);
+        let icon_texture = create_string(state, values.icon_texture);
+        state.push(icon_texture);
+        state.push(Val::Nil);
+        state.push(Val::Nil);
+        state.push(Val::Num(values.has_controlling_holiday as f64));
+        Ok(13)
+    }
+} // legacy_battleground
 
 fn request_battleground_instance_info(_state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
@@ -542,7 +547,12 @@ fn register_honor_stat_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_battleground_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "GetNumBattlegroundTypes", get_num_battleground_types)?;
-    LuaApiMut::register_function(lua, "GetBattlegroundInfo", get_battleground_info)?;
+    #[cfg(not(feature = "retail-12-0-0"))]
+    LuaApiMut::register_function(
+        lua,
+        "GetBattlegroundInfo",
+        legacy_battleground::get_battleground_info,
+    )?;
     LuaApiMut::register_function(
         lua,
         "RequestBattlegroundInstanceInfo",

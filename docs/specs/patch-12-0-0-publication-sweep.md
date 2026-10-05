@@ -39,6 +39,14 @@ Original baseline: 812 OK / 198 reviewed non-OK. The transmog implementation ret
 - [ ] Four event removals are also listed as additions by the page. Preserve both rows as metadata conflicts, not runtime removals.
 - [ ] Two added CVars lack getter/default publication; one removed CVar is a case-only scope rename resolved by case-insensitive getters. No default or scope semantics were invented.
 
+## Plain-global closure contract
+
+Assigned 37 global IDs are investigated only in `p1200-globals`. Simulator legacy combat-log aliases/navigation, `GetBattlegroundInfo` and `SetPortraitToTexture` stop publication at `retail-12-0-0`; earlier profiles retain their surface. Cached Blizzard deprecation aliases remain legitimate client publications, including direct references whose native/Lua destination source lacks `Deprecated`.
+
+Player cost and raid-marker enablement read explicit host inputs. Cloak/helm visibility is independent and reversible. No existing simulator clothing state exists at base `a10d55822` (the earlier `cloak_helm_transition.lua` is a native-probe fixture, not simulator state); these globals share one new state. Defaults are inferred, not native evidence; no persistence or 3D effects are claimed.
+
+`canaccesssecrets` uses the same VM guard as secret unwrapping; `hasanysecretvalues` checks direct VM wrappers, not nested contents; `issecrettable` inspects wrapper payload kind. Pinned rilua `a76ffa8` rejects `SecretWrapContents`; a table containing a secret is not itself a secret table. `dropsecretaccess` remains blocked: no separate caller-context revocation primitive exists. Stack-taint mutation would also change `issecure` and is not a faithful implementation. No fake global is registered.
+
 ## Transmog outfit closure contract
 
 The assigned transmog follow-up adds behavioral proof beyond publication: catalog creation and rename, displayed selection/locks, per-outfit saved slot contents, pending appearance and situation overlays, synchronous documented events, atomic apply with collection eligibility and host pricing. Invalid applications must preserve pending state and money. Native pricing/caps, persistence and automatic situation-trigger evaluation remain unverified; local choices are marked `INFERRED` in code. Publication fixtures are retired only after the sweep observes real registrations.

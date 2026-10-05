@@ -28,6 +28,8 @@ mod cmd_option;
 pub(crate) use cmd_option::{resolve_cmd_option, resolve_cmd_option_with_unit};
 mod environment;
 mod loader_env;
+#[cfg(feature = "retail-12-0-0")]
+mod retail_secret_helpers;
 pub(super) mod secret_values;
 mod secure_env;
 mod secure_handler;
@@ -63,6 +65,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
     )?;
     LuaApiMut::register_function(lua, "__sim_mark_slot_taint", value_access::mark_slot_taint)?;
     value_access::register_value_access_fallbacks(lua)?;
+    #[cfg(feature = "retail-12-0-0")]
+    retail_secret_helpers::register(lua)?;
     secret_values::register_scrub_fallbacks(lua)?;
     secure_handler::register_secure_handler_stubs(lua)?;
     state_drivers::register_state_driver_stubs(lua)?;

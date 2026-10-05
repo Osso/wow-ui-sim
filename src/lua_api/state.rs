@@ -145,6 +145,8 @@ macro_rules! build_empty_sim_state {
             action_outfits: $collections.action_outfits,
             action_macros: $collections.action_macros,
             equipped_gear_outfit_action_slots: $collections.equipped_gear_outfit_action_slots,
+            #[cfg(feature = "retail-12-0-0")]
+            plain_global_inputs: Default::default(),
             assisted_combat: AssistedCombatState::default(),
             action_highlights: ActionHighlightState::default(),
             extra_action_button: ExtraActionButtonState::default(),

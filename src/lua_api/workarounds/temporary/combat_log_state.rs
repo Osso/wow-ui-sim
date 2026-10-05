@@ -276,6 +276,8 @@ if rawget(C_CombatLogSecure, "CreateCombatLogMessage") == nil then
     end
 end
 
+-- Modern retail leaves legacy publication to cached Blizzard deprecation Lua.
+if publishLegacyGlobals then
 if rawget(_G, "CombatLog_Object_IsA") == nil then
     CombatLog_Object_IsA = C_CombatLog.DoesObjectMatchFilter
 end
@@ -330,12 +332,15 @@ if rawget(_G, "CombatLogSetCurrentEntry") == nil then
         CombatLogState().currentEntry = math.max(0, tonumber(entry) or 0)
     end
 end
+end -- publishLegacyGlobals
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     let publish_legacy = !cfg!(feature = "client-wowforever");
-    let source =
-        format!("local publishLegacyCurrentEvent = {publish_legacy}\n{COMBAT_LOG_STATE_LUA}");
+    let publish_globals = !cfg!(feature = "retail-12-0-0");
+    let source = format!(
+        "local publishLegacyCurrentEvent = {publish_legacy}\nlocal publishLegacyGlobals = {publish_globals}\n{COMBAT_LOG_STATE_LUA}"
+    );
     lua.exec(&source)?;
     Ok(())
 }
@@ -465,6 +470,7 @@ mod tests {
         );
     }
 
+    #[cfg(not(feature = "retail-12-0-0"))]
     #[test]
     fn installs_shared_combat_log_state_and_navigation() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

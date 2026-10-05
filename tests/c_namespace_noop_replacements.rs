@@ -625,6 +625,7 @@ fn encounter_journal_global_filters_and_tier_are_numeric() {
     );
 }
 
+#[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn combat_log_globals_have_stable_stub_behavior() {
     let env = env();

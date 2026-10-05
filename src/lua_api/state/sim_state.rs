@@ -1,6 +1,8 @@
 use super::*;
 
 pub struct SimState {
+    #[cfg(feature = "retail-12-0-0")]
+    pub plain_global_inputs: crate::lua_api::globals::real::publication_12_0_0::PlainGlobalInputs,
     pub(crate) private_aura_anchors: crate::c_api::private_aura_anchors::PrivateAuraAnchors,
     /// Explicit pending records only; empty default and lifecycle are simulator policy.
     #[cfg(all(

@@ -19,6 +19,9 @@ const PVP_INFO_SCRIPT: &str = r#"
         return "missing_battleground_rows"
     end
 
+    -- The legacy tuple is absent on modern retail; its existing assertions
+    -- remain active on profiles retaining the global.
+    if GetBattlegroundInfo ~= nil then
     local name, canEnter, isHoliday, isRandom, bgID, description, mapID, maxPlayers, gameType, iconTexture, _, _, hasControllingHoliday = GetBattlegroundInfo(1)
     if name ~= "Wintergrasp" or canEnter ~= true or isRandom ~= false or bgID ~= 571 or mapID ~= 571 or maxPlayers ~= 40 or hasControllingHoliday ~= 1 then
         return "wrong_world_battleground_row"
@@ -31,6 +34,7 @@ const PVP_INFO_SCRIPT: &str = r#"
 
     if GetBattlegroundInfo(99) ~= nil then
         return "unexpected_battleground_row"
+    end
     end
 
     local holiday = C_PvP.GetHolidayBGInfo()

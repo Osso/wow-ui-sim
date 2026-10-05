@@ -1,4 +1,4 @@
-local projectForbiddenDelegateArguments = ...
+local projectForbiddenDelegateArguments, retiredPortraitGlobal = ...
 
 local function __wow_public_global_path(path)
   local first, rest = string.match(path, "^([^.]+)%.?(.*)$")
@@ -302,7 +302,7 @@ if SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER == nil then
   SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER = 861
 end
 
-if SetPortraitToTexture == nil then
+if not retiredPortraitGlobal and SetPortraitToTexture == nil then
   function SetPortraitToTexture(texture, texturePath)
     if type(texture) ~= "table" or type(texture.SetTexture) ~= "function" then
       return

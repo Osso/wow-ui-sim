@@ -54,7 +54,10 @@ fn test_named_mask_texture_publishes_global() {
         )
         .unwrap();
 
-    assert!(published, "named MaskTexture regions should publish globals");
+    assert!(
+        published,
+        "named MaskTexture regions should publish globals"
+    );
 }
 
 #[test]
@@ -92,6 +95,7 @@ fn test_set_mask_creates_mask_texture() {
 // SetPortraitToTexture
 // ============================================================================
 
+#[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn test_set_portrait_to_texture_applies_circle_mask() {
     let env = env();
@@ -111,6 +115,7 @@ fn test_set_portrait_to_texture_applies_circle_mask() {
     );
 }
 
+#[cfg(not(feature = "retail-12-0-0"))]
 #[test]
 fn test_set_portrait_to_texture_no_double_mask() {
     let env = env();
