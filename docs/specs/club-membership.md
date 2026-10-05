@@ -57,7 +57,7 @@ All Rust commands ran in this worktree with `python3 scripts/build-host.py --bui
 
 `cargo fmt --check`, `python3 scripts/build-host.py --build-host local --check` (Cargo check), and separate local debug build passed. Startup ran after that build using `--build-host local --run --no-build -- --no-addons --no-saved-vars lua-errors`, capped at 90 seconds: exit 0, `[]`, 0 unique / 0 occurrences. The binary timestamp was newer than the final model source edits. No simulator compiler warnings remain; six pre-existing vendored iced manifest lint-name deprecations remain untouched.
 
-Readability metrics for the four model/boundary files: maximum function cognitive complexity 8, cyclomatic complexity 10; no warning suppressions. Boundary extraction and name-keyed guild projection avoid duplicated management decisions and quadratic roster matching.
+Readability metrics for the four model/boundary files: maximum function cognitive complexity 8, cyclomatic complexity 9; no warning suppressions. Boundary extraction and name-keyed guild projection avoid duplicated management decisions and quadratic roster matching.
 
 ### Row outcomes (coverage ledger deliberately unchanged)
 
