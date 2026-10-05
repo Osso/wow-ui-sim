@@ -2,8 +2,8 @@
 //! Native absence and post-cache absence/alias identity are separate boundaries.
 #![cfg(feature = "retail-12-0-0")]
 
-use std::collections::{BTreeMap, BTreeSet};
 use serde::Deserialize;
+use std::collections::{BTreeMap, BTreeSet};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[path = "common/publication_sweep.rs"]
@@ -25,7 +25,8 @@ struct Row {
 }
 
 fn read_data() -> Data {
-    let data: Data = serde_json::from_str(include_str!("data/patch_12_0_0_deprecated.json")).unwrap();
+    let data: Data =
+        serde_json::from_str(include_str!("data/patch_12_0_0_deprecated.json")).unwrap();
     assert_eq!(data.rows.len(), 21);
     assert_eq!(data.summary_id, "deprecated api-removal-summary-128");
     for (id, row) in &data.rows {
@@ -56,14 +57,19 @@ const OBSERVE_SYMBOL: &str = r#"
 fn symbol_matches(env: &WowLuaEnv, symbol: &str, target: Option<&str>) -> bool {
     let target = target.unwrap_or("");
     let script = format!("return (function(...) {OBSERVE_SYMBOL} end)({symbol:?}, {target:?})");
-    env.eval(&script).expect("observe raw and ordinary API identity")
+    env.eval(&script)
+        .expect("observe raw and ordinary API identity")
 }
 
 fn observe_native_retirement(data: &Data) -> Vec<String> {
     let native = WowLuaEnv::new().expect("create native-only environment");
-    data.rows.iter().filter_map(|(id, row)| {
-        (!symbol_matches(&native, &row.old, None)).then(|| format!("{id}: native still published"))
-    }).collect()
+    data.rows
+        .iter()
+        .filter_map(|(id, row)| {
+            (!symbol_matches(&native, &row.old, None))
+                .then(|| format!("{id}: native still published"))
+        })
+        .collect()
 }
 
 fn seed_successor_inputs(env: &WowLuaEnv) {
@@ -71,13 +77,16 @@ fn seed_successor_inputs(env: &WowLuaEnv) {
     let mut state = env.state().borrow_mut();
     state.cooldowns_restricted = false;
     state.spell_charges.clear();
-    state.spell_charges.insert(19750, SpellChargeState {
-        current_charges: 2,
-        max_charges: 3,
-        recharge_start: 312.0,
-        recharge_duration: 237.0,
-        charge_mod_rate: 1.25,
-    });
+    state.spell_charges.insert(
+        19750,
+        SpellChargeState {
+            current_charges: 2,
+            max_charges: 3,
+            recharge_start: 312.0,
+            recharge_duration: 237.0,
+            charge_mod_rate: 1.25,
+        },
+    );
     state.spell_cast_counts.extend([(19750, 7), (642, 2)]);
     state.known_spells.insert(19750);
     state.known_spells.remove(&999999999);
@@ -88,15 +97,19 @@ fn seed_successor_inputs(env: &WowLuaEnv) {
 
 fn observe_cached_retirement(env: &WowLuaEnv, data: &Data) -> Vec<String> {
     let aliases = sweep::read_deprecated_aliases(env);
-    data.rows.iter().filter_map(|(id, row)| {
-        let matches = match &row.loaded_alias {
-            None => symbol_matches(env, &row.old, None),
-            Some(target) => aliases.get(&row.old).is_some_and(|(cached_target, _)| {
-                cached_target == target && symbol_matches(env, &row.old, Some(target))
-            }),
-        };
-        (!matches).then(|| format!("{id}: cached absence or exact loaded alias identity failed"))
-    }).collect()
+    data.rows
+        .iter()
+        .filter_map(|(id, row)| {
+            let matches = match &row.loaded_alias {
+                None => symbol_matches(env, &row.old, None),
+                Some(target) => aliases.get(&row.old).is_some_and(|(cached_target, _)| {
+                    cached_target == target && symbol_matches(env, &row.old, Some(target))
+                }),
+            };
+            (!matches)
+                .then(|| format!("{id}: cached absence or exact loaded alias identity failed"))
+        })
+        .collect()
 }
 
 #[cfg(not(feature = "client-retail"))]

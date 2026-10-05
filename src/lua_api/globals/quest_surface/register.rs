@@ -65,6 +65,7 @@ pub const TASK_QUEST_METHODS: &[(&str, SurfaceFn)] = &[
         does_map_show_task_quest_objectives,
     ),
     ("GetQuestsOnMap", build_task_quest_info),
+    #[cfg(not(feature = "retail-12-0-0"))]
     ("GetQuestsForPlayerByMapID", build_task_quest_info),
     (
         "GetQuestUIWidgetSetByType",

@@ -94,6 +94,7 @@ fn register_mythic_plus_probe_handlers(state: &mut LuaState, ns: GcRef<Table>) -
 
 fn register_mythic_plus_status_handlers(state: &mut LuaState, ns: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, ns, "IsMythicPlusActive", is_mythic_plus_active)?;
+    #[cfg(not(feature = "retail-12-0-0"))]
     table_set_rust_fn_static(
         state,
         ns,
@@ -357,6 +358,7 @@ fn is_mythic_plus_active(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-0"))]
 fn is_weekly_reward_available(state: &mut LuaState) -> LuaResult<u32> {
     let available = borrow_state(state)?.mythic_plus.is_weekly_reward_available;
     state.push(Val::Bool(available));
