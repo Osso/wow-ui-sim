@@ -27,6 +27,8 @@ pub(crate) mod c_action_bar;
 pub(crate) mod c_action_bar_counts;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_action_bar_loss_of_control;
+#[cfg(feature = "retail-12-0-0")]
+pub mod c_action_bar_queries;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_action_bar_spell_slots;
 pub mod c_addon_profiler;
@@ -204,6 +206,8 @@ pub mod c_unit_auras;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_voice_chat_speak;
 pub(crate) mod c_weather;
+#[cfg(feature = "retail-12-0-0")]
+pub mod c_weekly_rewards;
 pub mod c_widget;
 pub mod c_wow_token_public;
 pub mod c_wowtoken_secure;

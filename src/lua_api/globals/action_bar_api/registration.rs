@@ -90,6 +90,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         "UnregisterActionUIButton",
         crate::c_api::c_action_bar::unregister_action_ui_button,
     )?;
+    #[cfg(feature = "retail-12-0-0")]
+    crate::c_api::c_action_bar_queries::register(state, table_ref)?;
     crate::c_api::action_macros::register(state, table_ref)?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_action_bar_spell_slots::register(state, table_ref)?;

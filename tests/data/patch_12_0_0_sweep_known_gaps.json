@@ -4,9 +4,6 @@
   "wt-events-SETTINGS_LOADED-816",
   "wt-events-TRANSMOG_OUTFITS_CHANGED-818",
   "wt-events-UNIT_SPELLCAST_SENT-819",
-  "wt-global-api-C_ActionBar.GetActionAutocast-45",
-  "wt-global-api-C_ActionBar.HasRangeRequirements-70",
-  "wt-global-api-C_ActionBar.IsActionInRange-73",
   "wt-global-api-C_CatalogShop.BulkPurchaseProducts-91",
   "wt-global-api-C_CatalogShop.RefreshRefundableDecors-101",
   "wt-global-api-C_CatalogShop.StartHousingVCPurchaseConfirmation-103",
@@ -24,7 +21,6 @@
   "wt-global-api-C_TooltipInfo.GetOutfit-334",
   "wt-global-api-C_TradeSkillUI.GetEnchantItems-643",
   "wt-global-api-C_TradeSkillUI.IsRecraftReagentValid-647",
-  "wt-global-api-C_WeeklyRewards.GetSortedProgressForActivity-424",
   "wt-global-api-dropsecretaccess-470",
   "wt-global-api-issecrettable-472",
   "wt-global-api-string.concat-478"
