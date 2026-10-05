@@ -102,7 +102,7 @@ fn chat_is_locked(sim: &SimState) -> bool {
 fn set_custom_message(state: &mut LuaState) -> LuaResult<u32> {
     let text = read_string(state, unwrap_secret(state, stack_val(state, 1))?, 1)?;
     // INFERRED: bounded local broadcast, not a remote Battle.net acknowledgement.
-    let accepted = text.len() <= BNET_BYTE_LIMIT && !chat_is_locked(&borrow_state(state)?);
+    let accepted = text.len() <= BNET_BYTE_LIMIT && !chat_is_locked(&*borrow_state(state)?);
     if accepted {
         borrow_state_mut(state)?.bnet_custom_message = text;
     }
