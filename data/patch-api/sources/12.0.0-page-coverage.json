@@ -11,7 +11,7 @@
       "symbols": [
         "1010 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 198 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
+      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 128 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
       "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_0_publication_sweep.rs",
@@ -21,6 +21,35 @@
       "compiled_revision": "305e919c4",
       "proof": "main-thread GREEN on rebased console branch / master 305e919c4 (run alone); negative control by Sol worker; no independent review",
       "ledger": "data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-wikitext-sweep-result.json"
+    },
+    {
+      "id": "transmog-outfits-12-0-0",
+      "symbols": [
+        "C_TransmogOutfitInfo, C_TransmogCollection custom sets, C_TransmogSets, C_Transmog.GetSlotVisualInfo, C_Item.CanItemTransmogAppearance"
+      ],
+      "scope": "Outfit lifecycle, pending transmogs/situations, slot topology, set imports/pricing, visual tables and item eligibility from simulator state; selector decoding matches cached GetData() payload. Fixed 4 pre-existing wardrobe prefork failures.",
+      "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
+      "tests": [
+        "tests/transmog_outfit_visuals.rs",
+        "tests/transmog_outfit*.rs"
+      ],
+      "implementation": "src/c_api/c_transmog_outfit_info/, c_transmog_sets/",
+      "compiled_revision": "1d2b73824",
+      "proof": "Sol workers GREEN; main-thread full integration 0 new vs d1a2a0250, prefork 2015/3; no independent review"
+    },
+    {
+      "id": "secret-predicate-queries-12-0-0",
+      "symbols": [
+        "C_Secrets Should*/Get*Secrecy/HasSecretRestrictions"
+      ],
+      "scope": "Queries reuse the shared secrecy predicates (aura restriction, cooldown restriction, unit identity) used by the corresponding APIs. INFERRED public defaults where secrecy is unmodeled: power, health max, comparisons, foreign casts, totems.",
+      "spec": "docs/specs/secrets-publication-queries.md",
+      "tests": [
+        "tests/secrets_publication_queries.rs"
+      ],
+      "implementation": "shared secrecy predicates + C_Secrets",
+      "compiled_revision": "90a2b865b",
+      "proof": "Sol worker GREEN; main-thread four sweeps + secret/aura/unit/cooldown/spell filters (pre-existing failures only); no independent review"
     }
   ],
   "source_rows": [
@@ -4540,9 +4569,12 @@
     },
     {
       "source_id": "wt-global-api-C_Item.CanItemTransmogAppearance-623",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Item.GetItemInfo-625",
@@ -5086,9 +5118,12 @@
     },
     {
       "source_id": "wt-global-api-C_Secrets.GetPowerTypeSecrecy-274",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.GetSpellAuraSecrecy-275",
@@ -5100,33 +5135,48 @@
     },
     {
       "source_id": "wt-global-api-C_Secrets.GetSpellCastSecrecy-276",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.GetSpellCooldownSecrecy-277",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.HasSecretRestrictions-278",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldActionCooldownBeSecret-279",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldAurasBeSecret-280",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldCooldownsBeSecret-281",
@@ -5138,87 +5188,129 @@
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldSpellAuraBeSecret-282",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldSpellBookItemCooldownBeSecret-283",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldSpellCooldownBeSecret-284",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldTotemSlotBeSecret-285",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldTotemSpellBeSecret-286",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitAuraIndexBeSecret-287",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitAuraInstanceBeSecret-288",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitAuraSlotBeSecret-289",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitComparisonBeSecret-290",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitHealthMaxBeSecret-291",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitIdentityBeSecret-292",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitPowerBeSecret-293",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitPowerMaxBeSecret-294",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitSpellCastBeSecret-295",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "secret-predicate-queries-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitSpellCastingBeSecret-296",
@@ -5784,9 +5876,12 @@
     },
     {
       "source_id": "wt-global-api-C_Transmog.GetSlotVisualInfo-651",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_Transmog.IsSlotBeingCollapsed-537",
@@ -5846,9 +5941,12 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogCollection.GetCustomSetHyperlinkFromItemTransmogInfoList-342",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogCollection.GetCustomSetInfo-343",
@@ -5876,9 +5974,12 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogCollection.GetItemTransmogInfoListFromCustomSetHyperlink-346",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogCollection.GetItemTransmogInfoListFromOutfitHyperlink-542",
@@ -5890,9 +5991,12 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogCollection.GetNumMaxCustomSets-347",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogCollection.GetNumMaxOutfits-543",
@@ -5936,9 +6040,12 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogCollection.IsValidCustomSetName-348",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogCollection.IsValidTransmogSource-349",
@@ -5998,15 +6105,21 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.AddNewOutfit-353",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.ChangeDisplayedOutfit-354",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.ChangeViewedOutfit-355",
@@ -6018,39 +6131,57 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.ClearAllPendingSituations-356",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.ClearAllPendingTransmogs-357",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.ClearDisplayedOutfit-358",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.CommitAndApplyAllPending-359",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.CommitOutfitInfo-360",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.CommitPendingSituations-361",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetActiveOutfitID-362",
@@ -6070,9 +6201,12 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetCollectionInfoForSlotAndOption-364",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID-365",
@@ -6084,21 +6218,30 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetEquippedSlotOptionFromTransmogSlot-366",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetIllusionDefaultIMAIDForCollectionType-367",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetItemModifiedAppearanceEffectiveCategory-368",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetLinkedSlotInfo-369",
@@ -6110,27 +6253,39 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetMaxNumberOfTotalOutfitsForSource-370",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetMaxNumberOfUsableOutfits-371",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetNextOutfitCost-372",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetNumberOfOutfitsUnlockedForSource-373",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetOutfitInfo-374",
@@ -6142,9 +6297,12 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetOutfitSituation-376",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetOutfitSituationsEnabled-375",
@@ -6172,33 +6330,48 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetSecondarySlotState-379",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetSetSourcesForSlot-380",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetSlotGroupInfo-381",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetSourceIDsForSlot-382",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetTransmogOutfitSlotForInventoryType-383",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetTransmogOutfitSlotFromInventorySlot-384",
@@ -6210,21 +6383,30 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetUISituationCategoriesAndOptions-385",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetUnassignedAtlasForSlot-386",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetUnassignedDisplayAtlasForSlot-387",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetViewedOutfitSlotInfo-388",
@@ -6236,27 +6418,39 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.GetWeaponOptionsForSlot-389",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.HasPendingOutfitSituations-390",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.HasPendingOutfitTransmogs-391",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.IsEquippedGearOutfitDisplayed-392",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.IsEquippedGearOutfitLocked-393",
@@ -6276,33 +6470,48 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.IsSlotWeaponSlot-395",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.IsValidTransmogOutfitName-396",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.PickupOutfit-397",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.ResetOutfitSituations-398",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.RevertPendingTransmog-399",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.SetOutfitSituationsEnabled-400",
@@ -6314,51 +6523,75 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.SetOutfitToCustomSet-401",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.SetOutfitToSet-402",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.SetPendingTransmog-403",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.SetSecondarySlotState-404",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.SetViewedWeaponOptionForSlot-405",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.SlotHasSecondary-406",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.UpdatePendingSituation-407",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogSets.GetAvailableSets-408",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogSets.GetSetsFilter-409",
@@ -6370,15 +6603,21 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogSets.IsUsingDefaultSetsFilters-410",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogSets.SetDefaultSetsFilters-411",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "transmog-outfits-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (see capability); INFERRED defaults noted there."
     },
     {
       "source_id": "wt-global-api-C_TransmogSets.SetSetsFilter-412",
