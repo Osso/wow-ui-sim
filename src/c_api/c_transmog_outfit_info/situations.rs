@@ -19,6 +19,10 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         ("ClearAllPendingSituations", clear_pending),
         ("CommitPendingSituations", commit_pending),
         ("ResetOutfitSituations", reset_situations),
+        (
+            "GetUISituationCategoriesAndOptions",
+            super::situation_catalog::get_categories,
+        ),
     ] {
         table_set_rust_fn_static(state, namespace, name, handler)?;
     }
@@ -58,7 +62,13 @@ fn update_pending(state: &mut LuaState) -> LuaResult<u32> {
 
 fn get_situation(state: &mut LuaState) -> LuaResult<u32> {
     let key = read_situation(state)?;
-    let value = {
+    let value = read_option_value(state, key)?;
+    state.push(Val::Bool(value));
+    Ok(1)
+}
+
+pub(super) fn read_option_value(state: &LuaState, key: SituationKey) -> LuaResult<bool> {
+    Ok({
         let sim = borrow_state(state)?;
         let saved = sim
             .viewed_transmog_outfit_id
@@ -69,9 +79,7 @@ fn get_situation(state: &mut LuaState) -> LuaResult<u32> {
             .copied()
             .or_else(|| saved.and_then(|outfit| outfit.situations.get(&key).copied()))
             .unwrap_or(false)
-    };
-    state.push(Val::Bool(value));
-    Ok(1)
+    })
 }
 
 fn has_pending(state: &mut LuaState) -> LuaResult<u32> {

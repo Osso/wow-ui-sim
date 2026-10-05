@@ -32,13 +32,15 @@ pub use viewed_slot_info::ViewedOutfitSlotInfo;
 #[cfg(feature = "retail-12-0-5")]
 mod model;
 #[cfg(feature = "retail-12-0-5")]
-pub use model::{OutfitContents, OutfitState};
+pub use model::{OutfitContents, OutfitState, SituationCategory, SituationGroup};
 #[cfg(feature = "retail-12-0-5")]
 mod imports;
 #[cfg(feature = "retail-12-0-5")]
 mod lifecycle;
 #[cfg(feature = "retail-12-0-5")]
 mod pending;
+#[cfg(feature = "retail-12-0-5")]
+mod situation_catalog;
 #[cfg(feature = "retail-12-0-5")]
 mod situations;
 #[cfg(feature = "retail-12-0-5")]

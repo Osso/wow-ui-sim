@@ -105,6 +105,7 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         ("SetSecondarySlotState", set_secondary),
         ("SetViewedWeaponOptionForSlot", set_weapon_option),
         ("GetWeaponOptionsForSlot", get_weapon_options),
+        ("GetEquippedSlotOptionFromTransmogSlot", get_equipped_option),
         ("GetCollectionInfoForSlotAndOption", get_collection),
         ("GetSlotGroupInfo", get_groups),
         ("GetAllSlotLocationInfo", get_all_locations),
@@ -216,6 +217,34 @@ fn weapon_options(slot: i32) -> &'static [(i32, &'static str)] {
         14 => &[(3, "Ranged weapon")],
         _ => &[(0, "None")],
     }
+}
+
+fn get_equipped_option(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = read_slot(state)?;
+    const INVENTORY_SLOTS: [i32; 15] = [1, 3, 3, 15, 5, 19, 4, 9, 10, 6, 7, 8, 16, 17, 18];
+    let inventory_type = {
+        let sim = borrow_state(state)?;
+        sim.player
+            .equipped_items
+            .get(&INVENTORY_SLOTS[slot as usize])
+            .and_then(|equipped| crate::items::get_item(equipped.item_id))
+            .map(|item| item.inventory_type)
+    };
+    let Some(inventory_type) = inventory_type else {
+        return Ok(0);
+    };
+    // INFERRED: inventory type selects the basic weapon option. Artifact/spec
+    // options need explicit artifact state and are not fabricated.
+    let option = match inventory_type {
+        13 | 21 | 22 => 1,
+        17 => 2,
+        15 | 25 | 26 => 3,
+        23 => 4,
+        14 => 5,
+        _ => 0,
+    };
+    state.push(Val::Num(option as f64));
+    Ok(1)
 }
 
 fn get_weapon_options(state: &mut LuaState) -> LuaResult<u32> {

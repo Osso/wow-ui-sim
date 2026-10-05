@@ -7,6 +7,22 @@ use super::ViewedOutfitSlotInfo;
 pub type SlotKey = (i32, i32, i32);
 pub type SituationKey = (i32, i32, i32, i32);
 
+#[derive(Debug, Clone)]
+pub struct SituationCategory {
+    pub trigger_id: i32,
+    pub name: String,
+    pub description: String,
+    pub is_radio_button: bool,
+    pub groups: Vec<SituationGroup>,
+}
+
+#[derive(Debug, Clone)]
+pub struct SituationGroup {
+    pub group_id: i32,
+    pub secondary_id: i32,
+    pub options: Vec<(String, SituationKey)>,
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct OutfitContents {
     pub slots: HashMap<SlotKey, ViewedOutfitSlotInfo>,
@@ -20,6 +36,7 @@ pub struct OutfitState {
     pub pending_slots: BTreeMap<SlotKey, ViewedOutfitSlotInfo>,
     pub pending_situations: BTreeMap<SituationKey, bool>,
     pub viewed_weapon_options: HashMap<i32, i32>,
+    pub situation_categories: Vec<SituationCategory>,
     pub max_outfits_by_source: [u32; 3],
     pub unlocked_by_source: [u32; 3],
     pub next_outfit_cost: u64,
@@ -36,6 +53,9 @@ impl Default for OutfitState {
             pending_slots: BTreeMap::new(),
             pending_situations: BTreeMap::new(),
             viewed_weapon_options: HashMap::new(),
+            // INFERRED: no native category catalog is fabricated; host provides
+            // trigger/group metadata, while selections read real outfit state.
+            situation_categories: Vec::new(),
             max_outfits_by_source: [0, 0, 20],
             unlocked_by_source: [0, 0, 20],
             next_outfit_cost: 0,
