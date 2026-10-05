@@ -366,6 +366,20 @@
       "implementation": "commits cf321e084, d33f715f9, a22301abc (rebased)",
       "compiled_revision": "dabae6c5c",
       "proof": "agent-run GREEN; main-thread targeted re-run on master (352 pass, 1 pre-existing); no independent review"
+    },
+    {
+      "id": "club-membership-model",
+      "symbols": [
+        "ClubMemberOpaqueId, CLUB_MEMBER_* events, C_Club role/note/invitation/kick management"
+      ],
+      "scope": "Opaque member ids across C_Club getters, CLUB_MEMBER_* payloads and message authors (stable across roster reordering); roles, notes, pending invitations and privilege checks in src/c_api club state; state changes visible during event callbacks. INFERRED: string-token id representation, synthetic stable guild GUIDs, role/privilege hierarchy, owner transfer, synchronous change-only events.",
+      "spec": "docs/specs/club-membership.md",
+      "tests": [
+        "tests/club_membership.rs"
+      ],
+      "implementation": "src/c_api club state; retired workarounds/temporary/club_management_defaults.rs",
+      "compiled_revision": "5e4e6b26a",
+      "proof": "Sol worker GREEN; main-thread on master 5e4e6b26a: club 45, guild 192, communities 11, bnet 3, chat 157 (1 pre-existing), p1207_gap_closures 6, 12.0.7 sweep, lua-errors []; no independent review"
     }
   ],
   "source_rows": [
@@ -1473,33 +1487,43 @@
     },
     {
       "source_id": "events-CLUB_MEMBER_ADDED-158",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: payload type becomes ClubMemberOpaqueId; simulator member IDs are roster row indices with no opaque identity model or host event source. Event name is registerable only. No credit."
+      "capabilities": [
+        "club-membership-model"
+      ],
+      "status": "partial-development-green",
+      "note": "Opaque member id payload with state visible during callback (club_membership tests)."
     },
     {
       "source_id": "events-CLUB_MEMBER_PRESENCE_UPDATED-159",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: payload type becomes ClubMemberOpaqueId; simulator member IDs are roster row indices with no opaque identity model or host event source. Event name is registerable only. No credit."
+      "capabilities": [
+        "club-membership-model"
+      ],
+      "status": "partial-development-green",
+      "note": "Opaque member id payload with state visible during callback (club_membership tests)."
     },
     {
       "source_id": "events-CLUB_MEMBER_REMOVED-160",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: payload type becomes ClubMemberOpaqueId; simulator member IDs are roster row indices with no opaque identity model or host event source. Event name is registerable only. No credit."
+      "capabilities": [
+        "club-membership-model"
+      ],
+      "status": "partial-development-green",
+      "note": "Opaque member id payload with state visible during callback (club_membership tests)."
     },
     {
       "source_id": "events-CLUB_MEMBER_ROLE_UPDATED-161",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: payload type becomes ClubMemberOpaqueId; simulator member IDs are roster row indices with no opaque identity model or host event source. Event name is registerable only. No credit."
+      "capabilities": [
+        "club-membership-model"
+      ],
+      "status": "partial-development-green",
+      "note": "Opaque member id payload with state visible during callback (club_membership tests)."
     },
     {
       "source_id": "events-CLUB_MEMBER_UPDATED-162",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: payload type becomes ClubMemberOpaqueId; simulator member IDs are roster row indices with no opaque identity model or host event source. Event name is registerable only. No credit."
+      "capabilities": [
+        "club-membership-model"
+      ],
+      "status": "partial-development-green",
+      "note": "Opaque member id payload with state visible during callback (club_membership tests)."
     },
     {
       "source_id": "events-ENCOUNTER_END-163",
@@ -1976,18 +2000,20 @@
     {
       "source_id": "wt-global-api-C_Club.AssignMemberRole-188",
       "capabilities": [
-        "publication-sweep-12-0-7"
+        "publication-sweep-12-0-7",
+        "club-membership-model"
       ],
       "status": "partial-development-green",
-      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
+      "note": "Published and backed by club state model (roles/notes/invitations/privileges); workaround retired."
     },
     {
       "source_id": "wt-global-api-C_Club.GetAssignableRoles-190",
       "capabilities": [
-        "publication-sweep-12-0-7"
+        "publication-sweep-12-0-7",
+        "club-membership-model"
       ],
       "status": "partial-development-green",
-      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
+      "note": "Published and backed by club state model (roles/notes/invitations/privileges); workaround retired."
     },
     {
       "source_id": "wt-global-api-C_Club.GetClubMembers-192",
@@ -2008,18 +2034,20 @@
     {
       "source_id": "wt-global-api-C_Club.KickMember-196",
       "capabilities": [
-        "publication-sweep-12-0-7"
+        "publication-sweep-12-0-7",
+        "club-membership-model"
       ],
       "status": "partial-development-green",
-      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
+      "note": "Published and backed by club state model (roles/notes/invitations/privileges); workaround retired."
     },
     {
       "source_id": "wt-global-api-C_Club.RevokeInvitation-198",
       "capabilities": [
-        "publication-sweep-12-0-7"
+        "publication-sweep-12-0-7",
+        "club-membership-model"
       ],
       "status": "partial-development-green",
-      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
+      "note": "Published and backed by club state model (roles/notes/invitations/privileges); workaround retired."
     },
     {
       "source_id": "wt-global-api-C_Club.SendBattleTagFriendRequest-200",
@@ -2032,18 +2060,20 @@
     {
       "source_id": "wt-global-api-C_Club.SendInvitation-202",
       "capabilities": [
-        "publication-sweep-12-0-7"
+        "publication-sweep-12-0-7",
+        "club-membership-model"
       ],
       "status": "partial-development-green",
-      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
+      "note": "Published and backed by club state model (roles/notes/invitations/privileges); workaround retired."
     },
     {
       "source_id": "wt-global-api-C_Club.SetClubMemberNote-204",
       "capabilities": [
-        "publication-sweep-12-0-7"
+        "publication-sweep-12-0-7",
+        "club-membership-model"
       ],
       "status": "partial-development-green",
-      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
+      "note": "Published and backed by club state model (roles/notes/invitations/privileges); workaround retired."
     },
     {
       "source_id": "wt-global-api-C_CombatText.GetActiveUnit-206",
