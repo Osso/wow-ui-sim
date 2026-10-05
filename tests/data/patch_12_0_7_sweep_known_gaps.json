@@ -12,7 +12,6 @@
   "wt-global-api-C_Club.SendBattleTagFriendRequest-200",
   "wt-global-api-C_Club.SendInvitation-202",
   "wt-global-api-C_Club.SetClubMemberNote-204",
-  "wt-global-api-C_DelvesUI.GetTieredEntranceType-212",
   "wt-global-api-C_EncounterWarnings.GetColorForSeverity-219",
   "wt-global-api-C_QuestInfoSystem.GetQuestHasShortExpirationWarning-152",
   "wt-global-api-C_ScenarioInfo.GetScenarioIconInfo-153",
@@ -23,7 +22,5 @@
   "wt-global-api-SimulateMouseUp-227",
   "wt-global-api-SimulateMouseWheel-229",
   "wt-scriptobjects-HousingLayoutPinFrame:IsConnectedToDraggingRoom-273",
-  "wt-scriptobjects-HousingLayoutPinFrame:IsPartOfDraggingRoom-274",
-  "wt-scriptobjects-SecondsFormatter:FormatZero-281",
-  "wt-scriptobjects-SecondsFormatter:GetDefaultAbbreviation-283"
+  "wt-scriptobjects-HousingLayoutPinFrame:IsPartOfDraggingRoom-274"
 ]

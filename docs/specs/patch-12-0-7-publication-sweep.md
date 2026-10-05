@@ -38,14 +38,14 @@ Matching is by exact symbol string. Today no 12.0.7 row has a later add/remove, 
 | Font | `CreateFont` with one fixed name |
 | ModelSceneActorBase | `CreateFrame('ModelScene'):CreateActor()` |
 
-Default Retail sweep: GREEN against the reviewed gap set, 174 observations (147 OK, 27 non-OK). The sweep also exposed four removed namespace members that the crawler register never listed (`C_DurationUtil.GetCurrentTime`, `C_HousingLayout.IsDraggingStairwell`, `C_Minimap.GetObjectIconTextureCoords`, `C_Scenario.GetScenarioIconInfo`); they are now retired from raw and ordinary lookup.
+Default Retail sweep: GREEN against the reviewed gap set, 174 observations (150 OK, 24 non-OK; the [12.0.5 sweep](patch-12-0-5-publication-sweep.md) follow-up published `C_DelvesUI.GetTieredEntranceType`, `SecondsFormatter:FormatZero` and `GetDefaultAbbreviation`). The sweep also exposed four removed namespace members that the crawler register never listed (`C_DurationUtil.GetCurrentTime`, `C_HousingLayout.IsDraggingStairwell`, `C_Minimap.GetObjectIconTextureCoords`, `C_Scenario.GetScenarioIconInfo`); they are now retired from raw and ordinary lookup.
 
 ## Known gaps (current cycle)
 
 Startup-surface gaps, not proof of native-client absence. Every unpublished symbol below is declared by the cached Retail 12.1.0 API documentation unless noted.
 
-- [ ] Added but unpublished: `C_QuestInfoSystem.GetQuestHasShortExpirationWarning`, `C_ScenarioInfo.GetScenarioIconInfo`, `C_Spell.GetMawPowerRarityInfoBySpellID`, `GetBaseDifficultyID`, `SecondsFormatter:FormatZero`, `SecondsFormatter:GetDefaultAbbreviation`.
-- [ ] Changed but unpublished (only the namespace autostub answers): `C_Club.AssignMemberRole`, `GetAssignableRoles`, `KickMember`, `RevokeInvitation`, `SendBattleTagFriendRequest`, `SendInvitation`, `SetClubMemberNote`; `C_DelvesUI.GetTieredEntranceType`; `C_EncounterWarnings.GetColorForSeverity` (modeled only under the `retail-12-1-5` gate); `SimulateMouseClick/Down/Up/Wheel`.
+- [ ] Added but unpublished: `C_QuestInfoSystem.GetQuestHasShortExpirationWarning`, `C_ScenarioInfo.GetScenarioIconInfo`, `C_Spell.GetMawPowerRarityInfoBySpellID`, `GetBaseDifficultyID`.
+- [ ] Changed but unpublished (only the namespace autostub answers): `C_Club.AssignMemberRole`, `GetAssignableRoles`, `KickMember`, `RevokeInvitation`, `SendBattleTagFriendRequest`, `SendInvitation`, `SetClubMemberNote`; `C_EncounterWarnings.GetColorForSeverity` (modeled only under the `retail-12-1-5` gate); `SimulateMouseClick/Down/Up/Wheel`.
 - [ ] `HousingLayoutPinFrame` methods: the object is host-created (`HousingLayoutPinFrameAdded`) and has no Lua factory, so both rows are unprobeable.
 - [ ] CVars with no registered value/default: `unlockedExpansionLandingPages` and the `{{Test-inline}}` test-realm CVars `Aftermath`, `AftermathCallstacks`, `enableMemoryTrap`.
 - [ ] Console commands `fetchBleepProxies` and `MemUsageStackTrace` (test-inline) are unprobeable by design.

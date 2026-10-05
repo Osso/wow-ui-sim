@@ -1037,11 +1037,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_AutoComplete.GetAutoCompleteRealms-253": {
     "expected": {
@@ -1091,11 +1091,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CatalogShop.GetProductInfo-370": {
     "expected": {
@@ -1325,11 +1325,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DelvesUI.GetActiveDelveTier-264": {
     "expected": {
@@ -1505,11 +1505,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DelvesUI.HasActiveDelve-385": {
     "expected": {
@@ -2009,11 +2009,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingInspectMode.ExitInspectMode-285": {
     "expected": {
@@ -2027,11 +2027,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingInspectMode.GetHoveredDecorGUID-286": {
     "expected": {
@@ -2045,11 +2045,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingInspectMode.IsHoveringDecor-287": {
     "expected": {
@@ -2063,11 +2063,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingInspectMode.IsInInspectMode-288": {
     "expected": {
@@ -2081,11 +2081,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingNeighborhood.OnCornerstoneClosed-289": {
     "expected": {
@@ -2351,11 +2351,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PartyInfo.IsLootMethodAvailable-292": {
     "expected": {
@@ -2387,11 +2387,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PhotoSharing.ClearAuthorization-294": {
     "expected": {
@@ -2405,11 +2405,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PhotoSharing.CompleteAuthorizationFlow-295": {
     "expected": {
@@ -2423,11 +2423,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PhotoSharing.GetCropRatio-296": {
     "expected": {
@@ -2441,11 +2441,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PhotoSharing.GetPhotoSharingAuthURL-297": {
     "expected": {
@@ -2459,11 +2459,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PhotoSharing.GetStatus-298": {
     "expected": {
@@ -2477,11 +2477,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PhotoSharing.IsAuthorized-299": {
     "expected": {
@@ -2531,11 +2531,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PhotoSharing.TakePhoto-302": {
     "expected": {
@@ -2549,11 +2549,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PhotoSharing.UploadPhotoToService-303": {
     "expected": {
@@ -2567,11 +2567,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_QuestInfoSystem.GetQuestLogRewardFavor-416": {
     "expected": {
@@ -2603,11 +2603,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ScenarioInfo.GetTieredEntranceActiveSpells-305": {
     "expected": {
@@ -2621,11 +2621,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ScenarioInfo.GetUnitCriteriaProgressValues-306": {
     "expected": {
@@ -3035,11 +3035,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_StringUtil.RemoveContiguousSpaces-451": {
     "expected": {
@@ -4079,11 +4079,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GetDodgeChance-553": {
     "expected": {
@@ -5105,11 +5105,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "DurationObject; lookup=nil",
+      "detail": "DurationObject; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-DurationObject:FormatElapsedDuration-667": {
     "expected": {
@@ -5645,11 +5645,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:CanRoundUpLastUnit-678": {
     "expected": {
@@ -5663,11 +5663,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:EvaluateDesiredUnitCount-679": {
     "expected": {
@@ -5753,11 +5753,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:GetApproximationSeconds-684": {
     "expected": {
@@ -5789,11 +5789,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:GetDefaultAbbreviation-686": {
     "expected": {
@@ -5807,11 +5807,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:GetDesiredUnitCount-688": {
     "expected": {
@@ -5825,11 +5825,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:GetDesiredUnitCountCurve-687": {
     "expected": {
@@ -5843,11 +5843,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:GetMaxInterval-690": {
     "expected": {
@@ -5861,11 +5861,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:GetMaxIntervalCurve-689": {
     "expected": {
@@ -5879,11 +5879,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:GetMillisecondsThreshold-691": {
     "expected": {
@@ -5915,11 +5915,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:GetMinIntervalCurve-692": {
     "expected": {
@@ -5933,11 +5933,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:GetStripIntervalWhitespace-694": {
     "expected": {
@@ -5969,11 +5969,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:SetApproximationSeconds-696": {
     "expected": {
@@ -6005,11 +6005,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:SetCanRoundUpLastUnit-698": {
     "expected": {
@@ -6041,11 +6041,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:SetDefaultAbbreviation-700": {
     "expected": {
@@ -6095,11 +6095,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:SetMaxInterval-704": {
     "expected": {
@@ -6185,11 +6185,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:SetStripIntervalWhitespace-708": {
     "expected": {
@@ -6401,11 +6401,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "FontString; lookup=nil",
+      "detail": "FontString; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-widgets-FontString:SetFont-762": {
     "expected": {
@@ -6455,11 +6455,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "ModelSceneActor; lookup=nil",
+      "detail": "ModelSceneActor; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-widgets-ModelSceneActor:UseUnitSheatheCategory-739": {
     "expected": {
@@ -6473,11 +6473,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "ModelSceneActor; lookup=nil",
+      "detail": "ModelSceneActor; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-widgets-ModelSceneActorBase:SetGradientMaskWithDyes-740": {
     "expected": {
@@ -6491,11 +6491,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "ModelSceneActorBase; lookup=nil",
+      "detail": "ModelSceneActorBase; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-widgets-ModelSceneActorBase:SetModelByUnit-758": {
     "expected": {
