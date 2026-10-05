@@ -655,13 +655,25 @@ fn party_info_instance_abandon_defaults_are_not_c_api_temporary_shims() {
 fn transmog_sets_availability_tracks_character_eligibility_and_collection() {
     use wow_ui_sim::c_api::c_transmog_sets::TransmogSetInfo;
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
-    env.state().borrow_mut().transmog_sets.entries.push(TransmogSetInfo {
-        set_id: 99, name: "Hidden Plate".into(), hidden_until_collected: true,
-        ..Default::default()
-    });
-    assert!(!env.eval::<bool>("return C_TransmogSets.HasAvailableSets()").unwrap());
+    env.state()
+        .borrow_mut()
+        .transmog_sets
+        .entries
+        .push(TransmogSetInfo {
+            set_id: 99,
+            name: "Hidden Plate".into(),
+            hidden_until_collected: true,
+            ..Default::default()
+        });
+    assert!(
+        !env.eval::<bool>("return C_TransmogSets.HasAvailableSets()")
+            .unwrap()
+    );
     env.state().borrow_mut().transmog_sets.entries[0].valid_for_character = true;
-    assert!(!env.eval::<bool>("return C_TransmogSets.HasAvailableSets()").unwrap());
+    assert!(
+        !env.eval::<bool>("return C_TransmogSets.HasAvailableSets()")
+            .unwrap()
+    );
     env.state().borrow_mut().transmog_sets.entries[0].collected = true;
     env.eval::<()>(r#"
         assert(C_TransmogSets.HasAvailableSets())

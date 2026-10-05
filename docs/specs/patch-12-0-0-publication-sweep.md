@@ -59,7 +59,7 @@ Tests: `tests/transmog_outfit_visuals.rs`, `tests/transmog_outfit_situation_cata
 
 ## Transmog verification — 2026-10-05
 
-Proof scope: code revision `85f738227510e7c95cd1ae524932f8d4b6c10395`; comparison master `3b4f660c4b83a25ed0d7dd2c84f37ce07cb17c74`, checked detached inside the same worktree, then restored to `p1200-transmog`. Later documentation changes do not invalidate these results. All builds used local debug retail and the existing target directory. No vendor, secrets or page-coverage files changed.
+Proof scope: code revision `85f738227510e7c95cd1ae524932f8d4b6c10395`; comparison master `3b4f660c4b83a25ed0d7dd2c84f37ce07cb17c74`, checked detached inside the same worktree, then restored to `p1200-transmog`. Later documentation and formatting-only changes do not invalidate these results. All builds used local debug retail and the existing target directory. No vendor, secrets or page-coverage files changed.
 
 Command prefix: `python3 /home/osso/.worktrees/wow-ui-sim-p1200-transmog/scripts/build-host.py --build-host local`.
 
@@ -79,7 +79,7 @@ Command prefix: `python3 /home/osso/.worktrees/wow-ui-sim-p1200-transmog/scripts
 | `--check` | Exit 0 |
 | bare prefix, then `--no-build --run -- --no-addons --no-saved-vars lua-errors` under `timeout 90` | Build exit 0; startup exit 0, `[]`, zero unique/total Lua errors |
 
-`cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1200-transmog/Cargo.toml` and subsequent `--check` exit 0. Six existing deprecated Clippy manifest-key warnings in `iced-wgpu-patched/Cargo.toml` also appear on master; no suppression or vendor edits.
+`cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1200-transmog/Cargo.toml` and subsequent `--check` exit 0. Because `autotests = false` hides generated integration modules from Cargo formatting discovery, direct `rustfmt --edition 2024` and subsequent `--check` also cover `tests/c_api_surface.rs` and `tests/transmog_outfit_visuals.rs`. Six existing deprecated Clippy manifest-key warnings in `iced-wgpu-patched/Cargo.toml` also appear on master; no suppression or vendor edits.
 
 Master failure comparisons use prefix plus `--test --lib FILTER`, with filters `transmog_situation`, `debug_environment_defaults`, `housing_catalog_state`, `apply_system_anchors`, and `unit_cast_duration_clears_before_completion_callbacks`. Exact failures: transmog situation enum (`metadata.NumValues=32`), debug defaults (calling userdata), housing searcher (`bad_searcher`), three anchor tests (missing `InitSystemAnchors`), and cast-duration clearing (assertion failure). The duration test's source differs on current master, but the same named test fails there too. No transmog regression is attributed to these failures.
 

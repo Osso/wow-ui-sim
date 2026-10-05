@@ -1,11 +1,21 @@
 #![cfg(feature = "retail-12-0-5")]
-use wow_ui_sim::lua_api::{WowLuaEnv, state::{AppearanceSourceInfo, EquippedItem}};
+use wow_ui_sim::lua_api::{
+    WowLuaEnv,
+    state::{AppearanceSourceInfo, EquippedItem},
+};
 
 fn env() -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     let state = env.state();
     let mut sim = state.borrow_mut();
-    sim.player.equipped_items.insert(1, EquippedItem { item_id: 109984, enchant_id: 0, gem_ids: [0;3] });
+    sim.player.equipped_items.insert(
+        1,
+        EquippedItem {
+            item_id: 109984,
+            enchant_id: 0,
+            gem_ids: [0; 3],
+        },
+    );
     let mut source = sim.world.transmog_appearances[0].clone();
     source.source_id = 190000;
     source.visual_id = 90000;
@@ -13,11 +23,21 @@ fn env() -> WowLuaEnv {
     source.item_id = 109984;
     source.is_collected = true;
     sim.world.transmog_appearances = vec![source];
-    sim.transmog_appearance_sources.insert(190001, AppearanceSourceInfo {
-        category: 1, item_appearance_id: 90001, can_have_illusion: false, icon: 135771,
-        is_collected: true, item_link: String::new(), transmoglink: String::new(),
-        source_type: None, item_subclass: 4, ignore_model_attachment_checks_for_illusion: false,
-    });
+    sim.transmog_appearance_sources.insert(
+        190001,
+        AppearanceSourceInfo {
+            category: 1,
+            item_appearance_id: 90001,
+            can_have_illusion: false,
+            icon: 135771,
+            is_collected: true,
+            item_link: String::new(),
+            transmoglink: String::new(),
+            source_type: None,
+            item_subclass: 4,
+            ignore_model_attachment_checks_for_illusion: false,
+        },
+    );
     drop(sim);
     env
 }
@@ -25,7 +45,8 @@ fn env() -> WowLuaEnv {
 #[test]
 fn transmog_outfit_visuals_shape_tracks_equipped_pending_and_applied_sources() {
     let env = env();
-    env.eval::<()>(r#"
+    env.eval::<()>(
+        r#"
         -- TransmogLocationMixin:GetData() payload from cached Blizzard_TransmogShared.
         local location = {slotID=1,type=0,modification=0}
         local visual = C_Transmog.GetSlotVisualInfo(location)
@@ -42,7 +63,9 @@ fn transmog_outfit_visuals_shape_tracks_equipped_pending_and_applied_sources() {
         visual = C_Transmog.GetSlotVisualInfo(location)
         assert(visual.appliedSourceID == 190001 and visual.appliedVisualID == 90001)
         assert(visual.pendingSourceID == 0)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
 #[test]
@@ -73,15 +96,23 @@ fn transmog_outfit_visuals_inventory_selectors_distinguish_shoulders_and_weapon_
 #[test]
 fn transmog_outfit_visuals_item_eligibility_returns_boolean_and_error_enum() {
     let env = env();
-    env.state().borrow_mut().player.equipped_items.insert(16, EquippedItem {
-        item_id: 250448, enchant_id: 0, gem_ids: [0;3],
-    });
+    env.state().borrow_mut().player.equipped_items.insert(
+        16,
+        EquippedItem {
+            item_id: 250448,
+            enchant_id: 0,
+            gem_ids: [0; 3],
+        },
+    );
     env.state().borrow_mut().player.equipped_items.remove(&17);
-    env.eval::<()>(r#"
+    env.eval::<()>(
+        r#"
         local can, error = C_Item.CanItemTransmogAppearance({equipmentSlotIndex=16})
         assert(can == true and error == Enum.TransmogOutfitSlotError.Ok)
         can, error = C_Item.CanItemTransmogAppearance({equipmentSlotIndex=17})
         assert(can == false and error == Enum.TransmogOutfitSlotError.NoItem)
         assert(not pcall(C_Item.CanItemTransmogAppearance, nil))
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
