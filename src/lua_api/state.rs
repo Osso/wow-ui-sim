@@ -190,6 +190,7 @@ macro_rules! build_empty_sim_state {
             // Simulator initial policy; native default is unverified.
             outfit_situations_enabled: false,
             transmog_set_filters: HashMap::new(),
+            transmog_sets: crate::c_api::c_transmog_sets::TransmogSets::default(),
             #[cfg(feature = "retail-12-0-0")]
             transmog_custom_sets: crate::c_api::c_transmog_collection::CustomSets::default(),
             equipped_outfit_locked: false,

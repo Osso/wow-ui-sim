@@ -48,7 +48,7 @@ fn get_appearance_source_info(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn build_source_table(state: &mut LuaState, record: &AppearanceSourceInfo) -> Val {
+pub(crate) fn build_source_table(state: &mut LuaState, record: &AppearanceSourceInfo) -> Val {
     let table = create_table(state);
     for (key, value) in [
         ("category", record.category as f64),

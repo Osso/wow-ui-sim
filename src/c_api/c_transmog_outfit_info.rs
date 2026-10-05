@@ -34,6 +34,8 @@ mod model;
 #[cfg(feature = "retail-12-0-5")]
 pub use model::{OutfitContents, OutfitState};
 #[cfg(feature = "retail-12-0-5")]
+mod imports;
+#[cfg(feature = "retail-12-0-5")]
 mod lifecycle;
 #[cfg(feature = "retail-12-0-5")]
 mod pending;
@@ -60,6 +62,8 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     situations::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
     slots::register(state, namespace)?;
+    #[cfg(feature = "retail-12-0-5")]
+    imports::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
     catalog::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]

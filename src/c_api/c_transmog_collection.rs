@@ -13,9 +13,11 @@ mod appearance_source_info;
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
-mod appearance_sources;
+pub(crate) mod appearance_sources;
 #[cfg(feature = "retail-12-0-5")]
 pub use appearance_source_info::AppearanceSourceInfo;
+
+mod hyperlinks;
 
 use std::collections::BTreeMap;
 
@@ -58,10 +60,10 @@ struct CustomSet {
 }
 
 #[derive(Debug, Clone)]
-struct ItemTransmogInfo {
-    appearance_id: i32,
-    secondary_appearance_id: i32,
-    illusion_id: i32,
+pub(crate) struct ItemTransmogInfo {
+    pub appearance_id: i32,
+    pub secondary_appearance_id: i32,
+    pub illusion_id: i32,
 }
 
 pub(crate) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<()> {
@@ -85,6 +87,14 @@ pub(crate) fn register(state: &mut LuaState, table: GcRef<Table>) -> LuaResult<(
         ("DeleteCustomSet", delete_custom_set),
         ("GetNumMaxCustomSets", get_max_custom_sets),
         ("IsValidCustomSetName", is_valid_custom_set_name),
+        (
+            "GetCustomSetHyperlinkFromItemTransmogInfoList",
+            hyperlinks::encode,
+        ),
+        (
+            "GetItemTransmogInfoListFromCustomSetHyperlink",
+            hyperlinks::decode,
+        ),
     ] {
         table_set_rust_fn_static(state, table, name, handler)?;
     }
@@ -201,11 +211,17 @@ fn get_custom_set_items(state: &mut LuaState) -> LuaResult<u32> {
         .get(&id)
         .map(|record| record.items.clone());
     let Some(items) = items else { return Ok(0) };
+    let array = build_items(state, &items);
+    state.push(array);
+    Ok(1)
+}
+
+fn build_items(state: &mut LuaState, items: &[ItemTransmogInfo]) -> Val {
     let array = create_table(state);
     let Val::Table(table) = array else {
         unreachable!()
     };
-    for (index, item) in items.into_iter().enumerate() {
+    for (index, item) in items.iter().enumerate() {
         let row = create_table(state);
         table_set(
             state,
@@ -222,8 +238,16 @@ fn get_custom_set_items(state: &mut LuaState) -> LuaResult<u32> {
         table_set(state, row, "illusionID", Val::Num(item.illusion_id as f64));
         table_set_num(state, table, (index + 1) as f64, row);
     }
-    state.push(array);
-    Ok(1)
+    array
+}
+
+pub(crate) fn read_custom_set_items(state: &LuaState, id: i32) -> LuaResult<Vec<ItemTransmogInfo>> {
+    borrow_state(state)?
+        .transmog_custom_sets
+        .records
+        .get(&id)
+        .map(|set| set.items.clone())
+        .ok_or_else(|| missing_set(id))
 }
 
 fn get_max_custom_sets(state: &mut LuaState) -> LuaResult<u32> {

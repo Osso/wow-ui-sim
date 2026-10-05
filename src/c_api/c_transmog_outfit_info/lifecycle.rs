@@ -23,6 +23,7 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
         ("GetNumberOfOutfitsUnlockedForSource", unlocked_for_source),
         ("GetMaxNumberOfUsableOutfits", max_usable),
         ("GetNextOutfitCost", next_cost),
+        ("PickupOutfit", pickup_outfit),
     ] {
         table_set_rust_fn_static(state, namespace, name, handler)?;
     }
@@ -146,6 +147,25 @@ fn is_equipped_displayed(state: &mut LuaState) -> LuaResult<u32> {
     let equipped = borrow_state(state)?.active_transmog_outfit_id.is_none();
     state.push(Val::Bool(equipped));
     Ok(1)
+}
+
+fn pickup_outfit(state: &mut LuaState) -> LuaResult<u32> {
+    let id = i64::from_stack(state, 1)?;
+    {
+        let mut sim = borrow_state_mut(state)?;
+        if id != 0
+            && !sim
+                .transmog_outfit_catalog
+                .entries
+                .iter()
+                .any(|entry| entry.outfit_id == id)
+        {
+            return Err(rilua::runtime_error(format!("unknown outfit ID {id}")));
+        }
+        sim.cursor_item = Some(crate::lua_api::state::CursorInfo::TransmogOutfit { outfit_id: id });
+    }
+    dispatch_event_now(state, "CURSOR_CHANGED", &[])?;
+    Ok(0)
 }
 
 fn read_source(state: &LuaState) -> LuaResult<usize> {

@@ -27,7 +27,24 @@ fn validate_cost(cost: u64) -> LuaResult<()> {
 }
 
 fn get_pending_transmog_cost(state: &mut LuaState) -> LuaResult<u32> {
-    let snapshot = borrow_state(state)?.pending_transmog_cost;
+    let snapshot = {
+        let sim = borrow_state(state)?;
+        if let Some(snapshot) = sim.pending_transmog_cost {
+            Some(snapshot)
+        } else if !sim.transmog_outfits.pending_slots.is_empty() {
+            let cost = sim
+                .transmog_outfits
+                .slot_cost
+                .checked_mul(sim.transmog_outfits.pending_slots.len() as u64)
+                .ok_or_else(|| rilua::runtime_error("pending transmog cost overflow"))?;
+            Some(super::PendingTransmogCost {
+                cost,
+                modifier_flags: 0,
+            })
+        } else {
+            None
+        }
+    };
     // Guessed absence policy; no native-client evidence establishes this arity.
     let Some(snapshot) = snapshot else {
         return Ok(0);

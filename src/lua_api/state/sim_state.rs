@@ -202,6 +202,7 @@ pub struct SimState {
     pub outfit_situations_enabled: bool,
     /// Explicit filter values only; native defaults and set filtering are unmodeled.
     pub transmog_set_filters: HashMap<i32, bool>,
+    pub transmog_sets: crate::c_api::c_transmog_sets::TransmogSets,
     #[cfg(feature = "retail-12-0-0")]
     pub transmog_custom_sets: crate::c_api::c_transmog_collection::CustomSets,
     pub equipped_outfit_locked: bool,

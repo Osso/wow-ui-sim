@@ -1,5 +1,8 @@
 //! Explicit set-filter state; native defaults and filtering effects are unmodeled.
 
+mod catalog;
+pub use catalog::{TransmogSetInfo, TransmogSets};
+
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -8,6 +11,7 @@ use rilua::{LuaResult, Val};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogSets")?;
+    table_set_rust_fn_static(state, namespace, "GetAvailableSets", catalog::get_available)?;
     table_set_rust_fn_static(state, namespace, "GetSetsFilter", get_sets_filter)?;
     table_set_rust_fn_static(state, namespace, "SetSetsFilter", set_sets_filter)?;
     table_set_rust_fn_static(

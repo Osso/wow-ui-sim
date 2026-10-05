@@ -22,6 +22,8 @@ pub enum CursorInfo {
         stack_count: i32,
         origin: CursorItemOrigin,
     },
+    /// Outfit dragged from the transmog catalog; zero means equipped gear.
+    TransmogOutfit { outfit_id: i64 },
     /// Money in copper held on the cursor (PickupPlayerMoney → DropCursorMoney).
     Money { copper: u64 },
 }

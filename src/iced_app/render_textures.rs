@@ -391,6 +391,7 @@ impl App {
             Some(crate::lua_api::state::CursorInfo::Talent { .. }) => return,
             Some(crate::lua_api::state::CursorInfo::Macro { .. }) => return,
             Some(crate::lua_api::state::CursorInfo::Money { .. }) => return,
+            Some(crate::lua_api::state::CursorInfo::TransmogOutfit { .. }) => return,
             None => return,
         };
         let Some(spell) = crate::spells::get_spell(spell_id) else {

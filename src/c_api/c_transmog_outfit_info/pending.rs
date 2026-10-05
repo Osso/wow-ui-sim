@@ -52,7 +52,7 @@ fn set_pending(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-fn build_pending_record(
+pub(super) fn build_pending_record(
     state: &LuaState,
     id: i64,
     display: i32,
@@ -153,9 +153,14 @@ fn commit_slots(state: &LuaState) -> LuaResult<Vec<SlotKey>> {
             "pending outfit contains unavailable transmogs",
         ));
     }
-    let cost = sim.pending_transmog_cost.map(|row| row.cost).unwrap_or(
-        sim.transmog_outfits.slot_cost * sim.transmog_outfits.pending_slots.len() as u64,
-    );
+    let cost = if let Some(snapshot) = sim.pending_transmog_cost {
+        snapshot.cost
+    } else {
+        sim.transmog_outfits
+            .slot_cost
+            .checked_mul(sim.transmog_outfits.pending_slots.len() as u64)
+            .ok_or_else(|| rilua::runtime_error("pending transmog cost overflow"))?
+    };
     if cost > sim.player.money.max(0) as u64 {
         return Err(rilua::runtime_error("not enough money to apply outfit"));
     }

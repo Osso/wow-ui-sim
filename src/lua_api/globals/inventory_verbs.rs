@@ -307,6 +307,10 @@ fn push_cursor_info(state: &mut LuaState, cursor: CursorInfo) -> LuaResult<u32> 
         CursorInfo::Macro { macro_index } => push_cursor_kind_id(state, "macro", macro_index),
         CursorInfo::Item { item_id, .. } => push_cursor_kind_id(state, "item", item_id),
         CursorInfo::Money { copper } => push_cursor_kind_number(state, "money", copper as f64),
+        // INFERRED cursor kind; native documentation does not specify outfit payloads.
+        CursorInfo::TransmogOutfit { outfit_id } => {
+            push_cursor_kind_number(state, "transmogoutfit", outfit_id as f64)
+        }
     }
 }
 
@@ -348,7 +352,9 @@ fn place_action(state: &mut LuaState) -> LuaResult<u32> {
             crate::c_api::action_macros::clear_slot(&mut st, slot);
             st.action_bars.insert(slot, talent_id);
         }
-        CursorInfo::Item { .. } | CursorInfo::Money { .. } => return Ok(0),
+        CursorInfo::Item { .. } | CursorInfo::Money { .. } | CursorInfo::TransmogOutfit { .. } => {
+            return Ok(0);
+        }
     }
     st.cursor_item = None;
     drop(st);

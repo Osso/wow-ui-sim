@@ -122,6 +122,8 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
             effective_category,
         ),
         ("GetIllusionDefaultIMAIDForCollectionType", default_illusion),
+        ("GetUnassignedAtlasForSlot", unassigned_atlas),
+        ("GetUnassignedDisplayAtlasForSlot", unassigned_display_atlas),
     ] {
         table_set_rust_fn_static(state, namespace, name, handler)?;
     }
@@ -425,7 +427,15 @@ fn get_linked_slots(state: &mut LuaState) -> LuaResult<u32> {
 
 fn slot_from_inventory_slot(state: &mut LuaState) -> LuaResult<u32> {
     let inventory_slot = i32::from_stack(state, 1)?;
-    let slot = match inventory_slot {
+    let Some(slot) = outfit_slot_from_inventory(inventory_slot) else {
+        return Ok(0);
+    };
+    state.push(Val::Num(slot as f64));
+    Ok(1)
+}
+
+pub(super) fn outfit_slot_from_inventory(inventory_slot: i32) -> Option<i32> {
+    Some(match inventory_slot {
         0 => 0,
         2 => 1,
         3 => 6,
@@ -440,10 +450,8 @@ fn slot_from_inventory_slot(state: &mut LuaState) -> LuaResult<u32> {
         16 => 13,
         17 => 14,
         18 => 5,
-        _ => return Ok(0),
-    };
-    state.push(Val::Num(slot as f64));
-    Ok(1)
+        _ => return None,
+    })
 }
 
 fn slot_for_inventory_type(state: &mut LuaState) -> LuaResult<u32> {
@@ -466,6 +474,48 @@ fn slot_for_inventory_type(state: &mut LuaState) -> LuaResult<u32> {
         _ => return Ok(0),
     };
     state.push(Val::Num(slot as f64));
+    Ok(1)
+}
+
+fn atlas_suffix(slot: i32) -> &'static str {
+    const SUFFIXES: [&str; 15] = [
+        "head",
+        "shoulders",
+        "shoulders",
+        "back",
+        "chest",
+        "tabard",
+        "shirt",
+        "wrist",
+        "hands",
+        "waist",
+        "legs",
+        "feet",
+        "mainhand",
+        "offhand",
+        "mainhand",
+    ];
+    SUFFIXES[slot as usize]
+}
+
+fn unassigned_atlas(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = read_slot(state)?;
+    // INFERRED slot-to-atlas assignment; atlas identities exist in data/atlas.rs.
+    let atlas = create_string(
+        state,
+        &format!("transmog-gearslot-unassigned-{}", atlas_suffix(slot)),
+    );
+    state.push(atlas);
+    Ok(1)
+}
+
+fn unassigned_display_atlas(state: &mut LuaState) -> LuaResult<u32> {
+    let slot = read_slot(state)?;
+    let atlas = create_string(
+        state,
+        &format!("transmog-appearance-unassigned-{}", atlas_suffix(slot)),
+    );
+    state.push(atlas);
     Ok(1)
 }
 
