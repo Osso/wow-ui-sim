@@ -201,6 +201,13 @@ impl Default for CVarStorage {
 
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
+    #[cfg(feature = "retail-12-0-0")]
+    for name in ["minimapTrackedInfov2", "useCompactPartyFrames"] {
+        // INFERRED: unconfigured zero; publication has no documented default.
+        let key = name.to_lowercase();
+        defaults.insert(key.clone(), "0".to_owned());
+        original_names.insert(key, name.to_owned());
+    }
     insert_profile_cvars(&mut defaults, &mut original_names);
     remove_profile_cvars(&mut defaults, &mut original_names);
     (defaults, original_names)

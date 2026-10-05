@@ -5,7 +5,7 @@
 //! - **Registerable**: events that addons can pass to `RegisterEvent()`.
 //!   Split across valid_events_a/b/c submodules.
 //! - **Non-registerable**: valid events that exist in the client but
-//!   `RegisterEvent()` rejects them (e.g. CHAT_MSG_ENCOUNTER_EVENT).
+//!   `RegisterEvent()` rejects them.
 //!
 //! `is_valid_event` = registerable OR non-registerable (for C_EventUtils).
 //! `is_registerable_event` = only registerable (for RegisterEvent).
@@ -99,8 +99,25 @@ pub fn is_registerable_event(name: &str) -> bool {
     if name == PATCH_12_0_5_REGISTERABLE_EVENT {
         return true;
     }
+    #[cfg(feature = "retail-12-0-0")]
+    if PATCH_12_0_0_REGISTERABLE_EVENTS
+        .binary_search(&name)
+        .is_ok()
+    {
+        return true;
+    }
     super::known_events::contains(name)
 }
+
+// Published 12.0.0 names missing from the generated historical event table.
+#[cfg(feature = "retail-12-0-0")]
+const PATCH_12_0_0_REGISTERABLE_EVENTS: &[&str] = &[
+    "CHAT_MSG_ENCOUNTER_EVENT",
+    "COMBAT_LOG_APPLY_FILTER_SETTINGS",
+    "COMBAT_LOG_EVENT_INTERNAL_UNFILTERED",
+    "COMBAT_LOG_REFILTER_ENTRIES",
+    "TOOLTIP_SHOW_ITEM_COMPARISON",
+];
 
 // The 12.0.5 consolidated table; the other added events are already known or
 // are noscript callback events (CLASS_TALENTS_SWITCH_TO_*).

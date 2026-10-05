@@ -23,3 +23,41 @@ fn p1200_mixed_string_util_integer_formatting() {
         end
     "#).unwrap();
 }
+
+#[test]
+fn p1200_mixed_event_publication() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local f = CreateFrame('Frame')
+        for _, event in ipairs({
+            'CHAT_MSG_ENCOUNTER_EVENT', 'COMBAT_LOG_APPLY_FILTER_SETTINGS',
+            'COMBAT_LOG_EVENT_INTERNAL_UNFILTERED', 'COMBAT_LOG_REFILTER_ENTRIES',
+            'TOOLTIP_SHOW_ITEM_COMPARISON',
+        }) do
+            assert(pcall(f.RegisterEvent, f, event), event)
+            assert(f:IsEventRegistered(event), event)
+            f:UnregisterEvent(event)
+            assert(not f:IsEventRegistered(event), event)
+        end
+        -- Contradictory removed rows remain registerable for current consumers.
+        for _, event in ipairs({'HOUSE_LEVEL_CHANGED', 'SETTINGS_LOADED',
+            'TRANSMOG_OUTFITS_CHANGED', 'UNIT_SPELLCAST_SENT'}) do
+            assert(pcall(f.RegisterEvent, f, event), event)
+        end
+    "#).unwrap();
+}
+
+#[test]
+fn p1200_mixed_cvar_publication() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        for _, name in ipairs({'minimapTrackedInfov2', 'useCompactPartyFrames'}) do
+            assert(C_CVar.GetCVarDefault(name) == '0')
+            C_CVar.SetCVar(name, '1')
+            assert(C_CVar.GetCVar(name) == '1')
+            assert(C_CVar.GetCVarDefault(name) == '0')
+        end
+        -- Case-insensitive identity: the Npcs row is published in this same patch.
+        assert(C_CVar.GetCVarDefault('nameplateShowFriendlyNPCs') == '0')
+    "#).unwrap();
+}
