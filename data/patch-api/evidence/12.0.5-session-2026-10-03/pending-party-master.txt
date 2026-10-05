@@ -1,0 +1,61 @@
+native source=/home/osso/.worktrees/wow-ui-sim-p1205-pending target=/home/osso/.worktrees/wow-ui-sim-p1205-pending/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']
+
+running 2 tests
+test patch_12_0_5_pending_party::leadership_addon_combat_denial_preserves_roles_leader_events_and_caller ... FAILED
+test patch_12_0_5_pending_party::leadership_secure_combat_and_addon_out_of_combat_calls_mutate_live_state ... ok
+
+failures:
+
+failures:
+    patch_12_0_5_pending_party::leadership_addon_combat_denial_preserves_roles_leader_events_and_caller
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 10607 filtered out; finished in 0.33s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1205-pending)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 15s
+     Running tests/integration.rs (target/debug/deps/integration-e55f1b5348ca8cac)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.012s] [Startup] SimState::default complete in 11.78ms
+[  0.012s] [Startup] SimState::default complete in 11.78ms
+[  0.012s] [Startup] rilua VM created in 111.86µs
+[  0.012s] [Startup] rilua VM created in 86.69µs
+[  0.012s] [Startup] builtin frames initialized in 74.57µs
+[  0.012s] [Startup] template registry cleared in 7.29µs
+[  0.012s] [Startup] builtin frames initialized in 64.10µs
+[  0.012s] [Startup] intrinsic templates registered in 8.45µs
+[  0.012s] [Startup] template registry cleared in 2.38µs
+[  0.012s] [Startup] initial app_data lua handle installed in 631.00ns
+[  0.012s] [Startup] intrinsic templates registered in 4.13µs
+[  0.012s] [Startup] initial app_data lua handle installed in 200.00ns
+[  0.203s] [Startup] init_lua_state complete in 191.18ms
+[  0.203s] [Startup] final app_data lua handle installed in 361.00ns
+[  0.203s] [Startup] initial screen globals installed in 109.78µs
+[  0.203s] [Startup] WowLuaEnv::new complete
+[  0.211s] [Startup] WowLuaEnv::new begin
+[  0.211s] [Startup] init_lua_state complete in 198.86ms
+[  0.211s] [Startup] final app_data lua handle installed in 390.00ns
+[  0.211s] [Startup] initial screen globals installed in 147.30µs
+[  0.211s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_12_0_5_pending_party::leadership_addon_combat_denial_preserves_roles_leader_events_and_caller' (3540108) panicked at /home/osso/.worktrees/wow-ui-sim-p1205-pending/tests/patch_12_0_5_pending_party.rs:53:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "addon leadership mutation must deny during combat: 1", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[  0.228s] [Startup] SimState::default complete in 17.34ms
+[  0.228s] [Startup] rilua VM created in 106.11µs
+[  0.228s] [Startup] builtin frames initialized in 49.00µs
+[  0.228s] [Startup] template registry cleared in 7.49µs
+[  0.228s] [Startup] intrinsic templates registered in 5.92µs
+[  0.228s] [Startup] initial app_data lua handle installed in 671.00ns
+[  0.327s] [Startup] init_lua_state complete in 98.75ms
+[  0.327s] [Startup] final app_data lua handle installed in 340.00ns
+[  0.327s] [Startup] initial screen globals installed in 114.90µs
+[  0.327s] [Startup] WowLuaEnv::new complete
+error: test failed, to rerun pass `--test integration`

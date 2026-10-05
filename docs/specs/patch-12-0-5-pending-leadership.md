@@ -4,10 +4,10 @@ Bounded follow-up to source row `prose-2026-03-25-074` in [retained page text](.
 
 ## What it must do
 
-- [ ] Deny addon-tainted calls to `C_PartyInfo.PromoteToLeader`, `PromoteToAssistant`, `DemoteAssistant`, and `SetEveryoneIsAssistant` during live player combat, before role/leader mutation or events.
-- [ ] Permit secure calls during combat and addon-tainted calls outside combat, subject to existing host permission and argument rules.
-- [ ] Restore the caller's original taint after denial; permit later out-of-combat recovery in the same environment.
-- [ ] Preserve current March 31 chat-lockdown behavior for countdown, ready checks, ping restrictions and loot methods; leadership denial does not replace that separate policy.
+- [x] Deny addon-tainted calls to `C_PartyInfo.PromoteToLeader`, `PromoteToAssistant`, `DemoteAssistant`, and `SetEveryoneIsAssistant` during live player combat, before role/leader mutation or events.
+- [x] Permit secure calls during combat and addon-tainted calls outside combat, subject to existing host permission and argument rules.
+- [x] Restore the caller's original taint after denial; permit later out-of-combat recovery in the same environment.
+- [x] Preserve current March 31 chat-lockdown behavior for countdown, ready checks, ping restrictions and loot methods; leadership denial does not replace that separate policy.
 
 **INFERRED:** the current namespace successors inherit the historical global leadership restriction. Simulator denial raises a nonempty runtime error; native error wording/convention is unspecified. Combat denial precedes existing argument authentication. No caller taint is cleared to execute the operation.
 

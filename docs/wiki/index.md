@@ -1,3 +1,7 @@
+## [2026-10-04] evidence | 12.0.5 pending non-sweep follow-up
+
+[24-row follow-up](investigations/patch-12-0-5-api-audit.md#pending-non-sweep-follow-up--2026-10-04): four leadership successors now deny addon combat mutations; unchanged restricted-mouse geometry proven. 55 targeted GREEN, startup `[]`; execution metering absent in pinned rilua. Coverage ledger unchanged.
+
 ## [2026-10-04] evidence | 12.1.0 page audit started
 
 [Patch 12.1.0 page audit](investigations/patch-12-1-0-page-audit.md): 1,111 rows (333 from the page extract, 778 from the wikitext inventories). Round 1: 24 bounded, 1 partial.
