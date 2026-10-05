@@ -15,7 +15,11 @@ use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 #[cfg(not(feature = "retail-12-0-7"))]
 use crate::lua_api::state::SEEDED_LOCAL_CHARACTER_GUID;
 use crate::lua_bridge::FromStack;
+#[cfg(feature = "retail-12-0-7")]
+use crate::lua_bridge::stack_val;
 use crate::lua_bridge::table_set_rust_fn_static;
+#[cfg(feature = "retail-12-0-7")]
+use rilua::runtime_error;
 use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
 use rilua::vm::table::Table;
@@ -305,8 +309,31 @@ fn c_party_info_do_ready_check(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_party_info_confirm_ready_check(state: &mut LuaState) -> LuaResult<u32> {
-    crate::lua_api::globals::group_verbs::confirm_ready_check(state)?;
+    let is_ready = read_ready_check_response(state)?;
+    crate::lua_api::globals::group_verbs::confirm_ready_check(state, is_ready)?;
     Ok(0)
+}
+
+/// Retail 12.0.7 `SecretArguments = AllowedWhenUntainted`, non-nilable `isReady`.
+/// INFERRED: every supplied argument (extras included) is authenticated before
+/// the boolean check and the chat-lockdown restriction.
+#[cfg(feature = "retail-12-0-7")]
+fn read_ready_check_response(state: &LuaState) -> LuaResult<bool> {
+    let is_ready = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    for value in state.stack.iter().take(state.top).skip(state.base + 1) {
+        rilua::table_security::unwrap_secret(state, *value)?;
+    }
+    match is_ready {
+        Val::Bool(is_ready) => Ok(is_ready),
+        _ => Err(runtime_error(
+            "C_PartyInfo.ConfirmReadyCheck: isReady must be a boolean",
+        )),
+    }
+}
+
+#[cfg(not(feature = "retail-12-0-7"))]
+fn read_ready_check_response(state: &LuaState) -> LuaResult<bool> {
+    Ok(Option::<bool>::from_stack(state, 1)?.unwrap_or(false))
 }
 
 fn c_party_info_get_available_loot_methods(state: &mut LuaState) -> LuaResult<u32> {

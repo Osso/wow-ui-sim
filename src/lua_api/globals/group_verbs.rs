@@ -175,10 +175,9 @@ pub(crate) fn start_ready_check(state: &mut LuaState) -> LuaResult<()> {
     dispatch_event_now(state, "READY_CHECK", &[])
 }
 
-pub(crate) fn confirm_ready_check(state: &mut LuaState) -> LuaResult<()> {
+pub(crate) fn confirm_ready_check(state: &mut LuaState, is_ready: bool) -> LuaResult<()> {
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_chat_info::reject_chat_messaging_lockdown(state, "Confirm ready check")?;
-    let is_ready = Option::<bool>::from_stack(state, 1)?.unwrap_or(false);
     {
         let mut sim = borrow_state_mut(state)?;
         sim.ready_check.active = false;
