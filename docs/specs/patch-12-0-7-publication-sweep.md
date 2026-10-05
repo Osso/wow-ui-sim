@@ -52,7 +52,7 @@ Startup-surface gaps, not proof of native-client absence. Every unpublished symb
 
 - [x] Modeled: `C_QuestInfoSystem.GetQuestHasShortExpirationWarning` (host-flagged quests), `C_Spell.GetMawPowerRarityInfoBySpellID` (host rarity ID + border atlas), `C_EncounterWarnings.GetColorForSeverity` (model promoted to `retail-12-1-0`), `C_Club.SendBattleTagFriendRequest` (recorded per guild member), `SimulateMouseClick/Down/Up/Wheel` (secure callers queue input replayed by the GUI mouse handlers; insecure callers and forbidden / script-inaccessible / combat-protected foci are refused), CVars `unlockedExpansionLandingPages`, `Aftermath`, `AftermathCallstacks`, `enableMemoryTrap`.
 - [x] Temporary workaround: `GetBaseDifficultyID` identity (no Difficulty.db2 variant model).
-- [ ] `C_Club.AssignMemberRole`, `GetAssignableRoles`, `KickMember`, `RevokeInvitation`, `SendInvitation`, `SetClubMemberNote` now use the [club membership model](club-membership.md); behavioral and publication re-verification pending. Guild clubs still grant no community management privileges.
+- [x] `C_Club.AssignMemberRole`, `GetAssignableRoles`, `KickMember`, `RevokeInvitation`, `SendInvitation`, `SetClubMemberNote` use the [club membership model](club-membership.md#development-proof--2026-10-05); 12 behavior tests and isolated publication sweep pass. Guild clubs still grant no community management privileges.
 - [ ] SimulateMouse gaps: no gamepad limited-input event source (insecure calls always refused) and only LeftButton/RightButton dispatch.
 
 ## Out of scope

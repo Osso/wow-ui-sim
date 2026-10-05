@@ -38,3 +38,7 @@ Added synchronous member snapshots/departures and stable historical chat authors
 ## 2026-10-05 | Guild opaque-ID regression
 
 Cached GuildRoster rank menus require `guid` independently of member IDs. Added stable projected GUIDs; no vendor/UI patch. Retest pending.
+
+## 2026-10-05 | Club membership proof
+
+Recorded [development proof](../specs/club-membership.md#development-proof--2026-10-05): five host/member event rows, 12 behavior tests, club/guild/communities/bnet green, publication green, startup `[]`, fmt/check green. Chat failure reproduced on untouched master. No coverage ledger edits.

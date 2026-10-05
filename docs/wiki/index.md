@@ -1,6 +1,6 @@
 ## [2026-10-04] system | Club membership
 
-[Club membership](systems/club-membership.md): opaque IDs and state-backed roles, notes, invitations; [contract](../specs/club-membership.md). Development proof pending; coverage ledger unchanged.
+[Club membership](systems/club-membership.md): opaque IDs and state-backed roles, notes, invitations; [contract](../specs/club-membership.md). [Development proof](../specs/club-membership.md#development-proof--2026-10-05): 12 member tests, regression filters, publication and startup `[]`; one unrelated master chat failure remains. Coverage ledger unchanged.
 
 ## [2026-10-04] evidence | 12.0.5 pending non-sweep follow-up
 
