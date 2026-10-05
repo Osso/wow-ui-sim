@@ -32,9 +32,15 @@ Cast completion's dynamic GUID also dies in STOP error reporting, then gets reus
 
 This proves a cast-completion rooting vulnerability, not the cause of the original one-in-three duration-test failure: that test has no failing handler/error callback and does not read the GUID. Its one-second live deadline plus an immediate `extract_completed_cast().is_none()` assertion is scheduling-sensitive; no speculative production or timing change was made.
 
+## Dynamic unit token construction
+
+Final pass found `fire_unit_aura_full_update` interning the unit token before evaluating a Lua table constructor. Arbitrary non-static tokens can be collected in that evaluation, before the event dispatcher has a chance to root them. Allocate the token after payload evaluation/secret wrapping instead.
+
+`unit_aura_token_survives_collection_during_payload_construction` forces a complete incremental cycle at the VM allocation safe point (`gc_threshold=0`, `gc_stepmul=1_000_000`) and checks a dynamic token's prefix/numeric suffix, without accidentally rooting its full spelling in Lua constants. Before the fix, delivery fails in `string.sub` on the collected token. This late source change invalidates the earlier full-lib/check/startup proof; final verification must rerun those scopes once after this fix.
+
 ## Recorded candidate matrix
 
-40 recorded construction/dispatch candidates: **17 real bugs fixed, 23 false positives left unchanged**. Allocation/execution search intersected 103 Rust files (including tests/helpers); this matrix records the deep classifications, not a claim that every GC lifetime in the simulator is proven safe. Transmog outfit/collection/sets files are excluded.
+41 recorded construction/dispatch candidates: **18 real bugs fixed, 23 false positives left unchanged**. Allocation/execution search intersected 103 Rust files (including tests/helpers); this matrix records the deep classifications, not a claim that every GC lifetime in the simulator is proven safe. Transmog outfit/collection/sets files are excluded.
 
 Raw `state.gc` arena allocation/interning and raw table setters accrue allocation debt; the VM performs collection at GC safe points. In pinned rilua `a76ffa83`, `wrap_secret` authenticates and allocates `Userdata::secret(value)` without executing Lua or collecting. Thus raw-only DTO construction is not equivalent to construction across a Lua callback.
 
@@ -58,7 +64,8 @@ Paths are relative to `src/`; line numbers at code revision `42d257700`. Tooltip
 | `lua_api/globals/missing_surface/tooltip_info/probes.rs:224` | Root pet parent | `pet_parent_survives_markup_color_collection` |
 | `lua_api/globals/missing_surface/tooltip_info/probes.rs:509` | Push achievement result before line fill | `achievement_parent_survives_markup_color_collection` |
 | `lua_api/globals/missing_surface/tooltip_info/probes.rs:603` | Push shapeshift result before line fill | `markup_segments_and_shapeshift_parent_survive_color_collection` |
-| `lua_api/env_events.rs:244` | Root payload across all listeners/error handlers | `host_event_payload_survives_collection_in_error_handler`; lib `completion_arguments_survive_collection_in_stop_error_handler` |
+| `lua_api/env_events.rs:231` | Allocate unit token after collecting Lua payload construction | lib `unit_aura_token_survives_collection_during_payload_construction` |
+| `lua_api/env_events.rs:245` | Root payload across all listeners/error handlers | `host_event_payload_survives_collection_in_error_handler`; lib `completion_arguments_survive_collection_in_stop_error_handler` |
 | `lua_api/script_helpers/event_dispatch.rs:50` | Root native payload across dispatch/error handlers | `native_aura_event_payload_survives_collection_in_error_handler` |
 | `lua_api/loader_env.rs:151` | Root loader payload across dispatch/error handlers | `loader_event_payload_survives_collection_in_error_handler` |
 

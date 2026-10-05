@@ -231,12 +231,13 @@ impl WowLuaEnv {
     /// Fire `UNIT_AURA(unit, {isFullUpdate=true})` with the payload secrecy
     /// applied to live aura updates.
     pub fn fire_unit_aura_full_update(&self, unit: &str) -> Result<()> {
-        let unit = self.lua_string(unit);
         let info = self.eval::<Val>("return { isFullUpdate = true }")?;
         let info = crate::c_api::unit_aura_access::unit_aura_event_payload(
             self.lua.borrow_mut().state_mut(),
             info,
         )?;
+        // Allocate the token after Lua payload construction can collect.
+        let unit = self.lua_string(unit);
         self.fire_event_with_args("UNIT_AURA", &[unit, info])
     }
 
@@ -567,6 +568,36 @@ impl WowLuaEnv {
 #[cfg(test)]
 mod tests {
     use super::WowLuaEnv;
+    use rilua::LuaApiMut;
+
+    #[test]
+    fn unit_aura_token_survives_collection_during_payload_construction() {
+        let env = WowLuaEnv::new().unwrap();
+        env.exec(
+            r#"
+            auraDeliveries = 0
+            local frame = CreateFrame('Frame')
+            frame:RegisterEvent('UNIT_AURA')
+            frame:SetScript('OnEvent', function(_, event, unit, info)
+                assert(event == 'UNIT_AURA' and info.isFullUpdate == true)
+                -- A full expected-token literal would itself root the interned string.
+                assert(unit:sub(1, 11) == 'audit-unit-' and tonumber(unit:sub(12)) == 987654)
+                auraDeliveries = auraDeliveries + 1
+            end)
+        "#,
+        )
+        .unwrap();
+        env.gc_collect();
+        {
+            let mut lua = env.rilua_mut();
+            let gc = &mut lua.state_mut().gc.gc_state;
+            gc.gc_threshold = 0;
+            gc.gc_stepmul = 1_000_000;
+        }
+        env.fire_unit_aura_full_update(&format!("audit-unit-{}", 987654))
+            .unwrap();
+        env.exec("assert(auraDeliveries == 1)").unwrap();
+    }
 
     #[test]
     fn dispatch_slash_command_uses_registered_handler() {
