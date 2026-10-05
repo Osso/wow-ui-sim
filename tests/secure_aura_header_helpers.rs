@@ -427,7 +427,7 @@ fn complete_spec_cast(env: &WowLuaEnv) {
         .casting
         .as_mut()
         .expect("spec cast")
-        .end_time = 0.0;
+        .duration = 0.0;
     wow_ui_sim::lua_api::cast_completion::tick_casting(env);
     assert!(env.state().borrow().casting.is_none());
     assert!(env.state().borrow().player.pending_spec_change.is_none());

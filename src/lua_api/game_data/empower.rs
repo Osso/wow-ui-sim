@@ -15,8 +15,12 @@ impl CastingState {
             .map_or(0, |timing| timing.stage_durations.len())
     }
 
+    pub fn end_time(&self) -> f64 {
+        self.start_time + self.duration
+    }
+
     pub fn completion_time(&self) -> f64 {
-        self.end_time
+        self.end_time()
             + self
                 .empower
                 .as_ref()

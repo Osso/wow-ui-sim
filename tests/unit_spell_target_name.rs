@@ -33,7 +33,7 @@ fn cast(target: Option<CastTargetSnapshot>) -> CastingState {
         spell_name: "Flash of Light".into(),
         icon_path: String::new(),
         start_time: 0.0,
-        end_time: 3600.0,
+        duration: 3600.0,
         cast_id: 1,
         empower: None,
         delay_time: 0.0,

@@ -1,3 +1,7 @@
+## [2026-10-05] investigation | Cast duration rounding
+
+[Investigation](investigations/cast-duration-rounding.md) records the captured one-ULP loss and deterministic RED. Cast state preserves configured spans; queries no longer recover duration from rounded deadlines. GC audit attribution updated; verification pending.
+
 ## [2026-10-05] evidence | 12.0.0 enum/deprecated extract proof
 
 [Follow-up](investigations/patch-12-0-0-api-audit.md#enum-and-deprecated-extract-proof) records loaded enum publication, falsified seed conflicts and deprecated retirement root causes. [Contract](../specs/patch-12-0-0-extract-enums-deprecated.md) links exact per-source outcomes, pending successor results, master comparisons and historical compilation limits; coverage ledgers unchanged.

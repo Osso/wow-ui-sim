@@ -483,7 +483,7 @@ fn extract_cast_info(state: &mut LuaState, slot: CastSlot) -> LuaResult<Option<C
         spell_name: cast.spell_name.clone(),
         icon_path: cast.icon_path.clone(),
         start_time: cast.start_time,
-        end_time: cast.end_time,
+        end_time: cast.end_time(),
         cast_id: cast.cast_id,
         spell_id: cast.spell_id,
         num_empower_stages: cast.empower_stage_count() as u32,

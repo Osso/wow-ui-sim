@@ -525,7 +525,7 @@ fn set_casting(state: &mut LuaState) -> LuaResult<u32> {
         spell_name,
         icon_path,
         start_time: now,
-        end_time: now + duration,
+        duration,
         cast_id,
         target: None,
         empower: None,

@@ -128,8 +128,8 @@ pub struct CastingState {
     pub icon_path: String,
     /// GetTime() at cast start (seconds).
     pub start_time: f64,
-    /// GetTime() at cast end (seconds).
-    pub end_time: f64,
+    /// Configured cast span in seconds; preserve it independently of deadline rounding.
+    pub duration: f64,
     pub cast_id: u32,
     /// Fixture input only: existing cast/channel producers leave this absent.
     pub target: Option<CastTargetSnapshot>,

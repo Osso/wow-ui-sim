@@ -34,6 +34,32 @@ fn completion_arguments_survive_collection_in_stop_error_handler() {
 }
 
 #[test]
+fn unit_cast_duration_preserves_span_across_rounded_deadline() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("A_Admin.SetCasting(19750, 'Completion', 'cast-icon', 1)")
+        .unwrap();
+    {
+        let mut sim = env.state().borrow_mut();
+        let cast = sim.casting.as_mut().unwrap();
+        // Captured from the flake: adding one rounds the absolute deadline.
+        cast.start_time = 0.25440984300000002;
+    }
+    env.exec(
+        r#"
+        local duration = UnitCastingDuration('player')
+        assert(duration:GetStartTime() == 0.25440984300000002)
+        assert(duration:GetEndTime() == 1.2544098429999999)
+        assert(duration:GetTotalDuration() == 1)
+        assert(A_Admin.DelayCasting(0.5))
+        local delayed = UnitCastingDuration('player')
+        assert(delayed:GetTotalDuration() == 1.5)
+        assert(duration:GetTotalDuration() == 1)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn unit_cast_duration_clears_before_completion_callbacks() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(

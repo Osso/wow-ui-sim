@@ -1,3 +1,7 @@
+## [2026-10-05] investigation | Cast duration precision
+
+[Captured flake and deterministic regression](investigations/cast-duration-rounding.md): subtracting rounded deadlines loses one ULP from a one-second cast. Store the configured span and derive deadlines; original completion assertions unchanged.
+
 ## [2026-10-05] evidence | 12.0.0 non-inventory extract
 
 [Extract supplement](investigations/patch-12-0-0-api-audit.md#non-inventory-extract-supplement) links reproducible seeding and exhaustive scout. [Enum/deprecated follow-up](investigations/patch-12-0-0-api-audit.md#enum-and-deprecated-extract-proof) falsifies seed conflicts and gates legacy publication; per-source proof retains pending successor results and historical compile blockers. Coverage ledgers unchanged.

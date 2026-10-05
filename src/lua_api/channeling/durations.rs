@@ -119,11 +119,13 @@ fn push_duration(state: &mut LuaState, kind: DurationKind) -> LuaResult<u32> {
             DurationKind::Empower { .. } => sim.channeling.as_ref().filter(|c| c.empower.is_some()),
         };
         cast.map(|cast| {
-            let end = match kind {
-                DurationKind::Empower { include_hold: true } => cast.completion_time(),
-                _ => cast.end_time,
+            let seconds = match kind {
+                DurationKind::Empower { include_hold: true } => {
+                    cast.duration + cast.empower.as_ref().unwrap().hold_at_max
+                }
+                _ => cast.duration,
             };
-            (cast.start_time, end - cast.start_time)
+            (cast.start_time, seconds)
         })
     };
     let Some((start, seconds)) = timing else {

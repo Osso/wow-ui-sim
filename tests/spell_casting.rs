@@ -62,11 +62,11 @@ fn cast_completes_and_heals_target() {
         // Start cast
         env.exec("UseAction(1)").expect("UseAction(1)");
 
-        // Force cast to complete by setting end_time to the past
+        // Force cast to complete by clearing its duration
         {
             let mut state = env.state().borrow_mut();
             if let Some(ref mut c) = state.casting {
-                c.end_time = 0.0;
+                c.duration = 0.0;
             }
         }
 

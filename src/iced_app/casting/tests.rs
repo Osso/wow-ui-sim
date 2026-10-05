@@ -42,7 +42,7 @@ fn assert_start(env: &WowLuaEnv) -> (u32, u32) {
 
 fn complete(env: &WowLuaEnv, expected: (u32, u32)) {
     assert!(extract_completed_cast(env.state()).is_none());
-    env.state().borrow_mut().casting.as_mut().unwrap().end_time = 0.0;
+    env.state().borrow_mut().casting.as_mut().unwrap().duration = 0.0;
     let completed = extract_completed_cast(env.state()).unwrap();
     assert_eq!(completed, expected);
     fire_cast_complete_events(env, completed.0, completed.1);

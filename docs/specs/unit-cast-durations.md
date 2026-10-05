@@ -6,7 +6,7 @@ Modeled player cast and channel duration queries live in `src/lua_api/channeling
 
 - [ ] Retail 12.1/PTR and Forever expose `UnitCastingDuration`, `UnitChannelDuration`, and `UnitEmpoweredChannelDuration` without enabling unrelated Retail APIs in Forever.
 - [ ] Missing matching player state and unmodeled non-player units return zero results.
-- [ ] Cast and channel objects snapshot stored start/end timestamps with rate one; repeated queries reflect timeline updates.
+- [ ] Cast and channel objects snapshot stored start and configured duration with rate one; end timestamps derive from their sum. Total duration preserves the configured span rather than subtracting rounded absolute timestamps. Repeated queries reflect timeline updates.
 - [ ] Empowered duration defaults to including hold-at-max; explicit false excludes hold. Ordinary channel duration uses the base channel end (inferred from the native CastingBar's separate hold adjustment).
 - [ ] `UnitEmpoweredStagePercentages(unit, includeHoldAtMaxTime=true)` returns a dense vector of individual stage fractions, not cumulative offsets. Default/true appends the hold fraction and includes hold in the denominator; false excludes both. For stages `{1,2}` and hold `3`, results are `{1/6,2/6,3/6}` or `{1/3,2/3}`. A zero hold still contributes a final zero element when included. Missing empowered player state/non-player units return zero results; updates, replacement and removal follow authoritative state.
 - [ ] Replacement, cancellation and natural completion change duration availability through existing simulator lifecycle inputs.

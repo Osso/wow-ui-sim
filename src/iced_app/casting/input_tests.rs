@@ -63,7 +63,7 @@ fn spellcast_input_delay_updates_query_and_deadline_atomically() {
     "#,
     )
     .unwrap();
-    let old_deadline = env.state().borrow().casting.as_ref().unwrap().end_time - 0.75;
+    let old_deadline = env.state().borrow().casting.as_ref().unwrap().end_time() - 0.75;
     let now = env.state().borrow().start_time.elapsed().as_secs_f64();
     env.state().borrow_mut().start_time -=
         std::time::Duration::from_secs_f64(old_deadline + 0.1 - now);
@@ -108,7 +108,7 @@ fn spellcast_input_failure_preserves_reentrant_cast_and_cancels_old_effects() {
             ))
             .unwrap();
             assert_eq!(env.state().borrow().player.health, 1000);
-            env.state().borrow_mut().casting.as_mut().unwrap().end_time = 0.0;
+            env.state().borrow_mut().casting.as_mut().unwrap().duration = 0.0;
             complete(&env);
             env.exec("assert(#inputEvents == 6); assert(A_Admin.FailCasting() == false)")
                 .unwrap();
@@ -125,7 +125,7 @@ fn spellcast_input_failed_specialization_does_not_leak_into_next_completion() {
     env.exec("assert(C_SpecializationInfo.SetSpecialization(2)); assert(A_Admin.FailCasting())")
         .unwrap();
     env.exec("CastSpellByID(19750)").unwrap();
-    env.state().borrow_mut().casting.as_mut().unwrap().end_time = 0.0;
+    env.state().borrow_mut().casting.as_mut().unwrap().duration = 0.0;
     complete(&env);
     assert_eq!(env.state().borrow().player.active_spec_index, 1);
     assert_eq!(env.state().borrow().player.pending_spec_change, None);
@@ -148,7 +148,7 @@ fn spellcast_input_failure_callback_can_replace_specialization_action() {
     )
     .unwrap();
     assert_eq!(env.state().borrow().player.pending_spec_change, Some(3));
-    env.state().borrow_mut().casting.as_mut().unwrap().end_time = 0.0;
+    env.state().borrow_mut().casting.as_mut().unwrap().duration = 0.0;
     complete(&env);
     assert_eq!(env.state().borrow().player.active_spec_index, 3);
 }

@@ -90,7 +90,7 @@ fn start_cast(
         spell_name: spell_name.to_string(),
         icon_path: icon_path.to_string(),
         start_time: now,
-        end_time: now + duration,
+        duration,
         cast_id,
         target: None,
         empower: None,

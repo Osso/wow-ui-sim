@@ -29,13 +29,14 @@ fn extend_cast(state: &mut LuaState, seconds: f64) -> LuaResult<Option<(u32, u32
     let Some(cast) = sim.casting.as_mut() else {
         return Ok(None);
     };
-    let end = cast.end_time + seconds;
+    let duration = cast.duration + seconds;
+    let end = cast.start_time + duration;
     let delay = cast.delay_time + seconds;
     let finite_timing = (end * 1000.0).is_finite() && (delay * 1000.0).is_finite();
     if !finite_timing {
         return Err(runtime_error("DelayCasting would overflow cast timing"));
     }
-    cast.end_time = end;
+    cast.duration = duration;
     cast.delay_time = delay;
     Ok(Some((cast.cast_id, cast.spell_id)))
 }

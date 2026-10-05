@@ -57,13 +57,13 @@ fn read_stages(table: &rilua::vm::table::Table) -> LuaResult<Vec<f64>> {
         .collect()
 }
 
-fn end_time(start: f64, duration: f64, hold: f64) -> LuaResult<f64> {
+fn validate_deadline(start: f64, duration: f64, hold: f64) -> LuaResult<()> {
     let end = start + duration;
     let finite = (end * 1000.0).is_finite() && ((end + hold) * 1000.0).is_finite();
     if !finite {
         return Err(runtime_error("channel deadline would overflow"));
     }
-    Ok(end)
+    Ok(())
 }
 
 fn input_cast(
@@ -83,12 +83,13 @@ fn input_cast(
     let icon_path = String::from_stack(state, 3)?;
     let start_time = borrow_state(state)?.start_time.elapsed().as_secs_f64();
     let hold = empower.as_ref().map_or(0.0, |timing| timing.hold_at_max);
+    validate_deadline(start_time, duration, hold)?;
     Ok(CastingState {
         spell_id: spell as u32,
         spell_name,
         icon_path,
         start_time,
-        end_time: end_time(start_time, duration, hold)?,
+        duration,
         cast_id: 0,
         target: None,
         empower,
@@ -125,8 +126,8 @@ fn update_timing(
         return Ok(None);
     };
     let hold = timing.as_ref().map_or(0.0, |value| value.hold_at_max);
-    let end = end_time(cast.start_time, duration, hold)?;
-    cast.end_time = end;
+    validate_deadline(cast.start_time, duration, hold)?;
+    cast.duration = duration;
     cast.empower = timing;
     Ok(Some((cast.cast_id, cast.spell_id)))
 }

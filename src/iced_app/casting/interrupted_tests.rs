@@ -106,7 +106,7 @@ fn assert_replacement_started(env: &WowLuaEnv) {
 
 fn complete_replacement(env: &WowLuaEnv) {
     assert_eq!(env.state().borrow().player.health, 1_000);
-    env.state().borrow_mut().casting.as_mut().unwrap().end_time = 0.0;
+    env.state().borrow_mut().casting.as_mut().unwrap().duration = 0.0;
     tick_completed_effects(env);
     env.exec(
         r#"

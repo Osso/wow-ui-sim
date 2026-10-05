@@ -300,7 +300,7 @@ fn start_specialization_change(state: &mut LuaState, target_index: i32) -> LuaRe
         spell_name: "Activate Specialization".to_string(),
         icon_path: String::new(),
         start_time: now,
-        end_time: now + SPEC_ACTIVATION_CAST_SECONDS,
+        duration: SPEC_ACTIVATION_CAST_SECONDS,
         cast_id,
         target: None,
         empower: None,

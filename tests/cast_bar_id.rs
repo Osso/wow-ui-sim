@@ -14,7 +14,7 @@ fn assert_tuple(env: &WowLuaEnv, channel: bool, id: u32, stages: u32) {
         let state = env.state().borrow();
         let cast = if channel { &state.channeling } else { &state.casting };
         let cast = cast.as_ref().unwrap();
-        (cast.start_time * 1000.0, cast.end_time * 1000.0)
+        (cast.start_time * 1000.0, cast.end_time() * 1000.0)
     };
     let query = if channel { "UnitChannelInfo" } else { "UnitCastingInfo" };
     let tail = if channel {
@@ -44,7 +44,7 @@ fn cast_bar_id_cast_lifecycle_preserves_tuple_and_identity() {
         .unwrap();
     let first = start_cast(&env);
     assert_tuple(&env, false, first, 0);
-    env.state().borrow_mut().casting.as_mut().unwrap().end_time += 0.5;
+    env.state().borrow_mut().casting.as_mut().unwrap().duration += 0.5;
     assert_tuple(&env, false, first, 0);
     env.exec("assert(UnitChannelInfo('player') == nil); A_Admin.StopCasting(); assert(UnitCastingInfo('player') == nil)")
         .unwrap();

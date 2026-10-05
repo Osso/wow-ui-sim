@@ -22,7 +22,7 @@ pub(crate) fn extract_completed_cast(
     let mut s = state.borrow_mut();
     let c = s.casting.as_ref()?;
     let now = s.start_time.elapsed().as_secs_f64();
-    if now < c.end_time {
+    if now < c.end_time() {
         return None;
     }
     let cast_id = c.cast_id;

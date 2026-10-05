@@ -30,7 +30,7 @@ C API subsystem filters at `7f6d28454`: allied races 13/13, artifact panel 42/42
 
 Cast completion's dynamic GUID also dies in STOP error reporting, then gets reused by SUCCEEDED. `completion_arguments_survive_collection_in_stop_error_handler` fails against baseline dispatch with `string.sub` rejecting a collected string. Rooting the host dispatcher fixes this caller too. Crucial negative-control detail: a literal full expected GUID in the test closure accidentally roots the interned string, hiding the bug. The regression checks prefix and numeric suffix instead.
 
-This proves a cast-completion rooting vulnerability, not the cause of the original one-in-three duration-test failure: that test has no failing handler/error callback and does not read the GUID. Its one-second live deadline plus an immediate `extract_completed_cast().is_none()` assertion is scheduling-sensitive; no speculative production or timing change was made.
+This proves a cast-completion rooting vulnerability, not the cause of the original duration-test failure: that test has no failing handler/error callback and does not read the GUID. The subsequent [cast-duration investigation](cast-duration-rounding.md) captures the failing total and establishes floating-point cancellation, independent of GC. The live immediate completion check remains unchanged.
 
 ## Dynamic unit token construction
 

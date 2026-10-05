@@ -121,7 +121,7 @@ fn start_crafting_cast(state: &mut LuaState, plan: &CraftPlan) {
         spell_name: plan.cast_name.clone(),
         icon_path: DEFAULT_CRAFTING_ICON.to_string(),
         start_time: now,
-        end_time: now + CRAFTING_CAST_DURATION_SECONDS,
+        duration: CRAFTING_CAST_DURATION_SECONDS,
         cast_id,
         target: None,
         empower: None,
