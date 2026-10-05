@@ -45,6 +45,8 @@ mod situation_catalog;
 mod situations;
 #[cfg(feature = "retail-12-0-5")]
 mod slots;
+#[cfg(feature = "retail-12-0-5")]
+mod visuals;
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
@@ -66,6 +68,8 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     slots::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
     imports::register(state, namespace)?;
+    #[cfg(feature = "retail-12-0-5")]
+    visuals::register(state)?;
     #[cfg(feature = "retail-12-0-5")]
     catalog::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]

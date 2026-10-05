@@ -485,7 +485,15 @@ pub(super) fn outfit_slot_from_inventory(inventory_slot: i32) -> Option<i32> {
 
 fn slot_for_inventory_type(state: &mut LuaState) -> LuaResult<u32> {
     let inventory_type = i32::from_stack(state, 1)?;
-    let slot = match inventory_type {
+    let Some(slot) = outfit_slot_for_inventory_type(inventory_type) else {
+        return Ok(0);
+    };
+    state.push(Val::Num(slot as f64));
+    Ok(1)
+}
+
+pub(super) fn outfit_slot_for_inventory_type(inventory_type: i32) -> Option<i32> {
+    Some(match inventory_type {
         1 => 0,
         3 => 1,
         4 => 6,
@@ -500,10 +508,8 @@ fn slot_for_inventory_type(state: &mut LuaState) -> LuaResult<u32> {
         15 | 25 | 26 => 14,
         16 => 3,
         19 => 5,
-        _ => return Ok(0),
-    };
-    state.push(Val::Num(slot as f64));
-    Ok(1)
+        _ => return None,
+    })
 }
 
 fn atlas_suffix(slot: i32) -> &'static str {

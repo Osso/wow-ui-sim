@@ -2,8 +2,8 @@
 
 use crate::lua_api::methods::create_string;
 use crate::lua_bridge::FromStack;
+use rilua::LuaResult;
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
 
 use super::ItemTransmogInfo;
 

@@ -231,7 +231,7 @@ fn c_item_does_item_exist_by_id(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-fn location_item(state: &mut LuaState, location: Val) -> Option<(u32, Option<String>)> {
+pub(crate) fn location_item(state: &mut LuaState, location: Val) -> Option<(u32, Option<String>)> {
     if let Val::Num(slot) = table_get(state, location, "equipmentSlotIndex") {
         let sim = borrow_state(state).ok()?;
         return resolve_equipped_location_item(&sim, slot as i32);
