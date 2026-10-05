@@ -1,3 +1,7 @@
+## [2026-10-05] evidence | 12.0.0 enum/deprecated extract proof
+
+[Follow-up](investigations/patch-12-0-0-api-audit.md#enum-and-deprecated-extract-proof) records loaded enum publication, falsified seed conflicts and deprecated retirement root causes. [Contract](../specs/patch-12-0-0-extract-enums-deprecated.md) links exact per-source outcomes, pending successor results, master comparisons and historical compilation limits; coverage ledgers unchanged.
+
 ## [2026-10-05] evidence | 12.0.0 non-inventory extraction and scout
 
 [Supplement](investigations/patch-12-0-0-api-audit.md#non-inventory-extract-supplement) records additive pending rows, deterministic extraction and every-row proof planning. Source-derived enum conflicts and historical test reuse are distinguished from fresh runtime acceptance.

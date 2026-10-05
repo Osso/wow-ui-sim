@@ -1,0 +1,791 @@
+{
+  "base_revision": "fbf0d11c535ab6571c348d9b34191f8f7d400f6c",
+  "runtime_test_revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+  "verified": "2026-10-05",
+  "outcomes": {
+    "enumerations-Enum-CraftingOrderResult-036": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-CraftingOrderResult-037": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-CraftingOrderResult-038": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-EditModeAccountSetting-039": {
+      "outcome": "superseded",
+      "by": "12.0.5 and 12.1.0",
+      "current_projection_test": "patch_12_0_0_enums::patch_12_0_0_enum_publication"
+    },
+    "enumerations-Enum-EditModeAccountSetting-040": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-EditModeAccountSetting-041": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-EditModeAccountSetting-042": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-EditModeAccountSetting-043": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-EditModeSystem-044": {
+      "outcome": "superseded",
+      "by": "12.0.5 and 12.1.0",
+      "current_projection_test": "patch_12_0_0_enums::patch_12_0_0_enum_publication"
+    },
+    "enumerations-Enum-EditModeSystem-045": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-EditModeSystem-046": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-EditModeSystem-047": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-PlayerInteractionType-048": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-PlayerInteractionType-049": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-QuestTagType-050": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-QuestTagType-051": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-SendAddonMessageResult-052": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-SendAddonMessageResult-053": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-SendAddonMessageResult-054": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-SurveyDeliveryMoment-055": {
+      "outcome": "superseded",
+      "by": "12.0.5",
+      "current_projection_test": "patch_12_0_0_enums::patch_12_0_0_enum_publication"
+    },
+    "enumerations-Enum-SurveyDeliveryMoment-056": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-TooltipDataLineType-057": {
+      "outcome": "superseded",
+      "by": "12.1.0 cached surface (earlier renumbering patch not established)",
+      "current_projection_test": "patch_12_0_0_enums::patch_12_0_0_enum_publication"
+    },
+    "enumerations-Enum-TooltipDataLineType-058": {
+      "outcome": "superseded",
+      "by": "12.1.0 cached surface (earlier renumbering patch not established)",
+      "current_projection_test": "patch_12_0_0_enums::patch_12_0_0_enum_publication"
+    },
+    "enumerations-Enum-TooltipDataLineType-059": {
+      "outcome": "superseded",
+      "by": "12.1.0 cached surface (earlier renumbering patch not established)",
+      "current_projection_test": "patch_12_0_0_enums::patch_12_0_0_enum_publication"
+    },
+    "enumerations-Enum-TooltipDataType-060": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-TooltipDataType-061": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-TradeskillRecipeType-062": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-TradeskillRecipeType-063": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-UICursorType-064": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-UICursorType-065": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-UIWidgetVisualizationType-066": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "enumerations-Enum-UIWidgetVisualizationType-067": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_enums::patch_12_0_0_enum_publication",
+      "scope": "current cached Retail numeric publication only"
+    },
+    "deprecated api-GetSpellInfo-130": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-GetNumSpellTabs-131": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-GetSpellTabInfo-132": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-GetSpellCooldown-133": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-GetSpellBookItemName-134": {
+      "outcome": "still-pending",
+      "reason": "C_SpellBook.GetSpellBookItemName returns one name, missing documented subName result. SpellBook producer excluded from this workstream.",
+      "partial_proof": "native and cached raw/ordinary retirement passes"
+    },
+    "deprecated api-GetSpellTexture-135": {
+      "outcome": "still-pending",
+      "reason": "C_Spell.GetSpellTexture returns path string as first result instead of documented fileID. Spell producer excluded from this workstream.",
+      "partial_proof": "native and cached raw/ordinary retirement passes"
+    },
+    "deprecated api-GetSpellCharges-136": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-GetSpellDescription-137": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-GetSpellCount-138": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-IsUsableSpell-139": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-C_TaskQuest-GetQuestsForPlayerByMapID-142": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-GetMerchantItemInfo-143": {
+      "outcome": "still-pending",
+      "reason": "C_MerchantFrame.GetItemInfo autostub returns nil for seeded merchant item. Merchant producer excluded from this workstream.",
+      "partial_proof": "native and cached raw/ordinary retirement passes"
+    },
+    "deprecated api-C_ChallengeMode-GetCompletionInfo-144": {
+      "outcome": "still-pending",
+      "reason": "C_ChallengeMode.GetChallengeCompletionInfo autostub returns nil, not non-nil ChallengeCompletionInfo. Successor producer excluded from this workstream.",
+      "partial_proof": "native and cached raw/ordinary retirement passes"
+    },
+    "deprecated api-C_MythicPlus-IsWeeklyRewardAvailable-145": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-IsActiveQuestLegendary-148": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-C_QuestLog-IsLegendaryQuest-149": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-C_QuestLog-IsQuestRepeatableType-150": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-ConsolePrint-153": {
+      "outcome": "still-pending",
+      "reason": "C_Log.LogMessage autostub returns one nil, not documented zero results. Logging producer excluded from this workstream.",
+      "partial_proof": "native and cached raw/ordinary retirement passes"
+    },
+    "deprecated api-message-154": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-IsSpellOverlayed-157": {
+      "outcome": "still-pending",
+      "reason": "C_SpellActivationOverlay.IsSpellOverlayed autostub returns nil, not bool. Overlay producer excluded from this workstream.",
+      "partial_proof": "native and cached raw/ordinary retirement passes"
+    },
+    "deprecated api-IsArtifactRelicItem-160": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "current native/cached retirement and bounded successor fixture, if listed"
+    },
+    "deprecated api-removal-summary-128": {
+      "outcome": "proven-by-test",
+      "test": "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors",
+      "scope": "all 21 current native/cached retirements; no aliases republished"
+    }
+  },
+  "proof_ledger": [
+    {
+      "label": "before-1210-enums",
+      "revision": "fbf0d11c535ab6571c348d9b34191f8f7d400f6c",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_enum_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 41.73s"
+      ],
+      "log": "enums-deprecated-logs/before-1210-enums.log",
+      "log_sha256": "45ae4d7748387731804cb245b56db20d1b38183c084c95e0f590949a14afed96",
+      "invalidated": false
+    },
+    {
+      "label": "before-enums",
+      "revision": "fbf0d11c535ab6571c348d9b34191f8f7d400f6c",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--lib",
+        "--",
+        "patch_12_0_0",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "summary": [
+        "test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 1965 filtered out; finished in 2.16s",
+        "thread 'loader::tests::wow_api_globals::transmog_situation::test_patch_12_0_0_transmog_situation_enum_values' (2544868) panicked at src/loader/tests/wow_api_globals/transmog_situation.rs:76:5:"
+      ],
+      "log": "enums-deprecated-logs/before-enums.log",
+      "log_sha256": "179ef4eb1ab4c7dd9b4af8c92880b6a8307f3e13c96a95124f52cc2bb74040d7",
+      "invalidated": false
+    },
+    {
+      "label": "before-deprecated",
+      "revision": "fbf0d11c535ab6571c348d9b34191f8f7d400f6c",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "deprecated",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "summary": [
+        "test result: FAILED. 107 passed; 1 failed; 0 ignored; 0 measured; 10590 filtered out; finished in 31.30s",
+        "thread 'publication_deprecated_alias::deprecated_alias_attribution_requires_loaded_publisher_and_exact_identity' (2545805) panicked at /home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/tests/publication_deprecated_alias.rs:13:51:"
+      ],
+      "log": "enums-deprecated-logs/before-deprecated.log",
+      "log_sha256": "316741671ec71c52b641a7ef1781e46ee2fd7c674574bc3e92c36e8812b71f75",
+      "invalidated": false
+    },
+    {
+      "label": "enum-red",
+      "revision": "fbf0d11c535ab6571c348d9b34191f8f7d400f6c + initial enum test (superseded by stronger type assertions at 9749c87accd27ceeb29cf8a6ed1e1e85ed12b617)",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_enum_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10698 filtered out; finished in 75.97s"
+      ],
+      "log": "enums-deprecated-logs/enum-red.log",
+      "log_sha256": "9014c23732ebc1a7330a4127d07acf360d6a0caf6d0b6a38bb9089782eeefad2",
+      "invalidated": true
+    },
+    {
+      "label": "deprecated-red",
+      "revision": "3ad41ac4f + initial deprecated fixture/test; production identical to fbf0d11c535ab6571c348d9b34191f8f7d400f6c",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "exit_code": 1,
+      "summary": [
+        "thread 'main' (2586952) panicked at /home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/tests/patch_12_0_0_deprecated.rs:65:9:",
+        "test result: FAILED. 0 passed; 1 failed; 1 total"
+      ],
+      "log": "enums-deprecated-logs/deprecated-red.log",
+      "log_sha256": "2abeb554c9759e3f01304782921183a02c27798b06b1872da8da18daa4a185d6",
+      "invalidated": true
+    },
+    {
+      "label": "deprecated-all-red",
+      "revision": "3ad41ac4f + initial deprecated fixture/test; production identical to fbf0d11c535ab6571c348d9b34191f8f7d400f6c",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "exit_code": 1,
+      "summary": [
+        "thread 'main' (2592018) panicked at /home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/tests/patch_12_0_0_deprecated.rs:131:5:",
+        "test result: FAILED. 0 passed; 1 failed; 1 total"
+      ],
+      "log": "enums-deprecated-logs/deprecated-all-red.log",
+      "log_sha256": "4d108a2234553e3ae9a8841bac74bd04dc597e1fe53fd0d417a6281aaa0b428d",
+      "invalidated": true
+    },
+    {
+      "label": "deprecated-green",
+      "revision": "e1fc7e655",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "exit_code": 1,
+      "summary": [
+        "thread 'main' (2605406) panicked at /home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/tests/patch_12_0_0_deprecated.rs:131:5:",
+        "test result: FAILED. 0 passed; 1 failed; 1 total"
+      ],
+      "log": "enums-deprecated-logs/deprecated-green.log",
+      "log_sha256": "cbd040097ccc1ac846bd226c5ed9fca46898ed6a6be02899c6b621321dbdee9a",
+      "invalidated": true
+    },
+    {
+      "label": "deprecated-final",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "exit_code": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 1 total"
+      ],
+      "log": "enums-deprecated-logs/deprecated-final.log",
+      "log_sha256": "0b3c4bc13b957b35819a2e4cb3607e883eb0a78e91f98ab47df700203f8ddb53",
+      "invalidated": false
+    },
+    {
+      "label": "after-enum-extract",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_enum_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10698 filtered out; finished in 6.20s"
+      ],
+      "log": "enums-deprecated-logs/after-enum-extract.log",
+      "log_sha256": "d6184e639e043d3a6838a83204a79ef5d58f520873bda0a30815374f4d5dc161",
+      "invalidated": false
+    },
+    {
+      "label": "after-1210-enums",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_enum_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10698 filtered out; finished in 7.62s"
+      ],
+      "log": "enums-deprecated-logs/after-1210-enums.log",
+      "log_sha256": "26c6952a450c6637644fa820f2049b9069800377092d7848ea4d7d2d38bdcbf6",
+      "invalidated": false
+    },
+    {
+      "label": "after-enums",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--lib",
+        "--",
+        "patch_12_0_0",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "summary": [
+        "test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 1964 filtered out; finished in 1.27s",
+        "thread 'loader::tests::wow_api_globals::transmog_situation::test_patch_12_0_0_transmog_situation_enum_values' (2618766) panicked at src/loader/tests/wow_api_globals/transmog_situation.rs:76:5:"
+      ],
+      "log": "enums-deprecated-logs/after-enums.log",
+      "log_sha256": "cde43cccf02521c2af24d23df8932515884b9cf009ee73b53c6e3faf580971d3",
+      "invalidated": false
+    },
+    {
+      "label": "after-deprecated",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "deprecated",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "summary": [
+        "test result: FAILED. 107 passed; 1 failed; 0 ignored; 0 measured; 10591 filtered out; finished in 9.62s",
+        "thread 'publication_deprecated_alias::deprecated_alias_attribution_requires_loaded_publisher_and_exact_identity' (2619191) panicked at /home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/tests/publication_deprecated_alias.rs:13:51:"
+      ],
+      "log": "enums-deprecated-logs/after-deprecated.log",
+      "log_sha256": "38407c0c9c1ae388bfc45f2971ab44aa4f8e425b00ac4b6b856b4dd8763dabf6",
+      "invalidated": false
+    },
+    {
+      "label": "after-1210-deprecated",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_12_1_0_deprecated_wrappers_delegate_to_new_apis"
+      ],
+      "exit_code": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 1 total"
+      ],
+      "log": "enums-deprecated-logs/after-1210-deprecated.log",
+      "log_sha256": "da06c3d2c3d3b4192f497468f27e894ca25a7e8b94d3642a19bcbb0c8b2a4a33",
+      "invalidated": false
+    },
+    {
+      "label": "default-check",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": [],
+      "log": "enums-deprecated-logs/default-check.log",
+      "log_sha256": "7d243ca36320a58544cb84f552605524ff361e471f63ccaa7d9488795c0f2b7f",
+      "invalidated": false
+    },
+    {
+      "label": "startup",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "exit_code": 0,
+      "summary": [
+        "[]",
+        "Status: CLEAN"
+      ],
+      "log": "enums-deprecated-logs/startup.log",
+      "log_sha256": "38524f83fd2c8428e36ea7d4d92b9a6cd4655a87413511b76d14739994603f90",
+      "invalidated": false
+    },
+    {
+      "label": "fmt-check",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/Cargo.toml",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": [],
+      "log": "enums-deprecated-logs/fmt-check.log",
+      "log_sha256": "abc30023955fb1415cb6df613a2f287897377fa4b0a607d322483e2bd51a91d1",
+      "invalidated": false
+    },
+    {
+      "label": "test-fmt-check",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "rustfmt",
+        "--check",
+        "--edition",
+        "2024",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/tests/patch_12_0_0_enums.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/tests/patch_12_0_0_deprecated.rs"
+      ],
+      "exit_code": 0,
+      "summary": [],
+      "log": "enums-deprecated-logs/test-fmt-check.log",
+      "log_sha256": "abc30023955fb1415cb6df613a2f287897377fa4b0a607d322483e2bd51a91d1",
+      "invalidated": false
+    },
+    {
+      "label": "historical-enums",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,profile-retail,retail-12-0-0",
+        "--test",
+        "--lib",
+        "--",
+        "patch_12_0_0",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "summary": [
+        "error[E0433]: cannot find `private_aura_sounds` in `c_api`"
+      ],
+      "log": "enums-deprecated-logs/historical-enums.log",
+      "log_sha256": "d3b32b0710140a5869791494a4cbed005a87c218de67b2918e4f82630191ef7b",
+      "invalidated": false
+    },
+    {
+      "label": "historical-retirement",
+      "revision": "9749c87accd27ceeb29cf8a6ed1e1e85ed12b617",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,profile-retail,retail-12-0-0",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_deprecated_native_retirement",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "summary": [
+        "error[E0433]: cannot find `private_aura_sounds` in `c_api`"
+      ],
+      "log": "enums-deprecated-logs/historical-retirement.log",
+      "log_sha256": "e1bfad5bd50cc7acec562e4079e8a9ad38db623771a1e8476f5307ec993db320",
+      "invalidated": false
+    },
+    {
+      "label": "master-historical-enums",
+      "revision": "fbf0d11c535ab6571c348d9b34191f8f7d400f6c",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,profile-retail,retail-12-0-0",
+        "--test",
+        "--lib",
+        "--",
+        "patch_12_0_0",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "summary": [
+        "error[E0433]: cannot find `private_aura_sounds` in `c_api`"
+      ],
+      "log": "enums-deprecated-logs/master-historical-enums.log",
+      "log_sha256": "d3b32b0710140a5869791494a4cbed005a87c218de67b2918e4f82630191ef7b",
+      "invalidated": false
+    },
+    {
+      "label": "master-1210-deprecated",
+      "revision": "fbf0d11c535ab6571c348d9b34191f8f7d400f6c",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-enums-deprecated/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_12_1_0_deprecated_wrappers_delegate_to_new_apis"
+      ],
+      "exit_code": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 1 total"
+      ],
+      "log": "enums-deprecated-logs/master-1210-deprecated.log",
+      "log_sha256": "4f7cbac4910c23fe98ec6b4fa6a74d80ed90cd42a979025c8e84d98308765d99",
+      "invalidated": false
+    }
+  ],
+  "boundaries": [
+    "Current Retail carries 12.1.0. No native-client parity or downstream enum consumer behavior claimed.",
+    "All 21 old APIs remain absent after cached Game load; no republished alias exemption was needed.",
+    "Historical 12.0.0 execution blocked by E0433 in on_update.rs:61; same failure reproduced on master base.",
+    "Six successor producer gaps are excluded by concurrent-work ownership; passing baseline comparison does not close them."
+  ],
+  "inferred": [
+    "Successor fixtures use existing simulator catalog/state (seven spellbook skill lines, seeded counts/charges/relic identity), not native WoW recordings.",
+    "Tooltip 43/44 to 33/34 renumbering is observed between historical control and current cache; exact earlier patch is not established. Supersession is conservatively assigned to the verified 12.1.0 surface."
+  ],
+  "protected_paths_unchanged": true
+}
