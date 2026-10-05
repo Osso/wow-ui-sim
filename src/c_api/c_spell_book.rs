@@ -445,6 +445,20 @@ fn resolve_player_spellbook_entry(slot: Val, bank: Val) -> Option<u32> {
     spellbook_data::get_spell_at_slot(slot as i32).map(|(_, entry, _)| entry.spell_id)
 }
 
+/// Shared book identity selection for cooldown outputs and C_Secrets queries.
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) fn cooldown_spell_for_book_entry(slot: Val, bank: Val) -> Option<u32> {
+    let spell_id = resolve_player_spellbook_entry(slot, bank)?;
+    let Val::Num(slot) = slot else {
+        return None;
+    };
+    let (_, _, skill_line) = spellbook_data::get_spell_at_slot(slot as i32)?;
+    if skill_line.off_spec_id.is_some() {
+        return None;
+    }
+    Some(spell_id)
+}
+
 #[cfg(all(
     feature = "retail-12-0-5",
     any(feature = "profile-retail", feature = "client-ptr")
@@ -486,7 +500,7 @@ fn c_spell_book_get_spell_book_item_cooldown_duration(state: &mut LuaState) -> L
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 mod cooldown_query {
-    use super::{LuaResult, LuaState, Val, resolve_player_spellbook_entry, spellbook_data};
+    use super::{LuaResult, LuaState, Val, cooldown_spell_for_book_entry};
 
     const COOLDOWN_API: &str = "C_SpellBook.GetSpellBookItemCooldown";
     const LOSS_OF_CONTROL_API: &str = "C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo";
@@ -500,23 +514,11 @@ mod cooldown_query {
             })
     }
 
-    fn resolve_displayable_spellbook_entry(slot: Val, bank: Val) -> Option<u32> {
-        let spell_id = resolve_player_spellbook_entry(slot, bank)?;
-        let Val::Num(slot) = slot else {
-            return None;
-        };
-        let (_, _, skill_line) = spellbook_data::get_spell_at_slot(slot as i32)?;
-        if skill_line.off_spec_id.is_some() {
-            return None;
-        }
-        Some(spell_id)
-    }
-
     pub(super) fn get(state: &mut LuaState) -> LuaResult<u32> {
         // Authenticate both original arguments before type, identity or model access.
         let slot = authenticate_book_selector(state, 1, COOLDOWN_API)?;
         let bank = authenticate_book_selector(state, 2, COOLDOWN_API)?;
-        let Some(spell_id) = resolve_displayable_spellbook_entry(slot, bank) else {
+        let Some(spell_id) = cooldown_spell_for_book_entry(slot, bank) else {
             state.push(Val::Nil);
             return Ok(1);
         };
@@ -526,7 +528,7 @@ mod cooldown_query {
     pub(super) fn get_loss_of_control(state: &mut LuaState) -> LuaResult<u32> {
         let slot = authenticate_book_selector(state, 1, LOSS_OF_CONTROL_API)?;
         let bank = authenticate_book_selector(state, 2, LOSS_OF_CONTROL_API)?;
-        let Some(spell_id) = resolve_displayable_spellbook_entry(slot, bank) else {
+        let Some(spell_id) = cooldown_spell_for_book_entry(slot, bank) else {
             state.push(Val::Nil);
             return Ok(1);
         };

@@ -1,3 +1,7 @@
+## [2026-10-05] system | C_Secrets publication queries
+
+[Query predicates](systems/secrets-publication-queries.md) share aura, cooldown and identity state with existing outputs. [Contract](../specs/secrets-publication-queries.md) distinguishes publication closure from unmodeled native power/cast/comparison/totem/health secrecy.
+
 ## [2026-10-05] investigation | Tooltip GC regression
 
 [Root cause](investigations/patch-12-0-0-api-audit.md#tooltip-gc-regression-exposed-by-retirement-registration): retirement registration shifts GC timing; Rust-held item DTO/line tables were unrooted across `CreateColor`. Forced callback collection reproduces the lifetime defect; VM stack roots replace allocation-sensitive behavior. API retirement and stat expectations remain unchanged.

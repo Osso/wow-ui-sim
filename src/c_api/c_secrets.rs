@@ -1,7 +1,10 @@
 //! Spell aura classification and explicit stat/cooldown output policies.
 
-#[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
+#[cfg(any(feature = "aura-containers", feature = "retail-12-0-0"))]
 use super::ensure_namespace;
+#[cfg(feature = "retail-12-0-0")]
+#[path = "secrets_queries.rs"]
+mod queries;
 #[cfg(feature = "retail-12-0-5")]
 use crate::lua_api::methods::borrow_state;
 #[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
@@ -22,9 +25,11 @@ const ALWAYS_SECRET: i32 = 1;
 #[cfg(feature = "aura-containers")]
 const CONTEXTUALLY_SECRET: i32 = 2;
 
-#[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
+#[cfg(any(feature = "aura-containers", feature = "retail-12-0-0"))]
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_Secrets")?;
+    #[cfg(feature = "retail-12-0-0")]
+    queries::register(state, namespace)?;
     #[cfg(feature = "aura-containers")]
     table_set_rust_fn_static(
         state,
@@ -57,7 +62,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 fn should_cooldowns_be_secret(state: &mut LuaState) -> LuaResult<u32> {
-    let restricted = borrow_state(state)?.cooldowns_restricted;
+    let restricted = super::charge_state::cooldowns_are_restricted(&borrow_state(state)?);
     state.push(Val::Bool(restricted));
     Ok(1)
 }

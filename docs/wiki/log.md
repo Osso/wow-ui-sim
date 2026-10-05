@@ -1,3 +1,7 @@
+## [2026-10-05] system | C_Secrets publication queries
+
+[Shared queries](systems/secrets-publication-queries.md): original selector authentication, same aura/cooldown/identity predicates as outputs, explicit INFERRED public defaults for absent backing models. Source page-coverage ledgers unchanged.
+
 ## [2026-10-05] investigation | Host Lua rooting audit
 
 [Audit](investigations/gc-rooting-audit.md): 41 recorded candidates, 18 fixed sites, 23 false positives. Forced-GC DTO/event/cast/token negatives, 173 targeted passes, startup `[]`; final lib 1,972 pass/six baseline-reproduced failures. Original duration-flake cause remains unproven.

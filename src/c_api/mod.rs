@@ -279,7 +279,7 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_intl::register(state)?;
     #[cfg(feature = "aura-containers")]
     c_aura_container_util::register(state)?;
-    #[cfg(any(feature = "aura-containers", feature = "retail-12-0-5"))]
+    #[cfg(any(feature = "aura-containers", feature = "retail-12-0-0"))]
     c_secrets::register(state)?;
     register_specialization_and_model_tables(state)?;
     register_glue_and_display_tables(state)?;

@@ -20,7 +20,7 @@ use rilua::table_security::wrap_secret;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
 
-fn auras_restricted(state: &LuaState) -> LuaResult<bool> {
+pub(crate) fn auras_restricted(state: &LuaState) -> LuaResult<bool> {
     Ok(cfg!(feature = "retail-12-1-0") && borrow_state(state)?.unit_auras_restricted)
 }
 
@@ -90,13 +90,20 @@ pub(crate) fn finish_spell_keyed_aura_data(
     spell_id: i32,
     aura_data: Val,
 ) -> LuaResult<Val> {
-    if !auras_restricted(state)? || is_never_secret_aura(spell_id)? {
+    if !spell_keyed_aura_is_secret(state, spell_id)? {
         return Ok(aura_data);
     }
     if !rilua::api::state_is_secure(state) {
         return Ok(Val::Nil);
     }
     wrap_secret(state, aura_data)
+}
+
+/// Shared by spell-keyed outputs and the prospective C_Secrets query.
+/// Preserve the existing context-first policy, including its known limitation:
+/// always-secret spell flags do not yet force secrecy outside this context.
+pub(crate) fn spell_keyed_aura_is_secret(state: &LuaState, spell_id: i32) -> LuaResult<bool> {
+    Ok(auras_restricted(state)? && !is_never_secret_aura(spell_id)?)
 }
 
 #[cfg(feature = "retail-12-1-0")]
