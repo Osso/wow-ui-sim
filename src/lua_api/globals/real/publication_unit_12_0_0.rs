@@ -101,14 +101,7 @@ fn threat_lead_situation(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Nil);
         return Ok(1);
     };
-    if snapshot.lead_state > 3 {
-        return Err(runtime_error("threat lead category must be in 0..3"));
-    }
-    let category = if snapshot.is_first {
-        snapshot.lead_state
-    } else {
-        3
-    } as f64;
+    let category = threat_lead_category(snapshot)?;
     let result = if restricted {
         wrap_host_secret_number(state, category)
     } else {
@@ -116,6 +109,19 @@ fn threat_lead_situation(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(result);
     Ok(1)
+}
+
+fn threat_lead_category(snapshot: super::publication_12_0_0::ThreatLeadSnapshot) -> LuaResult<f64> {
+    const RED: u8 = 3;
+    if snapshot.lead_state > RED {
+        return Err(runtime_error("threat lead category must be in 0..3"));
+    }
+    let category = if snapshot.is_first {
+        snapshot.lead_state
+    } else {
+        RED
+    };
+    Ok(category as f64)
 }
 
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {

@@ -41,6 +41,25 @@ fn p1200_cloak_helm_transitions_are_independent_and_reversible() {
 }
 
 #[test]
+fn p1200_cloak_helm_secret_arguments_authenticate_before_mutation() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local hidden = secretwrap(false)
+        ShowCloak(hidden); ShowHelm(hidden)
+        assert(not ShowingCloak() and not ShowingHelm())
+        local f = function()
+            assert(not pcall(ShowCloak, hidden))
+            assert(not pcall(ShowHelm, hidden))
+        end
+        debug.setobjecttaint(f, 'ClothingAddon'); f()
+        assert(not ShowingCloak() and not ShowingHelm())
+    "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn p1200_player_queries_read_host_inputs() {
     let env = WowLuaEnv::new().unwrap();
     {

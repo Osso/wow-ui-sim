@@ -80,11 +80,20 @@ fn stage_durations(state: &mut LuaState) -> LuaResult<u32> {
         .channeling
         .as_ref()
         .and_then(|cast| cast.empower.clone().map(|timing| (cast.start_time, timing)));
-    let Some((mut start, timing)) = timing else {
+    let Some((start, timing)) = timing else {
         return Ok(0);
     };
     let mut sections = timing.stage_durations;
     sections.push(timing.hold_at_max);
+    push_stage_durations(state, start, sections)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn push_stage_durations(
+    state: &mut LuaState,
+    mut start: f64,
+    sections: Vec<f64>,
+) -> LuaResult<u32> {
     let durations = state.gc.alloc_table(rilua::vm::table::Table::new());
     state.push(Val::Table(durations));
     for (index, seconds) in sections.into_iter().enumerate() {

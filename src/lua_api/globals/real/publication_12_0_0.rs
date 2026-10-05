@@ -3,7 +3,8 @@
 //! clothing shown, empty role/threat/class inputs. No persistence or 3D rendering.
 
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
-use crate::lua_bridge::FromStack;
+use crate::lua_bridge::stack_val;
+use rilua::table_security::unwrap_secret;
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 use std::collections::{HashMap, HashSet};
@@ -80,13 +81,13 @@ fn showing_helm(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn show_cloak(state: &mut LuaState) -> LuaResult<u32> {
-    let shown = bool::from_stack(state, 1)?;
+    let shown = unwrap_secret(state, stack_val(state, 1))?.is_truthy();
     borrow_state_mut(state)?.plain_global_inputs.showing_cloak = shown;
     Ok(0)
 }
 
 fn show_helm(state: &mut LuaState) -> LuaResult<u32> {
-    let shown = bool::from_stack(state, 1)?;
+    let shown = unwrap_secret(state, stack_val(state, 1))?.is_truthy();
     borrow_state_mut(state)?.plain_global_inputs.showing_helm = shown;
     Ok(0)
 }
