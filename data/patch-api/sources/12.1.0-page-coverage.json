@@ -176,7 +176,7 @@
       "symbols": [
         "778 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication (added/changed) or absence (removed, raw and ordinary lookup) in a fully loaded default-Retail environment. Publication only: no signature, behavior, security or payload proof. 10 known gaps baselined in tests/data/patch_12_1_0_sweep_known_gaps.json. Removed symbols accepted when the value is a Lua function from a cached Blizzard deprecation file.",
+      "scope": "Data-driven publication (added/changed) or absence (removed, raw and ordinary lookup) in a fully loaded default-Retail environment. Publication only: no signature, behavior, security or payload proof. 9 known gaps baselined in tests/data/patch_12_1_0_sweep_known_gaps.json. Removed symbols accepted when the value is a Lua function from a cached Blizzard deprecation file.",
       "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_1_0_publication_sweep.rs"
@@ -377,6 +377,29 @@
       "implementation": "src/lua_api/globals/real/unit_secret_predicates.rs",
       "compiled_revision": "2f36c7ddc",
       "proof": "main-thread on master 2f36c7ddc with rilua a76ffa8: 91 patch_12_1_0_ tests, broad unit/secret/guild/identity/lfg/role/pvp 1269 pass (1 pre-existing), lib/prefork only pre-existing failures, lua-errors []; no independent review"
+    },
+    {
+      "id": "leftovers-12-1-0",
+      "symbols": [
+        "layout-driven OnSizeChanged",
+        "aura sound triggers",
+        "AuraButton creation gate",
+        "mouse motion vs click",
+        "Frame:ResizeToBoundsRect"
+      ],
+      "scope": "OnSizeChanged dispatched from the per-tick layout pass (UntrustedLayoutScriptExecution filters addon handlers on frame, children, anchored); registered aura sounds play on add/application gain/removal; addon CreateFrame of intrinsics lacking allowUntaintedCreation errors; hover requires mouse motion enabled; ResizeToBoundsRect sizes to the union of shown descendants.",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/layout_size_changed.rs",
+        "tests/patch_12_1_0_aura_size_changed.rs",
+        "tests/patch_12_1_0_aura_sounds.rs",
+        "tests/patch_12_1_0_aura_creation.rs",
+        "tests/patch_12_1_0_resize_to_bounds.rs",
+        "src/iced_app aura_tooltip_motion lib test"
+      ],
+      "implementation": "commits df5e2dbf9..965dad7e4 (rebased)",
+      "compiled_revision": "965dad7e4",
+      "proof": "main-thread on master 965dad7e4: sweep, 94 patch_12_1_0_ tests, prefork 2011/7 pre-existing, lua-errors []; full integration 48 failures under baseline comparison; no independent review"
     }
   ],
   "source_rows": [
@@ -416,13 +439,13 @@
         "patch-12-1-0-aura-creation"
       ],
       "status": "bounded-coverage",
-      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Reviewed: bounded for this scope."
+      "note": "Proven: Construction, combat addon taint and actual CustomAuraButton initialization. Unproved: Managed secrecy and pixels. Reviewed: bounded for this scope. Test rewritten: addon creates AuraContainer; addon AuraButton creation now errors (row 118); secure creation works."
     },
     {
       "source_id": "prose-undated-010",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "VectorGraphics construction/SVG metadata storage exists, but native code explicitly says SVG path rendering is not modeled. Implement 2D SVG asset decoding/rendering and legal method surface; not a 3D feature."
+      "note": "Needs SVG rendering (texture/mod.rs stores metadata only)."
     },
     {
       "source_id": "prose-undated-011",
@@ -534,7 +557,7 @@
       "source_id": "prose-2026-06-18-032",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Public/forbidden proxy tables and XML mixin routing exist. Retail addon-inaccessible partitions, handler ownership and native access restrictions still need a complete model; table partitioning alone is not isolation proof."
+      "note": "Private script object partitions unmodeled."
     },
     {
       "source_id": "source-context-033",
@@ -588,7 +611,7 @@
       "source_id": "prose-2026-06-18-041",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Public/forbidden proxy tables and XML mixin routing exist. Retail addon-inaccessible partitions, handler ownership and native access restrictions still need a complete model; table partitioning alone is not isolation proof."
+      "note": "Private script object partitions unmodeled."
     },
     {
       "source_id": "source-context-042",
@@ -650,7 +673,7 @@
       "source_id": "prose-2026-06-18-053",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "VectorGraphics construction/SVG metadata storage exists, but native code explicitly says SVG path rendering is not modeled. Implement 2D SVG asset decoding/rendering and legal method surface; not a 3D feature."
+      "note": "Needs SVG rendering."
     },
     {
       "source_id": "prose-2026-06-18-054",
@@ -718,7 +741,7 @@
       "source_id": "prose-2026-06-18-062",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Radial APIs currently store per-frame metadata; this is not rendered texture/statusbar radial masking. Add presentation and secret-aspect behavior with concrete radial fixtures."
+      "note": "Needs radial-mask rendering (radial.rs stores parameters only)."
     },
     {
       "source_id": "prose-2026-06-18-064",
@@ -806,9 +829,11 @@
     },
     {
       "source_id": "prose-2026-06-23-079",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Automatic tooltip proven; disabling via SetMouseMotionEnabled unprovable: hover hit-test ignores mouse_motion_enabled."
+      "capabilities": [
+        "leftovers-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (leftovers-12-1-0 tests)."
     },
     {
       "source_id": "source-context-080",
@@ -826,9 +851,11 @@
     },
     {
       "source_id": "prose-2026-06-23-082",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Filter proven via fire_script_handler, but the sim never fires OnSizeChanged on layout size change (size.rs)."
+      "capabilities": [
+        "leftovers-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (leftovers-12-1-0 tests)."
     },
     {
       "source_id": "prose-2026-06-23-083",
@@ -1036,9 +1063,11 @@
     },
     {
       "source_id": "prose-2026-07-07-118",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "AddAuraFrame absence proven; addon CreateFrame(\"AuraButton\") not rejected (allowUntaintedCreation unmodeled)."
+      "capabilities": [
+        "leftovers-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "AddAuraFrame absent and addon CreateFrame(\"AuraButton\") rejected; secure creation still works."
     },
     {
       "source_id": "prose-2026-07-07-119",
@@ -1240,9 +1269,11 @@
     },
     {
       "source_id": "prose-2026-07-07-145",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Aura sounds registered, but no aura add/application/remove detection or sound playback record (needs aura-change subsystem)."
+      "capabilities": [
+        "leftovers-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (leftovers-12-1-0 tests)."
     },
     {
       "source_id": "prose-2026-07-07-146",
@@ -1450,9 +1481,11 @@
     },
     {
       "source_id": "prose-2026-07-21-180",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Same as 145: no aura-change sound subsystem."
+      "capabilities": [
+        "leftovers-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (leftovers-12-1-0 tests)."
     },
     {
       "source_id": "prose-2026-07-21-181",
@@ -1676,9 +1709,11 @@
     },
     {
       "source_id": "prose-2026-07-23-214",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "ResizeToBoundsRect is declared in cached SimpleFrame documentation but has no Rust/Lua simulator producer. Model resize from child bounds and preserve observable anchor/size semantics."
+      "capabilities": [
+        "leftovers-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (leftovers-12-1-0 tests)."
     },
     {
       "source_id": "prose-2026-07-23-215",
@@ -1700,13 +1735,13 @@
       "source_id": "prose-2026-07-23-217",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "CastingBarTypeInfo/nameplate taint fix is in vendor Lua context; identify real addon caller/secure owner state and reproduce its route. Existing proxy/delegate infrastructure does not prove the specific taint bug."
+      "note": "No pre-fix CastingBarFrame.lua to identify the taint route (ptr and retail copies identical)."
     },
     {
       "source_id": "prose-2026-07-23-218",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Unmodified cached PingableUnitFrameTemplate and C_PingSecure require a real addon-unit fixture proving taint and enemy ping behavior, not a namespace-presence test."
+      "note": "C_PingSecure.GetTargetPingReceiver missing; cached PingManager path never reaches an addon frame."
     },
     {
       "source_id": "prose-2026-07-23-219",
@@ -1718,9 +1753,11 @@
     },
     {
       "source_id": "prose-2026-07-23-220",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+      "capabilities": [
+        "leftovers-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (leftovers-12-1-0 tests)."
     },
     {
       "source_id": "prose-2026-07-23-221",
@@ -1824,7 +1861,7 @@
       "source_id": "prose-2026-08-04-237",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "VectorGraphics construction/SVG metadata storage exists, but native code explicitly says SVG path rendering is not modeled. Implement 2D SVG asset decoding/rendering and legal method surface; not a 3D feature."
+      "note": "Needs SVG rendering."
     },
     {
       "source_id": "prose-2026-08-04-238",
@@ -1838,13 +1875,15 @@
       "source_id": "prose-2026-08-04-239",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Unmodified cached PingableUnitFrameTemplate and C_PingSecure require a real addon-unit fixture proving taint and enemy ping behavior, not a namespace-presence test."
+      "note": "Same as 218."
     },
     {
       "source_id": "prose-2026-08-04-240",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Native aspect masks/inheritance exist, but mask publication does not establish UntrustedScriptExecution or UntrustedLayoutScriptExecution suppression across all callback/anchor paths. Model caller-sensitive dispatch before claiming security."
+      "capabilities": [
+        "leftovers-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (leftovers-12-1-0 tests)."
     },
     {
       "source_id": "source-context-243",
@@ -8316,9 +8355,12 @@
     },
     {
       "source_id": "wt-widgets-Frame:ResizeToBoundsRect-1152",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "object-method: Frame; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-1-0",
+        "leftovers-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and sized to shown descendants union."
     },
     {
       "source_id": "wt-widgets-Frame:SetOnUpdateMode-1153",

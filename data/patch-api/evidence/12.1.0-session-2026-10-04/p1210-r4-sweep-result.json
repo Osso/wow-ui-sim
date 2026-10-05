@@ -12505,11 +12505,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "Frame; lookup=nil",
+      "detail": "Frame; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-widgets-Frame:SetOnUpdateMode-1153": {
     "expected": {
