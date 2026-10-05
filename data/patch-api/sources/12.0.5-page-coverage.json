@@ -2329,16 +2329,33 @@
       "symbols": [
         "363 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted for removed symbols, supersession against 12.0.7 and 12.1.0 wikitext registers. Publication only. 13 known gaps baselined in tests/data/patch_12_0_5_sweep_known_gaps.json.",
+      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted for removed symbols, supersession against 12.0.7 and 12.1.0 wikitext registers. Publication only. 12 known gaps baselined in tests/data/patch_12_0_5_sweep_known_gaps.json.",
       "spec": "docs/specs/patch-12-0-5-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_5_publication_sweep.rs",
         "tests/common/publication_sweep.rs"
       ],
       "implementation": "test; retired autostubbed 12.0.5 removals (src/c_api/patch_retired_members.rs), 12.0.5 CVar renames/additions/removals, event additions/removals, HousingCatalogSearcher toggles",
-      "compiled_revision": "d363d6116",
+      "compiled_revision": "a55b2509c",
       "proof": "main-thread GREEN on master 174ab06fd (run alone; 12.0.7/12.1.0 sweeps also GREEN alone); negative control by agent; no independent review",
       "ledger": "data/patch-api/evidence/12.0.5-session-2026-10-03/p1205-wikitext-sweep-result.json"
+    },
+    {
+      "id": "p1205-pending-followup",
+      "symbols": [
+        "HANDLE:IsUnderMouse (RestrictedFrames.lua)",
+        "C_PartyInfo leadership combat restriction"
+      ],
+      "scope": "IsUnderMouse on restricted parents uses rectangle geometry with protected-child recursion and scale normalization (unchanged cached Lua). Four leadership successors deny addon-tainted calls in combat before mutation/events; secure and out-of-combat calls work. INFERRED: current namespace successors inherit the historical global restriction.",
+      "spec": "docs/specs/patch-12-0-5-pending-leadership.md",
+      "tests": [
+        "tests/patch_12_0_5_pending_mouse.rs",
+        "tests/patch_12_0_5_pending_party.rs"
+      ],
+      "implementation": "src/c_api/c_party_info.rs",
+      "compiled_revision": "8e3f007d5",
+      "proof": "Sol worker GREEN; main-thread re-run on master 8e3f007d5 (pending_party 2, pending_mouse 3, party_ 184, chat_lockdown 6); no independent review",
+      "ledger": "data/patch-api/evidence/12.0.5-session-2026-10-03/pending-rows-follow-up.md"
     }
   ],
   "source_rows": [
@@ -2475,7 +2492,7 @@
       "source_id": "prose-2026-03-12-050",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "12.0.5-api-changes.txt:50: \"Addon execution throttles will no longer apply while the PLAYER_LOGOUT and ADDONS_UNLOADING events are being processed.\" Same exemption requirement as the other occurrence. Checked event registration/dispatch, ReloadUI and pinned rilua hooks: teardown names are recognized, but no actual teardown producer or trusted addon execution meter was found; debug count hooks and zero throttle-limit mocks are not enforcement. User reports script-execution-limits exists only on another machine; GitHub ls-remote returned no matching branch, and Cargo.lock still pins 6044544. Unblock by making that VM capability available, integrating trusted metering and real lifecycle-scoped exemption, specifying attribution/reset/failure policy, and proving normal-budget denial, both exemptions and restoration after errors. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
+      "note": "Pinned rilua a76ffa8 has allocation limits and a debug instruction hook but no trusted execution-budget metering; script-execution-limits head 690fc3b only wires table-security tests. Blocked on a rilua metering capability."
     },
     {
       "source_id": "prose-2026-03-12-054",
@@ -2559,7 +2576,7 @@
       "source_id": "prose-2026-03-25-074",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "note": "Leadership subset proven (4 successors deny addon combat mutations); Convert/ConfirmConvert have no provider; aggregate stays pending. See pending-rows-follow-up.md."
     },
     {
       "source_id": "prose-2026-03-25-075",
@@ -2639,7 +2656,7 @@
       "source_id": "prose-2026-03-25-095",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "12.0.5-api-changes.txt:95: \"Addon execution throttles will no longer be applied while processing PLAYER_LOGOUT and ADDONS_UNLOADING events.\" Same exemption requirement as the other occurrence. Checked event registration/dispatch, ReloadUI and pinned rilua hooks: teardown names are recognized, but no actual teardown producer or trusted addon execution meter was found; debug count hooks and zero throttle-limit mocks are not enforcement. User reports script-execution-limits exists only on another machine; GitHub ls-remote returned no matching branch, and Cargo.lock still pins 6044544. Unblock by making that VM capability available, integrating trusted metering and real lifecycle-scoped exemption, specifying attribution/reset/failure policy, and proving normal-budget denial, both exemptions and restoration after errors. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
+      "note": "Pinned rilua a76ffa8 has allocation limits and a debug instruction hook but no trusted execution-budget metering; script-execution-limits head 690fc3b only wires table-security tests. Blocked on a rilua metering capability."
     },
     {
       "source_id": "prose-2026-03-25-098",
@@ -2651,9 +2668,11 @@
     },
     {
       "source_id": "prose-2026-03-25-099",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "12.0.5-api-changes.txt:99: \"Fixed an issue with the IsUnderMouse] API where it would incorrectly return false for parent frames that were actually under the mouse.\" Recheck disproves the handoff blanket absence claim: cached RestrictedFrames.lua:360 defines HANDLE:IsUnderMouse(recursive), using rectangle checks and protected-visible child recursion at 324-370. Simulator IsMouseOver separately uses frame bounds and visibility/mouse-enabled flags; it is not an established alias. Missing an identified failing parent/restricted-handle fixture and native pre/post result, not generic rendering capability. Unblock by identifying the source API boundary and reproducing parent/child, recursive, scale and visibility cases through unchanged restricted Lua; do not invent an IsUnderMouse frame-method alias. (Ledger: data/patch-api/evidence/12.0.5-session-2026-10-03/blocked-rows-ledger.md.)"
+      "capabilities": [
+        "p1205-pending-followup"
+      ],
+      "status": "partial-development-green",
+      "note": "Restricted-parent IsUnderMouse geometry proven against unchanged cached RestrictedFrames.lua; native pre/post regression unknown."
     },
     {
       "source_id": "prose-2026-03-25-104",
@@ -5350,9 +5369,11 @@
     },
     {
       "source_id": "wt-cvars-unlockedExpansionLandingPages-839",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "cvar: value/default queried (superseded_by wt-cvars-unlockedExpansionLandingPages-407)"
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status. Re-added by later patch (wt-cvars-unlockedExpansionLandingPages-407)."
     },
     {
       "source_id": "wt-events-AJ_PVP_TRAINING_GROUNDS_ACTION-775",

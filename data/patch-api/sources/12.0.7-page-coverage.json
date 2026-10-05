@@ -337,14 +337,14 @@
       "symbols": [
         "174 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication (added/changed) or absence (removed; deprecation-file fallbacks accepted) in a fully loaded default-Retail environment (12.1.0 surface). Rows a later patch removes again are expected absent (superseded_by). Publication only. 24 known gaps baselined in tests/data/patch_12_0_7_sweep_known_gaps.json.",
+      "scope": "Data-driven publication (added/changed) or absence (removed; deprecation-file fallbacks accepted) in a fully loaded default-Retail environment (12.1.0 surface). Rows a later patch removes again are expected absent (superseded_by). Publication only. 5 known gaps baselined in tests/data/patch_12_0_7_sweep_known_gaps.json.",
       "spec": "docs/specs/patch-12-0-7-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_7_publication_sweep.rs",
         "tests/common/publication_sweep.rs"
       ],
       "implementation": "test only; retired autostubbed C_DurationUtil.GetCurrentTime, C_HousingLayout.IsDraggingStairwell, C_Minimap.GetObjectIconTextureCoords, C_Scenario.GetScenarioIconInfo",
-      "compiled_revision": "d363d6116",
+      "compiled_revision": "a55b2509c",
       "proof": "main-thread GREEN on master dabae6c5c run alone; negative controls by agent; no independent review",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-wikitext-sweep-result.json"
     },
@@ -1611,15 +1611,19 @@
     },
     {
       "source_id": "wt-cvars-Aftermath-410",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "cvar: value/default queried"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-cvars-AftermathCallstacks-411",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "cvar: value/default queried"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-cvars-MemUsageStackTrace-413",
@@ -1717,9 +1721,11 @@
     },
     {
       "source_id": "wt-cvars-enableMemoryTrap-412",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "cvar: value/default queried"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-cvars-fetchBleepProxies-409",
@@ -1785,9 +1791,11 @@
     },
     {
       "source_id": "wt-cvars-unlockedExpansionLandingPages-407",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "cvar: value/default queried"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-cvars-useBLEEP-408",
@@ -1967,15 +1975,19 @@
     },
     {
       "source_id": "wt-global-api-C_Club.AssignMemberRole-188",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-C_Club.GetAssignableRoles-190",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-C_Club.GetClubMembers-192",
@@ -1995,33 +2007,43 @@
     },
     {
       "source_id": "wt-global-api-C_Club.KickMember-196",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-C_Club.RevokeInvitation-198",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-C_Club.SendBattleTagFriendRequest-200",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-C_Club.SendInvitation-202",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-C_Club.SetClubMemberNote-204",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-C_CombatText.GetActiveUnit-206",
@@ -2121,9 +2143,11 @@
     },
     {
       "source_id": "wt-global-api-C_EncounterWarnings.GetColorForSeverity-219",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames-139",
@@ -2247,9 +2271,11 @@
     },
     {
       "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestHasShortExpirationWarning-152",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-C_Scenario.GetScenarioIconInfo-175",
@@ -2275,9 +2301,11 @@
     },
     {
       "source_id": "wt-global-api-C_Spell.GetMawPowerRarityInfoBySpellID-154",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-C_StringUtil.EscapeDecimalNonPrintables-155",
@@ -2337,9 +2365,11 @@
     },
     {
       "source_id": "wt-global-api-GetBaseDifficultyID-159",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-GetBuildOption-160",
@@ -2447,27 +2477,35 @@
     },
     {
       "source_id": "wt-global-api-SimulateMouseClick-223",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-SimulateMouseDown-225",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-SimulateMouseUp-227",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-SimulateMouseWheel-229",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Published after 12.0.7 gap closures (a55b2509c); see spec for modeled vs temporary-workaround status."
     },
     {
       "source_id": "wt-global-api-UninviteUnit-185",
