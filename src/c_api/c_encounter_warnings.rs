@@ -5,6 +5,45 @@ use rilua::{LuaResult, Val, runtime_error};
 use crate::lua_api::methods::{call_function_state, create_string, create_table, table_set};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 
+/// INFERRED explicit availability and severity sound inputs. Zero means no sound.
+#[derive(Debug, Default)]
+pub struct WarningSettings {
+    pub available: bool,
+    pub sound_kits: [u32; 3],
+}
+
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) fn register_settings(state: &mut LuaState) -> LuaResult<()> {
+    let ns = super::ensure_namespace(state, "C_EncounterWarnings")?;
+    crate::lua_bridge::table_set_rust_fn_static(state, ns, "IsFeatureAvailable", |s| {
+        let available = crate::lua_api::methods::borrow_state(s)?
+            .encounter_warning_settings
+            .available;
+        s.push(Val::Bool(available));
+        Ok(1)
+    })?;
+    crate::lua_bridge::table_set_rust_fn_static(state, ns, "IsFeatureEnabled", |s| {
+        let enabled = {
+            let sim = crate::lua_api::methods::borrow_state(s)?;
+            sim.encounter_warning_settings.available
+                && sim
+                    .cvars
+                    .get("encounterWarningsEnabled")
+                    .is_some_and(|v| v != "0")
+        };
+        s.push(Val::Bool(enabled));
+        Ok(1)
+    })?;
+    crate::lua_bridge::table_set_rust_fn_static(state, ns, "GetSoundKitForSeverity", |s| {
+        let severity = read_severity(s)?;
+        let kit = crate::lua_api::methods::borrow_state(s)?
+            .encounter_warning_settings
+            .sound_kits[severity as usize];
+        s.push(Val::Num(f64::from(kit)));
+        Ok(1)
+    })
+}
+
 const PREVIEW_DURATION_SECONDS: f64 = 5.0;
 const PREVIEW_ICON_FILE_ID: f64 = 136122.0;
 

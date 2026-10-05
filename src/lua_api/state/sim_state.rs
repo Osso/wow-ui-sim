@@ -347,6 +347,10 @@ pub struct SimState {
     pub sound_manager: Option<SoundManager>,
     pub last_sound_kit_requested: Option<u32>,
     /// `C_CooldownViewer` entries keyed by cooldownID; empty until populated.
+    #[cfg(feature = "retail-12-0-0")]
+    pub encounter_policy: crate::c_api::c_instance_encounter::EncounterPolicy,
+    #[cfg(feature = "retail-12-0-0")]
+    pub encounter_warning_settings: crate::c_api::c_encounter_warnings::WarningSettings,
     pub cooldown_viewer_cooldowns:
         std::collections::BTreeMap<i32, crate::c_api::c_cooldown_viewer::CooldownViewerCooldown>,
     #[cfg(feature = "retail-12-1-0")]

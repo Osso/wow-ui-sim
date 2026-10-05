@@ -7,6 +7,14 @@ use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+/// INFERRED host-owned encounter policy snapshot; no encounter mechanics inferred.
+#[derive(Debug, Default)]
+pub struct EncounterPolicy {
+    pub limiting_resurrections: bool,
+    pub suppressing_release: bool,
+    pub show_timeline: bool,
+}
+
 pub(crate) fn register_c_instance_encounter_surface(state: &mut LuaState) -> LuaResult<()> {
     if !matches!(ACTIVE, ClientProfile::Retail | ClientProfile::Ptr) {
         return Ok(());
@@ -19,6 +27,24 @@ pub(crate) fn register_c_instance_encounter_surface(state: &mut LuaState) -> Lua
         "IsEncounterInProgress",
         is_encounter_in_progress,
     )?;
+    #[cfg(feature = "retail-12-0-0")]
+    {
+        table_set_rust_fn_static(state, namespace, "IsEncounterLimitingResurrections", |s| {
+            let value = borrow_state(s)?.encounter_policy.limiting_resurrections;
+            s.push(Val::Bool(value));
+            Ok(1)
+        })?;
+        table_set_rust_fn_static(state, namespace, "IsEncounterSuppressingRelease", |s| {
+            let value = borrow_state(s)?.encounter_policy.suppressing_release;
+            s.push(Val::Bool(value));
+            Ok(1)
+        })?;
+        table_set_rust_fn_static(state, namespace, "ShouldShowTimelineForEncounter", |s| {
+            let value = borrow_state(s)?.encounter_policy.show_timeline;
+            s.push(Val::Bool(value));
+            Ok(1)
+        })?;
+    }
     Ok(())
 }
 
