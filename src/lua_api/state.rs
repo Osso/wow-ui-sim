@@ -203,6 +203,7 @@ macro_rules! build_empty_sim_state {
             title_friend_requests: Vec::new(),
             #[cfg(feature = "retail-12-0-7")]
             club_battle_tag_friend_requests: Vec::new(),
+            clubs: crate::c_api::club_model::ClubState::default(),
             spell_cooldown_categories: HashMap::new(),
             spell_cooldown_item_sources: HashMap::new(),
             transmog_enabled: true,

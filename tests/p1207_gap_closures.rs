@@ -116,15 +116,16 @@ fn simulated_mouse_input_queues_only_for_secure_callers() {
 fn club_battle_tag_friend_request_records_guild_members_once() {
     let env = WowLuaEnv::new().unwrap();
     let member_two: String = env
-        .eval("return C_Club.GetMemberInfo('guild-0', 2).name")
+        .eval("return C_Club.GetMemberInfo('guild-0', C_Club.GetClubMembers('guild-0')[2]).name")
         .unwrap();
     env.exec(
         r#"
-        assert(select('#', C_Club.SendBattleTagFriendRequest('guild-0', 2)) == 0)
-        C_Club.SendBattleTagFriendRequest('guild-0', 2)
-        C_Club.SendBattleTagFriendRequest('guild-0', 1)
-        C_Club.SendBattleTagFriendRequest('guild-0', 999)
-        C_Club.SendBattleTagFriendRequest('other-club', 2)
+        local ids = C_Club.GetClubMembers('guild-0')
+        assert(select('#', C_Club.SendBattleTagFriendRequest('guild-0', ids[2])) == 0)
+        C_Club.SendBattleTagFriendRequest('guild-0', ids[2])
+        C_Club.SendBattleTagFriendRequest('guild-0', ids[1])
+        C_Club.SendBattleTagFriendRequest('guild-0', 'missing-member')
+        C_Club.SendBattleTagFriendRequest('other-club', ids[2])
         "#,
     )
     .unwrap();

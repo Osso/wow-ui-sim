@@ -94,7 +94,7 @@ fn get_club_members_entry_has_required_fields() {
             online: true,
         }];
     }
-    let (member_id, name, is_self, presence): (i32, String, bool, i32) = env
+    let (member_id, name, is_self, presence): (String, String, bool, i32) = env
         .eval(
             r#"
             local members = C_Club.GetClubMembers('guild-0')
@@ -104,7 +104,7 @@ fn get_club_members_entry_has_required_fields() {
             "#,
         )
         .unwrap();
-    assert_eq!(member_id, 1);
+    assert!(!member_id.is_empty());
     assert_eq!(name, "Uther");
     assert!(is_self, "first member should be isSelf=true");
     assert_eq!(presence, 1, "online presence = 1");
@@ -113,7 +113,7 @@ fn get_club_members_entry_has_required_fields() {
 #[test]
 fn get_club_members_returns_member_ids_for_member_info_lookup() {
     let env = env();
-    let (count, first_id, first_name, second_id, second_name): (i32, i32, String, i32, String) =
+    let (count, first_id, first_name, second_id, second_name): (i32, String, String, String, String) =
         env.eval(
             r#"
             local members = C_Club.GetClubMembers('guild-0')
@@ -125,9 +125,9 @@ fn get_club_members_returns_member_ids_for_member_info_lookup() {
         .unwrap();
 
     assert_eq!(count, 2);
-    assert_eq!(first_id, 1);
+    assert!(!first_id.is_empty());
     assert_eq!(first_name, "Uther");
-    assert_eq!(second_id, 2);
+    assert_ne!(second_id, first_id);
     assert_eq!(second_name, "Jaina");
 }
 

@@ -6,7 +6,6 @@ mod anima_diversion;
 mod auction_house;
 mod character_select;
 mod club_finder;
-mod club_info;
 mod creature_info;
 mod delves_ui;
 mod encoding_util;
@@ -271,7 +270,7 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     c_api::c_character_services::register_c_character_services_surface(state)?;
     c_api::c_chat_bubbles::register_c_chat_bubbles_surface(state)?;
     club_finder::register_club_finder_surface(state)?;
-    club_info::register_club_info_surface(state)?;
+    c_api::c_club::register_club_info_surface(state)?;
     friend_list::register_friend_list_surface(state)?;
     recruit_a_friend::register_recruit_a_friend_surface(state)?;
     voice_chat::register_voice_chat_surface(state)?;

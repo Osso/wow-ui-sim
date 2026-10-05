@@ -26,3 +26,7 @@ Extract missed 65 of 174 collapsed-table symbols; shared publication sweep added
 ## [2026-10-04] docs | 12.0.5 wikitext supplement
 
 Crawler register missed 216 of 363 collapsed-table symbols; sweep 306 OK / 57 gaps. [Audit page](investigations/patch-12-0-5-api-audit.md#wikitext-supplement--2026-10-04).
+
+## 2026-10-04 | Club membership model
+
+Added [club membership](systems/club-membership.md) and contract; retired temporary management defaults. Verification pending.

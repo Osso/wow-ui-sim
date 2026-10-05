@@ -1,3 +1,7 @@
+## [2026-10-04] system | Club membership
+
+[Club membership](systems/club-membership.md): opaque IDs and state-backed roles, notes, invitations; [contract](../specs/club-membership.md). Development proof pending; coverage ledger unchanged.
+
 ## [2026-10-04] evidence | 12.0.5 pending non-sweep follow-up
 
 [24-row follow-up](investigations/patch-12-0-5-api-audit.md#pending-non-sweep-follow-up--2026-10-04): four leadership successors now deny addon combat mutations; unchanged restricted-mouse geometry proven. 55 targeted GREEN, startup `[]`; execution metering absent in pinned rilua. Coverage ledger unchanged.

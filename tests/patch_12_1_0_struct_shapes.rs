@@ -363,7 +363,7 @@ const CASES: &[ShapeCase] = &[
         // GetInfoFromLastCommunityChatLine has no producer; GetMemberInfo
         // returns the same ClubMemberInfo. Discord membership is unmodeled,
         // so discordInfo is the Nilable=true nil.
-        getter: r#"return C_Club.GetMemberInfo("guild-0", 1)"#,
+        getter: r#"return C_Club.GetMemberInfo("guild-0", C_Club.GetClubMembers("guild-0")[1])"#,
         added: &["discordInfo"],
         removed: &[],
         values: r#"return info.discordInfo == nil and "ok" or "discord""#,

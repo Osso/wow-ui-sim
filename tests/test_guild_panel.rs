@@ -269,7 +269,7 @@ fn communities_member_detail_rank_dropdown_shows_rank_rows() {
                 return "missing_detail_frame"
             end
 
-            local memberInfo = C_Club.GetMemberInfo("guild-0", 2)
+            local memberInfo = C_Club.GetMemberInfo("guild-0", C_Club.GetClubMembers("guild-0")[2])
             frame:DisplayMember("guild-0", memberInfo)
             frame:SetupRankDropdown()
 

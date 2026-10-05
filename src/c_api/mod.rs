@@ -59,6 +59,7 @@ pub mod c_chromie_time;
 pub(crate) mod c_click_bindings;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_click_bindings_spell;
+pub mod c_club;
 #[cfg(feature = "retail-12-0-0")]
 mod c_combat_audio_alert;
 #[cfg(feature = "client-wowforever")]
@@ -152,6 +153,8 @@ pub(crate) mod c_tooltip_info_spell_mount;
 pub(crate) mod c_transmog_collection;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod class_talent_commands;
+mod club_members;
+pub mod club_model;
 #[cfg(feature = "retail-12-0-5")]
 pub mod equipment_set_command;
 #[cfg(feature = "retail-12-0-7")]

@@ -221,6 +221,7 @@ pub struct SimState {
     /// Guild club member names sent a Battle.net friend request via `C_Club`.
     #[cfg(feature = "retail-12-0-7")]
     pub club_battle_tag_friend_requests: Vec<String>,
+    pub clubs: crate::c_api::club_model::ClubState,
     /// Host spell data: cooldown category of each spell that has one.
     pub spell_cooldown_categories: HashMap<u32, i32>,
     /// Item whose use started a spell's current cooldown, keyed by spell ID.
