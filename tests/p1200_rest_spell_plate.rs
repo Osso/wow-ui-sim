@@ -6,8 +6,8 @@ fn p1200_rest_spell_classification() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().aura_filter_facts.important_spell_ids.insert(19750);
     env.exec(r#"
-        assert(C_Spell.IsSpellImportant(19750) == true)
-        assert(C_Spell.IsSpellImportant('Flash of Light') == true)
+        assert(C_Spell.IsSpellImportant(19750) == true, 'numeric classification')
+        assert(C_Spell.IsSpellImportant('Flash of Light') == true, 'named classification')
         assert(C_Spell.IsSpellImportant(999999) == false)
         assert(C_Spell.IsSpellCrowdControl(19750) == false)
         assert(C_Spell.IsExternalDefensive(19750) == false)
