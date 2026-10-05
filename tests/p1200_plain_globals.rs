@@ -73,10 +73,6 @@ fn p1200_secret_helpers_use_vm_wrappers_and_calling_taint() {
         assert(not hasanysecretvalues())
         assert(not hasanysecretvalues(nil, 42, 'public', {secret}))
         assert(hasanysecretvalues(nil, secret, 'public'))
-        assert(not issecrettable(secret))
-        local plain = {secret}
-        assert(not issecrettable(plain))
-        assert(issecrettable(secretwrap(plain)))
         local f = function() return canaccesssecrets(), hasanysecretvalues(secret) end
         debug.setobjecttaint(f, 'PlainGlobalAddon')
         local access, contains = f()

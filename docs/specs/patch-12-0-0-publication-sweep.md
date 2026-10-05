@@ -45,7 +45,7 @@ Assigned 37 global IDs are investigated only in `p1200-globals`. Simulator legac
 
 Player cost and raid-marker enablement read explicit host inputs. Cloak/helm visibility is independent and reversible. No existing simulator clothing state exists at base `a10d55822` (the earlier `cloak_helm_transition.lua` is a native-probe fixture, not simulator state); these globals share one new state. Defaults are inferred, not native evidence; no persistence or 3D effects are claimed.
 
-`canaccesssecrets` uses the same VM guard as secret unwrapping; `hasanysecretvalues` checks direct VM wrappers, not nested contents; `issecrettable` inspects wrapper payload kind. Pinned rilua `a76ffa8` rejects `SecretWrapContents`; a table containing a secret is not itself a secret table. `dropsecretaccess` remains blocked: no separate caller-context revocation primitive exists. Stack-taint mutation would also change `issecure` and is not a faithful implementation. No fake global is registered.
+`canaccesssecrets` uses the same VM guard as secret unwrapping; `hasanysecretvalues` checks direct VM wrappers, not nested contents. Pinned rilua `a76ffa8` rejects `SecretWrapContents`; a table containing a secret is not itself a secret table. `issecrettable` remains blocked: `Userdata::secret_value` is VM-private (`E0624`), and guarded `unwrap_secret` cannot inspect wrapper kind for tainted callers. `dropsecretaccess` remains blocked: no separate caller-context revocation primitive exists. Stack-taint mutation would also change `issecure` and is not a faithful implementation. Neither fake global is registered.
 
 ## Transmog outfit closure contract
 
