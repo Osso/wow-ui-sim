@@ -31,10 +31,9 @@ fn read_id(state: &LuaState) -> LuaResult<Option<u32>> {
     // VM authenticates opaque identifiers; tainted secret classification remains
     // unsupported by the pinned host API, rather than exposing secret payloads.
     let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
-    // Alias overrides share the existing resolver; spell names use the same
-    // spell database lookup as GetSpellName/GetSpellLossOfControlCooldownDuration.
-    let alias = super::c_spell::read_spell_identifier_value(state, value)?;
-    Ok(alias.or_else(|| super::c_spell::numeric_spell_id_value(state, value)))
+    // Use the same number/name lookup as GetSpellName and the LoC duration API.
+    // Alias override selection is outside this classification input contract.
+    Ok(super::c_spell::numeric_spell_id_value(state, value))
 }
 
 fn important(state: &mut LuaState) -> LuaResult<u32> {
