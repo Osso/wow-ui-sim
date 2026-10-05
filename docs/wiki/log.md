@@ -46,3 +46,7 @@ Cached GuildRoster rank menus require `guid` independently of member IDs. Added 
 ## 2026-10-05 | Club membership proof
 
 Recorded [development proof](../specs/club-membership.md#development-proof--2026-10-05): five host/member event rows, 12 behavior tests, club/guild/communities/bnet green, publication green, startup `[]`, fmt/check green. Chat failure reproduced on untouched master. No coverage ledger edits.
+
+## 2026-10-05 — Console registry
+
+Live CVar catalog extended with epoch-scoped Command records; shared command publication probing closes two 12.0.7 gaps. [System](systems/console-command-registry.md); [contract](../specs/console-command-catalog.md). Baseline console empty assertion was stale since `2c78bff73`.
