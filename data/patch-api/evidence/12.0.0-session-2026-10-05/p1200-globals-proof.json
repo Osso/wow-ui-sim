@@ -511,5 +511,26 @@
     "revision": "a631b3e7b",
     "result": "Changed Rust inspected; stage-vector emission and threat-category calculation extracted; no warning suppressions added",
     "valid": true
+  },
+  {
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-globals/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "d9776867159b7acd5a3847f8ea11095218e1bb15",
+    "scope": "current-master focused failure comparison",
+    "exit_code": 101,
+    "summary": "0 passed, 1 failed; left 22, right 21; matches starting master and branch failure",
+    "comparison_only": true,
+    "valid": true,
+    "execution_note": "Detached HEAD inside assigned worktree, restored p1200-globals; no other checkout modified"
   }
 ]

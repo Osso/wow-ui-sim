@@ -67,7 +67,7 @@ All helper invocations used `python3 /home/osso/.worktrees/wow-ui-sim-p1200-glob
 | cloak | 0 matched | 2 passed |
 | threat | 4 passed | 6 passed |
 
-The unchanged failure is `edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size`: both runs observe 22 metadata entries versus expected 21. It was reproduced before implementation on the starting master revision, not attributed to this change. No adjacent enum fix was made.
+The unchanged failure is `edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size`: both runs observe 22 metadata entries versus expected 21. It was reproduced before implementation on the starting master revision, then again by the exact focused test at current master `d9776867159b7acd5a3847f8ea11095218e1bb15` (0 passed / 1 failed, same 22 versus 21). That comparison used detached HEAD inside this same worktree, then restored `p1200-globals`; no canonical/other-worktree commands or edits. No adjacent enum fix was made.
 
 Additional proof: `p1200_` 13 passed; alias-attribution test 1 passed (15 exact cached aliases plus unrelated-replacement negative control); `pvp_info` 8 passed; `methods_texture` 53 passed; lib `combat_log` 3 passed. Cached full-UI prefork consumers: combat_log 31 passed, death_recap 8 passed. These exercise actual cached Blizzard loads, not replacement vendor Lua.
 
