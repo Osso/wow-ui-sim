@@ -125,6 +125,10 @@ pub struct SimState {
     pub last_account_store_storefront_info_request: Option<i64>,
     pub account_store_categories: HashMap<i64, AccountStoreCategoryInfo>,
     pub account_store_items: HashMap<i64, AccountStoreItemInfo>,
+    #[cfg(feature = "retail-12-0-0")]
+    pub spell_classifications: crate::c_api::c_spell_classification::SpellClassifications,
+    #[cfg(feature = "retail-12-0-0")]
+    pub nameplate_configuration: crate::c_api::c_nameplate_manager::NamePlateConfiguration,
     pub action_bars: HashMap<u32, u32>,
     /// INFERRED host-declared resolved spell IDs on special bars; empty by default.
     /// Independent of direct assignments and bar visibility.

@@ -282,6 +282,10 @@ macro_rules! build_empty_sim_state {
             last_sound_kit_requested: $runtime.last_sound_kit_requested,
             cooldown_viewer_cooldowns: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
+            spell_classifications: Default::default(),
+            #[cfg(feature = "retail-12-0-0")]
+            nameplate_configuration: Default::default(),
+            #[cfg(feature = "retail-12-0-0")]
             encounter_policy: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             encounter_warning_settings: Default::default(),

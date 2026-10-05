@@ -64,6 +64,8 @@ pub(crate) fn register_c_spell_surface(state: &mut LuaState) -> LuaResult<()> {
     )?;
     register_spell_methods(state, ns, SPELL_QUERY_METHODS)?;
     register_spell_methods(state, ns, SPELL_BOOLEAN_METHODS)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_spell_classification::register(state)?;
     if cfg!(feature = "client-mists") {
         register_legacy_spell_globals(state)?;
     }

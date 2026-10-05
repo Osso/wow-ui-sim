@@ -31,10 +31,19 @@ pub struct CooldownViewerCooldown {
     pub flags: i32,
     /// `Enum.CooldownViewerCategory` value.
     pub category: i32,
+    /// INFERRED host-declared alert capabilities, not derived from flags/categories.
+    pub valid_alert_types: Vec<u8>,
 }
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CooldownViewer")?;
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "GetValidAlertTypes",
+        get_valid_alert_types,
+    )?;
     table_set_rust_fn_static(
         state,
         namespace,
@@ -47,6 +56,28 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         "GetCooldownViewerCooldownInfo",
         get_cooldown_info,
     )
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn get_valid_alert_types(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let Val::Num(id) = value else {
+        return Err(runtime_error("cooldownID must be a number"));
+    };
+    if !id.is_finite() || id.fract() != 0.0 || id < i32::MIN as f64 || id > i32::MAX as f64 {
+        return Err(runtime_error("cooldownID must be an i32 integer"));
+    }
+    let alerts = borrow_state(state)?
+        .cooldown_viewer_cooldowns
+        .get(&(id as i32))
+        .map(|entry| entry.valid_alert_types.clone())
+        .unwrap_or_default();
+    let table = create_table(state);
+    state.push(table);
+    for (index, alert) in alerts.iter().enumerate() {
+        set_table_array(state, table, index as i64 + 1, Val::Num(f64::from(*alert)));
+    }
+    Ok(1)
 }
 
 fn required_number(state: &LuaState, index: i32, name: &str) -> LuaResult<i32> {

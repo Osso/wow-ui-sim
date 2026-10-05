@@ -133,6 +133,8 @@ pub mod c_sound;
 pub mod c_spec;
 pub mod c_spell;
 pub mod c_spell_book;
+#[cfg(feature = "retail-12-0-0")]
+pub mod c_spell_classification;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_spell_counts;
 pub mod c_spell_diminish;
