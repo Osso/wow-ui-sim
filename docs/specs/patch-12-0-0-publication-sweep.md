@@ -39,6 +39,12 @@ Final result: 812 OK / 198 reviewed non-OK. [Evidence and row-by-row review](../
 - [ ] Four event removals are also listed as additions by the page. Preserve both rows as metadata conflicts, not runtime removals.
 - [ ] Two added CVars lack getter/default publication; one removed CVar is a case-only scope rename resolved by case-insensitive getters. No default or scope semantics were invented.
 
+## Transmog outfit closure contract
+
+The assigned transmog follow-up adds behavioral proof beyond publication: catalog creation and rename, displayed selection/locks, per-outfit saved slot contents, pending appearance and situation overlays, synchronous documented events, atomic apply with collection eligibility and host pricing. Invalid applications must preserve pending state and money. Native pricing/caps, persistence and automatic situation-trigger evaluation remain unverified; local choices are marked `INFERRED` in code. Publication fixtures are retired only after the sweep observes real registrations.
+
+Tests: `tests/transmog_outfit_lifecycle.rs`. Implementation: `src/c_api/c_transmog_outfit_info/`.
+
 ## Out of scope
 
 Behavior, signatures, output shapes, secrecy/security, callback-event delivery, defaults/mutability, native-client parity, strict historical epoch builds, Enums/Structures sections, and club model changes. CVar default mismatches are diagnostic only. Contradictory added/removed rows remain separate observations rather than being silently deduplicated.

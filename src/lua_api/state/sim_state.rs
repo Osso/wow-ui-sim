@@ -190,6 +190,8 @@ pub struct SimState {
     pub transmog_outfit_locks: HashSet<i64>,
     #[cfg(feature = "retail-12-0-5")]
     pub transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog,
+    #[cfg(feature = "retail-12-0-5")]
+    pub transmog_outfits: crate::c_api::c_transmog_outfit_info::OutfitState,
     /// Explicit applied selection; independent of viewed/pending outfit metadata.
     #[cfg(feature = "retail-12-0-5")]
     pub active_transmog_outfit_id: Option<i64>,

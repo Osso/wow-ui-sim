@@ -29,6 +29,17 @@ mod viewed_slots;
 #[cfg(feature = "retail-12-0-5")]
 pub use viewed_slot_info::ViewedOutfitSlotInfo;
 
+#[cfg(feature = "retail-12-0-5")]
+mod model;
+#[cfg(feature = "retail-12-0-5")]
+pub use model::{OutfitContents, OutfitState};
+#[cfg(feature = "retail-12-0-5")]
+mod lifecycle;
+#[cfg(feature = "retail-12-0-5")]
+mod pending;
+#[cfg(feature = "retail-12-0-5")]
+mod situations;
+
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
@@ -39,6 +50,12 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
     #[cfg(feature = "retail-12-0-5")]
     pending_cost::register(state, namespace)?;
+    #[cfg(feature = "retail-12-0-5")]
+    lifecycle::register(state, namespace)?;
+    #[cfg(feature = "retail-12-0-5")]
+    pending::register(state, namespace)?;
+    #[cfg(feature = "retail-12-0-5")]
+    situations::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
     catalog::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]

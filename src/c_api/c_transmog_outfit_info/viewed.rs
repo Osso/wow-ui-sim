@@ -50,7 +50,16 @@ fn select_viewed_outfit(state: &mut LuaState, requested_id: f64) -> LuaResult<bo
     // INFERRED: catalog misses preserve state and emit no refresh. Like catalog
     // lookup, first matching ID wins; isDisabled is not an eligibility policy.
     let Some(id) = id else { return Ok(false) };
-    // INFERRED: changing viewed selection does not discard pending snapshots.
+    // INFERRED: selecting another modeled outfit discards its pending overlay;
+    // repeated selection preserves it. Host-only catalog fixtures keep explicit slots.
+    if sim.viewed_transmog_outfit_id != Some(id) {
+        if let Some(contents) = sim.transmog_outfits.saved.get(&id) {
+            sim.viewed_outfit_slots = contents.slots.clone();
+            sim.transmog_outfits.pending_slots.clear();
+            sim.transmog_outfits.pending_situations.clear();
+            sim.pending_transmog_cost = None;
+        }
+    }
     sim.viewed_transmog_outfit_id = Some(id);
     Ok(true)
 }

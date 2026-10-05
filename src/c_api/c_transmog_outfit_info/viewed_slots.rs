@@ -41,7 +41,14 @@ fn get_viewed_outfit_slot_info(state: &mut LuaState) -> LuaResult<u32> {
         read_selector(state, 2)?,
         read_selector(state, 3)?,
     );
-    let record = borrow_state(state)?.viewed_outfit_slots.get(&key).cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        sim.transmog_outfits
+            .pending_slots
+            .get(&key)
+            .or_else(|| sim.viewed_outfit_slots.get(&key))
+            .cloned()
+    };
     let Some(record) = record else { return Ok(0) };
     let table = build_slot_table(state, &record);
     state.push(table);

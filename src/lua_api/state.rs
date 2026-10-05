@@ -182,6 +182,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             transmog_outfit_catalog: crate::c_api::c_transmog_outfit_info::OutfitCatalog::default(),
             #[cfg(feature = "retail-12-0-5")]
+            transmog_outfits: crate::c_api::c_transmog_outfit_info::OutfitState::default(),
+            #[cfg(feature = "retail-12-0-5")]
             active_transmog_outfit_id: None,
             #[cfg(feature = "retail-12-0-5")]
             viewed_transmog_outfit_id: None,
