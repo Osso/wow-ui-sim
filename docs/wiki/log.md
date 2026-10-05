@@ -70,3 +70,7 @@ Recorded [development proof](../specs/club-membership.md#development-proof--2026
 ## 2026-10-05 — Console registry
 
 Live CVar catalog extended with epoch-scoped Command records; shared command publication probing closes two 12.0.7 gaps. [System](systems/console-command-registry.md); [contract](../specs/console-command-catalog.md). Baseline console empty assertion was stale since `2c78bff73`.
+
+## 2026-10-05 — Neighborhood initiatives
+
+Added [host-backed initiative state](systems/neighborhood-initiatives.md), deferred request ordering and explicit diagnostic-workaround limits. Contract lives in [publication spec](../specs/patch-12-0-0-publication-sweep.md#housinginitiative-closure-contract).

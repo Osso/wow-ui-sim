@@ -1,5 +1,8 @@
-//! Tracked initiative membership and host task reward scales; task records and
-//! events remain unmodeled.
+//! Host-backed initiative records, neighborhood selection, request replies,
+//! tracked task membership and reward scales.
+
+pub mod model;
+mod publication;
 
 use super::helpers::ensure_namespace;
 use crate::lua_api::methods::{
@@ -17,6 +20,9 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         return Ok(());
     }
     let namespace = ensure_namespace(state, "C_NeighborhoodInitiative")?;
+    if cfg!(feature = "retail-12-0-0") {
+        publication::register(state, namespace)?;
+    }
     table_set_rust_fn_static(
         state,
         namespace,

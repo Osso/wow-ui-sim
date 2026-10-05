@@ -261,6 +261,11 @@ fn one_based_index(index: i32) -> Option<usize> {
 
 #[derive(Clone, Debug, Default)]
 pub struct HousingState {
+    pub initiative: crate::c_api::c_neighborhood_initiative::model::NeighborhoodInitiativeState,
+    /// INFERRED: explicit host feature policy, disabled until configured.
+    pub market_shop_enabled: bool,
+    /// Last plot selected in the house finder; no purchase/teleport implied.
+    pub house_finder_selected_plot: Option<i32>,
     pub catalog: crate::c_api::c_housing::catalog::HousingCatalogState,
     pub exterior: crate::c_api::c_housing::exterior::HouseExteriorState,
     #[cfg(feature = "retail-12-0-5")]

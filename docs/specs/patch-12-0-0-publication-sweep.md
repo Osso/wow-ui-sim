@@ -88,3 +88,13 @@ All 50 assigned IDs are removed from the known-gap fixture, with no other fixtur
 ## Out of scope
 
 Behavior, signatures, output shapes, secrecy/security, callback-event delivery, defaults/mutability, native-client parity, strict historical epoch builds, Enums/Structures sections, and club model changes. CVar default mismatches are diagnostic only. Contradictory added/removed rows remain separate observations rather than being silently deduplicated.
+
+## Housing/initiative closure contract
+
+The 17 assigned housing IDs retire from the publication fixture: 13 initiative methods and two housing methods are **closed-modeled** with explicit host state; the two fixture-debug methods are **closed-temporary-publication** only. Their signatures/payloads are absent from cached exterior docs and consumers, so unavailable debug data returns one nil by an explicitly inferred temporary policy. Retirement requires native diagnostic evidence and a GUID/selected-fixture model; no native diagnostic parity is claimed. Page-coverage ledgers remain untouched.
+
+Initiative getters expose active/viewing GUID identity, documented info/tasks/milestones/progress and activity entries. Required level compares to player level; entitlement and current party's qualifying neighborhood membership are separate inputs. Task links come from host data, not an invented native codec. Request calls defer replies to a timer tick because cached dashboard OnShow requests before registering listeners, then fire `NEIGHBORHOOD_INITIATIVE_UPDATED` or `INITIATIVE_ACTIVITY_LOG_UPDATED` with zero payload and getter-visible loaded state. Reply identity stays bound to the requested neighborhood; a stale-view reply loads its own cache without notifying the new view. Active-selection changes dispatch a refresh, identical writes do not.
+
+INFERRED policies: empty string denotes unset active GUID; default required level is 1 and entitlement/group/shop flags are unconfigured false; missing requested initiative records use choosing-stage ID zero; task links are active-neighborhood host strings, unknown links empty; stale-view reply notifications are suppressed; plot clicks record selection without purchase/teleport/event. No service acquisition, native progression, persistence or native default policy is claimed.
+
+Tests: `tests/housing.rs`, covering concrete neighborhood/task/milestone/activity data, callback ordering, same-write reentry, detached results, view-switch reply identity, host level/access/group/shop gates and environment isolation. [Runtime model](../wiki/systems/neighborhood-initiatives.md).

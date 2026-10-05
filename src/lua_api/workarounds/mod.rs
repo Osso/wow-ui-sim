@@ -194,6 +194,7 @@ fn apply_runtime_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::combat_log_state::apply_bootstrap(lua)?;
     temporary::encounter_state::apply_bootstrap(lua)?;
     temporary::housing_catalog_state::apply_bootstrap(lua)?;
+    temporary::house_exterior_debug::apply_bootstrap(lua)?;
     temporary::map_runtime_state::apply_bootstrap(lua)?;
     temporary::perks_activities_state::apply_bootstrap(lua)?;
     temporary::private_aura_state::apply_bootstrap(lua)?;

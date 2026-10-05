@@ -104,7 +104,7 @@ pub mod c_mythic_plus_calendar;
 pub(crate) mod c_nameplate_manager;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_navigation;
-mod c_neighborhood_initiative;
+pub mod c_neighborhood_initiative;
 pub mod c_paper_doll_info;
 pub mod c_party_info;
 pub mod c_pet_battles;

@@ -76,6 +76,7 @@ pub(crate) mod glue_character_select_defaults;
 pub(crate) mod glueparent_uiparent_attributes;
 pub(crate) mod gossip_poi_defaults;
 pub(crate) mod guild_info_namespace_fallback;
+pub(crate) mod house_exterior_debug;
 pub(crate) mod housing_catalog_state;
 pub(crate) mod housing_dashboard_preload;
 pub(crate) mod inert_global_defaults;
