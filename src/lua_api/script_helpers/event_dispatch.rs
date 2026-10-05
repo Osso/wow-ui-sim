@@ -48,12 +48,17 @@ pub(crate) fn event_matches_unit_filter(
 }
 
 pub fn fire_named_event_state(state: &mut LuaState, event_name: &str, args: &[Val]) {
+    let saved_top = state.top;
+    for value in args {
+        state.push(*value);
+    }
     for widget_id in get_event_listeners(state, event_name) {
         if let Err(error) = dispatch_named_event_handlers(state, widget_id, event_name, args) {
             call_error_handler_state(state, &error.to_string());
-            return;
+            break;
         }
     }
+    state.top = saved_top;
 }
 
 /// Dispatch one frame's filtered precall, normal and postcall event scripts.

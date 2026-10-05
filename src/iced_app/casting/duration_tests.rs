@@ -4,6 +4,34 @@ use crate::lua_api::WowLuaEnv;
 use std::time::Duration;
 
 #[test]
+fn completion_arguments_survive_collection_in_stop_error_handler() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        completionErrors = 0
+        completionDeliveries = 0
+        seterrorhandler(function()
+            completionErrors = completionErrors + 1
+            collectgarbage('collect')
+        end)
+        local frame = CreateFrame('Frame')
+        frame:RegisterEvent('UNIT_SPELLCAST_STOP')
+        frame:RegisterEvent('UNIT_SPELLCAST_SUCCEEDED')
+        frame:SetScript('OnEvent', function(_, event, unit, guid, spell)
+            if event == 'UNIT_SPELLCAST_STOP' then error('audit cast stop') end
+            assert(unit == 'player' and guid == 'Cast-Sim-1' and spell == 19750)
+            assert(select('#', UnitCastingDuration('player')) == 0)
+            completionDeliveries = completionDeliveries + 1
+        end)
+    "#,
+    )
+    .unwrap();
+    fire_cast_complete_events(&env, 1, 19750);
+    env.exec("assert(completionErrors == 1 and completionDeliveries == 1)")
+        .unwrap();
+}
+
+#[test]
 fn unit_cast_duration_clears_before_completion_callbacks() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(

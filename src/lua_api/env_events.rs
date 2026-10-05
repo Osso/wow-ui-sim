@@ -242,6 +242,22 @@ impl WowLuaEnv {
 
     /// Fire an event with arguments to all registered frames.
     pub fn fire_event_with_args(&self, event: &str, args: &[Val]) -> Result<()> {
+        let saved_top = {
+            let mut lua = self.lua.borrow_mut();
+            let state = lua.state_mut();
+            let saved_top = state.top;
+            for value in args {
+                state.push(*value);
+            }
+            saved_top
+        };
+        // Individual calls unroot their arguments before invoking error handlers.
+        let result = self.fire_rooted_event(event, args);
+        self.lua.borrow_mut().state_mut().top = saved_top;
+        result
+    }
+
+    fn fire_rooted_event(&self, event: &str, args: &[Val]) -> Result<()> {
         #[cfg(feature = "retail-12-0-5")]
         crate::c_api::aura_entry::apply_entry_event(self.lua.borrow_mut().state_mut(), event)?;
         #[cfg(feature = "retail-12-0-0")]

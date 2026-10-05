@@ -20,6 +20,14 @@ Eleven additional construction sites need roots: `color_segment_table`, spell, a
 
 C API subsystem filters at `7f6d28454`: allied races 13/13, artifact panel 42/42, major factions 14/14.
 
+## Event error-handler window
+
+`WowLuaEnv::fire_event_with_args` and `fire_named_event_state` retained payloads only in Rust between listeners. A failed listener removes its call arguments from the VM stack, then invokes the configured Lua error handler. Forced collection there destroys table payloads before the next listener. Keep payloads on the VM stack across the entire dispatch; restore stack height on success and failure.
+
+`host_event_payload_survives_collection_in_error_handler` reproduces the host path with a nested payload. `native_aura_event_payload_survives_collection_in_error_handler` reproduces the native path through `A_Admin.AddBuff`. Both failed with `table has been collected` in the second listener before the fix.
+
+Cast completion uses strings and numbers, not tables. `completion_arguments_survive_collection_in_stop_error_handler` already passes before the dispatch fix: forced collection during STOP error reporting preserves the SUCCEEDED arguments. No evidence that the reported one-in-three duration test flake is this rooting bug. Its one-second live deadline plus an immediate `extract_completed_cast().is_none()` assertion is scheduling-sensitive; no speculative production or timing change was made.
+
 ## Sources
 
 - Commit `16682b415` — established stack/parent rooting idiom.
