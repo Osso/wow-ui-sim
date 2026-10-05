@@ -200,19 +200,20 @@ fn c_lfg_info_can_player_use_premade_group_can_be_disabled() {
 fn recruit_a_friend_surface_returns_disabled_empty_defaults() {
     let env = env();
     let (
-        enabled,
+        enabled_probe,
         recruiting_enabled,
         versions_len,
         recruits_len,
         claim_in_progress,
         recruit_active,
         recruit_faction_type,
-    ): (bool, bool, f64, f64, bool, bool, String) = env
+    ): (String, bool, f64, f64, bool, bool, String) = env
         .eval(
             r#"
             local info = C_RecruitAFriend.GetRAFInfo()
             local active, faction = C_RecruitAFriend.GetRecruitInfo()
-            return C_RecruitAFriend.IsEnabled(),
+            local enabled = C_RecruitAFriend.IsEnabled
+            return enabled and tostring(enabled()) or "absent",
                    C_RecruitAFriend.IsRecruitingEnabled(),
                    #info.versions,
                    #info.recruits,
@@ -222,7 +223,13 @@ fn recruit_a_friend_surface_returns_disabled_empty_defaults() {
             "#,
         )
         .expect("Recruit-A-Friend fallback surface should be callable");
-    assert!(!enabled);
+    // 12.1.0 removed C_RecruitAFriend.IsEnabled.
+    let expected_enabled = if cfg!(feature = "retail-12-1-0") {
+        "absent"
+    } else {
+        "false"
+    };
+    assert_eq!(enabled_probe, expected_enabled);
     assert!(!recruiting_enabled);
     assert_eq!(versions_len, 1.0);
     assert_eq!(recruits_len, 0.0);

@@ -268,7 +268,7 @@ fn blizzard_recruit_a_friend_appears_in_eager_game_discovery() {
 }
 
 #[test]
-fn blizzard_recruit_a_friend_loads_with_retail_is_enabled_surface() {
+fn blizzard_recruit_a_friend_loads_with_profile_is_enabled_surface() {
     let ui = blizzard_ui_dir();
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_mode(ScreenKind::Game);
@@ -287,24 +287,27 @@ fn blizzard_recruit_a_friend_loads_with_retail_is_enabled_surface() {
         }
     }
 
-    let (is_function, enabled): (bool, bool) = env
+    let probe: String = env
         .eval(
-            "return type(C_RecruitAFriend.IsEnabled) == 'function', \
-             C_RecruitAFriend.IsEnabled()",
+            "if C_RecruitAFriend.IsEnabled == nil then return 'absent' end \
+             return tostring(C_RecruitAFriend.IsEnabled())",
         )
-        .expect("retail Recruit-A-Friend enabled probe should be callable");
-    assert!(
-        is_function,
-        "retail 12.1 must expose C_RecruitAFriend.IsEnabled"
-    );
-    assert!(!enabled, "Recruit-A-Friend is modeled disabled by default");
+        .expect("Recruit-A-Friend enabled probe should run");
+    // 12.1.0 removed C_RecruitAFriend.IsEnabled (12.1.0 API changes, Global API
+    // removals) and the cached Blizzard_RecruitAFriend no longer calls it.
+    let expected = if cfg!(feature = "retail-12-1-0") {
+        "absent"
+    } else {
+        "false"
+    };
+    assert_eq!(probe, expected, "Recruit-A-Friend is modeled disabled by default");
 
     let warnings = recruit_a_friend_warnings.expect("Recruit-A-Friend addon should load");
     assert!(
         !warnings
             .iter()
             .any(|warning| warning.contains("C_RecruitAFriend.IsEnabled")),
-        "real Blizzard_RecruitAFriend load must resolve IsEnabled: {warnings:?}"
+        "real Blizzard_RecruitAFriend load must not reference IsEnabled: {warnings:?}"
     );
 }
 
