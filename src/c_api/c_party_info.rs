@@ -250,7 +250,26 @@ fn c_party_info_uninvite_unit(state: &mut LuaState) -> LuaResult<u32> {
     }
 }
 
+/// March 25 leadership restrictions were not loosened by March 31's
+/// countdown/ready-check/ping/loot policy. INFERRED: the migrated C_PartyInfo
+/// successors retain the legacy leadership restriction; denial raises an error.
+/// This reads VM caller taint and live combat state, never a Lua permission flag.
+fn reject_addon_leadership_combat(state: &LuaState) -> LuaResult<()> {
+    let restricted_caller = cfg!(feature = "retail-12-0-5") && !rilua::api::state_is_secure(state);
+    if restricted_caller
+        && crate::lua_api::methods::borrow_state(state)?
+            .player
+            .in_combat
+    {
+        return Err(rilua::runtime_error(
+            "C_PartyInfo: addon leadership changes are blocked during combat",
+        ));
+    }
+    Ok(())
+}
+
 fn c_party_info_demote_assistant(state: &mut LuaState) -> LuaResult<u32> {
+    reject_addon_leadership_combat(state)?;
     #[cfg(feature = "retail-12-0-7")]
     {
         roles_1207::demote_assistant(state)
@@ -264,6 +283,7 @@ fn c_party_info_demote_assistant(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_party_info_promote_to_assistant(state: &mut LuaState) -> LuaResult<u32> {
+    reject_addon_leadership_combat(state)?;
     #[cfg(feature = "retail-12-0-7")]
     {
         roles_1207::promote_to_assistant(state)
@@ -277,6 +297,7 @@ fn c_party_info_promote_to_assistant(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_party_info_promote_to_leader(state: &mut LuaState) -> LuaResult<u32> {
+    reject_addon_leadership_combat(state)?;
     #[cfg(feature = "retail-12-0-7")]
     {
         roles_1207::promote_to_leader(state)
@@ -291,6 +312,7 @@ fn c_party_info_promote_to_leader(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn c_party_info_set_everyone_is_assistant(state: &mut LuaState) -> LuaResult<u32> {
+    reject_addon_leadership_combat(state)?;
     #[cfg(feature = "retail-12-0-7")]
     {
         roles_1207::set_everyone_is_assistant(state)

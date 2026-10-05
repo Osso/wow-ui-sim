@@ -23,7 +23,7 @@ B11 replaces raid-wide assistant shortcuts with member-specific inputs; B25 publ
 - [x] Everyone toggle returns exactly one public boolean. INFERRED: `updated` is true only for an effective flag change in an active group, false for duplicate or inactive requests.
 - [x] Uninvite validates optional reason and exact-name selector, removes one resolved member, clears that member's roles, rebases a surviving leader index, and synchronously notifies `GROUP_ROSTER_UPDATE` with the new roster visible. INFERRED: removing the leader selects local-player leadership; self-uninvite is a no-op.
 - [x] Home membership reads the existing active roster and its existing synthetic GUID convention; category 2 reads only explicit host GUID membership. Unconfigured category 2 returns false. INFERRED: nil category routes to home; only 1/2 are accepted. No fabricated category-2 membership or fallback to home.
-- [x] Explicit host restriction rejects mutations atomically and permits recovery when cleared. INFERRED: restrictions are not derived automatically from combat or leadership. Membership remains readable under the flag.
+- [x] Explicit host restriction rejects mutations atomically and permits recovery when cleared. Host permission is independent of combat or leadership. Membership remains readable under the flag. Four leadership entry points additionally enforce the [12.0.5 addon-combat restriction](patch-12-0-5-pending-leadership.md); `UninviteUnit` is not in that historical list.
 - [x] Host input changes are read on every operation/query; inputs and mutations remain environment-local. Leaving the roster clears role sets.
 
 ### Secret arguments and taint
