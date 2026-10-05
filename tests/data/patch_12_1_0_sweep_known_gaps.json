@@ -3,10 +3,5 @@
   "wt-framexml-EncounterJournal_OpenToTieredEntrance-712",
   "wt-framexml-MacroFrame_SaveMacro-1017",
   "wt-framexml-PlayerChoiceToggle_TryShow-1027",
-  "wt-framexml-ShouldDisplaySpellCooldown-888",
-  "wt-global-api-C_Housing.IsInsideOwnHouse-567",
-  "wt-global-api-C_SuperTrack.GetNextWaypointForMap-572",
-  "wt-global-api-C_UnitAuras.RemovePrivateAuraAppliedSound-574",
-  "wt-global-api-GetInspectSpecialization-578",
-  "wt-global-api-GetInventorySlotInfo-579"
+  "wt-framexml-ShouldDisplaySpellCooldown-888"
 ]
