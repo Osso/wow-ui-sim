@@ -52,18 +52,63 @@ fn test_c_console_get_all_commands_returns_table() {
 }
 
 #[test]
-fn test_c_console_get_all_commands_empty() {
+fn test_c_console_get_all_commands_live_cvars() {
+    let env = env();
+    let valid: bool = env
+        .eval(
+            r#"
+            local before = C_Console.GetAllCommands()
+            RegisterCVar('ConsoleRegistryFixture', '27')
+            RegisterCVar('consoleregistryfixture', '99')
+            local found = {}
+            for _, record in ipairs(C_Console.GetAllCommands()) do
+                assert(type(record.command) == 'string')
+                assert(type(record.help) == 'string')
+                assert(type(record.scriptContents) == 'string')
+                assert(type(record.scriptParameters) == 'string')
+                assert(type(record.category) == 'number')
+                if record.commandType == Enum.ConsoleCommandType.Cvar then
+                    assert(GetCVar(record.command) ~= nil)
+                    found[record.command] = (found[record.command] or 0) + 1
+                end
+            end
+            for _, record in ipairs(before) do
+                assert(record.command ~= 'ConsoleRegistryFixture')
+            end
+            return found.ConsoleRegistryFixture == 1 and found.uiScale == 1
+                and GetCVar('ConsoleRegistryFixture') == '27'
+            "#,
+        )
+        .unwrap();
+    assert!(valid);
+}
+
+#[test]
+fn test_c_console_get_all_commands_command_records() {
     let env = env();
     let count: i32 = env
         .eval(
             r#"
-            local n = 0
-            for _ in pairs(C_Console.GetAllCommands()) do n = n + 1 end
-            return n
+            local found = {}
+            for _, record in ipairs(C_Console.GetAllCommands()) do
+                if record.command == 'fetchBleepProxies' or record.command == 'MemUsageStackTrace' then
+                    assert(record.commandType == Enum.ConsoleCommandType.Command)
+                    assert(record.category == Enum.ConsoleCategory.None)
+                    assert(record.help == '' and record.scriptContents == '' and record.scriptParameters == '')
+                    assert(GetCVar(record.command) == nil)
+                    assert(C_CVar.GetCVarDefault(record.command) == nil)
+                    assert(not found[record.command])
+                    found[record.command] = true
+                end
+            end
+            return (found.fetchBleepProxies and 1 or 0) + (found.MemUsageStackTrace and 1 or 0)
             "#,
         )
         .unwrap();
-    assert_eq!(count, 0);
+    let supported = wow_ui_sim::client_profile::ACTIVE
+        == wow_ui_sim::client_profile::ClientProfile::Retail
+        && wow_ui_sim::client_profile::ACTIVE_INTERFACE_VERSION >= 120007;
+    assert_eq!(count, if supported { 2 } else { 0 });
 }
 
 #[test]

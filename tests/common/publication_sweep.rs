@@ -51,7 +51,7 @@ type ProbeResult = (String, String, bool, Option<String>, Option<String>);
 
 // One classifier; constructor choices are per object kind, never per source symbol.
 const CLASSIFIER: &str = r#"
-local section, symbol, removed = ...
+local section, symbol, removed, entryKind = ...
 local function result(kind, detail, ok, value, default)
     return kind, detail, ok, value, default
 end
@@ -208,7 +208,18 @@ local function probe_cvar()
     if removed then ok = value == nil and default == nil end
     return result('cvar', 'value/default queried', ok, value, default)
 end
+local function probe_command()
+    local present = false
+    for _, record in ipairs(C_Console.GetAllCommands()) do
+        if record.command == symbol and record.commandType == Enum.ConsoleCommandType.Command then
+            present = true
+            break
+        end
+    end
+    return result('command', 'Command record present=' .. tostring(present), present ~= removed)
+end
 local function classify()
+    if entryKind == 'command' then return probe_command() end
     if section == 'events' then return probe_event() end
     if section == 'cvars' then return probe_cvar() end
     if section == 'widgets' or section == 'scriptobjects' then return probe_object() end
@@ -226,16 +237,12 @@ fn quote_lua(value: &str) -> String {
 }
 
 fn probe_entry(env: &WowLuaEnv, entry: &Entry, removed: bool) -> ProbeResult {
-    // Console commands have no Lua publication surface to probe.
-    if entry.kind.as_deref() == Some("command") {
-        let detail = "console command; no Lua publication probe".to_owned();
-        return ("unprobeable".into(), detail, false, None, None);
-    }
     let code = format!(
-        "return (function(...) {CLASSIFIER} end)({}, {}, {})",
+        "return (function(...) {CLASSIFIER} end)({}, {}, {}, {})",
         quote_lua(&entry.section),
         quote_lua(&entry.symbol),
         removed,
+        quote_lua(entry.kind.as_deref().unwrap_or("")),
     );
     env.eval::<ProbeResult>(&code)
         .unwrap_or_else(|error| ("probe-error".into(), error.to_string(), false, None, None))
@@ -244,6 +251,7 @@ fn probe_entry(env: &WowLuaEnv, entry: &Entry, removed: bool) -> ProbeResult {
 fn classify_entry(env: &WowLuaEnv, entry: &Entry, expectation: &Expectation) -> Value {
     let (kind, detail, ok, value, default) = probe_entry(env, entry, expectation.removed);
     let default_mismatch = entry.section == "cvars"
+        && entry.kind.as_deref() != Some("command")
         && !expectation.removed
         && entry.page_default.is_some()
         && entry.page_default != default;

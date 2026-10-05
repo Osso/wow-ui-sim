@@ -1,4 +1,4 @@
-//! Console enumeration exposes only CVars known to the simulator.
+//! Console enumeration exposes live CVars and epoch-scoped console commands.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -14,8 +14,12 @@ fn console_catalog_lists_supported_cvars_with_bounded_metadata() {
             for _, entry in ipairs(commands) do
                 assert(entry.command:lower() > previous, "sorted unique names")
                 previous = entry.command:lower()
-                assert(C_CVar.GetCVar(entry.command) ~= nil)
-                assert(entry.commandType == Enum.ConsoleCommandType.Cvar)
+                if entry.commandType == Enum.ConsoleCommandType.Cvar then
+                    assert(C_CVar.GetCVar(entry.command) ~= nil)
+                else
+                    assert(entry.commandType == Enum.ConsoleCommandType.Command)
+                    assert(C_CVar.GetCVar(entry.command) == nil)
+                end
                 assert(entry.category == Enum.ConsoleCategory.None)
                 assert(entry.help == "" and entry.scriptContents == "" and entry.scriptParameters == "")
                 if entry.command == "Sound_EnableAllSound" then found = true end
