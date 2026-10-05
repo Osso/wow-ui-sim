@@ -1,6 +1,6 @@
 ## [2026-10-05] investigation | Cast duration rounding
 
-[Investigation](investigations/cast-duration-rounding.md) records the captured one-ULP loss and deterministic RED. Cast state preserves configured spans; queries no longer recover duration from rounded deadlines. GC audit attribution updated; verification pending.
+[Investigation](investigations/cast-duration-rounding.md) records the captured one-ULP loss and deterministic RED. Cast state preserves configured spans; queries no longer recover duration from rounded deadlines. [Proof](investigations/cast-duration-rounding.md#verification--2026-10-05): targeted/module GREEN, 95 integration controls, three full parallel lib runs with only six known failures, startup `[]`, check/fmt pass. GC audit attribution updated.
 
 ## [2026-10-05] evidence | 12.0.0 enum/deprecated extract proof
 
