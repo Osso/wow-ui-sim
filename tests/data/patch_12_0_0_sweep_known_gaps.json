@@ -15,8 +15,6 @@
   "wt-global-api-C_CatalogShop.RefreshRefundableDecors-101",
   "wt-global-api-C_CatalogShop.StartHousingVCPurchaseConfirmation-103",
   "wt-global-api-C_CharacterServices.AssignFCMDistribution-104",
-  "wt-global-api-C_CombatAudioAlert.SetSpecSetting-124",
-  "wt-global-api-C_CombatAudioAlert.SetThrottle-125",
   "wt-global-api-C_CombatLog.IsCombatLogRestricted-133",
   "wt-global-api-C_Commentator.GetCombatEventInfo-141",
   "wt-global-api-C_CooldownViewer.GetValidAlertTypes-142",
