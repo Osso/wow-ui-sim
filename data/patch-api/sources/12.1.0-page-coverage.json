@@ -363,6 +363,20 @@
       "implementation": "src/c_api/unit_aura_access.rs, frame_id_from_stack in src/lua_api/methods.rs",
       "compiled_revision": "501d6f13a",
       "proof": "main-thread on master 501d6f13a: 86 patch_12_1_0_ tests, broad forbidden/secure/taint/eventutil/action_bar/access/settings 824 pass, lib/prefork only pre-existing failures, mists --check clean, lua-errors []; no independent review"
+    },
+    {
+      "id": "unit-secrecy-12-1-0",
+      "symbols": [
+        "17 unit identity APIs, UnitIsCharmed/UnitIsPossessed, UnitName PvP exemption, GetGuildInfo compound tokens"
+      ],
+      "scope": "Unit identity APIs return secrets while a unit's identity is marked secret (player/party exemptions per page), charm/possession secrecy follows aura secrecy except player-controlled tokens, UnitName public for players in an active PvP match, GetGuildInfo returns nothing for compound tokens. INFERRED: compound = ends in 'target' and not 'target'; Player- GUID prefix; charm/possession state itself not modeled (false); role values placeholders.",
+      "spec": "docs/specs/patch-12-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_1_0_unit_secrecy.rs"
+      ],
+      "implementation": "src/lua_api/globals/real/unit_secret_predicates.rs",
+      "compiled_revision": "2f36c7ddc",
+      "proof": "main-thread on master 2f36c7ddc with rilua a76ffa8: 91 patch_12_1_0_ tests, broad unit/secret/guild/identity/lfg/role/pvp 1269 pass (1 pre-existing), lib/prefork only pre-existing failures, lua-errors []; no independent review"
     }
   ],
   "source_rows": [
@@ -1536,27 +1550,35 @@
     },
     {
       "source_id": "prose-2026-07-21-194",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current UnitClass/related getters return ordinary values; implement secret results based on unit identity across every API named by the source. Existing UnitName policy does not cover these added contracts."
+      "capabilities": [
+        "unit-secrecy-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Unit secrecy proven with identity/aura secrecy as state inputs (patch_12_1_0_unit_secrecy)."
     },
     {
       "source_id": "prose-2026-07-21-195",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current UnitClass/related getters return ordinary values; implement secret results based on unit identity across every API named by the source. Existing UnitName policy does not cover these added contracts."
+      "capabilities": [
+        "unit-secrecy-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Unit secrecy proven with identity/aura secrecy as state inputs (patch_12_1_0_unit_secrecy)."
     },
     {
       "source_id": "prose-2026-07-21-196",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "GetGuildInfo has state-backed producers but the compound-token ban needs explicit authentication/validation before query results."
+      "capabilities": [
+        "unit-secrecy-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Unit secrecy proven with identity/aura secrecy as state inputs (patch_12_1_0_unit_secrecy)."
     },
     {
       "source_id": "prose-2026-07-21-197",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "UnitIsPossessed currently returns false and UnitIsCharmed is a compatibility stub. Model charm/possession state plus aura secrecy and player/pet/vehicle exceptions."
+      "capabilities": [
+        "unit-secrecy-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Unit secrecy proven with identity/aura secrecy as state inputs (patch_12_1_0_unit_secrecy)."
     },
     {
       "source_id": "source-context-198",
@@ -1702,33 +1724,43 @@
     },
     {
       "source_id": "prose-2026-07-23-221",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current UnitClass/related getters return ordinary values; implement secret results based on unit identity across every API named by the source. Existing UnitName policy does not cover these added contracts."
+      "capabilities": [
+        "unit-secrecy-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Unit secrecy proven with identity/aura secrecy as state inputs (patch_12_1_0_unit_secrecy)."
     },
     {
       "source_id": "prose-2026-07-23-222",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Current UnitClass/related getters return ordinary values; implement secret results based on unit identity across every API named by the source. Existing UnitName policy does not cover these added contracts."
+      "capabilities": [
+        "unit-secrecy-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Unit secrecy proven with identity/aura secrecy as state inputs (patch_12_1_0_unit_secrecy)."
     },
     {
       "source_id": "prose-2026-07-23-223",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "UnitIsPossessed currently returns false and UnitIsCharmed is a compatibility stub. Model charm/possession state plus aura secrecy and player/pet/vehicle exceptions."
+      "capabilities": [
+        "unit-secrecy-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Unit secrecy proven with identity/aura secrecy as state inputs (patch_12_1_0_unit_secrecy)."
     },
     {
       "source_id": "prose-2026-07-23-224",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "GetGuildInfo has state-backed producers but the compound-token ban needs explicit authentication/validation before query results."
+      "capabilities": [
+        "unit-secrecy-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Unit secrecy proven with identity/aura secrecy as state inputs (patch_12_1_0_unit_secrecy)."
     },
     {
       "source_id": "prose-2026-07-23-225",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Existing 12.0.5 unit-name-secret-tokens capability protects PvP tokens; the new no-secrets-in-active-PvP delta cannot inherit that opposite policy. Add explicit active-match handling."
+      "capabilities": [
+        "unit-secrecy-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Unit secrecy proven with identity/aura secrecy as state inputs (patch_12_1_0_unit_secrecy)."
     },
     {
       "source_id": "source-context-228",
@@ -1782,9 +1814,11 @@
     },
     {
       "source_id": "prose-2026-08-04-236",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "UnitIsPossessed currently returns false and UnitIsCharmed is a compatibility stub. Model charm/possession state plus aura secrecy and player/pet/vehicle exceptions."
+      "capabilities": [
+        "unit-secrecy-12-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Unit secrecy proven with identity/aura secrecy as state inputs (patch_12_1_0_unit_secrecy)."
     },
     {
       "source_id": "prose-2026-08-04-237",
