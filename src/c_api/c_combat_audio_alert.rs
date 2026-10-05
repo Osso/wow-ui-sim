@@ -13,7 +13,80 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetSpeakerVolume", get_speaker_volume)?;
     table_set_rust_fn_static(state, namespace, "SetSpeakerVolume", set_speaker_volume)?;
     table_set_rust_fn_static(state, namespace, "GetFormatSetting", get_format_setting)?;
-    table_set_rust_fn_static(state, namespace, "SetFormatSetting", set_format_setting)
+    table_set_rust_fn_static(state, namespace, "SetFormatSetting", set_format_setting)?;
+    #[cfg(feature = "retail-12-0-0")]
+    {
+        table_set_rust_fn_static(state, namespace, "GetSpecSetting", get_spec_setting)?;
+        table_set_rust_fn_static(state, namespace, "SetSpecSetting", set_spec_setting)?;
+        table_set_rust_fn_static(state, namespace, "GetThrottle", get_throttle)?;
+        table_set_rust_fn_static(state, namespace, "SetThrottle", set_throttle)?;
+    }
+    Ok(())
+}
+
+fn numeric_arg(state: &LuaState, index: i32, what: &str) -> LuaResult<f64> {
+    match stack_val(state, index) {
+        Val::Num(value) if value.is_finite() => Ok(value),
+        _ => Err(rilua::runtime_error(&format!(
+            "{what} requires a finite number"
+        ))),
+    }
+}
+
+/// Spec settings belong to the active specialization; switching spec exposes that
+/// spec's own (initially zero) values. INFERRED: per-spec scope, unset reads zero.
+#[cfg(feature = "retail-12-0-0")]
+fn spec_setting_key(state: &LuaState) -> LuaResult<(i32, i32)> {
+    let setting = numeric_arg(state, 1, "SpecSetting setting")? as i32;
+    let spec = borrow_state(state)?.player.active_spec_index;
+    Ok((spec, setting))
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn get_spec_setting(state: &mut LuaState) -> LuaResult<u32> {
+    let key = spec_setting_key(state)?;
+    let value = borrow_state(state)?
+        .combat_audio_spec_settings
+        .get(&key)
+        .copied()
+        .unwrap_or(0.0);
+    state.push(Val::Num(value));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn set_spec_setting(state: &mut LuaState) -> LuaResult<u32> {
+    let key = spec_setting_key(state)?;
+    let value = numeric_arg(state, 2, "SetSpecSetting newVal")?;
+    borrow_state_mut(state)?
+        .combat_audio_spec_settings
+        .insert(key, value);
+    state.push(Val::Bool(true));
+    Ok(1)
+}
+
+/// Throttles are shared across specs. INFERRED: unset reads zero.
+#[cfg(feature = "retail-12-0-0")]
+fn get_throttle(state: &mut LuaState) -> LuaResult<u32> {
+    let throttle_type = numeric_arg(state, 1, "Throttle throttleType")? as i32;
+    let value = borrow_state(state)?
+        .combat_audio_throttles
+        .get(&throttle_type)
+        .copied()
+        .unwrap_or(0.0);
+    state.push(Val::Num(value));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn set_throttle(state: &mut LuaState) -> LuaResult<u32> {
+    let throttle_type = numeric_arg(state, 1, "SetThrottle throttleType")? as i32;
+    let value = numeric_arg(state, 2, "SetThrottle newVal")?;
+    borrow_state_mut(state)?
+        .combat_audio_throttles
+        .insert(throttle_type, value);
+    state.push(Val::Bool(true));
+    Ok(1)
 }
 
 fn format_setting_key(state: &LuaState) -> LuaResult<(i32, i32)> {

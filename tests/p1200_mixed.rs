@@ -124,3 +124,22 @@ fn p1200_mixed_spell_loss_of_control_duration() {
     env.exec("assert(select('#', C_Spell.GetSpellLossOfControlCooldownDuration(19750)) == 0)")
         .unwrap();
 }
+
+#[test]
+fn p1200_mixed_combat_audio_settings() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        assert(C_CombatAudioAlert.SetSpecSetting(0, 4.5) == true)
+        assert(C_CombatAudioAlert.GetSpecSetting(0) == 4.5)
+        assert(C_CombatAudioAlert.GetSpecSetting(1) == 0)
+        assert(C_CombatAudioAlert.SetThrottle(1, 2.75) == true)
+        assert(C_CombatAudioAlert.GetThrottle(1) == 2.75)
+        assert(C_CombatAudioAlert.GetThrottle(0) == 0)
+        assert(not pcall(C_CombatAudioAlert.SetSpecSetting, 0, math.huge))
+        assert(C_CombatAudioAlert.GetSpecSetting(0) == 4.5)
+    "#).unwrap();
+    env.state().borrow_mut().player.active_spec_index = 1;
+    env.exec("assert(C_CombatAudioAlert.GetSpecSetting(0) == 0); assert(C_CombatAudioAlert.GetThrottle(1) == 2.75)").unwrap();
+    let other = WowLuaEnv::new().unwrap();
+    other.exec("assert(C_CombatAudioAlert.GetThrottle(1) == 0)").unwrap();
+}

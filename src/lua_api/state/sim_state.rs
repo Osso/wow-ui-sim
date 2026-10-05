@@ -335,6 +335,12 @@ pub struct SimState {
     pub combat_audio_speaker_volume: f64,
     /// Numeric unit/type setting state only; no formatting or CVar coupling.
     pub combat_audio_format_settings: HashMap<(i32, i32), f64>,
+    /// INFERRED per-active-spec-index settings; unconfigured zero, no CVar/playback coupling.
+    #[cfg(feature = "retail-12-0-0")]
+    pub combat_audio_spec_settings: HashMap<(i32, i32), f64>,
+    /// INFERRED shared throttle seconds by throttle type; unconfigured zero.
+    #[cfg(feature = "retail-12-0-0")]
+    pub combat_audio_throttles: HashMap<i32, f64>,
     /// Simulator tracking membership; empty initially, independent of task records.
     pub neighborhood_tracked_tasks: BTreeSet<i32>,
     pub weapon_enchants: [Vec<crate::c_api::weapon_enchants::WeaponEnchant>; 3],
