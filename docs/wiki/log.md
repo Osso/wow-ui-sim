@@ -1,3 +1,7 @@
+## [2026-10-05] investigation | Tooltip GC regression
+
+[Investigation](investigations/patch-12-0-0-api-audit.md#tooltip-gc-regression-exposed-by-retirement-registration) records original failure, unchanged host line order, retirement-only allocation control, and forced-color-callback GC RED. Root item DTO/line tables across Lua callbacks; keep API retirements and stat assertions.
+
 ## [2026-10-05] evidence | 12.0.0 wikitext publication sweep
 
 [Audit supplement](investigations/patch-12-0-0-api-audit.md#wikitext-supplement) records revision 6747189, parser and classifier corrections, 64 exact namespace retirements, all 270 initial-gap reviews, 812 OK / 198 final known gaps, source comparisons and proposed statuses. Four isolated sweeps, one-gap negative control, local check/build, fmt and startup `[]` pass. Six vendor manifest warnings match master; ledger/coverage JSON unchanged.

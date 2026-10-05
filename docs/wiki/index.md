@@ -1,3 +1,7 @@
+## [2026-10-05] investigation | Tooltip GC regression
+
+[Root cause](investigations/patch-12-0-0-api-audit.md#tooltip-gc-regression-exposed-by-retirement-registration): retirement registration shifts GC timing; Rust-held item DTO/line tables were unrooted across `CreateColor`. Forced callback collection reproduces the lifetime defect; VM stack roots replace allocation-sensitive behavior. API retirement and stat expectations remain unchanged.
+
 ## [2026-10-05] system | Console command registry
 
 [Console registry](systems/console-command-registry.md): live CVars plus two 12.0.7 Command records, shared publication probing and stale empty-test root cause. [Contract](../specs/console-command-catalog.md).

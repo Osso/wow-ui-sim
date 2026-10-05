@@ -38,7 +38,11 @@ pub(super) fn push_tooltip_line(
     left_color: Option<(f64, f64, f64)>,
     wrap: bool,
 ) {
+    // CreateColor executes Lua and may collect; Rust-held Vals are not GC roots.
+    let saved_top = state.top;
+    state.push(lines);
     let line = create_table(state);
+    set_table_array(state, lines, index, line);
     table_set(state, line, "type", Val::Num(line_type));
     let parsed = tooltip_line_text_and_color(state, left_text, left_color);
     let left_text_val = create_string(state, &parsed.text);
@@ -54,7 +58,7 @@ pub(super) fn push_tooltip_line(
     if wrap {
         table_set(state, line, "wrapText", Val::Bool(true));
     }
-    set_table_array(state, lines, index, line);
+    state.top = saved_top;
 }
 
 struct ParsedTooltipText {
@@ -571,6 +575,8 @@ pub(super) fn populate_item_tooltip_lines(
     tooltip: Val,
     item: &items::ItemInfo,
 ) {
+    let saved_top = state.top;
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_item_name_line(state, lines, item);
     push_item_level_line(state, lines, item);
@@ -579,6 +585,7 @@ pub(super) fn populate_item_tooltip_lines(
     push_item_equip_slot_line(state, lines, item.inventory_type, &mut next_index);
     push_item_binding_line(state, lines, &mut next_index, item);
     push_item_stat_lines(state, lines, item, &mut next_index);
+    state.top = saved_top;
 }
 
 pub(super) fn push_plain_line(state: &mut LuaState, lines: Val, index: i64, text: &str) {

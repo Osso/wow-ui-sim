@@ -363,6 +363,22 @@ fn secret_probe(script: &str) {
 }
 
 #[test]
+fn tooltip_item_payload_survives_collection_during_color_callback() {
+    let env = seeded_env();
+    env.exec(
+        r#"
+        local createColor = CreateColor
+        CreateColor = function(...)
+            collectgarbage('collect')
+            return createColor(...)
+        end
+        "#,
+    )
+    .unwrap();
+    probe(&env, "ITCheck(571,211995); ITCheck(604,211995,nil,1,80)");
+}
+
+#[test]
 fn default_no_map_is_meaningful_base_catalog_not_a_missing_provider() {
     probe(
         &empty_env(),
