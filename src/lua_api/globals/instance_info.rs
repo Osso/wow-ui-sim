@@ -2,7 +2,8 @@
 //!
 //! Migrates 3 entries off `GLOBAL_ZERO_STUBS`:
 //!
-//! - `GetInstanceInfo()`          → 10 values assembled from
+//! - `GetInstanceInfo()`          → 10 values (11 with Retail 12.0.7's
+//!   `hasWorldTier`) assembled from
 //!   `WorldState.instance_*` (name, type, difficulty id + name, max
 //!   players, dynamic-difficulty flags, instance id, group size, LFG
 //!   dungeon id).
@@ -50,6 +51,7 @@ struct InstanceInfoSnapshot {
     instance_id: i32,
     group_size: i32,
     lfg_dungeon_id: Option<i32>,
+    has_world_tier: bool,
 }
 
 fn snapshot_instance_info(state: &LuaState) -> LuaResult<InstanceInfoSnapshot> {
@@ -66,6 +68,7 @@ fn snapshot_instance_info(state: &LuaState) -> LuaResult<InstanceInfoSnapshot> {
         instance_id: w.instance_id,
         group_size: w.instance_group_size,
         lfg_dungeon_id: w.instance_lfg_dungeon_id,
+        has_world_tier: w.instance_has_world_tier,
     })
 }
 
@@ -90,7 +93,13 @@ fn push_instance_info_fields(state: &mut LuaState, snap: InstanceInfoSnapshot) {
 
 fn get_instance_info(state: &mut LuaState) -> LuaResult<u32> {
     let snap = snapshot_instance_info(state)?;
+    let has_world_tier = snap.has_world_tier;
     push_instance_info_fields(state, snap);
+    if cfg!(feature = "retail-12-0-7") {
+        // Retail 12.0.7 appended the non-nilable `hasWorldTier` return.
+        state.push(Val::Bool(has_world_tier));
+        return Ok(11);
+    }
     Ok(10)
 }
 

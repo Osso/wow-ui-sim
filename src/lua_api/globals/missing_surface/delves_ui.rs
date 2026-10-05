@@ -313,7 +313,10 @@ fn get_unseen_curios_by_slot_type(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_world_tier_difficulty_for_active_player(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Num(WORLD_TIER_NORMAL));
+    let selected = crate::lua_api::methods::borrow_state(state)?
+        .world
+        .world_tier_difficulty;
+    state.push(Val::Num(selected.map_or(WORLD_TIER_NORMAL, f64::from)));
     Ok(1)
 }
 

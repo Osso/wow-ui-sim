@@ -473,6 +473,13 @@ pub struct WorldState {
     /// LFG dungeon id for the current instance, if queued via the Group
     /// Finder. 10th return of `GetInstanceInfo` (nilable).
     pub instance_lfg_dungeon_id: Option<i32>,
+    /// Whether the current instance runs at the player's world tier. 11th
+    /// return of Retail 12.0.7+ `GetInstanceInfo` (`hasWorldTier`).
+    pub instance_has_world_tier: bool,
+    /// Player's selected `Enum.WorldTierDifficulty`, read by
+    /// `C_DelvesUI.GetWorldTierDifficultyForActivePlayer`. INFERRED: `None`
+    /// (no selection) reports Normal because the declaration is non-nilable.
+    pub world_tier_difficulty: Option<u8>,
     /// Mirror timers (underwater breath, exhaustion, feign death).
     /// `GetMirrorTimerInfo(index)` reads by 1-based index;
     /// `GetMirrorTimerProgress(name)` reads by name.
