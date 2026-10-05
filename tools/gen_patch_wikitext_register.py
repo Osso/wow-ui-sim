@@ -77,9 +77,11 @@ def parse_section(section, lines):
             mode = "changed"
         elif mode in ("added", "removed") and text.startswith(":"):
             entries.append(make_entry(section, mode, line_no, text))
-        elif mode == "changed" and re.match(r"^ (\{\{|\[\[)", text):
+        # Changed entries may carry a documentation-system label (" PlayerScript {{api|...}}").
+        elif mode == "changed" and re.match(r"^ (\w+ )?(\{\{|\[\[)", text):
             entries.append(make_entry(section, "changed", line_no, text))
-        elif mode == "changed" and re.match(r"^\s+[#+-] ", text):
+        # Annotations are operator lines or bare colored renames ("   <font ...>A -> B</font>").
+        elif mode == "changed" and re.match(r"^\s+([#+-] |<font)", text):
             note = FONT.sub("", text).strip()
             last = entries[-1]
             last["annotation"] = f"{last['annotation']}\n{note}".lstrip("\n")
