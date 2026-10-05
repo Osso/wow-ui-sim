@@ -58,7 +58,7 @@ pub(super) fn build_pending_record(
     display: i32,
 ) -> LuaResult<ViewedOutfitSlotInfo> {
     let sim = borrow_state(state)?;
-    let source = sim.transmog_appearance_sources.get(&id);
+    let source = super::super::c_transmog_collection::read_source_info(&sim, id);
     // INFERRED: non-assigned modes need no collected source. Illusions use
     // the illusion catalog rather than item modified appearance records.
     let illusion_collected = sim
@@ -66,7 +66,7 @@ pub(super) fn build_pending_record(
         .iter()
         .any(|row| i64::from(row.source_id) == id && row.is_collected);
     let collected =
-        display != 1 || source.is_some_and(|row| row.is_collected) || illusion_collected;
+        display != 1 || source.as_ref().is_some_and(|row| row.is_collected) || illusion_collected;
     Ok(ViewedOutfitSlotInfo {
         transmog_id: id,
         display_type: display,

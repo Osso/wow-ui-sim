@@ -38,10 +38,10 @@ fn read_source_id(state: &LuaState) -> LuaResult<i64> {
 
 fn get_appearance_source_info(state: &mut LuaState) -> LuaResult<u32> {
     let id = read_source_id(state)?;
-    let record = borrow_state(state)?
-        .transmog_appearance_sources
-        .get(&id)
-        .cloned();
+    let record = {
+        let sim = borrow_state(state)?;
+        super::read_source_info(&sim, id)
+    };
     let Some(record) = record else { return Ok(0) };
     let table = build_source_table(state, &record);
     state.push(table);

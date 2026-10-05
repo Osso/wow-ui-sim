@@ -50,7 +50,7 @@ fn get_sources(state: &mut LuaState) -> LuaResult<u32> {
     let rows = {
         let sim = borrow_state(state)?;
         ids.iter()
-            .filter_map(|id| sim.transmog_appearance_sources.get(id).cloned())
+            .filter_map(|id| super::super::c_transmog_collection::read_source_info(&sim, *id))
             .collect::<Vec<_>>()
     };
     let array = create_table(state);
@@ -71,10 +71,9 @@ fn option_for_source(state: &LuaState, id: i64, slot: i32) -> LuaResult<i32> {
     if slot < 12 {
         return Ok(0);
     }
-    let category = borrow_state(state)?
-        .transmog_appearance_sources
-        .get(&id)
-        .map(|row| row.category);
+    let sim = borrow_state(state)?;
+    let category =
+        super::super::c_transmog_collection::read_source_info(&sim, id).map(|row| row.category);
     Ok(match category {
         Some(18) => 5,
         Some(19) => 4,
@@ -130,8 +129,7 @@ fn import_set(state: &mut LuaState) -> LuaResult<u32> {
             .filter_map(|((_, slot), ids)| {
                 ids.iter()
                     .find(|source| {
-                        sim.transmog_appearance_sources
-                            .get(source)
+                        super::super::c_transmog_collection::read_source_info(&sim, **source)
                             .is_some_and(|row| row.is_collected)
                     })
                     .map(|source| (*slot, *source))

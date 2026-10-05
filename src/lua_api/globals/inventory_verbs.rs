@@ -145,6 +145,8 @@ fn pickup_action(state: &mut LuaState) -> LuaResult<u32> {
     };
     let cursor = if let Some(&macro_index) = st.action_macros.get(&slot) {
         CursorInfo::Macro { macro_index }
+    } else if let Some(&outfit_id) = st.action_outfits.get(&slot) {
+        CursorInfo::TransmogOutfit { outfit_id }
     } else if let Some(&spell_id) = st.action_bars.get(&slot) {
         CursorInfo::Action { slot, spell_id }
     } else {
@@ -352,9 +354,14 @@ fn place_action(state: &mut LuaState) -> LuaResult<u32> {
             crate::c_api::action_macros::clear_slot(&mut st, slot);
             st.action_bars.insert(slot, talent_id);
         }
-        CursorInfo::Item { .. } | CursorInfo::Money { .. } | CursorInfo::TransmogOutfit { .. } => {
-            return Ok(0);
+        CursorInfo::TransmogOutfit { outfit_id } => {
+            crate::c_api::action_macros::clear_slot(&mut st, slot);
+            st.action_outfits.insert(slot, outfit_id);
+            if outfit_id == 0 {
+                st.equipped_gear_outfit_action_slots.insert(slot);
+            }
         }
+        CursorInfo::Item { .. } | CursorInfo::Money { .. } => return Ok(0),
     }
     st.cursor_item = None;
     drop(st);

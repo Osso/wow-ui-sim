@@ -16,6 +16,8 @@ mod appearance_source_info;
 pub(crate) mod appearance_sources;
 #[cfg(feature = "retail-12-0-5")]
 pub use appearance_source_info::AppearanceSourceInfo;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) use appearance_source_info::read_source_info;
 
 mod hyperlinks;
 

@@ -6,6 +6,10 @@
 
 [Investigation](investigations/patch-12-0-0-api-audit.md#tooltip-gc-regression-exposed-by-retirement-registration) records original failure, unchanged host line order, retirement-only allocation control, and forced-color-callback GC RED. Root item DTO/line tables across Lua callbacks; keep API retirements and stat assertions.
 
+## [2026-10-05] implementation | Retail transmog outfit state
+
+[Outfit system](systems/transmog-outfits.md) documents catalog/pending/situation state, enum-slot topology, set imports, cursor actions and structured visual successors. [Contract](../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) separates modeled behavior from inferred/native-unverified choices. Publication and final proof reconciliation remain pending at this entry.
+
 ## [2026-10-05] evidence | 12.0.0 wikitext publication sweep
 
 [Audit supplement](investigations/patch-12-0-0-api-audit.md#wikitext-supplement) records revision 6747189, parser and classifier corrections, 64 exact namespace retirements, all 270 initial-gap reviews, 812 OK / 198 final known gaps, source comparisons and proposed statuses. Four isolated sweeps, one-gap negative control, local check/build, fmt and startup `[]` pass. Six vendor manifest warnings match master; ledger/coverage JSON unchanged.

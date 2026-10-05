@@ -556,11 +556,12 @@ fn unassigned_display_atlas(state: &mut LuaState) -> LuaResult<u32> {
 
 fn effective_category(state: &mut LuaState) -> LuaResult<u32> {
     let id = i64::from_stack(state, 1)?;
-    let category = borrow_state(state)?
-        .transmog_appearance_sources
-        .get(&id)
-        .map(|row| row.category)
-        .unwrap_or(0);
+    let category = {
+        let sim = borrow_state(state)?;
+        super::super::c_transmog_collection::read_source_info(&sim, id)
+            .map(|row| row.category)
+            .unwrap_or(0)
+    };
     state.push(Val::Num(category as f64));
     Ok(1)
 }

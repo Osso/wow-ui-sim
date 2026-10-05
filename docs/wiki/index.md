@@ -18,6 +18,10 @@
 
 [Club membership](systems/club-membership.md): opaque IDs and state-backed roles, notes, invitations; [contract](../specs/club-membership.md). [Development proof](../specs/club-membership.md#development-proof--2026-10-05): 12 member tests, regression filters, publication and startup `[]`; one unrelated master chat failure remains. Coverage ledger unchanged.
 
+## [2026-10-05] implementation | Retail transmog outfit state
+
+[Outfit system](systems/transmog-outfits.md) describes per-outfit saved and pending state, slot topology, collections/set imports, cursor actions and visual structures. [Closure contract](../specs/patch-12-0-0-publication-sweep.md#transmog-outfit-closure-contract) owns behavior and proof limitations.
+
 ## [2026-10-04] evidence | 12.0.5 pending non-sweep follow-up
 
 [24-row follow-up](investigations/patch-12-0-5-api-audit.md#pending-non-sweep-follow-up--2026-10-04): four leadership successors now deny addon combat mutations; unchanged restricted-mouse geometry proven. 55 targeted GREEN, startup `[]`; execution metering absent in pinned rilua. Coverage ledger unchanged.
