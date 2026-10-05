@@ -209,13 +209,19 @@ fn club_denied_management_has_no_side_effects() {
 
 #[test]
 fn club_restrictions_and_initialization_deny_privileged_mutations() {
-    use wow_ui_sim::c_api::club_model::Member;
+    use wow_ui_sim::c_api::club_model::{Invitation, Member};
     let (env, club) = community();
     {
         let mut sim = env.state().borrow_mut();
         sim.clubs.clubs.get_mut(&club).unwrap().members.push(Member::new("member:Jaina", "Jaina", 4, false));
         let candidate = Member::new("candidate:Uther", "Uther", 4, false);
         sim.clubs.clubs.get_mut(&club).unwrap().candidates.insert(candidate.id.clone(), candidate);
+        let club_state = sim.clubs.clubs.get_mut(&club).unwrap();
+        club_state.invitations.push(Invitation {
+            id: "invitation:Existing".into(),
+            invitee: Member::new("candidate:Uther", "Uther", 4, false),
+            inviter_id: club_state.members[0].id.clone(),
+        });
         sim.clubs.restriction_reason = 1;
     }
     env.exec(r#"
@@ -237,7 +243,7 @@ fn club_restrictions_and_initialization_deny_privileged_mutations() {
         assert(events == 0 and #C_Club.GetClubMembers(clubId) == 2)
         assert(C_Club.GetMemberInfo(clubId, 'member:Jaina').role == 4)
         assert(C_Club.GetMemberInfo(clubId, 'member:Jaina').memberNote == '')
-        assert(#C_Club.GetInvitationsForClub(clubId) == 0)
+        assert(#C_Club.GetInvitationsForClub(clubId) == 1)
     "#).unwrap();
     {
         let mut sim = env.state().borrow_mut();
@@ -250,7 +256,7 @@ fn club_restrictions_and_initialization_deny_privileged_mutations() {
     assert_eq!(club.members.len(), 2);
     assert_eq!(club.members[1].role, 4);
     assert!(club.members[1].note.is_empty());
-    assert!(club.invitations.is_empty());
+    assert_eq!(club.invitations.len(), 1);
     assert!(sim.lua_errors.is_empty());
 }
 
