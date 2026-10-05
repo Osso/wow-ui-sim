@@ -11,7 +11,7 @@
       "symbols": [
         "1010 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 111 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
+      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 76 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
       "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_0_publication_sweep.rs",
@@ -66,6 +66,21 @@
       "implementation": "src/c_api/c_neighborhood_initiative.rs, housing state; workarounds/temporary/house_exterior_debug.rs",
       "compiled_revision": "81384c16d",
       "proof": "Sol worker GREEN; main-thread four sweeps + housing 287/neighborhood 18/initiative 7; no independent review"
+    },
+    {
+      "id": "plain-globals-12-0-0",
+      "symbols": [
+        "removed CombatLog*/DeathRecap*/CombatText globals, GetBattlegroundInfo, SetPortraitToTexture; added Unit*/Show*Cloak/Helm/SetCursorPosition/GetCollapsingStarCost/IsRaidMarkerSystemEnabled/canaccesssecrets/hasanysecretvalues"
+      ],
+      "scope": "Removed globals: native copies epoch-gated off at retail-12-0-0; 15 legitimately republished by cached Blizzard_DeprecatedCombatLog as native aliases, verified by exact cached assignment and destination identity (sweep rule). Added globals from simulator state; canaccesssecrets/hasanysecretvalues use real VM secret machinery. Blocked: dropsecretaccess, issecrettable (no VM primitive).",
+      "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
+      "tests": [
+        "tests/publication_deprecated_alias.rs",
+        "combat_log/death_recap/secret/unit/cloak/threat filters"
+      ],
+      "implementation": "epoch-gated removals; unit/cloak/threat/secret globals",
+      "compiled_revision": "12d7fb16b",
+      "proof": "Sol worker GREEN; main-thread four sweeps + combat_log 10/death_recap 9/secret 276/unit 614 (1 pre-existing)/cloak 2/threat 6; no independent review"
     }
   ],
   "source_rows": [
@@ -6820,81 +6835,120 @@
     },
     {
       "source_id": "wt-global-api-CombatLogAddFilter-553",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CombatLogAdvanceEntry-554",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; absent on the default build."
     },
     {
       "source_id": "wt-global-api-CombatLogClearEntries-555",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CombatLogGetCurrentEntry-556",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CombatLogGetCurrentEventInfo-557",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CombatLogGetNumEntries-558",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CombatLogGetRetentionTime-559",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CombatLogResetFilter-560",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CombatLogSetCurrentEntry-561",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; absent on the default build."
     },
     {
       "source_id": "wt-global-api-CombatLogSetRetentionTime-562",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CombatLogShowCurrentEntry-563",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CombatLog_Object_IsA-564",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CombatTextSetActiveUnit-565",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-CreateAbbreviateConfig-425",
@@ -6914,15 +6968,21 @@
     },
     {
       "source_id": "wt-global-api-DeathRecap_GetEvents-566",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-DeathRecap_HasEvents-567",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-DoEmote-568",
@@ -7022,9 +7082,12 @@
     },
     {
       "source_id": "wt-global-api-GetBattlegroundInfo-580",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; absent on the default build."
     },
     {
       "source_id": "wt-global-api-GetBonusBarIndex-581",
@@ -7044,21 +7107,30 @@
     },
     {
       "source_id": "wt-global-api-GetCollapsingStarCost-427",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-GetCurrentCombatTextEventInfo-583",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-GetDeathRecapLink-584",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; republished by cached Blizzard deprecation alias (verified)."
     },
     {
       "source_id": "wt-global-api-GetExtraBarIndex-585",
@@ -7254,9 +7326,12 @@
     },
     {
       "source_id": "wt-global-api-IsRaidMarkerSystemEnabled-428",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-IsStackableAction-609",
@@ -7300,15 +7375,21 @@
     },
     {
       "source_id": "wt-global-api-SetCursorPosition-431",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-SetPortraitToTexture-612",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=function; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native removed; absent on the default build."
     },
     {
       "source_id": "wt-global-api-SetRaidTargetProtected-613",
@@ -7328,27 +7409,39 @@
     },
     {
       "source_id": "wt-global-api-ShowCloak-433",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-ShowHelm-434",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-ShowingCloak-435",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-ShowingHelm-436",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-SimulateMouseClick-437",
@@ -7480,9 +7573,12 @@
     },
     {
       "source_id": "wt-global-api-UnitEmpoweredStageDurations-446",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-UnitEmpoweredStagePercentages-447",
@@ -7526,21 +7622,30 @@
     },
     {
       "source_id": "wt-global-api-UnitIsLieutenant-452",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-UnitIsMinion-453",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-UnitIsNPCAsPlayer-454",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-UnitIsSpellTarget-455",
@@ -7584,15 +7689,21 @@
     },
     {
       "source_id": "wt-global-api-UnitShouldDisplaySpellTargetName-460",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-UnitSpellTargetClass-461",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-UnitSpellTargetName-462",
@@ -7604,9 +7715,12 @@
     },
     {
       "source_id": "wt-global-api-UnitThreatLeadSituation-463",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-UnregisterEventCallback-464",
@@ -7634,9 +7748,12 @@
     },
     {
       "source_id": "wt-global-api-canaccesssecrets-467",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-canaccesstable-468",
@@ -7658,19 +7775,22 @@
       "source_id": "wt-global-api-dropsecretaccess-470",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "note": "Blocked: pinned rilua lacks caller-context secret-access revocation / public secret payload-kind accessor."
     },
     {
       "source_id": "wt-global-api-hasanysecretvalues-471",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "plain-globals-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-issecrettable-472",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "global: raw=nil; lookup=nil"
+      "note": "Blocked: pinned rilua lacks caller-context secret-access revocation / public secret payload-kind accessor."
     },
     {
       "source_id": "wt-global-api-issecretvalue-473",

@@ -15329,11 +15329,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.AddEventFilter",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLogAdvanceEntry-554": {
     "expected": {
@@ -15347,11 +15347,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLogClearEntries-555": {
     "expected": {
@@ -15365,11 +15365,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.ClearEntries",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLogGetCurrentEntry-556": {
     "expected": {
@@ -15383,11 +15383,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.GetCurrentEntryInfo",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLogGetCurrentEventInfo-557": {
     "expected": {
@@ -15401,11 +15401,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.GetCurrentEventInfo",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLogGetNumEntries-558": {
     "expected": {
@@ -15419,11 +15419,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.GetEntryCount",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLogGetRetentionTime-559": {
     "expected": {
@@ -15437,11 +15437,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.GetEntryRetentionTime",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLogResetFilter-560": {
     "expected": {
@@ -15455,11 +15455,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.ClearEventFilters",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLogSetCurrentEntry-561": {
     "expected": {
@@ -15473,11 +15473,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLogSetRetentionTime-562": {
     "expected": {
@@ -15491,11 +15491,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.SetEntryRetentionTime",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLogShowCurrentEntry-563": {
     "expected": {
@@ -15509,11 +15509,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.ShouldShowCurrentEntry",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatLog_Object_IsA-564": {
     "expected": {
@@ -15527,11 +15527,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatLog.DoesObjectMatchFilter",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CombatTextSetActiveUnit-565": {
     "expected": {
@@ -15545,11 +15545,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatText.SetActiveUnit",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CreateAbbreviateConfig-425": {
     "expected": {
@@ -15599,11 +15599,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_DeathRecap.GetRecapEvents",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-DeathRecap_HasEvents-567": {
     "expected": {
@@ -15617,11 +15617,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_DeathRecap.HasRecapEvents",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-DoEmote-568": {
     "expected": {
@@ -15851,11 +15851,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GetBonusBarIndex-581": {
     "expected": {
@@ -15905,11 +15905,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GetCurrentCombatTextEventInfo-583": {
     "expected": {
@@ -15923,11 +15923,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_CombatText.GetCurrentEventInfo",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GetDeathRecapLink-584": {
     "expected": {
@@ -15941,11 +15941,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua; alias=C_DeathRecap.GetRecapLink",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GetExtraBarIndex-585": {
     "expected": {
@@ -16391,11 +16391,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-IsStackableAction-609": {
     "expected": {
@@ -16499,11 +16499,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-SetPortraitToTexture-612": {
     "expected": {
@@ -16517,11 +16517,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-SetRaidTargetProtected-613": {
     "expected": {
@@ -16571,11 +16571,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-ShowHelm-434": {
     "expected": {
@@ -16589,11 +16589,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-ShowingCloak-435": {
     "expected": {
@@ -16607,11 +16607,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-ShowingHelm-436": {
     "expected": {
@@ -16625,11 +16625,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-SimulateMouseClick-437": {
     "expected": {
@@ -16931,11 +16931,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-UnitEmpoweredStagePercentages-447": {
     "expected": {
@@ -17039,11 +17039,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-UnitIsMinion-453": {
     "expected": {
@@ -17057,11 +17057,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-UnitIsNPCAsPlayer-454": {
     "expected": {
@@ -17075,11 +17075,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-UnitIsSpellTarget-455": {
     "expected": {
@@ -17183,11 +17183,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-UnitSpellTargetClass-461": {
     "expected": {
@@ -17201,11 +17201,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-UnitSpellTargetName-462": {
     "expected": {
@@ -17237,11 +17237,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-UnregisterEventCallback-464": {
     "expected": {
@@ -17309,11 +17309,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-canaccesstable-468": {
     "expected": {
@@ -17381,11 +17381,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-issecrettable-472": {
     "expected": {
