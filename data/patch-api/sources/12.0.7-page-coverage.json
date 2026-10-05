@@ -331,6 +331,41 @@
       "compiled_revision": "96777f96f",
       "proof": "integrator RED 6 fail then GREEN 7/7; main-confirmed GREEN 7/7, startup clean; no independent review; partial",
       "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/round-11-master-green.log.txt"
+    },
+    {
+      "id": "publication-sweep-12-0-7",
+      "symbols": [
+        "174 wikitext inventory symbols"
+      ],
+      "scope": "Data-driven publication (added/changed) or absence (removed; deprecation-file fallbacks accepted) in a fully loaded default-Retail environment (12.1.0 surface). Rows a later patch removes again are expected absent (superseded_by). Publication only. 27 known gaps baselined in tests/data/patch_12_0_7_sweep_known_gaps.json.",
+      "spec": "docs/specs/patch-12-0-7-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_0_7_publication_sweep.rs",
+        "tests/common/publication_sweep.rs"
+      ],
+      "implementation": "test only; retired autostubbed C_DurationUtil.GetCurrentTime, C_HousingLayout.IsDraggingStairwell, C_Minimap.GetObjectIconTextureCoords, C_Scenario.GetScenarioIconInfo",
+      "compiled_revision": "dabae6c5c",
+      "proof": "main-thread GREEN on master dabae6c5c run alone; negative controls by agent; no independent review",
+      "ledger": "data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-wikitext-sweep-result.json"
+    },
+    {
+      "id": "p1207-state-models",
+      "symbols": [
+        "world tier",
+        "encounter timeline GetEventColor + color-changed event",
+        "ConfirmReadyCheck argument authentication"
+      ],
+      "scope": "Proven on the default Retail build (12.1.0 surface), not a strict 12.0.7-epoch build. World tier from WorldState (INFERRED Normal when unset); timeline model promoted to retail-12-1-0 (GetEventColor returns ColorMixin, 5s color-changed event); ConfirmReadyCheck authenticates all arguments before lockdown.",
+      "spec": "docs/specs/patch-12-0-7-publication-sweep.md",
+      "tests": [
+        "tests/p1207_world_tier.rs",
+        "tests/encounter_timeline_view.rs",
+        "tests/p1207_remaining_timeline_color_event.rs",
+        "tests/p1207_ready_check_auth.rs"
+      ],
+      "implementation": "commits cf321e084, d33f715f9, a22301abc (rebased)",
+      "compiled_revision": "dabae6c5c",
+      "proof": "agent-run GREEN; main-thread targeted re-run on master (352 pass, 1 pre-existing); no independent review"
     }
   ],
   "source_rows": [
@@ -386,7 +421,7 @@
       "source_id": "prose-undated-010",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Colour state is Lua-table backed; no timer trigger or notification. No credit."
+      "note": "5s color-changed event fires on default Retail and alpha covered; per-trigger colors (GetEventColor(id,trigger)/SetEventColor) not modeled."
     },
     {
       "source_id": "prose-undated-011",
@@ -516,9 +551,11 @@
     },
     {
       "source_id": "global api-C_DelvesUI-GetWorldTierDifficultyForActivePlayer-030",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Returns a constant; a none-default error would break cached InstanceDifficulty/DifficultyUtil consumers. No credit."
+      "capabilities": [
+        "p1207-state-models"
+      ],
+      "status": "partial-development-green",
+      "note": "World tier read from WorldState; GetInstanceInfo ret11 hasWorldTier (p1207_world_tier). No host source sets the tier."
     },
     {
       "source_id": "global api-C_DurationUtil-CreateDurationTextBinding-031",
@@ -538,9 +575,11 @@
     },
     {
       "source_id": "global api-C_EncounterTimeline-GetEventColor-033",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Returns four numbers where the cached declaration says a ColorMixin with NotAllowed secret arguments. No credit."
+      "capabilities": [
+        "p1207-state-models"
+      ],
+      "status": "partial-development-green",
+      "note": "Returns ColorMixin consumed by Blizzard timeline view (encounter_timeline_view). Secret-argument policy not enforced; colors are simulator choices."
     },
     {
       "source_id": "global api-C_HousingCatalog-GetCatalogCategoryAndSubcategoryNames-034",
@@ -576,9 +615,11 @@
     },
     {
       "source_id": "global api-C_PartyInfo-ConfirmReadyCheck-038",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Inherits the 12.0.5 ready-check lockdown only; the lockdown check runs before argument authentication and extras are not authenticated. No new credit."
+      "capabilities": [
+        "p1207-state-models"
+      ],
+      "status": "partial-development-green",
+      "note": "Arguments authenticated (secret unwrap, untainted only) before the boolean check and lockdown (p1207_ready_check_auth). HasRestrictions modeled only as chat lockdown."
     },
     {
       "source_id": "global api-C_PartyInfo-DemoteAssistant-039",
@@ -637,8 +678,8 @@
     {
       "source_id": "global api-C_PingSecure-ClearPendingPingOffScreenCallback-046",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Clears the shared slot in an addon-visible Lua table; no host-owned state or native consumer. Tests pass on the pre-change code."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "global api-C_PingSecure-SetPendingPingOffScreenCallback-047",
@@ -707,20 +748,20 @@
     {
       "source_id": "global api-GetSecurePendingButtonCallback-055",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "global api-GetSecurePendingPingOffScreenCallback-056",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "global api-GetSecurePendingToggleRunCallback-057",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "global api-GameTooltip_AddMoneyLine-058",
@@ -733,20 +774,20 @@
     {
       "source_id": "global api-SetSecurePendingButtonCallback-059",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "global api-SetSecurePendingPingOffScreenCallback-060",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "global api-SetSecurePendingToggleRunCallback-061",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Inert Lua-table callback storage with no native declaration located; tests pass on the pre-change code. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "source-context-063",
@@ -1123,50 +1164,50 @@
     {
       "source_id": "scriptobjects-DurationTextFormattingOptions-GetAddRemainingText-111",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: no cached declaration for this receiver or method (only the DurationTextBindingFormatOptions structure exists); constructor, arity, nilability and secrecy unknown. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "scriptobjects-DurationTextFormattingOptions-GetDurationType-112",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: no cached declaration for this receiver or method (only the DurationTextBindingFormatOptions structure exists); constructor, arity, nilability and secrecy unknown. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "scriptobjects-DurationTextFormattingOptions-SetAddRemainingText-113",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: no cached declaration for this receiver or method (only the DurationTextBindingFormatOptions structure exists); constructor, arity, nilability and secrecy unknown. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "scriptobjects-DurationTextFormattingOptions-SetDurationType-114",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: no cached declaration for this receiver or method (only the DurationTextBindingFormatOptions structure exists); constructor, arity, nilability and secrecy unknown. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "scriptobjects-DurationTextRawValue-GetMilliseconds-115",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: no cached declaration for DurationTextRawValue; how a raw value is obtained, its arity and secrecy are unknown. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "scriptobjects-DurationTextRawValue-GetSeconds-116",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: no cached declaration for DurationTextRawValue; how a raw value is obtained, its arity and secrecy are unknown. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "scriptobjects-DurationTextRawValue-SetMilliseconds-117",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: no cached declaration for DurationTextRawValue; how a raw value is obtained, its arity and secrecy are unknown. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "scriptobjects-DurationTextRawValue-SetSeconds-118",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: no cached declaration for DurationTextRawValue; how a raw value is obtained, its arity and secrecy are unknown. No credit."
+      "status": "metadata-only",
+      "note": "Not in any consolidated table of page revisions 6794100, 6745177 (12.0.7) or 6733756 (PTR); crawler-register origin unverified. No source contract to audit."
     },
     {
       "source_id": "source-context-120",
@@ -1338,9 +1379,11 @@
     },
     {
       "source_id": "events-ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED-145",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Producer exists only under the later retail-12-1-5 gate; four tests added but compiled out on the default build. No credit for 12.0.7."
+      "capabilities": [
+        "p1207-state-models"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact payload, fires once crossing 5s, cancellation suppresses it (p1207_remaining_timeline_color_event)."
     },
     {
       "source_id": "events-URL_TEXTURE_REQUEST_RESULT-146",
@@ -1522,9 +1565,11 @@
     },
     {
       "source_id": "source-context-172",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Excerpt says 20 added, 5 removed but names only six additions; the full page or a build diff is needed."
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "metadata-only",
+      "note": "Completeness claim resolved by wikitext: all 25 CVars named; individual CVars tracked as wt-cvars sweep rows."
     },
     {
       "source_id": "deprecated-api-174",
@@ -1563,6 +1608,1345 @@
       ],
       "status": "bounded-coverage",
       "note": "Forwarding through the unmodified cached wrapper file; replacement backend semantics and chronology not proved."
+    },
+    {
+      "source_id": "wt-cvars-Aftermath-410",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "cvar: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-AftermathCallstacks-411",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "cvar: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-MemUsageStackTrace-413",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "unprobeable: console command; no Lua publication probe"
+    },
+    {
+      "source_id": "wt-cvars-ThreadPoolPerThreadAllocator-406",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-assistedCombatReduceHighlights-394",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-debugGameEvents-416",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-developerLog-402",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-developerLogFilterDebug-395",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-developerLogFilterError-396",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-developerLogFilterFatal-397",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-developerLogFilterNormal-398",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-developerLogFilterSpam-399",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-developerLogFilterWarning-400",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-developerLogWriteToFile-401",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-enableMemoryTrap-412",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "cvar: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-fetchBleepProxies-409",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "unprobeable: console command; no Lua publication probe"
+    },
+    {
+      "source_id": "wt-cvars-frontendMatchingModes_WowLabs-417",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-housingDecorLightRadiusIndicatorsEnabled-403",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-housingOtherDecorLightRadiusIndicatorType-404",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-housingSelectedDecorLightRadiusIndicatorType-405",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-lastCharacterGuid-419",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-last_matchmaking_party_size-418",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-skipStartGear-420",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-unlockedExpansionLandingPages-407",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "cvar: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-useBLEEP-408",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_COMBAT_FACTION_CHANGE-356",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_COMBAT_HONOR_GAIN-358",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_COMBAT_MISC_INFO-360",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_COMBAT_XP_GAIN-362",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_CURRENCY-364",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_FILTERED-366",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_LOOT-368",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_MONEY-370",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_RESTRICTED-372",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBER_ADDED-374",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBER_PRESENCE_UPDATED-376",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBER_REMOVED-378",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBER_ROLE_UPDATED-380",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBER_UPDATED-382",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-ENCOUNTER_END-384",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED-350",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-URL_TEXTURE_REQUEST_RESULT-351",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-BNInviteFriend-169",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.InviteFriend-132",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ClickBindings.GetStringFromModifiers-170",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_ClickBindings.MakeModifiers-171",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.AssignMemberRole-188",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Club.GetAssignableRoles-190",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Club.GetClubMembers-192",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.GetMemberInfo-194",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.KickMember-196",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Club.RevokeInvitation-198",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Club.SendBattleTagFriendRequest-200",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Club.SendInvitation-202",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Club.SetClubMemberNote-204",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_CombatText.GetActiveUnit-206",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_CombatText.SetActiveUnit-210",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Container.CalculateTotalNumberOfFreeBagSlots-133",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetDelveEntranceTitleString-134",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetTieredEntranceType-212",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetWorldTierDifficultyForActivePlayer-135",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DurationUtil.CreateDurationTextBinding-136",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DurationUtil.CreateManualClock-137",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DurationUtil.GetCurrentTime-172",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterEvents.GetEventColor-214",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterEvents.SetEventColor-217",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterTimeline.GetEventColor-138",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterWarnings.GetColorForSeverity-219",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames-139",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.RoomConnectionSupportsDoorType-140",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.CanSetViewedFloor-141",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.IsDraggingStairwell-173",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_MerchantFrame.GetMerchantCurrencies-142",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Minimap.GetObjectIconTextureCoords-174",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.ConfirmReadyCheck-143",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.DemoteAssistant-144",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.DoReadyCheck-145",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.IsGUIDInGroup-146",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.PromoteToAssistant-147",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.PromoteToLeader-148",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.SetEveryoneIsAssistant-149",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.UninviteUnit-150",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer-151",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestHasShortExpirationWarning-152",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Scenario.GetScenarioIconInfo-175",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_ScenarioInfo.GetScenarioIconInfo-153",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetMawPowerBorderAtlasBySpellID-176",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetMawPowerRarityInfoBySpellID-154",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_StringUtil.EscapeDecimalNonPrintables-155",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UIFileAsset.GetFileID-156",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UIFileAsset.IsKnownFile-157",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UIFileAsset.IsLooseFile-158",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-ConfirmReadyCheck-177",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-DemoteAssistant-178",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-DoReadyCheck-179",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-GetBaseDifficultyID-159",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "global: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetBuildOption-160",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetEventCPUUsage-161",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetFunctionCPUUsage-162",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetInstanceInfo-221",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetMerchantCurrencies-180",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-GetProtocolTypes-163",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetScriptCPUUsage-164",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetStringFromModifiers-165",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-IsGUIDInGroup-181",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-MakeModifiers-166",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-PromoteToAssistant-182",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-PromoteToLeader-183",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-SetEveryoneIsAssistant-184",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-SimulateMouseClick-223",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "global: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SimulateMouseDown-225",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "global: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SimulateMouseUp-227",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "global: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SimulateMouseWheel-229",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "global: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-UninviteUnit-185",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationClock:GetTime-239",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationManualClock:AdvanceTime-240",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationManualClock:ResetTime-241",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationManualClock:RewindTime-242",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationManualClock:SetTime-243",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationObject:GetClock-244",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationObject:HasExpired-245",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationObject:HasStarted-246",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationObject:IsActive-247",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationObject:SetClock-248",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:CanFormatText-249",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:CanUpdateFontString-250",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:Disable-251",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:Enable-252",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:GetDuration-253",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:GetExpiredText-254",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:GetFontString-255",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:GetFormattedText-256",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:GetTimeModifier-257",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:GetUpdateInterval-258",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:GetZeroDurationText-259",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:HasSecretValues-260",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:IsEnabled-261",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetDuration-262",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetEnabled-263",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetExpiredText-264",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetFontString-265",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetFormatter-266",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetTextFormat-267",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetTimeModifier-268",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetToDefaults-269",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetUpdateInterval-270",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:SetZeroDurationText-271",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationTextBinding:UpdateFontString-272",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingLayoutPinFrame:IsConnectedToDraggingRoom-273",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "unprobeable: factory: unknown frame type 'HousingLayoutPinFrame'"
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingLayoutPinFrame:IsPartOfDraggingRoom-274",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "unprobeable: factory: unknown frame type 'HousingLayoutPinFrame'"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:Format-279",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:FormatZero-281",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetDefaultAbbreviation-283",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetDefaultAbbreviation-285",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Button:GetButtonState-305",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Button:IsEnabled-307",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Button:SetButtonState-309",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Button:SetEnabled-311",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-EditBox:SetFont-314",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Font:SetFont-317",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-FontString:SetFont-320",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-MessageFrame:SetFont-324",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Minimap:SetBlipTexture-297",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-widgets-Minimap:SetCorpsePOIArrowTexture-298",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-widgets-Minimap:SetIconTexture-299",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-widgets-Minimap:SetPOIArrowTexture-300",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-widgets-Minimap:SetPlayerTexture-301",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-widgets-Minimap:SetStaticPOIArrowTexture-302",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:GetModelUnitGUID-327",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-ScrollFrame:GetHorizontalScroll-329",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-ScrollFrame:GetVerticalScroll-331",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-ScrollFrame:SetHorizontalScroll-333",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-ScrollFrame:SetVerticalScroll-336",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-SimpleHTML:SetFont-339",
+      "capabilities": [
+        "publication-sweep-12-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
     }
-  ]
+  ],
+  "supplemental_register": "data/patch-api/sources/12.0.7-wikitext-register.json"
 }

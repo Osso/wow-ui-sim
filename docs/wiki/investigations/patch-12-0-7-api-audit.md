@@ -283,3 +283,12 @@ If the exact-behavior work resumes, create live PTR probe addons for restricted-
 - [[lua-api]] — Lua runtime surface and C API bridge context.
 - [[event-system]] — event registration/dispatch behavior.
 - [[taint-system]] — secure/taint behavior related to SimulateMouse, debug secret propagation, and secure actions.
+
+## Wikitext supplement — 2026-10-04
+
+**43 pending / 95 bounded / 173 partial / 29 metadata** (340 rows, incl. 174 `wt-` rows).
+
+- The plaintext extract dropped five collapsed tables: the raw wikitext (revid 6794100, [register](../../../data/patch-api/sources/12.0.7-wikitext-register.json), generator `tools/gen_patch_wikitext_register.py`) lists 174 symbols, 65 of them absent from the crawler register (all 20 changed globals, 14 added/5 removed CVars, script-object methods).
+- [Sweep](../../specs/patch-12-0-7-publication-sweep.md) shares `tests/common/publication_sweep.rs` with 12.1.0: 147 OK, 27 baselined gaps ([result](../../../data/patch-api/evidence/12.0.7-session-2026-10-03/p1207-wikitext-sweep-result.json)). Four removed members were still fabricated by the namespace autostub and are now absent. Rows a later patch removes again are expected absent (`superseded_by`); none today.
+- 15 crawler-register rows (`SecurePending*` callbacks, `C_PingSecure.ClearPendingPingOffScreenCallback`, `DurationTextFormattingOptions`/`DurationTextRawValue` methods) appear in no table of the current, 12.0.7 or PTR revisions → metadata-only; origin unverified.
+- Credited (default Retail build, 12.1.0 surface): world tier state, `C_EncounterTimeline.GetEventColor` (timeline model promoted from `retail-12-1-5` to `retail-12-1-0`), `ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED`, `ConfirmReadyCheck` argument authentication.
