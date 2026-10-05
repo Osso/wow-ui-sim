@@ -91,8 +91,24 @@ pub fn is_registerable_event(name: &str) -> bool {
     {
         return true;
     }
+    #[cfg(feature = "retail-12-0-5")]
+    if name == PATCH_12_0_5_REMOVED_REGISTERABLE_EVENT {
+        return false;
+    }
+    #[cfg(feature = "retail-12-0-5")]
+    if name == PATCH_12_0_5_REGISTERABLE_EVENT {
+        return true;
+    }
     super::known_events::contains(name)
 }
+
+// The 12.0.5 consolidated table; the other added events are already known or
+// are noscript callback events (CLASS_TALENTS_SWITCH_TO_*).
+#[cfg(feature = "retail-12-0-5")]
+const PATCH_12_0_5_REGISTERABLE_EVENT: &str = "HOUSE_EXTERIOR_DECOR_HIDDEN_CHANGED";
+
+#[cfg(feature = "retail-12-0-5")]
+const PATCH_12_0_5_REMOVED_REGISTERABLE_EVENT: &str = "CATALOG_SHOP_PMT_IMAGE_DOWNLOADED";
 
 #[cfg(feature = "retail-12-0-7")]
 const PATCH_12_0_7_REGISTERABLE_EVENTS: &[&str] = &["ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED"];
@@ -195,6 +211,13 @@ mod retail_tests {
     #[test]
     fn url_texture_request_result_is_registerable() {
         assert!(is_registerable_event("URL_TEXTURE_REQUEST_RESULT"));
+    }
+
+    #[cfg(feature = "retail-12-0-5")]
+    #[test]
+    fn patch_12_0_5_event_additions_and_removals() {
+        assert!(is_registerable_event("HOUSE_EXTERIOR_DECOR_HIDDEN_CHANGED"));
+        assert!(!is_registerable_event("CATALOG_SHOP_PMT_IMAGE_DOWNLOADED"));
     }
 
     #[cfg(feature = "retail-12-0-7")]

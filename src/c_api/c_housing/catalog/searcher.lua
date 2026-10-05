@@ -43,6 +43,8 @@ return function()
   function searcher:IsStoredOnlyActive() return state.storedOnly end
   function searcher:SetBaseVariantOnly(enabled) state.baseVariantOnly = not not enabled end
   function searcher:IsBaseVariantOnlyActive() return state.baseVariantOnly end
+  function searcher:ToggleStoredOnly() state.storedOnly = not state.storedOnly end
+  function searcher:ToggleBaseVariantOnly() state.baseVariantOnly = not state.baseVariantOnly end
   function searcher:SetEditorModeContext(mode) state.editorModeContext = mode end
   function searcher:GetEditorModeContext() return state.editorModeContext end
   function searcher:SetAllowedIndoors(enabled) state.allowedIndoors = not not enabled end

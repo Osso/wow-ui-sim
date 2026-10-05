@@ -148,6 +148,15 @@ local function create_object(owner)
             return rawget(_G, 'PublicationSweepFont') or CreateFont('PublicationSweepFont')
         end,
         ModelSceneActorBase = function() return CreateFrame('ModelScene'):CreateActor() end,
+        ModelSceneActor = function() return CreateFrame('ModelScene'):CreateActor() end,
+        AbbreviateConfig = function() return CreateAbbreviateConfig() end,
+        AbbreviatedNumberFormatter = function()
+            return C_StringUtil.CreateAbbreviatedNumberFormatter()
+        end,
+        -- NumericFormatter is the interface the abbreviated formatter implements.
+        NumericFormatter = function() return C_StringUtil.CreateAbbreviatedNumberFormatter() end,
+        NumericRuleFormatter = function() return C_StringUtil.CreateNumericRuleFormatter() end,
+        HousingCatalogSearcher = function() return C_HousingCatalog.CreateCatalogSearcher() end,
     }
     local factory = factories[owner]
     if factory then return factory() end

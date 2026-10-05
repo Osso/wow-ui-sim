@@ -206,11 +206,13 @@ fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     (defaults, original_names)
 }
 
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(feature = "retail-12-0-5")]
 fn insert_profile_cvars(
     defaults: &mut HashMap<String, String>,
     original_names: &mut HashMap<String, String>,
 ) {
+    insert_cvar_defaults(defaults, original_names, PATCH_12_0_5_CVARS);
+    #[cfg(feature = "retail-12-0-7")]
     insert_cvar_defaults(defaults, original_names, PATCH_12_0_7_CVARS);
     #[cfg(feature = "retail-12-1-0")]
     insert_cvar_defaults(defaults, original_names, PATCH_12_1_CVARS);
@@ -232,18 +234,14 @@ fn insert_profile_cvars(
     }
 }
 
-#[cfg(not(any(
-    feature = "retail-12-0-7",
-    feature = "retail-12-1-0",
-    feature = "client-wowforever"
-)))]
+#[cfg(not(any(feature = "retail-12-0-5", feature = "client-wowforever")))]
 fn insert_profile_cvars(
     _defaults: &mut HashMap<String, String>,
     _original_names: &mut HashMap<String, String>,
 ) {
 }
 
-#[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
+#[cfg(feature = "retail-12-0-5")]
 fn insert_cvar_defaults(
     defaults: &mut HashMap<String, String>,
     original_names: &mut HashMap<String, String>,
@@ -266,6 +264,8 @@ fn remove_profile_cvars(
     original_names: &mut HashMap<String, String>,
 ) {
     remove_cvar_defaults(defaults, original_names, PATCH_12_0_0_REMOVED_CVARS);
+    #[cfg(feature = "retail-12-0-5")]
+    remove_cvar_defaults(defaults, original_names, PATCH_12_0_5_REMOVED_CVARS);
     #[cfg(feature = "retail-12-0-7")]
     remove_cvar_defaults(defaults, original_names, PATCH_12_0_7_REMOVED_CVARS);
     #[cfg(feature = "retail-12-1-0")]
@@ -312,6 +312,14 @@ fn is_profile_removed_cvar_key(key: &str) -> bool {
         return true;
     }
 
+    #[cfg(feature = "retail-12-0-5")]
+    if PATCH_12_0_5_REMOVED_CVARS
+        .iter()
+        .any(|removed| removed.eq_ignore_ascii_case(key))
+    {
+        return true;
+    }
+
     #[cfg(feature = "retail-12-0-7")]
     if PATCH_12_0_7_REMOVED_CVARS
         .iter()
@@ -345,6 +353,33 @@ const PATCH_12_0_0_REMOVED_CVARS: &[&str] = &[
     "NamePlateHorizontalScale",
     "NamePlateVerticalScale",
     "ShowClassColorInFriendlyNameplate",
+];
+
+// Only names cvars.yaml still carries; nameplateShowFriends and
+// unlockedExpansionLandingPages return in later patches.
+#[cfg(feature = "retail-12-0-5")]
+const PATCH_12_0_5_REMOVED_CVARS: &[&str] = &[
+    "cameraDistanceFixedValue",
+    "endeavorInitiativesLastPoints",
+    "secretChallengeModeRestrictionsForced",
+    "secretCombatRestrictionsForced",
+    "secretEncounterRestrictionsForced",
+    "secretMapRestrictionsForced",
+    "secretPvPMatchRestrictionsForced",
+];
+
+#[cfg(feature = "retail-12-0-5")]
+const PATCH_12_0_5_CVARS: &[(&str, &str)] = &[
+    ("addonChallengeModeRestrictionsForced", "0"),
+    ("addonCombatRestrictionsForced", "0"),
+    ("addonEncounterRestrictionsForced", "0"),
+    ("addonMapRestrictionsForced", "0"),
+    ("addonPvPMatchRestrictionsForced", "0"),
+    ("AllowSpectateMode", "1"),
+    // INFERRED simulator default; the 12.0.5 page lists no default.
+    ("endeavorInitiativesLastPointsMap", ""),
+    ("houseExterior_Hide_Decor", "1"),
+    ("transmogPreviewedWeaponToggle", "0"),
 ];
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]
@@ -626,6 +661,22 @@ mod tests {
         assert_eq!(storage.get("PraiseTheSun"), Some("1".to_string()));
         assert_eq!(storage.get_default("PraiseTheSun"), Some("1".to_string()));
         assert!(storage.all_keys().iter().any(|key| key == "PraiseTheSun"));
+    }
+
+    #[cfg(feature = "retail-12-0-5")]
+    #[test]
+    fn patch_12_0_5_renamed_restriction_cvars() {
+        let storage = CVarStorage::new();
+        assert_eq!(
+            storage.get_default("addonCombatRestrictionsForced"),
+            Some("0".to_string())
+        );
+        assert_eq!(storage.get("AllowSpectateMode"), Some("1".to_string()));
+        assert_eq!(storage.get("secretCombatRestrictionsForced"), None);
+        assert_eq!(storage.get_default("cameraDistanceFixedValue"), None);
+        // A removed CVar cannot be re-registered at runtime.
+        storage.register("secretCombatRestrictionsForced", Some("0"));
+        assert_eq!(storage.get("secretCombatRestrictionsForced"), None);
     }
 
     #[cfg(feature = "retail-12-0-7")]

@@ -244,8 +244,8 @@ pub(crate) mod forever_finite_constants;
 mod gamepad_action_bar_constants;
 
 mod helpers;
-#[cfg(feature = "retail-12-0-7")]
-mod patch_12_0_7_retired;
+#[cfg(feature = "retail-12-0-5")]
+mod patch_retired_members;
 mod registration;
 
 pub(crate) use helpers::{
@@ -278,8 +278,8 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     c_secrets::register(state)?;
     register_specialization_and_model_tables(state)?;
     register_glue_and_display_tables(state)?;
-    #[cfg(feature = "retail-12-0-7")]
-    patch_12_0_7_retired::mark_retired_members(state)?;
+    #[cfg(feature = "retail-12-0-5")]
+    patch_retired_members::mark_retired_members(state)?;
     register_auxiliary_utility_tables(state)
 }
 
