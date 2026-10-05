@@ -57,6 +57,50 @@ fn p1200_rest_pvp_catalog_empty() {
     "#,
     )
     .unwrap();
+    {
+        use wow_ui_sim::c_api::c_pvp::catalog::BattlegroundInfo;
+        let mut state = env.state().borrow_mut();
+        state.pvp_catalog.training_enabled = true;
+        state.pvp_catalog.training_eligible = true;
+        state.pvp_catalog.random_training_win_today = true;
+        state.pvp_catalog.battlegrounds.push(BattlegroundInfo {
+            name: "Training Arena".into(),
+            lfg_dungeon_id: Some(1001),
+            battleground_id: Some(22),
+            max_players: 6,
+            game_type: "Arena".into(),
+            is_training_ground: true,
+            can_enter: true,
+            ..Default::default()
+        });
+        state.pvp_catalog.battlegrounds.push(BattlegroundInfo {
+            name: "Non-training BG".into(),
+            ..Default::default()
+        });
+    }
+    env.exec(
+        r#"
+        assert(C_PvP.AreTrainingGroundsEnabled())
+        local allowed,reason = C_PvP.CanPlayerUseTrainingGroundsUI()
+        assert(allowed and reason == '')
+        assert(C_PvP.HasRandomTrainingGroundWinToday())
+        assert(C_PvP.GetBattlegroundInfo(1).battlegroundID == 22)
+        local list = C_PvP.GetTrainingGrounds()
+        assert(#list == 1 and list[1].lfgDungeonID == 1001 and list[1].maxPlayers == 6)
+        list[1].name = 'mutated'
+        assert(C_PvP.GetBattlegroundInfo(1).name == 'Training Arena')
+        C_PvP.JoinTrainingGround(1001)
+        assert(not C_PvP.HasMatchStarted())
+        AcceptBattlefieldPort(1, true)
+        assert(C_PvP.HasMatchStarted())
+        LeaveBattlefield()
+        assert(not C_PvP.HasMatchStarted())
+    "#,
+    )
+    .unwrap();
+    assert_eq!(env.state().borrow().battlefield_queue.index, 0);
+    env.state().borrow_mut().pvp_catalog.match_completed = true;
+    env.exec("assert(C_PvP.HasMatchStarted())").unwrap();
 }
 
 #[test]

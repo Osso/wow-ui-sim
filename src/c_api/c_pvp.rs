@@ -8,6 +8,8 @@ mod brawl_info;
 #[cfg(feature = "retail-12-0-5")]
 pub use brawl_info::PvpBrawlInfo;
 
+#[cfg(feature = "retail-12-0-0")]
+pub mod catalog;
 use crate::c_api::ensure_namespace;
 #[cfg(feature = "retail-12-1-0")]
 use crate::lua_bridge::table_set_rust_fn_static;
@@ -27,6 +29,8 @@ pub enum TrainingGroundKind {
 
 pub(crate) fn register_c_pvp_surface(state: &mut LuaState) -> LuaResult<()> {
     let ns = ensure_namespace(state, "C_PvP")?;
+    #[cfg(feature = "retail-12-0-0")]
+    catalog::register(state, ns)?;
     #[cfg(all(
         feature = "retail-12-0-5",
         any(feature = "profile-retail", feature = "client-ptr")
