@@ -8,10 +8,14 @@
   "capabilities": [
     {
       "id": "tooltip-unit-buff-security",
-      "symbols": ["C_TooltipInfo.GetUnitBuff"],
+      "symbols": [
+        "C_TooltipInfo.GetUnitBuff"
+      ],
       "scope": "B79 bounded live player/party helpful indexed tooltip lookup, blocked/source filtering and three-position AllowedWhenUntainted VM authentication. Actual rooted secret identity/GC, caller preservation, read-only/live state and fresh DTO behavior. Public output is current model convention; unit-aura access/restricted output, native/general-unit/target identity remain unmodeled. Exact342 stays pending.",
       "spec": "docs/specs/tooltip-unit-buff-security.md",
-      "tests": ["tests/tooltip_unit_buff_security.rs"],
+      "tests": [
+        "tests/tooltip_unit_buff_security.rs"
+      ],
       "implementation": "a28293ee0fee1bd6a4192fc17c98bf49b0b87f5c",
       "compiled_revision": "ad18218054f28794bfb86964dd95a1d8112c85f8",
       "proof": "bounded-independent-pass",
@@ -20,10 +24,14 @@
     },
     {
       "id": "mount-spell-identifier",
-      "symbols": ["C_MountJournal.GetMountFromSpell"],
+      "symbols": [
+        "C_MountJournal.GetMountFromSpell"
+      ],
       "scope": "B77 bounded public alias-first SpellIdentifier lookup into existing world.mounts; live relation/alias updates, removals, read-only and environment isolation. Validation and secret rejection are inferred simulator policy; native AllowedWhenTainted and alias grammar remain unmodeled. Exact291 stays pending.",
       "spec": "docs/specs/mount-spell-identifier.md",
-      "tests": ["tests/mount_spell_identifier.rs"],
+      "tests": [
+        "tests/mount_spell_identifier.rs"
+      ],
       "implementation": "22ea15a235a855aa6a5e1e737e168b0b3a76db7e",
       "compiled_revision": "22ea15a235a855aa6a5e1e737e168b0b3a76db7e",
       "proof": "bounded-independent-pass",
@@ -32,10 +40,15 @@
     },
     {
       "id": "action-bar-direct-membership",
-      "symbols": ["C_ActionBar.IsOnBarOrSpecialBar"],
+      "symbols": [
+        "C_ActionBar.IsOnBarOrSpecialBar"
+      ],
       "scope": "Bounded PUBLIC effective direct-spell membership only: positive existing assignments exclude macro/outfit overrides; explicit alias-first registry, duplicate removal/replacement, read-only queries and environment isolation. Special-bar semantics and native AllowedWhenTainted access remain unmodeled; exact245 stays pending.",
       "spec": "docs/specs/action-bar-membership.md",
-      "tests": ["tests/action_bar_membership.rs", "tests/action_spell_slot_identifiers.rs"],
+      "tests": [
+        "tests/action_bar_membership.rs",
+        "tests/action_spell_slot_identifiers.rs"
+      ],
       "implementation": "2f6e575f9ef9af47668bfe2bd7077383251ab19c",
       "compiled_revision": "2f6e575f9ef9af47668bfe2bd7077383251ab19c",
       "proof": "bounded-independent-pass",
@@ -44,10 +57,14 @@
     },
     {
       "id": "ambiguate-context-neversecret",
-      "symbols": ["Ambiguate"],
+      "symbols": [
+        "Ambiguate"
+      ],
       "scope": "Exact415 arg2 NeverSecret only: real public-name transform classifies original context identity without payload decoding before any fullname access. Genuine host-secret NUM/BOOL/STR contexts reject in secure and addon callers; caller taint, wrapper secrecy/identity/liveness and public recovery survive GC. Existing none/other-context name mapping retained; earlier epochs short-circuit rejection and retain old public body. Error/order and name/context semantics remain simulator policy. Row416 secret-fullName permission and output secrecy unmodeled; no native/all-profile/global privacy credit.",
       "spec": "docs/specs/ambiguate-context.md",
-      "tests": ["tests/ambiguate_context.rs"],
+      "tests": [
+        "tests/ambiguate_context.rs"
+      ],
       "implementation": "9441f7c7c665142d022540329b5b1f9addcbbf6e",
       "compiled_revision": "9441f7c7c665142d022540329b5b1f9addcbbf6e",
       "proof": "bounded-independent-pass",
@@ -56,10 +73,14 @@
     },
     {
       "id": "house-exterior-fixture-removal",
-      "symbols": ["C_HouseExterior.RemoveFixtureFromSelectedPoint"],
+      "symbols": [
+        "C_HouseExterior.RemoveFixtureFromSelectedPoint"
+      ],
       "scope": "Exact267/268 attachedDecorAction and AllowedWhenUntainted over explicit owned ExteriorCustomization host state. Original argument VM authentication precedes domains and model access; secure genuine secrets accepted, addon secrets denied, public taint retained. Store returns only selected-owner attached decor through the existing full-key catalog with checked variant/known-base deltas; Detach retains identity/position/storage. Fixture clears only after atomic commit; selected point/options/raw host flag remain, public removability derives from current fixture presence. Rooted synchronous storage then response callbacks support GC/reentry. Nil/default/domain/error/eligibility/event ordering are inferred simulator policy, not native semantics. No core/SelectCore, acquisition/UI/3D/global privacy/all-profile credit.",
       "spec": "docs/specs/house-exterior-attached-decor.md",
-      "tests": ["tests/house_exterior_attached_decor.rs"],
+      "tests": [
+        "tests/house_exterior_attached_decor.rs"
+      ],
       "implementation": "71973af4b71a8768d2c447472b40196ac9f645c4",
       "compiled_revision": "71973af4b71a8768d2c447472b40196ac9f645c4",
       "proof": "bounded-independent-pass",
@@ -616,10 +637,16 @@
     },
     {
       "id": "power-regen-effective-ap-restricted-outputs",
-      "symbols": ["GetPowerRegen", "GetPowerRegenForPowerType", "PlayerEffectiveAttackPower"],
+      "symbols": [
+        "GetPowerRegen",
+        "GetPowerRegenForPowerType",
+        "PlayerEffectiveAttackPower"
+      ],
       "scope": "Exact466/468/496 output annotations only over existing explicit player inputs. Active/selected power-pool maps return distinct base/casting values and track updates; optional effective AP publishes five distinct stored fields in order. Every output follows unit_stats_restricted through public/restricted/public transitions; tainted callers receive opaque actual host secrets without unwrap/arithmetic access, caller taint retained. Missing-pool zeros, absent-AP no-results and numeric domains are simulator policy. No native formulas/activation/defaults/nominal scalar type/all-profile or neighboring API credit.",
       "spec": "docs/specs/retail-missing-stat-inputs.md",
-      "tests": ["tests/character_stats/missing_apis.rs"],
+      "tests": [
+        "tests/character_stats/missing_apis.rs"
+      ],
       "implementation": "89b72ff67894f9e5baa130407e49a55b61d215af",
       "compiled_revision": "71973af4b71a8768d2c447472b40196ac9f645c4",
       "source_view_revision": "9441f7c7c665142d022540329b5b1f9addcbbf6e",
@@ -629,10 +656,18 @@
     },
     {
       "id": "dodge-parry-restricted-outputs",
-      "symbols": ["GetDodgeChance", "GetDodgeChanceFromAttribute", "GetParryChance", "GetParryChanceFromAttribute"],
+      "symbols": [
+        "GetDodgeChance",
+        "GetDodgeChanceFromAttribute",
+        "GetParryChance",
+        "GetParryChanceFromAttribute"
+      ],
       "scope": "Exact430/432/458/460 output annotations only: existing modeled agility200/strength300 compute7/2/8/3 through explicit simulator coefficients. All four single outputs preserve value and arity across public/restricted/public flags, with genuine host-secret opacity and retained caller taint for addon calls. Base5/divisor100/clamping are simulator guesses, not native formulas. No block chance, input-secret/domain, automatic activation, all-profile or neighboring API credit.",
       "spec": "docs/specs/unit-stat-output-restriction.md",
-      "tests": ["tests/character_stats/stat_restriction.rs", "tests/character_stats/stat_restriction_fixtures.lua"],
+      "tests": [
+        "tests/character_stats/stat_restriction.rs",
+        "tests/character_stats/stat_restriction_fixtures.lua"
+      ],
       "implementation": "89b72ff67894f9e5baa130407e49a55b61d215af",
       "compiled_revision": "71973af4b71a8768d2c447472b40196ac9f645c4",
       "source_view_revision": "49d558661104b1b1c2c21c4b2ccaa02ac5979554",
@@ -654,7 +689,9 @@
     },
     {
       "id": "unit-comparison-permissions",
-      "symbols": ["UnitIsUnit"],
+      "symbols": [
+        "UnitIsUnit"
+      ],
       "scope": "B80 existing Retail12.0.5 base/group permission and residual denial matrices plus modeled GUID aliases; exact142/143/144 bounded, introductory141 partial. Canonical group bounds and nameplate-prefix/target-suffix classification are inferred lexical policy. Native token grammar/arity/errors/auth and older-profile parity remain unverified; unsupported identities not invented.",
       "spec": "docs/specs/unit-identity-equality.md",
       "tests": [
@@ -2286,6 +2323,22 @@
       "proof": "bounded-independent-pass",
       "ledger": "docs/specs/secure-aura-header-helper-delegation.md#development-proof-and-independent-bounded-acceptance--2026-10-03",
       "gate_scope": "Commits a9f6b0a26 and d62a972eb, integrated in a worktree: RED aura 2 PASS, helper 0 PASS / 4 FAIL, lifecycle 0/1; GREEN 381 integration + 12 lib there, cargo check clean; master 144/144 with controls, startup lua-errors [], cargo fmt --check exit0. Independent Sol source review ACCEPT WITH QUALIFICATIONS SHA256 108ffe0e872180e50f2193eb78916633d1410913d2ed078f1d39ee5d83cec2bc, report data/patch-api/evidence/12.0.5-session-2026-10-03/round-101-review.md. No broad suite or older-profile run."
+    },
+    {
+      "id": "publication-sweep-12-0-5",
+      "symbols": [
+        "363 wikitext inventory symbols"
+      ],
+      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted for removed symbols, supersession against 12.0.7 and 12.1.0 wikitext registers. Publication only. 57 known gaps baselined in tests/data/patch_12_0_5_sweep_known_gaps.json.",
+      "spec": "docs/specs/patch-12-0-5-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_0_5_publication_sweep.rs",
+        "tests/common/publication_sweep.rs"
+      ],
+      "implementation": "test; retired autostubbed 12.0.5 removals (src/c_api/patch_retired_members.rs), 12.0.5 CVar renames/additions/removals, event additions/removals, HousingCatalogSearcher toggles",
+      "compiled_revision": "174ab06fd",
+      "proof": "main-thread GREEN on master 174ab06fd (run alone; 12.0.7/12.1.0 sweeps also GREEN alone); negative control by agent; no independent review",
+      "ledger": "data/patch-api/evidence/12.0.5-session-2026-10-03/p1205-wikitext-sweep-result.json"
     }
   ],
   "source_rows": [
@@ -3297,13 +3350,17 @@
     },
     {
       "source_id": "global api-C_HouseExterior-RemoveFixtureFromSelectedPoint-267",
-      "capabilities": ["house-exterior-fixture-removal"],
+      "capabilities": [
+        "house-exterior-fixture-removal"
+      ],
       "status": "bounded-coverage",
       "note": "Exact267 accepted592+595 at71973af4b: attachedDecorAction Store/Detach/default drives selected-owner atomic catalog/placement removal and fixture clearing.60 distinct modern PASS, separate Forever inverse1/startup0[]. Domain/nil/error/eligibility/event ordering inferred; native/UI/acquisition/globalprivacy/core gaps and full-suite failures remain open."
     },
     {
       "source_id": "global api-C_HouseExterior-RemoveFixtureFromSelectedPoint-268",
-      "capabilities": ["house-exterior-fixture-removal"],
+      "capabilities": [
+        "house-exterior-fixture-removal"
+      ],
       "status": "bounded-coverage",
       "note": "Exact268 accepted592+595 at71973af4b: method-local AllowedWhenUntainted authenticates original attachedDecorAction before type/domain/model; genuine secure NUM/BOOL/string secrets evaluated normally, addon secrets denied atomically, public addon taint retained. Bounded security/rooting/GC/reentry tests only; no global privacy/native/all-profile or full-suite clearance."
     },
@@ -3317,19 +3374,25 @@
     },
     {
       "source_id": "global api-C_HouseExterior-SelectFixtureOption-272",
-      "capabilities": ["house-exterior-attached-decor"],
+      "capabilities": [
+        "house-exterior-attached-decor"
+      ],
       "status": "bounded-coverage",
       "note": "Exact272 independently accepted566 at361642437:104RetailPASS+separateForeverinverse1PASS/startup0[]. AttachedDecorAction Store/Detach/default, real state/catalog transitions, original-secret authentication, live rooted DTOs and synchronous GC/reentry/atomicity accepted. Domain/error/nil/same-value/storage ordering inferred; native acquisition/UI/globalprivacy/pet/type/dating gaps remain, no core/remove/enum row credit."
     },
     {
       "source_id": "global api-C_HouseExterior-SetHouseExteriorSize-274",
-      "capabilities": ["house-exterior-attached-decor"],
+      "capabilities": [
+        "house-exterior-attached-decor"
+      ],
       "status": "bounded-coverage",
       "note": "Exact274 independently accepted566 at361642437:104RetailPASS+separateForeverinverse1PASS/startup0[]. AttachedDecorAction Store/Detach/default, real state/catalog transitions, original-secret authentication, live rooted DTOs and synchronous GC/reentry/atomicity accepted. Domain/error/nil/same-value/storage ordering inferred; native acquisition/UI/globalprivacy/pet/type/dating gaps remain, no core/remove/enum row credit."
     },
     {
       "source_id": "global api-C_HouseExterior-SetHouseExteriorType-276",
-      "capabilities": ["house-exterior-attached-decor"],
+      "capabilities": [
+        "house-exterior-attached-decor"
+      ],
       "status": "bounded-coverage",
       "note": "Exact276 independently accepted566 at361642437:104RetailPASS+separateForeverinverse1PASS/startup0[]. AttachedDecorAction Store/Detach/default, real state/catalog transitions, original-secret authentication, live rooted DTOs and synchronous GC/reentry/atomicity accepted. Domain/error/nil/same-value/storage ordering inferred; native acquisition/UI/globalprivacy/pet/type/dating gaps remain, no core/remove/enum row credit."
     },
@@ -3435,7 +3498,9 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellCastCount-301",
-      "capabilities": ["spell-count-outputs"],
+      "capabilities": [
+        "spell-count-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact301 output predicate accepted under spell-count-outputs independent bounded proof. Meaningful spell-keyed quantity and restricted NUM output only; AllowedWhenTainted secret-input parity remains UNMODELED, conservative rejection earns no input or NeverSecret credit. Native acquisition/type/full API parity unproved."
     },
@@ -3449,7 +3514,9 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellCooldown-305",
-      "capabilities": ["spell-book-cooldown-outputs"],
+      "capabilities": [
+        "spell-book-cooldown-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact305 output predicate independently accepted: existing spell/GCD interval/parser/shape preserved, three authentic private NUM fields and public BOOLs under explicit live restriction flag. No input-policy credit; zero/fieldset policies inferred and nominal primitive/native/UI parity unproved. See bounded capability proof and retained Forever control failure."
     },
@@ -3463,7 +3530,9 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellDisplayCount-309",
-      "capabilities": ["spell-count-outputs"],
+      "capabilities": [
+        "spell-count-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact309 output predicate accepted under spell-count-outputs independent bounded proof. Meaningful STRING quantity/charge formatting, VM display authentication and private output lifetime tested; priority/default/domain policies inferred. Native acquisition/nominal primitive type/full API parity unproved."
     },
@@ -3477,7 +3546,9 @@
     },
     {
       "source_id": "global api-C_Spell-GetSpellLossOfControlCooldownInfo-313",
-      "capabilities": ["spell-book-loss-of-control-outputs"],
+      "capabilities": [
+        "spell-book-loss-of-control-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact313 output predicate independently accepted over existing optional LoC map, preserved permissive identifiers/nil misses, authentic restricted NUM3/public BOOL2 and rooted snapshots. Conservative secret-userdata nil remains unmodeled AllowedWhenTainted input parity; no input or NeverSecret credit. Native/type/acquisition/globalprivacy/UI unproved."
     },
@@ -3515,7 +3586,9 @@
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemCooldown-322",
-      "capabilities": ["spell-book-cooldown-outputs"],
+      "capabilities": [
+        "spell-book-cooldown-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact322 output predicate and meaningful player-bank0 cooldown provider independently accepted with both-selector VM authentication, actual slot/offspec lookup, shared intervals and rooted private numeric DTO fields. Earlier/Forever disabled provider preserved. Native/future/pet/full-bank/type/UI parity unproved; retained mask-quad failure not wholefilter green."
     },
@@ -3529,7 +3602,9 @@
     },
     {
       "source_id": "global api-C_SpellBook-GetSpellBookItemLossOfControlCooldownInfo-326",
-      "capabilities": ["spell-book-loss-of-control-outputs"],
+      "capabilities": [
+        "spell-book-loss-of-control-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact326 output predicate and meaningful actual player-bank LoC map provider independently accepted with both-selector VM authentication, typed offspec lookup, shared private numeric/public boolean DTO and root/copy/GC behavior. Absence/domain/epoch policies inferred; preserved inverse legacy provider does not prove native/full-bank/future/pet/type/UI parity."
     },
@@ -3931,7 +4006,9 @@
     },
     {
       "source_id": "global api-PlayerScript Ambiguate-415",
-      "capabilities": ["ambiguate-context-neversecret"],
+      "capabilities": [
+        "ambiguate-context-neversecret"
+      ],
       "status": "bounded-coverage",
       "note": "Exact415 accepted625 at9441f7c7c: secret arg2 identity rejects before fullname processing, no payload decoding;22 new Retail+2 inert PASS, separate Forever2 public controls/startup0[]/scopedfmt/check0. Old public mapping retained, inferred error/order/native context limits explicit. Row416 secret-fullName and output secrecy remain unmodeled; Forever8 warnings and original full-suite failures retained, no all-profile/current-whole-tree clearance."
     },
@@ -3991,13 +4068,17 @@
     },
     {
       "source_id": "global api-PlayerScript GetDodgeChance-430",
-      "capabilities": ["dodge-parry-restricted-outputs"],
+      "capabilities": [
+        "dodge-parry-restricted-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact430 accepted642: existing agility-backed simulator value7 and single-result privacy/arity/caller-opacity proof, not a constant shim. Four saved71973 stat cases PASS with named-body equivalence at49d; base5/divisor100 and activation remain inferred, no native/all-profile/input-secret or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetDodgeChanceFromAttribute-432",
-      "capabilities": ["dodge-parry-restricted-outputs"],
+      "capabilities": [
+        "dodge-parry-restricted-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact432 accepted642: existing agility-derived contribution2 obeys explicit restriction flag with retained numeric value/single arity and tainted opacity. Saved71973 source-scoped reuse at49d; coefficients/clamping/native activation/type/all-profile/input-domain gaps and original suite RED remain."
     },
@@ -4099,13 +4180,17 @@
     },
     {
       "source_id": "global api-PlayerScript GetParryChance-458",
-      "capabilities": ["dodge-parry-restricted-outputs"],
+      "capabilities": [
+        "dodge-parry-restricted-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact458 accepted642: existing strength-backed simulator value8 and single-result privacy/arity/caller-opacity proof, not a constant shim. Four saved71973 stat cases PASS with named-body equivalence at49d; base5/divisor100 and activation remain inferred, no native/all-profile/input-secret or full-suite clearance."
     },
     {
       "source_id": "global api-PlayerScript GetParryChanceFromAttribute-460",
-      "capabilities": ["dodge-parry-restricted-outputs"],
+      "capabilities": [
+        "dodge-parry-restricted-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact460 accepted642: existing strength-derived contribution3 obeys explicit restriction flag with retained numeric value/single arity and tainted opacity. Saved71973 source-scoped reuse at49d; coefficients/clamping/native activation/type/all-profile/input-domain gaps and original suite RED remain."
     },
@@ -4127,13 +4212,17 @@
     },
     {
       "source_id": "global api-PlayerScript GetPowerRegen-466",
-      "capabilities": ["power-regen-effective-ap-restricted-outputs"],
+      "capabilities": [
+        "power-regen-effective-ap-restricted-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact466 accepted632: existing explicit active-pool model preserves both base/casting values, updates and arity under unit_stats_restricted; genuine host secrets stay opaque to tainted callers. Six relevant saved71973 PASS with named-body equivalence through9441, no rerun or whole-current-tree claim. Defaults/activation/native formulas/nominal type/all-profile gaps and full-suite failures remain open."
     },
     {
       "source_id": "global api-PlayerScript GetPowerRegenForPowerType-468",
-      "capabilities": ["power-regen-effective-ap-restricted-outputs"],
+      "capabilities": [
+        "power-regen-effective-ap-restricted-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact468 accepted632: existing selected-pool model preserves both outputs/order/arity through public/restricted/public flags and live updates; public selectors under taint and secure actual secret selector exercised. Output annotation only; no new input-delta/domain/native credit. Saved71973 PASS reused with named-body equivalence through9441; full-suite failures, inferred defaults/type/activation/all-profile gaps retained."
     },
@@ -4243,7 +4332,9 @@
     },
     {
       "source_id": "global api-PlayerScript PlayerEffectiveAttackPower-496",
-      "capabilities": ["power-regen-effective-ap-restricted-outputs"],
+      "capabilities": [
+        "power-regen-effective-ap-restricted-outputs"
+      ],
       "status": "bounded-coverage",
       "note": "Exact496 accepted632: five distinct explicit effective-AP fields retain order/arity/value, offhand-only update and inferred absent/no-results shape; all five outputs obey restriction flags and tainted-caller opacity. Six relevant saved71973 PASS with named-body equivalence through9441; no native formula/activation/type/default/all-profile or whole-current-runtime credit, full-suite RED retained."
     },
@@ -4371,7 +4462,7 @@
         "model-unit-identity-guard"
       ],
       "status": "bounded-coverage",
-      "note": "Round 100 (942833a04): six tests drive real PlayerModel, DressUpModel, CinematicModel, TabardModel and ModelScene frames through SetUnit — one public nil with binding preserved for a secret identity, false for a missing one, true and stored otherwise — plus a tooltip SetUnit control; they pass on the existing guard, so this is coverage of existing behavior. Optional arguments, model loading and other profiles unproven. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6 model cases). Row 534 partial (PlayerModel itself untested); success/missing-unit returns inferred; other-profile SetUnit routing changed and untested. Bounded simulator proof, not native parity."
+      "note": "Round 100 (942833a04): six tests drive real PlayerModel, DressUpModel, CinematicModel, TabardModel and ModelScene frames through SetUnit \u2014 one public nil with binding preserved for a secret identity, false for a missing one, true and stored otherwise \u2014 plus a tooltip SetUnit control; they pass on the existing guard, so this is coverage of existing behavior. Optional arguments, model loading and other profiles unproven. (Round 100 review ACCEPT WITH QUALIFICATIONS, data/patch-api/evidence/12.0.5-session-2026-10-03/round-100-review.md SHA256 e710814978a563d2681ad4a8d10f5cfc0ef50b25681611613f018a581f2ab16e.) B98 accepted independent Sol source review of a4cce2db1 (main ran 6/6 model cases). Row 534 partial (PlayerModel itself untested); success/missing-unit returns inferred; other-profile SetUnit routing changed and untested. Bounded simulator proof, not native parity."
     },
     {
       "source_id": "widgets-Cooldown-GetMinimumCountdownDuration-536",
@@ -4887,7 +4978,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "partial-development-green",
-      "note": "Held-live reassessment: exact650 totalNumStored has live explicit-field publication proof across three getters, zero/large values, mutation and snapshot isolation; 13 existing prebuilt cases PASS. NOT full required-field conformance: None omits the cached nonnil number, independently for each total. No aggregate derivation/synchronization, native defaults, full DTO/profile parity; historical B24 ledger retained. Prior note: Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
+      "note": "Held-live reassessment: exact650 totalNumStored has live explicit-field publication proof across three getters, zero/large values, mutation and snapshot isolation; 13 existing prebuilt cases PASS. NOT full required-field conformance: None omits the cached nonnil number, independently for each total. No aggregate derivation/synchronization, native defaults, full DTO/profile parity; historical B24 ledger retained. Prior note: Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-651",
@@ -4895,7 +4986,7 @@
         "housing-catalog-aggregates"
       ],
       "status": "partial-development-green",
-      "note": "Held-live reassessment: exact651 totalNumPlaced has live explicit-field publication proof across three getters, zero/large values, mutation and snapshot isolation; 13 existing prebuilt cases PASS. NOT full required-field conformance: None omits the cached nonnil number, independently for each total. No aggregate derivation/synchronization, native defaults, full DTO/profile parity; historical B24 ledger retained. Prior note: Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None→nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
+      "note": "Held-live reassessment: exact651 totalNumPlaced has live explicit-field publication proof across three getters, zero/large values, mutation and snapshot isolation; 13 existing prebuilt cases PASS. NOT full required-field conformance: None omits the cached nonnil number, independently for each total. No aggregate derivation/synchronization, native defaults, full DTO/profile parity; historical B24 ledger retained. Prior note: Batch24 bounded explicit-field publication only; linked aggregate spec owns saved76PASS/fresh gates and limits. Status retained audit-pending: None\u2192nil missing-data simulator gap against cached required native numbers. No synchronization/variant derivation/full DTO/nonempty wrapper/native/all-profile or whole-row completion. Reassessment report (single Sol auditor, existing tests rerun on a prebuilt binary, no separate verifier): data/patch-api/evidence/12.0.5-session-2026-10-03/handoff-held-live.md SHA256 103c83fde8c90e8d4801bc17497285c6cf3f2fecd3693061a9567415c1add5a3."
     },
     {
       "source_id": "structures-HousingCatalogEntryInfo-652",
@@ -5032,6 +5123,2797 @@
       ],
       "status": "bounded-coverage",
       "note": "Batch9 observed at 4f9e1607c; linked spec owns bounded behavior and inference limits. Independent source-scoped batch9 audit complete: /tmp/patch-12.0.5-batch9-independent-proof.md confirms 31 PASS and saved startup []; current runtime fmt/check and post-batch10 startup pending; not whole-statement/native completion."
+    },
+    {
+      "source_id": "wt-cvars-AllowSpectateMode-814",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-NamePlateHorizontalScale-826",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-NamePlateVerticalScale-828",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-ShowClassColorInNameplate-836",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-activeCUFProfile-821",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-addonChallengeModeRestrictionsForced-809",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-addonCombatRestrictionsForced-810",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-addonEncounterRestrictionsForced-811",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-addonMapRestrictionsForced-812",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-addonPvPMatchRestrictionsForced-813",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-cameraDistanceFixedValue-822",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-currencyTokensBackpack1-823",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-endeavorInitiativesLastPoints-824",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-endeavorInitiativesLastPointsMap-815",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-guildRosterView-825",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-houseExterior_Hide_Decor-816",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-lastLockedDelvesCompanionAbilities-817",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (wt-cvars-lastLockedDelvesCompanionAbilities-1341); 12.0.5 added not observable on the 12.1.0 build."
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowFriends-827",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (wt-cvars-nameplateShowFriends-1326); 12.0.5 removed not observable on the 12.1.0 build."
+    },
+    {
+      "source_id": "wt-cvars-playerStatLeftDropdown-829",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-playerStatRightDropdown-830",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-secretChallengeModeRestrictionsForced-831",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-secretCombatRestrictionsForced-832",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-secretEncounterRestrictionsForced-833",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-secretMapRestrictionsForced-834",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-secretPvPMatchRestrictionsForced-835",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-showTokenFrameHonor-837",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-splashScreenNormal-838",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-cvars-transmogPreviewedWeaponToggle-818",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-cvars-unlockedExpansionLandingPages-839",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "cvar: value/default queried (superseded_by wt-cvars-unlockedExpansionLandingPages-407)"
+    },
+    {
+      "source_id": "wt-events-AJ_PVP_TRAINING_GROUNDS_ACTION-775",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-AURA_DATA_PROVIDER_SWITCH-776",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_PMT_IMAGE_DOWNLOADED-789",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-events-CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX-777",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_NAME-778",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-CLASS_TALENTS_SWITCH_TO_SPECIALIZATION_BY_INDEX-779",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CLASS_TALENTS_SWITCH_TO_SPECIALIZATION_BY_INDEX\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-CLASS_TALENTS_SWITCH_TO_SPECIALIZATION_BY_NAME-780",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "event: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CLASS_TALENTS_SWITCH_TO_SPECIALIZATION_BY_NAME\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-HOUSE_EXTERIOR_DECOR_HIDDEN_CHANGED-781",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-HOUSING_INSPECT_MODE_DECOR_HOVERED_CHANGED-782",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-HOUSING_INSPECT_MODE_STATE_UPDATED-783",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-HOUSING_STORAGE_ENTRY_UPDATED-792",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-QUEST_ACCEPT_CONFIRM-795",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-SPELL_CONFIRMATION_PROMPT-797",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-TRADE_UPDATE_WARNINGS-784",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-UNIT_AURA_BLOCKED-786",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-events-UNIT_AURA_BLOCK_LIST_CLEARED-785",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-Ambiguate-538",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-BreakUpLargeNumbers-534",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.FindSpellActionButtons-352",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.GetActionCharges-354",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.GetActionCooldown-356",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.GetActionCooldownDuration-358",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.GetActionDisplayCount-360",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.GetActionLossOfControlCooldownInfo-362",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.GetActionUseCount-364",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.HasSpellActionButtons-366",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.IsOnBarOrSpecialBar-368",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.UsesActionText-251",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AutoComplete.GetAutoCompletePresenceID-252",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_AutoComplete.GetAutoCompleteRealms-253",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AutoComplete.GetAutoCompleteResults-254",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AutoComplete.IsRecognizedName-255",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetProductInfo-370",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.IsProductIncludedInAnyBundle-256",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.PurchaseProduct-372",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.AreOutgoingAddonChatMessagesRestricted-257",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.InChatMessagingLockdown-374",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.ReplaceIconAndGroupExpressions-376",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.SwitchToLoadoutByIndex-258",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.SwitchToLoadoutByName-259",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.SwitchToSpecializationByIndex-260",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.SwitchToSpecializationByName-261",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ClickBindings.CanSpellBeClickBound-378",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SendAddonMessage-263",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SendAddonMessageLogged-262",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetActiveDelveTier-264",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetCurioLink-380",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetDelveEntranceBackgroundWidgetSetID-265",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetDelveEntranceDescriptionString-266",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetDelveEntranceHeaderString-267",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetDelveEntranceMapID-268",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetDelveEntranceTiers-269",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetTieredEntranceOptionalAffixTraitTreeID-270",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetTieredEntrancePDEID-383",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.GetTieredEntranceType-271",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.HasActiveDelve-385",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.IsDelveEntranceTierEnabled-272",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.RequestPartyEligibilityForDelveTiers-388",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.SelectDelveEntranceTier-273",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_GossipInfo.GetActiveDelveGossip-331",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_GossipInfo.GetGossipDelveMapID-332",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.IsAnyDecorAttachedToCoreFixture-274",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.IsAnyDecorAttachedToDoor-275",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.IsAnyDecorAttachedToHouseExterior-276",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint-277",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.IsExteriorDecorHidden-278",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.RemoveFixtureFromSelectedPoint-390",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.SelectCoreFixtureOption-393",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.SelectFixtureOption-395",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.SetExteriorDecorHidden-279",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.SetHouseExteriorSize-397",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.SetHouseExteriorType-399",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.StartPlacingNewDecor-401",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.DestroyEntry-404",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetAllVariantInfosForEntry-280",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryInfoByItem-407",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryInfoByRecordID-409",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryVariantInfo-281",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetDestroyableInstanceCount-411",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetFeaturedDecor-333",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetFeaturedSmallProducts-282",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetDecorHyperlink-283",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingInspectMode.EnterInspectMode-284",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: parent raw-absent; raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingInspectMode.ExitInspectMode-285",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingInspectMode.GetHoveredDecorGUID-286",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingInspectMode.IsHoveringDecor-287",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingInspectMode.IsInInspectMode-288",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.OnCornerstoneClosed-289",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingPhotoSharing.BeginAuthorizationFlow-334",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingPhotoSharing.ClearAuthorization-335",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingPhotoSharing.CompleteAuthorizationFlow-336",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingPhotoSharing.GetCropRatio-337",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingPhotoSharing.GetPhotoSharingAuthURL-338",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingPhotoSharing.IsAuthorized-339",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingPhotoSharing.IsEnabled-340",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingPhotoSharing.SetScreenshotPreviewTexture-341",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingPhotoSharing.TakePhoto-342",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingPhotoSharing.UploadPhotoToService-343",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetMountFromSpell-414",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_NamePlateManager.SetNamePlateHitTestFrame-344",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-C_NeighborhoodInitiative.GetAvailableHouseXP-290",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetLootMethodStyle-291",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.IsLootMethodAvailable-292",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.BeginAuthorizationFlow-293",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.ClearAuthorization-294",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.CompleteAuthorizationFlow-295",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.GetCropRatio-296",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.GetPhotoSharingAuthURL-297",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.GetStatus-298",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.IsAuthorized-299",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.IsEnabled-300",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.SetScreenshotPreviewTexture-301",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.TakePhoto-302",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PhotoSharing.UploadPhotoToService-303",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestLogRewardFavor-416",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ScenarioInfo.GetDisplayInfo-304",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_ScenarioInfo.GetTieredEntranceActiveSpells-305",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_ScenarioInfo.GetUnitCriteriaProgressValues-306",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ScenarioInfo.IsTieredEntranceScenario-307",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Secrets.ShouldUnitStatsBeSecret-308",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetBaseSpell-418",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetMawPowerBorderAtlasBySpellID-420",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (wt-global-api-C_Spell.GetMawPowerBorderAtlasBySpellID-176); 12.0.5 changed not observable on the 12.1.0 build."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetMawPowerLinkBySpellID-422",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetSpellCastCount-424",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetSpellCharges-426",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetSpellCooldown-428",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetSpellCooldownDuration-430",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetSpellDisplayCount-432",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetSpellLink-434",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetSpellLossOfControlCooldownInfo-436",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetSpellMaxCumulativeAuraApplications-438",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetSpellBookItemCastCount-441",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetSpellBookItemCharges-443",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetSpellBookItemCooldown-445",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetSpellBookItemCooldownDuration-447",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo-449",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_StringUtil.CreateAbbreviatedNumberFormatter-309",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_StringUtil.CreateNumericRuleFormatter-310",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_StringUtil.CreateSecondsFormatter-311",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_StringUtil.GetDefaultAbbreviationBreakpoints-312",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_StringUtil.RemoveContiguousSpaces-451",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetItemByID-453",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetMountBySpellID-456",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetSpellByID-459",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetUnitAuraByAuraInstanceID-462",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetUnitBuff-465",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetUnitBuffByAuraInstanceID-467",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetUnitDebuff-470",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetUnitDebuffByAuraInstanceID-472",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeInfo.ShouldShowTradeOfferWarning-313",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetIllusions-475",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogOutfitInfo.ChangeToOutfit-314",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogOutfitInfo.ClearOutfit-315",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogOutfitInfo.GetAllTransmogOutfitOptionSheatheCategoryInfo-316",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogOutfitInfo.GetOutfitInfo-478",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogOutfitInfo.GetOutfitInfoByName-317",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogOutfitInfo.GetOutfitInfoByPlayerFacingIndex-318",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogOutfitInfo.GetPendingTransmogCost-480",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogOutfitInfo.SetPendingTransmogSheatheCategory-319",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogSets.HasAvailableSets-320",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.AddBlockedAura-321",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.AddPrivateAuraAnchor-482",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.AuraIsBigDefensive-484",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.AuraIsPrivate-486",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.ClearBlockedAuras-322",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.DoesAuraHaveExpirationTime-488",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetAuraApplicationDisplayCount-490",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetAuraBaseDuration-494",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetAuraDataByIndex-496",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetAuraDataBySlot-499",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetAuraDispelTypeColor-501",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetAuraDuration-503",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetAuraSlots-505",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetBuffDataByIndex-507",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetCooldownAuraBySpellID-510",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetDebuffDataByIndex-512",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetPlayerAuraBySpellID-515",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetRefreshExtendedDuration-517",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetUnitAuraBySpellID-519",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.IsAuraFilteredOutByInstanceID-521",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.RemovePrivateAuraAnchor-524",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.RemovePrivateAuraAppliedSound-526",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "member: raw=function; lookup=function (superseded_by wt-global-api-C_UnitAuras.RemovePrivateAuraAppliedSound-574)"
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.ResetAuraDataProvider-323",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.SetPrivateWarningTextAnchor-528",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.SwitchAuraDataProvider-324",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.WantsAlteredForm-530",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.SpeakText-532",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-CreateAbbreviateConfig-536",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetAttackPowerForStat-541",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetAutoCompletePresenceID-345",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-GetAutoCompleteRealms-346",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-GetAutoCompleteResults-347",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-GetAvoidance-543",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetBlockChance-545",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetCombatRating-547",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetCombatRatingBonus-549",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetCritChance-551",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentCinematicSummary-325",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "global: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetDodgeChance-553",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetDodgeChanceFromAttribute-555",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetExpertise-557",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetExpertisePercent-559",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetHaste-561",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetHitModifier-563",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetLifesteal-565",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetManaRegen-567",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetMastery-569",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetMasteryEffect-571",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetMaxCombatRatingBonus-348",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-GetMeleeHaste-573",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetModResilienceDamageReduction-575",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetOverrideAPBySpellPower-577",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetOverrideSpellPowerByAP-579",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetParryChance-581",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetParryChanceFromAttribute-583",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetPetMeleeHaste-585",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetPetSpellBonusDamage-587",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetPowerRegen-589",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetPowerRegenForPowerType-591",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetPvpPowerDamage-593",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetPvpPowerHealing-595",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetRangedCritChance-597",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetRangedHaste-599",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetShieldBlock-601",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetSpeed-603",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellBonusDamage-605",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellBonusHealing-607",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellCritChance-609",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellHitModifier-611",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellPenetration-613",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetSturdiness-615",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetUnitSpeed-621",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetVersatilityBonus-617",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-IsRecognizedName-349",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-global-api-PlayerEffectiveAttackPower-619",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-UnitArmor-623",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-UnitAttackPower-625",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-UnitAttackSpeed-627",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-UnitDamage-629",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-UnitHasPowerType-326",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-UnitRangedAttackPower-631",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-UnitRangedDamage-633",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-UnitSpellHaste-635",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-UnitStat-637",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-UnitWeaponAttackPower-639",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-table.freeze-327",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-global-api-table.isfrozen-328",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-AbbreviateConfig:SetAbbreviateNumberData-719",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-AbbreviatedNumberFormatter:AddBreakpoint-649",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-AbbreviatedNumberFormatter:ClearBreakpoints-650",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-AbbreviatedNumberFormatter:Copy-651",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-AbbreviatedNumberFormatter:GetBreakpoints-652",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-AbbreviatedNumberFormatter:ResetBreakpoints-653",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-AbbreviatedNumberFormatter:SetBreakpoints-654",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationObject:EvaluateTotalDuration-666",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: DurationObject; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationObject:FormatElapsedDuration-667",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationObject:FormatRemainingDuration-668",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-DurationObject:FormatTotalDuration-669",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:GetAllSearchItems-721",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:GetCatalogSearchResults-724",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:IsBaseVariantOnlyActive-660",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:IsDistinctPerRecordIDActive-711",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:IsOwnedOnlyActive-712",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: HousingCatalogSearcher; lookup=function"
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:IsStoredOnlyActive-661",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:SetBaseVariantOnly-662",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:SetDistinctPerRecordID-713",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:SetOwnedOnly-714",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: HousingCatalogSearcher; lookup=function"
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:SetStoredOnly-663",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:ToggleBaseVariantOnly-664",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:ToggleDistinctPerRecordID-715",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:ToggleOwnedOnly-716",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: HousingCatalogSearcher; lookup=function"
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher:ToggleStoredOnly-665",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-NamePlate:CanChangeHitTestPoints-655",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "unprobeable: factory: unknown frame type 'NamePlate'"
+    },
+    {
+      "source_id": "wt-scriptobjects-NamePlate:ClearAllHitTestPoints-656",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "unprobeable: factory: unknown frame type 'NamePlate'"
+    },
+    {
+      "source_id": "wt-scriptobjects-NamePlate:GetHitTestPoints-657",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "unprobeable: factory: unknown frame type 'NamePlate'"
+    },
+    {
+      "source_id": "wt-scriptobjects-NamePlate:SetAllHitTestPoints-658",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "unprobeable: factory: unknown frame type 'NamePlate'"
+    },
+    {
+      "source_id": "wt-scriptobjects-NamePlate:SetHitTestPoints-659",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "unprobeable: factory: unknown frame type 'NamePlate'"
+    },
+    {
+      "source_id": "wt-scriptobjects-NumericFormatter:FormatNumber-670",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-NumericRuleFormatter:AddBreakpoint-671",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-NumericRuleFormatter:ClearBreakpoints-672",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-NumericRuleFormatter:Copy-673",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-NumericRuleFormatter:GetBreakpoints-674",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-NumericRuleFormatter:SetBreakpoints-675",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:CanApproximate-676",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:CanRoundUpIntervals-677",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:CanRoundUpLastUnit-678",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:EvaluateDesiredUnitCount-679",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:EvaluateMaxInterval-680",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:EvaluateMinInterval-681",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:Format-683",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:FormatZero-682",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetApproximationSeconds-684",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetConvertToLower-685",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetDefaultAbbreviation-686",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetDesiredUnitCount-688",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetDesiredUnitCountCurve-687",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetMaxInterval-690",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetMaxIntervalCurve-689",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetMillisecondsThreshold-691",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetMinInterval-693",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetMinIntervalCurve-692",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:GetStripIntervalWhitespace-694",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:Reset-695",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetApproximationSeconds-696",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetCanRoundUpIntervals-697",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetCanRoundUpLastUnit-698",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetConvertToLower-699",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetDefaultAbbreviation-700",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetDesiredUnitCount-702",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetDesiredUnitCountCurve-701",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetMaxInterval-704",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetMaxIntervalCurve-703",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetMillisecondsThreshold-705",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetMinInterval-707",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetMinIntervalCurve-706",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: SecondsFormatter; lookup=nil"
+    },
+    {
+      "source_id": "wt-scriptobjects-SecondsFormatter:SetStripIntervalWhitespace-708",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:GetCountdownAbbrevThreshold-741",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:GetCountdownFormatter-742",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:GetCountdownMillisecondsThreshold-743",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:GetMinimumCountdownDuration-752",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:SetCountdownAbbrevThreshold-754",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:SetCountdownFormatter-744",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:SetCountdownMillisecondsThreshold-745",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:SetMinimumCountdownDuration-756",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-FontString:GetFont-760",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-FontString:GetSmoothScaling-735",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-FontString:GetUnboundedStringWidthForText-736",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: FontString; lookup=nil"
+    },
+    {
+      "source_id": "wt-widgets-FontString:SetFont-762",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-FontString:SetSmoothScaling-737",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:SetSheathedCategory-738",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: ModelSceneActor; lookup=nil"
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:UseUnitSheatheCategory-739",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: ModelSceneActor; lookup=nil"
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:SetGradientMaskWithDyes-740",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "object-method: ModelSceneActorBase; lookup=nil"
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:SetModelByUnit-758",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
+    },
+    {
+      "source_id": "wt-widgets-PlayerModel:SetUnit-750",
+      "capabilities": [
+        "publication-sweep-12-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); behavior unproved."
     }
-  ]
+  ],
+  "supplemental_register": "data/patch-api/sources/12.0.5-wikitext-register.json"
 }

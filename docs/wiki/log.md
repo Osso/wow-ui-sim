@@ -18,3 +18,7 @@ Post-startup strict removals deleted Blizzard deprecation wrappers; fixed at nam
 ## [2026-10-04] docs | 12.0.7 wikitext supplement
 
 Extract missed 65 of 174 collapsed-table symbols; shared publication sweep added (147 OK, 27 gaps). [Audit page](investigations/patch-12-0-7-api-audit.md#wikitext-supplement--2026-10-04). 12.1.0 now 22 pending after leftovers; rilua pinned at a76ffa8 (intern GC fix).
+
+## [2026-10-04] docs | 12.0.5 wikitext supplement
+
+Crawler register missed 216 of 363 collapsed-table symbols; sweep 306 OK / 57 gaps. [Audit page](investigations/patch-12-0-5-api-audit.md#wikitext-supplement--2026-10-04).
