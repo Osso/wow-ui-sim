@@ -14,12 +14,6 @@ const FILTERED_STANDALONE_GLOBALS: &[&str] = &[
 ];
 
 const CURATED_EXTRA_GLOBALS: &[&str] = &[
-    "CombatLogAddFilter",
-    "CombatLogAdvanceEntry",
-    "CombatLogGetCurrentEntry",
-    "CombatLogGetCurrentEventInfo",
-    "CombatLogGetNumEntries",
-    "CombatLogSetCurrentEntry",
     "GetContainerItemID",
     "GetContainerItemLink",
     "GetContainerNumSlots",
