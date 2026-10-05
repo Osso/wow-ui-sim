@@ -70,9 +70,9 @@ fn p1200_threat_categories_and_missing_units_use_explicit_host_state() {
                 },
             );
         assert_eq!(
-            env.eval::<u8>("return UnitThreatLeadSituation('player','player')")
+            env.eval::<i32>("return UnitThreatLeadSituation('player','player')")
                 .unwrap(),
-            category
+            i32::from(category)
         );
     }
     env.state()
