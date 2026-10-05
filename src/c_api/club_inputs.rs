@@ -35,6 +35,10 @@ fn store_member_snapshot(
     validate_identity(club, member)?;
     let previous = club.member(&member.id).cloned();
     if club_id == GUILD_ID {
+        member.guid = member
+            .guid
+            .clone()
+            .or_else(|| previous.as_ref().and_then(|entry| entry.guid.clone()));
         // INFERRED: absent guild rank retains previous rank, initially 1.
         member.guild_rank = Some(
             member
@@ -172,7 +176,8 @@ fn classify_changes(previous: Option<&Member>, member: &Member) -> Vec<MemberEve
     let attributes_changed = previous.name != member.name
         || previous.note != member.note
         || previous.is_self != member.is_self
-        || previous.guild_rank != member.guild_rank;
+        || previous.guild_rank != member.guild_rank
+        || previous.guid != member.guid;
     if attributes_changed {
         events.push(("CLUB_MEMBER_UPDATED", None));
     }

@@ -9,12 +9,15 @@ fn club_opaque_ids_survive_roster_reordering() {
         assert(ids[1] ~= ids[2])
         assert(C_Club.GetMemberInfo('guild-0', ids[2]).memberId == ids[2])
         secondName = C_Club.GetMemberInfo('guild-0', ids[2]).name
+        secondGuid = C_Club.GetMemberInfo('guild-0', ids[2]).guid
+        assert(type(secondGuid) == 'string')
     "#).unwrap();
     env.state().borrow_mut().world.guild_members.reverse();
     env.exec(r#"
         local reordered = C_Club.GetClubMembers('guild-0')
         assert(reordered[1] == ids[2] and reordered[2] == ids[1])
         assert(C_Club.GetMemberInfo('guild-0', ids[2]).name == secondName)
+        assert(C_Club.GetMemberInfo('guild-0', ids[2]).guid == secondGuid)
         local ranges = C_Club.GetMessageRanges('guild-0', 1)
         local message = C_Club.GetMessageInfo('guild-0', 1, ranges[1].oldestMessageId)
         assert(message.author.memberId == ids[1])

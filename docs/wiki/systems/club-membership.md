@@ -4,7 +4,7 @@ Club state lives in `SimState.clubs`, implemented under `src/c_api/`. Lua receiv
 
 ## Identity and management
 
-`ClubState` allocates member/club/invitation tokens. Guild roster projection matches full character names, preserving IDs under reordering; removal/rejoin allocates a fresh ID. This mapping is INFERRED because the existing GuildMember producer has no GUID. Guild ranks do not confer community privileges.
+`ClubState` allocates member/club/invitation tokens. Guild roster projection matches full character names, preserving IDs under reordering; removal/rejoin allocates a fresh ID. This mapping is INFERRED because the existing GuildMember producer has no GUID. Guild ranks do not confer community privileges. The legacy producer lacks GUIDs, so projected members also receive stable simulator `Player-0-<hex>` GUIDs (INFERRED). These are separate from opaque member IDs; cached `GuildRoster.lua:17` requires a GUID before building rank menus. Host updates retain an omitted prior GUID.
 
 Community creation installs the player as owner. INFERRED policy: owner manages lower roles; leader manages moderators/members; moderator manages members. Owner is required/unique; transfer demotes old owner to leader atomically. Member notes distinguish own/other privileges. Invitations reference server-supplied candidates and never invent accepted membership. Restrictions and initialization are explicit host inputs; denied mutations are silent and have no side effects.
 

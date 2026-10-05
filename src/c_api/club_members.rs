@@ -109,6 +109,10 @@ pub(super) fn build_member_info(state: &mut LuaState, member: &Member, club_type
     table_set(state, table, "role", Val::Num(member.role as f64));
     table_set(state, table, "presence", Val::Num(member.presence as f64));
     table_set(state, table, "clubType", Val::Num(club_type as f64));
+    if let Some(guid) = &member.guid {
+        let guid = create_string(state, guid);
+        table_set(state, table, "guid", guid);
+    }
     if let Some(rank) = member.guild_rank {
         table_set(state, table, "guildRankOrder", Val::Num(rank as f64));
     }

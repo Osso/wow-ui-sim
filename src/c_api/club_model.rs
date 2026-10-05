@@ -20,6 +20,7 @@ pub struct Member {
     pub is_self: bool,
     pub note: String,
     pub guild_rank: Option<i32>,
+    pub guid: Option<String>,
 }
 
 impl Member {
@@ -32,6 +33,7 @@ impl Member {
             is_self,
             note: String::new(),
             guild_rank: None,
+            guid: None,
         }
     }
 }
@@ -209,7 +211,11 @@ impl ClubState {
     ) -> Member {
         let mut member = previous.unwrap_or_else(|| {
             let id = self.allocate_id("member");
-            Member::new(&id, &entry.name, MEMBER, is_self)
+            let mut member = Member::new(&id, &entry.name, MEMBER, is_self);
+            // INFERRED stable simulator GUID: the legacy roster has no native GUID.
+            // Guild UI needs a distinct GUID field; it must not be a row index.
+            member.guid = Some(format!("Player-0-{:08X}", self.next_id));
+            member
         });
         // Preserve explicit host Away/Mobile/Busy presence while the legacy
         // roster's online bit remains true.

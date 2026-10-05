@@ -34,3 +34,7 @@ Added [club membership](systems/club-membership.md) and contract; retired tempor
 ## 2026-10-05 | Club host inputs
 
 Added synchronous member snapshots/departures and stable historical chat authors to [club membership](systems/club-membership.md). New proof pending.
+
+## 2026-10-05 | Guild opaque-ID regression
+
+Cached GuildRoster rank menus require `guid` independently of member IDs. Added stable projected GUIDs; no vendor/UI patch. Retest pending.
