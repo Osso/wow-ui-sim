@@ -480,7 +480,8 @@ fn addon_security_status(addon: &crate::lua_api::AddonInfo) -> String {
 }
 
 fn addon_is_secure_by_default(addon: &crate::lua_api::AddonInfo) -> bool {
-    addon.folder_name == "__BuiltIn" || addon.folder_name.starts_with("Blizzard_")
+    addon.folder_name == "__BuiltIn"
+        || crate::blizzard_ui_sync::is_builtin_addon_folder(&addon.folder_name)
 }
 
 /// `C_AddOns.GetAddOnDependencies(indexOrName) → ...string`

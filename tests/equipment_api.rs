@@ -1,5 +1,6 @@
 //! Tests for equipment: equip/unequip items, query inventory slots.
 
+use crate::common::inventory_slot_info_chunk;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {
@@ -113,7 +114,7 @@ fn test_admin_unequip_item() {
 fn test_inventory_slot_info() {
     let env = env();
     let (slot_id, tex_id): (i32, i32) =
-        env.eval("return GetInventorySlotInfo('HeadSlot')").unwrap();
+        env.eval(&inventory_slot_info_chunk("return GetInventorySlotInfo('HeadSlot')")).unwrap();
     assert_eq!(slot_id, 1);
     assert!(tex_id > 0);
 }

@@ -225,7 +225,7 @@ fn toc_raw_bytes_pin_three_directives_and_nine_body_files() {
 }
 
 #[test]
-fn game_discovery_loads_middleclass_before_tutorial_manager_without_unrelated_non_blizzard_roots() {
+fn game_discovery_loads_middleclass_before_tutorial_manager_and_other_builtin_roots() {
     let addons = discover_blizzard_addons_for_screen(&blizzard_ui_dir(), ScreenKind::Game);
     let middleclass_index = addons
         .iter()
@@ -245,10 +245,11 @@ fn game_discovery_loads_middleclass_before_tutorial_manager_without_unrelated_no
          can call class(\"TutorialBase\")"
     );
     assert!(
-        !addons
+        addons
             .iter()
             .any(|(name, _)| name == "Deprecated_PaperDoll"),
-        "unrelated non-Blizzard roots must not enter Game discovery"
+        "built-in non-LoD Deprecated_PaperDoll ships in the client interface data, so it \
+         is a Game startup root despite lacking the `Blizzard_` prefix"
     );
 }
 

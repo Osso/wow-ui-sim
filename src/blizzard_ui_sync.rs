@@ -90,6 +90,25 @@ pub fn manifest_entries() -> impl Iterator<Item = &'static str> {
         .filter(|line| !line.is_empty())
 }
 
+/// Whether `folder_name` is a built-in Blizzard addon for the active profile.
+///
+/// The client treats every addon shipped in its interface data as built-in, whatever
+/// the folder is called (retail ships `Deprecated_PaperDoll` and `middleclass`). The
+/// committed manifest mirrors that data; the `Blizzard_` prefix covers built-in
+/// folders outside it, such as synthetic fixture trees.
+pub fn is_builtin_addon_folder(folder_name: &str) -> bool {
+    static MANIFEST_FOLDERS: std::sync::OnceLock<std::collections::HashSet<&'static str>> =
+        std::sync::OnceLock::new();
+    folder_name.starts_with("Blizzard_")
+        || MANIFEST_FOLDERS
+            .get_or_init(|| {
+                manifest_entries()
+                    .filter_map(|entry| entry.split_once('/').map(|(folder, _)| folder))
+                    .collect()
+            })
+            .contains(folder_name)
+}
+
 fn active_blizzard_ui_manifest() -> &'static str {
     match crate::client_profile::ACTIVE {
         crate::client_profile::ClientProfile::Retail => RETAIL_BLIZZARD_UI_MANIFEST,

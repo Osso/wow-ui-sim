@@ -559,9 +559,9 @@ impl TocFile {
     /// Check if this TOC should execute without addon taint.
     ///
     /// Most Blizzard UI TOCs advertise `AllowLoad`; a few secure helper TOCs
-    /// only advertise `UseSecureEnvironment`; other internal Blizzard addons
-    /// rely on the signed `Blizzard_` folder-name convention that also drives
-    /// `C_AddOns.GetAddOnSecurity`.
+    /// only advertise `UseSecureEnvironment`; other built-in addons are
+    /// identified by folder (`blizzard_ui_sync::is_builtin_addon_folder`), the
+    /// same rule that drives `C_AddOns.GetAddOnSecurity`.
     pub fn loads_as_blizzard_code(&self) -> bool {
         addon_loads_as_blizzard_code(
             self.folder_name(),
@@ -581,7 +581,9 @@ pub(crate) fn addon_loads_as_blizzard_code(
     allow_load: bool,
     use_secure_env: bool,
 ) -> bool {
-    allow_load || use_secure_env || folder_name.is_some_and(|name| name.starts_with("Blizzard_"))
+    allow_load
+        || use_secure_env
+        || folder_name.is_some_and(crate::blizzard_ui_sync::is_builtin_addon_folder)
 }
 
 #[cfg(test)]

@@ -28,6 +28,7 @@ pub(crate) mod xml_layer_batch;
 mod xml_lifecycle;
 mod xml_texture;
 
+use crate::blizzard_ui_sync::is_builtin_addon_folder;
 use crate::lua_api::LoaderEnv;
 pub use crate::lua_api::state::{
     LoadDiagnosticAttribution, LoadDiagnostics, MissingRequirement, MissingRequirementKind,
@@ -500,7 +501,7 @@ pub fn load_addon_from_toc_with_saved_vars(
 
 /// Discover all Blizzard addons in a BlizzardUI directory, topologically sorted by dependencies.
 ///
-/// Scans for `Blizzard_*` subdirectories, parses their TOC files, filters out `LoadOnDemand`
+/// Scans for built-in addon subdirectories, parses their TOC files, filters out `LoadOnDemand`
 /// addons, and returns the remaining addons in dependency order.
 pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)> {
     discover_blizzard_addons_for_screen(blizzard_ui_dir, ScreenKind::Game)
@@ -508,10 +509,10 @@ pub fn discover_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, PathBuf)
 
 /// Discover every Blizzard addon directory in a BlizzardUI tree, including LoadOnDemand addons.
 ///
-/// This includes every parseable `Blizzard_*` directory regardless of screen restrictions
-/// or `LoadOnDemand`, plus the transitive `## Dependencies:` closure of those roots. This
-/// admits hard non-Blizzard dependencies (for example `middleclass`) without eagerly loading
-/// unrelated non-Blizzard directories. Foundational shared XML addons
+/// This includes every parseable built-in addon directory (see
+/// `blizzard_ui_sync::is_builtin_addon_folder`) regardless of screen restrictions or
+/// `LoadOnDemand`, plus the transitive `## Dependencies:` closure of those roots, without
+/// eagerly loading unrelated non-built-in directories. Foundational shared XML addons
 /// (`Blizzard_SharedXMLBase`, `Blizzard_SharedXML`, `Blizzard_SharedXMLGame`) are emitted first
 /// via the eager LoadFirst pass so dependency-free LoadOnDemand frames that inherit their
 /// templates resolve against a fully-registered template chain.
@@ -538,12 +539,12 @@ pub fn discover_all_blizzard_addons(blizzard_ui_dir: &Path) -> Vec<(String, Path
             Ok(toc) => {
                 toc_map.insert(name.to_string(), (toc_path, toc));
             }
-            Err(_) if name.starts_with("Blizzard_") => unparsed.push((name.to_string(), toc_path)),
+            Err(_) if is_builtin_addon_folder(name) => unparsed.push((name.to_string(), toc_path)),
             Err(_) => {}
         }
     }
 
-    retain_blizzard_roots_and_required_dependencies(&mut toc_map);
+    retain_builtin_roots_and_required_dependencies(&mut toc_map);
     promote_foundational_addons_to_load_first(&mut toc_map);
     let mut sorted = topological_sort_addons(toc_map);
     sorted.extend(unparsed);
@@ -677,12 +678,12 @@ fn queue_pending_addon(name: String, pending: &mut Vec<String>, queued: &mut Has
     }
 }
 
-fn retain_blizzard_roots_and_required_dependencies(
+fn retain_builtin_roots_and_required_dependencies(
     toc_map: &mut HashMap<String, (PathBuf, TocFile)>,
 ) {
     let mut pending: Vec<String> = toc_map
         .keys()
-        .filter(|name| name.starts_with("Blizzard_"))
+        .filter(|name| is_builtin_addon_folder(name))
         .cloned()
         .collect();
     let mut retained: HashSet<String> = pending.iter().cloned().collect();
@@ -757,10 +758,10 @@ fn discover_blizzard_addon_toc_pools_for_screen(
             continue;
         }
 
-        let is_blizzard_root = dir_name.starts_with("Blizzard_")
+        let is_builtin_root = is_builtin_addon_folder(&dir_name)
             && !excluded_addons_for_screen(screen).contains(&dir_name.as_str())
             && !excluded_addons_for_active_profile().contains(&dir_name.as_str());
-        if is_blizzard_root && !toc.is_load_on_demand() {
+        if is_builtin_root && !toc.is_load_on_demand() {
             addons.insert(dir_name, (toc_path, toc));
         } else {
             dependency_pool.insert(dir_name, (toc_path, toc));
@@ -812,10 +813,10 @@ fn excluded_addons_for_active_profile() -> &'static [&'static str] {
     }
 }
 
-/// Recursively pull hard dependencies into the main set when required by Blizzard roots.
+/// Recursively pull hard dependencies into the main set when required by built-in roots.
 ///
-/// The candidate pool contains LoadOnDemand Blizzard addons and every eligible non-Blizzard
-/// TOC, so unrelated non-Blizzard directories remain excluded unless a retained root requires
+/// The candidate pool contains LoadOnDemand built-in addons and every eligible non-built-in
+/// TOC, so unrelated non-built-in directories remain excluded unless a retained root requires
 /// them through `## Dependencies:`.
 fn pull_required_dependency_addons(
     addons: &mut HashMap<String, (PathBuf, TocFile)>,

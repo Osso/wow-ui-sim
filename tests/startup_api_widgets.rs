@@ -3,6 +3,7 @@
 #[path = "startup_api_stubs/common.rs"]
 mod startup_api_common;
 
+use crate::common::inventory_slot_info_chunk;
 use startup_api_common::*;
 
 fn load_blizzard_addons(env: &wow_ui_sim::lua_api::WowLuaEnv) {
@@ -571,7 +572,7 @@ fn get_inventory_slot_info_returns_integer_id() {
     // long-stable canonical slot table.
     let env = env();
     let (head_id, main_id, secondary_id, ranged_id, unknown): (f64, f64, f64, f64, String) = env
-        .eval(
+        .eval(&inventory_slot_info_chunk(
             r#"
             return GetInventorySlotInfo("HEADSLOT"),
                    GetInventorySlotInfo("MainHandSlot"),
@@ -579,7 +580,7 @@ fn get_inventory_slot_info_returns_integer_id() {
                    GetInventorySlotInfo("RangedSlot"),
                    tostring(GetInventorySlotInfo("NotASlot"))
             "#,
-        )
+        ))
         .unwrap();
     assert_eq!(head_id, 1.0);
     assert_eq!(main_id, 16.0);

@@ -70,7 +70,7 @@ fn insert_bootstrap_nodes(
 }
 
 fn is_eligible_bootstrap_root(name: &str, toc: &TocFile, screen: ScreenKind) -> bool {
-    if !name.starts_with("Blizzard_") || is_addon_excluded_for_active_profile(name) {
+    if !is_builtin_addon_folder(name) || is_addon_excluded_for_active_profile(name) {
         return false;
     }
     if excluded_addons_for_screen(screen).contains(&name) {

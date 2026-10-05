@@ -64,7 +64,8 @@ fn format_addons_txt(addons: &[AddonInfo]) -> String {
 }
 
 fn should_persist_addon(addon: &AddonInfo) -> bool {
-    addon.folder_name != "__BuiltIn" && !addon.folder_name.starts_with("Blizzard_")
+    addon.folder_name != "__BuiltIn"
+        && !crate::blizzard_ui_sync::is_builtin_addon_folder(&addon.folder_name)
 }
 
 #[cfg(test)]

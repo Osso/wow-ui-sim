@@ -48,7 +48,7 @@ pub(crate) fn is_blizzard_addon(state: &Rc<RefCell<SimState>>, idx: Option<u16>)
             .borrow()
             .addons
             .get(i as usize)
-            .is_some_and(|a| a.folder_name.starts_with("Blizzard_"))
+            .is_some_and(|a| crate::blizzard_ui_sync::is_builtin_addon_folder(&a.folder_name))
     })
     .unwrap_or(true)
 }

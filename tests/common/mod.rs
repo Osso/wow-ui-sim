@@ -317,3 +317,16 @@ const _: () = {
         let _ = try_create_gpu_device as fn() -> Option<(wgpu::Device, wgpu::Queue)>;
     }
 };
+
+/// Prefix `code` with a local `GetInventorySlotInfo` bound to the profile's producer.
+///
+/// 12.1.0 removed the native global; the producer is `C_PaperDollInfo.GetInventorySlotInfo`
+/// (Blizzard's `Deprecated_PaperDoll` republishes it as the global after UI load).
+pub fn inventory_slot_info_chunk(code: &str) -> String {
+    let producer = if cfg!(feature = "retail-12-1-0") {
+        "C_PaperDollInfo.GetInventorySlotInfo"
+    } else {
+        "GetInventorySlotInfo"
+    };
+    format!("local GetInventorySlotInfo = {producer}\n{code}")
+}
