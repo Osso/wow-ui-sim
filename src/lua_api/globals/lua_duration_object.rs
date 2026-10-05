@@ -42,6 +42,7 @@ const METHOD_NAMES: &[&str] = &[
     "EvaluateElapsedPercent",
     "EvaluateRemainingDuration",
     "EvaluateRemainingPercent",
+    "EvaluateTotalDuration",
     "GetClock",
     "GetClockTime",
     "GetElapsedDuration",

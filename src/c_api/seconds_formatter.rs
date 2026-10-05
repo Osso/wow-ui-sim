@@ -99,6 +99,9 @@ fn new_configuration(state: &mut LuaState) -> LuaResult<u32> {
     ] {
         table_set_static(state, values, key, Val::Num(value));
     }
+    // INFERRED: interval promotion stays on, preserving the formatter's prior output.
+    table_set_static(state, values, "canRoundUpIntervals", Val::Bool(true));
+    table_set_static(state, values, "convertToLower", Val::Bool(false));
     Ok(1)
 }
 
@@ -120,7 +123,11 @@ fn write_configuration(state: &mut LuaState) -> LuaResult<u32> {
             | "defaultAbbreviation"
             | "rounding"
             | "canRoundUpLastUnit"
+            | "canRoundUpIntervals"
+            | "convertToLower"
+            | "minIntervalCurve"
             | "maxIntervalCurve"
+            | "desiredUnitCountCurve"
     );
     if !valid {
         return Err(runtime_error(

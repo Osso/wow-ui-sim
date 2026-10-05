@@ -164,6 +164,78 @@ fn seconds_formatter_evaluation_resolves_live_curve_methods_without_fallback() {
 }
 
 #[test]
+fn seconds_formatter_getters_report_static_or_curve_configuration_and_reset() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local f = C_StringUtil.CreateSecondsFormatter()
+        local other = C_StringUtil.CreateSecondsFormatter()
+        local interval = Enum.SecondsFormatterInterval
+        local function assert_defaults(formatter)
+            assert(formatter:GetDefaultAbbreviation() == nil)
+            assert(formatter:CanRoundUpLastUnit() == true)
+            assert(formatter:CanRoundUpIntervals() == true)
+            assert(formatter:GetConvertToLower() == false)
+            assert(formatter:GetMinInterval() == interval.Seconds)
+            assert(formatter:GetMaxInterval() == interval.Days)
+            assert(formatter:GetDesiredUnitCount() == 1)
+            assert(formatter:GetMinIntervalCurve() == nil)
+            assert(formatter:GetMaxIntervalCurve() == nil)
+            assert(formatter:GetDesiredUnitCountCurve() == nil)
+            assert(formatter:GetApproximationSeconds() == 0)
+        end
+        assert_defaults(f)
+
+        local minCurve = C_CurveUtil.CreateCurve()
+        minCurve:AddPoint(0, interval.Seconds)
+        minCurve:AddPoint(7200, interval.Hours)
+        f:SetMinIntervalCurve(minCurve)
+        assert(f:GetMinInterval() == nil and f:GetMinIntervalCurve() == minCurve)
+        assert(f:EvaluateMinInterval(0) == interval.Seconds)
+        assert(f:EvaluateMinInterval(7200) == interval.Hours)
+
+        local countCurve = C_CurveUtil.CreateCurve()
+        countCurve:AddPoint(0, 1)
+        countCurve:AddPoint(3600, 3)
+        f:SetDesiredUnitCountCurve(countCurve)
+        assert(f:GetDesiredUnitCount() == nil and f:GetDesiredUnitCountCurve() == countCurve)
+        assert(f:EvaluateDesiredUnitCount(0) == 1 and f:EvaluateDesiredUnitCount(3600) == 3)
+
+        local maxCurve = C_CurveUtil.CreateCurve()
+        maxCurve:AddPoint(0, interval.Hours)
+        f:SetMaxIntervalCurve(maxCurve)
+        assert(f:GetMaxInterval() == nil and f:GetMaxIntervalCurve() == maxCurve)
+
+        f:SetMinInterval(interval.Minutes)
+        f:SetDesiredUnitCount(2)
+        assert(f:GetMinIntervalCurve() == nil and f:GetMinInterval() == interval.Minutes)
+        assert(f:GetDesiredUnitCountCurve() == nil and f:GetDesiredUnitCount() == 2)
+        assert(f:EvaluateMinInterval(7200) == interval.Minutes)
+
+        f:SetDefaultAbbreviation(2)
+        f:SetCanRoundUpLastUnit(false)
+        f:SetCanRoundUpIntervals(false)
+        f:SetConvertToLower(true)
+        f:SetApproximationSeconds(3)
+        assert(f:GetDefaultAbbreviation() == 2 and f:CanRoundUpLastUnit() == false)
+        assert(f:CanRoundUpIntervals() == false and f:GetConvertToLower() == true)
+        for _, invalid in ipairs({1, 'true', nil}) do
+            assert(not pcall(f.SetConvertToLower, f, invalid))
+            assert(not pcall(f.SetCanRoundUpIntervals, f, invalid))
+        end
+        assert(f:CanRoundUpIntervals() == false and f:GetConvertToLower() == true)
+        assert_defaults(other)
+
+        assert(select('#', f:Reset()) == 0)
+        assert_defaults(f)
+        assert(f:EvaluateMinInterval(7200) == interval.Seconds)
+        assert(not pcall(f.Reset, {}))
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn seconds_formatter_evaluation_rejects_invalid_inputs_without_mutation() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(

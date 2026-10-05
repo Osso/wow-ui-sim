@@ -782,6 +782,19 @@ fn duration_curve_remaining_seconds_follow_clock_and_modifiers() {
 }
 
 #[test]
+fn duration_curve_total_seconds_ignore_clock_position() {
+    duration_curve_env()
+        .exec(
+            r#"
+        AssertDurationCurveSamples('EvaluateTotalDuration', secondsCurve,
+            {200, 200, 200, 200, 200, 200, 200},
+            {300, 300, 300, 300, 300, 300, 300})
+    "#,
+        )
+        .expect("total seconds evaluate the full span against the curve at every clock time");
+}
+
+#[test]
 fn duration_curve_elapsed_percent_is_modifier_invariant() {
     duration_curve_env()
         .exec(

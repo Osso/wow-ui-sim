@@ -50,8 +50,9 @@ local function __wow_install_seconds_formatter_format(methods, render_duration_u
   end
 
   local function options_for(object, seconds, abbreviation)
-    local minimum = methods.EvaluateMinInterval(object, seconds)
+    local minimum, secret_minimum = read_number(methods.EvaluateMinInterval(object, seconds))
     local maximum, secret_maximum = read_number(methods.EvaluateMaxInterval(object, seconds))
+    local count, secret_count = read_number(methods.EvaluateDesiredUnitCount(object, seconds))
     if minimum > maximum then error("SecondsFormatter minimum exceeds maximum", 3) end
     local width = enum_option(abbreviation, nil, 2, "abbreviation")
     if width == nil then width = enum_option(object.defaultAbbreviation, 0, 2, "abbreviation") end
@@ -59,8 +60,8 @@ local function __wow_install_seconds_formatter_format(methods, render_duration_u
     local can_round_up = object.canRoundUpLastUnit
     if can_round_up == nil then can_round_up = true end
     if type(can_round_up) ~= "boolean" then error("SecondsFormatter round-up flag must be boolean", 3) end
-    return minimum, maximum, methods.EvaluateDesiredUnitCount(object, seconds), width,
-        rounding == 0 and can_round_up, secret_maximum
+    return minimum, maximum, count, width, rounding == 0 and can_round_up,
+        secret_minimum or secret_maximum or secret_count
   end
 
   function methods:Format(input, abbreviation)
@@ -82,10 +83,15 @@ local function __wow_install_seconds_formatter_format(methods, render_duration_u
     local milliseconds = magnitude > 0 and magnitude < methods.GetMillisecondsThreshold(self)
     local precision = milliseconds and 3 or 0
     local rounded = round_seconds(magnitude, last, precision, round_up)
-    first = selected_interval(rounded, minimum, maximum)
-    last = last_interval(first, minimum, count)
+    -- Promotion (eg. '60m' -> '1h') re-selects the window after rounding.
+    if methods.CanRoundUpIntervals(self) then
+      first = selected_interval(rounded, minimum, maximum)
+      last = last_interval(first, minimum, count)
+    end
     local parts = parts_for(rounded, first, last, precision)
-    local text = prefix .. render_duration_units(parts, width, methods.GetStripIntervalWhitespace(self))
+    local units = render_duration_units(parts, width, methods.GetStripIntervalWhitespace(self))
+    if methods.GetConvertToLower(self) then units = string.lower(units) end
+    local text = prefix .. units
     return secret and wrap_value(text) or text
   end
   -- Inferred NumericFormatter interface required by unchanged AuraContainer consumers.

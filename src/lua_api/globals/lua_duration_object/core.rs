@@ -415,6 +415,9 @@ pub(super) fn register(state: &mut LuaState, methods: Val) {
         ("EvaluateRemainingDuration", |s| {
             evaluate_with_curve(s, "GetRemainingDuration")
         }),
+        ("EvaluateTotalDuration", |s| {
+            evaluate_with_curve(s, "GetTotalDuration")
+        }),
         ("EvaluateElapsedPercent", |s| {
             evaluate_with_curve(s, "GetElapsedPercent")
         }),

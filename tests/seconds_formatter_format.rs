@@ -108,6 +108,36 @@ fn seconds_formatter_format_uses_locale_width_and_survives_gc() {
 
 #[cfg(feature = "native-duration-formatting")]
 #[test]
+fn seconds_formatter_format_applies_promotion_lowercase_and_zero_settings() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        local f = C_StringUtil.CreateSecondsFormatter()
+        f:SetRounding(Enum.SecondsFormatterRounding.RoundUp)
+        assert(f:Format(3599) == '1 hour', f:Format(3599))
+        f:SetCanRoundUpIntervals(false)
+        assert(f:Format(3599) == '60 minutes', f:Format(3599))
+        f:SetCanRoundUpIntervals(true)
+        local old = GetLocale
+        GetLocale = function() return 'deDE' end
+        assert(f:Format(1) == '1 Sekunde', f:Format(1))
+        f:SetConvertToLower(true)
+        assert(f:Format(1) == '1 sekunde', f:Format(1))
+        f:SetApproximationSeconds(5)
+        assert(f:Format(2) == '< 5 sekunden', f:Format(2))
+        GetLocale = old
+        assert(f:FormatZero() == '0 seconds', f:FormatZero())
+        assert(f:FormatZero(Enum.SecondsFormatterAbbreviation.OneLetter) == '0s')
+        f:SetDefaultAbbreviation(Enum.SecondsFormatterAbbreviation.Truncate)
+        assert(f:FormatZero() == '0 sec', f:FormatZero())
+        assert(select('#', f:FormatZero()) == 1)
+    "#,
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "native-duration-formatting")]
+#[test]
 fn seconds_formatter_format_rejects_invalid_state_without_mutating_it() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(

@@ -697,6 +697,16 @@ fn frame_text_scale_value(state: &LuaState, id: u64) -> f64 {
 
 pub(super) fn measure_text_width(state: &LuaState, id: u64) -> f64 {
     let (text, font, font_size) = frame_text_measurement(state, id);
+    measure_width_in_frame_font(state, id, &text, font.as_deref(), font_size)
+}
+
+fn measure_width_in_frame_font(
+    state: &LuaState,
+    id: u64,
+    text: &str,
+    font: Option<&str>,
+    font_size: f32,
+) -> f64 {
     if text.is_empty() {
         return 0.0;
     }
@@ -706,10 +716,22 @@ pub(super) fn measure_text_width(state: &LuaState, id: u64) -> f64 {
     {
         return font_system
             .borrow_mut()
-            .measure_text_width(&text, font.as_deref(), font_size) as f64
+            .measure_text_width(text, font, font_size) as f64
             * text_scale;
     }
-    approximate_text_width(&text, font_size) as f64 * text_scale
+    approximate_text_width(text, font_size) as f64 * text_scale
+}
+
+/// Measures caller text in this font string's font, without touching its own text.
+#[cfg(feature = "retail-12-0-5")]
+pub(super) fn get_unbounded_string_width_for_text(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let text = <String as crate::lua_bridge::FromStack>::from_stack(state, 2)?;
+    let text = crate::render::strip_wow_markup(&text);
+    let (_, font, font_size) = frame_text_measurement(state, id);
+    let width = measure_width_in_frame_font(state, id, &text, font.as_deref(), font_size);
+    state.push(Val::Num(width));
+    Ok(1)
 }
 
 fn measure_text_height(state: &LuaState, id: u64, wrap_width: Option<f32>) -> f64 {

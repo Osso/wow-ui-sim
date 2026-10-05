@@ -253,6 +253,13 @@ fn register_text_measurement(state: &mut LuaState, table: GcRef<Table>) -> LuaRe
         "GetUnboundedStringWidth",
         text::get_unbounded_string_width,
     )?;
+    #[cfg(feature = "retail-12-0-5")]
+    table_set_rust_fn_static(
+        state,
+        table,
+        "GetUnboundedStringWidthForText",
+        text::get_unbounded_string_width_for_text,
+    )?;
     Ok(())
 }
 

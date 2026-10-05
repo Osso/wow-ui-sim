@@ -359,6 +359,35 @@ fn font_string_get_wrapped_width_uses_active_wrap_width() {
     assert_eq!(wrapped_width, 60.0);
 }
 
+#[cfg(feature = "retail-12-0-5")]
+#[test]
+fn font_string_unbounded_width_for_text_measures_caller_text_in_own_font() {
+    let env = env();
+    let (for_text, own_width, reference_width, short_width, text): (f64, f64, f64, f64, String) =
+        env.eval(
+            r#"
+            local frame = CreateFrame("Frame", "WidthForTextProbeParent", UIParent)
+            local fs = frame:CreateFontString("WidthForTextProbe", "ARTWORK", "GameFontNormal")
+            fs:SetText("Tier 1")
+            fs:SetWidth(20)
+            fs:SetWordWrap(true)
+            local shortWidth = fs:GetUnboundedStringWidth()
+            local forText = fs:GetUnboundedStringWidthForText("|cffff0000Tier 11 (Lair Challenges)|r")
+            local ownWidth = fs:GetUnboundedStringWidth()
+            local text = fs:GetText()
+            local reference = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+            reference:SetText("Tier 11 (Lair Challenges)")
+            return forText, ownWidth, reference:GetUnboundedStringWidth(), shortWidth, text
+            "#,
+        )
+        .unwrap();
+    assert_eq!(for_text, reference_width, "markup is stripped and the own font is used");
+    assert!(for_text > 20.0, "measurement is not bounded by the frame width");
+    assert!(for_text > short_width);
+    assert_eq!(own_width, short_width, "own text measurement is unchanged");
+    assert_eq!(text, "Tier 1");
+}
+
 #[test]
 fn create_font_string_inherits_named_font_object_properties() {
     let env = env();

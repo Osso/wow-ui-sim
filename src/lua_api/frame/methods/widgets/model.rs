@@ -708,6 +708,12 @@ const MODEL_METHODS: &[(&'static str, rilua::vm::closure::RustFn)] = &[
     ("ReplaceIconTexture", SKIP_3D_RENDERING),
     ("SetGlow", SKIP_3D_RENDERING),
     ("SetGradientMask", SKIP_3D_RENDERING),
+    #[cfg(feature = "retail-12-0-5")]
+    ("SetGradientMaskWithDyes", SKIP_3D_RENDERING),
+    #[cfg(feature = "retail-12-0-5")]
+    ("SetSheathedCategory", SKIP_3D_RENDERING),
+    #[cfg(feature = "retail-12-0-5")]
+    ("UseUnitSheatheCategory", SKIP_3D_RENDERING),
     ("SetCustomCamera", SKIP_3D_RENDERING),
     ("MakeCurrentCameraCustom", SKIP_3D_RENDERING),
     // ModelSceneActorMixin lifecycle methods. The simulator does not render
