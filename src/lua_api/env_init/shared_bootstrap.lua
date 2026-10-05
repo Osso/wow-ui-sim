@@ -236,18 +236,6 @@ local function __wow_xml_mixin_target_partition(object, targetPartition)
   return "public"
 end
 
--- Secure delegates invoke the original function with secure execution taint.
--- Delegate options are accepted but not modeled.
-local callSecureDelegate = securecallfunction
-function CreateSecureDelegate(luaFunction, _options)
-  if type(luaFunction) ~= "function" then
-    error("CreateSecureDelegate: luaFunction must be a function", 2)
-  end
-  return function(...)
-    return callSecureDelegate(luaFunction, ...)
-  end
-end
-
 function __wow_apply_xml_mixin(object, mixin, targetPartition, inboundPartition, secureDelegates)
   if type(mixin) ~= "table" then
     return object

@@ -10,10 +10,19 @@ if AddSourceLocationExclude == nil then
   end
 end
 
--- Blizzard_EnvironmentCleanup removes the bootstrap CreateSecureDelegate from
--- _G; the secure environment keeps the same function.
-if CreateSecureDelegate == nil and type(__secureenv) == "table" then
-  CreateSecureDelegate = rawget(__secureenv, "CreateSecureDelegate")
+-- Secure delegates invoke the original function with secure execution taint.
+-- Delegate options are accepted but not modeled. Blizzard_EnvironmentCleanup
+-- nils the global; the post-cleanup restore reinstalls it here.
+if CreateSecureDelegate == nil then
+  local callSecureDelegate = securecallfunction
+  function CreateSecureDelegate(luaFunction, _options)
+    if type(luaFunction) ~= "function" then
+      error("CreateSecureDelegate: luaFunction must be a function", 2)
+    end
+    return function(...)
+      return callSecureDelegate(luaFunction, ...)
+    end
+  end
 end
 
 if GetButtonMetatable == nil then
