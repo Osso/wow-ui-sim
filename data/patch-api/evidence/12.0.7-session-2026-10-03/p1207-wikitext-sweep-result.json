@@ -1073,11 +1073,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DelvesUI.GetWorldTierDifficultyForActivePlayer-135": {
     "expected": {
@@ -2729,11 +2729,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:GetDefaultAbbreviation-283": {
     "expected": {
@@ -2747,11 +2747,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "SecondsFormatter; lookup=nil",
+      "detail": "SecondsFormatter; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-SecondsFormatter:SetDefaultAbbreviation-285": {
     "expected": {
