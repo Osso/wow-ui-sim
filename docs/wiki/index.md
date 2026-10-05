@@ -1,3 +1,7 @@
+## [2026-10-05] evidence | 12.0.0 non-inventory extract
+
+[Extract supplement](investigations/patch-12-0-0-api-audit.md#non-inventory-extract-supplement) links reproducible retained-prose/enum/structure/deprecation seeding and exhaustive scout. Existing inventory proof stays unchanged; runtime closure remains pending.
+
 ## [2026-10-05] system | Neighborhood initiatives
 
 [Initiative state](systems/neighborhood-initiatives.md) owns active/viewing selection, host records, level/access/group gates and deferred replies. [Closure contract](../specs/patch-12-0-0-publication-sweep.md#housinginitiative-closure-contract) separates modeled housing APIs from undocumented diagnostic workarounds.

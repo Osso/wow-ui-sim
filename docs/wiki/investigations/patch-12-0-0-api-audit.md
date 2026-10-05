@@ -1,3 +1,9 @@
+## Non-inventory extract supplement
+
+Verified: 2026-10-05. [Scout and proof batches](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md) cover every retained non-inventory line from revision 6747189. [Extractor](../../../tools/extract_patch_non_inventory.py) produces [plaintext](../../../data/patch-api/sources/12.0.0-api-changes.txt) and seeds 143 supplemental rows: 32 ENUM, 56 STRUCT, 24 PROSE-MODELABLE remain audit-pending; 31 editorial/context rows are metadata-only. All 1,010 existing `wt-` row objects remain unchanged. This captured revision contains no Notes/Blue posts; linked pages are not expanded.
+
+Cached declarations and source-derived enum comparisons are frozen in the scout evidence. Historical test citations are reusable bounded evidence, not new acceptance: two enum seed conflicts require loaded-environment observation, while older no-producer notes for private-anchor/reward/appearance fields lag inspected test bodies. No simulator or test files changed, and no new runtime coverage credit was granted. Counts, row-by-row classification, exact citations and validation live in the linked scout rather than this summary.
+
 ## Wikitext supplement
 
 Verified: 2026-10-05. Raw MediaWiki revision **6747189** (revision timestamp `2026-06-18T08:59:26Z`) is retained with [provenance](../../../data/patch-api/sources/12.0.0-api-changes.provenance.json). [Spec](../../specs/patch-12-0-0-publication-sweep.md) owns the contract. This is supplemental publication/absence evidence, not signature, behavior, security, historical-epoch or native-client parity. Existing occurrence statuses and page-coverage JSON remain unchanged.
