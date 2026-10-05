@@ -95,6 +95,8 @@ fn push_spell_description_line(state: &mut LuaState, lines: Val, index: i64, spe
 }
 
 pub(super) fn append_action_binding_line(state: &mut LuaState, tooltip: Val, slot: u32) {
+    let saved_top = state.top;
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     let index = tooltip_line_count(state, lines) + 1;
     let text = action_binding_line(slot);
@@ -108,6 +110,7 @@ pub(super) fn append_action_binding_line(state: &mut LuaState, tooltip: Val, slo
         Some(instruction_color),
         false,
     );
+    state.top = saved_top;
 }
 
 fn spell_color_from_global(
@@ -203,9 +206,12 @@ pub(super) fn tooltip_for_spell_id(state: &mut LuaState, spell_id: u32) -> Val {
     let Some(spell) = spells::get_spell(spell_id) else {
         return tooltip;
     };
+    let saved_top = state.top;
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_spell_tooltip_lines(state, lines, spell_id, spell.name);
     set_spell_tooltip_width_hint(state, tooltip);
+    state.top = saved_top;
     tooltip
 }
 
@@ -216,11 +222,14 @@ pub(super) fn tooltip_for_unit_aura(
     let Some(aura) = aura else {
         return empty_tooltip(state, TOOLTIP_TYPE_UNIT_AURA);
     };
+    let saved_top = state.top;
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_UNIT_AURA);
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_highlight_spell_line(state, lines, 1, &aura.name);
     push_highlight_spell_line(state, lines, 2, "1 hr");
     push_spell_description_line(state, lines, 3, aura.spell_id as u32);
+    state.top = saved_top;
     tooltip
 }
 
@@ -240,7 +249,9 @@ pub(super) fn tooltip_for_toy_item_id(state: &mut LuaState, item_id: u32) -> Val
         return empty_tooltip(state, TOOLTIP_TYPE_ITEM);
     };
 
+    let saved_top = state.top;
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_ITEM, item_id);
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_tooltip_line(
         state,
@@ -251,6 +262,7 @@ pub(super) fn tooltip_for_toy_item_id(state: &mut LuaState, item_id: u32) -> Val
         Some(item_quality_color(1)),
         false,
     );
+    state.top = saved_top;
     tooltip
 }
 
@@ -275,7 +287,9 @@ fn find_mount_name_for_spell(state: &mut LuaState, spell_id: u32) -> Option<Stri
 }
 
 fn build_mount_tooltip(state: &mut LuaState, spell_id: u32, mount_name: &str) -> Val {
+    let saved_top = state.top;
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_SPELL, spell_id);
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_tooltip_line(
         state,
@@ -296,6 +310,7 @@ fn build_mount_tooltip(state: &mut LuaState, spell_id: u32, mount_name: &str) ->
         true,
     );
     set_spell_tooltip_width_hint(state, tooltip);
+    state.top = saved_top;
     tooltip
 }
 

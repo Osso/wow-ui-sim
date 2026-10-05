@@ -12,6 +12,14 @@ Rust `Val`/`GcRef` locals are not VM roots. Callback execution can collect DTOs 
 
 All three regressions failed at baseline with `table has been collected` / `invalid table reference` when the color callback performed `collectgarbage('collect')`.
 
+## Tooltip follow-up
+
+Eleven additional construction sites need roots: `color_segment_table`, spell, aura, toy, mount, unit, currency, companion-pet DTO builders, action binding append, achievement and shapeshift probes. Rooting `lines` alone does not keep its containing tooltip alive: reachability is parent-to-child, not child-to-parent. Root each tooltip for the entire fill; root the segment array and attach entries before color callbacks.
+
+`tests/tooltip_gc_rooting.rs` forces collection in ten API calls, checking IDs, text, width hints, GUIDs, line counts and segment RGB/text. Mutable pet/mount/achievement/form names carry markup to reach the color callback even when their normal text is plain. All ten initially fail with collected-table errors; the action test limits collection to the final green binding line.
+
+C API subsystem filters at `7f6d28454`: allied races 13/13, artifact panel 42/42, major factions 14/14.
+
 ## Sources
 
 - Commit `16682b415` — established stack/parent rooting idiom.

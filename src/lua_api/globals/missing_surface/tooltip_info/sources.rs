@@ -91,7 +91,9 @@ pub(super) fn tooltip_for_currency(
     currency: &currency_data::CurrencyEntry,
     amount_override: Option<i32>,
 ) -> Val {
+    let saved_top = state.top;
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_CURRENCY);
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     let amount = amount_override.unwrap_or(currency.quantity);
     let max_display = if currency.max_quantity > 0 {
@@ -119,6 +121,7 @@ pub(super) fn tooltip_for_currency(
     );
     table_set(state, tooltip, "id", Val::Num(currency.currency_id as f64));
     table_set(state, tooltip, "quantity", Val::Num(amount as f64));
+    state.top = saved_top;
     tooltip
 }
 

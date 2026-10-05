@@ -231,7 +231,9 @@ fn tooltip_for_companion_pet(state: &mut LuaState, pet_id: &str) -> Option<Val> 
             .cloned()
     }?;
 
+    let saved_top = state.top;
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_COMPANION_PET);
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_plain_line(state, lines, 1, &pet.name);
     push_plain_line(
@@ -243,6 +245,7 @@ fn tooltip_for_companion_pet(state: &mut LuaState, pet_id: &str) -> Option<Val> 
     let pet_id = create_string(state, &pet.pet_id);
     table_set(state, tooltip, "id", pet_id);
     table_set(state, tooltip, "speciesID", Val::Num(pet.species_id as f64));
+    state.top = saved_top;
     Some(tooltip)
 }
 
@@ -514,9 +517,9 @@ pub(super) fn c_tooltip_get_achievement_by_id(state: &mut LuaState) -> LuaResult
         return Ok(1);
     };
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_SPELL);
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_plain_line(state, lines, 1, &name);
-    state.push(tooltip);
     Ok(1)
 }
 
@@ -609,10 +612,10 @@ pub(super) fn c_tooltip_get_shapeshift(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(1);
     };
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_SPELL);
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     push_plain_line(state, lines, 1, &form.name);
     table_set(state, tooltip, "id", Val::Num(form.spell_id as f64));
-    state.push(tooltip);
     Ok(1)
 }
 

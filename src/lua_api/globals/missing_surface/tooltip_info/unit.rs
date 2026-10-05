@@ -173,7 +173,9 @@ fn push_unit_tooltip_lines(state: &mut LuaState, lines: Val, info: &UnitTooltipI
 }
 
 pub(super) fn tooltip_for_unit(state: &mut LuaState, unit: &str) -> Val {
+    let saved_top = state.top;
     let tooltip = empty_tooltip(state, TOOLTIP_TYPE_UNIT);
+    state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
     if let Some(info) = unit_tooltip_info(state, unit) {
         push_unit_tooltip_lines(state, lines, &info);
@@ -182,6 +184,7 @@ pub(super) fn tooltip_for_unit(state: &mut LuaState, unit: &str) -> Val {
             table_set(state, tooltip, "guid", guid);
         }
     }
+    state.top = saved_top;
     tooltip
 }
 

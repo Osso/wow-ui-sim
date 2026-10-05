@@ -216,16 +216,19 @@ fn push_color_segment(
 }
 
 fn color_segment_table(state: &mut LuaState, segments: Vec<TooltipColorSegment>) -> Val {
+    let saved_top = state.top;
     let table = create_table(state);
+    state.push(table);
     for (index, segment) in segments.into_iter().enumerate() {
         let entry = create_table(state);
+        set_table_array(state, table, index as i64 + 1, entry);
         let text = create_string(state, &segment.text);
         table_set(state, entry, "text", text);
         let (r, g, b) = segment.color;
         let color = color_table(state, r, g, b, 1.0);
         table_set(state, entry, "color", color);
-        set_table_array(state, table, index as i64 + 1, entry);
     }
+    state.top = saved_top;
     table
 }
 
