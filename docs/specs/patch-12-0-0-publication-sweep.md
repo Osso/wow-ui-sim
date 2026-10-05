@@ -4,11 +4,11 @@ Publication/absence breadth evidence for the [raw wikitext register](../../data/
 
 ## What it must do
 
-- [ ] Retain raw revision provenance and reproducibly parse all 1,010 consolidated rows, including six uncollapsed script-object kinds; every printed inventory count must match.
-- [ ] Preserve byte-identical 12.0.5, 12.0.7 and 12.1.0 registers. The legacy 12.1.0 register omits optional metadata; regenerate it with `--inventory-only`.
-- [ ] Probe all rows in one fully loaded cached Game environment; require the non-OK ID set to equal the reviewed known-gap set exactly.
-- [ ] Apply later 12.0.5, 12.0.7 and 12.1.0 add/remove supersession, in order. Changed rows do not alter publication expectations.
-- [ ] Support `P1200_SWEEP_REGISTER` for a full scratch register and `P1200_SWEEP_OUT` for every observation, including failed runs. One flipped unsuperseded row must produce exactly one new gap.
+- [x] Retain raw revision provenance and reproducibly parse all 1,010 consolidated rows, including six uncollapsed script-object kinds; every printed inventory count must match.
+- [x] Preserve byte-identical 12.0.5, 12.0.7 and 12.1.0 registers. The legacy 12.1.0 register omits optional metadata; regenerate it with `--inventory-only`.
+- [x] Probe all rows in one fully loaded cached Game environment; require the non-OK ID set to equal the reviewed known-gap set exactly.
+- [x] Apply later 12.0.5, 12.0.7 and 12.1.0 add/remove supersession, in order. Changed rows do not alter publication expectations.
+- [x] Support `P1200_SWEEP_REGISTER` for a full scratch register and `P1200_SWEEP_OUT` for every observation, including failed runs. One flipped unsuperseded row must produce exactly one new gap.
 
 ## How it works
 
@@ -21,7 +21,8 @@ Publication/absence breadth evidence for the [raw wikitext register](../../data/
 - `tools/test_gen_patch_wikitext_register.py`: uncollapsed script-object table fixture.
 - `tests/common/publication_sweep.rs`: shared classification and exact gap comparison.
 - `tests/patch_12_0_0_publication_sweep.rs`: source inputs and three later registers.
-- `tests/data/patch_12_0_0_sweep_known_gaps.json`: reviewed non-OK source IDs.
+- `tests/data/patch_12_0_0_sweep_known_gaps.json`: 198 reviewed non-OK source IDs.
+- `src/c_api/patch_retired_members.rs`: 64 exact removed namespace keys gated from `retail-12-0-0`; later removals retain later epoch gates.
 
 ## Tests asserting this spec
 
@@ -30,7 +31,13 @@ Publication/absence breadth evidence for the [raw wikitext register](../../data/
 
 ## Known gaps (current cycle)
 
-- [ ] Initial RED findings require row-by-row review; no behavior credit follows from publication.
+Final result: 812 OK / 198 reviewed non-OK. [Evidence and row-by-row review](../../data/patch-api/evidence/12.0.0-session-2026-10-05/) record all observations and proposed statuses; older ledger stays unchanged.
+
+- [ ] 148 raw-absent autostub-only API entries and 19 absent added globals/members need actual publication/backing semantics.
+- [ ] 19 removed globals remain raw functions without Deprecated-file attribution; successor/alias and loaded-consumer review is needed before deletion.
+- [ ] Five callback/no-script/internal event rows lack a supported probe path; registration/delivery eligibility remains unproven.
+- [ ] Four event removals are also listed as additions by the page. Preserve both rows as metadata conflicts, not runtime removals.
+- [ ] Two added CVars lack getter/default publication; one removed CVar is a case-only scope rename resolved by case-insensitive getters. No default or scope semantics were invented.
 
 ## Out of scope
 

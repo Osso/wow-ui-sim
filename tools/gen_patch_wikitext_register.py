@@ -10,6 +10,7 @@ Usage: gen_patch_wikitext_register.py PATCH WIKITEXT REVID OUT
 import argparse
 import hashlib
 import json
+import os
 import re
 from pathlib import Path
 
@@ -132,7 +133,7 @@ def main():
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):
                 entry.pop(key, None)
-    source_path = str(Path(path).resolve().relative_to(Path(__file__).resolve().parent.parent))
+    source_path = os.path.relpath(Path(path).resolve(), Path(__file__).resolve().parent.parent)
     register = {
         "schema": "patch-api-wikitext-register/v1",
         "patch": patch,

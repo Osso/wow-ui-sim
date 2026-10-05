@@ -1,3 +1,7 @@
+## [2026-10-05] evidence | 12.0.0 wikitext publication sweep
+
+[Audit supplement](investigations/patch-12-0-0-api-audit.md#wikitext-supplement) records revision 6747189, parser and classifier corrections, 64 exact namespace retirements, all 270 initial-gap reviews, 812 OK / 198 final known gaps, source comparisons and proposed statuses. Four isolated sweeps, one-gap negative control, local check/build, fmt and startup `[]` pass. Six vendor manifest warnings match master; ledger/coverage JSON unchanged.
+
 ## [2026-10-04] evidence | 12.0.5 pending non-sweep follow-up
 
 [Audit follow-up](investigations/patch-12-0-5-api-audit.md#pending-non-sweep-follow-up--2026-10-04) records all24 row boundaries, leadership subset RED/master/GREEN, unchanged vendor mouse proof, 55 selected GREEN, checks/startup and pinned-rilua limits finding. Coverage JSON unchanged; aggregate blockers remain explicit.

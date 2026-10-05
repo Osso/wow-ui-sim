@@ -1,3 +1,40 @@
+## Wikitext supplement
+
+Verified: 2026-10-05. Raw MediaWiki revision **6747189** (revision timestamp `2026-06-18T08:59:26Z`) is retained with [provenance](../../../data/patch-api/sources/12.0.0-api-changes.provenance.json). [Spec](../../specs/patch-12-0-0-publication-sweep.md) owns the contract. This is supplemental publication/absence evidence, not signature, behavior, security, historical-epoch or native-client parity. Existing occurrence statuses and page-coverage JSON remain unchanged.
+
+### Source comparison
+
+The old register is **not a crawler excerpt**: `tools/gen_patch_12_0_0_register.py` generates it from Wowless history. It contains 3,410 occurrences / 3,406 literal symbols. The wikitext register has **1,010 rows / 1,006 literal symbols**, covering Global API, ScriptObjects, Widgets, Events and CVars (no FrameXML table in this page). Every printed add/remove header matches the parsed count; the uncollapsed ScriptObjects table has six rows and no numeric header.
+
+Literal set comparison: **39 wikitext symbols absent from the old register; 2,439 old symbols outside the swept tables**. After explicit representation normalization (widget dot/colon separators, UIObject/FrameScriptObject and two method-owner aliases, and Lua-prefixed object kinds), **four wikitext symbols remain absent**: `COMBAT_LOG_EVENT_INTERNAL_UNFILTERED`, `SETTINGS_LOADED`, `minimapTrackedInfov2`, `useCompactPartyFrames`. **2,404** normalized old symbols remain outside the swept tables. This is a scope mismatch, not evidence of missing implementations.
+
+Including Enums/Structures parent and colored-field subjects gives 1,103 page subjects; shortening namespaced structure subjects leaves **2,343 normalized old-register subjects outside all consolidated sections**. Those extra subjects are retained for comparison only, not swept or credited. [Comparison sets and normalization policy](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/register-comparison.json) preserve exact names and scope.
+
+### Publication observations and fixes
+
+Initial RED: **740 OK / 270 non-OK**. Final: **812 OK / 198 non-OK**, matching the exact reviewed baseline. All initial non-OK IDs have a [row review](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-row-review.json); [readable baseline index](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/row-review.md) covers every remaining gap.
+
+- **64 removed namespace members** were raw-absent but fabricated by ordinary `__index` lookup. `src/c_api/patch_retired_members.rs` now marks them removed from `retail-12-0-0`; later retirement lists remain gated at their own cumulative epochs. No Blizzard Lua or club code changed.
+- **Eight probe gaps**, not runtime defects: six script-object kinds now use their actual Lua constructors; abstract Region methods use a Texture. The generic parser now reads uncollapsed Added/Removed cells. Regenerated 12.0.5/12.0.7 bytes are unchanged; the existing 12.1.0 metadata omission requires explicit `--inventory-only`, and those bytes also match.
+- **186 global API gaps remain**: 148 missing raw members/parents with fabricated lookup functions (140 added + 6 changed + 2 missing parents), 19 absent added globals/members, and 19 removed globals still raw functions without Deprecated-file attribution. Real models/registration and successor/alias/consumer review remain required; no extra shims were introduced.
+- **Nine event gaps remain**: three callback/restricted-event probe limits, one documented non-registerable event (`CHAT_MSG_ENCOUNTER_EVENT`), one internal event with no proven registration path (`COMBAT_LOG_EVENT_INTERNAL_UNFILTERED`), and four contradictory add/remove page entries (`HOUSE_LEVEL_CHANGED`, `SETTINGS_LOADED`, `TRANSMOG_OUTFITS_CHANGED`, `UNIT_SPELLCAST_SENT`). Both occurrences are preserved.
+- **Three CVar gaps remain**: two additions lack getter/default publication and page defaults (`minimapTrackedInfov2`, `useCompactPartyFrames`); the case-only `nameplateShowFriendlyNPCs` → `nameplateShowFriendlyNpcs` rename cannot be modeled as absence because getters are case-insensitive. An attempted retirement broke the added spelling and was reverted. Account/Character scope semantics are outside this probe.
+
+Fourteen rows have later add/remove supersession; changed later rows do not override publication. Final successful observations are 516 added, 275 removed, 21 changed. Proposed supplemental statuses: **64 best-effort bounded absence**, **748 partial publication-only** (including the eight corrected probes), **193 evidence-required**, **five metadata-only** (four contradictory event removals plus case-only CVar rename). These are proposals, not changes to the old 3,410-row behavioral ledger.
+
+### Proof
+
+[Evidence directory](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/) holds results, failure controls and [proof ledger](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/proof-ledger.json). Runtime/test revision `d32f69b1a`:
+
+| Isolated sweep | Rows | OK | Exact known gaps | Result |
+|---|---:|---:|---:|---|
+| 12.0.0 | 1,010 | 812 | 198 | PASS |
+| 12.0.5 | 363 | 351 | 12 | PASS |
+| 12.0.7 | 174 | 169 | 5 | PASS |
+| 12.1.0 | 778 | 768 | 10 | PASS |
+
+The scratch register flips only `wt-global-api-AbbreviateLargeNumbers-42` from added to removed: expected exit 101, exactly one new gap, zero resolved gaps. Python parser fixture reached RED then GREEN; all four register byte comparisons passed. Local debug check/build, `cargo fmt --check`, and startup `lua-errors` passed; startup output `[]`. Six unsuppressed deprecated Clippy keys in `iced-wgpu-patched/Cargo.toml` are pre-existing and byte-identical to master; vendor edits are forbidden. Strict epoch branches were inspected but not executed. No independent agent review was requested or run.
+
 ## [2026-09-14] audit | Credit bounded StripHyperlinks markup flags
 
 One credit covers balanced well-formed UTF-8 hyperlink labels, documented color/bracket/newline/atlas/texture controls, one-result arity and the pinned Talent UI combination. API tests `2094af7e2` reached RED **0/5**; parser `1463fce69` progressed standalone RED 1/6 to GREEN 6/6; registration `50448633e` exposes the parser from retail 12.0.0. Independent behavior proof passes 5/5 each on retail 12.0.0/12.0.5/12.0.7 and exercises the actual unmodified Talent consumer fixture. Fmt/check/default builds and startup `[]` pass. The 12.0.0 stdout proves 5/5, but its enclosing exit, compiler stderr and warnings are **unknown** after recorder loss; no clean-process result is inferred. Metadata `1f78ffddc` proves one credit, nine renewals, six additions, **15,104 fresh / zero stale** hashes, six bindings, validator exit 0 and all 3,410 rows matching. Totals **2349 / 1059 / 2**; snapshot **1,085 / 282**. Literal `|n` preservation when false, escaped pipes, malformed markup and optional-flag truthiness are simulator policies. Native malformed/nested input, coercion, byte/string-view lifetime, security and full-LoD behavior remain unverified. [Spec](../../specs/strip-hyperlinks.md); proof `/tmp/verify-strip-hyperlinks-proof-reconciliation.json`.

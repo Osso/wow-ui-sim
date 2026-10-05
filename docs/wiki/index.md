@@ -1,3 +1,7 @@
+## [2026-10-05] evidence | 12.0.0 wikitext supplement
+
+[Supplement](investigations/patch-12-0-0-api-audit.md#wikitext-supplement): 1,010 rows, 812 publication/absence OK, 198 exact reviewed gaps; 64 fabricated removed members retired. Four isolated sweeps pass, negative control adds exactly one gap, startup `[]`. Old register is Wowless-history-based; 39 literal / four normalized missing names. Behavioral ledger unchanged.
+
 ## [2026-10-04] system | Club membership
 
 [Club membership](systems/club-membership.md): opaque IDs and state-backed roles, notes, invitations; [contract](../specs/club-membership.md). [Development proof](../specs/club-membership.md#development-proof--2026-10-05): 12 member tests, regression filters, publication and startup `[]`; one unrelated master chat failure remains. Coverage ledger unchanged.

@@ -1,0 +1,191 @@
+[
+  {
+    "filter": "patch_12_0_0_publication_sweep",
+    "revision": "d32f69b1a",
+    "command": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "patch_12_0_0_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "result_path": "data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-wikitext-sweep-result.json"
+  },
+  {
+    "filter": "patch_12_0_5_publication_sweep",
+    "revision": "d32f69b1a",
+    "command": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "patch_12_0_5_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "result_path": "data/patch-api/evidence/12.0.0-session-2026-10-05/p1205-wikitext-sweep-result.json"
+  },
+  {
+    "filter": "patch_12_0_7_publication_sweep",
+    "revision": "d32f69b1a",
+    "command": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "patch_12_0_7_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "result_path": "data/patch-api/evidence/12.0.0-session-2026-10-05/p1207-wikitext-sweep-result.json"
+  },
+  {
+    "filter": "patch_12_1_0_publication_sweep",
+    "revision": "d32f69b1a",
+    "command": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--test",
+      "--test",
+      "integration",
+      "patch_12_1_0_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "result_path": "data/patch-api/evidence/12.0.0-session-2026-10-05/p1210-wikitext-sweep-result.json"
+  },
+  {
+    "scope": "negative control",
+    "revision": "d32f69b1a",
+    "command": "same isolated P1200 sweep; P1200_SWEEP_REGISTER=negative-control-register.json",
+    "exit_code": 101,
+    "expected_failure": true,
+    "new_gaps": [
+      "wt-global-api-AbbreviateLargeNumbers-42"
+    ],
+    "resolved_gaps": []
+  },
+  {
+    "scope": "fmt-check",
+    "revision": "d32f69b1a",
+    "command": [
+      "cargo",
+      "fmt",
+      "--manifest-path",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/Cargo.toml",
+      "--check"
+    ],
+    "exit_code": 0,
+    "invalidated_by_later_changes": false
+  },
+  {
+    "scope": "cargo-check",
+    "revision": "d32f69b1a",
+    "command": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--check"
+    ],
+    "exit_code": 0,
+    "invalidated_by_later_changes": false
+  },
+  {
+    "scope": "debug-build",
+    "revision": "d32f69b1a",
+    "command": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/scripts/build-host.py",
+      "--build-host",
+      "local"
+    ],
+    "exit_code": 0,
+    "invalidated_by_later_changes": false
+  },
+  {
+    "scope": "startup Lua errors",
+    "revision": "d32f69b1a",
+    "command": [
+      "timeout",
+      "90",
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/scripts/build-host.py",
+      "--build-host",
+      "local",
+      "--no-build",
+      "--run",
+      "--",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "exit_code": 0,
+    "stdout": "native artifact=/home/osso/.worktrees/wow-ui-sim-p1200-wikitext/target/debug/wow-sim\n[]\n",
+    "invalidated_by_later_changes": false
+  },
+  {
+    "scope": "initial RED",
+    "revision": "d256d2550 plus new register/test; empty known-gap set",
+    "command": "isolated patch_12_0_0_publication_sweep with P1200_SWEEP_OUT=p1200-red.json",
+    "exit_code": 101,
+    "row_count": 1010,
+    "ok": 740,
+    "non_ok": 270,
+    "invalidated_by_later_changes": true
+  },
+  {
+    "scope": "generator stability",
+    "revision": "d32f69b1a",
+    "command": "absolute generator paths and outputs; --inventory-only for legacy 12.1.0",
+    "patches": [
+      "12.0.0",
+      "12.0.5",
+      "12.0.7",
+      "12.1.0"
+    ],
+    "result": "all byte-identical; 12.0.0 headers match; Python fixture RED then GREEN",
+    "invalidated_by_later_changes": false
+  },
+  {
+    "scope": "readability/self-review",
+    "revision": "d32f69b1a",
+    "result": "Changed Rust registrations, constants and test code inspected; no new readability violations. No agents used. Strict epoch cfg branches inspected but not executed.",
+    "invalidated_by_later_changes": false
+  },
+  {
+    "scope": "warnings",
+    "revision": "d32f69b1a",
+    "result": "Six deprecated Clippy manifest keys in iced-wgpu-patched/Cargo.toml; exact bytes match master. Vendor edits forbidden; unsuppressed and unchanged."
+  },
+  {
+    "scope": "rejected case-only CVar removal",
+    "revision": "f89768187",
+    "command": "isolated P1200 sweep",
+    "exit_code": 101,
+    "new_gap": "wt-cvars-nameplateShowFriendlyNpcs-931",
+    "result": "Rejected: case-insensitive getters cannot remove old casing without breaking added spelling. Reverted at d32f69b1a; exact baseline includes old removal observation.",
+    "invalidated_by_later_changes": true
+  }
+]
