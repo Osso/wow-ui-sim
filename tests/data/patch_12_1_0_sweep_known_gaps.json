@@ -7,5 +7,6 @@
   "wt-global-api-C_Housing.IsInsideOwnHouse-567",
   "wt-global-api-C_SuperTrack.GetNextWaypointForMap-572",
   "wt-global-api-C_UnitAuras.RemovePrivateAuraAppliedSound-574",
-  "wt-global-api-GetInspectSpecialization-578"
+  "wt-global-api-GetInspectSpecialization-578",
+  "wt-global-api-GetInventorySlotInfo-579"
 ]
