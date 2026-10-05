@@ -104,6 +104,7 @@ fn is_spell_in_range(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 /// `IsUsableSpell(idOrName)` — known AND no active cooldown.
+#[cfg(not(feature = "retail-12-0-0"))]
 fn is_usable_spell(state: &mut LuaState) -> LuaResult<u32> {
     let Some(id) = stack_u32(state, 1) else {
         state.push(Val::Bool(false));
@@ -184,6 +185,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     )?;
     LuaApiMut::register_function(lua, "IsSpellInRange", is_spell_in_range)?;
     LuaApiMut::register_function(lua, "IsItemInRange", c_item_is_item_in_range)?;
+    #[cfg(not(feature = "retail-12-0-0"))]
     LuaApiMut::register_function(lua, "IsUsableSpell", is_usable_spell)?;
     LuaApiMut::register_function(lua, "IsHarmfulSpell", is_harmful_spell)?;
     LuaApiMut::register_function(lua, "IsHelpfulSpell", is_helpful_spell)?;

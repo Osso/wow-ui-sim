@@ -4,6 +4,15 @@
 //! `globals::inventory_probes`. Keep only still-unmodeled inventory lookup
 //! fallbacks here instead of in generic global stub tables.
 
+#[cfg(not(feature = "retail-12-0-0"))]
+const LEGACY_RELIC_QUERY_LUA: &str = r#"
+if IsArtifactRelicItem == nil then
+    function IsArtifactRelicItem()
+        return false
+    end
+end
+"#;
+
 const INVENTORY_QUERY_DEFAULTS_LUA: &str = r#"
 if GetInventoryItemsForSlot == nil then
     function GetInventoryItemsForSlot()
@@ -16,14 +25,11 @@ if IsInventoryItemProfessionBag == nil then
     end
 end
 
-if IsArtifactRelicItem == nil then
-    function IsArtifactRelicItem()
-        return false
-    end
-end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(feature = "retail-12-0-0"))]
+    lua.exec(LEGACY_RELIC_QUERY_LUA)?;
     lua.exec(INVENTORY_QUERY_DEFAULTS_LUA)?;
     Ok(())
 }

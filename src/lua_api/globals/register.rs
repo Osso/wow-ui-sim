@@ -310,6 +310,7 @@ fn register_action_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
 
 fn register_progression_state_probes(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::xp_honor_rest::register_all(lua)?;
+    #[cfg(not(feature = "retail-12-0-0"))]
     super::real::spell_tabs::register_all(lua)?;
     super::battlefield_lfg_probes::register_all(lua)?;
     super::real::loot_method::register_all(lua)?;

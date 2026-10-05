@@ -4,12 +4,30 @@
 //! These legacy globals remain here for older Blizzard/addon callers until the
 //! compatibility boundary is narrowed further.
 
-const LEGACY_SPELL_GLOBALS_LUA: &str = r#"
+#[cfg(not(feature = "retail-12-0-0"))]
+const PRE_12_0_0_SPELL_GLOBALS_LUA: &str = r#"
 if GetSpellBookItemName == nil and C_SpellBook ~= nil then
     function GetSpellBookItemName(...)
         return C_SpellBook.GetSpellBookItemName(...)
     end
 end
+if GetSpellInfo == nil and C_Spell ~= nil then
+    function GetSpellInfo(spellID)
+        local info = C_Spell.GetSpellInfo(spellID)
+        if info == nil then
+            return nil
+        end
+        return info.name, nil, info.iconID, info.castTime, info.minRange, info.maxRange, info.spellID
+    end
+end
+if GetSpellTexture == nil and C_Spell ~= nil then
+    function GetSpellTexture(spellID)
+        return C_Spell.GetSpellTexture(spellID)
+    end
+end
+"#;
+
+const LEGACY_SPELL_GLOBALS_LUA: &str = r#"
 if GetSpellBookItemInfo == nil and C_SpellBook ~= nil then
     function GetSpellBookItemInfo(...)
         return C_SpellBook.GetSpellBookItemInfo(...)
@@ -46,20 +64,6 @@ if FindBaseSpellByID == nil and C_SpellBook ~= nil then
         return C_SpellBook.FindBaseSpellByID(spellID)
     end
 end
-if GetSpellInfo == nil and C_Spell ~= nil then
-    function GetSpellInfo(spellID)
-        local info = C_Spell.GetSpellInfo(spellID)
-        if info == nil then
-            return nil
-        end
-        return info.name, nil, info.iconID, info.castTime, info.minRange, info.maxRange, info.spellID
-    end
-end
-if GetSpellTexture == nil and C_Spell ~= nil then
-    function GetSpellTexture(spellID)
-        return C_Spell.GetSpellTexture(spellID)
-    end
-end
 if IsPassiveSpell == nil then
     function IsPassiveSpell(_spellID)
         return false
@@ -83,6 +87,8 @@ end
 "#;
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(feature = "retail-12-0-0"))]
+    lua.exec(PRE_12_0_0_SPELL_GLOBALS_LUA)?;
     lua.exec(LEGACY_SPELL_GLOBALS_LUA)?;
     Ok(())
 }
@@ -91,6 +97,7 @@ pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
 mod tests {
     use crate::lua_api::WowLuaEnv;
 
+    #[cfg(not(feature = "retail-12-0-0"))]
     #[test]
     fn keeps_state_backed_legacy_spell_globals_callable() {
         let env = WowLuaEnv::new().expect("lua env should initialize");

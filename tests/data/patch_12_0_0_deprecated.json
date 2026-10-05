@@ -1,0 +1,180 @@
+{
+  "summary_id": "deprecated api-removal-summary-128",
+  "rows": {
+    "deprecated api-GetSpellInfo-130": {
+      "old": "GetSpellInfo",
+      "successor": "C_Spell.GetSpellInfo",
+      "source": "12.0.0-api-changes.txt:130",
+      "probe": "assert(select('#', C_Spell.GetSpellInfo(19750)) == 1); local info=C_Spell.GetSpellInfo(19750); assert(info.spellID==19750 and info.name=='Flash of Light'); assert(C_Spell.GetSpellInfo(999999999)==nil)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:375"
+    },
+    "deprecated api-GetNumSpellTabs-131": {
+      "old": "GetNumSpellTabs",
+      "successor": "C_SpellBook.GetNumSpellBookSkillLines",
+      "source": "12.0.0-api-changes.txt:131",
+      "probe": "assert(select('#', C_SpellBook.GetNumSpellBookSkillLines()) == 1); assert(C_SpellBook.GetNumSpellBookSkillLines()==7)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:117"
+    },
+    "deprecated api-GetSpellTabInfo-132": {
+      "old": "GetSpellTabInfo",
+      "successor": "C_SpellBook.GetSpellBookSkillLineInfo",
+      "source": "12.0.0-api-changes.txt:132",
+      "probe": "assert(select('#', C_SpellBook.GetSpellBookSkillLineInfo(1)) == 1); local info=C_SpellBook.GetSpellBookSkillLineInfo(1); assert(info.name=='General' and info.itemIndexOffset==0 and info.numSpellBookItems==3); assert(C_SpellBook.GetSpellBookSkillLineInfo(9999)==nil)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:466"
+    },
+    "deprecated api-GetSpellCooldown-133": {
+      "old": "GetSpellCooldown",
+      "successor": "C_Spell.GetSpellCooldown",
+      "source": "12.0.0-api-changes.txt:133",
+      "probe": "A_Admin.SetSpellCooldown(19750,8); assert(select('#',C_Spell.GetSpellCooldown(19750))==1); local info=C_Spell.GetSpellCooldown(19750); assert(info.duration==8 and info.isActive==true and info.isEnabled==true and info.modRate==1)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:268"
+    },
+    "deprecated api-GetSpellBookItemName-134": {
+      "old": "GetSpellBookItemName",
+      "successor": "C_SpellBook.GetSpellBookItemName",
+      "source": "12.0.0-api-changes.txt:134",
+      "probe": "local bank=Enum.SpellBookSpellBank.Player; assert(select('#',C_SpellBook.GetSpellBookItemName(1,bank))==2); local name,sub=C_SpellBook.GetSpellBookItemName(1,bank); assert(name=='Auto Attack' and type(sub)=='string'); assert(C_SpellBook.GetSpellBookItemName(9999,bank)==nil)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:359"
+    },
+    "deprecated api-GetSpellTexture-135": {
+      "old": "GetSpellTexture",
+      "successor": "C_Spell.GetSpellTexture",
+      "source": "12.0.0-api-changes.txt:135",
+      "probe": "assert(select('#',C_Spell.GetSpellTexture(19750))==3); local icon,original,live=C_Spell.GetSpellTexture(19750); assert(type(icon)=='number' and icon>0 and type(original)=='number' and original>0 and (live==nil or type(live)=='number'))",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:554"
+    },
+    "deprecated api-GetSpellCharges-136": {
+      "old": "GetSpellCharges",
+      "successor": "C_Spell.GetSpellCharges",
+      "source": "12.0.0-api-changes.txt:136",
+      "probe": "assert(select('#',C_Spell.GetSpellCharges(19750))==1); local info=C_Spell.GetSpellCharges(19750); assert(info.currentCharges==2 and info.maxCharges==3 and info.cooldownStartTime==312 and info.cooldownDuration==237 and info.chargeModRate==1.25); assert(C_Spell.GetSpellCharges(999999999)==nil)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:250"
+    },
+    "deprecated api-GetSpellDescription-137": {
+      "old": "GetSpellDescription",
+      "successor": "C_Spell.GetSpellDescription",
+      "source": "12.0.0-api-changes.txt:137",
+      "probe": "assert(select('#',C_Spell.GetSpellDescription(19750))==1); local text=C_Spell.GetSpellDescription(19750); assert(type(text)=='string' and #text>0)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:304"
+    },
+    "deprecated api-GetSpellCount-138": {
+      "old": "GetSpellCount",
+      "successor": "C_Spell.GetSpellCastCount",
+      "source": "12.0.0-api-changes.txt:138",
+      "probe": "assert(select('#',C_Spell.GetSpellCastCount(19750))==1); assert(C_Spell.GetSpellCastCount(19750)==7 and C_Spell.GetSpellCastCount(642)==2)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:216"
+    },
+    "deprecated api-IsUsableSpell-139": {
+      "old": "IsUsableSpell",
+      "successor": "C_Spell.IsSpellUsable",
+      "source": "12.0.0-api-changes.txt:139",
+      "probe": "assert(select('#',C_Spell.IsSpellUsable(19750))==2); local usable,power=C_Spell.IsSpellUsable(19750); assert(usable==true and power==false); local unknown,missing=C_Spell.IsSpellUsable(999999999); assert(unknown==false and missing==false)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:911"
+    },
+    "deprecated api-C_TaskQuest-GetQuestsForPlayerByMapID-142": {
+      "old": "C_TaskQuest.GetQuestsForPlayerByMapID",
+      "successor": "C_TaskQuest.GetQuestsOnMap",
+      "source": "12.0.0-api-changes.txt:142",
+      "probe": "assert(select('#',C_TaskQuest.GetQuestsOnMap(2025))==1); local quests=C_TaskQuest.GetQuestsOnMap(2025); assert(#quests==2 and quests[1].questID==90001 and quests[1].x==0.52 and quests[1].y==0.63); assert(#C_TaskQuest.GetQuestsOnMap(9999)==0)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/QuestTaskInfoDocumentation.lua:144"
+    },
+    "deprecated api-GetMerchantItemInfo-143": {
+      "old": "GetMerchantItemInfo",
+      "successor": "C_MerchantFrame.GetItemInfo",
+      "source": "12.0.0-api-changes.txt:143",
+      "probe": "assert(select('#',C_MerchantFrame.GetItemInfo(1))==1); local info=C_MerchantFrame.GetItemInfo(1); assert(type(info)=='table' and info.name=='Hearthstone' and type(info.texture)=='number'); assert(C_MerchantFrame.GetItemInfo(9999)==nil)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/MerchantFrameDocumentation.lua:27"
+    },
+    "deprecated api-C_ChallengeMode-GetCompletionInfo-144": {
+      "old": "C_ChallengeMode.GetCompletionInfo",
+      "successor": "C_ChallengeMode.GetChallengeCompletionInfo",
+      "source": "12.0.0-api-changes.txt:144",
+      "probe": "assert(select('#',C_ChallengeMode.GetChallengeCompletionInfo())==1); local info=C_ChallengeMode.GetChallengeCompletionInfo(); assert(type(info)=='table' and type(info.mapChallengeModeID)=='number' and type(info.level)=='number')",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/ChallengeModeInfoDocumentation.lua:72"
+    },
+    "deprecated api-C_MythicPlus-IsWeeklyRewardAvailable-145": {
+      "old": "C_MythicPlus.IsWeeklyRewardAvailable",
+      "successor": null,
+      "source": "12.0.0-api-changes.txt:145",
+      "probe": null,
+      "loaded_alias": null
+    },
+    "deprecated api-IsActiveQuestLegendary-148": {
+      "old": "IsActiveQuestLegendary",
+      "successor": "C_QuestInfoSystem.GetQuestClassification",
+      "source": "12.0.0-api-changes.txt:148",
+      "probe": "assert(select('#',C_QuestInfoSystem.GetQuestClassification(90001))==1); assert(C_QuestInfoSystem.GetQuestClassification(90001)==Enum.QuestClassification.WorldQuest); assert(C_QuestInfoSystem.GetQuestClassification(9999)==Enum.QuestClassification.Normal)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/QuestInfoSystemDocumentation.lua:11"
+    },
+    "deprecated api-C_QuestLog-IsLegendaryQuest-149": {
+      "old": "C_QuestLog.IsLegendaryQuest",
+      "successor": "C_QuestInfoSystem.GetQuestClassification",
+      "source": "12.0.0-api-changes.txt:149",
+      "probe": "assert(C_QuestInfoSystem.GetQuestClassification(90001)==Enum.QuestClassification.WorldQuest); assert(C_QuestInfoSystem.GetQuestClassification(9999)==Enum.QuestClassification.Normal)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/QuestInfoSystemDocumentation.lua:11"
+    },
+    "deprecated api-C_QuestLog-IsQuestRepeatableType-150": {
+      "old": "C_QuestLog.IsQuestRepeatableType",
+      "successor": "C_QuestLog.IsRepeatableQuest",
+      "source": "12.0.0-api-changes.txt:150",
+      "probe": "assert(select('#',C_QuestLog.IsRepeatableQuest(9999))==1); assert(C_QuestLog.IsRepeatableQuest(9999)==false)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:1003"
+    },
+    "deprecated api-ConsolePrint-153": {
+      "old": "ConsolePrint",
+      "successor": "C_Log.LogMessage",
+      "source": "12.0.0-api-changes.txt:153",
+      "probe": "assert(select('#',C_Log.LogMessage('12.0.0 deprecated proof'))==0)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/LogDocumentation.lua:21"
+    },
+    "deprecated api-message-154": {
+      "old": "message",
+      "successor": "SetBasicMessageDialogText",
+      "source": "12.0.0-api-changes.txt:154",
+      "probe": "BasicMessageDialog:Hide(); assert(select('#',SetBasicMessageDialogText('12.0.0 proof'))==0); assert(BasicMessageDialog:IsShown() and BasicMessageDialog.Text:GetText()=='12.0.0 proof'); SetBasicMessageDialogText('ignored'); assert(BasicMessageDialog.Text:GetText()=='12.0.0 proof'); SetBasicMessageDialogText('forced',true); assert(BasicMessageDialog.Text:GetText()=='forced'); BasicMessageDialog:Hide()",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_SharedXML/SharedBasicControls.lua:141"
+    },
+    "deprecated api-IsSpellOverlayed-157": {
+      "old": "IsSpellOverlayed",
+      "successor": "C_SpellActivationOverlay.IsSpellOverlayed",
+      "source": "12.0.0-api-changes.txt:157",
+      "probe": "assert(select('#',C_SpellActivationOverlay.IsSpellOverlayed(19750))==1); assert(C_SpellActivationOverlay.IsSpellOverlayed(19750)==false)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/SpellActivationOverlayDocumentation.lua:11"
+    },
+    "deprecated api-IsArtifactRelicItem-160": {
+      "old": "IsArtifactRelicItem",
+      "successor": "C_ItemSocketInfo.IsArtifactRelicItem",
+      "source": "12.0.0-api-changes.txt:160",
+      "probe": "assert(select('#',C_ItemSocketInfo.IsArtifactRelicItem(12345))==1); assert(C_ItemSocketInfo.IsArtifactRelicItem(12345)==true and C_ItemSocketInfo.IsArtifactRelicItem(54321)==false)",
+      "loaded_alias": null,
+      "successor_source": "Blizzard_APIDocumentationGenerated/ItemSocketInfoDocumentation.lua:168"
+    }
+  },
+  "known_successor_gaps": {
+    "deprecated api-C_ChallengeMode-GetCompletionInfo-144": "C_ChallengeMode.GetChallengeCompletionInfo autostub returns nil, not non-nil ChallengeCompletionInfo. Successor producer excluded from this workstream.",
+    "deprecated api-ConsolePrint-153": "C_Log.LogMessage autostub returns one nil, not documented zero results. Logging producer excluded from this workstream.",
+    "deprecated api-GetMerchantItemInfo-143": "C_MerchantFrame.GetItemInfo autostub returns nil for seeded merchant item. Merchant producer excluded from this workstream.",
+    "deprecated api-GetSpellBookItemName-134": "C_SpellBook.GetSpellBookItemName returns one name, missing documented subName result. SpellBook producer excluded from this workstream.",
+    "deprecated api-GetSpellTexture-135": "C_Spell.GetSpellTexture returns path string as first result instead of documented fileID. Spell producer excluded from this workstream.",
+    "deprecated api-IsSpellOverlayed-157": "C_SpellActivationOverlay.IsSpellOverlayed autostub returns nil, not bool. Overlay producer excluded from this workstream."
+  }
+}

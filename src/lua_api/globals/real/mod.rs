@@ -72,6 +72,7 @@ pub mod specialization_legacy;
 ))]
 pub(crate) mod spell_confirmation_prompts;
 pub mod spell_flyout_legacy;
+#[cfg(not(feature = "retail-12-0-0"))]
 pub mod spell_tabs;
 #[cfg(feature = "retail-12-1-5")]
 pub mod string_extensions;

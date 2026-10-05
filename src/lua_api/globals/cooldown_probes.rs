@@ -49,6 +49,7 @@ fn push_cooldown_quad(state: &mut LuaState, start: f64, duration: f64) {
 }
 
 /// `GetSpellCooldown(spellID)` — retail: `(start, duration, enable, modRate)`.
+#[cfg(not(feature = "retail-12-0-0"))]
 fn get_spell_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     let spell_id = stack_u32(state, 1).unwrap_or(0);
     let (start, duration) = {
@@ -154,6 +155,7 @@ fn is_known_spell(known_spells: &HashSet<u32>, spell_id: u32) -> bool {
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    #[cfg(not(feature = "retail-12-0-0"))]
     LuaApiMut::register_function(lua, "GetSpellCooldown", get_spell_cooldown)?;
     LuaApiMut::register_function(lua, "GetActionCooldown", get_action_cooldown)?;
     LuaApiMut::register_function(lua, "GetInventoryItemCooldown", get_inventory_item_cooldown)?;

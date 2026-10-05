@@ -7,6 +7,10 @@ use rilua::vm::state::LuaState;
 
 const RETIRED_12_0_0_MEMBERS: &[(&str, &[&str])] = &[
     ("C_CatalogShop", &["OpenCatalogShopInteraction"]),
+    // Deprecated 11.x APIs removed by the 12.0.0 non-inventory extract.
+    ("C_ChallengeMode", &["GetCompletionInfo"]),
+    ("C_MythicPlus", &["IsWeeklyRewardAvailable"]),
+    ("C_QuestLog", &["IsLegendaryQuest", "IsQuestRepeatableType"]),
     ("C_EventUtils", &["NotifySettingsLoaded"]),
     ("C_HouseExterior", &["GetCurrentHouseExteriorTypeName"]),
     ("C_HousingBasicMode", &["IsNudgeEnabled", "SetNudgeEnabled"]),
@@ -47,7 +51,11 @@ const RETIRED_12_0_0_MEMBERS: &[(&str, &[&str])] = &[
     ("C_StorePublic", &["IsDisabledByParentalControls"]),
     (
         "C_TaskQuest",
-        &["GetQuestIconUIWidgetSet", "GetQuestTooltipUIWidgetSet"],
+        &[
+            "GetQuestIconUIWidgetSet",
+            "GetQuestTooltipUIWidgetSet",
+            "GetQuestsForPlayerByMapID",
+        ],
     ),
     ("C_TooltipInfo", &["GetTransmogrifyItem"]),
     (
