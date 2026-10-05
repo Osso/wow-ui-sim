@@ -8299,16 +8299,16 @@
       "note": "Editorial heading; no runtime credit."
     },
     {
-      "source_id": "prose-undated-025",
+      "source_id": "source-context-025",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
     },
     {
-      "source_id": "prose-undated-027",
+      "source_id": "source-context-027",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
     },
     {
       "source_id": "source-context-029",
@@ -8881,10 +8881,10 @@
       "note": "Editorial heading; no runtime credit."
     },
     {
-      "source_id": "source-context-128",
+      "source_id": "deprecated api-removal-summary-128",
       "capabilities": [],
-      "status": "metadata-only",
-      "note": "Deprecated-source heading/context; no runtime credit."
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
     },
     {
       "source_id": "source-context-129",

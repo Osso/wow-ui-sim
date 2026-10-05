@@ -82,12 +82,15 @@ def seed_rows(text):
         elif section == 'deprecated api':
             if value.startswith(': '):
                 parent = value[2:].split()[0].replace('.', '-')
-            else:
+            elif value.startswith('Deprecated_'):
                 metadata = True
                 reason = 'Deprecated-source heading/context; no runtime credit.'
+            else:
+                parent = 'removal-summary'
         elif (number == 1 or value.startswith(('* TOC:', '* Official', '* Diffs:',
                                              '* Deprecated', '** ', '* Addon apocalypse.',
-                                             ': 11.2.7'))):
+                                             ': 11.2.7', 'API changes have been introduced',
+                                             'The changes are not intended'))):
             metadata = True
             reason = 'Editorial/source/build context or external resource link; no runtime credit.'
         prefix = 'source-context' if metadata else (
@@ -138,11 +141,10 @@ def main():
     coverage = json.loads(coverage_path.read_text())
     existing = coverage['source_rows']
     inventory_rows = [row for row in existing if row['source_id'].startswith('wt-')]
-    expected_ids = {row['source_id'] for row in rows}
-    unexpected = [row for row in existing if not row['source_id'].startswith('wt-')
-                  and row['source_id'] not in expected_ids]
-    if unexpected:
-        raise ValueError('Unexpected supplemental rows; refusing replacement')
+    audited = [row for row in existing if not row['source_id'].startswith('wt-')
+               and (row['capabilities'] or row['status'] not in ('audit-pending', 'metadata-only'))]
+    if audited and not args.check:
+        raise ValueError('Supplemental rows already audited; refusing to reset proof')
     if args.check:
         assert text_path.read_text() == text, 'extract differs'
         assert [row for row in existing if not row['source_id'].startswith('wt-')] == rows, 'rows differ'
