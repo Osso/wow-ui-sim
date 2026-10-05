@@ -353,7 +353,6 @@ const PATCH_12_0_0_REMOVED_CVARS: &[&str] = &[
     "NamePlateHorizontalScale",
     "NamePlateVerticalScale",
     "ShowClassColorInFriendlyNameplate",
-    "nameplateShowFriendlyNPCs",
 ];
 
 // Only names cvars.yaml still carries; nameplateShowFriends and
