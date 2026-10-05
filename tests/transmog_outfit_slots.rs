@@ -22,6 +22,15 @@ fn transmog_outfit_slots_secondary_and_weapon_options_deliver_changes() {
         assert(api.IsSlotWeaponSlot(12) and not api.IsSlotWeaponSlot(0))
         api.SetViewedWeaponOptionForSlot(12, 2)
         assert(events[2][2] == 12 and events[2][3] == 2)
+        local repeatedEvents = 0
+        local refresh = CreateFrame('Frame')
+        refresh:RegisterEvent('VIEWED_TRANSMOG_OUTFIT_SLOT_WEAPON_OPTION_CHANGED')
+        refresh:SetScript('OnEvent', function(_, _, slot, option)
+            repeatedEvents = repeatedEvents + 1
+            if repeatedEvents < 3 then api.SetViewedWeaponOptionForSlot(slot,option) end
+        end)
+        api.SetViewedWeaponOptionForSlot(12, 1)
+        assert(repeatedEvents == 1, 'same-option refresh must not recursively redispatch')
         local groups = api.GetSlotGroupInfo()
         local seen = {}
         for _, group in ipairs(groups) do

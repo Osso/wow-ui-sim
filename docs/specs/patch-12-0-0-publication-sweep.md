@@ -21,7 +21,7 @@ Publication/absence breadth evidence for the [raw wikitext register](../../data/
 - `tools/test_gen_patch_wikitext_register.py`: uncollapsed script-object table fixture.
 - `tests/common/publication_sweep.rs`: shared classification and exact gap comparison.
 - `tests/patch_12_0_0_publication_sweep.rs`: source inputs and three later registers.
-- `tests/data/patch_12_0_0_sweep_known_gaps.json`: 198 reviewed non-OK source IDs.
+- `tests/data/patch_12_0_0_sweep_known_gaps.json`: 148 retained reviewed non-OK source IDs after the 50-row transmog implementation.
 - `src/c_api/patch_retired_members.rs`: 64 exact removed namespace keys gated from `retail-12-0-0`; later removals retain later epoch gates.
 
 ## Tests asserting this spec
@@ -31,7 +31,7 @@ Publication/absence breadth evidence for the [raw wikitext register](../../data/
 
 ## Known gaps (current cycle)
 
-Final result: 812 OK / 198 reviewed non-OK. [Evidence and row-by-row review](../../data/patch-api/evidence/12.0.0-session-2026-10-05/) record all observations and proposed statuses; older ledger stays unchanged.
+Original baseline: 812 OK / 198 reviewed non-OK. The transmog implementation retires 50 assigned fixture IDs; final isolated sweep proof is recorded in the follow-up report. [Evidence and row-by-row review](../../data/patch-api/evidence/12.0.0-session-2026-10-05/) record all observations and proposed statuses; older ledger stays unchanged.
 
 - [ ] 148 raw-absent autostub-only API entries and 19 absent added globals/members need actual publication/backing semantics.
 - [ ] 19 removed globals remain raw functions without Deprecated-file attribution; successor/alias and loaded-consumer review is needed before deletion.
@@ -42,6 +42,8 @@ Final result: 812 OK / 198 reviewed non-OK. [Evidence and row-by-row review](../
 ## Transmog outfit closure contract
 
 The assigned transmog follow-up adds behavioral proof beyond publication: catalog creation and rename, displayed selection/locks, per-outfit saved slot contents, pending appearance and situation overlays, synchronous documented events, atomic apply with collection eligibility and host pricing. Invalid applications must preserve pending state and money. Native pricing/caps, persistence and automatic situation-trigger evaluation remain unverified; local choices are marked `INFERRED` in code. Publication fixtures are retired only after the sweep observes real registrations.
+
+Synchronous viewed weapon-option events must fire only when the stored option changes; same-option refreshes inside event handlers must not recursively redispatch. Modern retail does not execute the old slot-topology defaults; only the existing temporary sheathe gap remains there, with a retirement note.
 
 Slot topology must use `Enum.TransmogOutfitSlot`, not zero-based inventory slots. Both shoulder locations are cacheable; displayed groups include the secondary shoulder only when the outfit split is enabled. Armor/weapon option collection queries use enum categories; category and illusion queries read collection state. Custom-set name validation and creation share one policy and enforce a host-configurable capacity. Set-filter reset restores checked collected/uncollected/PvE/PvP defaults (inferred).
 

@@ -197,10 +197,16 @@ fn set_weapon_option(state: &mut LuaState) -> LuaResult<u32> {
     if !(0..=11).contains(&option) {
         return Err(rilua::runtime_error("invalid weapon option"));
     }
-    borrow_state_mut(state)?
+    let changed = borrow_state_mut(state)?
         .transmog_outfits
         .viewed_weapon_options
-        .insert(slot, option);
+        .insert(slot, option)
+        != Some(option);
+    // INFERRED change-event policy: consumers refresh the selected option from
+    // inside synchronous handlers; repeated selection must not redispatch.
+    if !changed {
+        return Ok(0);
+    }
     dispatch_event_now(
         state,
         "VIEWED_TRANSMOG_OUTFIT_SLOT_WEAPON_OPTION_CHANGED",

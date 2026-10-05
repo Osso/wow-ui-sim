@@ -1,9 +1,12 @@
 //! Temporary `C_TransmogOutfitInfo` slot/outfit defaults.
 //!
 //! Outfit locks are state-backed in `lua_api::globals::transmog_outfit_info`.
-//! Slot metadata and sheathe categories remain compatibility defaults.
-//! Retail 12.0.5 active/viewed selection belongs to the catalog-backed C API.
+//! Retail slot topology and outfit contents belong to the C API model. Only
+//! sheathe compatibility remains on modern retail; retire it when per-outfit
+//! sheathe choices and source eligibility are modeled. Older epochs retain their
+//! preexisting stand-ins, not a fallback path for modern modeled APIs.
 
+#[cfg(not(feature = "retail-12-0-5"))]
 const TRANSMOG_OUTFIT_SLOT_DEFAULTS_LUA: &str = r#"
 C_TransmogOutfitInfo = C_TransmogOutfitInfo or __wow_namespace()
 local PENDING_SHEATHE_CATEGORIES_KEY = "__pendingSheatheCategories"
@@ -135,6 +138,41 @@ if rawget(C_TransmogOutfitInfo, "GetAllSlotLocationInfo") == nil then
 end
 "#;
 
+#[cfg(feature = "retail-12-0-5")]
+const TRANSMOG_OUTFIT_SLOT_DEFAULTS_LUA: &str = r#"
+local function enumValue(enumName, key, fallback)
+    local values = Enum and Enum[enumName]
+    return values and values[key] or fallback
+end
+
+if rawget(C_TransmogOutfitInfo, "GetAllTransmogOutfitOptionSheatheCategoryInfo") == nil then
+    function C_TransmogOutfitInfo.GetAllTransmogOutfitOptionSheatheCategoryInfo(imaID)
+        if tonumber(imaID) ~= 190001 then return nil end
+        return {
+            { sheatheCategory = enumValue("TransmogOutfitSlotOptionSheatheCategory", "Default", 0), categoryName = "Default" },
+            { sheatheCategory = enumValue("TransmogOutfitSlotOptionSheatheCategory", "Back", 1), categoryName = "Back" },
+            { sheatheCategory = enumValue("TransmogOutfitSlotOptionSheatheCategory", "Side", 2), categoryName = "Side" },
+            { sheatheCategory = enumValue("TransmogOutfitSlotOptionSheatheCategory", "Hide", 3), categoryName = "Hide" },
+        }
+    end
+end
+
+if rawget(C_TransmogOutfitInfo, "SetPendingTransmogSheatheCategory") == nil then
+    function C_TransmogOutfitInfo.SetPendingTransmogSheatheCategory(slot, option, category)
+        local pending = rawget(C_TransmogOutfitInfo, "__pendingSheatheCategories")
+        if not pending then
+            pending = {}
+            C_TransmogOutfitInfo.__pendingSheatheCategories = pending
+        end
+        local function key(value)
+            if type(value) == "number" and value % 1 == 0 then return string.format("%d", value) end
+            return tostring(value)
+        end
+        pending[key(slot) .. ":" .. key(option)] = category
+    end
+end
+"#;
+
 // Earlier patch epochs retain their existing compatibility surface. This chunk
 // is not compiled into Retail 12.0.5; it is not a fallback for the modeled APIs.
 #[cfg(not(feature = "retail-12-0-5"))]
@@ -216,6 +254,9 @@ mod tests {
             )
             .expect("outfit slot helpers should be queryable");
 
+        #[cfg(feature = "retail-12-0-5")]
+        assert_eq!(result, (13, true, true));
+        #[cfg(not(feature = "retail-12-0-5"))]
         assert_eq!(result, (16, true, true));
     }
 
@@ -226,10 +267,14 @@ mod tests {
             .eval(
                 r#"
                 local appearanceSlotInfo, illusionSlotInfo = C_TransmogOutfitInfo.GetAllSlotLocationInfo()
+                local hasSecondary = false
+                for _, info in ipairs(appearanceSlotInfo) do
+                    hasSecondary = hasSecondary or info.isSecondary
+                end
                 return #appearanceSlotInfo,
                        #illusionSlotInfo,
                        appearanceSlotInfo[1].slotName,
-                       appearanceSlotInfo[#appearanceSlotInfo].isSecondary,
+                       hasSecondary,
                        illusionSlotInfo[1].slotName
                 "#,
             )
