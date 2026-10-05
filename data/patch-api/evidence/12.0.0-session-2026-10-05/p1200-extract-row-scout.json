@@ -1,0 +1,2516 @@
+{
+  "revision": "3fa805ef78a2ad4a42f1963ae926ca251e19960b",
+  "proof_level": "source inspection and recorded historical test evidence only; no new simulator execution",
+  "rows": [
+    {
+      "source_id": "source-context-001",
+      "plaintext_line": 1,
+      "text": "Patch 12.0.0 API changes",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "plaintext_line": 3,
+      "text": "== Summary ==",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-004",
+      "plaintext_line": 4,
+      "text": "* Addon apocalypse.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "plaintext_line": 5,
+      "text": "* COMBAT_LOG_EVENT and COMBAT_LOG_EVENT_UNFILTERED will error when trying to register them.",
+      "status": "audit-pending",
+      "subsystem": "event registration",
+      "class": "PROSE-MODELABLE",
+      "batch": "B11",
+      "evidence": "Old audit keeps both changed event occurrences evidence-required/unsafe; publication sweep does not prove registration errors.",
+      "test_idea": "Addon-tainted CreateFrame:RegisterEvent and RegisterUnitEvent for both names must error; assert unchanged registrations and no OnEvent delivery after failure. Test callback mechanism separately, not as a substitute.",
+      "occurrence_matches": [
+        {
+          "id": "changed:COMBAT_LOG_EVENT",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence-required/unsafe: declaration metadata is modeled, but producer-backed payload, restricted delivery, ordinary registration behavior, callback delivery, and precedence remain unproven. Required full-LoD probe covers registration rejection, callback registration/delivery, producer transitions, exact payload count/types/order, restricted context, callback versus OnEvent precedence, and manual/generic dispatch."
+        },
+        {
+          "id": "changed:COMBAT_LOG_EVENT_UNFILTERED",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence-required/unsafe: runtime classification exists and generic dispatch forwards supplied arguments, but producer-backed payload, restricted delivery, ordinary registration behavior, callback delivery, and precedence remain unproven. Required full-LoD probe covers registration rejection, callback registration/delivery, producer transitions, exact payload count/types/order, restricted context, callback versus OnEvent precedence, and manual/generic dispatch."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "source-context-007",
+      "plaintext_line": 7,
+      "text": "== Resources ==",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "plaintext_line": 8,
+      "text": "* TOC: 120000",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "plaintext_line": 9,
+      "text": "* Official patch notes: Midnight Pre-Expansion Content Update Notes",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "plaintext_line": 11,
+      "text": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-012",
+      "plaintext_line": 12,
+      "text": "* Official restriction changes:  Planned API changes",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-013",
+      "plaintext_line": 13,
+      "text": "* Deprecated APIs:",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-014",
+      "plaintext_line": 14,
+      "text": "** Deprecated_BattleNet.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-015",
+      "plaintext_line": 15,
+      "text": "** Deprecated_ChatInfo.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-016",
+      "plaintext_line": 16,
+      "text": "** Deprecated_ChatFrame.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-017",
+      "plaintext_line": 17,
+      "text": "** Deprecated_CombatLog.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-018",
+      "plaintext_line": 18,
+      "text": "** Deprecated_SpellBook.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-019",
+      "plaintext_line": 19,
+      "text": "** Deprecated_InstanceEncounter.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-020",
+      "plaintext_line": 20,
+      "text": "** Deprecated_SpellScript.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-023",
+      "plaintext_line": 23,
+      "text": "== AddOn security changes ==",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-025",
+      "plaintext_line": 25,
+      "text": "API changes have been introduced with an aim to limit the ability for addons to perform complex logic and decision making based off combat information.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-027",
+      "plaintext_line": 27,
+      "text": "The changes are not intended to prevent \"look and feel\" customization of UI elements. As part of this, Blizzard have avoided outright restricting many APIs and moving frames into the secure environment but instead have introduced new technology termed as Secret Values.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-029",
+      "plaintext_line": 29,
+      "text": "=== Secret values ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "plaintext_line": 30,
+      "text": "Secret values are a new mechanism that restrict the ability for addons to perform some operations on Lua values on tainted execution paths.",
+      "status": "audit-pending",
+      "subsystem": "rilua secret values + Lua API value access",
+      "class": "PROSE-MODELABLE",
+      "batch": "B12",
+      "evidence": "Old added:issecretvalue occurrence remains evidence-required/unsafe; shallow predicate tests do not prove interpreter operation restrictions.",
+      "test_idea": "Produce secret via real restricted API; compare secure/tainted arithmetic, comparison, concatenation, indexing and branch operations; assert errors/secret propagation and allowed rendering paths. Native operation parity remains a VM-level boundary.",
+      "occurrence_matches": [
+        {
+          "id": "added:issecretvalue",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Unsafe: issecretvalue is published by guarded local shallow-secret logic, but full retail semantics are unproven. Required state-backed/full-LoD probes must cover nil, primitives, direct and nested secret values, mixed values, taint propagation, tainted closures, protected values, and boolean return type. Do not claim the local shallow behavior is retail-equivalent."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "source-context-032",
+      "plaintext_line": 32,
+      "text": "== Consolidated changes ==",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-033",
+      "plaintext_line": 33,
+      "text": ": 11.2.7 (64978) \u2192 12.0.0 (65655) Jan 28 2026",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-035",
+      "plaintext_line": 35,
+      "text": "=== Enumerations ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-CraftingOrderResult-036",
+      "plaintext_line": 36,
+      "text": "Enum.CraftingOrderResult",
+      "status": "audit-pending",
+      "subject": "CraftingOrderResult",
+      "field": null,
+      "cache_anchor": "ProfessionConstantsDocumentation.lua:78",
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived parent: 49 members; cache: 49. Missing={}; extra={}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-CraftingOrderResult-037",
+      "plaintext_line": 37,
+      "text": "+ MissingCurrency",
+      "status": "audit-pending",
+      "subject": "CraftingOrderResult",
+      "field": "MissingCurrency",
+      "cache_anchor": "ProfessionConstantsDocumentation.lua:78",
+      "cached_value": 30,
+      "simulator_source_value": 30,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail MissingCurrency=30; cached=30.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.CraftingOrderResult.MissingCurrency",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_crafting_order_result_enums.rs::test_patch_12_0_0_crafting_order_result_enum_additions"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup enum publication, Lua numeric type, and exact value 30 for Enum.CraftingOrderResult.MissingCurrency. Crafting-order result production, interpretation, persistence, transitions, consumers, and lifecycle are not claimed. Proof commit: ac04f9fc55381073c01ba07d794d0ba0d06b0b91."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_crafting_order_result_enums.rs::test_patch_12_0_0_crafting_order_result_enum_additions"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-CraftingOrderResult-038",
+      "plaintext_line": 38,
+      "text": "+ TooManyCurrencies",
+      "status": "audit-pending",
+      "subject": "CraftingOrderResult",
+      "field": "TooManyCurrencies",
+      "cache_anchor": "ProfessionConstantsDocumentation.lua:78",
+      "cached_value": 46,
+      "simulator_source_value": 46,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail TooManyCurrencies=46; cached=46.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.CraftingOrderResult.TooManyCurrencies",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_crafting_order_result_enums.rs::test_patch_12_0_0_crafting_order_result_enum_additions"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup enum publication, Lua numeric type, and exact value 46 for Enum.CraftingOrderResult.TooManyCurrencies. Crafting-order result production, interpretation, persistence, transitions, consumers, and lifecycle are not claimed. Proof commit: ac04f9fc55381073c01ba07d794d0ba0d06b0b91."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_crafting_order_result_enums.rs::test_patch_12_0_0_crafting_order_result_enum_additions"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-039",
+      "plaintext_line": 39,
+      "text": "Enum.EditModeAccountSetting",
+      "status": "audit-pending",
+      "subject": "EditModeAccountSetting",
+      "field": null,
+      "cache_anchor": "EditModeManagerConstantsDocumentation.lua:202",
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived parent: 36 members; cache: 36. Missing={}; extra={}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-040",
+      "plaintext_line": 40,
+      "text": "+ ShowPersonalResourceDisplay",
+      "status": "audit-pending",
+      "subject": "EditModeAccountSetting",
+      "field": "ShowPersonalResourceDisplay",
+      "cache_anchor": "EditModeManagerConstantsDocumentation.lua:202",
+      "cached_value": 29,
+      "simulator_source_value": 29,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail ShowPersonalResourceDisplay=29; cached=29.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.EditModeAccountSetting.ShowPersonalResourceDisplay",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_account_aura_settings_enums.rs::test_patch_12_0_0_edit_mode_account_aura_settings_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup enum publication, Lua numeric type, exact value 29 for Enum.EditModeAccountSetting.ShowPersonalResourceDisplay, absence of later ShowTotemActionBar, and metadata MinValue=0, MaxValue=32, NumValues=33. Edit Mode setting behavior, persistence, consumers, transitions, and lifecycle are not claimed. Proof commit: 0dfaa313be82192f753688ecc1dc2547df75bcea."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_account_aura_settings_enums.rs::test_patch_12_0_0_edit_mode_account_aura_settings_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-041",
+      "plaintext_line": 41,
+      "text": "+ ShowEncounterEvents",
+      "status": "audit-pending",
+      "subject": "EditModeAccountSetting",
+      "field": "ShowEncounterEvents",
+      "cache_anchor": "EditModeManagerConstantsDocumentation.lua:202",
+      "cached_value": 30,
+      "simulator_source_value": 30,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail ShowEncounterEvents=30; cached=30.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.EditModeAccountSetting.ShowEncounterEvents",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_account_aura_settings_enums.rs::test_patch_12_0_0_edit_mode_account_aura_settings_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup enum publication, Lua numeric type, exact value 30 for Enum.EditModeAccountSetting.ShowEncounterEvents, absence of later ShowTotemActionBar, and metadata MinValue=0, MaxValue=32, NumValues=33. Edit Mode setting behavior, persistence, consumers, transitions, and lifecycle are not claimed. Proof commit: 0dfaa313be82192f753688ecc1dc2547df75bcea."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_account_aura_settings_enums.rs::test_patch_12_0_0_edit_mode_account_aura_settings_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-042",
+      "plaintext_line": 42,
+      "text": "+ ShowDamageMeter",
+      "status": "audit-pending",
+      "subject": "EditModeAccountSetting",
+      "field": "ShowDamageMeter",
+      "cache_anchor": "EditModeManagerConstantsDocumentation.lua:202",
+      "cached_value": 31,
+      "simulator_source_value": 31,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail ShowDamageMeter=31; cached=31.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.EditModeAccountSetting.ShowDamageMeter",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_account_aura_settings_enums.rs::test_patch_12_0_0_edit_mode_account_aura_settings_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup enum publication, Lua numeric type, exact value 31 for Enum.EditModeAccountSetting.ShowDamageMeter, absence of later ShowTotemActionBar, and metadata MinValue=0, MaxValue=32, NumValues=33. Edit Mode setting behavior, persistence, consumers, transitions, and lifecycle are not claimed. Proof commit: 0dfaa313be82192f753688ecc1dc2547df75bcea."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_account_aura_settings_enums.rs::test_patch_12_0_0_edit_mode_account_aura_settings_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-043",
+      "plaintext_line": 43,
+      "text": "+ ShowExternalDefensives",
+      "status": "audit-pending",
+      "subject": "EditModeAccountSetting",
+      "field": "ShowExternalDefensives",
+      "cache_anchor": "EditModeManagerConstantsDocumentation.lua:202",
+      "cached_value": 32,
+      "simulator_source_value": 32,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail ShowExternalDefensives=32; cached=32.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.EditModeAccountSetting.ShowExternalDefensives",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_account_aura_settings_enums.rs::test_patch_12_0_0_edit_mode_account_aura_settings_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup enum publication, Lua numeric type, exact value 32 for Enum.EditModeAccountSetting.ShowExternalDefensives, absence of later ShowTotemActionBar, and metadata MinValue=0, MaxValue=32, NumValues=33. Edit Mode setting behavior, persistence, consumers, transitions, and lifecycle are not claimed. Proof commit: 0dfaa313be82192f753688ecc1dc2547df75bcea."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_account_aura_settings_enums.rs::test_patch_12_0_0_edit_mode_account_aura_settings_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-044",
+      "plaintext_line": 44,
+      "text": "Enum.EditModeSystem",
+      "status": "audit-pending",
+      "subject": "EditModeSystem",
+      "field": null,
+      "cache_anchor": "EditModeManagerConstantsDocumentation.lua:636",
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived parent: 27 members; cache: 27. Missing={}; extra={}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-045",
+      "plaintext_line": 45,
+      "text": "+ PersonalResourceDisplay",
+      "status": "audit-pending",
+      "subject": "EditModeSystem",
+      "field": "PersonalResourceDisplay",
+      "cache_anchor": "EditModeManagerConstantsDocumentation.lua:636",
+      "cached_value": 21,
+      "simulator_source_value": 21,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail PersonalResourceDisplay=21; cached=21.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.EditModeSystem.PersonalResourceDisplay",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_system_enums.rs::test_patch_12_0_0_edit_mode_system_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup enum publication, Lua numeric type, exact value 21 for Enum.EditModeSystem.PersonalResourceDisplay, and the tested EditModeSystem namespace boundary with TotemActionBar absent and metadata MinValue=0, MaxValue=23, NumValues=24. Edit Mode behavior, consumers, persistence, transitions, and lifecycle are not claimed. Proof commit: 4d883c9647cf972d6b12b7b4982b9de634d293c5."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_system_enums.rs::test_patch_12_0_0_edit_mode_system_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-046",
+      "plaintext_line": 46,
+      "text": "+ EncounterEvents",
+      "status": "audit-pending",
+      "subject": "EditModeSystem",
+      "field": "EncounterEvents",
+      "cache_anchor": "EditModeManagerConstantsDocumentation.lua:636",
+      "cached_value": 22,
+      "simulator_source_value": 22,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail EncounterEvents=22; cached=22.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.EditModeSystem.EncounterEvents",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_system_enums.rs::test_patch_12_0_0_edit_mode_system_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup enum publication, Lua numeric type, exact value 22 for Enum.EditModeSystem.EncounterEvents, and the tested EditModeSystem namespace boundary with TotemActionBar absent and metadata MinValue=0, MaxValue=23, NumValues=24. Edit Mode behavior, consumers, persistence, transitions, and lifecycle are not claimed. Proof commit: 4d883c9647cf972d6b12b7b4982b9de634d293c5."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_system_enums.rs::test_patch_12_0_0_edit_mode_system_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-047",
+      "plaintext_line": 47,
+      "text": "+ DamageMeter",
+      "status": "audit-pending",
+      "subject": "EditModeSystem",
+      "field": "DamageMeter",
+      "cache_anchor": "EditModeManagerConstantsDocumentation.lua:636",
+      "cached_value": 23,
+      "simulator_source_value": 23,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail DamageMeter=23; cached=23.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.EditModeSystem.DamageMeter",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_system_enums.rs::test_patch_12_0_0_edit_mode_system_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup enum publication, Lua numeric type, exact value 23 for Enum.EditModeSystem.DamageMeter, and the tested EditModeSystem namespace boundary with TotemActionBar absent and metadata MinValue=0, MaxValue=23, NumValues=24. Edit Mode behavior, consumers, persistence, transitions, and lifecycle are not claimed. Proof commit: 4d883c9647cf972d6b12b7b4982b9de634d293c5."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_edit_mode_system_enums.rs::test_patch_12_0_0_edit_mode_system_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-PlayerInteractionType-048",
+      "plaintext_line": 48,
+      "text": "Enum.PlayerInteractionType",
+      "status": "audit-pending",
+      "subject": "PlayerInteractionType",
+      "field": null,
+      "cache_anchor": "PlayerInteractionManagerConstantsDocumentation.lua:6",
+      "class": "ENUM",
+      "batch": "B07",
+      "evidence": "Source-derived parent: 80 members; cache: 80. Missing={'TieredEntrance': 79}; extra={'PlaceholderType79': 79}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-PlayerInteractionType-049",
+      "plaintext_line": 49,
+      "text": "# PlaceholderType79 -> TieredEntrance",
+      "status": "audit-pending",
+      "subject": "PlayerInteractionType",
+      "field": "TieredEntrance",
+      "cache_anchor": "PlayerInteractionManagerConstantsDocumentation.lua:6",
+      "cached_value": 79,
+      "simulator_source_value": null,
+      "class": "ENUM",
+      "batch": "B07",
+      "evidence": "Source-derived current Retail TieredEntrance=nil; cached=79. Renamed old key must be raw-absent and absent through ordinary lookup.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.PlayerInteractionType.TieredEntrance",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_enum_current_keys_and_old_keys_absent"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to current startup namespace publication, exact numeric Lua type, and exact 12.0.0 value. The paired old-key absence assertion is current-publication evidence only and does not prove historical removal timing, alias semantics, or full-LoD dynamic absence."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_enum_current_keys_and_old_keys_absent"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-QuestTagType-050",
+      "plaintext_line": 50,
+      "text": "Enum.QuestTagType",
+      "status": "audit-pending",
+      "subject": "QuestTagType",
+      "field": null,
+      "cache_anchor": "QuestConstantsDocumentation.lua:87",
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived parent: 20 members; cache: 20. Missing={}; extra={}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-QuestTagType-051",
+      "plaintext_line": 51,
+      "text": "# Placeholder_1 -> Prey",
+      "status": "audit-pending",
+      "subject": "QuestTagType",
+      "field": "Prey",
+      "cache_anchor": "QuestConstantsDocumentation.lua:87",
+      "cached_value": 19,
+      "simulator_source_value": 19,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail Prey=19; cached=19. Renamed old key must be raw-absent and absent through ordinary lookup.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.QuestTagType.Prey",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_enum_current_keys_and_old_keys_absent"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to current startup namespace publication, exact numeric Lua type, and exact 12.0.0 value. The paired old-key absence assertion is current-publication evidence only and does not prove historical removal timing, alias semantics, or full-LoD dynamic absence."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_enum_current_keys_and_old_keys_absent"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-SendAddonMessageResult-052",
+      "plaintext_line": 52,
+      "text": "Enum.SendAddonMessageResult",
+      "status": "audit-pending",
+      "subject": "SendAddonMessageResult",
+      "field": null,
+      "cache_anchor": "ChatConstantsDocumentation.lua:144",
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived parent: 13 members; cache: 13. Missing={}; extra={}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_send_addon_message_result_enums.rs::test_patch_12_0_0_send_addon_message_result_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-SendAddonMessageResult-053",
+      "plaintext_line": 53,
+      "text": "+ AddOnMessageLockdown",
+      "status": "audit-pending",
+      "subject": "SendAddonMessageResult",
+      "field": "AddOnMessageLockdown",
+      "cache_anchor": "ChatConstantsDocumentation.lua:144",
+      "cached_value": 11,
+      "simulator_source_value": 11,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail AddOnMessageLockdown=11; cached=11.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.SendAddonMessageResult.AddOnMessageLockdown",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_send_addon_message_result_enums.rs::test_patch_12_0_0_send_addon_message_result_enum_values"
+          ],
+          "notes": "Retail 12.0.0 startup publishes AddOnMessageLockdown=11; the complete family and metadata are behaviorally proven. No addon-message transport or consumer semantics are claimed."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_send_addon_message_result_enums.rs::test_patch_12_0_0_send_addon_message_result_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-SendAddonMessageResult-054",
+      "plaintext_line": 54,
+      "text": "+ TargetOffline",
+      "status": "audit-pending",
+      "subject": "SendAddonMessageResult",
+      "field": "TargetOffline",
+      "cache_anchor": "ChatConstantsDocumentation.lua:144",
+      "cached_value": 12,
+      "simulator_source_value": 12,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail TargetOffline=12; cached=12.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.SendAddonMessageResult.TargetOffline",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_send_addon_message_result_enums.rs::test_patch_12_0_0_send_addon_message_result_enum_values"
+          ],
+          "notes": "Retail 12.0.0 startup publishes TargetOffline=12; the complete family and metadata are behaviorally proven. No addon-message transport or consumer semantics are claimed."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_send_addon_message_result_enums.rs::test_patch_12_0_0_send_addon_message_result_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-SurveyDeliveryMoment-055",
+      "plaintext_line": 55,
+      "text": "Enum.SurveyDeliveryMoment",
+      "status": "audit-pending",
+      "subject": "SurveyDeliveryMoment",
+      "field": null,
+      "cache_anchor": "WowSurveyConstantsDocumentation.lua:18",
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived parent: 6 members; cache: 6. Missing={}; extra={}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-SurveyDeliveryMoment-056",
+      "plaintext_line": 56,
+      "text": "+ MythicPlusCompleted",
+      "status": "audit-pending",
+      "subject": "SurveyDeliveryMoment",
+      "field": "MythicPlusCompleted",
+      "cache_anchor": "WowSurveyConstantsDocumentation.lua:18",
+      "cached_value": 4,
+      "simulator_source_value": 4,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail MythicPlusCompleted=4; cached=4.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.SurveyDeliveryMoment.MythicPlusCompleted",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_small_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to startup namespace publication, exact numeric Lua type, and exact value for this enum entry. Enum consumers, server/state semantics, bitwise composition where applicable, mutation/protection, lifecycle, and other edge semantics are not claimed."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_small_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-057",
+      "plaintext_line": 57,
+      "text": "Enum.TooltipDataLineType",
+      "status": "audit-pending",
+      "subject": "TooltipDataLineType",
+      "field": null,
+      "cache_anchor": "TooltipInfoSharedDocumentation.lua:27",
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived parent: 50 members; cache: 50. Missing={}; extra={}; wrong={}. Historical 12.0.0 parent proof is exact 45 entries; current cache has 50 and renumbers SpellPassive/SpellDescription 43/44 to 33/34.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_tooltip_data_line_type_enums.rs::test_patch_12_0_0_tooltip_data_line_type_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-058",
+      "plaintext_line": 58,
+      "text": "+ SpellPassive",
+      "status": "audit-pending",
+      "subject": "TooltipDataLineType",
+      "field": "SpellPassive",
+      "cache_anchor": "TooltipInfoSharedDocumentation.lua:27",
+      "cached_value": 33,
+      "simulator_source_value": 33,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail SpellPassive=33; cached=33.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.TooltipDataLineType.SpellPassive",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_tooltip_data_line_type_enums.rs::test_patch_12_0_0_tooltip_data_line_type_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication, Lua table/member numeric types, exact values, complete family membership, and metadata. shared fallback data reflected a later enum shape while the retail-12-0-0 override now publishes the exact authoritative 12.0.0 family. Enum semantics, consumers, persistence, transitions, and lifecycle are not claimed. Proof commit: 891617e4c."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_tooltip_data_line_type_enums.rs::test_patch_12_0_0_tooltip_data_line_type_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-059",
+      "plaintext_line": 59,
+      "text": "+ SpellDescription",
+      "status": "audit-pending",
+      "subject": "TooltipDataLineType",
+      "field": "SpellDescription",
+      "cache_anchor": "TooltipInfoSharedDocumentation.lua:27",
+      "cached_value": 34,
+      "simulator_source_value": 34,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail SpellDescription=34; cached=34.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.TooltipDataLineType.SpellDescription",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_tooltip_data_line_type_enums.rs::test_patch_12_0_0_tooltip_data_line_type_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to retail 12.0.0 startup publication, Lua table/member numeric types, exact values, complete family membership, and metadata. shared fallback data reflected a later enum shape while the retail-12-0-0 override now publishes the exact authoritative 12.0.0 family. Enum semantics, consumers, persistence, transitions, and lifecycle are not claimed. Proof commit: 891617e4c."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_tooltip_data_line_type_enums.rs::test_patch_12_0_0_tooltip_data_line_type_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataType-060",
+      "plaintext_line": 60,
+      "text": "Enum.TooltipDataType",
+      "status": "audit-pending",
+      "subject": "TooltipDataType",
+      "field": null,
+      "cache_anchor": "TooltipInfoSharedDocumentation.lua:87",
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived parent: 28 members; cache: 28. Missing={}; extra={}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataType-061",
+      "plaintext_line": 61,
+      "text": "+ Outfit",
+      "status": "audit-pending",
+      "subject": "TooltipDataType",
+      "field": "Outfit",
+      "cache_anchor": "TooltipInfoSharedDocumentation.lua:87",
+      "cached_value": 27,
+      "simulator_source_value": 27,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail Outfit=27; cached=27.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.TooltipDataType.Outfit",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_small_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to startup namespace publication, exact numeric Lua type, and exact value for this enum entry. Enum consumers, tooltip/trait/cursor/widget state, mutation/protection, lifecycle, and other edge semantics are not claimed."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_small_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-TradeskillRecipeType-062",
+      "plaintext_line": 62,
+      "text": "Enum.TradeskillRecipeType",
+      "status": "audit-pending",
+      "subject": "TradeskillRecipeType",
+      "field": null,
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:70",
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived parent: 4 members; cache: 4. Missing={}; extra={}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-TradeskillRecipeType-063",
+      "plaintext_line": 63,
+      "text": "- Recraft",
+      "status": "audit-pending",
+      "subject": "TradeskillRecipeType",
+      "field": "Recraft",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:70",
+      "cached_value": null,
+      "simulator_source_value": null,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail Recraft=nil; cached=nil.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-UICursorType-064",
+      "plaintext_line": 64,
+      "text": "Enum.UICursorType",
+      "status": "audit-pending",
+      "subject": "UICursorType",
+      "field": null,
+      "cache_anchor": "CursorConstDocumentation.lua:120",
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived parent: 22 members; cache: 22. Missing={}; extra={}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-UICursorType-065",
+      "plaintext_line": 65,
+      "text": "+ Outfit",
+      "status": "audit-pending",
+      "subject": "UICursorType",
+      "field": "Outfit",
+      "cache_anchor": "CursorConstDocumentation.lua:120",
+      "cached_value": 21,
+      "simulator_source_value": 21,
+      "class": "ENUM",
+      "batch": "B01",
+      "evidence": "Source-derived current Retail Outfit=21; cached=21.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.UICursorType.Outfit",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_small_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to startup namespace publication, exact numeric Lua type, and exact value for this enum entry. Enum consumers, tooltip/trait/cursor/widget state, mutation/protection, lifecycle, and other edge semantics are not claimed."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_small_enum_values"
+      ]
+    },
+    {
+      "source_id": "enumerations-Enum-UIWidgetVisualizationType-066",
+      "plaintext_line": 66,
+      "text": "Enum.UIWidgetVisualizationType",
+      "status": "audit-pending",
+      "subject": "UIWidgetVisualizationType",
+      "field": null,
+      "cache_anchor": "UIWidgetManagerSharedDocumentation.lua:128",
+      "class": "ENUM",
+      "batch": "B07",
+      "evidence": "Source-derived parent: 31 members; cache: 32. Missing={'ScenarioHeaderDelves': 29, 'ButtonHeader': 30, 'PreyHuntProgress': 31}; extra={'ControlZone': 29, 'SpellWithChargesDisplay': 30}; wrong={}.",
+      "test_idea": "Assert entire cached table plus Meta, not only changed members; distinguish 12.0.0 epoch metadata from current Retail.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "enumerations-Enum-UIWidgetVisualizationType-067",
+      "plaintext_line": 67,
+      "text": "+ PreyHuntProgress",
+      "status": "audit-pending",
+      "subject": "UIWidgetVisualizationType",
+      "field": "PreyHuntProgress",
+      "cache_anchor": "UIWidgetManagerSharedDocumentation.lua:128",
+      "cached_value": 31,
+      "simulator_source_value": null,
+      "class": "ENUM",
+      "batch": "B07",
+      "evidence": "Source-derived current Retail PreyHuntProgress=nil; cached=31.",
+      "test_idea": "Full cached Game preload; assert exact raw/ordinary member value (or nil for removal), and metadata.",
+      "occurrence_matches": [
+        {
+          "id": "added:Enum.UIWidgetVisualizationType.PreyHuntProgress",
+          "status": "best-effort",
+          "tests": [
+            "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_small_enum_values"
+          ],
+          "notes": "Best-effort behavioral evidence is limited to startup namespace publication, exact numeric Lua type, and exact value for this enum entry. Enum consumers, tooltip/trait/cursor/widget state, mutation/protection, lifecycle, and other edge semantics are not claimed."
+        }
+      ],
+      "existing_tests": [
+        "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs::test_patch_12_0_0_small_enum_values"
+      ]
+    },
+    {
+      "source_id": "source-context-069",
+      "plaintext_line": 69,
+      "text": "=== Structures ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-AdvancedFilterOptions-070",
+      "plaintext_line": 70,
+      "text": "AdvancedFilterOptions",
+      "status": "audit-pending",
+      "subject": "AdvancedFilterOptions",
+      "field": null,
+      "subsystem": "C_LFGList filters",
+      "cache_anchor": "LFGListInfoDocumentation.lua:826",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "GetAdvancedFilter/SaveAdvancedFilter: four boolean playstyle flags; false defaults, save/reload a selected flag without filtering unrelated entries. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-AdvancedFilterOptions-071",
+      "plaintext_line": 71,
+      "text": "+ generalPlaystyle1",
+      "status": "audit-pending",
+      "subject": "AdvancedFilterOptions",
+      "field": "generalPlaystyle1",
+      "subsystem": "C_LFGList filters",
+      "cache_anchor": "LFGListInfoDocumentation.lua:826",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached generalPlaystyle1: bool, nilable=False.",
+      "test_idea": "GetAdvancedFilter/SaveAdvancedFilter: four boolean playstyle flags; false defaults, save/reload a selected flag without filtering unrelated entries.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_LFGList.AdvancedFilterOptions.generalPlaystyle1",
+          "status": "best-effort",
+          "tests": [
+            "tests/test_premade_groups.rs::get_advanced_filter_default_is_permissive"
+          ],
+          "notes": "Best-effort behavioral evidence covers returned boolean field publication and the exact false default. Mutation, serialization, validation, interaction with search filtering, persistence, refresh, and broader retail LFG semantics remain unclaimed."
+        }
+      ],
+      "existing_tests": [
+        "tests/test_premade_groups.rs::get_advanced_filter_default_is_permissive"
+      ]
+    },
+    {
+      "source_id": "structures-AdvancedFilterOptions-072",
+      "plaintext_line": 72,
+      "text": "+ generalPlaystyle2",
+      "status": "audit-pending",
+      "subject": "AdvancedFilterOptions",
+      "field": "generalPlaystyle2",
+      "subsystem": "C_LFGList filters",
+      "cache_anchor": "LFGListInfoDocumentation.lua:826",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached generalPlaystyle2: bool, nilable=False.",
+      "test_idea": "GetAdvancedFilter/SaveAdvancedFilter: four boolean playstyle flags; false defaults, save/reload a selected flag without filtering unrelated entries.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_LFGList.AdvancedFilterOptions.generalPlaystyle2",
+          "status": "best-effort",
+          "tests": [
+            "tests/test_premade_groups.rs::get_advanced_filter_default_is_permissive"
+          ],
+          "notes": "Best-effort behavioral evidence covers returned boolean field publication and the exact false default. Mutation, serialization, validation, interaction with search filtering, persistence, refresh, and broader retail LFG semantics remain unclaimed."
+        }
+      ],
+      "existing_tests": [
+        "tests/test_premade_groups.rs::get_advanced_filter_default_is_permissive"
+      ]
+    },
+    {
+      "source_id": "structures-AdvancedFilterOptions-073",
+      "plaintext_line": 73,
+      "text": "+ generalPlaystyle3",
+      "status": "audit-pending",
+      "subject": "AdvancedFilterOptions",
+      "field": "generalPlaystyle3",
+      "subsystem": "C_LFGList filters",
+      "cache_anchor": "LFGListInfoDocumentation.lua:826",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached generalPlaystyle3: bool, nilable=False.",
+      "test_idea": "GetAdvancedFilter/SaveAdvancedFilter: four boolean playstyle flags; false defaults, save/reload a selected flag without filtering unrelated entries.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_LFGList.AdvancedFilterOptions.generalPlaystyle3",
+          "status": "best-effort",
+          "tests": [
+            "tests/test_premade_groups.rs::get_advanced_filter_default_is_permissive"
+          ],
+          "notes": "Best-effort behavioral evidence covers returned boolean field publication and the exact false default. Mutation, serialization, validation, interaction with search filtering, persistence, refresh, and broader retail LFG semantics remain unclaimed."
+        }
+      ],
+      "existing_tests": [
+        "tests/test_premade_groups.rs::get_advanced_filter_default_is_permissive"
+      ]
+    },
+    {
+      "source_id": "structures-AdvancedFilterOptions-074",
+      "plaintext_line": 74,
+      "text": "+ generalPlaystyle4",
+      "status": "audit-pending",
+      "subject": "AdvancedFilterOptions",
+      "field": "generalPlaystyle4",
+      "subsystem": "C_LFGList filters",
+      "cache_anchor": "LFGListInfoDocumentation.lua:826",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached generalPlaystyle4: bool, nilable=False.",
+      "test_idea": "GetAdvancedFilter/SaveAdvancedFilter: four boolean playstyle flags; false defaults, save/reload a selected flag without filtering unrelated entries.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_LFGList.AdvancedFilterOptions.generalPlaystyle4",
+          "status": "best-effort",
+          "tests": [
+            "tests/test_premade_groups.rs::get_advanced_filter_default_is_permissive"
+          ],
+          "notes": "Best-effort behavioral evidence covers returned boolean field publication and the exact false default. Mutation, serialization, validation, interaction with search filtering, persistence, refresh, and broader retail LFG semantics remain unclaimed."
+        }
+      ],
+      "existing_tests": [
+        "tests/test_premade_groups.rs::get_advanced_filter_default_is_permissive"
+      ]
+    },
+    {
+      "source_id": "structures-CatalogShopCategoryInfo-075",
+      "plaintext_line": 75,
+      "text": "CatalogShopCategoryInfo",
+      "status": "audit-pending",
+      "subject": "CatalogShopCategoryInfo",
+      "field": null,
+      "subsystem": "C_CatalogShop categories",
+      "cache_anchor": "CatalogShopDocumentation.lua:673",
+      "class": "STRUCT",
+      "batch": "B09",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Seed refundable and nonrefundable categories; GetCategoryInfo returns showPersistentRefundButton bool and changes with category state. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CatalogShopCategoryInfo-076",
+      "plaintext_line": 76,
+      "text": "+ showPersistentRefundButton",
+      "status": "audit-pending",
+      "subject": "CatalogShopCategoryInfo",
+      "field": "showPersistentRefundButton",
+      "subsystem": "C_CatalogShop categories",
+      "cache_anchor": "CatalogShopDocumentation.lua:673",
+      "class": "STRUCT",
+      "batch": "B09",
+      "evidence": "Cached showPersistentRefundButton: bool, nilable=False.",
+      "test_idea": "Seed refundable and nonrefundable categories; GetCategoryInfo returns showPersistentRefundButton bool and changes with category state.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_CatalogShop.CatalogShopCategoryInfo.showPersistentRefundButton",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: seeded constant-false category data does not establish required boolean field fidelity, category-dependent values, persistent-refund button behavior, or retail catalog lifecycle semantics."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CatalogShopProductInfo-077",
+      "plaintext_line": 77,
+      "text": "CatalogShopProductInfo",
+      "status": "audit-pending",
+      "subject": "CatalogShopProductInfo",
+      "field": null,
+      "subsystem": "C_CatalogShop products",
+      "cache_anchor": "CatalogShopDocumentation.lua:727",
+      "class": "STRUCT",
+      "batch": "B09",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Seed consumable product quantity; GetProductInfo must expose the historical field. Current cache removed consumableQuantity: test 12.0.0 separately from current Retail absence. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CatalogShopProductInfo-078",
+      "plaintext_line": 78,
+      "text": "+  consumableQuantity",
+      "status": "audit-pending",
+      "subject": "CatalogShopProductInfo",
+      "field": "consumableQuantity",
+      "subsystem": "C_CatalogShop products",
+      "cache_anchor": "CatalogShopDocumentation.lua:727",
+      "class": "STRUCT",
+      "batch": "B09",
+      "evidence": "Cached consumableQuantity absent (later-epoch drift).",
+      "test_idea": "Seed consumable product quantity; GetProductInfo must expose the historical field. Current cache removed consumableQuantity: test 12.0.0 separately from current Retail absence.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_CatalogShop.CatalogShopProductInfo.consumableQuantity",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: current product payload omits nullable consumableQuantity and does not establish absent/populated numeric values, bundle behavior, consumer display, or lifecycle semantics."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CooldownViewerCooldown-079",
+      "plaintext_line": 79,
+      "text": "CooldownViewerCooldown",
+      "status": "audit-pending",
+      "subject": "CooldownViewerCooldown",
+      "field": null,
+      "subsystem": "C_CooldownViewer catalog",
+      "cache_anchor": "CooldownViewerDocumentation.lua:127",
+      "class": "STRUCT",
+      "batch": "B06",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Seed two cooldown entries; GetCooldownViewerCooldownInfo returns the selected cooldownID and category enum; unknown ID nil; detached snapshots. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CooldownViewerCooldown-080",
+      "plaintext_line": 80,
+      "text": "+ cooldownID",
+      "status": "audit-pending",
+      "subject": "CooldownViewerCooldown",
+      "field": "cooldownID",
+      "subsystem": "C_CooldownViewer catalog",
+      "cache_anchor": "CooldownViewerDocumentation.lua:127",
+      "class": "STRUCT",
+      "batch": "B06",
+      "evidence": "Cached cooldownID: number, nilable=False.",
+      "test_idea": "Seed two cooldown entries; GetCooldownViewerCooldownInfo returns the selected cooldownID and category enum; unknown ID nil; detached snapshots.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_CooldownViewer.CooldownViewerCooldown.cooldownID",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: no CooldownViewerCooldown producer establishes required numeric cooldownID publication, exact values, record relationships, invalid IDs, or lifecycle semantics."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CooldownViewerCooldown-081",
+      "plaintext_line": 81,
+      "text": "+ category",
+      "status": "audit-pending",
+      "subject": "CooldownViewerCooldown",
+      "field": "category",
+      "subsystem": "C_CooldownViewer catalog",
+      "cache_anchor": "CooldownViewerDocumentation.lua:127",
+      "class": "STRUCT",
+      "batch": "B06",
+      "evidence": "Cached category: CooldownViewerCategory, nilable=False.",
+      "test_idea": "Seed two cooldown entries; GetCooldownViewerCooldownInfo returns the selected cooldownID and category enum; unknown ID nil; detached snapshots.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_CooldownViewer.CooldownViewerCooldown.category",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: no CooldownViewerCooldown producer establishes required Enum.CooldownViewerCategory publication, exact values, cooldown relationships, routing, invalid IDs, or lifecycle semantics."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CraftingItemSlotModification-082",
+      "plaintext_line": 82,
+      "text": "CraftingItemSlotModification",
+      "status": "audit-pending",
+      "subject": "CraftingItemSlotModification",
+      "field": null,
+      "subsystem": "profession reagent inputs",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:149",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Construct nested CraftingReagent instead of itemID; consume a slot modification through crafting input; identity/currency/quantity validation, old key absence. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CraftingItemSlotModification-083",
+      "plaintext_line": 83,
+      "text": "+ itemID -> reagent",
+      "status": "audit-pending",
+      "subject": "CraftingItemSlotModification",
+      "field": "reagent",
+      "subsystem": "profession reagent inputs",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:149",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached reagent: CraftingReagent, nilable=False.",
+      "test_idea": "Construct nested CraftingReagent instead of itemID; consume a slot modification through crafting input; identity/currency/quantity validation, old key absence.",
+      "occurrence_matches": [
+        {
+          "id": "added:CraftingItemSlotModification.reagent",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "The named publication, values, producer/consumer behavior, and native contract remain unverified by this source-context reference; related implementations are not proof of equivalence."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CraftingOrderReagentInfo-084",
+      "plaintext_line": 84,
+      "text": "CraftingOrderReagentInfo",
+      "status": "audit-pending",
+      "subject": "CraftingOrderReagentInfo",
+      "field": null,
+      "subsystem": "crafting order reagent outputs",
+      "cache_anchor": "CraftingOrderUISharedDocumentation.lua:169",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Seed order reagents; returned entry has reagentInfo (CraftingReagentInfo) not reagent; nested values and snapshots. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CraftingOrderReagentInfo-085",
+      "plaintext_line": 85,
+      "text": "# reagent -> reagentInfo",
+      "status": "audit-pending",
+      "subject": "CraftingOrderReagentInfo",
+      "field": "reagentInfo",
+      "subsystem": "crafting order reagent outputs",
+      "cache_anchor": "CraftingOrderUISharedDocumentation.lua:169",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached reagentInfo: CraftingReagentInfo, nilable=False.",
+      "test_idea": "Seed order reagents; returned entry has reagentInfo (CraftingReagentInfo) not reagent; nested values and snapshots.",
+      "occurrence_matches": [
+        {
+          "id": "added:CraftingOrderReagentInfo.reagentInfo",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "The named publication, values, producer/consumer behavior, and native contract remain unverified by this source-context reference; related implementations are not proof of equivalence."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CraftingReagentInfo-086",
+      "plaintext_line": 86,
+      "text": "CraftingReagentInfo",
+      "status": "audit-pending",
+      "subject": "CraftingReagentInfo",
+      "field": null,
+      "subsystem": "profession reagent DTO",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:223",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Exercise nested reagent identity on craft/order inputs and outputs; no legacy itemID key; reject malformed nested identity. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CraftingReagentInfo-087",
+      "plaintext_line": 87,
+      "text": "+ itemID -> reagent",
+      "status": "audit-pending",
+      "subject": "CraftingReagentInfo",
+      "field": "reagent",
+      "subsystem": "profession reagent DTO",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:223",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached reagent: CraftingReagent, nilable=False.",
+      "test_idea": "Exercise nested reagent identity on craft/order inputs and outputs; no legacy itemID key; reject malformed nested identity.",
+      "occurrence_matches": [
+        {
+          "id": "added:CraftingReagentInfo.reagent",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "The named publication, values, producer/consumer behavior, and native contract remain unverified by this source-context reference; related implementations are not proof of equivalence."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CraftingReagentSlotSchematic-088",
+      "plaintext_line": 88,
+      "text": "CraftingReagentSlotSchematic",
+      "status": "audit-pending",
+      "subject": "CraftingReagentSlotSchematic",
+      "field": null,
+      "subsystem": "C_TradeSkillUI schematic",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:243",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "GetRecipeSchematic fixture with two variable quantities; assert array values/type and detached return tables, not an always-empty placeholder. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CraftingReagentSlotSchematic-089",
+      "plaintext_line": 89,
+      "text": "+ variableQuantities",
+      "status": "audit-pending",
+      "subject": "CraftingReagentSlotSchematic",
+      "field": "variableQuantities",
+      "subsystem": "C_TradeSkillUI schematic",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:243",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached variableQuantities: table, nilable=False.",
+      "test_idea": "GetRecipeSchematic fixture with two variable quantities; assert array values/type and detached return tables, not an always-empty placeholder.",
+      "occurrence_matches": [
+        {
+          "id": "added:CraftingReagentSlotSchematic.variableQuantities",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "The named publication, values, producer/consumer behavior, and native contract remain unverified by this source-context reference; related implementations are not proof of equivalence."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CraftingResourceReturnInfo-090",
+      "plaintext_line": 90,
+      "text": "CraftingResourceReturnInfo",
+      "status": "audit-pending",
+      "subject": "CraftingResourceReturnInfo",
+      "field": null,
+      "subsystem": "profession crafting result",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:308",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Produce a craft resource-return entry from deterministic recipe state; nested reagent identity replaces itemID; quantity and resource return data. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-CraftingResourceReturnInfo-091",
+      "plaintext_line": 91,
+      "text": "+ itemID -> reagent",
+      "status": "audit-pending",
+      "subject": "CraftingResourceReturnInfo",
+      "field": "reagent",
+      "subsystem": "profession crafting result",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:308",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached reagent: CraftingReagent, nilable=False.",
+      "test_idea": "Produce a craft resource-return entry from deterministic recipe state; nested reagent identity replaces itemID; quantity and resource return data.",
+      "occurrence_matches": [
+        {
+          "id": "added:CraftingResourceReturnInfo.reagent",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "The named publication, values, producer/consumer behavior, and native contract remain unverified by this source-context reference; related implementations are not proof of equivalence."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-ExpansionDisplayInfo-092",
+      "plaintext_line": 92,
+      "text": "ExpansionDisplayInfo",
+      "status": "audit-pending",
+      "subject": "ExpansionDisplayInfo",
+      "field": null,
+      "subsystem": "C_Expansion glue metadata",
+      "cache_anchor": "ExpansionDocumentation.lua:297",
+      "class": "STRUCT",
+      "batch": "B10",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "GetExpansionDisplayInfo for two expansions: optional numeric ambiance/music/credits kits; distinct values and nil when absent; playback not implied. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-ExpansionDisplayInfo-093",
+      "plaintext_line": 93,
+      "text": "+ glueAmbianceSoundKit",
+      "status": "audit-pending",
+      "subject": "ExpansionDisplayInfo",
+      "field": "glueAmbianceSoundKit",
+      "subsystem": "C_Expansion glue metadata",
+      "cache_anchor": "ExpansionDocumentation.lua:297",
+      "class": "STRUCT",
+      "batch": "B10",
+      "evidence": "Cached glueAmbianceSoundKit: number, nilable=True.",
+      "test_idea": "GetExpansionDisplayInfo for two expansions: optional numeric ambiance/music/credits kits; distinct values and nil when absent; playback not implied.",
+      "occurrence_matches": [
+        {
+          "id": "added:ExpansionDisplayInfo.glueAmbianceSoundKit",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Current bootstrap publishes GetExpansionDisplayInfo with glueAmbianceSoundKit, glueMusicSoundKit, and glueCreditsSoundKit explicitly nil; no authoritative populated values or consumer semantics are established."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-ExpansionDisplayInfo-094",
+      "plaintext_line": 94,
+      "text": "+ glueMusicSoundKit",
+      "status": "audit-pending",
+      "subject": "ExpansionDisplayInfo",
+      "field": "glueMusicSoundKit",
+      "subsystem": "C_Expansion glue metadata",
+      "cache_anchor": "ExpansionDocumentation.lua:297",
+      "class": "STRUCT",
+      "batch": "B10",
+      "evidence": "Cached glueMusicSoundKit: number, nilable=True.",
+      "test_idea": "GetExpansionDisplayInfo for two expansions: optional numeric ambiance/music/credits kits; distinct values and nil when absent; playback not implied.",
+      "occurrence_matches": [
+        {
+          "id": "added:ExpansionDisplayInfo.glueMusicSoundKit",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Current bootstrap publishes GetExpansionDisplayInfo with glueAmbianceSoundKit, glueMusicSoundKit, and glueCreditsSoundKit explicitly nil; no authoritative populated values or consumer semantics are established."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-ExpansionDisplayInfo-095",
+      "plaintext_line": 95,
+      "text": "+ glueCreditsSoundKit",
+      "status": "audit-pending",
+      "subject": "ExpansionDisplayInfo",
+      "field": "glueCreditsSoundKit",
+      "subsystem": "C_Expansion glue metadata",
+      "cache_anchor": "ExpansionDocumentation.lua:297",
+      "class": "STRUCT",
+      "batch": "B10",
+      "evidence": "Cached glueCreditsSoundKit: number, nilable=True.",
+      "test_idea": "GetExpansionDisplayInfo for two expansions: optional numeric ambiance/music/credits kits; distinct values and nil when absent; playback not implied.",
+      "occurrence_matches": [
+        {
+          "id": "added:ExpansionDisplayInfo.glueCreditsSoundKit",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Current bootstrap publishes GetExpansionDisplayInfo with glueAmbianceSoundKit, glueMusicSoundKit, and glueCreditsSoundKit explicitly nil; no authoritative populated values or consumer semantics are established."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-ItemInteractionFrameInfo-096",
+      "plaintext_line": 96,
+      "text": "ItemInteractionFrameInfo",
+      "status": "audit-pending",
+      "subject": "ItemInteractionFrameInfo",
+      "field": null,
+      "subsystem": "C_ItemInteraction state",
+      "cache_anchor": "ItemInteractionUIDocumentation.lua:132",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "GetItemInteractionInfo seeded flags: exact UIItemInteractionFlags numeric bitmask and combined flags; distinguish nil interaction from populated record. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-ItemInteractionFrameInfo-097",
+      "plaintext_line": 97,
+      "text": "# flags, Type: number -> UIItemInteractionFlags",
+      "status": "audit-pending",
+      "subject": "ItemInteractionFrameInfo",
+      "field": "flags",
+      "subsystem": "C_ItemInteraction state",
+      "cache_anchor": "ItemInteractionUIDocumentation.lua:132",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached flags: UIItemInteractionFlags, nilable=False.",
+      "test_idea": "GetItemInteractionInfo seeded flags: exact UIItemInteractionFlags numeric bitmask and combined flags; distinguish nil interaction from populated record.",
+      "occurrence_matches": [
+        {
+          "id": "changed:C_ItemInteraction.ItemInteractionFrameInfo.flags",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence-required/unsafe: retail changes flags from generic number to UIItemInteractionFlags; no C_ItemInteraction structure publication, field schema, or backing model is established. Required full-LoD/state-backed probe must establish namespace/method publication, real interaction states, exact bitmask combinations, nil versus zero, transitions, reset behavior, invalid calls, and return shape. Claims are bounded to the declared field type; no item-interaction semantics are claimed. Required probe: Full-LoD/state-backed probe: assert C_ItemInteraction and GetItemInteractionInfo publication; obtain real interaction info, assert flags is nil or number, then verify every documented UIItemInteractionFlags bit across real states, empty/populated transitions, reset/close, invalid calls, and exact field presence versus zero."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-LfgEntryData-098",
+      "plaintext_line": 98,
+      "text": "LfgEntryData",
+      "status": "audit-pending",
+      "subject": "LfgEntryData",
+      "field": null,
+      "subsystem": "C_LFGList active listing",
+      "cache_anchor": "LFGListInfoDocumentation.lua:923",
+      "class": "STRUCT",
+      "batch": "B04",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Create/update listing with generalPlaystyle enum; GetActiveEntryInfo roundtrip and optional nil; observable updates and snapshot isolation. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-LfgEntryData-099",
+      "plaintext_line": 99,
+      "text": "+ generalPlaystyle",
+      "status": "audit-pending",
+      "subject": "LfgEntryData",
+      "field": "generalPlaystyle",
+      "subsystem": "C_LFGList active listing",
+      "cache_anchor": "LFGListInfoDocumentation.lua:923",
+      "class": "STRUCT",
+      "batch": "B04",
+      "evidence": "Cached generalPlaystyle: LFGEntryGeneralPlaystyle, nilable=True.",
+      "test_idea": "Create/update listing with generalPlaystyle enum; GetActiveEntryInfo roundtrip and optional nil; observable updates and snapshot isolation.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_LFGList.LfgEntryData.generalPlaystyle",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: no active-listing model produces LfgEntryData, so field presence, nullable behavior, enum values, mutation, serialization, validation, and lifecycle remain unproven. The separate search-result generalPlaystyle field does not satisfy this structure contract."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-LfgListingCreateData-100",
+      "plaintext_line": 100,
+      "text": "LfgListingCreateData",
+      "status": "audit-pending",
+      "subject": "LfgListingCreateData",
+      "field": null,
+      "subsystem": "C_LFGList listing inputs",
+      "cache_anchor": "LFGListInfoDocumentation.lua:947",
+      "class": "STRUCT",
+      "batch": "B04",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "CreateListing/UpdateListing consume generalPlaystyle numeric enum; two different values roundtrip via GetActiveEntryInfo, validate invalid value. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-LfgListingCreateData-101",
+      "plaintext_line": 101,
+      "text": "+ generalPlaystyle",
+      "status": "audit-pending",
+      "subject": "LfgListingCreateData",
+      "field": "generalPlaystyle",
+      "subsystem": "C_LFGList listing inputs",
+      "cache_anchor": "LFGListInfoDocumentation.lua:947",
+      "class": "STRUCT",
+      "batch": "B04",
+      "evidence": "Cached generalPlaystyle: LFGEntryGeneralPlaystyle, nilable=False.",
+      "test_idea": "CreateListing/UpdateListing consume generalPlaystyle numeric enum; two different values roundtrip via GetActiveEntryInfo, validate invalid value.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_LFGList.LfgListingCreateData.generalPlaystyle",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: CreateListing and UpdateListing are absent, so required/default generalPlaystyle input handling, enum validation, listing creation/update state, result propagation, errors, and lifecycle remain unproven. Seeded search-result output is a different contract."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-102",
+      "plaintext_line": 102,
+      "text": "LfgSearchResultData",
+      "status": "audit-pending",
+      "subject": "LfgSearchResultData",
+      "field": null,
+      "subsystem": "C_LFGList search results",
+      "cache_anchor": "LFGListInfoDocumentation.lua:965",
+      "class": "STRUCT",
+      "batch": "B04",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Seed two result records with distinct generalPlaystyle; GetSearchResultInfo returns the requested value/nil, no cross-result leakage. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-103",
+      "plaintext_line": 103,
+      "text": "+ generalPlaystyle",
+      "status": "audit-pending",
+      "subject": "LfgSearchResultData",
+      "field": "generalPlaystyle",
+      "subsystem": "C_LFGList search results",
+      "cache_anchor": "LFGListInfoDocumentation.lua:965",
+      "class": "STRUCT",
+      "batch": "B04",
+      "evidence": "Cached generalPlaystyle: LFGEntryGeneralPlaystyle, nilable=True.",
+      "test_idea": "Seed two result records with distinct generalPlaystyle; GetSearchResultInfo returns the requested value/nil, no cross-result leakage.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_LFGList.LfgSearchResultData.generalPlaystyle",
+          "status": "best-effort",
+          "tests": [
+            "tests/test_premade_groups.rs::search_result_info_has_full_blizzard_schema"
+          ],
+          "notes": "Best-effort behavioral evidence covers seeded search-result field presence and numeric publication. Nullable omission, exact enum-value validation, invalid values, mutation, serialization, filtering effects, persistence, refresh, and full retail search-result lifecycle remain unclaimed."
+        }
+      ],
+      "existing_tests": [
+        "tests/test_premade_groups.rs::search_result_info_has_full_blizzard_schema"
+      ]
+    },
+    {
+      "source_id": "structures-MajorFactionData-104",
+      "plaintext_line": 104,
+      "text": "MajorFactionData",
+      "status": "audit-pending",
+      "subject": "MajorFactionData",
+      "field": null,
+      "subsystem": "C_MajorFactions faction state",
+      "cache_anchor": "MajorFactionsDocumentation.lua:228",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "GetMajorFactionData fixture: description string, ordered highlights records, optional playerCompanionID numeric; two faction IDs and absent companion. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-MajorFactionData-105",
+      "plaintext_line": 105,
+      "text": "+ description",
+      "status": "audit-pending",
+      "subject": "MajorFactionData",
+      "field": "description",
+      "subsystem": "C_MajorFactions faction state",
+      "cache_anchor": "MajorFactionsDocumentation.lua:228",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached description: cstring, nilable=False.",
+      "test_idea": "GetMajorFactionData fixture: description string, ordered highlights records, optional playerCompanionID numeric; two faction IDs and absent companion.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_MajorFactions.MajorFactionData.description",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: MajorFactionData has no description state and GetMajorFactionData does not emit the required field. Exact strings, defaults, per-faction values, unknown behavior, mutation, refresh, and lifecycle remain unproven; name and unlockDescription are different contracts."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-MajorFactionData-106",
+      "plaintext_line": 106,
+      "text": "+ highlights",
+      "status": "audit-pending",
+      "subject": "MajorFactionData",
+      "field": "highlights",
+      "subsystem": "C_MajorFactions faction state",
+      "cache_anchor": "MajorFactionsDocumentation.lua:228",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached highlights: table, nilable=False.",
+      "test_idea": "GetMajorFactionData fixture: description string, ordered highlights records, optional playerCompanionID numeric; two faction IDs and absent companion.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_MajorFactions.MajorFactionData.highlights",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: MajorFactionData has no highlights state and GetMajorFactionData omits the required array. Element schema, ordering, empty/non-empty behavior, per-faction values, mutation, refresh, and lifecycle remain unproven."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-MajorFactionData-107",
+      "plaintext_line": 107,
+      "text": "+ playerCompanionID",
+      "status": "audit-pending",
+      "subject": "MajorFactionData",
+      "field": "playerCompanionID",
+      "subsystem": "C_MajorFactions faction state",
+      "cache_anchor": "MajorFactionsDocumentation.lua:228",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached playerCompanionID: number, nilable=True.",
+      "test_idea": "GetMajorFactionData fixture: description string, ordered highlights records, optional playerCompanionID numeric; two faction IDs and absent companion.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_MajorFactions.MajorFactionData.playerCompanionID",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: MajorFactionData has no player-companion association and GetMajorFactionData omits the nullable field. Present/nil behavior, authoritative IDs, per-faction values, unknown behavior, mutation, refresh, and lifecycle remain unproven."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-MajorFactionRenownRewardInfo-108",
+      "plaintext_line": 108,
+      "text": "MajorFactionRenownRewardInfo",
+      "status": "audit-pending",
+      "subject": "MajorFactionRenownRewardInfo",
+      "field": null,
+      "subsystem": "C_MajorFactions reward state",
+      "cache_anchor": "MajorFactionsDocumentation.lua:277",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "GetRenownRewardsForLevel fixture: rewardType=2 versus nil, numeric type, level/faction isolation; validate complete parent shape separately. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-MajorFactionRenownRewardInfo-109",
+      "plaintext_line": 109,
+      "text": "+ rewardType",
+      "status": "audit-pending",
+      "subject": "MajorFactionRenownRewardInfo",
+      "field": "rewardType",
+      "subsystem": "C_MajorFactions reward state",
+      "cache_anchor": "MajorFactionsDocumentation.lua:277",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached rewardType: number, nilable=True.",
+      "test_idea": "GetRenownRewardsForLevel fixture: rewardType=2 versus nil, numeric type, level/faction isolation; validate complete parent shape separately.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_MajorFactions.MajorFactionRenownRewardInfo.rewardType",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: no MajorFactionRenownRewardInfo model or producer exists, and the major-faction reward query returns an empty table. Present/nil rewardType behavior, numeric meanings, per-level rewards, ordering, unknown behavior, refresh, and lifecycle remain unproven."
+        }
+      ],
+      "existing_tests": [
+        "tests/major_faction_renown_rewards.rs::major_faction_renown_rewards_publish_identity_and_optional_fields"
+      ]
+    },
+    {
+      "source_id": "structures-NewCraftingOrderInfo-110",
+      "plaintext_line": 110,
+      "text": "NewCraftingOrderInfo",
+      "status": "audit-pending",
+      "subject": "NewCraftingOrderInfo",
+      "field": null,
+      "subsystem": "C_CraftingOrders creation",
+      "cache_anchor": "CraftingOrderUISharedDocumentation.lua:199",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "PlaceNewOrder accepts reagentInfos array of RegularReagentInfo instead of reagentItems; posted order preserves identities/quantities, invalid inputs fail explicitly. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-NewCraftingOrderInfo-111",
+      "plaintext_line": 111,
+      "text": "# reagentItems -> reagentInfos",
+      "status": "audit-pending",
+      "subject": "NewCraftingOrderInfo",
+      "field": "reagentInfos",
+      "subsystem": "C_CraftingOrders creation",
+      "cache_anchor": "CraftingOrderUISharedDocumentation.lua:199",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached reagentInfos: table, nilable=False.",
+      "test_idea": "PlaceNewOrder accepts reagentInfos array of RegularReagentInfo instead of reagentItems; posted order preserves identities/quantities, invalid inputs fail explicitly.",
+      "occurrence_matches": [
+        {
+          "id": "added:NewCraftingOrderInfo.reagentInfos",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Retail 12.0.0 adds an array of RegularReagentInfo, but no simulator producer or typed structure is observable; the required probe must obtain a real returned order object and nested typed entries. Required probe: Full-LoD producer probe: obtain a NewCraftingOrderInfo table; assert type(order.reagentInfos) == \"table\"; for each info assert type(info) == \"table\" and type(info.reagent) == \"table\"."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-PrivateAuraIconInfo-112",
+      "plaintext_line": 112,
+      "text": "PrivateAuraIconInfo",
+      "status": "audit-pending",
+      "subject": "PrivateAuraIconInfo",
+      "field": null,
+      "subsystem": "C_UnitAuras private anchors",
+      "cache_anchor": "UnitConstantsDocumentation.lua:32",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "AddPrivateAuraAnchor accepts iconInfo.borderScale=1.25 or nil; GetPrivateAuraAnchors/added callback preserves copied value after input mutation; no pixels implied. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-PrivateAuraIconInfo-113",
+      "plaintext_line": 113,
+      "text": "+ borderScale",
+      "status": "audit-pending",
+      "subject": "PrivateAuraIconInfo",
+      "field": "borderScale",
+      "subsystem": "C_UnitAuras private anchors",
+      "cache_anchor": "UnitConstantsDocumentation.lua:32",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached borderScale: uiUnit, nilable=True.",
+      "test_idea": "AddPrivateAuraAnchor accepts iconInfo.borderScale=1.25 or nil; GetPrivateAuraAnchors/added callback preserves copied value after input mutation; no pixels implied.",
+      "occurrence_matches": [
+        {
+          "id": "added:PrivateAuraIconInfo.borderScale",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence-required unsafe: current implementation does not establish the exact PrivateAuraIconInfo.borderScale contract ({\"nilable\":true,\"type\":\"number\"}), field presence/nullability, authoritative values, state transitions, security, or consumer behavior. No focused proof exists."
+        }
+      ],
+      "existing_tests": [
+        "tests/private_aura_anchors.rs::nonempty_optional_bindings_publish_flattened_icon_dimensions"
+      ]
+    },
+    {
+      "source_id": "structures-RegularReagentInfo-114",
+      "plaintext_line": 114,
+      "text": "RegularReagentInfo",
+      "status": "audit-pending",
+      "subject": "RegularReagentInfo",
+      "field": null,
+      "subsystem": "profession/order reagent input",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:379",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Post an order with nested reagent and quantity; serialize returned record without legacy itemID; item vs currency reagent cases. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-RegularReagentInfo-115",
+      "plaintext_line": 115,
+      "text": "+ itemID -> reagent",
+      "status": "audit-pending",
+      "subject": "RegularReagentInfo",
+      "field": "reagent",
+      "subsystem": "profession/order reagent input",
+      "cache_anchor": "TradeSkillUITypesDocumentation.lua:379",
+      "class": "STRUCT",
+      "batch": "B08",
+      "evidence": "Cached reagent: CraftingReagent, nilable=False.",
+      "test_idea": "Post an order with nested reagent and quantity; serialize returned record without legacy itemID; item vs currency reagent cases.",
+      "occurrence_matches": [
+        {
+          "id": "added:RegularReagentInfo.reagent",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Retail 12.0.0 adds a CraftingReagent-typed field, but no simulator producer or structure publication is observable; the required probe must obtain a real returned object. Required probe: Full-LoD producer probe: obtain a RegularReagentInfo table; assert type(info.reagent) == \"table\" for its typed CraftingReagent field."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-ScheduledEventInfo-116",
+      "plaintext_line": 116,
+      "text": "ScheduledEventInfo",
+      "status": "audit-pending",
+      "subject": "ScheduledEventInfo",
+      "field": null,
+      "subsystem": "C_EventScheduler calendar",
+      "cache_anchor": "EventSchedulerUIDocumentation.lua:168",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "GetScheduledEvents seeded two events: eventID and nested displayInfo exact fields/types, upcoming state transitions and independent snapshots. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-ScheduledEventInfo-117",
+      "plaintext_line": 117,
+      "text": "+ eventID",
+      "status": "audit-pending",
+      "subject": "ScheduledEventInfo",
+      "field": "eventID",
+      "subsystem": "C_EventScheduler calendar",
+      "cache_anchor": "EventSchedulerUIDocumentation.lua:168",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached eventID: number, nilable=False.",
+      "test_idea": "GetScheduledEvents seeded two events: eventID and nested displayInfo exact fields/types, upcoming state transitions and independent snapshots.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_EventScheduler.ScheduledEventInfo.eventID",
+          "status": "best-effort",
+          "tests": [
+            "src/lua_api/workarounds/temporary/event_scheduler_state.rs::installs_seeded_events_reminders_and_namespace_fallback"
+          ],
+          "notes": "Best-effort behavioral, retail only: seeded scheduled events publish numeric eventID values 2001 and 2002, stable after RequestEvents refresh. Claims exclude real scheduling/timing, persistence, filtering, UI/rendering, localization, producers outside seeded state, and broader lifecycle semantics."
+        }
+      ],
+      "existing_tests": [
+        "src/lua_api/workarounds/temporary/event_scheduler_state.rs::installs_seeded_events_reminders_and_namespace_fallback"
+      ]
+    },
+    {
+      "source_id": "structures-ScheduledEventInfo-118",
+      "plaintext_line": 118,
+      "text": "+ displayInfo",
+      "status": "audit-pending",
+      "subject": "ScheduledEventInfo",
+      "field": "displayInfo",
+      "subsystem": "C_EventScheduler calendar",
+      "cache_anchor": "EventSchedulerUIDocumentation.lua:168",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached displayInfo: EventDisplayInfo, nilable=False.",
+      "test_idea": "GetScheduledEvents seeded two events: eventID and nested displayInfo exact fields/types, upcoming state transitions and independent snapshots.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_EventScheduler.ScheduledEventInfo.displayInfo",
+          "status": "best-effort",
+          "tests": [
+            "src/lua_api/workarounds/temporary/event_scheduler_state.rs::installs_seeded_events_reminders_and_namespace_fallback"
+          ],
+          "notes": "Best-effort behavioral, retail only: scheduled events publish a displayInfo table with hideDescription=false, hideTimeLeft=false, and nil optional overrides; the table remains populated after RequestEvents refresh. Claims exclude real scheduling/timing, persistence, filtering, UI/rendering, localization, producers outside seeded state, and broader lifecycle semantics."
+        }
+      ],
+      "existing_tests": [
+        "src/lua_api/workarounds/temporary/event_scheduler_state.rs::installs_seeded_events_reminders_and_namespace_fallback"
+      ]
+    },
+    {
+      "source_id": "structures-SpellCooldownInfo-119",
+      "plaintext_line": 119,
+      "text": "SpellCooldownInfo",
+      "status": "audit-pending",
+      "subject": "SpellCooldownInfo",
+      "field": null,
+      "subsystem": "C_Spell cooldown/GCD model",
+      "cache_anchor": "SpellSharedDocumentation.lua:19",
+      "class": "STRUCT",
+      "batch": "B06",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "Query a recovering spell and GCD-only state after SPELL_UPDATE_COOLDOWN; assert numeric timeUntilEndOfStartRecovery, bool isOnGCD, nil when unavailable, remaining-time update. Existing tests only assert nil. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-SpellCooldownInfo-120",
+      "plaintext_line": 120,
+      "text": "+ timeUntilEndOfStartRecovery",
+      "status": "audit-pending",
+      "subject": "SpellCooldownInfo",
+      "field": "timeUntilEndOfStartRecovery",
+      "subsystem": "C_Spell cooldown/GCD model",
+      "cache_anchor": "SpellSharedDocumentation.lua:19",
+      "class": "STRUCT",
+      "batch": "B06",
+      "evidence": "Cached timeUntilEndOfStartRecovery: number, nilable=True.",
+      "test_idea": "Query a recovering spell and GCD-only state after SPELL_UPDATE_COOLDOWN; assert numeric timeUntilEndOfStartRecovery, bool isOnGCD, nil when unavailable, remaining-time update. Existing tests only assert nil.",
+      "occurrence_matches": [
+        {
+          "id": "added:SpellCooldownInfo.timeUntilEndOfStartRecovery",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence-required unsafe: current implementation does not establish the exact SpellCooldownInfo.timeUntilEndOfStartRecovery contract ({\"nilable\":true,\"type\":\"number\"}), field presence/nullability, authoritative values, state transitions, security, or consumer behavior. No focused proof exists."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-SpellCooldownInfo-121",
+      "plaintext_line": 121,
+      "text": "+ isOnGCD",
+      "status": "audit-pending",
+      "subject": "SpellCooldownInfo",
+      "field": "isOnGCD",
+      "subsystem": "C_Spell cooldown/GCD model",
+      "cache_anchor": "SpellSharedDocumentation.lua:19",
+      "class": "STRUCT",
+      "batch": "B06",
+      "evidence": "Cached isOnGCD: bool, nilable=True.",
+      "test_idea": "Query a recovering spell and GCD-only state after SPELL_UPDATE_COOLDOWN; assert numeric timeUntilEndOfStartRecovery, bool isOnGCD, nil when unavailable, remaining-time update. Existing tests only assert nil.",
+      "occurrence_matches": [
+        {
+          "id": "added:SpellCooldownInfo.isOnGCD",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence-required unsafe: current implementation does not establish the exact SpellCooldownInfo.isOnGCD contract ({\"nilable\":true,\"type\":\"boolean\"}), field presence/nullability, authoritative values, state transitions, security, or consumer behavior. No focused proof exists."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-TransmogAppearanceSourceInfoData-122",
+      "plaintext_line": 122,
+      "text": "TransmogAppearanceSourceInfoData",
+      "status": "audit-pending",
+      "subject": "TransmogAppearanceSourceInfoData",
+      "field": null,
+      "subsystem": "C_TransmogCollection appearance sources",
+      "cache_anchor": "TransmogItemsDocumentation.lua:1163",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "GetAppearanceSourceInfo seeded source: itemSubclass=7, no itemSubClass; exact ten-field populated DTO and independent source identity. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_TransmogCollection.TransmogAppearanceSourceInfoData",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row."
+        }
+      ],
+      "existing_tests": [
+        "tests/patch_12_0_5_structure_inputs.rs::structure_appearance_complete_records_and_illusion_values"
+      ]
+    },
+    {
+      "source_id": "structures-TransmogAppearanceSourceInfoData-123",
+      "plaintext_line": 123,
+      "text": "+ itemSubClass -> itemSubclass",
+      "status": "audit-pending",
+      "subject": "TransmogAppearanceSourceInfoData",
+      "field": "itemSubclass",
+      "subsystem": "C_TransmogCollection appearance sources",
+      "cache_anchor": "TransmogItemsDocumentation.lua:1163",
+      "class": "STRUCT",
+      "batch": "B02",
+      "evidence": "Cached itemSubclass: number, nilable=False.",
+      "test_idea": "GetAppearanceSourceInfo seeded source: itemSubclass=7, no itemSubClass; exact ten-field populated DTO and independent source identity.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_TransmogCollection.TransmogAppearanceSourceInfoData",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row."
+        },
+        {
+          "id": "added:C_TransmogCollection.TransmogAppearanceSourceInfoData.itemSubclass",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Current C_TransmogCollection is seeded/partial: custom-set lifecycle, hyperlinks, persistence, validation, and exact changed structure semantics are unproven. Local related tests do not establish authoritative retail 12.0.0 behavior; no approval can close the row."
+        }
+      ],
+      "existing_tests": [
+        "tests/patch_12_0_5_structure_inputs.rs::structure_appearance_complete_records_and_illusion_values"
+      ]
+    },
+    {
+      "source_id": "structures-TransmogSetInfo-124",
+      "plaintext_line": 124,
+      "text": "TransmogSetInfo",
+      "status": "audit-pending",
+      "subject": "TransmogSetInfo",
+      "field": null,
+      "subsystem": "C_TransmogSets catalog",
+      "cache_anchor": "TransmogSetsDocumentation.lua:511",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached full structure declaration.",
+      "test_idea": "GetSetInfo/GetVariantSets fixture with grantAsPrecedingVariant true/false; bool type and catalog-driven variation; confirm grant behavior separately. Parent row requires every declared field/type, not just this patch delta.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "structures-TransmogSetInfo-125",
+      "plaintext_line": 125,
+      "text": "+ grantAsPrecedingVariant",
+      "status": "audit-pending",
+      "subject": "TransmogSetInfo",
+      "field": "grantAsPrecedingVariant",
+      "subsystem": "C_TransmogSets catalog",
+      "cache_anchor": "TransmogSetsDocumentation.lua:511",
+      "class": "STRUCT",
+      "batch": "B05",
+      "evidence": "Cached grantAsPrecedingVariant: bool, nilable=False.",
+      "test_idea": "GetSetInfo/GetVariantSets fixture with grantAsPrecedingVariant true/false; bool type and catalog-driven variation; confirm grant behavior separately.",
+      "occurrence_matches": [
+        {
+          "id": "added:C_TransmogSets.TransmogSetInfo.grantAsPrecedingVariant",
+          "status": "evidence-required",
+          "tests": [],
+          "notes": "Evidence required: placeholder TransmogSetInfo omits grantAsPrecedingVariant and no set-variant model exists. Field presence/type/value, preceding-variant relationships, collection effects, and lifecycle remain unproven."
+        }
+      ],
+      "existing_tests": []
+    },
+    {
+      "source_id": "source-context-127",
+      "plaintext_line": 127,
+      "text": "== Deprecated 11.x API ==",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-128",
+      "plaintext_line": 128,
+      "text": "These API functions were deprecated in the 11.x patches from the previous expansion and have been removed.",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Aggregate removal statement covers all 21 listed legacy occurrences, including namespaced members.",
+      "test_idea": "Full cached Game load at exact 12.0.0; all 21 names must be absent unless a later republished alias is explicitly proven; successor behavior not inferred from publication.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "source-context-129",
+      "plaintext_line": 129,
+      "text": "Deprecated_11_0_0.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Deprecated-source heading/context; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-GetSpellInfo-130",
+      "plaintext_line": 130,
+      "text": ": GetSpellInfo \u2192 C_Spell.GetSpellInfo",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "GetSpellInfo",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-GetNumSpellTabs-131",
+      "plaintext_line": 131,
+      "text": ": GetNumSpellTabs \u2192 C_SpellBook.GetNumSpellBookSkillLines",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "GetNumSpellTabs",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-GetSpellTabInfo-132",
+      "plaintext_line": 132,
+      "text": ": GetSpellTabInfo \u2192 C_SpellBook.GetSpellBookSkillLineInfo",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "GetSpellTabInfo",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-GetSpellCooldown-133",
+      "plaintext_line": 133,
+      "text": ": GetSpellCooldown \u2192 C_Spell.GetSpellCooldown",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "GetSpellCooldown",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-GetSpellBookItemName-134",
+      "plaintext_line": 134,
+      "text": ": GetSpellBookItemName \u2192 C_SpellBook.GetSpellBookItemName",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "GetSpellBookItemName",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-GetSpellTexture-135",
+      "plaintext_line": 135,
+      "text": ": GetSpellTexture \u2192 C_Spell.GetSpellTexture",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "GetSpellTexture",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-GetSpellCharges-136",
+      "plaintext_line": 136,
+      "text": ": GetSpellCharges \u2192 C_Spell.GetSpellCharges",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "GetSpellCharges",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-GetSpellDescription-137",
+      "plaintext_line": 137,
+      "text": ": GetSpellDescription \u2192 C_Spell.GetSpellDescription",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "GetSpellDescription",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-GetSpellCount-138",
+      "plaintext_line": 138,
+      "text": ": GetSpellCount \u2192 C_Spell.GetSpellCastCount",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "GetSpellCount",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-IsUsableSpell-139",
+      "plaintext_line": 139,
+      "text": ": IsUsableSpell \u2192 C_Spell.IsSpellUsable",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "IsUsableSpell",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "source-context-141",
+      "plaintext_line": 141,
+      "text": "Deprecated_11_0_5.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Deprecated-source heading/context; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-C_TaskQuest-GetQuestsForPlayerByMapID-142",
+      "plaintext_line": 142,
+      "text": ": C_TaskQuest.GetQuestsForPlayerByMapID \u2192 C_TaskQuest.GetQuestsOnMap",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "C_TaskQuest.GetQuestsForPlayerByMapID",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-GetMerchantItemInfo-143",
+      "plaintext_line": 143,
+      "text": ": GetMerchantItemInfo \u2192 C_MerchantFrame.GetItemInfo",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "GetMerchantItemInfo",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-C_ChallengeMode-GetCompletionInfo-144",
+      "plaintext_line": 144,
+      "text": ": C_ChallengeMode.GetCompletionInfo \u2192 C_ChallengeMode.GetChallengeCompletionInfo",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "C_ChallengeMode.GetCompletionInfo",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-C_MythicPlus-IsWeeklyRewardAvailable-145",
+      "plaintext_line": 145,
+      "text": ": C_MythicPlus.IsWeeklyRewardAvailable",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "C_MythicPlus.IsWeeklyRewardAvailable",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "source-context-147",
+      "plaintext_line": 147,
+      "text": "Deprecated_11_0_7.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Deprecated-source heading/context; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-IsActiveQuestLegendary-148",
+      "plaintext_line": 148,
+      "text": ": IsActiveQuestLegendary \u2192 C_QuestInfoSystem.GetQuestClassification",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "IsActiveQuestLegendary",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-C_QuestLog-IsLegendaryQuest-149",
+      "plaintext_line": 149,
+      "text": ": C_QuestLog.IsLegendaryQuest \u2192 C_QuestInfoSystem.GetQuestClassification",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "C_QuestLog.IsLegendaryQuest",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-C_QuestLog-IsQuestRepeatableType-150",
+      "plaintext_line": 150,
+      "text": ": C_QuestLog.IsQuestRepeatableType \u2192 C_QuestLog.IsRepeatableQuest",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "C_QuestLog.IsQuestRepeatableType",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "source-context-152",
+      "plaintext_line": 152,
+      "text": "Deprecated_11_1_5.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Deprecated-source heading/context; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-ConsolePrint-153",
+      "plaintext_line": 153,
+      "text": ": ConsolePrint \u2192 C_Log.LogMessage",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "ConsolePrint",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "deprecated api-message-154",
+      "plaintext_line": 154,
+      "text": ": message \u2192 SetBasicMessageDialogText",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "message",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "source-context-156",
+      "plaintext_line": 156,
+      "text": "Deprecated_11_2_0.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Deprecated-source heading/context; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-IsSpellOverlayed-157",
+      "plaintext_line": 157,
+      "text": ": IsSpellOverlayed \u2192 C_SpellActivationOverlay.IsSpellOverlayed",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "IsSpellOverlayed",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    },
+    {
+      "source_id": "source-context-159",
+      "plaintext_line": 159,
+      "text": "Deprecated_11_2_5.lua",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "reason": "Deprecated-source heading/context; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-IsArtifactRelicItem-160",
+      "plaintext_line": 160,
+      "text": ": IsArtifactRelicItem \u2192 C_ItemSocketInfo.IsArtifactRelicItem",
+      "status": "audit-pending",
+      "subsystem": "API retirement/deprecated wrapper attribution",
+      "subject": "IsArtifactRelicItem",
+      "class": "PROSE-MODELABLE",
+      "batch": "B03",
+      "evidence": "Historical retirement, not a new wrapper contract.",
+      "test_idea": "Assert raw and ordinary lookup absence at 12.0.0; in current Retail attribute any republished function to an exact cached deprecated assignment. If successor listed, exercise that successor with concrete state and compare arity/results.",
+      "occurrence_matches": [],
+      "existing_tests": []
+    }
+  ]
+}
