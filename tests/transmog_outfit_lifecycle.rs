@@ -36,7 +36,7 @@ fn transmog_outfit_lifecycle_pending_slots_commit_revert_and_isolate_outfits() {
     let env = WowLuaEnv::new().unwrap();
     for id in [190001, 190002, 190003] {
         env.state().borrow_mut().transmog_appearance_sources.insert(id,
-            wow_ui_sim::c_api::c_transmog_collection::AppearanceSourceInfo {
+            wow_ui_sim::lua_api::state::AppearanceSourceInfo {
                 category: 1, item_appearance_id: id, can_have_illusion: false,
                 icon: 135771, is_collected: true, item_link: String::new(),
                 transmoglink: String::new(), source_type: None, item_subclass: 0,
