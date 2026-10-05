@@ -3,11 +3,14 @@
 //! Missing native spell-cast/power attributes and health/power/comparison/totem
 //! restriction models are explicitly distinguished from modeled restrictions.
 
+use crate::c_api::{c_spell, c_spell_book, charge_state, unit_aura_access};
 use crate::lua_api::globals::unit_misc;
 use crate::lua_api::methods::{borrow_state, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::table_security::unwrap_secret;
+use rilua::vm::gc::arena::GcRef;
 use rilua::vm::state::LuaState;
+use rilua::vm::table::Table;
 use rilua::{LuaResult, Val};
 
 const NEVER_SECRET: f64 = 0.0;
@@ -67,7 +70,7 @@ const QUERIES: &[(&str, Query)] = &[
     ),
 ];
 
-pub(super) fn register(state: &mut LuaState, namespace: Val) -> LuaResult<()> {
+pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
     for &(name, query) in QUERIES {
         table_set_rust_fn_static(state, namespace, name, query)?;
     }
@@ -90,7 +93,7 @@ fn read_unit(state: &LuaState, position: i32) -> LuaResult<String> {
 
 fn read_spell(state: &LuaState, position: i32) -> LuaResult<Option<u32>> {
     let value = unwrap_secret(state, stack_val(state, position))?;
-    Ok(super::c_spell::numeric_spell_id_value(state, value))
+    Ok(c_spell::numeric_spell_id_value(state, value))
 }
 
 fn push_bool(state: &mut LuaState, flag: bool) -> LuaResult<u32> {
@@ -109,14 +112,14 @@ fn has_secret_restrictions(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn should_auras_be_secret(state: &mut LuaState) -> LuaResult<u32> {
-    let restricted = super::unit_aura_access::auras_restricted(state)?;
+    let restricted = unit_aura_access::auras_restricted(state)?;
     push_bool(state, restricted)
 }
 
 fn should_spell_aura_be_secret(state: &mut LuaState) -> LuaResult<u32> {
     let spell = read_spell(state, 1)?;
     let secret = match spell.and_then(|id| i32::try_from(id).ok()) {
-        Some(spell) => super::unit_aura_access::spell_keyed_aura_is_secret(state, spell)?,
+        Some(spell) => unit_aura_access::spell_keyed_aura_is_secret(state, spell)?,
         None => false,
     };
     push_bool(state, secret)
@@ -140,22 +143,27 @@ fn should_unit_aura_slot_be_secret(state: &mut LuaState) -> LuaResult<u32> {
 
 fn should_spell_cooldown_be_secret(state: &mut LuaState) -> LuaResult<u32> {
     read_spell(state, 1)?;
-    let restricted = super::charge_state::cooldowns_are_restricted(&borrow_state(state)?);
+    let restricted = read_cooldown_restriction(state)?;
     push_bool(state, restricted)
 }
 
 fn should_action_cooldown_be_secret(state: &mut LuaState) -> LuaResult<u32> {
     authenticate_arguments(state, 1)?;
     // Existing action output wraps even the zero-duration empty-slot DTO.
-    let restricted = super::charge_state::cooldowns_are_restricted(&borrow_state(state)?);
+    let restricted = read_cooldown_restriction(state)?;
     push_bool(state, restricted)
+}
+
+fn read_cooldown_restriction(state: &LuaState) -> LuaResult<bool> {
+    let sim = borrow_state(state)?;
+    Ok(charge_state::cooldowns_are_restricted(&sim))
 }
 
 fn should_spell_book_item_cooldown_be_secret(state: &mut LuaState) -> LuaResult<u32> {
     let slot = unwrap_secret(state, stack_val(state, 1))?;
     let bank = unwrap_secret(state, stack_val(state, 2))?;
-    let present = super::c_spell_book::cooldown_spell_for_book_entry(slot, bank).is_some();
-    let restricted = super::charge_state::cooldowns_are_restricted(&borrow_state(state)?);
+    let present = c_spell_book::cooldown_spell_for_book_entry(slot, bank).is_some();
+    let restricted = read_cooldown_restriction(state)?;
     push_bool(state, present && restricted)
 }
 

@@ -62,7 +62,10 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     any(feature = "profile-retail", feature = "client-ptr")
 ))]
 fn should_cooldowns_be_secret(state: &mut LuaState) -> LuaResult<u32> {
-    let restricted = super::charge_state::cooldowns_are_restricted(&borrow_state(state)?);
+    let restricted = {
+        let sim = borrow_state(state)?;
+        super::charge_state::cooldowns_are_restricted(&sim)
+    };
     state.push(Val::Bool(restricted));
     Ok(1)
 }
