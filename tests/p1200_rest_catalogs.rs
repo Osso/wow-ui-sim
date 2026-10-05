@@ -113,4 +113,36 @@ fn p1200_rest_prey_missing() {
     "#,
     )
     .unwrap();
+    let quest_id = {
+        let mut state = env.state().borrow_mut();
+        let id = state.quest_log_entries.entries[0].quest_id as u32;
+        state.prey_inputs.active_quest = Some(id);
+        state.prey_inputs.widgets.insert(
+            1001,
+            wow_ui_sim::c_api::c_prey::PreyHuntProgressWidget {
+                shown_state: 1,
+                progress_state: 3,
+                tooltip: "Ready to hunt".into(),
+                texture_kit: "prey".into(),
+                scripted_animation_effect_id: 42,
+                ..Default::default()
+            },
+        );
+        id
+    };
+    env.exec(&format!(r#"
+        assert(C_QuestLog.GetActivePreyQuest() == {quest_id})
+        local info = C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo(1001)
+        assert(info.progressState == 3 and info.shownState == 1 and info.tooltip == 'Ready to hunt')
+        assert(info.scriptedAnimationEffectID == 42 and info.hasTimer == false)
+        info.progressState = 0
+        assert(C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo(1001).progressState == 3)
+    "#)).unwrap();
+    env.state()
+        .borrow_mut()
+        .quest_log_entries
+        .entries
+        .retain(|q| q.quest_id as u32 != quest_id);
+    env.exec("assert(select('#', C_QuestLog.GetActivePreyQuest()) == 0)")
+        .unwrap();
 }

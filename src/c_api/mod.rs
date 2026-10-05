@@ -112,6 +112,8 @@ pub mod c_photo_sharing;
 pub mod c_ping_secure;
 pub mod c_player_choice;
 pub mod c_player_interaction_manager;
+#[cfg(feature = "retail-12-0-0")]
+pub mod c_prey;
 pub mod c_pvp;
 pub mod c_quest_hub;
 #[cfg(feature = "retail-12-0-5")]

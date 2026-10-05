@@ -133,6 +133,8 @@ pub struct SimState {
     pub recipe_quality_inputs: crate::c_api::c_trade_skill_quality::RecipeQualityInputs,
     #[cfg(feature = "retail-12-0-0")]
     pub pvp_catalog: crate::c_api::c_pvp::catalog::PvpCatalog,
+    #[cfg(feature = "retail-12-0-0")]
+    pub prey_inputs: crate::c_api::c_prey::PreyInputs,
     pub action_bars: HashMap<u32, u32>,
     /// INFERRED host-declared resolved spell IDs on special bars; empty by default.
     /// Independent of direct assignments and bar visibility.

@@ -290,6 +290,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-0")]
             pvp_catalog: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
+            prey_inputs: Default::default(),
+            #[cfg(feature = "retail-12-0-0")]
             encounter_policy: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             encounter_warning_settings: Default::default(),
