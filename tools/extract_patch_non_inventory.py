@@ -49,10 +49,11 @@ def render_line(line):
 def extract_text(raw):
     lines = []
     inventory = False
+    unheaded = "===Global API===" not in raw.splitlines()
     for line in raw.splitlines():
-        if line == "===Global API===" or line.startswith('{| class="wikitable"'):
+        if line == "===Global API===" or (unheaded and line.startswith('{| class="wikitable"')):
             inventory = True
-        if line in ("===Enums===", "===Structures==="):
+        if line == "===Enums===" or (unheaded and line == "===Structures==="):
             inventory = False
             if line == "===Enums===":
                 line = "=== Enumerations ==="

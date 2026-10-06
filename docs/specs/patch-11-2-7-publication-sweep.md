@@ -34,3 +34,7 @@ Initial cached sweep exposes explicit global `JoinBattlefield` and fabricated lo
 The same fabricated-member defect affects removed `C_CharacterServices.RPEResetCharacter`. Extend the retirement list and repeated-lookup regression; no character reset behavior is invented. All four initial unsuperseded removal defects now have producer/lookup fixes.
 
 Ten missing 11.2.7 Command records are a catalog omission, not a missing execution model. Publish their exact source names/types on supported retail epochs using `c_api::c_console`; classic catalogs remain unchanged. Empty native metadata remains the existing documented inference. Concrete command RED observed zero of ten records.
+
+## Extract compatibility
+
+Validation exposed an unintended 12.0.7 extractor change: resuming at Structures on headed pages now parsed templates the old tool excluded. Restrict wikitable/Structures boundary handling to pages without a Global API heading; preserve all existing headed-page rendering, including pre-existing unsupported-template outcomes. New RED fixture proves the old headed inventory exclusion. This Python-only correction leaves Rust sweep/check/startup proof valid.

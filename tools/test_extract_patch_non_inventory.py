@@ -18,6 +18,11 @@ class ExtractTests(unittest.TestCase):
                          ': 11.2.5 → 11.2.7\n=== Structures ===\n'
                          ' DifficultyInfo\n   + isUserSelectable\n')
 
+    def test_headed_inventory_preserves_existing_structure_exclusion(self):
+        raw = ('===Global API===\n: {{api|IgnoreMe}}\n'
+               '===Structures===\n DifficultyInfo\n   + isUserSelectable\n')
+        self.assertEqual(extract_text(raw), '')
+
     def test_12_0_0_plaintext_stays_identical(self):
         sources = ROOT / 'data/patch-api/sources'
         self.assertEqual(
