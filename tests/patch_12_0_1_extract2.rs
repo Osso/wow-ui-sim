@@ -5,7 +5,10 @@ use wow_ui_sim::lua_api::{MajorFactionData, WowLuaEnv};
 #[test]
 fn patch_12_0_1_creature_id_follows_identity_visibility() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec("A_Admin.SetTarget('Hogger', 11, 1, true); assert(UnitCreatureID('target') == 0)").unwrap();
+    env.exec("A_Admin.SetTarget('Hogger', 11, 1, true)").unwrap();
+    env.state().borrow_mut().current_target.as_mut().unwrap().guid =
+        "Creature-0-1-2-3-448-000001".into();
+    env.exec("assert(UnitCreatureID('target') == 448)").unwrap();
     env.state().borrow_mut().instance_identity.on_instanced_map = true;
     env.exec(r#"
         assert(C_Secrets.ShouldUnitIdentityBeSecret('target'))
@@ -18,7 +21,7 @@ fn patch_12_0_1_creature_id_follows_identity_visibility() {
         addon()
     "#).unwrap();
     env.state().borrow_mut().instance_identity.on_instanced_map = false;
-    env.exec("assert(UnitCreatureID('target') == 0); assert(UnitCreatureID('player') == nil)").unwrap();
+    env.exec("assert(UnitCreatureID('target') == 448); assert(UnitCreatureID('player') == nil)").unwrap();
 }
 
 #[test]
