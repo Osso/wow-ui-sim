@@ -1,4 +1,4 @@
-use super::super::profession_crafting::craft_recipe;
+use crate::c_api::crafting_execution::craft_recipe;
 use crate::items;
 use crate::lua_api::globals::profession_data;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};

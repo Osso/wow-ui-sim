@@ -5,8 +5,10 @@
 use crate::c_api::c_roleset::{push_names, split_roleset_list, update_frame_rolesets};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, frame_id_from_stack, val_to_string};
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+use rilua::LuaResult;
+#[cfg(feature = "retail-12-1-0")]
+use rilua::Val;
 use rilua::vm::{gc::arena::GcRef, state::LuaState, table::Table};
-use rilua::{LuaResult, Val};
 
 /// `GetRolesetNames` result for a frame without tags.
 const ROLELESS: &str = "roleless";

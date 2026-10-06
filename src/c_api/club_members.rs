@@ -54,6 +54,7 @@ fn string_arg(state: &mut LuaState, index: i32) -> LuaResult<String> {
         .ok_or_else(|| runtime_error("C_Club: club/member ID must be a nonempty opaque string"))
 }
 
+#[cfg(feature = "retail-12-0-7")]
 pub(super) fn guild_member_arg(state: &mut LuaState) -> LuaResult<Option<Member>> {
     let club_id = string_arg(state, 1)?;
     let member_id = string_arg(state, 2)?;
