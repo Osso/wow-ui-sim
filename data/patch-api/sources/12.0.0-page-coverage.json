@@ -139,6 +139,21 @@
       "implementation": "retail-12-0-0 retirement gates",
       "compiled_revision": "0856b624e",
       "proof": "GREEN inside full prefork run at 5168a5282; no independent review"
+    },
+    {
+      "id": "struct-dtos-12-0-0",
+      "symbols": [
+        "AdvancedFilterOptions, PrivateAuraIconInfo, MajorFactionRenownRewardInfo, TransmogAppearanceSourceInfoData, LfgEntryData/ListingCreateData/SearchResultData generalPlaystyle, ItemInteractionFrameInfo, MajorFactionData, ScheduledEventInfo, TransmogSetInfo, CooldownViewerCooldown, SpellCooldownInfo"
+      ],
+      "scope": "State-backed DTOs bounded to cached contracts: parent shape/types, optional fields, per-key isolation, independent snapshots; LFG playstyle roundtrip; spell cooldown recovery/GCD follow the cast producer. INFERRED: None-preference omission, scheduler demo inputs, catalog metadata defaults, shared GCD classification.",
+      "spec": "data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b2-proof.md",
+      "tests": [
+        "tests/patch_12_0_0_struct_shapes.rs",
+        "subsystem tests"
+      ],
+      "implementation": "commits 39b7cfe9d..7e269c34f (rebased)",
+      "compiled_revision": "7e269c34f",
+      "proof": "Sol worker GREEN; main-thread sweeps + lfg 96/major_faction 35/transmog_set 16/cooldown_viewer 6/spell_cooldown 18/item_interaction 7/private_aura 52/struct_shape 5/cast 136; no independent review"
     }
   ],
   "source_rows": [
@@ -8765,33 +8780,43 @@
     },
     {
       "source_id": "structures-AdvancedFilterOptions-070",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (advanced_filter_parent_and_playstyle_roundtrip)."
     },
     {
       "source_id": "structures-AdvancedFilterOptions-071",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (advanced_filter_parent_and_playstyle_roundtrip)."
     },
     {
       "source_id": "structures-AdvancedFilterOptions-072",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (advanced_filter_parent_and_playstyle_roundtrip)."
     },
     {
       "source_id": "structures-AdvancedFilterOptions-073",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (advanced_filter_parent_and_playstyle_roundtrip)."
     },
     {
       "source_id": "structures-AdvancedFilterOptions-074",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (advanced_filter_parent_and_playstyle_roundtrip)."
     },
     {
       "source_id": "structures-CatalogShopCategoryInfo-075",
@@ -8819,21 +8844,27 @@
     },
     {
       "source_id": "structures-CooldownViewerCooldown-079",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (cooldown_viewer_parent_identity_category_and_snapshots)."
     },
     {
       "source_id": "structures-CooldownViewerCooldown-080",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (cooldown_viewer_parent_identity_category_and_snapshots)."
     },
     {
       "source_id": "structures-CooldownViewerCooldown-081",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (cooldown_viewer_parent_identity_category_and_snapshots)."
     },
     {
       "source_id": "structures-CraftingItemSlotModification-082",
@@ -8921,87 +8952,115 @@
     },
     {
       "source_id": "structures-ItemInteractionFrameInfo-096",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (item_interaction_parent_and_combined_flags)."
     },
     {
       "source_id": "structures-ItemInteractionFrameInfo-097",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (item_interaction_parent_and_combined_flags)."
     },
     {
       "source_id": "structures-LfgEntryData-098",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (lfg_general_playstyle_roundtrip_and_parent_shapes)."
     },
     {
       "source_id": "structures-LfgEntryData-099",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (lfg_general_playstyle_roundtrip_and_parent_shapes)."
     },
     {
       "source_id": "structures-LfgListingCreateData-100",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (lfg_general_playstyle_roundtrip_and_parent_shapes)."
     },
     {
       "source_id": "structures-LfgListingCreateData-101",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (lfg_general_playstyle_roundtrip_and_parent_shapes)."
     },
     {
       "source_id": "structures-LfgSearchResultData-102",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (lfg_general_playstyle_roundtrip_and_parent_shapes)."
     },
     {
       "source_id": "structures-LfgSearchResultData-103",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (lfg_general_playstyle_roundtrip_and_parent_shapes)."
     },
     {
       "source_id": "structures-MajorFactionData-104",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (major_faction_parent_and_optional_companion)."
     },
     {
       "source_id": "structures-MajorFactionData-105",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (major_faction_parent_and_optional_companion)."
     },
     {
       "source_id": "structures-MajorFactionData-106",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (major_faction_parent_and_optional_companion)."
     },
     {
       "source_id": "structures-MajorFactionData-107",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (major_faction_parent_and_optional_companion)."
     },
     {
       "source_id": "structures-MajorFactionRenownRewardInfo-108",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (major_faction_renown_rewards_publish_identity_and_optional_fields)."
     },
     {
       "source_id": "structures-MajorFactionRenownRewardInfo-109",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (major_faction_renown_rewards_publish_identity_and_optional_fields)."
     },
     {
       "source_id": "structures-NewCraftingOrderInfo-110",
@@ -9017,15 +9076,19 @@
     },
     {
       "source_id": "structures-PrivateAuraIconInfo-112",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (nonempty_optional_bindings_publish_flattened_icon_dimensions)."
     },
     {
       "source_id": "structures-PrivateAuraIconInfo-113",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (nonempty_optional_bindings_publish_flattened_icon_dimensions)."
     },
     {
       "source_id": "structures-RegularReagentInfo-114",
@@ -9041,63 +9104,83 @@
     },
     {
       "source_id": "structures-ScheduledEventInfo-116",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (scheduled_event_parent_and_independent_snapshots)."
     },
     {
       "source_id": "structures-ScheduledEventInfo-117",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (scheduled_event_parent_and_independent_snapshots)."
     },
     {
       "source_id": "structures-ScheduledEventInfo-118",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (scheduled_event_parent_and_independent_snapshots)."
     },
     {
       "source_id": "structures-SpellCooldownInfo-119",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (spell_cooldown_recovery_and_gcd_follow_cast_producer)."
     },
     {
       "source_id": "structures-SpellCooldownInfo-120",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (spell_cooldown_recovery_and_gcd_follow_cast_producer)."
     },
     {
       "source_id": "structures-SpellCooldownInfo-121",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (spell_cooldown_recovery_and_gcd_follow_cast_producer)."
     },
     {
       "source_id": "structures-TransmogAppearanceSourceInfoData-122",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (appearance_parent_and_old_casing_absence)."
     },
     {
       "source_id": "structures-TransmogAppearanceSourceInfoData-123",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (appearance_parent_and_old_casing_absence)."
     },
     {
       "source_id": "structures-TransmogSetInfo-124",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (transmog_set_parent_variants_and_flags)."
     },
     {
       "source_id": "structures-TransmogSetInfo-125",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "struct-dtos-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded to cached DTO contract (transmog_set_parent_variants_and_flags)."
     },
     {
       "source_id": "source-context-127",
