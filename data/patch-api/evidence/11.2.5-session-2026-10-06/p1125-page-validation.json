@@ -1,0 +1,69 @@
+{
+  "result": "PASS",
+  "inventory_rows": 163,
+  "extract_rows": 73,
+  "unique_source_ids": 236,
+  "statuses": {
+    "partial-development-green": 92,
+    "audit-pending": 103,
+    "metadata-only": 19,
+    "bounded-coverage": 22
+  },
+  "inventory": {
+    "gaps": 45,
+    "superseded_ok": 4,
+    "strict_removal_absences": 7,
+    "cached_deprecated_aliases": 15
+  },
+  "scout_batches": {
+    "B01": 1,
+    "B02": 5,
+    "B03": 10,
+    "B04": 15,
+    "B05": 27
+  },
+  "isolated_sweeps": [
+    {
+      "rows": 163,
+      "ok": 118,
+      "gaps": 45,
+      "exit_code": 0
+    },
+    {
+      "rows": 508,
+      "ok": 387,
+      "gaps": 121,
+      "exit_code": 0
+    },
+    {
+      "rows": 1010,
+      "ok": 987,
+      "gaps": 23,
+      "exit_code": 0
+    },
+    {
+      "rows": 225,
+      "ok": 222,
+      "gaps": 3,
+      "exit_code": 0
+    },
+    {
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11,
+      "exit_code": 0
+    },
+    {
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3,
+      "exit_code": 0
+    },
+    {
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5,
+      "exit_code": 0
+    }
+  ]
+}

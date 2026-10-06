@@ -1,0 +1,160 @@
+{
+  "base_revision": "dacd71799",
+  "protected_artifacts": [
+    {
+      "path": "data/patch-api/sources/11.2.7-page-coverage.json",
+      "byte_identical_to_base": true,
+      "sha256": "55d0df1bda6061c9f4c079583a98618d020c7e751d93f0f9141f9a23f20a15f7"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-page-coverage.json",
+      "byte_identical_to_base": true,
+      "sha256": "4cd34c0f4251dd13e27b87bb3b2046aa25b24b7aeda1517645e988091c31ba3b"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-page-coverage.json",
+      "byte_identical_to_base": true,
+      "sha256": "a303140c42574cd5a5ad5b4afb0fc7e0b3912ee3c3f515364aef727415f7ef0e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-page-coverage.json",
+      "byte_identical_to_base": true,
+      "sha256": "65bb18154bb42b5b8385f279e8b79f31043777bf8f54e04492214e04898163dc"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-page-coverage.json",
+      "byte_identical_to_base": true,
+      "sha256": "ebed23da005c1dcb0d7355b48fd8b9b8524bb956194c65722a5d6c77ca14b26f"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-page-coverage.json",
+      "byte_identical_to_base": true,
+      "sha256": "328bbb571f06940dc4af61809d99115f1967ddf5bde2ecc1b1e326000b88c5a2"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-wikitext-register.json",
+      "byte_identical_to_base": true,
+      "sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "byte_identical_to_base": true,
+      "sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-wikitext-register.json",
+      "byte_identical_to_base": true,
+      "sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "byte_identical_to_base": true,
+      "sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "byte_identical_to_base": true,
+      "sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-wikitext-register.json",
+      "byte_identical_to_base": true,
+      "sha256": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311"
+    },
+    {
+      "path": "tests/data/patch_11_2_7_sweep_known_gaps.json",
+      "byte_identical_to_base": true,
+      "sha256": "b553ca254c486376cc7dbd6ffb50bb60116ed0aa95b0e18228fff3f2f5756bd3"
+    },
+    {
+      "path": "tests/data/patch_12_0_0_sweep_known_gaps.json",
+      "byte_identical_to_base": true,
+      "sha256": "9cbe0ad558a46c9923833524666b066e9942a6bbb96fe4039c96db6e0a16656f"
+    },
+    {
+      "path": "tests/data/patch_12_0_1_sweep_known_gaps.json",
+      "byte_identical_to_base": true,
+      "sha256": "e54f1163d3973d114fad6b278305877871970457724b9e0b8698197bb8e061e8"
+    },
+    {
+      "path": "tests/data/patch_12_0_5_sweep_known_gaps.json",
+      "byte_identical_to_base": true,
+      "sha256": "b7f23ae23eb3a727b315e4b2da0ceb241fe97f4fb7a267d0dfeb160129ed168b"
+    },
+    {
+      "path": "tests/data/patch_12_0_7_sweep_known_gaps.json",
+      "byte_identical_to_base": true,
+      "sha256": "4e8adaddfec027082455f008704102e9a96af42335317a543f0522b58bb078d0"
+    },
+    {
+      "path": "tests/data/patch_12_1_0_sweep_known_gaps.json",
+      "byte_identical_to_base": true,
+      "sha256": "8771981d939bf6072c33d443cb84de299243a0dbbaeeee780b1c87d776226b39"
+    }
+  ],
+  "later_sweeps": [
+    {
+      "tag": "1127",
+      "observation_maps_identical": true
+    },
+    {
+      "tag": "1200",
+      "observation_maps_identical": true
+    },
+    {
+      "tag": "1201",
+      "observation_maps_identical": true
+    },
+    {
+      "tag": "1205",
+      "observation_maps_identical": true
+    },
+    {
+      "tag": "1207",
+      "observation_maps_identical": true
+    },
+    {
+      "tag": "1210",
+      "observation_maps_identical": true
+    }
+  ],
+  "extractor_compatibility": [
+    {
+      "patch": "11.2.7",
+      "base_output_and_seed_identical": true,
+      "outcome": "rendered",
+      "rows": 19
+    },
+    {
+      "patch": "12.0.0",
+      "base_output_and_seed_identical": true,
+      "outcome": "rendered",
+      "rows": 143
+    },
+    {
+      "patch": "12.0.1",
+      "base_output_and_seed_identical": true,
+      "outcome": "rendered",
+      "rows": 252
+    },
+    {
+      "patch": "12.0.5",
+      "base_output_and_seed_identical": true,
+      "outcome": "rendered",
+      "rows": 271
+    },
+    {
+      "patch": "12.0.7",
+      "base_output_and_seed_identical": true,
+      "outcome": "rendered",
+      "rows": 89
+    },
+    {
+      "patch": "12.1.0",
+      "base_output_and_seed_identical": true,
+      "outcome": "unchanged unsupported-template error",
+      "rows": 0
+    }
+  ],
+  "non_vendor_warnings": 0
+}

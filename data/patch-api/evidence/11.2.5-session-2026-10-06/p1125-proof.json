@@ -400,6 +400,17 @@
       "stdout_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-startup.stdout",
       "stderr_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-startup.stderr",
       "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-validate.py"
+      ],
+      "revision": "7dcbe028a7c576fde359e5768cc69c46a993eecd",
+      "exit_code": 0,
+      "scope": "coverage/source/review/scout/negative-control/proof artifact assertions",
+      "result_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-page-validation.json",
+      "invalidated_by_later_changes": false
     }
   ],
   "runtime_revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
