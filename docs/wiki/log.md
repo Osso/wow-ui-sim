@@ -102,3 +102,7 @@ Live CVar catalog extended with epoch-scoped Command records; shared command pub
 ## 2026-10-05 — Neighborhood initiatives
 
 Added [host-backed initiative state](systems/neighborhood-initiatives.md), deferred request ordering and explicit diagnostic-workaround limits. Contract lives in [publication spec](../specs/patch-12-0-0-publication-sweep.md#housinginitiative-closure-contract).
+
+## 2026-10-06 | 12.0.1 publication and extract audit
+
+Added [page audit](investigations/patch-12-0-1-api-audit.md), retained revision 6747895, 225-row exact-gap sweep, four epoch-gated retirements and exhaustive 252-row extract scout. New 477-row ledger distinguishes publication-only, superseded, behavioral-pending and editorial scope. Existing page ledgers unchanged; 12.0.0 fixture reconciled against 12.0.1 supersession. [Contract](../specs/patch-12-0-1-publication-sweep.md) owns final proof.
