@@ -410,7 +410,8 @@ fn unit_affecting_combat(state: &mut LuaState) -> LuaResult<u32> {
 
 #[cfg(feature = "retail-12-0-0")]
 fn player_is_in_combat(state: &mut LuaState) -> LuaResult<u32> {
-    state.push(Val::Bool(borrow_state(state)?.player.in_combat));
+    let in_combat = borrow_state(state)?.player.in_combat;
+    state.push(Val::Bool(in_combat));
     Ok(1)
 }
 
