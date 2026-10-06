@@ -3593,11 +3593,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DyeColor.GetAllDyeColors-26": {
     "expected": {
@@ -3611,11 +3611,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27": {
     "expected": {
@@ -3629,11 +3629,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DyeColor.GetDyeColorForItem-29": {
     "expected": {
@@ -3683,11 +3683,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31": {
     "expected": {
@@ -3701,11 +3701,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DyeColor.IsDyeColorOwned-32": {
     "expected": {
@@ -3719,11 +3719,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_EncounterJournal.StartArathiRPE-33": {
     "expected": {
@@ -3863,11 +3863,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HouseEditor.EnterHouseEditor-41": {
     "expected": {
@@ -3881,11 +3881,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HouseEditor.GetActiveHouseEditorMode-42": {
     "expected": {
@@ -3917,11 +3917,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44": {
     "expected": {
@@ -3935,11 +3935,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HouseEditor.IsHouseEditorActive-45": {
     "expected": {
@@ -3953,11 +3953,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46": {
     "expected": {
@@ -3971,11 +3971,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47": {
     "expected": {
@@ -3989,11 +3989,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HouseEditor.LeaveHouseEditor-48": {
     "expected": {
@@ -4007,11 +4007,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HouseExterior.CancelActiveExteriorEditing-49": {
     "expected": {
@@ -4403,11 +4403,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Housing.GetHouseLevelFavorForLevel-71": {
     "expected": {
@@ -4763,11 +4763,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Housing.IsOnNeighborhoodMap-91": {
     "expected": {
@@ -4781,11 +4781,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Housing.LeaveHouse-92": {
     "expected": {
@@ -5069,11 +5069,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Housing.StartTutorial-108": {
     "expected": {
@@ -6761,11 +6761,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingDecor.IsHouseExteriorHovered-202": {
     "expected": {
@@ -7319,11 +7319,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingLayout.GetRoomPlacementBudget-233": {
     "expected": {
@@ -8363,11 +8363,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_KeyBindings.DeactivateBindingContext-291": {
     "expected": {
@@ -8381,11 +8381,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_KeyBindings.GetBindingByKey-292": {
     "expected": {
@@ -8471,11 +8471,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_KeyBindings.SetTurnStrafeStyle-297": {
     "expected": {
@@ -8867,11 +8867,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GetBindingByKey-327": {
     "expected": {
@@ -8975,11 +8975,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-SetCursorByMode-319": {
     "expected": {
@@ -9101,11 +9101,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "ModelSceneActorBase; lookup=nil",
+      "detail": "ModelSceneActorBase; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-widgets-ModelSceneActorBase:SetGradientMask-352": {
     "expected": {
@@ -9137,10 +9137,10 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "ModelSceneActorBase; lookup=nil",
+      "detail": "ModelSceneActorBase; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   }
 }

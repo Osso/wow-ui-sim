@@ -66,9 +66,9 @@ Startup built separately with no timeout; `timeout 90 python3 /home/osso/.worktr
 
 ## Gap closure follow-up — 2026-10-06
 
-Neighborhood invitation getters/setters reuse existing per-environment boolean state, now published on Retail 12.0.0+ as well as Forever. Classic publication unchanged. INFERRED initial false; documented omitted setter resets false. Behavioral RED: nil global. GREEN pending after commit. No persistence or notification event invented.
+Neighborhood invitation getters/setters reuse existing per-environment boolean state, now published on Retail 12.0.0+ as well as Forever. Classic publication unchanged. INFERRED initial false; documented omitted setter resets false. Behavioral RED: nil global. GREEN after commit: preference roundtrip and independent environments pass. No persistence or notification event invented.
 
-ModelSceneActorBase collision-bound preference methods are permanent 2D-scope compatibility: setter no-op, getter false even after setting true. Retail 12.0.0+ only. No 3D state or collision behavior claim. Behavioral RED observes missing actor method; post-commit GREEN pending.
+ModelSceneActorBase collision-bound preference methods are permanent 2D-scope compatibility: setter no-op, getter false even after setting true. Retail 12.0.0+ only. No 3D state or collision behavior claim. Behavioral RED observes missing actor method; post-commit actor lifecycle test passes.
 
 C_KeyBindings context activation/deactivation/query uses the existing keybinding state, with a per-environment set of documented context IDs. Cached Basic/Expert consumers require multiple simultaneous contexts. INFERRED idempotence and simulator integer validation. Binding routing/priority and turn/strafe migrations remain separate unmodeled boundaries.
 
@@ -77,3 +77,29 @@ C_HouseEditor consumes explicit host status and per-mode availability. Enter/Act
 Housing location queries use explicit host current-location snapshots, distinct from initiative viewing/ownership and tracked-house state. SetTrackedHouseGuid shares the existing getter state. Decor door-hover shares the existing exterior snapshot. GetNumActiveRooms counts existing room/floor records. INFERRED owned-plot subset and active-room interpretation of those records. GUID-based room/door/stair selections and camera geometry remain gaps: existing layout stores numeric room IDs, not those documented identities.
 
 C_DyeColor publishes six registered producers backed by explicit category/color records and consumable stacks in existing carried/bank bag state. No item ID means zero ownership; guild-bank stacks excluded. Fresh DTOs include both ColorMixin swatches, rooted across callback GC; callback failures propagate. INFERRED ascending-ID list order and positive-integer selector validation. Native dye acquisition/catalog population and unrepresented storage remain outside bounded proof.
+
+
+## Follow-up acceptance — runtime `0523068b2`
+
+This bounded follow-up closes 27 of the original 121 gaps: 25 state-backed producers and two permanent unsupported-3D methods. **94 remain gaps**, not completed native capabilities. Exact per-ID outcomes/reasons and model boundaries are in [outcomes](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-outcomes.json); [cached contracts](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-contracts.json) retain declarations and direct consumer references. The original 135-row review now records 41 total historical fixes / 94 retained, including the earlier 14 fixes. Publication closure is not native or historical parity.
+
+Only `tests/data/patch_11_2_7_sweep_known_gaps.json` changes, 121 → 94. All five later fixtures remain byte-identical to `dacd71799`; none contains a newly closed symbol. Six isolated local debug sweeps pass:
+
+| Patch | Rows | OK | Exact gaps | Result |
+|---|---:|---:|---:|---|
+| 11.2.7 | 508 | 414 | 94 | PASS |
+| 12.0.0 | 1010 | 987 | 23 | PASS |
+| 12.0.1 | 225 | 222 | 3 | PASS |
+| 12.0.5 | 363 | 352 | 11 | PASS |
+| 12.0.7 | 174 | 171 | 3 | PASS |
+| 12.1.0 | 778 | 773 | 5 | PASS |
+
+Eleven new behavioral tests have passing proof: ten passed in the group run; its sole failure was an invalid test call to bare-env `ColorMixin:SetRGB`, absent in byte-identical master defaults. Direct field mutation tests the intended DTO isolation; both dye tests then pass at the final revision. Concrete payloads cover catalog ownership (2 carried + 3 banked = 5, guild storage excluded), callback GC/error propagation, editor request/success/failure/leave, per-environment contexts/preferences, location/ownership separation, room counts, and permanent actor behavior.
+
+Master `dacd71799` and final revision both pass existing `housing_pending` 20 tests and `keybinding` 73 tests. Formatting and default local check pass. Mists `cargo check --tests --no-default-features --features "sound gui casc client-mists"` passes with zero errors/non-vendor warnings; unchanged six iced manifest deprecations remain vendor-owned. Startup build is separate and unbounded; subsequent `timeout 90` no-build local run exits 0 with `[]`. Exact commands/revisions/results, working RED scopes, proof validity and one advisory serializer-length readability finding are in [follow-up proof](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gaps-proof.json). Evidence-only changes do not invalidate runtime proof.
+
+Retained boundaries: 34 housing service/ownership/travel/validation APIs; 23 shared decor/editor controls; 12 layout GUID/transform APIs; three undocumented diagnostics; three turn/strafe migration APIs; three report-screenshot APIs; 13 other missing classification/catalog/eligibility/service producers; two native acquisition objects; one event-source conflict. These are still gaps, not intentionally unsupported features or permission to add generic placeholders. Per-ID reasons name the missing substrate.
+
+`HOUSE_LEVEL_CHANGED` remains registerable: current cached generated documentation explicitly lists `LiteralName = "HOUSE_LEVEL_CHANGED"`, and current blueprint/editor consumers register it. The later-register removal expectation conflicts with those current sources. Removing registration without verified current supersession would break the compatibility target. Retain the exact gap and source conflict; no Blizzard rewrite or register fabrication.
+
+Page-coverage JSON, vendor files, other worktrees and 11.2.5 files unchanged. No agents/models, push, merge, release build or extra target directory.

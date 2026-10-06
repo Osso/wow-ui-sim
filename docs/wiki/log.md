@@ -1,3 +1,7 @@
+## [2026-10-06] evidence | 11.2.7 producer follow-up
+
+[Audit](investigations/patch-11-2-7-api-audit.md#publication-gap-follow-up--2026-10-06) links all 121 original gap outcomes: 25 modeled, two permanent 3D workarounds, 94 retained model/source boundaries. [Proof](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gaps-proof.json) covers behavioral fixtures, unchanged-master subsystem comparisons, six isolated sweeps, Mists warning scope and startup `[]`. Page-coverage/vendor/11.2.5 files unchanged.
+
 ## [2026-10-06] evidence | Remaining 12.0.1 extract
 
 [Audit](investigations/patch-12-0-1-api-audit.md#remaining-extract-follow-up) links 133 per-ID outcomes and revision-scoped verification. Concrete restricted aura, faction snapshot, secret formatting and creature-ID tests establish 41 rows; resistant historical/model boundaries remain pending. Ledgers and vendor files unchanged.

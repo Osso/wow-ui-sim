@@ -4,7 +4,7 @@
 
 ## [2026-10-06] evidence | 11.2.7 page audit
 
-[Audit](investigations/patch-11-2-7-api-audit.md): 508 inventory / 19 extract rows; all later supersessions, 14 publication fixes, 121 exact gaps, one-row negative control. [Scout](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-extract-scout.md) assigns ten pending statements without behavioral credit. Existing ledgers unchanged.
+[Audit](investigations/patch-11-2-7-api-audit.md): 508 inventory / 19 extract rows; initial 14 publication fixes plus 27 follow-up closures, 94 remaining exact gaps, six isolated sweeps and startup `[]`. Per-ID retained model/source boundaries are explicit. [Scout](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-extract-scout.md) assigns ten pending statements without behavioral credit. Existing ledgers unchanged.
 
 ## [2026-10-06] evidence | Remaining 12.0.1 extract
 

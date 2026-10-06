@@ -1,7 +1,7 @@
 {
   "reviewed": 135,
-  "fixed": 14,
-  "retained": 121,
+  "fixed": 41,
+  "retained": 94,
   "rows": [
     {
       "source_id": "wt-cvars-NeighborhoodAddManager-574",
@@ -462,8 +462,8 @@
         },
         "ok": false
       },
-      "decision": "retained-superseded-removal-gap",
-      "reason": "12.0.0 removes HOUSE_LEVEL_CHANGED; valid_events_b.rs still accepts it. Later sweep retains the same exact gap. Dispatch consumers/epoch tests need reconciliation, not an isolated cheap publisher fix."
+      "decision": "still-gap",
+      "reason": "Historical later-register removal conflicts with current cached documentation and active Blizzard consumers. Preserve registration: deleting it would break blueprint/editor consumers and existing payload dispatch. Requires verified current re-publication/supersession evidence, not a vendor patch."
     },
     {
       "source_id": "wt-global-api-C_ActionBar.IsInterruptAction-22",
@@ -504,8 +504,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Interrupt-action classification needs action/spell interrupt metadata. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No authoritative interrupt spell classification or resolved macro/item action classification. Existing action spell bindings/range snapshots do not establish interrupt semantics."
     },
     {
       "source_id": "wt-global-api-C_CharacterServices.RPEResetCharacter-323",
@@ -588,8 +588,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Currency categories need category membership/DTO inputs; balances alone are insufficient. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing currency balances lack player currency category records/metadata; cannot derive the documented category DTO from amounts."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetAllDyeColorCategories-25",
@@ -624,14 +624,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetAllDyeColors-26",
@@ -666,14 +666,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27",
@@ -708,14 +708,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorInfo-30",
@@ -750,14 +750,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31",
@@ -792,14 +792,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.IsDyeColorOwned-32",
@@ -834,14 +834,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_GameRules.IsClassAllowedForGameMode-34",
@@ -882,8 +882,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Class eligibility/game-mode policy needs explicit rules. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Current game-rules state has mode/rule values, not authoritative class eligibility policy. Unknown class rules must not be replaced with always-true or always-false producers."
     },
     {
       "source_id": "wt-global-api-C_GameRules.IsWoWHack-39",
@@ -924,8 +924,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Class eligibility/game-mode policy needs explicit rules. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Native current-mode mapping is unverified: existing GameRulesState comments/use encode Standard=0 and Plunderstorm=1, while simulator Enum.GameMode publishes Standard=1, Plunderstorm=2, WoWHack=3. Cached function docs provide no enum mapping; do not add another inconsistent comparator."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.ActivateHouseEditorMode-40",
@@ -960,14 +960,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.EnterHouseEditor-41",
@@ -1002,14 +1002,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorAvailability-43",
@@ -1044,14 +1044,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44",
@@ -1086,14 +1086,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorActive-45",
@@ -1128,14 +1128,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46",
@@ -1170,14 +1170,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47",
@@ -1212,14 +1212,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.LeaveHouseEditor-48",
@@ -1254,14 +1254,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_Housing.AcceptNeighborhoodOwnership-59",
@@ -1302,8 +1302,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.CanEditCharter-60",
@@ -1344,8 +1344,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.CanTakeReportScreenshot-61",
@@ -1386,8 +1386,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No housing report capture eligibility or preview lifecycle. CLI screenshot rendering is not the report-system screenshot service."
     },
     {
       "source_id": "wt-global-api-C_Housing.CreateGuildNeighborhood-62",
@@ -1428,8 +1428,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.CreateNeighborhoodCharter-63",
@@ -1470,8 +1470,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.DeclineNeighborhoodOwnership-64",
@@ -1512,8 +1512,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.EditNeighborhoodCharter-66",
@@ -1554,8 +1554,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.GetCurrentHouseInfo-67",
@@ -1596,8 +1596,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing authoritative current-house record, settings/access policy and service reply model. Existing location/owned flags do not supply the documented current-house DTO, refund or permission state."
     },
     {
       "source_id": "wt-global-api-C_Housing.GetCurrentHouseRefundAmount-69",
@@ -1638,8 +1638,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing authoritative current-house record, settings/access policy and service reply model. Existing location/owned flags do not supply the documented current-house DTO, refund or permission state."
     },
     {
       "source_id": "wt-global-api-C_Housing.GetCurrentNeighborhoodGUID-70",
@@ -1674,14 +1674,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_Housing.GetHouseLevelRewardsForLevel-72",
@@ -1722,8 +1722,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing housing level/favor thresholds have no reward-per-level records or catalog. No reward DTOs can be derived from thresholds alone."
     },
     {
       "source_id": "wt-global-api-C_Housing.GetHousingAccessFlags-73",
@@ -1764,8 +1764,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing authoritative current-house record, settings/access policy and service reply model. Existing location/owned flags do not supply the documented current-house DTO, refund or permission state."
     },
     {
       "source_id": "wt-global-api-C_Housing.GetOthersOwnedHouses-76",
@@ -1806,8 +1806,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No other-player house ownership/permission records. Existing player-owned/initiative snapshots are not another owner's collection."
     },
     {
       "source_id": "wt-global-api-C_Housing.HouseFinderDeclineNeighborhoodInvitation-82",
@@ -1848,8 +1848,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.HouseFinderRequestReservationAndPort-84",
@@ -1890,8 +1890,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment."
     },
     {
       "source_id": "wt-global-api-C_Housing.IsHousingMarketEnabled-85",
@@ -1932,8 +1932,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing market-shop/cart feature policy is not housing-market service eligibility. No market-wide eligibility input; do not alias distinct flags."
     },
     {
       "source_id": "wt-global-api-C_Housing.IsInsidePlot-90",
@@ -1968,14 +1968,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_Housing.IsOnNeighborhoodMap-91",
@@ -2010,14 +2010,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_Housing.LeaveHouse-92",
@@ -2058,8 +2058,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment."
     },
     {
       "source_id": "wt-global-api-C_Housing.OnCharterConfirmationAccepted-93",
@@ -2100,8 +2100,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.OnCharterConfirmationClosed-94",
@@ -2142,8 +2142,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.OnCreateCharterNeighborhoodClosed-95",
@@ -2184,8 +2184,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.OnCreateGuildNeighborhoodClosed-96",
@@ -2226,8 +2226,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.OnRequestSignatureClicked-97",
@@ -2268,8 +2268,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.OnSignCharterClicked-98",
@@ -2310,8 +2310,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle."
     },
     {
       "source_id": "wt-global-api-C_Housing.RelinquishHouse-99",
@@ -2352,8 +2352,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment."
     },
     {
       "source_id": "wt-global-api-C_Housing.RequestCurrentHouseInfo-100",
@@ -2394,8 +2394,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing authoritative current-house record, settings/access policy and service reply model. Existing location/owned flags do not supply the documented current-house DTO, refund or permission state."
     },
     {
       "source_id": "wt-global-api-C_Housing.RequestPlayerCharacterList-102",
@@ -2436,8 +2436,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing character/house/neighborhood service catalog and asynchronous reply records; existing social membership state cannot populate these housing DTOs."
     },
     {
       "source_id": "wt-global-api-C_Housing.ReturnAfterVisitingHouse-103",
@@ -2478,8 +2478,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment."
     },
     {
       "source_id": "wt-global-api-C_Housing.SaveHouseSettings-104",
@@ -2520,8 +2520,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing authoritative current-house record, settings/access policy and service reply model. Existing location/owned flags do not supply the documented current-house DTO, refund or permission state."
     },
     {
       "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoods-106",
@@ -2562,8 +2562,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing character/house/neighborhood service catalog and asynchronous reply records; existing social membership state cannot populate these housing DTOs."
     },
     {
       "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoodsByID-105",
@@ -2604,8 +2604,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing character/house/neighborhood service catalog and asynchronous reply records; existing social membership state cannot populate these housing DTOs."
     },
     {
       "source_id": "wt-global-api-C_Housing.SetTrackedHouseGuid-107",
@@ -2640,14 +2640,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_Housing.TeleportHome-109",
@@ -2688,8 +2688,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment."
     },
     {
       "source_id": "wt-global-api-C_Housing.TryRenameNeighborhood-110",
@@ -2730,8 +2730,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing neighborhood naming/size eligibility and authoritative rename service policy. Cached docs supply types, not native lexical/size rules; do not invent success or arbitrary restrictions."
     },
     {
       "source_id": "wt-global-api-C_Housing.ValidateCreateGuildNeighborhoodSize-111",
@@ -2772,8 +2772,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing neighborhood naming/size eligibility and authoritative rename service policy. Cached docs supply types, not native lexical/size rules; do not invent success or arbitrary restrictions."
     },
     {
       "source_id": "wt-global-api-C_Housing.ValidateNeighborhoodName-112",
@@ -2814,8 +2814,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing neighborhood naming/size eligibility and authoritative rename service policy. Cached docs supply types, not native lexical/size rules; do not invent success or arbitrary restrictions."
     },
     {
       "source_id": "wt-global-api-C_Housing.VisitHouse-113",
@@ -2856,8 +2856,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment."
     },
     {
       "source_id": "wt-global-api-C_HousingBasicMode.GetHoveredDecorInfo-118",
@@ -2898,8 +2898,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingBasicMode.IsHouseExteriorHovered-123",
@@ -2940,8 +2940,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingBasicMode.IsHoveringDecor-125",
@@ -2982,8 +2982,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingBasicMode.RemoveSelectedDecor-128",
@@ -3024,8 +3024,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingBasicMode.RotateDecor-129",
@@ -3066,8 +3066,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingBasicMode.RotateHouseExterior-130",
@@ -3108,8 +3108,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryDebugInfoForID-140",
@@ -3150,8 +3150,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Catalog debug DTO producer absent; availability alone cannot supply debug metadata. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No corresponding diagnostic function contract in current cached generated documentation; no native diagnostic payload producer. Retain instead of registering an invented string or nil producer."
     },
     {
       "source_id": "wt-global-api-C_HousingCleanupMode.GetHoveredDecorInfo-152",
@@ -3192,8 +3192,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Cleanup selection/hover/removal producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingCleanupMode.IsHoveringDecor-153",
@@ -3234,8 +3234,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Cleanup selection/hover/removal producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingCleanupMode.RemoveSelectedDecor-154",
@@ -3276,8 +3276,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Cleanup selection/hover/removal producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyDyeToSelectedDecor-155",
@@ -3318,8 +3318,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later customization subset lacks this dye/selection/hover producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Dye catalog/ownership now modeled, but no selected placed-decor GUID and per-instance dye transaction consuming catalog/inventory. Variant dye slots are not selected-instance customization state."
     },
     {
       "source_id": "wt-global-api-C_HousingCustomizeMode.ClearDyesForSelectedDecor-161",
@@ -3360,8 +3360,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later customization subset lacks this dye/selection/hover producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Dye catalog/ownership now modeled, but no selected placed-decor GUID and per-instance dye transaction consuming catalog/inventory. Variant dye slots are not selected-instance customization state."
     },
     {
       "source_id": "wt-global-api-C_HousingCustomizeMode.GetHoveredDecorInfo-164",
@@ -3402,8 +3402,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later customization subset lacks this dye/selection/hover producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingCustomizeMode.IsHoveringDecor-177",
@@ -3444,8 +3444,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later customization subset lacks this dye/selection/hover producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingDecor.GetDecorDebugInfoForGUID-186",
@@ -3486,8 +3486,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Placed-decor debug DTO/exterior-door hit-test producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No corresponding diagnostic function contract in current cached generated documentation; no native diagnostic payload producer. Retain instead of registering an invented string or nil producer."
     },
     {
       "source_id": "wt-global-api-C_HousingDecor.GetSelectedDecorDebugInfo-195",
@@ -3528,8 +3528,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Placed-decor debug DTO/exterior-door hit-test producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No corresponding diagnostic function contract in current cached generated documentation; no native diagnostic payload producer. Retain instead of registering an invented string or nil producer."
     },
     {
       "source_id": "wt-global-api-C_HousingDecor.IsHouseExteriorDoorHovered-201",
@@ -3564,14 +3564,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Placed-decor debug DTO/exterior-door hit-test producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_HousingExpertMode.CommitDecorMovement-210",
@@ -3612,8 +3612,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingExpertMode.CommitHouseExteriorPosition-211",
@@ -3654,8 +3654,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingExpertMode.GetHoveredDecorInfo-212",
@@ -3696,8 +3696,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingExpertMode.IsGridVisible-217",
@@ -3738,8 +3738,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Shared placed-decor editor/grid/precision controller remains Lua-only compatibility state. No Rust controller consumes precision/rotation or synchronizes grid state with existing C_HousingDecor outputs; an isolated remembered flag would not close that boundary."
     },
     {
       "source_id": "wt-global-api-C_HousingExpertMode.IsHouseExteriorHovered-218",
@@ -3780,8 +3780,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingExpertMode.IsHoveringDecor-220",
@@ -3822,8 +3822,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingExpertMode.RemoveSelectedDecor-221",
@@ -3864,8 +3864,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs."
     },
     {
       "source_id": "wt-global-api-C_HousingExpertMode.SelectNextRotationAxis-223",
@@ -3906,8 +3906,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Shared placed-decor editor/grid/precision controller remains Lua-only compatibility state. No Rust controller consumes precision/rotation or synchronizes grid state with existing C_HousingDecor outputs; an isolated remembered flag would not close that boundary."
     },
     {
       "source_id": "wt-global-api-C_HousingExpertMode.SetGridVisible-224",
@@ -3948,8 +3948,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Shared placed-decor editor/grid/precision controller remains Lua-only compatibility state. No Rust controller consumes precision/rotation or synchronizes grid state with existing C_HousingDecor outputs; an isolated remembered flag would not close that boundary."
     },
     {
       "source_id": "wt-global-api-C_HousingExpertMode.SetPrecisionIncrementingActive-225",
@@ -3990,8 +3990,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Shared placed-decor editor/grid/precision controller remains Lua-only compatibility state. No Rust controller consumes precision/rotation or synchronizes grid state with existing C_HousingDecor outputs; an isolated remembered flag would not close that boundary."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.ConfirmStairChoice-229",
@@ -4032,8 +4032,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.DeselectRoomOrDoor-231",
@@ -4074,8 +4074,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.GetNumActiveRooms-232",
@@ -4110,14 +4110,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.GetSelectedRoom-236",
@@ -4158,8 +4158,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.GetSelectedStairwellRoomCount-237",
@@ -4200,8 +4200,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.HasSelectedDoor-242",
@@ -4242,8 +4242,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.HasSelectedFloorplan-243",
@@ -4284,8 +4284,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.HasSelectedRoom-244",
@@ -4326,8 +4326,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.HasStairs-245",
@@ -4368,8 +4368,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.MoveDraggedRoom-249",
@@ -4410,8 +4410,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.MoveLayoutCamera-250",
@@ -4452,8 +4452,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.RotateFocusedRoom-252",
@@ -4494,8 +4494,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.ZoomLayoutCamera-259",
@@ -4536,8 +4536,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion."
     },
     {
       "source_id": "wt-global-api-C_Item.IsDecorItem-289",
@@ -4578,8 +4578,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Decor classification needs item/catalog identity. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "ItemInfo export omits item class/subclass; GetItemInfo currently derives these from inventory type. Cached tutorial identifies decor via Housing class 20 / Decor subclass 0. Catalog association is not proof that an arbitrary consumable item has that classification."
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.ActivateBindingContext-290",
@@ -4614,14 +4614,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Per-environment active context set; cached Basic/Expert modes activate specific and shared contexts. No context priority/routing claim."
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.DeactivateBindingContext-291",
@@ -4656,14 +4656,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Per-environment active context set; cached Basic/Expert modes activate specific and shared contexts. No context priority/routing claim."
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.GetTurnStrafeStyle-295",
@@ -4704,8 +4704,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No turn/strafe style remapping, account-versus-character migration or notification policy. Existing base/override bindings and the new context set do not define that migration; storing a style flag alone would leave actual bindings wrong."
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.IsBindingContextActive-296",
@@ -4740,14 +4740,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=function; lookup=function",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "closed-modeled",
+      "reason": "Per-environment active context set; cached Basic/Expert modes activate specific and shared contexts. No context priority/routing claim."
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.SetTurnStrafeStyle-297",
@@ -4788,8 +4788,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No turn/strafe style remapping, account-versus-character migration or notification policy. Existing base/override bindings and the new context set do not define that migration; storing a style flag alone would leave actual bindings wrong."
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.UpdateTurnStrafeBindingsForCharacter-298",
@@ -4830,8 +4830,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No turn/strafe style remapping, account-versus-character migration or notification policy. Existing base/override bindings and the new context set do not define that migration; storing a style flag alone would leave actual bindings wrong."
     },
     {
       "source_id": "wt-global-api-C_PetJournal.GetNonBattlePetLinkByIndex-300",
@@ -4872,8 +4872,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Non-battle pet catalog/link input absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No indexed non-battle companion collection/link payload model. Existing battle pet journal records cannot be treated as the documented non-battle collection."
     },
     {
       "source_id": "wt-global-api-C_PlayerInfo.IsReturningCharacter-302",
@@ -4914,8 +4914,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Returning-character policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No per-character returning-player eligibility/service history model. Player level and returning-player UI publication do not establish returning-character eligibility."
     },
     {
       "source_id": "wt-global-api-C_ReportSystem.RequiresScreenshotForReportType-305",
@@ -4956,8 +4956,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Report-token initiate/send model lacks screenshot capture/preview/type policy. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing report-token/comment model lacks screenshot requirement policy, capture lifecycle and preview texture ownership. CLI screenshots do not implement WoW report capture/preview events."
     },
     {
       "source_id": "wt-global-api-C_ReportSystem.SetScreenshotPreviewTexture-306",
@@ -4998,8 +4998,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Report-token initiate/send model lacks screenshot capture/preview/type policy. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing report-token/comment model lacks screenshot requirement policy, capture lifecycle and preview texture ownership. CLI screenshots do not implement WoW report capture/preview events."
     },
     {
       "source_id": "wt-global-api-C_ReportSystem.TakeReportScreenshot-307",
@@ -5040,8 +5040,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Report-token initiate/send model lacks screenshot capture/preview/type policy. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "Existing report-token/comment model lacks screenshot requirement policy, capture lifecycle and preview texture ownership. CLI screenshots do not implement WoW report capture/preview events."
     },
     {
       "source_id": "wt-global-api-C_ReturningPlayerUI.AcceptPrompt-324",
@@ -5166,8 +5166,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Aura-stat/applied-appearance query input producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No spell/aura-to-stat contribution records. Current aura membership and aggregate player stats cannot attribute documented per-spell stat changes."
     },
     {
       "source_id": "wt-global-api-C_Spell.GetItemModifiedAppearancesApplied-309",
@@ -5208,8 +5208,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Aura-stat/applied-appearance query input producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+      "decision": "still-gap",
+      "reason": "No spell-to-applied modified-appearance mapping; saved transmog outfits alone do not identify appearance changes applied by a specified spell."
     },
     {
       "source_id": "wt-global-api-CanUpgradeToCurrentExpansion-313",
@@ -5250,8 +5250,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Entitlement/current-expansion upgrade policy producer absent."
+      "decision": "still-gap",
+      "reason": "No account expansion ownership/purchase eligibility service. Current client build/profile is not account upgrade eligibility."
     },
     {
       "source_id": "wt-global-api-ClearOutage-314",
@@ -5292,8 +5292,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Network outage lifecycle producer absent."
+      "decision": "still-gap",
+      "reason": "Missing restricted Battle.net outage notification/clearing state machine. Cached docs document no returns; this is not a boolean connectivity getter."
     },
     {
       "source_id": "wt-global-api-GetAutoDeclineNeighborhoodInvites-315",
@@ -5328,14 +5328,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=nil",
+          "detail": "raw=function; lookup=function",
           "kind": "global",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Neighborhood invitation preference backing state absent."
+      "decision": "closed-modeled",
+      "reason": "Existing per-environment preference producer was Forever-only; publish from earliest supported Retail epoch. No persistence/event claimed."
     },
     {
       "source_id": "wt-global-api-JoinBattlefield-329",
@@ -5418,8 +5418,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Network outage lifecycle producer absent."
+      "decision": "still-gap",
+      "reason": "Missing restricted Battle.net outage notification/clearing state machine. Cached docs document no returns; do not infer a predicate from the name."
     },
     {
       "source_id": "wt-global-api-SetAutoDeclineNeighborhoodInvites-318",
@@ -5454,14 +5454,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=nil",
+          "detail": "raw=function; lookup=function",
           "kind": "global",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-model-gap",
-      "reason": "Neighborhood invitation preference backing state absent."
+      "decision": "closed-modeled",
+      "reason": "Existing per-environment preference producer was Forever-only; publish from earliest supported Retail epoch. No persistence/event claimed."
     },
     {
       "source_id": "wt-global-api-SetCursorByMode-319",
@@ -5502,8 +5502,8 @@
         },
         "ok": false
       },
-      "decision": "retained-model-gap",
-      "reason": "Cursor-mode mapping/policy producer absent."
+      "decision": "still-gap",
+      "reason": "No cursor-mode-to-asset resolver/model; existing cursor item and mouse position state do not implement this documented cursor-mode operation."
     },
     {
       "source_id": "wt-scriptobjects-HousingFixturePointFrame-339",
@@ -5544,8 +5544,8 @@
         },
         "ok": false
       },
-      "decision": "retained-acquisition-gap",
-      "reason": "CreateFrame factory cannot acquire this native housing scriptobject. Supported acquisition fixture/model required; factory failure is not native absence proof."
+      "decision": "still-gap",
+      "reason": "Acquisition failure: CreateFrame factory is not a native housing-world object acquisition model. Cached ScriptObject definitions describe world-associated selection/restriction methods, not a CreateFrame constructor. Do not fabricate a generic frame as native acquisition proof."
     },
     {
       "source_id": "wt-scriptobjects-HousingLayoutPinFrame-340",
@@ -5586,8 +5586,8 @@
         },
         "ok": false
       },
-      "decision": "retained-acquisition-gap",
-      "reason": "CreateFrame factory cannot acquire this native housing scriptobject. Supported acquisition fixture/model required; factory failure is not native absence proof."
+      "decision": "still-gap",
+      "reason": "Acquisition failure: CreateFrame factory is not a native housing-world object acquisition model. Cached ScriptObject definitions describe world-associated selection/restriction methods, not a CreateFrame constructor. Do not fabricate a generic frame as native acquisition proof."
     },
     {
       "source_id": "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351",
@@ -5622,14 +5622,14 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "ModelSceneActorBase; lookup=nil",
+          "detail": "ModelSceneActorBase; lookup=function",
           "kind": "object-method",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-permanent-3d-gap",
-      "reason": "Collision-bound preference methods missing on ModelSceneActorBase; 3D/model semantics intentionally unsupported. Do not invent rendering/collision behavior to green publication."
+      "decision": "closed-workaround(src/lua_api/frame/methods/widgets/model.rs; permanent)",
+      "reason": "2D-only renderer intentionally does not support model collision-bound preferences; setter no-op, getter false."
     },
     {
       "source_id": "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353",
@@ -5664,14 +5664,18 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "ModelSceneActorBase; lookup=nil",
+          "detail": "ModelSceneActorBase; lookup=function",
           "kind": "object-method",
           "value": null
         },
-        "ok": false
+        "ok": true
       },
-      "decision": "retained-permanent-3d-gap",
-      "reason": "Collision-bound preference methods missing on ModelSceneActorBase; 3D/model semantics intentionally unsupported. Do not invent rendering/collision behavior to green publication."
+      "decision": "closed-workaround(src/lua_api/frame/methods/widgets/model.rs; permanent)",
+      "reason": "2D-only renderer intentionally does not support model collision-bound preferences; setter no-op, getter false."
     }
-  ]
+  ],
+  "followup_original_gaps": 121,
+  "followup_closed_modeled": 25,
+  "followup_closed_workaround": 2,
+  "runtime_revision": "0523068b2"
 }

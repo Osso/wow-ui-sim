@@ -1,0 +1,504 @@
+{
+  "base_revision": "dacd71799",
+  "proof": [
+    {
+      "label": "baseline-housing-pending",
+      "revision": "dacd71799c9d437d4089ef9cc619d1bdf546fe88",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "housing_pending",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/baseline-housing-pending.log"
+    },
+    {
+      "label": "baseline-keybindings",
+      "revision": "dacd71799c9d437d4089ef9cc619d1bdf546fe88",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "keybinding",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/baseline-keybindings.log"
+    },
+    {
+      "label": "red-invite",
+      "revision": "dacd71799c9d437d4089ef9cc619d1bdf546fe88",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1127_invite_preference",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 101,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/red-invite.log"
+    },
+    {
+      "label": "red-invite-behavior",
+      "revision": "dacd71799c9d437d4089ef9cc619d1bdf546fe88",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1127_invite_preference",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 101,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/red-invite-behavior.log"
+    },
+    {
+      "label": "green-invite",
+      "revision": "058f50f675571c7112748b3ff22a5aff5f75046c",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1127_invite_preference",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/green-invite.log"
+    },
+    {
+      "label": "red-model-collision",
+      "revision": "058f50f675571c7112748b3ff22a5aff5f75046c",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1127_model_collision",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 101,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/red-model-collision.log"
+    },
+    {
+      "label": "red-consumer-groups",
+      "revision": "752f94d19e0bd585311d1200bd9341353b0bb7b9",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1127_",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 101,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/red-consumer-groups.log"
+    },
+    {
+      "label": "green-consumer-groups",
+      "revision": "e1bea3813a8b8e7a05499fe6dd53d7653a92fdf9",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1127_",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 101,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/green-consumer-groups.log"
+    },
+    {
+      "label": "green-dye-snapshots",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1127_dye_colors",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/green-dye-snapshots.log"
+    },
+    {
+      "label": "post-housing-pending",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "housing_pending",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/post-housing-pending.log"
+    },
+    {
+      "label": "post-keybindings",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "keybinding",
+        "--",
+        "--nocapture"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/post-keybindings.log"
+    },
+    {
+      "label": "final-sweep-11_2_7",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "env": {
+        "P1127_SWEEP_OUT": "/home/osso/.cache/wow-ui-sim-audit/p1127-gaps-sweep.json"
+      },
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/final-sweep-11_2_7.log"
+    },
+    {
+      "label": "final-sweep-12_0_0",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "env": {
+        "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/data/patch-api/evidence/11.2.7-session-2026-10-06/p1200-sweep-result.json"
+      },
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/final-sweep-12_0_0.log"
+    },
+    {
+      "label": "final-sweep-12_0_1",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "env": {
+        "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/data/patch-api/evidence/11.2.7-session-2026-10-06/p1201-sweep-result.json"
+      },
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/final-sweep-12_0_1.log"
+    },
+    {
+      "label": "final-sweep-12_0_5",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "env": {
+        "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/data/patch-api/evidence/11.2.7-session-2026-10-06/p1205-sweep-result.json"
+      },
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/final-sweep-12_0_5.log"
+    },
+    {
+      "label": "final-sweep-12_0_7",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "env": {
+        "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/data/patch-api/evidence/11.2.7-session-2026-10-06/p1207-sweep-result.json"
+      },
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/final-sweep-12_0_7.log"
+    },
+    {
+      "label": "final-sweep-12_1_0",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "env": {
+        "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/data/patch-api/evidence/11.2.7-session-2026-10-06/p1210-sweep-result.json"
+      },
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/final-sweep-12_1_0.log"
+    },
+    {
+      "label": "final-fmt",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/final-fmt.log"
+    },
+    {
+      "label": "final-retail-check",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/final-retail-check.log"
+    },
+    {
+      "label": "final-mists-check",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/Cargo.toml",
+        "--tests",
+        "--no-default-features",
+        "--features",
+        "sound gui casc client-mists"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/final-mists-check.log"
+    },
+    {
+      "label": "startup-build",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/startup-build.log"
+    },
+    {
+      "label": "final-startup",
+      "revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+      "argv": [
+        "timeout",
+        "90",
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-build",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "env": null,
+      "exit_code": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1127-gaps/.cache/p1127-gaps/final-startup.log"
+    }
+  ],
+  "sweeps": {
+    "11_2_7": {
+      "rows": 508,
+      "ok": 414,
+      "gaps": 94,
+      "exit_code": 0
+    },
+    "12_0_0": {
+      "rows": 1010,
+      "ok": 987,
+      "gaps": 23,
+      "exit_code": 0
+    },
+    "12_0_1": {
+      "rows": 225,
+      "ok": 222,
+      "gaps": 3,
+      "exit_code": 0
+    },
+    "12_0_5": {
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11,
+      "exit_code": 0
+    },
+    "12_0_7": {
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3,
+      "exit_code": 0
+    },
+    "12_1_0": {
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5,
+      "exit_code": 0
+    }
+  },
+  "runtime_revision": "0523068b2cc67ea7149f680965d0fb7d979faf4a",
+  "validity": "Final six sweeps/check/startup and post-subsystem commands cover current committed runtime/test logic. Subsequent changes are evidence/docs only. No repeat broad commands needed.",
+  "master_comparison": {
+    "revision": "dacd71799",
+    "housing_pending": "20 PASS before / 20 PASS after",
+    "keybinding": "73 PASS before / 73 PASS after",
+    "new_test_failure": "Dye snapshot regression incorrectly called SetRGB on bare-env ColorMixin. Master color_defaults.rs is byte-identical and lacks SetRGB. Replace with direct r mutation; production unchanged. Corrected 2 dye tests PASS."
+  },
+  "working_scopes": {
+    "red-invite": "New uncommitted test initially referenced gated state field; compilation error is not behavioral RED.",
+    "red-invite-behavior": "Uncommitted new invite test, otherwise unchanged master code; nil-global behavioral RED.",
+    "red-model-collision": "Uncommitted new actor test at 058f50f67; actor method missing.",
+    "red-consumer-groups": "Uncommitted four new consumer test files at 752f94d19. Six behavioral failures: missing/unmodeled lookup outputs; existing invite/3D tests pass."
+  },
+  "test_proof_union": "green-consumer-groups at e1bea3813: 10 of 11 PASS; failing test construction fixed in 0523068b2. green-dye-snapshots at 0523068b2: both dye tests PASS. Union covers all 11 current behavioral tests; only test formatting / SetRGB-to-r mutation changed after original batch.",
+  "readability_review": {
+    "method": "Main-thread manual changed-line audit; no agents/models authorized.",
+    "result": "One advisory length finding; no added warning suppression or deep nesting.",
+    "findings": [
+      {
+        "category": "LENGTH",
+        "file": "src/c_api/c_dye_color.rs:163",
+        "function": "push_color_info",
+        "finding": "Serializer spans 43 formatted body lines across metadata and swatches; suggest named swatch helper if this surface grows.",
+        "decision": "Deferred structural-only cleanup; current serializer shares one rooted DTO and has two flat loops, preserving GC lifetime."
+      }
+    ]
+  },
+  "inferred_choices": [
+    "Unconfigured invite preference false; no persistence.",
+    "Context activation idempotent and simultaneous; no routing/priority model.",
+    "Editor unconfigured GenericFailure/default BasicDecor, local leave, simulator selector validation; single explicit pending slot, no server concurrency parity.",
+    "Owned plot implies inside plot; existing room/floor map interpreted as active room instances.",
+    "Dye list ascending ID; integer-selector validation; existing held/banked bag coverage only, not native catalog/other inventory domains.",
+    "Permanent actor collision setter no-op/getter false, justified by intentional unsupported 3D scope."
+  ],
+  "fixtures_changed": [
+    "tests/data/patch_11_2_7_sweep_known_gaps.json"
+  ],
+  "later_fixture_reconciliation": "All five later fixture ID sets checked against closed symbols; none contained those IDs. All later fixtures remain byte-identical to dacd71799 and all later sweeps pass."
+}

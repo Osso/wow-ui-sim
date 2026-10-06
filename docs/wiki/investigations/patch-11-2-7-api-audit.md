@@ -51,3 +51,24 @@ No agents/models, push, merge, vendor edits, Blizzard monkey-patches or existing
 - [[patch-12-0-1-api-audit]] — later-page pipeline and publication limits.
 - [[console-command-registry]] — catalog versus execution.
 - [[client-profiles]] — profile/epoch boundaries.
+
+
+## Publication-gap follow-up — 2026-10-06
+
+At runtime `0523068b2`, 27 of the original 121 gaps close: 25 host/state-backed producers and two permanent unsupported-3D methods; 94 remain explicit gaps. See [per-ID outcomes](../../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-outcomes.json), [cached contract/consumer evidence](../../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-contracts.json), and [contract/proof](../../specs/patch-11-2-7-publication-sweep.md#follow-up-acceptance--runtime-0523068b2). Earlier counts above are historical; page-coverage ledgers remain frozen.
+
+| Exact surface | Outcome | Proof level / boundary |
+|---|---:|---|
+| HouseEditor availability/activity/entry/leave | 8 modeled | Host status/results and deferred replies; no server eligibility/approval fabrication |
+| Dye category/color/ownership queries | 6 modeled | Explicit catalog, carried/bank consumables and fresh rooted swatches; no native catalog acquisition |
+| Housing location/tracking, exterior door hover, room count | 6 modeled | Host location plus existing state; GUID selection/geometry excluded |
+| Binding contexts | 3 modeled | Independent idempotent active-set queries; no routing/priority/migration |
+| Neighborhood invitation preference globals | 2 modeled | Existing per-environment boolean now Retail-gated; no persistence |
+| ModelSceneActor collision-bound preference | 2 permanent workarounds | No-op setter, false getter; 3D intentionally unsupported |
+| Remaining original IDs | 94 still-gap | Reasons and exact cached signatures/consumers retained per ID |
+
+The remaining event is a concrete source conflict, not a cheap registration omission: current cached `HousingUIDocumentation.lua:673` publishes `HOUSE_LEVEL_CHANGED`; current blueprint/editor Lua registers it, while the later page register expects removal. Acquisition failures are also retained: cached objects are world-associated ScriptObjects, not proof of a generic `CreateFrame` factory.
+
+Six isolated sweeps pass: 414/508, 987/1010, 222/225, 352/363, 171/174, 773/778 OK. Only the 11.2.7 exact-gap fixture changes (121 → 94); later fixtures remain unchanged. Eleven new behavior tests have passing proof; existing housing-pending 20 and keybinding 73 pass both before/after. Mists has no non-vendor warnings, default check/formatting pass, startup exits 0 with `[]`. One initial dye test assumed an unavailable bare-env SetRGB helper; master comparison proves the assumption error, and direct mutable DTO fields now exercise the real isolation boundary. No native parity or full-project-suite claim.
+
+Readability audit retains one advisory long serializer; no warning suppression, deep nesting, vendor patch or unmodeled placeholder added. All API producers stay in `src/c_api/` except the real non-C invitation preference and documented permanent 3D widget compatibility.

@@ -1,0 +1,2375 @@
+{
+  "scope": "Original 121 gaps; cached docs/consumers are evidence, not native parity",
+  "cache": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+  "rows": [
+    {
+      "source_id": "wt-events-HOUSE_LEVEL_CHANGED-394",
+      "symbol": "HOUSE_LEVEL_CHANGED",
+      "cached_contracts": [],
+      "consumer_count": 11,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorExteriorCustomizationMode.lua",
+          "line": 15,
+          "text": "\"HOUSE_LEVEL_CHANGED\","
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorExteriorCustomizationMode.lua",
+          "line": 73,
+          "text": "elseif event == \"HOUSE_LEVEL_CHANGED\" then"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorTemplates.lua",
+          "line": 307,
+          "text": "self.updateEvents = {\"HOUSING_NUM_DECOR_PLACED_CHANGED\", \"HOUSE_LEVEL_CHANGED\"};"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorTemplates.lua",
+          "line": 356,
+          "text": "self.updateEvents = {\"HOUSING_LAYOUT_ROOM_RECEIVED\", \"HOUSING_LAYOUT_ROOM_REMOVED\", \"HOUSE_LEVEL_CHANGED\"};"
+        },
+        {
+          "file": "Blizzard_HousingBlueprint/Blizzard_HousingBlueprintContentList.lua",
+          "line": 11,
+          "text": "\"HOUSE_LEVEL_CHANGED\","
+        },
+        {
+          "file": "Blizzard_HousingBlueprint/Blizzard_HousingBlueprintContentList.lua",
+          "line": 185,
+          "text": "or event == \"HOUSE_LEVEL_CHANGED\" then"
+        },
+        {
+          "file": "Blizzard_HousingBlueprint/Blizzard_HousingBlueprintContentSummary.lua",
+          "line": 9,
+          "text": "\"HOUSE_LEVEL_CHANGED\","
+        },
+        {
+          "file": "Blizzard_HousingBlueprint/Blizzard_HousingBlueprintContentSummary.lua",
+          "line": 34,
+          "text": "or event == \"HOUSE_LEVEL_CHANGED\" then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.IsInterruptAction-22",
+      "symbol": "C_ActionBar.IsInterruptAction",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ActionBarFrameDocumentation.lua",
+          "line": 794,
+          "contract": "{\n\t\t\tName = \"IsInterruptAction\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Returns whether the given action button contains a spell that can interrupt spellcasting.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slotID\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isInterruptAction\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_Tutorials/Blizzard_Tutorials_RPE.lua",
+          "line": 107,
+          "text": "if C_ActionBar.IsInterruptAction(btn.action) then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_CurrencyInfo.GetPlayerCurrencyCategoryInfo-24",
+      "symbol": "C_CurrencyInfo.GetPlayerCurrencyCategoryInfo",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/CurrencyInfoDocumentation.lua",
+          "line": 378,
+          "contract": "{\n\t\t\tName = \"GetPlayerCurrencyCategoryInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"categoryID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"includeAccountWide\", Type = \"bool\", Nilable = false, Default = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"PlayerCurrencyCategoryInfo\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetAllDyeColorCategories-25",
+      "symbol": "C_DyeColor.GetAllDyeColorCategories",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 11,
+          "contract": "{\n\t\t\tName = \"GetAllDyeColorCategories\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"dyeColorCategoryIDs\", Type = \"table\", InnerType = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetAllDyeColors-26",
+      "symbol": "C_DyeColor.GetAllDyeColors",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 20,
+          "contract": "{\n\t\t\tName = \"GetAllDyeColors\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"ownedColorsOnly\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"dyeColorIDs\", Type = \"table\", InnerType = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCustomizationDyeTemplates.lua",
+          "line": 251,
+          "text": "local dyeColorIDs = C_DyeColor.GetAllDyeColors();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27",
+      "symbol": "C_DyeColor.GetDyeColorCategoryInfo",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 35,
+          "contract": "{\n\t\t\tName = \"GetDyeColorCategoryInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"dyeColorCategoryID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"dyeColorCategoryInfo\", Type = \"DyeColorCategoryDisplayInfo\", Nilable = true },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCustomizationDyeTemplates.lua",
+          "line": 162,
+          "text": "local dyeColorCategory = C_DyeColor.GetDyeColorCategoryInfo(dyeSlotInfo.dyeColorCategoryID);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorInfo-30",
+      "symbol": "C_DyeColor.GetDyeColorInfo",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 50,
+          "contract": "{\n\t\t\tName = \"GetDyeColorInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"dyeColorID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"dyeColorInfo\", Type = \"DyeColorDisplayInfo\", Nilable = true },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 7,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCustomizationDyeTemplates.lua",
+          "line": 140,
+          "text": "local dyeColorInfo = C_DyeColor.GetDyeColorInfo(dyeColorID);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCustomizationDyeTemplates.lua",
+          "line": 166,
+          "text": "local dyeColorInfo = dyeSlotInfo.dyeColorID and C_DyeColor.GetDyeColorInfo(dyeSlotInfo.dyeColorID);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCustomizationDyeTemplates.lua",
+          "line": 239,
+          "text": "local dyeColorInfo = C_DyeColor.GetDyeColorInfo(dyeColorID);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCustomizationDyeTemplates.lua",
+          "line": 254,
+          "text": "local dyeColorInfo = C_DyeColor.GetDyeColorInfo(dyeColorID);"
+        },
+        {
+          "file": "Blizzard_HousingInspectModeUI/Blizzard_HousingInspectModeUI.lua",
+          "line": 170,
+          "text": "local dyeColorInfo = C_DyeColor.GetDyeColorInfo(dyeColorID);"
+        },
+        {
+          "file": "Blizzard_HousingModelPreview/Blizzard_HousingModelPreview.lua",
+          "line": 160,
+          "text": "local dyeColorInfo = C_DyeColor.GetDyeColorInfo(dyeSlotEntry.dyeColorID);"
+        },
+        {
+          "file": "Blizzard_HousingTemplates/Blizzard_HousingCatalogEntry.lua",
+          "line": 41,
+          "text": "local dyeColorInfo = dyeColorID and C_DyeColor.GetDyeColorInfo(dyeColorID) or nil;"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31",
+      "symbol": "C_DyeColor.GetDyeColorsInCategory",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 95,
+          "contract": "{\n\t\t\tName = \"GetDyeColorsInCategory\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"dyeColorCategory\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"ownedColorsOnly\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"dyeColorIDs\", Type = \"table\", InnerType = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.IsDyeColorOwned-32",
+      "symbol": "C_DyeColor.IsDyeColorOwned",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 111,
+          "contract": "{\n\t\t\tName = \"IsDyeColorOwned\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"True if the player owns any of the consumable item used to apply the specified dye\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"dyeColorID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isOwned\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsClassAllowedForGameMode-34",
+      "symbol": "C_GameRules.IsClassAllowedForGameMode",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/GameRulesDocumentation.lua",
+          "line": 177,
+          "contract": "{\n\t\t\tName = \"IsClassAllowedForGameMode\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"classID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"valid\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsWoWHack-39",
+      "symbol": "C_GameRules.IsWoWHack",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/GameRulesDocumentation.lua",
+          "line": 259,
+          "contract": "{\n\t\t\tName = \"IsWoWHack\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"active\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua",
+          "line": 521,
+          "text": "if C_GameRules.IsWoWHack() then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.ActivateHouseEditorMode-40",
+      "symbol": "C_HouseEditor.ActivateHouseEditorMode",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 11,
+          "contract": "{\n\t\t\tName = \"ActivateHouseEditorMode\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Attempts switch the House Editor to a specific House Editor mode\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"editMode\", Type = \"HouseEditorMode\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"HousingResult\", Nilable = false, Documentation = { \"The initial result of the attempt to activate the mode; If Success, mode is either already active, or we've succesfully started making required requests to server; Listen for MODE_CHANGED or MODE_CHANGE_FAILURE events for ultimate end result after server calls\" } },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 6,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorModeButtons.lua",
+          "line": 141,
+          "text": "C_HouseEditor.ActivateHouseEditorMode(self.editorMode);"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 82,
+          "text": "C_HouseEditor.ActivateHouseEditorMode(mode);"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 95,
+          "text": "C_HouseEditor.ActivateHouseEditorMode(expertMode);"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 336,
+          "text": "C_HouseEditor.ActivateHouseEditorMode(Enum.HouseEditorMode.Layout);"
+        },
+        {
+          "file": "Blizzard_HousingTemplates/Blizzard_HousingCatalogEntry.lua",
+          "line": 707,
+          "text": "C_HouseEditor.ActivateHouseEditorMode(Enum.HouseEditorMode.BasicDecor);"
+        },
+        {
+          "file": "Blizzard_HousingTemplates/Blizzard_HousingCatalogEntry.lua",
+          "line": 994,
+          "text": "C_HouseEditor.ActivateHouseEditorMode(Enum.HouseEditorMode.Layout);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.EnterHouseEditor-41",
+      "symbol": "C_HouseEditor.EnterHouseEditor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 27,
+          "contract": "{\n\t\t\tName = \"EnterHouseEditor\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Attempts to open the House Editor to the default House Editor mode\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"HousingResult\", Nilable = false, Documentation = { \"The initial result of the attempt to open the Editor; If Success, Editor is either already active, or we've succesfully started making required requests to server; Listen for MODE_CHANGED or MODE_CHANGE_FAILURE events for ultimate end result after server calls\" } },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+          "line": 84,
+          "text": "local initialResult = C_HouseEditor.EnterHouseEditor();"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 44,
+          "text": "local initialResult = C_HouseEditor.EnterHouseEditor();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorAvailability-43",
+      "symbol": "C_HouseEditor.GetHouseEditorAvailability",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 46,
+          "contract": "{\n\t\t\tName = \"GetHouseEditorAvailability\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns the availability state of the House Editor overall\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"HousingResult\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+          "line": 64,
+          "text": "local availabilityResult = C_HouseEditor.GetHouseEditorAvailability();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44",
+      "symbol": "C_HouseEditor.GetHouseEditorModeAvailability",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 56,
+          "contract": "{\n\t\t\tName = \"GetHouseEditorModeAvailability\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Returns the availability of a specific House Editor mode\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"editMode\", Type = \"HouseEditorMode\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"HousingResult\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 3,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorModeButtons.lua",
+          "line": 125,
+          "text": "local availabilityResult = C_HouseEditor.GetHouseEditorModeAvailability(self.editorMode);"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 59,
+          "text": "local modeAvailability = C_HouseEditor.GetHouseEditorModeAvailability(mode);"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 88,
+          "text": "if C_HouseEditor.GetHouseEditorModeAvailability(expertMode) ~= Enum.HousingResult.Success then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorActive-45",
+      "symbol": "C_HouseEditor.IsHouseEditorActive",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 81,
+          "contract": "{\n\t\t\tName = \"IsHouseEditorActive\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns whether the House Editor is active, in any mode\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isEditorActive\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 13,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditor.lua",
+          "line": 83,
+          "text": "if C_HouseEditor.IsHouseEditorActive() then"
+        },
+        {
+          "file": "Blizzard_HousingBlueprint/Blizzard_HousingBlueprintImport.lua",
+          "line": 130,
+          "text": "if C_HouseEditor.IsHouseEditorActive() then"
+        },
+        {
+          "file": "Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+          "line": 80,
+          "text": "return C_HouseEditor.IsHouseEditorActive();"
+        },
+        {
+          "file": "Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+          "line": 121,
+          "text": "return C_Housing.IsInsideHouse() and not C_HouseEditor.IsHouseEditorActive();"
+        },
+        {
+          "file": "Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+          "line": 192,
+          "text": "if C_HouseEditor.IsHouseEditorActive() then"
+        },
+        {
+          "file": "Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+          "line": 242,
+          "text": "if C_HouseEditor.IsHouseEditorActive() then"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 41,
+          "text": "if C_HouseEditor.IsHouseEditorActive() then"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 317,
+          "text": "if not C_Housing.IsInsideHouse() and C_HouseEditor.IsHouseEditorActive() then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46",
+      "symbol": "C_HouseEditor.IsHouseEditorModeActive",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 91,
+          "contract": "{\n\t\t\tName = \"IsHouseEditorModeActive\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Returns whether the specific House Editor mode is active\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"editMode\", Type = \"HouseEditorMode\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isModeActive\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 7,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorModeButtons.lua",
+          "line": 82,
+          "text": "return C_HouseEditor.IsHouseEditorModeActive(self.editorMode);"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 78,
+          "text": "if C_HouseEditor.IsHouseEditorModeActive(mode) then"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 94,
+          "text": "if not C_HouseEditor.IsHouseEditorModeActive(expertMode) then"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 331,
+          "text": "if C_HouseEditor.IsHouseEditorModeActive(Enum.HouseEditorMode.Layout) and HouseEditorFrame then"
+        },
+        {
+          "file": "Blizzard_HousingTemplates/Blizzard_HousingCatalogEntry.lua",
+          "line": 706,
+          "text": "if not C_HouseEditor.IsHouseEditorModeActive(Enum.HouseEditorMode.BasicDecor) then"
+        },
+        {
+          "file": "Blizzard_HousingTemplates/Blizzard_HousingCatalogEntry.lua",
+          "line": 938,
+          "text": "if C_HouseEditor.IsHouseEditorModeActive(Enum.HouseEditorMode.Layout) and (not C_HousingLayout.HasSelectedBlueprintFloorplan()) then"
+        },
+        {
+          "file": "Blizzard_HousingTemplates/Blizzard_HousingCatalogEntry.lua",
+          "line": 993,
+          "text": "if not C_HouseEditor.IsHouseEditorModeActive(Enum.HouseEditorMode.Layout) then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47",
+      "symbol": "C_HouseEditor.IsHouseEditorStatusAvailable",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 107,
+          "contract": "{\n\t\t\tName = \"IsHouseEditorStatusAvailable\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if the HouseEditor currently able process mode availability and switching; May be false if not in a house or plot, or while waiting to get house settings back from the server\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"editorStatusAvailable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.LeaveHouseEditor-48",
+      "symbol": "C_HouseEditor.LeaveHouseEditor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 117,
+          "contract": "{\n\t\t\tName = \"LeaveHouseEditor\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 8,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditor.lua",
+          "line": 84,
+          "text": "C_HouseEditor.LeaveHouseEditor();"
+        },
+        {
+          "file": "Blizzard_HousingBlueprint/Blizzard_HousingBlueprintCollection.lua",
+          "line": 227,
+          "text": "C_HouseEditor.LeaveHouseEditor();"
+        },
+        {
+          "file": "Blizzard_HousingBlueprint/Blizzard_HousingBlueprintImport.lua",
+          "line": 144,
+          "text": "C_HouseEditor.LeaveHouseEditor();"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 33,
+          "text": "C_HouseEditor.LeaveHouseEditor();"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 36,
+          "text": "C_HouseEditor.LeaveHouseEditor();"
+        },
+        {
+          "file": "Blizzard_HousingTemplates/Blizzard_HousingCatalogUtil.lua",
+          "line": 25,
+          "text": "C_HouseEditor.LeaveHouseEditor();"
+        },
+        {
+          "file": "Blizzard_Kiosk/Housing/Game.lua",
+          "line": 106,
+          "text": "C_HouseEditor.LeaveHouseEditor();"
+        },
+        {
+          "file": "Blizzard_Kiosk/Housing/Game.lua",
+          "line": 110,
+          "text": "C_HouseEditor.LeaveHouseEditor();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.AcceptNeighborhoodOwnership-59",
+      "symbol": "C_Housing.AcceptNeighborhoodOwnership",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 11,
+          "contract": "{\n\t\t\tName = \"AcceptNeighborhoodOwnership\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 458,
+          "text": "C_Housing.AcceptNeighborhoodOwnership();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CanEditCharter-60",
+      "symbol": "C_Housing.CanEditCharter",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 15,
+          "contract": "{\n\t\t\tName = \"CanEditCharter\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"canEditCharter\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCharter/Blizzard_HousingCharter.lua",
+          "line": 98,
+          "text": "self.SettingsButton:SetEnabled(C_Housing.CanEditCharter());"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CanTakeReportScreenshot-61",
+      "symbol": "C_Housing.CanTakeReportScreenshot",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 24,
+          "contract": "{\n\t\t\tName = \"CanTakeReportScreenshot\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"plotIndex\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"reason\", Type = \"InvalidPlotScreenshotReason\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_ReportFrameShared/ReportFrameShared.lua",
+          "line": 264,
+          "text": "local screenshotValidationResult =  C_Housing.CanTakeReportScreenshot(ReportFrame.reportInfo.plotIndex);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CreateGuildNeighborhood-62",
+      "symbol": "C_Housing.CreateGuildNeighborhood",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 39,
+          "contract": "{\n\t\t\tName = \"CreateGuildNeighborhood\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"neighborhoodName\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCreateNeighborhood/Blizzard_HousingCreateNeighborhood.lua",
+          "line": 97,
+          "text": "C_Housing.CreateGuildNeighborhood(HousingCreateGuildNeighborhoodFrame.NeighborhoodNameEditBox:GetText());"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CreateNeighborhoodCharter-63",
+      "symbol": "C_Housing.CreateNeighborhoodCharter",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 49,
+          "contract": "{\n\t\t\tName = \"CreateNeighborhoodCharter\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"neighborhoodName\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCreateNeighborhood/Blizzard_HousingCreateNeighborhood.lua",
+          "line": 239,
+          "text": "C_Housing.CreateNeighborhoodCharter(self.NeighborhoodNameEditBox:GetText());"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.DeclineNeighborhoodOwnership-64",
+      "symbol": "C_Housing.DeclineNeighborhoodOwnership",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 59,
+          "contract": "{\n\t\t\tName = \"DeclineNeighborhoodOwnership\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 462,
+          "text": "C_Housing.DeclineNeighborhoodOwnership();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.EditNeighborhoodCharter-66",
+      "symbol": "C_Housing.EditNeighborhoodCharter",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 78,
+          "contract": "{\n\t\t\tName = \"EditNeighborhoodCharter\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"neighborhoodName\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCreateNeighborhood/Blizzard_HousingCreateNeighborhood.lua",
+          "line": 237,
+          "text": "C_Housing.EditNeighborhoodCharter(self.NeighborhoodNameEditBox:GetText());"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentHouseInfo-67",
+      "symbol": "C_Housing.GetCurrentHouseInfo",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 88,
+          "contract": "{\n\t\t\tName = \"GetCurrentHouseInfo\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"houseInfo\", Type = \"HouseInfo\", Nilable = true },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 3,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingControls/Blizzard_HousingControls.lua",
+          "line": 105,
+          "text": "local houseInfo = C_Housing.GetCurrentHouseInfo();"
+        },
+        {
+          "file": "Blizzard_HousingCornerstone/Blizzard_HousingCornerstone.lua",
+          "line": 393,
+          "text": "local houseInfo = C_Housing.GetCurrentHouseInfo();"
+        },
+        {
+          "file": "Blizzard_HousingDashboard/Blizzard_HousingDashboardHouseDropdown.lua",
+          "line": 64,
+          "text": "local currentHouseInfo = C_Housing.GetCurrentHouseInfo();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentHouseRefundAmount-69",
+      "symbol": "C_Housing.GetCurrentHouseRefundAmount",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 107,
+          "contract": "{\n\t\t\tName = \"GetCurrentHouseRefundAmount\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"refundAmount\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingHouseSettings/Blizzard_HousingHouseSettings.lua",
+          "line": 332,
+          "text": "local refundAmount =  C_Housing.GetCurrentHouseRefundAmount();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentNeighborhoodGUID-70",
+      "symbol": "C_Housing.GetCurrentNeighborhoodGUID",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 116,
+          "contract": "{\n\t\t\tName = \"GetCurrentNeighborhoodGUID\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"neighborhoodGUID\", Type = \"WOWGUID\", Nilable = true },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingDashboard/Blizzard_HousingDashboardHouseDropdown.lua",
+          "line": 77,
+          "text": "local currentNeighborhoodGUID = C_Housing.GetCurrentNeighborhoodGUID();"
+        },
+        {
+          "file": "Blizzard_HousingDashboard/Blizzard_HousingDashboardHouseUpgrade.lua",
+          "line": 405,
+          "text": "local currentNeighborhoodGUID = C_Housing.GetCurrentNeighborhoodGUID();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetHouseLevelRewardsForLevel-72",
+      "symbol": "C_Housing.GetHouseLevelRewardsForLevel",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 140,
+          "contract": "{\n\t\t\tName = \"GetHouseLevelRewardsForLevel\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"level\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingDashboard/Blizzard_HousingDashboardHouseUpgrade.lua",
+          "line": 24,
+          "text": "C_Housing.GetHouseLevelRewardsForLevel(i); --will respond with RECEIVED_HOUSE_LEVEL_REWARDS"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetHousingAccessFlags-73",
+      "symbol": "C_Housing.GetHousingAccessFlags",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 150,
+          "contract": "{\n\t\t\tName = \"GetHousingAccessFlags\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"accessFlags\", Type = \"HouseSettingFlags\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingHouseSettings/Blizzard_HousingHouseSettings.lua",
+          "line": 67,
+          "text": "local selectedSettings = C_Housing.GetHousingAccessFlags();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetOthersOwnedHouses-76",
+      "symbol": "C_Housing.GetOthersOwnedHouses",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 183,
+          "contract": "{\n\t\t\tName = \"GetOthersOwnedHouses\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"playerGUID\", Type = \"WOWGUID\", Nilable = true },\n\t\t\t\t{ Name = \"bnetID\", Type = \"number\", Nilable = true },\n\t\t\t\t{ Name = \"isInPlayersGuild\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseList/Blizzard_HouseList.lua",
+          "line": 48,
+          "text": "C_Housing.GetOthersOwnedHouses(guid, bnetID, not not isGuildMember);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HouseFinderDeclineNeighborhoodInvitation-82",
+      "symbol": "C_Housing.HouseFinderDeclineNeighborhoodInvitation",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 242,
+          "contract": "{\n\t\t\tName = \"HouseFinderDeclineNeighborhoodInvitation\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingHouseFinder/Blizzard_HousingHouseFinder.lua",
+          "line": 660,
+          "text": "C_Housing.HouseFinderDeclineNeighborhoodInvitation();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HouseFinderRequestReservationAndPort-84",
+      "symbol": "C_Housing.HouseFinderRequestReservationAndPort",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 260,
+          "contract": "{\n\t\t\tName = \"HouseFinderRequestReservationAndPort\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"neighborhoodGuid\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"plotID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingHouseFinder/Blizzard_HousingHouseFinder.lua",
+          "line": 546,
+          "text": "C_Housing.HouseFinderRequestReservationAndPort(self.neighborhoodGUID, self.plotInfo.plotID);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsHousingMarketEnabled-85",
+      "symbol": "C_Housing.IsHousingMarketEnabled",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 280,
+          "contract": "{\n\t\t\tName = \"IsHousingMarketEnabled\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isHousingMarketEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorStorageFrame.lua",
+          "line": 414,
+          "text": "return C_Housing.IsHousingMarketEnabled();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsidePlot-90",
+      "symbol": "C_Housing.IsInsidePlot",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 352,
+          "contract": "{\n\t\t\tName = \"IsInsidePlot\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isInside\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsOnNeighborhoodMap-91",
+      "symbol": "C_Housing.IsOnNeighborhoodMap",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 361,
+          "contract": "{\n\t\t\tName = \"IsOnNeighborhoodMap\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isOnNeighborhoodMap\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_SharedMapDataProviders/NeighborhoodMapDataProvider.lua",
+          "line": 33,
+          "text": "if C_Housing.IsOnNeighborhoodMap() and self:GetMap():GetMapID() == C_Map.GetBestMapForUnit(\"player\") then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.LeaveHouse-92",
+      "symbol": "C_Housing.LeaveHouse",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 370,
+          "contract": "{\n\t\t\tName = \"LeaveHouse\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+          "line": 109,
+          "text": "C_Housing.LeaveHouse();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCharterConfirmationAccepted-93",
+      "symbol": "C_Housing.OnCharterConfirmationAccepted",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 374,
+          "contract": "{\n\t\t\tName = \"OnCharterConfirmationAccepted\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCreateNeighborhood/Blizzard_HousingCreateNeighborhood.lua",
+          "line": 55,
+          "text": "C_Housing.OnCharterConfirmationAccepted();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCharterConfirmationClosed-94",
+      "symbol": "C_Housing.OnCharterConfirmationClosed",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 378,
+          "contract": "{\n\t\t\tName = \"OnCharterConfirmationClosed\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCreateNeighborhood/Blizzard_HousingCreateNeighborhood.lua",
+          "line": 76,
+          "text": "C_Housing.OnCharterConfirmationClosed();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCreateCharterNeighborhoodClosed-95",
+      "symbol": "C_Housing.OnCreateCharterNeighborhoodClosed",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 382,
+          "contract": "{\n\t\t\tName = \"OnCreateCharterNeighborhoodClosed\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCreateNeighborhood/Blizzard_HousingCreateNeighborhood.lua",
+          "line": 248,
+          "text": "C_Housing.OnCreateCharterNeighborhoodClosed();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCreateGuildNeighborhoodClosed-96",
+      "symbol": "C_Housing.OnCreateGuildNeighborhoodClosed",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 386,
+          "contract": "{\n\t\t\tName = \"OnCreateGuildNeighborhoodClosed\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCreateNeighborhood/Blizzard_HousingCreateNeighborhood.lua",
+          "line": 170,
+          "text": "C_Housing.OnCreateGuildNeighborhoodClosed();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnRequestSignatureClicked-97",
+      "symbol": "C_Housing.OnRequestSignatureClicked",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 400,
+          "contract": "{\n\t\t\tName = \"OnRequestSignatureClicked\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCharter/Blizzard_HousingCharter.lua",
+          "line": 21,
+          "text": "C_Housing.OnRequestSignatureClicked();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnSignCharterClicked-98",
+      "symbol": "C_Housing.OnSignCharterClicked",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 404,
+          "contract": "{\n\t\t\tName = \"OnSignCharterClicked\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"charterOwnerGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCharter/Blizzard_HousingCharter.lua",
+          "line": 136,
+          "text": "C_Housing.OnSignCharterClicked(self.neighborhoodInfo.ownerGUID);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RelinquishHouse-99",
+      "symbol": "C_Housing.RelinquishHouse",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 414,
+          "contract": "{\n\t\t\tName = \"RelinquishHouse\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"houseGuid\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingHouseSettings/Blizzard_HousingHouseSettings.lua",
+          "line": 344,
+          "text": "C_Housing.RelinquishHouse(self.houseInfo.houseGUID);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RequestCurrentHouseInfo-100",
+      "symbol": "C_Housing.RequestCurrentHouseInfo",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 424,
+          "contract": "{\n\t\t\tName = \"RequestCurrentHouseInfo\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCornerstone/Blizzard_HousingCornerstone.lua",
+          "line": 351,
+          "text": "C_Housing.RequestCurrentHouseInfo();"
+        },
+        {
+          "file": "Blizzard_HousingHouseSettings/Blizzard_HousingHouseSettings.lua",
+          "line": 162,
+          "text": "C_Housing.RequestCurrentHouseInfo();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RequestPlayerCharacterList-102",
+      "symbol": "C_Housing.RequestPlayerCharacterList",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 439,
+          "contract": "{\n\t\t\tName = \"RequestPlayerCharacterList\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingHouseSettings/Blizzard_HousingHouseSettings.lua",
+          "line": 84,
+          "text": "C_Housing.RequestPlayerCharacterList();"
+        },
+        {
+          "file": "Blizzard_HousingHouseSettings/Blizzard_HousingHouseSettings.lua",
+          "line": 141,
+          "text": "C_Housing.RequestPlayerCharacterList();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ReturnAfterVisitingHouse-103",
+      "symbol": "C_Housing.ReturnAfterVisitingHouse",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 455,
+          "contract": "{\n\t\t\tName = \"ReturnAfterVisitingHouse\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_FrameXML/SecureTemplates.lua",
+          "line": 639,
+          "text": "C_Housing.ReturnAfterVisitingHouse();"
+        },
+        {
+          "file": "Blizzard_HousingDashboard/Blizzard_HousingDashboardHouseUpgrade.lua",
+          "line": 373,
+          "text": "C_Housing.ReturnAfterVisitingHouse();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SaveHouseSettings-104",
+      "symbol": "C_Housing.SaveHouseSettings",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 460,
+          "contract": "{\n\t\t\tName = \"SaveHouseSettings\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"playerGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"accessFlags\", Type = \"HouseSettingFlags\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingHouseSettings/Blizzard_HousingHouseSettings.lua",
+          "line": 199,
+          "text": "C_Housing.SaveHouseSettings(newOwnerGUID, accessSettings);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoods-106",
+      "symbol": "C_Housing.SearchBNetFriendNeighborhoods",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 471,
+          "contract": "{\n\t\t\tName = \"SearchBNetFriendNeighborhoods\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"bnetName\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isValidBnetFriend\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingHouseFinder/Blizzard_HousingHouseFinder.lua",
+          "line": 309,
+          "text": "return C_Housing.SearchBNetFriendNeighborhoodsByID(bnetID);"
+        },
+        {
+          "file": "Blizzard_HousingHouseFinder/Blizzard_HousingHouseFinder.lua",
+          "line": 312,
+          "text": "return C_Housing.SearchBNetFriendNeighborhoods(searchBox:GetText());"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoodsByID-105",
+      "symbol": "C_Housing.SearchBNetFriendNeighborhoodsByID",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 486,
+          "contract": "{\n\t\t\tName = \"SearchBNetFriendNeighborhoodsByID\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"bnetID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isValidBnetFriend\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingHouseFinder/Blizzard_HousingHouseFinder.lua",
+          "line": 309,
+          "text": "return C_Housing.SearchBNetFriendNeighborhoodsByID(bnetID);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SetTrackedHouseGuid-107",
+      "symbol": "C_Housing.SetTrackedHouseGuid",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 501,
+          "contract": "{\n\t\t\tName = \"SetTrackedHouseGuid\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"trackedHouse\", Type = \"WOWGUID\", Nilable = true },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingDashboard/Blizzard_HousingDashboardHouseUpgrade.lua",
+          "line": 495,
+          "text": "C_Housing.SetTrackedHouseGuid(nil);"
+        },
+        {
+          "file": "Blizzard_HousingDashboard/Blizzard_HousingDashboardHouseUpgrade.lua",
+          "line": 497,
+          "text": "C_Housing.SetTrackedHouseGuid(self.houseGUID);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.TeleportHome-109",
+      "symbol": "C_Housing.TeleportHome",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 515,
+          "contract": "{\n\t\t\tName = \"TeleportHome\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"neighborhoodGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"houseGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"plotID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_FrameXML/SecureTemplates.lua",
+          "line": 633,
+          "text": "C_Housing.TeleportHome(neighborhoodGUID, houseGUID, plotID);"
+        },
+        {
+          "file": "Blizzard_HousingDashboard/Blizzard_HousingDashboardHouseUpgrade.lua",
+          "line": 371,
+          "text": "C_Housing.TeleportHome(self.houseInfo.neighborhoodGUID, self.houseInfo.houseGUID, self.houseInfo.plotID);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.TryRenameNeighborhood-110",
+      "symbol": "C_Housing.TryRenameNeighborhood",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 528,
+          "contract": "{\n\t\t\tName = \"TryRenameNeighborhood\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"neighborhoodName\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingBulletinBoard/Blizzard_HousingBulletinBoard.lua",
+          "line": 738,
+          "text": "C_Housing.TryRenameNeighborhood(NeighborhoodChangeNameDialog.NameEditBox:GetText());"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ValidateCreateGuildNeighborhoodSize-111",
+      "symbol": "C_Housing.ValidateCreateGuildNeighborhoodSize",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 538,
+          "contract": "{\n\t\t\tName = \"ValidateCreateGuildNeighborhoodSize\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingCreateNeighborhood/Blizzard_HousingCreateNeighborhood.lua",
+          "line": 144,
+          "text": "C_Housing.ValidateCreateGuildNeighborhoodSize();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ValidateNeighborhoodName-112",
+      "symbol": "C_Housing.ValidateNeighborhoodName",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 542,
+          "contract": "{\n\t\t\tName = \"ValidateNeighborhoodName\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"neighborhoodName\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 3,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingBulletinBoard/Blizzard_HousingBulletinBoard.lua",
+          "line": 756,
+          "text": "C_Housing.ValidateNeighborhoodName(NeighborhoodChangeNameDialog.NameEditBox:GetText());"
+        },
+        {
+          "file": "Blizzard_HousingCreateNeighborhood/Blizzard_HousingCreateNeighborhood.lua",
+          "line": 120,
+          "text": "C_Housing.ValidateNeighborhoodName(self.NeighborhoodNameEditBox:GetText());"
+        },
+        {
+          "file": "Blizzard_HousingCreateNeighborhood/Blizzard_HousingCreateNeighborhood.lua",
+          "line": 201,
+          "text": "C_Housing.ValidateNeighborhoodName(self.NeighborhoodNameEditBox:GetText());"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.VisitHouse-113",
+      "symbol": "C_Housing.VisitHouse",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 552,
+          "contract": "{\n\t\t\tName = \"VisitHouse\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"neighborhoodGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"houseGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"plotID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_FrameXML/SecureTemplates.lua",
+          "line": 649,
+          "text": "C_Housing.VisitHouse(neighborhoodGUID, houseGUID, plotID);"
+        },
+        {
+          "file": "Blizzard_HouseList/Blizzard_HouseList.lua",
+          "line": 135,
+          "text": "C_Housing.VisitHouse(self.houseInfo.neighborhoodGUID, self.houseInfo.houseGUID, self.houseInfo.plotID);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.GetHoveredDecorInfo-118",
+      "symbol": "C_HousingBasicMode.GetHoveredDecorInfo",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 30,
+          "contract": "{\n\t\t\tName = \"GetHoveredDecorInfo\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns info for the placed decor instance currently being hovered, if there is one\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"HousingDecorInstanceInfo\", Nilable = true },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsHouseExteriorHovered-123",
+      "symbol": "C_HousingBasicMode.IsHouseExteriorHovered",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 88,
+          "contract": "{\n\t\t\tName = \"IsHouseExteriorHovered\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if the house's exterior is currently being hovered\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isHouseExteriorHovered\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsHoveringDecor-125",
+      "symbol": "C_HousingBasicMode.IsHoveringDecor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 108,
+          "contract": "{\n\t\t\tName = \"IsHoveringDecor\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if a placed decor instance is currently being hovered\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isHoveringDecor\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RemoveSelectedDecor-128",
+      "symbol": "C_HousingBasicMode.RemoveSelectedDecor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 127,
+          "contract": "{\n\t\t\tName = \"RemoveSelectedDecor\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Attempt to return the currently selected decor instance back to the house chest\" },\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RotateDecor-129",
+      "symbol": "C_HousingBasicMode.RotateDecor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 132,
+          "contract": "{\n\t\t\tName = \"RotateDecor\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Rotates the currently selected decor along a single axis; For wall decor, rotates such that the object stays flat against its current wall; For all other decor, rotates around the Z (vertical) axis\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"rotDegrees\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 157,
+          "text": "C_HousingBasicMode.RotateDecor(direction);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RotateHouseExterior-130",
+      "symbol": "C_HousingBasicMode.RotateHouseExterior",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 143,
+          "contract": "{\n\t\t\tName = \"RotateHouseExterior\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Rotates the House Exterior around the Z (vertical) axis\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"rotDegrees\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 159,
+          "text": "C_HousingBasicMode.RotateHouseExterior(direction);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryDebugInfoForID-140",
+      "symbol": "C_HousingCatalog.GetCatalogEntryDebugInfoForID",
+      "cached_contracts": [],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.GetHoveredDecorInfo-152",
+      "symbol": "C_HousingCleanupMode.GetHoveredDecorInfo",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCleanupModeUIDocumentation.lua",
+          "line": 11,
+          "contract": "{\n\t\t\tName = \"GetHoveredDecorInfo\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"HousingDecorInstanceInfo\", Nilable = true },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.IsHoveringDecor-153",
+      "symbol": "C_HousingCleanupMode.IsHoveringDecor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCleanupModeUIDocumentation.lua",
+          "line": 20,
+          "contract": "{\n\t\t\tName = \"IsHoveringDecor\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isHoveringDecor\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.RemoveSelectedDecor-154",
+      "symbol": "C_HousingCleanupMode.RemoveSelectedDecor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCleanupModeUIDocumentation.lua",
+          "line": 29,
+          "contract": "{\n\t\t\tName = \"RemoveSelectedDecor\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyDyeToSelectedDecor-155",
+      "symbol": "C_HousingCustomizeMode.ApplyDyeToSelectedDecor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCustomizeModeUIDocumentation.lua",
+          "line": 11,
+          "contract": "{\n\t\t\tName = \"ApplyDyeToSelectedDecor\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"If a dyeable decor is selected, applies a specific dye color in a specific slot as a preview; See CommitDyesForSelectedDecor to actually save applied dye changes\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"dyeSlotID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"dyeColorID\", Type = \"number\", Nilable = true, Documentation = { \"If not provided, clears the dye from the specified dye slot, returning that part of the decor asset to its default color\" } },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCustomizationDyeTemplates.lua",
+          "line": 295,
+          "text": "C_HousingCustomizeMode.ApplyDyeToSelectedDecor(self.dyeSlotInfo.ID, selectedColorID);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ClearDyesForSelectedDecor-161",
+      "symbol": "C_HousingCustomizeMode.ClearDyesForSelectedDecor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCustomizeModeUIDocumentation.lua",
+          "line": 84,
+          "contract": "{\n\t\t\tName = \"ClearDyesForSelectedDecor\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Clears all previewed dye changes on the selected decor; Does not clear any already saved dyes that were previously applied\" },\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetHoveredDecorInfo-164",
+      "symbol": "C_HousingCustomizeMode.GetHoveredDecorInfo",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCustomizeModeUIDocumentation.lua",
+          "line": 104,
+          "contract": "{\n\t\t\tName = \"GetHoveredDecorInfo\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns info for the placed decor instance currently being hovered, if there is one\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"HousingDecorInstanceInfo\", Nilable = true },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.IsHoveringDecor-177",
+      "symbol": "C_HousingCustomizeMode.IsHoveringDecor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCustomizeModeUIDocumentation.lua",
+          "line": 267,
+          "contract": "{\n\t\t\tName = \"IsHoveringDecor\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if a placed decor instance is currently being hovered\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isHoveringDecor\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetDecorDebugInfoForGUID-186",
+      "symbol": "C_HousingDecor.GetDecorDebugInfoForGUID",
+      "cached_contracts": [],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetSelectedDecorDebugInfo-195",
+      "symbol": "C_HousingDecor.GetSelectedDecorDebugInfo",
+      "cached_contracts": [],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.IsHouseExteriorDoorHovered-201",
+      "symbol": "C_HousingDecor.IsHouseExteriorDoorHovered",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingDecorUIDocumentation.lua",
+          "line": 281,
+          "contract": "{\n\t\t\tName = \"IsHouseExteriorDoorHovered\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if the entry door of the house's exterior is currently being hovered\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isHouseExteriorDoorHovered\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.CommitDecorMovement-210",
+      "symbol": "C_HousingExpertMode.CommitDecorMovement",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 16,
+          "contract": "{\n\t\t\tName = \"CommitDecorMovement\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Attempt to save the changes made to the currently selected decor instance\" },\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.CommitHouseExteriorPosition-211",
+      "symbol": "C_HousingExpertMode.CommitHouseExteriorPosition",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 21,
+          "contract": "{\n\t\t\tName = \"CommitHouseExteriorPosition\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Attempt to save the changes made to the House Exterior's position within the plot\" },\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.GetHoveredDecorInfo-212",
+      "symbol": "C_HousingExpertMode.GetHoveredDecorInfo",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 26,
+          "contract": "{\n\t\t\tName = \"GetHoveredDecorInfo\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns info for the placed decor instance currently being hovered, if there is one\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"HousingDecorInstanceInfo\", Nilable = true },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsGridVisible-217",
+      "symbol": "C_HousingExpertMode.IsGridVisible",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 82,
+          "contract": "{\n\t\t\tName = \"IsGridVisible\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"gridVisible\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsHouseExteriorHovered-218",
+      "symbol": "C_HousingExpertMode.IsHouseExteriorHovered",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 91,
+          "contract": "{\n\t\t\tName = \"IsHouseExteriorHovered\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if the house's exterior is currently being hovered\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isHouseExteriorHovered\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsHoveringDecor-220",
+      "symbol": "C_HousingExpertMode.IsHoveringDecor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 111,
+          "contract": "{\n\t\t\tName = \"IsHoveringDecor\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if a placed decor instance is currently being hovered\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isHoveringDecor\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.RemoveSelectedDecor-221",
+      "symbol": "C_HousingExpertMode.RemoveSelectedDecor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 121,
+          "contract": "{\n\t\t\tName = \"RemoveSelectedDecor\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Attempt to return the currently selected decor instance back to the house chest\" },\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SelectNextRotationAxis-223",
+      "symbol": "C_HousingExpertMode.SelectNextRotationAxis",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 137,
+          "contract": "{\n\t\t\tName = \"SelectNextRotationAxis\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"In the rotation submode, swaps the selected axis to the next available one, in order of X -> Y -> Z (wrapping back around to X again, etc); If no axis is selected, selects the first available one, also in that order\" },\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SetGridVisible-224",
+      "symbol": "C_HousingExpertMode.SetGridVisible",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 142,
+          "contract": "{\n\t\t\tName = \"SetGridVisible\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"gridVisible\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SetPrecisionIncrementingActive-225",
+      "symbol": "C_HousingExpertMode.SetPrecisionIncrementingActive",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 152,
+          "contract": "{\n\t\t\tName = \"SetPrecisionIncrementingActive\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Sets a specific type of incremental change active or inactive; Whilever that type is active and target stays selected, incremental changes of that type will continue to be made every frame\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"incrementType\", Type = \"HousingIncrementType\", Nilable = false },\n\t\t\t\t{ Name = \"active\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 4,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_TransformManipulator/Blizzard_RotateControlFrame.lua",
+          "line": 96,
+          "text": "C_HousingExpertMode.SetPrecisionIncrementingActive(self.incrementType, true);"
+        },
+        {
+          "file": "Blizzard_TransformManipulator/Blizzard_RotateControlFrame.lua",
+          "line": 102,
+          "text": "C_HousingExpertMode.SetPrecisionIncrementingActive(self.incrementType, false);"
+        },
+        {
+          "file": "Blizzard_TransformManipulator/Blizzard_ScaleControlFrame.lua",
+          "line": 187,
+          "text": "C_HousingExpertMode.SetPrecisionIncrementingActive(self.incrementType, true);"
+        },
+        {
+          "file": "Blizzard_TransformManipulator/Blizzard_ScaleControlFrame.lua",
+          "line": 193,
+          "text": "C_HousingExpertMode.SetPrecisionIncrementingActive(self.incrementType, false);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.ConfirmStairChoice-229",
+      "symbol": "C_HousingLayout.ConfirmStairChoice",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 45,
+          "contract": "{\n\t\t\tName = \"ConfirmStairChoice\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"choice\", Type = \"HousingLayoutStairDirection\", Nilable = true, Documentation = { \"If not set, the pending stair operation will be cancelled\" } },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 3,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 480,
+          "text": "C_HousingLayout.ConfirmStairChoice(Enum.HousingLayoutStairDirection.Up);"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 484,
+          "text": "C_HousingLayout.ConfirmStairChoice(Enum.HousingLayoutStairDirection.Down);"
+        },
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 488,
+          "text": "C_HousingLayout.ConfirmStairChoice(nil);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.DeselectRoomOrDoor-231",
+      "symbol": "C_HousingLayout.DeselectRoomOrDoor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 59,
+          "contract": "{\n\t\t\tName = \"DeselectRoomOrDoor\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetNumActiveRooms-232",
+      "symbol": "C_HousingLayout.GetNumActiveRooms",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 90,
+          "contract": "{\n\t\t\tName = \"GetNumActiveRooms\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"numRooms\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedRoom-236",
+      "symbol": "C_HousingLayout.GetSelectedRoom",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 152,
+          "contract": "{\n\t\t\tName = \"GetSelectedRoom\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tDocumentation = { \"If a Room is selected, returns the room's guid; Otherwise returns nothing\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"roomGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedStairwellRoomCount-237",
+      "symbol": "C_HousingLayout.GetSelectedStairwellRoomCount",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 163,
+          "contract": "{\n\t\t\tName = \"GetSelectedStairwellRoomCount\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"stairwellRoomCount\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedDoor-242",
+      "symbol": "C_HousingLayout.HasSelectedDoor",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 220,
+          "contract": "{\n\t\t\tName = \"HasSelectedDoor\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if a door component is currently selected\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasSelectedDoor\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorLayoutMode.lua",
+          "line": 125,
+          "text": "elseif C_HousingLayout.HasSelectedDoor() or C_HousingLayout.HasSelectedFloorplan() then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedFloorplan-243",
+      "symbol": "C_HousingLayout.HasSelectedFloorplan",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 230,
+          "contract": "{\n\t\t\tName = \"HasSelectedFloorplan\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasSelectedFloorplan\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorLayoutMode.lua",
+          "line": 125,
+          "text": "elseif C_HousingLayout.HasSelectedDoor() or C_HousingLayout.HasSelectedFloorplan() then"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorLayoutModePin.lua",
+          "line": 128,
+          "text": "elseif C_HousingLayout.HasSelectedFloorplan() then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedRoom-244",
+      "symbol": "C_HousingLayout.HasSelectedRoom",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 239,
+          "contract": "{\n\t\t\tName = \"HasSelectedRoom\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if a room is selected, will NOT return true if a door is selected\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasSelectedRoom\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorLayoutModePin.lua",
+          "line": 125,
+          "text": "elseif C_HousingLayout.HasSelectedRoom() then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasStairs-245",
+      "symbol": "C_HousingLayout.HasStairs",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 249,
+          "contract": "{\n\t\t\tName = \"HasStairs\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"roomRecordID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasStairs\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.MoveDraggedRoom-249",
+      "symbol": "C_HousingLayout.MoveDraggedRoom",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 306,
+          "contract": "{\n\t\t\tName = \"MoveDraggedRoom\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Attempt to move the room currently being dragged to a specific connection point on a specific other room\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"sourceDoorIndex\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"destRoom\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"destDoorIndex\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.MoveLayoutCamera-250",
+      "symbol": "C_HousingLayout.MoveLayoutCamera",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 319,
+          "contract": "{\n\t\t\tName = \"MoveLayoutCamera\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"direction\", Type = \"HousingLayoutCameraDirection\", Nilable = false },\n\t\t\t\t{ Name = \"isPressed\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.RotateFocusedRoom-252",
+      "symbol": "C_HousingLayout.RotateFocusedRoom",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 357,
+          "contract": "{\n\t\t\tName = \"RotateFocusedRoom\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Rotates either the currently dragged or currently selected room, if either exist\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"isLeft\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.ZoomLayoutCamera-259",
+      "symbol": "C_HousingLayout.ZoomLayoutCamera",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 412,
+          "contract": "{\n\t\t\tName = \"ZoomLayoutCamera\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"zoomIn\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"zoomChanged\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+          "line": 148,
+          "text": "local zoomChanged = C_HousingLayout.ZoomLayoutCamera(zoom);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsDecorItem-289",
+      "symbol": "C_Item.IsDecorItem",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ItemDocumentation.lua",
+          "line": 1256,
+          "contract": "{\n\t\t\tName = \"IsDecorItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Returns whether the item is a consumable decor item.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemInfo\", Type = \"ItemInfo\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isDecor\", Type = \"bool\", Nilable = true },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_ItemButton/Mainline/ItemButtonTemplate.lua",
+          "line": 288,
+          "text": "elseif C_Item.IsDecorItem(itemIDOrLink) then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.ActivateBindingContext-290",
+      "symbol": "C_KeyBindings.ActivateBindingContext",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 11,
+          "contract": "{\n\t\t\tName = \"ActivateBindingContext\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"newContext\", Type = \"BindingContext\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 9,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditor.lua",
+          "line": 71,
+          "text": "C_KeyBindings.ActivateBindingContext(Enum.BindingContext.HousingEditor);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorBasicDecorMode.lua",
+          "line": 130,
+          "text": "C_KeyBindings.ActivateBindingContext(Enum.BindingContext.HousingEditorBasicDecorMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorBasicDecorMode.lua",
+          "line": 131,
+          "text": "C_KeyBindings.ActivateBindingContext(Enum.BindingContext.HousingEditorBasicAndExpertDecorMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCleanupMode.lua",
+          "line": 32,
+          "text": "C_KeyBindings.ActivateBindingContext(Enum.BindingContext.HousingEditorCleanupMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCustomizeMode.lua",
+          "line": 231,
+          "text": "C_KeyBindings.ActivateBindingContext(Enum.BindingContext.HousingEditorCustomizeMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorExpertDecorMode.lua",
+          "line": 82,
+          "text": "C_KeyBindings.ActivateBindingContext(Enum.BindingContext.HousingEditorExpertDecorMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorExpertDecorMode.lua",
+          "line": 83,
+          "text": "C_KeyBindings.ActivateBindingContext(Enum.BindingContext.HousingEditorBasicAndExpertDecorMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorExteriorCustomizationMode.lua",
+          "line": 90,
+          "text": "C_KeyBindings.ActivateBindingContext(Enum.BindingContext.HousingEditorExteriorCustomizationMode);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.DeactivateBindingContext-291",
+      "symbol": "C_KeyBindings.DeactivateBindingContext",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 22,
+          "contract": "{\n\t\t\tName = \"DeactivateBindingContext\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"context\", Type = \"BindingContext\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 9,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditor.lua",
+          "line": 81,
+          "text": "C_KeyBindings.DeactivateBindingContext(Enum.BindingContext.HousingEditor);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorBasicDecorMode.lua",
+          "line": 136,
+          "text": "C_KeyBindings.DeactivateBindingContext(Enum.BindingContext.HousingEditorBasicDecorMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorBasicDecorMode.lua",
+          "line": 137,
+          "text": "C_KeyBindings.DeactivateBindingContext(Enum.BindingContext.HousingEditorBasicAndExpertDecorMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCleanupMode.lua",
+          "line": 39,
+          "text": "C_KeyBindings.DeactivateBindingContext(Enum.BindingContext.HousingEditorCleanupMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorCustomizeMode.lua",
+          "line": 245,
+          "text": "C_KeyBindings.DeactivateBindingContext(Enum.BindingContext.HousingEditorCustomizeMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorExpertDecorMode.lua",
+          "line": 90,
+          "text": "C_KeyBindings.DeactivateBindingContext(Enum.BindingContext.HousingEditorExpertDecorMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorExpertDecorMode.lua",
+          "line": 91,
+          "text": "C_KeyBindings.DeactivateBindingContext(Enum.BindingContext.HousingEditorBasicAndExpertDecorMode);"
+        },
+        {
+          "file": "Blizzard_HouseEditor/Blizzard_HouseEditorExteriorCustomizationMode.lua",
+          "line": 108,
+          "text": "C_KeyBindings.DeactivateBindingContext(Enum.BindingContext.HousingEditorExteriorCustomizationMode);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.GetTurnStrafeStyle-295",
+      "symbol": "C_KeyBindings.GetTurnStrafeStyle",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 109,
+          "contract": "{\n\t\t\tName = \"GetTurnStrafeStyle\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"style\", Type = \"TurnStrafeStyle\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 2,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_RPE_TurnStrafe/Blizzard_RPE_TurnStrafe.lua",
+          "line": 72,
+          "text": "local style = C_KeyBindings.GetTurnStrafeStyle();"
+        },
+        {
+          "file": "Blizzard_RPE_TurnStrafe/Blizzard_RPE_TurnStrafe.lua",
+          "line": 92,
+          "text": "local style = C_KeyBindings.GetTurnStrafeStyle();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.IsBindingContextActive-296",
+      "symbol": "C_KeyBindings.IsBindingContextActive",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 118,
+          "contract": "{\n\t\t\tName = \"IsBindingContextActive\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"context\", Type = \"BindingContext\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isActive\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.SetTurnStrafeStyle-297",
+      "symbol": "C_KeyBindings.SetTurnStrafeStyle",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 133,
+          "contract": "{\n\t\t\tName = \"SetTurnStrafeStyle\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Can only set to Modern or Legacy.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"style\", Type = \"TurnStrafeStyle\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_RPE_TurnStrafe/Blizzard_RPE_TurnStrafe.lua",
+          "line": 67,
+          "text": "C_KeyBindings.SetTurnStrafeStyle(style);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.UpdateTurnStrafeBindingsForCharacter-298",
+      "symbol": "C_KeyBindings.UpdateTurnStrafeBindingsForCharacter",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 144,
+          "contract": "{\n\t\t\tName = \"UpdateTurnStrafeBindingsForCharacter\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_RPE_TurnStrafe/Blizzard_RPE_TurnStrafe.lua",
+          "line": 103,
+          "text": "C_KeyBindings.UpdateTurnStrafeBindingsForCharacter();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetNonBattlePetLinkByIndex-300",
+      "symbol": "C_PetJournal.GetNonBattlePetLinkByIndex",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua",
+          "line": 61,
+          "contract": "{\n\t\t\tName = \"GetNonBattlePetLinkByIndex\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"index\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"link\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsReturningCharacter-302",
+      "symbol": "C_PlayerInfo.IsReturningCharacter",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/PlayerInfoDocumentation.lua",
+          "line": 313,
+          "contract": "{\n\t\t\tName = \"IsReturningCharacter\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isReturning\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_Game/Mainline/EventImplementation.lua",
+          "line": 571,
+          "text": "if not C_PlayerInfo.IsReturningCharacter() then"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.RequiresScreenshotForReportType-305",
+      "symbol": "C_ReportSystem.RequiresScreenshotForReportType",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ReportSystemDocumentation.lua",
+          "line": 110,
+          "contract": "{\n\t\t\tName = \"RequiresScreenshotForReportType\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"reportType\", Type = \"ReportType\", Nilable = false },\n\t\t\t\t{ Name = \"majorCategory\", Type = \"ReportMajorCategory\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"requiresScreenshot\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_ReportFrameShared/ReportFrameShared.lua",
+          "line": 158,
+          "text": "self.requiresScreenshot = C_ReportSystem.RequiresScreenshotForReportType(reportType, majorType);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SetScreenshotPreviewTexture-306",
+      "symbol": "C_ReportSystem.SetScreenshotPreviewTexture",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ReportSystemDocumentation.lua",
+          "line": 139,
+          "contract": "{\n\t\t\tName = \"SetScreenshotPreviewTexture\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"textureObject\", Type = \"SimpleTexture\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_ReportFrameShared/ReportFrameShared.lua",
+          "line": 36,
+          "text": "C_ReportSystem.SetScreenshotPreviewTexture(self.ScreenshotReportingFrame.ScreenshotPreview);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.TakeReportScreenshot-307",
+      "symbol": "C_ReportSystem.TakeReportScreenshot",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ReportSystemDocumentation.lua",
+          "line": 149,
+          "contract": "{\n\t\t\tName = \"TakeReportScreenshot\",\n\t\t\tType = \"Function\",\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_ReportFrameShared/ReportFrameShared.lua",
+          "line": 270,
+          "text": "C_ReportSystem.TakeReportScreenshot();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetAuraStatChanges-308",
+      "symbol": "C_Spell.GetAuraStatChanges",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua",
+          "line": 50,
+          "contract": "{\n\t\t\tName = \"GetAuraStatChanges\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"spellID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"healthChange\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"powerTypeChanges\", Type = \"table\", InnerType = \"PowerTypeChange\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetItemModifiedAppearancesApplied-309",
+      "symbol": "C_Spell.GetItemModifiedAppearancesApplied",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua",
+          "line": 98,
+          "contract": "{\n\t\t\tName = \"GetItemModifiedAppearancesApplied\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"spellID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"itemModifiedAppearanceIDs\", Type = \"table\", InnerType = \"number\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_SharedTalentUI/Blizzard_SharedTalentFrame.lua",
+          "line": 962,
+          "text": "return C_Spell.GetItemModifiedAppearancesApplied(definitionInfo.spellID);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-CanUpgradeToCurrentExpansion-313",
+      "symbol": "CanUpgradeToCurrentExpansion",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ExpansionDocumentation.lua",
+          "line": 10,
+          "contract": "{\n\t\t\tName = \"CanUpgradeToCurrentExpansion\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"canUpgradeExpansion\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 7,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_ClassTrial/Blizzard_ClassTrial.lua",
+          "line": 173,
+          "text": "if not CanUpgradeToCurrentExpansion() then"
+        },
+        {
+          "file": "Blizzard_ClassTrial/Blizzard_ClassTrial.lua",
+          "line": 219,
+          "text": "if CanUpgradeToCurrentExpansion() then"
+        },
+        {
+          "file": "Blizzard_ClassTrial/Blizzard_ClassTrial.lua",
+          "line": 339,
+          "text": "if CanUpgradeToCurrentExpansion() then"
+        },
+        {
+          "file": "Blizzard_GlueXML/Mainline/CharacterServices.lua",
+          "line": 61,
+          "text": "if isExpansionTrialCharacter and CanUpgradeToCurrentExpansion()  then"
+        },
+        {
+          "file": "Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectListElements.lua",
+          "line": 815,
+          "text": "elseif CanUpgradeToCurrentExpansion() then"
+        },
+        {
+          "file": "Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectListElements.lua",
+          "line": 896,
+          "text": "if IsExpansionTrial() or CanUpgradeToCurrentExpansion() then"
+        },
+        {
+          "file": "Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectListElements.lua",
+          "line": 1231,
+          "text": "return (self.lockCharacterSelectButton.isLockedByExpansion or IsExpansionTrialCharacter(self.lockGuid)) and CanUpgradeToCurrentExpansion();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-ClearOutage-314",
+      "symbol": "ClearOutage",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/BNetOutageDocumentation.lua",
+          "line": 10,
+          "contract": "{\n\t\t\tName = \"ClearOutage\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_GlueXML/Mainline/CharacterSelect.lua",
+          "line": 945,
+          "text": "ClearOutage();"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-GetAutoDeclineNeighborhoodInvites-315",
+      "symbol": "GetAutoDeclineNeighborhoodInvites",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua",
+          "line": 228,
+          "contract": "{\n\t\t\tName = \"GetAutoDeclineNeighborhoodInvites\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_SettingsDefinitions_Frame/Mainline/SocialOverrides.lua",
+          "line": 58,
+          "text": "Settings.VarType.Boolean, BLOCK_NEIGHBORHOOD_INVITES, defaultValue, GetAutoDeclineNeighborhoodInvites, SetAutoDeclineNeighborhoodInvites);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-OutageDetected-317",
+      "symbol": "OutageDetected",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/BNetOutageDocumentation.lua",
+          "line": 15,
+          "contract": "{\n\t\t\tName = \"OutageDetected\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-global-api-SetAutoDeclineNeighborhoodInvites-318",
+      "symbol": "SetAutoDeclineNeighborhoodInvites",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua",
+          "line": 1472,
+          "contract": "{\n\t\t\tName = \"SetAutoDeclineNeighborhoodInvites\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"allow\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 1,
+      "consumer_examples": [
+        {
+          "file": "Blizzard_SettingsDefinitions_Frame/Mainline/SocialOverrides.lua",
+          "line": 58,
+          "text": "Settings.VarType.Boolean, BLOCK_NEIGHBORHOOD_INVITES, defaultValue, GetAutoDeclineNeighborhoodInvites, SetAutoDeclineNeighborhoodInvites);"
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-SetCursorByMode-319",
+      "symbol": "SetCursorByMode",
+      "cached_contracts": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/GameCursorDocumentation.lua",
+          "line": 121,
+          "contract": "{\n\t\t\tName = \"SetCursorByMode\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"mode\", Type = \"Cursormode\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t}"
+        }
+      ],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingFixturePointFrame-339",
+      "symbol": "HousingFixturePointFrame",
+      "cached_contracts": [],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingLayoutPinFrame-340",
+      "symbol": "HousingLayoutPinFrame",
+      "cached_contracts": [],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351",
+      "symbol": "ModelSceneActorBase:IsPreferringModelCollisionBounds",
+      "cached_contracts": [],
+      "consumer_count": 0,
+      "consumer_examples": []
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353",
+      "symbol": "ModelSceneActorBase:SetPreferModelCollisionBounds",
+      "cached_contracts": [],
+      "consumer_count": 0,
+      "consumer_examples": []
+    }
+  ]
+}

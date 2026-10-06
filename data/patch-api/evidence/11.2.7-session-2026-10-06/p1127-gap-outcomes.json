@@ -1,0 +1,2965 @@
+{
+  "base": "dacd71799",
+  "runtime_revision": "0523068b2",
+  "scope": "Original 121 publication gaps; bounded simulator behavior, no native parity",
+  "counts": {
+    "closed-modeled": 25,
+    "closed-workaround-permanent": 2,
+    "still-gap": 94
+  },
+  "rows": [
+    {
+      "source_id": "wt-events-HOUSE_LEVEL_CHANGED-394",
+      "symbol": "HOUSE_LEVEL_CHANGED",
+      "outcome": "still-gap",
+      "reason": "Historical later-register removal conflicts with current cached documentation and active Blizzard consumers. Preserve registration: deleting it would break blueprint/editor consumers and existing payload dispatch. Requires verified current re-publication/supersession evidence, not a vendor patch.",
+      "model_evidence": [
+        "src/event/valid_events_b.rs:24",
+        "src/loader/tests/wow_api_globals/housing_event_dispatch.rs",
+        "cached:Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua:673",
+        "cached:Blizzard_HousingBlueprint/Blizzard_HousingBlueprintContentSummary.lua:9"
+      ],
+      "contract_evidence": [],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-events-HOUSE_LEVEL_CHANGED-394"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-events-HOUSE_LEVEL_CHANGED-394"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.IsInterruptAction-22",
+      "symbol": "C_ActionBar.IsInterruptAction",
+      "outcome": "still-gap",
+      "reason": "No authoritative interrupt spell classification or resolved macro/item action classification. Existing action spell bindings/range snapshots do not establish interrupt semantics.",
+      "model_evidence": [
+        "src/c_api/c_action_bar_queries.rs",
+        "src/c_api/c_spell_classification.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ActionBarFrameDocumentation.lua",
+          "line": 794
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_ActionBar.IsInterruptAction-22"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_ActionBar.IsInterruptAction-22"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_CurrencyInfo.GetPlayerCurrencyCategoryInfo-24",
+      "symbol": "C_CurrencyInfo.GetPlayerCurrencyCategoryInfo",
+      "outcome": "still-gap",
+      "reason": "Existing currency balances lack player currency category records/metadata; cannot derive the documented category DTO from amounts.",
+      "model_evidence": [
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/globals"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/CurrencyInfoDocumentation.lua",
+          "line": 378
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_CurrencyInfo.GetPlayerCurrencyCategoryInfo-24"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_CurrencyInfo.GetPlayerCurrencyCategoryInfo-24"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetAllDyeColorCategories-25",
+      "symbol": "C_DyeColor.GetAllDyeColorCategories",
+      "outcome": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 11
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_DyeColor.GetAllDyeColorCategories-25"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_DyeColor.GetAllDyeColorCategories-25"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetAllDyeColors-26",
+      "symbol": "C_DyeColor.GetAllDyeColors",
+      "outcome": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 20
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_DyeColor.GetAllDyeColors-26"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_DyeColor.GetAllDyeColors-26"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27",
+      "symbol": "C_DyeColor.GetDyeColorCategoryInfo",
+      "outcome": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 35
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorInfo-30",
+      "symbol": "C_DyeColor.GetDyeColorInfo",
+      "outcome": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 50
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_DyeColor.GetDyeColorInfo-30"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_DyeColor.GetDyeColorInfo-30"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31",
+      "symbol": "C_DyeColor.GetDyeColorsInCategory",
+      "outcome": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 95
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.IsDyeColorOwned-32",
+      "symbol": "C_DyeColor.IsDyeColorOwned",
+      "outcome": "closed-modeled",
+      "reason": "Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/DyeColorInfoDocumentation.lua",
+          "line": 111
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_DyeColor.IsDyeColorOwned-32"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_DyeColor.IsDyeColorOwned-32"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsClassAllowedForGameMode-34",
+      "symbol": "C_GameRules.IsClassAllowedForGameMode",
+      "outcome": "still-gap",
+      "reason": "Current game-rules state has mode/rule values, not authoritative class eligibility policy. Unknown class rules must not be replaced with always-true or always-false producers.",
+      "model_evidence": [
+        "src/lua_api/sim_substates/mod.rs:GameRulesState",
+        "src/lua_api/globals/game_rules.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/GameRulesDocumentation.lua",
+          "line": 177
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_GameRules.IsClassAllowedForGameMode-34"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_GameRules.IsClassAllowedForGameMode-34"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsWoWHack-39",
+      "symbol": "C_GameRules.IsWoWHack",
+      "outcome": "still-gap",
+      "reason": "Native current-mode mapping is unverified: existing GameRulesState comments/use encode Standard=0 and Plunderstorm=1, while simulator Enum.GameMode publishes Standard=1, Plunderstorm=2, WoWHack=3. Cached function docs provide no enum mapping; do not add another inconsistent comparator.",
+      "model_evidence": [
+        "src/lua_api/sim_substates/mod.rs:GameRulesState",
+        "src/lua_api/globals/game_rules.rs:PLUNDERSTORM_MODE",
+        "src/lua_api/globals/enum_data/widget.rs:GAME_MODE"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/GameRulesDocumentation.lua",
+          "line": 259
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_GameRules.IsWoWHack-39"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_GameRules.IsWoWHack-39"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.ActivateHouseEditorMode-40",
+      "symbol": "C_HouseEditor.ActivateHouseEditorMode",
+      "outcome": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 11
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HouseEditor.ActivateHouseEditorMode-40"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HouseEditor.ActivateHouseEditorMode-40"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.EnterHouseEditor-41",
+      "symbol": "C_HouseEditor.EnterHouseEditor",
+      "outcome": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 27
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HouseEditor.EnterHouseEditor-41"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HouseEditor.EnterHouseEditor-41"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorAvailability-43",
+      "symbol": "C_HouseEditor.GetHouseEditorAvailability",
+      "outcome": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 46
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HouseEditor.GetHouseEditorAvailability-43"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorAvailability-43"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44",
+      "symbol": "C_HouseEditor.GetHouseEditorModeAvailability",
+      "outcome": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 56
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorActive-45",
+      "symbol": "C_HouseEditor.IsHouseEditorActive",
+      "outcome": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 81
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HouseEditor.IsHouseEditorActive-45"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorActive-45"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46",
+      "symbol": "C_HouseEditor.IsHouseEditorModeActive",
+      "outcome": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 91
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47",
+      "symbol": "C_HouseEditor.IsHouseEditorStatusAvailable",
+      "outcome": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 107
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.LeaveHouseEditor-48",
+      "symbol": "C_HouseEditor.LeaveHouseEditor",
+      "outcome": "closed-modeled",
+      "reason": "Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HouseEditorUIDocumentation.lua",
+          "line": 117
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HouseEditor.LeaveHouseEditor-48"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HouseEditor.LeaveHouseEditor-48"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.AcceptNeighborhoodOwnership-59",
+      "symbol": "C_Housing.AcceptNeighborhoodOwnership",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 11
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.AcceptNeighborhoodOwnership-59"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.AcceptNeighborhoodOwnership-59"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CanEditCharter-60",
+      "symbol": "C_Housing.CanEditCharter",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 15
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.CanEditCharter-60"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.CanEditCharter-60"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CanTakeReportScreenshot-61",
+      "symbol": "C_Housing.CanTakeReportScreenshot",
+      "outcome": "still-gap",
+      "reason": "No housing report capture eligibility or preview lifecycle. CLI screenshot rendering is not the report-system screenshot service.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 24
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.CanTakeReportScreenshot-61"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.CanTakeReportScreenshot-61"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CreateGuildNeighborhood-62",
+      "symbol": "C_Housing.CreateGuildNeighborhood",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 39
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.CreateGuildNeighborhood-62"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.CreateGuildNeighborhood-62"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CreateNeighborhoodCharter-63",
+      "symbol": "C_Housing.CreateNeighborhoodCharter",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 49
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.CreateNeighborhoodCharter-63"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.CreateNeighborhoodCharter-63"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.DeclineNeighborhoodOwnership-64",
+      "symbol": "C_Housing.DeclineNeighborhoodOwnership",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 59
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.DeclineNeighborhoodOwnership-64"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.DeclineNeighborhoodOwnership-64"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.EditNeighborhoodCharter-66",
+      "symbol": "C_Housing.EditNeighborhoodCharter",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 78
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.EditNeighborhoodCharter-66"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.EditNeighborhoodCharter-66"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentHouseInfo-67",
+      "symbol": "C_Housing.GetCurrentHouseInfo",
+      "outcome": "still-gap",
+      "reason": "Missing authoritative current-house record, settings/access policy and service reply model. Existing location/owned flags do not supply the documented current-house DTO, refund or permission state.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 88
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.GetCurrentHouseInfo-67"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.GetCurrentHouseInfo-67"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentHouseRefundAmount-69",
+      "symbol": "C_Housing.GetCurrentHouseRefundAmount",
+      "outcome": "still-gap",
+      "reason": "Missing authoritative current-house record, settings/access policy and service reply model. Existing location/owned flags do not supply the documented current-house DTO, refund or permission state.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 107
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.GetCurrentHouseRefundAmount-69"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.GetCurrentHouseRefundAmount-69"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentNeighborhoodGUID-70",
+      "symbol": "C_Housing.GetCurrentNeighborhoodGUID",
+      "outcome": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 116
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.GetCurrentNeighborhoodGUID-70"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.GetCurrentNeighborhoodGUID-70"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetHouseLevelRewardsForLevel-72",
+      "symbol": "C_Housing.GetHouseLevelRewardsForLevel",
+      "outcome": "still-gap",
+      "reason": "Existing housing level/favor thresholds have no reward-per-level records or catalog. No reward DTOs can be derived from thresholds alone.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 140
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.GetHouseLevelRewardsForLevel-72"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.GetHouseLevelRewardsForLevel-72"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetHousingAccessFlags-73",
+      "symbol": "C_Housing.GetHousingAccessFlags",
+      "outcome": "still-gap",
+      "reason": "Missing authoritative current-house record, settings/access policy and service reply model. Existing location/owned flags do not supply the documented current-house DTO, refund or permission state.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 150
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.GetHousingAccessFlags-73"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.GetHousingAccessFlags-73"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetOthersOwnedHouses-76",
+      "symbol": "C_Housing.GetOthersOwnedHouses",
+      "outcome": "still-gap",
+      "reason": "No other-player house ownership/permission records. Existing player-owned/initiative snapshots are not another owner's collection.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 183
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.GetOthersOwnedHouses-76"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.GetOthersOwnedHouses-76"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HouseFinderDeclineNeighborhoodInvitation-82",
+      "symbol": "C_Housing.HouseFinderDeclineNeighborhoodInvitation",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 242
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.HouseFinderDeclineNeighborhoodInvitation-82"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.HouseFinderDeclineNeighborhoodInvitation-82"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HouseFinderRequestReservationAndPort-84",
+      "symbol": "C_Housing.HouseFinderRequestReservationAndPort",
+      "outcome": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 260
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.HouseFinderRequestReservationAndPort-84"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.HouseFinderRequestReservationAndPort-84"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsHousingMarketEnabled-85",
+      "symbol": "C_Housing.IsHousingMarketEnabled",
+      "outcome": "still-gap",
+      "reason": "Existing market-shop/cart feature policy is not housing-market service eligibility. No market-wide eligibility input; do not alias distinct flags.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 280
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.IsHousingMarketEnabled-85"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.IsHousingMarketEnabled-85"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsidePlot-90",
+      "symbol": "C_Housing.IsInsidePlot",
+      "outcome": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 352
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.IsInsidePlot-90"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.IsInsidePlot-90"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsOnNeighborhoodMap-91",
+      "symbol": "C_Housing.IsOnNeighborhoodMap",
+      "outcome": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 361
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.IsOnNeighborhoodMap-91"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.IsOnNeighborhoodMap-91"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.LeaveHouse-92",
+      "symbol": "C_Housing.LeaveHouse",
+      "outcome": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 370
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.LeaveHouse-92"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.LeaveHouse-92"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCharterConfirmationAccepted-93",
+      "symbol": "C_Housing.OnCharterConfirmationAccepted",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 374
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.OnCharterConfirmationAccepted-93"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.OnCharterConfirmationAccepted-93"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCharterConfirmationClosed-94",
+      "symbol": "C_Housing.OnCharterConfirmationClosed",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 378
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.OnCharterConfirmationClosed-94"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.OnCharterConfirmationClosed-94"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCreateCharterNeighborhoodClosed-95",
+      "symbol": "C_Housing.OnCreateCharterNeighborhoodClosed",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 382
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.OnCreateCharterNeighborhoodClosed-95"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.OnCreateCharterNeighborhoodClosed-95"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCreateGuildNeighborhoodClosed-96",
+      "symbol": "C_Housing.OnCreateGuildNeighborhoodClosed",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 386
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.OnCreateGuildNeighborhoodClosed-96"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.OnCreateGuildNeighborhoodClosed-96"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnRequestSignatureClicked-97",
+      "symbol": "C_Housing.OnRequestSignatureClicked",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 400
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.OnRequestSignatureClicked-97"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.OnRequestSignatureClicked-97"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnSignCharterClicked-98",
+      "symbol": "C_Housing.OnSignCharterClicked",
+      "outcome": "still-gap",
+      "reason": "Missing charter/guild/neighborhood ownership or invitation service transactions, signatures and authoritative permissions. Existing initiative records do not implement this mutable service lifecycle.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 404
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.OnSignCharterClicked-98"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.OnSignCharterClicked-98"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RelinquishHouse-99",
+      "symbol": "C_Housing.RelinquishHouse",
+      "outcome": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 414
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.RelinquishHouse-99"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.RelinquishHouse-99"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RequestCurrentHouseInfo-100",
+      "symbol": "C_Housing.RequestCurrentHouseInfo",
+      "outcome": "still-gap",
+      "reason": "Missing authoritative current-house record, settings/access policy and service reply model. Existing location/owned flags do not supply the documented current-house DTO, refund or permission state.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 424
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.RequestCurrentHouseInfo-100"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.RequestCurrentHouseInfo-100"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RequestPlayerCharacterList-102",
+      "symbol": "C_Housing.RequestPlayerCharacterList",
+      "outcome": "still-gap",
+      "reason": "Missing character/house/neighborhood service catalog and asynchronous reply records; existing social membership state cannot populate these housing DTOs.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 439
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.RequestPlayerCharacterList-102"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.RequestPlayerCharacterList-102"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ReturnAfterVisitingHouse-103",
+      "symbol": "C_Housing.ReturnAfterVisitingHouse",
+      "outcome": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 455
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.ReturnAfterVisitingHouse-103"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.ReturnAfterVisitingHouse-103"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SaveHouseSettings-104",
+      "symbol": "C_Housing.SaveHouseSettings",
+      "outcome": "still-gap",
+      "reason": "Missing authoritative current-house record, settings/access policy and service reply model. Existing location/owned flags do not supply the documented current-house DTO, refund or permission state.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 460
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.SaveHouseSettings-104"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.SaveHouseSettings-104"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoods-106",
+      "symbol": "C_Housing.SearchBNetFriendNeighborhoods",
+      "outcome": "still-gap",
+      "reason": "Missing character/house/neighborhood service catalog and asynchronous reply records; existing social membership state cannot populate these housing DTOs.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 471
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoods-106"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoods-106"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoodsByID-105",
+      "symbol": "C_Housing.SearchBNetFriendNeighborhoodsByID",
+      "outcome": "still-gap",
+      "reason": "Missing character/house/neighborhood service catalog and asynchronous reply records; existing social membership state cannot populate these housing DTOs.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 486
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoodsByID-105"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoodsByID-105"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SetTrackedHouseGuid-107",
+      "symbol": "C_Housing.SetTrackedHouseGuid",
+      "outcome": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 501
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.SetTrackedHouseGuid-107"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.SetTrackedHouseGuid-107"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.TeleportHome-109",
+      "symbol": "C_Housing.TeleportHome",
+      "outcome": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 515
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.TeleportHome-109"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.TeleportHome-109"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.TryRenameNeighborhood-110",
+      "symbol": "C_Housing.TryRenameNeighborhood",
+      "outcome": "still-gap",
+      "reason": "Missing neighborhood naming/size eligibility and authoritative rename service policy. Cached docs supply types, not native lexical/size rules; do not invent success or arbitrary restrictions.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 528
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.TryRenameNeighborhood-110"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.TryRenameNeighborhood-110"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ValidateCreateGuildNeighborhoodSize-111",
+      "symbol": "C_Housing.ValidateCreateGuildNeighborhoodSize",
+      "outcome": "still-gap",
+      "reason": "Missing neighborhood naming/size eligibility and authoritative rename service policy. Cached docs supply types, not native lexical/size rules; do not invent success or arbitrary restrictions.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 538
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.ValidateCreateGuildNeighborhoodSize-111"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.ValidateCreateGuildNeighborhoodSize-111"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ValidateNeighborhoodName-112",
+      "symbol": "C_Housing.ValidateNeighborhoodName",
+      "outcome": "still-gap",
+      "reason": "Missing neighborhood naming/size eligibility and authoritative rename service policy. Cached docs supply types, not native lexical/size rules; do not invent success or arbitrary restrictions.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 542
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.ValidateNeighborhoodName-112"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.ValidateNeighborhoodName-112"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.VisitHouse-113",
+      "symbol": "C_Housing.VisitHouse",
+      "outcome": "still-gap",
+      "reason": "Missing housing reservation/ownership transaction and world travel/return-position state machine. Mutating inside-owned booleans would falsely report completed server travel or relinquishment.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/state/sim_state.rs",
+        "src/lua_api/sim_substates/mod.rs",
+        "src/c_api/c_housing/market.rs",
+        "src/c_api/c_neighborhood_initiative/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingUIDocumentation.lua",
+          "line": 552
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Housing.VisitHouse-113"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Housing.VisitHouse-113"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.GetHoveredDecorInfo-118",
+      "symbol": "C_HousingBasicMode.GetHoveredDecorInfo",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 30
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingBasicMode.GetHoveredDecorInfo-118"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingBasicMode.GetHoveredDecorInfo-118"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsHouseExteriorHovered-123",
+      "symbol": "C_HousingBasicMode.IsHouseExteriorHovered",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 88
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingBasicMode.IsHouseExteriorHovered-123"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingBasicMode.IsHouseExteriorHovered-123"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsHoveringDecor-125",
+      "symbol": "C_HousingBasicMode.IsHoveringDecor",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 108
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingBasicMode.IsHoveringDecor-125"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingBasicMode.IsHoveringDecor-125"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RemoveSelectedDecor-128",
+      "symbol": "C_HousingBasicMode.RemoveSelectedDecor",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 127
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingBasicMode.RemoveSelectedDecor-128"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingBasicMode.RemoveSelectedDecor-128"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RotateDecor-129",
+      "symbol": "C_HousingBasicMode.RotateDecor",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 132
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingBasicMode.RotateDecor-129"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingBasicMode.RotateDecor-129"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RotateHouseExterior-130",
+      "symbol": "C_HousingBasicMode.RotateHouseExterior",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingBasicModeUIDocumentation.lua",
+          "line": 143
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingBasicMode.RotateHouseExterior-130"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingBasicMode.RotateHouseExterior-130"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryDebugInfoForID-140",
+      "symbol": "C_HousingCatalog.GetCatalogEntryDebugInfoForID",
+      "outcome": "still-gap",
+      "reason": "No corresponding diagnostic function contract in current cached generated documentation; no native diagnostic payload producer. Retain instead of registering an invented string or nil producer.",
+      "model_evidence": [
+        "src/c_api/c_housing/catalog.rs",
+        "src/c_api/c_housing/exterior.rs"
+      ],
+      "contract_evidence": [],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingCatalog.GetCatalogEntryDebugInfoForID-140"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryDebugInfoForID-140"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.GetHoveredDecorInfo-152",
+      "symbol": "C_HousingCleanupMode.GetHoveredDecorInfo",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCleanupModeUIDocumentation.lua",
+          "line": 11
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingCleanupMode.GetHoveredDecorInfo-152"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingCleanupMode.GetHoveredDecorInfo-152"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.IsHoveringDecor-153",
+      "symbol": "C_HousingCleanupMode.IsHoveringDecor",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCleanupModeUIDocumentation.lua",
+          "line": 20
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingCleanupMode.IsHoveringDecor-153"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingCleanupMode.IsHoveringDecor-153"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.RemoveSelectedDecor-154",
+      "symbol": "C_HousingCleanupMode.RemoveSelectedDecor",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCleanupModeUIDocumentation.lua",
+          "line": 29
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingCleanupMode.RemoveSelectedDecor-154"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingCleanupMode.RemoveSelectedDecor-154"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyDyeToSelectedDecor-155",
+      "symbol": "C_HousingCustomizeMode.ApplyDyeToSelectedDecor",
+      "outcome": "still-gap",
+      "reason": "Dye catalog/ownership now modeled, but no selected placed-decor GUID and per-instance dye transaction consuming catalog/inventory. Variant dye slots are not selected-instance customization state.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCustomizeModeUIDocumentation.lua",
+          "line": 11
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingCustomizeMode.ApplyDyeToSelectedDecor-155"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyDyeToSelectedDecor-155"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ClearDyesForSelectedDecor-161",
+      "symbol": "C_HousingCustomizeMode.ClearDyesForSelectedDecor",
+      "outcome": "still-gap",
+      "reason": "Dye catalog/ownership now modeled, but no selected placed-decor GUID and per-instance dye transaction consuming catalog/inventory. Variant dye slots are not selected-instance customization state.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCustomizeModeUIDocumentation.lua",
+          "line": 84
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingCustomizeMode.ClearDyesForSelectedDecor-161"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingCustomizeMode.ClearDyesForSelectedDecor-161"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetHoveredDecorInfo-164",
+      "symbol": "C_HousingCustomizeMode.GetHoveredDecorInfo",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCustomizeModeUIDocumentation.lua",
+          "line": 104
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingCustomizeMode.GetHoveredDecorInfo-164"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingCustomizeMode.GetHoveredDecorInfo-164"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.IsHoveringDecor-177",
+      "symbol": "C_HousingCustomizeMode.IsHoveringDecor",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingCustomizeModeUIDocumentation.lua",
+          "line": 267
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingCustomizeMode.IsHoveringDecor-177"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingCustomizeMode.IsHoveringDecor-177"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetDecorDebugInfoForGUID-186",
+      "symbol": "C_HousingDecor.GetDecorDebugInfoForGUID",
+      "outcome": "still-gap",
+      "reason": "No corresponding diagnostic function contract in current cached generated documentation; no native diagnostic payload producer. Retain instead of registering an invented string or nil producer.",
+      "model_evidence": [
+        "src/c_api/c_housing/catalog.rs",
+        "src/c_api/c_housing/exterior.rs"
+      ],
+      "contract_evidence": [],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingDecor.GetDecorDebugInfoForGUID-186"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingDecor.GetDecorDebugInfoForGUID-186"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetSelectedDecorDebugInfo-195",
+      "symbol": "C_HousingDecor.GetSelectedDecorDebugInfo",
+      "outcome": "still-gap",
+      "reason": "No corresponding diagnostic function contract in current cached generated documentation; no native diagnostic payload producer. Retain instead of registering an invented string or nil producer.",
+      "model_evidence": [
+        "src/c_api/c_housing/catalog.rs",
+        "src/c_api/c_housing/exterior.rs"
+      ],
+      "contract_evidence": [],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingDecor.GetSelectedDecorDebugInfo-195"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingDecor.GetSelectedDecorDebugInfo-195"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.IsHouseExteriorDoorHovered-201",
+      "symbol": "C_HousingDecor.IsHouseExteriorDoorHovered",
+      "outcome": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingDecorUIDocumentation.lua",
+          "line": 281
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingDecor.IsHouseExteriorDoorHovered-201"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingDecor.IsHouseExteriorDoorHovered-201"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.CommitDecorMovement-210",
+      "symbol": "C_HousingExpertMode.CommitDecorMovement",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 16
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingExpertMode.CommitDecorMovement-210"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingExpertMode.CommitDecorMovement-210"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.CommitHouseExteriorPosition-211",
+      "symbol": "C_HousingExpertMode.CommitHouseExteriorPosition",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 21
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingExpertMode.CommitHouseExteriorPosition-211"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingExpertMode.CommitHouseExteriorPosition-211"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.GetHoveredDecorInfo-212",
+      "symbol": "C_HousingExpertMode.GetHoveredDecorInfo",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 26
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingExpertMode.GetHoveredDecorInfo-212"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingExpertMode.GetHoveredDecorInfo-212"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsGridVisible-217",
+      "symbol": "C_HousingExpertMode.IsGridVisible",
+      "outcome": "still-gap",
+      "reason": "Shared placed-decor editor/grid/precision controller remains Lua-only compatibility state. No Rust controller consumes precision/rotation or synchronizes grid state with existing C_HousingDecor outputs; an isolated remembered flag would not close that boundary.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 82
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingExpertMode.IsGridVisible-217"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingExpertMode.IsGridVisible-217"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsHouseExteriorHovered-218",
+      "symbol": "C_HousingExpertMode.IsHouseExteriorHovered",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 91
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingExpertMode.IsHouseExteriorHovered-218"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingExpertMode.IsHouseExteriorHovered-218"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsHoveringDecor-220",
+      "symbol": "C_HousingExpertMode.IsHoveringDecor",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 111
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingExpertMode.IsHoveringDecor-220"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingExpertMode.IsHoveringDecor-220"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.RemoveSelectedDecor-221",
+      "symbol": "C_HousingExpertMode.RemoveSelectedDecor",
+      "outcome": "still-gap",
+      "reason": "No shared host-selected/hovered placed-decor target and transactional transform/removal model. Existing Rust pending-new-decor and exterior placements cannot identify the active selected target or populate the required DecorInstanceInfo consistently with Lua-only selection outputs.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 121
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingExpertMode.RemoveSelectedDecor-221"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingExpertMode.RemoveSelectedDecor-221"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SelectNextRotationAxis-223",
+      "symbol": "C_HousingExpertMode.SelectNextRotationAxis",
+      "outcome": "still-gap",
+      "reason": "Shared placed-decor editor/grid/precision controller remains Lua-only compatibility state. No Rust controller consumes precision/rotation or synchronizes grid state with existing C_HousingDecor outputs; an isolated remembered flag would not close that boundary.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 137
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingExpertMode.SelectNextRotationAxis-223"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingExpertMode.SelectNextRotationAxis-223"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SetGridVisible-224",
+      "symbol": "C_HousingExpertMode.SetGridVisible",
+      "outcome": "still-gap",
+      "reason": "Shared placed-decor editor/grid/precision controller remains Lua-only compatibility state. No Rust controller consumes precision/rotation or synchronizes grid state with existing C_HousingDecor outputs; an isolated remembered flag would not close that boundary.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 142
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingExpertMode.SetGridVisible-224"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingExpertMode.SetGridVisible-224"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SetPrecisionIncrementingActive-225",
+      "symbol": "C_HousingExpertMode.SetPrecisionIncrementingActive",
+      "outcome": "still-gap",
+      "reason": "Shared placed-decor editor/grid/precision controller remains Lua-only compatibility state. No Rust controller consumes precision/rotation or synchronizes grid state with existing C_HousingDecor outputs; an isolated remembered flag would not close that boundary.",
+      "model_evidence": [
+        "src/c_api/c_housing/basic_mode.rs",
+        "src/c_api/c_housing/exterior.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua",
+        "src/c_api/c_dye_color.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingExpertModeUIDocumentation.lua",
+          "line": 152
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingExpertMode.SetPrecisionIncrementingActive-225"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingExpertMode.SetPrecisionIncrementingActive-225"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.ConfirmStairChoice-229",
+      "symbol": "C_HousingLayout.ConfirmStairChoice",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 45
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.ConfirmStairChoice-229"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.ConfirmStairChoice-229"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.DeselectRoomOrDoor-231",
+      "symbol": "C_HousingLayout.DeselectRoomOrDoor",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 59
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.DeselectRoomOrDoor-231"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.DeselectRoomOrDoor-231"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetNumActiveRooms-232",
+      "symbol": "C_HousingLayout.GetNumActiveRooms",
+      "outcome": "closed-modeled",
+      "reason": "Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 90
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.GetNumActiveRooms-232"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.GetNumActiveRooms-232"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedRoom-236",
+      "symbol": "C_HousingLayout.GetSelectedRoom",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 152
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.GetSelectedRoom-236"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.GetSelectedRoom-236"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedStairwellRoomCount-237",
+      "symbol": "C_HousingLayout.GetSelectedStairwellRoomCount",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 163
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.GetSelectedStairwellRoomCount-237"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.GetSelectedStairwellRoomCount-237"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedDoor-242",
+      "symbol": "C_HousingLayout.HasSelectedDoor",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 220
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.HasSelectedDoor-242"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.HasSelectedDoor-242"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedFloorplan-243",
+      "symbol": "C_HousingLayout.HasSelectedFloorplan",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 230
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.HasSelectedFloorplan-243"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.HasSelectedFloorplan-243"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedRoom-244",
+      "symbol": "C_HousingLayout.HasSelectedRoom",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 239
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.HasSelectedRoom-244"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.HasSelectedRoom-244"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasStairs-245",
+      "symbol": "C_HousingLayout.HasStairs",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 249
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.HasStairs-245"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.HasStairs-245"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.MoveDraggedRoom-249",
+      "symbol": "C_HousingLayout.MoveDraggedRoom",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 306
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.MoveDraggedRoom-249"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.MoveDraggedRoom-249"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.MoveLayoutCamera-250",
+      "symbol": "C_HousingLayout.MoveLayoutCamera",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 319
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.MoveLayoutCamera-250"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.MoveLayoutCamera-250"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.RotateFocusedRoom-252",
+      "symbol": "C_HousingLayout.RotateFocusedRoom",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 357
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.RotateFocusedRoom-252"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.RotateFocusedRoom-252"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.ZoomLayoutCamera-259",
+      "symbol": "C_HousingLayout.ZoomLayoutCamera",
+      "outcome": "still-gap",
+      "reason": "Existing Rust layout uses numeric room/floor and blueprint IDs, not selected room/door GUIDs, stair operations, dragged-room transforms or layout-camera geometry. Cannot conflate numeric room IDs with documented world GUIDs or fake movement completion.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs:HousingState",
+        "src/c_api/c_housing.rs",
+        "src/lua_api/workarounds/temporary/housing_catalog_state.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/HousingLayoutUIDocumentation.lua",
+          "line": 412
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_HousingLayout.ZoomLayoutCamera-259"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_HousingLayout.ZoomLayoutCamera-259"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsDecorItem-289",
+      "symbol": "C_Item.IsDecorItem",
+      "outcome": "still-gap",
+      "reason": "ItemInfo export omits item class/subclass; GetItemInfo currently derives these from inventory type. Cached tutorial identifies decor via Housing class 20 / Decor subclass 0. Catalog association is not proof that an arbitrary consumable item has that classification.",
+      "model_evidence": [
+        "data/items.rs:ItemInfo",
+        "src/c_api/item_spell/c_item.rs",
+        "cached:Blizzard_HousingTutorials/Blizzard_HousingTutorialsMisc.lua:41"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ItemDocumentation.lua",
+          "line": 1256
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Item.IsDecorItem-289"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Item.IsDecorItem-289"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.ActivateBindingContext-290",
+      "symbol": "C_KeyBindings.ActivateBindingContext",
+      "outcome": "closed-modeled",
+      "reason": "Per-environment active context set; cached Basic/Expert modes activate specific and shared contexts. No context priority/routing claim.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 11
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_KeyBindings.ActivateBindingContext-290"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_KeyBindings.ActivateBindingContext-290"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.DeactivateBindingContext-291",
+      "symbol": "C_KeyBindings.DeactivateBindingContext",
+      "outcome": "closed-modeled",
+      "reason": "Per-environment active context set; cached Basic/Expert modes activate specific and shared contexts. No context priority/routing claim.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 22
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_KeyBindings.DeactivateBindingContext-291"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_KeyBindings.DeactivateBindingContext-291"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.GetTurnStrafeStyle-295",
+      "symbol": "C_KeyBindings.GetTurnStrafeStyle",
+      "outcome": "still-gap",
+      "reason": "No turn/strafe style remapping, account-versus-character migration or notification policy. Existing base/override bindings and the new context set do not define that migration; storing a style flag alone would leave actual bindings wrong.",
+      "model_evidence": [
+        "src/lua_api/sim_substates/mod.rs:Keybindings",
+        "src/lua_api/globals/keybindings.rs",
+        "cached:Blizzard_RPE_TurnStrafe/Blizzard_RPE_TurnStrafe.lua:67"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 109
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_KeyBindings.GetTurnStrafeStyle-295"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_KeyBindings.GetTurnStrafeStyle-295"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.IsBindingContextActive-296",
+      "symbol": "C_KeyBindings.IsBindingContextActive",
+      "outcome": "closed-modeled",
+      "reason": "Per-environment active context set; cached Basic/Expert modes activate specific and shared contexts. No context priority/routing claim.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 118
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_KeyBindings.IsBindingContextActive-296"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_KeyBindings.IsBindingContextActive-296"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.SetTurnStrafeStyle-297",
+      "symbol": "C_KeyBindings.SetTurnStrafeStyle",
+      "outcome": "still-gap",
+      "reason": "No turn/strafe style remapping, account-versus-character migration or notification policy. Existing base/override bindings and the new context set do not define that migration; storing a style flag alone would leave actual bindings wrong.",
+      "model_evidence": [
+        "src/lua_api/sim_substates/mod.rs:Keybindings",
+        "src/lua_api/globals/keybindings.rs",
+        "cached:Blizzard_RPE_TurnStrafe/Blizzard_RPE_TurnStrafe.lua:67"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 133
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_KeyBindings.SetTurnStrafeStyle-297"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_KeyBindings.SetTurnStrafeStyle-297"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.UpdateTurnStrafeBindingsForCharacter-298",
+      "symbol": "C_KeyBindings.UpdateTurnStrafeBindingsForCharacter",
+      "outcome": "still-gap",
+      "reason": "No turn/strafe style remapping, account-versus-character migration or notification policy. Existing base/override bindings and the new context set do not define that migration; storing a style flag alone would leave actual bindings wrong.",
+      "model_evidence": [
+        "src/lua_api/sim_substates/mod.rs:Keybindings",
+        "src/lua_api/globals/keybindings.rs",
+        "cached:Blizzard_RPE_TurnStrafe/Blizzard_RPE_TurnStrafe.lua:67"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/KeyBindingsDocumentation.lua",
+          "line": 144
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_KeyBindings.UpdateTurnStrafeBindingsForCharacter-298"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_KeyBindings.UpdateTurnStrafeBindingsForCharacter-298"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetNonBattlePetLinkByIndex-300",
+      "symbol": "C_PetJournal.GetNonBattlePetLinkByIndex",
+      "outcome": "still-gap",
+      "reason": "No indexed non-battle companion collection/link payload model. Existing battle pet journal records cannot be treated as the documented non-battle collection.",
+      "model_evidence": [
+        "src/lua_api/state/support_types.rs",
+        "src/lua_api/globals/missing_surface"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua",
+          "line": 61
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_PetJournal.GetNonBattlePetLinkByIndex-300"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_PetJournal.GetNonBattlePetLinkByIndex-300"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsReturningCharacter-302",
+      "symbol": "C_PlayerInfo.IsReturningCharacter",
+      "outcome": "still-gap",
+      "reason": "No per-character returning-player eligibility/service history model. Player level and returning-player UI publication do not establish returning-character eligibility.",
+      "model_evidence": [
+        "src/lua_api/state/sim_state.rs",
+        "src/c_api/c_character_services.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/PlayerInfoDocumentation.lua",
+          "line": 313
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_PlayerInfo.IsReturningCharacter-302"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_PlayerInfo.IsReturningCharacter-302"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.RequiresScreenshotForReportType-305",
+      "symbol": "C_ReportSystem.RequiresScreenshotForReportType",
+      "outcome": "still-gap",
+      "reason": "Existing report-token/comment model lacks screenshot requirement policy, capture lifecycle and preview texture ownership. CLI screenshots do not implement WoW report capture/preview events.",
+      "model_evidence": [
+        "src/c_api/c_report_system.rs",
+        "src/lua_api/state/support_types.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ReportSystemDocumentation.lua",
+          "line": 110
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_ReportSystem.RequiresScreenshotForReportType-305"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_ReportSystem.RequiresScreenshotForReportType-305"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SetScreenshotPreviewTexture-306",
+      "symbol": "C_ReportSystem.SetScreenshotPreviewTexture",
+      "outcome": "still-gap",
+      "reason": "Existing report-token/comment model lacks screenshot requirement policy, capture lifecycle and preview texture ownership. CLI screenshots do not implement WoW report capture/preview events.",
+      "model_evidence": [
+        "src/c_api/c_report_system.rs",
+        "src/lua_api/state/support_types.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ReportSystemDocumentation.lua",
+          "line": 139
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_ReportSystem.SetScreenshotPreviewTexture-306"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_ReportSystem.SetScreenshotPreviewTexture-306"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.TakeReportScreenshot-307",
+      "symbol": "C_ReportSystem.TakeReportScreenshot",
+      "outcome": "still-gap",
+      "reason": "Existing report-token/comment model lacks screenshot requirement policy, capture lifecycle and preview texture ownership. CLI screenshots do not implement WoW report capture/preview events.",
+      "model_evidence": [
+        "src/c_api/c_report_system.rs",
+        "src/lua_api/state/support_types.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ReportSystemDocumentation.lua",
+          "line": 149
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_ReportSystem.TakeReportScreenshot-307"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_ReportSystem.TakeReportScreenshot-307"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetAuraStatChanges-308",
+      "symbol": "C_Spell.GetAuraStatChanges",
+      "outcome": "still-gap",
+      "reason": "No spell/aura-to-stat contribution records. Current aura membership and aggregate player stats cannot attribute documented per-spell stat changes.",
+      "model_evidence": [
+        "src/c_api/c_spell.rs",
+        "src/c_api/c_unit_auras.rs",
+        "src/lua_api/state/sim_state.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua",
+          "line": 50
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Spell.GetAuraStatChanges-308"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Spell.GetAuraStatChanges-308"
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetItemModifiedAppearancesApplied-309",
+      "symbol": "C_Spell.GetItemModifiedAppearancesApplied",
+      "outcome": "still-gap",
+      "reason": "No spell-to-applied modified-appearance mapping; saved transmog outfits alone do not identify appearance changes applied by a specified spell.",
+      "model_evidence": [
+        "src/c_api/c_spell.rs",
+        "src/c_api/c_transmog_outfit_info/model.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua",
+          "line": 98
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-C_Spell.GetItemModifiedAppearancesApplied-309"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-C_Spell.GetItemModifiedAppearancesApplied-309"
+      }
+    },
+    {
+      "source_id": "wt-global-api-CanUpgradeToCurrentExpansion-313",
+      "symbol": "CanUpgradeToCurrentExpansion",
+      "outcome": "still-gap",
+      "reason": "No account expansion ownership/purchase eligibility service. Current client build/profile is not account upgrade eligibility.",
+      "model_evidence": [
+        "src/lua_api/state/sim_state.rs",
+        "src/c_api/c_account_services.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/ExpansionDocumentation.lua",
+          "line": 10
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-CanUpgradeToCurrentExpansion-313"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-CanUpgradeToCurrentExpansion-313"
+      }
+    },
+    {
+      "source_id": "wt-global-api-ClearOutage-314",
+      "symbol": "ClearOutage",
+      "outcome": "still-gap",
+      "reason": "Missing restricted Battle.net outage notification/clearing state machine. Cached docs document no returns; this is not a boolean connectivity getter.",
+      "model_evidence": [
+        "src/c_api/c_battle_net.rs",
+        "cached:Blizzard_APIDocumentationGenerated/BNetOutageDocumentation.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/BNetOutageDocumentation.lua",
+          "line": 10
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-ClearOutage-314"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-ClearOutage-314"
+      }
+    },
+    {
+      "source_id": "wt-global-api-GetAutoDeclineNeighborhoodInvites-315",
+      "symbol": "GetAutoDeclineNeighborhoodInvites",
+      "outcome": "closed-modeled",
+      "reason": "Existing per-environment preference producer was Forever-only; publish from earliest supported Retail epoch. No persistence/event claimed.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua",
+          "line": 228
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-GetAutoDeclineNeighborhoodInvites-315"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-GetAutoDeclineNeighborhoodInvites-315"
+      }
+    },
+    {
+      "source_id": "wt-global-api-OutageDetected-317",
+      "symbol": "OutageDetected",
+      "outcome": "still-gap",
+      "reason": "Missing restricted Battle.net outage notification/clearing state machine. Cached docs document no returns; do not infer a predicate from the name.",
+      "model_evidence": [
+        "src/c_api/c_battle_net.rs",
+        "cached:Blizzard_APIDocumentationGenerated/BNetOutageDocumentation.lua"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/BNetOutageDocumentation.lua",
+          "line": 15
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-OutageDetected-317"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-OutageDetected-317"
+      }
+    },
+    {
+      "source_id": "wt-global-api-SetAutoDeclineNeighborhoodInvites-318",
+      "symbol": "SetAutoDeclineNeighborhoodInvites",
+      "outcome": "closed-modeled",
+      "reason": "Existing per-environment preference producer was Forever-only; publish from earliest supported Retail epoch. No persistence/event claimed.",
+      "model_evidence": [],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua",
+          "line": 1472
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-SetAutoDeclineNeighborhoodInvites-318"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-SetAutoDeclineNeighborhoodInvites-318"
+      }
+    },
+    {
+      "source_id": "wt-global-api-SetCursorByMode-319",
+      "symbol": "SetCursorByMode",
+      "outcome": "still-gap",
+      "reason": "No cursor-mode-to-asset resolver/model; existing cursor item and mouse position state do not implement this documented cursor-mode operation.",
+      "model_evidence": [
+        "src/c_api/c_cursor.rs",
+        "src/lua_api/state/sim_state.rs"
+      ],
+      "contract_evidence": [
+        {
+          "file": "Blizzard_APIDocumentationGenerated/GameCursorDocumentation.lua",
+          "line": 121
+        }
+      ],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-global-api-SetCursorByMode-319"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-global-api-SetCursorByMode-319"
+      }
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingFixturePointFrame-339",
+      "symbol": "HousingFixturePointFrame",
+      "outcome": "still-gap",
+      "reason": "Acquisition failure: CreateFrame factory is not a native housing-world object acquisition model. Cached ScriptObject definitions describe world-associated selection/restriction methods, not a CreateFrame constructor. Do not fabricate a generic frame as native acquisition proof.",
+      "model_evidence": [
+        "tests/common/publication_sweep.rs",
+        "src/widget/frame_types.rs",
+        "cached:Blizzard_APIDocumentationGenerated/HousingFixturePointFrameAPIDocumentation.lua"
+      ],
+      "contract_evidence": [],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-scriptobjects-HousingFixturePointFrame-339"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-scriptobjects-HousingFixturePointFrame-339"
+      }
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingLayoutPinFrame-340",
+      "symbol": "HousingLayoutPinFrame",
+      "outcome": "still-gap",
+      "reason": "Acquisition failure: CreateFrame factory is not a native housing-world object acquisition model. Cached ScriptObject definitions describe world-associated selection/restriction methods, not a CreateFrame constructor. Do not fabricate a generic frame as native acquisition proof.",
+      "model_evidence": [
+        "tests/common/publication_sweep.rs",
+        "src/widget/frame_types.rs",
+        "cached:Blizzard_APIDocumentationGenerated/HousingLayoutPinFrameAPIDocumentation.lua"
+      ],
+      "contract_evidence": [],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-scriptobjects-HousingLayoutPinFrame-340"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-scriptobjects-HousingLayoutPinFrame-340"
+      }
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351",
+      "symbol": "ModelSceneActorBase:IsPreferringModelCollisionBounds",
+      "outcome": "closed-workaround(src/lua_api/frame/methods/widgets/model.rs; permanent)",
+      "reason": "2D-only renderer intentionally does not support model collision-bound preferences; setter no-op, getter false.",
+      "model_evidence": [],
+      "contract_evidence": [],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351"
+      }
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353",
+      "symbol": "ModelSceneActorBase:SetPreferModelCollisionBounds",
+      "outcome": "closed-workaround(src/lua_api/frame/methods/widgets/model.rs; permanent)",
+      "reason": "2D-only renderer intentionally does not support model collision-bound preferences; setter no-op, getter false.",
+      "model_evidence": [],
+      "contract_evidence": [],
+      "observation_ref": {
+        "file": "p1127-sweep-result.json",
+        "key": "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353"
+      },
+      "cached_contract_ref": {
+        "file": "p1127-gap-contracts.json",
+        "source_id": "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353"
+      }
+    }
+  ]
+}
