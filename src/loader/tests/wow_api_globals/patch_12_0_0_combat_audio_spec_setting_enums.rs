@@ -7,6 +7,12 @@ use super::super::*;
 #[test]
 fn test_patch_12_0_0_combat_audio_spec_setting_enum_values() {
     let env = WowLuaEnv::new().unwrap();
+    env.exec(if cfg!(feature = "client-retail") {
+        "CurrentRetail = true"
+    } else {
+        "CurrentRetail = false"
+    })
+    .unwrap();
     let result: String = env
         .eval(
             r#"
@@ -17,6 +23,15 @@ fn test_patch_12_0_0_combat_audio_spec_setting_enum_values() {
                     Resource2Format = 3,
                     SayIfTargeted = 4,
                 }
+                if CurrentRetail then
+                    expected.Resource1Voice = 2
+                    expected.Resource1Volume = 3
+                    expected.Resource2Percent = 4
+                    expected.Resource2Format = 5
+                    expected.Resource2Voice = 6
+                    expected.Resource2Volume = 7
+                    expected.SayIfTargeted = 8
+                end
                 if type(Enum.CombatAudioAlertSpecSetting) ~= "table" then
                     return "CombatAudioAlertSpecSetting: expected table"
                 end
@@ -36,7 +51,7 @@ fn test_patch_12_0_0_combat_audio_spec_setting_enum_values() {
                 }
                 for index = 1, #absent do
                     local name = absent[index]
-                    if Enum.CombatAudioAlertSpecSetting[name] ~= nil then
+                    if not CurrentRetail and Enum.CombatAudioAlertSpecSetting[name] ~= nil then
                         return name .. ": expected nil"
                     end
                 end
@@ -45,7 +60,9 @@ fn test_patch_12_0_0_combat_audio_spec_setting_enum_values() {
                 if type(meta) ~= "table" then
                     return "CombatAudioAlertSpecSettingMeta: expected table"
                 end
-                if meta.MinValue ~= 0 or meta.MaxValue ~= 4 or meta.NumValues ~= 5 then
+                local maxValue = CurrentRetail and 8 or 4
+                local numValues = CurrentRetail and 9 or 5
+                if meta.MinValue ~= 0 or meta.MaxValue ~= maxValue or meta.NumValues ~= numValues then
                     return "metadata mismatch"
                 end
 
