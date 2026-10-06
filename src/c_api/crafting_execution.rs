@@ -36,12 +36,19 @@ pub(crate) fn craft_recipe(state: &mut LuaState, recipe_id: i32, count: i32) -> 
         return Ok(false);
     };
 
-    let affected_bags = {
+    let (affected_bags, output_guid) = {
         let mut sim = borrow_state_mut(state)?;
         let Some(bags) = commit_inventory(&mut sim, &plan) else {
             return Ok(false);
         };
-        bags
+        let (location, _) = sim
+            .bag_items
+            .iter()
+            .find(|(_, item)| item.item_id == plan.output_item_id)
+            .expect("crafted output inventory committed");
+        let guid =
+            super::item_spell::item_guid_for_bag_slot(location.0, location.1, plan.output_item_id);
+        (bags, guid)
     };
 
     start_crafting_cast(state, &plan);
@@ -51,7 +58,7 @@ pub(crate) fn craft_recipe(state: &mut LuaState, recipe_id: i32, count: i32) -> 
     }
     fire_named_event_state(state, "BAG_UPDATE_DELAYED", &[]);
 
-    publish_crafting_result(state, &plan);
+    publish_crafting_result(state, &plan, &output_guid);
     Ok(true)
 }
 
@@ -91,6 +98,7 @@ struct CraftPlan {
     reagents: crafting_plan::ReagentDeltas,
     output_item_id: u32,
     output_count: i32,
+    hyperlink: String,
 }
 
 fn craft_plan(state: &mut LuaState, recipe_id: i32, count: i32) -> LuaResult<Option<CraftPlan>> {
@@ -122,6 +130,8 @@ fn craft_plan(state: &mut LuaState, recipe_id: i32, count: i32) -> LuaResult<Opt
         reagents,
         output_item_id: recipe.output_item_id,
         output_count: count,
+        hyperlink: super::item_spell::item_link_for_id(recipe.output_item_id)
+            .ok_or_else(|| rilua::runtime_error("crafted output item catalog data unavailable"))?,
     }))
 }
 
@@ -156,16 +166,16 @@ fn crafted_item_name(recipe: &profession_data::RecipeEntry) -> &'static str {
         .unwrap_or(recipe.name)
 }
 
-fn publish_crafting_result(state: &mut LuaState, plan: &CraftPlan) {
+fn publish_crafting_result(state: &mut LuaState, plan: &CraftPlan, output_guid: &str) {
     let table = crafting_tables::rooted_table(state);
     let returns = crafting_tables::regular_array(state, &plan.reagents.returns);
     crate::lua_api::methods::table_set(state, table, "resourcesReturned", returns);
-    populate_result_fields(state, table, plan);
+    populate_result_fields(state, table, plan, output_guid);
     // INFERRED: result publication accompanies the existing immediate inventory commit;
     // native asynchronous crafting completion/proc probabilities are not simulated here.
     fire_named_event_state(state, "TRADE_SKILL_ITEM_CRAFTED_RESULT", &[table]);
 }
-fn populate_result_fields(state: &mut LuaState, table: Val, plan: &CraftPlan) {
+fn populate_result_fields(state: &mut LuaState, table: Val, plan: &CraftPlan, output_guid: &str) {
     for (key, value) in [
         ("itemID", plan.output_item_id as i32),
         ("quantity", plan.output_count),
@@ -189,10 +199,9 @@ fn populate_result_fields(state: &mut LuaState, table: Val, plan: &CraftPlan) {
     ] {
         crate::lua_api::methods::table_set(state, table, key, Val::Bool(false));
     }
-    let guid = crate::lua_api::methods::create_string(state, "");
+    let guid = crate::lua_api::methods::create_string(state, output_guid);
     crate::lua_api::methods::table_set(state, table, "itemGUID", guid);
-    let hyperlink =
-        crate::lua_api::methods::create_string(state, &format!("item:{}", plan.output_item_id));
+    let hyperlink = crate::lua_api::methods::create_string(state, &plan.hyperlink);
     crate::lua_api::methods::table_set(state, table, "hyperlink", hyperlink);
 }
 

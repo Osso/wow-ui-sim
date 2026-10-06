@@ -341,6 +341,8 @@ fn crafting_nested_allocations_consume_items_currency_and_publish_returns() {
         assert(C_TradeSkillUI.CraftRecipe(100001,2,allocations))
         local result=CraftingResults[1]
         assert(result.quantity == 2 and result.itemID == 211993 and #result.resourcesReturned == 2)
+        assert(result.itemGUID == C_Item.GetItemGUID({bagID=0,slotIndex=2}))
+        assert(string.find(result.hyperlink,'|Hitem:211993',1,true))
         for _,resource in ipairs(result.resourcesReturned) do CheckCraftingShape('CraftingResourceReturnInfo',resource); assert(resource.itemID == nil and rawget(resource,'itemID') == nil) end
         assert(result.resourcesReturned[1].reagent.currencyID == 2803 and result.resourcesReturned[1].quantity == 4)
         assert(result.resourcesReturned[2].reagent.itemID == 210937 and result.resourcesReturned[2].quantity == 2)

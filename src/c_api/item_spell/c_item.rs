@@ -57,7 +57,7 @@ pub(crate) fn spell_link_for_id(spell_id: u32) -> Option<String> {
     ))
 }
 
-fn item_guid_for_bag_slot(bag: i32, slot: i32, item_id: u32) -> String {
+pub(crate) fn item_guid_for_bag_slot(bag: i32, slot: i32, item_id: u32) -> String {
     format!("Item-{bag}-{slot}-{item_id}")
 }
 
