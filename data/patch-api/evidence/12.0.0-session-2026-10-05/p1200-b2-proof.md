@@ -27,8 +27,8 @@ PrivateAuraIconInfo is input-only: full binding acceptance and per-field rejecti
 - [x] B02 post-commit proof
 - [x] B04 listing inputs/results
 - [x] B05 interaction/faction/schedule/set DTOs
-- [ ] B06 viewer and cooldown transitions
-- [ ] Publication sweeps and startup
+- [x] B06 viewer and cooldown transitions
+- [x] Publication sweeps and startup
 
 ## B04
 
@@ -73,4 +73,40 @@ Viewer positive parent test passed against unchanged master producer. Cast recov
 | structures-SpellCooldownInfo-120 | spell_cooldown_recovery_and_gcd_follow_cast_producer |
 | structures-SpellCooldownInfo-121 | spell_cooldown_recovery_and_gcd_follow_cast_producer |
 
-B06 proof is pending post-commit GREEN. Native category selection remains unavailable (optional activeCategory nil); this does not substitute for positive recovery/GCD proof.
+B06 post-commit GREEN: both new tests and all 27 cooldown/book-output controls passed. Native category selection remains unavailable (optional activeCategory nil); this does not substitute for positive recovery/GCD proof.
+
+## Final verification — 2026-10-06
+
+Last behavioral producer change: 7822aecfe (cooldown metadata/events); LFG publisher decomposition fd7640d1d is behavior-preserving and its positive nested DTO test passed afterward. Final test fixture revisions: 8ccd7eab4 (interaction replacement) and 034315289 (negative cooldown event/expiry). Formatting commit 28a2bbc83 and unused-import removal 990ac2e00 do not invalidate runtime/publication/startup proof. Documentation-only commits do not invalidate any proof.
+
+Commands run from this worktree with absolute script path `/home/osso/.worktrees/wow-ui-sim-p1200-extract-b2/scripts/build-host.py`, always `--build-host local`, default debug target. Integration command suffix: `--test --test integration FILTER -- --nocapture`; lib suffix: `--test --lib -- FILTER --nocapture`. Sweeps use `--test --test integration FILTER -- --test-threads=1`, each alone.
+
+| command/filter | scope revision | result |
+|---|---|---|
+| lfg | 0608c9571 | 96 passed; later publisher-only decomposition covered by positive LFG probe below |
+| major_faction | 0608c9571 | 35 passed; later changes are fixture expansion/comment only |
+| event_scheduler | 0608c9571 | 10 passed |
+| transmog_set | e1ccc0588 | 16 passed; stale master fabricated-set-zero assertion migrated |
+| item_interaction | 0608c9571 | 7 passed; later fixture replacement proof below |
+| private_aura | 0608c9571 | 52 passed |
+| struct_shapes | 0608c9571 | 5 passed; current B02 probe below |
+| spell_casting | 61fcc3c7f | 19 passed |
+| cooldown_viewer | 28a2bbc83 | 6 passed |
+| spell_book_cooldown_outputs | 28a2bbc83 | 27 passed, including restricted numeric and public boolean controls |
+| patch_12_0_0_struct_shapes | 28a2bbc83 | 2 passed |
+| patch_12_0_0_lfg_playstyle | 28a2bbc83 | 1 passed |
+| patch_12_0_0_state_dtos | 8ccd7eab4 | 4 passed; two ordered highlights, two interaction flag masks, host upcoming-list transition |
+| patch_12_0_0_cooldown_transitions | 034315289 | 2 passed; both positive recovery and negative expiry callbacks observed |
+| lib event_scheduler | 61fcc3c7f | 1 passed (migrated state test) |
+| lib transmog_sets_defaults | 61fcc3c7f | 2 passed |
+| patch_12_0_0_publication_sweep | 28a2bbc83 | 1 passed, isolated |
+| patch_12_0_5_publication_sweep | 28a2bbc83 | 1 passed, isolated |
+| patch_12_0_7_publication_sweep | 28a2bbc83 | 1 passed, isolated |
+| patch_12_1_0_publication_sweep | 28a2bbc83 | 1 passed, isolated |
+| cargo fmt --manifest-path ABS/Cargo.toml --check | 990ac2e00 | passed; dynamic integration sources also formatted separately with rustfmt --edition 2024 |
+| --build-host local --check | 990ac2e00 | passed; no warnings from changed Rust code |
+| --build-host local --run -- --no-addons --no-saved-vars lua-errors | 28a2bbc83 | exit 0, stdout JSON [] |
+
+Master comparison: initial existing subsystem controls all passed at 6a8e37342 (premade 18, reward 9, private anchors 18, appearance 3, viewer 1, spell/book cooldown 27, major factions 14, transmog set 15, item interaction 6). Initial scheduled_event integration filter matched zero tests; scheduler lib baseline matched one and passed. New RED probes executed before changing the relevant producers; B05 producer source diff 6a8e37342..8ff519d84 and B06 producer diff 6a8e37342..e1ccc0588 are empty. These are same-production-code comparisons, not a separately modified master checkout. B02 RED: saved filter unchanged; B04 RED: fractional enum accepted; B05 RED: missing/nil/fabricated DTOs and aliased nested snapshot; B06 RED: cast missed cooldown event. Branch-introduced visibility compile error fixed in 04de7efb4. Branch unused import warning fixed in 990ac2e00. Six pre-existing iced-wgpu-patched manifest lint-name deprecations remain; vendor files are excluded and no warning was suppressed.
+
+Readability review: inspected changed Rust functions for nesting, mutable state scope, naming and duplicate field publication. Split dungeon/PvP publication into bounded helpers. No suppressions added. Scope: complete cached DTO parents/deltas and host/cast transitions, not native eligibility, server services, grant behavior, rendering or secret-value VM operation parity. All 34 assigned IDs have bounded proven-by-test outcomes above; no assigned ID is still pending at this proof level. Page-coverage JSON unchanged.

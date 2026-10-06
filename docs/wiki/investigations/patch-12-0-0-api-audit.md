@@ -18,6 +18,14 @@ The [successor contract](../../specs/retirement-successors.md) closes six retain
 
 Current cache republishes none of this extract's old names. The test nevertheless validates frozen direct aliases against the established loaded-file scanner and raw/ordinary exact identity if such a mapping is ever deliberately added. Pending successor results and the master-reproduced historical compile blocker remain explicit in the report; exact-gap test success is not full behavioral closure.
 
+### DTO extract batches B02/B04/B05/B06
+
+Verified: 2026-10-06. [Per-source outcomes and revision-scoped proof](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b2-proof.md) cover all 34 assigned DTO parent/delta rows; coverage ledgers remain unchanged. Cached parent type probes supplement field-specific fixtures, rather than treating publication sweeps or nil-only cooldown queries as behavioral proof.
+
+Observed causes: SaveAdvancedFilter never persisted state; active listing enum inputs truncated; search/faction parents lacked fields; GetSetInfo fabricated set zero; scheduler getters returned mutable host tables; cast producers omitted cooldown update events. Producers now live in C API modules, with host-input snapshots and cast-driven recovery metadata. Scheduler input state remains Lua-owned `_state`; Rust interaction/faction/catalog state remains explicit and independently queryable.
+
+INFERRED None-preference omission, demo scheduler inputs, absent catalog metadata and shared-GCD start recovery are marked in code and qualified in the report. Native per-spell GCD eligibility, server scheduling, item interaction execution and transmog grants are not claimed. Cached declarations, not renderer/vendor patches, determine DTO contracts.
+
 ## Wikitext supplement
 
 Verified: 2026-10-05. Raw MediaWiki revision **6747189** (revision timestamp `2026-06-18T08:59:26Z`) is retained with [provenance](../../../data/patch-api/sources/12.0.0-api-changes.provenance.json). [Spec](../../specs/patch-12-0-0-publication-sweep.md) owns the contract. This is supplemental publication/absence evidence, not signature, behavior, security, historical-epoch or native-client parity. Existing occurrence statuses and page-coverage JSON remain unchanged.

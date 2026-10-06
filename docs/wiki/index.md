@@ -2,6 +2,10 @@
 
 [Follow-up](investigations/patch-12-0-0-api-audit.md#retirement-fallout-follow-up) links six state-backed successor contracts and epoch-aware test migrations. Retired globals stay absent; zero-gap successor assertions replace exact-gap allowances.
 
+## [2026-10-06] evidence | 12.0.0 DTO extract producer proof
+
+[DTO follow-up](investigations/patch-12-0-0-api-audit.md#dto-extract-batches-b02b04b05b06) links 34 source-ID outcomes, full cached parent probes, LFG input roundtrips, host DTO snapshots and cast-driven recovery/GCD events. [Proof ledger](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b2-proof.md) retains exact revisions, baseline comparisons, isolated sweep passes, startup `[]` and inferred/native limits. Page-coverage JSON unchanged.
+
 ## [2026-10-05] investigation | Cast duration precision
 
 [Captured flake and deterministic regression](investigations/cast-duration-rounding.md): subtracting rounded deadlines loses one ULP from a one-second cast. Store the configured span and derive deadlines; original completion assertions unchanged.
