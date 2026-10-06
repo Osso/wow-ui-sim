@@ -699,6 +699,17 @@
       "exit_code": 101,
       "expected_exit_code": 101,
       "invalidated_by": null
+    },
+    {
+      "name": "artifact-validation-initial",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-validate.py"
+      ],
+      "revision": "d0d7e72dc",
+      "exit_code": 1,
+      "failure": "Validator disproved hand-counted removal subtype totals; observations show 47 strict removals and 10 deprecated aliases, not 46 and 11. Ledger row statuses and runtime results were already correct.",
+      "invalidated_by": "corrected subtype counts in validator, capability summary and docs"
     }
   ],
   "scope_notes": {

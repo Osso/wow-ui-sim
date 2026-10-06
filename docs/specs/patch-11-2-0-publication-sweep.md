@@ -43,6 +43,6 @@ Negative control flips only C_ChallengeMode.GetLeaverPenaltyWarningTimeLeft adde
 
 Separate local debug build succeeds; bounded 90-second startup run exits 0 with `[]`, CLEAN, zero unique errors/occurrences. No release, extra target directory, vendor edit, Blizzard monkey-patch, other worktree edit, push, merge or delegation.
 
-Coverage: 162 inventory + 82 extract = 244 unique IDs; 75 partial-development-green, 57 bounded-coverage, 91 audit-pending, 21 metadata-only. Of 57 successful unsuperseded removals, 46 establish absence/registration rejection and 11 accept exact cached deprecated wrappers/aliases, not strict raw absence. Extract: 65 pending / 17 editorial; scout batches 4, 8, 34, 9 and 10 rows.
+Coverage: 162 inventory + 82 extract = 244 unique IDs; 75 partial-development-green, 57 bounded-coverage, 91 audit-pending, 21 metadata-only. Of 57 successful unsuperseded removals, 47 establish absence/registration rejection and 10 accept exact cached deprecated wrappers/aliases, not strict raw absence. Extract: 65 pending / 17 editorial; scout batches 4, 8, 34, 9 and 10 rows.
 
 [Artifact validator](../../data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-validate.py) checks hashes, source identities, chronological expectations, exact gaps, reviewed outcomes, negative control, ledger credit, complete scout allocation and revision-scoped proof. Local build/check logs are ignored artifacts, referenced by the retained proof ledger.

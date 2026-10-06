@@ -79,7 +79,7 @@ def validate_inventory(register, coverage, results):
         else:
             counts["published"] += 1
             assert credit["status"] == "partial-development-green"
-    assert counts == {"superseded_ok": 4, "deprecated_aliases": 11, "strict_removals": 46, "published": 75}
+    assert counts == {"superseded_ok": 4, "deprecated_aliases": 10, "strict_removals": 47, "published": 75}
     return dict(counts)
 
 

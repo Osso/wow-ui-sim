@@ -17,7 +17,7 @@ Two retired globals remain defects, not accepted aliases: GetLootMethod uses a l
 | Statements/features | Count | Proof / boundary |
 |---|---:|---|
 | Inventory add/change publication | 75 | Partial-development-green; signatures/output/security/behavior unproven |
-| Unsuperseded source removals | 57 | Bounded shared policy: 46 absence/rejection, 11 exact cached deprecated wrappers/aliases |
+| Unsuperseded source removals | 57 | Bounded shared policy: 47 absence/rejection, 10 exact cached deprecated wrappers/aliases |
 | Later-superseded inventory OK | 4 | Metadata-only; no historical credit |
 | Inventory gaps | 26 | 24 missing explicit namespace producers, two global-retirement defects |
 | Extract contractual candidates | 65 | Audit-pending, five ranked follow-up batches |
