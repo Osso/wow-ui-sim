@@ -21,7 +21,8 @@
       },
       "exit_code": 101,
       "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-initial.log",
-      "invalidated_by_later_changes": false
+      "invalidated_by_later_changes": true,
+      "historical_evidence": "Retained RED/compile reproduction; superseded by final gate-aligned GREEN proof."
     },
     {
       "command": [
@@ -41,7 +42,8 @@
       "scope": "test gate widened, producer unchanged (uncommitted RED test)",
       "exit_code": 101,
       "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-location-red.log",
-      "invalidated_by_later_changes": false
+      "invalidated_by_later_changes": true,
+      "historical_evidence": "Retained RED/compile reproduction; superseded by final gate-aligned GREEN proof."
     },
     {
       "command": [
@@ -60,7 +62,8 @@
       "revision": "e5ae95820afbd4b9b43c0671ed534244eba7876d",
       "exit_code": 101,
       "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-location-green.log",
-      "invalidated_by_later_changes": false
+      "invalidated_by_later_changes": true,
+      "historical_evidence": "Retained RED/compile reproduction; superseded by final gate-aligned GREEN proof."
     },
     {
       "command": [
@@ -398,5 +401,7 @@
       "stderr_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-startup.stderr",
       "invalidated_by_later_changes": false
     }
-  ]
+  ],
+  "runtime_revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+  "later_changes": "Coverage/evidence/docs only; runtime, tests and extractor unchanged after final proof."
 }

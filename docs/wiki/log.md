@@ -130,3 +130,8 @@ Updated [audit](investigations/patch-12-0-1-api-audit.md), [spec](../specs/patch
 ## 2026-10-06 | ingest | Patch 11.2.7 page audit
 
 [Investigation](investigations/patch-11-2-7-api-audit.md) links retained revision 6726771, parser fixes, 508-row sweep, all-later supersession, four retail retirements, ten Command records, exact gap review and 19-row scout. New 527-ID ledger preserves publication-only limits; no existing page coverage edited.
+
+## [2026-10-06] evidence | 11.2.5 page audit
+
+[Audit](investigations/patch-11-2-5-api-audit.md) links 163 inventory + 73 extract rows, two modeled-global profile-gate fixes, 45 exact retained gaps and exhaustive scout. Seven isolated sweeps, negative control, Mists check and startup `[]` pass; deprecated aliases distinguished from absence. Existing coverage ledgers and concurrent 11.2.7 producers unchanged.
+

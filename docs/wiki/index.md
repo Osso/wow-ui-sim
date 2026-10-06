@@ -1,3 +1,7 @@
+## [2026-10-06] evidence | 11.2.5 page audit
+
+[Audit](investigations/patch-11-2-5-api-audit.md) links 163 inventory + 73 extract rows, two modeled-global profile-gate fixes, 45 exact retained gaps and exhaustive scout. Seven isolated sweeps, negative control, Mists check and startup `[]` pass; deprecated aliases distinguished from absence. Existing coverage ledgers and concurrent 11.2.7 producers unchanged.
+
 ## [2026-10-06] evidence | 11.2.7 page audit
 
 [Audit](investigations/patch-11-2-7-api-audit.md): 508 inventory / 19 extract rows; all later supersessions, 14 publication fixes, 121 exact gaps, one-row negative control. [Scout](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-extract-scout.md) assigns ten pending statements without behavioral credit. Existing ledgers unchanged.
