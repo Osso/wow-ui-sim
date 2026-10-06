@@ -8,9 +8,14 @@ fn major_faction_parent_and_optional_companion() {
         let state = env.state(); let mut state = state.borrow_mut();
         let first = state.major_factions.values_mut().next().unwrap();
         first.description = "Fixture description".into(); first.player_companion_id = Some(77);
-        first.highlights = vec![wow_ui_sim::c_api::c_major_factions::RenownHighlightInfo {
-            title: "First".into(), description: "Highlight".into(), level: 7
-        }];
+        first.highlights = vec![
+            wow_ui_sim::c_api::c_major_factions::RenownHighlightInfo {
+                title: "First".into(), description: "Highlight".into(), level: 7,
+            },
+            wow_ui_sim::c_api::c_major_factions::RenownHighlightInfo {
+                title: "Second highlight".into(), description: "Later".into(), level: 9,
+            },
+        ];
         let mut other = first.clone(); other.faction_id = 9999;
         other.description = "Second".into(); other.highlights.clear(); other.player_companion_id = None;
         state.major_factions.insert(9999, other);
