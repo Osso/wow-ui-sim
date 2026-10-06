@@ -205,6 +205,12 @@ fn major_faction_renown_rewards_default_has_no_fabricated_rows() {
 #[test]
 fn major_faction_renown_rewards_publish_identity_and_optional_fields() {
     let env = reward_fixture();
+    super::patch_12_0_0_struct_shapes::assert_shape(
+        &env,
+        "MajorFactionsDocumentation.lua",
+        "MajorFactionRenownRewardInfo",
+        "return C_MajorFactions.GetRenownRewardsForLevel(2507, 7)[1]",
+    );
     env.exec(
         r#"
         local rewards = C_MajorFactions.GetRenownRewardsForLevel(2507, 7)

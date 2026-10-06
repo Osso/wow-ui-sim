@@ -771,6 +771,10 @@ fn register_filter_methods(state: &mut LuaState, table_ref: GcRef<Table>) -> Lua
                 catalog::get_default_language_search_filter,
             ),
             ("GetAdvancedFilter", catalog::get_advanced_filter),
+            (
+                "SaveAdvancedFilter",
+                crate::c_api::c_lfg_list_filter::save_advanced_filter,
+            ),
         ],
     )
 }
