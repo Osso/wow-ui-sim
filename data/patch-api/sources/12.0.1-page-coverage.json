@@ -22,6 +22,21 @@
       "compiled_revision": "3ddcc019cc0db948ae24ffe64c2837f547221e0f",
       "proof": "Main-thread development GREEN and exact one-new-gap negative control. Final isolated sweep/check/startup proof recorded separately; no independent review or exact 12.0.1 runtime.",
       "ledger": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-development-sweep.json"
+    },
+    {
+      "id": "gap-closures-12-0-1",
+      "symbols": [
+        "C_CombatAudioAlert category voice/volume, C_EncounterWarnings shown/sound settings, C_BattleNet AFK/DND, C_DeathRecap max health, C_LFGList endgame edit rules, C_PvP arena CC duration, C_Secrets unit comparison/threat state, C_TransmogOutfitInfo events/discount, C_VoiceChat channel lookups, totem globals, PlayerIsSpellTarget, UnitHealPredictionCalculator methods; 12.0.1 removals withdrawn"
+      ],
+      "scope": "State-backed producers; symbols added in 12.0.0 and removed in 12.0.1 withdrawn from retail-12-0-5 (first supported later epoch).",
+      "spec": "docs/specs/patch-12-0-1-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_0_1_utilities.rs",
+        "subsystem filters"
+      ],
+      "implementation": "commits through e670ebcdb",
+      "compiled_revision": "e670ebcdb",
+      "proof": "Sol worker GREEN; main-thread five sweeps + audio 11, prediction 17, death_recap 10, outfit 52, secret 278, voice_chat 53, totem 4, encounter_warning 8; no independent review"
     }
   ],
   "non_inventory_source": {
@@ -545,15 +560,19 @@
     },
     {
       "source_id": "wt-cvars-minimapTrackedInfov2-491",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":\"0\",\"default_mismatch\":false,\"detail\":\"value/default queried\",\"kind\":\"cvar\",\"value\":\"0\"}"
+      "capabilities": [
+        "publication-sweep-12-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
     },
     {
       "source_id": "wt-cvars-nameplateLargerScale-493",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":\"1.200000\",\"default_mismatch\":false,\"detail\":\"value/default queried\",\"kind\":\"cvar\",\"value\":\"1.200000\"}"
+      "capabilities": [
+        "publication-sweep-12-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
     },
     {
       "source_id": "wt-cvars-nameplateOtherBottomInset-494",
@@ -573,15 +592,19 @@
     },
     {
       "source_id": "wt-cvars-nameplatePlayerLargerScale-496",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":\"1.800000\",\"default_mismatch\":false,\"detail\":\"value/default queried\",\"kind\":\"cvar\",\"value\":\"1.800000\"}"
+      "capabilities": [
+        "publication-sweep-12-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
     },
     {
       "source_id": "wt-cvars-nameplateSelfAlpha-497",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":\"0.750000\",\"default_mismatch\":false,\"detail\":\"value/default queried\",\"kind\":\"cvar\",\"value\":\"0.750000\"}"
+      "capabilities": [
+        "publication-sweep-12-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
     },
     {
       "source_id": "wt-cvars-nameplateSimplifiedScale-470",
@@ -647,9 +670,11 @@
     },
     {
       "source_id": "wt-cvars-useCompactPartyFrames-501",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":\"0\",\"default_mismatch\":false,\"detail\":\"value/default queried\",\"kind\":\"cvar\",\"value\":\"0\"}"
+      "capabilities": [
+        "publication-sweep-12-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
     },
     {
       "source_id": "wt-events-BULK_PURCHASE_RESULT_RECEIVED-408",
@@ -669,9 +694,11 @@
     },
     {
       "source_id": "wt-events-CHAT_MSG_ENCOUNTER_EVENT-405",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"pcall=true; return=true; registered=true\",\"kind\":\"event\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
     },
     {
       "source_id": "wt-events-ENCOUNTER_TIMELINE_VIEW_ACTIVATED-392",
@@ -763,9 +790,12 @@
     },
     {
       "source_id": "wt-events-UNIT_ARENA_COOLDOWNS_UPDATE-402",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \\\"UNIT_ARENA_COOLDOWNS_UPDATE\\\"; registered=false\",\"kind\":\"event\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-BNSetAFK-303",
@@ -801,15 +831,21 @@
     },
     {
       "source_id": "wt-global-api-C_BattleNet.SetAFK-222",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_BattleNet.SetDND-223",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_CatalogShop.BulkRefundDecors-224",
@@ -859,15 +895,21 @@
     },
     {
       "source_id": "wt-global-api-C_CombatAudioAlert.GetCategoryVoice-230",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_CombatAudioAlert.GetCategoryVolume-231",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_CombatAudioAlert.GetSpeakerVolume-306",
@@ -887,15 +929,21 @@
     },
     {
       "source_id": "wt-global-api-C_CombatAudioAlert.SetCategoryVoice-233",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_CombatAudioAlert.SetCategoryVolume-234",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_CombatAudioAlert.SetSpeakerVolume-307",
@@ -939,9 +987,12 @@
     },
     {
       "source_id": "wt-global-api-C_DeathRecap.GetRecapMaxHealth-236",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_DelvesUI.GetPlayerCompanionPDEID-237",
@@ -1089,27 +1140,39 @@
     },
     {
       "source_id": "wt-global-api-C_EncounterWarnings.GetPlayCustomSoundsWhenHidden-255",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_EncounterWarnings.GetWarningsShown-256",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_EncounterWarnings.SetPlayCustomSoundsWhenHidden-257",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_EncounterWarnings.SetWarningsShown-258",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_GuildInfo.GetInfoText-259",
@@ -1137,9 +1200,12 @@
     },
     {
       "source_id": "wt-global-api-C_Housing.IsHousingMarketCartFullRemoveEnabled-262",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_HousingCatalog.CanDestroyEntry-308",
@@ -1273,15 +1339,21 @@
     },
     {
       "source_id": "wt-global-api-C_LFGList.IsPlayerValidForEndgameFieldEdits-281",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_LFGList.ListingUsesEndgameEditRestrictions-282",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_LossOfControl.GetActiveLossOfControlDuration-283",
@@ -1309,21 +1381,30 @@
     },
     {
       "source_id": "wt-global-api-C_PvP.GetArenaCrowdControlDuration-284",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_Secrets.CanCompareUnitTokens-285",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitThreatStateBeSecret-286",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_Secrets.ShouldUnitThreatValuesBeSecret-287",
@@ -1373,9 +1454,12 @@
     },
     {
       "source_id": "wt-global-api-C_StringUtil.StripTextureMarkupForLooseFiles-290",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_TableUtil.FindIndexedMismatch-291",
@@ -1387,33 +1471,48 @@
     },
     {
       "source_id": "wt-global-api-C_TransmogCollection.IsSpellItemEnchantmentHiddenVisual-292",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.InTransmogEvent-293",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.IsUsableDiscountAvailable-294",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.SetOutfitToOutfit-295",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_TransmogOutfitInfo.TransmogEventActive-296",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_VoiceChat.GetChannel-333",
@@ -1425,15 +1524,21 @@
     },
     {
       "source_id": "wt-global-api-C_VoiceChat.GetChannelForChannelType-335",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-C_VoiceChat.GetChannelForCommunityStream-337",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=function\",\"kind\":\"member\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-GetBattlefieldScore-313",
@@ -1469,15 +1574,21 @@
     },
     {
       "source_id": "wt-global-api-GetNumTotemSlots-297",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=nil\",\"kind\":\"global\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-GetTotemDuration-298",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=nil\",\"kind\":\"global\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-GuildRosterSetOfficerNote-317",
@@ -1497,9 +1608,12 @@
     },
     {
       "source_id": "wt-global-api-PlayerIsSpellTarget-299",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"raw=nil; lookup=nil\",\"kind\":\"global\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-global-api-SetGuildInfoText-319",
@@ -1567,15 +1681,21 @@
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateCurrentHealthPercent-350",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateMissingHealthPercent-351",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetCurrentHealth-352",
@@ -1587,21 +1707,30 @@
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetCurrentHealthPercent-353",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumDamageAbsorbs-354",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumHealAbsorbs-355",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumHealth-356",
@@ -1621,45 +1750,66 @@
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumIncomingHeals-358",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealth-359",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealthPercent-360",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalDamageAbsorbs-361",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalHealAbsorbs-362",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHeals-363",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer-364",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"UnitHealPredictionCalculator; lookup=nil\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1",
+        "gap-closures-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state (p1201 gap closures)."
     },
     {
       "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:ResetPredictedValues-365",
@@ -1687,9 +1837,11 @@
     },
     {
       "source_id": "wt-widgets-FrameScriptObject:SetPreventSecretValues-380",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication gap: {\"default\":null,\"default_mismatch\":false,\"detail\":\"FrameScriptObject; lookup=function\",\"kind\":\"object-method\",\"value\":null}"
+      "capabilities": [
+        "publication-sweep-12-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absent on the default build (sweep)."
     },
     {
       "source_id": "wt-widgets-GameTooltip:ClearPadding-377",

@@ -11,7 +11,7 @@
       "symbols": [
         "1010 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 27 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json. Supersession now also checks the 12.0.1 register.",
+      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 23 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json. Supersession now also checks the 12.0.1 register.",
       "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_0_publication_sweep.rs",
@@ -154,6 +154,21 @@
       "implementation": "commits 39b7cfe9d..7e269c34f (rebased)",
       "compiled_revision": "7e269c34f",
       "proof": "Sol worker GREEN; main-thread sweeps + lfg 96/major_faction 35/transmog_set 16/cooldown_viewer 6/spell_cooldown 18/item_interaction 7/private_aura 52/struct_shape 5/cast 136; no independent review"
+    },
+    {
+      "id": "crafting-structs-12-0-0",
+      "symbols": [
+        "CraftingItemSlotModification, CraftingOrderReagentInfo, CraftingReagentInfo, CraftingReagentSlotSchematic, CraftingResourceReturnInfo, NewCraftingOrderInfo, RegularReagentInfo; combat-log registration prose"
+      ],
+      "scope": "State-backed crafting/order fixtures: nested reagent identity, item vs currency, quantities, resource returns, order snapshots. Combat-log event registration errors without delivery (prose-undated-005).",
+      "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_0_0_crafting_shapes.rs",
+        "tests/patch_12_0_0_prose.rs"
+      ],
+      "implementation": "commits through f1b6977a9",
+      "compiled_revision": "f1b6977a9",
+      "proof": "Sol worker GREEN; main-thread full integration 0 new vs d1a2a0250, prefork 2016/3, startup [] (addons: only pre-existing EllesmereUI error); no independent review"
     }
   ],
   "source_rows": [
@@ -1967,9 +1982,11 @@
     },
     {
       "source_id": "wt-cvars-minimapTrackedInfov2-925",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Added in 12.0.0 but removed again in 12.0.1 (supersession); simulator still publishes it on the current build."
+      "capabilities": [
+        "publication-sweep-12-0-0"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (wt-cvars-minimapTrackedInfov2-491); observed as expected on the current build."
     },
     {
       "source_id": "wt-cvars-nameplateAuraScale-926",
@@ -2443,9 +2460,11 @@
     },
     {
       "source_id": "wt-cvars-useCompactPartyFrames-962",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Added in 12.0.0 but removed again in 12.0.1 (supersession); simulator still publishes it on the current build."
+      "capabilities": [
+        "publication-sweep-12-0-0"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (wt-cvars-useCompactPartyFrames-501); observed as expected on the current build."
     },
     {
       "source_id": "wt-cvars-watchFrameBaseAlpha-1115",
@@ -2513,9 +2532,11 @@
     },
     {
       "source_id": "wt-events-CHAT_MSG_ENCOUNTER_EVENT-739",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Added in 12.0.0 but removed again in 12.0.1 (supersession); simulator still publishes it on the current build."
+      "capabilities": [
+        "publication-sweep-12-0-0"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (wt-events-CHAT_MSG_ENCOUNTER_EVENT-405); observed as expected on the current build."
     },
     {
       "source_id": "wt-events-COMBAT_LOG_APPLY_FILTER_SETTINGS-740",
@@ -8223,9 +8244,11 @@
     },
     {
       "source_id": "wt-widgets-FrameScriptObject:SetPreventSecretValues-691",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Added in 12.0.0 but removed again in 12.0.1 (supersession); simulator still publishes it on the current build."
+      "capabilities": [
+        "publication-sweep-12-0-0"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (wt-widgets-FrameScriptObject:SetPreventSecretValues-380); observed as expected on the current build."
     },
     {
       "source_id": "wt-widgets-GameTooltip:GetLeftLine-704",
@@ -8375,9 +8398,11 @@
     },
     {
       "source_id": "prose-undated-005",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "source-context-007",
@@ -8485,7 +8510,7 @@
       "source_id": "prose-undated-030",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "note": "No operation-specific native oracle for secure/tainted arithmetic, comparison, concatenation, indexing, branching and rendering."
     },
     {
       "source_id": "source-context-032",
@@ -8857,63 +8882,83 @@
     },
     {
       "source_id": "structures-CraftingItemSlotModification-082",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-CraftingItemSlotModification-083",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-CraftingOrderReagentInfo-084",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-CraftingOrderReagentInfo-085",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-CraftingReagentInfo-086",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-CraftingReagentInfo-087",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-CraftingReagentSlotSchematic-088",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-CraftingReagentSlotSchematic-089",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-CraftingResourceReturnInfo-090",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-CraftingResourceReturnInfo-091",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-ExpansionDisplayInfo-092",
@@ -9053,15 +9098,19 @@
     },
     {
       "source_id": "structures-NewCraftingOrderInfo-110",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-NewCraftingOrderInfo-111",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-PrivateAuraIconInfo-112",
@@ -9081,15 +9130,19 @@
     },
     {
       "source_id": "structures-RegularReagentInfo-114",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-RegularReagentInfo-115",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "crafting-structs-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven (patch_12_0_0_crafting_shapes / patch_12_0_0_prose)."
     },
     {
       "source_id": "structures-ScheduledEventInfo-116",

@@ -4071,17 +4071,17 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "cvars",
-      "superseded_by": null,
+      "superseded_by": "wt-cvars-minimapTrackedInfov2-491",
       "symbol": "minimapTrackedInfov2"
     },
     "observed": {
-      "default": "0",
+      "default": null,
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": "0"
+      "value": null
     },
     "ok": true
   },
@@ -5151,17 +5151,17 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "cvars",
-      "superseded_by": null,
+      "superseded_by": "wt-cvars-useCompactPartyFrames-501",
       "symbol": "useCompactPartyFrames"
     },
     "observed": {
-      "default": "0",
+      "default": null,
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": "0"
+      "value": null
     },
     "ok": true
   },
@@ -5313,15 +5313,15 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "events",
-      "superseded_by": null,
+      "superseded_by": "wt-events-CHAT_MSG_ENCOUNTER_EVENT-405",
       "symbol": "CHAT_MSG_ENCOUNTER_EVENT"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "pcall=true; return=true; registered=true",
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_ENCOUNTER_EVENT\"; registered=false",
       "kind": "event",
       "value": null
     },
@@ -7041,15 +7041,15 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_ActionBar.GetActionLossOfControlCooldown-305",
       "symbol": "C_ActionBar.GetActionLossOfControlCooldown"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua",
       "kind": "member",
       "value": null
     },
@@ -8229,15 +8229,15 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_CombatAudioAlert.GetSpeakerVolume-306",
       "symbol": "C_CombatAudioAlert.GetSpeakerVolume"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
@@ -8337,15 +8337,15 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_CombatAudioAlert.SetSpeakerVolume-307",
       "symbol": "C_CombatAudioAlert.SetSpeakerVolume"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
@@ -17085,15 +17085,15 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-UnitIsSpellTarget-320",
       "symbol": "UnitIsSpellTarget"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=function; lookup=function",
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_1.lua",
       "kind": "global",
       "value": null
     },
@@ -17877,15 +17877,15 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "widgets",
-      "superseded_by": null,
+      "superseded_by": "wt-widgets-FrameScriptObject:SetPreventSecretValues-380",
       "symbol": "FrameScriptObject:SetPreventSecretValues"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "FrameScriptObject; lookup=function",
+      "detail": "FrameScriptObject; lookup=nil",
       "kind": "object-method",
       "value": null
     },
