@@ -1,0 +1,3973 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "11.2.7",
+  "source_register": "data/patch-api/sources/11.2.7-wikitext-register.json",
+  "source_sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986",
+  "audit_status": "in-progress",
+  "proof_policy": "Publication does not establish signatures, outputs, security or behavioral parity. No exact 11.2.7 runtime exists. Main-thread development evidence, not independent/native acceptance. Non-inventory statements remain pending; external linked pages are not expanded. Existing patch-page ledgers unchanged.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-11-2-7",
+      "symbols": [
+        "508 wikitext inventory occurrences"
+      ],
+      "scope": "387 OK / 121 exact reviewed gaps; 50 superseded OK and one superseded event gap. All five later registers applied chronologically. Publication/absence only.",
+      "spec": "docs/specs/patch-11-2-7-publication-sweep.md",
+      "tests": [
+        "tests/patch_11_2_7_publication_sweep.rs",
+        "tests/common/publication_sweep.rs",
+        "tests/patch_11_2_7_retirement.rs"
+      ],
+      "implementation": "Retail baseline retirement of one global/three namespace members; ten typed console catalog records. No fabricated backing model.",
+      "compiled_revision": "9cc60a03dc2dc2b51ff2675b00f9e5688228b0e5",
+      "proof": "Six isolated GREEN sweeps; negative control adds exactly one gap. Main-thread development only.",
+      "ledger": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-sweep-result.json"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/11.2.7-api-changes.txt",
+    "sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+    "wikitext_revid": 6726771,
+    "wikitext_sha256": "1538a9bdf49a0e09102b4f9c3905aada48e9e1aafdf9c4b9c780a1127179e324",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1127-page/tools/extract_patch_non_inventory.py --patch 11.2.7 --text-only"
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_ActionBar.IsInterruptAction-22",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.InstallHighResTextures-23",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_CurrencyInfo.GetPlayerCurrencyCategoryInfo-24",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetAllDyeColorCategories-25",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetAllDyeColors-26",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorForItemLocation-28",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_DyeColor.GetDyeColorForItemLocation-565; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorForItem-29",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_DyeColor.GetDyeColorForItem-566; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorInfo-30",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.IsDyeColorOwned-32",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.StartArathiRPE-33",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsClassAllowedForGameMode-34",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsGameModeEnabled-35",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsMultiActionBarVisibilityForced-36",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsPlunderstorm-37",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsStandard-38",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsWoWHack-39",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.ActivateHouseEditorMode-40",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.EnterHouseEditor-41",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.GetActiveHouseEditorMode-42",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorAvailability-43",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorActive-45",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.LeaveHouseEditor-48",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.CancelActiveExteriorEditing-49",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.GetCoreFixtureOptionsInfo-50",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.GetCurrentHouseExteriorSize-51",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.GetCurrentHouseExteriorTypeName-52",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_HouseExterior.GetCurrentHouseExteriorTypeName-487; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.GetSelectedFixturePointInfo-53",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.HasHoveredFixture-54",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.HasSelectedFixturePoint-55",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.RemoveFixtureFromSelectedPoint-56",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.SelectCoreFixtureOption-57",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HouseExterior.SelectFixtureOption-58",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.AcceptNeighborhoodOwnership-59",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CanEditCharter-60",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CanTakeReportScreenshot-61",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CreateGuildNeighborhood-62",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CreateNeighborhoodCharter-63",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.DeclineNeighborhoodOwnership-64",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.DoesFactionMatchNeighborhood-65",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.EditNeighborhoodCharter-66",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentHouseInfo-67",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentHouseLevelFavor-68",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentHouseRefundAmount-69",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentNeighborhoodGUID-70",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetHouseLevelFavorForLevel-71",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetHouseLevelRewardsForLevel-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetHousingAccessFlags-73",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetMaxHouseLevel-74",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetNeighborhoodTextureSuffix-75",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetOthersOwnedHouses-76",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetPlayerOwnedHouses-77",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetTrackedHouseGuid-78",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetUIMapIDForNeighborhood-79",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetVisitCooldownInfo-80",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HasHousingExpansionAccess-81",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HouseFinderDeclineNeighborhoodInvitation-82",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HouseFinderRequestNeighborhoods-83",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HouseFinderRequestReservationAndPort-84",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsHousingMarketEnabled-85",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsHousingServiceEnabled-86",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsideHouseOrPlot-87",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsideHouse-88",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsideOwnHouse-89",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_Housing.IsInsideOwnHouse-567; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsidePlot-90",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsOnNeighborhoodMap-91",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.LeaveHouse-92",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCharterConfirmationAccepted-93",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCharterConfirmationClosed-94",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCreateCharterNeighborhoodClosed-95",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCreateGuildNeighborhoodClosed-96",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnRequestSignatureClicked-97",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnSignCharterClicked-98",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RelinquishHouse-99",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RequestCurrentHouseInfo-100",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RequestHouseFinderNeighborhoodData-101",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RequestPlayerCharacterList-102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ReturnAfterVisitingHouse-103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SaveHouseSettings-104",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoodsByID-105",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoods-106",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SetTrackedHouseGuid-107",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.StartTutorial-108",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.TeleportHome-109",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.TryRenameNeighborhood-110",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ValidateCreateGuildNeighborhoodSize-111",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ValidateNeighborhoodName-112",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.VisitHouse-113",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.CancelActiveEditing-114",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.CommitDecorMovement-115",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.CommitHouseExteriorPosition-116",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.FinishPlacingNewDecor-117",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.GetHoveredDecorInfo-118",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.GetSelectedDecorInfo-119",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsDecorSelected-120",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsGridSnapEnabled-121",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsGridVisible-122",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsHouseExteriorHovered-123",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsHouseExteriorSelected-124",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsHoveringDecor-125",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsNudgeEnabled-126",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_HousingBasicMode.IsNudgeEnabled-488; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsPlacingNewDecor-127",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RemoveSelectedDecor-128",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RotateDecor-129",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RotateHouseExterior-130",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.SetGridSnapEnabled-131",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.SetGridVisible-132",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.SetNudgeEnabled-133",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_HousingBasicMode.SetNudgeEnabled-489; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.StartPlacingNewDecor-134",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.CanDestroyEntry-135",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_HousingCatalog.CanDestroyEntry-308; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.CreateCatalogSearcher-136",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.DestroyEntry-137",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetAllFilterTagGroups-138",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogCategoryInfo-139",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryDebugInfoForID-140",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryInfoByItem-141",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryInfoByRecordID-142",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryInfo-143",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogSubcategoryInfo-144",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetDecorMaxOwnedCount-145",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetDecorTotalOwnedCount-146",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetFeaturedBundles-147",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetFeaturedDecor-148",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_HousingCatalog.GetFeaturedDecor-333; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.RequestHousingMarketInfoRefresh-149",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.SearchCatalogCategories-150",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.SearchCatalogSubcategories-151",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.GetHoveredDecorInfo-152",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.IsHoveringDecor-153",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.RemoveSelectedDecor-154",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyDyeToSelectedDecor-155",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyThemeToRoom-156",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyThemeToSelectedRoomComponent-157",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyWallpaperToAllWalls-158",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyWallpaperToSelectedRoomComponent-159",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.CancelActiveEditing-160",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ClearDyesForSelectedDecor-161",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ClearTargetRoomComponent-162",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.CommitDyesForSelectedDecor-163",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetHoveredDecorInfo-164",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetHoveredRoomComponentInfo-165",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetNumDyesToRemoveOnSelectedDecor-166",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetNumDyesToSpendOnSelectedDecor-167",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetPreviewDyesOnSelectedDecor-168",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetRecentlyUsedDyes-169",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetRecentlyUsedThemeSets-170",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetRecentlyUsedWallpapers-171",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetSelectedDecorInfo-172",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetSelectedRoomComponentInfo-173",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetThemeSetInfo-174",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetWallpapersForRoomComponentType-175",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.IsDecorSelected-176",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.IsHoveringDecor-177",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.IsHoveringRoomComponent-178",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.IsRoomComponentSelected-179",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.RoomComponentSupportsVariant-180",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.SetRoomComponentCeilingType-181",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.SetRoomComponentDoorType-182",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.CancelActiveEditing-183",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.CommitDecorMovement-184",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetAllPlacedDecor-185",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetDecorDebugInfoForGUID-186",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetDecorIcon-187",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetDecorInstanceInfoForGUID-188",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetDecorName-189",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetHoveredDecorDebugInfo-190",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetHoveredDecorInfo-191",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetMaxDecorPlaced-192",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_HousingDecor.GetMaxDecorPlaced-490; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetMaxPlacementBudget-193",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetNumDecorPlaced-194",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetSelectedDecorDebugInfo-195",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetSelectedDecorInfo-196",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetSpentPlacementBudget-197",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.HasMaxPlacementBudget-198",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.IsDecorSelected-199",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.IsGridVisible-200",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.IsHouseExteriorDoorHovered-201",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.IsHouseExteriorHovered-202",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.IsHoveringDecor-203",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.RemovePlacedDecorEntry-204",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.RemoveSelectedDecor-205",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.SetGridVisible-206",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.SetPlacedDecorEntryHovered-207",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.SetPlacedDecorEntrySelected-208",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.CancelActiveEditing-209",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.CommitDecorMovement-210",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.CommitHouseExteriorPosition-211",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.GetHoveredDecorInfo-212",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.GetPrecisionSubmodeRestriction-213",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.GetPrecisionSubmode-214",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.GetSelectedDecorInfo-215",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsDecorSelected-216",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsGridVisible-217",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsHouseExteriorHovered-218",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsHouseExteriorSelected-219",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsHoveringDecor-220",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.RemoveSelectedDecor-221",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.ResetPrecisionChanges-222",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SelectNextRotationAxis-223",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SetGridVisible-224",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SetPrecisionIncrementingActive-225",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SetPrecisionSubmode-226",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.AnyRoomsOnFloor-227",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.CancelActiveLayoutEditing-228",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.ConfirmStairChoice-229",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.DeselectFloorplan-230",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.DeselectRoomOrDoor-231",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetNumActiveRooms-232",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetRoomPlacementBudget-233",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedDoor-234",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedFloorplan-235",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedRoom-236",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedStairwellRoomCount-237",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSpentPlacementBudget-238",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetViewedFloor-239",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasAnySelections-240",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasRoomPlacementBudget-241",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedDoor-242",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedFloorplan-243",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedRoom-244",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasStairs-245",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasValidConnection-246",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.IsBaseRoom-247",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.IsDraggingRoom-248",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.MoveDraggedRoom-249",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.MoveLayoutCamera-250",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.RemoveRoom-251",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.RotateFocusedRoom-252",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.RotateRoom-253",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.SelectFloorplan-254",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.SetViewedFloor-255",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.StartDrag-256",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.StopDraggingRoom-257",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.StopDrag-258",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.ZoomLayoutCamera-259",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.CanReturnAfterVisitingHouse-260",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.CancelInviteToNeighborhood-261",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.DemoteToResident-262",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.GetCornerstoneHouseInfo-263",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.GetCornerstoneNeighborhoodInfo-264",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.GetCornerstonePurchaseMode-265",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.GetCurrentNeighborhoodTextureSuffix-266",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.GetDiscountedMovePrice-267",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.GetMoveCooldownTime-268",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.GetNeighborhoodMapData-269",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.GetNeighborhoodName-270",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.GetNeighborhoodPlotName-271",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.GetPreviousHouseIdentifier-272",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.HasPermissionToPurchase-273",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.InvitePlayerToNeighborhood-274",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.IsNeighborhoodManager-275",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.IsNeighborhoodOwner-276",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.IsPlayerInOtherPlayersPlot-277",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.IsPlotAvailableForPurchase-278",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.IsPlotOwnedByPlayer-279",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.OnBulletinBoardClosed-280",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.PromoteToManager-281",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.RequestNeighborhoodInfo-282",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.RequestNeighborhoodRoster-283",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.RequestPendingNeighborhoodInvites-284",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.TransferNeighborhoodOwnership-285",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.TryEvictPlayer-286",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.TryMoveHouse-287",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_HousingNeighborhood.TryPurchasePlot-288",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsDecorItem-289",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.ActivateBindingContext-290",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.DeactivateBindingContext-291",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.GetBindingByKey-292",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.GetBindingContextForAction-293",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.GetSearchTagsForAction-294",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.GetTurnStrafeStyle-295",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.IsBindingContextActive-296",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.SetTurnStrafeStyle-297",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.UpdateTurnStrafeBindingsForCharacter-298",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PaperDollInfo.IsRangedSlotShown-299",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetNonBattlePetLinkByIndex-300",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsPlayerInRPE-301",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsReturningCharacter-302",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsTutorialsTabAvailable-303",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.JoinBattlefield-304",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.RequiresScreenshotForReportType-305",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SetScreenshotPreviewTexture-306",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.TakeReportScreenshot-307",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetAuraStatChanges-308",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetItemModifiedAppearancesApplied-309",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Texture.GetAtlasExists-310",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetUnitAuras-311",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_VideoOptions.IsSpellVisualDensitySystemSupported-312",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-CanUpgradeToCurrentExpansion-313",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ClearOutage-314",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetAutoDeclineNeighborhoodInvites-315",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetUpgradeExpansionLevel-316",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-OutageDetected-317",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-SetAutoDeclineNeighborhoodInvites-318",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-SetCursorByMode-319",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ShouldShowExpansionUpgradeBanner-320",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-global-api-C_CharacterServices.RPEResetCharacter-323",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absence only (sweep); no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-C_ReturningPlayerUI.AcceptPrompt-324",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absence only (sweep); no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-C_ReturningPlayerUI.DeclinePrompt-325",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absence only (sweep); no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-CanUpgradeExpansion-326",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absence only (sweep); no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-GetBindingByKey-327",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absence only (sweep); no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-GetSpecChangeCost-328",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absence only (sweep); no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-JoinBattlefield-329",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absence only (sweep); no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.OpenCatalogShopInteraction-332",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_CatalogShop.OpenCatalogShopInteraction-485; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingCatalogSearcher-338",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingFixturePointFrame-339",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingLayoutPinFrame-340",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Model:SetGradientMask-350",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:SetGradientMask-352",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-events-ACCOUNT_STORE_FRONT_UPDATED-366",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-ACCOUNT_STORE_TRANSACTION_ERROR-367",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-ADD_NEIGHBORHOOD_CHARTER_SIGNATURE-368",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-AVAILABLE_GAME_MODES_UPDATED-369",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-B_NET_NEIGHBORHOOD_LIST_UPDATED-370",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-BINDINGS_LOADED-371",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-CANCEL_NEIGHBORHOOD_INVITE_RESPONSE-372",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-CHALLENGE_MODE_LEADERBOARD_RESULT-373",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-CLOSE_CHARTER_CONFIRMATION_UI-374",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-CLOSE_CREATE_CHARTER_NEIGHBORHOOD_UI-375",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-CLOSE_CREATE_GUILD_NEIGHBORHOOD_UI-376",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-CLOSE_PLOT_CORNERSTONE-377",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-CREATE_NEIGHBORHOOD_RESULT-378",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-CURRENT_HOUSE_INFO_RECIEVED-379",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-CURRENT_HOUSE_INFO_UPDATED-380",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-DECLINE_NEIGHBORHOOD_INVITATION_RESPONSE-381",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-DYE_COLOR_CATEGORY_UPDATED-382",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-DYE_COLOR_UPDATED-383",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-FORCE_REFRESH_HOUSE_FINDER-384",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-GAME_MODE_DISPLAY_MODE_TOGGLE_DISABLED-385",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_DECOR_ADDED_TO_CHEST-386",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_EDITOR_AVAILABILITY_CHANGED-387",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_EDITOR_MODE_CHANGE_FAILURE-388",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_EDITOR_MODE_CHANGED-389",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_EXTERIOR_POSITION_FAILURE-390",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_EXTERIOR_POSITION_SUCCESS-391",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_FINDER_NEIGHBORHOOD_DATA_RECIEVED-392",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_INFO_UPDATED-393",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_LEVEL_CHANGED-394",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-events-HOUSE_LEVEL_FAVOR_UPDATED-395",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_PLOT_ENTERED-396",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_PLOT_EXITED-397",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSE_RESERVATION_RESPONSE_RECIEVED-398",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_BASIC_MODE_HOVERED_TARGET_CHANGED-399",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_BASIC_MODE_PLACEMENT_FLAGS_UPDATED-400",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_BASIC_MODE_SELECTED_TARGET_CHANGED-401",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_CATALOG_CATEGORY_UPDATED-402",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_CATALOG_SEARCHER_RELEASED-403",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-events-HOUSING_CATALOG_SEARCHER_RELEASED-813; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-events-HOUSING_CATALOG_SUBCATEGORY_UPDATED-404",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_CLEANUP_MODE_HOVERED_TARGET_CHANGED-405",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_CLEANUP_MODE_TARGET_SELECTED-406",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_CORE_FIXTURE_CHANGED-407",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_CUSTOMIZE_MODE_HOVERED_TARGET_CHANGED-408",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_CUSTOMIZE_MODE_SELECTED_TARGET_CHANGED-409",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_CUSTOMIZATION_CHANGED-410",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_DYE_FAILURE-411",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_GRID_SNAP_OCCURRED-412",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_GRID_SNAP_STATUS_CHANGED-413",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_GRID_VISIBILITY_STATUS_CHANGED-414",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_NUDGE_STATUS_CHANGED-415",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-events-HOUSING_DECOR_NUDGE_STATUS_CHANGED-814; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_PLACE_FAILURE-416",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_PLACE_SUCCESS-417",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_PRECISION_MANIPULATION_EVENT-418",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_PRECISION_MANIPULATION_STATUS_CHANGED-419",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_PRECISION_SUBMODE_CHANGED-420",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_REMOVED-421",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_DECOR_SELECT_RESPONSE-422",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_EXPERT_MODE_HOVERED_TARGET_CHANGED-423",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_EXPERT_MODE_SELECTED_TARGET_CHANGED-424",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_FIXTURE_HOVER_CHANGED-425",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_FIXTURE_POINT_FRAME_ADDED-426",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_FIXTURE_POINT_FRAME_RELEASED-427",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_FIXTURE_POINT_FRAMES_RELEASED-428",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_FIXTURE_POINT_SELECTION_CHANGED-429",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_DOOR_SELECTED-430",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_DOOR_SELECTION_CHANGED-431",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_DRAG_TARGET_CHANGED-432",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_FLOORPLAN_SELECTION_CHANGED-433",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_NUM_FLOORS_CHANGED-434",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-events-HOUSING_LAYOUT_NUM_FLOORS_CHANGED-1297; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_PIN_FRAME_ADDED-435",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_PIN_FRAME_RELEASED-436",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_PIN_FRAMES_RELEASED-437",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_ROOM_COMPONENT_THEME_SET_CHANGED-438",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_ROOM_MOVE_INVALID-439",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_ROOM_MOVED-440",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_ROOM_RECEIVED-441",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_ROOM_REMOVED-442",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_ROOM_RETURNED-443",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_ROOM_SELECTION_CHANGED-444",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_ROOM_SNAPPED-445",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_LAYOUT_VIEWED_FLOOR_CHANGED-446",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_MARKET_AVAILABILITY_UPDATED-447",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_NUM_DECOR_PLACED_CHANGED-448",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_ROOM_COMPONENT_CUSTOMIZATION_CHANGE_FAILED-449",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_ROOM_COMPONENT_CUSTOMIZATION_CHANGED-450",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_SERVICES_AVAILABILITY_UPDATED-451",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_STORAGE_ENTRY_UPDATED-452",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-HOUSING_STORAGE_UPDATED-453",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-MOVE_OUT_RESERVATION_UPDATED-454",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-NEIGHBORHOOD_GUILD_SIZE_VALIDATED-455",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-NEIGHBORHOOD_INFO_UPDATED-456",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-NEIGHBORHOOD_INVITE_RESPONSE-457",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-NEIGHBORHOOD_LIST_UPDATED-458",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-NEIGHBORHOOD_MAP_DATA_UPDATED-459",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-NEIGHBORHOOD_NAME_UPDATED-460",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-NEIGHBORHOOD_NAME_VALIDATED-461",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-NEW_HOUSING_ITEM_ACQUIRED-462",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-NOTIFY_TURN_STRAFE_CHANGE-463",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-OPEN_CHARTER_CONFIRMATION_UI-464",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-OPEN_CREATE_CHARTER_NEIGHBORHOOD_UI-465",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-OPEN_CREATE_GUILD_NEIGHBORHOOD_UI-466",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-OPEN_NEIGHBORHOOD_CHARTER_SIGNATURE_REQUEST-467",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-OPEN_NEIGHBORHOOD_CHARTER-468",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-OPEN_PLOT_CORNERSTONE-469",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-PENDING_NEIGHBORHOOD_INVITES_RECIEVED-470",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-PLAYER_CHARACTER_LIST_UPDATED-471",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-PLAYER_HOUSE_LIST_UPDATED-472",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-PURCHASE_PLOT_RESULT-473",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-RECEIVED_HOUSE_LEVEL_REWARDS-474",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-REPORT_SCREENSHOT_READY-475",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-SHOW_NEIGHBORHOOD_OWNERSHIP_TRANSFER_DIALOG-476",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-SHOW_PLAYER_EVICTED_DIALOG-477",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-SHOW_STAIR_DIRECTION_CONFIRMATION-478",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-TRACKED_HOUSE_CHANGED-479",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-UPDATE_BULLETIN_BOARD_ROSTER_STATUSES-480",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-UPDATE_BULLETIN_BOARD_ROSTER-481",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-VIEW_HOUSES_LIST_RECIEVED-482",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-events-RETURNING_PLAYER_PROMPT-485",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absence only (sweep); no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-cvars-accountNeedsTurnStrafeDialog-496",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-ActionCombatCameraEnable-497",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-assistedCombatHighlightRPE-498",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-cameraDistanceFixedValue-499",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-cameraDistanceFixedValue-822; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-characterNeedsTurnStrafeDialog-500",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-ClientSettings_LowVramActions-501",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-collapseExpandBuffs-502",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingDecorFreePlaceEnabled-503",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingDecorGridSnapEnabled-504",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingDecorGridVisible-505",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_BaseOrbScale-506",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_BaseOrbScale-1015; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_BaseRingScale-507",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_BaseRingScale-1016; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_DistScaleMax-508",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_DistScaleMax-1017; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_DistScaleMin-509",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_DistScaleMin-1018; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_HighlightDefault-510",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_HighlightDefault-1019; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_HighlightDragging-511",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_HighlightDragging-1020; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_HighlightHovered-512",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_HighlightHovered-1021; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_HighlightKeybind-513",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_HighlightKeybind-1022; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_HighlightSelected-514",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_HighlightSelected-1023; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_OrbPosOffset-515",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_OrbPosOffset-1024; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_ScaleDistanceMax-516",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_ScaleDistanceMax-1025; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_ScaleDistanceMin-517",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_ScaleDistanceMin-1026; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_SnapDegrees-518",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_SnapDegrees-1027; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_TextMode-519",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_TextMode-1028; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_XRayCheckerSize-520",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_XRayCheckerSize-1029; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_XRayDarkAlpha-521",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_XRayDarkAlpha-1030; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Rotation_XRayLightAlpha-522",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Rotation_XRayLightAlpha-1031; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Scale_FrameOffset-523",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Scale_Snap-524",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_SnapOnHold-525",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_BaseArrowHeadScale-526",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_BaseArrowHeadScale-1032; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_BaseArrowStemScale-527",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_BaseArrowStemScale-1033; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_BaseCubeScale-528",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_BaseCubeScale-1034; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_DistScaleMax-529",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_DistScaleMax-1035; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_DistScaleMin-530",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_DistScaleMin-1036; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_HighlightDefault-531",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_HighlightDefault-1037; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_HighlightDragging-532",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_HighlightDragging-1038; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_HighlightHovered-533",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_HighlightHovered-1039; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_HighlightKeybind-534",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_HighlightKeybind-1040; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_HighlightSelected-535",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_HighlightSelected-1041; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_MaxDistanceFromCamera-536",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_MaxDistanceFromCamera-1042; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_Padding-537",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_Padding-1043; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_ScaleDistanceMax-538",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_ScaleDistanceMax-1044; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_ScaleDistanceMin-539",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_ScaleDistanceMin-1045; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_XRayCheckerSize-540",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_XRayCheckerSize-1046; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_XRayDarkAlpha-541",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_XRayDarkAlpha-1047; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingExpertGizmos_Translation_XRayLightAlpha-542",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-housingExpertGizmos_Translation_XRayLightAlpha-1048; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-housingLayout_Camera_DefaultDistance-543",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingLayout_Camera_DragFriction-544",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingLayout_Camera_DragMomentum-545",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingLayout_Camera_MaxDistanceIncr-546",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingLayout_Camera_MaxDistance-547",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingLayout_Camera_MinDistance-548",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingLayout_Camera_Smoothness-549",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingLayout_Camera_Speed-550",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingStoragePanelCollapsed-551",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingStoragePanelHeight-552",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingStoragePanelWidth-553",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-housingTutorialsEnabled-554",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-InvalidateDeactivatedHandles-555",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-RenderScaleDowngradeBackgroundMinSize-556",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-RenderScaleDowngradeForegroundMinSize-557",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-TerrainBlendBakeEnable-558",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-TerrainBlendBakeEnable-1112; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-TerrainUnlitShaderEnable-559",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-TerrainUnlitShaderEnable-1113; effective expectation absent. Historical 11.2.7 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-UnitNameFocused-560",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-alwaysShowActionBars-563",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Absence only (sweep); no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodAddManager-574",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodCancelInvitation-575",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodGetInvites-576",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodInviteResident-577",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodRemoveManager-578",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodSetName-579",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodSetPublic-580",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-OfferNeighborhoodOwnership-581",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-PlayerDeclineHousingInvitation-582",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "wt-cvars-PlayerGetHousingInvitation-583",
+      "capabilities": [
+        "publication-sweep-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep)"
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1127-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1127-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-AccountStoreItemInfo-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1127-extract-scout.md."
+    },
+    {
+      "source_id": "structures-AccountStoreItemInfo-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1127-extract-scout.md."
+    },
+    {
+      "source_id": "structures-BNetGameAccountInfo-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1127-extract-scout.md."
+    },
+    {
+      "source_id": "structures-BNetGameAccountInfo-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1127-extract-scout.md."
+    },
+    {
+      "source_id": "structures-DifficultyInfo-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1127-extract-scout.md."
+    },
+    {
+      "source_id": "structures-DifficultyInfo-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1127-extract-scout.md."
+    },
+    {
+      "source_id": "structures-PlayerChoiceInfo-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1127-extract-scout.md."
+    },
+    {
+      "source_id": "structures-PlayerChoiceInfo-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1127-extract-scout.md."
+    }
+  ]
+}

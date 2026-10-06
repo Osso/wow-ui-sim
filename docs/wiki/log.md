@@ -126,3 +126,7 @@ Added [page audit](investigations/patch-12-0-1-api-audit.md), retained revision 
 ## 12.0.1 gap closure follow-up
 
 Updated [audit](investigations/patch-12-0-1-api-audit.md), [spec](../specs/patch-12-0-1-publication-sweep.md) and per-ID review: 48 closed / three retained; runtime `eeccdea61`, five isolated sweeps, startup `[]`, bounded producer/inference limits. Page-coverage ledgers unchanged.
+
+## 2026-10-06 | ingest | Patch 11.2.7 page audit
+
+[Investigation](investigations/patch-11-2-7-api-audit.md) links retained revision 6726771, parser fixes, 508-row sweep, all-later supersession, four retail retirements, ten Command records, exact gap review and 19-row scout. New 527-ID ledger preserves publication-only limits; no existing page coverage edited.

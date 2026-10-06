@@ -1,0 +1,5677 @@
+{
+  "reviewed": 135,
+  "fixed": 14,
+  "retained": 121,
+  "rows": [
+    {
+      "source_id": "wt-cvars-NeighborhoodAddManager-574",
+      "symbol": "NeighborhoodAddManager",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodAddManager"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodAddManager"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Populate exact typed Command record; catalog only, no execution claim."
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodCancelInvitation-575",
+      "symbol": "NeighborhoodCancelInvitation",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodCancelInvitation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodCancelInvitation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Populate exact typed Command record; catalog only, no execution claim."
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodGetInvites-576",
+      "symbol": "NeighborhoodGetInvites",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodGetInvites"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodGetInvites"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Populate exact typed Command record; catalog only, no execution claim."
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodInviteResident-577",
+      "symbol": "NeighborhoodInviteResident",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodInviteResident"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodInviteResident"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Populate exact typed Command record; catalog only, no execution claim."
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodRemoveManager-578",
+      "symbol": "NeighborhoodRemoveManager",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodRemoveManager"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodRemoveManager"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Populate exact typed Command record; catalog only, no execution claim."
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodSetName-579",
+      "symbol": "NeighborhoodSetName",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodSetName"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodSetName"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Populate exact typed Command record; catalog only, no execution claim."
+    },
+    {
+      "source_id": "wt-cvars-NeighborhoodSetPublic-580",
+      "symbol": "NeighborhoodSetPublic",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodSetPublic"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "NeighborhoodSetPublic"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Populate exact typed Command record; catalog only, no execution claim."
+    },
+    {
+      "source_id": "wt-cvars-OfferNeighborhoodOwnership-581",
+      "symbol": "OfferNeighborhoodOwnership",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "OfferNeighborhoodOwnership"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "OfferNeighborhoodOwnership"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Populate exact typed Command record; catalog only, no execution claim."
+    },
+    {
+      "source_id": "wt-cvars-PlayerDeclineHousingInvitation-582",
+      "symbol": "PlayerDeclineHousingInvitation",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "PlayerDeclineHousingInvitation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "PlayerDeclineHousingInvitation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Populate exact typed Command record; catalog only, no execution claim."
+    },
+    {
+      "source_id": "wt-cvars-PlayerGetHousingInvitation-583",
+      "symbol": "PlayerGetHousingInvitation",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "PlayerGetHousingInvitation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "PlayerGetHousingInvitation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Populate exact typed Command record; catalog only, no execution claim."
+    },
+    {
+      "source_id": "wt-events-HOUSE_LEVEL_CHANGED-394",
+      "symbol": "HOUSE_LEVEL_CHANGED",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "absent",
+          "section": "events",
+          "superseded_by": "wt-events-HOUSE_LEVEL_CHANGED-812",
+          "symbol": "HOUSE_LEVEL_CHANGED"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "pcall=true; return=true; registered=true",
+          "kind": "event",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "absent",
+          "section": "events",
+          "superseded_by": "wt-events-HOUSE_LEVEL_CHANGED-812",
+          "symbol": "HOUSE_LEVEL_CHANGED"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "pcall=true; return=true; registered=true",
+          "kind": "event",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-superseded-removal-gap",
+      "reason": "12.0.0 removes HOUSE_LEVEL_CHANGED; valid_events_b.rs still accepts it. Later sweep retains the same exact gap. Dispatch consumers/epoch tests need reconciliation, not an isolated cheap publisher fix."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.IsInterruptAction-22",
+      "symbol": "C_ActionBar.IsInterruptAction",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ActionBar.IsInterruptAction"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ActionBar.IsInterruptAction"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Interrupt-action classification needs action/spell interrupt metadata. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_CharacterServices.RPEResetCharacter-323",
+      "symbol": "C_CharacterServices.RPEResetCharacter",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CharacterServices.RPEResetCharacter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CharacterServices.RPEResetCharacter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Stop legacy global publisher / block retired namespace autostub at retail baseline."
+    },
+    {
+      "source_id": "wt-global-api-C_CurrencyInfo.GetPlayerCurrencyCategoryInfo-24",
+      "symbol": "C_CurrencyInfo.GetPlayerCurrencyCategoryInfo",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CurrencyInfo.GetPlayerCurrencyCategoryInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CurrencyInfo.GetPlayerCurrencyCategoryInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Currency categories need category membership/DTO inputs; balances alone are insufficient. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetAllDyeColorCategories-25",
+      "symbol": "C_DyeColor.GetAllDyeColorCategories",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.GetAllDyeColorCategories"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.GetAllDyeColorCategories"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetAllDyeColors-26",
+      "symbol": "C_DyeColor.GetAllDyeColors",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.GetAllDyeColors"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.GetAllDyeColors"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27",
+      "symbol": "C_DyeColor.GetDyeColorCategoryInfo",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.GetDyeColorCategoryInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.GetDyeColorCategoryInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorInfo-30",
+      "symbol": "C_DyeColor.GetDyeColorInfo",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.GetDyeColorInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.GetDyeColorInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31",
+      "symbol": "C_DyeColor.GetDyeColorsInCategory",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.GetDyeColorsInCategory"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.GetDyeColorsInCategory"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_DyeColor.IsDyeColorOwned-32",
+      "symbol": "C_DyeColor.IsDyeColorOwned",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.IsDyeColorOwned"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DyeColor.IsDyeColorOwned"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Dye catalog/category/ownership input absent from current customization subset. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsClassAllowedForGameMode-34",
+      "symbol": "C_GameRules.IsClassAllowedForGameMode",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.IsClassAllowedForGameMode"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.IsClassAllowedForGameMode"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Class eligibility/game-mode policy needs explicit rules. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsWoWHack-39",
+      "symbol": "C_GameRules.IsWoWHack",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.IsWoWHack"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.IsWoWHack"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Class eligibility/game-mode policy needs explicit rules. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.ActivateHouseEditorMode-40",
+      "symbol": "C_HouseEditor.ActivateHouseEditorMode",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.ActivateHouseEditorMode"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.ActivateHouseEditorMode"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.EnterHouseEditor-41",
+      "symbol": "C_HouseEditor.EnterHouseEditor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.EnterHouseEditor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.EnterHouseEditor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorAvailability-43",
+      "symbol": "C_HouseEditor.GetHouseEditorAvailability",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.GetHouseEditorAvailability"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.GetHouseEditorAvailability"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44",
+      "symbol": "C_HouseEditor.GetHouseEditorModeAvailability",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.GetHouseEditorModeAvailability"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.GetHouseEditorModeAvailability"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorActive-45",
+      "symbol": "C_HouseEditor.IsHouseEditorActive",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.IsHouseEditorActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.IsHouseEditorActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46",
+      "symbol": "C_HouseEditor.IsHouseEditorModeActive",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.IsHouseEditorModeActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.IsHouseEditorModeActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47",
+      "symbol": "C_HouseEditor.IsHouseEditorStatusAvailable",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.IsHouseEditorStatusAvailable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.IsHouseEditorStatusAvailable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HouseEditor.LeaveHouseEditor-48",
+      "symbol": "C_HouseEditor.LeaveHouseEditor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.LeaveHouseEditor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HouseEditor.LeaveHouseEditor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current housing module lacks editor lifecycle/availability/mode transitions. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.AcceptNeighborhoodOwnership-59",
+      "symbol": "C_Housing.AcceptNeighborhoodOwnership",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.AcceptNeighborhoodOwnership"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.AcceptNeighborhoodOwnership"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CanEditCharter-60",
+      "symbol": "C_Housing.CanEditCharter",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.CanEditCharter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.CanEditCharter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CanTakeReportScreenshot-61",
+      "symbol": "C_Housing.CanTakeReportScreenshot",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.CanTakeReportScreenshot"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.CanTakeReportScreenshot"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CreateGuildNeighborhood-62",
+      "symbol": "C_Housing.CreateGuildNeighborhood",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.CreateGuildNeighborhood"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.CreateGuildNeighborhood"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.CreateNeighborhoodCharter-63",
+      "symbol": "C_Housing.CreateNeighborhoodCharter",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.CreateNeighborhoodCharter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.CreateNeighborhoodCharter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.DeclineNeighborhoodOwnership-64",
+      "symbol": "C_Housing.DeclineNeighborhoodOwnership",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.DeclineNeighborhoodOwnership"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.DeclineNeighborhoodOwnership"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.EditNeighborhoodCharter-66",
+      "symbol": "C_Housing.EditNeighborhoodCharter",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.EditNeighborhoodCharter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.EditNeighborhoodCharter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentHouseInfo-67",
+      "symbol": "C_Housing.GetCurrentHouseInfo",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetCurrentHouseInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetCurrentHouseInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentHouseRefundAmount-69",
+      "symbol": "C_Housing.GetCurrentHouseRefundAmount",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetCurrentHouseRefundAmount"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetCurrentHouseRefundAmount"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetCurrentNeighborhoodGUID-70",
+      "symbol": "C_Housing.GetCurrentNeighborhoodGUID",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetCurrentNeighborhoodGUID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetCurrentNeighborhoodGUID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetHouseLevelRewardsForLevel-72",
+      "symbol": "C_Housing.GetHouseLevelRewardsForLevel",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetHouseLevelRewardsForLevel"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetHouseLevelRewardsForLevel"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetHousingAccessFlags-73",
+      "symbol": "C_Housing.GetHousingAccessFlags",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetHousingAccessFlags"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetHousingAccessFlags"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.GetOthersOwnedHouses-76",
+      "symbol": "C_Housing.GetOthersOwnedHouses",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetOthersOwnedHouses"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.GetOthersOwnedHouses"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HouseFinderDeclineNeighborhoodInvitation-82",
+      "symbol": "C_Housing.HouseFinderDeclineNeighborhoodInvitation",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.HouseFinderDeclineNeighborhoodInvitation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.HouseFinderDeclineNeighborhoodInvitation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.HouseFinderRequestReservationAndPort-84",
+      "symbol": "C_Housing.HouseFinderRequestReservationAndPort",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.HouseFinderRequestReservationAndPort"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.HouseFinderRequestReservationAndPort"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsHousingMarketEnabled-85",
+      "symbol": "C_Housing.IsHousingMarketEnabled",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.IsHousingMarketEnabled"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.IsHousingMarketEnabled"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsInsidePlot-90",
+      "symbol": "C_Housing.IsInsidePlot",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.IsInsidePlot"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.IsInsidePlot"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.IsOnNeighborhoodMap-91",
+      "symbol": "C_Housing.IsOnNeighborhoodMap",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.IsOnNeighborhoodMap"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.IsOnNeighborhoodMap"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.LeaveHouse-92",
+      "symbol": "C_Housing.LeaveHouse",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.LeaveHouse"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.LeaveHouse"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCharterConfirmationAccepted-93",
+      "symbol": "C_Housing.OnCharterConfirmationAccepted",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnCharterConfirmationAccepted"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnCharterConfirmationAccepted"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCharterConfirmationClosed-94",
+      "symbol": "C_Housing.OnCharterConfirmationClosed",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnCharterConfirmationClosed"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnCharterConfirmationClosed"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCreateCharterNeighborhoodClosed-95",
+      "symbol": "C_Housing.OnCreateCharterNeighborhoodClosed",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnCreateCharterNeighborhoodClosed"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnCreateCharterNeighborhoodClosed"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnCreateGuildNeighborhoodClosed-96",
+      "symbol": "C_Housing.OnCreateGuildNeighborhoodClosed",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnCreateGuildNeighborhoodClosed"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnCreateGuildNeighborhoodClosed"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnRequestSignatureClicked-97",
+      "symbol": "C_Housing.OnRequestSignatureClicked",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnRequestSignatureClicked"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnRequestSignatureClicked"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.OnSignCharterClicked-98",
+      "symbol": "C_Housing.OnSignCharterClicked",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnSignCharterClicked"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.OnSignCharterClicked"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RelinquishHouse-99",
+      "symbol": "C_Housing.RelinquishHouse",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.RelinquishHouse"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.RelinquishHouse"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RequestCurrentHouseInfo-100",
+      "symbol": "C_Housing.RequestCurrentHouseInfo",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.RequestCurrentHouseInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.RequestCurrentHouseInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.RequestPlayerCharacterList-102",
+      "symbol": "C_Housing.RequestPlayerCharacterList",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.RequestPlayerCharacterList"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.RequestPlayerCharacterList"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ReturnAfterVisitingHouse-103",
+      "symbol": "C_Housing.ReturnAfterVisitingHouse",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.ReturnAfterVisitingHouse"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.ReturnAfterVisitingHouse"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SaveHouseSettings-104",
+      "symbol": "C_Housing.SaveHouseSettings",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.SaveHouseSettings"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.SaveHouseSettings"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoods-106",
+      "symbol": "C_Housing.SearchBNetFriendNeighborhoods",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.SearchBNetFriendNeighborhoods"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.SearchBNetFriendNeighborhoods"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SearchBNetFriendNeighborhoodsByID-105",
+      "symbol": "C_Housing.SearchBNetFriendNeighborhoodsByID",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.SearchBNetFriendNeighborhoodsByID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.SearchBNetFriendNeighborhoodsByID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.SetTrackedHouseGuid-107",
+      "symbol": "C_Housing.SetTrackedHouseGuid",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.SetTrackedHouseGuid"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.SetTrackedHouseGuid"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.TeleportHome-109",
+      "symbol": "C_Housing.TeleportHome",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.TeleportHome"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.TeleportHome"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.TryRenameNeighborhood-110",
+      "symbol": "C_Housing.TryRenameNeighborhood",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.TryRenameNeighborhood"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.TryRenameNeighborhood"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ValidateCreateGuildNeighborhoodSize-111",
+      "symbol": "C_Housing.ValidateCreateGuildNeighborhoodSize",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.ValidateCreateGuildNeighborhoodSize"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.ValidateCreateGuildNeighborhoodSize"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.ValidateNeighborhoodName-112",
+      "symbol": "C_Housing.ValidateNeighborhoodName",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.ValidateNeighborhoodName"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.ValidateNeighborhoodName"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Housing.VisitHouse-113",
+      "symbol": "C_Housing.VisitHouse",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.VisitHouse"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Housing.VisitHouse"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Current local housing/market state lacks this neighborhood/charter/ownership/travel/service producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.GetHoveredDecorInfo-118",
+      "symbol": "C_HousingBasicMode.GetHoveredDecorInfo",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.GetHoveredDecorInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.GetHoveredDecorInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsHouseExteriorHovered-123",
+      "symbol": "C_HousingBasicMode.IsHouseExteriorHovered",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.IsHouseExteriorHovered"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.IsHouseExteriorHovered"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.IsHoveringDecor-125",
+      "symbol": "C_HousingBasicMode.IsHoveringDecor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.IsHoveringDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.IsHoveringDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RemoveSelectedDecor-128",
+      "symbol": "C_HousingBasicMode.RemoveSelectedDecor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.RemoveSelectedDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.RemoveSelectedDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RotateDecor-129",
+      "symbol": "C_HousingBasicMode.RotateDecor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.RotateDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.RotateDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingBasicMode.RotateHouseExterior-130",
+      "symbol": "C_HousingBasicMode.RotateHouseExterior",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.RotateHouseExterior"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingBasicMode.RotateHouseExterior"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Pending-decor/free-place state lacks hover/selection/rotation/removal/exterior producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCatalog.GetCatalogEntryDebugInfoForID-140",
+      "symbol": "C_HousingCatalog.GetCatalogEntryDebugInfoForID",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCatalog.GetCatalogEntryDebugInfoForID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCatalog.GetCatalogEntryDebugInfoForID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Catalog debug DTO producer absent; availability alone cannot supply debug metadata. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.GetHoveredDecorInfo-152",
+      "symbol": "C_HousingCleanupMode.GetHoveredDecorInfo",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCleanupMode.GetHoveredDecorInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCleanupMode.GetHoveredDecorInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Cleanup selection/hover/removal producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.IsHoveringDecor-153",
+      "symbol": "C_HousingCleanupMode.IsHoveringDecor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCleanupMode.IsHoveringDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCleanupMode.IsHoveringDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Cleanup selection/hover/removal producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCleanupMode.RemoveSelectedDecor-154",
+      "symbol": "C_HousingCleanupMode.RemoveSelectedDecor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCleanupMode.RemoveSelectedDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCleanupMode.RemoveSelectedDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Cleanup selection/hover/removal producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ApplyDyeToSelectedDecor-155",
+      "symbol": "C_HousingCustomizeMode.ApplyDyeToSelectedDecor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCustomizeMode.ApplyDyeToSelectedDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCustomizeMode.ApplyDyeToSelectedDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later customization subset lacks this dye/selection/hover producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.ClearDyesForSelectedDecor-161",
+      "symbol": "C_HousingCustomizeMode.ClearDyesForSelectedDecor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCustomizeMode.ClearDyesForSelectedDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCustomizeMode.ClearDyesForSelectedDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later customization subset lacks this dye/selection/hover producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.GetHoveredDecorInfo-164",
+      "symbol": "C_HousingCustomizeMode.GetHoveredDecorInfo",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCustomizeMode.GetHoveredDecorInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCustomizeMode.GetHoveredDecorInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later customization subset lacks this dye/selection/hover producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingCustomizeMode.IsHoveringDecor-177",
+      "symbol": "C_HousingCustomizeMode.IsHoveringDecor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCustomizeMode.IsHoveringDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCustomizeMode.IsHoveringDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later customization subset lacks this dye/selection/hover producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetDecorDebugInfoForGUID-186",
+      "symbol": "C_HousingDecor.GetDecorDebugInfoForGUID",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingDecor.GetDecorDebugInfoForGUID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingDecor.GetDecorDebugInfoForGUID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Placed-decor debug DTO/exterior-door hit-test producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.GetSelectedDecorDebugInfo-195",
+      "symbol": "C_HousingDecor.GetSelectedDecorDebugInfo",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingDecor.GetSelectedDecorDebugInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingDecor.GetSelectedDecorDebugInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Placed-decor debug DTO/exterior-door hit-test producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingDecor.IsHouseExteriorDoorHovered-201",
+      "symbol": "C_HousingDecor.IsHouseExteriorDoorHovered",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingDecor.IsHouseExteriorDoorHovered"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingDecor.IsHouseExteriorDoorHovered"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Placed-decor debug DTO/exterior-door hit-test producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.CommitDecorMovement-210",
+      "symbol": "C_HousingExpertMode.CommitDecorMovement",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.CommitDecorMovement"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.CommitDecorMovement"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.CommitHouseExteriorPosition-211",
+      "symbol": "C_HousingExpertMode.CommitHouseExteriorPosition",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.CommitHouseExteriorPosition"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.CommitHouseExteriorPosition"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.GetHoveredDecorInfo-212",
+      "symbol": "C_HousingExpertMode.GetHoveredDecorInfo",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.GetHoveredDecorInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.GetHoveredDecorInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsGridVisible-217",
+      "symbol": "C_HousingExpertMode.IsGridVisible",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.IsGridVisible"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.IsGridVisible"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsHouseExteriorHovered-218",
+      "symbol": "C_HousingExpertMode.IsHouseExteriorHovered",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.IsHouseExteriorHovered"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.IsHouseExteriorHovered"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.IsHoveringDecor-220",
+      "symbol": "C_HousingExpertMode.IsHoveringDecor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.IsHoveringDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.IsHoveringDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.RemoveSelectedDecor-221",
+      "symbol": "C_HousingExpertMode.RemoveSelectedDecor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.RemoveSelectedDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.RemoveSelectedDecor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SelectNextRotationAxis-223",
+      "symbol": "C_HousingExpertMode.SelectNextRotationAxis",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.SelectNextRotationAxis"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.SelectNextRotationAxis"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SetGridVisible-224",
+      "symbol": "C_HousingExpertMode.SetGridVisible",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.SetGridVisible"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.SetGridVisible"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingExpertMode.SetPrecisionIncrementingActive-225",
+      "symbol": "C_HousingExpertMode.SetPrecisionIncrementingActive",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.SetPrecisionIncrementingActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingExpertMode.SetPrecisionIncrementingActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Expert placement/transform/grid/precision interaction producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.ConfirmStairChoice-229",
+      "symbol": "C_HousingLayout.ConfirmStairChoice",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.ConfirmStairChoice"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.ConfirmStairChoice"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.DeselectRoomOrDoor-231",
+      "symbol": "C_HousingLayout.DeselectRoomOrDoor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.DeselectRoomOrDoor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.DeselectRoomOrDoor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetNumActiveRooms-232",
+      "symbol": "C_HousingLayout.GetNumActiveRooms",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.GetNumActiveRooms"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.GetNumActiveRooms"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedRoom-236",
+      "symbol": "C_HousingLayout.GetSelectedRoom",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.GetSelectedRoom"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.GetSelectedRoom"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.GetSelectedStairwellRoomCount-237",
+      "symbol": "C_HousingLayout.GetSelectedStairwellRoomCount",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.GetSelectedStairwellRoomCount"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.GetSelectedStairwellRoomCount"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedDoor-242",
+      "symbol": "C_HousingLayout.HasSelectedDoor",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.HasSelectedDoor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.HasSelectedDoor"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedFloorplan-243",
+      "symbol": "C_HousingLayout.HasSelectedFloorplan",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.HasSelectedFloorplan"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.HasSelectedFloorplan"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasSelectedRoom-244",
+      "symbol": "C_HousingLayout.HasSelectedRoom",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.HasSelectedRoom"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.HasSelectedRoom"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.HasStairs-245",
+      "symbol": "C_HousingLayout.HasStairs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.HasStairs"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.HasStairs"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.MoveDraggedRoom-249",
+      "symbol": "C_HousingLayout.MoveDraggedRoom",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.MoveDraggedRoom"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.MoveDraggedRoom"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.MoveLayoutCamera-250",
+      "symbol": "C_HousingLayout.MoveLayoutCamera",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.MoveLayoutCamera"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.MoveLayoutCamera"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.RotateFocusedRoom-252",
+      "symbol": "C_HousingLayout.RotateFocusedRoom",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.RotateFocusedRoom"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.RotateFocusedRoom"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_HousingLayout.ZoomLayoutCamera-259",
+      "symbol": "C_HousingLayout.ZoomLayoutCamera",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.ZoomLayoutCamera"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingLayout.ZoomLayoutCamera"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Later layout subset lacks room/stair/selection/camera/drag producer. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsDecorItem-289",
+      "symbol": "C_Item.IsDecorItem",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Item.IsDecorItem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Item.IsDecorItem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Decor classification needs item/catalog identity. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.ActivateBindingContext-290",
+      "symbol": "C_KeyBindings.ActivateBindingContext",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.ActivateBindingContext"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.ActivateBindingContext"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.DeactivateBindingContext-291",
+      "symbol": "C_KeyBindings.DeactivateBindingContext",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.DeactivateBindingContext"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.DeactivateBindingContext"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.GetTurnStrafeStyle-295",
+      "symbol": "C_KeyBindings.GetTurnStrafeStyle",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.GetTurnStrafeStyle"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.GetTurnStrafeStyle"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.IsBindingContextActive-296",
+      "symbol": "C_KeyBindings.IsBindingContextActive",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.IsBindingContextActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.IsBindingContextActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.SetTurnStrafeStyle-297",
+      "symbol": "C_KeyBindings.SetTurnStrafeStyle",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.SetTurnStrafeStyle"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.SetTurnStrafeStyle"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_KeyBindings.UpdateTurnStrafeBindingsForCharacter-298",
+      "symbol": "C_KeyBindings.UpdateTurnStrafeBindingsForCharacter",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.UpdateTurnStrafeBindingsForCharacter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_KeyBindings.UpdateTurnStrafeBindingsForCharacter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Binding context and turn/strafe policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetNonBattlePetLinkByIndex-300",
+      "symbol": "C_PetJournal.GetNonBattlePetLinkByIndex",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PetJournal.GetNonBattlePetLinkByIndex"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PetJournal.GetNonBattlePetLinkByIndex"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Non-battle pet catalog/link input absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsReturningCharacter-302",
+      "symbol": "C_PlayerInfo.IsReturningCharacter",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PlayerInfo.IsReturningCharacter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PlayerInfo.IsReturningCharacter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Returning-character policy producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.RequiresScreenshotForReportType-305",
+      "symbol": "C_ReportSystem.RequiresScreenshotForReportType",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ReportSystem.RequiresScreenshotForReportType"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ReportSystem.RequiresScreenshotForReportType"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Report-token initiate/send model lacks screenshot capture/preview/type policy. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SetScreenshotPreviewTexture-306",
+      "symbol": "C_ReportSystem.SetScreenshotPreviewTexture",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ReportSystem.SetScreenshotPreviewTexture"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ReportSystem.SetScreenshotPreviewTexture"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Report-token initiate/send model lacks screenshot capture/preview/type policy. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.TakeReportScreenshot-307",
+      "symbol": "C_ReportSystem.TakeReportScreenshot",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ReportSystem.TakeReportScreenshot"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ReportSystem.TakeReportScreenshot"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Report-token initiate/send model lacks screenshot capture/preview/type policy. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_ReturningPlayerUI.AcceptPrompt-324",
+      "symbol": "C_ReturningPlayerUI.AcceptPrompt",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ReturningPlayerUI.AcceptPrompt"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ReturningPlayerUI.AcceptPrompt"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Stop legacy global publisher / block retired namespace autostub at retail baseline."
+    },
+    {
+      "source_id": "wt-global-api-C_ReturningPlayerUI.DeclinePrompt-325",
+      "symbol": "C_ReturningPlayerUI.DeclinePrompt",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ReturningPlayerUI.DeclinePrompt"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ReturningPlayerUI.DeclinePrompt"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Stop legacy global publisher / block retired namespace autostub at retail baseline."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetAuraStatChanges-308",
+      "symbol": "C_Spell.GetAuraStatChanges",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.GetAuraStatChanges"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.GetAuraStatChanges"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Aura-stat/applied-appearance query input producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetItemModifiedAppearancesApplied-309",
+      "symbol": "C_Spell.GetItemModifiedAppearancesApplied",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.GetItemModifiedAppearancesApplied"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.GetItemModifiedAppearancesApplied"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Aura-stat/applied-appearance query input producer absent. Raw lookup absent; ordinary lookup fabricates a compatibility function, not publication proof."
+    },
+    {
+      "source_id": "wt-global-api-CanUpgradeToCurrentExpansion-313",
+      "symbol": "CanUpgradeToCurrentExpansion",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CanUpgradeToCurrentExpansion"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CanUpgradeToCurrentExpansion"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Entitlement/current-expansion upgrade policy producer absent."
+    },
+    {
+      "source_id": "wt-global-api-ClearOutage-314",
+      "symbol": "ClearOutage",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "ClearOutage"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "ClearOutage"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Network outage lifecycle producer absent."
+    },
+    {
+      "source_id": "wt-global-api-GetAutoDeclineNeighborhoodInvites-315",
+      "symbol": "GetAutoDeclineNeighborhoodInvites",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetAutoDeclineNeighborhoodInvites"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetAutoDeclineNeighborhoodInvites"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Neighborhood invitation preference backing state absent."
+    },
+    {
+      "source_id": "wt-global-api-JoinBattlefield-329",
+      "symbol": "JoinBattlefield",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "JoinBattlefield"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "JoinBattlefield"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      },
+      "decision": "fixed",
+      "reason": "Stop legacy global publisher / block retired namespace autostub at retail baseline."
+    },
+    {
+      "source_id": "wt-global-api-OutageDetected-317",
+      "symbol": "OutageDetected",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "OutageDetected"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "OutageDetected"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Network outage lifecycle producer absent."
+    },
+    {
+      "source_id": "wt-global-api-SetAutoDeclineNeighborhoodInvites-318",
+      "symbol": "SetAutoDeclineNeighborhoodInvites",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "SetAutoDeclineNeighborhoodInvites"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "SetAutoDeclineNeighborhoodInvites"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Neighborhood invitation preference backing state absent."
+    },
+    {
+      "source_id": "wt-global-api-SetCursorByMode-319",
+      "symbol": "SetCursorByMode",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "SetCursorByMode"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "SetCursorByMode"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-model-gap",
+      "reason": "Cursor-mode mapping/policy producer absent."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingFixturePointFrame-339",
+      "symbol": "HousingFixturePointFrame",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "scriptobjects",
+          "superseded_by": null,
+          "symbol": "HousingFixturePointFrame"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "factory=false; type=string",
+          "kind": "object-kind",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "scriptobjects",
+          "superseded_by": null,
+          "symbol": "HousingFixturePointFrame"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "factory=false; type=string",
+          "kind": "object-kind",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-acquisition-gap",
+      "reason": "CreateFrame factory cannot acquire this native housing scriptobject. Supported acquisition fixture/model required; factory failure is not native absence proof."
+    },
+    {
+      "source_id": "wt-scriptobjects-HousingLayoutPinFrame-340",
+      "symbol": "HousingLayoutPinFrame",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "scriptobjects",
+          "superseded_by": null,
+          "symbol": "HousingLayoutPinFrame"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "factory=false; type=string",
+          "kind": "object-kind",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "scriptobjects",
+          "superseded_by": null,
+          "symbol": "HousingLayoutPinFrame"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "factory=false; type=string",
+          "kind": "object-kind",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-acquisition-gap",
+      "reason": "CreateFrame factory cannot acquire this native housing scriptobject. Supported acquisition fixture/model required; factory failure is not native absence proof."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351",
+      "symbol": "ModelSceneActorBase:IsPreferringModelCollisionBounds",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "ModelSceneActorBase:IsPreferringModelCollisionBounds"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "ModelSceneActorBase; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "ModelSceneActorBase:IsPreferringModelCollisionBounds"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "ModelSceneActorBase; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-permanent-3d-gap",
+      "reason": "Collision-bound preference methods missing on ModelSceneActorBase; 3D/model semantics intentionally unsupported. Do not invent rendering/collision behavior to green publication."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353",
+      "symbol": "ModelSceneActorBase:SetPreferModelCollisionBounds",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "ModelSceneActorBase:SetPreferModelCollisionBounds"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "ModelSceneActorBase; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "ModelSceneActorBase:SetPreferModelCollisionBounds"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "ModelSceneActorBase; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      },
+      "decision": "retained-permanent-3d-gap",
+      "reason": "Collision-bound preference methods missing on ModelSceneActorBase; 3D/model semantics intentionally unsupported. Do not invent rendering/collision behavior to green publication."
+    }
+  ]
+}

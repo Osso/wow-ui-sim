@@ -1,0 +1,27 @@
+{
+  "revision": "9cc60a03dc2dc2b51ff2675b00f9e5688228b0e5",
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p1127-page/scripts/build-host.py",
+    "--build-host",
+    "local",
+    "--test",
+    "--test",
+    "integration",
+    "patch_11_2_7_publication_sweep",
+    "--",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "flipped_id": "wt-global-api-C_BattleNet.InstallHighResTextures-23",
+  "baseline_gaps": 121,
+  "control_gaps": 122,
+  "new_gaps": [
+    "wt-global-api-C_BattleNet.InstallHighResTextures-23"
+  ],
+  "changed_observations": [
+    "wt-global-api-C_BattleNet.InstallHighResTextures-23"
+  ],
+  "exit_code": 101,
+  "passed": true
+}

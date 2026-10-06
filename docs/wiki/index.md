@@ -1,3 +1,7 @@
+## [2026-10-06] evidence | 11.2.7 page audit
+
+[Audit](investigations/patch-11-2-7-api-audit.md): 508 inventory / 19 extract rows; all later supersessions, 14 publication fixes, 121 exact gaps, one-row negative control. [Scout](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-extract-scout.md) assigns ten pending statements without behavioral credit. Existing ledgers unchanged.
+
 ## [2026-10-06] evidence | Remaining 12.0.1 extract
 
 [Follow-up](investigations/patch-12-0-1-api-audit.md#remaining-extract-follow-up) accounts for all 133 remaining rows: 41 bounded behavioral proofs, one metadata candidate, 91 explicit gaps. Creature-ID secrecy uses existing identity state; current buff attributes do not establish historical healer policy.
