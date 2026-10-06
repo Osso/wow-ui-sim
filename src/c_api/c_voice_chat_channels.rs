@@ -64,6 +64,12 @@ fn push_channel(state: &mut LuaState, channel: Option<VoiceChannel>) -> LuaResul
     let Some(channel) = channel else { return Ok(0) };
     let row = create_table(state);
     state.push(row);
+    write_channel_fields(state, row, &channel);
+    write_channel_members(state, row, &channel.members);
+    Ok(1)
+}
+
+fn write_channel_fields(state: &mut LuaState, row: Val, channel: &VoiceChannel) {
     for (field, value) in [
         ("name", &channel.name),
         ("clubId", &channel.club_id),
@@ -87,17 +93,19 @@ fn push_channel(state: &mut LuaState, channel: Option<VoiceChannel>) -> LuaResul
     ] {
         table_set(state, row, field, Val::Bool(value));
     }
+}
+
+fn write_channel_members(state: &mut LuaState, row: Val, records: &[VoiceMember]) {
     let members = create_table(state);
     table_set(state, row, "members", members);
     let Val::Table(array) = members else {
         unreachable!()
     };
-    for (index, member) in channel.members.iter().enumerate() {
+    for (index, member) in records.iter().enumerate() {
         let value = create_table(state);
         table_set_num(state, array, (index + 1) as f64, value);
         write_member(state, value, member);
     }
-    Ok(1)
 }
 
 fn write_member(state: &mut LuaState, row: Val, member: &VoiceMember) {
