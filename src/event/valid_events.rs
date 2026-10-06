@@ -65,6 +65,11 @@ const FOREVER_REGISTERABLE_EVENTS: &[&str] = &[
 ];
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub fn is_registerable_event(name: &str) -> bool {
+    // 12.0.0 retains these as callback events, not script registrations.
+    #[cfg(feature = "retail-12-0-0")]
+    if matches!(name, "COMBAT_LOG_EVENT" | "COMBAT_LOG_EVENT_UNFILTERED") {
+        return false;
+    }
     #[cfg(feature = "client-wowforever")]
     if FOREVER_REGISTERABLE_EVENTS.binary_search(&name).is_ok() {
         return true;
@@ -272,4 +277,4 @@ pub fn restricted_events() -> &'static [&'static str] {
 
 /// Events that exist in the WoW client but cannot be registered by addons.
 /// From wowless events.yaml: registerable = false.
-const NON_REGISTERABLE_EVENTS: &[&str] = &[];
+const NON_REGISTERABLE_EVENTS: &[&str] = &["COMBAT_LOG_EVENT", "COMBAT_LOG_EVENT_UNFILTERED"];

@@ -39,7 +39,7 @@ fn prose_callback_event_mechanism_is_separate_from_script_registration() {
         assert(not C_EventUtils.IsCallbackEvent('PLAYER_ENTERING_WORLD'))
         local f=CreateFrame('Frame')
         local callback=function() end
-        assert(f:RegisterEventCallback('COMBAT_LOG_EVENT',callback))
-        f:UnregisterEventCallback('COMBAT_LOG_EVENT')
+        local ok = pcall(f.RegisterEventCallback,f,'COMBAT_LOG_EVENT',callback)
+        assert(ok and f:IsEventRegistered('COMBAT_LOG_EVENT'))
     "#).unwrap();
 }
