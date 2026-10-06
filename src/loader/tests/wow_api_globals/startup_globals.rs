@@ -1496,7 +1496,10 @@ fn test_addon_startup_frame_scale_and_merchant_namespaces_exist() {
     assert_eq!(dpi_ty, "function");
     assert_eq!(dpi_scale, 1.0);
     assert_eq!(merchant_ty, "table");
-    assert_eq!(merchant_item_ty, "table");
+    assert_eq!(
+        merchant_item_ty, "nil",
+        "empty merchant inventory has no item record"
+    );
     assert_eq!(raid_locks_ty, "table");
     assert!(!encounter_complete);
 }

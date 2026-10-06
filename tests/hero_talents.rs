@@ -312,9 +312,9 @@ fn test_load_config_returns_no_changes_necessary_for_active_loadout() {
 }
 
 #[test]
-fn test_active_hero_node_icon_texture_path_resolves_to_real_asset() {
+fn test_active_hero_node_icon_file_id_resolves_to_real_asset() {
     let env = env();
-    let texture_path: String = env
+    let icon_id: i64 = env
         .eval(
             r#"
             local config = C_ClassTalents.GetActiveConfigID()
@@ -333,20 +333,23 @@ fn test_active_hero_node_icon_texture_path_resolves_to_real_asset() {
                         local definition = C_Traits.GetDefinitionInfo(definitionID)
                         local spellID = definition and definition.spellID
                         if spellID and spellID > 0 then
-                            local texturePath = C_Spell.GetSpellTexture(spellID)
-                            if type(texturePath) == "string" and texturePath ~= "" then
-                                return texturePath
+                            local iconID = C_Spell.GetSpellTexture(spellID)
+                            if type(iconID) == "number" and iconID > 0 then
+                                return iconID
                             end
                         end
                     end
                 end
             end
 
-            error("expected at least one visible hero node with spell-backed icon path")
+            error("expected at least one visible hero node with spell-backed icon file ID")
             "#,
         )
         .unwrap();
 
+    let relative_path = wow_ui_sim::manifest_interface_data::get_texture_path(icon_id as u32)
+        .unwrap_or_else(|| panic!("hero node icon file ID has no texture mapping: {icon_id}"));
+    let texture_path = format!("Interface\\\\{}", relative_path.replace('/', "\\\\"));
     let mut mgr = TextureManager::new();
     let texture = load_texture_or_crop(&mut mgr, &texture_path).unwrap_or_else(|| {
         panic!("hero node spell texture did not resolve: {texture_path}");
