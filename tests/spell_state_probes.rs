@@ -158,10 +158,11 @@ fn spell_readiness_false_on_cooldown() {
         use wow_ui_sim::lua_api::state::SpellCooldownState;
         let mut st = env.state().borrow_mut();
         st.known_spells.insert(10);
+        let start = st.start_time.elapsed().as_secs_f64();
         st.spell_cooldowns.insert(
             10,
             SpellCooldownState {
-                start: 0.0,
+                start,
                 duration: 3.0,
             },
         );

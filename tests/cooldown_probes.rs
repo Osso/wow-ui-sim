@@ -12,7 +12,10 @@ mod charge_duration;
 mod ignore_gcd;
 
 fn env() -> WowLuaEnv {
-    WowLuaEnv::new().expect("WowLuaEnv init")
+    let env = WowLuaEnv::new().expect("WowLuaEnv init");
+    // Fixtures subtract up to 40 seconds; valid live cooldowns need positive starts.
+    env.state().borrow_mut().start_time -= std::time::Duration::from_secs(100);
+    env
 }
 
 #[cfg(not(feature = "retail-12-0-5"))]
@@ -496,6 +499,11 @@ fn get_action_cooldown_active_is_false_after_expiration() {
 #[test]
 fn get_action_cooldown_active_is_false_for_zero_start() {
     let env = env();
+    env.exec(if cfg!(feature = "retail-12-0-5") {
+        "InactiveIntervalIsZero = true"
+    } else {
+        "InactiveIntervalIsZero = false"
+    }).unwrap();
     {
         let mut state = env.state().borrow_mut();
         state.start_time = std::time::Instant::now() - std::time::Duration::from_secs(1);
@@ -512,7 +520,9 @@ fn get_action_cooldown_active_is_false_for_zero_start() {
     env.exec(
         r#"
         local action = C_ActionBar.GetActionCooldown(1)
-        assert(action.startTime == 0 and action.duration == 5)
+        assert(action.startTime == 0)
+        local expectedDuration = InactiveIntervalIsZero and 0 or 5
+        assert(action.duration == expectedDuration)
         assert(action.isEnabled == true and action.modRate == 1)
         "#,
     )
