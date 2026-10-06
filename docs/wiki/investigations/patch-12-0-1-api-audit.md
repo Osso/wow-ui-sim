@@ -36,7 +36,7 @@ Every 51-row non-OK observation is retained in [gap review](../../../data/patch-
 
 ## Verification
 
-[Publication spec](../../specs/patch-12-0-1-publication-sweep.md) owns exact commands and final gate outcomes. Development sweep: 174/51 exact baseline, four retirement closures. Negative control flips `C_DamageMeter.GetSessionDurationSeconds`: exactly one new gap (51 → 52) and one changed observation, expected failure. Retirement test and 11 audio-filter tests pass; four Python extraction tests pass. Final isolated sweeps, startup and format/check evidence will be recorded in the same session evidence directory. No independent agent/model review was authorized or invoked.
+[Publication spec](../../specs/patch-12-0-1-publication-sweep.md) owns exact commands and final gate outcomes. Development sweep: 174/51 exact baseline, four retirement closures. Negative control flips `C_DamageMeter.GetSessionDurationSeconds`: exactly one new gap (51 → 52) and one changed observation, expected failure. Retirement test and 11 audio-filter tests pass; four Python extraction tests pass. Final isolated sweeps all pass: 12.0.0 983/27, 12.0.1 174/51, 12.0.5 352/11, 12.0.7 171/3, 12.1.0 773/5 (OK/exact gaps). Startup returns `[]`; formatting/local check and 477-row validation pass. [Proof ledger](../../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-proof.json) records revision `a69dcfd66`, exact commands and unchanged six vendor-manifest warnings. No independent agent/model review was authorized or invoked.
 
 ## Sources
 
