@@ -10,11 +10,16 @@ use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+mod layout;
+pub use layout::{CatalogShopBundleChildInfo, CatalogShopSectionInfo};
+
 /// Explicit per-environment inputs; no built-in storefront products.
 #[derive(Clone, Debug, Default)]
 pub struct CatalogShopProducts {
     pub products: HashMap<i32, CatalogShopProductInfo>,
     pub displays: HashMap<i32, CatalogShopProductDisplayInfo>,
+    pub bundle_children: HashMap<i32, Vec<CatalogShopBundleChildInfo>>,
+    pub sections: HashMap<(i32, i32), CatalogShopSectionInfo>,
     /// INFERRED host "new" labels in display order, independent of ownership.
     pub new_product_ids: Vec<i32>,
 }
@@ -142,6 +147,7 @@ pub(crate) fn register_c_catalog_shop_products(state: &mut LuaState) -> LuaResul
         }
         Ok(1)
     })?;
+    layout::register(state, namespace)?;
     table_set_rust_fn_static(state, namespace, "GetProductInfo", product_info)?;
     table_set_rust_fn_static(
         state,
@@ -152,9 +158,13 @@ pub(crate) fn register_c_catalog_shop_products(state: &mut LuaState) -> LuaResul
 }
 
 fn read_product_id(state: &mut LuaState) -> LuaResult<i32> {
+    read_public_id(state, 1)
+}
+
+fn read_public_id(state: &mut LuaState, index: i32) -> LuaResult<i32> {
     // INFERRED: exact public i32 selectors; native argument coercion and
     // AllowedWhenUntainted secret acceptance are not modeled in this slice.
-    let Val::Num(number) = Val::from_stack(state, 1)? else {
+    let Val::Num(number) = Val::from_stack(state, index)? else {
         return Err(rilua::runtime_error(
             "catalog shop product ID must be a public integer; secret access is not modeled",
         ));

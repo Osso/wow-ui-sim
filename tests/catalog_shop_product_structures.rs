@@ -135,6 +135,72 @@ const EXACT: &str = r#"
 "#;
 
 #[test]
+fn catalog_shop_patch_12_0_1_empty_bundle_and_section_inputs() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        assert(next(C_CatalogShop.GetProductIDsForBundle(2003)) == nil, 'no fabricated bundle children')
+        local ok, err = pcall(C_CatalogShop.GetCategorySectionInfo, 101, 1)
+        assert(not ok and type(err) == 'string', 'missing nonnullable section must report missing host input')
+    "#).unwrap();
+}
+
+#[test]
+fn catalog_shop_patch_12_0_1_bundle_section_snapshots() {
+    let env = fixture_env();
+    {
+        let mut state = env.state().borrow_mut();
+        state.catalog_shop_products.bundle_children.insert(81001, vec![
+            CatalogShopBundleChildInfo { child_product_id: 81002.0, display_order: 7.0, quantity_in_bundle: 3.0 },
+            CatalogShopBundleChildInfo { child_product_id: 81003.0, display_order: 2.0, quantity_in_bundle: 9.0 },
+        ]);
+        state.catalog_shop_products.sections.insert((101, 8), CatalogShopSectionInfo {
+            id: 8.0, display_name: "Recommended decor".into(),
+            parent_catalog_shop_category_info_id: Some(101.0), card_type: Some("Wide".into()),
+            scroll_grid_size: Some(4.0), should_show_recommendation_opt_out_disclaimer: true,
+        });
+    }
+    env.exec(EXACT).unwrap();
+    env.exec(r#"
+        ExpectedChildren = {
+            {childProductID=81002, displayOrder=7, quantityInBundle=3},
+            {childProductID=81003, displayOrder=2, quantityInBundle=9},
+        }
+        ExpectedSection = {ID=8, displayName='Recommended decor', parentCatalogShopCategoryInfoID=101,
+            cardType='Wide', scrollGridSize=4, shouldShowRecommendationOptOutDisclaimer=true}
+        Bundle = C_CatalogShop.GetProductIDsForBundle(81001)
+        Section = C_CatalogShop.GetCategorySectionInfo(101, 8)
+        exact(Bundle, ExpectedChildren); exact(Section, ExpectedSection)
+        local edited = C_CatalogShop.GetProductIDsForBundle(81001)
+        edited[1].quantityInBundle = -1; table.remove(edited, 2)
+        local editedSection = C_CatalogShop.GetCategorySectionInfo(101, 8)
+        editedSection.shouldShowRecommendationOptOutDisclaimer = false
+        exact(C_CatalogShop.GetProductIDsForBundle(81001), ExpectedChildren)
+        exact(C_CatalogShop.GetCategorySectionInfo(101, 8), ExpectedSection)
+        local d = C_CatalogShop.GetCatalogShopProductDisplayInfo(81001)
+        assert(rawget(d, 'otherProductPMTURL') == nil and d.otherProductPMTURL == nil)
+        assert(d.productPMTURL == 'fixture://productPMTURL' and not issecretvalue(d.productPMTURL))
+    "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        state.catalog_shop_products.bundle_children.get_mut(&81001).unwrap()[0].quantity_in_bundle = 5.0;
+        let section = state.catalog_shop_products.sections.get_mut(&(101, 8)).unwrap();
+        section.should_show_recommendation_opt_out_disclaimer = false;
+        section.parent_catalog_shop_category_info_id = None;
+        section.card_type = None;
+        section.scroll_grid_size = None;
+    }
+    env.exec(r#"
+        assert(Bundle[1].quantityInBundle == 3 and Section.shouldShowRecommendationOptOutDisclaimer)
+        ExpectedChildren[1].quantityInBundle = 5
+        exact(C_CatalogShop.GetProductIDsForBundle(81001), ExpectedChildren)
+        exact(C_CatalogShop.GetCategorySectionInfo(101, 8),
+            {ID=8, displayName='Recommended decor', shouldShowRecommendationOptOutDisclaimer=false})
+        assert(next(C_CatalogShop.GetProductIDsForBundle(81002)) == nil)
+        assert(not pcall(C_CatalogShop.GetCategorySectionInfo, 102, 8))
+    "#).unwrap();
+}
+
+#[test]
 fn additional_product_pmt_urls_preserve_order_and_string_type() {
     let env = fixture_env();
     env.exec(r#"

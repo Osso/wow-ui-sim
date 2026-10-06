@@ -583,16 +583,6 @@ C_CatalogShop = __wow_merge_namespace(C_CatalogShop, {
     end
     return { 1 }
   end,
-  GetCategorySectionInfo = function(categoryID, sectionID)
-    return {
-      ID = sectionID,
-      displayName = "Featured",
-      parentCatalogShopCategoryInfoID = categoryID,
-      cardType = nil,
-      scrollGridSize = 1,
-      shouldShowRecommendationOptOutDisclaimer = false,
-    }
-  end,
   GetFailureInfo = function() return nil, nil end,
   RefreshVirtualCurrencyBalance = __wow_noop,
   GetVirtualCurrencyBalance = function() return 0 end,
@@ -616,17 +606,6 @@ C_CatalogShop = __wow_merge_namespace(C_CatalogShop, {
   ShouldShowHousingWarning = function() return false end,
   GetRefundableDecors = function()
     return {}, 0
-  end,
-  GetProductIDsForBundle = function(productID)
-    local product = __wow_housing_seeded_product_infos[productID]
-    if not product or not product.isBundle then
-      return {}
-    end
-    local children = {}
-    for index, child_id in ipairs(product.productIDList or {}) do
-      children[index] = { childProductID = child_id, displayOrder = index, quantityInBundle = 1 }
-    end
-    return children
   end,
   GetSpellVisualInfoForMount = function() return nil end,
   PurchaseProduct = __wow_noop,

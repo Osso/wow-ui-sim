@@ -51,7 +51,15 @@ Main accepts an independent GPT-6.1-sol review: **ACCEPT WITH QUALIFICATIONS** (
 - [x] State, module and registration wired; the two seeded Lua publishers and their helpers removed.
 - [ ] Storefront and housing panels were not opened. Seeded category/product-ID lists still name products absent from the empty maps; cached catalog code skips missing products by inspection, while `Blizzard_HousingMarketProductDisplay.lua:46` and shared card code dereference without a nil check (those housing IDs were absent from the old getters too).
 
+## 12.0.1 extract bundle and section DTOs
+
+`CatalogShopProducts` also stores explicit bundle child arrays and sections keyed by `(categoryID, sectionID)`. `GetProductIDsForBundle` preserves host array order and exact numeric `childProductID`, `displayOrder`, `quantityInBundle`; no synthetic quantity or seeded bundle fallback. `GetCategorySectionInfo` copies `ID`, `displayName`, optional parent ID/card type/grid size and required `shouldShowRecommendationOptOutDisclaimer`, including false. Both return fresh snapshots. Matching temporary Lua publishers are removed.
+
+**INFERRED:** unknown bundles return an empty array; missing nonnullable sections raise a contextual host-input error. Public exact-i32 selector policy is shared with product queries. Native service availability, secret-selector acceptance and storefront navigation remain unproved.
+
+`catalog_shop_patch_12_0_1_bundle_section_snapshots` tests two distinct quantities, nonsequential display orders, disclaimer transitions, optional omissions, independent snapshots and old `otherProductPMTURL` absence. Existing full product/display fixtures cover retained DTO fields.
+
 ## Out of scope
 
 - `HasRestrictions` rows `global api-C_CatalogShop-GetProductInfo-247` and `global api-C_CatalogShop-PurchaseProduct-249`: declarations supply no restriction predicate. No restriction or purchase behavior is modeled or credited.
-- `PurchaseProduct`, other catalog APIs, housing bundles and other structure rows; no native secret-argument parity, native validation/error-wording claims, other-profile execution or storefront panel acceptance.
+- `PurchaseProduct`, other catalog APIs beyond the bundle/section getters above, housing bundles and other structure rows; no native secret-argument parity, native validation/error-wording claims, other-profile execution or storefront panel acceptance.
