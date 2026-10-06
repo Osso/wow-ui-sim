@@ -1,5 +1,5 @@
 {
-  "code_revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+  "code_revision": "d296467af5aabd08934d348231e7694bef5ee85b",
   "commands": [
     {
       "command": "integration spell_aura_secrecy",
@@ -110,6 +110,72 @@
       "command": "cargo fmt --check",
       "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
       "result": 0
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-extract2/scripts/build-host.py --build-host local --test --test integration patch_12_0_1_extract2 -- --test-threads=1",
+      "revision": "d296467af5aabd08934d348231e7694bef5ee85b",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 4 tests\ntest patch_12_0_1_extract2::patch_12_0_1_creature_id_follows_identity_visibility ... ok\ntest patch_12_0_1_extract2::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context ... ok\ntest patch_12_0_1_extract2::patch_12_0_1_major_faction_flags_are_host_state_snapshots ... ok\ntest patch_12_0_1_extract2::patch_12_0_1_secret_precision_retains_jar_jar_payload ... ok\n\ntest result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 10755 filtered out; finished in 0.61s\n\n"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-extract2/scripts/build-host.py --build-host local --test --test integration patch_12_0_0_publication_sweep -- --test-threads=1",
+      "revision": "d296467af5aabd08934d348231e7694bef5ee85b",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_0_publication_sweep::patch_12_0_0_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 4.45s\n\n"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-extract2/scripts/build-host.py --build-host local --test --test integration patch_12_0_1_publication_sweep -- --test-threads=1",
+      "revision": "d296467af5aabd08934d348231e7694bef5ee85b",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_1_publication_sweep::patch_12_0_1_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 4.20s\n\n"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-extract2/scripts/build-host.py --build-host local --test --test integration patch_12_0_5_publication_sweep -- --test-threads=1",
+      "revision": "d296467af5aabd08934d348231e7694bef5ee85b",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_5_publication_sweep::patch_12_0_5_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 4.25s\n\n"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-extract2/scripts/build-host.py --build-host local --test --test integration patch_12_0_7_publication_sweep -- --test-threads=1",
+      "revision": "d296467af5aabd08934d348231e7694bef5ee85b",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_7_publication_sweep::patch_12_0_7_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 4.77s\n\n"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-extract2/scripts/build-host.py --build-host local --test --test integration patch_12_1_0_publication_sweep -- --test-threads=1",
+      "revision": "d296467af5aabd08934d348231e7694bef5ee85b",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_1_0_publication_sweep::patch_12_1_0_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 4.65s\n\n"
+    },
+    {
+      "command": "cargo check --manifest-path /home/osso/.worktrees/wow-ui-sim-p1201-extract2/Cargo.toml --tests --no-default-features --features \"sound gui casc client-mists\"",
+      "revision": "d296467af5aabd08934d348231e7694bef5ee85b",
+      "result": 0,
+      "output": "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n    Checking wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract2)\n    Finished `dev` profile [optimized + debuginfo] target(s) in 20.23s\n"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-extract2/scripts/build-host.py --build-host local (separate build before bounded runtime)",
+      "revision": "d296467af5aabd08934d348231e7694bef5ee85b",
+      "result": 0,
+      "output": "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n    Finished `dev` profile [optimized + debuginfo] target(s) in 0.52s\n"
+    },
+    {
+      "command": "timeout 90 python3 /home/osso/.worktrees/wow-ui-sim-p1201-extract2/scripts/build-host.py --build-host local --run -- --no-addons --no-saved-vars lua-errors",
+      "revision": "d296467af5aabd08934d348231e7694bef5ee85b",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\nnative artifact=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target/debug/wow-sim\n[]\n",
+      "diagnostics": "s_canvas_layout_visibility\n[  2.490s] [Workarounds] finished patch_settings_canvas_layout_visibility in 117.48\u00b5s\n[  2.490s] [Startup] apply_post_load_workarounds: workarounds complete\n[  2.569s] [Startup] apply_post_load_workarounds: globals restored\n[  2.569s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored\n[  2.569s] [Startup] apply_post_load_workarounds: seterrorhandler restored\n[  2.570s] [Startup] post-load workarounds complete in 232.95ms\n[  2.570s] [Startup] restarting GC after bootstrap\n[  2.717s] [Startup] GC restart complete in 147.75ms\n=== Final observed Lua error summary ===\nStatus: CLEAN\nLua errors: 0 unique, 0 occurrence(s)\nAttributed owners: 0\nUnattributed Lua errors: 0 occurrence(s)\nDropping OutputStream, audio playing through this stream will stop\n"
+    },
+    {
+      "command": "cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1201-extract2/Cargo.toml --check",
+      "revision": "d296467af5aabd08934d348231e7694bef5ee85b",
+      "result": 0
+    },
+    {
+      "command": "git -C /home/osso/.worktrees/wow-ui-sim-p1201-extract2 diff edb893503 b78a55bf2 -- /home/osso/.worktrees/wow-ui-sim-p1201-extract2/src",
+      "revision": "edb893503..b78a55bf2",
+      "result": 0,
+      "output": ""
     }
   ],
   "master_comparison": "Creature identity RED ran against identical edb893503 production with added tests; no canonical checkout modified or separate master worktree used. Other selected filters pass; no failures remain.",
@@ -140,5 +206,17 @@
       "Blizzard_MajorFactions/Blizzard_MajorFactionUnlockToast.lua"
     ],
     "breakpointData": []
+  },
+  "final_summary": {
+    "proven_by_test": 41,
+    "metadata_candidate": 1,
+    "still_pending": 91,
+    "publication_sweeps": "5/5 pass, individually filtered",
+    "extract_tests": "4/4 pass",
+    "mists_check": "exit 0; six existing iced vendor manifest warnings only",
+    "startup": "[]; clean process exit 0",
+    "formatting": "cargo fmt --check exit 0",
+    "gate_change": "retail-12-0-5 is first supported later epoch; final gate rerun after cfg change",
+    "later_changes": "Only evidence/docs after this revision; runtime/test proof not invalidated."
   }
 }
