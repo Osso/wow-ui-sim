@@ -1,3 +1,7 @@
+## [2026-10-06] evidence | Remaining 12.0.1 extract
+
+[Follow-up](investigations/patch-12-0-1-api-audit.md#remaining-extract-follow-up) accounts for all 133 remaining rows: 41 bounded behavioral proofs, one metadata candidate, 91 explicit gaps. Creature-ID secrecy uses existing identity state; current buff attributes do not establish historical healer policy.
+
 ## [2026-10-06] investigation | Branch reconciliation
 
 [36-patch decision table](investigations/branch-reconciliation.md) distinguishes existing/obsolete work from four source patches ported in five commits. Nested-color tooltip coverage, talent cursor icons, host-position screenshot overlay and stale FrameXML cleanup are preserved; local checks and startup `[]` pass. Master integration and branch deletion remain unperformed.

@@ -15,6 +15,12 @@ Bounded host-backed model of [retained 12.0.5 prose](../../data/patch-api/source
 
 INFERRED policies: false/empty default map/player-owned/control context; existing party_group_active and party_members supply group membership using the existing synthetic party GUID provider. Host owns map, player-owned identity and control lifecycle; no automatic world discovery. Explicit classification precedence is simulator policy, not native-verified semantics. Existing unresolved identities cannot be classified and retain existing absence/placeholder outputs; that is a known boundary, not an alternate classifier. Exempt membership is not inferred from a token spelling, friendliness or attackability.
 
+## 12.0.1 creature identifier follow-up
+
+- [x] `UnitCreatureID` returns nil whenever the shared host-backed unit identity is secret, for secure and tainted callers. Clearing the context restores the concrete creature ID without changing caller taint. Player GUIDs continue to yield nil.
+
+Implemented from `retail-12-0-5`, the first supported epoch after 12.0.1; earlier epochs preserve their existing behavior. `tests/patch_12_0_1_extract2.rs::patch_12_0_1_creature_id_follows_identity_visibility` uses Hogger creature ID 448 and the existing instance context. RED on unchanged `edb893503` production; GREEN after the getter consumes the existing predicate. No additional identity classifier or world acquisition is introduced. [Per-row proof](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract2-proof.json).
+
 ## How it works
 
 - [Lua API architecture](../lua-api.md).

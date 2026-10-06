@@ -1,3 +1,7 @@
+## [2026-10-06] evidence | Remaining 12.0.1 extract
+
+[Audit](investigations/patch-12-0-1-api-audit.md#remaining-extract-follow-up) links 133 per-ID outcomes and revision-scoped verification. Concrete restricted aura, faction snapshot, secret formatting and creature-ID tests establish 41 rows; resistant historical/model boundaries remain pending. Ledgers and vendor files unchanged.
+
 ## [2026-10-06] investigation | Branch reconciliation
 
 [Audit](investigations/branch-reconciliation.md) records every positive cherry patch, historical master counterparts, five port commits, RED/GREEN proof, source-identical rebase and integrated local check/startup. Abandoned renderer/VM/profile snapshots remain outside per-commit audit; deletion safety is conditional on master integration. No pushes, branch deletions or vendor edits.

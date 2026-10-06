@@ -1,0 +1,144 @@
+{
+  "code_revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+  "commands": [
+    {
+      "command": "integration spell_aura_secrecy",
+      "revision": "edb893503 baseline",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 4 tests\ntest spell_aura_secrecy::spell_aura_secrecy_reuses_existing_spell_identifier_resolution ... ok\ntest spell_aura_secrecy::spell_aura_secrecy_uses_native_attribute_flags_and_contextual_default ... ok\ntest spell_aura_secrecy::spell_aura_secrecy_rejects_conflicting_native_flags_without_guessing_precedence ... ok\n\nrunning 1 test\ntest spell_aura_secrecy::spell_aura_secrecy_drives_blizzard_identity_candidate_filtering ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10754 filtered out; finished in 0.62s\n\ntest spell_aura_secrecy::spell_aura_secrecy_drives_blizzard_identity_candidate_filtering ... ok\n\ntest result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 10751 filtered out; finished in 0.65s\n\n"
+    },
+    {
+      "command": "integration patch_12_0_1_long_buff",
+      "revision": "b78a55bf24bc629781321e6fd29cb15395de2c80",
+      "result": 0
+    },
+    {
+      "command": "integration c_major_factions_globals",
+      "revision": "b78a55bf2 (production identical to edb893503)",
+      "result": 0
+    },
+    {
+      "command": "integration patch_12_0_1_extract2 RED",
+      "revision": "b78a55bf2 + tests only; production edb893503",
+      "result": 101
+    },
+    {
+      "command": "integration patch_12_0_1_extract2 GREEN",
+      "revision": "cd8144589f624c7cfd403e3675daf94831c0a5f0",
+      "result": 0
+    },
+    {
+      "command": "integration patch_12_0_1_extract2",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 4 tests\ntest patch_12_0_1_extract2::patch_12_0_1_major_faction_flags_are_host_state_snapshots ... ok\ntest patch_12_0_1_extract2::patch_12_0_1_secret_precision_retains_jar_jar_payload ... ok\ntest patch_12_0_1_extract2::patch_12_0_1_creature_id_follows_identity_visibility ... ok\ntest patch_12_0_1_extract2::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context ... ok\n\ntest result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 10755 filtered out; finished in 0.20s\n\n"
+    },
+    {
+      "command": "integration unit_api::test_unit_creature_id_target_from_guid",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest unit_api::test_unit_creature_id_target_from_guid ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 0.24s\n\n"
+    },
+    {
+      "command": "integration instanced_identity",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 7 tests\ntest instanced_identity::instanced_identity_explicit_secret_override_is_independent_of_map_exemption ... ok\ntest instanced_identity::instanced_identity_map_exit_changes_new_outputs_not_retained_values ... ok\ntest instanced_identity::instanced_identity_group_exemption_follows_guid_alias_and_mind_control ... ok\ntest instanced_identity::instanced_identity_control_alone_does_not_exempt_a_visitor ... ok\ntest instanced_identity::instanced_identity_tainted_caller_observes_context_without_losing_taint ... ok\ntest instanced_identity::instanced_identity_friendly_and_attackable_visitors_share_current_policy ... ok\ntest cast_events_identity::model_identity::model_unit_binding_uses_instanced_identity_context ... ok\n\ntest result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 10752 filtered out; finished in 0.37s\n\n"
+    },
+    {
+      "command": "integration c_major_factions_globals",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 14 tests\ntest c_major_factions_globals::is_account_wide_reputation_is_false_by_default ... ok\ntest c_major_factions_globals::get_renown_levels_returns_state_sequence ... ok\ntest c_major_factions_globals::is_major_faction_is_false_when_unregistered ... ok\ntest c_major_factions_globals::is_account_wide_reputation_reads_state_set ... ok\ntest c_major_factions_globals::default_tww_major_faction_texture_kits_resolve_to_journey_icon_atlases ... ok\ntest c_major_factions_globals::get_major_faction_data_unlock_description_can_be_nil ... ok\ntest c_major_factions_globals::default_midnight_major_faction_texture_kits_resolve_to_journey_icon_atlases ... ok\ntest c_major_factions_globals::get_major_faction_data_returns_state_row ... ok\ntest c_major_factions_globals::get_major_faction_data_returns_nil_when_unknown ... ok\ntest c_major_factions_globals::get_renown_levels_returns_empty_table_for_unknown_faction ... ok\ntest c_major_factions_globals::faction_data_survives_collection_in_color_callback ... ok\ntest c_major_factions_globals::is_major_faction_reads_state_table ... ok\ntest c_major_factions_globals::reputation_bar_helper_uses_renown_max_level ... ok\ntest c_major_factions_globals::midnight_major_faction_filter_returns_midnight_rows_without_war_within_leak ... ok\n\ntest result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 10745 filtered out; finished in 0.35s\n\n"
+    },
+    {
+      "command": "integration secret_string_formatting",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 6 tests\ntest secret_string_formatting::public_strings_keep_precision_and_width_direct_and_positional ... ok\ntest secret_string_formatting::secret_precision_direct_preserves_full_payload_and_secrecy ... ok\ntest secret_string_formatting::secret_positional_formatting_ignores_precision_and_width ... ok\ntest secret_string_formatting::secret_width_direct_does_not_pad_or_declassify ... ok\ntest secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint ... ok\ntest secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 10753 filtered out; finished in 0.22s\n\n"
+    },
+    {
+      "command": "integration patch_12_0_0_publication_sweep --test-threads=1",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_0_publication_sweep::patch_12_0_0_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 5.02s\n\n"
+    },
+    {
+      "command": "integration patch_12_0_1_publication_sweep --test-threads=1",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_1_publication_sweep::patch_12_0_1_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 4.26s\n\n"
+    },
+    {
+      "command": "integration patch_12_0_5_publication_sweep --test-threads=1",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_5_publication_sweep::patch_12_0_5_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 4.34s\n\n"
+    },
+    {
+      "command": "integration patch_12_0_7_publication_sweep --test-threads=1",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_7_publication_sweep::patch_12_0_7_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 4.02s\n\n"
+    },
+    {
+      "command": "integration patch_12_1_0_publication_sweep --test-threads=1",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_1_0_publication_sweep::patch_12_1_0_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10758 filtered out; finished in 4.49s\n\n"
+    },
+    {
+      "command": "cargo check --tests --no-default-features --features \"sound gui casc client-mists\"",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "g lz4_flex v0.12.1\n    Checking hyper-util v0.1.20\n    Checking compression-codecs v0.4.38\n    Checking calloop-wayland-source v0.4.1\n    Checking cascette-crypto v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)\n    Checking idna v1.1.0\n    Checking serde_json v1.0.149\n    Checking calloop v0.13.0\n    Checking zvariant_utils v3.3.0\n    Checking wgpu-core v27.0.3\n    Checking async-io v2.6.0\n    Checking getrandom v0.3.4\n    Checking rand v0.8.5\n    Checking symphonia-utils-xiph v0.5.5\n    Checking async-channel v2.5.0\n    Checking openssl-sys v0.9.117\n    Checking iced_debug v0.14.0\n    Checking http-body-util v0.1.3\n    Checking enumflags2 v0.7.12\n    Checking wayland-protocols-experimental v20250721.0.1\n    Checking wayland-protocols-misc v0.3.10\n    Checking sync_wrapper v1.0.2\n    Checking hashbrown v0.14.5\n    Checking endi v1.1.1\n    Checking md5 v0.8.0\n    Checking rand_core v0.10.1\n    Checking ctor-lite v0.1.1\n    Checking tower-layer v0.3.3\n    Checking float_next_after v1.0.0\n    Checking static_assertions v1.1.0\n    Checking lyon_tessellation v1.0.16\n    Checking dashmap v6.1.0\n    Checking tower v0.5.3\n    Checking tiny-xlib v0.2.4\n    Checking cascette-formats v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)\n    Checking zvariant v5.9.2\n    Checking smithay-client-toolkit v0.20.0\n    Checking openssl v0.10.81\n    Checking wgpu v27.0.1\n    Checking async-signal v0.2.13\n    Checking calloop-wayland-source v0.3.0\n    Checking url v2.5.8\n    Checking async-compression v0.4.42\n    Checking tokio-rustls v0.26.4\n    Checking etagere v0.2.15\n    Checking async-lock v3.4.2\n    Checking webpki-roots v1.0.7\n    Checking lyon_algorithms v1.0.16\n    Checking owned_ttf_parser v0.25.1\n    Checking piper v0.2.4\n    Checking ryu v1.0.23\n    Checking lru v0.16.3\n    Checking ab_glyph_rasterizer v0.1.10\n    Checking utf8parse v0.2.2\n    Checking cpufeatures v0.3.0\n    Checking ab_glyph v0.2.32\n    Checking native-tls v0.2.18\n    Checking chacha20 v0.10.1\n    Checking anstyle-parse v0.2.7\n    Checking cryoglyph v0.1.0\n    Checking lyon v1.0.16\n    Checking async-process v2.5.0\n    Checking blocking v1.6.2\n    Checking hyper-rustls v0.27.9\n    Checking tower-http v0.6.10\n    Checking smithay-client-toolkit v0.19.2\n    Checking zbus_names v4.3.1\n    Checking icu_locale_data v2.1.2\n    Checking smithay-clipboard v0.7.3\n    Checking getrandom v0.4.3\n    Checking softbuffer v0.4.8\n    Checking guillotiere v0.6.2\n    Checking async-executor v1.13.3\n    Checking pkcs8 v0.10.2\n    Checking rustls-native-certs v0.8.4\n    Checking async-broadcast v0.7.2\n    Checking uuid v1.20.0\n    Checking num-iter v0.1.45\n    Checking aho-corasick v1.1.4\n    Checking ordered-stream v0.2.0\n    Checking kurbo v0.10.4\n    Checking colorchoice v1.0.4\n    Checking siphasher v1.0.2\n    Checking regex-syntax v0.8.8\n    Checking cpufeatures v0.2.17\n    Checking anstyle v1.0.13\n    Checking mime v0.3.17\n    Checking anstyle-query v1.1.5\n    Checking is_terminal_polyfill v1.70.2\n    Checking iced_tiny_skia v0.14.0\n    Checking anstream v0.6.21\n    Checking sha2 v0.10.9\n    Checking phf_shared v0.11.3\n    Checking zbus v5.13.2\n    Checking sctk-adwaita v0.10.1\n    Checking num-bigint-dig v0.8.6\n    Checking rustls-platform-verifier v0.6.2\n    Checking pkcs1 v0.7.5\n    Checking iced_wgpu v0.14.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract2/iced-wgpu-patched)\n    Checking rand v0.10.1\n    Checking regex-automata v0.4.13\n    Checking clipboard_wayland v0.2.2\n    Checking icu_locale v2.1.1\n    Checking prost v0.14.4\n    Checking ahash v0.8.12\n    Checking x11-dl v2.21.0\n    Checking alsa-sys v0.3.1\n    Checking tokio-native-tls v0.3.1\n    Checking x509-cert v0.2.5\n    Checking clipboard_x11 v0.4.3\n    Checking signature v2.2.0\n    Checking xkbcommon-dl v0.4.2\n    Checking iced_runtime v0.14.0\n    Checking wayland-protocols-plasma v0.3.10\n    Checking jpeg-decoder v0.3.2\n    Checking rmp v0.8.15\n    Checking clap_lex v0.7.7\n    Checking dpi v0.1.2\n    Checking extended v0.1.0\n    Checking strsim v0.11.1\n    Checking symphonia-format-riff v0.5.5\n    Checking clap_builder v4.5.56\n    Checking rmp-serde v1.3.1\n    Checking asn1 v0.23.1\n    Checking tiff v0.9.1\n    Checking mail-parser v0.11.4\n    Checking mundy v0.2.2\n    Checking iced_program v0.14.0\n    Checking cms v0.2.3\n    Checking winit v0.30.12\n    Checking rsa v0.9.10\n    Checking window_clipboard v0.5.1\n    Checking hyper-tls v0.6.0\n    Checking alsa v0.9.1\n    Checking cascette-client-storage v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)\n    Checking iced_renderer v0.14.0\n    Checking cascette-cache v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)\n    Checking reqwest v0.13.1\n    Checking libsqlite3-sys v0.33.0\n    Checking prometheus v0.14.0\n    Checking serde_urlencoded v0.7.1\n    Checking symphonia-format-ogg v0.5.5\n    Checking symphonia-codec-vorbis v0.5.5\n    Checking symphonia-format-isomp4 v0.5.5\n    Checking symphonia-bundle-flac v0.5.5\n    Checking symphonia-bundle-mp3 v0.5.5\n    Checking symphonia-codec-pcm v0.5.5\n    Checking symphonia-codec-aac v0.5.5\n    Checking hashlink v0.10.0\n    Checking gif v0.13.3\n    Checking png v0.17.16\n    Checking fallible-streaming-iterator v0.1.9\n    Checking minimal-lexical v0.2.1\n    Checking option-ext v0.2.0\n    Checking byteorder v1.5.0\n    Checking dasp_sample v0.11.0\n    Checking fallible-iterator v0.3.0\n    Checking nom v7.1.3\n    Checking cpal v0.16.0\n    Checking dirs-sys v0.4.1\n    Checking rusqlite v0.35.0\n    Checking symphonia v0.5.5\n    Checking cascette-protocol v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)\n    Checking image v0.24.9\n    Checking reqwest v0.12.28\n    Checking libwebp-sys v0.9.6\n    Checking iced_winit v0.14.0\n   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract2)\n    Checking iced_widget v0.14.2\n    Checking clap v4.5.56\n    Checking icu_plurals_data v2.1.1\n    Checking peercred-ipc v0.1.0 (https://github.com/Osso/peercred-ipc.git?tag=v0.2.0#dc0093cf)\n    Checking icu_casemap_data v2.1.1\n    Checking icu_collator_data v2.1.1\n    Checking icu_segmenter_data v2.1.1\n    Checking matchers v0.2.0\n    Checking phf_generator v0.11.3\n    Checking fixed_decimal v0.7.0\n    Checking texpresso v2.0.2\n    Checking sharded-slab v0.1.7\n    Checking xattr v1.6.1\n    Checking tracing-log v0.2.0\n    Checking filetime v0.2.28\n    Checking thread_local v1.1.9\n    Checking glob v0.3.3\n    Checking same-file v1.0.6\n    Checking nu-ansi-term v0.50.3\n    Checking iced v0.14.0\n    Checking iced-layout-inspector v0.1.0 (https://github.com/Osso/iced-layout-inspector.git?tag=v0.2.0#c1f1dd2c)\n    Checking walkdir v2.5.0\n    Checking tracing-subscriber v0.3.22\n    Checking tar v0.4.45\n    Checking image-blp v1.2.0\n    Checking icu_plurals v2.1.1\n    Checking phf_codegen v0.11.3\n    Checking icu_segmenter v2.1.1\n    Checking icu_collator v2.1.1\n    Checking icu_casemap v2.1.1\n    Checking casc-extract v0.1.0 (https://github.com/Osso/casc-extract?rev=bbfb184066531b6eb674b50b63a6052eb871ab2f#bbfb1840)\n    Checking phf v0.11.3\n    Checking webp v0.3.1\n    Checking asset-resolver v0.1.0 (https://github.com/world-of-osso/asset-resolver?rev=462097bba2aa72d1afed8e0ca5b7c7315096427d#462097bb)\n    Checking rodio v0.21.1\n    Checking winapi v0.3.9\n    Checking dirs v5.0.1\n    Checking regex v1.12.2\n    Checking tempfile v3.24.0\n    Checking quick-xml v0.37.5\n    Checking console v0.15.11\n    Checking rilua v0.1.21 (https://github.com/Osso/rilua.git?rev=a76ffa83f548da94b72777c96d51de38b7f9ef3c#a76ffa83)\n    Checking pollster v0.4.0\n    Checking httpdate v1.0.3\n    Checking unicode-blocks v0.1.10\n    Checking similar v2.7.0\n    Checking insta v1.46.0\n    Finished `dev` profile [optimized + debuginfo] target(s) in 1m 44s\n"
+    },
+    {
+      "command": "python3 scripts/build-host.py --build-host local",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "oml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n    Finished `dev` profile [optimized + debuginfo] target(s) in 0.27s\n"
+    },
+    {
+      "command": "timeout 90 python3 scripts/build-host.py --build-host local --run -- --no-addons --no-saved-vars lua-errors (after separate build)",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0,
+      "output": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract2 target=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\nnative artifact=/home/osso/.worktrees/wow-ui-sim-p1201-extract2/target/debug/wow-sim\n[]\n",
+      "diagnostics": "container_frame_token_tracker\n[  4.063s] [Workarounds] finished patch_container_frame_token_tracker in 40.24\u00b5s\n[  4.063s] [Workarounds] starting patch_achievement_display_set_achievements\n[  4.063s] [Workarounds] finished patch_achievement_display_set_achievements in 8.00\u00b5s\n[  4.063s] [Workarounds] starting patch_housing_dashboard_preload\n[  4.063s] [Workarounds] finished patch_housing_dashboard_preload in 61.11\u00b5s\n[  4.063s] [Workarounds] starting patch_lfg_lock_list\n[  4.063s] [Workarounds] finished patch_lfg_lock_list in 6.22\u00b5s\n[  4.063s] [Workarounds] starting patch_auction_house_browse_results_event\n[  4.063s] [Workarounds] finished patch_auction_house_browse_results_event in 65.11\u00b5s\n[  4.063s] [Workarounds] starting patch_auction_house_search_context_aliases\n[  4.063s] [Workarounds] finished patch_auction_house_search_context_aliases in 29.28\u00b5s\n[  4.063s] [Workarounds] starting patch_auth_challenge_frame_parent\n[  4.063s] [Workarounds] finished patch_auth_challenge_frame_parent in 44.85\u00b5s\n[  4.063s] [Workarounds] starting patch_settings_surface_defaults\n[  4.064s] [Workarounds] finished patch_settings_surface_defaults in 352.16\u00b5s\n[  4.064s] [Workarounds] starting patch_settings_canvas_layout_visibility\n[  4.064s] [Workarounds] finished patch_settings_canvas_layout_visibility in 117.80\u00b5s\n[  4.064s] [Startup] apply_post_load_workarounds: workarounds complete\n[  4.134s] [Startup] apply_post_load_workarounds: globals restored\n[  4.134s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored\n[  4.134s] [Startup] apply_post_load_workarounds: seterrorhandler restored\n[  4.140s] [Startup] post-load workarounds complete in 216.04ms\n[  4.140s] [Startup] restarting GC after bootstrap\n[  4.286s] [Startup] GC restart complete in 146.10ms\n=== Final observed Lua error summary ===\nStatus: CLEAN\nLua errors: 0 unique, 0 occurrence(s)\nAttributed owners: 0\nUnattributed Lua errors: 0 occurrence(s)\nDropping OutputStream, audio playing through this stream will stop\n"
+    },
+    {
+      "command": "cargo fmt --check",
+      "revision": "6b1551acbacdd088b35dd03664f2de6717909f9d",
+      "result": 0
+    }
+  ],
+  "master_comparison": "Creature identity RED ran against identical edb893503 production with added tests; no canonical checkout modified or separate master worktree used. Other selected filters pass; no failures remain.",
+  "inferred_choices": [
+    "Reuse existing host-declared instance identity policy (false default and explicit GUID override), not native world acquisition.",
+    "Existing tainted string formatting is an allowed opaque operation; test retains this INFERRED policy.",
+    "Current 12.1.0 native spell attributes are not overwritten to pretend historical 12.0.1 healer exemptions."
+  ],
+  "readability": "Manual changed-line audit: single early return in getter; tests have explicit fixtures, maximum two nested blocks, no suppressions or opaque mutation.",
+  "consumer_references": {
+    "hideFutureChapters": [
+      "Blizzard_FrameXMLUtil/CampaignUtil.lua"
+    ],
+    "moneyCost": [
+      "Blizzard_Communities/GuildRewards.lua",
+      "Blizzard_ItemUpgradeUI/Mainline/Blizzard_ItemUpgradeUI.lua",
+      "Blizzard_TrainerUI/Classic/Blizzard_TrainerUI.lua",
+      "Blizzard_TrainerUI/Mainline/Blizzard_TrainerUI.lua"
+    ],
+    "outerGlow": [
+      "Blizzard_POIButton/POIButton.lua",
+      "Blizzard_ActionBar/Shared/ActionButton.lua"
+    ],
+    "mapPinInfo": [
+      "Blizzard_POIButton/POIButton.lua"
+    ],
+    "useJourneyUnlockToast": [
+      "Blizzard_MajorFactions/Blizzard_MajorFactionUnlockToast.lua"
+    ],
+    "breakpointData": []
+  }
+}

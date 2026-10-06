@@ -1,0 +1,882 @@
+[
+  {
+    "source_id": "prose-2026-02-19-026",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "C_Spell rejects secret spell identifiers for addon callers, but no production-order fixture combines secret formatting with all affected spell-name entrypoints; blanket exploit closure not credited."
+  },
+  {
+    "source_id": "prose-2026-02-19-027",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "No concrete status-bar secret-number laundering reproduction with tainted readback and retained host payload established; ordinary status-bar value tests are not this failure boundary."
+  },
+  {
+    "source_id": "prose-2026-02-19-028",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Source does not specify which Lua error/debuglocals sequence crashed; no process-lifetime crash reproduction or native oracle established."
+  },
+  {
+    "source_id": "prose-2026-02-19-029",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "No relog/full-update lifetime test of retained aura-instance IDs across the actual update/recreation boundary established; seeded one-frame lookup fixtures are insufficient."
+  },
+  {
+    "source_id": "prose-2026-02-19-030",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "No chat-lockdown/timestamp enabled event-delivery fixture established; source gives no precise lockdown state machine, and startup [] alone is not proof."
+  },
+  {
+    "source_id": "prose-2026-02-19-031",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Previous gap review retains missing numeric threat-output/secrecy model; token-pair comparison denial requires concrete threats and caller contexts, not a publication predicate."
+  },
+  {
+    "source_id": "prose-2026-02-19-032",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Source does not enumerate affected APIs or the PvP compound-token/name policy; no native/host match-state input rejection matrix established."
+  },
+  {
+    "source_id": "prose-2026-02-19-034",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "PvP crowd-control models do not establish the announced other-player exploit boundary across arena state and tainted consumers; no unrelated-player spell/duration denial fixture credited."
+  },
+  {
+    "source_id": "prose-2026-02-19-035",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "No arena other-player PvP-trinket cooldown state acquisition plus tainted denial fixture; ordinary player cooldown secrecy does not prove this contract."
+  },
+  {
+    "source_id": "prose-2026-02-24-050",
+    "outcome": "metadata-candidate",
+    "tests": [],
+    "reason": "Announcement of planned exemptions and possible future reprotection; concrete spell-list contracts are audited separately."
+  },
+  {
+    "source_id": "prose-2026-02-24-057",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 355941 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-058",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 363502 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-059",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 364343 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-060",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 366155 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-061",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 367364 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-062",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 373267 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-063",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 376788 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-066",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 360827 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-067",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 395152 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-068",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 410089 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-069",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 410263 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-070",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 410686 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-071",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 413984 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-074",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 774 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-075",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 8936 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-076",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 33763 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-077",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 48438 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-078",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 155777 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-081",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 17 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-082",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 194384 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-083",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 1253593 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-086",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 139 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-087",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 41635 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-088",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 77489 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-091",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 115175 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-092",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 119611 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-093",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 124682 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-094",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 450769 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-097",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 974, 383648 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-098",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 61295 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-101",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 53563 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-102",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 156322 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-103",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 156910 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-104",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 1244893 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-108",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-109",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-110",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-111",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-112",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-113",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-114",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-117",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-118",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-119",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-120",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-121",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-122",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-123",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-124",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-125",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-126",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-127",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-128",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-129",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-133",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-134",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-137",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-138",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-139",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-140",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-141",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-142",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-143",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-146",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-147",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-148",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-149",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-150",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-153",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-154",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context"
+    ],
+    "reason": "All listed spell IDs yield public exact name/ID/duration/expiry from populated host auras to a tainted caller while aura access is restricted; contextual spell 35395 remains blocked. Current cached 12.1.0 retained policy, not a historical native-client oracle."
+  },
+  {
+    "source_id": "prose-2026-02-24-157",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 8690 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-158",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Listed IDs 20608 lack the never-secret flag in committed 12.1.0 export; C_Secrets and aura access use that export. Historical 12.0.1 exemption data/caller policy unavailable; no synthetic overlay or unverified claim of later reprotection."
+  },
+  {
+    "source_id": "prose-2026-02-24-159",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Wildcard Mythic Plus teleport list has no IDs; current attribute export does not establish exhaustive teleport membership or cooldown exemption policy."
+  },
+  {
+    "source_id": "prose-2026-03-21-174",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Secret-bearing duration objects reject tainted callers; retained ignored RED patch_12_0_1_tainted_secret_duration_object. Opaque rendering consumption is not implemented; caller taint is never cleared. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-177",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Numeric secret setter rejection proven, but full addon replication lacks secret-bearing duration consumption and derived LoC replacement. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-181",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Positive/nonpositive intervals and real cast expiry proven; producer always enables regular cooldowns, so disabled/held branch cannot be exercised. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-183",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "LoC isActive is a supplied host flag, not computed from the positive start/duration formula. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-185",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Regular and charge inactive zero spans proven; inactive spell LoC duration still returns no object rather than a zero-span object. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-186",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cooldown-aura association query does not participate in spell/action interval selection. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-187",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "No PvP-trinket/Adaptation cooldown-aura producer or authoritative hotfix mapping; no mapping fabricated. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-188",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Association lookup still must be consumed by callers; upstream aura-derived interval selection missing. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-193",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "No behavioral old-name deprecation/unpacked-return proof; publication sweep is insufficient. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-194",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Secret numeric fields/public flags are fixture-tested, but shouldReplaceNormalCooldown is a host flag rather than derived expiration comparison. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-195",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Existing seeded publisher returns numeric 4 for player/index 1, not a duration object. Populated real producer belongs to concurrent publication-sweep scope. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-196",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "No populated totem-duration state producer/proof in this checkout; missing-publication producer changes belong to concurrent sweep task. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "prose-2026-03-21-200",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_secret_precision_retains_jar_jar_payload"
+    ],
+    "reason": "Exact %.1s Jar Jar Binks example preserves full secret payload for secure and tainted callers; public input still truncates to J, addon payload reads fail and caller taint persists. Existing opaque formatting policy is INFERRED."
+  },
+  {
+    "source_id": "prose-2026-03-21-201",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_secret_precision_retains_jar_jar_payload"
+    ],
+    "reason": "Exact %.1s Jar Jar Binks example preserves full secret payload for secure and tainted callers; public input still truncates to J, addon payload reads fail and caller taint persists. Existing opaque formatting policy is INFERRED."
+  },
+  {
+    "source_id": "prose-2026-03-21-203",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_creature_id_follows_identity_visibility"
+    ],
+    "reason": "Concrete Creature-0-1-2-3-448-000001 returns 448 outside the host instance context, nil under shared secret-identity policy for secure/tainted callers, and 448 after context clears; player remains nil. RED on unchanged master production, GREEN after shared predicate check."
+  },
+  {
+    "source_id": "prose-2026-03-21-204",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Literal source spelling Texture:IsDesatured retained; no exact-method secret-aspect nil probe for all three getters. IsDesaturated tests are not that occurrence."
+  },
+  {
+    "source_id": "prose-2026-03-21-205",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Unit-aura tooltip APIs share current aura access logic, but announcement omits the inconsistent cases fixed; no historical-to-current production-order security regression established."
+  },
+  {
+    "source_id": "prose-2026-03-21-206",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "No host rate-window/clock and real macro world-marker dispatch fixture proving first three per second accepted and fourth denied without mutation."
+  },
+  {
+    "source_id": "prose-2026-03-21-207",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "No tainted macro-to-BNet delivery test across active encounter transition; publication or direct whisper calls do not prove macro denial."
+  },
+  {
+    "source_id": "prose-2026-03-21-208",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Current private_warning_text_anchor.rs explicitly permits combat calls in the later retained surface. Historical combat denial for all five APIs is not established; do not regress later behavior by guessing a global combat guard."
+  },
+  {
+    "source_id": "structures-CampaignInfo-254",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached WarCampaignDocumentation requires eight nonnullable fields; current campaign_covenant_defaults.rs returns synthetic Lua data, not host campaign state. CampaignUtil consumes hideFutureChapters; no state-backed chapter/visibility producer established."
+  },
+  {
+    "source_id": "structures-CampaignInfo-255",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached WarCampaignDocumentation requires eight nonnullable fields; current campaign_covenant_defaults.rs returns synthetic Lua data, not host campaign state. CampaignUtil consumes hideFutureChapters; no state-backed chapter/visibility producer established."
+  },
+  {
+    "source_id": "structures-DamageMeterAvailableCombatSession-265",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "structures-DamageMeterCombatSession-267",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "structures-DamageMeterCombatSessionSource-270",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "structures-DamageMeterCombatSource-272",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "structures-DamageMeterCombatSpell-278",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "structures-DamageMeterCombatSpellUnitDetails-282",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication. Previous 18-row proof retained; missing piece not remodeled."
+  },
+  {
+    "source_id": "structures-EncounterTimelineEventInfo-286",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached current EncounterTimelineDocumentation has isApproximate but no color field; current EventInfo stores no color. Historical 12.0.1 color contract cannot be reconciled by fabricating a value or treating current absence as behavioral proof."
+  },
+  {
+    "source_id": "structures-EncounterTimelineEventInfo-287",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached current EncounterTimelineDocumentation has isApproximate but no color field; current EventInfo stores no color. Historical 12.0.1 color contract cannot be reconciled by fabricating a value or treating current absence as behavioral proof."
+  },
+  {
+    "source_id": "structures-EncounterWarningInfo-288",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached EncounterWarningsDocumentation marks color and identifying fields SecretValue. Edit-mode preview tests establish plain ColorMixin preview values, not a populated secret encounter-warning producer or full parent secrecy."
+  },
+  {
+    "source_id": "structures-EncounterWarningInfo-289",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached EncounterWarningsDocumentation marks color and identifying fields SecretValue. Edit-mode preview tests establish plain ColorMixin preview values, not a populated secret encounter-warning producer or full parent secrecy."
+  },
+  {
+    "source_id": "structures-HousingCatalogEntryInfo-290",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "State-backed catalog/snapshot.rs::push_entry exports only ID/name/storage/trophy fields; cached HousingCatalogUIDocumentation requires categories, tags and further metadata. No complete populated catalog parent or explicit removed marketInfo runtime test established."
+  },
+  {
+    "source_id": "structures-HousingCatalogEntryInfo-291",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "State-backed catalog/snapshot.rs::push_entry exports only ID/name/storage/trophy fields; cached HousingCatalogUIDocumentation requires categories, tags and further metadata. No complete populated catalog parent or explicit removed marketInfo runtime test established."
+  },
+  {
+    "source_id": "structures-ItemUpgradeLevelInfo-292",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached ItemUpgradeDocumentation requires nested stats/currency/item cost arrays and optional WOWMONEY moneyCost; no modeled item-upgrade level transaction/record producer found in src/c_api. A zero or nil placeholder would not establish a concrete upgrade cost."
+  },
+  {
+    "source_id": "structures-ItemUpgradeLevelInfo-293",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached ItemUpgradeDocumentation requires nested stats/currency/item cost arrays and optional WOWMONEY moneyCost; no modeled item-upgrade level transaction/record producer found in src/c_api. A zero or nil placeholder would not establish a concrete upgrade cost."
+  },
+  {
+    "source_id": "structures-MajorFactionData-294",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Two changed fields proven separately; full cached parent not closed: producer adds legacy expansionFilter and cannot omit optional factionFontColor from its tuple-only backing field. No complete exact-schema/nullability fixture credited."
+  },
+  {
+    "source_id": "structures-MajorFactionData-295",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_major_faction_flags_are_host_state_snapshots"
+    ],
+    "reason": "Host faction 9801 returns boolean true/false journey-toast flags and numeric maxLevel 27/31 across host mutations; held outputs stay independent and absent faction returns nil. Parent contract not credited."
+  },
+  {
+    "source_id": "structures-MajorFactionData-296",
+    "outcome": "proven-by-test",
+    "tests": [
+      "tests/patch_12_0_1_extract2.rs::patch_12_0_1_major_faction_flags_are_host_state_snapshots"
+    ],
+    "reason": "Host faction 9801 returns boolean true/false journey-toast flags and numeric maxLevel 27/31 across host mutations; held outputs stay independent and absent faction returns nil. Parent contract not credited."
+  },
+  {
+    "source_id": "structures-NumberAbbrevOptions-297",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached LocalizationDocumentation defines nullable breakpointData/locale/config inputs. Existing AbbreviateNumbers and AbbreviateLargeNumbers are formatting_utility_defaults.rs shims ignoring options; formatter SetBreakpoints tests exercise a different API, not NumberAbbrevOptions."
+  },
+  {
+    "source_id": "structures-NumberAbbrevOptions-298",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached LocalizationDocumentation defines nullable breakpointData/locale/config inputs. Existing AbbreviateNumbers and AbbreviateLargeNumbers are formatting_utility_defaults.rs shims ignoring options; formatter SetBreakpoints tests exercise a different API, not NumberAbbrevOptions."
+  },
+  {
+    "source_id": "structures-QuestTheme-299",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached QuestLogDocumentation requires background/seal/signature/poiIcon plus optional UIMapPinInfo; POIButton consumes mapPinInfo. No host-backed theme/map-pin producer found; no fabricated theme table or nil-only proof."
+  },
+  {
+    "source_id": "structures-QuestTheme-300",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached QuestLogDocumentation requires background/seal/signature/poiIcon plus optional UIMapPinInfo; POIButton consumes mapPinInfo. No host-backed theme/map-pin producer found; no fabricated theme table or nil-only proof."
+  },
+  {
+    "source_id": "structures-TraitNodeInfo-301",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Existing missing_surface/traits.rs publishes DB-backed totalMaxRanks, but no new concrete parent/changed-field rank fixture established here; admin purchase loops are not exact full parent shape/nullability or multi-rank sum proof."
+  },
+  {
+    "source_id": "structures-TraitNodeInfo-302",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Existing missing_surface/traits.rs publishes DB-backed totalMaxRanks, but no new concrete parent/changed-field rank fixture established here; admin purchase loops are not exact full parent shape/nullability or multi-rank sum proof."
+  },
+  {
+    "source_id": "structures-TraitTreeInfo-303",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached trait tree metadata requires populated uiTextureKit/titleText. No host metadata record plus independently asserted populated/absent output fixture established; node rank tests do not prove tree DTO fields."
+  },
+  {
+    "source_id": "structures-TraitTreeInfo-304",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached trait tree metadata requires populated uiTextureKit/titleText. No host metadata record plus independently asserted populated/absent output fixture established; node rank tests do not prove tree DTO fields."
+  },
+  {
+    "source_id": "structures-TraitTreeInfo-305",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached trait tree metadata requires populated uiTextureKit/titleText. No host metadata record plus independently asserted populated/absent output fixture established; node rank tests do not prove tree DTO fields."
+  },
+  {
+    "source_id": "structures-UIMapPinInfo-306",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached UIMapPinSharedDocumentation requires button/buttonSelected/underlay/outerGlow; POIButton uses outerGlow. No populated host map-pin/button record producer found; string publication alone cannot close parent or nested consumers."
+  },
+  {
+    "source_id": "structures-UIMapPinInfo-307",
+    "outcome": "still-pending",
+    "tests": [],
+    "reason": "Cached UIMapPinSharedDocumentation requires button/buttonSelected/underlay/outerGlow; POIButton uses outerGlow. No populated host map-pin/button record producer found; string publication alone cannot close parent or nested consumers."
+  }
+]

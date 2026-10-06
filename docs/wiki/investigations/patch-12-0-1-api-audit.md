@@ -54,6 +54,12 @@ Catalog bundle/section DTOs were seeded temporary Lua outputs, including synthet
 
 [Cooldown follow-up](../../specs/cooldown-restriction.md#1201-extract-follow-up) retains LoC flag derivation, aura-driven intervals and opaque duration-consumption gaps. Startup prints `[]`/CLEAN but process termination times out at 90 seconds; no clean-exit claim or master termination comparison. Two broad-filter failures already occur at the original master baseline; all isolated publication sweeps still pass.
 
+## Remaining extract follow-up
+
+[Per-row outcomes](../../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract2-proof.json) classify all 133 remaining rows: 41 proven-by-test, one metadata-candidate, 91 still-pending. The 41 are 36 retained buff exemptions (39 explicit IDs), two major-faction fields, two secret-string formatting statements and UnitCreatureID identity suppression. Buff tests use populated restricted host auras and tainted callers with a contextual-spell negative control; historical healer exemptions are not fabricated over current 12.1.0 attribute data. Parent DTOs, ambiguous historical colors, cooldown derivations, private-aura combat epoch differences and unspecified exploit boundaries retain individual reasons.
+
+UnitCreatureID parsed a public numeric identifier even when the existing name/GUID identity predicate was secret. The regression fails against unchanged master production; the getter now consumes that same predicate from the first supported post-12.0.1 epoch. [Identity contract](../../specs/instanced-identity.md#1201-creature-identifier-follow-up) preserves existing host-policy inferences and profile limits. [Verification ledger](../../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract2-verification.json) records exact revision-scoped checks and master comparison. No coverage-ledger or vendor edits.
+
 ## Sources
 
 - [Source provenance](../../../data/patch-api/sources/12.0.1-api-changes.provenance.json).
