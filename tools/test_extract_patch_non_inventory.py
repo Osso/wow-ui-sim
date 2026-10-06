@@ -14,6 +14,13 @@ class ExtractTests(unittest.TestCase):
             extract_text((sources / '12.0.0-api-changes.wikitext').read_text()),
             (sources / '12.0.0-api-changes.txt').read_text())
 
+    def test_nested_blue_post_contract_is_not_editorial(self):
+        rows = seed_rows('== Blue posts ==\n=== 2026-03-21 ===\n'
+                         '** For charge cooldowns, currentCharges < maxCharges.\n',
+                         patch='12.0.1')
+        self.assertEqual(rows[-1]['status'], 'audit-pending')
+        self.assertEqual(rows[-1]['source_id'], 'prose-2026-03-21-003')
+
     def test_comparison_operators_are_not_html_tags(self):
         self.assertEqual(
             extract_text('* <code>currentCharges < maxCharges and startTime > 0</code>\n'),

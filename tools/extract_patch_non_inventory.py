@@ -68,6 +68,21 @@ def extract_text(raw):
     return '\n'.join(lines) + '\n'
 
 
+def is_source_context(value, number, patch):
+    if number == 1 or value.startswith(('* TOC:', '* Official', '* Diffs:', '* Deprecated')):
+        return True
+    if patch == '12.0.0':
+        return value.startswith(('** ', '* Addon apocalypse.', ': 11.2.7',
+                                 'API changes have been introduced',
+                                 'The changes are not intended'))
+    return value.startswith(('Patch 12.0.1 is ', 'Midnight 12.0.1 ',
+                             'Hello again', 'DISCLAIMER:', 'NOTE:',
+                             'Bonus notes that were forgotten:',
+                             'Today we have an update', 'Over the course of Beta',
+                             'While we had originally hoped', 'In the meantime',
+                             'The full list of spells', ': 12.0.0'))
+
+
 def seed_rows(text, patch='12.0.0'):
     rows = []
     section, parent, date = 'prose', '', 'undated'
@@ -100,10 +115,7 @@ def seed_rows(text, patch='12.0.0'):
                 reason = 'Deprecated-source heading/context; no runtime credit.'
             else:
                 parent = 'removal-summary'
-        elif (number == 1 or value.startswith(('* TOC:', '* Official', '* Diffs:',
-                                             '* Deprecated', '** ', '* Addon apocalypse.',
-                                             ': 11.2.7', 'API changes have been introduced',
-                                             'The changes are not intended'))):
+        elif is_source_context(value, number, patch):
             metadata = True
             reason = 'Editorial/source/build context or external resource link; no runtime credit.'
         prefix = 'source-context' if metadata else (
