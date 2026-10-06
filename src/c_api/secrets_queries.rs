@@ -225,7 +225,7 @@ fn can_compare_unit_tokens(state: &mut LuaState) -> LuaResult<u32> {
     let rhs = read_unit(state, 2)?;
     push_bool(
         state,
-        super::unit_comparison::permitted(Some(&lhs), Some(&rhs)),
+        crate::c_api::unit_comparison::permitted(Some(&lhs), Some(&rhs)),
     )
 }
 
