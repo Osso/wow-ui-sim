@@ -187,7 +187,7 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::input_interface::register_all(lua)?;
     #[cfg(feature = "client-wowforever")]
     super::real::player_facing::register_all(lua)?;
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     super::real::recent_allies_location::register_all(lua)?;
     #[cfg(feature = "client-wowforever")]
     super::real::neighborhood_invites::register_all(lua)?;

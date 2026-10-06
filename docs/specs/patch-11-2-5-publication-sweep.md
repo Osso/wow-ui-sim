@@ -13,3 +13,7 @@ Use `tests/common/publication_sweep.rs`; exact observed gap IDs equal `tests/dat
 - [ ] Unique inventory/extract ledger and complete extract scout.
 - [ ] Seven isolated sweeps, local debug retail.
 - [ ] Format, retail check, Mists test check without non-vendor warnings, startup `[]`.
+
+## Location preference publication fix
+
+Both location visibility globals already have a state-backed implementation, synchronous event notifications, strict boolean/secret-caller validation and per-environment isolation. Their module and registration were gated to Forever only despite the 11.2.5 introduction. Publish that unchanged model from `retail-12-0-0` as well; classic builds retain absence, Forever retains its existing contract. Reuse the five behavioral tests under the same widened gate. RED: all five fail on missing globals. No recent-allies namespace producer changes.

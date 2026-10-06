@@ -60,7 +60,7 @@ pub mod preferred_interact;
 pub mod publication_12_0_0;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod publication_unit_12_0_0;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod recent_allies_location;
 pub mod shapeshift;
 #[cfg(feature = "retail-12-0-7")]
