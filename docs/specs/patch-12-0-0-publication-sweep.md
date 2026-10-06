@@ -176,3 +176,30 @@ Five published events now pass finite Retail event validation: `CHAT_MSG_ENCOUNT
 Removed event rows remain gaps: the same source page also adds all four names; current cached ActionBarController/Game EventRouting, ActionButton/UnitDocumentation and HousingBlueprint/HouseEditor consume three. `TRANSMOG_OUTFITS_CHANGED` has the same add/remove contradiction; no historical epoch is invented. `nameplateShowFriendlyNPCs` remains a gap because this same patch publishes `nameplateShowFriendlyNpcs`; case-insensitive CVar identity makes removal incompatible with that addition (and existing metadata tests). No later-patch re-add found in committed wikitext sources.
 
 `C_ActionBar.UnregisterActionUIButton` removes only the supplied frame from existing action-button registration state, including repeated unregistration. `C_Spell.GetSpellLossOfControlCooldownDuration` and its spellbook counterpart return a new duration proxy using the existing LoC record's start/duration/modRate. Missing/inactive records return zero values (documented MayReturnNothing). INFERRED: `is_active`, not wall-clock expiry, selects presence; player-bank/off-spec identity follows existing cooldown selection; no additional secrecy/native expiry policy is claimed.
+
+## Remaining namespace closure — 2026-10-06
+
+Code revision: `a70cfd11d043570cc7eaf44da90bb44b1c9456d4`, on `p1200-rest`, original master base `3fa805ef7`. The 60 assigned IDs are retained individually in [outcomes](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-rest-outcomes.json): **39 closed-modeled, 21 still-gap**, zero new workarounds. Every closed observation is `raw=function; lookup=function`. Exactly those 39 IDs were removed from the 62-row base fixture; 23 remain, including two unassigned VM gaps. Other patch fixtures are unchanged.
+
+[State fields and producer wiring](../wiki/systems/retail-publication-inputs.md) cover action/pet/range queries, BNet local intent, catalog labels, encounter policies, cooldown alert arrays, nameplate configuration, PvP catalog/queue state, prey selection/widgets, recipe quality, weekly completions, intrinsic item binding and catalog-backed outfit tooltip titles. Cached declarations and consumer paths are captured per ID. No live service/DB2 acquisition, native defaults, persistence, complete secrecy parity or 3D rendering is claimed.
+
+INFERRED choices and limits are enumerated in the [proof ledger](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-rest-proof.json): empty/false/zero defaults; GUID-keyed ranges and shared pet autocast; local BNet acceptance; independent encounter/camera/entitlement/input grants; one training queue slot; missing reagent-link errors; prey quest membership; weekly count combining with lowest representative ID; title-only outfit tooltip; public spell classifiers without alias overrides/tainted-secret parity. Account binding uses existing `bonding` values and cached `ItemBind` 7–9; including until-equipped mode 9 is inferred, not instance ownership/bound-state behavior.
+
+Retained rows have specific evidence, not fabricated producers: five contradictory event/CVar removals; checkout/refund/confirmation and character-transfer service gaps; commentator tuple uncertainty; absent native game-curve/companion catalogs; protected LFG title and tooltip-comparison models; training rewards; restriction-event context; enchant/recraft conditions; undocumented `string.concat` signature. Wowless lists `string.concat` but supplies no implementation/inputs/outputs, and cached Blizzard has no uses. The item-binding hold was rejected after inspecting the existing ItemBind enum and Veilroot Fountain metadata; no guessed flags or new item dataset was required.
+
+### Verification
+
+All builds use local debug Retail and this worktree's existing target. Final commands and exact source scopes are in the proof ledger; documentation-only recording does not invalidate code proof. No push, merge, delegation/model CLI, vendor/Wowless edit, Blizzard monkey patch or page-coverage edit.
+
+| Isolated sweep | Rows | OK | Known gaps | Result |
+|---|---:|---:|---:|---|
+| 12.0.0 | 1,010 | 987 | 23 | Pass |
+| 12.0.5 | 363 | 352 | 11 | Pass |
+| 12.0.7 | 174 | 171 | 3 | Pass |
+| 12.1.0 | 778 | 773 | 5 | Pass |
+
+All four ran alone with `--test-threads=1` at `a70cfd11d`; 12.0.0 output is `/home/osso/.cache/wow-ui-sim-audit/p1200-rest-sweep.json`. Final `p1200_rest`: 14 passed; `c_item`: 122 passed. `tooltip`: 487 passed, 1 failed, 1 ignored. The failure is `tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges`, `tests/tooltip_text_layout.rs:180`, assertion `rect.x + rect.width <= state.screen_width + 0.1`; the exact focused test fails identically on current master `f1e59afe593338a1fbc823b27be4d5915d6d024d`. No adjacent layout fix was made.
+
+Earlier unchanged producer scopes at `197cd3858`: BNet 20, encounter 96/one ignored, nameplate 23, cooldown viewer 5, trade skill 14, PvP info 8, action bar 123, weekly rewards 15, exterior 75, stable 21, combat log 10, quest log 70, UI widget 11 passed; lib combat-log 3 passed. Original-master `3fa805ef7` comparisons inside the same worktree confirm exterior 75, stable 21, combat log 10, quest log 70 and UI widget 11 passed. Other before/RED development filters and exact revisions are recorded, not represented as one full-suite baseline. The final item change does not alter those other producers, but their historical command revisions remain explicit.
+
+Final `cargo fmt --check`, direct changed-test `rustfmt --check`, local `--check`, separate debug binary build and bounded startup pass. Startup JSON is `[]` with zero unique/total Lua errors. Six existing iced vendor manifest-key deprecations remain; no new compiler warnings or suppression. Main-thread source/readability review only, because delegation was forbidden. Full project and alternate-profile suites were not run.

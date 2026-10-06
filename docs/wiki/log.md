@@ -10,6 +10,10 @@
 
 [Supplement](investigations/patch-12-0-0-api-audit.md#non-inventory-extract-supplement) records additive pending rows, deterministic extraction and every-row proof planning. Source-derived enum conflicts and historical test reuse are distinguished from fresh runtime acceptance.
 
+## [2026-10-06] system | Retail publication input queries
+
+[Models](systems/retail-publication-inputs.md) link namespace query fields to the [remaining-row closure contract](../specs/patch-12-0-0-publication-sweep.md#remaining-namespace-closure--2026-10-06). Evidence retains every assigned outcome, exact revision/command proof and native limits; no page-coverage ledger changes.
+
 ## [2026-10-05] investigation | Plain-global publication attribution
 
 [Investigation](investigations/plain-global-publication.md) records why direct cached Blizzard aliases lack Deprecated debug sources. [Contract](../specs/patch-12-0-0-publication-sweep.md#plain-global-closure-contract) owns state, epoch gates and two pinned-VM blockers; page-coverage files unchanged.

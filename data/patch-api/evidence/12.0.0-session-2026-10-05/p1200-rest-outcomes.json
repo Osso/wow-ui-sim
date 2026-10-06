@@ -1,0 +1,2337 @@
+{
+  "code_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+  "scope": "60 assigned IDs; bounded behavioral models and publication, not full native parity",
+  "outcomes": [
+    {
+      "id": "wt-cvars-nameplateShowFriendlyNPCs-1100",
+      "symbol": "nameplateShowFriendlyNPCs",
+      "outcome": "still-gap",
+      "reason": "Same patch adds nameplateShowFriendlyNpcs; case-insensitive CVar identity cannot simultaneously remove it. Existing mutable CVar behavior is preserved.",
+      "producer": null,
+      "reference_observation": {
+        "default": "0",
+        "default_mismatch": false,
+        "detail": "value/default queried",
+        "kind": "cvar",
+        "value": "0"
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": "0",
+          "publication": "absent",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "nameplateShowFriendlyNPCs"
+        },
+        "observed": {
+          "default": "0",
+          "default_mismatch": false,
+          "detail": "value/default queried",
+          "kind": "cvar",
+          "value": "0"
+        },
+        "ok": false
+      },
+      "cached_contract": [],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-events-HOUSE_LEVEL_CHANGED-812",
+      "symbol": "HOUSE_LEVEL_CHANGED",
+      "outcome": "still-gap",
+      "reason": "Same patch adds and removes this event; cached HousingBlueprint/HouseEditor consumers still register it. Preserve conflicting metadata.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=true; return=true; registered=true",
+        "kind": "event",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "events",
+          "superseded_by": null,
+          "symbol": "HOUSE_LEVEL_CHANGED"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "pcall=true; return=true; registered=true",
+          "kind": "event",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-events-SETTINGS_LOADED-816",
+      "symbol": "SETTINGS_LOADED",
+      "outcome": "still-gap",
+      "reason": "Same patch adds and removes this event; cached ActionBarController consumers register it. Preserve conflicting metadata.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=true; return=true; registered=true",
+        "kind": "event",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "events",
+          "superseded_by": null,
+          "symbol": "SETTINGS_LOADED"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "pcall=true; return=true; registered=true",
+          "kind": "event",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-events-TRANSMOG_OUTFITS_CHANGED-818",
+      "symbol": "TRANSMOG_OUTFITS_CHANGED",
+      "outcome": "still-gap",
+      "reason": "Same patch adds and removes this event. No historical epoch can be inferred from contradictory rows; preserve registration.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=true; return=true; registered=true",
+        "kind": "event",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "events",
+          "superseded_by": null,
+          "symbol": "TRANSMOG_OUTFITS_CHANGED"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "pcall=true; return=true; registered=true",
+          "kind": "event",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-events-UNIT_SPELLCAST_SENT-819",
+      "symbol": "UNIT_SPELLCAST_SENT",
+      "outcome": "still-gap",
+      "reason": "Same patch adds and removes this event; cached ActionButton/Unit documentation retains consumers. Preserve conflicting metadata.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=true; return=true; registered=true",
+        "kind": "event",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "events",
+          "superseded_by": null,
+          "symbol": "UNIT_SPELLCAST_SENT"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "pcall=true; return=true; registered=true",
+          "kind": "event",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_ActionBar.GetActionAutocast-45",
+      "symbol": "C_ActionBar.GetActionAutocast",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_action_bar_queries.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ActionBar.GetActionAutocast"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetActionAutocast\",\n\t\t\tType = \"Function\",\n\t\t\tRequiresValidActionSlot = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"actionID\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"autocastAllowed\", Type = \"bool\", Nilable = false },\n\t\t\t\t{ Name = \"autocastEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua:11: return C_ActionBar.GetActionAutocast(actionID);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_ActionBar.HasRangeRequirements-70",
+      "symbol": "C_ActionBar.HasRangeRequirements",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_action_bar_queries.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ActionBar.HasRangeRequirements"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"HasRangeRequirements\",\n\t\t\tType = \"Function\",\n\t\t\tRequiresValidActionSlot = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"actionID\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasRangeRequirements\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua:77: return C_ActionBar.HasRangeRequirements(actionID);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_ActionBar.IsActionInRange-73",
+      "symbol": "C_ActionBar.IsActionInRange",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_action_bar_queries.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ActionBar.IsActionInRange"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsActionInRange\",\n\t\t\tType = \"Function\",\n\t\t\tRequiresValidActionSlot = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"actionID\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"target\", Type = \"UnitToken\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isInRange\", Type = \"bool\", Nilable = true, Documentation = { \"If nil, range cannot be determined (eg. no target is available).\" } },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua:81: return C_ActionBar.IsActionInRange(actionID);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.SendGameData-88",
+      "symbol": "C_BattleNet.SendGameData",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/addon_messages.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_BattleNet.SendGameData"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"SendGameData\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"gameAccountID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"prefix\", Type = \"stringView\", Nilable = false },\n\t\t\t\t{ Name = \"data\", Type = \"stringView\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"SendAddonMessageResult\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua:10: C_BattleNet.SendGameData(gameAccountID, prefix, data);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.SendWhisper-89",
+      "symbol": "C_BattleNet.SendWhisper",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/addon_messages.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_BattleNet.SendWhisper"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"SendWhisper\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tRestrictedForMacroChatMessages = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"bnetAccountID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"text\", Type = \"stringView\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"success\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua:14: C_BattleNet.SendWhisper(bnetAccountID, text);",
+        "Blizzard_ChatFrameBase/Shared/ChatFrameEditBox.lua:302: C_BattleNet.SendWhisper(bnetIDAccount, text);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.SetCustomMessage-90",
+      "symbol": "C_BattleNet.SetCustomMessage",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/addon_messages.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_BattleNet.SetCustomMessage"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"SetCustomMessage\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"text\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"success\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua:18: C_BattleNet.SetCustomMessage(text);",
+        "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:2127: C_BattleNet.SetCustomMessage(newBroadcastText);",
+        "Blizzard_SocialUI/Mainline/SocialUITemplates.lua:561: C_BattleNet.SetCustomMessage(pendingBroadcastText);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_CatalogShop.BulkPurchaseProducts-91",
+      "symbol": "C_CatalogShop.BulkPurchaseProducts",
+      "outcome": "still-gap",
+      "reason": "CatalogShopProducts contains display/product DTOs, not an atomic checkout, authoritative currency balance or purchase eligibility model. No invented purchase acknowledgement.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CatalogShop.BulkPurchaseProducts"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"BulkPurchaseProducts\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"productIDs\", Type = \"table\", InnerType = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"canPurchaseProducts\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_CatalogShop.GetNewProducts-94",
+      "symbol": "C_CatalogShop.GetNewProducts",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_catalog_shop_products.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CatalogShop.GetNewProducts"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetNewProducts\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"newProducts\", Type = \"table\", InnerType = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_CatalogShop.RefreshRefundableDecors-101",
+      "symbol": "C_CatalogShop.RefreshRefundableDecors",
+      "outcome": "still-gap",
+      "reason": "Cached RefundFlow requests an asynchronous service refresh; no refundable-decor acquisition/reply state exists. Do not fabricate a synchronous refresh or empty reply.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CatalogShop.RefreshRefundableDecors"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"RefreshRefundableDecors\",\n\t\t\tType = \"Function\",\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_CatalogShopRefundFlow/Blizzard_CatalogShopRefundFlow.lua:72: C_CatalogShop.RefreshRefundableDecors();"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_CatalogShop.StartHousingVCPurchaseConfirmation-103",
+      "symbol": "C_CatalogShop.StartHousingVCPurchaseConfirmation",
+      "outcome": "still-gap",
+      "reason": "Cached TopUpFlow requires a confirmation/service transaction, not a product DTO. No housing VC confirmation/funding model exists.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CatalogShop.StartHousingVCPurchaseConfirmation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"StartHousingVCPurchaseConfirmation\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"productID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_CatalogShopTopUpFlow/Blizzard_CatalogShopTopUpFlow.lua:158: C_CatalogShop.StartHousingVCPurchaseConfirmation(productInfo.catalogShopProductID);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_CharacterServices.AssignFCMDistribution-104",
+      "symbol": "C_CharacterServices.AssignFCMDistribution",
+      "outcome": "still-gap",
+      "reason": "Declaration not found in cached generated namespace documentation; Glue calls into free-character-transfer distribution services. Existing CharacterServicesState models boost probes, not distribution assignment.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CharacterServices.AssignFCMDistribution"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [],
+      "cached_consumers": [
+        "Blizzard_GlueXML/Shared/CharacterServicesFreeCharacterTransfer.lua:4: return C_CharacterServices.AssignFCMDistribution("
+      ]
+    },
+    {
+      "id": "wt-global-api-C_CombatLog.IsCombatLogRestricted-133",
+      "symbol": "C_CombatLog.IsCombatLogRestricted",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_combat_log.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CombatLog.IsCombatLogRestricted"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsCombatLogRestricted\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"restricted\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_Commentator.GetCombatEventInfo-141",
+      "symbol": "C_Commentator.GetCombatEventInfo",
+      "outcome": "still-gap",
+      "reason": "Cached documentation has an empty Returns block but commentator consumers unpack combat-event fields; active-commentator event ingestion/tuple contract is not modeled. No invented tuple.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Commentator.GetCombatEventInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"GetCombatEventInfo\",\n\t\t\tType = \"Function\",\n\t\t\tRequiresActiveCommentator = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_Commentator/Classic/Blizzard_CommentatorModelScene.lua:30: self:OnCommentatorCombatEvent(C_Commentator.GetCombatEventInfo());",
+        "Blizzard_Commentator/Classic/Blizzard_CommentatorUnitFrame.lua:129: self:OnCommentatorCombatEvent(C_Commentator.GetCombatEventInfo());",
+        "Blizzard_Commentator/Mainline/Blizzard_CommentatorModelScene.lua:30: self:OnCommentatorCombatEvent(C_Commentator.GetCombatEventInfo());",
+        "Blizzard_Commentator/Mainline/Blizzard_CommentatorUnitFrame.lua:151: self:OnCommentatorCombatEvent(C_Commentator.GetCombatEventInfo());"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_CooldownViewer.GetValidAlertTypes-142",
+      "symbol": "C_CooldownViewer.GetValidAlertTypes",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_cooldown_viewer.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CooldownViewer.GetValidAlertTypes"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetValidAlertTypes\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"cooldownID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"validAlertTypes\", Type = \"table\", InnerType = \"CooldownViewerAlertEventType\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_CooldownViewer/CooldownViewerItemData.lua:1043: self.validAlertTypes = tInvert(C_CooldownViewer.GetValidAlertTypes(self:GetCooldownID()));"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_CurveUtil.EvaluateGameCurve-148",
+      "symbol": "C_CurveUtil.EvaluateGameCurve",
+      "outcome": "still-gap",
+      "reason": "Existing scalar/color curve objects do not load a curveID-keyed native game-curve catalog or its interpolation metadata. Unknown IDs must not silently use fabricated curves.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CurveUtil.EvaluateGameCurve"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"EvaluateGameCurve\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"curveID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"x\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"y\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_DelvesUI.GetLockedTextForCompanion-159",
+      "symbol": "C_DelvesUI.GetLockedTextForCompanion",
+      "outcome": "still-gap",
+      "reason": "Existing Delves companion APIs use hardcoded PDE/tree constants, not companion unlock state or localized lock-reason inputs. No meaningful existing companion model to query.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DelvesUI.GetLockedTextForCompanion"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"GetLockedTextForCompanion\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"companionID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"text\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_EncounterJournal/Mainline/Blizzard_Journeys.lua:903: GameTooltip_AddErrorLine(GameTooltip, C_DelvesUI.GetLockedTextForCompanion(self.playerCompanionID));"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_DelvesUI.IsTraitTreeForCompanion-160",
+      "symbol": "C_DelvesUI.IsTraitTreeForCompanion",
+      "outcome": "still-gap",
+      "reason": "Existing GetTraitTreeForCompanion returns a hardcoded tree for every companion; no trait-tree ownership catalog. Comparing against that constant would perpetuate fabricated identity.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_DelvesUI.IsTraitTreeForCompanion"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"IsTraitTreeForCompanion\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"traitTreeID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isForCompanion\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_FrameXMLUtil/Mainline/TraitUtil.lua:39: return C_DelvesUI.IsTraitTreeForCompanion(treeID);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_EncounterWarnings.GetSoundKitForSeverity-190",
+      "symbol": "C_EncounterWarnings.GetSoundKitForSeverity",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_encounter_warnings.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_EncounterWarnings.GetSoundKitForSeverity"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetSoundKitForSeverity\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"severity\", Type = \"EncounterEventSeverity\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"soundKitID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_EncounterWarnings.IsFeatureAvailable-191",
+      "symbol": "C_EncounterWarnings.IsFeatureAvailable",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_encounter_warnings.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_EncounterWarnings.IsFeatureAvailable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsFeatureAvailable\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isAvailable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_SettingsDefinitions_Frame/AdvancedOptions.lua:106: local isAvailable = C_EncounterWarnings.IsFeatureAvailable() or C_EncounterTimeline.IsFeatureAvailable();",
+        "Blizzard_SettingsDefinitions_Frame/AdvancedOptions.lua:115: initializer:AddModifyPredicate(function() return C_EncounterWarnings.IsFeatureAvailable() or C_EncounterTimeline.IsFeatureAvailable(); end);",
+        "Blizzard_SettingsDefinitions_Frame/AdvancedOptions.lua:133: local isAvailable = C_EncounterWarnings.IsFeatureAvailable();"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_EncounterWarnings.IsFeatureEnabled-192",
+      "symbol": "C_EncounterWarnings.IsFeatureEnabled",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_encounter_warnings.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_EncounterWarnings.IsFeatureEnabled"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsFeatureEnabled\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isAvailableAndEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_SettingsDefinitions_Frame/AdvancedOptions.lua:123: return CanEnableBossWarningFeatures() and C_EncounterWarnings.IsFeatureEnabled();"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.IsHouseExteriorDoorHovered-219",
+      "symbol": "C_HousingCustomizeMode.IsHouseExteriorDoorHovered",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_housing/exterior.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_HousingCustomizeMode.IsHouseExteriorDoorHovered"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsHouseExteriorDoorHovered\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if the entry door of the house's exterior is currently being hovered\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isHouseExteriorDoorHovered\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_InstanceEncounter.IsEncounterLimitingResurrections-226",
+      "symbol": "C_InstanceEncounter.IsEncounterLimitingResurrections",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_instance_encounter.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_InstanceEncounter.IsEncounterLimitingResurrections"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsEncounterLimitingResurrections\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isLimitingResurrections\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_DeprecatedInstanceEncounter/Deprecated_InstanceEncounter.lua:17: return C_InstanceEncounter.IsEncounterLimitingResurrections();",
+        "Blizzard_StaticPopup_Game/GameDialogDefsUtil.lua:17: if ( C_InstanceEncounter.IsEncounterLimitingResurrections() ) then"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_InstanceEncounter.IsEncounterSuppressingRelease-227",
+      "symbol": "C_InstanceEncounter.IsEncounterSuppressingRelease",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_instance_encounter.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_InstanceEncounter.IsEncounterSuppressingRelease"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsEncounterSuppressingRelease\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isSuppressingRelease\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_DeprecatedInstanceEncounter/Deprecated_InstanceEncounter.lua:13: return C_InstanceEncounter.IsEncounterSuppressingRelease();",
+        "Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:259: local encounterSuppressRelease = C_InstanceEncounter.IsEncounterSuppressingRelease();"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_InstanceEncounter.ShouldShowTimelineForEncounter-228",
+      "symbol": "C_InstanceEncounter.ShouldShowTimelineForEncounter",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_instance_encounter.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_InstanceEncounter.ShouldShowTimelineForEncounter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"ShouldShowTimelineForEncounter\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"shouldShow\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_EncounterTimeline/EncounterTimeline.lua:252: if C_InstanceEncounter.IsEncounterInProgress() and C_InstanceEncounter.ShouldShowTimelineForEncounter() then"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_Item.IsItemBindToAccount-229",
+      "symbol": "C_Item.IsItemBindToAccount",
+      "outcome": "closed-modeled",
+      "reason": "Existing bonding metadata and cached ItemBind enum provide the backing classification; inclusion of until-equipped mode 9 is INFERRED, not instance ownership/bound-state parity.",
+      "producer": "src/c_api/item_spell/c_item.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Item.IsItemBindToAccount"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsItemBindToAccount\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemInfo\", Type = \"ItemInfo\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isItemBindToAccount\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_EncounterJournal/Mainline/Blizzard_Journeys.lua:173: [\"isWarbandItem\"] = C_Item.IsItemBindToAccount(itemLink),",
+        "Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:729: if C_Item.IsItemBindToAccountUntilEquip(itemLink) then"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-627",
+      "symbol": "C_LFGList.DoesEntryTitleMatchPrebuiltTitle",
+      "outcome": "still-gap",
+      "reason": "Native contract compares a protected entry-creation edit-box title with a generated selector-based title. Existing active-entry model publishes empty title and has no protected edit-box/title generator state.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_LFGList.DoesEntryTitleMatchPrebuiltTitle"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"DoesEntryTitleMatchPrebuiltTitle\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"activityID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"groupID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"playstyle\", Type = \"LFGEntryPlaystyle\", Nilable = true },\n\t\t\t\t{ Name = \"generalPlaystyle\", Type = \"LFGEntryGeneralPlaystyle\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"matches\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_GroupFinder/Mainline/LFGList.lua:1196: if(C_LFGList.DoesEntryTitleMatchPrebuiltTitle(self.selectedActivity, self.selectedGroup, legacyLFGEntryPlaystyle, previousPlaystyle)) then"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_LFGList.SetEntryTitle-631",
+      "symbol": "C_LFGList.SetEntryTitle",
+      "outcome": "still-gap",
+      "reason": "Arguments are activityID/groupID/playstyle/generalPlaystyle, not a string setter. No native localized prebuilt-title generator or protected edit-box registration model exists; do not synthesize text from activity name.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_LFGList.SetEntryTitle"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"SetEntryTitle\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"activityID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"groupID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"playstyle\", Type = \"LFGEntryPlaystyle\", Nilable = true },\n\t\t\t\t{ Name = \"generalPlaystyle\", Type = \"LFGEntryGeneralPlaystyle\", Nilable = true },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_GroupFinder/Mainline/LFGList.lua:1420: C_LFGList.SetEntryTitle(self.selectedActivity, self.selectedGroup, self.selectedPlaystyle, self.generalPlaystyle);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_LimitedInput.LimitedInputAllowed-230",
+      "symbol": "C_LimitedInput.LimitedInputAllowed",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_limited_input.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_LimitedInput.LimitedInputAllowed"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"LimitedInputAllowed\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"type\", Type = \"LimitedInputType\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"allowed\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_NamePlate.GetNamePlateSize-233",
+      "symbol": "C_NamePlate.GetNamePlateSize",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_nameplate_manager.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_NamePlate.GetNamePlateSize"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetNamePlateSize\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"width\", Type = \"uiUnit\", Nilable = false },\n\t\t\t\t{ Name = \"height\", Type = \"uiUnit\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_NamePlateManager.IsNamePlateUnitBehindCamera-236",
+      "symbol": "C_NamePlateManager.IsNamePlateUnitBehindCamera",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_nameplate_manager.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_NamePlateManager.IsNamePlateUnitBehindCamera"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsNamePlateUnitBehindCamera\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Returns whether the unit to which the nameplate is attached is behind the player's camera.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unitToken\", Type = \"UnitTokenNamePlate\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isBehindCamera\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_NamePlates/Blizzard_NamePlateUnitFrame.lua:522: self.isBehindCamera = C_NamePlateManager.IsNamePlateUnitBehindCamera(self.unit);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_NamePlateManager.SetNamePlateSimplified-239",
+      "symbol": "C_NamePlateManager.SetNamePlateSimplified",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_nameplate_manager.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_NamePlateManager.SetNamePlateSimplified"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"SetNamePlateSimplified\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Set whether the nameplate attached to a unit is considered simplified, which can change the way it's displayed.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unitToken\", Type = \"UnitTokenNamePlate\", Nilable = false },\n\t\t\t\t{ Name = \"isSimplified\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_NamePlates/Blizzard_NamePlateUnitFrame.lua:371: C_NamePlateManager.SetNamePlateSimplified(self.unit, isSimplified);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_PvP.AreTrainingGroundsEnabled-259",
+      "symbol": "C_PvP.AreTrainingGroundsEnabled",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_pvp/catalog.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.AreTrainingGroundsEnabled"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"AreTrainingGroundsEnabled\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"areTrainingGroundsEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:2792: if not C_PvP.AreTrainingGroundsEnabled() then"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_PvP.CanPlayerUseTrainingGroundsUI-260",
+      "symbol": "C_PvP.CanPlayerUseTrainingGroundsUI",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_pvp/catalog.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.CanPlayerUseTrainingGroundsUI"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"CanPlayerUseTrainingGroundsUI\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"canUseTrainingGroundsUI\", Type = \"bool\", Nilable = false },\n\t\t\t\t{ Name = \"failureReason\", Type = \"string\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:373: canUse, failureReason = C_PvP.CanPlayerUseTrainingGroundsUI();",
+        "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:434: local canUseTrainingGrounds = C_PvP.CanPlayerUseTrainingGroundsUI();"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetBattlegroundInfo-261",
+      "symbol": "C_PvP.GetBattlegroundInfo",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_pvp/catalog.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.GetBattlegroundInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetBattlegroundInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"battlegroundIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"battlegroundInfo\", Type = \"BattlegroundInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:890: local battlegroundInfo = C_PvP.GetBattlegroundInfo(index);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetRandomTrainingGroundRewards-262",
+      "symbol": "C_PvP.GetRandomTrainingGroundRewards",
+      "outcome": "still-gap",
+      "reason": "Five-value result needs honor/experience and item/currency/role-shortage reward eligibility. Training catalog/queue state supplies no reward catalog; reuse of inert legacy reward tuples would be a shim.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.GetRandomTrainingGroundRewards"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"GetRandomTrainingGroundRewards\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"honor\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"experience\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"itemRewards\", Type = \"table\", InnerType = \"BattlefieldItemReward\", Nilable = true },\n\t\t\t\t{ Name = \"currencyRewards\", Type = \"table\", InnerType = \"BattlefieldCurrencyReward\", Nilable = true },\n\t\t\t\t{ Name = \"roleShortageBonus\", Type = \"RoleShortageReward\", Nilable = true },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:2919: [\"RandomTrainingGround\"] = C_PvP.GetRandomTrainingGroundRewards;",
+        "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:2920: [\"RandomTrainingGroundArena\"] = C_PvP.GetRandomTrainingGroundRewards;"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetTrainingGrounds-263",
+      "symbol": "C_PvP.GetTrainingGrounds",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_pvp/catalog.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.GetTrainingGrounds"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetTrainingGrounds\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"trainingGrounds\", Type = \"table\", InnerType = \"BattlegroundInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:3108: for _index, trainingGround in ipairs(C_PvP.GetTrainingGrounds()) do"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_PvP.HasMatchStarted-264",
+      "symbol": "C_PvP.HasMatchStarted",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_pvp/catalog.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.HasMatchStarted"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"HasMatchStarted\",\n\t\t\tType = \"Function\",\n\t\t\tDocumentation = { \"Returns true if a match is either active or complete.\" },\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasStarted\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_PvP.HasRandomTrainingGroundWinToday-265",
+      "symbol": "C_PvP.HasRandomTrainingGroundWinToday",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_pvp/catalog.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.HasRandomTrainingGroundWinToday"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"HasRandomTrainingGroundWinToday\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasRandomTrainingGroundWinToday\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_PvP.JoinTrainingGround-267",
+      "symbol": "C_PvP.JoinTrainingGround",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_pvp/catalog.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.JoinTrainingGround"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"JoinTrainingGround\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"trainingGroundID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:2717: C_PvP.JoinTrainingGround(queueOption);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.GetActivePreyQuest-269",
+      "symbol": "C_QuestLog.GetActivePreyQuest",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_prey.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_QuestLog.GetActivePreyQuest"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetActivePreyQuest\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"questID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_UIWidgets/Blizzard_UIWidgetTemplatePreyHuntProgress.lua:65: local questID = C_QuestLog.GetActivePreyQuest();"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_RestrictedActions.IsAddOnRestrictionActive-273",
+      "symbol": "C_RestrictedActions.IsAddOnRestrictionActive",
+      "outcome": "still-gap",
+      "reason": "Existing temporary GetAddOnRestrictionState always returns zero and no restriction policy owns dispatch context. Contract requires false during ADDON_RESTRICTION_STATE_CHANGED; an independent host bool would not implement that boundary.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_RestrictedActions.IsAddOnRestrictionActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"IsAddOnRestrictionActive\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Returns true if an addon restriction type is in an active state. Will always return false during dispatch of ADDON_RESTRICTION_STATE_CHANGED.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"type\", Type = \"AddOnRestrictionType\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"active\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_Spell.IsConsumableSpell-306",
+      "symbol": "C_Spell.IsConsumableSpell",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_spell_classification.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.IsConsumableSpell"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsConsumableSpell\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenTainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"spellIdentifier\", Type = \"SpellIdentifier\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"consumable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_Spell.IsExternalDefensive-307",
+      "symbol": "C_Spell.IsExternalDefensive",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_spell_classification.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.IsExternalDefensive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsExternalDefensive\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Returns true if an aura is considered an external defensive.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"spellID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isExternalDefensive\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_Spell.IsSpellCrowdControl-310",
+      "symbol": "C_Spell.IsSpellCrowdControl",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_spell_classification.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.IsSpellCrowdControl"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsSpellCrowdControl\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenTainted\",\n\t\t\tDocumentation = { \"Returns true if the spell causes a crowd control effect when cast on a valid target.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"spellIdentifier\", Type = \"SpellIdentifier\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isCrowdControl\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_NamePlates/Blizzard_NamePlateAuras.lua:178: if C_Spell.IsSpellCrowdControl(aura.spellId) then"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_Spell.IsSpellImportant-311",
+      "symbol": "C_Spell.IsSpellImportant",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_spell_classification.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.IsSpellImportant"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsSpellImportant\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenTainted\",\n\t\t\tDocumentation = { \"Returns true if the spell is considered important. For example a spell that's lethal if not interrupted would be considered important.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"spellIdentifier\", Type = \"SpellIdentifier\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isImportant\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_FrameXMLUtil/AuraUtil.lua:186: local aImportant = auraA.spellId ~= nil and C_Spell.IsSpellImportant(auraA.spellId);",
+        "Blizzard_FrameXMLUtil/AuraUtil.lua:187: local bImportant = auraB.spellId ~= nil and C_Spell.IsSpellImportant(auraB.spellId);",
+        "Blizzard_NamePlates/Blizzard_NamePlateAuras.lua:196: if self:IsFriend() == false and aura.isStealable == false and C_Spell.IsSpellImportant(aura.spellId) == false then",
+        "Blizzard_UIPanels_Game/Shared/CastingBarFrame.lua:976: self:SetIsHighlightedImportantCast(self:GetHighlightImportantCasts() and self.spellID ~= nil and C_Spell.IsSpellImportant(self.spellID));"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.IsBonusPetSlotAvailable-322",
+      "symbol": "C_StableInfo.IsBonusPetSlotAvailable",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_stable_info.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_StableInfo.IsBonusPetSlotAvailable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"IsBonusPetSlotAvailable\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isAvailable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_StableUI/Blizzard_StableUI.lua:750: local isAvailable = C_StableInfo.IsBonusPetSlotAvailable();"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_TooltipComparison.CompareItem-333",
+      "symbol": "C_TooltipComparison.CompareItem",
+      "outcome": "still-gap",
+      "reason": "Namespace absent; protected comparison requires inventory alternative selection and actual comparison-tooltip display/anchoring. No comparison engine exists; a void callable would hide the missing effect.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TooltipComparison.CompareItem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"CompareItem\",\n\t\t\tType = \"Function\",\n\t\t\tIsProtectedFunction = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"comparisonItem\", Type = \"TooltipComparisonItem\", Nilable = false },\n\t\t\t\t{ Name = \"tooltip\", Type = \"Tooltip\", Nilable = false },\n\t\t\t\t{ Name = \"anchorFrame\", Type = \"SimpleFrame\", Nilable = true },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_GameTooltip/Mainline/GameTooltip.lua:489: C_TooltipComparison.CompareItem(comparisonItem, tooltip, anchorFrame);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_TooltipInfo.GetOutfit-334",
+      "symbol": "C_TooltipInfo.GetOutfit",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_tooltip_info_outfit.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TooltipInfo.GetOutfit"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetOutfit\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"outfitID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": []
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetEnchantItems-643",
+      "symbol": "C_TradeSkillUI.GetEnchantItems",
+      "outcome": "still-gap",
+      "reason": "Existing bag GUIDs and static blacksmithing recipes lack enchant-target eligibility and reagent-sensitive enchant conditions. Returning arbitrary bag GUIDs or an empty list is not modeled filtering.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TradeSkillUI.GetEnchantItems"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"GetEnchantItems\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"craftingReagents\", Type = \"table\", InnerType = \"CraftingReagentInfo\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"items\", Type = \"table\", InnerType = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeFlyout.lua:535: local itemGUIDs = C_TradeSkillUI.GetEnchantItems(self:GetRecipeID(), reagentInfos);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeItemQualityInfo-339",
+      "symbol": "C_TradeSkillUI.GetRecipeItemQualityInfo",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_trade_skill_quality.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TradeSkillUI.GetRecipeItemQualityInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetRecipeItemQualityInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"quality\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"CraftingQualityInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_Professions/Blizzard_ProfessionsCrafterOrderView.lua:291: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(self.order.spellID, self.order.minQuality);",
+        "Blizzard_Professions/Blizzard_ProfessionsCrafterOrderView.lua:730: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(self.order.spellID, self.order.minQuality);",
+        "Blizzard_Professions/Blizzard_ProfessionsCrafterOrderView.lua:843: local requiredQualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(self.order.spellID, self.order.minQuality);",
+        "Blizzard_ProfessionsCustomerOrders/Blizzard_ProfessionsCustomerOrdersForm.lua:522: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(self.order.spellID, index);",
+        "Blizzard_ProfessionsCustomerOrders/Blizzard_ProfessionsCustomerOrdersForm.lua:644: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(self.order.spellID, quality);",
+        "Blizzard_ProfessionsCustomerOrders/Blizzard_ProfessionsCustomerOrdersForm.lua:1061: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(recipeID, self.order.minQuality or 1);",
+        "Blizzard_ProfessionsCustomerOrders/Blizzard_ProfessionsCustomerOrdersForm.lua:1111: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(recipeID, self.order.minQuality);",
+        "Blizzard_ProfessionsCustomerOrders/Blizzard_ProfessionsCustomerOrdersForm.lua:1128: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(recipeID, self.order.minQuality);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua:156: local nextQualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(self.recipeInfo.recipeID, qualityInfo.quality + 1);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua:202: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(recipeID, index);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua:327: self.craftingQualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(operationInfo.recipeID, nextCraftingQuality);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua:450: qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(self.operationInfo.recipeID, quality);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua:527: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(recipeID, math.floor(quality));",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua:528: local maxQualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(recipeID, maxQuality);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua:557: local nextQualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(recipeID, nextQuality);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua:606: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(self.operationInfo.recipeID, quality);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeSchematicForm.lua:1426: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(operationInfo.recipeID, operationInfo.craftingQuality);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsTemplates.lua:300: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(order.spellID, order.quality);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsTemplates.lua:464: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(order.spellID, order.minQuality);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsTemplates.lua:536: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(order.spellID, order.minQuality);",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsTemplates.lua:581: local qualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(order.spellID, index);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeQualityReagentLink-340",
+      "symbol": "C_TradeSkillUI.GetRecipeQualityReagentLink",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_trade_skill_quality.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TradeSkillUI.GetRecipeQualityReagentLink"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetRecipeQualityReagentLink\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"dataSlotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"qualityIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"link\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:720: local link = C_TradeSkillUI.GetRecipeQualityReagentLink(recipeID, reagentSlotSchematic.dataSlotIndex, qualityIndex);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecraftReagentValid-647",
+      "symbol": "C_TradeSkillUI.IsRecraftReagentValid",
+      "outcome": "still-gap",
+      "reason": "Existing item GUID/parser and recipe data lack recraft-target/reagent compatibility conditions. No item-or-currency eligibility policy to validate; a constant false is not a producer.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TradeSkillUI.IsRecraftReagentValid"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [
+        "Name = \"IsRecraftReagentValid\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"reagent\", Type = \"CraftingReagent\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"valid\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:133: if recraftAllocation and not C_TradeSkillUI.IsRecraftReagentValid(recraftAllocation, reagent) then",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeFlyout.lua:679: if recraftAllocation and not C_TradeSkillUI.IsRecraftReagentValid(recraftAllocation, reagent) then",
+        "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeFlyout.lua:792: if recraftAllocation and not C_TradeSkillUI.IsRecraftReagentValid(recraftAllocation, reagent) then"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo-414",
+      "symbol": "C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_prey.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetPreyHuntProgressWidgetVisualizationInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"widgetID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"widgetInfo\", Type = \"PreyHuntProgressWidgetVisualizationInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_UIWidgets/Blizzard_UIWidgetTemplatePreyHuntProgress.lua:2: local widgetInfo = C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo(widgetID);"
+      ]
+    },
+    {
+      "id": "wt-global-api-C_WeeklyRewards.GetSortedProgressForActivity-424",
+      "symbol": "C_WeeklyRewards.GetSortedProgressForActivity",
+      "outcome": "closed-modeled",
+      "reason": "Real registration; explicit simulator input/state with concrete behavioral proof. Native data acquisition and full parity are not implied.",
+      "producer": "src/c_api/c_weekly_rewards.rs",
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_WeeklyRewards.GetSortedProgressForActivity"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cached_contract": [
+        "Name = \"GetSortedProgressForActivity\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"type\", Type = \"WeeklyRewardChestThresholdType\", Nilable = false },\n\t\t\t\t{ Name = \"combineSharedDifficulty\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"progress\", Type = \"table\", InnerType = \"WeeklyRewardActivityTierProgress\", Nilable = false },\n\t\t\t},\n\t\t},\n"
+      ],
+      "cached_consumers": [
+        "Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.lua:853: local activityTierProgress = C_WeeklyRewards.GetSortedProgressForActivity(Enum.WeeklyRewardChestThresholdType.World, combineSharedDifficulty);"
+      ]
+    },
+    {
+      "id": "wt-global-api-string.concat-478",
+      "symbol": "string.concat",
+      "outcome": "still-gap",
+      "reason": "Listed in wowless data/products/wow/apis.yaml:38978, but entry has no implementation, inputs or outputs; zero cached Blizzard uses. No live native-client signature/coercion/secret evidence; no guessed strconcat alias.",
+      "producer": null,
+      "reference_observation": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "final_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "string.concat"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "cached_contract": [],
+      "cached_consumers": []
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "tests/data/patch_12_0_5_sweep_known_gaps.json",
+      "before": 11,
+      "after": 11,
+      "removed_ids": []
+    },
+    {
+      "path": "tests/data/patch_12_0_7_sweep_known_gaps.json",
+      "before": 3,
+      "after": 3,
+      "removed_ids": []
+    },
+    {
+      "path": "tests/data/patch_12_1_0_sweep_known_gaps.json",
+      "before": 5,
+      "after": 5,
+      "removed_ids": []
+    },
+    {
+      "path": "tests/data/patch_12_0_0_sweep_known_gaps.json",
+      "before": 62,
+      "after": 23,
+      "removed_ids": [
+        "wt-global-api-C_ActionBar.GetActionAutocast-45",
+        "wt-global-api-C_ActionBar.HasRangeRequirements-70",
+        "wt-global-api-C_ActionBar.IsActionInRange-73",
+        "wt-global-api-C_BattleNet.SendGameData-88",
+        "wt-global-api-C_BattleNet.SendWhisper-89",
+        "wt-global-api-C_BattleNet.SetCustomMessage-90",
+        "wt-global-api-C_CatalogShop.GetNewProducts-94",
+        "wt-global-api-C_CombatLog.IsCombatLogRestricted-133",
+        "wt-global-api-C_CooldownViewer.GetValidAlertTypes-142",
+        "wt-global-api-C_EncounterWarnings.GetSoundKitForSeverity-190",
+        "wt-global-api-C_EncounterWarnings.IsFeatureAvailable-191",
+        "wt-global-api-C_EncounterWarnings.IsFeatureEnabled-192",
+        "wt-global-api-C_HousingCustomizeMode.IsHouseExteriorDoorHovered-219",
+        "wt-global-api-C_InstanceEncounter.IsEncounterLimitingResurrections-226",
+        "wt-global-api-C_InstanceEncounter.IsEncounterSuppressingRelease-227",
+        "wt-global-api-C_InstanceEncounter.ShouldShowTimelineForEncounter-228",
+        "wt-global-api-C_Item.IsItemBindToAccount-229",
+        "wt-global-api-C_LimitedInput.LimitedInputAllowed-230",
+        "wt-global-api-C_NamePlate.GetNamePlateSize-233",
+        "wt-global-api-C_NamePlateManager.IsNamePlateUnitBehindCamera-236",
+        "wt-global-api-C_NamePlateManager.SetNamePlateSimplified-239",
+        "wt-global-api-C_PvP.AreTrainingGroundsEnabled-259",
+        "wt-global-api-C_PvP.CanPlayerUseTrainingGroundsUI-260",
+        "wt-global-api-C_PvP.GetBattlegroundInfo-261",
+        "wt-global-api-C_PvP.GetTrainingGrounds-263",
+        "wt-global-api-C_PvP.HasMatchStarted-264",
+        "wt-global-api-C_PvP.HasRandomTrainingGroundWinToday-265",
+        "wt-global-api-C_PvP.JoinTrainingGround-267",
+        "wt-global-api-C_QuestLog.GetActivePreyQuest-269",
+        "wt-global-api-C_Spell.IsConsumableSpell-306",
+        "wt-global-api-C_Spell.IsExternalDefensive-307",
+        "wt-global-api-C_Spell.IsSpellCrowdControl-310",
+        "wt-global-api-C_Spell.IsSpellImportant-311",
+        "wt-global-api-C_StableInfo.IsBonusPetSlotAvailable-322",
+        "wt-global-api-C_TooltipInfo.GetOutfit-334",
+        "wt-global-api-C_TradeSkillUI.GetRecipeItemQualityInfo-339",
+        "wt-global-api-C_TradeSkillUI.GetRecipeQualityReagentLink-340",
+        "wt-global-api-C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo-414",
+        "wt-global-api-C_WeeklyRewards.GetSortedProgressForActivity-424"
+      ]
+    }
+  ],
+  "verified": "2026-10-06"
+}

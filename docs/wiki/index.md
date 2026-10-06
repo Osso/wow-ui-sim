@@ -6,6 +6,10 @@
 
 [Extract supplement](investigations/patch-12-0-0-api-audit.md#non-inventory-extract-supplement) links reproducible seeding and exhaustive scout. [Enum/deprecated follow-up](investigations/patch-12-0-0-api-audit.md#enum-and-deprecated-extract-proof) falsifies seed conflicts and gates legacy publication; per-source proof retains pending successor results and historical compile blockers. Coverage ledgers unchanged.
 
+## [2026-10-06] system | Retail publication input queries
+
+[State fields and producers](systems/retail-publication-inputs.md) describe bounded namespace models and host-input limits. [Per-ID outcomes and proof](../specs/patch-12-0-0-publication-sweep.md#remaining-namespace-closure--2026-10-06) distinguish registered producers from retained service/catalog/policy gaps.
+
 ## [2026-10-05] system | Neighborhood initiatives
 
 [Initiative state](systems/neighborhood-initiatives.md) owns active/viewing selection, host records, level/access/group gates and deferred replies. [Closure contract](../specs/patch-12-0-0-publication-sweep.md#housinginitiative-closure-contract) separates modeled housing APIs from undocumented diagnostic workarounds.

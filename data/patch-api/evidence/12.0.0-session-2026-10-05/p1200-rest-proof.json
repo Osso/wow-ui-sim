@@ -1,0 +1,1850 @@
+{
+  "verified": "2026-10-06",
+  "code_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+  "commands": [
+    {
+      "scope": "p1200_mixed baseline",
+      "source_revision": "3fa805ef78a2ad4a42f1963ae926ca251e19960b",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_mixed",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 10692 filtered out; finished in 0.52s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-0.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "BNet RED",
+      "source_revision": "3fa805ef78a2ad4a42f1963ae926ca251e19960b",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_battle_net",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10698 filtered out; finished in 0.38s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-1.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "BNet GREEN",
+      "source_revision": "60ce45018726c5535baaa2d60d72b7a8b964be2f",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_battle_net",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-2.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "battle_net GREEN regression",
+      "source_revision": "dd0dafc1497a9f38d1c3a3e2e354d64b4709ea31",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "battle_net",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 10679 filtered out; finished in 0.56s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-3.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "encounter before encounter change",
+      "source_revision": "dd0dafc1497a9f38d1c3a3e2e354d64b4709ea31",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "encounter",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10699 filtered out; finished in 2.36s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10699 filtered out; finished in 5.14s",
+        "test result: FAILED. 95 passed; 1 failed; 1 ignored; 0 measured; 10603 filtered out; finished in 9.23s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-4.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "cooldown_viewer before encounter change",
+      "source_revision": "dd0dafc1497a9f38d1c3a3e2e354d64b4709ea31",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "cooldown_viewer",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 10695 filtered out; finished in 0.29s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-5.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "nameplate before encounter change",
+      "source_revision": "dd0dafc1497a9f38d1c3a3e2e354d64b4709ea31",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "nameplate",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 10678 filtered out; finished in 5.43s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-6.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "p1200_rest_encounter_defaults before encounter change",
+      "source_revision": "dd0dafc1497a9f38d1c3a3e2e354d64b4709ea31",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_encounter_defaults",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10699 filtered out; finished in 0.33s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-7.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "encounter GREEN regression",
+      "source_revision": "6b8129ddcefbdbdced4eb17f1cf2e8b625f64dbd",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "encounter",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10699 filtered out; finished in 4.22s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10699 filtered out; finished in 2.88s",
+        "test result: ok. 96 passed; 0 failed; 1 ignored; 0 measured; 10603 filtered out; finished in 74.88s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-8.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "spell plate cooldown RED",
+      "source_revision": "6b8129ddcefbdbdced4eb17f1cf2e8b625f64dbd",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_spell_plate",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 0.36s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-9.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "spell plate cooldown GREEN",
+      "source_revision": "065f02286177ecbb36b87db4fb12a30a34d98d33",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_spell_plate",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 0.24s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-10.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "spell plate cooldown GREEN",
+      "source_revision": "62f273c105abd5e17692f62814cb19b6b9917b2c",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_spell_plate",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 0.31s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-11.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "p1200_rest_catalogs RED/before",
+      "source_revision": "62f273c105abd5e17692f62814cb19b6b9917b2c",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_catalogs",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 10703 filtered out; finished in 0.18s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-12.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "trade_skill RED/before",
+      "source_revision": "62f273c105abd5e17692f62814cb19b6b9917b2c",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "trade_skill",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10705 filtered out; finished in 2.31s",
+        "test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 10692 filtered out; finished in 2.34s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-13.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "pvp_info RED/before",
+      "source_revision": "62f273c105abd5e17692f62814cb19b6b9917b2c",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "pvp_info",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 10698 filtered out; finished in 0.25s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-14.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "crafting quality GREEN",
+      "source_revision": "70cbd19331f35cf4e92b8e7d3bf0bb120df283ac",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_crafting",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10705 filtered out; finished in 0.15s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-15.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "PvP catalogs GREEN",
+      "source_revision": "d9a79cf54e3b675ea830887a2fb3308ea910edb9",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_pvp",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10705 filtered out; finished in 0.22s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-16.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "catalogs GREEN",
+      "source_revision": "b2ad2d4c70af1e21849f47459bc15196a1537d2e",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_catalogs",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10703 filtered out; finished in 0.24s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-17.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "policy RED",
+      "source_revision": "b2ad2d4c70af1e21849f47459bc15196a1537d2e",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_policy",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 10706 filtered out; finished in 0.22s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-18.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "policy GREEN",
+      "source_revision": "8bb9276b99a9bddc72aa33a09a42b06c6fb77d39",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_policy",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-19.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "policy GREEN",
+      "source_revision": "22cc17de25d4bed434bdbcb54417d60b9abaf645",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_policy",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10706 filtered out; finished in 0.22s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-20.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "p1200_rest_action_weekly RED/before",
+      "source_revision": "22cc17de25d4bed434bdbcb54417d60b9abaf645",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_action_weekly",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 10708 filtered out; finished in 0.40s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-21.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "action_bar RED/before",
+      "source_revision": "22cc17de25d4bed434bdbcb54417d60b9abaf645",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "action_bar",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 4.68s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 6.92s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 5.84s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 4.21s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 4.43s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 6.62s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 4.95s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 6.74s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 4.54s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 8.82s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 9.60s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 9.77s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 4.63s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 5.34s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 0.37s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 0.38s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 4.99s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 4.78s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 4.96s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10709 filtered out; finished in 5.38s",
+        "test result: ok. 123 passed; 0 failed; 0 ignored; 0 measured; 10587 filtered out; finished in 89.29s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-22.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "weekly_rewards RED/before",
+      "source_revision": "22cc17de25d4bed434bdbcb54417d60b9abaf645",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "weekly_rewards",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 10695 filtered out; finished in 0.05s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-23.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "action weekly GREEN",
+      "source_revision": "4327b8e4ab4c59b828a38558630616b43c59efa7",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_action_weekly",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10708 filtered out; finished in 0.25s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-24.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "outfit tooltip RED",
+      "source_revision": "a5bde8d9f9a8f60802631a578854e4e0156f09f3",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_outfit_tooltip",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 0.38s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-25.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "outfit tooltip GREEN",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_outfit_tooltip",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 0.27s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-26.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "p1200_rest final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 10698 filtered out; finished in 1.19s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-p1200_rest.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "nameplate final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "nameplate",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 10688 filtered out; finished in 2.35s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-nameplate.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "cooldown_viewer final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "cooldown_viewer",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 10706 filtered out; finished in 0.21s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-cooldown_viewer.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "trade_skill final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "trade_skill",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 1.84s",
+        "test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 6.18s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-trade_skill.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "pvp_info final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "pvp_info",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 10703 filtered out; finished in 0.28s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-pvp_info.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "house_exterior final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "house_exterior",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 75 passed; 0 failed; 0 ignored; 0 measured; 10636 filtered out; finished in 14.91s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-house_exterior.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "stable final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "stable",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 13.40s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.37s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 14.72s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 6.38s",
+        "test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 10690 filtered out; finished in 23.46s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-stable.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "battle_net final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "battle_net",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 10691 filtered out; finished in 1.27s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-battle_net.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "encounter final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "encounter",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 7.48s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 13.54s",
+        "test result: ok. 96 passed; 0 failed; 1 ignored; 0 measured; 10614 filtered out; finished in 45.37s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-encounter.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "action_bar final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "action_bar",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 7.22s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 7.28s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.55s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 2.96s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.12s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 5.70s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 4.85s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.19s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.12s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 2.79s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.73s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 4.63s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 4.10s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 0.25s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.65s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.36s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 0.32s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.96s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 4.12s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.35s",
+        "test result: ok. 123 passed; 0 failed; 0 ignored; 0 measured; 10588 filtered out; finished in 65.14s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-action_bar.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "weekly_rewards final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "weekly_rewards",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 10696 filtered out; finished in 0.05s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-weekly_rewards.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "combat_log final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "combat_log",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 10701 filtered out; finished in 0.34s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-combat_log.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "quest_log final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "quest_log",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 70 passed; 0 failed; 0 ignored; 0 measured; 10641 filtered out; finished in 2.36s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-quest_log.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "ui_widget final",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "ui_widget",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10710 filtered out; finished in 3.74s",
+        "test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 4.35s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-ui_widget.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "house_exterior original master comparison",
+      "source_revision": "3fa805ef78a2ad4a42f1963ae926ca251e19960b",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "house_exterior",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 75 passed; 0 failed; 0 ignored; 0 measured; 10623 filtered out; finished in 5.20s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-base-house_exterior.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "stable original master comparison",
+      "source_revision": "3fa805ef78a2ad4a42f1963ae926ca251e19960b",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "stable",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 1.28s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 2.47s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 5.68s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 3.82s",
+        "test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 10677 filtered out; finished in 17.91s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-base-stable.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "combat_log original master comparison",
+      "source_revision": "3fa805ef78a2ad4a42f1963ae926ca251e19960b",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "combat_log",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 10688 filtered out; finished in 0.30s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-base-combat_log.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "quest_log original master comparison",
+      "source_revision": "3fa805ef78a2ad4a42f1963ae926ca251e19960b",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "quest_log",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 70 passed; 0 failed; 0 ignored; 0 measured; 10628 filtered out; finished in 3.66s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-base-quest_log.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "ui_widget original master comparison",
+      "source_revision": "3fa805ef78a2ad4a42f1963ae926ca251e19960b",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "ui_widget",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 5.66s",
+        "test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 10687 filtered out; finished in 104.61s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-base-ui_widget.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "patch_12_0_0_publication_sweep",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": {
+        "rows": 1010,
+        "ok": 986,
+        "gaps": 24
+      },
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-patch_12_0_0_publication_sweep.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged.",
+      "environment": {
+        "P1200_SWEEP_OUT": "/home/osso/.cache/wow-ui-sim-audit/p1200-rest-sweep.json"
+      }
+    },
+    {
+      "scope": "patch_12_0_5_publication_sweep",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": {
+        "rows": 363,
+        "ok": 352,
+        "gaps": 11
+      },
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-patch_12_0_5_publication_sweep.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged.",
+      "environment": {
+        "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-12_0_5-sweep.json"
+      }
+    },
+    {
+      "scope": "patch_12_0_7_publication_sweep",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": {
+        "rows": 174,
+        "ok": 171,
+        "gaps": 3
+      },
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-patch_12_0_7_publication_sweep.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged.",
+      "environment": {
+        "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-12_0_7-sweep.json"
+      }
+    },
+    {
+      "scope": "patch_12_1_0_publication_sweep",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": {
+        "rows": 778,
+        "ok": 773,
+        "gaps": 5
+      },
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-patch_12_1_0_publication_sweep.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged.",
+      "environment": {
+        "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-12_1_0-sweep.json"
+      }
+    },
+    {
+      "scope": "cargo fmt check",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "exit": 0,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-cargo-fmt-check.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "integration formatting",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "rustfmt",
+        "--edition",
+        "2024",
+        "--check",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_encounter.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_spell_plate.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_catalogs.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_policy.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_action_weekly.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_outfit_tooltip.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/house_exterior.rs"
+      ],
+      "exit": 0,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-integration-formatting.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "local cargo check",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "exit": 0,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-local-cargo-check.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "lib combat_log",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--lib",
+        "--",
+        "combat_log"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 1974 filtered out; finished in 0.16s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-lib-combat_log.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "debug binary build",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local"
+      ],
+      "exit": 0,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-debug-binary-build.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "startup Lua errors",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": false,
+      "command": [
+        "timeout",
+        "90",
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-build",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "exit": 0,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-startup.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "item binding RED",
+      "source_revision": "197cd38582e6b751fa147e6242dad784abd8dc89",
+      "uncommitted_red_test": true,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_item_binding",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 0.14s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-56.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "item binding GREEN",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest_item_binding",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 0.30s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-development-57.log",
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "p1200_rest final item integration",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "p1200_rest",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 10698 filtered out; finished in 0.50s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-item-p1200_rest.log",
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "c_item final item integration",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "c_item",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 3.70s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 3.84s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 1.88s",
+        "test result: ok. 122 passed; 0 failed; 0 ignored; 0 measured; 10590 filtered out; finished in 5.66s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-item-c_item.log",
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "tooltip final item integration",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "tooltip",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 1.63s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 1.67s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 1.75s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 3.82s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 2.48s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 2.28s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 1.13s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 3.53s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 1.90s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 4.22s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 3.58s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 2.86s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 2.33s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 5.05s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 2.46s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 2.47s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 2.75s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 2.71s",
+        "test result: FAILED. 487 passed; 1 failed; 1 ignored; 0 measured; 10223 filtered out; finished in 29.77s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-item-tooltip.log",
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "patch_12_0_0_publication_sweep final item integration",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": {
+        "rows": 1010,
+        "ok": 987,
+        "gaps": 23
+      },
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-item-patch_12_0_0_publication_sweep.log",
+      "environment": {
+        "P1200_SWEEP_OUT": "/home/osso/.cache/wow-ui-sim-audit/p1200-rest-sweep.json"
+      },
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "patch_12_0_5_publication_sweep final item integration",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": {
+        "rows": 363,
+        "ok": 352,
+        "gaps": 11
+      },
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-item-patch_12_0_5_publication_sweep.log",
+      "environment": {
+        "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-12_0_5-sweep.json"
+      },
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "patch_12_0_7_publication_sweep final item integration",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": {
+        "rows": 174,
+        "ok": 171,
+        "gaps": 3
+      },
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-item-patch_12_0_7_publication_sweep.log",
+      "environment": {
+        "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-12_0_7-sweep.json"
+      },
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "patch_12_1_0_publication_sweep final item integration",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "summary": {
+        "rows": 778,
+        "ok": 773,
+        "gaps": 5
+      },
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-final-item-patch_12_1_0_publication_sweep.log",
+      "environment": {
+        "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-12_1_0-sweep.json"
+      },
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "tooltip clamp current master comparison",
+      "source_revision": "f1e59afe593338a1fbc823b27be4d5915d6d024d",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "test_tooltip_layout_is_clamped_to_viewport_edges",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 101,
+      "summary": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10698 filtered out; finished in 0.25s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-master-tooltip-clamp.log",
+      "valid_for_final_code": false,
+      "later_changes": "Historical exact revision; later item registration changes global initialization. See updated item/integration/sweep/check/startup commands; older unrelated subsystem code remains unchanged."
+    },
+    {
+      "scope": "cargo fmt check final item",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "exit": 0,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-cargo-fmt-check-final-item.log",
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "integration formatting final item",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "rustfmt",
+        "--edition",
+        "2024",
+        "--check",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_encounter.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_spell_plate.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_catalogs.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_policy.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_action_weekly.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_outfit_tooltip.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/p1200_rest_item_binding.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/tests/house_exterior.rs"
+      ],
+      "exit": 0,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-integration-formatting-final-item.log",
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "local cargo check final item",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "exit": 0,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-local-cargo-check-final-item.log",
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "debug binary build final item",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local"
+      ],
+      "exit": 0,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-debug-binary-build-final-item.log",
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    },
+    {
+      "scope": "startup Lua errors final item",
+      "source_revision": "a70cfd11d043570cc7eaf44da90bb44b1c9456d4",
+      "uncommitted_red_test": false,
+      "command": [
+        "timeout",
+        "90",
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-rest/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-build",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "exit": 0,
+      "summary": [],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-startup-Lua-errors-final-item.log",
+      "valid_for_final_code": true,
+      "later_changes": "No later source/fixture changes."
+    }
+  ],
+  "inferred_choices_and_limits": [
+    "Host datasets are empty and scalar policy/entitlement/camera flags initially false; warning sound kits and nameplate dimensions initially zero. No native defaults, acquisition, persistence or 3D camera projection are claimed.",
+    "Action range inputs are spell/GUID-keyed; absent data yields nil even for unranged actions. Direct pet-spell assignments share pet action autocast flags; macros/items/outfits are not resolved.",
+    "Battle.net success is local acceptance/outbound intent, not delivery. Existing limits/routing are reused; whispers require a known online account and <=4078 bytes, and chat lockdown rejects whispers/broadcast mutation. Local custom message is stored but legacy BNGetInfo remains a temporary account probe.",
+    "Warning enablement is host availability AND encounterWarningsEnabled; encounter release/resurrection/timeline flags are independent host snapshots, not inferred from encounter-in-progress.",
+    "Training catalog display order and metadata are host inputs. JoinTrainingGround identifies LFG dungeon IDs as cached PVPUI does, rejects unavailable/unknown/non-enterable requests and uses one existing battlefield queue slot. Completed-match and daily-win flags require host updates.",
+    "Recipe quality links error on unconfigured tuples, rather than fabricate links. Item quality records are nullable fresh snapshots; no DB2 quality/reagent catalog is acquired.",
+    "Prey selection requires membership in the existing rich quest log; widget progress/effects are host snapshots, not a progression/timer engine or widget-set population service.",
+    "Weekly completions are separate from vault threshold rows, sorted descending difficulty. Combining difficulties sums points and chooses lowest activityTierID; ties use ascending ID.",
+    "Outfit tooltip is a bounded title-only payload from existing catalog name/identity (type 27), not native appearance descriptions/layout. Publication is gated with the existing 12.0.5 outfit model; strict historical builds were not exercised.",
+    "Spell classifications use existing number/name spell lookup, without alias overrides. Important IDs share aura_filter_facts; other booleans use explicit classifications. Pinned VM rejects tainted secret identifiers; AllowedWhenTainted parity remains unsupported.",
+    "LimitedInputAllowed reads four persistent host grants; it does not consume grants or change mouse-event dispatch. Combat-log restriction is a host query flag, not enforcement of native log filtering/secrecy. Bonus stable slot is independent of the existing stable-open flag.",
+    "Catalog new-product IDs preserve host order and are independent of ownership; no checkout/refund/confirmation service is supplied.",
+    "IsItemBindToAccount reads existing bonding metadata (ItemBind 7/8/9); including until-equipped mode 9 in the generic predicate is INFERRED. It classifies intrinsic metadata, not instance ownership/bound state."
+  ],
+  "sweeps": {
+    "12_0_0": {
+      "exit": 0,
+      "rows": 1010,
+      "ok": 987,
+      "gaps": 23,
+      "output": "/home/osso/.cache/wow-ui-sim-audit/p1200-rest-sweep.json"
+    },
+    "12_0_5": {
+      "exit": 0,
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11,
+      "output": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-12_0_5-sweep.json"
+    },
+    "12_0_7": {
+      "exit": 0,
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3,
+      "output": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-12_0_7-sweep.json"
+    },
+    "12_1_0": {
+      "exit": 0,
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5,
+      "output": "/home/osso/.worktrees/wow-ui-sim-p1200-rest/target/p1200-rest-12_1_0-sweep.json"
+    }
+  },
+  "manual_review": "Main-thread source review only (delegation explicitly forbidden): real registrations/state wiring, fresh/rooted DTOs, selectors and borrow lifetimes, epoch gates; no new warning suppression, vendor edits, monkey patches, alternate resolvers or source-substring tests. DTO emitters retain flat field lists; native parity limits remain explicit.",
+  "constraints": "No push/merge/delegation/model CLIs; only assigned worktree edited. Original-master comparisons used detached 3fa805ef7 inside this worktree and restored p1200-rest. No full project suite or alternate target directory.",
+  "baseline_warnings": "Six pre-existing iced-wgpu-patched manifest-key deprecations also observed before implementation; no new Rust compiler warnings.",
+  "known_failure": {
+    "test": "tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges",
+    "line": "tests/tooltip_text_layout.rs:180",
+    "assertion": "rect.x + rect.width <= state.screen_width + 0.1",
+    "final_result": "tooltip filter: 487 passed, 1 failed, 1 ignored",
+    "master_comparison": {
+      "revision": "f1e59afe593338a1fbc823b27be4d5915d6d024d",
+      "exit": 101
+    },
+    "disposition": "Same exact failure reproduced on current master; unrelated viewport/layout behavior left unchanged."
+  },
+  "scope_preservation": "The item change adds only a C_Item metadata reader/registration/test. Other namespace producers/tests are unchanged from 197cd3858; their earlier targeted regression results remain scoped to that exact revision, not presented as full-suite proof of a70cfd11d."
+}
