@@ -38,11 +38,12 @@ pub(crate) fn register_c_merchant_frame_surface(state: &mut LuaState) -> LuaResu
 /// stock. Prices, stock limits and eligibility are not supplied by this model.
 #[cfg(feature = "retail-12-0-0")]
 fn get_item_info(state: &mut LuaState) -> LuaResult<u32> {
-    let index = usize::from_stack(state, 1)?;
+    let index = i32::from_stack(state, 1)?;
     let item_id = {
         let sim = borrow_state(state)?;
         index
             .checked_sub(1)
+            .and_then(|slot| usize::try_from(slot).ok())
             .and_then(|slot| sim.merchant_items.get(slot).copied())
     };
     let Some(item) = item_id.and_then(crate::items::get_item) else {

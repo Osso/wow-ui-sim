@@ -2,8 +2,7 @@
 
 use crate::c_api::ensure_namespace;
 use crate::lua_api::methods::{
-    borrow_state, create_string, create_table, create_table_with_capacity, table_set_num,
-    table_set_static,
+    borrow_state, create_string, create_table, create_table_with_capacity, table_set_static,
 };
 use crate::lua_bridge::table_set_rust_fn_static;
 use rilua::vm::state::LuaState;
@@ -52,7 +51,7 @@ fn get_challenge_completion_info(state: &mut LuaState) -> LuaResult<u32> {
     table_set_static(state, info, "members", members);
     for (index, member) in completion.members.iter().enumerate() {
         let row = create_table_with_capacity(state, 2);
-        table_set_num(state, members, (index + 1) as f64, row);
+        crate::c_api::helpers::set_table_array(state, members, index as i64 + 1, row);
         let guid = create_string(state, &member.member_guid);
         table_set_static(state, row, "memberGUID", guid);
         let name = create_string(state, &member.name);
