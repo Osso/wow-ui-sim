@@ -25,8 +25,8 @@ PrivateAuraIconInfo is input-only: full binding acceptance and per-field rejecti
 ## Progress
 
 - [x] B02 post-commit proof
-- [ ] B04 listing inputs/results
-- [ ] B05 interaction/faction/schedule/set DTOs
+- [x] B04 listing inputs/results
+- [x] B05 interaction/faction/schedule/set DTOs
 - [ ] B06 viewer and cooldown transitions
 - [ ] Publication sweeps and startup
 
@@ -37,3 +37,40 @@ New test fails on unchanged master LFG producer (`39b7cfe9d` only changed filter
 All six IDs use patch_12_0_0_lfg_playstyle::lfg_general_playstyle_roundtrip_and_parent_shapes: structures-LfgEntryData-098, structures-LfgEntryData-099, structures-LfgListingCreateData-100, structures-LfgListingCreateData-101, structures-LfgSearchResultData-102, structures-LfgSearchResultData-103. Full current cached parent shapes, concrete Learning/Expert listing and separate search record values, optional omission, detached snapshots and invalid-enum atomicity. Does not imply that one's own listing is automatically a search result.
 
 B02 post-commit: struct_shapes 2, reward 9, private_aura_anchors 18, structure_appearance 3, test_premade_groups 18 passed.
+
+## B05
+
+Four runtime RED failures against unchanged master producers: missing MajorFactionData.description; ItemInteractionInfo nil-only namespace fallback; fabricated TransmogSetInfo missing expansionID; scheduler leaked nested source tables. B05 GREEN at 0608c9571: four tests passed. Catalog-default test was stale: master passes fabricated set zero; current empty catalog returns nil (documented MayReturnNothing). Migrated that expectation in e1ccc0588; transmog_set 16 passed.
+
+Lua-owned scheduler `_state` is retained as explicit host input, with copied nested DTOs under src/c_api/c_event_scheduler.rs. Unknown-member callable-nil fallback removed, not promoted into modeled C API. Existing unsupported continent-name query remains isolated in temporary workarounds. Scheduler demo events are explicitly INFERRED, not server records; no live scheduling service claim.
+
+| source_id | proven-by-test (patch_12_0_0_state_dtos module) |
+|---|---|
+| structures-ItemInteractionFrameInfo-096 | item_interaction_parent_and_combined_flags |
+| structures-ItemInteractionFrameInfo-097 | item_interaction_parent_and_combined_flags |
+| structures-MajorFactionData-104 | major_faction_parent_and_optional_companion |
+| structures-MajorFactionData-105 | major_faction_parent_and_optional_companion |
+| structures-MajorFactionData-106 | major_faction_parent_and_optional_companion |
+| structures-MajorFactionData-107 | major_faction_parent_and_optional_companion |
+| structures-ScheduledEventInfo-116 | scheduled_event_parent_and_independent_snapshots |
+| structures-ScheduledEventInfo-117 | scheduled_event_parent_and_independent_snapshots |
+| structures-ScheduledEventInfo-118 | scheduled_event_parent_and_independent_snapshots |
+| structures-TransmogSetInfo-124 | transmog_set_parent_variants_and_flags |
+| structures-TransmogSetInfo-125 | transmog_set_parent_variants_and_flags |
+
+MajorFactionData model lives in C API and is re-exported for old Rust callers. New required unseeded metadata uses empty description/highlights and zero bounty/false toast (INFERRED catalog absence); companion/effect IDs are optional. GetSetInfo/GetVariantSets publish existing catalog rows. grantAsPrecedingVariant is metadata; no native grant-service parity asserted.
+
+## B06
+
+Viewer positive parent test passed against unchanged master producer. Cast recovery test failed: no SPELL_UPDATE_COOLDOWN dispatch. Cooldown snapshot derives optional recovery and GCD metadata from the same clock and intervals used for duration. Cast producers publish SPELL_UPDATE_COOLDOWN after state commits. INFERRED: shared GCD models start recovery; isOnGCD identifies GCD as the winning interval, not a longer spell cooldown. Unknown GCD state omits metadata; known expired GCD reports false. Native per-spell GCD eligibility remains unmodeled. Restricted recovery numbers use authentic secret wrappers; isOnGCD remains NeverSecret.
+
+| source_id | test (patch_12_0_0_cooldown_transitions module) |
+|---|---|
+| structures-CooldownViewerCooldown-079 | cooldown_viewer_parent_identity_category_and_snapshots |
+| structures-CooldownViewerCooldown-080 | cooldown_viewer_parent_identity_category_and_snapshots |
+| structures-CooldownViewerCooldown-081 | cooldown_viewer_parent_identity_category_and_snapshots |
+| structures-SpellCooldownInfo-119 | spell_cooldown_recovery_and_gcd_follow_cast_producer |
+| structures-SpellCooldownInfo-120 | spell_cooldown_recovery_and_gcd_follow_cast_producer |
+| structures-SpellCooldownInfo-121 | spell_cooldown_recovery_and_gcd_follow_cast_producer |
+
+B06 proof is pending post-commit GREEN. Native category selection remains unavailable (optional activeCategory nil); this does not substitute for positive recovery/GCD proof.

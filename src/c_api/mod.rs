@@ -183,6 +183,7 @@ pub mod club_model;
 pub mod equipment_set_command;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7_inputs;
+mod spell_cooldown_output;
 pub(crate) mod unit_aura_access;
 pub mod url_texture_inputs;
 #[cfg(feature = "retail-12-0-5")]

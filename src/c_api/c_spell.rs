@@ -502,19 +502,20 @@ fn get_spell_cooldown(state: &mut LuaState) -> LuaResult<u32> {
 fn read_spell_cooldown_snapshot(
     state: &mut LuaState,
     spell_id: u32,
-) -> LuaResult<(f64, f64, bool)> {
+) -> LuaResult<super::spell_cooldown_output::SpellCooldownSnapshot> {
     let sim = borrow_state(state)?;
     let now = sim.start_time.elapsed().as_secs_f64();
-    let (start, duration) = spell_cooldown_times(&sim, spell_id, now);
-    Ok((
-        start,
-        duration,
-        super::charge_state::cooldowns_are_restricted(&sim),
-    ))
+    Ok(super::spell_cooldown_output::snapshot(&sim, spell_id, now))
 }
 
 pub(crate) fn push_spell_cooldown_info(state: &mut LuaState, spell_id: u32) -> LuaResult<u32> {
-    let (start, duration, restricted) = read_spell_cooldown_snapshot(state, spell_id)?;
+    let super::spell_cooldown_output::SpellCooldownSnapshot {
+        start,
+        duration,
+        restricted,
+        recovery_remaining,
+        is_on_gcd,
+    } = read_spell_cooldown_snapshot(state, spell_id)?;
     let info = create_table_with_capacity(state, SPELL_COOLDOWN_HASH_FIELDS);
     // Root the public DTO before keys or secret numeric wrappers allocate.
     state.push(info);
@@ -532,6 +533,17 @@ pub(crate) fn push_spell_cooldown_info(state: &mut LuaState, spell_id: u32) -> L
     }
     table_set_static(state, info, "isEnabled", Val::Bool(true));
     table_set_static(state, info, "isActive", Val::Bool(duration > 0.0));
+    if let Some(remaining) = recovery_remaining {
+        let value = if restricted {
+            rilua::table_security::wrap_host_secret_number(state, remaining)
+        } else {
+            Val::Num(remaining)
+        };
+        table_set_static(state, info, "timeUntilEndOfStartRecovery", value);
+    }
+    if let Some(is_on_gcd) = is_on_gcd {
+        table_set_static(state, info, "isOnGCD", Val::Bool(is_on_gcd));
+    }
     Ok(1)
 }
 

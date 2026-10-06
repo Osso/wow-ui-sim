@@ -725,6 +725,8 @@ impl MajorFactionRow {
             renown_fanfare_sound_kit_id: 0,
             texture_kit: self.texture_kit.to_string(),
             faction_font_color: self.faction_font_color,
+            // INFERRED: no imported description/highlight/bounty/toast metadata.
+            // Optional companion/effect IDs remain absent until the host seeds them.
             ..Default::default()
         }
     }

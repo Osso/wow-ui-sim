@@ -196,6 +196,7 @@ fn start_instant_spell_cooldowns(state: &mut LuaState, spell_id: u32) {
         SpellTargetType::SelfOnly => {}
     }
     start_spell_cooldown(state, spell_id, instant_spell_cooldown_seconds(spell_id));
+    fire_named_event_state(state, "SPELL_UPDATE_COOLDOWN", &[]);
 }
 
 pub(crate) fn execute_spell_by_id(state: &mut LuaState, spell_id: u32) -> LuaResult<()> {
@@ -248,6 +249,7 @@ fn start_timed_spell_cast(state: &mut LuaState, spell_id: u32) -> bool {
         "[spellcast] START spell_id={spell_id} name={spell_name} duration_ms={cast_time_ms}"
     ));
     crate::lua_api::spellcast_events::fire_player_cast_start(state, cast_id, spell_id);
+    fire_named_event_state(state, "SPELL_UPDATE_COOLDOWN", &[]);
     true
 }
 
