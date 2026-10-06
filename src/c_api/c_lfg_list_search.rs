@@ -30,9 +30,14 @@ pub struct PvpRating {
 
 pub(crate) fn publish(state: &mut LuaState, info: Val, metadata: &SearchMetadata) {
     table_set(state, info, "hasSelf", Val::Bool(metadata.has_self));
+    publish_dungeon_scores(state, info, &metadata.dungeon_scores);
+    publish_pvp_ratings(state, info, &metadata.pvp_ratings);
+}
+
+fn publish_dungeon_scores(state: &mut LuaState, info: Val, scores: &[DungeonScore]) {
     let dungeons = create_table(state);
     table_set(state, info, "leaderDungeonScoreInfo", dungeons);
-    for (index, score) in metadata.dungeon_scores.iter().enumerate() {
+    for (index, score) in scores.iter().enumerate() {
         let row = create_table(state);
         super::helpers::set_table_array(state, dungeons, index as i64 + 1, row);
         for (key, value) in [
@@ -52,9 +57,12 @@ pub(crate) fn publish(state: &mut LuaState, info: Val, metadata: &SearchMetadata
             Val::Bool(score.finished_success),
         );
     }
+}
+
+fn publish_pvp_ratings(state: &mut LuaState, info: Val, ratings_info: &[PvpRating]) {
     let ratings = create_table(state);
     table_set(state, info, "leaderPvpRatingInfo", ratings);
-    for (index, rating) in metadata.pvp_ratings.iter().enumerate() {
+    for (index, rating) in ratings_info.iter().enumerate() {
         let row = create_table(state);
         super::helpers::set_table_array(state, ratings, index as i64 + 1, row);
         for (key, value) in [

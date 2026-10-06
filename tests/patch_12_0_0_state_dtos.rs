@@ -23,6 +23,7 @@ fn major_faction_parent_and_optional_companion() {
         assert(id)
         local a, b = C_MajorFactions.GetMajorFactionData(id), C_MajorFactions.GetMajorFactionData(id)
         assert(a.description == 'Fixture description' and a.highlights[1].level == 7)
+        assert(#a.highlights == 2 and a.highlights[2].title == 'Second highlight' and a.highlights[2].level == 9)
         a.highlights[1].title = 'mutation'; assert(b.highlights[1].title == 'First')
         assert(C_MajorFactions.GetMajorFactionData(id).highlights[1].description == 'Highlight')
         assert(C_MajorFactions.GetMajorFactionData(9999).playerCompanionID == nil)
@@ -65,6 +66,16 @@ fn scheduled_event_parent_and_independent_snapshots() {
         local updated = C_EventScheduler.GetScheduledEvents()
         assert(updated[1].eventID == 3001 and updated[2].eventID == 2002)
         assert(updated[1].displayInfo.overrideAtlas == 'FixtureAtlas')
+        C_EventScheduler._state.scheduledEvents[1].displayInfo.hideTimeLeft = true
+        C_EventScheduler._state.scheduledEvents[1].displayInfo.overrideTooltipWidgetSetID = 45
+        local display = C_EventScheduler.GetScheduledEvents()[1].displayInfo
+        assert(display.hideTimeLeft and display.overrideTooltipWidgetSetID == 45)
+        assert(second[1].displayInfo.overrideTooltipWidgetSetID == nil)
+        -- Host delivers ongoing/upcoming state; getters do not synthesize events.
+        table.remove(C_EventScheduler._state.scheduledEvents, 1)
+        local upcoming = C_EventScheduler.GetScheduledEvents()
+        assert(#upcoming == 1 and upcoming[1].eventID == 2002)
+        assert(#second == 2 and second[1].eventID == 2001)
         assert(second[1].eventID == 2001 and second[1].displayInfo.overrideAtlas == nil)
     "#).unwrap();
 }
