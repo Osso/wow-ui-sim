@@ -197,6 +197,7 @@ pub mod equipment_set_command;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7_inputs;
 mod spell_cooldown_output;
+pub(crate) mod talent_spell;
 pub(crate) mod unit_aura_access;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod unit_comparison;

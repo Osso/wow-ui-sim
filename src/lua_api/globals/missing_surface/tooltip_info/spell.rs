@@ -10,7 +10,6 @@ use crate::lua_api::game_data;
 use crate::lua_api::globals::spell_api;
 use crate::lua_api::methods::{borrow_state, table_get, table_set};
 use crate::spells;
-use crate::traits::{TRAIT_DEFINITION_DB, TRAIT_ENTRY_DB, TRAIT_NODE_DB};
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
@@ -323,38 +322,11 @@ fn set_spell_tooltip_width_hint(state: &mut LuaState, tooltip: Val) {
     );
 }
 
-fn preferred_trait_spell_id(definition_id: u32) -> Option<u32> {
-    let definition = TRAIT_DEFINITION_DB.get(&definition_id)?;
-    [
-        definition.visible_spell_id,
-        definition.overrides_spell_id,
-        definition.spell_id,
-    ]
-    .into_iter()
-    .find(|spell_id| *spell_id != 0)
-}
-
-fn spell_id_for_trait_entry(entry_id: u32) -> Option<u32> {
-    let mut current_id = entry_id;
-    for _ in 0..8 {
-        if let Some(spell_id) = preferred_trait_spell_id(current_id) {
-            return Some(spell_id);
-        }
-        current_id = TRAIT_ENTRY_DB.get(&current_id)?.definition_id;
-    }
-    None
-}
-
 pub(super) fn spell_id_for_talent_id(state: &LuaState, talent_id: u32) -> Option<u32> {
-    if let Some(node) = TRAIT_NODE_DB.get(&talent_id) {
-        let selected_entry_id = borrow_state(state)
-            .ok()
-            .and_then(|sim| sim.talents.node_selections.get(&talent_id).copied());
-        let entry_id = selected_entry_id.or_else(|| node.entry_ids.first().copied())?;
-        return spell_id_for_trait_entry(entry_id);
-    }
-
-    spell_id_for_trait_entry(talent_id).or_else(|| preferred_trait_spell_id(talent_id))
+    let selected_entry_id = borrow_state(state)
+        .ok()
+        .and_then(|sim| sim.talents.node_selections.get(&talent_id).copied());
+    crate::c_api::talent_spell::spell_id_for_talent(talent_id, selected_entry_id)
 }
 
 pub(super) fn lookup_player_aura(state: &LuaState, index: i32) -> Option<game_data::AuraInfo> {
