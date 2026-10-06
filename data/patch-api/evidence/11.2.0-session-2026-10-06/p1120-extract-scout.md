@@ -68,6 +68,6 @@ No Notes/Blue posts in retained revision. Inventory annotations stay attached to
 ## Evidence
 
 - [Exhaustive assignment map](p1120-extract-assignments.json)
-- [38-row gap review](p1120-gap-review.json): 11 fixed, 27 retained.
-- [162 observations](p1120-sweep-result.json): 135 OK.
+- [38-row gap review](p1120-gap-review.json): 12 fixed, 26 retained.
+- [162 observations](p1120-sweep-result.json): 136 OK.
 - [Coverage ledger](../../sources/11.2.0-page-coverage.json): 244 unique IDs.

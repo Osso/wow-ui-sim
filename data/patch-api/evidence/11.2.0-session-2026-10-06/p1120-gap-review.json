@@ -355,10 +355,10 @@
     {
       "source_id": "wt-global-api-C_Bank.FetchNextPurchasableBankTabCost-96",
       "symbol": "C_Bank.FetchNextPurchasableBankTabCost",
-      "category": "missing-explicit-producer",
-      "investigate": "src/c_api/item_spell/c_currency.rs",
-      "decision": "retained",
-      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior. Existing bank implementation has deposited-money/tab-count placeholders, not viewable types, tab purchase data, access/reasons or transfer capabilities.",
+      "category": "retirement",
+      "investigate": "src/c_api/patch_retired_members.rs",
+      "decision": "fixed",
+      "reason": "Source direction removed; raw absence was undermined by generic namespace lookup. Existing retirement machinery blocks repeated lookups. No bank purchase model invented.",
       "initial": {
         "expected": {
           "direction": "removed",
@@ -389,11 +389,11 @@
         "observed": {
           "default": null,
           "default_mismatch": false,
-          "detail": "raw=nil; lookup=function",
+          "detail": "raw=nil; lookup=nil",
           "kind": "member",
           "value": null
         },
-        "ok": false
+        "ok": true
       }
     },
     {

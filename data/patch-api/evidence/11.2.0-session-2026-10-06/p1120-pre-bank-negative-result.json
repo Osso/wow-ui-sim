@@ -875,11 +875,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": true
+    "ok": false
   },
   "wt-global-api-C_Bank.FetchNextPurchasableBankTabData-41": {
     "expected": {
@@ -919,9 +919,9 @@
   },
   "wt-global-api-C_ChallengeMode.GetLeaverPenaltyWarningTimeLeft-43": {
     "expected": {
-      "direction": "added",
+      "direction": "removed",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
       "superseded_by": null,
       "symbol": "C_ChallengeMode.GetLeaverPenaltyWarningTimeLeft"
@@ -933,7 +933,7 @@
       "kind": "member",
       "value": null
     },
-    "ok": true
+    "ok": false
   },
   "wt-global-api-C_ChallengeMode.GetMapUIInfo-142": {
     "expected": {

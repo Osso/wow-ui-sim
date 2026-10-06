@@ -11,15 +11,15 @@
       "symbols": [
         "162 wikitext inventory occurrences"
       ],
-      "scope": "135 OK / 27 exact gaps; four superseded OK. 57 unsuperseded removals: 46 strict absence/rejection proofs, 11 cached deprecated aliases. Publication only.",
+      "scope": "136 OK / 26 exact gaps; four superseded OK. 57 unsuperseded removals: 46 strict absence/rejection proofs, 11 cached deprecated aliases. Publication only.",
       "spec": "docs/specs/patch-11-2-0-publication-sweep.md",
       "tests": [
         "tests/patch_11_2_0_publication_sweep.rs",
         "tests/common/publication_sweep.rs",
         "tests/patch_11_2_0_publication_fixes.rs"
       ],
-      "implementation": "Eleven bounded fixes: combat/gradient readback, four fog CVars, four namespace retirements and Browser NavigateTo exclusion. Retail-12-0-0 gates preserve classic profiles.",
-      "compiled_revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "implementation": "Twelve bounded fixes: combat/gradient readback, four fog CVars, five namespace retirements and Browser NavigateTo exclusion. Retail-12-0-0 gates preserve classic profiles.",
+      "compiled_revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
       "proof": "Eight isolated GREEN sweeps; seven later observations identical; negative control adds exactly one gap. Five bounded behavioral tests GREEN after RED.",
       "ledger": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-sweep-result.json"
     }
@@ -444,9 +444,11 @@
     },
     {
       "source_id": "wt-global-api-C_Bank.FetchNextPurchasableBankTabCost-96",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
     },
     {
       "source_id": "wt-global-api-C_Container.SortReagentBankBags-97",

@@ -875,11 +875,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": true
+    "ok": false
   },
   "wt-global-api-C_Bank.FetchNextPurchasableBankTabData-41": {
     "expected": {

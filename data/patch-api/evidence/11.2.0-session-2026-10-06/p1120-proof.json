@@ -1,5 +1,5 @@
 {
-  "runtime_revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+  "runtime_revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
   "results": [
     {
       "name": "initial-sweep",
@@ -77,7 +77,8 @@
       ],
       "revision": "5a4af891e3cd0390053d4d0ade805b89c82bb322",
       "exit_code": 0,
-      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-fixes-green-final.log"
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-fixes-green-final.log",
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13"
     },
     {
       "name": "extract-red",
@@ -108,8 +109,8 @@
       "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-sweep.log",
-      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-sweep-result.json",
-      "invalidated_by": null,
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-pre-bank-sweep-result.json",
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
       "rows": 162,
       "ok": 135,
       "gaps": 27
@@ -133,7 +134,7 @@
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1125-sweep.log",
       "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1125-sweep-result.json",
-      "invalidated_by": null,
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
       "rows": 163,
       "ok": 118,
       "gaps": 45
@@ -157,7 +158,7 @@
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1127-sweep.log",
       "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1127-sweep-result.json",
-      "invalidated_by": null,
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
       "rows": 508,
       "ok": 387,
       "gaps": 121
@@ -181,7 +182,7 @@
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1200-sweep.log",
       "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1200-sweep-result.json",
-      "invalidated_by": null,
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
       "rows": 1010,
       "ok": 987,
       "gaps": 23
@@ -205,7 +206,7 @@
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1201-sweep.log",
       "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1201-sweep-result.json",
-      "invalidated_by": null,
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
       "rows": 225,
       "ok": 222,
       "gaps": 3
@@ -229,7 +230,7 @@
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1205-sweep.log",
       "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1205-sweep-result.json",
-      "invalidated_by": null,
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
       "rows": 363,
       "ok": 352,
       "gaps": 11
@@ -253,7 +254,7 @@
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1207-sweep.log",
       "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1207-sweep-result.json",
-      "invalidated_by": null,
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
       "rows": 174,
       "ok": 171,
       "gaps": 3
@@ -277,7 +278,7 @@
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1210-sweep.log",
       "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1210-sweep-result.json",
-      "invalidated_by": null,
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
       "rows": 778,
       "ok": 773,
       "gaps": 5
@@ -300,7 +301,7 @@
       "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
       "exit_code": 101,
       "expected_exit_code": 101,
-      "invalidated_by": null
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13"
     },
     {
       "name": "extract-green",
@@ -351,7 +352,7 @@
       "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-fmt.log",
-      "invalidated_by": null
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13"
     },
     {
       "name": "retail-check",
@@ -365,7 +366,7 @@
       "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-retail-check.log",
-      "invalidated_by": null
+      "invalidated_by": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13"
     },
     {
       "name": "mists-check",
@@ -383,6 +384,328 @@
       "exit_code": 0,
       "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-mists-check.log",
       "invalidated_by": null
+    },
+    {
+      "name": "bank-retirement-red",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_removed_members_stay_absent_on_repeated_lookup",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "efc42f103bbb67c6dd060d4eabcae5511249676e",
+      "scope": "uncommitted added bank-cost lookup assertion",
+      "exit_code": 101
+    },
+    {
+      "name": "patch_11_2_0_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-sweep-final.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-sweep-result.json",
+      "rows": 162,
+      "ok": 136,
+      "gaps": 26,
+      "invalidated_by": null
+    },
+    {
+      "name": "patch_11_2_5_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1125-sweep-final.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1125-sweep-result.json",
+      "rows": 163,
+      "ok": 118,
+      "gaps": 45,
+      "invalidated_by": null
+    },
+    {
+      "name": "patch_11_2_7_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1127-sweep-final.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1127-sweep-result.json",
+      "rows": 508,
+      "ok": 387,
+      "gaps": 121,
+      "invalidated_by": null
+    },
+    {
+      "name": "patch_12_0_0_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1200-sweep-final.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1200-sweep-result.json",
+      "rows": 1010,
+      "ok": 987,
+      "gaps": 23,
+      "invalidated_by": null
+    },
+    {
+      "name": "patch_12_0_1_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1201-sweep-final.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1201-sweep-result.json",
+      "rows": 225,
+      "ok": 222,
+      "gaps": 3,
+      "invalidated_by": null
+    },
+    {
+      "name": "patch_12_0_5_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1205-sweep-final.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1205-sweep-result.json",
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11,
+      "invalidated_by": null
+    },
+    {
+      "name": "patch_12_0_7_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1207-sweep-final.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1207-sweep-result.json",
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3,
+      "invalidated_by": null
+    },
+    {
+      "name": "patch_12_1_0_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1210-sweep-final.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1210-sweep-result.json",
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5,
+      "invalidated_by": null
+    },
+    {
+      "name": "fixes-final",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_fixes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-fixes-final.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "fmt-final",
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/Cargo.toml",
+        "--check"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-fmt-final.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "retail-check-final",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-retail-check-final.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "startup-build",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-startup-build.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "startup",
+      "command": [
+        "timeout",
+        "90",
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-build",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-startup.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "negative-control-final",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
+      "exit_code": 101,
+      "expected_exit_code": 101,
+      "invalidated_by": null
     }
-  ]
+  ],
+  "scope_notes": {
+    "mists-check": "Retains current proof: later code changes only a retail-gated retirement constant and assertions inside client-retail-gated file. Mists compilation inputs after cfg are unchanged. No repeat broad Mists check.",
+    "extract-register-tests": "Extractor/register code unchanged after c8ab179fe; proof remains valid.",
+    "readability": "Manual changed-line audit: flat registration lists and existing gate patterns; combat reader 3 lines, gradient reader 13 lines, one sweep specification and five bounded tests. No new suppressions, deep nesting, duplication or parameter overload.",
+    "startup": "Separate local debug build, bounded 90-second run exit 0 with [] and CLEAN/zero errors.",
+    "independence": "No agents/models/native probes; local development evidence only."
+  }
 }
