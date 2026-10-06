@@ -4077,13 +4077,13 @@
       "symbol": "minimapTrackedInfov2"
     },
     "observed": {
-      "default": "0",
+      "default": null,
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": "0"
+      "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-nameplateAuraScale-926": {
     "expected": {
@@ -5157,13 +5157,13 @@
       "symbol": "useCompactPartyFrames"
     },
     "observed": {
-      "default": "0",
+      "default": null,
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": "0"
+      "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-watchFrameBaseAlpha-1115": {
     "expected": {
@@ -5321,11 +5321,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "pcall=true; return=true; registered=true",
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_ENCOUNTER_EVENT\"; registered=false",
       "kind": "event",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-events-COMBAT_LOG_APPLY_FILTER_SETTINGS-740": {
     "expected": {
@@ -17885,11 +17885,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "FrameScriptObject; lookup=function",
+      "detail": "FrameScriptObject; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-widgets-GameTooltip:GetLeftLine-704": {
     "expected": {

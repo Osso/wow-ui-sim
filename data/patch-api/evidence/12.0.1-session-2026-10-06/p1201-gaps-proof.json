@@ -1,0 +1,1292 @@
+{
+  "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+  "base": "a3332a7fe",
+  "scope": "debug retail local, worktree only; no agents/models",
+  "proofs": [
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_retirement",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+      "scope": "patch_12_0_1_retirement",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-patch_12_0_1_retirement.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 0.16s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 3m 26s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_models",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+      "scope": "patch_12_0_1_models",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-patch_12_0_1_models.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10733 filtered out; finished in 0.26s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.84s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_heal_prediction",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+      "scope": "patch_12_0_1_heal_prediction",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-patch_12_0_1_heal_prediction.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 0.25s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.30s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_transmog",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+      "scope": "patch_12_0_1_transmog",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-patch_12_0_1_transmog.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 0.24s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.21s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_utilities",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+      "scope": "patch_12_0_1_utilities",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-patch_12_0_1_utilities.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10733 filtered out; finished in 0.36s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.29s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_globals",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+      "scope": "patch_12_0_1_globals",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-patch_12_0_1_globals.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10733 filtered out; finished in 0.43s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.30s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_social",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+      "scope": "patch_12_0_1_social",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-patch_12_0_1_social.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10733 filtered out; finished in 0.40s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.21s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_policy",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+      "scope": "patch_12_0_1_policy",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-patch_12_0_1_policy.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10733 filtered out; finished in 0.28s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.21s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "audio_",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+      "scope": "audio_",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-audio_.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 3.32s",
+        "test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 10724 filtered out; finished in 10.29s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.25s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "heal_prediction",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "c1826116da6289421d9f8749021825e5b5e67ef3",
+      "scope": "heal_prediction",
+      "exit_code": 101,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-heal_prediction.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test userdata_proxy::heal_prediction_tostring ... FAILED",
+        "test result: FAILED. 16 passed; 1 failed; 0 ignored; 0 measured; 10718 filtered out; finished in 2.22s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.47s"
+      ],
+      "superseded_by": "eeccdea61: 17 heal_prediction tests pass after restoring tostring"
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "heal_prediction",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "heal_prediction",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-integration-heal_prediction.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 10718 filtered out; finished in 3.61s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 1m 02s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "c_death_recap_probes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "c_death_recap_probes",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-integration-c_death_recap_probes.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 10729 filtered out; finished in 1.12s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.38s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "transmog_outfit_",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "transmog_outfit_",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-integration-transmog_outfit_.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 10711 filtered out; finished in 4.06s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.39s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "secrets_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "secrets_publication",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-integration-secrets_publication.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 10729 filtered out; finished in 0.99s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 0.44s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--lib",
+        "--",
+        "test_secret_and_protected_methods_reflect_frame_security_state",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "test_secret_and_protected_methods_reflect_frame_security_state",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-lib-test_secret_and_protected_methods_reflect_frame_security_state.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1975 filtered out; finished in 0.85s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 4m 29s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--lib",
+        "--",
+        "cvars::tests",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "cvars::tests",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-lib-cvars__tests.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 1967 filtered out; finished in 0.06s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 2.39s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "environment": {
+        "P1200_SWEEP_OUT": "/home/osso/.cache/wow-ui-sim-audit/p1201-gaps-sweep1200.json"
+      },
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "isolated 12_0_0 publication",
+      "exit_code": 0,
+      "counts": {
+        "rows": 1010,
+        "ok": 987,
+        "gaps": 23
+      },
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-sweep-12_0_0.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 103.54s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 1.21s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "environment": {
+        "P1201_SWEEP_OUT": "/home/osso/.cache/wow-ui-sim-audit/p1201-gaps-sweep.json"
+      },
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "isolated 12_0_1 publication",
+      "exit_code": 0,
+      "counts": {
+        "rows": 225,
+        "ok": 222,
+        "gaps": 3
+      },
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-sweep-12_0_1.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 26.35s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 1.26s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "environment": {
+        "P1205_SWEEP_OUT": "/home/osso/.cache/wow-ui-sim-audit/p1201-gaps-sweep1205.json"
+      },
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "isolated 12_0_5 publication",
+      "exit_code": 0,
+      "counts": {
+        "rows": 363,
+        "ok": 352,
+        "gaps": 11
+      },
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-sweep-12_0_5.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 27.08s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 1.25s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "environment": {
+        "P1207_SWEEP_OUT": "/home/osso/.cache/wow-ui-sim-audit/p1201-gaps-sweep1207.json"
+      },
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "isolated 12_0_7 publication",
+      "exit_code": 0,
+      "counts": {
+        "rows": 174,
+        "ok": 171,
+        "gaps": 3
+      },
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-sweep-12_0_7.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 27.37s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 1.30s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "environment": {
+        "P1210_SWEEP_OUT": "/home/osso/.cache/wow-ui-sim-audit/p1201-gaps-sweep1210.json"
+      },
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "isolated 12_1_0 publication",
+      "exit_code": 0,
+      "counts": {
+        "rows": 778,
+        "ok": 773,
+        "gaps": 5
+      },
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-sweep-12_1_0.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 29.37s",
+        "    Finished `test` profile [optimized + debuginfo] target(s) in 1.27s"
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "formatting",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-final-0.log",
+      "later_changes_invalidate": false,
+      "summaries": []
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "cargo check default retail",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-final-1.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "    Finished `dev` profile [optimized + debuginfo] target(s) in 6m 10s"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "startup binary build",
+      "exit_code": 0,
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-final-2.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "    Finished `dev` profile [optimized + debuginfo] target(s) in 2.82s"
+      ]
+    },
+    {
+      "command": [
+        "timeout",
+        "90",
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-build",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+      "scope": "cached startup no addons/savedvars",
+      "exit_code": 0,
+      "stdout": "native artifact=/home/osso/.worktrees/wow-ui-sim-p1201-gaps/target/debug/wow-sim\n[]\n",
+      "log": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-startup.log",
+      "later_changes_invalidate": false,
+      "summaries": [
+        "Status: CLEAN",
+        "Lua errors: 0 unique, 0 occurrence(s)",
+        "Unattributed Lua errors: 0 occurrence(s)"
+      ]
+    }
+  ],
+  "master_comparison": {
+    "heal_prediction_tostring": "a3332a7fe proxy factory defines __tostring returning UnitHealPredictionCalculator:<id>; migrated factory omitted it. Source comparison, not a full master runtime run. Restored the same prefix/unique-instance contract."
+  },
+  "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+  "outcomes": {
+    "original_gaps": 51,
+    "closed": 48,
+    "retained": [
+      "wt-global-api-C_CatalogShop.BulkRefundDecors-224",
+      "wt-global-api-C_Secrets.ShouldUnitThreatValuesBeSecret-287",
+      "wt-scriptobjects-NamePlate:SetStackingBoundsFrame-349"
+    ]
+  },
+  "development_red": [
+    {
+      "filter": "retirement",
+      "revision": "a3332a7fe",
+      "result": "behavioral failure before corresponding implementation"
+    },
+    {
+      "filter": "models",
+      "revision": "3ad069483",
+      "result": "behavioral failure before corresponding implementation"
+    },
+    {
+      "filter": "heal_prediction",
+      "revision": "1ac7a6be7",
+      "result": "behavioral failure before corresponding implementation"
+    },
+    {
+      "filter": "transmog",
+      "revision": "9653d03a3",
+      "result": "behavioral failure before corresponding implementation"
+    },
+    {
+      "filter": "utilities",
+      "revision": "7a08969ae",
+      "result": "behavioral failure before corresponding implementation"
+    },
+    {
+      "filter": "globals",
+      "revision": "4eb100e6e",
+      "result": "behavioral failure before corresponding implementation"
+    },
+    {
+      "filter": "social",
+      "revision": "b9c5950d6",
+      "result": "behavioral failure before corresponding implementation"
+    },
+    {
+      "filter": "policy",
+      "revision": "b21e54dc7",
+      "result": "behavioral failure before corresponding implementation"
+    }
+  ],
+  "inferred_choices": [
+    "No 12.0.1 epoch exists; additions/removals use the first supported later epoch retail-12-0-5, preserving strict 12.0.0 publication.",
+    "Unconfigured audio/category values zero; warning/presence/event/discount/eligibility/market inputs false, empty catalogs and CC windows.",
+    "Prediction zero-maximum percentages zero; overflow multiplies maximum-health boundary.",
+    "Outfit source slots merge into pending overlay without deleting absent target slots.",
+    "Missing recap returns zero; omitted recap selects latest. Nonnumeric texture names are loose files.",
+    "Inactive/unknown totem or arena CC requests produce empty duration objects; only existing player caster state is modeled.",
+    "Presence flags independent; no undocumented mutual clearing.",
+    "Existing UnitIsUnit token permission rules reused unchanged; numeric threat secrecy remains separate."
+  ],
+  "limitations": [
+    "Default debug retail only; strict 12.0.0 preservation source-inspected, not separately runtime-tested.",
+    "Master comparison for identity regression is source-level, not a complete master runtime suite.",
+    "Six pre-existing vendor manifest deprecations unchanged; no suppression/vendor edits.",
+    "No agents/models, push, merge, release, extra target directory, crafting/order or page-coverage edits."
+  ],
+  "readability": {
+    "revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "method": "Manual changed-line audit; serializer field/member phases extracted; no added warning suppressions, deeply nested new logic or dynamic fallback paths.",
+    "rust_files": [
+      "src/c_api/c_battle_net.rs",
+      "src/c_api/c_combat_audio_alert.rs",
+      "src/c_api/c_death_recap.rs",
+      "src/c_api/c_encounter_warnings.rs",
+      "src/c_api/c_housing/market.rs",
+      "src/c_api/c_lfg_list_policy.rs",
+      "src/c_api/c_pvp_crowd_control.rs",
+      "src/c_api/c_string_util.rs",
+      "src/c_api/c_string_util/hyperlinks.rs",
+      "src/c_api/c_transmog_collection/illusions.rs",
+      "src/c_api/c_transmog_outfit_info.rs",
+      "src/c_api/c_transmog_outfit_info/imports.rs",
+      "src/c_api/c_transmog_outfit_info/model.rs",
+      "src/c_api/c_voice_chat_channels.rs",
+      "src/c_api/mod.rs",
+      "src/c_api/secrets_queries.rs",
+      "src/c_api/unit_comparison.rs",
+      "src/cvars.rs",
+      "src/event/valid_events.rs",
+      "src/loader/tests/frame_state.rs",
+      "src/lua_api/env_init/mod.rs",
+      "src/lua_api/frame/methods/misc/secret.rs",
+      "src/lua_api/globals/missing_surface.rs",
+      "src/lua_api/globals/real/heal_prediction.rs",
+      "src/lua_api/globals/real/mod.rs",
+      "src/lua_api/globals/real/totems.rs",
+      "src/lua_api/globals/real/unit_spell_target_name.rs",
+      "src/lua_api/globals/unit_misc.rs",
+      "src/lua_api/state.rs",
+      "src/lua_api/state/sim_state.rs",
+      "src/lua_api/state/support_types.rs",
+      "src/lua_api/state_types/mythic_plus_scenario.rs",
+      "src/lua_api/workarounds/mod.rs",
+      "src/lua_api/workarounds/temporary/mod.rs",
+      "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
+      "src/lua_api/workarounds/temporary/totem_defaults.rs",
+      "tests/c_death_recap_probes.rs",
+      "tests/patch_12_0_1_globals.rs",
+      "tests/patch_12_0_1_heal_prediction.rs",
+      "tests/patch_12_0_1_models.rs",
+      "tests/patch_12_0_1_policy.rs",
+      "tests/patch_12_0_1_retirement.rs",
+      "tests/patch_12_0_1_social.rs",
+      "tests/patch_12_0_1_transmog.rs",
+      "tests/patch_12_0_1_utilities.rs"
+    ],
+    "metrics_binary": "/home/osso/.cargo/bin/rust-code-analysis-cli",
+    "metrics": [
+      {
+        "file": "src/c_api/c_battle_net.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_battle_net.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_battle_net.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 3.0,
+          "cyclomatic": 13.0
+        }
+      },
+      {
+        "file": "src/c_api/c_combat_audio_alert.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_combat_audio_alert.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_combat_audio_alert.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 2.0,
+          "cyclomatic": 13.0
+        }
+      },
+      {
+        "file": "src/c_api/c_death_recap.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_death_recap.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_death_recap.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 3.0,
+          "cyclomatic": 5.0
+        }
+      },
+      {
+        "file": "src/c_api/c_encounter_warnings.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_encounter_warnings.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_encounter_warnings.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 1.0,
+          "cyclomatic": 6.0
+        }
+      },
+      {
+        "file": "src/c_api/c_housing/market.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_housing/market.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_housing_market.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 0.0,
+          "cyclomatic": 3.0
+        }
+      },
+      {
+        "file": "src/c_api/c_lfg_list_policy.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_lfg_list_policy.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_lfg_list_policy.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 0.0,
+          "cyclomatic": 3.0
+        }
+      },
+      {
+        "file": "src/c_api/c_pvp_crowd_control.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_pvp_crowd_control.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_pvp_crowd_control.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 1.0,
+          "cyclomatic": 3.0
+        }
+      },
+      {
+        "file": "src/c_api/c_string_util.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_string_util.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_string_util.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 4.0,
+          "cyclomatic": 16.0
+        }
+      },
+      {
+        "file": "src/c_api/c_string_util/hyperlinks.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_string_util/hyperlinks.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_string_util_hyperlinks.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 10.0,
+          "cyclomatic": 12.0
+        }
+      },
+      {
+        "file": "src/c_api/c_transmog_collection/illusions.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_transmog_collection/illusions.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_transmog_collection_illusions.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 2.0,
+          "cyclomatic": 6.0
+        }
+      },
+      {
+        "file": "src/c_api/c_transmog_outfit_info.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_transmog_outfit_info.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_transmog_outfit_info.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 3.0,
+          "cyclomatic": 19.0
+        }
+      },
+      {
+        "file": "src/c_api/c_transmog_outfit_info/imports.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_transmog_outfit_info/imports.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_transmog_outfit_info_imports.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 6.0,
+          "cyclomatic": 10.0
+        }
+      },
+      {
+        "file": "src/c_api/c_transmog_outfit_info/model.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/c_transmog_outfit_info/model.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_c_transmog_outfit_info_model.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 0.0,
+          "cyclomatic": 2.0
+        }
+      },
+      {
+        "file": "src/c_api/secrets_queries.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/secrets_queries.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_secrets_queries.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 1.0,
+          "cyclomatic": 5.0
+        }
+      },
+      {
+        "file": "src/c_api/unit_comparison.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/c_api/unit_comparison.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_c_api_unit_comparison.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 6.0,
+          "cyclomatic": 6.0
+        }
+      },
+      {
+        "file": "src/cvars.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/cvars.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_cvars.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 15.0,
+          "cyclomatic": 8.0
+        }
+      },
+      {
+        "file": "src/event/valid_events.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/event/valid_events.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_event_valid_events.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 10.0,
+          "cyclomatic": 11.0
+        }
+      },
+      {
+        "file": "src/loader/tests/frame_state.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/loader/tests/frame_state.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_loader_tests_frame_state.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 0.0,
+          "cyclomatic": 1.0
+        }
+      },
+      {
+        "file": "src/lua_api/frame/methods/misc/secret.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/frame/methods/misc/secret.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_frame_methods_misc_secret.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 5.0,
+          "cyclomatic": 11.0
+        }
+      },
+      {
+        "file": "src/lua_api/globals/missing_surface.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/globals/missing_surface.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_globals_missing_surface.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 4.0,
+          "cyclomatic": 17.0
+        }
+      },
+      {
+        "file": "src/lua_api/globals/real/heal_prediction.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/globals/real/heal_prediction.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_globals_real_heal_prediction.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 0.0,
+          "cyclomatic": 2.0
+        }
+      },
+      {
+        "file": "src/lua_api/globals/real/totems.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/globals/real/totems.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_globals_real_totems.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 1.0,
+          "cyclomatic": 4.0
+        }
+      },
+      {
+        "file": "src/lua_api/globals/real/unit_spell_target_name.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/globals/real/unit_spell_target_name.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_globals_real_unit_spell_target_name.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 4.0,
+          "cyclomatic": 8.0
+        }
+      },
+      {
+        "file": "src/lua_api/globals/unit_misc.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/globals/unit_misc.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_globals_unit_misc.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 5.0,
+          "cyclomatic": 19.0
+        }
+      },
+      {
+        "file": "src/lua_api/state.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/state.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_state.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 1.0,
+          "cyclomatic": 2.0
+        }
+      },
+      {
+        "file": "src/lua_api/state/sim_state.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/state/sim_state.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_state_sim_state.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 0.0,
+          "cyclomatic": 1.0
+        }
+      },
+      {
+        "file": "src/lua_api/state/support_types.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/state/support_types.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_state_support_types.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 1.0,
+          "cyclomatic": 4.0
+        }
+      },
+      {
+        "file": "src/lua_api/state_types/mythic_plus_scenario.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/state_types/mythic_plus_scenario.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_state_types_mythic_plus_scenario.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 0.0,
+          "cyclomatic": 2.0
+        }
+      },
+      {
+        "file": "src/lua_api/workarounds/temporary/proxy_object_factories.rs",
+        "command": [
+          "/home/osso/.cargo/bin/rust-code-analysis-cli",
+          "-m",
+          "-p",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/src/lua_api/workarounds/temporary/proxy_object_factories.rs",
+          "-O",
+          "json",
+          "-o",
+          "/home/osso/.worktrees/wow-ui-sim-p1201-gaps/.p1201-metrics/src_lua_api_workarounds_temporary_proxy_object_factories.rs"
+        ],
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 0.0,
+          "cyclomatic": 2.0
+        }
+      },
+      {
+        "file": "src/c_api/c_voice_chat_channels.rs",
+        "exit_code": 0,
+        "maxima": {
+          "cognitive": 3,
+          "cyclomatic": 4
+        },
+        "note": "Earlier identical-revision metric call retained; not rerun."
+      }
+    ],
+    "note": "Whole-file maxima include pre-existing unchanged code; manual changed-line audit determines scope. No warning suppression added."
+  },
+  "unchanged_inputs": {
+    "page_coverage_ledgers": "git diff a3332a7fe..HEAD contains none",
+    "vendor_files": "git diff a3332a7fe..HEAD contains none",
+    "other_patch_fixtures": "12.0.5/12.0.7/12.1.0 unchanged; exact isolated sweep sets passed"
+  }
+}

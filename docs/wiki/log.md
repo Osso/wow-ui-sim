@@ -110,3 +110,7 @@ Added [host-backed initiative state](systems/neighborhood-initiatives.md), defer
 ## 2026-10-06 | 12.0.1 publication and extract audit
 
 Added [page audit](investigations/patch-12-0-1-api-audit.md), retained revision 6747895, 225-row exact-gap sweep, four epoch-gated retirements and exhaustive 252-row extract scout. New 477-row ledger distinguishes publication-only, superseded, behavioral-pending and editorial scope. Existing page ledgers unchanged; 12.0.0 fixture reconciled against 12.0.1 supersession. [Contract](../specs/patch-12-0-1-publication-sweep.md) owns final proof.
+
+## 12.0.1 gap closure follow-up
+
+Updated [audit](investigations/patch-12-0-1-api-audit.md), [spec](../specs/patch-12-0-1-publication-sweep.md) and per-ID review: 48 closed / three retained; runtime `eeccdea61`, five isolated sweeps, startup `[]`, bounded producer/inference limits. Page-coverage ledgers unchanged.

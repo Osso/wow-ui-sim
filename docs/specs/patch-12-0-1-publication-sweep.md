@@ -95,3 +95,31 @@ Presence setters mutate local account flags, with documented optional true argum
 ## Host policy and arena inputs
 
 Comparison permission shares the existing UnitIsUnit token policy, moved into `c_api`; existing inferred token rules are unchanged. Threat-state secrecy reads the same host restriction flag as UnitThreatLeadSituation; numeric threat-values secrecy remains a separate missing model. Housing cart removal, endgame field eligibility/activity classification and hidden spell-enchantment IDs use explicit host inputs, not invented native thresholds or source-ID mappings. Arena CC returns timers from host windows keyed by resolved GUID. INFERRED: unset policies are false, unknown/inactive CC is an empty duration; native CC production/selection/secrecy is not claimed. Concrete selectors, enabled/disabled inputs and expired/unknown timers are tested. Seven publication IDs close.
+
+## Gap closure result — verified runtime eeccdea61
+
+Original 51 IDs: **48 publication-closed / 3 retained**. Every ID retains baseline/current observations and its bounded behavior filter in [gap review](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gap-review.json). This is not full 51-gap closure or native parity.
+
+| Retained ID | Evidence / boundary |
+|---|---|
+| wt-global-api-C_CatalogShop.BulkRefundDecors-224 | GUID-array command documented, but no refundable-decor transaction, settlement or service-response model; no no-op publisher added |
+| wt-global-api-C_Secrets.ShouldUnitThreatValuesBeSecret-287 | Numeric threat helpers remain temporary constant defaults; categorical threat-state policy is not numeric threat secrecy |
+| wt-scriptobjects-NamePlate:SetStackingBoundsFrame-349 | Engine-managed acquisition unavailable; permanent C_NamePlate shim returns no plates because 3D nameplates are out of scope; cached empty mixin setter is not factory proof |
+
+Five final sweeps run independently with `--test-threads=1`, default debug retail, `--build-host local`, existing target directory:
+
+| Patch | Rows | OK | Exact retained gaps | Result |
+|---|---:|---:|---:|---|
+| 12.0.0 | 1010 | 987 | 23 | PASS |
+| 12.0.1 | 225 | 222 | 3 | PASS |
+| 12.0.5 | 363 | 352 | 11 | PASS |
+| 12.0.7 | 174 | 171 | 3 | PASS |
+| 12.1.0 | 778 | 773 | 5 | PASS |
+
+12.0.0 fixture removes its four reopened retirement IDs; 12.0.1 removes 48 closed IDs. Other three fixtures stay unchanged; their exact sweeps pass. The specified `P1201_SWEEP_OUT`/`P1200_SWEEP_OUT` cache artifacts are retained, with copies in session evidence.
+
+Thirteen new targeted regressions pass. Overlapping subsystem filters: audio 12 across direct/prefork phases, prediction 17, death recap 6, outfits 24, secrets 6; lib frame security 1 and CVar storage 9 pass. The first prediction regression run had 16 pass / 1 fail: migrating the factory omitted the old identity `__tostring`. Source comparison against master `a3332a7fe` identified that omission; restored prefix/instance labels make all 17 pass. No full master runtime comparison was run.
+
+`cargo fmt --check` and local helper `--check` pass. Startup built separately, then `timeout 90 python3 <absolute-worktree>/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors`: exit 0, JSON `[]`, CLEAN / zero errors. Six pre-existing vendor-manifest warnings remain unchanged; no suppressions or vendor edits. Rust metrics/manual changed-line audit found no threshold blockers. [Proof ledger](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gaps-proof.json) retains exact argv/revisions, original RED failures, final counts and inferred choices.
+
+Strict 12.0.0 preservation is source-gate inspected, not separately runtime-proven. No release, extra target directories, agents/models, push, merge, crafting/order changes, or page-coverage ledger edits. Current source/page ledgers are historical audit artifacts and were not relabeled as behavioral/native coverage.

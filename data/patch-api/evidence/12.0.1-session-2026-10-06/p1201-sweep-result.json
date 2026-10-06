@@ -1161,13 +1161,13 @@
       "symbol": "minimapTrackedInfov2"
     },
     "observed": {
-      "default": "0",
+      "default": null,
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": "0"
+      "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-nameplateLargerScale-493": {
     "expected": {
@@ -1179,13 +1179,13 @@
       "symbol": "nameplateLargerScale"
     },
     "observed": {
-      "default": "1.200000",
+      "default": null,
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": "1.200000"
+      "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-nameplateOtherBottomInset-494": {
     "expected": {
@@ -1233,13 +1233,13 @@
       "symbol": "nameplatePlayerLargerScale"
     },
     "observed": {
-      "default": "1.800000",
+      "default": null,
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": "1.800000"
+      "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-nameplateSelfAlpha-497": {
     "expected": {
@@ -1251,13 +1251,13 @@
       "symbol": "nameplateSelfAlpha"
     },
     "observed": {
-      "default": "0.750000",
+      "default": null,
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": "0.750000"
+      "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-nameplateSimplifiedScale-470": {
     "expected": {
@@ -1413,13 +1413,13 @@
       "symbol": "useCompactPartyFrames"
     },
     "observed": {
-      "default": "0",
+      "default": null,
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
-      "value": "0"
+      "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-events-BULK_PURCHASE_RESULT_RECEIVED-408": {
     "expected": {
@@ -1469,11 +1469,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "pcall=true; return=true; registered=true",
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_ENCOUNTER_EVENT\"; registered=false",
       "kind": "event",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-events-ENCOUNTER_TIMELINE_VIEW_ACTIVATED-392": {
     "expected": {
@@ -1685,11 +1685,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"UNIT_ARENA_COOLDOWNS_UPDATE\"; registered=false",
+      "detail": "pcall=true; return=true; registered=true",
       "kind": "event",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-BNSetAFK-303": {
     "expected": {
@@ -1775,11 +1775,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_BattleNet.SetDND-223": {
     "expected": {
@@ -1793,11 +1793,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CatalogShop.BulkRefundDecors-224": {
     "expected": {
@@ -1919,11 +1919,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CombatAudioAlert.GetCategoryVolume-231": {
     "expected": {
@@ -1937,11 +1937,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CombatAudioAlert.GetSpeakerVolume-306": {
     "expected": {
@@ -1991,11 +1991,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CombatAudioAlert.SetCategoryVolume-234": {
     "expected": {
@@ -2009,11 +2009,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CombatAudioAlert.SetSpeakerVolume-307": {
     "expected": {
@@ -2117,11 +2117,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_DelvesUI.GetPlayerCompanionPDEID-237": {
     "expected": {
@@ -2459,11 +2459,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_EncounterWarnings.GetWarningsShown-256": {
     "expected": {
@@ -2477,11 +2477,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_EncounterWarnings.SetPlayCustomSoundsWhenHidden-257": {
     "expected": {
@@ -2495,11 +2495,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_EncounterWarnings.SetWarningsShown-258": {
     "expected": {
@@ -2513,11 +2513,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_GuildInfo.GetInfoText-259": {
     "expected": {
@@ -2585,11 +2585,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingCatalog.CanDestroyEntry-308": {
     "expected": {
@@ -2945,11 +2945,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_LFGList.ListingUsesEndgameEditRestrictions-282": {
     "expected": {
@@ -2963,11 +2963,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_LossOfControl.GetActiveLossOfControlDuration-283": {
     "expected": {
@@ -3035,11 +3035,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Secrets.CanCompareUnitTokens-285": {
     "expected": {
@@ -3053,11 +3053,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Secrets.ShouldUnitThreatStateBeSecret-286": {
     "expected": {
@@ -3071,11 +3071,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Secrets.ShouldUnitThreatValuesBeSecret-287": {
     "expected": {
@@ -3197,11 +3197,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_TableUtil.FindIndexedMismatch-291": {
     "expected": {
@@ -3233,11 +3233,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_TransmogOutfitInfo.InTransmogEvent-293": {
     "expected": {
@@ -3251,11 +3251,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_TransmogOutfitInfo.IsUsableDiscountAvailable-294": {
     "expected": {
@@ -3269,11 +3269,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_TransmogOutfitInfo.SetOutfitToOutfit-295": {
     "expected": {
@@ -3287,11 +3287,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_TransmogOutfitInfo.TransmogEventActive-296": {
     "expected": {
@@ -3305,11 +3305,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_VoiceChat.GetChannel-333": {
     "expected": {
@@ -3341,11 +3341,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_VoiceChat.GetChannelForCommunityStream-337": {
     "expected": {
@@ -3359,11 +3359,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GetBattlefieldScore-313": {
     "expected": {
@@ -3449,11 +3449,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GetTotemDuration-298": {
     "expected": {
@@ -3467,11 +3467,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-GuildRosterSetOfficerNote-317": {
     "expected": {
@@ -3521,11 +3521,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
+      "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-SetGuildInfoText-319": {
     "expected": {
@@ -3701,11 +3701,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateMissingHealthPercent-351": {
     "expected": {
@@ -3719,11 +3719,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:GetCurrentHealth-352": {
     "expected": {
@@ -3755,11 +3755,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumDamageAbsorbs-354": {
     "expected": {
@@ -3773,11 +3773,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumHealAbsorbs-355": {
     "expected": {
@@ -3791,11 +3791,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumHealth-356": {
     "expected": {
@@ -3845,11 +3845,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealth-359": {
     "expected": {
@@ -3863,11 +3863,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealthPercent-360": {
     "expected": {
@@ -3881,11 +3881,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalDamageAbsorbs-361": {
     "expected": {
@@ -3899,11 +3899,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalHealAbsorbs-362": {
     "expected": {
@@ -3917,11 +3917,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHeals-363": {
     "expected": {
@@ -3935,11 +3935,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer-364": {
     "expected": {
@@ -3953,11 +3953,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "detail": "UnitHealPredictionCalculator; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-scriptobjects-UnitHealPredictionCalculator:ResetPredictedValues-365": {
     "expected": {
@@ -4025,11 +4025,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "FrameScriptObject; lookup=function",
+      "detail": "FrameScriptObject; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-widgets-GameTooltip:ClearPadding-377": {
     "expected": {

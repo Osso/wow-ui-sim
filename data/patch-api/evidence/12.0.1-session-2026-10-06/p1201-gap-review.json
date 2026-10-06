@@ -10,14 +10,25 @@
       "symbol": "minimapTrackedInfov2"
     },
     "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "review": "Epoch-gated CVar/method/event publication; strict 12.0.0 gates preserved. Cached consumers absent for removed symbols. Registration/default/override resurrection and current event eligibility regression passed.",
+    "status": "publication-closed",
+    "baseline_observed": {
       "default": "0",
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
       "value": "0"
     },
-    "review": "Removed CVar remains queryable. Check case-insensitive aliases and later policy before retiring state.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_retirement"
   },
   {
     "source_id": "wt-cvars-nameplateLargerScale-493",
@@ -30,14 +41,25 @@
       "symbol": "nameplateLargerScale"
     },
     "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "review": "Epoch-gated CVar/method/event publication; strict 12.0.0 gates preserved. Cached consumers absent for removed symbols. Registration/default/override resurrection and current event eligibility regression passed.",
+    "status": "publication-closed",
+    "baseline_observed": {
       "default": "1.200000",
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
       "value": "1.200000"
     },
-    "review": "Removed CVar remains queryable. Check case-insensitive aliases and later policy before retiring state.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_retirement"
   },
   {
     "source_id": "wt-cvars-nameplatePlayerLargerScale-496",
@@ -50,14 +72,25 @@
       "symbol": "nameplatePlayerLargerScale"
     },
     "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "review": "Epoch-gated CVar/method/event publication; strict 12.0.0 gates preserved. Cached consumers absent for removed symbols. Registration/default/override resurrection and current event eligibility regression passed.",
+    "status": "publication-closed",
+    "baseline_observed": {
       "default": "1.800000",
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
       "value": "1.800000"
     },
-    "review": "Removed CVar remains queryable. Check case-insensitive aliases and later policy before retiring state.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_retirement"
   },
   {
     "source_id": "wt-cvars-nameplateSelfAlpha-497",
@@ -70,14 +103,25 @@
       "symbol": "nameplateSelfAlpha"
     },
     "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "review": "Epoch-gated CVar/method/event publication; strict 12.0.0 gates preserved. Cached consumers absent for removed symbols. Registration/default/override resurrection and current event eligibility regression passed.",
+    "status": "publication-closed",
+    "baseline_observed": {
       "default": "0.750000",
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
       "value": "0.750000"
     },
-    "review": "Removed CVar remains queryable. Check case-insensitive aliases and later policy before retiring state.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_retirement"
   },
   {
     "source_id": "wt-cvars-useCompactPartyFrames-501",
@@ -90,14 +134,25 @@
       "symbol": "useCompactPartyFrames"
     },
     "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "review": "Epoch-gated CVar/method/event publication; strict 12.0.0 gates preserved. Cached consumers absent for removed symbols. Registration/default/override resurrection and current event eligibility regression passed.",
+    "status": "publication-closed",
+    "baseline_observed": {
       "default": "0",
       "default_mismatch": false,
       "detail": "value/default queried",
       "kind": "cvar",
       "value": "0"
     },
-    "review": "Removed CVar remains queryable. Check case-insensitive aliases and later policy before retiring state.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_retirement"
   },
   {
     "source_id": "wt-events-CHAT_MSG_ENCOUNTER_EVENT-405",
@@ -112,12 +167,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_ENCOUNTER_EVENT\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "review": "Epoch-gated CVar/method/event publication; strict 12.0.0 gates preserved. Cached consumers absent for removed symbols. Registration/default/override resurrection and current event eligibility regression passed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "pcall=true; return=true; registered=true",
       "kind": "event",
       "value": null
     },
-    "review": "Removed event remains registerable; source registry/epoch eligibility requires reconciliation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_retirement"
   },
   {
     "source_id": "wt-events-UNIT_ARENA_COOLDOWNS_UPDATE-402",
@@ -132,12 +198,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "review": "Epoch-gated CVar/method/event publication; strict 12.0.0 gates preserved. Cached consumers absent for removed symbols. Registration/default/override resurrection and current event eligibility regression passed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"UNIT_ARENA_COOLDOWNS_UPDATE\"; registered=false",
       "kind": "event",
       "value": null
     },
-    "review": "Unknown concrete arena event in event registry; registration/delivery model missing.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_retirement"
   },
   {
     "source_id": "wt-global-api-C_BattleNet.SetAFK-222",
@@ -152,12 +229,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Local presence flag writes or complete host channel/member snapshots with exact opaque ID selection. Remote presence, legacy BNGetInfo migration and voice transport/chat-lockdown secrecy are not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_social"
   },
   {
     "source_id": "wt-global-api-C_BattleNet.SetDND-223",
@@ -172,12 +260,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Local presence flag writes or complete host channel/member snapshots with exact opaque ID selection. Remote presence, legacy BNGetInfo migration and voice transport/chat-lockdown secrecy are not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_social"
   },
   {
     "source_id": "wt-global-api-C_CatalogShop.BulkRefundDecors-224",
@@ -196,8 +295,22 @@
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "review": "Refund GUID input is documented, but C_CatalogShop currently owns no refundable-decor transaction, inventory/currency settlement or service-response model. Kept raw-publication gap rather than installing a no-op.",
+    "status": "retained-model-or-scope-gap",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": false,
+    "native_parity": false,
+    "implementation": [
+      "src/c_api/c_catalog_shop.rs"
+    ],
+    "behavioral_test": null
   },
   {
     "source_id": "wt-global-api-C_CombatAudioAlert.GetCategoryVoice-230",
@@ -212,12 +325,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "State-backed category maps or warning boolean settings; independent concrete write/read transitions pass. No playback/native bounds/secret-argument enforcement claim.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_models"
   },
   {
     "source_id": "wt-global-api-C_CombatAudioAlert.GetCategoryVolume-231",
@@ -232,12 +356,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "State-backed category maps or warning boolean settings; independent concrete write/read transitions pass. No playback/native bounds/secret-argument enforcement claim.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_models"
   },
   {
     "source_id": "wt-global-api-C_CombatAudioAlert.SetCategoryVoice-233",
@@ -252,12 +387,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "State-backed category maps or warning boolean settings; independent concrete write/read transitions pass. No playback/native bounds/secret-argument enforcement claim.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_models"
   },
   {
     "source_id": "wt-global-api-C_CombatAudioAlert.SetCategoryVolume-234",
@@ -272,12 +418,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "State-backed category maps or warning boolean settings; independent concrete write/read transitions pass. No playback/native bounds/secret-argument enforcement claim.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_models"
   },
   {
     "source_id": "wt-global-api-C_DeathRecap.GetRecapMaxHealth-236",
@@ -292,12 +449,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Death-time health snapshot or loose-file-only markup transform; concrete missing/known recap and escaped/numeric/path/UTF-8 fixtures pass. Missing-ID and loose-file classification policies are inferred.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_utilities"
   },
   {
     "source_id": "wt-global-api-C_EncounterWarnings.GetPlayCustomSoundsWhenHidden-255",
@@ -312,12 +480,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "State-backed category maps or warning boolean settings; independent concrete write/read transitions pass. No playback/native bounds/secret-argument enforcement claim.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_models"
   },
   {
     "source_id": "wt-global-api-C_EncounterWarnings.GetWarningsShown-256",
@@ -332,12 +511,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "State-backed category maps or warning boolean settings; independent concrete write/read transitions pass. No playback/native bounds/secret-argument enforcement claim.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_models"
   },
   {
     "source_id": "wt-global-api-C_EncounterWarnings.SetPlayCustomSoundsWhenHidden-257",
@@ -352,12 +542,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "State-backed category maps or warning boolean settings; independent concrete write/read transitions pass. No playback/native bounds/secret-argument enforcement claim.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_models"
   },
   {
     "source_id": "wt-global-api-C_EncounterWarnings.SetWarningsShown-258",
@@ -372,12 +573,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "State-backed category maps or warning boolean settings; independent concrete write/read transitions pass. No playback/native bounds/secret-argument enforcement claim.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_models"
   },
   {
     "source_id": "wt-global-api-C_Housing.IsHousingMarketCartFullRemoveEnabled-262",
@@ -392,12 +604,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Shared UnitIsUnit comparison boundary, existing categorical threat-state restriction, explicit housing/LFG/enchantment inputs or GUID-keyed arena CC timer. Concrete enabled/disabled, selected/unknown and expired input cases pass; native input production/eligibility/catalog/secrecy is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_policy"
   },
   {
     "source_id": "wt-global-api-C_LFGList.IsPlayerValidForEndgameFieldEdits-281",
@@ -412,12 +635,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Shared UnitIsUnit comparison boundary, existing categorical threat-state restriction, explicit housing/LFG/enchantment inputs or GUID-keyed arena CC timer. Concrete enabled/disabled, selected/unknown and expired input cases pass; native input production/eligibility/catalog/secrecy is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_policy"
   },
   {
     "source_id": "wt-global-api-C_LFGList.ListingUsesEndgameEditRestrictions-282",
@@ -432,12 +666,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Shared UnitIsUnit comparison boundary, existing categorical threat-state restriction, explicit housing/LFG/enchantment inputs or GUID-keyed arena CC timer. Concrete enabled/disabled, selected/unknown and expired input cases pass; native input production/eligibility/catalog/secrecy is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_policy"
   },
   {
     "source_id": "wt-global-api-C_PvP.GetArenaCrowdControlDuration-284",
@@ -452,12 +697,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Shared UnitIsUnit comparison boundary, existing categorical threat-state restriction, explicit housing/LFG/enchantment inputs or GUID-keyed arena CC timer. Concrete enabled/disabled, selected/unknown and expired input cases pass; native input production/eligibility/catalog/secrecy is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_policy"
   },
   {
     "source_id": "wt-global-api-C_Secrets.CanCompareUnitTokens-285",
@@ -472,12 +728,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Shared UnitIsUnit comparison boundary, existing categorical threat-state restriction, explicit housing/LFG/enchantment inputs or GUID-keyed arena CC timer. Concrete enabled/disabled, selected/unknown and expired input cases pass; native input production/eligibility/catalog/secrecy is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_policy"
   },
   {
     "source_id": "wt-global-api-C_Secrets.ShouldUnitThreatStateBeSecret-286",
@@ -492,12 +759,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Shared UnitIsUnit comparison boundary, existing categorical threat-state restriction, explicit housing/LFG/enchantment inputs or GUID-keyed arena CC timer. Concrete enabled/disabled, selected/unknown and expired input cases pass; native input production/eligibility/catalog/secrecy is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_policy"
   },
   {
     "source_id": "wt-global-api-C_Secrets.ShouldUnitThreatValuesBeSecret-287",
@@ -516,8 +794,22 @@
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "review": "Numeric threat returns still come from temporary UnitDetailedThreatSituation/UnitThreatPercentageOfLead defaults. Categorical threat lead/state policy does not establish numeric threat secrecy. Kept raw-publication gap pending a numeric threat model.",
+    "status": "retained-model-or-scope-gap",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": false,
+    "native_parity": false,
+    "implementation": [
+      "src/lua_api/workarounds/temporary/unit_threat_defaults.rs"
+    ],
+    "behavioral_test": null
   },
   {
     "source_id": "wt-global-api-C_StringUtil.StripTextureMarkupForLooseFiles-290",
@@ -532,12 +824,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Death-time health snapshot or loose-file-only markup transform; concrete missing/known recap and escaped/numeric/path/UTF-8 fixtures pass. Missing-ID and loose-file classification policies are inferred.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_utilities"
   },
   {
     "source_id": "wt-global-api-C_TransmogCollection.IsSpellItemEnchantmentHiddenVisual-292",
@@ -552,12 +855,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Shared UnitIsUnit comparison boundary, existing categorical threat-state restriction, explicit housing/LFG/enchantment inputs or GUID-keyed arena CC timer. Concrete enabled/disabled, selected/unknown and expired input cases pass; native input production/eligibility/catalog/secrecy is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_policy"
   },
   {
     "source_id": "wt-global-api-C_TransmogOutfitInfo.InTransmogEvent-293",
@@ -572,12 +886,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Copied saved outfit slots stage into pending state without changing source; event/discount queries read explicit host inputs. Discount pricing/redemption/native merge semantics remain unverified.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_transmog"
   },
   {
     "source_id": "wt-global-api-C_TransmogOutfitInfo.IsUsableDiscountAvailable-294",
@@ -592,12 +917,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Copied saved outfit slots stage into pending state without changing source; event/discount queries read explicit host inputs. Discount pricing/redemption/native merge semantics remain unverified.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_transmog"
   },
   {
     "source_id": "wt-global-api-C_TransmogOutfitInfo.SetOutfitToOutfit-295",
@@ -612,12 +948,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Copied saved outfit slots stage into pending state without changing source; event/discount queries read explicit host inputs. Discount pricing/redemption/native merge semantics remain unverified.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_transmog"
   },
   {
     "source_id": "wt-global-api-C_TransmogOutfitInfo.TransmogEventActive-296",
@@ -632,12 +979,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Copied saved outfit slots stage into pending state without changing source; event/discount queries read explicit host inputs. Discount pricing/redemption/native merge semantics remain unverified.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_transmog"
   },
   {
     "source_id": "wt-global-api-C_VoiceChat.GetChannelForChannelType-335",
@@ -652,12 +1010,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Local presence flag writes or complete host channel/member snapshots with exact opaque ID selection. Remote presence, legacy BNGetInfo migration and voice transport/chat-lockdown secrecy are not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_social"
   },
   {
     "source_id": "wt-global-api-C_VoiceChat.GetChannelForCommunityStream-337",
@@ -672,12 +1041,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Local presence flag writes or complete host channel/member snapshots with exact opaque ID selection. Remote presence, legacy BNGetInfo migration and voice transport/chat-lockdown secrecy are not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
     },
-    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_social"
   },
   {
     "source_id": "wt-global-api-GetNumTotemSlots-297",
@@ -692,12 +1072,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "review": "Shared totem slot inputs drive active/expired duration/info results; actual player cast target GUID drives secret boolean. Non-player caster, native totem secrecy and native production are unmodeled.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=nil",
       "kind": "global",
       "value": null
     },
-    "review": "Global absent from raw and ordinary lookup. Requires a modeled global producer.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_globals"
   },
   {
     "source_id": "wt-global-api-GetTotemDuration-298",
@@ -712,12 +1103,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "review": "Shared totem slot inputs drive active/expired duration/info results; actual player cast target GUID drives secret boolean. Non-player caster, native totem secrecy and native production are unmodeled.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=nil",
       "kind": "global",
       "value": null
     },
-    "review": "Global absent from raw and ordinary lookup. Requires a modeled global producer.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_globals"
   },
   {
     "source_id": "wt-global-api-PlayerIsSpellTarget-299",
@@ -732,12 +1134,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "review": "Shared totem slot inputs drive active/expired duration/info results; actual player cast target GUID drives secret boolean. Non-player caster, native totem secrecy and native production are unmodeled.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "raw=nil; lookup=nil",
       "kind": "global",
       "value": null
     },
-    "review": "Global absent from raw and ordinary lookup. Requires a modeled global producer.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_globals"
   },
   {
     "source_id": "wt-scriptobjects-NamePlate:SetStackingBoundsFrame-349",
@@ -756,8 +1169,22 @@
       "kind": "unprobeable",
       "value": null
     },
-    "review": "NamePlate is not a CreateFrame type; current sweep has no supported NamePlate acquisition fixture. Publication unproven, not proof of absence.",
-    "status": "audit-pending"
+    "review": "Engine-managed NamePlate acquisition is unavailable: CreateFrame(NamePlate) fails and C_NamePlate acquisition intentionally returns no plates because 3D world nameplates are unsupported. Cached NamePlateScriptBaseMixin defines an empty setter, not an acquisition fixture. Kept unprobeable gap, not a synthetic factory.",
+    "status": "retained-model-or-scope-gap",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'NamePlate'",
+      "kind": "unprobeable",
+      "value": null
+    },
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": false,
+    "native_parity": false,
+    "implementation": [
+      "src/c_api/permanent_shims/c_nameplate.rs"
+    ],
+    "behavioral_test": null
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateCurrentHealthPercent-350",
@@ -772,12 +1199,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateMissingHealthPercent-351",
@@ -792,12 +1230,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetCurrentHealthPercent-353",
@@ -812,12 +1261,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumDamageAbsorbs-354",
@@ -832,12 +1292,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumHealAbsorbs-355",
@@ -852,12 +1323,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumIncomingHeals-358",
@@ -872,12 +1354,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealth-359",
@@ -892,12 +1385,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealthPercent-360",
@@ -912,12 +1416,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalDamageAbsorbs-361",
@@ -932,12 +1447,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalHealAbsorbs-362",
@@ -952,12 +1478,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHeals-363",
@@ -972,12 +1509,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer-364",
@@ -992,12 +1540,23 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Modeled prediction values, mode-dependent clamp maxima and supplied curve evaluation. Factory moved out of temporary defaults; object identity prefix preserved. Native heal/absorb/secrecy production is not claimed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "UnitHealPredictionCalculator; lookup=nil",
       "kind": "object-method",
       "value": null
     },
-    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_heal_prediction"
   },
   {
     "source_id": "wt-widgets-FrameScriptObject:SetPreventSecretValues-380",
@@ -1012,11 +1571,22 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
+      "detail": "FrameScriptObject; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Epoch-gated CVar/method/event publication; strict 12.0.0 gates preserved. Cached consumers absent for removed symbols. Registration/default/override resurrection and current event eligibility regression passed.",
+    "status": "publication-closed",
+    "baseline_observed": {
+      "default": null,
+      "default_mismatch": false,
       "detail": "FrameScriptObject; lookup=function",
       "kind": "object-method",
       "value": null
     },
-    "review": "Removed frame method still published. Coordinated epoch retirement must reconcile method surface, security state and legacy tests.",
-    "status": "audit-pending"
+    "verified_revision": "eeccdea6189dbb856bd5675de3d9a74635481019",
+    "publication_ok": true,
+    "native_parity": false,
+    "behavioral_test": "patch_12_0_1_retirement"
   }
 ]
