@@ -21,8 +21,7 @@ pub(crate) fn get_all_commands(state: &mut LuaState) -> LuaResult<u32> {
             crate::client_profile::ACTIVE,
             crate::client_profile::ACTIVE_INTERFACE_VERSION,
         )
-        .iter()
-        .map(|name| ((*name).to_owned(), CONSOLE_COMMAND_TYPE_COMMAND)),
+        .map(|name| (name.to_owned(), CONSOLE_COMMAND_TYPE_COMMAND)),
     );
     // INFERRED: stable case-insensitive ordering; native ordering is undocumented.
     records.sort_by_key(|(name, _)| name.to_lowercase());
@@ -38,14 +37,34 @@ pub(crate) fn get_all_commands(state: &mut LuaState) -> LuaResult<u32> {
 fn native_command_names(
     profile: crate::client_profile::ClientProfile,
     version: u32,
-) -> &'static [&'static str] {
-    // 12.0.7 wikitext command additions; no later command removals in 12.1.0.
-    // INFERRED: retain additions in later retail epochs, not unmeasured profiles.
-    if profile == crate::client_profile::ClientProfile::Retail && version >= 120007 {
+) -> impl Iterator<Item = &'static str> {
+    // 11.2.7 additions precede all supported retail epochs. These are catalog
+    // records only: command execution and neighborhood service effects are unmodeled.
+    const BASELINE: &[&str] = &[
+        "NeighborhoodAddManager",
+        "NeighborhoodCancelInvitation",
+        "NeighborhoodGetInvites",
+        "NeighborhoodInviteResident",
+        "NeighborhoodRemoveManager",
+        "NeighborhoodSetName",
+        "NeighborhoodSetPublic",
+        "OfferNeighborhoodOwnership",
+        "PlayerDeclineHousingInvitation",
+        "PlayerGetHousingInvitation",
+    ];
+    let retail = profile == crate::client_profile::ClientProfile::Retail;
+    let baseline = if retail && version >= 120000 {
+        BASELINE
+    } else {
+        &[]
+    };
+    // INFERRED: later additions remain published, not on unmeasured profiles.
+    let later: &[&str] = if retail && version >= 120007 {
         &["fetchBleepProxies", "MemUsageStackTrace"]
     } else {
         &[]
-    }
+    };
+    baseline.iter().chain(later).copied()
 }
 
 fn create_command_record(state: &mut LuaState, name: &str, command_type: f64) -> Val {

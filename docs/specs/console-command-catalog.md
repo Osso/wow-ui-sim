@@ -58,6 +58,10 @@ This is simulator behavioral/publication evidence, not native-client metadata or
 - [ ] Validate unchanged Datamine root startup. The prior 863-member `[]` observation is invalidated: diagnostic trace recovered and silently discarded `__Datamine_45253` after `Missing FileName or FilePath` (`/tmp/forever-addon-runtime/datamine-recovery-trace-2do7026r/stderr`).
 - [ ] Resolve the observed nil enum input and nil `tagToActor` errors exposed by the real chat-dispatched `/dm ui` open/close attempt before crediting a bounded interaction; no missing-function cause is established (`/tmp/forever-addon-audit/verify-datamine-ui-failure-ledger.json`).
 
+## 11.2.7 baseline catalog — 2026-10-06
+
+The ten command names in revision 6726771's separate Commands table are published as Command records from the earliest supported retail epoch, 12.0.0. `tests/patch_11_2_7_retirement.rs` verifies all ten exact names/types; `tests/patch_11_2_7_publication_sweep.rs` observes each occurrence after cached Game load. Classic profiles omit these records. No neighborhood command execution, service effects or native metadata fidelity is claimed.
+
 ## Out of scope
 
-Commands beyond the two documented 12.0.7 additions, macro/script records, native category/help metadata, command execution, full client catalog completeness and native-client conformance. Cached Forever `ConsoleDocumentation.lua` establishes the global and record shape; local Wowless `data/impl/ConsoleGetAllCommands.lua` supplies the CVar-only precedent, not native verification.
+Commands beyond the ten documented 11.2.7 and two 12.0.7 additions, macro/script records, native category/help metadata, command execution, full client catalog completeness and native-client conformance. Cached Forever `ConsoleDocumentation.lua` establishes the global and record shape; local Wowless `data/impl/ConsoleGetAllCommands.lua` supplies the CVar-only precedent, not native verification.
