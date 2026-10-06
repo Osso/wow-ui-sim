@@ -1,0 +1,13 @@
+{
+  "revision": "60849b4dc148c1e04be393bd5248221eac4397d9",
+  "result": "PASS",
+  "sweep_observations": 508,
+  "ok": 414,
+  "exact_gaps": 94,
+  "original_gap_outcomes": 121,
+  "old_review_rows": 135,
+  "historical_closed_in_review": 41,
+  "later_fixtures": "all five byte-identical to dacd71799",
+  "page_coverage_files_unchanged": 6,
+  "runtime_and_tests_unchanged_since_proof": "0523068b2"
+}
