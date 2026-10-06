@@ -1,18 +1,15 @@
-//! Crafting helpers for `professions.rs`.
-//!
-//! Extracted to keep `professions.rs` under 750 lines.
-//! Provides `recipe_is_craftable` and `craft_recipe`, called by the
-//! `C_TradeSkillUI.IsRecipeCraftable` and `C_TradeSkillUI.CraftRecipe`
-//! dispatchers in `professions.rs`.
+//! Crafting inventory transactions and result production for C_TradeSkillUI.
 
+use super::{crafting_input, crafting_plan, crafting_tables};
 use crate::items;
 use crate::lua_api::game_data::CastingState;
 use crate::lua_api::globals::profession_data;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_api::script_helpers::fire_named_event_state;
 use crate::lua_api::state::BagItem;
-use rilua::Val;
+use crate::lua_bridge::stack_val;
 use rilua::vm::state::LuaState;
+use rilua::{LuaResult, Val};
 use std::collections::{BTreeSet, HashMap};
 
 const CRAFTING_CAST_DURATION_SECONDS: f64 = 2.0;
@@ -20,40 +17,28 @@ const DEFAULT_CRAFTING_ICON: &str = "Interface/Icons/INV_Misc_QuestionMark";
 
 /// Returns true iff the recipe exists in the catalogue AND all reagents are
 /// available in `player.bag_items` for the requested `count`.
-pub(super) fn recipe_is_craftable(state: &mut LuaState, recipe_id: i32, count: i32) -> bool {
-    let Some(recipe) = profession_data::get_recipe(recipe_id) else {
-        return false;
-    };
+pub(crate) fn recipe_is_craftable(state: &mut LuaState, recipe_id: i32, count: i32) -> bool {
     let Ok(sim) = borrow_state(state) else {
         return false;
     };
-    for reagent in recipe.reagents {
-        let needed = reagent.quantity * count;
-        let have: i32 = sim
-            .bag_items
-            .values()
-            .filter(|b| b.item_id == reagent.item_id)
-            .map(|b| b.stack_count)
-            .sum();
-        if have < needed {
-            return false;
-        }
-    }
-    true
+    let Some(slots) = sim.crafting.reagents.recipe_slots.get(&recipe_id) else {
+        return false;
+    };
+    let allocations = crafting_plan::default_allocations(slots);
+    crafting_plan::plan_deltas(&sim.crafting.reagents, recipe_id, &allocations, count)
+        .is_ok_and(|deltas| crafting_plan::has_resources(&sim, &deltas))
 }
 
 /// Consumes reagents from bags and adds output item if all reagents are available.
 /// Returns false and changes nothing when reagents are insufficient.
-pub(super) fn craft_recipe(state: &mut LuaState, recipe_id: i32, count: i32) -> bool {
-    let Some(plan) = craft_plan(state, recipe_id, count) else {
-        return false;
+pub(crate) fn craft_recipe(state: &mut LuaState, recipe_id: i32, count: i32) -> LuaResult<bool> {
+    let Some(plan) = craft_plan(state, recipe_id, count)? else {
+        return Ok(false);
     };
 
     let mut affected_bags = BTreeSet::new();
     {
-        let Ok(mut sim) = borrow_state_mut(state) else {
-            return false;
-        };
+        let mut sim = borrow_state_mut(state)?;
 
         if !sim
             .bag_items
@@ -61,10 +46,16 @@ pub(super) fn craft_recipe(state: &mut LuaState, recipe_id: i32, count: i32) -> 
             .any(|slot| slot.item_id == plan.output_item_id)
             && free_bag0_slot(&sim).is_none()
         {
-            return false;
+            return Ok(false);
         }
         let backpack_capacity = sim.bag_num_slots(0);
-        consume_reagents(&mut sim.bag_items, &plan.reagent_deltas, &mut affected_bags);
+        consume_reagents(&mut sim.bag_items, &plan.reagents.items, &mut affected_bags);
+        for (id, quantity) in &plan.reagents.currencies {
+            sim.currency_info
+                .get_mut(&(*id as i32))
+                .expect("currency preflighted")
+                .quantity -= quantity;
+        }
         let output_bag = add_output_item(
             &mut sim.bag_items,
             backpack_capacity,
@@ -81,30 +72,48 @@ pub(super) fn craft_recipe(state: &mut LuaState, recipe_id: i32, count: i32) -> 
     }
     fire_named_event_state(state, "BAG_UPDATE_DELAYED", &[]);
 
-    true
+    publish_crafting_result(state, &plan);
+    Ok(true)
 }
 
 struct CraftPlan {
     recipe_id: i32,
     cast_name: String,
-    reagent_deltas: Vec<(u32, i32)>,
+    reagents: crafting_plan::ReagentDeltas,
     output_item_id: u32,
     output_count: i32,
 }
 
-fn craft_plan(state: &mut LuaState, recipe_id: i32, count: i32) -> Option<CraftPlan> {
-    if !recipe_is_craftable(state, recipe_id, count) {
-        return None;
+fn craft_plan(state: &mut LuaState, recipe_id: i32, count: i32) -> LuaResult<Option<CraftPlan>> {
+    let Some(recipe) = profession_data::get_recipe(recipe_id) else {
+        return Ok(None);
+    };
+    let provided = stack_val(state, 3);
+    let allocations = if matches!(provided, Val::Nil) {
+        let sim = borrow_state(state)?;
+        let slots = sim
+            .crafting
+            .reagents
+            .recipe_slots
+            .get(&recipe_id)
+            .expect("catalog schematic installed");
+        crafting_plan::default_allocations(slots)
+    } else {
+        crafting_input::read_allocations(state, provided)?
+    };
+    let sim = borrow_state(state)?;
+    let reagents =
+        crafting_plan::plan_deltas(&sim.crafting.reagents, recipe_id, &allocations, count)?;
+    if !crafting_plan::has_resources(&sim, &reagents) {
+        return Ok(None);
     }
-
-    let recipe = profession_data::get_recipe(recipe_id)?;
-    Some(CraftPlan {
-        recipe_id: recipe.recipe_id,
-        cast_name: crafted_item_name(recipe).to_string(),
-        reagent_deltas: reagent_deltas(recipe, count),
+    Ok(Some(CraftPlan {
+        recipe_id,
+        cast_name: crafted_item_name(recipe).into(),
+        reagents,
         output_item_id: recipe.output_item_id,
         output_count: count,
-    })
+    }))
 }
 
 fn start_crafting_cast(state: &mut LuaState, plan: &CraftPlan) {
@@ -138,12 +147,41 @@ fn crafted_item_name(recipe: &profession_data::RecipeEntry) -> &'static str {
         .unwrap_or(recipe.name)
 }
 
-fn reagent_deltas(recipe: &profession_data::RecipeEntry, count: i32) -> Vec<(u32, i32)> {
-    recipe
-        .reagents
-        .iter()
-        .map(|reagent| (reagent.item_id, reagent.quantity * count))
-        .collect()
+fn publish_crafting_result(state: &mut LuaState, plan: &CraftPlan) {
+    let table = crafting_tables::rooted_table(state);
+    let returns = crafting_tables::regular_array(state, &plan.reagents.returns);
+    crate::lua_api::methods::table_set(state, table, "resourcesReturned", returns);
+    for (key, value) in [
+        ("itemID", plan.output_item_id as i32),
+        ("quantity", plan.output_count),
+        ("qualityProgress", 0),
+        ("critBonusSkill", 0),
+        ("multicraft", 0),
+        ("operationID", 0),
+        ("concentrationCurrencyID", 0),
+        ("concentrationSpent", 0),
+        ("ingenuityRefund", 0),
+    ] {
+        crate::lua_api::methods::table_set(state, table, key, Val::Num(f64::from(value)));
+    }
+    for key in [
+        "isCrit",
+        "recraftable",
+        "bonusCraft",
+        "firstCraftReward",
+        "isEnchant",
+        "hasIngenuityProc",
+    ] {
+        crate::lua_api::methods::table_set(state, table, key, Val::Bool(false));
+    }
+    let guid = crate::lua_api::methods::create_string(state, "");
+    crate::lua_api::methods::table_set(state, table, "itemGUID", guid);
+    let hyperlink =
+        crate::lua_api::methods::create_string(state, &format!("item:{}", plan.output_item_id));
+    crate::lua_api::methods::table_set(state, table, "hyperlink", hyperlink);
+    // INFERRED: result publication accompanies the existing immediate inventory commit;
+    // native asynchronous crafting completion/proc probabilities are not simulated here.
+    fire_named_event_state(state, "TRADE_SKILL_ITEM_CRAFTED_RESULT", &[table]);
 }
 
 fn consume_reagents(

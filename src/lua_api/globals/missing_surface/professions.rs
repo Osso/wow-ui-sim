@@ -11,8 +11,8 @@ mod professions_registration;
 mod professions_tables;
 mod professions_tracking;
 
-use super::profession_crafting::{craft_recipe, recipe_is_craftable};
 use super::{ensure_namespace, set_table_array};
+use crate::c_api::crafting_execution::{craft_recipe, recipe_is_craftable};
 use crate::lua_api::globals::{profession_data, spellbook_data};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_get, table_set,
@@ -563,7 +563,7 @@ fn c_trade_skill_ui_is_recipe_in_skill_line(state: &mut LuaState) -> LuaResult<u
 fn c_trade_skill_ui_craft_recipe(state: &mut LuaState) -> LuaResult<u32> {
     let recipe_id = i32::from_stack(state, 1)?;
     let count = Option::<i32>::from_stack(state, 2)?.unwrap_or(1).max(1);
-    let success = craft_recipe(state, recipe_id, count);
+    let success = craft_recipe(state, recipe_id, count)?;
     state.push(Val::Bool(success));
     Ok(1)
 }

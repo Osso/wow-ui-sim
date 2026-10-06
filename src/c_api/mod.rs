@@ -72,6 +72,8 @@ mod c_combat_log;
 mod c_combat_text;
 pub(crate) mod c_console;
 pub mod c_cooldown_viewer;
+#[cfg(feature = "retail-12-0-0")]
+mod c_crafting_orders;
 pub(crate) mod c_creature_info;
 pub mod c_cursor;
 pub mod c_curve_util;
@@ -179,6 +181,11 @@ pub(crate) mod class_talent_commands;
 mod club_inputs;
 mod club_members;
 pub mod club_model;
+pub(crate) mod crafting_execution;
+pub(crate) mod crafting_input;
+pub(crate) mod crafting_plan;
+pub mod crafting_reagents;
+pub(crate) mod crafting_tables;
 #[cfg(feature = "retail-12-0-5")]
 pub mod equipment_set_command;
 #[cfg(feature = "retail-12-0-7")]

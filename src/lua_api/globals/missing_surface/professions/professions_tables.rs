@@ -161,6 +161,7 @@ pub(super) fn recipe_schematic_table(
     };
 
     let table = create_table_with_capacity(state, RECIPE_SCHEMATIC_HASH_FIELDS);
+    state.push(table);
     populate_recipe_schematic_table(state, table, recipe);
     table
 }
@@ -169,43 +170,15 @@ fn reagent_slot_schematic_table(
     state: &mut LuaState,
     recipe: &profession_data::RecipeEntry,
 ) -> Val {
-    let table = create_table(state);
-    for (index, reagent) in recipe.reagents.iter().enumerate() {
-        let value = reagent_slot_table(state, index, reagent);
-        set_table_array(state, table, (index + 1) as i64, value);
-    }
-    table
-}
-
-fn reagent_slot_table(
-    state: &mut LuaState,
-    index: usize,
-    reagent: &profession_data::ReagentSlot,
-) -> Val {
-    let table = create_table(state);
-    let reagents = reagent_entry_table(state, reagent);
-    let variable_quantities = create_table(state);
-    table_set_static(state, table, "reagents", reagents);
-    table_set_static(state, table, "slotIndex", Val::Num((index + 1) as f64));
-    table_set_static(state, table, "dataSlotIndex", Val::Num((index + 1) as f64));
-    table_set_static(state, table, "reagentType", Val::Num(1.0));
-    table_set_static(state, table, "required", Val::Bool(true));
-    table_set_static(state, table, "hiddenInCraftingForm", Val::Bool(false));
-    table_set_static(
-        state,
-        table,
-        "quantityRequired",
-        Val::Num(reagent.quantity as f64),
-    );
-    table_set_static(state, table, "variableQuantities", variable_quantities);
-    table
-}
-
-fn reagent_entry_table(state: &mut LuaState, reagent: &profession_data::ReagentSlot) -> Val {
-    let table = create_table(state);
-    let reagent = reagent_info_table(state, Some(reagent));
-    set_table_array(state, table, 1, reagent);
-    table
+    let slots = borrow_state(state)
+        .expect("crafting state installed")
+        .crafting
+        .reagents
+        .recipe_slots
+        .get(&recipe.recipe_id)
+        .cloned()
+        .expect("catalog recipe has a host schematic");
+    crate::c_api::crafting_tables::schematic_slots(state, &slots)
 }
 
 pub(super) fn profession_for_recipe(

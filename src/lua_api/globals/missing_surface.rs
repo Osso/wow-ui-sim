@@ -21,7 +21,6 @@ mod item_spell;
 mod mythic_plus;
 mod pet_battles;
 mod player_info;
-mod profession_crafting;
 pub(crate) mod professions;
 mod quest_choice;
 mod quest_log;

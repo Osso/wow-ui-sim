@@ -65,8 +65,6 @@ const TRADE_SKILL_METHODS: &[NamespaceMethod] = &[
         c_trade_skill_ui_get_dependent_reagents,
     ),
     ("GetCraftableCount", stub_zero),
-    ("GetItemSlotModifications", stub_empty_table),
-    ("GetItemSlotModificationsForOrder", stub_empty_table),
     ("GetRecraftRemovalWarnings", stub_empty_table),
     ("GetRemainingRecasts", stub_zero),
     ("IsRecraftItemEquipped", stub_false),

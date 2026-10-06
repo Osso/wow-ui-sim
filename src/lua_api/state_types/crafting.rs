@@ -7,6 +7,7 @@ use std::collections::HashSet;
 /// what the player has actually done with it.
 #[derive(Debug, Clone, Default)]
 pub struct CraftingState {
+    pub reagents: crate::c_api::crafting_reagents::CraftingInputs,
     /// Currently-selected profession id (Skill Line ID — matches the
     /// values in `profession_data`). `None` until `C_TradeSkillUI.
     /// SetProfessionChildSkillLineID` is called or the player opens

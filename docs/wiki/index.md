@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-12-0-1-api-audit.md) links 225 inventory observations, 252 extract rows, four epoch-gated retirements and exact negative control. [Scout](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract-scout.md) assigns every non-inventory ID without behavioral credit; existing coverage ledgers unchanged.
 
+## [2026-10-06] system | Crafting reagent contracts
+
+[Typed reagent state](systems/crafting-reagents.md) replaces flattened schematic entries and consumes nested crafting/order inputs. [Contract](../specs/crafting-reagent-contracts.md) keeps local policy and native server gaps explicit; proof pending, ledgers unchanged.
+
 ## [2026-10-05] investigation | Retirement successor fallout
 
 [Follow-up](investigations/patch-12-0-0-api-audit.md#retirement-fallout-follow-up) links six state-backed successor contracts and epoch-aware test migrations. Retired globals stay absent; zero-gap successor assertions replace exact-gap allowances.

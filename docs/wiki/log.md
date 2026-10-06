@@ -1,3 +1,7 @@
+## [2026-10-06] system | Crafting reagents
+
+[Model](systems/crafting-reagents.md) and [contract](../specs/crafting-reagent-contracts.md) document B08 typed inputs, rooted nested outputs and deterministic local resource/order boundaries. No coverage ledger credit assigned.
+
 ## [2026-10-05] investigation | Retirement successor fallout
 
 [Follow-up](investigations/patch-12-0-0-api-audit.md#retirement-fallout-follow-up) records all 17 reproduced failures and six reproduced successor gaps. Model tests use current APIs, legacy-only assertions retain epoch gates, and state-backed successors replace autostubs. [Contract and final proof](../specs/retirement-successors.md#verification--2026-10-05) define bounded scope, full-suite results, corrected post-suite controls and original-base reproductions. Page-coverage ledger unchanged.

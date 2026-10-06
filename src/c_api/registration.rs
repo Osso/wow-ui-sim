@@ -67,6 +67,8 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     #[cfg(feature = "retail-12-0-0")]
     super::c_trade_skill_quality::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
+    super::c_crafting_orders::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
     super::c_prey::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_weekly_rewards::register(state)?;
