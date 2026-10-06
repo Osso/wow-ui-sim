@@ -61,29 +61,8 @@ fn get_challenge_completion_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn set_completion_fields(state: &mut LuaState, info: Val, completion: &ChallengeCompletionInfo) {
-    for (name, value) in [
-        (
-            "mapChallengeModeID",
-            f64::from(completion.map_challenge_mode_id),
-        ),
-        ("level", f64::from(completion.level)),
-        ("time", completion.time),
-        (
-            "keystoneUpgradeLevels",
-            f64::from(completion.keystone_upgrade_levels),
-        ),
-    ] {
-        table_set_static(state, info, name, Val::Num(value));
-    }
-    for (name, value) in [
-        ("onTime", completion.on_time),
-        ("practiceRun", completion.practice_run),
-        ("isMapRecord", completion.is_map_record),
-        ("isAffixRecord", completion.is_affix_record),
-        ("isEligibleForScore", completion.is_eligible_for_score),
-    ] {
-        table_set_static(state, info, name, Val::Bool(value));
-    }
+    set_completion_numbers(state, info, completion);
+    set_completion_flags(state, info, completion);
     table_set_static(
         state,
         info,
@@ -100,4 +79,33 @@ fn set_completion_fields(state: &mut LuaState, info: Val, completion: &Challenge
             .new_overall_dungeon_score
             .map_or(Val::Nil, Val::Num),
     );
+}
+
+fn set_completion_numbers(state: &mut LuaState, info: Val, completion: &ChallengeCompletionInfo) {
+    for (name, value) in [
+        (
+            "mapChallengeModeID",
+            f64::from(completion.map_challenge_mode_id),
+        ),
+        ("level", f64::from(completion.level)),
+        ("time", completion.time),
+        (
+            "keystoneUpgradeLevels",
+            f64::from(completion.keystone_upgrade_levels),
+        ),
+    ] {
+        table_set_static(state, info, name, Val::Num(value));
+    }
+}
+
+fn set_completion_flags(state: &mut LuaState, info: Val, completion: &ChallengeCompletionInfo) {
+    for (name, value) in [
+        ("onTime", completion.on_time),
+        ("practiceRun", completion.practice_run),
+        ("isMapRecord", completion.is_map_record),
+        ("isAffixRecord", completion.is_affix_record),
+        ("isEligibleForScore", completion.is_eligible_for_score),
+    ] {
+        table_set_static(state, info, name, Val::Bool(value));
+    }
 }

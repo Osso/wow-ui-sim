@@ -53,8 +53,14 @@ fn get_item_info(state: &mut LuaState) -> LuaResult<u32> {
     state.push(info);
     let name = create_string(state, item.name);
     table_set_static(state, info, "name", name);
+    set_offer_fields(state, info, item.icon_file_data_id);
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn set_offer_fields(state: &mut LuaState, info: rilua::Val, icon_id: u32) {
     for (key, value) in [
-        ("texture", f64::from(item.icon_file_data_id)),
+        ("texture", f64::from(icon_id)),
         ("price", 0.0),
         ("stackCount", 1.0),
         ("numAvailable", -1.0),
@@ -69,7 +75,6 @@ fn get_item_info(state: &mut LuaState) -> LuaResult<u32> {
     ] {
         table_set_static(state, info, key, rilua::Val::Bool(value));
     }
-    Ok(1)
 }
 
 #[cfg(any(feature = "retail-12-0-7", feature = "retail-12-1-0"))]

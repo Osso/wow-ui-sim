@@ -77,6 +77,8 @@ fn seed_successor_inputs(env: &WowLuaEnv) {
     use wow_ui_sim::c_api::charge_state::SpellChargeState;
     let mut state = env.state().borrow_mut();
     state.cooldowns_restricted = false;
+    state.gcd = None;
+    state.spell_cooldowns.remove(&19750);
     state.spell_charges.clear();
     state.spell_charges.insert(
         19750,

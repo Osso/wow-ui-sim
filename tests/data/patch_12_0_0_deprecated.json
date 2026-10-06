@@ -29,7 +29,7 @@
       "old": "GetSpellCooldown",
       "successor": "C_Spell.GetSpellCooldown",
       "source": "12.0.0-api-changes.txt:133",
-      "probe": "A_Admin.SetSpellCooldown(19750,8); assert(select('#',C_Spell.GetSpellCooldown(19750))==1); local info=C_Spell.GetSpellCooldown(19750); assert(info.duration==8 and info.isActive==true and info.isEnabled==true and info.modRate==1)",
+      "probe": "A_Admin.SetSpellCooldown(19750,8); assert(select('#',C_Spell.GetSpellCooldown(19750))==1); local info=C_Spell.GetSpellCooldown(19750); assert(math.abs(info.duration-8)<1e-9 and info.isActive==true and info.isEnabled==true and info.modRate==1, string.format('duration=%.17g active=%s enabled=%s modRate=%.17g',info.duration,tostring(info.isActive),tostring(info.isEnabled),info.modRate))",
       "loaded_alias": null,
       "successor_source": "Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:268"
     },
