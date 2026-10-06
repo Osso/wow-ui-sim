@@ -24,7 +24,7 @@ pub(crate) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
 }
 
 fn read_totem(state: &LuaState) -> LuaResult<Option<Totem>> {
-    let slot = usize::from_stack(state, 1)?;
+    let slot = u32::from_stack(state, 1)? as usize;
     let sim = borrow_state(state)?;
     let totem = slot
         .checked_sub(1)
