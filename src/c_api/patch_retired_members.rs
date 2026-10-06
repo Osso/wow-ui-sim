@@ -109,10 +109,16 @@ const RETIRED_12_0_0_MEMBERS: &[(&str, &[&str])] = &[
 // There is no 12.0.1 epoch. Retire at the first supported epoch after the
 // removal, preserving the documented 12.0.0 surface.
 #[cfg(feature = "retail-12-0-5")]
-const RETIRED_12_0_1_MEMBERS: &[(&str, &[&str])] = &[(
-    "C_NamePlate",
-    &["GetTargetClampingInsets", "SetTargetClampingInsets"],
-)];
+const RETIRED_12_0_1_MEMBERS: &[(&str, &[&str])] = &[
+    (
+        "C_CombatAudioAlert",
+        &["GetSpeakerVolume", "SetSpeakerVolume"],
+    ),
+    (
+        "C_NamePlate",
+        &["GetTargetClampingInsets", "SetTargetClampingInsets"],
+    ),
+];
 
 #[cfg(feature = "retail-12-0-5")]
 const RETIRED_12_0_5_MEMBERS: &[(&str, &[&str])] = &[

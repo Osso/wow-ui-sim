@@ -1087,7 +1087,7 @@ mod audio_speaker_speed_tests {
     }
 }
 
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(all(feature = "retail-12-0-0", not(feature = "retail-12-0-5")))]
 mod audio_speaker_volume_tests {
     use super::{WowLuaEnv, env};
 
@@ -1234,7 +1234,7 @@ mod audio_format_setting_tests {
     }
 
     #[test]
-    fn audio_format_setting_arity_and_speaker_preservation() {
+    fn audio_format_setting_arity_and_speaker_speed_preservation() {
         let env = env();
         env.exec(
             r#"
@@ -1245,21 +1245,17 @@ mod audio_format_setting_tests {
                 return value
             end
             assert(C_CombatAudioAlert.SetSpeakerSpeed(1) == true)
-            assert(C_CombatAudioAlert.SetSpeakerVolume(25) == true)
             for _, value in ipairs({1, 2, 2}) do
                 assert(single_value("boolean", C_CombatAudioAlert.SetFormatSetting(0, 1, value)) == true,
                     "simulator accepted-write policy requires true")
                 assert(single_value("number", C_CombatAudioAlert.GetFormatSetting(0, 1)) == value)
                 assert(C_CombatAudioAlert.GetSpeakerSpeed() == 1)
-                assert(C_CombatAudioAlert.GetSpeakerVolume() == 25)
             end
             assert(C_CombatAudioAlert.SetSpeakerSpeed(2) == true)
-            assert(C_CombatAudioAlert.SetSpeakerVolume(75) == true)
             assert(C_CombatAudioAlert.GetFormatSetting(0, 1) == 2)
             assert(C_CombatAudioAlert.SetFormatSetting(0, 1, 3) == true)
             assert(C_CombatAudioAlert.GetFormatSetting(0, 1) == 3)
             assert(C_CombatAudioAlert.GetSpeakerSpeed() == 2)
-            assert(C_CombatAudioAlert.GetSpeakerVolume() == 75)
             "#,
         )
         .unwrap();

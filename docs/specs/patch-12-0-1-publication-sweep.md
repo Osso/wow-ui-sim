@@ -10,7 +10,7 @@ Require the exact observed non-OK ID set to equal `tests/data/patch_12_0_1_sweep
 
 ## Retirement epoch
 
-`Cargo.toml` and `src/client_profile.rs` expose 12.0.0, 12.0.5, 12.0.7 and later epochs; no 12.0.1 feature exists. The source explicitly compares 12.0.0 (65655) to 12.0.1 (66838). `C_NamePlate.GetTargetClampingInsets` and `SetTargetClampingInsets` were observed raw-absent but fabricated by ordinary namespace lookup. Mark them retired at `retail-12-0-5`, the first supported epoch after removal. A 12.0.0 gate would incorrectly retire APIs on the preceding surface. Earlier-epoch preservation is source-gate inspected, not runtime-proven under this retail-only task.
+`Cargo.toml` and `src/client_profile.rs` expose 12.0.0, 12.0.5, 12.0.7 and later epochs; no 12.0.1 feature exists. The source explicitly compares 12.0.0 (65655) to 12.0.1 (66838). `C_NamePlate.GetTargetClampingInsets` and `SetTargetClampingInsets` were observed raw-absent but fabricated by ordinary namespace lookup. Mark them retired at `retail-12-0-5`, the first supported epoch after removal. A 12.0.0 gate would incorrectly retire APIs on the preceding surface. Earlier-epoch preservation is source-gate inspected, not runtime-proven under this retail-only task. The same gate stops the explicit `C_CombatAudioAlert.GetSpeakerVolume`/`SetSpeakerVolume` publishers and marks their keys retired. Earlier-only volume tests remain epoch-gated; current format/speed tests no longer invoke retired volume APIs. Category voice/volume successors remain real model gaps; no replacement stubs were invented.
 
 ## Verification
 
