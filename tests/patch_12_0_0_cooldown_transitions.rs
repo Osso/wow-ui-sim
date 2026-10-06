@@ -6,15 +6,34 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 fn cooldown_viewer_parent_identity_category_and_snapshots() {
     let env = WowLuaEnv::new().unwrap();
     for (id, category, spell) in [(701, 0, 19750), (702, 1, 642)] {
-        env.state().borrow_mut().cooldown_viewer_cooldowns.insert(id, CooldownViewerCooldown {
-            cooldown_id: id, category, spell_id: Some(spell), spell_category_id: Some(99),
-            override_spell_id: Some(19751), override_tooltip_spell_id: Some(19752),
-            equip_slot: Some(13), buff_slot: Some(2), linked_spell_ids: vec![19750, 642],
-            self_aura: true, has_aura: true, charges: true, is_known: true, is_invisible: false,
-            flags: 1, ..Default::default()
-        });
+        env.state().borrow_mut().cooldown_viewer_cooldowns.insert(
+            id,
+            CooldownViewerCooldown {
+                cooldown_id: id,
+                category,
+                spell_id: Some(spell),
+                spell_category_id: Some(99),
+                override_spell_id: Some(19751),
+                override_tooltip_spell_id: Some(19752),
+                equip_slot: Some(13),
+                buff_slot: Some(2),
+                linked_spell_ids: vec![19750, 642],
+                self_aura: true,
+                has_aura: true,
+                charges: true,
+                is_known: true,
+                is_invisible: false,
+                flags: 1,
+                ..Default::default()
+            },
+        );
     }
-    assert_shape(&env, "CooldownViewerDocumentation.lua", "CooldownViewerCooldown", "return C_CooldownViewer.GetCooldownViewerCooldownInfo(701)");
+    assert_shape(
+        &env,
+        "CooldownViewerDocumentation.lua",
+        "CooldownViewerCooldown",
+        "return C_CooldownViewer.GetCooldownViewerCooldownInfo(701)",
+    );
     env.exec(r#"
         local first = C_CooldownViewer.GetCooldownViewerCooldownInfo(701)
         local second = C_CooldownViewer.GetCooldownViewerCooldownInfo(702)
@@ -51,18 +70,27 @@ fn spell_cooldown_recovery_and_gcd_follow_cast_producer() {
         assert(EventCooldown.timeUntilEndOfStartRecovery > 0 and EventCooldown.timeUntilEndOfStartRecovery <= 1.5)
         BeforeRecovery = EventCooldown.timeUntilEndOfStartRecovery
     "#).unwrap();
-    assert_shape(&env, "SpellSharedDocumentation.lua", "SpellCooldownInfo", "return C_Spell.GetSpellCooldown(19750)");
+    assert_shape(
+        &env,
+        "SpellSharedDocumentation.lua",
+        "SpellCooldownInfo",
+        "return C_Spell.GetSpellCooldown(19750)",
+    );
     // Deterministic host-clock progression, no wall-clock sleeps.
     env.state().borrow_mut().start_time -= std::time::Duration::from_millis(500);
-    env.exec(r#"
+    env.exec(
+        r#"
         local next = C_Spell.GetSpellCooldown(19750)
         assert(next.isOnGCD == true and next.timeUntilEndOfStartRecovery < BeforeRecovery - 0.49)
         assert(next.timeUntilEndOfStartRecovery > 0)
         next.isOnGCD = false
         assert(EventCooldown.isOnGCD == true and C_Spell.GetSpellCooldown(19750).isOnGCD == true)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     env.state().borrow_mut().start_time -= std::time::Duration::from_secs(2);
-    env.exec(r#"
+    env.exec(
+        r#"
         local expired = C_Spell.GetSpellCooldown(19750)
         assert(expired.isOnGCD == false and expired.timeUntilEndOfStartRecovery == nil)
         assert(expired.duration == 0 and expired.isActive == false)
@@ -70,5 +98,7 @@ fn spell_cooldown_recovery_and_gcd_follow_cast_producer() {
         local spellOnly = C_Spell.GetSpellCooldown(642)
         assert(spellOnly.duration == 300 and spellOnly.isActive == true)
         assert(spellOnly.isOnGCD == false and spellOnly.timeUntilEndOfStartRecovery == nil)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }

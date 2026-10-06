@@ -47,8 +47,14 @@ pub(crate) fn assert_shape(env: &WowLuaEnv, file: &str, name: &str, getter: &str
 #[test]
 fn advanced_filter_parent_and_playstyle_roundtrip() {
     let env = WowLuaEnv::new().unwrap();
-    assert_shape(&env, "LFGListInfoDocumentation.lua", "AdvancedFilterOptions", "return C_LFGList.GetAdvancedFilter()");
-    env.exec(r#"
+    assert_shape(
+        &env,
+        "LFGListInfoDocumentation.lua",
+        "AdvancedFilterOptions",
+        "return C_LFGList.GetAdvancedFilter()",
+    );
+    env.exec(
+        r#"
         local before = C_LFGList.GetAdvancedFilter()
         for index = 1, 4 do
             local selected = C_LFGList.GetAdvancedFilter()
@@ -63,23 +69,48 @@ fn advanced_filter_parent_and_playstyle_roundtrip() {
         end
         for flag = 1, 4 do assert(before['generalPlaystyle' .. flag] == false) end
         assert(C_LFGList.GetSearchResultInfo(1).name == '+15 Mists chill run')
-    "#).unwrap();
-    assert_shape(&env, "LFGListInfoDocumentation.lua", "AdvancedFilterOptions", "return C_LFGList.GetAdvancedFilter()");
+    "#,
+    )
+    .unwrap();
+    assert_shape(
+        &env,
+        "LFGListInfoDocumentation.lua",
+        "AdvancedFilterOptions",
+        "return C_LFGList.GetAdvancedFilter()",
+    );
 }
 
 #[test]
 fn appearance_parent_and_old_casing_absence() {
     use wow_ui_sim::lua_api::state::AppearanceSourceInfo;
     let env = WowLuaEnv::new().unwrap();
-    env.state().borrow_mut().transmog_appearance_sources.insert(901, AppearanceSourceInfo {
-        category: 4, item_appearance_id: 902, can_have_illusion: true, icon: 903,
-        is_collected: false, item_link: "item:fixture".into(), transmoglink: "transmog:fixture".into(),
-        source_type: Some(3), item_subclass: 7, ignore_model_attachment_checks_for_illusion: true,
-    });
-    assert_shape(&env, "TransmogItemsDocumentation.lua", "TransmogAppearanceSourceInfoData", "return C_TransmogCollection.GetAppearanceSourceInfo(901)");
-    env.exec(r#"
+    env.state().borrow_mut().transmog_appearance_sources.insert(
+        901,
+        AppearanceSourceInfo {
+            category: 4,
+            item_appearance_id: 902,
+            can_have_illusion: true,
+            icon: 903,
+            is_collected: false,
+            item_link: "item:fixture".into(),
+            transmoglink: "transmog:fixture".into(),
+            source_type: Some(3),
+            item_subclass: 7,
+            ignore_model_attachment_checks_for_illusion: true,
+        },
+    );
+    assert_shape(
+        &env,
+        "TransmogItemsDocumentation.lua",
+        "TransmogAppearanceSourceInfoData",
+        "return C_TransmogCollection.GetAppearanceSourceInfo(901)",
+    );
+    env.exec(
+        r#"
         local info = C_TransmogCollection.GetAppearanceSourceInfo(901)
         assert(info.itemSubclass == 7)
         assert(rawget(info, 'itemSubClass') == nil and info.itemSubClass == nil)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }

@@ -85,10 +85,15 @@ mod current {
         let state = state.borrow();
         let now = state.start_time.elapsed().as_secs_f64();
         let gcd_known = state.gcd.is_some();
-        let recovering = state.gcd.is_some_and(|(start, duration)| start + duration > now);
+        let recovering = state
+            .gcd
+            .is_some_and(|(start, duration)| start + duration > now);
         let is_on_gcd = state.gcd.is_some_and(|(start, duration)| {
-            recovering && state.spell_cooldowns.get(&19750)
-                .is_none_or(|cooldown| cooldown.start + cooldown.duration <= start + duration)
+            recovering
+                && state
+                    .spell_cooldowns
+                    .get(&19750)
+                    .is_none_or(|cooldown| cooldown.start + cooldown.duration <= start + duration)
         });
         let restricted = state.cooldowns_restricted;
         drop(state);
@@ -115,7 +120,9 @@ mod current {
             assert(count == {expected_count})
             "#
         ))
-        .expect("five required fields and model-derived optional metadata; only numbers may be private");
+        .expect(
+            "five required fields and model-derived optional metadata; only numbers may be private",
+        );
     }
 
     fn check(env: &WowLuaEnv, query: &str, expected: (f64, f64), restricted: bool) {

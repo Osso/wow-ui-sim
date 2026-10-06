@@ -617,7 +617,9 @@ fn test_transmog_sets_get_variant_sets_empty() {
 #[test]
 fn test_transmog_sets_get_set_info() {
     let env = env();
-    let missing: bool = env.eval("return C_TransmogSets.GetSetInfo(1) == nil").unwrap();
+    let missing: bool = env
+        .eval("return C_TransmogSets.GetSetInfo(1) == nil")
+        .unwrap();
     assert!(missing, "unknown catalog entry must not fabricate set zero");
 }
 
