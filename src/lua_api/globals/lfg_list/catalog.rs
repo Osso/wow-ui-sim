@@ -422,7 +422,7 @@ fn set_advanced_filter_activities(state: &mut LuaState, info: Val, activities: &
     table_set(state, info, "activities", activities_table);
 }
 
-pub(super) fn u32_array_table(state: &mut LuaState, values: &[u32]) -> Val {
+pub(crate) fn u32_array_table(state: &mut LuaState, values: &[u32]) -> Val {
     let table = create_table(state);
     let Val::Table(table_ref) = table else {
         return table;
