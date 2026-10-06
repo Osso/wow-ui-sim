@@ -221,11 +221,12 @@ fn crafting_order_secret_arguments_obey_caller_taint() {
         local request={skillLineAbilityID=9001,orderType=0,orderDuration=0,tipAmount=0,customerNotes='',
             reagentInfos={{reagent=secretwrap({currencyID=2803}),quantity=6},
                 {reagent={itemID=210937},quantity=2}},craftingReagentItems={}}
-        C_CraftingOrders.PlaceNewOrder(secretwrap(request))
+        local wrapped = secretwrap(request)
+        C_CraftingOrders.PlaceNewOrder(wrapped)
         assert(#C_CraftingOrders.GetMyOrders()==1)
         local function addon()
             assert(debug.getstacktaint()=='CraftingAddon')
-            assert(not pcall(C_CraftingOrders.PlaceNewOrder,secretwrap(request)))
+            assert(not pcall(C_CraftingOrders.PlaceNewOrder,wrapped))
             assert(not pcall(C_CraftingOrders.PlaceNewOrder,request))
             assert(#C_CraftingOrders.GetMyOrders()==1)
             request.reagentInfos[1].reagent={currencyID=2803}
