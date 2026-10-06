@@ -117,7 +117,7 @@ fn profession_crafting_slot_shapes_and_variable_quantities() {
     env.exec(r#"
         local mods = C_TradeSkillUI.GetItemSlotModifications('Item-1-42')
         assert(#mods == 2)
-        for _, info in ipairs(mods) do CheckCraftingShape('CraftingItemSlotModification', info); assert(info.itemID == nil) end
+        for _, info in ipairs(mods) do CheckCraftingShape('CraftingItemSlotModification', info); assert(info.itemID == nil and rawget(info,'itemID') == nil) end
         assert(mods[1].dataSlotIndex == 1 and mods[1].reagent.currencyID == 2803 and mods[1].reagent.itemID == nil)
         assert(mods[2].dataSlotIndex == 2 and mods[2].reagent.itemID == 210937 and mods[2].reagent.currencyID == nil)
         assert(#C_TradeSkillUI.GetItemSlotModifications('Item-unknown') == 0)
@@ -160,7 +160,8 @@ fn crafting_order_nested_inputs_outputs_and_snapshots() {
         assert(#first.reagents == 2)
         for _, info in ipairs(first.reagents) do
             CheckCraftingShape('CraftingOrderReagentInfo', info)
-            assert(info.reagent == nil and info.reagentInfo.itemID == nil)
+            assert(info.reagent == nil and rawget(info,'reagent') == nil)
+            assert(info.reagentInfo.itemID == nil and rawget(info.reagentInfo,'itemID') == nil)
             assert(info.source == Enum.CraftingOrderReagentSource.Customer and info.isBasicReagent)
         end
         assert(first.reagents[1].reagentInfo.reagent.itemID == 210937 and first.reagents[1].reagentInfo.quantity == 2)
@@ -194,13 +195,14 @@ fn crafting_nested_allocations_consume_items_currency_and_publish_returns() {
         local frame=CreateFrame('Frame')
         frame:RegisterEvent('TRADE_SKILL_ITEM_CRAFTED_RESULT')
         frame:SetScript('OnEvent',function(_,_,data) CraftingResults[#CraftingResults+1]=data end)
-        local allocations={{reagent={currencyID=2803},dataSlotIndex=1,quantity=6},
-            {reagent={itemID=210937},dataSlotIndex=2,quantity=2}}
+        local mods=C_TradeSkillUI.GetItemSlotModifications('Item-1-42')
+        local allocations={{reagent=mods[1].reagent,dataSlotIndex=mods[1].dataSlotIndex,quantity=6},
+            {reagent=mods[2].reagent,dataSlotIndex=mods[2].dataSlotIndex,quantity=2}}
         for _,info in ipairs(allocations) do CheckCraftingShape('CraftingReagentInfo',info) end
         assert(C_TradeSkillUI.CraftRecipe(100001,2,allocations))
         local result=CraftingResults[1]
         assert(result.quantity == 2 and result.itemID == 211993 and #result.resourcesReturned == 2)
-        for _,resource in ipairs(result.resourcesReturned) do CheckCraftingShape('CraftingResourceReturnInfo',resource); assert(resource.itemID == nil) end
+        for _,resource in ipairs(result.resourcesReturned) do CheckCraftingShape('CraftingResourceReturnInfo',resource); assert(resource.itemID == nil and rawget(resource,'itemID') == nil) end
         assert(result.resourcesReturned[1].reagent.currencyID == 2803 and result.resourcesReturned[1].quantity == 4)
         assert(result.resourcesReturned[2].reagent.itemID == 210937 and result.resourcesReturned[2].quantity == 2)
         assert(C_CurrencyInfo.GetCurrencyInfo(2803).quantity == 12)
@@ -210,6 +212,30 @@ fn crafting_nested_allocations_consume_items_currency_and_publish_returns() {
     let state = env.state().borrow();
     assert_eq!(state.bag_items.values().filter(|item| item.item_id == 210937).map(|item| item.stack_count).sum::<i32>(),8);
     assert_eq!(state.bag_items.values().filter(|item| item.item_id == 211993).map(|item| item.stack_count).sum::<i32>(),2);
+}
+
+#[test]
+fn crafting_order_secret_arguments_obey_caller_taint() {
+    let env = fixture();
+    env.exec(r#"
+        local request={skillLineAbilityID=9001,orderType=0,orderDuration=0,tipAmount=0,customerNotes='',
+            reagentInfos={{reagent=secretwrap({currencyID=2803}),quantity=6},
+                {reagent={itemID=210937},quantity=2}},craftingReagentItems={}}
+        C_CraftingOrders.PlaceNewOrder(secretwrap(request))
+        assert(#C_CraftingOrders.GetMyOrders()==1)
+        local function addon()
+            assert(debug.getstacktaint()=='CraftingAddon')
+            assert(not pcall(C_CraftingOrders.PlaceNewOrder,secretwrap(request)))
+            assert(not pcall(C_CraftingOrders.PlaceNewOrder,request))
+            assert(#C_CraftingOrders.GetMyOrders()==1)
+            request.reagentInfos[1].reagent={currencyID=2803}
+            C_CraftingOrders.PlaceNewOrder(request)
+            assert(#C_CraftingOrders.GetMyOrders()==2)
+            assert(debug.getstacktaint()=='CraftingAddon')
+        end
+        debug.setobjecttaint(addon,'CraftingAddon')
+        addon()
+    "#).unwrap();
 }
 
 #[test]

@@ -190,6 +190,10 @@ pub(crate) fn orders(state: &mut LuaState, orders: &[CraftingOrder]) -> Val {
 }
 
 pub(crate) fn read_field(state: &mut LuaState, table: Val, key: &str) -> LuaResult<Val> {
+    let Val::Table(reference) = table else {
+        return Err(rilua::runtime_error("crafting structure must be a table"));
+    };
+    rilua::table_security::check_table_access(state, reference, None)?;
     let value = table_get(state, table, key);
     rilua::table_security::unwrap_secret(state, value)
 }

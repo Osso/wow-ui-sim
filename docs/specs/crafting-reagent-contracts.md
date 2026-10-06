@@ -8,6 +8,7 @@
 - [ ] Consume nested CraftingReagentInfo through CraftRecipe; preflight item/currency quantities before mutation and publish nested resource returns.
 - [ ] Parse every NewCraftingOrderInfo field and RegularReagentInfo/CraftingReagentInfo entries; post local orders without retaining Lua tables and return CraftingOrderReagentInfo.
 - [ ] Reject invalid identities, quantities, unknown slots/abilities and old-only flattened inputs without partial mutation.
+- [ ] Preserve VM table-access policy and AllowedWhenUntainted input authentication, including nested identities; reject secret inputs from tainted callers without changing state/taint.
 
 ## How it works
 

@@ -10,6 +10,7 @@ pub(crate) fn read_array(state: &LuaState, value: Val) -> LuaResult<Vec<Val>> {
     let Val::Table(reference) = value else {
         return Err(runtime_error("crafting array required"));
     };
+    rilua::table_security::check_table_access(state, reference, None)?;
     let table = state
         .gc
         .tables
@@ -33,10 +34,18 @@ pub(crate) fn integer(value: Val, label: &str, min: i32) -> LuaResult<i32> {
         ))),
     }
 }
+fn authenticate_table(state: &mut LuaState, value: Val) -> LuaResult<Val> {
+    let value = rilua::table_security::unwrap_secret(state, value)?;
+    let Val::Table(reference) = value else {
+        return Err(runtime_error("crafting structure must be a table"));
+    };
+    rilua::table_security::check_table_access(state, reference, None)?;
+    state.push(value);
+    Ok(value)
+}
+
 pub(crate) fn read_identity(state: &mut LuaState, value: Val) -> LuaResult<CraftingReagent> {
-    if !matches!(value, Val::Table(_)) {
-        return Err(runtime_error("nested crafting reagent required"));
-    }
+    let value = authenticate_table(state, value)?;
     let item = read_field(state, value, "itemID")?;
     let currency = read_field(state, value, "currencyID")?;
     // INFERRED: consumers branch on one identity; ambiguous/neither identities are rejected.
@@ -51,15 +60,14 @@ pub(crate) fn read_identity(state: &mut LuaState, value: Val) -> LuaResult<Craft
     }
 }
 pub(crate) fn read_regular(state: &mut LuaState, value: Val) -> LuaResult<RegularReagentInfo> {
-    if !matches!(value, Val::Table(_)) {
-        return Err(runtime_error("reagent info table required"));
-    }
+    let value = authenticate_table(state, value)?;
     let nested = read_field(state, value, "reagent")?;
     let reagent = read_identity(state, nested)?;
     let quantity = integer(read_field(state, value, "quantity")?, "quantity", 1)?;
     Ok(RegularReagentInfo { reagent, quantity })
 }
 pub(crate) fn read_allocation(state: &mut LuaState, value: Val) -> LuaResult<CraftingReagentInfo> {
+    let value = authenticate_table(state, value)?;
     let regular = read_regular(state, value)?;
     let data_slot_index = integer(
         read_field(state, value, "dataSlotIndex")?,
@@ -100,9 +108,7 @@ fn optional_text(state: &mut LuaState, table: Val, key: &str) -> LuaResult<Optio
     Ok(val_to_string(state, value))
 }
 pub(crate) fn read_order(state: &mut LuaState, table: Val) -> LuaResult<NewCraftingOrderInfo> {
-    if !matches!(table, Val::Table(_)) {
-        return Err(runtime_error("NewCraftingOrderInfo required"));
-    }
+    let table = authenticate_table(state, table)?;
     if !matches!(read_field(state, table, "reagentItems")?, Val::Nil) {
         return Err(runtime_error("reagentItems retired; use reagentInfos"));
     }
