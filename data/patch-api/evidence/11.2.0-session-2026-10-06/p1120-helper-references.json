@@ -1,0 +1,52 @@
+[
+  {
+    "batchcomplete": "",
+    "query": {
+      "pages": {
+        "637920": {
+          "pageid": 637920,
+          "ns": 3000,
+          "title": "API:FontString GetAlphaGradient",
+          "revisions": [
+            {
+              "revid": 6846733,
+              "parentid": 6820244,
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "*": "{{widgetmethod|system=SimpleFontStringAPI}}\n{{apisig|start, length {{=}} FontString:GetAlphaGradient()}}\n\n==Returns==\n:;start:{{apitype|number}}\n:;length:{{apitype|number}}\n\n==Patch changes==\n* {{Patch 11.2.0|note=Added.}}"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "batchcomplete": "",
+    "query": {
+      "pages": {
+        "637873": {
+          "pageid": 637873,
+          "ns": 3000,
+          "title": "API:PlayerIsInCombat",
+          "revisions": [
+            {
+              "revid": 6846267,
+              "parentid": 6813789,
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "*": "{{wowapi|t=a|system=PlayerScript}}\n{{apisig|playerIsInCombat {{=}} PlayerIsInCombat()}}\n\n==Returns==\n:;playerIsInCombat:{{apitype|boolean}}"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+]

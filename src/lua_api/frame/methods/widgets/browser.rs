@@ -11,6 +11,8 @@ use rilua::vm::table::Table;
 
 pub(super) fn register_browser(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, mt, "NavigateHome", navigate)?;
+    // Removed in 11.2.0, before the first supported retail epoch.
+    #[cfg(not(feature = "retail-12-0-0"))]
     table_set_rust_fn_static(state, mt, "NavigateTo", navigate)?;
     Ok(())
 }

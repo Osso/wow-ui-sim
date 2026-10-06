@@ -408,6 +408,12 @@ fn unit_affecting_combat(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(feature = "retail-12-0-0")]
+fn player_is_in_combat(state: &mut LuaState) -> LuaResult<u32> {
+    state.push(Val::Bool(borrow_state(state)?.player.in_combat));
+    Ok(1)
+}
+
 fn unit_is_feign_death(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
     let feigning = unit == "player"
@@ -451,6 +457,8 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "UnitIsUnit", unit_is_unit)?;
     LuaApiMut::register_function(lua, "UnitThreatSituation", unit_threat_situation)?;
     LuaApiMut::register_function(lua, "UnitAffectingCombat", unit_affecting_combat)?;
+    #[cfg(feature = "retail-12-0-0")]
+    LuaApiMut::register_function(lua, "PlayerIsInCombat", player_is_in_combat)?;
     LuaApiMut::register_function(lua, "UnitIsFeignDeath", unit_is_feign_death)?;
     LuaApiMut::register_function(lua, "GetCorruption", get_corruption)?;
     LuaApiMut::register_function(lua, "GetCorruptionResistance", get_corruption_resistance)?;

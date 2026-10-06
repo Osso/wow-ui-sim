@@ -202,8 +202,15 @@ impl Default for CVarStorage {
 fn parse_default_cvars() -> (HashMap<String, String>, HashMap<String, String>) {
     let (mut defaults, mut original_names) = parse_cvar_yaml(include_str!("cvars.yaml"));
     #[cfg(feature = "retail-12-0-0")]
-    for name in ["minimapTrackedInfov2", "useCompactPartyFrames"] {
-        // INFERRED: unconfigured zero; publication has no documented default.
+    for name in [
+        "minimapTrackedInfov2",
+        "useCompactPartyFrames",
+        "volumeFogDisableLightScattering",
+        "volumeFogDisableNoise",
+        "volumeFogDisableShadows",
+        "volumeFogUse16BitTexture",
+    ] {
+        // Fog defaults documented by the 11.2.0 page; other zeros are inferred.
         let key = name.to_lowercase();
         defaults.insert(key.clone(), "0".to_owned());
         original_names.insert(key, name.to_owned());

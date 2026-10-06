@@ -11,6 +11,8 @@ pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, mt, "ClearAlphaGradient", clear_alpha_gradient)?;
     table_set_rust_fn_static(state, mt, "HasAlphaGradient", has_alpha_gradient)?;
     table_set_rust_fn_static(state, mt, "SetAlphaGradient", set_alpha_gradient)?;
+    #[cfg(feature = "retail-12-0-0")]
+    table_set_rust_fn_static(state, mt, "GetAlphaGradient", get_alpha_gradient)?;
     Ok(())
 }
 
@@ -32,6 +34,21 @@ pub fn has_alpha_gradient(state: &mut LuaState) -> LuaResult<u32> {
         .unwrap_or(false);
     state.push(Val::Bool(val));
     Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn get_alpha_gradient(state: &mut LuaState) -> LuaResult<u32> {
+    let id = frame_id_from_stack(state, 1)?;
+    let gradient = borrow_state(state)?
+        .widgets
+        .get(id)
+        .and_then(|frame| frame.alpha_gradients.get(&0).copied());
+    let (start, length) = gradient
+        .map(|gradient| (gradient.start, gradient.length))
+        .unwrap_or((0.0, 0.0));
+    state.push(Val::Num(start as f64));
+    state.push(Val::Num(length as f64));
+    Ok(2)
 }
 
 pub fn set_alpha_gradient(state: &mut LuaState) -> LuaResult<u32> {
