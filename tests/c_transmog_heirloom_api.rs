@@ -617,17 +617,8 @@ fn test_transmog_sets_get_variant_sets_empty() {
 #[test]
 fn test_transmog_sets_get_set_info() {
     let env = env();
-    let (set_id, name, collected): (i32, String, bool) = env
-        .eval(
-            r#"
-            local info = C_TransmogSets.GetSetInfo(1)
-            return info.setID, info.name, info.collected
-            "#,
-        )
-        .unwrap();
-    assert_eq!(set_id, 0);
-    assert_eq!(name, "");
-    assert!(!collected);
+    let missing: bool = env.eval("return C_TransmogSets.GetSetInfo(1) == nil").unwrap();
+    assert!(missing, "unknown catalog entry must not fabricate set zero");
 }
 
 #[test]
