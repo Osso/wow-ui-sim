@@ -569,6 +569,10 @@ macro_rules! build_empty_sim_state {
             ready_check: ReadyCheckState::default(),
             voice_chat: VoiceChatState::default(),
             #[cfg(feature = "retail-12-0-5")]
+            voice_channels: Vec::new(),
+            #[cfg(feature = "retail-12-0-5")]
+            bnet_presence: Default::default(),
+            #[cfg(feature = "retail-12-0-5")]
             voice_chat_speak_requests: Vec::new(),
             #[cfg(feature = "retail-12-0-0")]
             spell_activation_overlays: ::std::collections::HashSet::new(),

@@ -36,9 +36,31 @@ use rilua::{LuaResult, Val};
 
 type BattleNetTable = GcRef<Table>;
 
+/// Local account presence commands. Remote presence propagation is unmodeled.
+/// INFERRED: initially false, independent flags; no undocumented mutual clearing.
+#[cfg(feature = "retail-12-0-5")]
+#[derive(Debug, Default)]
+pub struct Presence {
+    pub is_afk: bool,
+    pub is_dnd: bool,
+}
+
 pub(crate) fn register_c_battle_net_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_BattleNet")?;
     register_texture_methods(state, table_ref)?;
+    #[cfg(feature = "retail-12-0-5")]
+    {
+        table_set_rust_fn_static(state, table_ref, "SetAFK", |s| {
+            let flag = Option::<bool>::from_stack(s, 1)?.unwrap_or(true);
+            borrow_state_mut(s)?.bnet_presence.is_afk = flag;
+            Ok(0)
+        })?;
+        table_set_rust_fn_static(state, table_ref, "SetDND", |s| {
+            let flag = Option::<bool>::from_stack(s, 1)?.unwrap_or(true);
+            borrow_state_mut(s)?.bnet_presence.is_dnd = flag;
+            Ok(0)
+        })?;
+    }
     #[cfg(feature = "retail-12-0-0")]
     table_set_rust_fn_static(
         state,

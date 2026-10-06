@@ -273,6 +273,8 @@ fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
     friend_list::register_friend_list_surface(state)?;
     recruit_a_friend::register_recruit_a_friend_surface(state)?;
     voice_chat::register_voice_chat_surface(state)?;
+    #[cfg(feature = "retail-12-0-5")]
+    c_api::c_voice_chat_channels::register(state)?;
     c_api::c_social::register_c_social_surface(state)?;
     c_api::c_summon_info::register_c_summon_info_surface(state)?;
     character_select::register_character_select_surface(state)?;

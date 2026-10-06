@@ -653,6 +653,10 @@ pub struct SimState {
     pub party_leader_index: Option<usize>,
     pub ready_check: ReadyCheckState,
     pub voice_chat: VoiceChatState,
+    #[cfg(feature = "retail-12-0-5")]
+    pub voice_channels: Vec<crate::c_api::c_voice_chat_channels::VoiceChannel>,
+    #[cfg(feature = "retail-12-0-5")]
+    pub bnet_presence: crate::c_api::c_battle_net::Presence,
     /// Accepted public SpeakText requests in call order; no audio playback.
     #[cfg(feature = "retail-12-0-5")]
     pub voice_chat_speak_requests: Vec<crate::c_api::c_voice_chat_speak::SpeakTextRequest>,

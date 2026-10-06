@@ -87,3 +87,7 @@ Move the existing prediction value/configuration object out of temporary proxy d
 ## Totem and spell-target globals
 
 Replace empty totem defaults with host-supplied slots shared by info/count/duration queries, using four initial slots from cached `MAX_TOTEMS`. Expired slots are inactive. INFERRED: absent/out-of-range duration requests return empty objects. Spell-target queries read actual player casting/target GUID state, return VM-secret booleans, and never confuse another player target with self. Non-player casters have no cast records; channel support and native totem secrecy remain absent. Tests cover active/expired slots and self/other-player/unknown caster results.
+
+## Social producers
+
+Presence setters mutate local account flags, with documented optional true arguments. INFERRED: initially false, independent flags; no remote propagation or legacy `BNGetInfo` migration credit. Voice queries produce complete channel/member snapshots from host records; exact opaque community IDs are retained, missing selectors return nothing and returned DTO mutations do not affect state. Transport, membership mutations and chat-lockdown secrecy remain unmodeled. Four publication rows close with setter state assertions and nonempty channel/member fixtures.
