@@ -1,0 +1,3565 @@
+{
+  "revision": "c886cc3aa383ceab7f360a092ebcabf7e2b8aed1",
+  "source_revid": 6747895,
+  "batches": {
+    "B01": {
+      "name": "Enum values, renamed/removed keys and Meta",
+      "tests": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes.",
+      "effort_units": 1,
+      "rows": 37
+    },
+    "B02": {
+      "name": "Damage-meter producer DTOs",
+      "tests": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots.",
+      "effort_units": 1,
+      "rows": 21
+    },
+    "B03": {
+      "name": "Catalog shop DTO additions/rename",
+      "tests": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "proof": "Reuse fully populated product/display fixtures; exercise bundle quantity and section disclaimer, enforce old URL-key absence and exact types.",
+      "effort_units": 1,
+      "rows": 9
+    },
+    "B04": {
+      "name": "Cooldown hotfix contracts and secure delegation",
+      "tests": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix.",
+      "effort_units": 2,
+      "rows": 19
+    },
+    "B05": {
+      "name": "Other structure producers and returned schema",
+      "tests": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type.",
+      "effort_units": 4,
+      "rows": 24
+    },
+    "B06": {
+      "name": "Spell-ID declassification data and wildcard control",
+      "tests": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source.",
+      "effort_units": 6,
+      "rows": 74
+    },
+    "B07": {
+      "name": "Other security, token, aura and macro contracts",
+      "tests": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven.",
+      "effort_units": 5,
+      "rows": 17
+    }
+  },
+  "rows": [
+    {
+      "source_id": "source-context-001",
+      "plaintext_line": 1,
+      "statement": "Patch 12.0.1 API changes",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "plaintext_line": 3,
+      "statement": "== Summary ==",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-004",
+      "plaintext_line": 4,
+      "statement": "Patch 12.0.1 is the Midnight launch patch, rolling up changes that took place after Patch 12.0.0 went stable.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-006",
+      "plaintext_line": 6,
+      "statement": "== Resources ==",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-007",
+      "plaintext_line": 7,
+      "statement": "* TOC: 120001",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "plaintext_line": 9,
+      "statement": "* Official patch notes: Second Midnight Pre-Expansion Update Notes",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-010",
+      "plaintext_line": 10,
+      "statement": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "plaintext_line": 11,
+      "statement": "* Deprecated API: Blizzard_Deprecated",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-014",
+      "plaintext_line": 14,
+      "statement": "== Blue posts ==",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-015",
+      "plaintext_line": 15,
+      "statement": "=== 2026-02-19 ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-016",
+      "plaintext_line": 16,
+      "statement": "Midnight 12.0.1 AddOn Restrictions Update",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-018",
+      "plaintext_line": 18,
+      "statement": "Hello again from Blizzard! We have a small list of changes that are being hotfixed to live in preparation for Early Access launch next week. You should expect these to hit live servers in the next few days.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-020",
+      "plaintext_line": 20,
+      "statement": "DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-022",
+      "plaintext_line": 22,
+      "statement": "NOTE: While most of these are bugfixes that last couple changes were made to address exploits or addon functionality we did not want to allow. Apologies for the late changes there!",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-025",
+      "plaintext_line": 25,
+      "statement": "=== Changes due to be deployed before Midnight Early Access ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-19-026",
+      "plaintext_line": 26,
+      "statement": "*Fixed an exploit that allowed addons to declassify spell names using tricky string formatting. APIs no longer accept secret spell names from addons as a result. (Already live)",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-02-19-027",
+      "plaintext_line": 27,
+      "statement": "*Fixed an exploit where status bars could be used to launder secret numbers.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-02-19-028",
+      "plaintext_line": 28,
+      "statement": "*Fixed an issue where calling debuglocals after certain Lua errors would cause a crash.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-02-19-029",
+      "plaintext_line": 29,
+      "statement": "*Fixed an issue where numerous APIs that accept aura instance IDs would stop working after a full aura update (relog was the easiest repro).",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-02-19-030",
+      "plaintext_line": 30,
+      "statement": "*Fixed an issue where enabling timestamps on chat frames would cause Lua errors when chat lockdowns are in effect.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-02-19-031",
+      "plaintext_line": 31,
+      "statement": "*Threat APIs now conditionally return secrets for some combinations of input unit tokens to prevent unintended use of these functions to compare units.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-02-19-032",
+      "plaintext_line": 32,
+      "statement": "*Various APIs no longer accept compound unit tokens or unit names when in an active PvP match.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "source-context-033",
+      "plaintext_line": 33,
+      "statement": "Bonus notes that were forgotten:",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-19-034",
+      "plaintext_line": 34,
+      "statement": "Fixed an exploit that allowed addons to access spell IDs and durations of crowd control effects for other players.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-02-19-035",
+      "plaintext_line": 35,
+      "statement": "Fixed an exploit that allowed addons to access cooldowns of PvP trinkets for other players in arenas.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "source-context-038",
+      "plaintext_line": 38,
+      "statement": "=== 2026-02-24 ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-039",
+      "plaintext_line": 39,
+      "statement": "Midnight 12.0.1 Spell Declassification Update",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-041",
+      "plaintext_line": 41,
+      "statement": "Hello again from Blizzard!",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-043",
+      "plaintext_line": 43,
+      "statement": "Today we have an update regarding which spells we are going to be flagging as non-secret for Midnight launch. These changes are planned to go out in a data hotfix in the next couple days, but we wanted to give you all a heads up beforehand so you can plan any necessary changes to your addons.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-045",
+      "plaintext_line": 45,
+      "statement": "Over the course of Beta, as well as recent weeks on live, one of the biggest recurring points of feedback has been from healers who wish that our default UI provided more robust options for filtering or emphasizing specific buffs on raid frames. In the past month we have added a few layers of extra logic to buff sorting and visibility, and while we've heard positive feedback from many healers about these improvements, we realize that our solutions are leaving others still wanting more customization.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-047",
+      "plaintext_line": 47,
+      "statement": "While we had originally hoped to be able to deliver a streamlined default experience, it has become clear that there are common use-cases that a single set of logic cannot cover. Some players may want to make simple tweaks like highlighting the target of their Preservation Evoker's Echo, or their Holy Paladin's active Beacon, while others would consider that to be distracting clutter. We are now beginning work on a system to allow players to hide or emphasize buffs from their spellcasts on a per-spell basis, via the Spellbook. We expect that solution to be ready for players in a later Midnight patch.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-048",
+      "plaintext_line": 48,
+      "statement": "In the meantime, we have also seen a few addons popping up that use non-secret information to make very reliable guesses about players' spellcasts in order to drive this sort of filtering logic. Breaking the API calls driving this functionality would cause significant collateral damage to common addons, and we are not planning to do go down that path. Ultimately, this design space is mostly about customizing the display of information, rather than objectively advantageous computational solutions, so we want to treat it the same way we approached resources like Holy Power or Maelstrom.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-050",
+      "plaintext_line": 50,
+      "statement": "Thus, rather than requiring addon developers to jump through hoops to support an implementation that will have some frustrating inaccuracies, we are planning to flag a number of short-cooldown rotational healer spells, and very long duration buffs, to exclude them from our Secret Value system. We will likely re-protect these spells once our own filtering solution, with its own addon hooks for display customization, is in place.",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-052",
+      "plaintext_line": 52,
+      "statement": "The full list of spells being flagged is below, broken down into several categories.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-055",
+      "plaintext_line": 55,
+      "statement": "=== Healer Buffs and HoTs ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-056",
+      "plaintext_line": 56,
+      "statement": "=== Preservation Evoker ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-057",
+      "plaintext_line": 57,
+      "statement": "*355941 - Dream Breath",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-058",
+      "plaintext_line": 58,
+      "statement": "*363502 - Dream Flight",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-059",
+      "plaintext_line": 59,
+      "statement": "*364343 - Echo",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-060",
+      "plaintext_line": 60,
+      "statement": "*366155 - Reversion",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-061",
+      "plaintext_line": 61,
+      "statement": "*367364 - Echo Reversion",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-062",
+      "plaintext_line": 62,
+      "statement": "*373267 - Lifebind",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-063",
+      "plaintext_line": 63,
+      "statement": "*376788 - Echo Dream Breath",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-065",
+      "plaintext_line": 65,
+      "statement": "=== Augmentation Evoker ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-066",
+      "plaintext_line": 66,
+      "statement": "*360827 - Blistering Scales",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-067",
+      "plaintext_line": 67,
+      "statement": "*395152 - Ebon Might",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-068",
+      "plaintext_line": 68,
+      "statement": "*410089 - Prescience",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-069",
+      "plaintext_line": 69,
+      "statement": "*410263 - Inferno's Blessing",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-070",
+      "plaintext_line": 70,
+      "statement": "*410686 - Symbiotic Bloom",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-071",
+      "plaintext_line": 71,
+      "statement": "*413984 - Shifting Sands",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-073",
+      "plaintext_line": 73,
+      "statement": "=== Resto Druid ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-074",
+      "plaintext_line": 74,
+      "statement": "*774 - Rejuv",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-075",
+      "plaintext_line": 75,
+      "statement": "*8936 - Regrowth",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-076",
+      "plaintext_line": 76,
+      "statement": "*33763 - Lifebloom",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-077",
+      "plaintext_line": 77,
+      "statement": "*48438 - Wild Growth",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-078",
+      "plaintext_line": 78,
+      "statement": "*155777 - Germination",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-080",
+      "plaintext_line": 80,
+      "statement": "=== Disc Priest ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-081",
+      "plaintext_line": 81,
+      "statement": "*17 - Power Word: Shield",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-082",
+      "plaintext_line": 82,
+      "statement": "*194384 - Atonement",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-083",
+      "plaintext_line": 83,
+      "statement": "*1253593 - Void Shield",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-085",
+      "plaintext_line": 85,
+      "statement": "=== Holy Priest ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-086",
+      "plaintext_line": 86,
+      "statement": "*139 - Renew",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-087",
+      "plaintext_line": 87,
+      "statement": "*41635 - Prayer of Mending",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-088",
+      "plaintext_line": 88,
+      "statement": "*77489 - Echo of Light",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-090",
+      "plaintext_line": 90,
+      "statement": "=== Mistweaver Monk ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-091",
+      "plaintext_line": 91,
+      "statement": "*115175 - Soothing Mist",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-092",
+      "plaintext_line": 92,
+      "statement": "*119611 - Renewing Mist",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-093",
+      "plaintext_line": 93,
+      "statement": "*124682 - Enveloping Mist",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-094",
+      "plaintext_line": 94,
+      "statement": "*450769 - Aspect of Harmony",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-096",
+      "plaintext_line": 96,
+      "statement": "=== Restoration Shaman ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-097",
+      "plaintext_line": 97,
+      "statement": "*974, 383648 - Earth Shield",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-098",
+      "plaintext_line": 98,
+      "statement": "*61295 - Riptide",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-100",
+      "plaintext_line": 100,
+      "statement": "=== Holy Paladin ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-101",
+      "plaintext_line": 101,
+      "statement": "*53563 - Beacon of Light",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-102",
+      "plaintext_line": 102,
+      "statement": "*156322 - Eternal Flame",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-103",
+      "plaintext_line": 103,
+      "statement": "*156910 - Beacon of Faith",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-104",
+      "plaintext_line": 104,
+      "statement": "*1244893 - Beacon of the Savior",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-107",
+      "plaintext_line": 107,
+      "statement": "=== Long-term Raid Buffs ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-108",
+      "plaintext_line": 108,
+      "statement": "*1126 - Mark of the Wild",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-109",
+      "plaintext_line": 109,
+      "statement": "*1459 - Arcane Intellect",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-110",
+      "plaintext_line": 110,
+      "statement": "*6673 - Battle Shout",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-111",
+      "plaintext_line": 111,
+      "statement": "*21562 - Power Word: Fortitude",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-112",
+      "plaintext_line": 112,
+      "statement": "*369459 - Source of Magic",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-113",
+      "plaintext_line": 113,
+      "statement": "*462854 - Skyfury",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-114",
+      "plaintext_line": 114,
+      "statement": "*474754 – Symbiotic Relationship",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-116",
+      "plaintext_line": 116,
+      "statement": "=== Blessing of the Bronze Auras ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-117",
+      "plaintext_line": 117,
+      "statement": "*381732 - Death Knight",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-118",
+      "plaintext_line": 118,
+      "statement": "*381741 - Demon Hunter",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-119",
+      "plaintext_line": 119,
+      "statement": "*381746 – Druid",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-120",
+      "plaintext_line": 120,
+      "statement": "*381748 – Evoker",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-121",
+      "plaintext_line": 121,
+      "statement": "*381749 – Hunter",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-122",
+      "plaintext_line": 122,
+      "statement": "*381750 – Mage",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-123",
+      "plaintext_line": 123,
+      "statement": "*381751 – Monk",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-124",
+      "plaintext_line": 124,
+      "statement": "*381752 – Paladin",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-125",
+      "plaintext_line": 125,
+      "statement": "*381753 – Priest",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-126",
+      "plaintext_line": 126,
+      "statement": "*381754 – Rogue",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-127",
+      "plaintext_line": 127,
+      "statement": "*381756 – Shaman",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-128",
+      "plaintext_line": 128,
+      "statement": "*381757 – Warlock",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-129",
+      "plaintext_line": 129,
+      "statement": "*381758 - Warrior",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-132",
+      "plaintext_line": 132,
+      "statement": "=== Long-term Self Buffs ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-133",
+      "plaintext_line": 133,
+      "statement": "*433568 - Rite of Sanctification",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-134",
+      "plaintext_line": 134,
+      "statement": "*433583 - Rite of Adjuration",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-136",
+      "plaintext_line": 136,
+      "statement": "=== Rogue Poisons ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-137",
+      "plaintext_line": 137,
+      "statement": "*2823 - Deadly Poison",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-138",
+      "plaintext_line": 138,
+      "statement": "*8679 - Wound Poison",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-139",
+      "plaintext_line": 139,
+      "statement": "*3408 - Crippling Poison",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-140",
+      "plaintext_line": 140,
+      "statement": "*5761 - Numbing Poison",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-141",
+      "plaintext_line": 141,
+      "statement": "*315584 - Instant Poison",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-142",
+      "plaintext_line": 142,
+      "statement": "*381637 - Atrophic Poison",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-143",
+      "plaintext_line": 143,
+      "statement": "*381664 - Amplifying Poison",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-145",
+      "plaintext_line": 145,
+      "statement": "=== Shaman Imbuements ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-146",
+      "plaintext_line": 146,
+      "statement": "*319773 – Windfury Weapon",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-147",
+      "plaintext_line": 147,
+      "statement": "*319778 – Flametongue Weapon",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-148",
+      "plaintext_line": 148,
+      "statement": "*382021, 382022 – Earthliving Weapon",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-149",
+      "plaintext_line": 149,
+      "statement": "*457496, 457481 – Tidecaller's Guard",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-150",
+      "plaintext_line": 150,
+      "statement": "*462757, 462742 – Thunderstrike Ward",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-152",
+      "plaintext_line": 152,
+      "statement": "=== Resource-like Auras ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-153",
+      "plaintext_line": 153,
+      "statement": "*205473 - Mage Icicles",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-154",
+      "plaintext_line": 154,
+      "statement": "*260286 - Hunter Tip of the Spear",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-156",
+      "plaintext_line": 156,
+      "statement": "=== Cooldowns ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-02-24-157",
+      "plaintext_line": 157,
+      "statement": "*8690 - Hearthstone",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-158",
+      "plaintext_line": 158,
+      "statement": "*20608 - Shaman Reincarnation",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "prose-2026-02-24-159",
+      "plaintext_line": 159,
+      "statement": "*All Mythic Plus Teleport Spells (IDs not listed)",
+      "status": "audit-pending",
+      "class": "PROSE-DATA",
+      "batch": "B06",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/aura_secret_display.rs",
+        "tests/secret_value_security.rs"
+      ],
+      "next_proof": "All 73 spell-list occurrences plus policy row require frozen hotfix data and caller/cast/aura secrecy controls. Multi-ID rows test each ID; all Mythic Plus teleport spells has no listed IDs and needs an explicit data source."
+    },
+    {
+      "source_id": "source-context-162",
+      "plaintext_line": 162,
+      "statement": "=== 2026-03-21 ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-163",
+      "plaintext_line": 163,
+      "statement": "Midnight 12.0.1 Upcoming Restriction Changes",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-165",
+      "plaintext_line": 165,
+      "statement": "Hello again from Blizzard! Mythic raids and M+ open this week and we will be hotfixing in some last-minute changes to fix exploits before resets.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-03-21-167",
+      "plaintext_line": 167,
+      "statement": "We recognize that some of these changes are going to be disruptive and require last-second changes to your addons, and we sincerely apologize for them coming in so late. Part of these changes involve removing the secure delegate portion of ActionButton_ApplyCooldown. We have added new APIs that should replace the functionality it provided, but we will be watching closely for reports of functionality that still needs replacing.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "source-context-169",
+      "plaintext_line": 169,
+      "statement": "DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-172",
+      "plaintext_line": 172,
+      "statement": "=== Cooldowns ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-03-21-173",
+      "plaintext_line": 173,
+      "statement": "* Removed the ability for tainted code to configure cooldown frames with secret values via Cooldown:SetCooldown, Cooldown:SetCooldownFromExpirationTime, Cooldown:SetCooldownDuration, and Cooldown:SetCooldownUNIX.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-174",
+      "plaintext_line": 174,
+      "statement": "** This does not impact Cooldown:SetCooldownFromDurationObject which, going forward, is the only way to configure a cooldown frame with secret values.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-176",
+      "plaintext_line": 176,
+      "statement": "* The ActionButton_ApplyCooldown Lua function no longer routes through a secure delegate.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-177",
+      "plaintext_line": 177,
+      "statement": "** This unfortunately means that existing code passing secrets into this function will start throwing Lua errors when the hotfix goes live. However, all of the logic that this function is doing should be able to be replicated by addons with the new isActive/shouldReplaceNormalCooldown boolean fields and duration objects (see below for details on those).",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-179",
+      "plaintext_line": 179,
+      "statement": "* Action/Spell cooldown APIs now return isEnabled and maxCharges as non-secrets.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-180",
+      "plaintext_line": 180,
+      "statement": "* Action/Spell cooldown APIs now return a new non-secret isActive boolean, which is set to true if the UI should render a cooldown display.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-181",
+      "plaintext_line": 181,
+      "statement": "** For regular cooldowns, it's true if isEnabled and startTime > 0 and duration > 0.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-182",
+      "plaintext_line": 182,
+      "statement": "** For charge cooldowns, it's true if maxCharges > 1 and currentCharges < maxCharges and startTime > 0 and duration > 0.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-183",
+      "plaintext_line": 183,
+      "statement": "** For LoC cooldowns, it's true if startTime > 0 and duration > 0.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-185",
+      "plaintext_line": 185,
+      "statement": "* Action/Spell cooldown APIs that yield duration objects now return a zero-span object if the isActive boolean evaluates to false.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-186",
+      "plaintext_line": 186,
+      "statement": "* Action/Spell cooldown APIs now return results modified by the presence of cooldown aura spells on the player.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-187",
+      "plaintext_line": 187,
+      "statement": "** For example, if an action button is assigned to a PvP trinket (Sigil of Adaptation) that has a passive effect of automatically removing a loss of control effect with a 1 minute cooldown, the GetActionCooldown API will track that 1 minute cooldown when the Adaptation debuff has been applied to the player.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-188",
+      "plaintext_line": 188,
+      "statement": "** This means no addon code needs to deal with the C_UnitAuras.GetCooldownAuraBySpellID API.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "source-context-191",
+      "plaintext_line": 191,
+      "statement": "=== Cooldowns (continued) ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-03-21-192",
+      "plaintext_line": 192,
+      "statement": "* Action/Spell Loss of Control cooldown APIs now return a structured table instead of unpacked values.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-193",
+      "plaintext_line": 193,
+      "statement": "** These functions have been renamed with an \"Info\" suffix (eg. C_Spell.GetSpellLossOfControlCooldownInfo) with a deprecation for the old name that unpacks the start time and duration value.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-194",
+      "plaintext_line": 194,
+      "statement": "** This structured table contains several new fields not present in the old API. In addition to the isActive boolean mentioned above, it includes modRate (secret) and shouldReplaceNormalCooldown (non-secret), which is true if the loss of control cooldown has an expiration time that's later than any regular cooldown for this ability/spell.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-195",
+      "plaintext_line": 195,
+      "statement": "* Added a new C_LossOfControl.GetActiveLossOfControlDuration(unitToken, index) API that returns a duration object.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "prose-2026-03-21-196",
+      "plaintext_line": 196,
+      "statement": "* Added a new GetTotemDuration(slot) API that returns a duration object.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B04",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/action_loss_control_cooldown_info.rs",
+        "tests/spell_book_cooldown_outputs.rs",
+        "tests/action_cooldown_output_restriction.rs",
+        "tests/cooldown_probes.rs"
+      ],
+      "next_proof": "Reuse actual host-secret flags, zero-span and LoC comparisons; test tainted frame rejection, duration-object allowance and actual cached ActionButton_ApplyCooldown after hotfix."
+    },
+    {
+      "source_id": "source-context-199",
+      "plaintext_line": 199,
+      "statement": "=== Other changes ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-2026-03-21-200",
+      "plaintext_line": 200,
+      "statement": "* A change that we had already made in 12.0.5 to restrict the ability to use %.1s style precision specifiers with secret string inputs has been brought forward to 12.0.1.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-03-21-201",
+      "plaintext_line": 201,
+      "statement": "** As a result, format(\"%.1s\", secretwrap(\"Jar Jar Binks\")) will no longer truncate to \"J\".",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-03-21-203",
+      "plaintext_line": 203,
+      "statement": "* The UnitCreatureID API now returns nil when unit identity is secret.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-03-21-204",
+      "plaintext_line": 204,
+      "statement": "* The following script object methods now return nil if relevant secret aspects are assigned: Frame:GetEffectiveAlpha(), StatusBar:IsStatusBarDesaturated(), Texture:IsDesatured()",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-03-21-205",
+      "plaintext_line": 205,
+      "statement": "* Resolved a few issues where C_TooltipInfo APIs for unit auras had inconsistent security requirements.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-03-21-206",
+      "plaintext_line": 206,
+      "statement": "* The use of /wm and /cwm in macros has been limited to 3 per second.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-03-21-207",
+      "plaintext_line": 207,
+      "statement": "Macros are no longer allowed to send BNet whispers while an encounter is active.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "prose-2026-03-21-208",
+      "plaintext_line": 208,
+      "statement": "* The following  C_UnitAuras APIs can no longer be called while the player is in combat: C_UnitAuras.AddPrivateAuraAnchor, C_UnitAuras.RemovePrivateAuraAnchor, C_UnitAuras.SetPrivateWarningTextAnchor, C_UnitAuras.AddPrivateAuraAppliedSound, C_UnitAuras.RemovePrivateAuraAppliedSound.",
+      "status": "audit-pending",
+      "class": "PROSE-MODELABLE",
+      "batch": "B07",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/secret_string_formatting.rs",
+        "tests/unit_name_secret_tokens.rs",
+        "tests/private_aura_anchors.rs",
+        "tests/private_aura_sound_removal.rs",
+        "tests/private_aura_sound_add_context.rs"
+      ],
+      "next_proof": "Prove trusted/addon restrictions and unchanged state on denial; include aura full-update lifetime, status-bar laundering, chat lockdown, PvP identity/threat, macro rate/encounter and private-aura combat boundaries. Native bug-fix policy details remain unproven."
+    },
+    {
+      "source_id": "source-context-211",
+      "plaintext_line": 211,
+      "statement": "== Consolidated changes ==",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-212",
+      "plaintext_line": 212,
+      "statement": ": 12.0.0 (65655) → 12.0.1 (66838) Apr  3 2026",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-214",
+      "plaintext_line": 214,
+      "statement": "=== Enumerations ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-215",
+      "plaintext_line": 215,
+      "statement": "Enum.CombatAudioAlertSpecSetting",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-216",
+      "plaintext_line": 216,
+      "statement": "+ Resource1Voice",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-217",
+      "plaintext_line": 217,
+      "statement": "+ Resource1Volume",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-218",
+      "plaintext_line": 218,
+      "statement": "+ Resource2Voice",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-219",
+      "plaintext_line": 219,
+      "statement": "+ Resource2Volume",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerAlertEventType-220",
+      "plaintext_line": 220,
+      "statement": "Enum.CooldownViewerAlertEventType",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerAlertEventType-221",
+      "plaintext_line": 221,
+      "statement": "+ OnAuraApplied",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerAlertEventType-222",
+      "plaintext_line": 222,
+      "statement": "+ OnAuraRemoved",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-DamageMeterType-223",
+      "plaintext_line": 223,
+      "statement": "Enum.DamageMeterType",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-DamageMeterType-224",
+      "plaintext_line": 224,
+      "statement": "+ Deaths",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-DamageMeterType-225",
+      "plaintext_line": 225,
+      "statement": "+ EnemyDamageTaken",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-NeighborhoodInviteResult-226",
+      "plaintext_line": 226,
+      "statement": "Enum.NeighborhoodInviteResult",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-NeighborhoodInviteResult-227",
+      "plaintext_line": 227,
+      "statement": "+ AlreadyInNeighborhood",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-PartyRequestJoinRelation-228",
+      "plaintext_line": 228,
+      "statement": "Enum.PartyRequestJoinRelation",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-PartyRequestJoinRelation-229",
+      "plaintext_line": 229,
+      "statement": "# NumPartyRequestJoinRelations -> RecentAllies",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-SecretAspect-230",
+      "plaintext_line": 230,
+      "statement": "Enum.SecretAspect",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-SecretAspect-231",
+      "plaintext_line": 231,
+      "statement": "+ Attributes",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-SecretAspect-232",
+      "plaintext_line": 232,
+      "statement": "+ CooldownStyle",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-233",
+      "plaintext_line": 233,
+      "statement": "Enum.TooltipDataLineType",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-234",
+      "plaintext_line": 234,
+      "statement": "# ToyFlavorText -> FlavorText",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-235",
+      "plaintext_line": 235,
+      "statement": "+ ItemQuality",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-236",
+      "plaintext_line": 236,
+      "statement": "+ TradeTimeRemaining",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-237",
+      "plaintext_line": 237,
+      "statement": "+ ItemSpellTriggerLearn",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-238",
+      "plaintext_line": 238,
+      "statement": "+ LearnTransmogSet",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-239",
+      "plaintext_line": 239,
+      "statement": "+ LearnTransmogIllusion",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-240",
+      "plaintext_line": 240,
+      "statement": "+ ErrorLine",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-241",
+      "plaintext_line": 241,
+      "statement": "+ DisabledLine",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-242",
+      "plaintext_line": 242,
+      "statement": "+ UsageRequirement",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-243",
+      "plaintext_line": 243,
+      "statement": "- RestrictedRaceClass",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-244",
+      "plaintext_line": 244,
+      "statement": "- RestrictedFaction",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-245",
+      "plaintext_line": 245,
+      "statement": "- RestrictedSkill",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-246",
+      "plaintext_line": 246,
+      "statement": "- RestrictedPvPMedal",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-247",
+      "plaintext_line": 247,
+      "statement": "- RestrictedReputation",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-248",
+      "plaintext_line": 248,
+      "statement": "- RestrictedSpellKnown",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-249",
+      "plaintext_line": 249,
+      "statement": "- RestrictedLevel",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-250",
+      "plaintext_line": 250,
+      "statement": "- RestrictedArena",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-251",
+      "plaintext_line": 251,
+      "statement": "- RestrictedBg",
+      "status": "audit-pending",
+      "class": "ENUM",
+      "batch": "B01",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/patch_12_1_0_enums.rs",
+        "tests/patch_12_0_0_enums.rs"
+      ],
+      "next_proof": "Compare all seven full parents, 30 deltas and Meta after cached Game preload; distinguish historical 12.0.1 and current later changes."
+    },
+    {
+      "source_id": "source-context-253",
+      "plaintext_line": 253,
+      "statement": "=== Structures ===",
+      "status": "metadata-only",
+      "class": "METADATA",
+      "batch": null,
+      "proof_level": "metadata",
+      "test_candidates": [],
+      "next_proof": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-CampaignInfo-254",
+      "plaintext_line": 254,
+      "statement": "CampaignInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-CampaignInfo-255",
+      "plaintext_line": 255,
+      "statement": "+ hideFutureChapters",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-CatalogShopBundleChildInfo-256",
+      "plaintext_line": 256,
+      "statement": "CatalogShopBundleChildInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B03",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "next_proof": "Reuse fully populated product/display fixtures; exercise bundle quantity and section disclaimer, enforce old URL-key absence and exact types."
+    },
+    {
+      "source_id": "structures-CatalogShopBundleChildInfo-257",
+      "plaintext_line": 257,
+      "statement": "+ quantityInBundle",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B03",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "next_proof": "Reuse fully populated product/display fixtures; exercise bundle quantity and section disclaimer, enforce old URL-key absence and exact types."
+    },
+    {
+      "source_id": "structures-CatalogShopProductDisplayInfo-258",
+      "plaintext_line": 258,
+      "statement": "CatalogShopProductDisplayInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B03",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "next_proof": "Reuse fully populated product/display fixtures; exercise bundle quantity and section disclaimer, enforce old URL-key absence and exact types."
+    },
+    {
+      "source_id": "structures-CatalogShopProductDisplayInfo-259",
+      "plaintext_line": 259,
+      "statement": "# otherProductPMTURL -> productPMTURL",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B03",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "next_proof": "Reuse fully populated product/display fixtures; exercise bundle quantity and section disclaimer, enforce old URL-key absence and exact types."
+    },
+    {
+      "source_id": "structures-CatalogShopProductInfo-260",
+      "plaintext_line": 260,
+      "statement": "CatalogShopProductInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B03",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "next_proof": "Reuse fully populated product/display fixtures; exercise bundle quantity and section disclaimer, enforce old URL-key absence and exact types."
+    },
+    {
+      "source_id": "structures-CatalogShopProductInfo-261",
+      "plaintext_line": 261,
+      "statement": "+ isVCProduct",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B03",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "next_proof": "Reuse fully populated product/display fixtures; exercise bundle quantity and section disclaimer, enforce old URL-key absence and exact types."
+    },
+    {
+      "source_id": "structures-CatalogShopProductInfo-262",
+      "plaintext_line": 262,
+      "statement": "+ containsHousingItem",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B03",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "next_proof": "Reuse fully populated product/display fixtures; exercise bundle quantity and section disclaimer, enforce old URL-key absence and exact types."
+    },
+    {
+      "source_id": "structures-CatalogShopSectionInfo-263",
+      "plaintext_line": 263,
+      "statement": "CatalogShopSectionInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B03",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "next_proof": "Reuse fully populated product/display fixtures; exercise bundle quantity and section disclaimer, enforce old URL-key absence and exact types."
+    },
+    {
+      "source_id": "structures-CatalogShopSectionInfo-264",
+      "plaintext_line": 264,
+      "statement": "+ shouldShowRecommendationOptOutDisclaimer",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B03",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/catalog_shop_product_structures.rs"
+      ],
+      "next_proof": "Reuse fully populated product/display fixtures; exercise bundle quantity and section disclaimer, enforce old URL-key absence and exact types."
+    },
+    {
+      "source_id": "structures-DamageMeterAvailableCombatSession-265",
+      "plaintext_line": 265,
+      "statement": "DamageMeterAvailableCombatSession",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterAvailableCombatSession-266",
+      "plaintext_line": 266,
+      "statement": "+ durationSeconds",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSession-267",
+      "plaintext_line": 267,
+      "statement": "DamageMeterCombatSession",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSession-268",
+      "plaintext_line": 268,
+      "statement": "+ totalAmount",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSession-269",
+      "plaintext_line": 269,
+      "statement": "+ durationSeconds",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSessionSource-270",
+      "plaintext_line": 270,
+      "statement": "DamageMeterCombatSessionSource",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSessionSource-271",
+      "plaintext_line": 271,
+      "statement": "+ totalAmount",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-272",
+      "plaintext_line": 272,
+      "statement": "DamageMeterCombatSource",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-273",
+      "plaintext_line": 273,
+      "statement": "# sourceGUID, Nilable: false -> true",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-274",
+      "plaintext_line": 274,
+      "statement": "+ sourceCreatureID",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-275",
+      "plaintext_line": 275,
+      "statement": "+ deathRecapID",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-276",
+      "plaintext_line": 276,
+      "statement": "+ deathTimeSeconds",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-277",
+      "plaintext_line": 277,
+      "statement": "+ classification",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpell-278",
+      "plaintext_line": 278,
+      "statement": "DamageMeterCombatSpell",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpell-279",
+      "plaintext_line": 279,
+      "statement": "+ overkillAmount",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpell-280",
+      "plaintext_line": 280,
+      "statement": "+ isAvoidable",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpell-281",
+      "plaintext_line": 281,
+      "statement": "+ isDeadly",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpellUnitDetails-282",
+      "plaintext_line": 282,
+      "statement": "DamageMeterCombatSpellUnitDetails",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpellUnitDetails-283",
+      "plaintext_line": 283,
+      "statement": "+ isPet",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpellUnitDetails-284",
+      "plaintext_line": 284,
+      "statement": "+ isMob",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpellUnitDetails-285",
+      "plaintext_line": 285,
+      "statement": "+ specIconID",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B02",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/startup_targeted_regressions/damage_meter.rs"
+      ],
+      "next_proof": "Reuse explicit aggregate/detail and GUID-omission fixtures; add per-row exact populated values, secrecy and independent snapshots."
+    },
+    {
+      "source_id": "structures-EncounterTimelineEventInfo-286",
+      "plaintext_line": 286,
+      "statement": "EncounterTimelineEventInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-EncounterTimelineEventInfo-287",
+      "plaintext_line": 287,
+      "statement": "+ color",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-EncounterWarningInfo-288",
+      "plaintext_line": 288,
+      "statement": "EncounterWarningInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-EncounterWarningInfo-289",
+      "plaintext_line": 289,
+      "statement": "+ color",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-HousingCatalogEntryInfo-290",
+      "plaintext_line": 290,
+      "statement": "HousingCatalogEntryInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-HousingCatalogEntryInfo-291",
+      "plaintext_line": 291,
+      "statement": "- marketInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-ItemUpgradeLevelInfo-292",
+      "plaintext_line": 292,
+      "statement": "ItemUpgradeLevelInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-ItemUpgradeLevelInfo-293",
+      "plaintext_line": 293,
+      "statement": "+ moneyCost",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-MajorFactionData-294",
+      "plaintext_line": 294,
+      "statement": "MajorFactionData",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-MajorFactionData-295",
+      "plaintext_line": 295,
+      "statement": "+ useJourneyUnlockToast",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-MajorFactionData-296",
+      "plaintext_line": 296,
+      "statement": "+ maxLevel",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-NumberAbbrevOptions-297",
+      "plaintext_line": 297,
+      "statement": "NumberAbbrevOptions",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-NumberAbbrevOptions-298",
+      "plaintext_line": 298,
+      "statement": "# breakpointData, InnerType: NumberAbbrevData -> NumberAbbreviationBreakpoint",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-QuestTheme-299",
+      "plaintext_line": 299,
+      "statement": "QuestTheme",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-QuestTheme-300",
+      "plaintext_line": 300,
+      "statement": "+ mapPinInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-TraitNodeInfo-301",
+      "plaintext_line": 301,
+      "statement": "TraitNodeInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-TraitNodeInfo-302",
+      "plaintext_line": 302,
+      "statement": "+ totalMaxRanks",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-TraitTreeInfo-303",
+      "plaintext_line": 303,
+      "statement": "TraitTreeInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-TraitTreeInfo-304",
+      "plaintext_line": 304,
+      "statement": "+ uiTextureKit",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-TraitTreeInfo-305",
+      "plaintext_line": 305,
+      "statement": "+ titleText",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-UIMapPinInfo-306",
+      "plaintext_line": 306,
+      "statement": "UIMapPinInfo",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    },
+    {
+      "source_id": "structures-UIMapPinInfo-307",
+      "plaintext_line": 307,
+      "statement": "+ outerGlow",
+      "status": "audit-pending",
+      "class": "STRUCT",
+      "batch": "B05",
+      "proof_level": "source/test-body inspection only; no new runtime acceptance",
+      "test_candidates": [
+        "tests/encounter_events.rs",
+        "tests/encounter_warning_preview.rs",
+        "tests/abbreviated_number_formatter.rs",
+        "tests/admin_spec_talent_api.rs"
+      ],
+      "next_proof": "Build concrete producer cases for all 12 remaining parents/deltas; verify color objects, marketInfo absence, upgrade cost, faction flags, traits, quest/map metadata and breakpoint inner type."
+    }
+  ]
+}
