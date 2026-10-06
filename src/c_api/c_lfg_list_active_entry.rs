@@ -3,8 +3,8 @@
 //! `LfgEntryData`. `LFG_LIST_ACTIVE_ENTRY_UPDATE` is deferred to the next timer
 //! tick because the real event arrives after the server round trip.
 
-use super::catalog::u32_array_table;
-use super::{defer_lfg_event, fire_event_with_args};
+use crate::lua_api::globals::lfg_list::catalog::u32_array_table;
+use crate::lua_api::globals::lfg_list::{defer_lfg_event, fire_event_with_args};
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_table, table_get, table_set,
 };
@@ -76,7 +76,7 @@ fn read_create_data(state: &mut LuaState) -> LuaResult<LfgActiveEntry> {
         private_group: bool_field(state, data, "isPrivateGroup")?,
         new_player_friendly: bool_field(state, data, "newPlayerFriendly")?,
         playstyle: number_field(state, data, "playstyle")?.unwrap_or(0.0) as i32,
-        general_playstyle: number_field(state, data, "generalPlaystyle")?.unwrap_or(0.0) as i32,
+        general_playstyle: read_general_playstyle(state, data)?,
         required_dungeon_score: number_field(state, data, "requiredDungeonScore")?.unwrap_or(0.0),
         required_item_level: number_field(state, data, "requiredItemLevel")?.unwrap_or(0.0),
         required_pvp_rating: number_field(state, data, "requiredPvpRating")?.unwrap_or(0.0),
@@ -86,7 +86,7 @@ fn read_create_data(state: &mut LuaState) -> LuaResult<LfgActiveEntry> {
 }
 
 /// `CreateListing(createData)` -> success. Fails while a listing is active.
-pub(super) fn create_listing(state: &mut LuaState) -> LuaResult<u32> {
+pub(crate) fn create_listing(state: &mut LuaState) -> LuaResult<u32> {
     let entry = read_create_data(state)?;
     let created = {
         let mut sim = borrow_state_mut(state)?;
@@ -105,7 +105,7 @@ pub(super) fn create_listing(state: &mut LuaState) -> LuaResult<u32> {
 
 /// `UpdateListing(createData)` -> success. Keeps creation time and moderation
 /// state; fails without an active listing.
-pub(super) fn update_listing(state: &mut LuaState) -> LuaResult<u32> {
+pub(crate) fn update_listing(state: &mut LuaState) -> LuaResult<u32> {
     let entry = read_create_data(state)?;
     let updated = {
         let mut sim = borrow_state_mut(state)?;
@@ -128,7 +128,7 @@ pub(super) fn update_listing(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
-pub(super) fn remove_listing(state: &mut LuaState) -> LuaResult<u32> {
+pub(crate) fn remove_listing(state: &mut LuaState) -> LuaResult<u32> {
     let removed = borrow_state_mut(state)?.lfg_active_entry.take().is_some();
     if removed {
         defer_lfg_event(state, dispatch_removed, "C_LFGList.ActiveEntryRemoved")?;
@@ -156,14 +156,14 @@ fn dispatch_removed(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
-pub(super) fn has_active_entry_info(state: &mut LuaState) -> LuaResult<u32> {
+pub(crate) fn has_active_entry_info(state: &mut LuaState) -> LuaResult<u32> {
     let has = borrow_state(state)?.lfg_active_entry.is_some();
     state.push(Val::Bool(has));
     Ok(1)
 }
 
 /// `GetActiveEntryInfo()` -> `LfgEntryData`, or nothing without a listing.
-pub(super) fn get_active_entry_info(state: &mut LuaState) -> LuaResult<u32> {
+pub(crate) fn get_active_entry_info(state: &mut LuaState) -> LuaResult<u32> {
     let Some(entry) = borrow_state(state)?.lfg_active_entry.clone() else {
         return Ok(0);
     };
@@ -189,12 +189,12 @@ fn set_entry_fields(state: &mut LuaState, info: Val, entry: &LfgActiveEntry) {
         ("requiredDungeonScore", entry.required_dungeon_score),
         ("requiredPvpRating", entry.required_pvp_rating),
         ("playstyle", f64::from(entry.playstyle)),
-        ("generalPlaystyle", f64::from(entry.general_playstyle)),
         // INFERRED: duration is whole seconds since the listing was created.
         ("duration", entry.created_at.elapsed().as_secs() as f64),
     ] {
         table_set(state, info, name, Val::Num(value));
     }
+    publish_general_playstyle(state, info, entry.general_playstyle);
     if let Some(quest_id) = entry.quest_id {
         table_set(state, info, "questID", Val::Num(f64::from(quest_id)));
     }
@@ -216,3 +216,21 @@ fn set_patch_12_1_entry_fields(state: &mut LuaState, info: Val, entry: &LfgActiv
 
 #[cfg(not(feature = "retail-12-1-0"))]
 fn set_patch_12_1_entry_fields(_state: &mut LuaState, _info: Val, _entry: &LfgActiveEntry) {}
+
+fn read_general_playstyle(state: &mut LuaState, data: Val) -> LuaResult<i32> {
+    let value = number_field(state, data, "generalPlaystyle")?.unwrap_or(0.0);
+    if value.fract() != 0.0 || !(0.0..=4.0).contains(&value) {
+        return Err(runtime_error(
+            "generalPlaystyle must be an LFGEntryGeneralPlaystyle value",
+        ));
+    }
+    Ok(value as i32)
+}
+
+pub(crate) fn publish_general_playstyle(state: &mut LuaState, info: Val, value: i32) {
+    // INFERRED: enum None (0) means no optional output preference. The input
+    // default remains documented None; no listing/search record is synthesized.
+    if value != 0 {
+        table_set(state, info, "generalPlaystyle", Val::Num(f64::from(value)));
+    }
+}

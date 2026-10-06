@@ -3,8 +3,8 @@
 //! Backed by `SimState::lfg_category_info`, `lfg_activity_groups`,
 //! `lfg_activities`, and `world.premade_listings`.
 
-mod active_entry;
-mod catalog;
+use crate::c_api::c_lfg_list_active_entry as active_entry;
+pub(crate) mod catalog;
 mod counts;
 
 pub use counts::{admin_set_applicant_counts, admin_set_application_counts};
@@ -27,7 +27,11 @@ use rilua::{LuaResult, Val, runtime_error};
 use std::collections::HashMap;
 use std::time::Instant;
 
-fn fire_event_with_args(state: &mut LuaState, event_name: &str, args: Vec<Val>) -> LuaResult<()> {
+pub(crate) fn fire_event_with_args(
+    state: &mut LuaState,
+    event_name: &str,
+    args: Vec<Val>,
+) -> LuaResult<()> {
     borrow_state_mut(state)?.events.push(Event {
         name: event_name.to_string(),
         args: Vec::new(),
@@ -50,7 +54,11 @@ fn fire_event_with_args(state: &mut LuaState, event_name: &str, args: Vec<Val>) 
 }
 
 /// Fire `dispatch` on the next timer tick, as the server reply would arrive.
-fn defer_lfg_event(state: &mut LuaState, dispatch: RustFn, label: &'static str) -> LuaResult<()> {
+pub(crate) fn defer_lfg_event(
+    state: &mut LuaState,
+    dispatch: RustFn,
+    label: &'static str,
+) -> LuaResult<()> {
     let callback = Val::Function(
         state
             .gc
@@ -139,12 +147,7 @@ fn set_search_result_activity_fields(state: &mut LuaState, info: Val, listing: &
     );
     let activity_ids = activity_ids_table(state, listing);
     table_set(state, info, "activityIDs", activity_ids);
-    table_set(
-        state,
-        info,
-        "generalPlaystyle",
-        Val::Num(listing.general_playstyle as f64),
-    );
+    active_entry::publish_general_playstyle(state, info, listing.general_playstyle);
     table_set(
         state,
         info,

@@ -24,8 +24,16 @@ PrivateAuraIconInfo is input-only: full binding acceptance and per-field rejecti
 
 ## Progress
 
-- [ ] B02 post-commit proof
+- [x] B02 post-commit proof
 - [ ] B04 listing inputs/results
 - [ ] B05 interaction/faction/schedule/set DTOs
 - [ ] B06 viewer and cooldown transitions
 - [ ] Publication sweeps and startup
+
+## B04
+
+New test fails on unchanged master LFG producer (`39b7cfe9d` only changed filter code): fractional generalPlaystyle was truncated and accepted. Active listing implementation moved into src/c_api; strict enum validation, copied updates, optional preference omission. INFERRED: enum None=0 is omitted from nilable active/search output, while input default is None.
+
+All six IDs use patch_12_0_0_lfg_playstyle::lfg_general_playstyle_roundtrip_and_parent_shapes: structures-LfgEntryData-098, structures-LfgEntryData-099, structures-LfgListingCreateData-100, structures-LfgListingCreateData-101, structures-LfgSearchResultData-102, structures-LfgSearchResultData-103. Full current cached parent shapes, concrete Learning/Expert listing and separate search record values, optional omission, detached snapshots and invalid-enum atomicity. Does not imply that one's own listing is automatically a search result.
+
+B02 post-commit: struct_shapes 2, reward 9, private_aura_anchors 18, structure_appearance 3, test_premade_groups 18 passed.
