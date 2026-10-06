@@ -1,6 +1,6 @@
 ## [2026-10-05] investigation | Retirement successor fallout
 
-[Follow-up](investigations/patch-12-0-0-api-audit.md#retirement-fallout-follow-up) records all 17 reproduced failures and six reproduced successor gaps. Model tests use current APIs, legacy-only assertions retain epoch gates, and state-backed successors replace autostubs. [Contract](../specs/retirement-successors.md) defines scope; current proof follows after verification.
+[Follow-up](investigations/patch-12-0-0-api-audit.md#retirement-fallout-follow-up) records all 17 reproduced failures and six reproduced successor gaps. Model tests use current APIs, legacy-only assertions retain epoch gates, and state-backed successors replace autostubs. [Contract and final proof](../specs/retirement-successors.md#verification--2026-10-05) define bounded scope, full-suite results, corrected post-suite controls and original-base reproductions. Page-coverage ledger unchanged.
 
 ## [2026-10-05] investigation | Cast duration rounding
 

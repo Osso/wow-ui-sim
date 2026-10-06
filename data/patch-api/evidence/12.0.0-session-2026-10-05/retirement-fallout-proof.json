@@ -1,0 +1,517 @@
+{
+  "base": "f1e59afe5",
+  "records": [
+    {
+      "scope": "17 listed fallout tests",
+      "revision": "f1e59afe5",
+      "command": "build-host local --test --test integration -- <17 filters> --test-threads=4",
+      "result": "0 passed; 17 failed",
+      "log": "red-all-fallout.log"
+    },
+    {
+      "scope": "six new successor contract tests",
+      "revision": "17a4be11a plus RED tests",
+      "command": "build-host local --test --test integration retirement_successors:: -- --test-threads=4",
+      "result": "0 passed; 6 failed",
+      "log": "red-successors.log"
+    },
+    {
+      "scope": "successor and migrated fallout tests, diff controls",
+      "revision": "47b1da4f408dacd87e6df6c2f18018d867f59ec2",
+      "command": "build-host local --test --test integration -- <targeted filters> --test-threads=4",
+      "result": "27 passed; 0 failed",
+      "log": "green-targeted-current.log"
+    },
+    {
+      "scope": "cached retirement and all successor probes",
+      "revision": "47b1da4f408dacd87e6df6c2f18018d867f59ec2",
+      "command": "build-host local --test --test prefork_full_ui patch_12_0_0_deprecated",
+      "result": 1,
+      "log": "prefork-targeted.log"
+    },
+    {
+      "scope": "cached retirement cooldown diagnosis",
+      "revision": "47b1da4f4 plus diagnostic only",
+      "command": "build-host local --test --test prefork_full_ui patch_12_0_0_deprecated",
+      "result": "1 passed (flaky exact duration assertion)",
+      "log": "prefork-cooldown-diagnostic.log",
+      "invalidated_by": "cooldown seed isolation and tolerant floating span assertion"
+    },
+    {
+      "name": "full-prefork",
+      "revision": "d978182f081d66885324e74b6a4c3fab9e09a57a",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "prefork_full_ui"
+      ],
+      "status": "finished",
+      "started": 1791245413.0791793,
+      "log": "full-prefork.log",
+      "exit_code": 1,
+      "seconds": 228.25190019607544,
+      "summary": [
+        "test blizzard_deprecated_housing_catalog_loads::blizzard_deprecated_housing_catalog_wraps_category_info_with_legacy_field ... FAILED (panic: Deprecated_HousingCatalog.lua line 184-187 wraps `C_HousingCatalog.GetCatalogCategoryInfo` to mirror the new `anyStoredEntries` field onto the legacy `anyOwnedEntries` field via `AddBackwardCompatCategoryInfoFields` (line 96-101))",
+        "test blizzard_deprecated_housing_catalog_loads::blizzard_deprecated_housing_catalog_wraps_get_catalog_entry_info_with_legacy_fields ... FAILED (panic: Deprecated_HousingCatalog.lua line 130-133 wraps `C_HousingCatalog.GetCatalogEntryInfoByRecordID` so the returned info table carries all 5 backward-compat fields populated by `AddBackwardCompatEntryInfoFields` at line 76-91: `entryID` (compound table with entrySubtype=Enum.HousingCatalogEntrySubtype.Unowned + subtypeIdentifier=0 + variantIdentifier=0), `quantity` (mirroring totalNumStored), `numPlaced` (mirroring totalNumPlaced), `showQuantity` (boolean), `dyeSlots` (empty table))",
+        "test catalog_shop::catalog_shop_loads_and_populates_navigation_and_products ... FAILED (panic: assertion `left == right` failed",
+        "test result: FAILED. 2016 passed; 3 failed; 2019 total"
+      ]
+    },
+    {
+      "name": "sweep-12_0_0",
+      "revision": "d978182f081d66885324e74b6a4c3fab9e09a57a",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "status": "finished",
+      "started": 1791245641.3391237,
+      "log": "sweep-12_0_0.log",
+      "exit_code": 0,
+      "seconds": 18.902953386306763,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 4.21s"
+      ]
+    },
+    {
+      "name": "sweep-12_0_5",
+      "revision": "d978182f081d66885324e74b6a4c3fab9e09a57a",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "status": "finished",
+      "started": 1791245660.2455292,
+      "log": "sweep-12_0_5.log",
+      "exit_code": 0,
+      "seconds": 8.923499584197998,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 4.01s"
+      ]
+    },
+    {
+      "name": "sweep-12_0_7",
+      "revision": "d978182f081d66885324e74b6a4c3fab9e09a57a",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "status": "finished",
+      "started": 1791245669.172749,
+      "log": "sweep-12_0_7.log",
+      "exit_code": 0,
+      "seconds": 9.188609600067139,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 4.34s"
+      ]
+    },
+    {
+      "name": "sweep-12_1_0",
+      "revision": "d978182f081d66885324e74b6a4c3fab9e09a57a",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "status": "finished",
+      "started": 1791245678.364403,
+      "log": "sweep-12_1_0.log",
+      "exit_code": 0,
+      "seconds": 8.84229850769043,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 4.34s"
+      ]
+    },
+    {
+      "name": "full-integration",
+      "revision": "d978182f081d66885324e74b6a4c3fab9e09a57a",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "--",
+        "--skip",
+        "publication_sweep",
+        "--skip",
+        "enum_publication",
+        "--skip",
+        "full_ui_preload_bootstrap",
+        "--skip",
+        "publication_deprecated_alias"
+      ],
+      "status": "finished",
+      "started": 1791245687.2119215,
+      "log": "full-integration.log",
+      "exit_code": 101,
+      "seconds": 1825.9424862861633,
+      "summary": [
+        "test aura_table_shape::buff_slot_table_has_every_documented_field ... FAILED",
+        "test blizzard_core_frame_lane::lane_dep_edges_pin_canonical_chain ... FAILED",
+        "test blizzard_frame_xml_loads::blizzard_frame_xml_toc_is_load_first_with_current_dependencies ... FAILED",
+        "test blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors ... FAILED",
+        "test blizzard_reforging_ui_loads::find_toc_file_resolves_classic_suffix_via_fallthrough ... FAILED",
+        "test blizzard_ui_blizzard_accountstore::behavior_currency_format::format_currency_display_returns_amount_space_texture_markup_with_size_twelve_twelve_zero_zero ... FAILED",
+        "test blizzard_ui_blizzard_achievementui::behavior_search_filter::search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length ... FAILED",
+        "test c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims ... FAILED",
+        "test c_api_surface::scenario_defaults_are_not_c_api_temporary_shims ... FAILED",
+        "test c_spell_static_fallbacks::test_spell_static_fallback_shims_return_inert_values ... FAILED",
+        "test edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size ... FAILED",
+        "test generated_data_refresh_coverage::generated_lua_refresh_manifest_matches_current_file_contents ... FAILED",
+        "test hero_talents::test_active_hero_node_icon_texture_path_resolves_to_real_asset ... FAILED",
+        "test method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface ... FAILED",
+        "test method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface ... FAILED",
+        "test numeric_rule_formatter::numeric_rule_formatter_updates_duration_binding_text ... FAILED",
+        "test on_update_modes::on_update_modes_process_actual_managed_aura_dirty_phases ... FAILED",
+        "test patch_12_0_7_b23_b28::b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries ... FAILED",
+        "test spell_api::test_spell_get_maw_power_border_atlas_by_spell_id_is_stubbed ... FAILED",
+        "test spell_api::test_spell_get_spell_charges ... FAILED",
+        "test test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window ... FAILED",
+        "test tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges ... FAILED",
+        "test toplevel_render_groups::native_controls_keep_unraised_and_raised_groups_in_owner_strata ... FAILED",
+        "test toplevel_render_groups::screen_roots_do_not_capture_independent_render_groups ... FAILED",
+        "test utility_api::test_table_create_returns_empty_mutable_tables_for_capacity_variants ... FAILED",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 0.18s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 0.16s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 0.31s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 0.16s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 1.30s",
+        "test wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles ... FAILED",
+        "test wowforever_table::wowforever_table_does_not_leak_into_earlier_profiles ... FAILED",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 0.01s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 0.01s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 0.01s",
+        "test test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window ... FAILED",
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 3.53s",
+        "test result: FAILED. 10648 passed; 27 failed; 18 ignored; 0 measured; 8 filtered out; finished in 1820.21s"
+      ],
+      "later_test_only_changes": "130cfdd5d updates obsolete hero icon and empty merchant assertions; scoped successor/control passes cover these changes; runtime code unchanged",
+      "broad_rerun": "not repeated; full suites already cover final runtime code"
+    },
+    {
+      "name": "full-lib",
+      "revision": "d978182f081d66885324e74b6a4c3fab9e09a57a",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--lib"
+      ],
+      "status": "finished",
+      "started": 1791247513.2147536,
+      "log": "full-lib.log",
+      "exit_code": 101,
+      "seconds": 257.1565272808075,
+      "summary": [
+        "test loader::tests::wow_api_globals::startup_globals::test_addon_startup_frame_scale_and_merchant_namespaces_exist ... FAILED",
+        "test loader::tests::wow_api_globals::transmog_situation::test_patch_12_0_0_transmog_situation_enum_values ... FAILED",
+        "test lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults ... FAILED",
+        "test lua_api::workarounds::temporary::housing_catalog_state::tests::installs_seeded_housing_catalog_surface ... FAILED",
+        "test lua_api::workarounds_editmode::tests::apply_system_anchors::cast_and_player::apply_system_anchors_replays_player_frame_size_without_cast_bar_side_effect ... FAILED",
+        "test lua_api::workarounds_editmode::tests::apply_system_anchors::singletons::apply_system_anchors_falls_back_to_minus_one_for_nil_singletons ... FAILED",
+        "test lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_batches_compact_unit_frame_startup_refreshes ... FAILED",
+        "test result: FAILED. 1970 passed; 7 failed; 0 ignored; 0 measured; 0 filtered out; finished in 49.00s"
+      ],
+      "later_test_only_changes": "130cfdd5d updates obsolete hero icon and empty merchant assertions; scoped successor/control passes cover these changes; runtime code unchanged",
+      "broad_rerun": "not repeated; full suites already cover final runtime code"
+    },
+    {
+      "name": "post-suite-successor-controls",
+      "revision": "130cfdd5d941833b74d6adb36276f9de16e0b79b",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "--",
+        "retirement_successors::",
+        "hero_talents::test_active_hero_node_icon_file_id_resolves_to_real_asset",
+        "c_item_api::globals_and_inventory::test_get_spell_cooldown",
+        "cooldown_probes::get_spell_cooldown_",
+        "global_function_diff_coverage::",
+        "item_socket_info::artifact_relic_detection",
+        "map_canvas_pins::test_default_map_has_world_quests",
+        "map_canvas_pins::test_isle_of_dorn_has_seeded_world_quests",
+        "spell_state_probes::is_usable_spell",
+        "spell_state_probes::spell_readiness",
+        "talent_spec_probes::get_spell_book",
+        "talent_spec_probes::get_num_spell_book",
+        "spell_api::test_spell_get_spell_texture",
+        "--test-threads=4"
+      ],
+      "status": "finished",
+      "started": 1791247934.20074,
+      "log": "post-suite-successor-controls.log",
+      "exit_code": 0,
+      "seconds": 69.07962083816528,
+      "summary": [
+        "test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 10673 filtered out; finished in 1.13s"
+      ]
+    },
+    {
+      "name": "post-suite-lib-startup-control",
+      "revision": "130cfdd5d941833b74d6adb36276f9de16e0b79b",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--lib",
+        "test_addon_startup_frame_scale_and_merchant_namespaces_exist",
+        "--",
+        "--exact"
+      ],
+      "status": "finished",
+      "started": 1791248003.2849238,
+      "log": "post-suite-lib-startup-control.log",
+      "exit_code": 0,
+      "seconds": 60.533315896987915,
+      "summary": [
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.00s"
+      ],
+      "result": "INVALID: short filter combined with --exact ran zero tests; replaced by current-lib-startup-exact"
+    },
+    {
+      "name": "cargo-check",
+      "revision": "130cfdd5d941833b74d6adb36276f9de16e0b79b",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "status": "finished",
+      "started": 1791248063.8557076,
+      "log": "cargo-check.log",
+      "exit_code": 0,
+      "seconds": 87.75892162322998,
+      "summary": []
+    },
+    {
+      "name": "debug-build",
+      "revision": "130cfdd5d941833b74d6adb36276f9de16e0b79b",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--bin",
+        "wow-sim"
+      ],
+      "status": "finished",
+      "started": 1791248151.6176145,
+      "log": "debug-build.log",
+      "exit_code": 0,
+      "seconds": 4.80830979347229,
+      "summary": []
+    },
+    {
+      "name": "startup",
+      "revision": "130cfdd5d941833b74d6adb36276f9de16e0b79b",
+      "command": [
+        "timeout",
+        "90",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/target/debug/wow-sim",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "exit_code": 0,
+      "result": "[]\n",
+      "log": "startup-lua-errors.json"
+    },
+    {
+      "name": "base-aura-control",
+      "revision": "f1e59afe5",
+      "scope": "random default aura boundary",
+      "result": {
+        "attempt": 25,
+        "exit_code": 101,
+        "summary": [
+          "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10698 filtered out; finished in 0.22s"
+        ]
+      },
+      "log": "base-aura-proof.json"
+    },
+    {
+      "name": "base-lib-failure-controls",
+      "revision": "f1e59afe5",
+      "scope": "seven original full-lib failures",
+      "exit_code": 101,
+      "log": "base-lib-failures.log"
+    },
+    {
+      "name": "current-lib-startup-exact",
+      "revision": "130cfdd5d941833b74d6adb36276f9de16e0b79b",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--lib",
+        "loader::tests::wow_api_globals::startup_globals::test_addon_startup_frame_scale_and_merchant_namespaces_exist",
+        "--",
+        "--exact"
+      ],
+      "status": "finished",
+      "started": 1791248656.7375672,
+      "log": "current-lib-startup-exact.log",
+      "exit_code": 0,
+      "seconds": 105.40094661712646,
+      "summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1976 filtered out; finished in 0.21s"
+      ]
+    },
+    {
+      "name": "cargo-fmt-check",
+      "revision": "130cfdd5d941833b74d6adb36276f9de16e0b79b",
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-retire-fallout/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "result": "empty stdout/stderr"
+    }
+  ],
+  "integration_comparison": {
+    "full_run_failures": [
+      "aura_table_shape::buff_slot_table_has_every_documented_field",
+      "blizzard_core_frame_lane::lane_dep_edges_pin_canonical_chain",
+      "blizzard_frame_xml_loads::blizzard_frame_xml_toc_is_load_first_with_current_dependencies",
+      "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors",
+      "blizzard_reforging_ui_loads::find_toc_file_resolves_classic_suffix_via_fallthrough",
+      "blizzard_ui_blizzard_accountstore::behavior_currency_format::format_currency_display_returns_amount_space_texture_markup_with_size_twelve_twelve_zero_zero",
+      "blizzard_ui_blizzard_achievementui::behavior_search_filter::search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length",
+      "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+      "c_api_surface::scenario_defaults_are_not_c_api_temporary_shims",
+      "c_spell_static_fallbacks::test_spell_static_fallback_shims_return_inert_values",
+      "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+      "generated_data_refresh_coverage::generated_lua_refresh_manifest_matches_current_file_contents",
+      "hero_talents::test_active_hero_node_icon_texture_path_resolves_to_real_asset",
+      "method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface",
+      "method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface",
+      "numeric_rule_formatter::numeric_rule_formatter_updates_duration_binding_text",
+      "on_update_modes::on_update_modes_process_actual_managed_aura_dirty_phases",
+      "patch_12_0_7_b23_b28::b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries",
+      "spell_api::test_spell_get_maw_power_border_atlas_by_spell_id_is_stubbed",
+      "spell_api::test_spell_get_spell_charges",
+      "test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window",
+      "tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges",
+      "toplevel_render_groups::native_controls_keep_unraised_and_raised_groups_in_owner_strata",
+      "toplevel_render_groups::screen_roots_do_not_capture_independent_render_groups",
+      "utility_api::test_table_create_returns_empty_mutable_tables_for_capacity_variants",
+      "wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles",
+      "wowforever_table::wowforever_table_does_not_leak_into_earlier_profiles"
+    ],
+    "baseline_failures": [
+      "addon_api::test_save_addons_writes_local_addons_txt",
+      "blizzard_core_frame_lane::lane_dep_edges_pin_canonical_chain",
+      "blizzard_frame_xml_loads::blizzard_frame_xml_toc_is_load_first_with_current_dependencies",
+      "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors",
+      "blizzard_reforging_ui_loads::find_toc_file_resolves_classic_suffix_via_fallthrough",
+      "blizzard_ui_blizzard_accountstore::behavior_currency_format::format_currency_display_returns_amount_space_texture_markup_with_size_twelve_twelve_zero_zero",
+      "blizzard_ui_blizzard_achievementui::behavior_search_filter::search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length",
+      "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+      "c_api_surface::scenario_defaults_are_not_c_api_temporary_shims",
+      "c_api_surface::transmog_sets_empty_inventory_defaults_are_not_c_api_temporary_shims",
+      "c_spell_static_fallbacks::test_spell_static_fallback_shims_return_inert_values",
+      "c_system_api::test_c_console_get_all_commands_empty",
+      "edit_mode_api::enums::edit_mode_profile_option_enums_match_blizzard_docs",
+      "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+      "generated_data_refresh_coverage::generated_lua_refresh_manifest_matches_current_file_contents",
+      "method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface",
+      "method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface",
+      "numeric_rule_formatter::numeric_rule_formatter_updates_duration_binding_text",
+      "on_update_modes::on_update_modes_process_actual_managed_aura_dirty_phases",
+      "patch_12_0_7_b23_b28::b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries",
+      "spell_api::test_spell_get_maw_power_border_atlas_by_spell_id_is_stubbed",
+      "spell_api::test_spell_get_spell_charges",
+      "test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window",
+      "text_perf::glyph_text_shaping_for_representative_strings_stays_under_budget",
+      "tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges",
+      "toplevel_render_groups::native_controls_keep_unraised_and_raised_groups_in_owner_strata",
+      "toplevel_render_groups::screen_roots_do_not_capture_independent_render_groups",
+      "utility_api::test_table_create_returns_empty_mutable_tables_for_capacity_variants",
+      "wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles",
+      "wowforever_table::wowforever_table_does_not_leak_into_earlier_profiles"
+    ],
+    "outside_supplied_baseline": [
+      "aura_table_shape::buff_slot_table_has_every_documented_field",
+      "hero_talents::test_active_hero_node_icon_texture_path_resolves_to_real_asset"
+    ],
+    "baseline_not_observed": [
+      "addon_api::test_save_addons_writes_local_addons_txt",
+      "c_api_surface::transmog_sets_empty_inventory_defaults_are_not_c_api_temporary_shims",
+      "c_system_api::test_c_console_get_all_commands_empty",
+      "edit_mode_api::enums::edit_mode_profile_option_enums_match_blizzard_docs",
+      "text_perf::glyph_text_shaping_for_representative_strings_stays_under_budget"
+    ],
+    "resolved_after_run": "hero_talents::test_active_hero_node_icon_texture_path_resolves_to_real_asset migrated to numeric ID; 28 focused tests pass",
+    "extra_preexisting": "aura_table_shape::buff_slot_table_has_every_documented_field reproduced with original base source/tests on attempt 25"
+  },
+  "consumer_scan": {
+    "raw_rg": "target/retire-proof/retired-consumer-scan.json",
+    "non_executable_matches": "11_0_0_SpellBookAPITransitionGuide.lua is a single long Lua comment; remaining matches are in non-Mainline Commentator/TalentUI Classic/Mists/Cata sources",
+    "active_consumer_proof": "Mainline Commentator TOC selects Mainline files; full cached retirement case and startup prove zero active runtime calls to retired functions"
+  },
+  "constraints": {
+    "no_vendor_edits": true,
+    "no_page_coverage_edits": true,
+    "no_push": true,
+    "no_merge": true,
+    "no_agents": true,
+    "build_host": "local",
+    "profile": "debug/default Retail",
+    "target": "target only"
+  }
+}
