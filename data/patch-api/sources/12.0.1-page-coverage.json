@@ -37,6 +37,22 @@
       "implementation": "commits through e670ebcdb",
       "compiled_revision": "e670ebcdb",
       "proof": "Sol worker GREEN; main-thread five sweeps + audio 11, prediction 17, death_recap 10, outfit 52, secret 278, voice_chat 53, totem 4, encounter_warning 8; no independent review"
+    },
+    {
+      "id": "extract-proofs-12-0-1",
+      "symbols": [
+        "12.0.1 enums, damage-meter DTOs, catalog DTOs, cooldown hotfix contracts"
+      ],
+      "scope": "Enum values/Meta after cached preload; damage-meter exact values/snapshots (combat ConditionalSecret policy pending on parent rows); catalog bundle/section DTOs; cooldown formulas, zero-span durations and cached secure-delegate removal. Bounded simulator fixtures, not native parity.",
+      "spec": "data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract-proof.md",
+      "tests": [
+        "tests/patch_12_0_1_enums.rs",
+        "tests/patch_12_0_1_cooldown.rs",
+        "damage_meter/catalog_shop tests"
+      ],
+      "implementation": "commits through 5f62f6944",
+      "compiled_revision": "5f62f6944",
+      "proof": "Sol worker GREEN; main-thread enum tests alone, five sweeps, damage_meter/catalog_shop/cooldown/combat_audio filters (pre-existing failures only); no independent review"
     }
   ],
   "non_inventory_source": {
@@ -2609,9 +2625,11 @@
     },
     {
       "source_id": "prose-2026-03-21-167",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_cached_secure_delegate_removed"
     },
     {
       "source_id": "source-context-169",
@@ -2627,81 +2645,91 @@
     },
     {
       "source_id": "prose-2026-03-21-173",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_cached_secure_delegate_removed"
     },
     {
       "source_id": "prose-2026-03-21-174",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Secret-bearing duration objects reject tainted callers; retained ignored RED patch_12_0_1_tainted_secret_duration_object. Opaque rendering consumption is not implemented; caller taint is never cleared."
     },
     {
       "source_id": "prose-2026-03-21-176",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_cached_secure_delegate_removed"
     },
     {
       "source_id": "prose-2026-03-21-177",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Numeric secret setter rejection proven, but full addon replication lacks secret-bearing duration consumption and derived LoC replacement."
     },
     {
       "source_id": "prose-2026-03-21-179",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_cooldown_cast_expiry_transitions, patch_12_0_1_cooldown_charge_formula_and_zero_span"
     },
     {
       "source_id": "prose-2026-03-21-180",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_cooldown_cast_expiry_transitions, patch_12_0_1_cooldown_charge_formula_and_zero_span, unrestricted_action_and_existing_spell_dtos_match_concrete_record"
     },
     {
       "source_id": "prose-2026-03-21-181",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Positive/nonpositive intervals and real cast expiry proven; producer always enables regular cooldowns, so disabled/held branch cannot be exercised."
     },
     {
       "source_id": "prose-2026-03-21-182",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_cooldown_charge_formula_and_zero_span"
     },
     {
       "source_id": "prose-2026-03-21-183",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: LoC isActive is a supplied host flag, not computed from the positive start/duration formula."
     },
     {
       "source_id": "prose-2026-03-21-185",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Regular and charge inactive zero spans proven; inactive spell LoC duration still returns no object rather than a zero-span object."
     },
     {
       "source_id": "prose-2026-03-21-186",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Cooldown-aura association query does not participate in spell/action interval selection."
     },
     {
       "source_id": "prose-2026-03-21-187",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: No PvP-trinket/Adaptation cooldown-aura producer or authoritative hotfix mapping; no mapping fabricated."
     },
     {
       "source_id": "prose-2026-03-21-188",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Association lookup still must be consumed by callers; upstream aura-derived interval selection missing."
     },
     {
       "source_id": "source-context-191",
@@ -2711,33 +2739,35 @@
     },
     {
       "source_id": "prose-2026-03-21-192",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: unrestricted_action_and_existing_spell_dtos_match_concrete_record, assigned_first_slot_returns_all_five_concrete_values"
     },
     {
       "source_id": "prose-2026-03-21-193",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: No behavioral old-name deprecation/unpacked-return proof; publication sweep is insufficient."
     },
     {
       "source_id": "prose-2026-03-21-194",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Secret numeric fields/public flags are fixture-tested, but shouldReplaceNormalCooldown is a host flag rather than derived expiration comparison."
     },
     {
       "source_id": "prose-2026-03-21-195",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Existing seeded publisher returns numeric 4 for player/index 1, not a duration object. Populated real producer belongs to concurrent publication-sweep scope."
     },
     {
       "source_id": "prose-2026-03-21-196",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: No populated totem-duration state producer/proof in this checkout; missing-publication producer changes belong to concurrent sweep task."
     },
     {
       "source_id": "source-context-199",
@@ -2813,225 +2843,299 @@
     },
     {
       "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-215",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-216",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-217",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-218",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-219",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-CooldownViewerAlertEventType-220",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-CooldownViewerAlertEventType-221",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-CooldownViewerAlertEventType-222",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-DamageMeterType-223",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-DamageMeterType-224",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-DamageMeterType-225",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-NeighborhoodInviteResult-226",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-NeighborhoodInviteResult-227",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-PartyRequestJoinRelation-228",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-PartyRequestJoinRelation-229",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-SecretAspect-230",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-SecretAspect-231",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-SecretAspect-232",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-233",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-234",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-235",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-236",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-237",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-238",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-239",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-240",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-241",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-242",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by a later patch; current successor passes the enum test."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-243",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-244",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-245",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-246",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-247",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-248",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-249",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-250",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-251",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: patch_12_0_1_enum_publication"
     },
     {
       "source_id": "source-context-253",
@@ -3053,183 +3157,231 @@
     },
     {
       "source_id": "structures-CatalogShopBundleChildInfo-256",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: catalog_shop_patch_12_0_1_bundle_section_snapshots"
     },
     {
       "source_id": "structures-CatalogShopBundleChildInfo-257",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: catalog_shop_patch_12_0_1_bundle_section_snapshots"
     },
     {
       "source_id": "structures-CatalogShopProductDisplayInfo-258",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: catalog_shop_patch_12_0_1_bundle_section_snapshots, fully_populated_display_has_exact_declared_shape"
     },
     {
       "source_id": "structures-CatalogShopProductDisplayInfo-259",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: catalog_shop_patch_12_0_1_bundle_section_snapshots"
     },
     {
       "source_id": "structures-CatalogShopProductInfo-260",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: fully_populated_product_has_exact_declared_shape"
     },
     {
       "source_id": "structures-CatalogShopProductInfo-261",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: fully_populated_product_has_exact_declared_shape"
     },
     {
       "source_id": "structures-CatalogShopProductInfo-262",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: fully_populated_product_has_exact_declared_shape"
     },
     {
       "source_id": "structures-CatalogShopSectionInfo-263",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: catalog_shop_patch_12_0_1_bundle_section_snapshots"
     },
     {
       "source_id": "structures-CatalogShopSectionInfo-264",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: catalog_shop_patch_12_0_1_bundle_section_snapshots"
     },
     {
       "source_id": "structures-DamageMeterAvailableCombatSession-265",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
     },
     {
       "source_id": "structures-DamageMeterAvailableCombatSession-266",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSession-267",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
     },
     {
       "source_id": "structures-DamageMeterCombatSession-268",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSession-269",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSessionSource-270",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
     },
     {
       "source_id": "structures-DamageMeterCombatSessionSource-271",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSource-272",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
     },
     {
       "source_id": "structures-DamageMeterCombatSource-273",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSource-274",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSource-275",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSource-276",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSource-277",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSpell-278",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
     },
     {
       "source_id": "structures-DamageMeterCombatSpell-279",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSpell-280",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSpell-281",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSpellUnitDetails-282",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "note": "Pending: Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
     },
     {
       "source_id": "structures-DamageMeterCombatSpellUnitDetails-283",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSpellUnitDetails-284",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-DamageMeterCombatSpellUnitDetails-285",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1201-extract-scout.md."
+      "capabilities": [
+        "extract-proofs-12-0-1"
+      ],
+      "status": "partial-development-green",
+      "note": "Proven: damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
     },
     {
       "source_id": "structures-EncounterTimelineEventInfo-286",
