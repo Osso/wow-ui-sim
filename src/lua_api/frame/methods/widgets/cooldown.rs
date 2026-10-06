@@ -147,14 +147,29 @@ fn ensure_countdown_font_string(state: &mut LuaState, parent_id: u64) -> Option<
     Some(child_id)
 }
 
+fn read_cooldown_number(state: &LuaState, index: i32) -> LuaResult<f64> {
+    let input = stack_val(state, index);
+    #[cfg(feature = "retail-12-0-5")]
+    let input = rilua::table_security::unwrap_secret(state, input)?;
+    Ok(val_to_f64(input))
+}
+
+fn cooldown_inputs_are_secret(state: &LuaState, indices: std::ops::RangeInclusive<i32>) -> bool {
+    cfg!(feature = "retail-12-0-5")
+        && indices
+            .into_iter()
+            .any(|index| rilua::table_security::is_secret_value(state, stack_val(state, index)))
+}
+
 pub(super) fn set_cooldown(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let start = val_to_f64(stack_val(state, 2));
-    let duration = val_to_f64(stack_val(state, 3));
-    let mod_rate = normalize_mod_rate(val_to_f64(stack_val(state, 4)));
+    let start = read_cooldown_number(state, 2)?;
+    let duration = read_cooldown_number(state, 3)?;
+    let mod_rate = normalize_mod_rate(read_cooldown_number(state, 4)?);
+    let secret_timing = cooldown_inputs_are_secret(state, 2..=4);
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {
-        f.secret_timing = false;
+        f.secret_timing = secret_timing;
         apply_cooldown_state(f, start, duration, mod_rate);
     }
     Ok(0)
@@ -166,13 +181,14 @@ pub(super) fn set_cooldown_unix(state: &mut LuaState) -> LuaResult<u32> {
 
 pub(super) fn set_cooldown_from_expiration_time(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let expiration = val_to_f64(stack_val(state, 2));
-    let duration = val_to_f64(stack_val(state, 3));
-    let mod_rate = normalize_mod_rate(val_to_f64(stack_val(state, 4)));
+    let expiration = read_cooldown_number(state, 2)?;
+    let duration = read_cooldown_number(state, 3)?;
+    let mod_rate = normalize_mod_rate(read_cooldown_number(state, 4)?);
+    let secret_timing = cooldown_inputs_are_secret(state, 2..=4);
     let start = expiration - duration;
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {
-        f.secret_timing = false;
+        f.secret_timing = secret_timing;
         apply_cooldown_state(f, start, duration, mod_rate);
     }
     Ok(0)
@@ -180,10 +196,12 @@ pub(super) fn set_cooldown_from_expiration_time(state: &mut LuaState) -> LuaResu
 
 pub(super) fn set_cooldown_duration(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
-    let duration = val_to_f64(stack_val(state, 2));
-    let mod_rate = normalize_mod_rate(val_to_f64(stack_val(state, 3)));
+    let duration = read_cooldown_number(state, 2)?;
+    let mod_rate = normalize_mod_rate(read_cooldown_number(state, 3)?);
+    let secret_timing = cooldown_inputs_are_secret(state, 2..=3);
     let mut sim = borrow_state_mut(state)?;
     if let Some(f) = sim.widgets.get_mut_visual(id) {
+        f.secret_timing |= secret_timing;
         let start = f.cooldown_start;
         apply_cooldown_state(f, start, duration, mod_rate);
     }
