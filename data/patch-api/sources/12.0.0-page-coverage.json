@@ -11,7 +11,7 @@
       "symbols": [
         "1010 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 23 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
+      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 27 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json. Supersession now also checks the 12.0.1 register.",
       "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_0_publication_sweep.rs",
@@ -1967,12 +1967,9 @@
     },
     {
       "source_id": "wt-cvars-minimapTrackedInfov2-925",
-      "capabilities": [
-        "publication-sweep-12-0-0",
-        "mixed-surface-12-0-0"
-      ],
-      "status": "partial-development-green",
-      "note": "Published from simulator state (p1200_mixed)."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Added in 12.0.0 but removed again in 12.0.1 (supersession); simulator still publishes it on the current build."
     },
     {
       "source_id": "wt-cvars-nameplateAuraScale-926",
@@ -2446,12 +2443,9 @@
     },
     {
       "source_id": "wt-cvars-useCompactPartyFrames-962",
-      "capabilities": [
-        "publication-sweep-12-0-0",
-        "mixed-surface-12-0-0"
-      ],
-      "status": "partial-development-green",
-      "note": "Published from simulator state (p1200_mixed)."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Added in 12.0.0 but removed again in 12.0.1 (supersession); simulator still publishes it on the current build."
     },
     {
       "source_id": "wt-cvars-watchFrameBaseAlpha-1115",
@@ -2519,12 +2513,9 @@
     },
     {
       "source_id": "wt-events-CHAT_MSG_ENCOUNTER_EVENT-739",
-      "capabilities": [
-        "publication-sweep-12-0-0",
-        "mixed-surface-12-0-0"
-      ],
-      "status": "partial-development-green",
-      "note": "Published from simulator state (p1200_mixed)."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Added in 12.0.0 but removed again in 12.0.1 (supersession); simulator still publishes it on the current build."
     },
     {
       "source_id": "wt-events-COMBAT_LOG_APPLY_FILTER_SETTINGS-740",
@@ -8232,11 +8223,9 @@
     },
     {
       "source_id": "wt-widgets-FrameScriptObject:SetPreventSecretValues-691",
-      "capabilities": [
-        "publication-sweep-12-0-0"
-      ],
-      "status": "partial-development-green",
-      "note": "Publication only (sweep); behavior unproved."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Added in 12.0.0 but removed again in 12.0.1 (supersession); simulator still publishes it on the current build."
     },
     {
       "source_id": "wt-widgets-GameTooltip:GetLeftLine-704",
