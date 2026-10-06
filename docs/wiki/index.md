@@ -2,6 +2,10 @@
 
 [Follow-up](investigations/patch-12-0-1-api-audit.md#gap-closure-verification): 48/51 publication gaps closed, three retained model/scope boundaries; five isolated sweeps pass, startup `[]`. [Per-ID outcomes and proof](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gap-review.json) distinguish bounded producers from native parity.
 
+## [2026-10-06] evidence | 12.0.1 extract B01–B04
+
+[Follow-up](investigations/patch-12-0-1-api-audit.md#b01b04-extract-follow-up) links per-source outcomes, current enum publication, host DTO snapshots, charge activity and cached delegate boundaries. Secret duration rendering, combat DTO secrecy, LoC derivation and aura intervals remain explicit gaps. Page ledgers unchanged; startup JSON clean, process exit timed out.
+
 ## [2026-10-06] evidence | 12.0.1 page audit
 
 [Audit](investigations/patch-12-0-1-api-audit.md) links 225 inventory observations, 252 extract rows, four epoch-gated retirements and exact negative control. [Scout](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract-scout.md) assigns every non-inventory ID without behavioral credit; existing coverage ledgers unchanged.

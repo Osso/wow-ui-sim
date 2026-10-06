@@ -1,3 +1,7 @@
+## [2026-10-06] evidence | 12.0.1 extract B01–B04
+
+[Follow-up](investigations/patch-12-0-1-api-audit.md#b01b04-extract-follow-up) records source-specific proof and withheld closures, enum/charge/numeric setter root causes, real catalog DTO inputs, isolated sweeps and original-master failures. Secret duration RED remains failing; startup emits `[]` but times out. No page-ledger edits or vendor patches.
+
 ## [2026-10-06] system | Crafting reagents
 
 [Model](systems/crafting-reagents.md), [contract](../specs/crafting-reagent-contracts.md) and [per-source proof](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b8-prose-report.md) record typed inputs, rooted outputs, required host snapshots, committed item identities and resistant prose/historical boundaries. No coverage ledger edits.

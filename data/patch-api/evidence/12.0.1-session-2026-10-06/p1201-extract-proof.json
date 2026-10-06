@@ -1,0 +1,1795 @@
+{
+  "base_revision": "f1b6977a9d225a4993b402329ec910c072ea2578",
+  "final_code_revision": "0abd710a8",
+  "summary": {
+    "proven-by-test": 57,
+    "still-pending": 18,
+    "superseded": 11
+  },
+  "rows": [
+    {
+      "source_id": "prose-2026-03-21-167",
+      "batch": "B04",
+      "statement": "We recognize that some of these changes are going to be disruptive and require last-second changes to your addons, and we sincerely apologize for them coming in so late. Part of these changes involve removing the secure delegate portion of ActionButton_ApplyCooldown. We have added new APIs that should replace the functionality it provided, but we will be watching closely for reports of functionality that still needs replacing.",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_cached_secure_delegate_removed"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "prose-2026-03-21-173",
+      "batch": "B04",
+      "statement": "* Removed the ability for tainted code to configure cooldown frames with secret values via Cooldown:SetCooldown, Cooldown:SetCooldownFromExpirationTime, Cooldown:SetCooldownDuration, and Cooldown:SetCooldownUNIX.",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_cached_secure_delegate_removed"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "prose-2026-03-21-174",
+      "batch": "B04",
+      "statement": "** This does not impact Cooldown:SetCooldownFromDurationObject which, going forward, is the only way to configure a cooldown frame with secret values.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "Secret-bearing duration objects reject tainted callers; retained ignored RED patch_12_0_1_tainted_secret_duration_object. Opaque rendering consumption is not implemented; caller taint is never cleared."
+    },
+    {
+      "source_id": "prose-2026-03-21-176",
+      "batch": "B04",
+      "statement": "* The ActionButton_ApplyCooldown Lua function no longer routes through a secure delegate.",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_cached_secure_delegate_removed"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "prose-2026-03-21-177",
+      "batch": "B04",
+      "statement": "** This unfortunately means that existing code passing secrets into this function will start throwing Lua errors when the hotfix goes live. However, all of the logic that this function is doing should be able to be replicated by addons with the new isActive/shouldReplaceNormalCooldown boolean fields and duration objects (see below for details on those).",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "Numeric secret setter rejection proven, but full addon replication lacks secret-bearing duration consumption and derived LoC replacement."
+    },
+    {
+      "source_id": "prose-2026-03-21-179",
+      "batch": "B04",
+      "statement": "* Action/Spell cooldown APIs now return isEnabled and maxCharges as non-secrets.",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_cooldown_cast_expiry_transitions",
+        "patch_12_0_1_cooldown_charge_formula_and_zero_span"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "prose-2026-03-21-180",
+      "batch": "B04",
+      "statement": "* Action/Spell cooldown APIs now return a new non-secret isActive boolean, which is set to true if the UI should render a cooldown display.",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_cooldown_cast_expiry_transitions",
+        "patch_12_0_1_cooldown_charge_formula_and_zero_span",
+        "unrestricted_action_and_existing_spell_dtos_match_concrete_record"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "prose-2026-03-21-181",
+      "batch": "B04",
+      "statement": "** For regular cooldowns, it's true if isEnabled and startTime > 0 and duration > 0.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "Positive/nonpositive intervals and real cast expiry proven; producer always enables regular cooldowns, so disabled/held branch cannot be exercised."
+    },
+    {
+      "source_id": "prose-2026-03-21-182",
+      "batch": "B04",
+      "statement": "** For charge cooldowns, it's true if maxCharges > 1 and currentCharges < maxCharges and startTime > 0 and duration > 0.",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_cooldown_charge_formula_and_zero_span"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "prose-2026-03-21-183",
+      "batch": "B04",
+      "statement": "** For LoC cooldowns, it's true if startTime > 0 and duration > 0.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "LoC isActive is a supplied host flag, not computed from the positive start/duration formula."
+    },
+    {
+      "source_id": "prose-2026-03-21-185",
+      "batch": "B04",
+      "statement": "* Action/Spell cooldown APIs that yield duration objects now return a zero-span object if the isActive boolean evaluates to false.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "Regular and charge inactive zero spans proven; inactive spell LoC duration still returns no object rather than a zero-span object."
+    },
+    {
+      "source_id": "prose-2026-03-21-186",
+      "batch": "B04",
+      "statement": "* Action/Spell cooldown APIs now return results modified by the presence of cooldown aura spells on the player.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "Cooldown-aura association query does not participate in spell/action interval selection."
+    },
+    {
+      "source_id": "prose-2026-03-21-187",
+      "batch": "B04",
+      "statement": "** For example, if an action button is assigned to a PvP trinket (Sigil of Adaptation) that has a passive effect of automatically removing a loss of control effect with a 1 minute cooldown, the GetActionCooldown API will track that 1 minute cooldown when the Adaptation debuff has been applied to the player.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "No PvP-trinket/Adaptation cooldown-aura producer or authoritative hotfix mapping; no mapping fabricated."
+    },
+    {
+      "source_id": "prose-2026-03-21-188",
+      "batch": "B04",
+      "statement": "** This means no addon code needs to deal with the C_UnitAuras.GetCooldownAuraBySpellID API.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "Association lookup still must be consumed by callers; upstream aura-derived interval selection missing."
+    },
+    {
+      "source_id": "prose-2026-03-21-192",
+      "batch": "B04",
+      "statement": "* Action/Spell Loss of Control cooldown APIs now return a structured table instead of unpacked values.",
+      "outcome": "proven-by-test",
+      "tests": [
+        "unrestricted_action_and_existing_spell_dtos_match_concrete_record",
+        "assigned_first_slot_returns_all_five_concrete_values"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "prose-2026-03-21-193",
+      "batch": "B04",
+      "statement": "** These functions have been renamed with an \"Info\" suffix (eg. C_Spell.GetSpellLossOfControlCooldownInfo) with a deprecation for the old name that unpacks the start time and duration value.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "No behavioral old-name deprecation/unpacked-return proof; publication sweep is insufficient."
+    },
+    {
+      "source_id": "prose-2026-03-21-194",
+      "batch": "B04",
+      "statement": "** This structured table contains several new fields not present in the old API. In addition to the isActive boolean mentioned above, it includes modRate (secret) and shouldReplaceNormalCooldown (non-secret), which is true if the loss of control cooldown has an expiration time that's later than any regular cooldown for this ability/spell.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "Secret numeric fields/public flags are fixture-tested, but shouldReplaceNormalCooldown is a host flag rather than derived expiration comparison."
+    },
+    {
+      "source_id": "prose-2026-03-21-195",
+      "batch": "B04",
+      "statement": "* Added a new C_LossOfControl.GetActiveLossOfControlDuration(unitToken, index) API that returns a duration object.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "Existing seeded publisher returns numeric 4 for player/index 1, not a duration object. Populated real producer belongs to concurrent publication-sweep scope."
+    },
+    {
+      "source_id": "prose-2026-03-21-196",
+      "batch": "B04",
+      "statement": "* Added a new GetTotemDuration(slot) API that returns a duration object.",
+      "outcome": "still-pending",
+      "tests": [],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity",
+      "reason": "No populated totem-duration state producer/proof in this checkout; missing-publication producer changes belong to concurrent sweep task."
+    },
+    {
+      "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-215",
+      "batch": "B01",
+      "statement": "Enum.CombatAudioAlertSpecSetting",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-216",
+      "batch": "B01",
+      "statement": "+ Resource1Voice",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-217",
+      "batch": "B01",
+      "statement": "+ Resource1Volume",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-218",
+      "batch": "B01",
+      "statement": "+ Resource2Voice",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-CombatAudioAlertSpecSetting-219",
+      "batch": "B01",
+      "statement": "+ Resource2Volume",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerAlertEventType-220",
+      "batch": "B01",
+      "statement": "Enum.CooldownViewerAlertEventType",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerAlertEventType-221",
+      "batch": "B01",
+      "statement": "+ OnAuraApplied",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownViewerAlertEventType-222",
+      "batch": "B01",
+      "statement": "+ OnAuraRemoved",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-DamageMeterType-223",
+      "batch": "B01",
+      "statement": "Enum.DamageMeterType",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-DamageMeterType-224",
+      "batch": "B01",
+      "statement": "+ Deaths",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-DamageMeterType-225",
+      "batch": "B01",
+      "statement": "+ EnemyDamageTaken",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-NeighborhoodInviteResult-226",
+      "batch": "B01",
+      "statement": "Enum.NeighborhoodInviteResult",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-NeighborhoodInviteResult-227",
+      "batch": "B01",
+      "statement": "+ AlreadyInNeighborhood",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-PartyRequestJoinRelation-228",
+      "batch": "B01",
+      "statement": "Enum.PartyRequestJoinRelation",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-PartyRequestJoinRelation-229",
+      "batch": "B01",
+      "statement": "# NumPartyRequestJoinRelations -> RecentAllies",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-SecretAspect-230",
+      "batch": "B01",
+      "statement": "Enum.SecretAspect",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.0.5 and 12.1.0"
+    },
+    {
+      "source_id": "enumerations-Enum-SecretAspect-231",
+      "batch": "B01",
+      "statement": "+ Attributes",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-SecretAspect-232",
+      "batch": "B01",
+      "statement": "+ CooldownStyle",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-233",
+      "batch": "B01",
+      "statement": "Enum.TooltipDataLineType",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-234",
+      "batch": "B01",
+      "statement": "# ToyFlavorText -> FlavorText",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-235",
+      "batch": "B01",
+      "statement": "+ ItemQuality",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-236",
+      "batch": "B01",
+      "statement": "+ TradeTimeRemaining",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-237",
+      "batch": "B01",
+      "statement": "+ ItemSpellTriggerLearn",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-238",
+      "batch": "B01",
+      "statement": "+ LearnTransmogSet",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-239",
+      "batch": "B01",
+      "statement": "+ LearnTransmogIllusion",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-240",
+      "batch": "B01",
+      "statement": "+ ErrorLine",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-241",
+      "batch": "B01",
+      "statement": "+ DisabledLine",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-242",
+      "batch": "B01",
+      "statement": "+ UsageRequirement",
+      "outcome": "superseded",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "Current successor numeric values/Meta/absence pass; historical numeric epoch not executed.",
+      "by_patch": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-243",
+      "batch": "B01",
+      "statement": "- RestrictedRaceClass",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-244",
+      "batch": "B01",
+      "statement": "- RestrictedFaction",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-245",
+      "batch": "B01",
+      "statement": "- RestrictedSkill",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-246",
+      "batch": "B01",
+      "statement": "- RestrictedPvPMedal",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-247",
+      "batch": "B01",
+      "statement": "- RestrictedReputation",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-248",
+      "batch": "B01",
+      "statement": "- RestrictedSpellKnown",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-249",
+      "batch": "B01",
+      "statement": "- RestrictedLevel",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-250",
+      "batch": "B01",
+      "statement": "- RestrictedArena",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-251",
+      "batch": "B01",
+      "statement": "- RestrictedBg",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_1_enum_publication"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "structures-CatalogShopBundleChildInfo-256",
+      "batch": "B03",
+      "statement": "CatalogShopBundleChildInfo",
+      "outcome": "proven-by-test",
+      "tests": [
+        "catalog_shop_patch_12_0_1_bundle_section_snapshots"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "structures-CatalogShopBundleChildInfo-257",
+      "batch": "B03",
+      "statement": "+ quantityInBundle",
+      "outcome": "proven-by-test",
+      "tests": [
+        "catalog_shop_patch_12_0_1_bundle_section_snapshots"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "structures-CatalogShopProductDisplayInfo-258",
+      "batch": "B03",
+      "statement": "CatalogShopProductDisplayInfo",
+      "outcome": "proven-by-test",
+      "tests": [
+        "catalog_shop_patch_12_0_1_bundle_section_snapshots",
+        "fully_populated_display_has_exact_declared_shape"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "structures-CatalogShopProductDisplayInfo-259",
+      "batch": "B03",
+      "statement": "# otherProductPMTURL -> productPMTURL",
+      "outcome": "proven-by-test",
+      "tests": [
+        "catalog_shop_patch_12_0_1_bundle_section_snapshots"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "structures-CatalogShopProductInfo-260",
+      "batch": "B03",
+      "statement": "CatalogShopProductInfo",
+      "outcome": "proven-by-test",
+      "tests": [
+        "fully_populated_product_has_exact_declared_shape"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "structures-CatalogShopProductInfo-261",
+      "batch": "B03",
+      "statement": "+ isVCProduct",
+      "outcome": "proven-by-test",
+      "tests": [
+        "fully_populated_product_has_exact_declared_shape"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "structures-CatalogShopProductInfo-262",
+      "batch": "B03",
+      "statement": "+ containsHousingItem",
+      "outcome": "proven-by-test",
+      "tests": [
+        "fully_populated_product_has_exact_declared_shape"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "structures-CatalogShopSectionInfo-263",
+      "batch": "B03",
+      "statement": "CatalogShopSectionInfo",
+      "outcome": "proven-by-test",
+      "tests": [
+        "catalog_shop_patch_12_0_1_bundle_section_snapshots"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "structures-CatalogShopSectionInfo-264",
+      "batch": "B03",
+      "statement": "+ shouldShowRecommendationOptOutDisclaimer",
+      "outcome": "proven-by-test",
+      "tests": [
+        "catalog_shop_patch_12_0_1_bundle_section_snapshots"
+      ],
+      "scope": "current cached Retail; bounded simulator fixture, not native/historical parity"
+    },
+    {
+      "source_id": "structures-DamageMeterAvailableCombatSession-265",
+      "batch": "B02",
+      "statement": "DamageMeterAvailableCombatSession",
+      "outcome": "still-pending",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity.",
+      "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
+    },
+    {
+      "source_id": "structures-DamageMeterAvailableCombatSession-266",
+      "batch": "B02",
+      "statement": "+ durationSeconds",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSession-267",
+      "batch": "B02",
+      "statement": "DamageMeterCombatSession",
+      "outcome": "still-pending",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity.",
+      "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSession-268",
+      "batch": "B02",
+      "statement": "+ totalAmount",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSession-269",
+      "batch": "B02",
+      "statement": "+ durationSeconds",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSessionSource-270",
+      "batch": "B02",
+      "statement": "DamageMeterCombatSessionSource",
+      "outcome": "still-pending",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity.",
+      "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSessionSource-271",
+      "batch": "B02",
+      "statement": "+ totalAmount",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-272",
+      "batch": "B02",
+      "statement": "DamageMeterCombatSource",
+      "outcome": "still-pending",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity.",
+      "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-273",
+      "batch": "B02",
+      "statement": "# sourceGUID, Nilable: false -> true",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-274",
+      "batch": "B02",
+      "statement": "+ sourceCreatureID",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-275",
+      "batch": "B02",
+      "statement": "+ deathRecapID",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-276",
+      "batch": "B02",
+      "statement": "+ deathTimeSeconds",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSource-277",
+      "batch": "B02",
+      "statement": "+ classification",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpell-278",
+      "batch": "B02",
+      "statement": "DamageMeterCombatSpell",
+      "outcome": "still-pending",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity.",
+      "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpell-279",
+      "batch": "B02",
+      "statement": "+ overkillAmount",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpell-280",
+      "batch": "B02",
+      "statement": "+ isAvoidable",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpell-281",
+      "batch": "B02",
+      "statement": "+ isDeadly",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpellUnitDetails-282",
+      "batch": "B02",
+      "statement": "DamageMeterCombatSpellUnitDetails",
+      "outcome": "still-pending",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity.",
+      "reason": "Complete populated out-of-combat shape/value/snapshot proof passes, but parent ConditionalSecret/combat field policy remains unmodeled; existing producer explicitly blocks combat publication."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpellUnitDetails-283",
+      "batch": "B02",
+      "statement": "+ isPet",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpellUnitDetails-284",
+      "batch": "B02",
+      "statement": "+ isMob",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    },
+    {
+      "source_id": "structures-DamageMeterCombatSpellUnitDetails-285",
+      "batch": "B02",
+      "statement": "+ specIconID",
+      "outcome": "proven-by-test",
+      "tests": [
+        "damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions"
+      ],
+      "scope": "Exact public out-of-combat host aggregate/detail snapshots, types, optional GUID omission; no combat-secret parity."
+    }
+  ],
+  "proof_commands": [
+    {
+      "key": "patch_12_0_0_enum_publication_before",
+      "revision": "f1b6977a9 (HEAD equaled master)",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_enum_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "1 passed; 0 failed"
+      ],
+      "invalidated": false,
+      "evidence": "Original captured tool output; not rerun to recover logs."
+    },
+    {
+      "key": "patch_12_1_0_enum_publication_before",
+      "revision": "f1b6977a9 (HEAD equaled master before edits)",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_enum_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 4.74s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_1_0_enums::patch_12_1_0_enum_publication ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 4.74s\n\n",
+      "stderr_tail": "ly_system_anchors\n[  4.287s] [EditMode] finished apply_system_anchors in 169.39ms\n[  4.287s] [EditMode] starting finalize_action_bar_positions\n[  4.291s] [EditMode] finished finalize_action_bar_positions in 4.38ms\n[  4.291s] [EditMode] starting invoke_anchor_changed_hooks\n[  4.299s] [EditMode] finished invoke_anchor_changed_hooks in 7.86ms\n[  4.299s] [EditMode] starting fix_action_bar_nan_size\n[  4.299s] [EditMode] finished fix_action_bar_nan_size in 107.18\u00b5s\n[  4.299s] [EditMode] starting fix_action_bar_scale\n[  4.299s] [EditMode] finished fix_action_bar_scale in 5.76\u00b5s\n[  4.299s] [EditMode] starting reapply_player_frame_anchor\n[  4.301s] [EditMode] finished reapply_player_frame_anchor in 1.71ms\n[  4.312s] [Startup] end world enter sequence in 500.28ms\n[  4.312s] [Startup] begin post-login events\n[  4.313s] [Startup] Firing UNIT_AURA\n[  4.314s] [Startup] Firing PET_UI_UPDATE\n[  4.316s] [Startup] Firing BAG_UPDATE_DELAYED\n[  4.318s] [Startup] Firing QUEST_LOG_UPDATE\n[  4.319s] [Startup] Firing GROUP_ROSTER_UPDATE\n[  4.441s] [Startup] Firing ACTIONBAR_UPDATE_STATE\n[  4.441s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN\n[  4.442s] [Startup] Firing UPDATE_BONUS_ACTIONBAR\n[  4.456s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED\n[  4.456s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED\n[  4.456s] [Startup] Firing UPDATE_BINDINGS\n[  4.460s] [Startup] Firing UPDATE_CHAT_WINDOWS\n[  4.463s] [Startup] Firing LFG_UPDATE_RANDOM_INFO\n[  4.464s] [Startup] end post-login events in 152.39ms\n[  4.464s] [Startup] begin close startup special windows\n[  4.464s] [Startup] end close startup special windows in 323.36\u00b5s\n[  4.464s] [Startup] begin FIRST_FRAME_RENDERED\n[  4.464s] [Startup] Firing FIRST_FRAME_RENDERED\n[  4.465s] [Startup] end FIRST_FRAME_RENDERED in 202.40\u00b5s\n[  4.465s] [Startup] begin unblock hidden splash alerts\n[  4.465s] [Startup] end unblock hidden splash alerts in 16.99\u00b5s\n[  4.465s] [Startup] begin post-event workarounds\n[  4.465s] [Startup] end post-event workarounds in 942.00ns\n",
+      "invalidated": false
+    },
+    {
+      "key": "damage_meter_before",
+      "revision": "f1b6977a9 (HEAD equaled master before edits)",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "damage_meter",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 0.39s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 0.23s",
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 10.76s",
+        "test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 10718 filtered out; finished in 18.33s"
+      ],
+      "failed_tests": [
+        "test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window"
+      ],
+      "stdout_tail": "ge_meter_queries_return_independent_nested_snapshots ... ok\ntest startup_targeted_regressions::damage_meter::damage_meter_reset_clears_inputs_without_changing_availability ... ok\ntest startup_targeted_regressions::damage_meter::damage_meter_secret_selectors_reject_without_unwrapping ... ok\ntest startup_targeted_regressions::late::damage_meter_saved_variables_default_with_empty_saved_vars_storage ... \nrunning 1 test\ntest startup_targeted_regressions::late::damage_meter_saved_variables_default_with_empty_saved_vars_storage ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 0.39s\n\nok\ntest startup_targeted_regressions::late::damage_meter_saved_variables_default_without_partial_empty_seed ... \nrunning 1 test\ntest startup_targeted_regressions::late::damage_meter_saved_variables_default_without_partial_empty_seed ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 0.23s\n\nok\ntest test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window ... \nrunning 1 test\ntest test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window ... FAILED\n\nfailures:\n\nfailures:\n    test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 10.76s\n\nFAILED\n\nfailures:\n\nfailures:\n    test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window\n\ntest result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 10718 filtered out; finished in 18.33s\n\n",
+      "stderr_tail": "ounds: workarounds complete\n[  8.736s] [Startup] apply_post_load_workarounds: globals restored\n[  8.739s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored\n[  8.739s] [Startup] apply_post_load_workarounds: seterrorhandler restored\n[  9.696s] [EditMode] starting setup_layout_info\n[  9.714s] [EditMode] finished setup_layout_info in 18.74ms\n[  9.714s] [EditMode] starting apply_system_anchors\n[  9.818s] [EditMode] finished apply_system_anchors in 103.58ms\n[  9.818s] [EditMode] starting finalize_action_bar_positions\n[  9.826s] [EditMode] finished finalize_action_bar_positions in 8.52ms\n[  9.827s] [EditMode] starting invoke_anchor_changed_hooks\n[  9.842s] [EditMode] finished invoke_anchor_changed_hooks in 15.61ms\n[  9.842s] [EditMode] starting fix_action_bar_nan_size\n[  9.843s] [EditMode] finished fix_action_bar_nan_size in 341.14\u00b5s\n[  9.843s] [EditMode] starting fix_action_bar_scale\n[  9.843s] [EditMode] finished fix_action_bar_scale in 38.95\u00b5s\n[  9.843s] [EditMode] starting reapply_player_frame_anchor\n[  9.853s] [EditMode] finished reapply_player_frame_anchor in 9.89ms\n\nthread 'test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window' (3490030) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/test_showuipanel_lod.rs:347:9:\nassertion `left == right` failed: DamageMeter should load and populate the primary session and source windows: entry_frame_count=0\n  left: \"entry_frame_count=0\"\n right: \"ok\"\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\nthread 'test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window' (3490026) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/common/timeout_reexec.rs:181:9:\ntimeout child for `test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window` failed (exit code 101)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": false
+    },
+    {
+      "key": "cooldown_before",
+      "revision": "f1b6977a9 (HEAD equaled master before edits)",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "cooldown",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 1.15s",
+        "test result: FAILED. 205 passed; 1 failed; 1 ignored; 0 measured; 10526 filtered out; finished in 82.52s"
+      ],
+      "failed_tests": [
+        "wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles"
+      ],
+      "stdout_tail": "k_cooldown_outputs::current::tainted_copy_and_gc_keep_actual_wrapper_metadata_and_payloads ... ok\ntest spell_book_cooldown_outputs::current::tainted_public_selectors_preserve_caller_and_public_booleans ... ok\ntest spell_book_loss_of_control_outputs::current::explicit_cooldown_flag_alone_controls_numeric_privacy ... ok\ntest spell_state_probes::is_usable_spell_true_when_known_and_no_cooldown ... ok\ntest spell_state_probes::spell_readiness_false_on_cooldown ... ok\ntest startup_warnings::late::test_blizzard_commentator_loads_without_cooldown_frame_warning ... \nrunning 1 test\ntest startup_warnings::late::test_blizzard_commentator_loads_without_cooldown_frame_warning ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 1.15s\n\nok\ntest talent_spec_probes::specialization_class_id_cooldown_viewer_uses_cross_class_tag ... ok\ntest test_showuipanel_lod_fixtures::cooldown_broadcaster_loadui_can_be_exercised_when_opt_in ... ignored, opt-in coverage for real CooldownBroadcaster load \u2014 needs C_ChatInfo/C_Spell surface\ntest tooltip::tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line ... ok\ntest tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line ... ok\ntest wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles ... FAILED\ntest xml_parsing_widgets::test_parse_cooldown_textures ... ok\n\nfailures:\n\nfailures:\n    wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles\n\ntest result: FAILED. 205 passed; 1 failed; 1 ignored; 0 measured; 10526 filtered out; finished in 82.52s\n\n",
+      "stderr_tail": "alled in 971.00ns\n[ 82.048s] [Startup] init_lua_state complete in 152.97ms\n[ 82.048s] [Startup] final app_data lua handle installed in 441.00ns\n[ 82.048s] [Startup] initial screen globals installed in 187.93\u00b5s\n[ 82.048s] [Startup] WowLuaEnv::new complete\n[ 82.118s] [Startup] WowLuaEnv::new begin\n[ 82.121s] [Startup] SimState::default complete in 2.53ms\n[ 82.121s] [Startup] rilua VM created in 126.74\u00b5s\n[ 82.121s] [Startup] builtin frames initialized in 63.27\u00b5s\n[ 82.121s] [Startup] template registry cleared in 6.74\u00b5s\n[ 82.121s] [Startup] intrinsic templates registered in 8.61\u00b5s\n[ 82.121s] [Startup] initial app_data lua handle installed in 871.00ns\n[ 82.295s] [Startup] init_lua_state complete in 174.24ms\n[ 82.295s] [Startup] final app_data lua handle installed in 481.00ns\n[ 82.295s] [Startup] initial screen globals installed in 228.29\u00b5s\n[ 82.295s] [Startup] WowLuaEnv::new complete\n[ 82.308s] [Startup] WowLuaEnv::new begin\n[ 82.311s] [Startup] SimState::default complete in 2.89ms\n[ 82.311s] [Startup] rilua VM created in 157.86\u00b5s\n[ 82.311s] [Startup] builtin frames initialized in 95.20\u00b5s\n[ 82.311s] [Startup] template registry cleared in 7.66\u00b5s\n[ 82.311s] [Startup] intrinsic templates registered in 11.93\u00b5s\n[ 82.311s] [Startup] initial app_data lua handle installed in 772.00ns\n[ 82.497s] [Startup] init_lua_state complete in 185.78ms\n[ 82.497s] [Startup] final app_data lua handle installed in 310.00ns\n[ 82.497s] [Startup] initial screen globals installed in 195.42\u00b5s\n[ 82.497s] [Startup] WowLuaEnv::new complete\n\nthread 'wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles' (3494384) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/wowforever_cooldown_categories.rs:58:6:\ncalled `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: \"assertion failed!\", level: 0, traceback: [] }))\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": false
+    },
+    {
+      "key": "catalog_shop_before",
+      "revision": "f1b6977a9 (HEAD equaled master before edits)",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "catalog_shop",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 3.64s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 3.40s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 4.52s",
+        "test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 10712 filtered out; finished in 14.22s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": ". ok\ntest catalog_shop_product_structures::preview_small_bg_override_product_url_round_trips ... ok\ntest catalog_shop_product_structures::returned_tables_and_every_nested_array_are_independent ... ok\ntest catalog_shop_product_structures::unknown_ids_and_legacy_seed_ids_return_nil ... ok\ntest catalog_shop_product_structures::zero_decor_counts_are_present_not_nil ... ok\ntest runtime_bootstrap_boundaries::catalog_shop_soundkit_defaults_are_not_runtime_bootstrap_fallbacks ... ok\ntest startup_targeted_regressions::late::apply_post_load_workarounds_does_not_introduce_catalog_shop_numeric_error ... \nrunning 1 test\ntest startup_targeted_regressions::late::apply_post_load_workarounds_does_not_introduce_catalog_shop_numeric_error ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 3.64s\n\nok\ntest startup_targeted_regressions::late::loading_blizzard_addons_does_not_emit_catalog_shop_numeric_error ... \nrunning 1 test\ntest startup_targeted_regressions::late::loading_blizzard_addons_does_not_emit_catalog_shop_numeric_error ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 3.40s\n\nok\ntest startup_targeted_regressions::late::startup_catalog_shop_numeric_error_after_load_clear ... \nrunning 1 test\ntest startup_targeted_regressions::late::startup_catalog_shop_numeric_error_after_load_clear ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10732 filtered out; finished in 4.52s\n\nok\n\ntest result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 10712 filtered out; finished in 14.22s\n\n",
+      "stderr_tail": "lfg_lock_list\n[  3.415s] [Workarounds] finished patch_lfg_lock_list in 40.04\u00b5s\n[  3.415s] [Workarounds] starting patch_auction_house_browse_results_event\n[  3.415s] [Workarounds] finished patch_auction_house_browse_results_event in 85.46\u00b5s\n[  3.415s] [Workarounds] starting patch_auction_house_search_context_aliases\n[  3.415s] [Workarounds] finished patch_auction_house_search_context_aliases in 36.89\u00b5s\n[  3.415s] [Workarounds] starting patch_auth_challenge_frame_parent\n[  3.415s] [Workarounds] finished patch_auth_challenge_frame_parent in 92.57\u00b5s\n[  3.415s] [Workarounds] starting patch_settings_surface_defaults\n[  3.416s] [Workarounds] finished patch_settings_surface_defaults in 516.75\u00b5s\n[  3.416s] [Workarounds] starting patch_settings_canvas_layout_visibility\n[  3.416s] [Workarounds] finished patch_settings_canvas_layout_visibility in 148.14\u00b5s\n[  3.416s] [Startup] apply_post_load_workarounds: workarounds complete\n[  3.504s] [Startup] apply_post_load_workarounds: globals restored\n[  3.504s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored\n[  3.504s] [Startup] apply_post_load_workarounds: seterrorhandler restored\n[  3.910s] [EditMode] starting setup_layout_info\n[  3.915s] [EditMode] finished setup_layout_info in 4.53ms\n[  3.915s] [EditMode] starting apply_system_anchors\n[  4.059s] [EditMode] finished apply_system_anchors in 144.06ms\n[  4.059s] [EditMode] starting finalize_action_bar_positions\n[  4.062s] [EditMode] finished finalize_action_bar_positions in 3.07ms\n[  4.062s] [EditMode] starting invoke_anchor_changed_hooks\n[  4.068s] [EditMode] finished invoke_anchor_changed_hooks in 6.55ms\n[  4.068s] [EditMode] starting fix_action_bar_nan_size\n[  4.068s] [EditMode] finished fix_action_bar_nan_size in 61.70\u00b5s\n[  4.068s] [EditMode] starting fix_action_bar_scale\n[  4.068s] [EditMode] finished fix_action_bar_scale in 5.71\u00b5s\n[  4.068s] [EditMode] starting reapply_player_frame_anchor\n[  4.070s] [EditMode] finished reapply_player_frame_anchor in 1.76ms\n",
+      "invalidated": false
+    },
+    {
+      "key": "enum_new",
+      "revision": "aa18d15aa",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_enum_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10733 filtered out; finished in 73.77s"
+      ],
+      "failed_tests": [
+        "patch_12_0_1_enums::patch_12_0_1_enum_publication"
+      ],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_1_enums::patch_12_0_1_enum_publication ... FAILED\n\nfailures:\n\nfailures:\n    patch_12_0_1_enums::patch_12_0_1_enum_publication\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10733 filtered out; finished in 73.77s\n\n",
+      "stderr_tail": "atch_12_0_1_enums.rs:123:5:\nenum gaps:\nenumerations-Enum-CombatAudioAlertSpecSetting-215 (CombatAudioAlertSharedDocumentation.lua:160): CombatAudioAlertSpecSetting.Resource1Voice: expected number:2/number:2, observed nil:nil/nil:nil; CombatAudioAlertSpecSetting.Resource1Volume: expected number:3/number:3, observed nil:nil/nil:nil; CombatAudioAlertSpecSetting.Resource2Format: expected number:5/number:5, observed number:3/number:3; CombatAudioAlertSpecSetting.Resource2Percent: expected number:4/number:4, observed number:2/number:2; CombatAudioAlertSpecSetting.Resource2Voice: expected number:6/number:6, observed nil:nil/nil:nil; CombatAudioAlertSpecSetting.Resource2Volume: expected number:7/number:7, observed nil:nil/nil:nil; CombatAudioAlertSpecSetting.SayIfTargeted: expected number:8/number:8, observed number:4/number:4; CombatAudioAlertSpecSettingMeta.MaxValue: expected number:8/number:8, observed number:4/number:4; CombatAudioAlertSpecSettingMeta.NumValues: expected number:9/number:9, observed number:5/number:5; CombatAudioAlertSpecSetting: expected 9 members, observed 5\nenumerations-Enum-CombatAudioAlertSpecSetting-216 (CombatAudioAlertSharedDocumentation.lua:160): CombatAudioAlertSpecSetting.Resource1Voice: expected number:2/number:2, observed nil:nil/nil:nil\nenumerations-Enum-CombatAudioAlertSpecSetting-217 (CombatAudioAlertSharedDocumentation.lua:160): CombatAudioAlertSpecSetting.Resource1Volume: expected number:3/number:3, observed nil:nil/nil:nil\nenumerations-Enum-CombatAudioAlertSpecSetting-218 (CombatAudioAlertSharedDocumentation.lua:160): CombatAudioAlertSpecSetting.Resource2Voice: expected number:6/number:6, observed nil:nil/nil:nil\nenumerations-Enum-CombatAudioAlertSpecSetting-219 (CombatAudioAlertSharedDocumentation.lua:160): CombatAudioAlertSpecSetting.Resource2Volume: expected number:7/number:7, observed nil:nil/nil:nil\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": true
+    },
+    {
+      "key": "enum_fixed",
+      "revision": "0f7e7386a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_enum_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10733 filtered out; finished in 47.41s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_1_enums::patch_12_0_1_enum_publication ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10733 filtered out; finished in 47.41s\n\n",
+      "stderr_tail": "rical supersession=Some(\"12.1.0 cached surface; earlier renumbering patch not established\")\nenumerations-Enum-TooltipDataLineType-237: current publication proven; historical supersession=Some(\"12.1.0 cached surface; earlier renumbering patch not established\")\nenumerations-Enum-TooltipDataLineType-238: current publication proven; historical supersession=Some(\"12.1.0 cached surface; earlier renumbering patch not established\")\nenumerations-Enum-TooltipDataLineType-239: current publication proven; historical supersession=Some(\"12.1.0 cached surface; earlier renumbering patch not established\")\nenumerations-Enum-TooltipDataLineType-240: current publication proven; historical supersession=Some(\"12.1.0 cached surface; earlier renumbering patch not established\")\nenumerations-Enum-TooltipDataLineType-241: current publication proven; historical supersession=Some(\"12.1.0 cached surface; earlier renumbering patch not established\")\nenumerations-Enum-TooltipDataLineType-242: current publication proven; historical supersession=Some(\"12.1.0 cached surface; earlier renumbering patch not established\")\nenumerations-Enum-TooltipDataLineType-243: current publication proven; historical supersession=None\nenumerations-Enum-TooltipDataLineType-244: current publication proven; historical supersession=None\nenumerations-Enum-TooltipDataLineType-245: current publication proven; historical supersession=None\nenumerations-Enum-TooltipDataLineType-246: current publication proven; historical supersession=None\nenumerations-Enum-TooltipDataLineType-247: current publication proven; historical supersession=None\nenumerations-Enum-TooltipDataLineType-248: current publication proven; historical supersession=None\nenumerations-Enum-TooltipDataLineType-249: current publication proven; historical supersession=None\nenumerations-Enum-TooltipDataLineType-250: current publication proven; historical supersession=None\nenumerations-Enum-TooltipDataLineType-251: current publication proven; historical supersession=None\n",
+      "invalidated": false
+    },
+    {
+      "key": "damage_new",
+      "revision": "d73a7056b",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "damage_meter_patch_12_0_1",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 0.27s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest startup_targeted_regressions::damage_meter::damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10734 filtered out; finished in 0.27s\n\n",
+      "stderr_tail": ": iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract)\n    Finished `test` profile [optimized + debuginfo] target(s) in 6m 40s\n     Running tests/integration.rs (target/debug/deps/integration-e55f1b5348ca8cac)\n[  0.000s] [Startup] WowLuaEnv::new begin\n[  0.004s] [Startup] SimState::default complete in 3.51ms\n[  0.004s] [Startup] rilua VM created in 199.19\u00b5s\n[  0.004s] [Startup] builtin frames initialized in 160.63\u00b5s\n[  0.004s] [Startup] template registry cleared in 10.17\u00b5s\n[  0.004s] [Startup] intrinsic templates registered in 11.45\u00b5s\n[  0.004s] [Startup] initial app_data lua handle installed in 1.17\u00b5s\n[  0.254s] [Startup] init_lua_state complete in 250.00ms\n[  0.254s] [Startup] final app_data lua handle installed in 361.00ns\n[  0.254s] [Startup] initial screen globals installed in 168.04\u00b5s\n[  0.254s] [Startup] WowLuaEnv::new complete\n",
+      "invalidated": false
+    },
+    {
+      "key": "catalog_red",
+      "revision": "d73a7056b plus new RED test",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "catalog_shop_patch_12_0_1_empty",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10735 filtered out; finished in 0.31s"
+      ],
+      "failed_tests": [
+        "catalog_shop_product_structures::catalog_shop_patch_12_0_1_empty_bundle_and_section_inputs"
+      ],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest catalog_shop_product_structures::catalog_shop_patch_12_0_1_empty_bundle_and_section_inputs ... FAILED\n\nfailures:\n\nfailures:\n    catalog_shop_product_structures::catalog_shop_patch_12_0_1_empty_bundle_and_section_inputs\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10735 filtered out; finished in 0.31s\n\n",
+      "stderr_tail": "t work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract)\n    Finished `test` profile [optimized + debuginfo] target(s) in 1m 48s\n     Running tests/integration.rs (target/debug/deps/integration-e55f1b5348ca8cac)\n[  0.000s] [Startup] WowLuaEnv::new begin\n[  0.005s] [Startup] SimState::default complete in 5.27ms\n[  0.006s] [Startup] rilua VM created in 287.02\u00b5s\n[  0.006s] [Startup] builtin frames initialized in 232.53\u00b5s\n[  0.006s] [Startup] template registry cleared in 28.45\u00b5s\n[  0.006s] [Startup] intrinsic templates registered in 26.66\u00b5s\n[  0.006s] [Startup] initial app_data lua handle installed in 1.96\u00b5s\n[  0.301s] [Startup] init_lua_state complete in 294.54ms\n[  0.301s] [Startup] final app_data lua handle installed in 401.00ns\n[  0.301s] [Startup] initial screen globals installed in 204.10\u00b5s\n[  0.301s] [Startup] WowLuaEnv::new complete\n\nthread 'catalog_shop_product_structures::catalog_shop_patch_12_0_1_empty_bundle_and_section_inputs' (3557709) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/catalog_shop_product_structures.rs:144:9:\ncalled `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: \"no fabricated bundle children\", level: 0, traceback: [] }))\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": true
+    },
+    {
+      "key": "catalog_new",
+      "revision": "c4bb2dfc2",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "catalog_shop_product_structures",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 10719 filtered out; finished in 2.36s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "nd_required_arrays_exist ... ok\ntest catalog_shop_product_structures::catalog_shop_patch_12_0_1_bundle_section_snapshots ... ok\ntest catalog_shop_product_structures::catalog_shop_patch_12_0_1_empty_bundle_and_section_inputs ... ok\ntest catalog_shop_product_structures::consumable_quantity_is_absent_from_populated_product ... ok\ntest catalog_shop_product_structures::decor_quantity_round_trips_nested_numbers ... ok\ntest catalog_shop_product_structures::environments_are_isolated ... ok\ntest catalog_shop_product_structures::fully_populated_display_has_exact_declared_shape ... ok\ntest catalog_shop_product_structures::fully_populated_product_has_exact_declared_shape ... ok\ntest catalog_shop_product_structures::host_replacements_affect_new_snapshots_only ... ok\ntest catalog_shop_product_structures::house_texture_atlas_round_trips ... ok\ntest catalog_shop_product_structures::malformed_public_selectors_do_not_alias_stored_products ... ok\ntest catalog_shop_product_structures::maps_use_exact_keys_without_product_display_cross_lookup ... ok\ntest catalog_shop_product_structures::preview_bg_override_product_url_round_trips ... ok\ntest catalog_shop_product_structures::preview_small_bg_override_product_url_round_trips ... ok\ntest catalog_shop_product_structures::returned_tables_and_every_nested_array_are_independent ... ok\ntest catalog_shop_product_structures::unknown_ids_and_legacy_seed_ids_return_nil ... ok\ntest catalog_shop_product_structures::zero_decor_counts_are_present_not_nil ... ok\n\ntest result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 10719 filtered out; finished in 2.36s\n\n",
+      "stderr_tail": "p] initial screen globals installed in 135.51\u00b5s\n[  2.023s] [Startup] WowLuaEnv::new complete\n[  2.029s] [Startup] WowLuaEnv::new begin\n[  2.032s] [Startup] SimState::default complete in 2.33ms\n[  2.032s] [Startup] rilua VM created in 128.88\u00b5s\n[  2.032s] [Startup] builtin frames initialized in 53.82\u00b5s\n[  2.032s] [Startup] template registry cleared in 6.05\u00b5s\n[  2.032s] [Startup] intrinsic templates registered in 9.92\u00b5s\n[  2.032s] [Startup] initial app_data lua handle installed in 691.00ns\n[  2.126s] [Startup] init_lua_state complete in 94.22ms\n[  2.126s] [Startup] final app_data lua handle installed in 360.00ns\n[  2.126s] [Startup] initial screen globals installed in 158.83\u00b5s\n[  2.126s] [Startup] WowLuaEnv::new complete\n[  2.143s] [Startup] WowLuaEnv::new begin\n[  2.145s] [Startup] SimState::default complete in 2.24ms\n[  2.145s] [Startup] rilua VM created in 107.70\u00b5s\n[  2.145s] [Startup] builtin frames initialized in 47.77\u00b5s\n[  2.146s] [Startup] template registry cleared in 6.86\u00b5s\n[  2.146s] [Startup] intrinsic templates registered in 10.11\u00b5s\n[  2.146s] [Startup] initial app_data lua handle installed in 651.00ns\n[  2.249s] [Startup] init_lua_state complete in 103.16ms\n[  2.249s] [Startup] final app_data lua handle installed in 341.00ns\n[  2.249s] [Startup] initial screen globals installed in 137.22\u00b5s\n[  2.249s] [Startup] WowLuaEnv::new complete\n[  2.255s] [Startup] WowLuaEnv::new begin\n[  2.258s] [Startup] SimState::default complete in 2.24ms\n[  2.258s] [Startup] rilua VM created in 121.26\u00b5s\n[  2.258s] [Startup] builtin frames initialized in 50.03\u00b5s\n[  2.258s] [Startup] template registry cleared in 6.47\u00b5s\n[  2.258s] [Startup] intrinsic templates registered in 9.48\u00b5s\n[  2.258s] [Startup] initial app_data lua handle installed in 701.00ns\n[  2.355s] [Startup] init_lua_state complete in 97.38ms\n[  2.355s] [Startup] final app_data lua handle installed in 341.00ns\n[  2.355s] [Startup] initial screen globals installed in 117.43\u00b5s\n[  2.355s] [Startup] WowLuaEnv::new complete\n",
+      "invalidated": false
+    },
+    {
+      "key": "cooldown_red",
+      "revision": "c4bb2dfc2 plus new RED tests",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_cooldown",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 10737 filtered out; finished in 0.39s"
+      ],
+      "failed_tests": [
+        "patch_12_0_1_cooldown::patch_12_0_1_cooldown_charge_formula_and_zero_span"
+      ],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 2 tests\ntest patch_12_0_1_cooldown::patch_12_0_1_cooldown_cast_expiry_transitions ... ok\ntest patch_12_0_1_cooldown::patch_12_0_1_cooldown_charge_formula_and_zero_span ... FAILED\n\nfailures:\n\nfailures:\n    patch_12_0_1_cooldown::patch_12_0_1_cooldown_charge_formula_and_zero_span\n\ntest result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 10737 filtered out; finished in 0.39s\n\n",
+      "stderr_tail": "mpiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract)\n    Finished `test` profile [optimized + debuginfo] target(s) in 2m 05s\n     Running tests/integration.rs (target/debug/deps/integration-e55f1b5348ca8cac)\n[  0.000s] [Startup] WowLuaEnv::new begin\n[  0.003s] [Startup] SimState::default complete in 2.79ms\n[  0.003s] [Startup] rilua VM created in 136.76\u00b5s\n[  0.003s] [Startup] builtin frames initialized in 97.62\u00b5s\n[  0.003s] [Startup] template registry cleared in 5.03\u00b5s\n[  0.003s] [Startup] intrinsic templates registered in 8.43\u00b5s\n[  0.003s] [Startup] initial app_data lua handle installed in 702.00ns\n[  0.233s] [Startup] init_lua_state complete in 229.72ms\n[  0.233s] [Startup] final app_data lua handle installed in 341.00ns\n[  0.233s] [Startup] initial screen globals installed in 156.49\u00b5s\n[  0.233s] [Startup] WowLuaEnv::new complete\n[  0.233s] [spellcast] INSTANT spell_id=642\n[  0.242s] [Startup] WowLuaEnv::new begin\n[  0.252s] [Startup] SimState::default complete in 10.09ms\n[  0.252s] [Startup] rilua VM created in 92.60\u00b5s\n[  0.252s] [Startup] builtin frames initialized in 45.11\u00b5s\n[  0.252s] [Startup] template registry cleared in 5.93\u00b5s\n[  0.252s] [Startup] intrinsic templates registered in 9.27\u00b5s\n[  0.252s] [Startup] initial app_data lua handle installed in 682.00ns\n[  0.383s] [Startup] init_lua_state complete in 130.29ms\n[  0.383s] [Startup] final app_data lua handle installed in 330.00ns\n[  0.383s] [Startup] initial screen globals installed in 149.48\u00b5s\n[  0.383s] [Startup] WowLuaEnv::new complete\n\nthread 'patch_12_0_1_cooldown::patch_12_0_1_cooldown_charge_formula_and_zero_span' (3591301) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/patch_12_0_1_cooldown.rs:51:80:\ncalled `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: \"assertion failed!\", level: 0, traceback: [] }))\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": true
+    },
+    {
+      "key": "patch_12_0_1_cooldown",
+      "revision": "207a25f0a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_cooldown",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10738 filtered out; finished in 0.37s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 2 tests\ntest patch_12_0_1_cooldown::patch_12_0_1_cooldown_cast_expiry_transitions ... ok\ntest patch_12_0_1_cooldown::patch_12_0_1_cooldown_charge_formula_and_zero_span ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10738 filtered out; finished in 0.37s\n\n",
+      "stderr_tail": "alls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract)\n    Finished `test` profile [optimized + debuginfo] target(s) in 2m 24s\n     Running tests/integration.rs (target/debug/deps/integration-e55f1b5348ca8cac)\n[  0.000s] [Startup] WowLuaEnv::new begin\n[  0.003s] [Startup] SimState::default complete in 2.90ms\n[  0.003s] [Startup] rilua VM created in 138.05\u00b5s\n[  0.003s] [Startup] builtin frames initialized in 93.90\u00b5s\n[  0.003s] [Startup] template registry cleared in 6.49\u00b5s\n[  0.003s] [Startup] intrinsic templates registered in 8.92\u00b5s\n[  0.003s] [Startup] initial app_data lua handle installed in 431.00ns\n[  0.221s] [Startup] init_lua_state complete in 217.73ms\n[  0.221s] [Startup] final app_data lua handle installed in 360.00ns\n[  0.221s] [Startup] initial screen globals installed in 134.04\u00b5s\n[  0.221s] [Startup] WowLuaEnv::new complete\n[  0.221s] [spellcast] INSTANT spell_id=642\n[  0.228s] [Startup] WowLuaEnv::new begin\n[  0.232s] [Startup] SimState::default complete in 3.44ms\n[  0.232s] [Startup] rilua VM created in 110.07\u00b5s\n[  0.232s] [Startup] builtin frames initialized in 45.56\u00b5s\n[  0.232s] [Startup] template registry cleared in 5.28\u00b5s\n[  0.232s] [Startup] intrinsic templates registered in 9.19\u00b5s\n[  0.232s] [Startup] initial app_data lua handle installed in 491.00ns\n[  0.358s] [Startup] init_lua_state complete in 125.62ms\n[  0.358s] [Startup] final app_data lua handle installed in 321.00ns\n[  0.358s] [Startup] initial screen globals installed in 147.70\u00b5s\n[  0.358s] [Startup] WowLuaEnv::new complete\n",
+      "invalidated": false
+    },
+    {
+      "key": "patch_12_0_1_cached_secure_delegate_removed",
+      "revision": "207a25f0a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_cached_secure_delegate_removed",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10739 filtered out; finished in 5.34s"
+      ],
+      "failed_tests": [
+        "patch_12_0_1_secure_delegate::patch_12_0_1_cached_secure_delegate_removed"
+      ],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_1_secure_delegate::patch_12_0_1_cached_secure_delegate_removed ... FAILED\n\nfailures:\n\nfailures:\n    patch_12_0_1_secure_delegate::patch_12_0_1_cached_secure_delegate_removed\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10739 filtered out; finished in 5.34s\n\n",
+      "stderr_tail": "x_action_bar_scale in 4.98\u00b5s\n[  4.898s] [EditMode] starting reapply_player_frame_anchor\n[  4.899s] [EditMode] finished reapply_player_frame_anchor in 1.61ms\n[  4.910s] [Startup] end world enter sequence in 481.81ms\n[  4.910s] [Startup] begin post-login events\n[  4.911s] [Startup] Firing UNIT_AURA\n[  4.912s] [Startup] Firing PET_UI_UPDATE\n[  4.915s] [Startup] Firing BAG_UPDATE_DELAYED\n[  4.917s] [Startup] Firing QUEST_LOG_UPDATE\n[  4.918s] [Startup] Firing GROUP_ROSTER_UPDATE\n[  5.030s] [Startup] Firing ACTIONBAR_UPDATE_STATE\n[  5.030s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN\n[  5.032s] [Startup] Firing UPDATE_BONUS_ACTIONBAR\n[  5.046s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED\n[  5.046s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED\n[  5.046s] [Startup] Firing UPDATE_BINDINGS\n[  5.050s] [Startup] Firing UPDATE_CHAT_WINDOWS\n[  5.053s] [Startup] Firing LFG_UPDATE_RANDOM_INFO\n[  5.054s] [Startup] end post-login events in 144.32ms\n[  5.054s] [Startup] begin close startup special windows\n[  5.054s] [Startup] end close startup special windows in 330.88\u00b5s\n[  5.054s] [Startup] begin FIRST_FRAME_RENDERED\n[  5.054s] [Startup] Firing FIRST_FRAME_RENDERED\n[  5.055s] [Startup] end FIRST_FRAME_RENDERED in 194.81\u00b5s\n[  5.055s] [Startup] begin unblock hidden splash alerts\n[  5.055s] [Startup] end unblock hidden splash alerts in 15.68\u00b5s\n[  5.055s] [Startup] begin post-event workarounds\n[  5.055s] [Startup] end post-event workarounds in 891.00ns\n[  5.061s] [spellcast] INSTANT spell_id=642\n\nthread 'patch_12_0_1_secure_delegate::patch_12_0_1_cached_secure_delegate_removed' (3601892) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/patch_12_0_1_secure_delegate.rs:37:9:\ncalled `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: \"cached function must not clear taint through a secure delegate\", level: 0, traceback: [] }))\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": true
+    },
+    {
+      "key": "secure_fixed",
+      "revision": "183e31c6a",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_cached_secure_delegate_removed",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10740 filtered out; finished in 372.87s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_1_secure_delegate::patch_12_0_1_cached_secure_delegate_removed ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10740 filtered out; finished in 372.87s\n\n",
+      "stderr_tail": "finished apply_system_anchors in 793.20ms\n[ 23.302s] [EditMode] starting finalize_action_bar_positions\n[ 23.315s] [EditMode] finished finalize_action_bar_positions in 12.59ms\n[ 23.315s] [EditMode] starting invoke_anchor_changed_hooks\n[ 23.342s] [EditMode] finished invoke_anchor_changed_hooks in 27.13ms\n[ 23.342s] [EditMode] starting fix_action_bar_nan_size\n[ 23.342s] [EditMode] finished fix_action_bar_nan_size in 426.24\u00b5s\n[ 23.342s] [EditMode] starting fix_action_bar_scale\n[ 23.342s] [EditMode] finished fix_action_bar_scale in 33.79\u00b5s\n[ 23.342s] [EditMode] starting reapply_player_frame_anchor\n[ 23.351s] [EditMode] finished reapply_player_frame_anchor in 8.11ms\n[ 23.410s] [Startup] end world enter sequence in 2.38s\n[ 23.410s] [Startup] begin post-login events\n[ 23.415s] [Startup] Firing UNIT_AURA\n[ 23.419s] [Startup] Firing PET_UI_UPDATE\n[ 23.427s] [Startup] Firing BAG_UPDATE_DELAYED\n[ 23.438s] [Startup] Firing QUEST_LOG_UPDATE\n[ 23.444s] [Startup] Firing GROUP_ROSTER_UPDATE\n[ 24.031s] [Startup] Firing ACTIONBAR_UPDATE_STATE\n[ 24.031s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN\n[ 24.036s] [Startup] Firing UPDATE_BONUS_ACTIONBAR\n[ 24.115s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED\n[ 24.115s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED\n[ 24.115s] [Startup] Firing UPDATE_BINDINGS\n[ 24.135s] [Startup] Firing UPDATE_CHAT_WINDOWS\n[ 24.149s] [Startup] Firing LFG_UPDATE_RANDOM_INFO\n[ 24.153s] [Startup] end post-login events in 742.71ms\n[ 24.153s] [Startup] begin close startup special windows\n[ 24.155s] [Startup] end close startup special windows in 1.41ms\n[ 24.155s] [Startup] begin FIRST_FRAME_RENDERED\n[ 24.155s] [Startup] Firing FIRST_FRAME_RENDERED\n[ 24.155s] [Startup] end FIRST_FRAME_RENDERED in 805.04\u00b5s\n[ 24.155s] [Startup] begin unblock hidden splash alerts\n[ 24.156s] [Startup] end unblock hidden splash alerts in 72.08\u00b5s\n[ 24.156s] [Startup] begin post-event workarounds\n[ 24.156s] [Startup] end post-event workarounds in 6.28\u00b5s\n[ 24.157s] [spellcast] INSTANT spell_id=642\n",
+      "invalidated": false
+    },
+    {
+      "key": "regular_red",
+      "revision": "183e31c6a plus new RED test",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_cooldown_nonpositive",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 0.87s"
+      ],
+      "failed_tests": [
+        "patch_12_0_1_cooldown::patch_12_0_1_cooldown_nonpositive_intervals_are_inactive"
+      ],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_1_cooldown::patch_12_0_1_cooldown_nonpositive_intervals_are_inactive ... FAILED\n\nfailures:\n\nfailures:\n    patch_12_0_1_cooldown::patch_12_0_1_cooldown_nonpositive_intervals_are_inactive\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 0.87s\n\n",
+      "stderr_tail": "ts` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract)\n    Finished `test` profile [optimized + debuginfo] target(s) in 4m 52s\n     Running tests/integration.rs (target/debug/deps/integration-e55f1b5348ca8cac)\n[  0.000s] [Startup] WowLuaEnv::new begin\n[  0.012s] [Startup] SimState::default complete in 11.39ms\n[  0.012s] [Startup] rilua VM created in 639.13\u00b5s\n[  0.013s] [Startup] builtin frames initialized in 354.82\u00b5s\n[  0.013s] [Startup] template registry cleared in 35.70\u00b5s\n[  0.013s] [Startup] intrinsic templates registered in 32.46\u00b5s\n[  0.013s] [Startup] initial app_data lua handle installed in 1.93\u00b5s\n[  0.835s] [Startup] init_lua_state complete in 822.33ms\n[  0.835s] [Startup] final app_data lua handle installed in 1.07\u00b5s\n[  0.836s] [Startup] initial screen globals installed in 559.26\u00b5s\n[  0.836s] [Startup] WowLuaEnv::new complete\n\nthread 'patch_12_0_1_cooldown::patch_12_0_1_cooldown_nonpositive_intervals_are_inactive' (3662004) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/patch_12_0_1_cooldown.rs:69:13:\ncalled `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: \"nonpositive interval must not render\", level: 0, traceback: [] }))\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": true
+    },
+    {
+      "key": "regular_fixed",
+      "revision": "d59fd1884",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_cooldown",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10739 filtered out; finished in 2.12s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 3 tests\ntest patch_12_0_1_cooldown::patch_12_0_1_cooldown_cast_expiry_transitions ... ok\ntest patch_12_0_1_cooldown::patch_12_0_1_cooldown_charge_formula_and_zero_span ... ok\ntest patch_12_0_1_cooldown::patch_12_0_1_cooldown_nonpositive_intervals_are_inactive ... ok\n\ntest result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10739 filtered out; finished in 2.12s\n\n",
+      "stderr_tail": " (target/debug/deps/integration-e55f1b5348ca8cac)\n[  0.000s] [Startup] WowLuaEnv::new begin\n[  0.013s] [Startup] SimState::default complete in 12.53ms\n[  0.013s] [Startup] rilua VM created in 738.47\u00b5s\n[  0.014s] [Startup] builtin frames initialized in 362.82\u00b5s\n[  0.014s] [Startup] template registry cleared in 20.99\u00b5s\n[  0.014s] [Startup] intrinsic templates registered in 30.10\u00b5s\n[  0.014s] [Startup] initial app_data lua handle installed in 1.51\u00b5s\n[  0.914s] [Startup] init_lua_state complete in 900.09ms\n[  0.914s] [Startup] final app_data lua handle installed in 1.07\u00b5s\n[  0.915s] [Startup] initial screen globals installed in 664.05\u00b5s\n[  0.915s] [Startup] WowLuaEnv::new complete\n[  0.915s] [spellcast] INSTANT spell_id=642\n[  0.944s] [Startup] WowLuaEnv::new begin\n[  0.953s] [Startup] SimState::default complete in 9.24ms\n[  0.953s] [Startup] rilua VM created in 515.93\u00b5s\n[  0.954s] [Startup] builtin frames initialized in 179.00\u00b5s\n[  0.954s] [Startup] template registry cleared in 18.04\u00b5s\n[  0.954s] [Startup] intrinsic templates registered in 36.09\u00b5s\n[  0.954s] [Startup] initial app_data lua handle installed in 1.49\u00b5s\n[  1.523s] [Startup] init_lua_state complete in 569.15ms\n[  1.523s] [Startup] final app_data lua handle installed in 1.07\u00b5s\n[  1.524s] [Startup] initial screen globals installed in 599.56\u00b5s\n[  1.524s] [Startup] WowLuaEnv::new complete\n[  1.551s] [Startup] WowLuaEnv::new begin\n[  1.561s] [Startup] SimState::default complete in 9.32ms\n[  1.561s] [Startup] rilua VM created in 479.84\u00b5s\n[  1.561s] [Startup] builtin frames initialized in 195.27\u00b5s\n[  1.561s] [Startup] template registry cleared in 16.58\u00b5s\n[  1.561s] [Startup] intrinsic templates registered in 35.15\u00b5s\n[  1.561s] [Startup] initial app_data lua handle installed in 1.76\u00b5s\n[  2.092s] [Startup] init_lua_state complete in 530.30ms\n[  2.092s] [Startup] final app_data lua handle installed in 1.10\u00b5s\n[  2.092s] [Startup] initial screen globals installed in 658.25\u00b5s\n[  2.093s] [Startup] WowLuaEnv::new complete\n",
+      "invalidated": false
+    },
+    {
+      "key": "patch_12_0_0_enum_publication_after",
+      "revision": "d59fd1884",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_enum_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 29.94s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_0_enums::patch_12_0_0_enum_publication ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 29.94s\n\n",
+      "stderr_tail": "ations-Enum-QuestTagType-050: current publication proven; historical supersession=None\nenumerations-Enum-QuestTagType-051: current publication proven; historical supersession=None\nenumerations-Enum-SendAddonMessageResult-052: current publication proven; historical supersession=None\nenumerations-Enum-SendAddonMessageResult-053: current publication proven; historical supersession=None\nenumerations-Enum-SendAddonMessageResult-054: current publication proven; historical supersession=None\nenumerations-Enum-SurveyDeliveryMoment-055: current publication proven; historical supersession=Some(\"12.0.5\")\nenumerations-Enum-SurveyDeliveryMoment-056: current publication proven; historical supersession=None\nenumerations-Enum-TooltipDataLineType-057: current publication proven; historical supersession=Some(\"12.1.0 cached surface (earlier renumbering patch not established)\")\nenumerations-Enum-TooltipDataLineType-058: current publication proven; historical supersession=Some(\"12.1.0 cached surface (earlier renumbering patch not established)\")\nenumerations-Enum-TooltipDataLineType-059: current publication proven; historical supersession=Some(\"12.1.0 cached surface (earlier renumbering patch not established)\")\nenumerations-Enum-TooltipDataType-060: current publication proven; historical supersession=None\nenumerations-Enum-TooltipDataType-061: current publication proven; historical supersession=None\nenumerations-Enum-TradeskillRecipeType-062: current publication proven; historical supersession=None\nenumerations-Enum-TradeskillRecipeType-063: current publication proven; historical supersession=None\nenumerations-Enum-UICursorType-064: current publication proven; historical supersession=None\nenumerations-Enum-UICursorType-065: current publication proven; historical supersession=None\nenumerations-Enum-UIWidgetVisualizationType-066: current publication proven; historical supersession=None\nenumerations-Enum-UIWidgetVisualizationType-067: current publication proven; historical supersession=None\n",
+      "invalidated": false
+    },
+    {
+      "key": "patch_12_1_0_enum_publication_after",
+      "revision": "d59fd1884",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_enum_publication",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 26.66s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_1_0_enums::patch_12_1_0_enum_publication ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 26.66s\n\n",
+      "stderr_tail": "apply_system_anchors\n[ 25.056s] [EditMode] finished apply_system_anchors in 883.72ms\n[ 25.056s] [EditMode] starting finalize_action_bar_positions\n[ 25.070s] [EditMode] finished finalize_action_bar_positions in 14.30ms\n[ 25.070s] [EditMode] starting invoke_anchor_changed_hooks\n[ 25.102s] [EditMode] finished invoke_anchor_changed_hooks in 32.55ms\n[ 25.103s] [EditMode] starting fix_action_bar_nan_size\n[ 25.103s] [EditMode] finished fix_action_bar_nan_size in 552.71\u00b5s\n[ 25.103s] [EditMode] starting fix_action_bar_scale\n[ 25.103s] [EditMode] finished fix_action_bar_scale in 137.08\u00b5s\n[ 25.103s] [EditMode] starting reapply_player_frame_anchor\n[ 25.112s] [EditMode] finished reapply_player_frame_anchor in 8.37ms\n[ 25.174s] [Startup] end world enter sequence in 2.47s\n[ 25.174s] [Startup] begin post-login events\n[ 25.179s] [Startup] Firing UNIT_AURA\n[ 25.184s] [Startup] Firing PET_UI_UPDATE\n[ 25.194s] [Startup] Firing BAG_UPDATE_DELAYED\n[ 25.206s] [Startup] Firing QUEST_LOG_UPDATE\n[ 25.215s] [Startup] Firing GROUP_ROSTER_UPDATE\n[ 25.816s] [Startup] Firing ACTIONBAR_UPDATE_STATE\n[ 25.816s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN\n[ 25.823s] [Startup] Firing UPDATE_BONUS_ACTIONBAR\n[ 25.899s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED\n[ 25.900s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED\n[ 25.900s] [Startup] Firing UPDATE_BINDINGS\n[ 25.924s] [Startup] Firing UPDATE_CHAT_WINDOWS\n[ 25.940s] [Startup] Firing LFG_UPDATE_RANDOM_INFO\n[ 25.944s] [Startup] end post-login events in 769.74ms\n[ 25.944s] [Startup] begin close startup special windows\n[ 25.945s] [Startup] end close startup special windows in 1.43ms\n[ 25.945s] [Startup] begin FIRST_FRAME_RENDERED\n[ 25.945s] [Startup] Firing FIRST_FRAME_RENDERED\n[ 25.946s] [Startup] end FIRST_FRAME_RENDERED in 824.34\u00b5s\n[ 25.946s] [Startup] begin unblock hidden splash alerts\n[ 25.946s] [Startup] end unblock hidden splash alerts in 68.89\u00b5s\n[ 25.946s] [Startup] begin post-event workarounds\n[ 25.946s] [Startup] end post-event workarounds in 5.19\u00b5s\n",
+      "invalidated": false
+    },
+    {
+      "key": "damage_meter_after",
+      "revision": "d59fd1884",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "damage_meter",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 2.02s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 1.97s",
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 14.88s",
+        "test result: FAILED. 15 passed; 1 failed; 0 ignored; 0 measured; 10726 filtered out; finished in 50.77s"
+      ],
+      "failed_tests": [
+        "test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window"
+      ],
+      "stdout_tail": "ge_meter_queries_return_independent_nested_snapshots ... ok\ntest startup_targeted_regressions::damage_meter::damage_meter_reset_clears_inputs_without_changing_availability ... ok\ntest startup_targeted_regressions::damage_meter::damage_meter_secret_selectors_reject_without_unwrapping ... ok\ntest startup_targeted_regressions::late::damage_meter_saved_variables_default_with_empty_saved_vars_storage ... \nrunning 1 test\ntest startup_targeted_regressions::late::damage_meter_saved_variables_default_with_empty_saved_vars_storage ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 2.02s\n\nok\ntest startup_targeted_regressions::late::damage_meter_saved_variables_default_without_partial_empty_seed ... \nrunning 1 test\ntest startup_targeted_regressions::late::damage_meter_saved_variables_default_without_partial_empty_seed ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 1.97s\n\nok\ntest test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window ... \nrunning 1 test\ntest test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window ... FAILED\n\nfailures:\n\nfailures:\n    test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 14.88s\n\nFAILED\n\nfailures:\n\nfailures:\n    test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window\n\ntest result: FAILED. 15 passed; 1 failed; 0 ignored; 0 measured; 10726 filtered out; finished in 50.77s\n\n",
+      "stderr_tail": "rounds: workarounds complete\n[ 13.105s] [Startup] apply_post_load_workarounds: globals restored\n[ 13.107s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored\n[ 13.107s] [Startup] apply_post_load_workarounds: seterrorhandler restored\n[ 13.969s] [EditMode] starting setup_layout_info\n[ 13.988s] [EditMode] finished setup_layout_info in 18.29ms\n[ 13.988s] [EditMode] starting apply_system_anchors\n[ 14.077s] [EditMode] finished apply_system_anchors in 89.43ms\n[ 14.077s] [EditMode] starting finalize_action_bar_positions\n[ 14.084s] [EditMode] finished finalize_action_bar_positions in 6.86ms\n[ 14.084s] [EditMode] starting invoke_anchor_changed_hooks\n[ 14.097s] [EditMode] finished invoke_anchor_changed_hooks in 13.03ms\n[ 14.097s] [EditMode] starting fix_action_bar_nan_size\n[ 14.097s] [EditMode] finished fix_action_bar_nan_size in 325.41\u00b5s\n[ 14.097s] [EditMode] starting fix_action_bar_scale\n[ 14.097s] [EditMode] finished fix_action_bar_scale in 31.78\u00b5s\n[ 14.097s] [EditMode] starting reapply_player_frame_anchor\n[ 14.107s] [EditMode] finished reapply_player_frame_anchor in 9.26ms\n\nthread 'test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window' (3683823) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/test_showuipanel_lod.rs:347:9:\nassertion `left == right` failed: DamageMeter should load and populate the primary session and source windows: entry_frame_count=0\n  left: \"entry_frame_count=0\"\n right: \"ok\"\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\nthread 'test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window' (3683819) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/common/timeout_reexec.rs:181:9:\ntimeout child for `test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window` failed (exit code 101)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": false
+    },
+    {
+      "key": "cooldown_after",
+      "revision": "d59fd1884",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "cooldown",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 3.49s",
+        "test result: FAILED. 200 passed; 9 failed; 1 ignored; 0 measured; 10532 filtered out; finished in 306.18s"
+      ],
+      "failed_tests": [
+        "cooldown_probes::get_action_cooldown_active_is_false_for_zero_start",
+        "cooldown_probes::get_action_cooldown_duration_reads_active_slot_and_runtime_clock",
+        "cooldown_probes::get_action_cooldown_duration_selects_later_ending_gcd",
+        "cooldown_probes::get_action_cooldown_duration_snapshots_slot_and_spell_state",
+        "cooldown_probes::get_spell_cooldown_duration_reads_active_spell_and_runtime_clock",
+        "cooldown_probes::get_spell_cooldown_duration_resolves_alias_and_snapshots_state",
+        "cooldown_probes::get_spell_cooldown_duration_selects_later_ending_gcd",
+        "spell_state_probes::spell_readiness_false_on_cooldown",
+        "wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles"
+      ],
+      "stdout_tail": "ard_commentator_loads_without_cooldown_frame_warning ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 3.49s\n\nok\ntest talent_spec_probes::specialization_class_id_cooldown_viewer_uses_cross_class_tag ... ok\ntest test_showuipanel_lod_fixtures::cooldown_broadcaster_loadui_can_be_exercised_when_opt_in ... ignored, opt-in coverage for real CooldownBroadcaster load \u2014 needs C_ChatInfo/C_Spell surface\ntest tooltip::tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line ... ok\ntest tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line ... ok\ntest wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles ... FAILED\ntest xml_parsing_widgets::test_parse_cooldown_textures ... ok\n\nfailures:\n\nfailures:\n    cooldown_probes::get_action_cooldown_active_is_false_for_zero_start\n    cooldown_probes::get_action_cooldown_duration_reads_active_slot_and_runtime_clock\n    cooldown_probes::get_action_cooldown_duration_selects_later_ending_gcd\n    cooldown_probes::get_action_cooldown_duration_snapshots_slot_and_spell_state\n    cooldown_probes::get_spell_cooldown_duration_reads_active_spell_and_runtime_clock\n    cooldown_probes::get_spell_cooldown_duration_resolves_alias_and_snapshots_state\n    cooldown_probes::get_spell_cooldown_duration_selects_later_ending_gcd\n    spell_state_probes::spell_readiness_false_on_cooldown\n    wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles\n\ntest result: FAILED. 200 passed; 9 failed; 1 ignored; 0 measured; 10532 filtered out; finished in 306.18s\n\n",
+      "stderr_tail": "templates registered in 33.65\u00b5s\n[304.446s] [Startup] initial app_data lua handle installed in 1.40\u00b5s\n[304.984s] [Startup] init_lua_state complete in 537.26ms\n[304.984s] [Startup] final app_data lua handle installed in 1.01\u00b5s\n[304.984s] [Startup] initial screen globals installed in 622.20\u00b5s\n[304.984s] [Startup] WowLuaEnv::new complete\n[305.013s] [Startup] WowLuaEnv::new begin\n[305.022s] [Startup] SimState::default complete in 8.62ms\n[305.023s] [Startup] rilua VM created in 516.86\u00b5s\n[305.023s] [Startup] builtin frames initialized in 234.30\u00b5s\n[305.023s] [Startup] template registry cleared in 17.76\u00b5s\n[305.023s] [Startup] intrinsic templates registered in 36.80\u00b5s\n[305.023s] [Startup] initial app_data lua handle installed in 2.08\u00b5s\n[305.557s] [Startup] init_lua_state complete in 533.99ms\n[305.557s] [Startup] final app_data lua handle installed in 1.06\u00b5s\n[305.558s] [Startup] initial screen globals installed in 621.40\u00b5s\n[305.558s] [Startup] WowLuaEnv::new complete\n[305.584s] [Startup] WowLuaEnv::new begin\n[305.593s] [Startup] SimState::default complete in 8.66ms\n[305.593s] [Startup] rilua VM created in 519.82\u00b5s\n[305.593s] [Startup] builtin frames initialized in 201.33\u00b5s\n[305.593s] [Startup] template registry cleared in 15.46\u00b5s\n[305.593s] [Startup] intrinsic templates registered in 29.80\u00b5s\n[305.593s] [Startup] initial app_data lua handle installed in 1.68\u00b5s\n[306.147s] [Startup] init_lua_state complete in 553.59ms\n[306.147s] [Startup] final app_data lua handle installed in 1.28\u00b5s\n[306.148s] [Startup] initial screen globals installed in 866.06\u00b5s\n[306.148s] [Startup] WowLuaEnv::new complete\n\nthread 'wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles' (3696558) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/wowforever_cooldown_categories.rs:58:6:\ncalled `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: \"assertion failed!\", level: 0, traceback: [] }))\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": true
+    },
+    {
+      "key": "cooldown_probes_fixed",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "cooldown_probes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 42 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 24.36s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "st cooldown_probes::get_inventory_item_cooldown_zero_when_no_cooldown ... ok\ntest cooldown_probes::get_spell_autocast_always_false ... ok\ntest cooldown_probes::get_spell_cooldown_duration_inactive_numeric_and_unresolved_alias ... ok\ntest cooldown_probes::get_spell_cooldown_duration_reads_active_spell_and_runtime_clock ... ok\ntest cooldown_probes::get_spell_cooldown_duration_resolves_alias_and_snapshots_state ... ok\ntest cooldown_probes::get_spell_cooldown_duration_selects_later_ending_gcd ... ok\ntest cooldown_probes::get_spell_cooldown_reads_spell_cooldowns_entry ... ok\ntest cooldown_probes::get_spell_cooldown_zero_when_no_cooldown ... ok\ntest cooldown_probes::get_spell_level_learned_one_for_known_spell ... ok\ntest cooldown_probes::get_spell_level_learned_zero_for_unknown_spell ... ok\ntest cooldown_probes::ignore_gcd::ignore_gcd_only_gcd_returns_zero_individual_interval ... ok\ntest cooldown_probes::ignore_gcd::ignore_gcd_only_spell_and_empty_preserve_zero_object_contract ... ok\ntest cooldown_probes::ignore_gcd::ignore_gcd_overlap_selects_individual_interval_on_all_three_surfaces ... ok\ntest cooldown_probes::ignore_gcd::ignore_gcd_snapshots_keep_interval_and_runtime_clock_after_model_changes ... ok\ntest cooldown_probes::ignore_gcd::ignore_gcd_spell_ending_later_and_expired_spell ... ok\ntest cooldown_probes::ignore_gcd::ignore_gcd_unknown_inputs_do_not_invent_slot_spell_or_bank_mappings ... ok\ntest cooldown_probes::spell_bonus_damage_and_healing_share_intellect_bucket ... ok\n\ntest result: ok. 42 passed; 0 failed; 0 ignored; 0 measured; 10700 filtered out; finished in 24.36s\n\n",
+      "stderr_tail": "p] initial screen globals installed in 507.15\u00b5s\n[ 22.670s] [Startup] WowLuaEnv::new complete\n[ 22.696s] [Startup] WowLuaEnv::new begin\n[ 22.716s] [Startup] SimState::default complete in 19.86ms\n[ 22.716s] [Startup] rilua VM created in 520.42\u00b5s\n[ 22.717s] [Startup] builtin frames initialized in 201.00\u00b5s\n[ 22.717s] [Startup] template registry cleared in 17.43\u00b5s\n[ 22.717s] [Startup] intrinsic templates registered in 40.88\u00b5s\n[ 22.717s] [Startup] initial app_data lua handle installed in 1.83\u00b5s\n[ 23.242s] [Startup] init_lua_state complete in 525.25ms\n[ 23.242s] [Startup] final app_data lua handle installed in 1.01\u00b5s\n[ 23.243s] [Startup] initial screen globals installed in 601.89\u00b5s\n[ 23.243s] [Startup] WowLuaEnv::new complete\n[ 23.271s] [Startup] WowLuaEnv::new begin\n[ 23.280s] [Startup] SimState::default complete in 8.99ms\n[ 23.280s] [Startup] rilua VM created in 491.43\u00b5s\n[ 23.280s] [Startup] builtin frames initialized in 168.62\u00b5s\n[ 23.280s] [Startup] template registry cleared in 18.20\u00b5s\n[ 23.280s] [Startup] intrinsic templates registered in 31.05\u00b5s\n[ 23.281s] [Startup] initial app_data lua handle installed in 1.78\u00b5s\n[ 23.801s] [Startup] init_lua_state complete in 520.27ms\n[ 23.801s] [Startup] final app_data lua handle installed in 1.11\u00b5s\n[ 23.801s] [Startup] initial screen globals installed in 476.21\u00b5s\n[ 23.801s] [Startup] WowLuaEnv::new complete\n[ 23.827s] [Startup] WowLuaEnv::new begin\n[ 23.837s] [Startup] SimState::default complete in 10.43ms\n[ 23.838s] [Startup] rilua VM created in 687.40\u00b5s\n[ 23.838s] [Startup] builtin frames initialized in 200.93\u00b5s\n[ 23.838s] [Startup] template registry cleared in 19.43\u00b5s\n[ 23.838s] [Startup] intrinsic templates registered in 38.77\u00b5s\n[ 23.838s] [Startup] initial app_data lua handle installed in 1.70\u00b5s\n[ 24.334s] [Startup] init_lua_state complete in 495.24ms\n[ 24.334s] [Startup] final app_data lua handle installed in 1.15\u00b5s\n[ 24.334s] [Startup] initial screen globals installed in 576.59\u00b5s\n[ 24.334s] [Startup] WowLuaEnv::new complete\n",
+      "invalidated": false
+    },
+    {
+      "key": "spell_readiness_false_on_cooldown_fixed",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "spell_readiness_false_on_cooldown",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 0.85s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest spell_state_probes::spell_readiness_false_on_cooldown ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 0.85s\n\n",
+      "stderr_tail": "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n    Finished `test` profile [optimized + debuginfo] target(s) in 3.07s\n     Running tests/integration.rs (target/debug/deps/integration-e55f1b5348ca8cac)\n[  0.000s] [Startup] WowLuaEnv::new begin\n[  0.012s] [Startup] SimState::default complete in 11.97ms\n[  0.013s] [Startup] rilua VM created in 606.65\u00b5s\n[  0.013s] [Startup] builtin frames initialized in 350.19\u00b5s\n[  0.013s] [Startup] template registry cleared in 22.58\u00b5s\n[  0.013s] [Startup] intrinsic templates registered in 30.36\u00b5s\n[  0.013s] [Startup] initial app_data lua handle installed in 1.57\u00b5s\n[  0.815s] [Startup] init_lua_state complete in 802.07ms\n[  0.815s] [Startup] final app_data lua handle installed in 1.00\u00b5s\n[  0.816s] [Startup] initial screen globals installed in 532.97\u00b5s\n[  0.816s] [Startup] WowLuaEnv::new complete\n",
+      "invalidated": false
+    },
+    {
+      "key": "catalog_shop_after",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "catalog_shop",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 17.44s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 14.43s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 20.96s",
+        "test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 10719 filtered out; finished in 65.12s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "k\ntest catalog_shop_product_structures::preview_small_bg_override_product_url_round_trips ... ok\ntest catalog_shop_product_structures::returned_tables_and_every_nested_array_are_independent ... ok\ntest catalog_shop_product_structures::unknown_ids_and_legacy_seed_ids_return_nil ... ok\ntest catalog_shop_product_structures::zero_decor_counts_are_present_not_nil ... ok\ntest runtime_bootstrap_boundaries::catalog_shop_soundkit_defaults_are_not_runtime_bootstrap_fallbacks ... ok\ntest startup_targeted_regressions::late::apply_post_load_workarounds_does_not_introduce_catalog_shop_numeric_error ... \nrunning 1 test\ntest startup_targeted_regressions::late::apply_post_load_workarounds_does_not_introduce_catalog_shop_numeric_error ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 17.44s\n\nok\ntest startup_targeted_regressions::late::loading_blizzard_addons_does_not_emit_catalog_shop_numeric_error ... \nrunning 1 test\ntest startup_targeted_regressions::late::loading_blizzard_addons_does_not_emit_catalog_shop_numeric_error ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 14.43s\n\nok\ntest startup_targeted_regressions::late::startup_catalog_shop_numeric_error_after_load_clear ... \nrunning 1 test\ntest startup_targeted_regressions::late::startup_catalog_shop_numeric_error_after_load_clear ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 20.96s\n\nok\n\ntest result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 10719 filtered out; finished in 65.12s\n\n",
+      "stderr_tail": "k_list\n[ 16.327s] [Workarounds] finished patch_lfg_lock_list in 270.94\u00b5s\n[ 16.327s] [Workarounds] starting patch_auction_house_browse_results_event\n[ 16.328s] [Workarounds] finished patch_auction_house_browse_results_event in 518.10\u00b5s\n[ 16.328s] [Workarounds] starting patch_auction_house_search_context_aliases\n[ 16.328s] [Workarounds] finished patch_auction_house_search_context_aliases in 163.99\u00b5s\n[ 16.328s] [Workarounds] starting patch_auth_challenge_frame_parent\n[ 16.328s] [Workarounds] finished patch_auth_challenge_frame_parent in 432.52\u00b5s\n[ 16.328s] [Workarounds] starting patch_settings_surface_defaults\n[ 16.331s] [Workarounds] finished patch_settings_surface_defaults in 2.60ms\n[ 16.331s] [Workarounds] starting patch_settings_canvas_layout_visibility\n[ 16.332s] [Workarounds] finished patch_settings_canvas_layout_visibility in 857.80\u00b5s\n[ 16.332s] [Startup] apply_post_load_workarounds: workarounds complete\n[ 16.680s] [Startup] apply_post_load_workarounds: globals restored\n[ 16.682s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored\n[ 16.682s] [Startup] apply_post_load_workarounds: seterrorhandler restored\n[ 18.569s] [EditMode] starting setup_layout_info\n[ 18.589s] [EditMode] finished setup_layout_info in 20.23ms\n[ 18.589s] [EditMode] starting apply_system_anchors\n[ 19.355s] [EditMode] finished apply_system_anchors in 766.54ms\n[ 19.356s] [EditMode] starting finalize_action_bar_positions\n[ 19.372s] [EditMode] finished finalize_action_bar_positions in 16.68ms\n[ 19.372s] [EditMode] starting invoke_anchor_changed_hooks\n[ 19.403s] [EditMode] finished invoke_anchor_changed_hooks in 30.69ms\n[ 19.403s] [EditMode] starting fix_action_bar_nan_size\n[ 19.404s] [EditMode] finished fix_action_bar_nan_size in 543.98\u00b5s\n[ 19.404s] [EditMode] starting fix_action_bar_scale\n[ 19.404s] [EditMode] finished fix_action_bar_scale in 53.27\u00b5s\n[ 19.404s] [EditMode] starting reapply_player_frame_anchor\n[ 19.413s] [EditMode] finished reapply_player_frame_anchor in 8.90ms\n",
+      "invalidated": false
+    },
+    {
+      "key": "cooldown_final",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "cooldown",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 4.00s",
+        "test result: FAILED. 208 passed; 1 failed; 1 ignored; 0 measured; 10532 filtered out; finished in 247.57s"
+      ],
+      "failed_tests": [
+        "wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles"
+      ],
+      "stdout_tail": "_cooldown_outputs::current::tainted_copy_and_gc_keep_actual_wrapper_metadata_and_payloads ... ok\ntest spell_book_cooldown_outputs::current::tainted_public_selectors_preserve_caller_and_public_booleans ... ok\ntest spell_book_loss_of_control_outputs::current::explicit_cooldown_flag_alone_controls_numeric_privacy ... ok\ntest spell_state_probes::is_usable_spell_true_when_known_and_no_cooldown ... ok\ntest spell_state_probes::spell_readiness_false_on_cooldown ... ok\ntest startup_warnings::late::test_blizzard_commentator_loads_without_cooldown_frame_warning ... \nrunning 1 test\ntest startup_warnings::late::test_blizzard_commentator_loads_without_cooldown_frame_warning ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 4.00s\n\nok\ntest talent_spec_probes::specialization_class_id_cooldown_viewer_uses_cross_class_tag ... ok\ntest test_showuipanel_lod_fixtures::cooldown_broadcaster_loadui_can_be_exercised_when_opt_in ... ignored, opt-in coverage for real CooldownBroadcaster load \u2014 needs C_ChatInfo/C_Spell surface\ntest tooltip::tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line ... ok\ntest tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line ... ok\ntest wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles ... FAILED\ntest xml_parsing_widgets::test_parse_cooldown_textures ... ok\n\nfailures:\n\nfailures:\n    wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles\n\ntest result: FAILED. 208 passed; 1 failed; 1 ignored; 0 measured; 10532 filtered out; finished in 247.57s\n\n",
+      "stderr_tail": " installed in 1.40\u00b5s\n[246.192s] [Startup] init_lua_state complete in 581.80ms\n[246.192s] [Startup] final app_data lua handle installed in 1.01\u00b5s\n[246.193s] [Startup] initial screen globals installed in 661.26\u00b5s\n[246.193s] [Startup] WowLuaEnv::new complete\n[246.274s] [Startup] WowLuaEnv::new begin\n[246.285s] [Startup] SimState::default complete in 10.57ms\n[246.285s] [Startup] rilua VM created in 521.55\u00b5s\n[246.286s] [Startup] builtin frames initialized in 208.99\u00b5s\n[246.286s] [Startup] template registry cleared in 16.13\u00b5s\n[246.286s] [Startup] intrinsic templates registered in 56.57\u00b5s\n[246.286s] [Startup] initial app_data lua handle installed in 1.81\u00b5s\n[246.852s] [Startup] init_lua_state complete in 566.76ms\n[246.853s] [Startup] final app_data lua handle installed in 1.00\u00b5s\n[246.853s] [Startup] initial screen globals installed in 551.70\u00b5s\n[246.853s] [Startup] WowLuaEnv::new complete\n[246.887s] [Startup] WowLuaEnv::new begin\n[246.897s] [Startup] SimState::default complete in 10.26ms\n[246.898s] [Startup] rilua VM created in 554.98\u00b5s\n[246.898s] [Startup] builtin frames initialized in 173.68\u00b5s\n[246.898s] [Startup] template registry cleared in 14.89\u00b5s\n[246.898s] [Startup] intrinsic templates registered in 31.26\u00b5s\n[246.898s] [Startup] initial app_data lua handle installed in 1.47\u00b5s\n[247.515s] [Startup] init_lua_state complete in 616.76ms\n[247.515s] [Startup] final app_data lua handle installed in 1.24\u00b5s\n[247.516s] [Startup] initial screen globals installed in 731.43\u00b5s\n[247.516s] [Startup] WowLuaEnv::new complete\n\nthread 'wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles' (3728715) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/wowforever_cooldown_categories.rs:58:6:\ncalled `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: \"assertion failed!\", level: 0, traceback: [] }))\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": false
+    },
+    {
+      "key": "audio_lib",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--lib",
+        "--",
+        "test_patch_12_0_0_combat_audio_spec_setting_enum_values"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.00s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.00s\n\n",
+      "stderr_tail": "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract)\n    Finished `test` profile [optimized + debuginfo] target(s) in 16m 50s\n     Running unittests src/lib.rs (target/debug/deps/wow_ui_sim-bf85043d9f960a05)\n",
+      "invalidated": false
+    },
+    {
+      "key": "fmt_check",
+      "revision": "0abd710a8",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/Cargo.toml",
+        "--check"
+      ],
+      "exit_code": 0,
+      "test_summaries": [],
+      "failed_tests": [],
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "invalidated": false
+    },
+    {
+      "key": "cargo_check",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "exit_code": 0,
+      "test_summaries": [],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n",
+      "stderr_tail": "v0.1.0 (https://github.com/Osso/peercred-ipc.git?tag=v0.2.0#dc0093cf)\n    Checking cryoglyph v0.1.0\n    Checking icu_casemap_data v2.1.1\n    Checking icu_collator_data v2.1.1\n    Checking iced_wgpu v0.14.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract/iced-wgpu-patched)\n    Checking icu_segmenter_data v2.1.1\n    Checking icu_plurals_data v2.1.1\n    Checking phf_generator v0.11.3\n    Checking fixed_decimal v0.7.0\n    Checking xattr v1.6.1\n    Checking texpresso v2.0.2\n    Checking sharded-slab v0.1.7\n    Checking tracing-log v0.2.0\n    Checking filetime v0.2.28\n    Checking thread_local v1.1.9\n    Checking nu-ansi-term v0.50.3\n    Checking glob v0.3.3\n    Checking same-file v1.0.6\n    Checking casc-extract v0.1.0 (https://github.com/Osso/casc-extract?rev=bbfb184066531b6eb674b50b63a6052eb871ab2f#bbfb1840)\n    Checking walkdir v2.5.0\n    Checking tar v0.4.45\n    Checking iced-layout-inspector v0.1.0 (https://github.com/Osso/iced-layout-inspector.git?tag=v0.2.0#c1f1dd2c)\n    Checking icu_plurals v2.1.1\n    Checking tracing-subscriber v0.3.22\n    Checking icu_segmenter v2.1.1\n    Checking phf_codegen v0.11.3\n    Checking icu_collator v2.1.1\n    Checking asset-resolver v0.1.0 (https://github.com/world-of-osso/asset-resolver?rev=462097bba2aa72d1afed8e0ca5b7c7315096427d#462097bb)\n    Checking iced_renderer v0.14.0\n    Checking icu_casemap v2.1.1\n    Checking webp v0.3.1\n    Checking iced_widget v0.14.2\n    Checking phf v0.11.3\n    Checking rodio v0.21.1\n    Checking dirs v5.0.1\n    Checking winapi v0.3.9\n    Checking regex v1.12.2\n    Checking quick-xml v0.37.5\n    Checking rilua v0.1.21 (https://github.com/Osso/rilua.git?rev=a76ffa83f548da94b72777c96d51de38b7f9ef3c#a76ffa83)\n    Checking unicode-blocks v0.1.10\n    Checking pollster v0.4.0\n    Checking httpdate v1.0.3\n    Checking image-blp v1.2.0\n    Checking iced v0.14.0\n    Checking wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1201-extract)\n    Finished `dev` profile [optimized + debuginfo] target(s) in 9m 19s\n",
+      "invalidated": false
+    },
+    {
+      "key": "debug_build",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local"
+      ],
+      "exit_code": 0,
+      "test_summaries": [],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n",
+      "stderr_tail": "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n    Finished `dev` profile [optimized + debuginfo] target(s) in 4.73s\n",
+      "invalidated": false
+    },
+    {
+      "key": "startup_retry",
+      "revision": "0abd710a8",
+      "argv": [
+        "timeout",
+        "90",
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-build",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "exit_code": 124,
+      "test_summaries": [],
+      "failed_tests": [],
+      "stdout_tail": "native artifact=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target/debug/wow-sim\n[]\n",
+      "stderr_tail": "tch_container_frame_token_tracker\n[ 42.501s] [Workarounds] finished patch_container_frame_token_tracker in 1.19ms\n[ 42.501s] [Workarounds] starting patch_achievement_display_set_achievements\n[ 42.501s] [Workarounds] finished patch_achievement_display_set_achievements in 100.67\u00b5s\n[ 42.502s] [Workarounds] starting patch_housing_dashboard_preload\n[ 42.502s] [Workarounds] finished patch_housing_dashboard_preload in 397.36\u00b5s\n[ 42.502s] [Workarounds] starting patch_lfg_lock_list\n[ 42.503s] [Workarounds] finished patch_lfg_lock_list in 75.25\u00b5s\n[ 42.503s] [Workarounds] starting patch_auction_house_browse_results_event\n[ 42.504s] [Workarounds] finished patch_auction_house_browse_results_event in 727.02\u00b5s\n[ 42.504s] [Workarounds] starting patch_auction_house_search_context_aliases\n[ 42.504s] [Workarounds] finished patch_auction_house_search_context_aliases in 351.69\u00b5s\n[ 42.504s] [Workarounds] starting patch_auth_challenge_frame_parent\n[ 42.505s] [Workarounds] finished patch_auth_challenge_frame_parent in 481.76\u00b5s\n[ 42.505s] [Workarounds] starting patch_settings_surface_defaults\n[ 42.509s] [Workarounds] finished patch_settings_surface_defaults in 3.90ms\n[ 42.509s] [Workarounds] starting patch_settings_canvas_layout_visibility\n[ 42.511s] [Workarounds] finished patch_settings_canvas_layout_visibility in 1.26ms\n[ 42.511s] [Startup] apply_post_load_workarounds: workarounds complete\n[ 43.216s] [Startup] apply_post_load_workarounds: globals restored\n[ 43.219s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored\n[ 43.219s] [Startup] apply_post_load_workarounds: seterrorhandler restored\n[ 43.222s] [Startup] post-load workarounds complete in 3.03s\n[ 43.222s] [Startup] restarting GC after bootstrap\n[ 44.302s] [Startup] GC restart complete in 1.08s\n=== Final observed Lua error summary ===\nStatus: CLEAN\nLua errors: 0 unique, 0 occurrence(s)\nAttributed owners: 0\nUnattributed Lua errors: 0 occurrence(s)\nDropping OutputStream, audio playing through this stream will stop\n",
+      "invalidated": false
+    },
+    {
+      "key": "patch_12_0_0_publication_sweep_final",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 176.69s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_0_publication_sweep::patch_12_0_0_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 176.69s\n\n",
+      "stderr_tail": "ng apply_system_anchors\n[ 26.339s] [EditMode] finished apply_system_anchors in 873.66ms\n[ 26.339s] [EditMode] starting finalize_action_bar_positions\n[ 26.352s] [EditMode] finished finalize_action_bar_positions in 13.63ms\n[ 26.352s] [EditMode] starting invoke_anchor_changed_hooks\n[ 26.378s] [EditMode] finished invoke_anchor_changed_hooks in 25.99ms\n[ 26.378s] [EditMode] starting fix_action_bar_nan_size\n[ 26.379s] [EditMode] finished fix_action_bar_nan_size in 384.77\u00b5s\n[ 26.379s] [EditMode] starting fix_action_bar_scale\n[ 26.379s] [EditMode] finished fix_action_bar_scale in 31.97\u00b5s\n[ 26.379s] [EditMode] starting reapply_player_frame_anchor\n[ 26.387s] [EditMode] finished reapply_player_frame_anchor in 8.42ms\n[ 26.445s] [Startup] end world enter sequence in 2.54s\n[ 26.445s] [Startup] begin post-login events\n[ 26.449s] [Startup] Firing UNIT_AURA\n[ 26.453s] [Startup] Firing PET_UI_UPDATE\n[ 26.462s] [Startup] Firing BAG_UPDATE_DELAYED\n[ 26.472s] [Startup] Firing QUEST_LOG_UPDATE\n[ 26.478s] [Startup] Firing GROUP_ROSTER_UPDATE\n[ 27.046s] [Startup] Firing ACTIONBAR_UPDATE_STATE\n[ 27.046s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN\n[ 27.050s] [Startup] Firing UPDATE_BONUS_ACTIONBAR\n[ 27.134s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED\n[ 27.134s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED\n[ 27.134s] [Startup] Firing UPDATE_BINDINGS\n[ 27.154s] [Startup] Firing UPDATE_CHAT_WINDOWS\n[ 27.171s] [Startup] Firing LFG_UPDATE_RANDOM_INFO\n[ 27.177s] [Startup] end post-login events in 732.04ms\n[ 27.177s] [Startup] begin close startup special windows\n[ 27.178s] [Startup] end close startup special windows in 1.65ms\n[ 27.178s] [Startup] begin FIRST_FRAME_RENDERED\n[ 27.178s] [Startup] Firing FIRST_FRAME_RENDERED\n[ 27.180s] [Startup] end FIRST_FRAME_RENDERED in 1.45ms\n[ 27.180s] [Startup] begin unblock hidden splash alerts\n[ 27.180s] [Startup] end unblock hidden splash alerts in 87.12\u00b5s\n[ 27.180s] [Startup] begin post-event workarounds\n[ 27.180s] [Startup] end post-event workarounds in 5.70\u00b5s\n",
+      "invalidated": false
+    },
+    {
+      "key": "patch_12_0_1_publication_sweep_final",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 225.79s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_1_publication_sweep::patch_12_0_1_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 225.79s\n\n",
+      "stderr_tail": "ting apply_system_anchors\n[ 46.489s] [EditMode] finished apply_system_anchors in 2.02s\n[ 46.489s] [EditMode] starting finalize_action_bar_positions\n[ 46.548s] [EditMode] finished finalize_action_bar_positions in 59.28ms\n[ 46.548s] [EditMode] starting invoke_anchor_changed_hooks\n[ 46.595s] [EditMode] finished invoke_anchor_changed_hooks in 46.41ms\n[ 46.595s] [EditMode] starting fix_action_bar_nan_size\n[ 46.596s] [EditMode] finished fix_action_bar_nan_size in 576.83\u00b5s\n[ 46.596s] [EditMode] starting fix_action_bar_scale\n[ 46.597s] [EditMode] finished fix_action_bar_scale in 68.00\u00b5s\n[ 46.597s] [EditMode] starting reapply_player_frame_anchor\n[ 46.642s] [EditMode] finished reapply_player_frame_anchor in 44.55ms\n[ 46.764s] [Startup] end world enter sequence in 6.00s\n[ 46.764s] [Startup] begin post-login events\n[ 46.771s] [Startup] Firing UNIT_AURA\n[ 46.777s] [Startup] Firing PET_UI_UPDATE\n[ 46.788s] [Startup] Firing BAG_UPDATE_DELAYED\n[ 46.841s] [Startup] Firing QUEST_LOG_UPDATE\n[ 46.851s] [Startup] Firing GROUP_ROSTER_UPDATE\n[ 48.246s] [Startup] Firing ACTIONBAR_UPDATE_STATE\n[ 48.247s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN\n[ 48.256s] [Startup] Firing UPDATE_BONUS_ACTIONBAR\n[ 48.420s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED\n[ 48.420s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED\n[ 48.420s] [Startup] Firing UPDATE_BINDINGS\n[ 48.456s] [Startup] Firing UPDATE_CHAT_WINDOWS\n[ 48.480s] [Startup] Firing LFG_UPDATE_RANDOM_INFO\n[ 48.487s] [Startup] end post-login events in 1.72s\n[ 48.487s] [Startup] begin close startup special windows\n[ 48.490s] [Startup] end close startup special windows in 2.43ms\n[ 48.490s] [Startup] begin FIRST_FRAME_RENDERED\n[ 48.490s] [Startup] Firing FIRST_FRAME_RENDERED\n[ 48.492s] [Startup] end FIRST_FRAME_RENDERED in 1.60ms\n[ 48.492s] [Startup] begin unblock hidden splash alerts\n[ 48.492s] [Startup] end unblock hidden splash alerts in 288.76\u00b5s\n[ 48.492s] [Startup] begin post-event workarounds\n[ 48.493s] [Startup] end post-event workarounds in 281.28\u00b5s\n",
+      "invalidated": false
+    },
+    {
+      "key": "patch_12_0_5_publication_sweep_final",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 88.68s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_5_publication_sweep::patch_12_0_5_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 88.68s\n\n",
+      "stderr_tail": "ng apply_system_anchors\n[ 39.611s] [EditMode] finished apply_system_anchors in 965.59ms\n[ 39.611s] [EditMode] starting finalize_action_bar_positions\n[ 39.626s] [EditMode] finished finalize_action_bar_positions in 14.79ms\n[ 39.626s] [EditMode] starting invoke_anchor_changed_hooks\n[ 39.657s] [EditMode] finished invoke_anchor_changed_hooks in 31.72ms\n[ 39.657s] [EditMode] starting fix_action_bar_nan_size\n[ 39.658s] [EditMode] finished fix_action_bar_nan_size in 535.04\u00b5s\n[ 39.658s] [EditMode] starting fix_action_bar_scale\n[ 39.658s] [EditMode] finished fix_action_bar_scale in 58.16\u00b5s\n[ 39.658s] [EditMode] starting reapply_player_frame_anchor\n[ 39.666s] [EditMode] finished reapply_player_frame_anchor in 8.26ms\n[ 39.736s] [Startup] end world enter sequence in 2.95s\n[ 39.736s] [Startup] begin post-login events\n[ 39.743s] [Startup] Firing UNIT_AURA\n[ 39.748s] [Startup] Firing PET_UI_UPDATE\n[ 39.758s] [Startup] Firing BAG_UPDATE_DELAYED\n[ 39.769s] [Startup] Firing QUEST_LOG_UPDATE\n[ 39.777s] [Startup] Firing GROUP_ROSTER_UPDATE\n[ 40.491s] [Startup] Firing ACTIONBAR_UPDATE_STATE\n[ 40.491s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN\n[ 40.498s] [Startup] Firing UPDATE_BONUS_ACTIONBAR\n[ 40.595s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED\n[ 40.595s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED\n[ 40.595s] [Startup] Firing UPDATE_BINDINGS\n[ 40.620s] [Startup] Firing UPDATE_CHAT_WINDOWS\n[ 40.636s] [Startup] Firing LFG_UPDATE_RANDOM_INFO\n[ 40.641s] [Startup] end post-login events in 904.84ms\n[ 40.641s] [Startup] begin close startup special windows\n[ 40.644s] [Startup] end close startup special windows in 2.29ms\n[ 40.644s] [Startup] begin FIRST_FRAME_RENDERED\n[ 40.644s] [Startup] Firing FIRST_FRAME_RENDERED\n[ 40.645s] [Startup] end FIRST_FRAME_RENDERED in 1.09ms\n[ 40.645s] [Startup] begin unblock hidden splash alerts\n[ 40.645s] [Startup] end unblock hidden splash alerts in 89.29\u00b5s\n[ 40.645s] [Startup] begin post-event workarounds\n[ 40.645s] [Startup] end post-event workarounds in 5.14\u00b5s\n",
+      "invalidated": false
+    },
+    {
+      "key": "patch_12_0_7_publication_sweep_final",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 41.52s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_7_publication_sweep::patch_12_0_7_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 41.52s\n\n",
+      "stderr_tail": "ing apply_system_anchors\n[ 27.705s] [EditMode] finished apply_system_anchors in 1.13s\n[ 27.706s] [EditMode] starting finalize_action_bar_positions\n[ 27.719s] [EditMode] finished finalize_action_bar_positions in 13.60ms\n[ 27.719s] [EditMode] starting invoke_anchor_changed_hooks\n[ 27.748s] [EditMode] finished invoke_anchor_changed_hooks in 28.42ms\n[ 27.748s] [EditMode] starting fix_action_bar_nan_size\n[ 27.748s] [EditMode] finished fix_action_bar_nan_size in 524.05\u00b5s\n[ 27.748s] [EditMode] starting fix_action_bar_scale\n[ 27.748s] [EditMode] finished fix_action_bar_scale in 42.55\u00b5s\n[ 27.748s] [EditMode] starting reapply_player_frame_anchor\n[ 27.758s] [EditMode] finished reapply_player_frame_anchor in 9.74ms\n[ 27.834s] [Startup] end world enter sequence in 3.33s\n[ 27.834s] [Startup] begin post-login events\n[ 27.842s] [Startup] Firing UNIT_AURA\n[ 27.848s] [Startup] Firing PET_UI_UPDATE\n[ 27.857s] [Startup] Firing BAG_UPDATE_DELAYED\n[ 27.871s] [Startup] Firing QUEST_LOG_UPDATE\n[ 27.880s] [Startup] Firing GROUP_ROSTER_UPDATE\n[ 28.592s] [Startup] Firing ACTIONBAR_UPDATE_STATE\n[ 28.592s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN\n[ 28.598s] [Startup] Firing UPDATE_BONUS_ACTIONBAR\n[ 28.706s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED\n[ 28.707s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED\n[ 28.707s] [Startup] Firing UPDATE_BINDINGS\n[ 28.732s] [Startup] Firing UPDATE_CHAT_WINDOWS\n[ 28.752s] [Startup] Firing LFG_UPDATE_RANDOM_INFO\n[ 28.756s] [Startup] end post-login events in 922.69ms\n[ 28.756s] [Startup] begin close startup special windows\n[ 28.758s] [Startup] end close startup special windows in 1.80ms\n[ 28.758s] [Startup] begin FIRST_FRAME_RENDERED\n[ 28.758s] [Startup] Firing FIRST_FRAME_RENDERED\n[ 28.759s] [Startup] end FIRST_FRAME_RENDERED in 1.15ms\n[ 28.759s] [Startup] begin unblock hidden splash alerts\n[ 28.759s] [Startup] end unblock hidden splash alerts in 101.76\u00b5s\n[ 28.759s] [Startup] begin post-event workarounds\n[ 28.759s] [Startup] end post-event workarounds in 11.20\u00b5s\n",
+      "invalidated": false
+    },
+    {
+      "key": "patch_12_1_0_publication_sweep_final",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_summaries": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 49.50s"
+      ],
+      "failed_tests": [],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_1_0_publication_sweep::patch_12_1_0_publication_sweep ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 49.50s\n\n",
+      "stderr_tail": " apply_system_anchors\n[ 30.782s] [EditMode] finished apply_system_anchors in 875.81ms\n[ 30.782s] [EditMode] starting finalize_action_bar_positions\n[ 30.796s] [EditMode] finished finalize_action_bar_positions in 14.37ms\n[ 30.796s] [EditMode] starting invoke_anchor_changed_hooks\n[ 30.832s] [EditMode] finished invoke_anchor_changed_hooks in 35.90ms\n[ 30.832s] [EditMode] starting fix_action_bar_nan_size\n[ 30.833s] [EditMode] finished fix_action_bar_nan_size in 588.49\u00b5s\n[ 30.833s] [EditMode] starting fix_action_bar_scale\n[ 30.833s] [EditMode] finished fix_action_bar_scale in 52.34\u00b5s\n[ 30.833s] [EditMode] starting reapply_player_frame_anchor\n[ 30.841s] [EditMode] finished reapply_player_frame_anchor in 8.47ms\n[ 30.908s] [Startup] end world enter sequence in 2.89s\n[ 30.908s] [Startup] begin post-login events\n[ 30.916s] [Startup] Firing UNIT_AURA\n[ 30.920s] [Startup] Firing PET_UI_UPDATE\n[ 30.930s] [Startup] Firing BAG_UPDATE_DELAYED\n[ 30.940s] [Startup] Firing QUEST_LOG_UPDATE\n[ 30.947s] [Startup] Firing GROUP_ROSTER_UPDATE\n[ 31.641s] [Startup] Firing ACTIONBAR_UPDATE_STATE\n[ 31.641s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN\n[ 31.646s] [Startup] Firing UPDATE_BONUS_ACTIONBAR\n[ 31.741s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED\n[ 31.741s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED\n[ 31.741s] [Startup] Firing UPDATE_BINDINGS\n[ 31.763s] [Startup] Firing UPDATE_CHAT_WINDOWS\n[ 31.780s] [Startup] Firing LFG_UPDATE_RANDOM_INFO\n[ 31.786s] [Startup] end post-login events in 877.46ms\n[ 31.786s] [Startup] begin close startup special windows\n[ 31.787s] [Startup] end close startup special windows in 1.60ms\n[ 31.787s] [Startup] begin FIRST_FRAME_RENDERED\n[ 31.787s] [Startup] Firing FIRST_FRAME_RENDERED\n[ 31.788s] [Startup] end FIRST_FRAME_RENDERED in 880.83\u00b5s\n[ 31.788s] [Startup] begin unblock hidden splash alerts\n[ 31.788s] [Startup] end unblock hidden splash alerts in 74.74\u00b5s\n[ 31.788s] [Startup] begin post-event workarounds\n[ 31.788s] [Startup] end post-event workarounds in 6.04\u00b5s\n",
+      "invalidated": false
+    },
+    {
+      "key": "secret_duration_pending",
+      "revision": "0abd710a8",
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1201-extract/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_tainted_secret_duration_object",
+        "--",
+        "--ignored",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "test_summaries": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 1.29s"
+      ],
+      "stdout_tail": "native source=/home/osso/.worktrees/wow-ui-sim-p1201-extract target=/home/osso/.worktrees/wow-ui-sim-p1201-extract/target scope=['/syncthing/Sync/Projects/world-of-osso/game-engine/scripts/agent/agent-run', 'native-build']\n\nrunning 1 test\ntest patch_12_0_1_secure_delegate::patch_12_0_1_tainted_secret_duration_object ... FAILED\n\nfailures:\n\nfailures:\n    patch_12_0_1_secure_delegate::patch_12_0_1_tainted_secret_duration_object\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10741 filtered out; finished in 1.29s\n\n",
+      "stderr_tail": "y.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n    Finished `test` profile [optimized + debuginfo] target(s) in 2.50s\n     Running tests/integration.rs (target/debug/deps/integration-e55f1b5348ca8cac)\n[  0.000s] [Startup] WowLuaEnv::new begin\n[  0.037s] [Startup] SimState::default complete in 37.29ms\n[  0.038s] [Startup] rilua VM created in 746.61\u00b5s\n[  0.040s] [Startup] builtin frames initialized in 1.73ms\n[  0.040s] [Startup] template registry cleared in 457.18\u00b5s\n[  0.041s] [Startup] intrinsic templates registered in 65.55\u00b5s\n[  0.041s] [Startup] initial app_data lua handle installed in 15.67\u00b5s\n[  1.221s] [Startup] init_lua_state complete in 1.18s\n[  1.221s] [Startup] final app_data lua handle installed in 1.44\u00b5s\n[  1.221s] [Startup] initial screen globals installed in 668.44\u00b5s\n[  1.221s] [Startup] WowLuaEnv::new complete\n\nthread 'patch_12_0_1_secure_delegate::patch_12_0_1_tainted_secret_duration_object' (3850103) panicked at /home/osso/.worktrees/wow-ui-sim-p1201-extract/tests/patch_12_0_1_secure_delegate.rs:65:9:\ncalled `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: \"secret-origin widget readout requires an untainted caller\", level: 0, traceback: [] }))\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test integration`\n",
+      "invalidated": false,
+      "outcome": "Expected retained RED; not counted as proven or as passing default coverage. Existing require_readable guard also present in master base; original-master runtime of this new test not separately executed."
+    }
+  ],
+  "startup_initial_attempt": "Requested --run invocation, after separate build, timed out at 90s without retained output. No worktree child processes survived. --no-build retry observed [] / CLEAN summary but exited 124 at 90s; clean process termination not proven, no master termination comparison.",
+  "inferred": [
+    "Public out-of-combat damage snapshots; combat queries explicitly blocked.",
+    "Explicit host charge inputs; no automatic spending/replenishment.",
+    "Fresh catalog maps/snapshots; unknown bundle returns empty; missing nonnullable section raises contextual input error; exact public i32 selectors.",
+    "Later first-supported retail-12-0-5 gate, with current Retail enum corrections; no 12.0.1 runtime epoch."
+  ],
+  "warnings": "Six pre-existing iced_wgpu manifest deprecations; vendor files unchanged.",
+  "review": "Main-thread manual changed-Rust readability/security review; no agents/models invoked.",
+  "commits": [
+    "0abd710a8affb877b9957ac943912ca7c1b263a7 Use positive cooldown starts in active interval fixtures",
+    "d59fd1884defc4168778ab12479e6410a0ae31e9 Normalize inactive cooldown intervals across spell and action outputs",
+    "183e31c6ad9cc8fe549f547720339afee76f36e6 Retain secret duration rendering blocker separately from delegate proof",
+    "014495b507daf6baa04580465d8a67a8518093a2 Inspect secret cooldown timing through separate secure host entry",
+    "c66aa03ce516ebb4f409a8c19ece13e048772f1e Enforce cooldown numeric secret argument security before mutation",
+    "207a25f0afc3d4aebb0f8a8fe3be88bed30c5e1a Derive charge activity and prove retained cooldown hotfix boundaries",
+    "c4bb2dfc2212b7047b6da5b4297d2d806d7422a4 Import catalog layout fixture types",
+    "b1ff7b9f93b62323843f563196aba1ad7ae2ab75 Correct catalog GC reference import path",
+    "3efbfcee7085375c047e26610475e4d63526c7b9 Use catalog namespace table reference for registration",
+    "0ea9c0befe9815154eba5bd4c75cdeb83d8b15ea Model catalog bundle quantities and section disclaimers",
+    "d73a7056b31349fb56f284f51fa12830edda7c9c Prove damage meter extract DTO values and snapshots",
+    "0f7e7386ab908bdedac176ae0d81862d2f65d0fc Publish retained 12.0.1 combat audio enum values",
+    "aa18d15aa77458dfaaad57d7d27768224873257c Test 12.0.1 extract enum values and supersession"
+  ]
+}
