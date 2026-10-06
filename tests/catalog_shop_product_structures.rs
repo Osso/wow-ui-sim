@@ -145,6 +145,48 @@ fn catalog_shop_patch_12_0_1_empty_bundle_and_section_inputs() {
 }
 
 #[test]
+fn catalog_shop_section_ids_follow_host_inputs() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("assert(next(C_CatalogShop.GetSectionIDsForCategory(101)) == nil)")
+        .unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        for (category, section) in [(101, 8), (101, 2), (102, 3)] {
+            state.catalog_shop_products.sections.insert(
+                (category, section),
+                CatalogShopSectionInfo {
+                    id: f64::from(section),
+                    display_name: format!("Section {section}"),
+                    ..Default::default()
+                },
+            );
+        }
+    }
+    env.exec(EXACT).unwrap();
+    env.exec(r#"
+        SectionIDs = C_CatalogShop.GetSectionIDsForCategory(101)
+        exact(SectionIDs, {2, 8})
+        exact(C_CatalogShop.GetSectionIDsForCategory(102), {3})
+        for _, id in ipairs(SectionIDs) do
+            assert(C_CatalogShop.GetCategorySectionInfo(101, id).ID == id)
+        end
+        SectionIDs[1] = 99
+        exact(C_CatalogShop.GetSectionIDsForCategory(101), {2, 8})
+        assert(next(C_CatalogShop.GetSectionIDsForCategory(103)) == nil)
+    "#).unwrap();
+    env.state()
+        .borrow_mut()
+        .catalog_shop_products
+        .sections
+        .remove(&(101, 2));
+    env.exec(r#"
+        exact(C_CatalogShop.GetSectionIDsForCategory(101), {8})
+        exact(SectionIDs, {99, 8})
+        assert(not pcall(C_CatalogShop.GetCategorySectionInfo, 101, 2))
+    "#).unwrap();
+}
+
+#[test]
 fn catalog_shop_patch_12_0_1_bundle_section_snapshots() {
     let env = fixture_env();
     {

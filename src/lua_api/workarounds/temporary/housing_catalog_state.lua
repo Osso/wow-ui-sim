@@ -577,12 +577,6 @@ C_CatalogShop = __wow_merge_namespace(C_CatalogShop, {
     end
     return productID
   end,
-  GetSectionIDsForCategory = function(categoryID)
-    if categoryID == __wow_housing_all_category_id then
-      return { 1 }
-    end
-    return { 1 }
-  end,
   GetFailureInfo = function() return nil, nil end,
   RefreshVirtualCurrencyBalance = __wow_noop,
   GetVirtualCurrencyBalance = function() return 0 end,

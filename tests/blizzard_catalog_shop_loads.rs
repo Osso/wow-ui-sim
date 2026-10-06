@@ -82,6 +82,45 @@ fn blizzard_catalog_shop_loads_without_errors(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
+fn catalog_shop_host_sections_refresh_without_errors(env: &WowLuaEnv) {
+    assert_catalog_shop_loaded(&env);
+    {
+        let mut state = env.state().borrow_mut();
+        state.lua_errors.clear();
+        state.catalog_shop_products.sections.insert(
+            (101, 8),
+            wow_ui_sim::c_api::c_catalog_shop_products::CatalogShopSectionInfo {
+                id: 8.0,
+                display_name: "Host recommendations".into(),
+                parent_catalog_shop_category_info_id: Some(101.0),
+                scroll_grid_size: Some(4.0),
+                should_show_recommendation_opt_out_disclaimer: true,
+                ..Default::default()
+            },
+        );
+    }
+    env.exec(r#"
+        CatalogShopFrame:Show()
+        CatalogShopFrame:OnCategorySelected(101)
+        local container = CatalogShopFrame.ProductContainerFrame
+        assert(#container.sectionData == 1)
+        assert(container.sectionData[1].ID == 8)
+        assert(container.sectionData[1].sectionDisplayName == 'Host recommendations')
+        assert(type(container.ProductsScrollBoxContainer.ScrollBox:GetDataProvider()) == 'table')
+    "#).expect("cached catalog should consume host sections");
+    env.state().borrow_mut().catalog_shop_products.sections.remove(&(101, 8));
+    env.exec(r#"
+        CatalogShopFrame:OnCategorySelected(101)
+        local container = CatalogShopFrame.ProductContainerFrame
+        assert(#container.sectionData == 0)
+        assert(type(container.ProductsScrollBoxContainer.ScrollBox:GetDataProvider()) == 'table')
+        CatalogShopFrame:Hide()
+    "#).expect("cached catalog should refresh after host section removal");
+    assert!(env.state().borrow().lua_errors.is_empty(), "host section refresh emitted Lua errors");
+}
+}
+
+prefork_full_ui_case! {
 fn catalog_shop_show_and_hide_run_without_errors(env: &WowLuaEnv) {
     assert_catalog_shop_loaded(&env);
 

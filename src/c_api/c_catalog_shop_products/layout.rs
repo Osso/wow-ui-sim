@@ -24,6 +24,7 @@ pub(super) fn register(
     namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetProductIDsForBundle", bundle_children)?;
+    table_set_rust_fn_static(state, namespace, "GetSectionIDsForCategory", section_ids)?;
     table_set_rust_fn_static(state, namespace, "GetCategorySectionInfo", section_info)
 }
 
@@ -50,6 +51,24 @@ fn bundle_children(state: &mut LuaState) -> LuaResult<u32> {
         }
         set_table_array(state, result, index as i64 + 1, row);
         state.pop();
+    }
+    Ok(1)
+}
+
+fn section_ids(state: &mut LuaState) -> LuaResult<u32> {
+    let category = read_public_id(state, 1)?;
+    let mut ids: Vec<i32> = borrow_state(state)?
+        .catalog_shop_products
+        .sections
+        .keys()
+        .filter_map(|&(category_id, section_id)| (category_id == category).then_some(section_id))
+        .collect();
+    // INFERRED: stable numeric order until the host supplies section display order.
+    ids.sort_unstable();
+    let result = create_table(state);
+    state.push(result);
+    for (index, id) in ids.into_iter().enumerate() {
+        set_table_array(state, result, index as i64 + 1, Val::Num(f64::from(id)));
     }
     Ok(1)
 }

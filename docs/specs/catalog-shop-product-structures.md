@@ -53,7 +53,7 @@ Main accepts an independent GPT-6.1-sol review: **ACCEPT WITH QUALIFICATIONS** (
 
 ## 12.0.1 extract bundle and section DTOs
 
-`CatalogShopProducts` also stores explicit bundle child arrays and sections keyed by `(categoryID, sectionID)`. `GetProductIDsForBundle` preserves host array order and exact numeric `childProductID`, `displayOrder`, `quantityInBundle`; no synthetic quantity or seeded bundle fallback. `GetCategorySectionInfo` copies `ID`, `displayName`, optional parent ID/card type/grid size and required `shouldShowRecommendationOptOutDisclaimer`, including false. Both return fresh snapshots. Matching temporary Lua publishers are removed.
+`CatalogShopProducts` also stores explicit bundle child arrays and sections keyed by `(categoryID, sectionID)`. `GetSectionIDsForCategory` enumerates only stored section keys for that category, returning a fresh empty array when there are none. **INFERRED:** section IDs use ascending numeric order until host display-order metadata is modeled. Removing a host section removes it from subsequent enumeration; missing section queries still raise an error. Seeded category navigation must not advertise nonexistent sections. `GetProductIDsForBundle` preserves host array order and exact numeric `childProductID`, `displayOrder`, `quantityInBundle`; no synthetic quantity or seeded bundle fallback. `GetCategorySectionInfo` copies `ID`, `displayName`, optional parent ID/card type/grid size and required `shouldShowRecommendationOptOutDisclaimer`, including false. Both return fresh snapshots. Matching temporary Lua publishers are removed.
 
 **INFERRED:** unknown bundles return an empty array; missing nonnullable sections raise a contextual host-input error. Public exact-i32 selector policy is shared with product queries. Native service availability, secret-selector acceptance and storefront navigation remain unproved.
 
@@ -62,4 +62,4 @@ Main accepts an independent GPT-6.1-sol review: **ACCEPT WITH QUALIFICATIONS** (
 ## Out of scope
 
 - `HasRestrictions` rows `global api-C_CatalogShop-GetProductInfo-247` and `global api-C_CatalogShop-PurchaseProduct-249`: declarations supply no restriction predicate. No restriction or purchase behavior is modeled or credited.
-- `PurchaseProduct`, other catalog APIs beyond the bundle/section getters above, housing bundles and other structure rows; no native secret-argument parity, native validation/error-wording claims, other-profile execution or storefront panel acceptance.
+- `PurchaseProduct`, other catalog APIs beyond the bundle/section getters and section enumeration above, housing bundles and other structure rows; no native secret-argument parity, native validation/error-wording claims, other-profile execution or storefront panel acceptance.

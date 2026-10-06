@@ -6,6 +6,10 @@
 
 [Audit](investigations/patch-11-2-5-api-audit.md) links 163 inventory + 73 extract rows, two modeled-global profile-gate fixes, 45 exact retained gaps and exhaustive scout. Seven isolated sweeps, negative control, Mists check and startup `[]` pass; deprecated aliases distinguished from absence. Existing coverage ledgers and concurrent 11.2.7 producers unchanged.
 
+## [2026-10-06] investigation | Catalog ScrollBox regression
+
+[Section enumeration](investigations/patch-12-0-1-api-audit.md#catalog-section-enumeration-regression): host-backed section DTOs retained seeded IDs, aborting before provider assignment. Enumerate actual host keys; preserve missing-input errors and empty product maps.
+
 ## [2026-10-06] evidence | 11.2.7 page audit
 
 [Audit](investigations/patch-11-2-7-api-audit.md): 508 inventory / 19 extract rows; initial 14 publication fixes plus 27 follow-up closures, 94 remaining exact gaps, six isolated sweeps and startup `[]`. Per-ID retained model/source boundaries are explicit. [Scout](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-extract-scout.md) assigns ten pending statements without behavioral credit. Existing ledgers unchanged.
