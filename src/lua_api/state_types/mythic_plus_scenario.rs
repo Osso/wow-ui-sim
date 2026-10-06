@@ -196,6 +196,8 @@ pub struct DeathRecapEntry {
     /// Internal recap id — mirrors the `recapID` concept used by
     /// `C_DeathRecap.GetRecapEvents`; 1-based.
     pub recap_id: u32,
+    /// Host snapshot of maximum health at death, not current player health.
+    pub max_health: u64,
     /// Zone / encounter name where the player died (informational).
     pub zone_name: String,
     /// Killing blows list (ordered from most damaging to least).

@@ -16,6 +16,8 @@ use rilua::{LuaResult, Val};
 
 pub(crate) fn register_c_death_recap_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_DeathRecap")?;
+    #[cfg(feature = "retail-12-0-5")]
+    table_set_rust_fn_static(state, table_ref, "GetRecapMaxHealth", get_recap_max_health)?;
     table_set_rust_fn_static(
         state,
         table_ref,
@@ -29,6 +31,23 @@ pub(crate) fn register_c_death_recap_surface(state: &mut LuaState) -> LuaResult<
         c_death_recap_get_most_recent_death_recap,
     )?;
     Ok(())
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn get_recap_max_health(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let id = Option::<u32>::from_stack(state, 1)?;
+    let maximum = {
+        let sim = borrow_state(state)?;
+        let entry = match id {
+            Some(id) => sim.death_recaps.iter().find(|entry| entry.recap_id == id),
+            None => sim.death_recaps.last(),
+        };
+        // INFERRED: omitted recap selects the newest; missing recap returns zero.
+        entry.map_or(0, |entry| entry.max_health)
+    };
+    state.push(Val::Num(maximum as f64));
+    Ok(1)
 }
 
 fn c_death_recap_get_killing_blows(state: &mut LuaState) -> LuaResult<u32> {

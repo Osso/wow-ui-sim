@@ -79,3 +79,7 @@ Move the existing prediction value/configuration object out of temporary proxy d
 ## Outfit successors
 
 `SetOutfitToOutfit` stages a copy of source saved slots into the viewed outfit pending overlay, emits slot refresh and rejects unknown sources/no viewed target. INFERRED merge policy follows existing set imports; source contents are unchanged. Three event/discount queries read explicit host policy fields, defaulting false rather than inferring event participation from saved outfits. Discount query publication does not claim a native discount-pricing or redemption model. Tests cover nonempty source copying, source preservation and independent event/discount inputs.
+
+## Death snapshot and texture markup
+
+`GetRecapMaxHealth` reads maximum health stored on each death record, independently of current player health. INFERRED: nil selects newest; missing IDs return zero. Loose-file texture stripping preserves numeric file IDs, atlases, escaped pipes, UTF-8 and malformed markup. INFERRED: nonnumeric texture names are loose files; cached docs specify no classification rule. Concrete snapshot and markup fixtures cover both APIs.

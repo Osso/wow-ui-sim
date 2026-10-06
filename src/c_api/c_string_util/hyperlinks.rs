@@ -29,6 +29,41 @@ pub fn strip_hyperlinks(text: &str, options: &StripHyperlinksOptions) -> String 
     output
 }
 
+/// Remove only file-path texture tags; leave file IDs, atlases, escaped pipes,
+/// colors and malformed tags untouched. INFERRED: a nonnumeric texture name
+/// denotes a loose file, since the docs do not define the classification rule.
+#[cfg(feature = "retail-12-0-5")]
+pub fn strip_loose_file_textures(text: &str) -> String {
+    let mut output = String::with_capacity(text.len());
+    let mut offset = 0;
+    while offset < text.len() {
+        let remaining = &text[offset..];
+        if remaining.starts_with("||") {
+            output.push_str("||");
+            offset += 2;
+            continue;
+        }
+        if let Some(end) = find_loose_texture_end(text, offset) {
+            offset = end;
+            continue;
+        }
+        let character = remaining.chars().next().unwrap();
+        output.push(character);
+        offset += character.len_utf8();
+    }
+    output
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn find_loose_texture_end(text: &str, offset: usize) -> Option<usize> {
+    if !text[offset..].starts_with("|T") {
+        return None;
+    }
+    let end = find_marker(text, offset + 2, b't')?;
+    let texture = text[offset + 2..end].split(':').next().unwrap_or_default();
+    (!texture.is_empty() && texture.parse::<u32>().is_err()).then_some(end + 2)
+}
+
 /// Find a real marker, skipping escaped pipe pairs.
 fn find_marker(text: &str, start: usize, marker: u8) -> Option<usize> {
     let bytes = text.as_bytes();

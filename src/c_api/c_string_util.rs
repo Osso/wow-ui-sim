@@ -2,6 +2,8 @@
 
 use crate::client_profile::{ACTIVE, ClientProfile};
 use crate::lua_api::methods::{create_string, create_string_bytes, val_to_string};
+#[cfg(feature = "retail-12-0-5")]
+use crate::lua_bridge::FromStack;
 use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 #[cfg(feature = "retail-12-0-0")]
 use rilua::runtime_error;
@@ -78,11 +80,27 @@ pub fn register_c_string_util(state: &mut LuaState) -> LuaResult<()> {
             round_to_nearest_string,
         )?;
     }
+    #[cfg(feature = "retail-12-0-5")]
+    table_set_rust_fn_static(
+        state,
+        c_string_util_ref,
+        "StripTextureMarkupForLooseFiles",
+        strip_loose_file_textures,
+    )?;
     #[cfg(feature = "numeric-rule-formatters")]
     super::numeric_rule_formatter::register(state, c_string_util_ref)?;
     #[cfg(feature = "retail-12-0-5")]
     super::abbreviated_number_formatter::register(state, c_string_util_ref)?;
     Ok(())
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn strip_loose_file_textures(state: &mut LuaState) -> LuaResult<u32> {
+    let text = String::from_stack(state, 1)?;
+    let stripped = hyperlinks::strip_loose_file_textures(&text);
+    let value = create_string(state, &stripped);
+    state.push(value);
+    Ok(1)
 }
 
 pub fn c_string_util_escape_quoted_codes(state: &mut LuaState) -> LuaResult<u32> {
