@@ -1,0 +1,469 @@
+{
+  "enums": {
+    "CombatAudioAlertSpecSetting": {
+      "source": "CombatAudioAlertSharedDocumentation.lua:160",
+      "sha256": "8b5c7da3ebaae3b38ef97ec6df4cd0a9e9c9483f8d83260fd96ba6590e7a4005",
+      "meta": {
+        "NumValues": 9,
+        "MinValue": 0,
+        "MaxValue": 8
+      },
+      "values": {
+        "Resource1Percent": 0,
+        "Resource1Format": 1,
+        "Resource1Voice": 2,
+        "Resource1Volume": 3,
+        "Resource2Percent": 4,
+        "Resource2Format": 5,
+        "Resource2Voice": 6,
+        "Resource2Volume": 7,
+        "SayIfTargeted": 8
+      }
+    },
+    "CooldownViewerAlertEventType": {
+      "source": "CooldownViewerConstantsDocumentation.lua:43",
+      "sha256": "61aad99f22bf819a078f4c696d2297ece418ed7519d70b750a973ea19ffef678",
+      "meta": {
+        "NumValues": 6,
+        "MinValue": 1,
+        "MaxValue": 6
+      },
+      "values": {
+        "Available": 1,
+        "PandemicTime": 2,
+        "OnCooldown": 3,
+        "ChargeGained": 4,
+        "OnAuraApplied": 5,
+        "OnAuraRemoved": 6
+      }
+    },
+    "DamageMeterType": {
+      "source": "DamageMeterConstantsDocumentation.lua:95",
+      "sha256": "22387668bd383e2feb8c65ae2dce765cb0c69602d5e9b85eba84324608ec0e79",
+      "meta": {
+        "NumValues": 11,
+        "MinValue": 0,
+        "MaxValue": 10
+      },
+      "values": {
+        "DamageDone": 0,
+        "Dps": 1,
+        "HealingDone": 2,
+        "Hps": 3,
+        "Absorbs": 4,
+        "Interrupts": 5,
+        "Dispels": 6,
+        "DamageTaken": 7,
+        "AvoidableDamageTaken": 8,
+        "Deaths": 9,
+        "EnemyDamageTaken": 10
+      }
+    },
+    "NeighborhoodInviteResult": {
+      "source": "PlayerHousingConstantsDocumentation.lua:553",
+      "sha256": "a63b38010eefd04f16ba1c3bfe7e7341ef48b9f9798d3cca496c5b3f70f15905",
+      "meta": {
+        "NumValues": 12,
+        "MinValue": 0,
+        "MaxValue": 11
+      },
+      "values": {
+        "Success": 0,
+        "DbError": 1,
+        "RpcFailure": 2,
+        "GenericFailure": 3,
+        "Permission": 4,
+        "Faction": 5,
+        "PendingInvitation": 6,
+        "InviteLimit": 7,
+        "NotEnoughPlots": 8,
+        "NotFound": 9,
+        "TooManyRequests": 10,
+        "AlreadyInNeighborhood": 11
+      }
+    },
+    "PartyRequestJoinRelation": {
+      "source": "PartyConstantsDocumentation.lua:22",
+      "sha256": "4e65ee2bcb9b2a252f13f460a36cfe7830366db3ba42d50d464903ebc55650ac",
+      "meta": {
+        "NumValues": 5,
+        "MinValue": 0,
+        "MaxValue": 4
+      },
+      "values": {
+        "None": 0,
+        "Friend": 1,
+        "Guild": 2,
+        "Club": 3,
+        "RecentAllies": 4
+      }
+    },
+    "SecretAspect": {
+      "source": "SecretAspectConstantsDocumentation.lua:6",
+      "sha256": "771c97a8efceeb75a26a7c6bf8d0c35384dfdceab1622d6d2e8bb4de7bbb9b82",
+      "meta": {
+        "NumValues": 30,
+        "MinValue": 1,
+        "MaxValue": 8388608
+      },
+      "values": {
+        "ObjectDebug": 1,
+        "ObjectName": 1,
+        "ObjectType": 1,
+        "ObjectSecrets": 1,
+        "ObjectSecurity": 1,
+        "Attributes": 1,
+        "Hierarchy": 1,
+        "ID": 2,
+        "Toplevel": 4,
+        "Text": 8,
+        "SecureText": 16,
+        "Shown": 32,
+        "Scale": 64,
+        "Alpha": 128,
+        "FrameLevel": 256,
+        "ScrollRange": 512,
+        "Cursor": 1024,
+        "VertexColor": 2048,
+        "Desaturation": 4096,
+        "TexCoords": 8192,
+        "BarValue": 16384,
+        "Cooldown": 32768,
+        "Rotation": 65536,
+        "MinimumWidth": 131072,
+        "Padding": 262144,
+        "CooldownStyle": 524288,
+        "TooltipTexture": 1048576,
+        "ButtonState": 2097152,
+        "ScrollOffset": 4194304,
+        "RadialProgress": 8388608
+      }
+    },
+    "TooltipDataLineType": {
+      "source": "TooltipInfoSharedDocumentation.lua:27",
+      "sha256": "3cae18d4c643bae07c2d4aad7f333ae1d3d47c502f737ceec73b3ee566dba1e3",
+      "meta": {
+        "NumValues": 50,
+        "MinValue": 0,
+        "MaxValue": 49
+      },
+      "values": {
+        "None": 0,
+        "Blank": 1,
+        "UnitName": 2,
+        "GemSocket": 3,
+        "AzeriteEssenceSlot": 4,
+        "AzeriteEssencePower": 5,
+        "LearnableSpell": 6,
+        "UnitThreat": 7,
+        "QuestObjective": 8,
+        "AzeriteItemPowerDescription": 9,
+        "RuneforgeLegendaryPowerDescription": 10,
+        "SellPrice": 11,
+        "ProfessionCraftingQuality": 12,
+        "SpellName": 13,
+        "CurrencyTotal": 14,
+        "ItemEnchantmentPermanent": 15,
+        "UnitOwner": 16,
+        "QuestTitle": 17,
+        "QuestPlayer": 18,
+        "NestedBlock": 19,
+        "ItemBinding": 20,
+        "EquipSlot": 21,
+        "ItemName": 22,
+        "Separator": 23,
+        "ToyName": 24,
+        "ToyText": 25,
+        "ToyEffect": 26,
+        "ToyDuration": 27,
+        "ToyDescription": 28,
+        "ToySource": 29,
+        "GemSocketEnchantment": 30,
+        "ItemLevel": 31,
+        "ItemUpgradeLevel": 32,
+        "SpellPassive": 33,
+        "SpellDescription": 34,
+        "ItemQuality": 35,
+        "TradeTimeRemaining": 36,
+        "FlavorText": 37,
+        "ItemSpellTriggerLearn": 38,
+        "LearnTransmogSet": 39,
+        "LearnTransmogIllusion": 40,
+        "ErrorLine": 41,
+        "DisabledLine": 42,
+        "UsageRequirement": 43,
+        "ItemSpellTriggerOnUse": 44,
+        "ItemSpellTriggerOnEquip": 45,
+        "ItemSpellTriggerOnProc": 46,
+        "UnitLevel": 47,
+        "UnitType": 48,
+        "UnitDead": 49
+      }
+    }
+  },
+  "rows": {
+    "enumerations-Enum-CombatAudioAlertSpecSetting-215": {
+      "enum": "CombatAudioAlertSpecSetting",
+      "member": null,
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-CombatAudioAlertSpecSetting-216": {
+      "enum": "CombatAudioAlertSpecSetting",
+      "member": "Resource1Voice",
+      "value": 2,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-CombatAudioAlertSpecSetting-217": {
+      "enum": "CombatAudioAlertSpecSetting",
+      "member": "Resource1Volume",
+      "value": 3,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-CombatAudioAlertSpecSetting-218": {
+      "enum": "CombatAudioAlertSpecSetting",
+      "member": "Resource2Voice",
+      "value": 6,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-CombatAudioAlertSpecSetting-219": {
+      "enum": "CombatAudioAlertSpecSetting",
+      "member": "Resource2Volume",
+      "value": 7,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-CooldownViewerAlertEventType-220": {
+      "enum": "CooldownViewerAlertEventType",
+      "member": null,
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-CooldownViewerAlertEventType-221": {
+      "enum": "CooldownViewerAlertEventType",
+      "member": "OnAuraApplied",
+      "value": 5,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-CooldownViewerAlertEventType-222": {
+      "enum": "CooldownViewerAlertEventType",
+      "member": "OnAuraRemoved",
+      "value": 6,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-DamageMeterType-223": {
+      "enum": "DamageMeterType",
+      "member": null,
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-DamageMeterType-224": {
+      "enum": "DamageMeterType",
+      "member": "Deaths",
+      "value": 9,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-DamageMeterType-225": {
+      "enum": "DamageMeterType",
+      "member": "EnemyDamageTaken",
+      "value": 10,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-NeighborhoodInviteResult-226": {
+      "enum": "NeighborhoodInviteResult",
+      "member": null,
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-NeighborhoodInviteResult-227": {
+      "enum": "NeighborhoodInviteResult",
+      "member": "AlreadyInNeighborhood",
+      "value": 11,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-PartyRequestJoinRelation-228": {
+      "enum": "PartyRequestJoinRelation",
+      "member": null,
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-PartyRequestJoinRelation-229": {
+      "enum": "PartyRequestJoinRelation",
+      "member": "RecentAllies",
+      "value": 4,
+      "absent": [
+        "NumPartyRequestJoinRelations"
+      ],
+      "superseded_by": null
+    },
+    "enumerations-Enum-SecretAspect-230": {
+      "enum": "SecretAspect",
+      "member": null,
+      "value": null,
+      "absent": [],
+      "superseded_by": "12.0.5 and 12.1.0"
+    },
+    "enumerations-Enum-SecretAspect-231": {
+      "enum": "SecretAspect",
+      "member": "Attributes",
+      "value": 1,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-SecretAspect-232": {
+      "enum": "SecretAspect",
+      "member": "CooldownStyle",
+      "value": 524288,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-TooltipDataLineType-233": {
+      "enum": "TooltipDataLineType",
+      "member": null,
+      "value": null,
+      "absent": [],
+      "superseded_by": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    "enumerations-Enum-TooltipDataLineType-234": {
+      "enum": "TooltipDataLineType",
+      "member": "FlavorText",
+      "value": 37,
+      "absent": [
+        "ToyFlavorText"
+      ],
+      "superseded_by": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    "enumerations-Enum-TooltipDataLineType-235": {
+      "enum": "TooltipDataLineType",
+      "member": "ItemQuality",
+      "value": 35,
+      "absent": [],
+      "superseded_by": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    "enumerations-Enum-TooltipDataLineType-236": {
+      "enum": "TooltipDataLineType",
+      "member": "TradeTimeRemaining",
+      "value": 36,
+      "absent": [],
+      "superseded_by": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    "enumerations-Enum-TooltipDataLineType-237": {
+      "enum": "TooltipDataLineType",
+      "member": "ItemSpellTriggerLearn",
+      "value": 38,
+      "absent": [],
+      "superseded_by": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    "enumerations-Enum-TooltipDataLineType-238": {
+      "enum": "TooltipDataLineType",
+      "member": "LearnTransmogSet",
+      "value": 39,
+      "absent": [],
+      "superseded_by": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    "enumerations-Enum-TooltipDataLineType-239": {
+      "enum": "TooltipDataLineType",
+      "member": "LearnTransmogIllusion",
+      "value": 40,
+      "absent": [],
+      "superseded_by": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    "enumerations-Enum-TooltipDataLineType-240": {
+      "enum": "TooltipDataLineType",
+      "member": "ErrorLine",
+      "value": 41,
+      "absent": [],
+      "superseded_by": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    "enumerations-Enum-TooltipDataLineType-241": {
+      "enum": "TooltipDataLineType",
+      "member": "DisabledLine",
+      "value": 42,
+      "absent": [],
+      "superseded_by": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    "enumerations-Enum-TooltipDataLineType-242": {
+      "enum": "TooltipDataLineType",
+      "member": "UsageRequirement",
+      "value": 43,
+      "absent": [],
+      "superseded_by": "12.1.0 cached surface; earlier renumbering patch not established"
+    },
+    "enumerations-Enum-TooltipDataLineType-243": {
+      "enum": "TooltipDataLineType",
+      "member": "RestrictedRaceClass",
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-TooltipDataLineType-244": {
+      "enum": "TooltipDataLineType",
+      "member": "RestrictedFaction",
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-TooltipDataLineType-245": {
+      "enum": "TooltipDataLineType",
+      "member": "RestrictedSkill",
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-TooltipDataLineType-246": {
+      "enum": "TooltipDataLineType",
+      "member": "RestrictedPvPMedal",
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-TooltipDataLineType-247": {
+      "enum": "TooltipDataLineType",
+      "member": "RestrictedReputation",
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-TooltipDataLineType-248": {
+      "enum": "TooltipDataLineType",
+      "member": "RestrictedSpellKnown",
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-TooltipDataLineType-249": {
+      "enum": "TooltipDataLineType",
+      "member": "RestrictedLevel",
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-TooltipDataLineType-250": {
+      "enum": "TooltipDataLineType",
+      "member": "RestrictedArena",
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    },
+    "enumerations-Enum-TooltipDataLineType-251": {
+      "enum": "TooltipDataLineType",
+      "member": "RestrictedBg",
+      "value": null,
+      "absent": [],
+      "superseded_by": null
+    }
+  }
+}
