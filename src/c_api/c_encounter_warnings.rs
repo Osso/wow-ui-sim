@@ -14,6 +14,9 @@ use crate::lua_bridge::table_set_rust_fn_static;
 #[derive(Debug, Default)]
 pub struct WarningSettings {
     pub available: bool,
+    /// INFERRED: unconfigured visibility and custom-sound settings are false.
+    pub warnings_shown: bool,
+    pub play_custom_sounds_when_hidden: bool,
     pub sound_kits: [u32; 3],
 }
 
@@ -39,6 +42,8 @@ pub(crate) fn register_settings(state: &mut LuaState) -> LuaResult<()> {
         s.push(Val::Bool(enabled));
         Ok(1)
     })?;
+    #[cfg(feature = "retail-12-0-5")]
+    register_visibility_settings(state, ns)?;
     crate::lua_bridge::table_set_rust_fn_static(state, ns, "GetSoundKitForSeverity", |s| {
         let severity = read_severity(s)?;
         let kit = crate::lua_api::methods::borrow_state(s)?
@@ -46,6 +51,41 @@ pub(crate) fn register_settings(state: &mut LuaState) -> LuaResult<()> {
             .sound_kits[severity as usize];
         s.push(Val::Num(f64::from(kit)));
         Ok(1)
+    })
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn register_visibility_settings(
+    state: &mut LuaState,
+    ns: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+    use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
+    table_set_rust_fn_static(state, ns, "GetWarningsShown", |s| {
+        let value = borrow_state(s)?.encounter_warning_settings.warnings_shown;
+        s.push(Val::Bool(value));
+        Ok(1)
+    })?;
+    table_set_rust_fn_static(state, ns, "SetWarningsShown", |s| {
+        let value = bool::from_stack(s, 1)?;
+        borrow_state_mut(s)?
+            .encounter_warning_settings
+            .warnings_shown = value;
+        Ok(0)
+    })?;
+    table_set_rust_fn_static(state, ns, "GetPlayCustomSoundsWhenHidden", |s| {
+        let value = borrow_state(s)?
+            .encounter_warning_settings
+            .play_custom_sounds_when_hidden;
+        s.push(Val::Bool(value));
+        Ok(1)
+    })?;
+    table_set_rust_fn_static(state, ns, "SetPlayCustomSoundsWhenHidden", |s| {
+        let value = bool::from_stack(s, 1)?;
+        borrow_state_mut(s)?
+            .encounter_warning_settings
+            .play_custom_sounds_when_hidden = value;
+        Ok(0)
     })
 }
 

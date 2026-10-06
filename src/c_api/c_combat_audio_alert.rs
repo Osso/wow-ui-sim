@@ -6,8 +6,19 @@ use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
 
+/// INFERRED: unconfigured category values are zero; categories are independent,
+/// shared across specs, and not coupled to playback or CVars.
+#[cfg(feature = "retail-12-0-5")]
+#[derive(Debug, Default)]
+pub struct CategorySettings {
+    pub voices: std::collections::HashMap<i32, f64>,
+    pub volumes: std::collections::HashMap<i32, f64>,
+}
+
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_CombatAudioAlert")?;
+    #[cfg(feature = "retail-12-0-5")]
+    register_category_settings(state, namespace)?;
     table_set_rust_fn_static(state, namespace, "GetSpeakerSpeed", get_speaker_speed)?;
     table_set_rust_fn_static(state, namespace, "SetSpeakerSpeed", set_speaker_speed)?;
     #[cfg(not(feature = "retail-12-0-5"))]
@@ -25,6 +36,57 @@ pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
         table_set_rust_fn_static(state, namespace, "SetThrottle", set_throttle)?;
     }
     Ok(())
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn register_category_settings(
+    state: &mut LuaState,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+) -> LuaResult<()> {
+    table_set_rust_fn_static(state, namespace, "GetCategoryVoice", |s| {
+        get_category_setting(s, true)
+    })?;
+    table_set_rust_fn_static(state, namespace, "GetCategoryVolume", |s| {
+        get_category_setting(s, false)
+    })?;
+    table_set_rust_fn_static(state, namespace, "SetCategoryVoice", |s| {
+        set_category_setting(s, true)
+    })?;
+    table_set_rust_fn_static(state, namespace, "SetCategoryVolume", |s| {
+        set_category_setting(s, false)
+    })
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn get_category_setting(state: &mut LuaState, voice: bool) -> LuaResult<u32> {
+    let category = numeric_arg(state, 1, "category")? as i32;
+    let value = {
+        let sim = borrow_state(state)?;
+        let values = if voice {
+            &sim.combat_audio_categories.voices
+        } else {
+            &sim.combat_audio_categories.volumes
+        };
+        values.get(&category).copied().unwrap_or(0.0)
+    };
+    state.push(Val::Num(value));
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn set_category_setting(state: &mut LuaState, voice: bool) -> LuaResult<u32> {
+    let category = numeric_arg(state, 1, "category")? as i32;
+    let value = numeric_arg(state, 2, "newVal")?;
+    let mut sim = borrow_state_mut(state)?;
+    let values = if voice {
+        &mut sim.combat_audio_categories.voices
+    } else {
+        &mut sim.combat_audio_categories.volumes
+    };
+    values.insert(category, value);
+    drop(sim);
+    state.push(Val::Bool(true));
+    Ok(1)
 }
 
 fn numeric_arg(state: &LuaState, index: i32, what: &str) -> LuaResult<f64> {

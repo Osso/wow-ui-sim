@@ -316,6 +316,8 @@ macro_rules! build_empty_sim_state {
             combat_audio_format_settings: HashMap::new(),
             #[cfg(feature = "retail-12-0-0")]
             combat_audio_spec_settings: HashMap::new(),
+            #[cfg(feature = "retail-12-0-5")]
+            combat_audio_categories: Default::default(),
             #[cfg(feature = "retail-12-0-0")]
             combat_audio_throttles: HashMap::new(),
             neighborhood_tracked_tasks: BTreeSet::new(),

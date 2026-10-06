@@ -65,7 +65,7 @@ pub(crate) mod c_click_bindings;
 pub(crate) mod c_click_bindings_spell;
 pub mod c_club;
 #[cfg(feature = "retail-12-0-0")]
-mod c_combat_audio_alert;
+pub(crate) mod c_combat_audio_alert;
 #[cfg(feature = "retail-12-0-0")]
 mod c_combat_log;
 #[cfg(feature = "retail-12-0-0")]

@@ -67,3 +67,7 @@ Six pre-existing `iced-wgpu-patched/Cargo.toml` deprecated manifest-key warnings
 ## Removal follow-up — 2026-10-05
 
 Five removed CVars are filtered from defaults, overrides, registration and console enumeration from `retail-12-0-5`. Encounter chat registration is rejected; arena cooldown registration is accepted. `SetPreventSecretValues` is no longer registered in later retail epochs. Cached retail consumers contain none of these seven removed symbols. Strict 12.0.0 publishers remain gated separately. Security-query tests now inject host frame state instead of calling the retired setter. Eight publication IDs close; behavioral retirement regression covers case-insensitive resurrection attempts.
+
+## Settings producers
+
+Category voice/volume settings use independent category-keyed maps under `c_api`, shared across specs. Encounter warning visibility and hidden custom-sound settings roundtrip through `WarningSettings`. These do not simulate audio playback, routing, persistence or native secret-argument enforcement. INFERRED: unconfigured values are zero/false; finite numeric writes succeed. Eight publication rows close with concrete category isolation and boolean transition tests.
