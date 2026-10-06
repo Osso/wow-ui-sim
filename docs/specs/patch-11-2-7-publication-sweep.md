@@ -26,3 +26,7 @@ Earliest supported retail epoch is `retail-12-0-0`; no 11.x runtime exists. Defa
 - `data/patch-api/sources/11.2.7-api-changes.wikitext` and provenance.
 - `data/patch-api/sources/11.2.7-wikitext-register.json`.
 - [Session evidence](../../data/patch-api/evidence/11.2.7-session-2026-10-06/).
+
+## Retirement fixes
+
+Initial cached sweep exposes explicit global `JoinBattlefield` and fabricated lookup members `C_ReturningPlayerUI.AcceptPrompt` / `DeclinePrompt` after removal. Stop the legacy global publisher from `retail-12-0-0`; mark both namespace keys removed in the already retail-gated retirement module. Preserve classic publication and the existing state-backed `C_PvP.JoinBattlefield` queue producer. Regression asserts repeated raw/ordinary absence and concrete successor queue state. Existing queue tests use the live namespace successor rather than the retired global. No new backing model or fallback.

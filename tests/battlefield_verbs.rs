@@ -21,7 +21,7 @@ fn fired(env: &WowLuaEnv, name: &str) -> bool {
 #[test]
 fn join_battlefield_queues_player_and_fires_status() {
     let env = env();
-    env.exec("JoinBattlefield(3)").unwrap();
+    env.exec("C_PvP.JoinBattlefield(3)").unwrap();
     let st = env.state().borrow();
     assert_eq!(st.battlefield_queue.status, BattlefieldStatus::Queued);
     assert_eq!(st.battlefield_queue.index, 3);
@@ -33,7 +33,7 @@ fn join_battlefield_queues_player_and_fires_status() {
 #[test]
 fn join_battlefield_defaults_index_to_one() {
     let env = env();
-    env.exec("JoinBattlefield()").unwrap();
+    env.exec("C_PvP.JoinBattlefield()").unwrap();
     assert_eq!(env.state().borrow().battlefield_queue.index, 1);
 }
 
@@ -42,7 +42,7 @@ fn join_battlefield_defaults_index_to_one() {
 #[test]
 fn accept_battlefield_port_true_activates_queue() {
     let env = env();
-    env.exec("JoinBattlefield(2)").unwrap();
+    env.exec("C_PvP.JoinBattlefield(2)").unwrap();
     env.exec("AcceptBattlefieldPort(2, 1)").unwrap();
     let st = env.state().borrow();
     assert_eq!(st.battlefield_queue.status, BattlefieldStatus::Active);
@@ -51,7 +51,7 @@ fn accept_battlefield_port_true_activates_queue() {
 #[test]
 fn accept_battlefield_port_false_clears_queue() {
     let env = env();
-    env.exec("JoinBattlefield(2)").unwrap();
+    env.exec("C_PvP.JoinBattlefield(2)").unwrap();
     env.exec("AcceptBattlefieldPort(2, nil)").unwrap();
     let st = env.state().borrow();
     assert_eq!(st.battlefield_queue.status, BattlefieldStatus::None);
@@ -65,7 +65,7 @@ fn accept_battlefield_port_false_clears_queue() {
 fn leave_battlefield_clears_and_fires_status() {
     let env = env();
     env.exec(
-        "JoinBattlefield(5)
+        "C_PvP.JoinBattlefield(5)
                LeaveBattlefield()",
     )
     .unwrap();

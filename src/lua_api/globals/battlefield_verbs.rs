@@ -133,6 +133,9 @@ fn request_battlefield_positions(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
+    // Removed in 11.2.7, before the earliest supported retail epoch.
+    // C_PvP.JoinBattlefield retains this queue producer; classic keeps the global.
+    #[cfg(not(feature = "retail-12-0-0"))]
     LuaApiMut::register_function(lua, "JoinBattlefield", join_battlefield)?;
     LuaApiMut::register_function(lua, "AcceptBattlefieldPort", accept_battlefield_port)?;
     LuaApiMut::register_function(lua, "LeaveBattlefield", leave_battlefield)?;

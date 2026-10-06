@@ -1,9 +1,13 @@
-//! Namespace members (and whole namespaces) the Patch 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
+//! Namespace members (and whole namespaces) the Patch 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
 //! consolidated API tables list as removed that no other module retires.
 //! Marking keeps the namespace `__index` autostub from fabricating them on
 //! ordinary lookup.
 use rilua::LuaResult;
 use rilua::vm::state::LuaState;
+
+// 11.2.7 predates every supported retail epoch; classic profiles do not load this module.
+const RETIRED_11_2_7_MEMBERS: &[(&str, &[&str])] =
+    &[("C_ReturningPlayerUI", &["AcceptPrompt", "DeclinePrompt"])];
 
 const RETIRED_12_0_0_MEMBERS: &[(&str, &[&str])] = &[
     ("C_CatalogShop", &["OpenCatalogShopInteraction"]),
@@ -142,6 +146,7 @@ const RETIRED_12_0_7_MEMBERS: &[(&str, &[&str])] = &[
 ];
 
 pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
+    mark_members(state, RETIRED_11_2_7_MEMBERS)?;
     mark_members(state, RETIRED_12_0_0_MEMBERS)?;
     #[cfg(feature = "retail-12-0-5")]
     {
