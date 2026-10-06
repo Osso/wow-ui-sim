@@ -1,0 +1,15 @@
+{
+  "source_id": "wt-global-api-C_AddOns.GetAddOnName-25",
+  "change": "added -> removed",
+  "baseline_gaps": 45,
+  "negative_gaps": 46,
+  "new_ids": [
+    "wt-global-api-C_AddOns.GetAddOnName-25"
+  ],
+  "resolved_ids": [],
+  "changed_observations": [
+    "wt-global-api-C_AddOns.GetAddOnName-25"
+  ],
+  "expected_exit_code": 101,
+  "actual_exit_code": 101
+}

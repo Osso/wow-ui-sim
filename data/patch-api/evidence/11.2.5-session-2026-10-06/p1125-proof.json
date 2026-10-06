@@ -1,0 +1,402 @@
+{
+  "scope": "local debug retail; no vendor edits; one sweep per process",
+  "results": [
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "e16afbe653a9a06a71fdc2895ecd830e828d88c1",
+      "environment": {
+        "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-initial-sweep.json"
+      },
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-initial.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "recent_allies_location_preference",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "e16afbe653a9a06a71fdc2895ecd830e828d88c1",
+      "scope": "test gate widened, producer unchanged (uncommitted RED test)",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-location-red.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "recent_allies_location_preference",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "e5ae95820afbd4b9b43c0671ed534244eba7876d",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-location-green.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "recent_allies_location_preference",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "2b4c90065b9b0740c8188f808966335c7361ef29",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-location-final.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "environment": {
+        "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-sweep-result.json"
+      },
+      "exit_code": 0,
+      "rows": 163,
+      "ok": 118,
+      "gaps": 45,
+      "result_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-sweep-result.json",
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-sweep.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "environment": {
+        "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1127-sweep-result.json"
+      },
+      "exit_code": 0,
+      "rows": 508,
+      "ok": 387,
+      "gaps": 121,
+      "result_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1127-sweep-result.json",
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1127-sweep.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "environment": {
+        "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1200-sweep-result.json"
+      },
+      "exit_code": 0,
+      "rows": 1010,
+      "ok": 987,
+      "gaps": 23,
+      "result_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1200-sweep-result.json",
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1200-sweep.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "environment": {
+        "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1201-sweep-result.json"
+      },
+      "exit_code": 0,
+      "rows": 225,
+      "ok": 222,
+      "gaps": 3,
+      "result_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1201-sweep-result.json",
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1201-sweep.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "environment": {
+        "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1205-sweep-result.json"
+      },
+      "exit_code": 0,
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11,
+      "result_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1205-sweep-result.json",
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1205-sweep.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "environment": {
+        "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1207-sweep-result.json"
+      },
+      "exit_code": 0,
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3,
+      "result_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1207-sweep-result.json",
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1207-sweep.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "environment": {
+        "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1210-sweep-result.json"
+      },
+      "exit_code": 0,
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5,
+      "result_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1210-sweep-result.json",
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1210-sweep.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "environment": {
+        "P1125_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-negative-register.json",
+        "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1125-page/data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-negative-result.json"
+      },
+      "exit_code": 101,
+      "expected_exit_code": 101,
+      "scope": "negative control; same register size, one unsuperseded direction flipped",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-extract-green.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-register-fixtures.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.2.5",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-extract-repro.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-fmt.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-retail-check.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/Cargo.toml",
+        "--tests",
+        "--no-default-features",
+        "--features",
+        "sound gui casc client-mists"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-mists-check.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "exit_code": 0,
+      "scope": "standalone debug retail startup build, no timeout",
+      "log_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-build.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "command": [
+        "timeout",
+        "90",
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1125-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-build",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "exit_code": 0,
+      "stdout_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-startup.stdout",
+      "stderr_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-startup.stderr",
+      "invalidated_by_later_changes": false
+    }
+  ]
+}

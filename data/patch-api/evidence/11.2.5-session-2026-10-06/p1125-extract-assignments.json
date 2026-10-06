@@ -1,0 +1,92 @@
+{
+  "patch": "11.2.5",
+  "revid": 6726772,
+  "total_rows": 73,
+  "batches": {
+    "B01": [
+      "prose-undated-004"
+    ],
+    "B02": [
+      "enumerations-Enum-CooldownSetSpellFlags-027",
+      "enumerations-Enum-CooldownSetSpellFlags-028",
+      "structures-CooldownViewerCooldown-062",
+      "structures-CooldownViewerCooldown-063",
+      "structures-CooldownViewerCooldown-064"
+    ],
+    "B03": [
+      "structures-AddOnInfo-060",
+      "structures-AddOnInfo-061",
+      "structures-GossipQuestUIInfo-065",
+      "structures-GossipQuestUIInfo-066",
+      "structures-MythicPlusDate-067",
+      "structures-MythicPlusDate-068",
+      "structures-MythicPlusRunInfo-069",
+      "structures-MythicPlusRunInfo-070",
+      "structures-MythicPlusRunInfo-071",
+      "structures-MythicPlusRunInfo-072"
+    ],
+    "B04": [
+      "enumerations-Enum-TraitCurrencyType-046",
+      "enumerations-Enum-TraitCurrencyType-047",
+      "enumerations-Enum-TraitNodeEntryType-048",
+      "enumerations-Enum-TraitNodeEntryType-049",
+      "enumerations-Enum-TraitNodeFlag-050",
+      "enumerations-Enum-TraitNodeFlag-051",
+      "enumerations-Enum-TraitNodeFlag-052",
+      "enumerations-Enum-TraitNodeFlag-053",
+      "enumerations-Enum-TraitSystemFlag-054",
+      "enumerations-Enum-TraitSystemFlag-055",
+      "structures-TraitNodeInfo-073",
+      "structures-TraitNodeInfo-074",
+      "structures-TraitNodeInfo-075",
+      "structures-TraitTreeInfo-076",
+      "structures-TraitTreeInfo-077"
+    ],
+    "B05": [
+      "enumerations-Enum-AccountData-019",
+      "enumerations-Enum-AccountData-020",
+      "enumerations-Enum-AccountData-021",
+      "enumerations-Enum-AccountData-022",
+      "enumerations-Enum-AccountTransType-023",
+      "enumerations-Enum-AccountTransType-024",
+      "enumerations-Enum-BonusStatIndex-025",
+      "enumerations-Enum-BonusStatIndex-026",
+      "enumerations-Enum-ItemCollectionType-029",
+      "enumerations-Enum-ItemCollectionType-030",
+      "enumerations-Enum-ItemCollectionType-031",
+      "enumerations-Enum-ItemCollectionType-032",
+      "enumerations-Enum-ItemCollectionType-033",
+      "enumerations-Enum-ItemConsumableSubclass-034",
+      "enumerations-Enum-ItemConsumableSubclass-035",
+      "enumerations-Enum-MinimapTrackingFilter-036",
+      "enumerations-Enum-MinimapTrackingFilter-037",
+      "enumerations-Enum-PerksVendorCategoryType-038",
+      "enumerations-Enum-PerksVendorCategoryType-039",
+      "enumerations-Enum-PhaseReason-040",
+      "enumerations-Enum-PhaseReason-041",
+      "enumerations-Enum-QuestTagType-042",
+      "enumerations-Enum-QuestTagType-043",
+      "enumerations-Enum-ReportType-044",
+      "enumerations-Enum-ReportType-045",
+      "enumerations-Enum-UIModelSceneFlags-056",
+      "enumerations-Enum-UIModelSceneFlags-057"
+    ]
+  },
+  "metadata": [
+    "source-context-001",
+    "source-context-003",
+    "source-context-006",
+    "source-context-007",
+    "source-context-008",
+    "source-context-009",
+    "source-context-010",
+    "source-context-011",
+    "source-context-012",
+    "source-context-013",
+    "source-context-014",
+    "source-context-016",
+    "source-context-017",
+    "source-context-018",
+    "source-context-059"
+  ]
+}

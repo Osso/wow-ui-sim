@@ -1,0 +1,1689 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "11.2.5",
+  "source_register": "data/patch-api/sources/11.2.5-wikitext-register.json",
+  "source_sha256": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a",
+  "audit_status": "in-progress",
+  "proof_policy": "Publication does not establish signatures, outputs, security or behavioral parity. No 11.2.5 runtime exists. Main-thread development evidence, not independent/native acceptance. Removed-publication policy accepts exact cached deprecation aliases, which are not raw absence. Non-inventory statements remain pending; linked external pages are not expanded. Existing page ledgers unchanged.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-11-2-5",
+      "symbols": [
+        "163 wikitext inventory occurrences"
+      ],
+      "scope": "118 OK / 45 exact reviewed gaps; four superseded OK. All six later registers applied chronologically. 22 unsuperseded removals: seven strict absences, fifteen exact cached deprecated aliases. Publication only.",
+      "spec": "docs/specs/patch-11-2-5-publication-sweep.md",
+      "tests": [
+        "tests/patch_11_2_5_publication_sweep.rs",
+        "tests/common/publication_sweep.rs",
+        "tests/recent_allies_location_preference.rs"
+      ],
+      "implementation": "Widen existing modeled location preference module/registration/state gates to supported retail epochs; no namespace/model invention.",
+      "compiled_revision": "57b50a24cab703d3f006485ff7e28f215b90c33a",
+      "proof": "Seven isolated GREEN sweeps; negative control adds exactly one gap. Main-thread development only.",
+      "ledger": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-sweep-result.json"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/11.2.5-api-changes.txt",
+    "sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+    "wikitext_revid": 6726772,
+    "wikitext_sha256": "c729365457a32afff2af1020cac832504358c11e9e59aaad2987cada06c4950b",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1125-page/tools/extract_patch_non_inventory.py --patch 11.2.5 --text-only"
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnName-25",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnNotes-26",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnSecurity-27",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnTitle-28",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_BattleNet.BNCheckBattleTagInviteToRecentAlly-29",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.CloseCatalogShopInteraction-30",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetAvailableCategoryIDs-31",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetAvailableTransmogRaceInfos-32",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetCatalogShopProductDisplayInfo-33",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetCategoryInfo-34",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetCategorySectionInfo-35",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetFailureInfo-36",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetProductAvailabilityTimeRemainingSecs-37",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetProductIDsForBundle-38",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetProductIDsForCategorySection-39",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetProductInfo-40",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetProductSortOrder-41",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetSectionIDsForCategory-42",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.GetSpellVisualInfoForMount-43",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.IsShop2Enabled-44",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.OnLegalDisclaimerClicked-45",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.OpenCatalogShopInteraction-46",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-global-api-C_CatalogShop.OpenCatalogShopInteraction-485; effective expectation absent. Historical 11.2.5 behavior not established."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.ProductDisplayedTelemetry-47",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.ProductSelectedTelemetry-48",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CatalogShop.PurchaseProduct-49",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CooldownViewer.GetLayoutData-50",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CooldownViewer.SetLayoutData-51",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ExternalEventURL.HasURL-52",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ExternalEventURL.IsNew-53",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ExternalEventURL.LaunchURL-54",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsRelicItem-55",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.AcceptSockets-56",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.ClickSocketButton-57",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.CloseSocketInfo-58",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.GetCurrUIType-59",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.GetExistingSocketInfo-60",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.GetExistingSocketLink-61",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.GetNewSocketInfo-62",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.GetNewSocketLink-63",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.GetNumSockets-64",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.GetSocketItemBoundTradeable-65",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.GetSocketItemInfo-66",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.GetSocketItemRefundable-67",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.GetSocketTypes-68",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.HasBoundGemProposed-69",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.IsArtifactRelicItem-70",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.ReportGroupAsAdvertisement-71",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetInstanceAbandonVoteCooldownTime-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PetInfo.GetPetTalentTree-73",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PetInfo.PetAssistMode-74",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsPlayerInTimerunningHeroicWorldTier-75",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RaidLocks.IsRaidLockExtendFeatureEnabled-76",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.CanSetRecentAllyNote-77",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.GetRecentAllies-78",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.GetRecentAllyByFullName-79",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.GetRecentAllyByGUID-80",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.IsRecentAllyByFullName-81",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.IsRecentAllyByGUID-82",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.IsRecentAllyDataReady-83",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.IsRecentAllyPinned-84",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.IsSystemEnabled-85",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.IsSystemSupported-86",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.SetRecentAllyNote-87",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.SetRecentAllyPinned-88",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RecentAllies.TryRequestRecentAlliesData-89",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RemixArtifactUI.ClearRemixArtifactItem-90",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RemixArtifactUI.GetAppearanceInfoByID-91",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RemixArtifactUI.GetArtifactArtInfo-92",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RemixArtifactUI.GetArtifactItemInfo-93",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RemixArtifactUI.GetCurrArtifactItemID-94",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RemixArtifactUI.GetCurrItemSpecIndex-95",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RemixArtifactUI.GetCurrTraitTreeID-96",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RemixArtifactUI.ItemInSlotIsRemixArtifact-97",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Texture.SetURLTexture-98",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TimerunningUI.GetActiveTimerunningSeasonID-99",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.GetConfigVariationID-100",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.GetIncreasedTraitData-101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.PurchaseAllRanks-102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.TryPurchaseAllRanks-103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.TryPurchaseToNode-104",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.TryRefundToNode-105",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.GetUnitAuraBySpellID-106",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_WowSurvey.OpenSurvey-107",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_WowSurvey.TriggerSurveyServe-108",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetAllowRecentAlliesSeeLocation-109",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-PlayerIsTimerunning-110",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetAllowRecentAlliesSeeLocation-111",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-table.count-112",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-AcceptSockets-115",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-ClickSocketButton-116",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-CloseSocketInfo-117",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetExistingSocketInfo-118",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetExistingSocketLink-119",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetNewSocketInfo-120",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetNewSocketLink-121",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetNumSockets-122",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetPetTalentTree-123",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetSocketItemBoundTradeable-124",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetSocketItemInfo-125",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetSocketItemRefundable-126",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetSocketTypes-127",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-HasBoundGemProposed-128",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-IsArtifactRelicItem-129",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded removed-symbol absence in current retail; no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-PetAssistMode-130",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Removed-publication policy observes exact cached deprecated alias identity, not strict raw absence or successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnInfo-133",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.ImportLoadout-135",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.ViewLoadout-137",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CooldownViewer.GetCooldownViewerCategorySet-139",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_MythicPlus.GetRunHistory-141",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestClassification-143",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-table.create-145",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:SetPointsOffset-156",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-ModelScene:GetAllowOverlappedModels-157",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-widgets-ModelScene:SetAllowOverlappedModels-158",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:DetachFromMount-159",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:GetMinimumCountdownDuration-160",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:SetMinimumCountdownDuration-161",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:SetPlayerModelFromGlues-166",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reviewed publication gap; see p1125-gap-review.json. No runtime parity credit."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActorBase:SetModelByUnit-168",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_ADD_PENDING_PRODUCT-178",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_DATA_REFRESH-179",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_DISABLED-180",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_FETCH_FAILURE-181",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_FETCH_SUCCESS-182",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_OPEN_SIMPLE_CHECKOUT-183",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_PMT_IMAGE_DOWNLOADED-184",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-events-CATALOG_SHOP_PMT_IMAGE_DOWNLOADED-789; effective expectation absent. Historical 11.2.5 behavior not established."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_PURCHASE_SUCCESS-185",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_REBUILD_SCROLL_BOX-186",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_REMOVE_PENDING_PRODUCT-187",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_RESULT_ERROR-188",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CATALOG_SHOP_SPECIFIC_PRODUCT_REFRESH-189",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-COOLDOWN_VIEWER_DATA_LOADED-190",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED-191",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-LFG_COOLDOWNS_UPDATED-192",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-LFG_LIST_UPDATE_SEARCH_RESULTS-193",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-RECENT_ALLIES_CACHE_UPDATE-194",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-RECENT_ALLIES_DATA_READY-195",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-RECENT_ALLIES_SYSTEM_STATUS_UPDATED-196",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-RECENT_ALLY_DATA_UPDATED-197",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-REMIX_ARTIFACT_ITEM_SPECS_LOADED-198",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-REMIX_ARTIFACT_UPDATE-199",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-SOCKET_INFO_UI_EVENT_REGISTRATION_UPDATE-200",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-SURVEY_DELIVERED-201",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-TRY_PURCHASE_TO_NODE_PARTIAL_SUCCESS-202",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-ClientSettings_AFTERMATH-215",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-ClientSettings_AFTERMATH-477; effective expectation absent. Historical 11.2.5 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-ClientSettings_COPY_QUEUE-216",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "metadata-only",
+      "note": "Later-superseded publication OK: wt-cvars-ClientSettings_COPY_QUEUE-480; effective expectation absent. Historical 11.2.5 behavior not established."
+    },
+    {
+      "source_id": "wt-cvars-closedRemixArtifactTutorialFrames-217",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-cooldownViewerShowUnlearned-218",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-GxCompatCopyQueue-219",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-hardcoreDeathAlertType-220",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-hardcoreDeathChatType-221",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-lastLaunchedExternalEventURL-222",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-LowLatencyMinInterval-223",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-movePadInPressAndHoldMode-224",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-movePadLocked-225",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-optOutIngameSurveys-226",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-RenderFormat-227",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-advJournalLastOpened-230",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded removed-symbol absence in current retail; no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-cvars-enableTwitter-231",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded removed-symbol absence in current retail; no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-cvars-hideAdventureJournalAlerts-232",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded removed-symbol absence in current retail; no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-cvars-twitterGetConfigTime-233",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded removed-symbol absence in current retail; no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-cvars-twitterShortUrlLengthHttps-234",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded removed-symbol absence in current retail; no historical/native behavior claim."
+    },
+    {
+      "source_id": "wt-cvars-twitterShortUrlLength-235",
+      "capabilities": [
+        "publication-sweep-11-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded removed-symbol absence in current retail; no historical/native behavior claim."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountData-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountData-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountData-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountData-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BonusStatIndex-025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BonusStatIndex-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownSetSpellFlags-027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownSetSpellFlags-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemCollectionType-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemCollectionType-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemCollectionType-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemCollectionType-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemCollectionType-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemConsumableSubclass-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemConsumableSubclass-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-MinimapTrackingFilter-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-MinimapTrackingFilter-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-PerksVendorCategoryType-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-PerksVendorCategoryType-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-PhaseReason-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-PhaseReason-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-QuestTagType-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-QuestTagType-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ReportType-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ReportType-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitCurrencyType-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitCurrencyType-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitNodeEntryType-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitNodeEntryType-049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitNodeFlag-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitNodeFlag-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitNodeFlag-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitNodeFlag-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitSystemFlag-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitSystemFlag-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-UIModelSceneFlags-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-UIModelSceneFlags-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-059",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-AddOnInfo-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-AddOnInfo-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-CooldownViewerCooldown-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-CooldownViewerCooldown-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-CooldownViewerCooldown-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-GossipQuestUIInfo-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-GossipQuestUIInfo-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-MythicPlusDate-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-MythicPlusDate-068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-MythicPlusRunInfo-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-MythicPlusRunInfo-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-MythicPlusRunInfo-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-MythicPlusRunInfo-072",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-TraitNodeInfo-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-TraitNodeInfo-074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-TraitNodeInfo-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-TraitTreeInfo-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    },
+    {
+      "source_id": "structures-TraitTreeInfo-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1125-extract-scout.md."
+    }
+  ]
+}
