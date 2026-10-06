@@ -21,17 +21,5 @@
   "wt-global-api-GetNumTotemSlots-297",
   "wt-global-api-GetTotemDuration-298",
   "wt-global-api-PlayerIsSpellTarget-299",
-  "wt-scriptobjects-NamePlate:SetStackingBoundsFrame-349",
-  "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateCurrentHealthPercent-350",
-  "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateMissingHealthPercent-351",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetCurrentHealthPercent-353",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumDamageAbsorbs-354",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumHealAbsorbs-355",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumIncomingHeals-358",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealth-359",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealthPercent-360",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalDamageAbsorbs-361",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalHealAbsorbs-362",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHeals-363",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer-364"
+  "wt-scriptobjects-NamePlate:SetStackingBoundsFrame-349"
 ]

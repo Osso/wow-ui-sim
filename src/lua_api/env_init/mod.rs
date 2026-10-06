@@ -58,6 +58,7 @@ pub(super) fn init_lua_state(
     #[cfg(feature = "retail-12-0-7")]
     super::globals::real::performance_inputs::register(lua)?;
     crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
+    super::globals::real::heal_prediction::register(lua)?;
     crate::c_api::c_click_bindings::register(lua)?;
     #[cfg(feature = "retail-12-0-5")]
     crate::c_api::c_click_bindings_spell::register(lua.state_mut())?;

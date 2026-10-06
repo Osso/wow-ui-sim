@@ -71,3 +71,7 @@ Five removed CVars are filtered from defaults, overrides, registration and conso
 ## Settings producers
 
 Category voice/volume settings use independent category-keyed maps under `c_api`, shared across specs. Encounter warning visibility and hidden custom-sound settings roundtrip through `WarningSettings`. These do not simulate audio playback, routing, persistence or native secret-argument enforcement. INFERRED: unconfigured values are zero/false; finite numeric writes succeed. Eight publication rows close with concrete category isolation and boolean transition tests.
+
+## Prediction object producers
+
+Move the existing prediction value/configuration object out of temporary proxy defaults into `globals/real`. Twelve 12.0.1 methods query those values, mode-dependent clamp maxima, fractions and supplied curves. `UnitGetDetailedHealPrediction` still supplies health/vitals to the same object; native absorb/heal and secrecy inputs remain unmodeled by that producer. Explicit `SetPredictedValues` provides concrete absorb/heal inputs. INFERRED: zero-max fractions return zero; overflow multiplies the maximum-health boundary. The documented WithAbsorbs mode adds total damage absorbs. Tests cover nonzero values, three clamp modes, reset and curve evaluation.

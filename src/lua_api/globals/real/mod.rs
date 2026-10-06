@@ -24,6 +24,7 @@ pub mod gossip_probes;
 #[cfg(feature = "client-wowforever")]
 pub mod guild_invites;
 pub mod guild_logo;
+pub(crate) mod heal_prediction;
 #[cfg(feature = "client-wowforever")]
 pub mod input_interface;
 #[cfg(all(
