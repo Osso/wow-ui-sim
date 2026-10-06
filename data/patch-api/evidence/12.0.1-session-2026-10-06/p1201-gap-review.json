@@ -1,0 +1,1022 @@
+[
+  {
+    "source_id": "wt-cvars-minimapTrackedInfov2-491",
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "minimapTrackedInfov2"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "review": "Removed CVar remains queryable. Check case-insensitive aliases and later policy before retiring state.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-cvars-nameplateLargerScale-493",
+    "expected": {
+      "direction": "removed",
+      "page_default": "1.200000",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplateLargerScale"
+    },
+    "observed": {
+      "default": "1.200000",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1.200000"
+    },
+    "review": "Removed CVar remains queryable. Check case-insensitive aliases and later policy before retiring state.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-cvars-nameplatePlayerLargerScale-496",
+    "expected": {
+      "direction": "removed",
+      "page_default": "1.800000",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplatePlayerLargerScale"
+    },
+    "observed": {
+      "default": "1.800000",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1.800000"
+    },
+    "review": "Removed CVar remains queryable. Check case-insensitive aliases and later policy before retiring state.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-cvars-nameplateSelfAlpha-497",
+    "expected": {
+      "direction": "removed",
+      "page_default": "0.750000",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplateSelfAlpha"
+    },
+    "observed": {
+      "default": "0.750000",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0.750000"
+    },
+    "review": "Removed CVar remains queryable. Check case-insensitive aliases and later policy before retiring state.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-cvars-useCompactPartyFrames-501",
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "useCompactPartyFrames"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "review": "Removed CVar remains queryable. Check case-insensitive aliases and later policy before retiring state.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-events-CHAT_MSG_ENCOUNTER_EVENT-405",
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CHAT_MSG_ENCOUNTER_EVENT"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "review": "Removed event remains registerable; source registry/epoch eligibility requires reconciliation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-events-UNIT_ARENA_COOLDOWNS_UPDATE-402",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "UNIT_ARENA_COOLDOWNS_UPDATE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"UNIT_ARENA_COOLDOWNS_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "review": "Unknown concrete arena event in event registry; registration/delivery model missing.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_BattleNet.SetAFK-222",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.SetAFK"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_BattleNet.SetDND-223",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.SetDND"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_CatalogShop.BulkRefundDecors-224",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CatalogShop.BulkRefundDecors"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_CombatAudioAlert.GetCategoryVoice-230",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.GetCategoryVoice"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_CombatAudioAlert.GetCategoryVolume-231",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.GetCategoryVolume"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_CombatAudioAlert.SetCategoryVoice-233",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.SetCategoryVoice"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_CombatAudioAlert.SetCategoryVolume-234",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.SetCategoryVolume"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_DeathRecap.GetRecapMaxHealth-236",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_DeathRecap.GetRecapMaxHealth"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_EncounterWarnings.GetPlayCustomSoundsWhenHidden-255",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterWarnings.GetPlayCustomSoundsWhenHidden"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_EncounterWarnings.GetWarningsShown-256",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterWarnings.GetWarningsShown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_EncounterWarnings.SetPlayCustomSoundsWhenHidden-257",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterWarnings.SetPlayCustomSoundsWhenHidden"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_EncounterWarnings.SetWarningsShown-258",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterWarnings.SetWarningsShown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_Housing.IsHousingMarketCartFullRemoveEnabled-262",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Housing.IsHousingMarketCartFullRemoveEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.IsPlayerValidForEndgameFieldEdits-281",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LFGList.IsPlayerValidForEndgameFieldEdits"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.ListingUsesEndgameEditRestrictions-282",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LFGList.ListingUsesEndgameEditRestrictions"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetArenaCrowdControlDuration-284",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetArenaCrowdControlDuration"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_Secrets.CanCompareUnitTokens-285",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Secrets.CanCompareUnitTokens"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_Secrets.ShouldUnitThreatStateBeSecret-286",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Secrets.ShouldUnitThreatStateBeSecret"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_Secrets.ShouldUnitThreatValuesBeSecret-287",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Secrets.ShouldUnitThreatValuesBeSecret"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_StringUtil.StripTextureMarkupForLooseFiles-290",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_StringUtil.StripTextureMarkupForLooseFiles"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.IsSpellItemEnchantmentHiddenVisual-292",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogCollection.IsSpellItemEnchantmentHiddenVisual"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogOutfitInfo.InTransmogEvent-293",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogOutfitInfo.InTransmogEvent"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogOutfitInfo.IsUsableDiscountAvailable-294",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogOutfitInfo.IsUsableDiscountAvailable"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogOutfitInfo.SetOutfitToOutfit-295",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogOutfitInfo.SetOutfitToOutfit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogOutfitInfo.TransmogEventActive-296",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogOutfitInfo.TransmogEventActive"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.GetChannelForChannelType-335",
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_VoiceChat.GetChannelForChannelType"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.GetChannelForCommunityStream-337",
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_VoiceChat.GetChannelForCommunityStream"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "review": "Raw publication absent; ordinary lookup is only namespace autostub. Requires a backing model, not stub registration.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-GetNumTotemSlots-297",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNumTotemSlots"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "review": "Global absent from raw and ordinary lookup. Requires a modeled global producer.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-GetTotemDuration-298",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetTotemDuration"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "review": "Global absent from raw and ordinary lookup. Requires a modeled global producer.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-global-api-PlayerIsSpellTarget-299",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "PlayerIsSpellTarget"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "review": "Global absent from raw and ordinary lookup. Requires a modeled global producer.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-NamePlate:SetStackingBoundsFrame-349",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "NamePlate:SetStackingBoundsFrame"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'NamePlate'",
+      "kind": "unprobeable",
+      "value": null
+    },
+    "review": "NamePlate is not a CreateFrame type; current sweep has no supported NamePlate acquisition fixture. Publication unproven, not proof of absence.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateCurrentHealthPercent-350",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:EvaluateCurrentHealthPercent"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateMissingHealthPercent-351",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:EvaluateMissingHealthPercent"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetCurrentHealthPercent-353",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetCurrentHealthPercent"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumDamageAbsorbs-354",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMaximumDamageAbsorbs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumHealAbsorbs-355",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMaximumHealAbsorbs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumIncomingHeals-358",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMaximumIncomingHeals"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealth-359",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMissingHealth"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealthPercent-360",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMissingHealthPercent"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalDamageAbsorbs-361",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetTotalDamageAbsorbs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalHealAbsorbs-362",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetTotalHealAbsorbs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHeals-363",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetTotalIncomingHeals"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer-364",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Constructor succeeded; actual object lacks method. Requires object-state implementation.",
+    "status": "audit-pending"
+  },
+  {
+    "source_id": "wt-widgets-FrameScriptObject:SetPreventSecretValues-380",
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "FrameScriptObject:SetPreventSecretValues"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "FrameScriptObject; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "review": "Removed frame method still published. Coordinated epoch retirement must reconcile method surface, security state and legacy tests.",
+    "status": "audit-pending"
+  }
+]

@@ -1,0 +1,307 @@
+Patch 12.0.1 API changes
+
+== Summary ==
+Patch 12.0.1 is the Midnight launch patch, rolling up changes that took place after Patch 12.0.0 went stable.
+
+== Resources ==
+* TOC: 120001
+
+* Official patch notes: Second Midnight Pre-Expansion Update Notes
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Blizzard_Deprecated
+
+
+== Blue posts ==
+=== 2026-02-19 ===
+Midnight 12.0.1 AddOn Restrictions Update
+
+Hello again from Blizzard! We have a small list of changes that are being hotfixed to live in preparation for Early Access launch next week. You should expect these to hit live servers in the next few days.
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+
+NOTE: While most of these are bugfixes that last couple changes were made to address exploits or addon functionality we did not want to allow. Apologies for the late changes there!
+
+
+=== Changes due to be deployed before Midnight Early Access ===
+*Fixed an exploit that allowed addons to declassify spell names using tricky string formatting. APIs no longer accept secret spell names from addons as a result. (Already live)
+*Fixed an exploit where status bars could be used to launder secret numbers.
+*Fixed an issue where calling debuglocals after certain Lua errors would cause a crash.
+*Fixed an issue where numerous APIs that accept aura instance IDs would stop working after a full aura update (relog was the easiest repro).
+*Fixed an issue where enabling timestamps on chat frames would cause Lua errors when chat lockdowns are in effect.
+*Threat APIs now conditionally return secrets for some combinations of input unit tokens to prevent unintended use of these functions to compare units.
+*Various APIs no longer accept compound unit tokens or unit names when in an active PvP match.
+Bonus notes that were forgotten:
+Fixed an exploit that allowed addons to access spell IDs and durations of crowd control effects for other players.
+Fixed an exploit that allowed addons to access cooldowns of PvP trinkets for other players in arenas.
+
+
+=== 2026-02-24 ===
+Midnight 12.0.1 Spell Declassification Update
+
+Hello again from Blizzard!
+
+Today we have an update regarding which spells we are going to be flagging as non-secret for Midnight launch. These changes are planned to go out in a data hotfix in the next couple days, but we wanted to give you all a heads up beforehand so you can plan any necessary changes to your addons.
+
+Over the course of Beta, as well as recent weeks on live, one of the biggest recurring points of feedback has been from healers who wish that our default UI provided more robust options for filtering or emphasizing specific buffs on raid frames. In the past month we have added a few layers of extra logic to buff sorting and visibility, and while we've heard positive feedback from many healers about these improvements, we realize that our solutions are leaving others still wanting more customization.
+
+While we had originally hoped to be able to deliver a streamlined default experience, it has become clear that there are common use-cases that a single set of logic cannot cover. Some players may want to make simple tweaks like highlighting the target of their Preservation Evoker's Echo, or their Holy Paladin's active Beacon, while others would consider that to be distracting clutter. We are now beginning work on a system to allow players to hide or emphasize buffs from their spellcasts on a per-spell basis, via the Spellbook. We expect that solution to be ready for players in a later Midnight patch.
+In the meantime, we have also seen a few addons popping up that use non-secret information to make very reliable guesses about players' spellcasts in order to drive this sort of filtering logic. Breaking the API calls driving this functionality would cause significant collateral damage to common addons, and we are not planning to do go down that path. Ultimately, this design space is mostly about customizing the display of information, rather than objectively advantageous computational solutions, so we want to treat it the same way we approached resources like Holy Power or Maelstrom.
+
+Thus, rather than requiring addon developers to jump through hoops to support an implementation that will have some frustrating inaccuracies, we are planning to flag a number of short-cooldown rotational healer spells, and very long duration buffs, to exclude them from our Secret Value system. We will likely re-protect these spells once our own filtering solution, with its own addon hooks for display customization, is in place.
+
+The full list of spells being flagged is below, broken down into several categories.
+
+
+=== Healer Buffs and HoTs ===
+=== Preservation Evoker ===
+*355941 - Dream Breath
+*363502 - Dream Flight
+*364343 - Echo
+*366155 - Reversion
+*367364 - Echo Reversion
+*373267 - Lifebind
+*376788 - Echo Dream Breath
+
+=== Augmentation Evoker ===
+*360827 - Blistering Scales
+*395152 - Ebon Might
+*410089 - Prescience
+*410263 - Inferno's Blessing
+*410686 - Symbiotic Bloom
+*413984 - Shifting Sands
+
+=== Resto Druid ===
+*774 - Rejuv
+*8936 - Regrowth
+*33763 - Lifebloom
+*48438 - Wild Growth
+*155777 - Germination
+
+=== Disc Priest ===
+*17 - Power Word: Shield
+*194384 - Atonement
+*1253593 - Void Shield
+
+=== Holy Priest ===
+*139 - Renew
+*41635 - Prayer of Mending
+*77489 - Echo of Light
+
+=== Mistweaver Monk ===
+*115175 - Soothing Mist
+*119611 - Renewing Mist
+*124682 - Enveloping Mist
+*450769 - Aspect of Harmony
+
+=== Restoration Shaman ===
+*974, 383648 - Earth Shield
+*61295 - Riptide
+
+=== Holy Paladin ===
+*53563 - Beacon of Light
+*156322 - Eternal Flame
+*156910 - Beacon of Faith
+*1244893 - Beacon of the Savior
+
+
+=== Long-term Raid Buffs ===
+*1126 - Mark of the Wild
+*1459 - Arcane Intellect
+*6673 - Battle Shout
+*21562 - Power Word: Fortitude
+*369459 - Source of Magic
+*462854 - Skyfury
+*474754 – Symbiotic Relationship
+
+=== Blessing of the Bronze Auras ===
+*381732 - Death Knight
+*381741 - Demon Hunter
+*381746 – Druid
+*381748 – Evoker
+*381749 – Hunter
+*381750 – Mage
+*381751 – Monk
+*381752 – Paladin
+*381753 – Priest
+*381754 – Rogue
+*381756 – Shaman
+*381757 – Warlock
+*381758 - Warrior
+
+
+=== Long-term Self Buffs ===
+*433568 - Rite of Sanctification
+*433583 - Rite of Adjuration
+
+=== Rogue Poisons ===
+*2823 - Deadly Poison
+*8679 - Wound Poison
+*3408 - Crippling Poison
+*5761 - Numbing Poison
+*315584 - Instant Poison
+*381637 - Atrophic Poison
+*381664 - Amplifying Poison
+
+=== Shaman Imbuements ===
+*319773 – Windfury Weapon
+*319778 – Flametongue Weapon
+*382021, 382022 – Earthliving Weapon
+*457496, 457481 – Tidecaller's Guard
+*462757, 462742 – Thunderstrike Ward
+
+=== Resource-like Auras ===
+*205473 - Mage Icicles
+*260286 - Hunter Tip of the Spear
+
+=== Cooldowns ===
+*8690 - Hearthstone
+*20608 - Shaman Reincarnation
+*All Mythic Plus Teleport Spells (IDs not listed)
+
+
+=== 2026-03-21 ===
+Midnight 12.0.1 Upcoming Restriction Changes
+
+Hello again from Blizzard! Mythic raids and M+ open this week and we will be hotfixing in some last-minute changes to fix exploits before resets.
+
+We recognize that some of these changes are going to be disruptive and require last-second changes to your addons, and we sincerely apologize for them coming in so late. Part of these changes involve removing the secure delegate portion of ActionButton_ApplyCooldown. We have added new APIs that should replace the functionality it provided, but we will be watching closely for reports of functionality that still needs replacing.
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+
+
+=== Cooldowns ===
+* Removed the ability for tainted code to configure cooldown frames with secret values via Cooldown:SetCooldown, Cooldown:SetCooldownFromExpirationTime, Cooldown:SetCooldownDuration, and Cooldown:SetCooldownUNIX.
+** This does not impact Cooldown:SetCooldownFromDurationObject which, going forward, is the only way to configure a cooldown frame with secret values.
+
+* The ActionButton_ApplyCooldown Lua function no longer routes through a secure delegate.
+** This unfortunately means that existing code passing secrets into this function will start throwing Lua errors when the hotfix goes live. However, all of the logic that this function is doing should be able to be replicated by addons with the new isActive/shouldReplaceNormalCooldown boolean fields and duration objects (see below for details on those).
+
+* Action/Spell cooldown APIs now return isEnabled and maxCharges as non-secrets.
+* Action/Spell cooldown APIs now return a new non-secret isActive boolean, which is set to true if the UI should render a cooldown display.
+** For regular cooldowns, it's true if isEnabled and startTime > 0 and duration > 0.
+** For charge cooldowns, it's true if maxCharges > 1 and currentCharges < maxCharges and startTime > 0 and duration > 0.
+** For LoC cooldowns, it's true if startTime > 0 and duration > 0.
+
+* Action/Spell cooldown APIs that yield duration objects now return a zero-span object if the isActive boolean evaluates to false.
+* Action/Spell cooldown APIs now return results modified by the presence of cooldown aura spells on the player.
+** For example, if an action button is assigned to a PvP trinket (Sigil of Adaptation) that has a passive effect of automatically removing a loss of control effect with a 1 minute cooldown, the GetActionCooldown API will track that 1 minute cooldown when the Adaptation debuff has been applied to the player.
+** This means no addon code needs to deal with the C_UnitAuras.GetCooldownAuraBySpellID API.
+
+
+=== Cooldowns (continued) ===
+* Action/Spell Loss of Control cooldown APIs now return a structured table instead of unpacked values.
+** These functions have been renamed with an "Info" suffix (eg. C_Spell.GetSpellLossOfControlCooldownInfo) with a deprecation for the old name that unpacks the start time and duration value.
+** This structured table contains several new fields not present in the old API. In addition to the isActive boolean mentioned above, it includes modRate (secret) and shouldReplaceNormalCooldown (non-secret), which is true if the loss of control cooldown has an expiration time that's later than any regular cooldown for this ability/spell.
+* Added a new C_LossOfControl.GetActiveLossOfControlDuration(unitToken, index) API that returns a duration object.
+* Added a new GetTotemDuration(slot) API that returns a duration object.
+
+
+=== Other changes ===
+* A change that we had already made in 12.0.5 to restrict the ability to use %.1s style precision specifiers with secret string inputs has been brought forward to 12.0.1.
+** As a result, format("%.1s", secretwrap("Jar Jar Binks")) will no longer truncate to "J".
+
+* The UnitCreatureID API now returns nil when unit identity is secret.
+* The following script object methods now return nil if relevant secret aspects are assigned: Frame:GetEffectiveAlpha(), StatusBar:IsStatusBarDesaturated(), Texture:IsDesatured()
+* Resolved a few issues where C_TooltipInfo APIs for unit auras had inconsistent security requirements.
+* The use of /wm and /cwm in macros has been limited to 3 per second.
+Macros are no longer allowed to send BNet whispers while an encounter is active.
+* The following  C_UnitAuras APIs can no longer be called while the player is in combat: C_UnitAuras.AddPrivateAuraAnchor, C_UnitAuras.RemovePrivateAuraAnchor, C_UnitAuras.SetPrivateWarningTextAnchor, C_UnitAuras.AddPrivateAuraAppliedSound, C_UnitAuras.RemovePrivateAuraAppliedSound.
+
+
+== Consolidated changes ==
+: 12.0.0 (65655) → 12.0.1 (66838) Apr  3 2026
+
+=== Enumerations ===
+ Enum.CombatAudioAlertSpecSetting
+   + Resource1Voice
+   + Resource1Volume
+   + Resource2Voice
+   + Resource2Volume
+ Enum.CooldownViewerAlertEventType
+   + OnAuraApplied
+   + OnAuraRemoved
+ Enum.DamageMeterType
+   + Deaths
+   + EnemyDamageTaken
+ Enum.NeighborhoodInviteResult
+   + AlreadyInNeighborhood
+ Enum.PartyRequestJoinRelation
+   # NumPartyRequestJoinRelations -> RecentAllies
+ Enum.SecretAspect
+   + Attributes
+   + CooldownStyle
+ Enum.TooltipDataLineType
+   # ToyFlavorText -> FlavorText
+   + ItemQuality
+   + TradeTimeRemaining
+   + ItemSpellTriggerLearn
+   + LearnTransmogSet
+   + LearnTransmogIllusion
+   + ErrorLine
+   + DisabledLine
+   + UsageRequirement
+   - RestrictedRaceClass
+   - RestrictedFaction
+   - RestrictedSkill
+   - RestrictedPvPMedal
+   - RestrictedReputation
+   - RestrictedSpellKnown
+   - RestrictedLevel
+   - RestrictedArena
+   - RestrictedBg
+
+=== Structures ===
+ CampaignInfo
+   + hideFutureChapters
+ CatalogShopBundleChildInfo
+   + quantityInBundle
+ CatalogShopProductDisplayInfo
+   # otherProductPMTURL -> productPMTURL
+ CatalogShopProductInfo
+   + isVCProduct
+   + containsHousingItem
+ CatalogShopSectionInfo
+   + shouldShowRecommendationOptOutDisclaimer
+ DamageMeterAvailableCombatSession
+   + durationSeconds
+ DamageMeterCombatSession
+   + totalAmount
+   + durationSeconds
+ DamageMeterCombatSessionSource
+   + totalAmount
+ DamageMeterCombatSource
+   # sourceGUID, Nilable: false -> true
+   + sourceCreatureID
+   + deathRecapID
+   + deathTimeSeconds
+   + classification
+ DamageMeterCombatSpell
+   + overkillAmount
+   + isAvoidable
+   + isDeadly
+ DamageMeterCombatSpellUnitDetails
+   + isPet
+   + isMob
+   + specIconID
+ EncounterTimelineEventInfo
+   + color
+ EncounterWarningInfo
+   + color
+ HousingCatalogEntryInfo
+   - marketInfo
+ ItemUpgradeLevelInfo
+   + moneyCost
+ MajorFactionData
+   + useJourneyUnlockToast
+   + maxLevel
+ NumberAbbrevOptions
+   # breakpointData, InnerType: NumberAbbrevData -> NumberAbbreviationBreakpoint
+ QuestTheme
+   + mapPinInfo
+ TraitNodeInfo
+   + totalMaxRanks
+ TraitTreeInfo
+   + uiTextureKit
+   + titleText
+ UIMapPinInfo
+   + outerGlow
