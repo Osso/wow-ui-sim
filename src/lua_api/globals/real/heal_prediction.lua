@@ -133,9 +133,13 @@
     self:Reset()
   end
 
+  local nextPredictionId = 0
   function CreateUnitHealPredictionCalculator()
+    nextPredictionId = nextPredictionId + 1
+    local label = "UnitHealPredictionCalculator:" .. tostring(nextPredictionId)
     local calculator = setmetatable({}, {
       __index = healPredictionMethods,
+      __tostring = function() return label end,
       __newindex = function(object, key, value)
         if healPredictionMethods[key] ~= nil then
           error("read-only key: " .. tostring(key), 2)
