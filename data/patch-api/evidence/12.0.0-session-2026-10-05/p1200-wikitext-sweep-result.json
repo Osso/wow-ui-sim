@@ -6923,11 +6923,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ActionBar.GetActionBarPage-46": {
     "expected": {
@@ -7373,11 +7373,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ActionBar.HasTempShapeshiftActionBar-71": {
     "expected": {
@@ -7427,11 +7427,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ActionBar.IsAttackAction-74": {
     "expected": {
@@ -7697,11 +7697,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_BattleNet.SendWhisper-89": {
     "expected": {
@@ -7715,11 +7715,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_BattleNet.SetCustomMessage-90": {
     "expected": {
@@ -7733,11 +7733,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CatalogShop.BulkPurchaseProducts-91": {
     "expected": {
@@ -7805,11 +7805,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CatalogShop.GetProductIDsForCategory-95": {
     "expected": {
@@ -8525,11 +8525,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CombatLog.RefilterEntries-134": {
     "expected": {
@@ -8687,11 +8687,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CreatureInfo.GetCreatureID-143": {
     "expected": {
@@ -9551,11 +9551,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_EncounterWarnings.IsFeatureAvailable-191": {
     "expected": {
@@ -9569,11 +9569,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_EncounterWarnings.IsFeatureEnabled-192": {
     "expected": {
@@ -9587,11 +9587,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_EncounterWarnings.PlaySound-193": {
     "expected": {
@@ -10163,11 +10163,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_HousingDecor.EnterPreviewState-220": {
     "expected": {
@@ -10307,11 +10307,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_InstanceEncounter.IsEncounterSuppressingRelease-227": {
     "expected": {
@@ -10325,11 +10325,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_InstanceEncounter.ShouldShowTimelineForEncounter-228": {
     "expected": {
@@ -10343,11 +10343,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Item.CanItemTransmogAppearance-623": {
     "expected": {
@@ -10397,11 +10397,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-627": {
     "expected": {
@@ -10469,11 +10469,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_MajorFactions.ShouldDisplayMajorFactionAsJourney-231": {
     "expected": {
@@ -10685,11 +10685,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_NamePlate.GetNumNamePlateMotionTypes-500": {
     "expected": {
@@ -10919,11 +10919,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_NamePlateManager.SetNamePlateHitTestFrame-237": {
     "expected": {
@@ -10973,11 +10973,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_NeighborhoodInitiative.AddTrackedInitiativeTask-240": {
     "expected": {
@@ -11369,11 +11369,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PvP.CanDisplayDamage-512": {
     "expected": {
@@ -11441,11 +11441,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PvP.GetBattlegroundInfo-261": {
     "expected": {
@@ -11459,11 +11459,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PvP.GetRandomTrainingGroundRewards-262": {
     "expected": {
@@ -11495,11 +11495,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PvP.HasMatchStarted-264": {
     "expected": {
@@ -11513,11 +11513,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PvP.HasRandomTrainingGroundWinToday-265": {
     "expected": {
@@ -11531,11 +11531,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PvP.JoinRandomTrainingGround-266": {
     "expected": {
@@ -11567,11 +11567,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_QuestInfoSystem.GetQuestLogRewardFavor-268": {
     "expected": {
@@ -11603,11 +11603,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Reputation.GetFactionParagonInfo-633": {
     "expected": {
@@ -12323,11 +12323,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Spell.IsExternalDefensive-307": {
     "expected": {
@@ -12341,11 +12341,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Spell.IsPriorityAura-308": {
     "expected": {
@@ -12395,11 +12395,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Spell.IsSpellImportant-311": {
     "expected": {
@@ -12413,11 +12413,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_SpellBook.FindBaseSpellByID-312": {
     "expected": {
@@ -12611,11 +12611,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_StorePublic.IsDisabledByParentalControls-515": {
     "expected": {
@@ -12899,11 +12899,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_TooltipInfo.GetRecipeResultItem-639": {
     "expected": {
@@ -13097,11 +13097,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_TradeSkillUI.GetRecipeQualityReagentItemLink-522": {
     "expected": {
@@ -13133,11 +13133,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_TradeSkillUI.GetRecraftRemovalWarnings-645": {
     "expected": {
@@ -15059,11 +15059,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_UnitAuras.AuraIsBigDefensive-415": {
     "expected": {
@@ -15275,11 +15275,11 @@
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=function; lookup=function",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-CancelEmote-551": {
     "expected": {

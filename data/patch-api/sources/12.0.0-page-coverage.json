@@ -11,7 +11,7 @@
       "symbols": [
         "1010 wikitext inventory symbols"
       ],
-      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 62 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
+      "scope": "Data-driven publication/absence in a fully loaded default-Retail environment (12.1.0 surface), deprecation-file fallbacks accepted, supersession against 12.0.5/12.0.7/12.1.0 wikitext registers. Publication only. 23 known gaps baselined in tests/data/patch_12_0_0_sweep_known_gaps.json.",
       "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_0_publication_sweep.rs",
@@ -95,6 +95,50 @@
       "implementation": "commits 3aa2a1a61..a414dce7d (rebased)",
       "compiled_revision": "HEAD",
       "proof": "Sol worker (stopped early, auth expired) + main-thread completion; four sweeps, p1200_mixed 6, action_bar 123, cvar 55, string_util 23, combat_audio 2, spell (3 pre-existing); no independent review"
+    },
+    {
+      "id": "namespace-producers-12-0-0",
+      "symbols": [
+        "C_ActionBar range/autocast, C_BattleNet game data/whisper/custom message, C_PvP training grounds/HasMatchStarted/GetBattlegroundInfo, C_EncounterWarnings, C_InstanceEncounter flags, C_NamePlate size/behind-camera/simplified, C_Spell classification flags, C_QuestLog prey quest, prey widget, C_WeeklyRewards, C_TradeSkillUI quality info, C_TooltipInfo.GetOutfit, C_LimitedInput, C_StableInfo, C_Item.IsItemBindToAccount, C_CombatLog.IsCombatLogRestricted, C_CooldownViewer.GetValidAlertTypes, C_HousingCustomizeMode door hover"
+      ],
+      "scope": "Registered producers backed by simulator state (no new shims), replacing autostub-fabricated functions.",
+      "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
+      "tests": [
+        "tests/p1200_*.rs"
+      ],
+      "implementation": "commits through cfdeb7407",
+      "compiled_revision": "cfdeb7407",
+      "proof": "Sol worker GREEN; main-thread four sweeps + action_bar 123, battle_net 20, pvp 97, nameplate 23, encounter 96, instance_encounter 4, weekly_rewards 15, trade_skill 14, p1200 33; no independent review"
+    },
+    {
+      "id": "enum-values-12-0-0",
+      "symbols": [
+        "12 page-listed enum families"
+      ],
+      "scope": "Values/Meta after cached Game preload, raw + ordinary lookup; removed members nil; renamed old keys absent. Members changed again by later patches recorded as superseded.",
+      "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_0_0_enums.rs",
+        "tests/data/patch_12_0_0_enums.json"
+      ],
+      "implementation": "test only (B07 seed conflicts falsified)",
+      "compiled_revision": "0856b624e",
+      "proof": "Sol worker GREEN; main-thread standalone run GREEN; no independent review"
+    },
+    {
+      "id": "deprecated-retirement-12-0-0",
+      "symbols": [
+        "21 deprecated 11.x APIs"
+      ],
+      "scope": "Native absent on retail 12.0.0+ (13 native copies retired), no cached republication; successor observable results where listed. Six successor shape gaps under fix.",
+      "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_12_0_0_deprecated.rs",
+        "tests/data/patch_12_0_0_deprecated.json"
+      ],
+      "implementation": "retail-12-0-0 retirement gates",
+      "compiled_revision": "0856b624e",
+      "proof": "Sol worker GREEN alone; fails inside full prefork run until successor gaps fixed (sol-retire-fallout); no independent review"
     }
   ],
   "source_rows": [
@@ -3169,9 +3213,12 @@
     },
     {
       "source_id": "wt-global-api-C_ActionBar.GetActionAutocast-45",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_ActionBar.GetActionBarPage-46",
@@ -3367,9 +3414,12 @@
     },
     {
       "source_id": "wt-global-api-C_ActionBar.HasRangeRequirements-70",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_ActionBar.HasTempShapeshiftActionBar-71",
@@ -3389,9 +3439,12 @@
     },
     {
       "source_id": "wt-global-api-C_ActionBar.IsActionInRange-73",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_ActionBar.IsAttackAction-74",
@@ -3508,21 +3561,30 @@
     },
     {
       "source_id": "wt-global-api-C_BattleNet.SendGameData-88",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_BattleNet.SendWhisper-89",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_BattleNet.SetCustomMessage-90",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_CatalogShop.BulkPurchaseProducts-91",
@@ -3548,9 +3610,12 @@
     },
     {
       "source_id": "wt-global-api-C_CatalogShop.GetNewProducts-94",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_CatalogShop.GetProductIDsForCategory-95",
@@ -3862,9 +3927,12 @@
     },
     {
       "source_id": "wt-global-api-C_CombatLog.IsCombatLogRestricted-133",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_CombatLog.RefilterEntries-134",
@@ -3930,9 +3998,12 @@
     },
     {
       "source_id": "wt-global-api-C_CooldownViewer.GetValidAlertTypes-142",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_CreatureInfo.GetCreatureID-143",
@@ -4306,21 +4377,30 @@
     },
     {
       "source_id": "wt-global-api-C_EncounterWarnings.GetSoundKitForSeverity-190",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_EncounterWarnings.IsFeatureAvailable-191",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_EncounterWarnings.IsFeatureEnabled-192",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_EncounterWarnings.PlaySound-193",
@@ -4576,9 +4656,12 @@
     },
     {
       "source_id": "wt-global-api-C_HousingCustomizeMode.IsHouseExteriorDoorHovered-219",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_HousingDecor.EnterPreviewState-220",
@@ -4638,21 +4721,30 @@
     },
     {
       "source_id": "wt-global-api-C_InstanceEncounter.IsEncounterLimitingResurrections-226",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_InstanceEncounter.IsEncounterSuppressingRelease-227",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_InstanceEncounter.ShouldShowTimelineForEncounter-228",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_Item.CanItemTransmogAppearance-623",
@@ -4673,9 +4765,12 @@
     },
     {
       "source_id": "wt-global-api-C_Item.IsItemBindToAccount-229",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-627",
@@ -4699,9 +4794,12 @@
     },
     {
       "source_id": "wt-global-api-C_LimitedInput.LimitedInputAllowed-230",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: parent raw-absent; raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_MajorFactions.ShouldDisplayMajorFactionAsJourney-231",
@@ -4793,9 +4891,12 @@
     },
     {
       "source_id": "wt-global-api-C_NamePlate.GetNamePlateSize-233",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_NamePlate.GetNumNamePlateMotionTypes-500",
@@ -4895,9 +4996,12 @@
     },
     {
       "source_id": "wt-global-api-C_NamePlateManager.IsNamePlateUnitBehindCamera-236",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_NamePlateManager.SetNamePlateHitTestFrame-237",
@@ -4917,9 +5021,12 @@
     },
     {
       "source_id": "wt-global-api-C_NamePlateManager.SetNamePlateSimplified-239",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_NeighborhoodInitiative.AddTrackedInitiativeTask-240",
@@ -5104,9 +5211,12 @@
     },
     {
       "source_id": "wt-global-api-C_PvP.AreTrainingGroundsEnabled-259",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_PvP.CanDisplayDamage-512",
@@ -5134,15 +5244,21 @@
     },
     {
       "source_id": "wt-global-api-C_PvP.CanPlayerUseTrainingGroundsUI-260",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_PvP.GetBattlegroundInfo-261",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_PvP.GetRandomTrainingGroundRewards-262",
@@ -5152,21 +5268,30 @@
     },
     {
       "source_id": "wt-global-api-C_PvP.GetTrainingGrounds-263",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_PvP.HasMatchStarted-264",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_PvP.HasRandomTrainingGroundWinToday-265",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_PvP.JoinRandomTrainingGround-266",
@@ -5178,9 +5303,12 @@
     },
     {
       "source_id": "wt-global-api-C_PvP.JoinTrainingGround-267",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestLogRewardFavor-268",
@@ -5192,9 +5320,12 @@
     },
     {
       "source_id": "wt-global-api-C_QuestLog.GetActivePreyQuest-269",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_Reputation.GetFactionParagonInfo-633",
@@ -5529,15 +5660,21 @@
     },
     {
       "source_id": "wt-global-api-C_Spell.IsConsumableSpell-306",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_Spell.IsExternalDefensive-307",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_Spell.IsPriorityAura-308",
@@ -5557,15 +5694,21 @@
     },
     {
       "source_id": "wt-global-api-C_Spell.IsSpellCrowdControl-310",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_Spell.IsSpellImportant-311",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_SpellBook.FindBaseSpellByID-312",
@@ -5650,9 +5793,12 @@
     },
     {
       "source_id": "wt-global-api-C_StableInfo.IsBonusPetSlotAvailable-322",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_StorePublic.IsDisabledByParentalControls-515",
@@ -5776,9 +5922,12 @@
     },
     {
       "source_id": "wt-global-api-C_TooltipInfo.GetOutfit-334",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_TooltipInfo.GetRecipeResultItem-639",
@@ -5860,9 +6009,12 @@
     },
     {
       "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeItemQualityInfo-339",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeQualityReagentItemLink-522",
@@ -5874,9 +6026,12 @@
     },
     {
       "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeQualityReagentLink-340",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_TradeSkillUI.GetRecraftRemovalWarnings-645",
@@ -6775,9 +6930,12 @@
     },
     {
       "source_id": "wt-global-api-C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo-414",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-C_UnitAuras.AuraIsBigDefensive-415",
@@ -6869,9 +7027,12 @@
     },
     {
       "source_id": "wt-global-api-C_WeeklyRewards.GetSortedProgressForActivity-424",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "member: raw=nil; lookup=function"
+      "capabilities": [
+        "publication-sweep-12-0-0",
+        "namespace-producers-12-0-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Published and backed by simulator state."
     },
     {
       "source_id": "wt-global-api-CancelEmote-551",
@@ -8342,195 +8503,259 @@
     },
     {
       "source_id": "enumerations-Enum-CraftingOrderResult-036",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-CraftingOrderResult-037",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-CraftingOrderResult-038",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeAccountSetting-039",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (12.0.5 / 12.1.0); 12.0.0 value not observable on the current build."
     },
     {
       "source_id": "enumerations-Enum-EditModeAccountSetting-040",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeAccountSetting-041",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeAccountSetting-042",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeAccountSetting-043",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeSystem-044",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (12.0.5 / 12.1.0); 12.0.0 value not observable on the current build."
     },
     {
       "source_id": "enumerations-Enum-EditModeSystem-045",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeSystem-046",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-EditModeSystem-047",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-PlayerInteractionType-048",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-PlayerInteractionType-049",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-QuestTagType-050",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-QuestTagType-051",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-SendAddonMessageResult-052",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-SendAddonMessageResult-053",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-SendAddonMessageResult-054",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-SurveyDeliveryMoment-055",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (12.0.5); 12.0.0 value not observable on the current build."
     },
     {
       "source_id": "enumerations-Enum-SurveyDeliveryMoment-056",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-057",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (12.1.0 surface); 12.0.0 value not observable on the current build."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-058",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (12.1.0 surface); 12.0.0 value not observable on the current build."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataLineType-059",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "metadata-only",
+      "note": "Superseded by later patch (12.1.0 surface); 12.0.0 value not observable on the current build."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataType-060",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-TooltipDataType-061",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-TradeskillRecipeType-062",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-TradeskillRecipeType-063",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-UICursorType-064",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-UICursorType-065",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-UIWidgetVisualizationType-066",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "enumerations-Enum-UIWidgetVisualizationType-067",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "enum-values-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact value/Meta after cached Game preload (patch_12_0_0_enum_publication)."
     },
     {
       "source_id": "source-context-069",
@@ -8882,9 +9107,11 @@
     },
     {
       "source_id": "deprecated api-removal-summary-128",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "source-context-129",
@@ -8894,63 +9121,79 @@
     },
     {
       "source_id": "deprecated api-GetSpellInfo-130",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "deprecated api-GetNumSpellTabs-131",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "deprecated api-GetSpellTabInfo-132",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "deprecated api-GetSpellCooldown-133",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "deprecated api-GetSpellBookItemName-134",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "note": "Retirement proven; successor C_SpellBook.GetSpellBookItemName omits subName (under fix)."
     },
     {
       "source_id": "deprecated api-GetSpellTexture-135",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "note": "Retirement proven; successor C_Spell.GetSpellTexture returns path not fileID (under fix)."
     },
     {
       "source_id": "deprecated api-GetSpellCharges-136",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "deprecated api-GetSpellDescription-137",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "deprecated api-GetSpellCount-138",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "deprecated api-IsUsableSpell-139",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "source-context-141",
@@ -8960,27 +9203,31 @@
     },
     {
       "source_id": "deprecated api-C_TaskQuest-GetQuestsForPlayerByMapID-142",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "deprecated api-GetMerchantItemInfo-143",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "note": "Retirement proven; successor returns nil for seeded merchant item (under fix)."
     },
     {
       "source_id": "deprecated api-C_ChallengeMode-GetCompletionInfo-144",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "note": "Retirement proven; successor returns nil instead of completion record (under fix)."
     },
     {
       "source_id": "deprecated api-C_MythicPlus-IsWeeklyRewardAvailable-145",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "source-context-147",
@@ -8990,21 +9237,27 @@
     },
     {
       "source_id": "deprecated api-IsActiveQuestLegendary-148",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "deprecated api-C_QuestLog-IsLegendaryQuest-149",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "deprecated api-C_QuestLog-IsQuestRepeatableType-150",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "source-context-152",
@@ -9016,13 +9269,15 @@
       "source_id": "deprecated api-ConsolePrint-153",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "note": "Retirement proven; successor returns one nil instead of zero results (under fix)."
     },
     {
       "source_id": "deprecated api-message-154",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     },
     {
       "source_id": "source-context-156",
@@ -9034,7 +9289,7 @@
       "source_id": "deprecated api-IsSpellOverlayed-157",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "note": "Retirement proven; successor returns nil instead of bool (under fix)."
     },
     {
       "source_id": "source-context-159",
@@ -9044,9 +9299,11 @@
     },
     {
       "source_id": "deprecated api-IsArtifactRelicItem-160",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Non-inventory statement requires behavioral audit; see p1200-extract-scout.md."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired, no cached republication; successor result where listed (patch_12_0_0_deprecated)."
     }
   ],
   "non_inventory_source": {
