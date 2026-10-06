@@ -14,6 +14,8 @@ pub mod editor;
 pub mod exterior;
 #[cfg(feature = "retail-12-0-5")]
 pub mod inspect_mode;
+#[cfg(feature = "retail-12-0-0")]
+pub mod location;
 mod market;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7;
@@ -59,6 +61,8 @@ pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> 
     catalog::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     editor::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    location::register(state)?;
     exterior::register(state)?;
     basic_mode::register_pending(state)?;
     #[cfg(feature = "retail-12-0-0")]

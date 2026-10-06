@@ -293,6 +293,8 @@ pub struct HousingState {
     pub blueprint_import_availability: i32,
     #[cfg(feature = "retail-12-0-0")]
     pub editor: crate::c_api::c_housing::editor::EditorState,
+    #[cfg(feature = "retail-12-0-0")]
+    pub location: crate::c_api::c_housing::location::LocationState,
     pub active_house_editor_mode: i32,
     pub house_editor_player_type: Option<i32>,
     pub selected_decor_pet_guid: Option<String>,
