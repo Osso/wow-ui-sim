@@ -370,6 +370,79 @@ fn damage_meter_ambiguous_partial_selectors_return_empty_details() {
     );
 }
 
+// B02: INFERRED public out-of-combat publication; combat queries remain blocked.
+// This proves DTO snapshots, not native ConditionalSecret combat policy.
+#[test]
+fn damage_meter_patch_12_0_1_exact_values_and_snapshot_transitions() {
+    let env = fixture_env();
+    env.exec(r#"
+        local function exact(actual, expected)
+            assert(not issecretvalue(actual), 'out-of-combat fixture must be public')
+            assert(type(actual) == type(expected), 'wrong field type')
+            if type(expected) ~= 'table' then
+                assert(actual == expected, 'wrong field value')
+                return
+            end
+            for key, value in pairs(expected) do exact(actual[key], value) end
+            for key in pairs(actual) do assert(rawget(expected, key) ~= nil, 'extra field: '..key) end
+        end
+        ExpectedAvailable = {{sessionID=47, name='Fixture encounter', durationSeconds=20}}
+        ExpectedSource = {
+            sourceGUID='Creature-0-1-2-3-901-0000000047', sourceCreatureID=901,
+            name='Fixture source', classFilename='MAGE', specIconID=135932,
+            totalAmount=840, amountPerSecond=42, isLocalPlayer=false,
+            deathRecapID=73, deathTimeSeconds=18, classification='elite',
+            sourceDisplayType=2, factionGroup='Horde',
+        }
+        ExpectedSession = {combatSources={ExpectedSource}, maxAmount=840, totalAmount=840, durationSeconds=20}
+        ExpectedDetails = {maxAmount=630, totalAmount=630, combatSpells={{
+            spellID=133, totalAmount=630, amountPerSecond=31.5, creatureName='Fixture target',
+            overkillAmount=7, isAvoidable=true, isDeadly=false, combatSpellDetails={
+                unitName='Fixture target', unitClassFilename='WARRIOR', classification='normal',
+                isPet=false, isMob=true, amount=630, specIconID=132355,
+            },
+        }}}
+        function CheckExactDamageMeter()
+            exact(C_DamageMeter.GetAvailableCombatSessions(), ExpectedAvailable)
+            exact(C_DamageMeter.GetCombatSessionFromID(47, 0), ExpectedSession)
+            exact(C_DamageMeter.GetCombatSessionFromType(1, 0), ExpectedSession)
+            exact(C_DamageMeter.GetCombatSessionSourceFromID(47, 0, nil, 901), ExpectedDetails)
+            exact(C_DamageMeter.GetCombatSessionSourceFromType(1, 0, nil, 901), ExpectedDetails)
+        end
+        CheckExactDamageMeter()
+        RetainedSession = C_DamageMeter.GetCombatSessionFromID(47, 0)
+        RetainedDetails = C_DamageMeter.GetCombatSessionSourceFromID(47, 0, nil, 901)
+        local edited = C_DamageMeter.GetCombatSessionFromID(47, 0)
+        edited.totalAmount = -1; edited.combatSources[1].deathTimeSeconds = -1
+        local details = C_DamageMeter.GetCombatSessionSourceFromID(47, 0, nil, 901)
+        details.combatSpells[1].overkillAmount = -1
+        details.combatSpells[1].combatSpellDetails.isPet = true
+        collectgarbage('collect')
+        CheckExactDamageMeter()
+    "#).unwrap();
+    {
+        let state = env.state();
+        let mut state = state.borrow_mut();
+        let session = state.damage_meter.sessions.get_mut(&(SESSION_ID, DAMAGE_DONE)).unwrap();
+        session.total_amount = 1700.0;
+        session.combat_sources[0].source_guid = None;
+        let details = state.damage_meter.source_details.get_mut(&(SESSION_ID, DAMAGE_DONE, source_key())).unwrap();
+        details.total_amount = 900.0;
+        details.combat_spells[0].is_deadly = true;
+    }
+    env.exec(r#"
+        assert(RetainedSession.totalAmount == 840)
+        assert(RetainedSession.combatSources[1].sourceGUID == 'Creature-0-1-2-3-901-0000000047')
+        assert(RetainedDetails.totalAmount == 630 and RetainedDetails.combatSpells[1].isDeadly == false)
+        ExpectedSession.totalAmount = 1700; ExpectedSource.sourceGUID = nil
+        ExpectedDetails.totalAmount = 900; ExpectedDetails.combatSpells[1].isDeadly = true
+        CheckExactDamageMeter()
+        local missing = C_DamageMeter.GetCombatSessionFromID(47, 0).combatSources[1]
+        assert(rawget(missing, 'sourceGUID') == nil and missing.sourceGUID == nil)
+        assert(missing.sourceCreatureID == 901)
+    "#).unwrap();
+}
+
 fn inject_host_secret_selectors(env: &WowLuaEnv) {
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
