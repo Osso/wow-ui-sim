@@ -50,11 +50,12 @@ def extract_text(raw):
     lines = []
     inventory = False
     for line in raw.splitlines():
-        if line == "===Global API===":
+        if line == "===Global API===" or line.startswith('{| class="wikitable"'):
             inventory = True
-        if line == "===Enums===":
+        if line in ("===Enums===", "===Structures==="):
             inventory = False
-            line = "=== Enumerations ==="
+            if line == "===Enums===":
+                line = "=== Enumerations ==="
         if inventory:
             continue
         if line.strip() in ('{| class="darktable"', '|', '|}'):
@@ -71,6 +72,8 @@ def extract_text(raw):
 def is_source_context(value, number, patch):
     if number == 1 or value.startswith(('* TOC:', '* Official', '* Diffs:', '* Deprecated')):
         return True
+    if patch == '11.2.7':
+        return value.startswith(': 11.2.5')
     if patch == '12.0.0':
         return value.startswith(('** ', '* Addon apocalypse.', ': 11.2.7',
                                  'API changes have been introduced',

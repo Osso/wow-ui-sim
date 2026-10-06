@@ -8,6 +8,16 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_unheaded_inventory_stops_at_structures(self):
+        raw = ('==Consolidated changes==\n: 11.2.5 → 11.2.7\n'
+               '{| class="wikitable"\n: {{api|IgnoreMe}}\n|}\n'
+               '===CVars===\n: {{apitooltip|name=IgnoreCVar}}\n'
+               '===Commands===\n: {{apitooltip|name=IgnoreCommand}}\n'
+               '===Structures===\n DifficultyInfo\n   + isUserSelectable\n')
+        self.assertEqual(extract_text(raw), '== Consolidated changes ==\n'
+                         ': 11.2.5 → 11.2.7\n=== Structures ===\n'
+                         ' DifficultyInfo\n   + isUserSelectable\n')
+
     def test_12_0_0_plaintext_stays_identical(self):
         sources = ROOT / 'data/patch-api/sources'
         self.assertEqual(

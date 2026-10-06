@@ -1,0 +1,24 @@
+Patch 11.2.7 API changes
+
+== Summary ==
+* Housing.
+* ChatFrame Lua functions have been reorganized into a ChatFrameUtil namespace or moved to new ChatFrame and ChatFrameEditBox mixins.
+
+== Resources ==
+* TOC: 110207
+* Official patch notes: The Warning Content Update Notes
+
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+
+
+== Consolidated changes ==
+: 11.2.5 (64502) → 11.2.7 (64978) Dec 16 2025
+=== Structures ===
+ AccountStoreItemInfo
+   + mode
+ BNetGameAccountInfo
+   + classID
+ DifficultyInfo
+   + isUserSelectable
+ PlayerChoiceInfo
+   + requiresSelection

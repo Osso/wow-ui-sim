@@ -1,0 +1,27 @@
+[
+  {
+    "register": "12.0.0-wikitext-register.json",
+    "byte_identical": true,
+    "sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d"
+  },
+  {
+    "register": "12.0.1-wikitext-register.json",
+    "byte_identical": true,
+    "sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb"
+  },
+  {
+    "register": "12.0.5-wikitext-register.json",
+    "byte_identical": true,
+    "sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23"
+  },
+  {
+    "register": "12.0.7-wikitext-register.json",
+    "byte_identical": true,
+    "sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7"
+  },
+  {
+    "register": "12.1.0-wikitext-register.json",
+    "byte_identical": true,
+    "sha256": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311"
+  }
+]
