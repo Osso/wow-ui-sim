@@ -1,0 +1,388 @@
+{
+  "runtime_revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+  "results": [
+    {
+      "name": "initial-sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "a4de665d6e94db31be3f2ede0e39396f25c81128",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-initial.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "fixes-red",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_fixes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "a4de665d6e94db31be3f2ede0e39396f25c81128",
+      "scope": "new uncommitted five behavioral tests; no implementation edits",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-fixes-red.log"
+    },
+    {
+      "name": "fixes-green",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_fixes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "5b95c0ad9e6d110e159855e9d792421d851d2efd",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-fixes-green.log"
+    },
+    {
+      "name": "fixes-green-final",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_fixes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "5a4af891e3cd0390053d4d0ade805b89c82bb322",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-fixes-green-final.log"
+    },
+    {
+      "name": "extract-red",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/tools/test_extract_patch_non_inventory.py",
+        "ExtractTests.test_11_2_0_resources_are_editorial_but_nested_contracts_are_pending"
+      ],
+      "revision": "5a4af891e3cd0390053d4d0ade805b89c82bb322",
+      "scope": "new uncommitted editorial fixture",
+      "exit_code": 1
+    },
+    {
+      "name": "patch_11_2_0_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-sweep.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-sweep-result.json",
+      "invalidated_by": null,
+      "rows": 162,
+      "ok": 135,
+      "gaps": 27
+    },
+    {
+      "name": "patch_11_2_5_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1125-sweep.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1125-sweep-result.json",
+      "invalidated_by": null,
+      "rows": 163,
+      "ok": 118,
+      "gaps": 45
+    },
+    {
+      "name": "patch_11_2_7_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1127-sweep.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1127-sweep-result.json",
+      "invalidated_by": null,
+      "rows": 508,
+      "ok": 387,
+      "gaps": 121
+    },
+    {
+      "name": "patch_12_0_0_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1200-sweep.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1200-sweep-result.json",
+      "invalidated_by": null,
+      "rows": 1010,
+      "ok": 987,
+      "gaps": 23
+    },
+    {
+      "name": "patch_12_0_1_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1201-sweep.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1201-sweep-result.json",
+      "invalidated_by": null,
+      "rows": 225,
+      "ok": 222,
+      "gaps": 3
+    },
+    {
+      "name": "patch_12_0_5_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1205-sweep.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1205-sweep-result.json",
+      "invalidated_by": null,
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11
+    },
+    {
+      "name": "patch_12_0_7_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1207-sweep.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1207-sweep-result.json",
+      "invalidated_by": null,
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3
+    },
+    {
+      "name": "patch_12_1_0_publication_sweep",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1210-sweep.log",
+      "result_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1210-sweep-result.json",
+      "invalidated_by": null,
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5
+    },
+    {
+      "name": "negative-control",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 101,
+      "expected_exit_code": 101,
+      "invalidated_by": null
+    },
+    {
+      "name": "extract-green",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-extract-green.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "register-tests",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-register-tests.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "extract-reproduce",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.2.0",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-extract-reproduce.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/Cargo.toml",
+        "--check"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-fmt.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "retail-check",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-retail-check.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "mists-check",
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/Cargo.toml",
+        "--tests",
+        "--no-default-features",
+        "--features",
+        "sound gui casc client-mists"
+      ],
+      "revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-mists-check.log",
+      "invalidated_by": null
+    }
+  ]
+}

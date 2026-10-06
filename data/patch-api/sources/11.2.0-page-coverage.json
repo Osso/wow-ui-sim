@@ -1,0 +1,1770 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "11.2.0",
+  "source_register": "data/patch-api/sources/11.2.0-wikitext-register.json",
+  "source_sha256": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8",
+  "audit_status": "in-progress",
+  "proof_policy": "Publication does not establish signature/output/security/behavior or native parity. No 11.x runtime exists; current retail 12.1.0 is observed with all later supersessions. Main-thread local development, not independent/native acceptance. Exact cached deprecation aliases are not raw absence. Non-inventory contracts remain pending; external linked pages are not expanded. Existing ledgers unchanged.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-11-2-0",
+      "symbols": [
+        "162 wikitext inventory occurrences"
+      ],
+      "scope": "135 OK / 27 exact gaps; four superseded OK. 57 unsuperseded removals: 46 strict absence/rejection proofs, 11 cached deprecated aliases. Publication only.",
+      "spec": "docs/specs/patch-11-2-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_11_2_0_publication_sweep.rs",
+        "tests/common/publication_sweep.rs",
+        "tests/patch_11_2_0_publication_fixes.rs"
+      ],
+      "implementation": "Eleven bounded fixes: combat/gradient readback, four fog CVars, four namespace retirements and Browser NavigateTo exclusion. Retail-12-0-0 gates preserve classic profiles.",
+      "compiled_revision": "12ff22a5e5a0c158e3ce7c47ef8c74579e48cb60",
+      "proof": "Eight isolated GREEN sweeps; seven later observations identical; negative control adds exactly one gap. Five bounded behavioral tests GREEN after RED.",
+      "ledger": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-sweep-result.json"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/11.2.0-api-changes.txt",
+    "sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+    "wikitext_revid": 6726773,
+    "wikitext_sha256": "eea31d2692950b42d6e2395b0fc2d031757a41fb5f9acd63a082e540127b1af2",
+    "extract_tool": "tools/extract_patch_non_inventory.py"
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_Bank.AreAnyBankTypesViewable-37",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.DoesBankTypeSupportAutoDeposit-38",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.DoesBankTypeSupportMoneyTransfer-39",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.FetchBankLockedReason-40",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.FetchNextPurchasableBankTabData-41",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.FetchViewableBankTypes-42",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.GetLeaverPenaltyWarningTimeLeft-43",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.GetStartTime-44",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.IsChallengeModeResettable-45",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.SendChatMessage-46",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.AreMembersReady-47",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.FocusMembers-48",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.UnfocusMembers-49",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Container.HasContainerItem-50",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Container.SortBank-51",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_InstanceLeaver.IsPlayerLeaver-52",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.GetLevelUpInstances-53",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetGroupLeaverCountsByRole-54",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PaperDollInfo.GetInspectRatedBGData-55",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PaperDollInfo.IsInventorySlotEnabled-56",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.CanStartInstanceAbandonVote-57",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.ChallengeModeRestrictionsActive-58",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetAvailableLootMethods-59",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetInstanceAbandonShutdownTime-60",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetInstanceAbandonVoteRequirements-61",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetInstanceAbandonVoteResponse-62",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetInstanceAbandonVoteTime-63",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetLootMethod-64",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetNumInstanceAbandonGroupVoteResponses-65",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.IsChallengeModeActive-66",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.IsChallengeModeKeystoneOwner-67",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.SetInstanceAbandonVoteResponse-68",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.SetLootMethod-69",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.StartInstanceAbandonVote-70",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.DismissSummonedPet-71",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.IsCurrentlySummoned-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsAccountBankEnabled-73",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsCharacterBankEnabled-74",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.GetActiveSpecGroup-75",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.GetSpecializationInfo-76",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.GetSpecializationMasterySpells-77",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.GetSpecialization-78",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.GetTalentInfo-79",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.CancelSpellByID-80",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellActivationOverlay.IsSpellOverlayed-81",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.IsSpellInSpellBook-82",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.IsSpellKnownOrInSpellBook-83",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.IsSpellKnown-84",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeInfo.PickupTradeMoney-85",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.IsTransmogEnabled-86",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "metadata-only",
+      "note": "Later register reverses publication expectation: wt-global-api-C_Transmog.IsTransmogEnabled-538. No historical publication credit."
+    },
+    {
+      "source_id": "wt-global-api-CreateFromMixins-87",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetExpertisePercent-88",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-HasLootSpecializations-89",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-Mixin-90",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-PlayerIsInCombat-91",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-BankButtonIDToInvSlotID-94",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-BuyReagentBank-95",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.FetchNextPurchasableBankTabCost-96",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Container.SortReagentBankBags-97",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetVoidDepositItem-98",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetVoidItem-99",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetVoidWithdrawalItem-100",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-CanUseVoidStorage-101",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ClearVoidTransferDepositSlot-102",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ClickVoidStorageSlot-103",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ClickVoidTransferDepositSlot-104",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ClickVoidTransferWithdrawalSlot-105",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-DepositReagentBank-106",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ExecuteVoidTransfer-107",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetActiveSpecGroup-108",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Shared removed-publication policy accepts exact cached deprecation source/alias; not strict raw absence and not successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetBankSlotCost-109",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetInspectRatedBGData-110",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetLootMethod-111",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumBankSlots-112",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumVoidTransferDeposit-113",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumVoidTransferWithdrawal-114",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetReagentBankCost-115",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSpecializationInfo-116",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Shared removed-publication policy accepts exact cached deprecation source/alias; not strict raw absence and not successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetSpecializationMasterySpells-117",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Shared removed-publication policy accepts exact cached deprecation source/alias; not strict raw absence and not successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetSpecialization-118",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Shared removed-publication policy accepts exact cached deprecation source/alias; not strict raw absence and not successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetTalentInfo-119",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Shared removed-publication policy accepts exact cached deprecation source/alias; not strict raw absence and not successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidItemHyperlinkString-120",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidItemInfo-121",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidStorageSlotPageIndex-122",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidTransferCost-123",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidTransferDepositInfo-124",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidTransferWithdrawalInfo-125",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidUnlockCost-126",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-IsPlayerSpell-127",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Shared removed-publication policy accepts exact cached deprecation source/alias; not strict raw absence and not successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-IsReagentBankUnlocked-128",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-IsSpellKnownOrOverridesKnown-129",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Shared removed-publication policy accepts exact cached deprecation source/alias; not strict raw absence and not successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-IsSpellKnown-130",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Shared removed-publication policy accepts exact cached deprecation source/alias; not strict raw absence and not successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-IsSpellOverlayed-131",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-IsVoidStorageReady-132",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-PickupTradeMoney-133",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Shared removed-publication policy accepts exact cached deprecation source/alias; not strict raw absence and not successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-PurchaseSlot-134",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ReagentBankButtonIDToInvSlotID-135",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-SendChatMessage-136",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-SetLootMethod-137",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ShowBossFrameWhenUninteractable-138",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Shared removed-publication policy accepts exact cached deprecation source/alias; not strict raw absence and not successor behavior."
+    },
+    {
+      "source_id": "wt-global-api-UnlockVoidStorage-139",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.GetMapUIInfo-142",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetTalentTreeTalentPointResearchInfo-144",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1120-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.GetNumSpecializationsForClassID-146",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-FrameScriptObject:SetToDefaults-156",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:ClearScripts-157",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:ShouldButtonPassThrough-158",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Font:GetFontHeight-159",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-FontString:ClearAlphaGradient-160",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-FontString:GetAlphaGradient-161",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-FontString:GetFontHeight-162",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-FontString:SetFontHeight-163",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:ClearVertexOffsets-164",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:ClearAttribute-165",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:ClearAttributes-166",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:HasAlphaGradient-167",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:IsFrameBuffer-168",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:IsHighlightLocked-169",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:SetEdgeColor-170",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Browser:NavigateTo-173",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-CHALLENGE_MODE_COMPLETED_REWARDS-184",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CHALLENGE_MODE_LEAVER_TIMER_ENDED-185",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CHALLENGE_MODE_LEAVER_TIMER_STARTED-186",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CHALLENGE_MODE_NEW_RECORD-187",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBERS_UPDATED-188",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-CURRENCY_TRANSFER_SUCCESS-189",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-DELVE_ASSIST_ACTION-190",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-INSTANCE_ABANDON_VOTE_FINISHED-191",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-INSTANCE_ABANDON_VOTE_STARTED-192",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-INSTANCE_ABANDON_VOTE_UPDATED-193",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-INSTANCE_LEAVER_STATUS_CHANGED-194",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-ITEM_UPGRADE_MASTER_UPDATE-195",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-PLAYER_IN_COMBAT_CHANGED-196",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_GUILD_LEVEL-197",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-events-PLAYERBANKBAGSLOTS_CHANGED-200",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-PLAYERREAGENTBANKSLOTS_CHANGED-201",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-REAGENTBANK_PURCHASED-202",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-REAGENTBANK_UPDATE-203",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-VOID_DEPOSIT_WARNING-204",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-VOID_STORAGE_CONTENTS_UPDATE-205",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-VOID_STORAGE_DEPOSIT_UPDATE-206",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-VOID_STORAGE_UPDATE-207",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-VOID_TRANSFER_DONE-208",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-VOID_TRANSFER_SUCCESS-209",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-events-LEAVE_PARTY_CONFIRMATION-212",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-AsyncAssistActions-222",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-ClientSettings_ASYNC_COMPUTE-223",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "metadata-only",
+      "note": "Later register reverses publication expectation: wt-cvars-ClientSettings_ASYNC_COMPUTE-478. No historical publication credit."
+    },
+    {
+      "source_id": "wt-cvars-ClientSettings_SpellClutter-224",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-DeprecatedWarningThrottle-225",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-GxCompatAsyncComputeQueue-226",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-lastRenownForMajorFaction2658-227",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "metadata-only",
+      "note": "Later register reverses publication expectation: wt-cvars-lastRenownForMajorFaction2658-1061. No historical publication credit."
+    },
+    {
+      "source_id": "wt-cvars-lastRenownForMajorFaction2736-228",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "metadata-only",
+      "note": "Later register reverses publication expectation: wt-cvars-lastRenownForMajorFaction2736-1064. No historical publication credit."
+    },
+    {
+      "source_id": "wt-cvars-Sound_EnableGameplaySFX-229",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-Sound_GameplaySFX-230",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-spellVisualDensityFilterSetting-231",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-userFontScale-232",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-volumeFogDisableLightScattering-233",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-volumeFogDisableNoise-234",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-volumeFogDisableShadows-235",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-volumeFogUse16BitTexture-236",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only (sweep); no signature/output/security/behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-predictedHealth-239",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "wt-cvars-UseOldVolumeFog-240",
+      "capabilities": [
+        "publication-sweep-11-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-020",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-021",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-023",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-025",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-026",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-028",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-029",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-030",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-BagFlag-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagFlag-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagFlag-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BagIndex-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownSetSpellFlags-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-CooldownSetSpellFlags-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemGemColor-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemGemColor-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemSocketType-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemSocketType-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-QuestCompleteSpellType-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-QuestCompleteSpellType-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-WarbandScenePlacementType-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-WarbandScenePlacementType-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-SlotRegion-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-SlotRegion-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-SlotRegion-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-SlotRegionMask-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-SlotRegionMask-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-SlotRegionMask-068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-SubcontainerType-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-SubcontainerType-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-SubcontainerType-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-073",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-BankTabData-074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-BankTabData-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-BankTabData-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-CraftingReagentSlotSchematic-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-CraftingReagentSlotSchematic-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-ExpansionDisplayInfo-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-ExpansionDisplayInfo-080",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-FontScriptInfo-081",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-FontScriptInfo-082",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-LfgSearchResultPlayerInfo-083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-LfgSearchResultPlayerInfo-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-RandomBGInfo-085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-RandomBGInfo-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    },
+    {
+      "source_id": "structures-RandomBGInfo-087",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1120-extract-scout.md."
+    }
+  ]
+}

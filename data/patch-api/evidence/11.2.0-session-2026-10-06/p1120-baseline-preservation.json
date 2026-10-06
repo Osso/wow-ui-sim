@@ -1,0 +1,37 @@
+[
+  {
+    "patch": "p1125-sweep-result.json",
+    "identical_observations": true,
+    "baseline_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1125-sweep-result.json"
+  },
+  {
+    "patch": "p1127-sweep-result.json",
+    "identical_observations": true,
+    "baseline_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1127-sweep-result.json"
+  },
+  {
+    "patch": "p1200-sweep-result.json",
+    "identical_observations": true,
+    "baseline_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1200-sweep-result.json"
+  },
+  {
+    "patch": "p1201-sweep-result.json",
+    "identical_observations": true,
+    "baseline_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1201-sweep-result.json"
+  },
+  {
+    "patch": "p1205-sweep-result.json",
+    "identical_observations": true,
+    "baseline_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1205-sweep-result.json"
+  },
+  {
+    "patch": "p1207-sweep-result.json",
+    "identical_observations": true,
+    "baseline_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1207-sweep-result.json"
+  },
+  {
+    "patch": "p1210-sweep-result.json",
+    "identical_observations": true,
+    "baseline_path": "data/patch-api/evidence/11.2.5-session-2026-10-06/p1210-sweep-result.json"
+  }
+]

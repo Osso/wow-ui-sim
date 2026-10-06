@@ -1,0 +1,1676 @@
+{
+  "rows": [
+    {
+      "source_id": "wt-cvars-volumeFogDisableLightScattering-233",
+      "symbol": "volumeFogDisableLightScattering",
+      "category": "cvar-default",
+      "investigate": "src/cvars.rs",
+      "decision": "fixed",
+      "reason": "Missing four documented zero-default CVars; add through existing retail-gated defaults, no rendering claim.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": "0",
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "volumeFogDisableLightScattering"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": true,
+          "detail": "value/default queried",
+          "kind": "cvar",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": "0",
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "volumeFogDisableLightScattering"
+        },
+        "observed": {
+          "default": "0",
+          "default_mismatch": false,
+          "detail": "value/default queried",
+          "kind": "cvar",
+          "value": "0"
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-cvars-volumeFogDisableNoise-234",
+      "symbol": "volumeFogDisableNoise",
+      "category": "cvar-default",
+      "investigate": "src/cvars.rs",
+      "decision": "fixed",
+      "reason": "Missing four documented zero-default CVars; add through existing retail-gated defaults, no rendering claim.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": "0",
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "volumeFogDisableNoise"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": true,
+          "detail": "value/default queried",
+          "kind": "cvar",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": "0",
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "volumeFogDisableNoise"
+        },
+        "observed": {
+          "default": "0",
+          "default_mismatch": false,
+          "detail": "value/default queried",
+          "kind": "cvar",
+          "value": "0"
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-cvars-volumeFogDisableShadows-235",
+      "symbol": "volumeFogDisableShadows",
+      "category": "cvar-default",
+      "investigate": "src/cvars.rs",
+      "decision": "fixed",
+      "reason": "Missing four documented zero-default CVars; add through existing retail-gated defaults, no rendering claim.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": "0",
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "volumeFogDisableShadows"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": true,
+          "detail": "value/default queried",
+          "kind": "cvar",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": "0",
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "volumeFogDisableShadows"
+        },
+        "observed": {
+          "default": "0",
+          "default_mismatch": false,
+          "detail": "value/default queried",
+          "kind": "cvar",
+          "value": "0"
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-cvars-volumeFogUse16BitTexture-236",
+      "symbol": "volumeFogUse16BitTexture",
+      "category": "cvar-default",
+      "investigate": "src/cvars.rs",
+      "decision": "fixed",
+      "reason": "Missing four documented zero-default CVars; add through existing retail-gated defaults, no rendering claim.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": "0",
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "volumeFogUse16BitTexture"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": true,
+          "detail": "value/default queried",
+          "kind": "cvar",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": "0",
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "volumeFogUse16BitTexture"
+        },
+        "observed": {
+          "default": "0",
+          "default_mismatch": false,
+          "detail": "value/default queried",
+          "kind": "cvar",
+          "value": "0"
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.AreAnyBankTypesViewable-37",
+      "symbol": "C_Bank.AreAnyBankTypesViewable",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/item_spell/c_currency.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior. Existing bank implementation has deposited-money/tab-count placeholders, not viewable types, tab purchase data, access/reasons or transfer capabilities.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.AreAnyBankTypesViewable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.AreAnyBankTypesViewable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.DoesBankTypeSupportAutoDeposit-38",
+      "symbol": "C_Bank.DoesBankTypeSupportAutoDeposit",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/item_spell/c_currency.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior. Existing bank implementation has deposited-money/tab-count placeholders, not viewable types, tab purchase data, access/reasons or transfer capabilities.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.DoesBankTypeSupportAutoDeposit"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.DoesBankTypeSupportAutoDeposit"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.DoesBankTypeSupportMoneyTransfer-39",
+      "symbol": "C_Bank.DoesBankTypeSupportMoneyTransfer",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/item_spell/c_currency.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior. Existing bank implementation has deposited-money/tab-count placeholders, not viewable types, tab purchase data, access/reasons or transfer capabilities.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.DoesBankTypeSupportMoneyTransfer"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.DoesBankTypeSupportMoneyTransfer"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.FetchBankLockedReason-40",
+      "symbol": "C_Bank.FetchBankLockedReason",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/item_spell/c_currency.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior. Existing bank implementation has deposited-money/tab-count placeholders, not viewable types, tab purchase data, access/reasons or transfer capabilities.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.FetchBankLockedReason"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.FetchBankLockedReason"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.FetchNextPurchasableBankTabCost-96",
+      "symbol": "C_Bank.FetchNextPurchasableBankTabCost",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/item_spell/c_currency.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior. Existing bank implementation has deposited-money/tab-count placeholders, not viewable types, tab purchase data, access/reasons or transfer capabilities.",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.FetchNextPurchasableBankTabCost"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.FetchNextPurchasableBankTabCost"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.FetchNextPurchasableBankTabData-41",
+      "symbol": "C_Bank.FetchNextPurchasableBankTabData",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/item_spell/c_currency.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior. Existing bank implementation has deposited-money/tab-count placeholders, not viewable types, tab purchase data, access/reasons or transfer capabilities.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.FetchNextPurchasableBankTabData"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.FetchNextPurchasableBankTabData"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Bank.FetchViewableBankTypes-42",
+      "symbol": "C_Bank.FetchViewableBankTypes",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/item_spell/c_currency.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior. Existing bank implementation has deposited-money/tab-count placeholders, not viewable types, tab purchase data, access/reasons or transfer capabilities.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.FetchViewableBankTypes"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Bank.FetchViewableBankTypes"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.GetStartTime-44",
+      "symbol": "C_ChallengeMode.GetStartTime",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/c_challenge_mode.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ChallengeMode.GetStartTime"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ChallengeMode.GetStartTime"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.IsChallengeModeResettable-45",
+      "symbol": "C_ChallengeMode.IsChallengeModeResettable",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/c_challenge_mode.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ChallengeMode.IsChallengeModeResettable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ChallengeMode.IsChallengeModeResettable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Club.UnfocusMembers-49",
+      "symbol": "C_Club.UnfocusMembers",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/c_club.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Club.UnfocusMembers"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Club.UnfocusMembers"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Container.SortBank-51",
+      "symbol": "C_Container.SortBank",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/item_spell",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Container.SortBank"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Container.SortBank"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Container.SortReagentBankBags-97",
+      "symbol": "C_Container.SortReagentBankBags",
+      "category": "retirement",
+      "investigate": "src/c_api/patch_retired_members.rs",
+      "decision": "fixed",
+      "reason": "Raw-absent retired member fabricated by namespace __index; existing retirement mechanism now blocks ordinary lookup.",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Container.SortReagentBankBags"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Container.SortReagentBankBags"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetTalentTreeTalentPointResearchInfo-144",
+      "symbol": "C_Garrison.GetTalentTreeTalentPointResearchInfo",
+      "category": "missing-explicit-producer",
+      "investigate": "src/lua_api/globals/missing_surface/garrison.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Garrison.GetTalentTreeTalentPointResearchInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Garrison.GetTalentTreeTalentPointResearchInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_InstanceLeaver.IsPlayerLeaver-52",
+      "symbol": "C_InstanceLeaver.IsPlayerLeaver",
+      "category": "missing-explicit-producer",
+      "investigate": "src/lua_api/globals/stubs/namespace_stubs.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_InstanceLeaver.IsPlayerLeaver"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_InstanceLeaver.IsPlayerLeaver"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.GetLevelUpInstances-53",
+      "symbol": "C_LFGInfo.GetLevelUpInstances",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/c_lfg_info.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_LFGInfo.GetLevelUpInstances"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_LFGInfo.GetLevelUpInstances"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PaperDollInfo.GetInspectRatedBGData-55",
+      "symbol": "C_PaperDollInfo.GetInspectRatedBGData",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PaperDollInfo.GetInspectRatedBGData"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PaperDollInfo.GetInspectRatedBGData"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.ChallengeModeRestrictionsActive-58",
+      "symbol": "C_PartyInfo.ChallengeModeRestrictionsActive",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/c_party_info.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PartyInfo.ChallengeModeRestrictionsActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PartyInfo.ChallengeModeRestrictionsActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetInstanceAbandonVoteRequirements-61",
+      "symbol": "C_PartyInfo.GetInstanceAbandonVoteRequirements",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/c_party_info.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PartyInfo.GetInstanceAbandonVoteRequirements"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PartyInfo.GetInstanceAbandonVoteRequirements"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.IsChallengeModeActive-66",
+      "symbol": "C_PartyInfo.IsChallengeModeActive",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/c_party_info.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PartyInfo.IsChallengeModeActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PartyInfo.IsChallengeModeActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.IsChallengeModeKeystoneOwner-67",
+      "symbol": "C_PartyInfo.IsChallengeModeKeystoneOwner",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/c_party_info.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PartyInfo.IsChallengeModeKeystoneOwner"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PartyInfo.IsChallengeModeKeystoneOwner"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.DismissSummonedPet-71",
+      "symbol": "C_PetJournal.DismissSummonedPet",
+      "category": "missing-explicit-producer",
+      "investigate": "src/lua_api/globals/stubs/namespace_stubs.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PetJournal.DismissSummonedPet"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PetJournal.DismissSummonedPet"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.IsCurrentlySummoned-72",
+      "symbol": "C_PetJournal.IsCurrentlySummoned",
+      "category": "missing-explicit-producer",
+      "investigate": "src/lua_api/globals/stubs/namespace_stubs.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PetJournal.IsCurrentlySummoned"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PetJournal.IsCurrentlySummoned"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsAccountBankEnabled-73",
+      "symbol": "C_PlayerInfo.IsAccountBankEnabled",
+      "category": "missing-explicit-producer",
+      "investigate": "src/lua_api/globals/stubs/namespace_stubs.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PlayerInfo.IsAccountBankEnabled"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PlayerInfo.IsAccountBankEnabled"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsCharacterBankEnabled-74",
+      "symbol": "C_PlayerInfo.IsCharacterBankEnabled",
+      "category": "missing-explicit-producer",
+      "investigate": "src/lua_api/globals/stubs/namespace_stubs.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PlayerInfo.IsCharacterBankEnabled"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PlayerInfo.IsCharacterBankEnabled"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.GetTalentInfo-79",
+      "symbol": "C_SpecializationInfo.GetTalentInfo",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api/c_spec.rs",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior. GetTalentInfo producer is Mists-only; that legacy tuple does not establish the retail query contract.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_SpecializationInfo.GetTalentInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_SpecializationInfo.GetTalentInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.CancelSpellByID-80",
+      "symbol": "C_Spell.CancelSpellByID",
+      "category": "missing-explicit-producer",
+      "investigate": "src/c_api",
+      "decision": "retained",
+      "reason": "Raw member absent; generic lookup callable is not an explicit producer. Retain missing backing contract; publication shim would invent behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.CancelSpellByID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.CancelSpellByID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetVoidDepositItem-98",
+      "symbol": "C_TooltipInfo.GetVoidDepositItem",
+      "category": "retirement",
+      "investigate": "src/c_api/patch_retired_members.rs",
+      "decision": "fixed",
+      "reason": "Raw-absent retired member fabricated by namespace __index; existing retirement mechanism now blocks ordinary lookup.",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TooltipInfo.GetVoidDepositItem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TooltipInfo.GetVoidDepositItem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetVoidItem-99",
+      "symbol": "C_TooltipInfo.GetVoidItem",
+      "category": "retirement",
+      "investigate": "src/c_api/patch_retired_members.rs",
+      "decision": "fixed",
+      "reason": "Raw-absent retired member fabricated by namespace __index; existing retirement mechanism now blocks ordinary lookup.",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TooltipInfo.GetVoidItem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TooltipInfo.GetVoidItem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetVoidWithdrawalItem-100",
+      "symbol": "C_TooltipInfo.GetVoidWithdrawalItem",
+      "category": "retirement",
+      "investigate": "src/c_api/patch_retired_members.rs",
+      "decision": "fixed",
+      "reason": "Raw-absent retired member fabricated by namespace __index; existing retirement mechanism now blocks ordinary lookup.",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TooltipInfo.GetVoidWithdrawalItem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TooltipInfo.GetVoidWithdrawalItem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-GetLootMethod-111",
+      "symbol": "GetLootMethod",
+      "category": "retained-global-retirement",
+      "investigate": "src/lua_api/globals/real/loot_method.rs",
+      "decision": "retained",
+      "reason": "Legacy simulator global still explicitly registered; cached deprecation source/identity not established. Retain exact retirement gap: namespaced successor returns numeric method/nil indices, legacy tests use string/zero contract; migration needs separate producer/consumer proof.",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetLootMethod"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetLootMethod"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-PlayerIsInCombat-91",
+      "symbol": "PlayerIsInCombat",
+      "category": "existing-state-or-shim-publication",
+      "investigate": "src/lua_api/globals/unit_misc.rs",
+      "decision": "fixed",
+      "reason": "Missing no-argument reader of existing player.in_combat; register gated live-state producer.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "PlayerIsInCombat"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "PlayerIsInCombat"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-SendChatMessage-136",
+      "symbol": "SendChatMessage",
+      "category": "retained-global-retirement",
+      "investigate": "src/lua_api/globals/message_verbs.rs; src/lua_api/chat_init.rs",
+      "decision": "retained",
+      "reason": "Simulator registration and post-load chat activation publish native legacy closure, replacing cached forwarding wrapper. Retain exact lifecycle retirement/deprecation-attribution gap; removal must preserve cold env outbound chat, cached forwarding and post-load chat behavior.",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "SendChatMessage"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "SendChatMessage"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-widgets-Browser:NavigateTo-173",
+      "symbol": "Browser:NavigateTo",
+      "category": "existing-state-or-shim-publication",
+      "investigate": "src/lua_api/frame/methods/widgets/browser.rs",
+      "decision": "fixed",
+      "reason": "Unconditional permanent browser shim published removed method; exclude supported retail epochs, preserve NavigateHome/classic.",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "Browser:NavigateTo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Browser; lookup=function",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "Browser:NavigateTo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Browser; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-widgets-FontString:GetAlphaGradient-161",
+      "symbol": "FontString:GetAlphaGradient",
+      "category": "existing-state-or-shim-publication",
+      "investigate": "src/lua_api/frame/methods/misc/alpha_gradient.rs",
+      "decision": "fixed",
+      "reason": "Set/clear already own gradient slot 0; add gated numeric readback. Empty span zero is inferred simulator policy.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "FontString:GetAlphaGradient"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "FontString; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "FontString:GetAlphaGradient"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "FontString; lookup=function",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": true
+      }
+    }
+  ]
+}

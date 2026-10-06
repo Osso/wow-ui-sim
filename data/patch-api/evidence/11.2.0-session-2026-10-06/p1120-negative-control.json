@@ -1,0 +1,13 @@
+{
+  "expected_exit_code": 101,
+  "actual_exit_code": 101,
+  "changed_ids": [
+    "wt-global-api-C_ChallengeMode.GetLeaverPenaltyWarningTimeLeft-43"
+  ],
+  "new_ids": [
+    "wt-global-api-C_ChallengeMode.GetLeaverPenaltyWarningTimeLeft-43"
+  ],
+  "resolved_ids": [],
+  "normal_gaps": 27,
+  "negative_gaps": 28
+}
