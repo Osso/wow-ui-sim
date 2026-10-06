@@ -56,7 +56,7 @@ pub(crate) fn push_charge_info(state: &mut LuaState, spell_id: Option<u32>) -> L
         state.push(Val::Nil);
         return Ok(1);
     };
-    let info = create_table_with_capacity(state, 5);
+    let info = create_table_with_capacity(state, 6);
     // Keep the result reachable while host-secret wrappers allocate.
     state.push(info);
     table_set_static(
@@ -78,11 +78,24 @@ pub(crate) fn push_charge_info(state: &mut LuaState, spell_id: Option<u32>) -> L
         };
         table_set_static(state, info, name, value);
     }
+    #[cfg(feature = "retail-12-0-5")]
+    table_set_static(state, info, "isActive", Val::Bool(charge_is_active(charge)));
     Ok(1)
 }
 
+fn charge_is_active(charge: SpellChargeState) -> bool {
+    let recharging = charge.max_charges > 1 && charge.current_charges < charge.max_charges;
+    let has_interval = charge.recharge_start > 0.0 && charge.recharge_duration > 0.0;
+    recharging && has_interval
+}
+
 fn select_recharge_times(charge: SpellChargeState, now: f64) -> Option<(f64, f64, f64)> {
-    if charge.current_charges < charge.max_charges {
+    let active = if cfg!(feature = "retail-12-0-5") {
+        charge_is_active(charge)
+    } else {
+        charge.current_charges < charge.max_charges
+    };
+    if active {
         return Some((
             charge.recharge_start,
             charge.recharge_duration,

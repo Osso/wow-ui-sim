@@ -8,7 +8,7 @@ Implemented below; bounded batch11 execution and independent default-profile gat
 
 - [x] Default `cooldowns_restricted` to false. Read changes live, independently of combat and `unit_stats_restricted`; the predicate returns exactly one ordinary boolean.
 - [x] Resolve existing public spell/action/player-book selectors to the same explicit `SpellChargeState`. Fixture spell 19750, action 17, player book slot 5/bank 0 supplies current 1, max 3, recharge start 12, base duration 40, rate 2.
-- [x] With restriction false, all five numeric fields are ordinary and match input. With restriction true, wrap only concrete Rust `currentCharges`, `cooldownStartTime`, `cooldownDuration`, and `chargeModRate` numbers with `wrap_host_secret_number`; preserve payloads. `maxCharges` and the table itself remain public. Root the table before wrapper allocations. Do not add `isActive`.
+- [x] With restriction false, all five numeric fields are ordinary and match input. With restriction true, wrap only concrete Rust `currentCharges`, `cooldownStartTime`, `cooldownDuration`, and `chargeModRate` numbers with `wrap_host_secret_number`; preserve payloads. `maxCharges` and the table itself remain public. Root the table before wrapper allocations. The 12.0.1 extract follow-up adds public `isActive` under the later supported `retail-12-0-5` gate.
 - [x] Subsequent table queries follow false → true → false changes without modifying charge input. Retain nil for missing input, unresolved identity, or zero maximum charges; fabricate no records.
 - [x] Accept tainted callers using public selectors without clearing caller taint. Restricted fields remain opaque; guarded VM inspection is available only to untainted callers.
 - [x] Authenticate secret action/book selectors using VM `unwrap_secret`, even for secure callers, before exact numeric identity resolution. Tainted public selectors are accepted; tainted secret selectors are rejected. Authenticate both book selectors before resolving identity, including invalid slot/bank combinations.
@@ -28,7 +28,7 @@ Exact local source directory: `/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/A
 
 - `SecretPredicateAPIDocumentation.lua:129–131`: predicate name/function/documentation; following Returns declares one nonnil boolean and no Arguments block.
 - `SecretPredicatesDocumentation.lua:89–92`: restriction annotation includes combat/encounter/challenge/PvP contexts and individual spell exceptions. This slice exposes an explicit input, not automatic native restriction hooks or exception inference.
-- `SpellSharedDocumentation.lua:6–15`: numeric charge fields; `maxCharges` and the newer `isActive` are `NeverSecret`. `isActive` is deliberately not added to this existing five-field model.
+- `SpellSharedDocumentation.lua:6–15`: numeric charge fields; `maxCharges` and the newer `isActive` are `NeverSecret`. `isActive` was excluded from the original restriction slice; the 12.0.1 extract follow-up below supplies it.
 - `SpellDocumentation.lua:250–254`, `ActionBarFrameDocumentation.lua:138–142`, `SpellBookDocumentation.lua:196–200`: all three queries have restricted output; spell secret arguments are `AllowedWhenTainted`, action/book are `AllowedWhenUntainted`.
 
 ### Inferences and native-probe boundary
@@ -67,6 +67,14 @@ Batch11 at `d8a93bec37dc09980e41dd37b63d0dd26be88668` records **24 PASS / 0 FAIL
 - [ ] Secret spell identifier `AllowedWhenTainted` remains unresolved and untested here; guarded generic unwrap does not solve it.
 - [x] Bounded independent audit and revision-scoped default fmt/check gates above; not PTR/older-profile, native or whole-page acceptance.
 
+## 12.0.1 extract follow-up
+
+`isActive` is a public boolean computed from `maxCharges > 1`, `currentCharges < maxCharges`, positive recharge start and positive recharge duration. All three charge queries share this formula. Inactive configured charge input returns a zero-span duration object. Earlier epochs preserve their existing active-only duration behavior.
+
+`patch_12_0_1_cooldown_charge_formula_and_zero_span` tests active, full charges, one maximum charge, zero start and zero duration with restriction enabled, through spell/action/book tables and objects. `patch_12_0_1_cooldown_cast_expiry_transitions` exercises actual cast creation and host-clock expiry of regular cooldowns. `patch_12_0_1_cached_secure_delegate_removed` exercises unchanged cached Game Lua under a tainted caller, rejecting secret numeric setters while permitting real duration objects.
+
+**INFERRED:** automatic charge spending/replenishment is not modeled; tests supply host transitions. Regular cooldown enablement has no hold state. LoC fields remain host-provided flags rather than derived expiration comparisons; cooldown-aura associations do not yet feed cooldown selection. These gaps prevent full hotfix closure.
+
 ## Out of scope
 
-Other cooldown/cast-count/aura APIs, new `isActive` output, per-spell exceptions, automatic restriction hooks, spending/replenishment, pet/macro mappings, full secret-argument matrix, and native-client parity. No SimState, Cargo, XML, gamepad, or vendor edits in this producer slice; no push or deployment.
+Other cooldown/cast-count/aura APIs outside the extract follow-up above, per-spell exceptions, automatic restriction hooks, spending/replenishment, pet/macro mappings, full secret-argument matrix, and native-client parity. No SimState, Cargo, XML, gamepad, or vendor edits in this producer slice; no push or deployment.
