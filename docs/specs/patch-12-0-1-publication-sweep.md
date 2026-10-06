@@ -91,3 +91,7 @@ Replace empty totem defaults with host-supplied slots shared by info/count/durat
 ## Social producers
 
 Presence setters mutate local account flags, with documented optional true arguments. INFERRED: initially false, independent flags; no remote propagation or legacy `BNGetInfo` migration credit. Voice queries produce complete channel/member snapshots from host records; exact opaque community IDs are retained, missing selectors return nothing and returned DTO mutations do not affect state. Transport, membership mutations and chat-lockdown secrecy remain unmodeled. Four publication rows close with setter state assertions and nonempty channel/member fixtures.
+
+## Host policy and arena inputs
+
+Comparison permission shares the existing UnitIsUnit token policy, moved into `c_api`; existing inferred token rules are unchanged. Threat-state secrecy reads the same host restriction flag as UnitThreatLeadSituation; numeric threat-values secrecy remains a separate missing model. Housing cart removal, endgame field eligibility/activity classification and hidden spell-enchantment IDs use explicit host inputs, not invented native thresholds or source-ID mappings. Arena CC returns timers from host windows keyed by resolved GUID. INFERRED: unset policies are false, unknown/inactive CC is an empty duration; native CC production/selection/secrecy is not claimed. Concrete selectors, enabled/disabled inputs and expired/unknown timers are tested. Seven publication IDs close.

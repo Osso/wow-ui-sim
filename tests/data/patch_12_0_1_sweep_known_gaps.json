@@ -1,12 +1,5 @@
 [
   "wt-global-api-C_CatalogShop.BulkRefundDecors-224",
-  "wt-global-api-C_Housing.IsHousingMarketCartFullRemoveEnabled-262",
-  "wt-global-api-C_LFGList.IsPlayerValidForEndgameFieldEdits-281",
-  "wt-global-api-C_LFGList.ListingUsesEndgameEditRestrictions-282",
-  "wt-global-api-C_PvP.GetArenaCrowdControlDuration-284",
-  "wt-global-api-C_Secrets.CanCompareUnitTokens-285",
-  "wt-global-api-C_Secrets.ShouldUnitThreatStateBeSecret-286",
   "wt-global-api-C_Secrets.ShouldUnitThreatValuesBeSecret-287",
-  "wt-global-api-C_TransmogCollection.IsSpellItemEnchantmentHiddenVisual-292",
   "wt-scriptobjects-NamePlate:SetStackingBoundsFrame-349"
 ]

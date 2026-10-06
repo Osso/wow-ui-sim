@@ -18,6 +18,13 @@ const CONTEXTUALLY_SECRET: f64 = 2.0;
 type Query = fn(&mut LuaState) -> LuaResult<u32>;
 
 const QUERIES: &[(&str, Query)] = &[
+    #[cfg(feature = "retail-12-0-5")]
+    ("CanCompareUnitTokens", can_compare_unit_tokens),
+    #[cfg(feature = "retail-12-0-5")]
+    (
+        "ShouldUnitThreatStateBeSecret",
+        should_unit_threat_state_be_secret,
+    ),
     ("GetPowerTypeSecrecy", get_power_type_secrecy),
     ("GetSpellCastSecrecy", get_spell_cast_secrecy),
     ("GetSpellCooldownSecrecy", get_spell_cooldown_secrecy),
@@ -210,6 +217,26 @@ fn should_unit_power_be_secret(state: &mut LuaState) -> LuaResult<u32> {
 
 fn should_unit_power_max_be_secret(state: &mut LuaState) -> LuaResult<u32> {
     should_unit_power_be_secret(state)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn can_compare_unit_tokens(state: &mut LuaState) -> LuaResult<u32> {
+    let lhs = read_unit(state, 1)?;
+    let rhs = read_unit(state, 2)?;
+    push_bool(
+        state,
+        super::unit_comparison::permitted(Some(&lhs), Some(&rhs)),
+    )
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn should_unit_threat_state_be_secret(state: &mut LuaState) -> LuaResult<u32> {
+    authenticate_arguments(state, 2)?;
+    // The same host policy controls UnitThreatLeadSituation secret returns.
+    let restricted = borrow_state(state)?
+        .plain_global_inputs
+        .threat_state_restricted;
+    push_bool(state, restricted)
 }
 
 fn should_unit_comparison_be_secret(state: &mut LuaState) -> LuaResult<u32> {

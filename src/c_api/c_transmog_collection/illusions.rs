@@ -8,6 +8,20 @@ use rilua::{LuaResult, Val};
 use super::IllusionInfo;
 
 pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+    table_set_rust_fn_static(
+        state,
+        namespace,
+        "IsSpellItemEnchantmentHiddenVisual",
+        |s| {
+            use crate::lua_bridge::FromStack;
+            let id = u32::from_stack(s, 1)?;
+            let hidden = borrow_state(s)?
+                .hidden_spell_item_enchantments
+                .contains(&id);
+            s.push(Val::Bool(hidden));
+            Ok(1)
+        },
+    )?;
     table_set_rust_fn_static(state, namespace, "GetIllusions", get_illusions)
 }
 

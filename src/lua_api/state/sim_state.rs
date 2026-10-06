@@ -656,6 +656,12 @@ pub struct SimState {
     #[cfg(feature = "retail-12-0-5")]
     pub voice_channels: Vec<crate::c_api::c_voice_chat_channels::VoiceChannel>,
     #[cfg(feature = "retail-12-0-5")]
+    pub lfg_endgame_policy: crate::c_api::c_lfg_list_policy::EndgameEditPolicy,
+    #[cfg(feature = "retail-12-0-5")]
+    pub arena_crowd_control: HashMap<String, crate::c_api::c_pvp_crowd_control::CrowdControlWindow>,
+    #[cfg(feature = "retail-12-0-5")]
+    pub hidden_spell_item_enchantments: std::collections::HashSet<u32>,
+    #[cfg(feature = "retail-12-0-5")]
     pub bnet_presence: crate::c_api::c_battle_net::Presence,
     /// Accepted public SpeakText requests in call order; no audio playback.
     #[cfg(feature = "retail-12-0-5")]

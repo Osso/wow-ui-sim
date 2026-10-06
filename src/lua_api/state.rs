@@ -571,6 +571,12 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             voice_channels: Vec::new(),
             #[cfg(feature = "retail-12-0-5")]
+            lfg_endgame_policy: Default::default(),
+            #[cfg(feature = "retail-12-0-5")]
+            arena_crowd_control: HashMap::new(),
+            #[cfg(feature = "retail-12-0-5")]
+            hidden_spell_item_enchantments: std::collections::HashSet::new(),
+            #[cfg(feature = "retail-12-0-5")]
             bnet_presence: Default::default(),
             #[cfg(feature = "retail-12-0-5")]
             voice_chat_speak_requests: Vec::new(),

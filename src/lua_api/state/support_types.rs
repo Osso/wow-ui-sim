@@ -264,6 +264,8 @@ pub struct HousingState {
     pub initiative: crate::c_api::c_neighborhood_initiative::model::NeighborhoodInitiativeState,
     /// INFERRED: explicit host feature policy, disabled until configured.
     pub market_shop_enabled: bool,
+    /// Host market-cart removal capability; INFERRED unconfigured false.
+    pub market_cart_full_remove_enabled: bool,
     /// Last plot selected in the house finder; no purchase/teleport implied.
     pub house_finder_selected_plot: Option<i32>,
     pub catalog: crate::c_api::c_housing::catalog::HousingCatalogState,

@@ -365,65 +365,11 @@ fn comparison_unit_token(state: &LuaState, index: i32) -> LuaResult<Option<Strin
     Option::<String>::from_stack(state, index)
 }
 
-#[cfg(feature = "retail-12-0-5")]
-fn is_base_comparison_token(unit: &str) -> bool {
-    matches!(
-        unit,
-        "player"
-            | "pet"
-            | "vehicle"
-            | "mouseover"
-            | "target"
-            | "softenemy"
-            | "softfriend"
-            | "softinteract"
-            | "focus"
-            | "none"
-            | "npc"
-            | "questnpc"
-    )
-}
-
-#[cfg(feature = "retail-12-0-5")]
-fn is_group_comparison_token(unit: &str) -> bool {
-    const GROUP_TOKEN_LIMITS: [(&str, u8); 4] =
-        [("party", 4), ("partypet", 4), ("raid", 40), ("raidpet", 40)];
-    GROUP_TOKEN_LIMITS.iter().any(|(prefix, limit)| {
-        let Some(suffix) = unit.strip_prefix(prefix) else {
-            return false;
-        };
-        let Ok(index) = suffix.parse::<u8>() else {
-            return false;
-        };
-        let canonical = suffix == index.to_string();
-        canonical && (1..=*limit).contains(&index)
-    })
-}
-
-#[cfg(feature = "retail-12-0-5")]
-fn is_restricted_comparison_counterpart(unit: &str) -> bool {
-    unit.starts_with("nameplate") || unit.ends_with("target")
-}
-
-#[cfg(feature = "retail-12-0-5")]
-fn unit_comparison_permitted(lhs: Option<&str>, rhs: Option<&str>) -> bool {
-    let (Some(lhs), Some(rhs)) = (lhs, rhs) else {
-        // Inferred compatibility policy: missing tokens retain false, not denial.
-        return true;
-    };
-    if is_base_comparison_token(lhs) || is_base_comparison_token(rhs) {
-        return true;
-    }
-    let lhs_allows = is_group_comparison_token(lhs) && !is_restricted_comparison_counterpart(rhs);
-    let rhs_allows = is_group_comparison_token(rhs) && !is_restricted_comparison_counterpart(lhs);
-    lhs_allows || rhs_allows
-}
-
 fn unit_is_unit(state: &mut LuaState) -> LuaResult<u32> {
     let lhs = comparison_unit_token(state, 1)?;
     let rhs = comparison_unit_token(state, 2)?;
     #[cfg(feature = "retail-12-0-5")]
-    if !unit_comparison_permitted(lhs.as_deref(), rhs.as_deref()) {
+    if !crate::c_api::unit_comparison::permitted(lhs.as_deref(), rhs.as_deref()) {
         return Ok(0);
     }
     let lhs = lhs.unwrap_or_default();

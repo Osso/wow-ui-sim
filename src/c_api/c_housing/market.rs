@@ -12,6 +12,17 @@ pub(super) fn register(state: &mut LuaState, housing: GcRef<Table>) -> LuaResult
         "IsHousingMarketShopEnabled",
         is_market_shop_enabled,
     )?;
+    #[cfg(feature = "retail-12-0-5")]
+    table_set_rust_fn_static(
+        state,
+        housing,
+        "IsHousingMarketCartFullRemoveEnabled",
+        |s| {
+            let enabled = borrow_state(s)?.housing.market_cart_full_remove_enabled;
+            s.push(Val::Bool(enabled));
+            Ok(1)
+        },
+    )?;
     table_set_rust_fn_static(state, housing, "OnHouseFinderClickPlot", select_plot)
 }
 

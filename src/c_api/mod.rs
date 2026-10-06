@@ -100,6 +100,8 @@ pub mod c_item_interaction;
 pub mod c_lfg_info;
 pub(crate) mod c_lfg_list_active_entry;
 pub(crate) mod c_lfg_list_filter;
+#[cfg(feature = "retail-12-0-5")]
+pub mod c_lfg_list_policy;
 pub mod c_lfg_list_search;
 #[cfg(feature = "retail-12-0-0")]
 mod c_limited_input;
@@ -130,6 +132,8 @@ pub mod c_player_interaction_manager;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_prey;
 pub mod c_pvp;
+#[cfg(feature = "retail-12-0-5")]
+pub mod c_pvp_crowd_control;
 pub mod c_quest_hub;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_quest_info_system;
@@ -194,6 +198,8 @@ pub mod equipment_set_command;
 pub(crate) mod patch_12_0_7_inputs;
 mod spell_cooldown_output;
 pub(crate) mod unit_aura_access;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod unit_comparison;
 pub mod url_texture_inputs;
 #[cfg(feature = "retail-12-0-5")]
 pub use c_transmog_collection::IllusionInfo;
