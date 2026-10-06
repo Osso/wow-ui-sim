@@ -87,8 +87,21 @@ fn explicit_secret_aspects_accumulate_without_affecting_other_frames() {
 #[test]
 fn explicit_secret_aspects_union_with_existing_derived_state() {
     let env = env();
-    env.exec("SecretAspectProtectedFrame = CreateFrame('Frame', 'SecretAspectProtectedFrame')")
-        .expect("create protected-state fixture");
+    env.exec(
+        "SecretAspectProtectedFrame = CreateFrame('Frame', 'SecretAspectProtectedFrame') \
+         SecretAspectPreventFrame = CreateFrame('Frame', 'SecretAspectPreventFrame')",
+    )
+    .expect("create protected-state and prevent-secret fixtures");
+    // SetPreventSecretValues was removed in 12.0.1; prevent-secret state is host input.
+    let set_prevent = |env: &wow_ui_sim::lua_api::WowLuaEnv, on: bool| {
+        let mut state = env.state().borrow_mut();
+        let id = state
+            .widgets
+            .get_id_by_name("SecretAspectPreventFrame")
+            .unwrap();
+        state.widgets.get_mut(id).unwrap().prevent_secret_values = on;
+    };
+    set_prevent(&env, true);
     {
         let mut state = env.state().borrow_mut();
         let id = state
@@ -99,13 +112,18 @@ fn explicit_secret_aspects_union_with_existing_derived_state() {
     }
     env.exec(
         r#"
-        local frame = CreateFrame("Frame")
-        frame:SetPreventSecretValues(true)
+        local frame = SecretAspectPreventFrame
         assert(frame:HasSecretAspect(1) and frame:HasAnySecretAspect())
         assert(frame:HasSecretValues() and frame:IsAnchoringSecret())
         frame:AddSecretAspect(8)
         assert(frame:HasSecretAspect(1) and frame:HasSecretAspect(8))
-        frame:SetPreventSecretValues(false)
+        "#,
+    )
+    .expect("explicit masks union with prevent-secret state");
+    set_prevent(&env, false);
+    env.exec(
+        r#"
+        local frame = SecretAspectPreventFrame
         assert(not frame:HasSecretAspect(1))
         assert(frame:HasSecretAspect(8) and frame:HasSecretValues())
         assert(not frame:IsAnchoringSecret())
