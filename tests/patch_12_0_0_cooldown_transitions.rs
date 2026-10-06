@@ -95,6 +95,8 @@ fn spell_cooldown_recovery_and_gcd_follow_cast_producer() {
         assert(expired.isOnGCD == false and expired.timeUntilEndOfStartRecovery == nil)
         assert(expired.duration == 0 and expired.isActive == false)
         CastSpellByID(642)
+        assert(UpdateCount == 2 and EventCooldown.isOnGCD == false)
+        assert(EventCooldown.timeUntilEndOfStartRecovery == nil)
         local spellOnly = C_Spell.GetSpellCooldown(642)
         assert(spellOnly.duration == 300 and spellOnly.isActive == true)
         assert(spellOnly.isOnGCD == false and spellOnly.timeUntilEndOfStartRecovery == nil)
