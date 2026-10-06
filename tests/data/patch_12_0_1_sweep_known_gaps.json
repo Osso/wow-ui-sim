@@ -12,8 +12,5 @@
   "wt-global-api-C_TransmogCollection.IsSpellItemEnchantmentHiddenVisual-292",
   "wt-global-api-C_VoiceChat.GetChannelForChannelType-335",
   "wt-global-api-C_VoiceChat.GetChannelForCommunityStream-337",
-  "wt-global-api-GetNumTotemSlots-297",
-  "wt-global-api-GetTotemDuration-298",
-  "wt-global-api-PlayerIsSpellTarget-299",
   "wt-scriptobjects-NamePlate:SetStackingBoundsFrame-349"
 ]

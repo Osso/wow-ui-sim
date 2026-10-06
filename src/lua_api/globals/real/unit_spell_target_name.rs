@@ -42,6 +42,29 @@ fn unit_spell_target_name(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+fn player_is_spell_target(state: &mut LuaState) -> LuaResult<u32> {
+    use crate::lua_bridge::FromStack;
+    let unit = String::from_stack(state, 1)?;
+    let targeted = {
+        let sim = borrow_state(state)?;
+        let caster = super::super::unit_misc::existing_guid_for_unit(&sim, &unit);
+        let player = super::super::unit_misc::existing_guid_for_unit(&sim, "player");
+        // Only the player's active cast is modeled; other casters have no cast
+        // record. Compare GUIDs, not the target's broad is_player flag.
+        caster.is_some()
+            && caster == player
+            && sim
+                .casting
+                .as_ref()
+                .and_then(|cast| cast.target.as_ref())
+                .is_some_and(|target| Some(target.guid.as_str()) == player.as_deref())
+    };
+    let value = rilua::table_security::wrap_host_secret_bool(state, targeted);
+    state.push(value);
+    Ok(1)
+}
+
 pub(crate) fn register_all(lua: &mut rilua::Lua) -> LuaResult<()> {
+    LuaApiMut::register_function(lua, "PlayerIsSpellTarget", player_is_spell_target)?;
     LuaApiMut::register_function(lua, "UnitSpellTargetName", unit_spell_target_name)
 }

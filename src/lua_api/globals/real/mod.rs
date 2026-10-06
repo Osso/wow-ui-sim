@@ -81,6 +81,7 @@ pub mod table_extensions;
 pub mod table_freeze;
 pub mod template_queries;
 pub mod timerunning;
+pub mod totems;
 pub mod ui_widget_container;
 pub mod unit_interaction;
 #[cfg(feature = "aura-containers")]

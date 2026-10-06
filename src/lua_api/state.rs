@@ -527,6 +527,8 @@ macro_rules! build_empty_sim_state {
             character_services: CharacterServicesState::default(),
             scenario: ScenarioState::default(),
             death_recaps: Vec::new(),
+            // Cached FrameXMLBase/Constants.lua: MAX_TOTEMS = 4.
+            totem_slots: vec![None; 4],
             chat_bubbles: Vec::new(),
             summon_request: SummonRequestState::default(),
             player_map_position: (0.5, 0.5),

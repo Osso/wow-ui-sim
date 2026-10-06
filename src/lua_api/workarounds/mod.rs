@@ -213,7 +213,6 @@ fn apply_account_and_social_state_bootstrap(lua: &mut rilua::Lua) -> crate::Resu
 fn apply_player_state_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     temporary::player_spells_onload_backfill::apply_bootstrap(lua)?;
     temporary::possess_info_defaults::apply_bootstrap(lua)?;
-    temporary::totem_defaults::apply_bootstrap(lua)?;
     Ok(())
 }
 

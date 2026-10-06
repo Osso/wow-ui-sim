@@ -83,3 +83,7 @@ Move the existing prediction value/configuration object out of temporary proxy d
 ## Death snapshot and texture markup
 
 `GetRecapMaxHealth` reads maximum health stored on each death record, independently of current player health. INFERRED: nil selects newest; missing IDs return zero. Loose-file texture stripping preserves numeric file IDs, atlases, escaped pipes, UTF-8 and malformed markup. INFERRED: nonnumeric texture names are loose files; cached docs specify no classification rule. Concrete snapshot and markup fixtures cover both APIs.
+
+## Totem and spell-target globals
+
+Replace empty totem defaults with host-supplied slots shared by info/count/duration queries, using four initial slots from cached `MAX_TOTEMS`. Expired slots are inactive. INFERRED: absent/out-of-range duration requests return empty objects. Spell-target queries read actual player casting/target GUID state, return VM-secret booleans, and never confuse another player target with self. Non-player casters have no cast records; channel support and native totem secrecy remain absent. Tests cover active/expired slots and self/other-player/unknown caster results.
