@@ -72,13 +72,29 @@ fn item_interaction_parent_and_combined_flags() {
     env.exec(r#"local a, b = C_ItemInteraction.GetItemInteractionInfo(), C_ItemInteraction.GetItemInteractionInfo()
         assert(a.flags == Enum.UIItemInteractionFlags.DisplayWithInset + Enum.UIItemInteractionFlags.AddCurrency)
         a.flags = 0; assert(b.flags == 17 and C_ItemInteraction.GetItemInteractionInfo().flags == 17)
-        assert(b.cost == 42.5 and b.buttonTooltip == nil)"#).unwrap();
+        assert(b.cost == 42.5 and b.buttonTooltip == nil)
+        OldInteraction = b"#).unwrap();
     assert_shape(
         &env,
         "ItemInteractionUIDocumentation.lua",
         "ItemInteractionFrameInfo",
         "return C_ItemInteraction.GetItemInteractionInfo()",
     );
+    env.state().borrow_mut().item_interaction =
+        Some(wow_ui_sim::c_api::c_item_interaction::ItemInteractionInfo {
+            title_text: "Second".into(),
+            flags: 34,
+            button_tooltip: Some("New tooltip".into()),
+            ..Default::default()
+        });
+    env.exec(r#"
+        local second = C_ItemInteraction.GetItemInteractionInfo()
+        assert(second.flags == Enum.UIItemInteractionFlags.ConfirmationHasDelay + Enum.UIItemInteractionFlags.UsesCharges)
+        assert(second.titleText == 'Second' and second.buttonTooltip == 'New tooltip' and second.cost == nil)
+        assert(OldInteraction.flags == 17 and OldInteraction.titleText == 'First' and OldInteraction.cost == 42.5)
+    "#).unwrap();
+    env.state().borrow_mut().item_interaction = None;
+    env.exec("assert(C_ItemInteraction.GetItemInteractionInfo() == nil); assert(OldInteraction.flags == 17)").unwrap();
 }
 
 #[test]
