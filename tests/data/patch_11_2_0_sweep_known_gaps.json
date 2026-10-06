@@ -3,7 +3,6 @@
   "wt-global-api-C_Bank.DoesBankTypeSupportAutoDeposit-38",
   "wt-global-api-C_Bank.DoesBankTypeSupportMoneyTransfer-39",
   "wt-global-api-C_Bank.FetchBankLockedReason-40",
-  "wt-global-api-C_Bank.FetchNextPurchasableBankTabCost-96",
   "wt-global-api-C_Bank.FetchNextPurchasableBankTabData-41",
   "wt-global-api-C_Bank.FetchViewableBankTypes-42",
   "wt-global-api-C_ChallengeMode.GetStartTime-44",

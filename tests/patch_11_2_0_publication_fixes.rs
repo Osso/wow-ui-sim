@@ -44,6 +44,7 @@ fn patch_11_2_0_removed_members_stay_absent_on_repeated_lookup() {
     env.exec(
         r#"
         for i = 1, 2 do
+            assert(C_Bank.FetchNextPurchasableBankTabCost == nil)
             assert(C_Container.SortReagentBankBags == nil)
             assert(C_TooltipInfo.GetVoidDepositItem == nil)
             assert(C_TooltipInfo.GetVoidItem == nil)

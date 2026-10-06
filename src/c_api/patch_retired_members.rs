@@ -7,6 +7,7 @@ use rilua::vm::state::LuaState;
 
 // 11.x predates every supported retail epoch; classic profiles do not load this module.
 const RETIRED_11_2_0_MEMBERS: &[(&str, &[&str])] = &[
+    ("C_Bank", &["FetchNextPurchasableBankTabCost"]),
     ("C_Container", &["SortReagentBankBags"]),
     (
         "C_TooltipInfo",
