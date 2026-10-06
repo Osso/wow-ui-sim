@@ -107,43 +107,40 @@ fn optional_text(state: &mut LuaState, table: Val, key: &str) -> LuaResult<Optio
     }
     Ok(val_to_string(state, value))
 }
+fn integer_field(state: &mut LuaState, table: Val, key: &str, min: i32) -> LuaResult<i32> {
+    integer(read_field(state, table, key)?, key, min)
+}
+fn read_tip_amount(state: &mut LuaState, table: Val) -> LuaResult<f64> {
+    let Val::Num(amount) = read_field(state, table, "tipAmount")? else {
+        return Err(runtime_error("tipAmount must be money"));
+    };
+    if !amount.is_finite() || amount < 0.0 || amount.fract() != 0.0 {
+        return Err(runtime_error("invalid tipAmount"));
+    }
+    Ok(amount)
+}
+fn read_regular_array(state: &mut LuaState, table: Val) -> LuaResult<Vec<RegularReagentInfo>> {
+    let array = read_field(state, table, "reagentInfos")?;
+    read_array(state, array)?
+        .into_iter()
+        .map(|value| read_regular(state, value))
+        .collect()
+}
 pub(crate) fn read_order(state: &mut LuaState, table: Val) -> LuaResult<NewCraftingOrderInfo> {
     let table = authenticate_table(state, table)?;
     if !matches!(read_field(state, table, "reagentItems")?, Val::Nil) {
         return Err(runtime_error("reagentItems retired; use reagentInfos"));
     }
-    let skill_line_ability_id = integer(
-        read_field(state, table, "skillLineAbilityID")?,
-        "skillLineAbilityID",
-        1,
-    )?;
-    let order_type = integer(read_field(state, table, "orderType")?, "orderType", 0)?;
-    let order_duration = integer(
-        read_field(state, table, "orderDuration")?,
-        "orderDuration",
-        0,
-    )?;
-    let Val::Num(tip_amount) = read_field(state, table, "tipAmount")? else {
-        return Err(runtime_error("tipAmount must be money"));
-    };
-    if !tip_amount.is_finite() || tip_amount < 0.0 || tip_amount.fract() != 0.0 {
-        return Err(runtime_error("invalid tipAmount"));
-    }
-    let customer_notes = optional_text(state, table, "customerNotes")?
-        .ok_or_else(|| runtime_error("customerNotes required"))?;
-    let regular = read_field(state, table, "reagentInfos")?;
-    let reagent_infos = read_array(state, regular)?
-        .into_iter()
-        .map(|value| read_regular(state, value))
-        .collect::<LuaResult<_>>()?;
+    let reagent_infos = read_regular_array(state, table)?;
     let crafting = read_field(state, table, "craftingReagentItems")?;
     let crafting_reagent_items = read_allocations(state, crafting)?;
     Ok(NewCraftingOrderInfo {
-        skill_line_ability_id,
-        order_type,
-        order_duration,
-        tip_amount,
-        customer_notes,
+        skill_line_ability_id: integer_field(state, table, "skillLineAbilityID", 1)?,
+        order_type: integer_field(state, table, "orderType", 0)?,
+        order_duration: integer_field(state, table, "orderDuration", 0)?,
+        tip_amount: read_tip_amount(state, table)?,
+        customer_notes: optional_text(state, table, "customerNotes")?
+            .ok_or_else(|| runtime_error("customerNotes required"))?,
         reagent_infos,
         crafting_reagent_items,
         min_crafting_quality_id: optional_integer(state, table, "minCraftingQualityID")?,

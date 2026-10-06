@@ -36,34 +36,13 @@ pub(crate) fn craft_recipe(state: &mut LuaState, recipe_id: i32, count: i32) -> 
         return Ok(false);
     };
 
-    let mut affected_bags = BTreeSet::new();
-    {
+    let affected_bags = {
         let mut sim = borrow_state_mut(state)?;
-
-        if !sim
-            .bag_items
-            .values()
-            .any(|slot| slot.item_id == plan.output_item_id)
-            && free_bag0_slot(&sim).is_none()
-        {
+        let Some(bags) = commit_inventory(&mut sim, &plan) else {
             return Ok(false);
-        }
-        let backpack_capacity = sim.bag_num_slots(0);
-        consume_reagents(&mut sim.bag_items, &plan.reagents.items, &mut affected_bags);
-        for (id, quantity) in &plan.reagents.currencies {
-            sim.currency_info
-                .get_mut(&(*id as i32))
-                .expect("currency preflighted")
-                .quantity -= quantity;
-        }
-        let output_bag = add_output_item(
-            &mut sim.bag_items,
-            backpack_capacity,
-            plan.output_item_id,
-            plan.output_count,
-        );
-        affected_bags.insert(output_bag);
-    }
+        };
+        bags
+    };
 
     start_crafting_cast(state, &plan);
 
@@ -74,6 +53,36 @@ pub(crate) fn craft_recipe(state: &mut LuaState, recipe_id: i32, count: i32) -> 
 
     publish_crafting_result(state, &plan);
     Ok(true)
+}
+
+fn commit_inventory(
+    sim: &mut crate::lua_api::state::SimState,
+    plan: &CraftPlan,
+) -> Option<BTreeSet<i32>> {
+    let has_output_stack = sim
+        .bag_items
+        .values()
+        .any(|slot| slot.item_id == plan.output_item_id);
+    if !has_output_stack && free_bag0_slot(sim).is_none() {
+        return None;
+    }
+    let mut affected_bags = BTreeSet::new();
+    let capacity = sim.bag_num_slots(0);
+    consume_reagents(&mut sim.bag_items, &plan.reagents.items, &mut affected_bags);
+    for (id, quantity) in &plan.reagents.currencies {
+        sim.currency_info
+            .get_mut(&(*id as i32))
+            .expect("currency preflighted")
+            .quantity -= quantity;
+    }
+    let output_bag = add_output_item(
+        &mut sim.bag_items,
+        capacity,
+        plan.output_item_id,
+        plan.output_count,
+    );
+    affected_bags.insert(output_bag);
+    Some(affected_bags)
 }
 
 struct CraftPlan {
@@ -151,6 +160,12 @@ fn publish_crafting_result(state: &mut LuaState, plan: &CraftPlan) {
     let table = crafting_tables::rooted_table(state);
     let returns = crafting_tables::regular_array(state, &plan.reagents.returns);
     crate::lua_api::methods::table_set(state, table, "resourcesReturned", returns);
+    populate_result_fields(state, table, plan);
+    // INFERRED: result publication accompanies the existing immediate inventory commit;
+    // native asynchronous crafting completion/proc probabilities are not simulated here.
+    fire_named_event_state(state, "TRADE_SKILL_ITEM_CRAFTED_RESULT", &[table]);
+}
+fn populate_result_fields(state: &mut LuaState, table: Val, plan: &CraftPlan) {
     for (key, value) in [
         ("itemID", plan.output_item_id as i32),
         ("quantity", plan.output_count),
@@ -179,9 +194,6 @@ fn publish_crafting_result(state: &mut LuaState, plan: &CraftPlan) {
     let hyperlink =
         crate::lua_api::methods::create_string(state, &format!("item:{}", plan.output_item_id));
     crate::lua_api::methods::table_set(state, table, "hyperlink", hyperlink);
-    // INFERRED: result publication accompanies the existing immediate inventory commit;
-    // native asynchronous crafting completion/proc probabilities are not simulated here.
-    fire_named_event_state(state, "TRADE_SKILL_ITEM_CRAFTED_RESULT", &[table]);
 }
 
 fn consume_reagents(

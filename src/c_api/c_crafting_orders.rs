@@ -84,27 +84,31 @@ fn map_order_reagents(
         })
         .collect())
 }
+fn map_request_to_recipe(
+    inputs: &CraftingInputs,
+    request: &NewCraftingOrderInfo,
+) -> LuaResult<(i32, Vec<CraftingOrderReagentInfo>)> {
+    let recipe_id = *inputs
+        .order_recipes
+        .get(&request.skill_line_ability_id)
+        .ok_or_else(|| runtime_error("crafting order ability is not configured"))?;
+    let slots = inputs
+        .recipe_slots
+        .get(&recipe_id)
+        .ok_or_else(|| runtime_error("crafting order recipe is not configured"))?;
+    let reagents = map_order_reagents(slots, request)?;
+    Ok((recipe_id, reagents))
+}
 fn place_order(state: &mut LuaState) -> LuaResult<u32> {
     let request = crafting_input::read_order(state, stack_val(state, 1))?;
     // Generated ProfessionConstants: order types 0..3 and durations 0..2.
     if !(0..=3).contains(&request.order_type) || !(0..=2).contains(&request.order_duration) {
         return Err(runtime_error("unknown crafting order type or duration"));
     }
-    let sim = borrow_state(state)?;
-    let recipe_id = *sim
-        .crafting
-        .reagents
-        .order_recipes
-        .get(&request.skill_line_ability_id)
-        .ok_or_else(|| runtime_error("crafting order ability is not configured"))?;
-    let slots = sim
-        .crafting
-        .reagents
-        .recipe_slots
-        .get(&recipe_id)
-        .ok_or_else(|| runtime_error("crafting order recipe is not configured"))?;
-    let reagents = map_order_reagents(slots, &request)?;
-    drop(sim);
+    let (recipe_id, reagents) = {
+        let sim = borrow_state(state)?;
+        map_request_to_recipe(&sim.crafting.reagents, &request)?
+    };
     let mut sim = borrow_state_mut(state)?;
     let inputs = &mut sim.crafting.reagents;
     // INFERRED: simulator-local monotonic IDs; no server placement/escrow is claimed.

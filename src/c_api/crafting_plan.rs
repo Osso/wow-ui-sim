@@ -37,6 +37,47 @@ pub(crate) fn plan_deltas(
         .get(&recipe_id)
         .ok_or_else(|| runtime_error("recipe reagent slots unavailable"))?;
     validate_allocations(slots, allocations).map_err(runtime_error)?;
+    let mut totals = sum_allocations(allocations, count)?;
+    let required = totals
+        .iter()
+        .map(|(reagent, quantity)| RegularReagentInfo {
+            reagent: *reagent,
+            quantity: *quantity,
+        })
+        .collect();
+    let returns = subtract_resource_returns(inputs, recipe_id, count, &mut totals)?;
+    Ok(build_deltas(&totals, returns, required))
+}
+fn build_deltas(
+    totals: &BTreeMap<CraftingReagent, i32>,
+    returns: Vec<RegularReagentInfo>,
+    required: Vec<RegularReagentInfo>,
+) -> ReagentDeltas {
+    let items = totals
+        .iter()
+        .filter_map(|(key, value)| match key {
+            CraftingReagent::Item(id) => Some((*id, *value)),
+            _ => None,
+        })
+        .collect();
+    let currencies = totals
+        .iter()
+        .filter_map(|(key, value)| match key {
+            CraftingReagent::Currency(id) => Some((*id, *value)),
+            _ => None,
+        })
+        .collect();
+    ReagentDeltas {
+        items,
+        currencies,
+        returns,
+        required,
+    }
+}
+fn sum_allocations(
+    allocations: &[CraftingReagentInfo],
+    count: i32,
+) -> LuaResult<BTreeMap<CraftingReagent, i32>> {
     let mut totals = BTreeMap::<CraftingReagent, i32>::new();
     for allocation in allocations {
         let quantity = allocation
@@ -48,13 +89,14 @@ pub(crate) fn plan_deltas(
             .checked_add(quantity)
             .ok_or_else(|| runtime_error("crafting quantity overflow"))?;
     }
-    let required = totals
-        .iter()
-        .map(|(reagent, quantity)| RegularReagentInfo {
-            reagent: *reagent,
-            quantity: *quantity,
-        })
-        .collect();
+    Ok(totals)
+}
+fn subtract_resource_returns(
+    inputs: &CraftingInputs,
+    recipe_id: i32,
+    count: i32,
+    totals: &mut BTreeMap<CraftingReagent, i32>,
+) -> LuaResult<Vec<RegularReagentInfo>> {
     let mut returns = inputs
         .resource_returns
         .get(&recipe_id)
@@ -73,26 +115,7 @@ pub(crate) fn plan_deltas(
         }
         *total -= entry.quantity;
     }
-    let items = totals
-        .iter()
-        .filter_map(|(key, value)| match key {
-            CraftingReagent::Item(id) => Some((*id, *value)),
-            _ => None,
-        })
-        .collect();
-    let currencies = totals
-        .iter()
-        .filter_map(|(key, value)| match key {
-            CraftingReagent::Currency(id) => Some((*id, *value)),
-            _ => None,
-        })
-        .collect();
-    Ok(ReagentDeltas {
-        items,
-        currencies,
-        returns,
-        required,
-    })
+    Ok(returns)
 }
 pub(crate) fn has_resources(sim: &SimState, deltas: &ReagentDeltas) -> bool {
     deltas.required.iter().all(|entry| {
