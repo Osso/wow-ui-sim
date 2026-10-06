@@ -92,6 +92,8 @@ fn map_request_to_recipe(
         .order_recipes
         .get(&request.skill_line_ability_id)
         .ok_or_else(|| runtime_error("crafting order ability is not configured"))?;
+    crate::lua_api::globals::profession_data::get_recipe(recipe_id)
+        .ok_or_else(|| runtime_error("crafting order recipe is not in the catalog"))?;
     let slots = inputs
         .recipe_slots
         .get(&recipe_id)
@@ -113,9 +115,14 @@ fn place_order(state: &mut LuaState) -> LuaResult<u32> {
     let inputs = &mut sim.crafting.reagents;
     // INFERRED: simulator-local monotonic IDs; no server placement/escrow is claimed.
     let order_id = inputs.next_order_id;
-    inputs.next_order_id = order_id
+    let next_order_id = order_id
         .checked_add(1)
         .ok_or_else(|| runtime_error("crafting order IDs exhausted"))?;
+    let details = inputs
+        .placement_results
+        .pop_front()
+        .ok_or_else(|| runtime_error("crafting order host placement result is not configured"))?;
+    inputs.next_order_id = next_order_id;
     inputs.orders.insert(
         order_id,
         CraftingOrder {
@@ -123,6 +130,7 @@ fn place_order(state: &mut LuaState) -> LuaResult<u32> {
             recipe_id,
             request,
             reagents,
+            details,
         },
     );
     Ok(0)

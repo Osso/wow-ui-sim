@@ -25,21 +25,29 @@ fn prose_combat_log_registration_errors_without_delivery() {
         debug.setobjecttaint(addon_registration,'ProseAddon')
         addon_registration()
     "#).unwrap();
-    for event in ["COMBAT_LOG_EVENT", "COMBAT_LOG_EVENT_UNFILTERED", "PLAYER_ENTERING_WORLD"] {
+    for event in [
+        "COMBAT_LOG_EVENT",
+        "COMBAT_LOG_EVENT_UNFILTERED",
+        "PLAYER_ENTERING_WORLD",
+    ] {
         env.fire_event(event).unwrap();
     }
-    env.exec("assert(#ProseEvents==1 and ProseEvents[1]=='PLAYER_ENTERING_WORLD')").unwrap();
+    env.exec("assert(#ProseEvents==1 and ProseEvents[1]=='PLAYER_ENTERING_WORLD')")
+        .unwrap();
 }
 
 #[test]
 fn prose_callback_event_mechanism_is_separate_from_script_registration() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(C_EventUtils.IsCallbackEvent('COMBAT_LOG_EVENT'))
         assert(not C_EventUtils.IsCallbackEvent('PLAYER_ENTERING_WORLD'))
         local f=CreateFrame('Frame')
         local callback=function() end
         local ok = pcall(f.RegisterEventCallback,f,'COMBAT_LOG_EVENT',callback)
         assert(ok and f:IsEventRegistered('COMBAT_LOG_EVENT'))
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }

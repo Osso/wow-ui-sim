@@ -1,6 +1,6 @@
 //! Nested profession reagent identities and host-provided recipe/order state.
 use crate::lua_api::globals::profession_data;
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap, HashMap, VecDeque};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum CraftingReagent {
@@ -96,11 +96,42 @@ pub struct CraftingOrderReagentInfo {
 }
 
 #[derive(Debug, Clone)]
+pub struct OrderReward {
+    pub item_link: Option<String>,
+    pub currency_type: Option<i32>,
+    pub count: i32,
+}
+
+/// Host placement result. No default lifecycle, fee, quality or identity is fabricated.
+#[derive(Debug, Clone)]
+pub struct CraftingOrderDetails {
+    pub order_state: i32,
+    pub expiration_time: f64,
+    pub claim_end_time: f64,
+    pub min_quality: i32,
+    pub consortium_cut: f64,
+    pub is_fulfillable: bool,
+    pub reagent_state: i32,
+    pub customer_guid: Option<String>,
+    pub customer_name: Option<String>,
+    pub crafter_guid: Option<String>,
+    pub crafter_name: Option<String>,
+    pub npc_customer_creature_id: Option<i32>,
+    pub output_item_hyperlink: Option<String>,
+    pub output_item_guid: Option<String>,
+    pub recraft_item_hyperlink: Option<String>,
+    pub npc_order_rewards: Vec<OrderReward>,
+    pub npc_crafting_order_set_id: i32,
+    pub npc_treasure_id: i32,
+}
+
+#[derive(Debug, Clone)]
 pub struct CraftingOrder {
     pub order_id: u32,
     pub recipe_id: i32,
     pub request: NewCraftingOrderInfo,
     pub reagents: Vec<CraftingOrderReagentInfo>,
+    pub details: CraftingOrderDetails,
 }
 
 #[derive(Debug, Clone)]
@@ -113,6 +144,8 @@ pub struct CraftingInputs {
     pub order_recipes: HashMap<i32, i32>,
     pub orders: BTreeMap<u32, CraftingOrder>,
     pub next_order_id: u32,
+    /// Host responses consumed only after successful request validation.
+    pub placement_results: VecDeque<CraftingOrderDetails>,
 }
 
 impl Default for CraftingInputs {
@@ -142,6 +175,7 @@ impl Default for CraftingInputs {
             order_recipes: HashMap::new(),
             orders: BTreeMap::new(),
             next_order_id: 1,
+            placement_results: VecDeque::new(),
         }
     }
 }

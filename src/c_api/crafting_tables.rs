@@ -142,32 +142,23 @@ pub(crate) fn order(state: &mut LuaState, order: &CraftingOrder) -> Val {
         array_entry(state, reagents, index, value);
     }
     table_set(state, table, "reagents", reagents);
-    let rewards = rooted_table(state);
+    let rewards = order_rewards(state, &order.details.npc_order_rewards);
     table_set(state, table, "npcOrderRewards", rewards);
     table
 }
 fn populate_order_fields(state: &mut LuaState, table: Val, order: &CraftingOrder) {
     let request = &order.request;
-    // INFERRED: container lifecycle/economic fields below are local zero sentinels,
-    // not server order state. Only the nested reagent contracts are proven here.
     text(state, table, "orderID", &order.order_id.to_string());
     for (key, value) in [
         ("spellID", order.recipe_id),
         ("skillLineAbilityID", request.skill_line_ability_id),
         ("orderType", request.order_type),
-        ("orderState", 0),
-        ("expirationTime", 0),
-        ("claimEndTime", 0),
-        ("minQuality", request.min_crafting_quality_id.unwrap_or(0)),
-        ("consortiumCut", 0),
-        ("reagentState", 0),
-        ("npcCraftingOrderSetID", 0),
-        ("npcTreasureID", 0),
     ] {
         number(state, table, key, value);
     }
     let item_id = crate::lua_api::globals::profession_data::get_recipe(order.recipe_id)
-        .map_or(0, |recipe| recipe.output_item_id);
+        .expect("order catalog validated at placement")
+        .output_item_id;
     table_set(state, table, "itemID", Val::Num(f64::from(item_id)));
     table_set(state, table, "tipAmount", Val::Num(request.tip_amount));
     table_set(
@@ -176,11 +167,66 @@ fn populate_order_fields(state: &mut LuaState, table: Val, order: &CraftingOrder
         "isRecraft",
         Val::Bool(request.recraft_item.is_some()),
     );
-    table_set(state, table, "isFulfillable", Val::Bool(true));
     text(state, table, "customerNotes", &request.customer_notes);
-    if let Some(name) = &request.order_target {
-        text(state, table, "crafterName", name);
+    populate_order_details(state, table, &order.details);
+}
+fn populate_order_details(state: &mut LuaState, table: Val, details: &CraftingOrderDetails) {
+    for (key, value) in [
+        ("orderState", details.order_state),
+        ("minQuality", details.min_quality),
+        ("reagentState", details.reagent_state),
+        ("npcCraftingOrderSetID", details.npc_crafting_order_set_id),
+        ("npcTreasureID", details.npc_treasure_id),
+    ] {
+        number(state, table, key, value);
     }
+    for (key, value) in [
+        ("expirationTime", details.expiration_time),
+        ("claimEndTime", details.claim_end_time),
+        ("consortiumCut", details.consortium_cut),
+    ] {
+        table_set(state, table, key, Val::Num(value));
+    }
+    table_set(
+        state,
+        table,
+        "isFulfillable",
+        Val::Bool(details.is_fulfillable),
+    );
+    if let Some(id) = details.npc_customer_creature_id {
+        number(state, table, "npcCustomerCreatureID", id);
+    }
+    populate_order_identities(state, table, details);
+}
+fn populate_order_identities(state: &mut LuaState, table: Val, details: &CraftingOrderDetails) {
+    for (key, value) in [
+        ("customerGuid", &details.customer_guid),
+        ("customerName", &details.customer_name),
+        ("crafterGuid", &details.crafter_guid),
+        ("crafterName", &details.crafter_name),
+        ("outputItemHyperlink", &details.output_item_hyperlink),
+        ("outputItemGUID", &details.output_item_guid),
+        ("recraftItemHyperlink", &details.recraft_item_hyperlink),
+    ] {
+        if let Some(value) = value {
+            text(state, table, key, value);
+        }
+    }
+}
+fn order_rewards(state: &mut LuaState, rewards: &[OrderReward]) -> Val {
+    let table = rooted_table(state);
+    for (index, reward) in rewards.iter().enumerate() {
+        let value = rooted_table(state);
+        number(state, value, "count", reward.count);
+        if let Some(link) = &reward.item_link {
+            text(state, value, "itemLink", link);
+        }
+        if let Some(currency) = reward.currency_type {
+            number(state, value, "currencyType", currency);
+        }
+        array_entry(state, table, index, value);
+    }
+    table
 }
 pub(crate) fn orders(state: &mut LuaState, orders: &[CraftingOrder]) -> Val {
     let table = rooted_table(state);

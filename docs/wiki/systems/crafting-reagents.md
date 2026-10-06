@@ -6,11 +6,11 @@ B08 implements nested item/currency reagent state in `src/c_api/`, owned by `Cra
 
 `CraftingReagent` has Item/Currency variants. Recipe slots initialize from the existing catalog; host fixtures can supply alternatives, variable quantities and metadata. Allocation validation precedes inventory changes. Currency quantities share `SimState.currency_info`; items share bags. Host resourcefulness outcomes subtract saved resources from gross consumption after gross-resource preflight.
 
-Typed order requests copy every documented input field. Explicit ability-to-recipe mapping prevents conflating IDs. Local orders serialize nested reagentInfo records; no Lua request/output table is retained. Intermediate output tables stay rooted across allocation and event dispatch.
+Typed order requests copy every documented input field. Explicit ability-to-recipe mapping prevents conflating IDs. A required queued host placement result supplies lifecycle, fee, quality, identity and reward fields; no container sentinel is fabricated. Valid placement consumes one host response; rejected requests preserve the queue. Local orders serialize nested reagentInfo records; no Lua request/output table is retained. Intermediate output tables stay rooted across allocation and event dispatch.
 
 ## Limits
 
-See [out-of-scope contract](../../specs/crafting-reagent-contracts.md#out-of-scope). Structural proof does not establish native server lifecycle or full CraftingOrderInfo parity. Order container fields outside the reagent slice remain bounded local defaults. Unsupported fields must not receive broader ledger credit.
+See [out-of-scope contract](../../specs/crafting-reagent-contracts.md#out-of-scope). Structural/host-snapshot proof does not establish native server lifecycle or full CraftingOrderInfo policy parity. Native placement, fee computation, escrow and fulfillment remain host responsibilities; unavailable host responses are errors, not placeholder orders.
 
 ## Sources
 
