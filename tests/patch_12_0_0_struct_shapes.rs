@@ -1,4 +1,5 @@
 //! Full cached DTO contracts for the 12.0.0 extract, not native-domain parity.
+#![cfg(feature = "retail-12-0-0")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 /// Same cached-field/type pattern as patch_12_1_0_struct_shapes, applied to

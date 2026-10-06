@@ -1,6 +1,7 @@
 //! Typed input validation. No legacy itemID/reagentItems alternate path.
 use super::crafting_reagents::*;
 use super::crafting_tables::read_field;
+#[cfg(feature = "retail-12-0-0")]
 use crate::lua_api::methods::val_to_string;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val, runtime_error};
@@ -91,6 +92,7 @@ pub(crate) fn read_allocations(
         .map(|value| read_allocation(state, value))
         .collect()
 }
+#[cfg(feature = "retail-12-0-0")]
 fn optional_integer(state: &mut LuaState, table: Val, key: &str) -> LuaResult<Option<i32>> {
     let value = read_field(state, table, key)?;
     if matches!(value, Val::Nil) {
@@ -99,6 +101,7 @@ fn optional_integer(state: &mut LuaState, table: Val, key: &str) -> LuaResult<Op
         integer(value, key, 1).map(Some)
     }
 }
+#[cfg(feature = "retail-12-0-0")]
 fn optional_text(state: &mut LuaState, table: Val, key: &str) -> LuaResult<Option<String>> {
     let value = read_field(state, table, key)?;
     if matches!(value, Val::Nil) {
@@ -109,9 +112,11 @@ fn optional_text(state: &mut LuaState, table: Val, key: &str) -> LuaResult<Optio
     }
     Ok(val_to_string(state, value))
 }
+#[cfg(feature = "retail-12-0-0")]
 fn integer_field(state: &mut LuaState, table: Val, key: &str, min: i32) -> LuaResult<i32> {
     integer(read_field(state, table, key)?, key, min)
 }
+#[cfg(feature = "retail-12-0-0")]
 fn read_tip_amount(state: &mut LuaState, table: Val) -> LuaResult<f64> {
     let Val::Num(amount) = read_field(state, table, "tipAmount")? else {
         return Err(runtime_error("tipAmount must be money"));
@@ -121,6 +126,7 @@ fn read_tip_amount(state: &mut LuaState, table: Val) -> LuaResult<f64> {
     }
     Ok(amount)
 }
+#[cfg(feature = "retail-12-0-0")]
 fn read_regular_array(state: &mut LuaState, table: Val) -> LuaResult<Vec<RegularReagentInfo>> {
     let array = read_field(state, table, "reagentInfos")?;
     read_array(state, array)?
@@ -128,6 +134,7 @@ fn read_regular_array(state: &mut LuaState, table: Val) -> LuaResult<Vec<Regular
         .map(|value| read_regular(state, value))
         .collect()
 }
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) fn read_order(state: &mut LuaState, table: Val) -> LuaResult<NewCraftingOrderInfo> {
     let table = authenticate_table(state, table)?;
     if !matches!(read_field(state, table, "reagentItems")?, Val::Nil) {

@@ -367,6 +367,7 @@ fn is_blocked_aura(state: &mut LuaState, unit: &str, aura_instance_id: i32) -> b
 }
 
 /// Every helpful and harmful aura on `unit`, including display-blocked ones.
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) fn collect_all_unit_auras(state: &mut LuaState, unit: &str) -> Vec<AuraInfo> {
     let mut auras = collect_unit_auras(state, unit, AuraFilter::Helpful);
     for aura in collect_unit_auras(state, unit, AuraFilter::Harmful) {

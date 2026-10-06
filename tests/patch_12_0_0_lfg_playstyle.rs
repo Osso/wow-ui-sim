@@ -1,3 +1,4 @@
+#![cfg(feature = "retail-12-0-0")]
 use super::patch_12_0_0_struct_shapes::assert_shape;
 use wow_ui_sim::lua_api::WowLuaEnv;
 

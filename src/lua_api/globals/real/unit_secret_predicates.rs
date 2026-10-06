@@ -46,6 +46,10 @@ pub(crate) fn finish_possession_restricted(
 
 /// `UnitName` secrecy: identity rules minus players during an active PvP match.
 /// INFERRED: "player" means the resolved GUID is a `Player-` GUID.
+#[cfg(all(
+    feature = "retail-12-0-5",
+    any(feature = "profile-retail", feature = "client-ptr")
+))]
 pub(crate) fn unit_name_identity_restricted(state: &mut LuaState, unit: &str) -> LuaResult<bool> {
     let secret = super::super::unit_misc::unit_identity_is_secret(state, unit)?;
     if !RETAIL_12_1_0 || !secret {

@@ -38,6 +38,7 @@ pub(crate) fn regular(state: &mut LuaState, info: &RegularReagentInfo) -> Val {
     number(state, table, "quantity", info.quantity);
     table
 }
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) fn allocation(state: &mut LuaState, info: &CraftingReagentInfo) -> Val {
     let table = regular(
         state,
@@ -49,6 +50,7 @@ pub(crate) fn allocation(state: &mut LuaState, info: &CraftingReagentInfo) -> Va
     number(state, table, "dataSlotIndex", info.data_slot_index);
     table
 }
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) fn modifications(state: &mut LuaState, mods: &[ItemSlotModification]) -> Val {
     let table = rooted_table(state);
     for (index, modification) in mods.iter().enumerate() {
@@ -123,6 +125,7 @@ pub(crate) fn schematic_slots(state: &mut LuaState, slots: &[ReagentSlotSchemati
     }
     table
 }
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) fn order(state: &mut LuaState, order: &CraftingOrder) -> Val {
     let table = rooted_table(state);
     populate_order_fields(state, table, order);
@@ -146,6 +149,7 @@ pub(crate) fn order(state: &mut LuaState, order: &CraftingOrder) -> Val {
     table_set(state, table, "npcOrderRewards", rewards);
     table
 }
+#[cfg(feature = "retail-12-0-0")]
 fn populate_order_fields(state: &mut LuaState, table: Val, order: &CraftingOrder) {
     let request = &order.request;
     text(state, table, "orderID", &order.order_id.to_string());
@@ -170,6 +174,7 @@ fn populate_order_fields(state: &mut LuaState, table: Val, order: &CraftingOrder
     text(state, table, "customerNotes", &request.customer_notes);
     populate_order_details(state, table, &order.details);
 }
+#[cfg(feature = "retail-12-0-0")]
 fn populate_order_details(state: &mut LuaState, table: Val, details: &CraftingOrderDetails) {
     for (key, value) in [
         ("orderState", details.order_state),
@@ -198,6 +203,7 @@ fn populate_order_details(state: &mut LuaState, table: Val, details: &CraftingOr
     }
     populate_order_identities(state, table, details);
 }
+#[cfg(feature = "retail-12-0-0")]
 fn populate_order_identities(state: &mut LuaState, table: Val, details: &CraftingOrderDetails) {
     for (key, value) in [
         ("customerGuid", &details.customer_guid),
@@ -213,6 +219,7 @@ fn populate_order_identities(state: &mut LuaState, table: Val, details: &Craftin
         }
     }
 }
+#[cfg(feature = "retail-12-0-0")]
 fn order_rewards(state: &mut LuaState, rewards: &[OrderReward]) -> Val {
     let table = rooted_table(state);
     for (index, reward) in rewards.iter().enumerate() {
@@ -228,6 +235,7 @@ fn order_rewards(state: &mut LuaState, rewards: &[OrderReward]) -> Val {
     }
     table
 }
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) fn orders(state: &mut LuaState, orders: &[CraftingOrder]) -> Val {
     let table = rooted_table(state);
     for (index, record) in orders.iter().enumerate() {

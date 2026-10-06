@@ -27,6 +27,7 @@ current_retail_ptr_test_modules! {
 }
 
 mod account_state_flags;
+#[cfg(feature = "retail-12-0-0")]
 mod caa_constants;
 mod combat_log_object;
 mod frames_and_attributes;
@@ -41,6 +42,7 @@ mod patch_12_1_5_aura_application_options;
 mod patch_12_1_5_aura_caster_guid;
 mod patch_12_1_5_aura_caster_name_options;
 mod patch_12_1_5_bag_forbidden_enums;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_bonus_stat_index_enums;
 mod patch_12_1_5_cooldown_thresholds;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
@@ -67,6 +69,7 @@ mod patch_12_1_5_intl_titlecase;
 mod patch_12_1_5_intl_transform;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_locale_context;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_player_data_flag_enums;
 #[cfg(feature = "client-retail")]
 mod patch_12_1_5_round_layout;
@@ -78,6 +81,7 @@ mod patch_12_1_5_table_count_info;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_table_freeze;
 mod patch_12_1_5_table_util_removal;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_tiered_entrance_enums;
 #[cfg(feature = "client-retail")]
 mod patch_12_1_5_timed_signal_map;
@@ -85,6 +89,7 @@ mod patch_12_1_5_timed_signal_map;
 mod patch_12_1_5_tooltip_line_enums;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_training_grounds;
+#[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_transmog_illusion_flags;
 #[cfg(any(feature = "client-ptr", feature = "client-retail"))]
 mod patch_12_1_5_weather;

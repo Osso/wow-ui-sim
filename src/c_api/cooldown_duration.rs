@@ -6,6 +6,7 @@ use crate::lua_bridge::stack_val;
 use rilua::Val;
 use rilua::vm::state::LuaState;
 
+#[cfg(feature = "retail-12-0-0")]
 pub(crate) fn read_ignore_gcd(state: &LuaState, index: i32) -> bool {
     cfg!(feature = "retail-12-0-5") && matches!(stack_val(state, index), Val::Bool(true))
 }
