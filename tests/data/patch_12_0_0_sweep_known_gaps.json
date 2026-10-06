@@ -12,7 +12,6 @@
   "wt-global-api-C_CurveUtil.EvaluateGameCurve-148",
   "wt-global-api-C_DelvesUI.GetLockedTextForCompanion-159",
   "wt-global-api-C_DelvesUI.IsTraitTreeForCompanion-160",
-  "wt-global-api-C_Item.IsItemBindToAccount-229",
   "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-627",
   "wt-global-api-C_LFGList.SetEntryTitle-631",
   "wt-global-api-C_PvP.GetRandomTrainingGroundRewards-262",

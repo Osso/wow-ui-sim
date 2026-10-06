@@ -118,6 +118,8 @@ fn register_c_item_metadata_queries(
             ("GetItemNameByID", c_item_get_item_name_by_id),
             ("GetItemQualityByID", c_item_get_item_quality_by_id),
             ("GetItemQuality", c_item_get_item_quality),
+            #[cfg(feature = "retail-12-0-0")]
+            ("IsItemBindToAccount", c_item_is_item_bind_to_account),
             (
                 "GetItemMaxStackSizeByID",
                 c_item_get_item_max_stack_size_by_id,
@@ -273,6 +275,20 @@ fn item_id_from_location_or_item_info(state: &mut LuaState, value: Val) -> Optio
         Val::Table(_) => location_item(state, value).map(|(item_id, _)| item_id),
         _ => parse_item_id_from_val(state, value),
     }
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn c_item_is_item_bind_to_account(state: &mut LuaState) -> LuaResult<u32> {
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let id = item_id_from_location_or_item_info(state, value);
+    // ItemConstantsDocumentation: ItemBind 7/8/9 are the three account modes.
+    // INFERRED: the generic account predicate includes until-equipped mode;
+    // this reads intrinsic metadata, not an individual item's bound/owner state.
+    let account_bound = id
+        .and_then(items::get_item)
+        .is_some_and(|item| matches!(item.bonding, 7..=9));
+    state.push(Val::Bool(account_bound));
+    Ok(1)
 }
 
 pub(crate) fn c_item_get_item_id(state: &mut LuaState) -> LuaResult<u32> {
