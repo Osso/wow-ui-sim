@@ -1,0 +1,15 @@
+{
+  "patch": "11.2.7",
+  "title": "Patch 11.2.7/API changes",
+  "pageid": 649551,
+  "source_url": "https://warcraft.wiki.gg/wiki/Patch_11.2.7/API_changes",
+  "wikitext": {
+    "file": "11.2.7-api-changes.wikitext",
+    "method": "MediaWiki action=query prop=revisions rvprop=ids|timestamp|content rvslots=main",
+    "revid": 6726771,
+    "revision_timestamp": "2026-05-25T20:31:09Z",
+    "retrieved": "2026-10-06",
+    "sha256": "1538a9bdf49a0e09102b4f9c3905aada48e9e1aafdf9c4b9c780a1127179e324",
+    "register": "11.2.7-wikitext-register.json"
+  }
+}
