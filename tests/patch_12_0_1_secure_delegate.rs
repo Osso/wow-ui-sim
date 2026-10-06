@@ -30,7 +30,8 @@ fn assert_secret_setter_boundary(env: &WowLuaEnv) {
                 local ok, err = pcall(invoke)
                 assert(not ok and type(err) == 'string', 'tainted secret numeric setter must fail')
                 assert(debug.getstacktaint() == 'ExtractCooldownProbe')
-                local start, span = ProbeNormal:GetCooldownTimes()
+                local readable, start, span = pcall(function() return ProbeNormal:GetCooldownTimes() end)
+                assert(readable, 'rejected setter must not mark public frame timing secret')
                 assert(start == 10000 and span == 20000, 'rejected setter must preserve frame state')
             end
             ProbeNormal:SetCooldownFromDurationObject(ProbeDuration)
@@ -39,8 +40,10 @@ fn assert_secret_setter_boundary(env: &WowLuaEnv) {
         end
         debug.setobjecttaint(addon, 'ExtractCooldownProbe')
         addon()
-        assert(ProbeNormal:GetCooldownDisplayDuration() == 300000)
     "#).unwrap();
+    // Separate secure host entry: taint propagates back to the calling Lua chunk.
+    let duration: f64 = env.eval("return ProbeNormal:GetCooldownDisplayDuration()").unwrap();
+    assert_eq!(duration, 300000.0);
 }
 
 #[test]
