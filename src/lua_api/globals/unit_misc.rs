@@ -176,6 +176,11 @@ fn unit_guid(state: &mut LuaState) -> LuaResult<u32> {
 
 fn unit_creature_id(state: &mut LuaState) -> LuaResult<u32> {
     let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();
+    #[cfg(feature = "retail-12-0-0")]
+    if unit_identity_is_secret(state, &unit)? {
+        state.push(Val::Nil);
+        return Ok(1);
+    }
     let creature_id = {
         let Ok(sim) = borrow_state(state) else {
             return Ok(0);

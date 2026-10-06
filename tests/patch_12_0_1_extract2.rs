@@ -1,6 +1,77 @@
 #![cfg(feature = "retail-12-1-0")]
 
-use wow_ui_sim::lua_api::WowLuaEnv;
+use wow_ui_sim::lua_api::{MajorFactionData, WowLuaEnv};
+
+#[test]
+fn patch_12_0_1_creature_id_follows_identity_visibility() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec("A_Admin.SetTarget('Hogger', 11, 1, true); assert(UnitCreatureID('target') == 0)").unwrap();
+    env.state().borrow_mut().instance_identity.on_instanced_map = true;
+    env.exec(r#"
+        assert(C_Secrets.ShouldUnitIdentityBeSecret('target'))
+        assert(UnitCreatureID('target') == nil)
+        local function addon()
+            assert(UnitCreatureID('target') == nil)
+            assert(debug.getstacktaint() == 'CreatureProbe')
+        end
+        debug.setobjecttaint(addon, 'CreatureProbe')
+        addon()
+    "#).unwrap();
+    env.state().borrow_mut().instance_identity.on_instanced_map = false;
+    env.exec("assert(UnitCreatureID('target') == 0); assert(UnitCreatureID('player') == nil)").unwrap();
+}
+
+#[test]
+fn patch_12_0_1_major_faction_flags_are_host_state_snapshots() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().major_factions.insert(9801, MajorFactionData {
+        faction_id: 9801,
+        name: "Proof faction".into(),
+        max_level: 27,
+        use_journey_unlock_toast: true,
+        ..Default::default()
+    });
+    env.exec(r#"
+        HeldFaction = C_MajorFactions.GetMajorFactionData(9801)
+        assert(HeldFaction.name == 'Proof faction')
+        assert(type(HeldFaction.maxLevel) == 'number' and HeldFaction.maxLevel == 27)
+        assert(type(HeldFaction.useJourneyUnlockToast) == 'boolean' and HeldFaction.useJourneyUnlockToast)
+        HeldFaction.maxLevel = -1
+        assert(C_MajorFactions.GetMajorFactionData(9801).maxLevel == 27)
+    "#).unwrap();
+    {
+        let mut state = env.state().borrow_mut();
+        let faction = state.major_factions.get_mut(&9801).unwrap();
+        faction.max_level = 31;
+        faction.use_journey_unlock_toast = false;
+    }
+    env.exec(r#"
+        local fresh = C_MajorFactions.GetMajorFactionData(9801)
+        assert(fresh.maxLevel == 31 and fresh.useJourneyUnlockToast == false)
+        assert(HeldFaction.maxLevel == -1 and HeldFaction.useJourneyUnlockToast)
+        assert(C_MajorFactions.GetMajorFactionData(9802) == nil)
+    "#).unwrap();
+}
+
+#[test]
+fn patch_12_0_1_secret_precision_retains_jar_jar_payload() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(r#"
+        local secret = secretwrap('Jar Jar Binks')
+        local text = string.format('%.1s', secret)
+        assert(issecretvalue(text) and secretunwrap(text) == 'Jar Jar Binks')
+        assert(string.format('%.1s', 'Jar Jar Binks') == 'J')
+        local function addon()
+            local result = string.format('%.1s', secret)
+            assert(issecretvalue(result))
+            assert(not pcall(secretunwrap, result))
+            assert(debug.getstacktaint() == 'PrecisionProbe')
+            return result
+        end
+        debug.setobjecttaint(addon, 'PrecisionProbe')
+        assert(secretunwrap(addon()) == 'Jar Jar Binks')
+    "#).unwrap();
+}
 
 #[test]
 fn patch_12_0_1_long_buff_exemptions_survive_restricted_aura_context() {
