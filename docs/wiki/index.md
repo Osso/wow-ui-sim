@@ -1,3 +1,7 @@
+## [2026-10-06] investigation | Branch reconciliation
+
+[36-patch decision table](investigations/branch-reconciliation.md) distinguishes existing/obsolete work from four source patches ported in five commits. Nested-color tooltip coverage, talent cursor icons, host-position screenshot overlay and stale FrameXML cleanup are preserved; local checks and startup `[]` pass. Master integration and branch deletion remain unperformed.
+
 ## evidence | 12.0.1 producer closure
 
 [Follow-up](investigations/patch-12-0-1-api-audit.md#gap-closure-verification): 48/51 publication gaps closed, three retained model/scope boundaries; five isolated sweeps pass, startup `[]`. [Per-ID outcomes and proof](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gap-review.json) distinguish bounded producers from native parity.

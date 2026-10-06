@@ -1,3 +1,7 @@
+## [2026-10-06] investigation | Branch reconciliation
+
+[Audit](investigations/branch-reconciliation.md) records every positive cherry patch, historical master counterparts, five port commits, RED/GREEN proof, source-identical rebase and integrated local check/startup. Abandoned renderer/VM/profile snapshots remain outside per-commit audit; deletion safety is conditional on master integration. No pushes, branch deletions or vendor edits.
+
 ## [2026-10-06] evidence | 12.0.1 extract B01–B04
 
 [Follow-up](investigations/patch-12-0-1-api-audit.md#b01b04-extract-follow-up) records source-specific proof and withheld closures, enum/charge/numeric setter root causes, real catalog DTO inputs, isolated sweeps and original-master failures. Secret duration RED remains failing; startup emits `[]` but times out. No page-ledger edits or vendor patches.
