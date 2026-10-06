@@ -157,7 +157,7 @@ fn secret_env() -> WowLuaEnv {
                 assert(rawequal(left, right), 'secure boolean payload equality')
             else
                 local ok, err = pcall(rawequal, left, right)
-                assert(not ok and err == 'table security operation requires an untainted caller',
+                assert(not ok and err == 'secret access requires an untainted caller without revoked access',
                     'tainted secret BOOL equality denied')
             end
             assert(debug.getstacktaint() == before, 'equality preserves caller taint')
