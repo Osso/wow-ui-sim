@@ -542,7 +542,7 @@ pub struct SimState {
     pub loot_frame_open: bool,
     pub guild_registrar_open: bool,
     pub pet_stables_open: bool,
-    #[cfg(feature = "client-wowforever")]
+    #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
     pub allow_recent_allies_see_location: bool,
     #[cfg(feature = "client-wowforever")]
     pub stable_reads: crate::c_api::c_stable_info::forever::StableReadState,
