@@ -31,7 +31,6 @@
 
 use super::helpers::ensure_namespace;
 use crate::c_api::item_spell::spell_link_for_id;
-use crate::lua_api::globals::action_bar_api::spell_cooldown_times;
 use crate::lua_api::globals::spellbook_data;
 use crate::lua_api::methods::{
     borrow_state, borrow_state_mut, create_string, create_string_static, create_table,
