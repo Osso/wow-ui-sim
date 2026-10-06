@@ -809,5 +809,21 @@ pub(super) fn register_model(state: &mut LuaState, metatable: GcRef<Table>) -> L
     for (name, func) in MODEL_METHODS {
         table_set_rust_fn(state, metatable, name, *func)?;
     }
+    #[cfg(feature = "retail-12-0-0")]
+    {
+        // Permanent: collision-bound preference has no effect in this 2D renderer.
+        table_set_rust_fn(
+            state,
+            metatable,
+            "SetPreferModelCollisionBounds",
+            SKIP_3D_RENDERING,
+        )?;
+        table_set_rust_fn(
+            state,
+            metatable,
+            "IsPreferringModelCollisionBounds",
+            stub_false,
+        )?;
+    }
     Ok(())
 }

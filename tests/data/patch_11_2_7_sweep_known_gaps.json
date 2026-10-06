@@ -115,7 +115,5 @@
   "wt-global-api-OutageDetected-317",
   "wt-global-api-SetCursorByMode-319",
   "wt-scriptobjects-HousingFixturePointFrame-339",
-  "wt-scriptobjects-HousingLayoutPinFrame-340",
-  "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351",
-  "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353"
+  "wt-scriptobjects-HousingLayoutPinFrame-340"
 ]

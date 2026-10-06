@@ -67,3 +67,5 @@ Startup built separately with no timeout; `timeout 90 python3 /home/osso/.worktr
 ## Gap closure follow-up — 2026-10-06
 
 Neighborhood invitation getters/setters reuse existing per-environment boolean state, now published on Retail 12.0.0+ as well as Forever. Classic publication unchanged. INFERRED initial false; documented omitted setter resets false. Behavioral RED: nil global. GREEN pending after commit. No persistence or notification event invented.
+
+ModelSceneActorBase collision-bound preference methods are permanent 2D-scope compatibility: setter no-op, getter false even after setting true. Retail 12.0.0+ only. No 3D state or collision behavior claim. Behavioral RED observes missing actor method; post-commit GREEN pending.
