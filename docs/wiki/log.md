@@ -4,7 +4,7 @@
 
 ## [2026-10-06] investigation | Catalog ScrollBox regression
 
-[Bisect and root cause](investigations/patch-12-0-1-api-audit.md#catalog-section-enumeration-regression): `9ff0ff93c` section migration leaves stale seeded enumeration. Stored-key query replaces it without restoring synthetic products or weakening the original UI test.
+[Bisect and root cause](investigations/patch-12-0-1-api-audit.md#catalog-section-enumeration-regression): `9ff0ff93c` section migration leaves stale seeded enumeration. Stored-key query replaces it without restoring synthetic products or weakening the original UI test. [Revision-scoped verification](investigations/patch-12-0-1-api-audit.md#catalog-verification--f1ca398299ca536acccf74ec50b32919c04b6af6) records local checks and the unchanged product-provider failure.
 
 ## [2026-10-06] evidence | Remaining 12.0.1 extract
 

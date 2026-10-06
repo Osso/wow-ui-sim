@@ -62,6 +62,20 @@ Bisect between `e670ebcdb` and `dacd71799` with the local debug `prefork_full_ui
 
 The original show/hide assertion remains unchanged. Added [DTO enumeration regression](../../../tests/catalog_shop_product_structures.rs) covers category isolation, stable ordered snapshots and host removal; [cached UI regression](../../../tests/blizzard_catalog_shop_loads.rs) covers section insertion/removal through the actual category-selection path. Unmodified parent catalog prefork result: 14 pass, one pre-existing `catalog_shop_loads_and_populates_navigation_and_products` failure (`product_provider_empty`). Product maps remain empty by the [catalog contract](../../specs/catalog-shop-product-structures.md); no fabricated product restoration or vendor patch.
 
+### Catalog verification — `f1ca398299ca536acccf74ec50b32919c04b6af6`
+
+All commands ran in `/home/osso/.worktrees/wow-ui-sim-fix-catalog`, local debug only. Test commands use `python3 scripts/build-host.py --build-host local --test` followed by the Cargo tail shown below.
+
+| Command / proof scope | Result |
+| --- | --- |
+| `--test prefork_full_ui -- catalog_shop_show_and_hide` | 1 pass; original regression fixed |
+| `--test prefork_full_ui -- catalog_shop` | 15 pass / 1 fail; unchanged `product_provider_empty`, including new cached host-section refresh pass |
+| `--test integration -- catalog_shop` | 24 pass, including bundle/section snapshots and exact populated product/display DTOs |
+| `cargo check --tests --no-default-features --features "sound gui casc client-mists"` | exit 0; six unchanged iced vendor-manifest deprecations, no project warnings/errors |
+| Local build, then bounded `--no-build --run -- --no-addons --no-saved-vars lua-errors` | `[]`, CLEAN, exit 0 |
+
+Enumeration regression first failed on `dacd71799` plus the new test before producer changes. `cargo fmt`, post-commit `cargo fmt --check` and `git diff --check` exit 0. Readability metrics: layout maximum cognitive 4 / cyclomatic 5; new enumeration test 1 / 2. Manual changed-line audit found no new readability violations. Temporary bisect worktree removed. No source changes after the proof revision; this verification addition changes documentation only.
+
 ## Remaining extract follow-up
 
 [Per-row outcomes](../../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-extract2-proof.json) classify all 133 remaining rows: 41 proven-by-test, one metadata-candidate, 91 still-pending. The 41 are 36 retained buff exemptions (39 explicit IDs), two major-faction fields, two secret-string formatting statements and UnitCreatureID identity suppression. Buff tests use populated restricted host auras and tainted callers with a contextual-spell negative control; historical healer exemptions are not fabricated over current 12.1.0 attribute data. Parent DTOs, ambiguous historical colors, cooldown derivations, private-aura combat epoch differences and unspecified exploit boundaries retain individual reasons.
