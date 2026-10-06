@@ -36,6 +36,20 @@ class ExtractTests(unittest.TestCase):
         self.assertEqual(rows[-1]['status'], 'audit-pending')
         self.assertEqual(rows[-1]['source_id'], 'prose-2026-03-21-003')
 
+    def test_11_2_5_resource_links_and_build_transition_are_editorial(self):
+        rows = seed_rows('Patch 11.2.5 API changes\n== Summary ==\n'
+                         '* Item socketing APIs moved to C_ItemSocketInfo.\n'
+                         '== Resources ==\n* Deprecated APIs:\n'
+                         '** Deprecated_ItemSocketInfo.lua\n'
+                         '== Consolidated changes ==\n'
+                         ': 11.2.0 (62438) → 11.2.5 (63796) Oct 10 2025\n',
+                         patch='11.2.5')
+        self.assertEqual(rows[2]['status'], 'audit-pending')
+        self.assertEqual(rows[5]['source_id'], 'source-context-006')
+        self.assertEqual(rows[5]['status'], 'metadata-only')
+        self.assertEqual(rows[7]['source_id'], 'source-context-008')
+        self.assertEqual(rows[7]['status'], 'metadata-only')
+
     def test_comparison_operators_are_not_html_tags(self):
         self.assertEqual(
             extract_text('* <code>currentCharges < maxCharges and startTime > 0</code>\n'),

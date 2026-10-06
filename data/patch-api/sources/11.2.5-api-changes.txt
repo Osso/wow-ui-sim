@@ -1,0 +1,77 @@
+Patch 11.2.5 API changes
+
+== Summary ==
+* Many item socketing APIs have been relocated to the C_ItemSocketInfo namespace.
+
+== Resources ==
+* TOC: 110205
+* Official patch notes: Legion Remix Content Update Notes
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated APIs:
+** Deprecated_11_2_5.lua
+** Deprecated_ItemSocketInfo.lua
+** Deprecated_PetInfo.lua
+** Deprecated_WorldElapsedTimerTypes.lua
+
+== Consolidated changes ==
+: 11.2.0 (62438) → 11.2.5 (63796) Oct 10 2025
+=== Enumerations ===
+ Enum.AccountData
+   + CooldownManager
+   + CooldownManager2
+   + Shop2PendingOrders
+ Enum.AccountTransType
+   + EventRecords
+ Enum.BonusStatIndex
+   # SpiritUnused -> Spirit
+ Enum.CooldownSetSpellFlags
+   # PlaceHolder1 -> HideByDefault
+ Enum.ItemCollectionType
+   + ItemCollectionRoom
+   + ItemCollectionExteriorFixture
+   + ItemCollectionRoomThemes
+   + ItemCollectionRoomMaterials
+ Enum.ItemConsumableSubclass
+   + Relic
+ Enum.MinimapTrackingFilter
+   # QuestPoIs -> QuestPOIs
+ Enum.PerksVendorCategoryType
+   # Refund -> UnusedPerksVendorCategoryRefundUnused
+ Enum.PhaseReason
+   + TimerunningHwt
+ Enum.QuestTagType
+   + Placeholder_1
+ Enum.ReportType
+   + RecentAlly
+ Enum.TraitCurrencyType
+   + TraitSourcedPlayerDataElement
+ Enum.TraitNodeEntryType
+   + SpendInfinite
+ Enum.TraitNodeFlag
+   + ActiveAtFirstRank
+   + ShowExpandedSelection
+   + HideMaxRank
+ Enum.TraitSystemFlag
+   + AllowEditInChallengeMode
+ Enum.UIModelSceneFlags
+   + NoCameraSpin
+
+=== Structures ===
+ AddOnInfo
+   - updateAvailable
+ CooldownViewerCooldown
+   + overrideTooltipSpellID
+   + isKnown
+ GossipQuestUIInfo
+   + questInfoID
+ MythicPlusDate
+   + weekday
+ MythicPlusRunInfo
+   + durationSec
+   + completionDate
+   + season
+ TraitNodeInfo
+   + ranksIncreased
+   + entryIDToRanksIncreased
+ TraitTreeInfo
+   + rootNodeID

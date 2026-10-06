@@ -17,3 +17,7 @@ Use `tests/common/publication_sweep.rs`; exact observed gap IDs equal `tests/dat
 ## Location preference publication fix
 
 Both location visibility globals already have a state-backed implementation, synchronous event notifications, strict boolean/secret-caller validation and per-environment isolation. Their module and registration were gated to Forever only despite the 11.2.5 introduction. Publish that unchanged model from `retail-12-0-0` as well; classic builds retain absence, Forever retains its existing contract. Reuse the five behavioral tests under the same widened gate. RED: all five fail on missing globals. No recent-allies namespace producer changes.
+
+## Extract seeding
+
+Treat the four nested Deprecated resource links and the 11.2.0→11.2.5 build comparison as editorial for this page only. Keep the socketing relocation summary and all enum/structure parent/member statements pending. Existing extracts and coverage ledgers are never rewritten. Initial sweep: 116 OK / 47 gaps; two globals close through existing modeled state, 45 explicit member/3D gaps remain.
