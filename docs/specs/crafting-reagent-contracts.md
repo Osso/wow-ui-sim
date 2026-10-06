@@ -6,9 +6,9 @@
 
 - [x] Return item/currency identities, variable quantities, optional slot metadata and detached schematic/modification snapshots.
 - [x] Consume nested CraftingReagentInfo through CraftRecipe; preflight item/currency quantities before mutation and publish nested resource returns.
-- [ ] Craft results carry the committed bag item's existing C_Item GUID policy and catalog hyperlink, not an empty/fabricated identity. Missing output catalog data fails before inventory mutation.
+- [x] Craft results carry the committed bag item's existing C_Item GUID policy and catalog hyperlink, not an empty/fabricated identity. Missing output catalog data fails before inventory mutation.
 - [x] Parse every NewCraftingOrderInfo field and RegularReagentInfo/CraftingReagentInfo entries; post local orders without retaining Lua tables and return CraftingOrderReagentInfo.
-- [ ] Require host placement metadata for order lifecycle, fees, quality, identities and rewards; consume it only after valid placement. No fabricated container fields.
+- [x] Require host placement metadata for order lifecycle, fees, quality, identities and rewards; consume it only after valid placement. No fabricated container fields.
 - [x] Reject invalid identities, quantities, unknown slots/abilities and old-only flattened inputs without partial mutation.
 - [x] Preserve VM table-access policy and AllowedWhenUntainted input authentication, including nested identities; reject secret inputs from tainted callers without changing state/taint.
 

@@ -4,8 +4,8 @@ Unassigned PROSE-MODELABLE extract rows from the [scout](../../data/patch-api/ev
 
 ## What it must do
 
-- [ ] COMBAT_LOG_EVENT and COMBAT_LOG_EVENT_UNFILTERED script registrations error on addon-tainted RegisterEvent/RegisterUnitEvent paths, preserve existing registrations and receive no OnEvent delivery after rejection. Callback classification remains distinct.
-- [ ] Revalidate all 21 legacy retirements and available successors through the existing data-driven native/cached proof, distinguishing historical execution from current Retail.
+- [x] COMBAT_LOG_EVENT and COMBAT_LOG_EVENT_UNFILTERED script registrations error on addon-tainted RegisterEvent/RegisterUnitEvent paths, preserve existing registrations and receive no OnEvent delivery after rejection. Callback classification remains distinct.
+- [x] Revalidate all 21 legacy retirements and available successors through the existing data-driven native/cached proof, distinguishing historical execution from current Retail.
 - [ ] Establish operation-specific secret-value behavior only with a documented/native operation oracle; predicate publication is not that proof.
 
 ## How it works
@@ -26,7 +26,7 @@ Unassigned PROSE-MODELABLE extract rows from the [scout](../../data/patch-api/ev
 
 ## Known gaps (current cycle)
 
-- [ ] Fresh post-fix registration and retirement verification.
+Current native/cached registration and retirement proof passes; exact-12.0.0 execution remains blocked by the master-reproduced `on_update.rs:61` / `private_aura_sounds` feature-gate error. See the per-source report for revision scope.
 - [ ] General secret operations lack an operation-specific authoritative oracle in the captured prose. VM/dependency changes outside this worktree are unauthorized.
 
 ## Out of scope

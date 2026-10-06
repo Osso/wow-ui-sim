@@ -1,0 +1,1437 @@
+{
+  "task": "12.0.0 B08 and unassigned prose",
+  "worktree": "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8",
+  "base": "e9baac195",
+  "runtime_revision": "900d756ec0c867868bd7a164de3574e9b3bb51bc",
+  "ledger_modified": false,
+  "outcomes": [
+    {
+      "source_id": "structures-CraftingItemSlotModification-082",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::profession_crafting_slot_shapes_and_variable_quantities"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-CraftingItemSlotModification-083",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::profession_crafting_slot_shapes_and_variable_quantities"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-CraftingOrderReagentInfo-084",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::crafting_order_nested_inputs_outputs_and_snapshots"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-CraftingOrderReagentInfo-085",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::crafting_order_nested_inputs_outputs_and_snapshots"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-CraftingReagentInfo-086",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::crafting_order_nested_inputs_outputs_and_snapshots",
+        "patch_12_0_0_crafting_shapes::crafting_nested_allocations_consume_items_currency_and_publish_returns"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-CraftingReagentInfo-087",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::crafting_order_nested_inputs_outputs_and_snapshots",
+        "patch_12_0_0_crafting_shapes::crafting_nested_allocations_consume_items_currency_and_publish_returns"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-CraftingReagentSlotSchematic-088",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::profession_crafting_slot_shapes_and_variable_quantities"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-CraftingReagentSlotSchematic-089",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::profession_crafting_slot_shapes_and_variable_quantities"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-CraftingResourceReturnInfo-090",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::crafting_nested_allocations_consume_items_currency_and_publish_returns"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-CraftingResourceReturnInfo-091",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::crafting_nested_allocations_consume_items_currency_and_publish_returns"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-NewCraftingOrderInfo-110",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::crafting_order_nested_inputs_outputs_and_snapshots",
+        "patch_12_0_0_crafting_shapes::crafting_order_secret_arguments_obey_caller_taint"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-NewCraftingOrderInfo-111",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::crafting_order_nested_inputs_outputs_and_snapshots",
+        "patch_12_0_0_crafting_shapes::crafting_order_secret_arguments_obey_caller_taint"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-RegularReagentInfo-114",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::crafting_order_nested_inputs_outputs_and_snapshots"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "structures-RegularReagentInfo-115",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_crafting_shapes::crafting_order_nested_inputs_outputs_and_snapshots"
+      ],
+      "scope": "bounded current cached Retail contract; native policy not inferred"
+    },
+    {
+      "source_id": "prose-undated-005",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_prose::prose_combat_log_registration_errors_without_delivery"
+      ],
+      "scope": "tainted RegisterEvent/RegisterUnitEvent error, registrations unchanged, no OnEvent delivery"
+    },
+    {
+      "source_id": "prose-undated-030",
+      "outcome": "still-pending",
+      "reason": "Captured prose supplies no operation-specific secure/tainted arithmetic, comparison, concatenation, indexing, branching or rendering oracle. Existing VM secrecy predicates/argument guards do not prove that full contract; rilua dependency edits outside this worktree are unauthorized."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-128",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-GetSpellInfo-130",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-GetNumSpellTabs-131",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-GetSpellTabInfo-132",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-GetSpellCooldown-133",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-GetSpellBookItemName-134",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-GetSpellTexture-135",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-GetSpellCharges-136",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-GetSpellDescription-137",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-GetSpellCount-138",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-IsUsableSpell-139",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-C_TaskQuest-GetQuestsForPlayerByMapID-142",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-GetMerchantItemInfo-143",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-C_ChallengeMode-GetCompletionInfo-144",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-C_MythicPlus-IsWeeklyRewardAvailable-145",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-IsActiveQuestLegendary-148",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-C_QuestLog-IsLegendaryQuest-149",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-C_QuestLog-IsQuestRepeatableType-150",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-ConsolePrint-153",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-message-154",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-IsSpellOverlayed-157",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    },
+    {
+      "source_id": "deprecated api-IsArtifactRelicItem-160",
+      "outcome": "proven-by-test",
+      "tests": [
+        "patch_12_0_0_deprecated::patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "scope": "Already bounded on base e9baac195, revalidated current native/cached absence and listed successors; exact 12.0.0 native run remains master-reproduced compilation-blocked."
+    }
+  ],
+  "proof": [
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "trade_skill",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration trade_skill -- --nocapture",
+      "revision_scope": "e9baac195",
+      "exit_code": 0,
+      "purpose": "baseline/master comparison",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting -- --nocapture",
+      "revision_scope": "e9baac195",
+      "exit_code": 0,
+      "purpose": "baseline/master comparison",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "profession",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration profession -- --nocapture",
+      "revision_scope": "e9baac195",
+      "exit_code": 0,
+      "purpose": "baseline/master comparison",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting_order",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting_order -- --nocapture",
+      "revision_scope": "e9baac195",
+      "exit_code": 0,
+      "purpose": "baseline/master comparison",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_crafting_shapes",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_0_crafting_shapes -- --nocapture",
+      "revision_scope": "e9baac195 + tests",
+      "exit_code": 101,
+      "purpose": "baseline/master comparison",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_crafting_shapes",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_0_crafting_shapes -- --nocapture",
+      "revision_scope": "590f67542",
+      "exit_code": 101,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting -- --nocapture",
+      "revision_scope": "5c5f0dbe05f0b7b95a7988cd16147e1815e2f333",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "trade_skill",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration trade_skill -- --nocapture",
+      "revision_scope": "5c5f0dbe05f0b7b95a7988cd16147e1815e2f333",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "profession",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration profession -- --nocapture",
+      "revision_scope": "5c5f0dbe05f0b7b95a7988cd16147e1815e2f333",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting_order",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting_order -- --nocapture",
+      "revision_scope": "5c5f0dbe05f0b7b95a7988cd16147e1815e2f333",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_prose",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_0_prose -- --nocapture",
+      "revision_scope": "5c5f0dbe05f0b7b95a7988cd16147e1815e2f333",
+      "exit_code": 101,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_prose",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_0_prose -- --nocapture",
+      "revision_scope": "e9baac195 + same tests",
+      "exit_code": 101,
+      "purpose": "baseline/master comparison",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting_order_secret_arguments",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting_order_secret_arguments -- --nocapture",
+      "revision_scope": "fc3bbcb64 + test",
+      "exit_code": 101,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_prose",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_0_prose -- --nocapture",
+      "revision_scope": "76335ea10114003ecd851acaca9cc46928edca13",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "autoroll_compat",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration autoroll_compat -- --nocapture",
+      "revision_scope": "76335ea10114003ecd851acaca9cc46928edca13",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "register_event",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration register_event -- --nocapture",
+      "revision_scope": "76335ea10114003ecd851acaca9cc46928edca13",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting -- --nocapture",
+      "revision_scope": "76335ea10114003ecd851acaca9cc46928edca13",
+      "exit_code": 101,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "trade_skill",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration trade_skill -- --nocapture",
+      "revision_scope": "76335ea10114003ecd851acaca9cc46928edca13",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "profession",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration profession -- --nocapture",
+      "revision_scope": "76335ea10114003ecd851acaca9cc46928edca13",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting_order",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting_order -- --nocapture",
+      "revision_scope": "76335ea10114003ecd851acaca9cc46928edca13",
+      "exit_code": 101,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting_order_secret_arguments",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting_order_secret_arguments -- --nocapture",
+      "revision_scope": "d4fa9be12",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting -- --nocapture",
+      "revision_scope": "e069e4ef3d726f8fd706ee70221641113a0f6d0a",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "trade_skill",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration trade_skill -- --nocapture",
+      "revision_scope": "e069e4ef3d726f8fd706ee70221641113a0f6d0a",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "profession",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration profession -- --nocapture",
+      "revision_scope": "e069e4ef3d726f8fd706ee70221641113a0f6d0a",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting_order",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting_order -- --nocapture",
+      "revision_scope": "e069e4ef3d726f8fd706ee70221641113a0f6d0a",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_12_0_0_deprecated_retirement_and_successors"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test prefork_full_ui -- patch_12_0_0_deprecated_retirement_and_successors",
+      "revision_scope": "e069e4ef3d726f8fd706ee70221641113a0f6d0a",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --check",
+      "revision_scope": "e069e4ef3d726f8fd706ee70221641113a0f6d0a",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/Cargo.toml",
+        "--check"
+      ],
+      "command": "cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/Cargo.toml --check",
+      "revision_scope": "e069e4ef3d726f8fd706ee70221641113a0f6d0a",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-default-features",
+        "--features",
+        "profile-retail,retail-12-0-0",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_deprecated_native_retirement",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --no-default-features --features profile-retail,retail-12-0-0 --test --test integration patch_12_0_0_deprecated_native_retirement -- --nocapture",
+      "revision_scope": "e069e4ef3",
+      "exit_code": 101,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-default-features",
+        "--features",
+        "profile-retail,retail-12-0-0",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_deprecated_native_retirement",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --no-default-features --features profile-retail,retail-12-0-0 --test --test integration patch_12_0_0_deprecated_native_retirement -- --nocapture",
+      "revision_scope": "e9baac195",
+      "exit_code": 101,
+      "purpose": "baseline/master comparison",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local",
+      "revision_scope": "6d6d56013",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "timeout",
+        "90",
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-build",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "command": "timeout 90 python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors",
+      "revision_scope": "6d6d56013",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_0_publication_sweep -- --test-threads=1",
+      "revision_scope": "6d6d56013",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_5_publication_sweep -- --test-threads=1",
+      "revision_scope": "6d6d56013",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_7_publication_sweep -- --test-threads=1",
+      "revision_scope": "6d6d56013",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_1_0_publication_sweep -- --test-threads=1",
+      "revision_scope": "6d6d56013",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/Cargo.toml",
+        "--check"
+      ],
+      "command": "cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/Cargo.toml --check",
+      "revision_scope": "6d6d56013",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting_order_requires_host_placement_metadata",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting_order_requires_host_placement_metadata -- --nocapture",
+      "revision_scope": "6d6d56013 + test",
+      "exit_code": 101,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting -- --nocapture",
+      "revision_scope": "343a269b1502b60940d6ad6864584be87642661a",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "trade_skill",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration trade_skill -- --nocapture",
+      "revision_scope": "343a269b1502b60940d6ad6864584be87642661a",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "profession",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration profession -- --nocapture",
+      "revision_scope": "343a269b1502b60940d6ad6864584be87642661a",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting_order",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting_order -- --nocapture",
+      "revision_scope": "343a269b1502b60940d6ad6864584be87642661a",
+      "exit_code": 0,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting_nested_allocations_consume_items_currency_and_publish_returns",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting_nested_allocations_consume_items_currency_and_publish_returns -- --nocapture",
+      "revision_scope": "343a269b1 + test",
+      "exit_code": 101,
+      "purpose": "development",
+      "valid_for_current_relevant_scope": false,
+      "invalidation": "Superseded by parser/refactor/host-metadata/result-identity source changes. Older sweeps/startup were explicitly invalidated and repeated after the last producer change."
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting -- --nocapture",
+      "revision_scope": "900d756ec0c867868bd7a164de3574e9b3bb51bc",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "trade_skill",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration trade_skill -- --nocapture",
+      "revision_scope": "900d756ec0c867868bd7a164de3574e9b3bb51bc",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "profession",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration profession -- --nocapture",
+      "revision_scope": "900d756ec0c867868bd7a164de3574e9b3bb51bc",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "crafting_order",
+        "--",
+        "--nocapture"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration crafting_order -- --nocapture",
+      "revision_scope": "900d756ec0c867868bd7a164de3574e9b3bb51bc",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --check",
+      "revision_scope": "900d756ec0c867868bd7a164de3574e9b3bb51bc",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local",
+      "revision_scope": "900d756ec0c867868bd7a164de3574e9b3bb51bc",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "timeout",
+        "90",
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-build",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "command": "timeout 90 python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors",
+      "revision_scope": "900d756ec0c867868bd7a164de3574e9b3bb51bc",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/Cargo.toml",
+        "--check"
+      ],
+      "command": "cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/Cargo.toml --check",
+      "revision_scope": "900d756ec0c867868bd7a164de3574e9b3bb51bc",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "rustfmt",
+        "--edition",
+        "2024",
+        "--check",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/tests/patch_12_0_0_crafting_shapes.rs",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/tests/patch_12_0_0_prose.rs"
+      ],
+      "command": "rustfmt --edition 2024 --check /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/tests/patch_12_0_0_crafting_shapes.rs /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/tests/patch_12_0_0_prose.rs",
+      "revision_scope": "900d756ec0c867868bd7a164de3574e9b3bb51bc",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_0_publication_sweep -- --test-threads=1",
+      "revision_scope": "900d756ec",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_5_publication_sweep -- --test-threads=1",
+      "revision_scope": "900d756ec",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_0_7_publication_sweep -- --test-threads=1",
+      "revision_scope": "900d756ec",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--test-threads=1"
+      ],
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1200-extract-b8/scripts/build-host.py --build-host local --test --test integration patch_12_1_0_publication_sweep -- --test-threads=1",
+      "revision_scope": "900d756ec",
+      "exit_code": 0,
+      "purpose": "final bounded proof",
+      "valid_for_current_relevant_scope": true,
+      "invalidation": null
+    }
+  ],
+  "retirement_proof_scope": "e069e4ef3 cached/native-current retirement test; retirement bindings/probes unchanged at final revision. Historical exact-12.0.0 test blocked on task and base; blocking on_update.rs call remains unchanged.",
+  "historical_blocker": {
+    "file": "src/lua_api/on_update.rs:61",
+    "error": "E0433 private_aura_sounds requires retail-12-0-5",
+    "task_revision": "e069e4ef3",
+    "baseline": "e9baac195"
+  },
+  "readability": {
+    "crafting_reagents.rs.json": {
+      "max_cognitive": 7.0,
+      "max_cyclomatic": 8.0
+    },
+    "crafting_plan.rs.json": {
+      "max_cognitive": 4.0,
+      "max_cyclomatic": 6.0
+    },
+    "crafting_input.rs.json": {
+      "max_cognitive": 3.0,
+      "max_cyclomatic": 15.0
+    },
+    "crafting_execution.rs.json": {
+      "max_cognitive": 4.0,
+      "max_cyclomatic": 8.0
+    },
+    "crafting_tables.rs.json": {
+      "max_cognitive": 5.0,
+      "max_cyclomatic": 4.0
+    },
+    "c_crafting_orders.rs.json": {
+      "max_cognitive": 2.0,
+      "max_cyclomatic": 9.0
+    }
+  }
+}

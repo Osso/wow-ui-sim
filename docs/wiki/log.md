@@ -1,6 +1,6 @@
 ## [2026-10-06] system | Crafting reagents
 
-[Model](systems/crafting-reagents.md) and [contract](../specs/crafting-reagent-contracts.md) document B08 typed inputs, rooted nested outputs and deterministic local resource/order boundaries. No coverage ledger credit assigned.
+[Model](systems/crafting-reagents.md), [contract](../specs/crafting-reagent-contracts.md) and [per-source proof](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b8-prose-report.md) record typed inputs, rooted outputs, required host snapshots, committed item identities and resistant prose/historical boundaries. No coverage ledger edits.
 
 ## [2026-10-05] investigation | Retirement successor fallout
 

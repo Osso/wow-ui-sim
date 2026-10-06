@@ -4,7 +4,7 @@
 
 ## [2026-10-06] system | Crafting reagent contracts
 
-[Typed reagent state](systems/crafting-reagents.md) replaces flattened schematic entries and consumes nested crafting/order inputs. [Contract](../specs/crafting-reagent-contracts.md) keeps local policy and native server gaps explicit; proof pending, ledgers unchanged.
+[Typed reagent state](systems/crafting-reagents.md) replaces flattened entries, consumes nested inputs and requires host order metadata. [Per-source proof](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b8-prose-report.md) records bounded tests, inferred policy, secret-operation resistance and historical compile blocker. Ledgers unchanged.
 
 ## [2026-10-05] investigation | Retirement successor fallout
 
