@@ -1,0 +1,598 @@
+{{apichanges|12.0.1|prev=12.0.0|next=12.0.5}}
+
+==Summary==
+[[Patch 12.0.1]] is the {{g|Midnight}} launch patch, rolling up changes that took place after [[Patch 12.0.0/API changes|Patch 12.0.0]] went stable.
+
+==Resources==
+* TOC: <code>120001</code>
+<div class="noexcerpt">
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24246298/second-midnight-pre-expansion-update-notes#item5 Second Midnight Pre-Expansion Update Notes]
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/12.0.0..12.0.1 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/12.0.0..12.0.1 BlizzardInterfaceResources]
+* Deprecated API: [https://github.com/Gethe/wow-ui-source/blob/12.0.1/Interface/AddOns/Blizzard_Deprecated/Deprecated_12_0_1.lua Blizzard_Deprecated]
+</div>
+
+==Blue posts==
+===2026-02-19===
+[https://discord.com/channels/327414731654692866/1473839027018010826 {{apisummary.title|Midnight 12.0.1 AddOn Restrictions Update}}]
+<blockquote {{apisummary.blizzquote}}>
+Hello again from Blizzard! We have a small list of changes that are being hotfixed to live in preparation for Early Access launch next week. You should expect these to hit live servers in the next few days.
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+
+NOTE: While most of these are bugfixes that last couple changes were made to address exploits or addon functionality we did not want to allow. Apologies for the late changes there!
+</blockquote>
+<details open>
+{{apisummary.header|Changes due to be deployed before Midnight Early Access}}
+*Fixed an exploit that allowed addons to declassify spell names using tricky string formatting. APIs no longer accept secret spell names from addons as a result. (Already live)
+*Fixed an exploit where status bars could be used to launder secret numbers.
+*Fixed an issue where calling {{api|debuglocals}} after certain Lua errors would cause a crash.
+*Fixed an issue where numerous APIs that accept aura instance IDs would stop working after a full aura update (relog was the easiest repro).
+*Fixed an issue where enabling timestamps on chat frames would cause Lua errors when chat lockdowns are in effect.
+*Threat APIs now conditionally return secrets for some combinations of input unit tokens to prevent unintended use of these functions to compare units.
+*Various APIs no longer accept compound unit tokens or unit names when in an active PvP match.
+Bonus notes that were forgotten:
+Fixed an exploit that allowed addons to access spell IDs and durations of crowd control effects for other players.
+Fixed an exploit that allowed addons to access cooldowns of PvP trinkets for other players in arenas.
+</details><br>
+
+===2026-02-24===
+[https://discord.com/channels/327414731654692866/1475979247825977595 {{apisummary.title|Midnight 12.0.1 Spell Declassification Update}}]
+<blockquote {{apisummary.blizzquote}}>
+Hello again from Blizzard!
+
+Today we have an update regarding which spells we are going to be flagging as non-secret for Midnight launch. These changes are planned to go out in a data hotfix in the next couple days, but we wanted to give you all a heads up beforehand so you can plan any necessary changes to your addons.
+
+Over the course of Beta, as well as recent weeks on live, one of the biggest recurring points of feedback has been from healers who wish that our default UI provided more robust options for filtering or emphasizing specific buffs on raid frames. In the past month we have added a few layers of extra logic to buff sorting and visibility, and while we've heard positive feedback from many healers about these improvements, we realize that our solutions are leaving others still wanting more customization. 
+
+While we had originally hoped to be able to deliver a streamlined default experience, it has become clear that there are common use-cases that a single set of logic cannot cover. Some players may want to make simple tweaks like highlighting the target of their Preservation Evoker's Echo, or their Holy Paladin's active Beacon, while others would consider that to be distracting clutter. We are now beginning work on a system to allow players to hide or emphasize buffs from their spellcasts on a per-spell basis, via the Spellbook. We expect that solution to be ready for players in a later Midnight patch.
+In the meantime, we have also seen a few addons popping up that use non-secret information to make very reliable guesses about players' spellcasts in order to drive this sort of filtering logic. Breaking the API calls driving this functionality would cause significant collateral damage to common addons, and we are not planning to do go down that path. Ultimately, this design space is mostly about customizing the display of information, rather than objectively advantageous computational solutions, so we want to treat it the same way we approached resources like Holy Power or Maelstrom.
+
+Thus, rather than requiring addon developers to jump through hoops to support an implementation that will have some frustrating inaccuracies, we are planning to flag a number of short-cooldown rotational healer spells, and very long duration buffs, to exclude them from our Secret Value system. We will likely re-protect these spells once our own filtering solution, with its own addon hooks for display customization, is in place.
+
+The full list of spells being flagged is below, broken down into several categories.
+</blockquote>
+<details open>
+{{apisummary.header|Healer Buffs and HoTs}}
+{{text|blizz|Preservation Evoker}}
+*355941 - Dream Breath
+*363502 - Dream Flight
+*364343 - Echo
+*366155 - Reversion
+*367364 - Echo Reversion
+*373267 - Lifebind
+*376788 - Echo Dream Breath
+
+{{text|blizz|Augmentation Evoker}}
+*360827 - Blistering Scales
+*395152 - Ebon Might
+*410089 - Prescience
+*410263 - Inferno's Blessing
+*410686 - Symbiotic Bloom
+*413984 - Shifting Sands
+
+{{text|blizz|Resto Druid}}
+*774 - Rejuv
+*8936 - Regrowth
+*33763 - Lifebloom
+*48438 - Wild Growth
+*155777 - Germination
+
+{{text|blizz|Disc Priest}}
+*17 - Power Word: Shield
+*194384 - Atonement
+*1253593 - Void Shield
+
+{{text|blizz|Holy Priest}}
+*139 - Renew
+*41635 - Prayer of Mending
+*77489 - Echo of Light
+
+{{text|blizz|Mistweaver Monk}}
+*115175 - Soothing Mist
+*119611 - Renewing Mist
+*124682 - Enveloping Mist
+*450769 - Aspect of Harmony
+
+{{text|blizz|Restoration Shaman}}
+*974, 383648 - Earth Shield
+*61295 - Riptide
+
+{{text|blizz|Holy Paladin}}
+*53563 - Beacon of Light
+*156322 - Eternal Flame
+*156910 - Beacon of Faith
+*1244893 - Beacon of the Savior
+</details>
+<details open>
+{{apisummary.header|Long-term Raid Buffs}}
+*1126 - Mark of the Wild
+*1459 - Arcane Intellect
+*6673 - Battle Shout
+*21562 - Power Word: Fortitude
+*369459 - Source of Magic
+*462854 - Skyfury
+*474754 – Symbiotic Relationship
+
+{{text|blizz|Blessing of the Bronze Auras}}
+*381732 - Death Knight
+*381741 - Demon Hunter
+*381746 – Druid
+*381748 – Evoker
+*381749 – Hunter
+*381750 – Mage
+*381751 – Monk
+*381752 – Paladin
+*381753 – Priest
+*381754 – Rogue
+*381756 – Shaman
+*381757 – Warlock
+*381758 - Warrior
+</details>
+<details open>
+{{apisummary.header|Long-term Self Buffs}}
+*433568 - Rite of Sanctification
+*433583 - Rite of Adjuration
+
+{{text|blizz|Rogue Poisons}}
+*2823 - Deadly Poison
+*8679 - Wound Poison
+*3408 - Crippling Poison
+*5761 - Numbing Poison
+*315584 - Instant Poison
+*381637 - Atrophic Poison
+*381664 - Amplifying Poison
+
+{{text|blizz|Shaman Imbuements}}
+*319773 – Windfury Weapon
+*319778 – Flametongue Weapon
+*382021, 382022 – Earthliving Weapon
+*457496, 457481 – Tidecaller's Guard
+*462757, 462742 – Thunderstrike Ward
+
+{{text|blizz|Resource-like Auras}}
+*205473 - Mage Icicles
+*260286 - Hunter Tip of the Spear
+
+{{text|blizz|Cooldowns}}
+*8690 - Hearthstone
+*20608 - Shaman Reincarnation
+*All Mythic Plus Teleport Spells (IDs not listed)
+</details><br>
+
+===2026-03-21===
+[https://discord.com/channels/327414731654692866/1484980480217448540 {{apisummary.title|Midnight 12.0.1 Upcoming Restriction Changes}}]
+<blockquote {{apisummary.blizzquote}}>
+Hello again from Blizzard! Mythic raids and M+ open this week and we will be hotfixing in some last-minute changes to fix exploits before resets.
+
+We recognize that some of these changes are going to be disruptive and require last-second changes to your addons, and we sincerely apologize for them coming in so late. Part of these changes involve removing the secure delegate portion of ActionButton_ApplyCooldown. We have added new APIs that should replace the functionality it provided, but we will be watching closely for reports of functionality that still needs replacing.
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+</blockquote>
+<details open>
+{{apisummary.header|Cooldowns}}
+* Removed the ability for tainted code to configure cooldown frames with secret values via {{api|t=w|Cooldown:SetCooldown|SetCooldown}}, {{api|t=w|Cooldown:SetCooldownFromExpirationTime|SetCooldownFromExpirationTime}}, {{api|t=w|Cooldown:SetCooldownDuration|SetCooldownDuration}}, and {{api|t=w|Cooldown:SetCooldownUNIX|SetCooldownUNIX}}.
+** This does not impact {{api|t=w|Cooldown:SetCooldownFromDurationObject|SetCooldownFromDurationObject}} which, going forward, is the only way to configure a cooldown frame with secret values.
+
+* The {{tlygo|ActionButton_ApplyCooldown}} Lua function no longer routes through a secure delegate.
+** This unfortunately means that existing code passing secrets into this function will start throwing Lua errors when the hotfix goes live. However, all of the logic that this function is doing should be able to be replicated by addons with the new <code>isActive</code>/<code>shouldReplaceNormalCooldown</code> boolean fields and duration objects (see below for details on those).
+
+* Action/Spell cooldown APIs now return <code>isEnabled</code> and <code>maxCharges</code> as non-secrets.
+* Action/Spell cooldown APIs now return a new non-secret <code>isActive</code> boolean, which is set to true if the UI should render a cooldown display.
+** For regular cooldowns, it's true if <code>isEnabled and startTime > 0 and duration > 0</code>.
+** For charge cooldowns, it's true if <code>maxCharges > 1 and currentCharges < maxCharges and startTime > 0 and duration > 0</code>.
+** For LoC cooldowns, it's true if <code>startTime > 0 and duration > 0</code>.
+
+* Action/Spell cooldown APIs that yield duration objects now return a zero-span object if the <code>isActive</code> boolean evaluates to false.
+* Action/Spell cooldown APIs now return results modified by the presence of cooldown aura spells on the player.
+** For example, if an action button is assigned to a PvP trinket (Sigil of Adaptation) that has a passive effect of automatically removing a loss of control effect with a 1 minute cooldown, the GetActionCooldown API will track that 1 minute cooldown when the Adaptation debuff has been applied to the player.
+** This means no addon code needs to deal with the {{api|C_UnitAuras.GetCooldownAuraBySpellID}} API.
+</details>
+<details open>
+{{apisummary.header|Cooldowns (continued)}}
+* Action/Spell Loss of Control cooldown APIs now return a structured table instead of unpacked values.
+** These functions have been renamed with an "Info" suffix (eg. {{api|C_Spell.GetSpellLossOfControlCooldownInfo|GetSpellLossOfControlCooldownInfo}}) with a deprecation for the old name that unpacks the start time and duration value.
+** This structured table contains several new fields not present in the old API. In addition to the <code>isActive</code> boolean mentioned above, it includes <code>modRate</code> (secret) and <code>shouldReplaceNormalCooldown</code> (non-secret), which is true if the loss of control cooldown has an expiration time that's later than any regular cooldown for this ability/spell.
+* Added a new {{api|C_LossOfControl.GetActiveLossOfControlDuration(unitToken, index)}} API that returns a duration object.
+* Added a new {{api|GetTotemDuration(slot)}} API that returns a duration object.
+</details>
+<details open>
+{{apisummary.header|Other changes}}
+* A change that we had already made in 12.0.5 to restrict the ability to use <code>%.1s</code> style precision specifiers with secret string inputs has been brought forward to 12.0.1.
+** As a result, {{api.inline|format("%.1s", secretwrap("Jar Jar Binks"))}} will no longer truncate to "J".
+
+* The {{api|UnitCreatureID}} API now returns nil when unit identity is secret.
+* The following script object methods now return nil if relevant secret aspects are assigned: {{api|t=w|Frame:GetEffectiveAlpha()}}, {{api|t=w|StatusBar:IsStatusBarDesaturated()}}, {{api|t=w|Texture:IsDesatured()}}
+* Resolved a few issues where {{api.system|TooltipInfo|C_TooltipInfo}} APIs for unit auras had inconsistent security requirements.
+* The use of [[MACRO worldmarker|/wm]] and [[MACRO clearworldmarker|/cwm]] in macros has been limited to 3 per second.
+Macros are no longer allowed to send BNet whispers while an encounter is active.
+* The following  {{api.system|UnitAuras|C_UnitAuras}} APIs can no longer be called while the player is in combat: {{api|C_UnitAuras.AddPrivateAuraAnchor|AddPrivateAuraAnchor}}, {{api|C_UnitAuras.RemovePrivateAuraAnchor|RemovePrivateAuraAnchor}}, {{api|C_UnitAuras.SetPrivateWarningTextAnchor|SetPrivateWarningTextAnchor}}, {{api|C_UnitAuras.AddPrivateAuraAppliedSound|AddPrivateAuraAppliedSound}}, {{api|C_UnitAuras.RemovePrivateAuraAppliedSound|RemovePrivateAuraAppliedSound}}.
+</details>
+
+==Consolidated changes==
+: <font color="pink">12.0.0 (65655)</font> &rarr; <font color="lightgreen">12.0.1 (66838)</font> Apr  3 2026
+
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(80)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(18)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_ActionBar.GetActionLossOfControlCooldownInfo}}
+: {{api|t=a|C_BattleNet.SetAFK}}
+: {{api|t=a|C_BattleNet.SetDND}}
+: {{api|t=a|C_CatalogShop.BulkRefundDecors}}
+: {{api|t=a|C_CatalogShop.FindBestCurrencyProductForNeededAmount}}
+: {{api|t=a|C_CatalogShop.GetVCProductInfos}}
+: {{api|t=a|C_CatalogShop.OnLegalPersonalizedOptOutClicked}}
+: {{api|t=a|C_CatalogShop.ShouldShowHousingWarning}}
+: {{api|t=a|C_CombatAudioAlert.AddToKnownTargetingList}}
+: {{api|t=a|C_CombatAudioAlert.GetCategoryVoice}}
+: {{api|t=a|C_CombatAudioAlert.GetCategoryVolume}}
+: {{api|t=a|C_CombatAudioAlert.RemoveFromKnownTargetingList}}
+: {{api|t=a|C_CombatAudioAlert.SetCategoryVoice}}
+: {{api|t=a|C_CombatAudioAlert.SetCategoryVolume}}
+: {{api|t=a|C_DamageMeter.GetSessionDurationSeconds}}
+: {{api|t=a|C_DeathRecap.GetRecapMaxHealth}}
+: {{api|t=a|C_DelvesUI.GetPlayerCompanionPDEID}}
+: {{api|t=a|C_DelvesUI.GetTieredEntrancePDEID}}
+: {{api|t=a|C_EncounterEvents.GetEventColor}}
+: {{api|t=a|C_EncounterEvents.GetEventInfo}}
+: {{api|t=a|C_EncounterEvents.GetEventList}}
+: {{api|t=a|C_EncounterEvents.GetEventSound}}
+: {{api|t=a|C_EncounterEvents.HasEventInfo}}
+: {{api|t=a|C_EncounterEvents.PlayEventSound}}
+: {{api|t=a|C_EncounterEvents.SetEventColor}}
+: {{api|t=a|C_EncounterEvents.SetEventSound}}
+: {{api|t=a|C_EncounterTimeline.GetEventHighlightTime}}
+: {{api|t=a|C_EncounterTimeline.GetEventTimer}}
+: {{api|t=a|C_EncounterTimeline.GetSortedEventList}}
+: {{api|t=a|C_EncounterTimeline.GetTrackMaxEventDuration}}
+: {{api|t=a|C_EncounterTimeline.GetTrackType}}
+: {{api|t=a|C_EncounterTimeline.GetViewType}}
+: {{api|t=a|C_EncounterTimeline.SetViewType}}
+: {{api|t=a|C_EncounterWarnings.GetColorForSeverity}}
+: {{api|t=a|C_EncounterWarnings.GetPlayCustomSoundsWhenHidden}}
+: {{api|t=a|C_EncounterWarnings.GetWarningsShown}}
+: {{api|t=a|C_EncounterWarnings.SetPlayCustomSoundsWhenHidden}}
+: {{api|t=a|C_EncounterWarnings.SetWarningsShown}}
+: {{api|t=a|C_GuildInfo.GetInfoText}}
+: {{api|t=a|C_GuildInfo.GetMOTD}}
+: {{api|t=a|C_GuildInfo.SetInfoText}}
+: {{api|t=a|C_Housing.IsHousingMarketCartFullRemoveEnabled}}
+: {{api|t=a|C_HousingCatalog.GetDestroyableInstanceCount}}
+: {{api|t=a|C_HousingCatalog.GetMarketInfoForDecor}}
+: {{api|t=a|C_HousingCatalog.HousingMarketActionAddToCart}}
+: {{api|t=a|C_HousingCatalog.HousingMarketActionClearCart}}
+: {{api|t=a|C_HousingCatalog.HousingMarketActionRemoveFromCart}}
+: {{api|t=a|C_HousingCatalog.HousingMarketActionViewBundle}}
+: {{api|t=a|C_HousingCatalog.HousingMarketActionViewInStore}}
+: {{api|t=a|C_HousingLayout.GetNumFloors}}
+: {{api|t=a|C_HousingPhotoSharing.BeginAuthorizationFlow}}
+: {{api|t=a|C_HousingPhotoSharing.ClearAuthorization}}
+: {{api|t=a|C_HousingPhotoSharing.CompleteAuthorizationFlow}}
+: {{api|t=a|C_HousingPhotoSharing.GetCropRatio}}
+: {{api|t=a|C_HousingPhotoSharing.GetPhotoSharingAuthURL}}
+: {{api|t=a|C_HousingPhotoSharing.IsAuthorized}}
+: {{api|t=a|C_HousingPhotoSharing.IsEnabled}}
+: {{api|t=a|C_HousingPhotoSharing.SetScreenshotPreviewTexture}}
+: {{api|t=a|C_HousingPhotoSharing.TakePhoto}}
+: {{api|t=a|C_HousingPhotoSharing.UploadPhotoToService}}
+: {{api|t=a|C_LFGList.IsPlayerValidForEndgameFieldEdits}}
+: {{api|t=a|C_LFGList.ListingUsesEndgameEditRestrictions}}
+: {{api|t=a|C_LossOfControl.GetActiveLossOfControlDuration}}
+: {{api|t=a|C_PvP.GetArenaCrowdControlDuration}}
+: {{api|t=a|C_Secrets.CanCompareUnitTokens}}
+: {{api|t=a|C_Secrets.ShouldUnitThreatStateBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitThreatValuesBeSecret}}
+: {{api|t=a|C_Spell.GetSpellLossOfControlCooldownInfo}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo}}
+: {{api|t=a|C_StringUtil.StripTextureMarkupForLooseFiles}}
+: {{api|t=a|C_TableUtil.FindIndexedMismatch}}
+: {{api|t=a|C_TransmogCollection.IsSpellItemEnchantmentHiddenVisual}}
+: {{api|t=a|C_TransmogOutfitInfo.InTransmogEvent}}
+: {{api|t=a|C_TransmogOutfitInfo.IsUsableDiscountAvailable}}
+: {{api|t=a|C_TransmogOutfitInfo.SetOutfitToOutfit}}
+: {{api|t=a|C_TransmogOutfitInfo.TransmogEventActive}}
+: {{api|t=a|GetNumTotemSlots}}
+: {{api|t=a|GetTotemDuration}}
+: {{api|t=a|PlayerIsSpellTarget}}
+: {{api|t=a|dumpobject}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|BNSetAFK}}
+: {{api|t=a|BNSetDND}}
+: {{api|t=a|C_ActionBar.GetActionLossOfControlCooldown}}
+: {{api|t=a|C_CombatAudioAlert.GetSpeakerVolume}}
+: {{api|t=a|C_CombatAudioAlert.SetSpeakerVolume}}
+: {{api|t=a|C_HousingCatalog.CanDestroyEntry}}
+: {{api|t=a|C_NamePlate.GetTargetClampingInsets}}
+: {{api|t=a|C_NamePlate.SetTargetClampingInsets}}
+: {{api|t=a|C_Spell.GetSpellLossOfControlCooldown}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemLossOfControlCooldown}}
+: {{api|t=a|GetBattlefieldScore}}
+: {{api|t=a|GetBattlefieldStatData}}
+: {{api|t=a|GetGuildInfoText}}
+: {{api|t=a|GetGuildRosterMOTD}}
+: {{api|t=a|GuildRosterSetOfficerNote}}
+: {{api|t=a|GuildRosterSetPublicNote}}
+: {{api|t=a|SetGuildInfoText}}
+: {{api|t=a|UnitIsSpellTarget}}
+</div>
+|}
+ {{api|t=a|C_CombatAudioAlert.SpeakText}}
+   + arg 2: <font color="#00b400">category</font>
+ {{api|t=a|C_DamageMeter.GetCombatSessionSourceFromID}}
+   # arg 3: <font color="#ecbc2a">sourceGUID</font>, Nilable: false -> true
+   + arg 4: <font color="#00b400">sourceCreatureID</font>
+ {{api|t=a|C_DamageMeter.GetCombatSessionSourceFromType}}
+   # arg 3: <font color="#ecbc2a">sourceGUID</font>, Nilable: false -> true
+   + arg 4: <font color="#00b400">sourceCreatureID</font>
+ {{api|t=a|C_StringUtil.StripHyperlinks}}
+   + arg 6: <font color="#00b400">maintainTextures</font>
+ {{api|t=a|C_VoiceChat.GetChannel}}
+   # ret 1: <font color="#ecbc2a">channel</font>, Nilable: true -> false
+ {{api|t=a|C_VoiceChat.GetChannelForChannelType}}
+   # ret 1: <font color="#ecbc2a">channel</font>, Nilable: true -> false
+ {{api|t=a|C_VoiceChat.GetChannelForCommunityStream}}
+   # ret 1: <font color="#ecbc2a">channel</font>, Nilable: true -> false
+ {{api|t=a|UnitCastingInfo}}
+   + ret 11: <font color="#00b400">delayTimeMs</font>
+
+===ScriptObjects===
+{| class="wikitable"
+| <font color="lightgreen">Added</font>
+: {{apilink|t=w|DurationObject:GetClockTime|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:IsDistinctPerRecordIDActive|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:SetDistinctPerRecordID|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:ToggleDistinctPerRecordID|noparens=1}}
+: {{apilink|t=w|NamePlate:SetStackingBoundsFrame|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:EvaluateCurrentHealthPercent|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:EvaluateMissingHealthPercent|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetCurrentHealth|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetCurrentHealthPercent|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetMaximumDamageAbsorbs|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetMaximumHealAbsorbs|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetMaximumHealth|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetMaximumHealthMode|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetMaximumIncomingHeals|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetMissingHealth|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetMissingHealthPercent|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetTotalDamageAbsorbs|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetTotalHealAbsorbs|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetTotalIncomingHeals|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:ResetPredictedValues|noparens=1}}
+: {{apilink|t=w|UnitHealPredictionCalculator:SetMaximumHealthMode|noparens=1}}
+|}
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(2)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|FontString:ClearText}}
+: {{api|t=w|GameTooltip:ClearPadding}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|FrameScriptObject:SetPreventSecretValues}}
+</div>
+|}
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(12)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|BULK_REFUND_RESULT_RECEIVED}}
+: {{api|t=e|ENCOUNTER_TIMELINE_VIEW_ACTIVATED}}
+: {{api|t=e|ENCOUNTER_TIMELINE_VIEW_DEACTIVATED}}
+: {{api|t=e|PHOTO_SHARING_AUTHORIZATION_NEEDED}}
+: {{api|t=e|PHOTO_SHARING_AUTHORIZATION_UPDATED}}
+: {{api|t=e|PHOTO_SHARING_PHOTO_UPLOAD_STATUS}}
+: {{api|t=e|PHOTO_SHARING_SCREENSHOT_READY}}
+: {{api|t=e|PHOTO_SHARING_THIRD_PARTY_AUTHORIZATION_NEEDED}}
+: {{api|t=e|PLAYER_MAX_LEVEL_UPDATE}}
+: {{api|t=e|SIMPLE_BROWSER_POPUP}}
+: {{api|t=e|SIMPLE_BROWSER_SOCIAL_CALLBACK_INVOKED}}
+: {{api|t=e|UNIT_ARENA_COOLDOWNS_UPDATE}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CHAT_MSG_ENCOUNTER_EVENT}}
+</div>
+|}
+ {{api|t=e|BULK_PURCHASE_RESULT_RECEIVED}}
+   + 3: <font color="#00b400">bestTopUpProductID</font>
+   + 4: <font color="#00b400">totalCost</font>
+ {{api|t=e|HOUSING_CLEANUP_MODE_HOVERED_TARGET_CHANGED}}
+   + 2: <font color="#00b400">targetType</font>
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(54)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(25)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=CAADebuffSelfAlert|default=0|scope=Account|cat=4|desc=Announce when a dispellable debuff is applied to the player using a special format (0=off)}}
+: {{apitooltip|type=cvar|name=CAAPartyHealthVoice|default=0|scope=Account|cat=4|desc=Voice to use for party health combat audio alerts}}
+: {{apitooltip|type=cvar|name=CAAPartyHealthVolume|default=100|scope=Account|cat=4|desc=Volume of party health combat audio alerts (0 to 100)}}
+: {{apitooltip|type=cvar|name=CAAPlayerCastVoice|default=0|scope=Account|cat=4|desc=Voice to use for player cast combat audio alerts}}
+: {{apitooltip|type=cvar|name=CAAPlayerCastVolume|default=100|scope=Account|cat=4|desc=Volume of player cast combat audio alerts (0 to 100)}}
+: {{apitooltip|type=cvar|name=CAAPlayerHealthVoice|default=0|scope=Account|cat=4|desc=Voice to use for player health combat audio alerts}}
+: {{apitooltip|type=cvar|name=CAAPlayerHealthVolume|default=100|scope=Account|cat=4|desc=Volume of player health combat audio alerts (0 to 100)}}
+: {{apitooltip|type=cvar|name=CAAResource1Voice|scope=Character|cat=4|desc=Stores the voice to use (for each spec) when announcing the player's first resource}}
+: {{apitooltip|type=cvar|name=CAAResource1Volume|scope=Character|cat=4|desc=Stores the volume to use (for each spec) when announcing the player's first resource (0 to 100)}}
+: {{apitooltip|type=cvar|name=CAAResource2Voice|scope=Character|cat=4|desc=Stores the voice to use (for each spec) when announcing the player's second resource}}
+: {{apitooltip|type=cvar|name=CAAResource2Volume|scope=Character|cat=4|desc=Stores the volume to use (for each spec) when announcing the player's second resource (0 to 100)}}
+: {{apitooltip|type=cvar|name=CAASayYourDebuffsFormat|default=0|scope=Account|cat=4|desc=Format string to use when announcing debuffs applied to the player}}
+: {{apitooltip|type=cvar|name=CAASayYourDebuffsMinDuration|default=1.500000|scope=Account|cat=4|desc=Minimum duration of debuffs to be announced (0 means all debuffs)}}
+: {{apitooltip|type=cvar|name=CAASayYourDebuffsVoice|default=0|scope=Account|cat=4|desc=Voice to use for player debuff combat audio alerts}}
+: {{apitooltip|type=cvar|name=CAASayYourDebuffsVolume|default=100|scope=Account|cat=4|desc=Volume of player debuff combat audio alerts (0 to 100)}}
+: {{apitooltip|type=cvar|name=CAASayYourDebuffs|default=1|scope=Account|cat=4|desc=Announce when a debuff is applied to the player}}
+: {{apitooltip|type=cvar|name=CAATargetCastVoice|default=0|scope=Account|cat=4|desc=Voice to use for target cast combat audio alerts}}
+: {{apitooltip|type=cvar|name=CAATargetCastVolume|default=100|scope=Account|cat=4|desc=Volume of target cast combat audio alerts (0 to 100)}}
+: {{apitooltip|type=cvar|name=CAATargetHealthVoice|default=0|scope=Account|cat=4|desc=Voice to use for target health combat audio alerts}}
+: {{apitooltip|type=cvar|name=CAATargetHealthVolume|default=100|scope=Account|cat=4|desc=Volume of target health combat audio alerts (0 to 100)}}
+: {{apitooltip|type=cvar|name=ClientSettings_AFTERMATH_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_AFTERMATH_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=ClientSettings_ASYNC_COMPUTE_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_ASYNC_COMPUTE_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=ClientSettings_CMD_LIST_MT_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_CMD_LIST_MT_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=ClientSettings_COPY_QUEUE_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_COPY_QUEUE_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=ClientSettings_HIGH_MEM_FEATURES_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_HIGH_MEM_FEATURES_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=ClientSettings_OPT_FEATURES_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_OPT_FEATURES_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=ClientSettings_RAY_TRACING_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_RAY_TRACING_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=ClientSettings_SHADER_MT_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_SHADER_MT_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=ClientSettings_SM6_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_SM6_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=ClientSettings_WORK_OPTIMS_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_WORK_OPTIMS_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=currencyTokensBackpack1|cat=4|desc=Currency token types shown on backpack.}}
+: {{apitooltip|type=cvar|name=damageMeterResetOnNewInstance|default=0|scope=Character|cat=4|desc=If true, reset the damage meter any time the player enters a new instance.}}
+: {{apitooltip|type=cvar|name=enableConnectToPhotoSharing|default=0|cat=4|desc=Enables the photo sharing connection feature.}}
+: {{apitooltip|type=cvar|name=encounterTimelineHighlightDuration|default=5000|scope=Account|cat=4|desc=Milliseconds at which events will be signaled to trigger a highlight glow animation.}}
+: {{apitooltip|type=cvar|name=encounterTimelineShowSequenceCount|default=0|scope=Account|cat=4|desc=If true, display the spell sequence count in encounter timeline spell names}}
+: {{apitooltip|type=cvar|name=highestUnlockedTieredEntranceTier|scope=Character|cat=4|desc=Serialized mapping using a PDE ID. Stores the highest unlocked difficulty tier. Used to notify the player when they have higher difficulty tiers available.}}
+: {{apitooltip|type=cvar|name=imageSharingPublishCooldown|default=5000|cat=4|desc=Amount of time between allowed photo publish attempts (in milliseconds).}}
+: {{apitooltip|type=cvar|name=lastLockedTieredEntranceCompanionAbilities|scope=Account|cat=4|desc=Serialized mapping using a PDE ID. Stores the nodeIDs of the locked delve companion abilities, to highlight them when unlocked.}}
+: {{apitooltip|type=cvar|name=lastSelectedTieredEntranceTier|scope=Account|cat=4|desc=Serialized mapping using a PDE ID. Stores the last selected difficulty tier. If 0, the player will be forced to select a tier.}}
+: {{apitooltip|type=cvar|name=nameplateSimplifiedScale|default=0.300000|cat=4|desc=Scale used for simplified nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateUseClassColorForFriendlyPlayerUnitNames|default=0|cat=4|desc=Used to display the class color in friendly player unit nameplate names.}}
+: {{apitooltip|type=cvar|name=raidFramesHealthBarColorBG|default=FF141414|scope=Character|cat=4|desc=Colors raid frame backgrounds with a custom color, ARGB format}}
+: {{apitooltip|type=cvar|name=seenPurchasableClassCapstone|default=0|scope=Character|cat=4|desc=Whether or not the player has ever opened the class talent UI and seen a purchasable capstone node}}
+: {{apitooltip|type=cvar|name=showTokenFrameHonor|cat=4|desc=The token UI has shown Honor}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=ClientSettings_AFTERMATH}}
+: {{apitooltip|type=cvar|name=ClientSettings_ASYNC_COMPUTE}}
+: {{apitooltip|type=cvar|name=ClientSettings_CMD_LIST_MT}}
+: {{apitooltip|type=cvar|name=ClientSettings_COPY_QUEUE}}
+: {{apitooltip|type=cvar|name=ClientSettings_HIGH_MEM_FEATURES}}
+: {{apitooltip|type=cvar|name=ClientSettings_OPT_FEATURES}}
+: {{apitooltip|type=cvar|name=ClientSettings_RAY_TRACING}}
+: {{apitooltip|type=cvar|name=ClientSettings_SHADER_MT}}
+: {{apitooltip|type=cvar|name=ClientSettings_SM6}}
+: {{apitooltip|type=cvar|name=ClientSettings_WORK_OPTIMS}}
+: {{apitooltip|type=cvar|name=highestUnlockedDelvesTier|default=1|scope=Character|cat=4|desc=Stores the highest unlocked delve difficulty tier. Used to notify the player when they have higher difficulty tiers available.}}
+: {{apitooltip|type=cvar|name=lastLockedDelvesCompanionAbilities|scope=Account|cat=4|desc=Stores the nodeIDs of the locked delve companion abilities, to highlight them when unlocked.}}
+: {{apitooltip|type=cvar|name=lastSelectedDelvesTier|default=0|scope=Account|cat=4|desc=Stores the last selected delve difficulty tier. If 0, the player will be forced to select a tier.}}
+: {{apitooltip|type=cvar|name=lastVoidStorageTutorial|cat=4|desc=Stores the last void storage tutorial the player has accepted}}
+: {{apitooltip|type=cvar|name=minimapTrackedInfov2}}
+: {{apitooltip|type=cvar|name=NamePlateClassificationScale|cat=4|desc=Applied to the classification icon for nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateLargerScale|default=1.200000|scope=Character|cat=4|desc=An additional scale modifier for important monster nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateOtherBottomInset|cat=1|desc=The inset from the bottom (in screen percent) that the non-self nameplates are clamped to.}}
+: {{apitooltip|type=cvar|name=nameplateOtherTopInset|cat=1|desc=The inset from the top (in screen percent) that the non-self nameplates are clamped to.}}
+: {{apitooltip|type=cvar|name=nameplatePlayerLargerScale|default=1.800000|scope=Character|cat=4|desc=An additional scale modifier for player nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateSelfAlpha|default=0.750000|scope=Character|cat=4|desc=The alpha of the self nameplate.}}
+: {{apitooltip|type=cvar|name=seenCharacterSelectAddGroupHelpTip|cat=4|desc=Seen and acknowledged the character select add group help tip}}
+: {{apitooltip|type=cvar|name=seenCharacterSelectNavBarCampsHelpTip|cat=4|desc=Seen and acknowledged the character select camps nav bar help tip}}
+: {{apitooltip|type=cvar|name=seenCharacterSelectWarbandHelpTip|cat=4|desc=Seen and acknowledged the character select warband help tip}}
+: {{apitooltip|type=cvar|name=useCompactPartyFrames}}
+</div>
+|}
+
+===Enums===
+ Enum.CombatAudioAlertSpecSetting
+   + <font color="#00b400">Resource1Voice</font>
+   + <font color="#00b400">Resource1Volume</font>
+   + <font color="#00b400">Resource2Voice</font>
+   + <font color="#00b400">Resource2Volume</font>
+ Enum.CooldownViewerAlertEventType
+   + <font color="#00b400">OnAuraApplied</font>
+   + <font color="#00b400">OnAuraRemoved</font>
+ Enum.DamageMeterType
+   + <font color="#00b400">Deaths</font>
+   + <font color="#00b400">EnemyDamageTaken</font>
+ Enum.NeighborhoodInviteResult
+   + <font color="#00b400">AlreadyInNeighborhood</font>
+ Enum.PartyRequestJoinRelation
+   # <font color="#ff6767">NumPartyRequestJoinRelations</font> -> <font color="#00b400">RecentAllies</font>
+ Enum.SecretAspect
+   + <font color="#00b400">Attributes</font>
+   + <font color="#00b400">CooldownStyle</font>
+ Enum.TooltipDataLineType
+   # <font color="#ff6767">ToyFlavorText</font> -> <font color="#00b400">FlavorText</font>
+   + <font color="#00b400">ItemQuality</font>
+   + <font color="#00b400">TradeTimeRemaining</font>
+   + <font color="#00b400">ItemSpellTriggerLearn</font>
+   + <font color="#00b400">LearnTransmogSet</font>
+   + <font color="#00b400">LearnTransmogIllusion</font>
+   + <font color="#00b400">ErrorLine</font>
+   + <font color="#00b400">DisabledLine</font>
+   + <font color="#00b400">UsageRequirement</font>
+   - <font color="#ff6767">RestrictedRaceClass</font>
+   - <font color="#ff6767">RestrictedFaction</font>
+   - <font color="#ff6767">RestrictedSkill</font>
+   - <font color="#ff6767">RestrictedPvPMedal</font>
+   - <font color="#ff6767">RestrictedReputation</font>
+   - <font color="#ff6767">RestrictedSpellKnown</font>
+   - <font color="#ff6767">RestrictedLevel</font>
+   - <font color="#ff6767">RestrictedArena</font>
+   - <font color="#ff6767">RestrictedBg</font>
+
+===Structures===
+ CampaignInfo
+   + <font color="#00b400">hideFutureChapters</font>
+ CatalogShopBundleChildInfo
+   + <font color="#00b400">quantityInBundle</font>
+ CatalogShopProductDisplayInfo
+   # <font color="#ff6767">otherProductPMTURL</font> -> <font color="#00b400">productPMTURL</font>
+ CatalogShopProductInfo
+   + <font color="#00b400">isVCProduct</font>
+   + <font color="#00b400">containsHousingItem</font>
+ CatalogShopSectionInfo
+   + <font color="#00b400">shouldShowRecommendationOptOutDisclaimer</font>
+ DamageMeterAvailableCombatSession
+   + <font color="#00b400">durationSeconds</font>
+ DamageMeterCombatSession
+   + <font color="#00b400">totalAmount</font>
+   + <font color="#00b400">durationSeconds</font>
+ DamageMeterCombatSessionSource
+   + <font color="#00b400">totalAmount</font>
+ DamageMeterCombatSource
+   # <font color="#ecbc2a">sourceGUID</font>, Nilable: false -> true
+   + <font color="#00b400">sourceCreatureID</font>
+   + <font color="#00b400">deathRecapID</font>
+   + <font color="#00b400">deathTimeSeconds</font>
+   + <font color="#00b400">classification</font>
+ DamageMeterCombatSpell
+   + <font color="#00b400">overkillAmount</font>
+   + <font color="#00b400">isAvoidable</font>
+   + <font color="#00b400">isDeadly</font>
+ DamageMeterCombatSpellUnitDetails
+   + <font color="#00b400">isPet</font>
+   + <font color="#00b400">isMob</font>
+   + <font color="#00b400">specIconID</font>
+ EncounterTimelineEventInfo
+   + <font color="#00b400">color</font>
+ EncounterWarningInfo
+   + <font color="#00b400">color</font>
+ HousingCatalogEntryInfo
+   - <font color="#ff6767">marketInfo</font>
+ ItemUpgradeLevelInfo
+   + <font color="#00b400">moneyCost</font>
+ MajorFactionData
+   + <font color="#00b400">useJourneyUnlockToast</font>
+   + <font color="#00b400">maxLevel</font>
+ NumberAbbrevOptions
+   # <font color="#ecbc2a">breakpointData</font>, InnerType: NumberAbbrevData -> NumberAbbreviationBreakpoint
+ QuestTheme
+   + <font color="#00b400">mapPinInfo</font>
+ TraitNodeInfo
+   + <font color="#00b400">totalMaxRanks</font>
+ TraitTreeInfo
+   + <font color="#00b400">uiTextureKit</font>
+   + <font color="#00b400">titleText</font>
+ UIMapPinInfo
+   + <font color="#00b400">outerGlow</font>
