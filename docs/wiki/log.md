@@ -139,3 +139,7 @@ Updated [audit](investigations/patch-12-0-1-api-audit.md), [spec](../specs/patch
 
 [Audit](investigations/patch-11-2-5-api-audit.md) links 163 inventory + 73 extract rows, two modeled-global profile-gate fixes, 45 exact retained gaps and exhaustive scout. Seven isolated sweeps, negative control, Mists check and startup `[]` pass; deprecated aliases distinguished from absence. Existing coverage ledgers and concurrent 11.2.7 producers unchanged.
 
+## 2026-10-06 | ingest | Patch 11.2.0 page audit
+
+[Audit](investigations/patch-11-2-0-api-audit.md) retains revision 6726773, 162 inventory + 82 extract rows, twelve bounded simulator publication fixes, 26 exact gaps and exhaustive scout. Eight isolated sweeps, one-row negative control, local retail/Mists checks and exit-0 startup `[]` pass. New 244-ID coverage ledger distinguishes publication, absence, cached aliases and pending behavior; existing ledgers/registers/raw sources/later fixtures unchanged.
+
