@@ -17,20 +17,6 @@ if rawget(C_TransmogSets, "GetBaseSetID") == nil then
     end
 end
 
-if rawget(C_TransmogSets, "GetVariantSets") == nil then
-    C_TransmogSets.GetVariantSets = emptyTable
-end
-
-if rawget(C_TransmogSets, "GetSetInfo") == nil then
-    function C_TransmogSets.GetSetInfo(_setID)
-        return {
-            setID = 0,
-            name = "",
-            collected = false,
-        }
-    end
-end
-
 if rawget(C_TransmogSets, "GetSetPrimaryAppearances") == nil then
     C_TransmogSets.GetSetPrimaryAppearances = emptyTable
 end
@@ -82,7 +68,7 @@ mod tests {
                 if #C_TransmogSets.GetAllSetAppearancesByID(1) ~= 0 then return "appearances" end
                 if C_TransmogSets.HasAvailableSets() ~= false then return "available" end
                 local info = C_TransmogSets.GetSetInfo(1)
-                if info.setID ~= 0 or info.name ~= "" or info.collected ~= false then
+                if info ~= nil then
                     return "set_info"
                 end
                 return "ok"

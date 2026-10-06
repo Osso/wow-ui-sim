@@ -121,3 +121,39 @@ fn build_set_info(state: &mut LuaState, entry: &TransmogSetInfo) -> Val {
     }
     row
 }
+
+pub(super) fn get_info(state: &mut LuaState) -> LuaResult<u32> {
+    let id: i32 = crate::lua_bridge::FromStack::from_stack(state, 1)?;
+    let entry = borrow_state(state)?
+        .transmog_sets
+        .entries
+        .iter()
+        .find(|e| e.set_id == id)
+        .cloned();
+    match entry {
+        Some(entry) => {
+            let row = build_set_info(state, &entry);
+            state.push(row);
+        }
+        None => state.push(Val::Nil),
+    }
+    Ok(1)
+}
+
+pub(super) fn get_variants(state: &mut LuaState) -> LuaResult<u32> {
+    let id: i32 = crate::lua_bridge::FromStack::from_stack(state, 1)?;
+    let entries: Vec<_> = borrow_state(state)?
+        .transmog_sets
+        .entries
+        .iter()
+        .filter(|e| e.base_set_id == Some(id) && e.set_id != id)
+        .cloned()
+        .collect();
+    let array = create_table(state);
+    state.push(array);
+    for (index, entry) in entries.iter().enumerate() {
+        let row = build_set_info(state, entry);
+        crate::c_api::helpers::set_table_array(state, array, index as i64 + 1, row);
+    }
+    Ok(1)
+}

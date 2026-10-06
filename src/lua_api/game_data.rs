@@ -725,6 +725,7 @@ impl MajorFactionRow {
             renown_fanfare_sound_kit_id: 0,
             texture_kit: self.texture_kit.to_string(),
             faction_font_color: self.faction_font_color,
+            ..Default::default()
         }
     }
 }

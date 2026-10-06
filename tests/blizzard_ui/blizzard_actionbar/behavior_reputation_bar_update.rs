@@ -302,6 +302,7 @@ fn seed_major_faction(env: &WowLuaEnv) {
             renown_fanfare_sound_kit_id: 0,
             texture_kit: "councilofdornogal".to_string(),
             faction_font_color: (0.96, 0.78, 0.40),
+            ..Default::default()
         },
     );
     state.major_faction_renown_levels.insert(

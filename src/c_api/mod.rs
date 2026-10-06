@@ -86,6 +86,7 @@ mod c_edit_mode;
 pub(crate) mod c_encounter_timeline;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_encounter_warnings;
+pub(crate) mod c_event_scheduler;
 pub mod c_glue;
 pub mod c_housing;
 pub mod c_housing_bundles;
@@ -93,6 +94,7 @@ pub mod c_housing_bundles;
 pub mod c_input_interface_style;
 pub mod c_instance_encounter;
 pub mod c_intl;
+pub mod c_item_interaction;
 pub mod c_lfg_info;
 pub(crate) mod c_lfg_list_active_entry;
 pub(crate) mod c_lfg_list_filter;

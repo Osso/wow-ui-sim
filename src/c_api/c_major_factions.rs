@@ -13,6 +13,8 @@
 //!   matching vec. The mixin uses the **last** entry's `level` to clamp the
 //!   bar via `:GetMaxLevel()`. An unknown id yields an empty sequence.
 
+mod data;
+pub use data::{MajorFactionData, RenownHighlightInfo};
 mod renown_rewards;
 pub use renown_rewards::RenownRewardInfo;
 
@@ -21,7 +23,7 @@ use crate::lua_api::methods::{
     borrow_state, call_function_state, create_string, create_table, create_table_with_fields,
     table_set_num, table_set_static,
 };
-use crate::lua_api::state::{MajorFactionData, RenownLevelInfo};
+use crate::lua_api::state::RenownLevelInfo;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -114,6 +116,7 @@ fn build_major_faction_data_table(state: &mut LuaState, data: &MajorFactionData)
     state.push(table);
     set_major_faction_numbers(state, table, data);
     set_major_faction_descriptive_fields(state, table, data);
+    publish_extract_fields(state, table, data);
     state.top = saved_top;
     table
 }
@@ -244,4 +247,43 @@ fn build_renown_level_entry(state: &mut LuaState, level: &RenownLevelInfo) -> Va
             ("isCapstone", Val::Bool(level.is_capstone)),
         ],
     )
+}
+
+fn publish_extract_fields(state: &mut LuaState, table: Val, data: &MajorFactionData) {
+    let description = create_string(state, &data.description);
+    table_set_static(state, table, "description", description);
+    table_set_static(
+        state,
+        table,
+        "bountySetID",
+        number(i64::from(data.bounty_set_id)),
+    );
+    table_set_static(
+        state,
+        table,
+        "useJourneyUnlockToast",
+        Val::Bool(data.use_journey_unlock_toast),
+    );
+    for (key, value) in [
+        (
+            "renownTrackLevelEffectID",
+            data.renown_track_level_effect_id,
+        ),
+        ("playerCompanionID", data.player_companion_id),
+    ] {
+        if let Some(value) = value {
+            table_set_static(state, table, key, number(i64::from(value)));
+        }
+    }
+    let highlights = create_table(state);
+    table_set_static(state, table, "highlights", highlights);
+    for (index, highlight) in data.highlights.iter().enumerate() {
+        let row = create_table(state);
+        crate::c_api::helpers::set_table_array(state, highlights, index as i64 + 1, row);
+        let title = create_string(state, &highlight.title);
+        table_set_static(state, row, "title", title);
+        let description = create_string(state, &highlight.description);
+        table_set_static(state, row, "description", description);
+        table_set_static(state, row, "level", number(i64::from(highlight.level)));
+    }
 }

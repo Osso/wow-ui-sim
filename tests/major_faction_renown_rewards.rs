@@ -27,6 +27,7 @@ fn register_faction_levels(env: &WowLuaEnv, faction_id: i64) {
             renown_fanfare_sound_kit_id: 0,
             texture_kit: "majorfactions_dreamwardens".into(),
             faction_font_color: (1.0, 1.0, 1.0),
+            ..Default::default()
         },
     );
     state.major_faction_renown_levels.insert(
