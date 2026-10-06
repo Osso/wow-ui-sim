@@ -226,6 +226,23 @@ mod tests {
         app.build_overlay().texture_requests.len()
     }
 
+    #[test]
+    fn cursor_talent_icon_renders_in_overlay() {
+        const TALENT_DEFINITION_ID: u32 = 137759;
+        let mut app = build_test_app();
+        app.mouse_position = Some(Point::new(48.0, 48.0));
+        app.env.borrow().state().borrow_mut().cursor_item =
+            Some(crate::lua_api::state::CursorInfo::Talent {
+                talent_id: TALENT_DEFINITION_ID,
+                pvp: false,
+            });
+
+        let overlay = app.build_overlay();
+        assert_eq!(overlay.texture_requests.len(), 2, "talent icon plus pointer");
+        assert_ne!(overlay.texture_requests[0].path, r"Interface\Cursor\Point");
+        assert_eq!(overlay.texture_requests[1].path, r"Interface\Cursor\Point");
+    }
+
     fn mark_frames_dirty(app: &App, frame_ids: &[u64]) {
         let env = app.env.borrow();
         let state = env.state().borrow();

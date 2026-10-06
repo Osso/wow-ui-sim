@@ -383,16 +383,12 @@ impl App {
     fn append_cursor_item_icon(&self, overlay: &mut QuadBatch, pos: Point) {
         let env = self.env.borrow();
         let state = env.state().borrow();
-        let spell_id = match &state.cursor_item {
-            Some(crate::lua_api::state::CursorInfo::Action { spell_id, .. }) => *spell_id,
-            Some(crate::lua_api::state::CursorInfo::Spell { spell_id }) => *spell_id,
-            Some(crate::lua_api::state::CursorInfo::PetAction { spell_id, .. }) => *spell_id,
-            Some(crate::lua_api::state::CursorInfo::Item { .. }) => return,
-            Some(crate::lua_api::state::CursorInfo::Talent { .. }) => return,
-            Some(crate::lua_api::state::CursorInfo::Macro { .. }) => return,
-            Some(crate::lua_api::state::CursorInfo::Money { .. }) => return,
-            Some(crate::lua_api::state::CursorInfo::TransmogOutfit { .. }) => return,
-            None => return,
+        let Some(spell_id) = state
+            .cursor_item
+            .as_ref()
+            .and_then(|cursor| cursor_spell_icon_id(cursor, &state.talents.node_selections))
+        else {
+            return;
         };
         let Some(spell) = crate::spells::get_spell(spell_id) else {
             return;
@@ -415,6 +411,64 @@ impl App {
             crate::render::BlendMode::Alpha,
         );
     }
+}
+
+fn cursor_spell_icon_id(
+    cursor: &crate::lua_api::state::CursorInfo,
+    node_selections: &std::collections::HashMap<u32, u32>,
+) -> Option<u32> {
+    use crate::lua_api::state::CursorInfo;
+    match cursor {
+        CursorInfo::Action { spell_id, .. }
+        | CursorInfo::Spell { spell_id }
+        | CursorInfo::PetAction { spell_id, .. } => Some(*spell_id),
+        CursorInfo::Talent { talent_id, .. } => {
+            spell_id_for_talent_cursor(*talent_id, node_selections)
+        }
+        CursorInfo::Item { .. }
+        | CursorInfo::Macro { .. }
+        | CursorInfo::Money { .. }
+        | CursorInfo::TransmogOutfit { .. } => None,
+    }
+}
+
+fn spell_id_for_talent_cursor(
+    talent_id: u32,
+    node_selections: &std::collections::HashMap<u32, u32>,
+) -> Option<u32> {
+    if let Some(node) = crate::traits::TRAIT_NODE_DB.get(&talent_id) {
+        let entry_id = node_selections
+            .get(&talent_id)
+            .copied()
+            .or_else(|| node.entry_ids.first().copied())?;
+        return spell_id_for_trait_entry(entry_id);
+    }
+    spell_id_for_trait_entry(talent_id).or_else(|| preferred_trait_spell_id(talent_id))
+}
+
+fn spell_id_for_trait_entry(entry_id: u32) -> Option<u32> {
+    const MAX_DEFINITION_LINKS: usize = 8;
+    let mut current_id = entry_id;
+    for _ in 0..MAX_DEFINITION_LINKS {
+        if let Some(spell_id) = preferred_trait_spell_id(current_id) {
+            return Some(spell_id);
+        }
+        current_id = crate::traits::TRAIT_ENTRY_DB
+            .get(&current_id)?
+            .definition_id;
+    }
+    None
+}
+
+fn preferred_trait_spell_id(definition_id: u32) -> Option<u32> {
+    let definition = crate::traits::TRAIT_DEFINITION_DB.get(&definition_id)?;
+    [
+        definition.visible_spell_id,
+        definition.overrides_spell_id,
+        definition.spell_id,
+    ]
+    .into_iter()
+    .find(|spell_id| *spell_id != 0)
 }
 
 fn collect_debug_overlay_ids(state: &crate::lua_api::SimState) -> Vec<u64> {
