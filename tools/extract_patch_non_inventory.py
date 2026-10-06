@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Extract retained 12.0.0 non-inventory wikitext and seed supplemental rows.
+"""Extract retained patch non-inventory wikitext and seed supplemental rows.
 
 No network or dependencies. Line suffixes refer to the generated plaintext,
 including blank lines, as in the 12.1.0 page ledger. --check never writes.
-The captured revision has no Notes/Blue posts: linked pages are not expanded.
+The 12.0.0 capture has no Notes/Blue posts; 12.0.1 retains Blue posts.
+Linked pages are not expanded. --text-only never accesses a coverage ledger.
 """
 
 import argparse
@@ -18,13 +19,25 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 
+def render_api_reference(match):
+    """Keep the API identity, not its optional shortened display label."""
+    parts = [part for part in match[1].split('|') if '=' not in part]
+    return parts[0]
+
+
 def render_line(line):
-    """Render the markup forms present in the retained revision."""
+    """Render the markup forms present in the retained revisions."""
+    line = re.sub(r"\{\{(?:apisummary.header|text\|blizz)\|([^{}]+)\}\}",
+                  r"=== \1 ===", line)
+    line = line.replace('{{apisummary.blizzquote}}', '')
+    line = re.sub(r"\{\{(?:g|tlygo|api.inline|apisummary.title)\|([^{}]+)\}\}",
+                  r"\1", line)
+    line = re.sub(r"\{\{api.system\|[^|{}]+\|([^{}]+)\}\}", r"\1", line)
     line = re.sub(r"\[\[File:[^\]]*\]\]", "", line, flags=re.I)
     line = re.sub(r"\[\[([^]|]+)(?:\|([^]]+))?\]\]",
                   lambda m: m[2] or m[1], line)
     line = re.sub(r"\[https?://\S+\s+([^]]+)\]", r"\1", line)
-    line = re.sub(r"\{\{api\|([^{}]+)\}\}", r"\1", line)
+    line = re.sub(r"\{\{api\|([^{}]+)\}\}", render_api_reference, line)
     line = re.sub(r"\{\{apichanges\|([^|]+)\|[^{}]+\}\}",
                   r"Patch \1 API changes", line)
     line = re.sub(r"\{\{ambox\|.*?<br>(.*?)\|format=tiny\}\}", r"\1", line)
@@ -55,7 +68,7 @@ def extract_text(raw):
     return '\n'.join(lines) + '\n'
 
 
-def seed_rows(text):
+def seed_rows(text, patch='12.0.0'):
     rows = []
     section, parent, date = 'prose', '', 'undated'
     for number, line in enumerate(text.splitlines(), 1):
@@ -99,7 +112,9 @@ def seed_rows(text):
             'source_id': f'{prefix}-{number:03}',
             'capabilities': [],
             'status': 'metadata-only' if metadata else 'audit-pending',
-            'note': reason if metadata else 'Non-inventory statement requires behavioral audit; see p1200-extract-scout.md.',
+            'note': reason if metadata else (
+                'Non-inventory statement requires behavioral audit; see '
+                f'p{patch.replace(".", "")}-extract-scout.md.'),
         })
     return rows
 
@@ -127,17 +142,30 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--self-test', action='store_true')
+    parser.add_argument('--patch', default='12.0.0')
+    parser.add_argument('--text-only', action='store_true',
+                        help='Write/check plaintext only; never read or modify a coverage ledger')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
         print('PASS: extraction and row-ID behavioral fixtures')
         return
     base = ROOT / 'data/patch-api/sources'
-    raw_path = base / '12.0.0-api-changes.wikitext'
-    text_path = base / '12.0.0-api-changes.txt'
-    coverage_path = base / '12.0.0-page-coverage.json'
+    raw_path = base / f'{args.patch}-api-changes.wikitext'
+    text_path = base / f'{args.patch}-api-changes.txt'
+    coverage_path = base / f'{args.patch}-page-coverage.json'
     text = extract_text(raw_path.read_text())
-    rows = seed_rows(text)
+    rows = seed_rows(text, args.patch)
+    if args.text_only:
+        if args.check:
+            assert text_path.read_text() == text, 'extract differs'
+        else:
+            text_path.write_text(text)
+        print(json.dumps({'patch': args.patch, 'rows': len(rows),
+                          'statuses': dict(Counter(row['status'] for row in rows))}))
+        return
+    if args.patch != '12.0.0':
+        raise ValueError('Use --text-only for other patches; coverage credit is audit-owned')
     coverage = json.loads(coverage_path.read_text())
     existing = coverage['source_rows']
     inventory_rows = [row for row in existing if row['source_id'].startswith('wt-')]
