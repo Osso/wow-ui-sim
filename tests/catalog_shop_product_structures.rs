@@ -1,8 +1,8 @@
 #![cfg(feature = "retail-12-0-5")]
 
 use wow_ui_sim::c_api::c_catalog_shop_products::{
-    CatalogShopProductDisplayInfo, CatalogShopProductInfo, CatalogShopSubItemInfo,
-    CatalogShopVirtualCurrency, DecorQuantity,
+    CatalogShopBundleChildInfo, CatalogShopProductDisplayInfo, CatalogShopProductInfo,
+    CatalogShopSectionInfo, CatalogShopSubItemInfo, CatalogShopVirtualCurrency, DecorQuantity,
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 
