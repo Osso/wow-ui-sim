@@ -42,14 +42,14 @@ impl App {
         ))
     }
 
-    fn build_screenshot_batch(
+    pub(super) fn build_screenshot_batch(
         &self,
         width: u32,
         height: u32,
         filter: Option<&str>,
     ) -> (crate::render::QuadBatch, GlyphAtlas) {
         let mut glyph_atlas = GlyphAtlas::new();
-        let batch = {
+        let mut batch = {
             let env = self.env.borrow();
             let mut fs = self.font_system.borrow_mut();
             let buckets = {
@@ -76,6 +76,7 @@ impl App {
                 .quest_blobs(Some(&state.quest_blobs)),
             )
         };
+        batch.append(&self.build_overlay());
         (batch, glyph_atlas)
     }
 }

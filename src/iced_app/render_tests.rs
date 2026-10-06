@@ -243,6 +243,43 @@ mod tests {
         assert_eq!(overlay.texture_requests[1].path, r"Interface\Cursor\Point");
     }
 
+    #[test]
+    fn cursor_overlay_uses_sim_mouse_position_when_app_position_is_empty() {
+        let app = build_test_app();
+        {
+            let env = app.env.borrow();
+            let mut state = env.state().borrow_mut();
+            state.set_mouse_position(Some((72.0, 72.0)));
+            state.cursor_item = Some(crate::lua_api::state::CursorInfo::Spell { spell_id: 19750 });
+        }
+        let overlay = app.build_overlay();
+        assert_eq!(overlay.texture_requests.len(), 2, "spell icon plus pointer");
+    }
+
+    #[test]
+    fn cursor_overlay_is_last_in_screenshot_batch() {
+        let mut app = build_test_app();
+        app.mouse_position = Some(Point::new(48.0, 48.0));
+        app.env.borrow().state().borrow_mut().cursor_item =
+            Some(crate::lua_api::state::CursorInfo::Spell { spell_id: 19750 });
+        let overlay = app.build_overlay();
+        let (screenshot, _) = app.build_screenshot_batch(128, 128, None);
+        let cursor_request = screenshot.texture_requests.last().expect("screenshot pointer");
+        assert_eq!(cursor_request.path, r"Interface\Cursor\Point");
+        let overlay_vertices = overlay.vertices.len();
+        let screenshot_positions: Vec<_> = screenshot.vertices
+            [screenshot.vertices.len() - overlay_vertices..]
+            .iter()
+            .map(|vertex| vertex.position)
+            .collect();
+        let overlay_positions: Vec<_> = overlay.vertices
+            .iter()
+            .map(|vertex| vertex.position)
+            .collect();
+        assert_eq!(screenshot_positions, overlay_positions,
+            "cursor overlay must follow screenshot UI quads");
+    }
+
     fn mark_frames_dirty(app: &App, frame_ids: &[u64]) {
         let env = app.env.borrow();
         let state = env.state().borrow();

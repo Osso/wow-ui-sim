@@ -100,11 +100,11 @@ impl TextureLoadBatchTelemetry {
 }
 
 impl App {
-    pub(super) fn build_overlay(&self) -> QuadBatch {
+    pub(crate) fn build_overlay(&self) -> QuadBatch {
         let mut overlay = QuadBatch::new();
         self.append_debug_overlay(&mut overlay);
         self.append_hover_highlight(&mut overlay);
-        if let Some(pos) = self.mouse_position {
+        if let Some(pos) = self.cursor_overlay_position() {
             self.append_cursor_item_icon(&mut overlay, pos);
             const CURSOR_SIZE: f32 = 32.0;
             overlay.push_textured_path(
@@ -118,6 +118,14 @@ impl App {
             );
         }
         overlay
+    }
+
+    fn cursor_overlay_position(&self) -> Option<Point> {
+        self.mouse_position.or_else(|| {
+            let env = self.env.borrow();
+            let state = env.state().borrow();
+            state.mouse_position.map(|(x, y)| Point::new(x, y))
+        })
     }
 
     fn append_debug_overlay(&self, overlay: &mut QuadBatch) {
