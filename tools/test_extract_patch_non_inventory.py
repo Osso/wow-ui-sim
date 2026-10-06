@@ -14,6 +14,11 @@ class ExtractTests(unittest.TestCase):
             extract_text((sources / '12.0.0-api-changes.wikitext').read_text()),
             (sources / '12.0.0-api-changes.txt').read_text())
 
+    def test_comparison_operators_are_not_html_tags(self):
+        self.assertEqual(
+            extract_text('* <code>currentCharges < maxCharges and startTime > 0</code>\n'),
+            '* currentCharges < maxCharges and startTime > 0\n')
+
     def test_blue_post_templates_preserve_api_contract_and_spell_ids(self):
         raw = ('==Blue posts==\n===2026-02-24===\n'
                '{{apisummary.header|Healer Buffs and HoTs}}\n'

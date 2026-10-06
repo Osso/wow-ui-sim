@@ -41,7 +41,7 @@ def render_line(line):
     line = re.sub(r"\{\{apichanges\|([^|]+)\|[^{}]+\}\}",
                   r"Patch \1 API changes", line)
     line = re.sub(r"\{\{ambox\|.*?<br>(.*?)\|format=tiny\}\}", r"\1", line)
-    line = re.sub(r"<[^>]+>", "", line)
+    line = re.sub(r"</?[A-Za-z][^>]*>", "", line)
     line = line.replace("'''", "").replace("''", "")
     return html.unescape(line).rstrip()
 
