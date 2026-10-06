@@ -130,7 +130,7 @@
       "symbols": [
         "21 deprecated 11.x APIs"
       ],
-      "scope": "Native absent on retail 12.0.0+ (13 native copies retired), no cached republication; successor observable results where listed. Six successor shape gaps under fix.",
+      "scope": "Native absent on retail 12.0.0+ (13 native copies retired), no cached republication; successor observable results where listed. Successor shapes fixed (C_SpellBook.GetSpellBookItemName subName, C_Spell.GetSpellTexture fileIDs, C_MerchantFrame.GetItemInfo, C_ChallengeMode.GetChallengeCompletionInfo, C_Log.LogMessage, IsSpellOverlayed bool).",
       "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
       "tests": [
         "tests/patch_12_0_0_deprecated.rs",
@@ -138,7 +138,7 @@
       ],
       "implementation": "retail-12-0-0 retirement gates",
       "compiled_revision": "0856b624e",
-      "proof": "Sol worker GREEN alone; fails inside full prefork run until successor gaps fixed (sol-retire-fallout); no independent review"
+      "proof": "GREEN inside full prefork run at 5168a5282; no independent review"
     }
   ],
   "source_rows": [
@@ -9153,15 +9153,19 @@
     },
     {
       "source_id": "deprecated api-GetSpellBookItemName-134",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retirement proven; successor C_SpellBook.GetSpellBookItemName omits subName (under fix)."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired; successor result now matches cached docs (patch_12_0_0_deprecated passes inside full prefork run)."
     },
     {
       "source_id": "deprecated api-GetSpellTexture-135",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retirement proven; successor C_Spell.GetSpellTexture returns path not fileID (under fix)."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired; successor result now matches cached docs (patch_12_0_0_deprecated passes inside full prefork run)."
     },
     {
       "source_id": "deprecated api-GetSpellCharges-136",
@@ -9211,15 +9215,19 @@
     },
     {
       "source_id": "deprecated api-GetMerchantItemInfo-143",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retirement proven; successor returns nil for seeded merchant item (under fix)."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired; successor result now matches cached docs (patch_12_0_0_deprecated passes inside full prefork run)."
     },
     {
       "source_id": "deprecated api-C_ChallengeMode-GetCompletionInfo-144",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retirement proven; successor returns nil instead of completion record (under fix)."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired; successor result now matches cached docs (patch_12_0_0_deprecated passes inside full prefork run)."
     },
     {
       "source_id": "deprecated api-C_MythicPlus-IsWeeklyRewardAvailable-145",
@@ -9267,9 +9275,11 @@
     },
     {
       "source_id": "deprecated api-ConsolePrint-153",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retirement proven; successor returns one nil instead of zero results (under fix)."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired; successor result now matches cached docs (patch_12_0_0_deprecated passes inside full prefork run)."
     },
     {
       "source_id": "deprecated api-message-154",
@@ -9287,9 +9297,11 @@
     },
     {
       "source_id": "deprecated api-IsSpellOverlayed-157",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retirement proven; successor returns nil instead of bool (under fix)."
+      "capabilities": [
+        "deprecated-retirement-12-0-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Native retired; successor result now matches cached docs (patch_12_0_0_deprecated passes inside full prefork run)."
     },
     {
       "source_id": "source-context-159",
