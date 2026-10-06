@@ -69,3 +69,5 @@ Startup built separately with no timeout; `timeout 90 python3 /home/osso/.worktr
 Neighborhood invitation getters/setters reuse existing per-environment boolean state, now published on Retail 12.0.0+ as well as Forever. Classic publication unchanged. INFERRED initial false; documented omitted setter resets false. Behavioral RED: nil global. GREEN pending after commit. No persistence or notification event invented.
 
 ModelSceneActorBase collision-bound preference methods are permanent 2D-scope compatibility: setter no-op, getter false even after setting true. Retail 12.0.0+ only. No 3D state or collision behavior claim. Behavioral RED observes missing actor method; post-commit GREEN pending.
+
+C_KeyBindings context activation/deactivation/query uses the existing keybinding state, with a per-environment set of documented context IDs. Cached Basic/Expert consumers require multiple simultaneous contexts. INFERRED idempotence and simulator integer validation. Binding routing/priority and turn/strafe migrations remain separate unmodeled boundaries.

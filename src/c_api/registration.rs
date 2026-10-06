@@ -74,6 +74,8 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_prey::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_weekly_rewards::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_key_bindings::register(state)?;
     super::c_item_interaction::register(state)?;
     super::c_cooldown_viewer::register(state)?;
     super::c_neighborhood_initiative::register(state)?;

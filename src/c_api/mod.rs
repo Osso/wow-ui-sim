@@ -97,6 +97,8 @@ pub mod c_input_interface_style;
 pub mod c_instance_encounter;
 pub mod c_intl;
 pub mod c_item_interaction;
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) mod c_key_bindings;
 pub mod c_lfg_info;
 pub(crate) mod c_lfg_list_active_entry;
 pub(crate) mod c_lfg_list_filter;

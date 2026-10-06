@@ -641,6 +641,8 @@ pub struct LfgListCounts {
 /// `GetBindingAction(key, checkOverride=true)` semantics.
 #[derive(Debug, Default, Clone)]
 pub struct Keybindings {
+    /// Explicit active context IDs; no binding priority or routing is inferred.
+    pub active_contexts: std::collections::HashSet<i32>,
     /// Insertion-ordered base bindings set by `SetBinding(key, action)`.
     /// Keyed by key name; the value is the bound action. Actions can be
     /// bound to at most 2 keys (WoW's documented limit).
