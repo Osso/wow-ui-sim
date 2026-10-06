@@ -13,12 +13,39 @@ pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResu
             import_custom_set as fn(&mut LuaState) -> LuaResult<u32>,
         ),
         ("SetOutfitToSet", import_set),
+        ("SetOutfitToOutfit", import_outfit),
         ("GetSourceIDsForSlot", get_source_ids),
         ("GetSetSourcesForSlot", get_sources),
     ] {
         table_set_rust_fn_static(state, namespace, name, handler)?;
     }
     Ok(())
+}
+
+fn import_outfit(state: &mut LuaState) -> LuaResult<u32> {
+    let id = i64::from_stack(state, 1)?;
+    let slots = {
+        let sim = borrow_state(state)?;
+        if sim.viewed_transmog_outfit_id.is_none() {
+            return Err(rilua::runtime_error("no viewed outfit"));
+        }
+        sim.transmog_outfits
+            .saved
+            .get(&id)
+            .ok_or_else(|| rilua::runtime_error("unknown source outfit"))?
+            .slots
+            .clone()
+    };
+    // INFERRED: merge source slots into the pending overlay, preserving target
+    // slots absent from the source, as with the existing set imports.
+    let mut sim = borrow_state_mut(state)?;
+    for (key, mut row) in slots {
+        row.has_pending = true;
+        sim.transmog_outfits.pending_slots.insert(key, row);
+    }
+    drop(sim);
+    dispatch_event_now(state, "VIEWED_TRANSMOG_OUTFIT_SLOT_REFRESH", &[])?;
+    Ok(0)
 }
 
 fn read_source_ids(state: &LuaState) -> LuaResult<Vec<i64>> {

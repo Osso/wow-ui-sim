@@ -57,6 +57,24 @@ use rilua::{LuaResult, Val};
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_TransmogOutfitInfo")?;
     #[cfg(feature = "retail-12-0-5")]
+    {
+        table_set_rust_fn_static(state, namespace, "InTransmogEvent", |s| {
+            let value = borrow_state(s)?.transmog_outfits.in_event;
+            s.push(Val::Bool(value));
+            Ok(1)
+        })?;
+        table_set_rust_fn_static(state, namespace, "TransmogEventActive", |s| {
+            let value = borrow_state(s)?.transmog_outfits.event_active;
+            s.push(Val::Bool(value));
+            Ok(1)
+        })?;
+        table_set_rust_fn_static(state, namespace, "IsUsableDiscountAvailable", |s| {
+            let value = borrow_state(s)?.transmog_outfits.usable_discount_available;
+            s.push(Val::Bool(value));
+            Ok(1)
+        })?;
+    }
+    #[cfg(feature = "retail-12-0-5")]
     pending_cost::register(state, namespace)?;
     #[cfg(feature = "retail-12-0-5")]
     lifecycle::register(state, namespace)?;

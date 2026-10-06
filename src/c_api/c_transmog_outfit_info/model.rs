@@ -41,6 +41,10 @@ pub struct OutfitState {
     pub unlocked_by_source: [u32; 3],
     pub next_outfit_cost: u64,
     pub slot_cost: u64,
+    /// Host event/discount policy inputs, not inferred from outfit metadata.
+    pub event_active: bool,
+    pub in_event: bool,
+    pub usable_discount_available: bool,
 }
 
 impl Default for OutfitState {
@@ -60,6 +64,10 @@ impl Default for OutfitState {
             unlocked_by_source: [0, 0, 20],
             next_outfit_cost: 0,
             slot_cost: 0,
+            // INFERRED: no event or discount without explicit host inputs.
+            event_active: false,
+            in_event: false,
+            usable_discount_available: false,
         }
     }
 }

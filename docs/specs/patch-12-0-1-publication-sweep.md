@@ -75,3 +75,7 @@ Category voice/volume settings use independent category-keyed maps under `c_api`
 ## Prediction object producers
 
 Move the existing prediction value/configuration object out of temporary proxy defaults into `globals/real`. Twelve 12.0.1 methods query those values, mode-dependent clamp maxima, fractions and supplied curves. `UnitGetDetailedHealPrediction` still supplies health/vitals to the same object; native absorb/heal and secrecy inputs remain unmodeled by that producer. Explicit `SetPredictedValues` provides concrete absorb/heal inputs. INFERRED: zero-max fractions return zero; overflow multiplies the maximum-health boundary. The documented WithAbsorbs mode adds total damage absorbs. Tests cover nonzero values, three clamp modes, reset and curve evaluation.
+
+## Outfit successors
+
+`SetOutfitToOutfit` stages a copy of source saved slots into the viewed outfit pending overlay, emits slot refresh and rejects unknown sources/no viewed target. INFERRED merge policy follows existing set imports; source contents are unchanged. Three event/discount queries read explicit host policy fields, defaulting false rather than inferring event participation from saved outfits. Discount query publication does not claim a native discount-pricing or redemption model. Tests cover nonempty source copying, source preservation and independent event/discount inputs.
