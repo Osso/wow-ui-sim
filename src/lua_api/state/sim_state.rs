@@ -59,6 +59,8 @@ pub struct SimState {
     /// Explicit chat restriction input; false default is simulator policy, not a native producer.
     #[cfg(feature = "retail-12-0-5")]
     pub chat_messaging_lockdown: bool,
+    #[cfg(feature = "retail-12-0-5")]
+    pub chat_expression_inputs: crate::c_api::chat_expressions::ChatExpressionInputs,
     /// C_PartyInfo restriction enum input; None (0) is an inferred simulator default.
     #[cfg(feature = "retail-12-0-5")]
     pub party_ping_restriction: u8,

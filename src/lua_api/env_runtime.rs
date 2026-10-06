@@ -277,6 +277,8 @@ impl WowLuaEnv {
         &self,
         elapsed: f64,
     ) -> Result<super::on_update::OnUpdateStageTimings> {
+        #[cfg(feature = "retail-12-0-5")]
+        super::execution_budget::reset_frame_budgets(self.lua.borrow_mut().state_mut())?;
         super::on_update::fire(self, elapsed)
     }
 

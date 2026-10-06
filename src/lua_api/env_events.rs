@@ -1,5 +1,5 @@
 use super::env::WowLuaEnv;
-use super::env_init::{addon_taint_name, is_blizzard_addon, record_addon_time};
+use super::env_init::record_addon_time;
 use super::handler_timing;
 use super::state::SimState;
 use crate::Result;
@@ -8,7 +8,7 @@ use crate::lua_api::methods::{
 };
 use crate::lua_api::script_helpers::{
     call_error_handler, event_matches_unit_filter, get_event_listeners, get_script,
-    get_scripts_for_dispatch, protected_lua_pcall_state,
+    get_scripts_for_dispatch,
 };
 use rilua::{LuaApi, LuaApiMut, Val};
 use std::cell::RefCell;
@@ -339,13 +339,15 @@ impl WowLuaEnv {
         handler: Val,
         call_args: &[Val],
     ) {
-        let taint = addon_taint_name(&self.state, addon_idx);
-        let blizzard = is_blizzard_addon(&self.state, addon_idx);
-        let _ = (taint, blizzard);
-
         let start = Instant::now();
         self.state.borrow_mut().executing_addon_index = addon_idx;
-        let call_result = protected_lua_pcall_state(lua.state_mut(), handler, call_args);
+        let call_result = call_budgeted_widget_handler(
+            lua.state_mut(),
+            widget_id,
+            handler_name,
+            handler,
+            call_args,
+        );
         if let Err(error) = call_result {
             let source = widget_handler_source_label(lua, handler);
             let error = widget_handler_error_message(
@@ -563,6 +565,27 @@ impl WowLuaEnv {
 
         Ok(false)
     }
+}
+
+fn call_budgeted_widget_handler(
+    state: &mut rilua::vm::state::LuaState,
+    widget_id: u64,
+    handler_name: &str,
+    handler: Val,
+    args: &[Val],
+) -> Result<Vec<Val>, String> {
+    let event = if handler_name == "OnEvent" {
+        args.get(1).and_then(|value| val_to_string(state, *value))
+    } else {
+        None
+    };
+    super::script_helpers::call_frame_handler_state(
+        state,
+        widget_id,
+        handler,
+        args,
+        event.as_deref(),
+    )
 }
 
 #[cfg(test)]

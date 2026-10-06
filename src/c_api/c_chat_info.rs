@@ -13,7 +13,8 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
         namespace,
         "InChatMessagingLockdown",
         in_chat_messaging_lockdown,
-    )
+    )?;
+    super::chat_expressions::register(state)
 }
 
 /// Explicit rejection is simulator policy; native error wording is unknown.

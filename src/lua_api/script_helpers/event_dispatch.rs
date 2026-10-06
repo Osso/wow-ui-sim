@@ -1,6 +1,6 @@
 use super::{
     ScriptBinding, ScriptHandlerLookup, call_error_handler, call_error_handler_state,
-    get_scripts_for_dispatch, protected_lua_pcall_state, registry_table, table_get_str,
+    get_scripts_for_dispatch, registry_table, table_get_str,
 };
 use crate::c_api::on_update_modes::OnUpdateMode;
 use crate::lua_api::handler_timing;
@@ -88,7 +88,9 @@ pub(crate) fn dispatch_named_event_handlers(
         if !matches!(handler, Val::Function(_)) {
             continue;
         }
-        if let Err(error) = protected_lua_pcall_state(state, handler, &call_args) {
+        if let Err(error) =
+            super::call_frame_handler_state(state, widget_id, handler, &call_args, Some(event_name))
+        {
             call_error_handler_state(state, &error);
         }
     }
@@ -204,7 +206,13 @@ pub fn dispatch_script(
         let owner_addon = handler_owner_addon(lua.state(), widget_id);
         let func = rilua::Function::from_gc_ref(func_ref);
         let previous_addon = replace_executing_addon(lua.state(), owner_addon);
-        if let Err(e) = lua.call_function(&func, &args) {
+        if let Err(e) = super::call_frame_handler_state(
+            lua.state_mut(),
+            widget_id,
+            Val::Function(func.gc_ref()),
+            &args,
+            None,
+        ) {
             call_error_handler(lua, &e.to_string());
         }
         replace_executing_addon(lua.state(), previous_addon);
@@ -312,7 +320,13 @@ fn dispatch_on_update_handler(
     let func = rilua::Function::from_gc_ref(func_ref);
     let start = Instant::now();
     let previous_addon = replace_executing_addon(lua.state(), owner_addon);
-    if let Err(e) = lua.call_function(&func, &[frame_val, elapsed_val]) {
+    if let Err(e) = super::call_frame_handler_state(
+        lua.state_mut(),
+        frame_id,
+        Val::Function(func.gc_ref()),
+        &[frame_val, elapsed_val],
+        None,
+    ) {
         // Names and sources are only needed for the report, so they are
         // resolved here instead of for every handler call.
         let registered_source =

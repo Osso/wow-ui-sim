@@ -69,6 +69,8 @@ macro_rules! build_empty_sim_state {
             #[cfg(feature = "retail-12-0-5")]
             chat_messaging_lockdown: false,
             #[cfg(feature = "retail-12-0-5")]
+            chat_expression_inputs: crate::c_api::chat_expressions::ChatExpressionInputs::default(),
+            #[cfg(feature = "retail-12-0-5")]
             party_ping_restriction: 0,
             #[cfg(feature = "retail-12-0-5")]
             party_countdown_request: None,

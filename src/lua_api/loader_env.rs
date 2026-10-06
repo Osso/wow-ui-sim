@@ -186,8 +186,12 @@ impl<'a> LoaderEnv<'a> {
                 call_args.push(event_name);
                 call_args.extend_from_slice(args);
                 for handler in handlers {
-                    if let Err(error) = crate::lua_api::script_helpers::call_void_function_state(
-                        state, handler, &call_args,
+                    if let Err(error) = crate::lua_api::script_helpers::call_frame_handler_state(
+                        state,
+                        widget_id,
+                        handler,
+                        &call_args,
+                        Some(event),
                     ) {
                         call_error_handler_state(state, &error);
                     }

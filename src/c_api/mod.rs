@@ -187,6 +187,8 @@ pub(crate) mod c_transmog_collection;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_voice_chat_channels;
 #[cfg(feature = "retail-12-0-5")]
+pub mod chat_expressions;
+#[cfg(feature = "retail-12-0-5")]
 pub(crate) mod class_talent_commands;
 mod club_inputs;
 mod club_members;

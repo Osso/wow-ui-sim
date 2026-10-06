@@ -24,10 +24,6 @@ installChatInfoDefault("IsValidChatLine", function(_chatLine)
     return false
 end)
 
-installChatInfoDefault("ReplaceIconAndGroupExpressions", function(text)
-    return text
-end)
-
 installChatInfoDefault("UncensorChatLine", function(_chatLine)
 end)
 
@@ -68,6 +64,14 @@ end)
 
 pub(crate) fn apply_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
     lua.exec(C_CHAT_INFO_DEFAULTS_LUA)?;
+    #[cfg(not(feature = "retail-12-0-5"))]
+    lua.exec(
+        r#"
+if rawget(C_ChatInfo, "ReplaceIconAndGroupExpressions") == nil then
+    C_ChatInfo.ReplaceIconAndGroupExpressions = function(text) return text end
+end
+"#,
+    )?;
     Ok(())
 }
 

@@ -203,13 +203,27 @@ fn execute_compiled_lua_file(
     crate::lua_api::loader_env::apply_loading_scoped_fenv_state(state, &func)
         .map_err(|e| report_lua_load_error(state, e))?;
     let result = if ctx.taint {
-        exec_addon_func(state, func, ctx)
+        execute_budgeted_addon_file(state, func, ctx)
     } else {
         crate::loader::stack_taint::with_secure_stack(state, |state| {
             exec_addon_func(state, func, ctx)
         })
     };
     result.map_err(|e| contextual_lua_load_error(state, e, chunk_name))
+}
+
+fn execute_budgeted_addon_file(
+    state: &mut LuaState,
+    func: rilua::Function,
+    ctx: &AddonContext,
+) -> Result<rilua::Val, LoadError> {
+    #[cfg(feature = "retail-12-0-5")]
+    return crate::lua_api::execution_budget::with_addon_budget(state, ctx.name, |state| {
+        exec_addon_func(state, func, ctx).map_err(|error| rilua::runtime_error(error.to_string()))
+    })
+    .map_err(|error| LoadError::Lua(error.to_string()));
+    #[cfg(not(feature = "retail-12-0-5"))]
+    exec_addon_func(state, func, ctx)
 }
 
 fn contextual_lua_load_error(

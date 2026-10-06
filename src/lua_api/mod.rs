@@ -16,6 +16,8 @@ mod env_events;
 mod env_init;
 mod env_rilua;
 mod env_runtime;
+#[cfg(feature = "retail-12-0-5")]
+pub(crate) mod execution_budget;
 pub(crate) mod frame;
 pub(crate) mod frame_substates;
 pub(crate) mod game_data;

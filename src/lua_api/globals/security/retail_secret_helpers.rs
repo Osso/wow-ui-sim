@@ -1,22 +1,31 @@
-//! Retail 12.0.0 helpers using VM wrappers and the VM's access guard.
-//! dropsecretaccess is intentionally absent: pinned rilua has no per-caller
-//! access-revocation primitive. Setting stack taint would change issecure too.
-//! issecrettable is absent: the wrapper payload-kind accessor is VM-private;
-//! unwrap_secret rejects tainted callers, which must still use this predicate.
+//! Retail 12.0.0 secret predicates and caller-context access revocation.
 
-use rilua::api::state_is_secure;
-use rilua::table_security::is_secret_value;
+use rilua::table_security::{
+    can_access_secrets, is_secret_table, is_secret_value, revoke_secret_access,
+};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult, Val};
 
 pub(super) fn register(lua: &mut rilua::Lua) -> LuaResult<()> {
     LuaApiMut::register_function(lua, "canaccesssecrets", canaccesssecrets)?;
-    LuaApiMut::register_function(lua, "hasanysecretvalues", hasanysecretvalues)
+    LuaApiMut::register_function(lua, "hasanysecretvalues", hasanysecretvalues)?;
+    LuaApiMut::register_function(lua, "dropsecretaccess", dropsecretaccess)?;
+    LuaApiMut::register_function(lua, "issecrettable", issecrettable)
 }
 
 fn canaccesssecrets(state: &mut LuaState) -> LuaResult<u32> {
-    // This is exactly the guard used by rilua's unwrap_secret.
-    state.push(Val::Bool(state_is_secure(state)));
+    state.push(Val::Bool(can_access_secrets(state)));
+    Ok(1)
+}
+
+fn dropsecretaccess(state: &mut LuaState) -> LuaResult<u32> {
+    revoke_secret_access(state)?;
+    Ok(0)
+}
+
+fn issecrettable(state: &mut LuaState) -> LuaResult<u32> {
+    let value = crate::lua_bridge::stack_val(state, 1);
+    state.push(Val::Bool(is_secret_table(state, value)));
     Ok(1)
 }
 

@@ -124,10 +124,10 @@ fn p1200_threat_categories_and_missing_units_use_explicit_host_state() {
 }
 
 #[test]
-fn p1200_unavailable_secret_helpers_are_not_faked() {
+fn p1200_secret_helpers_are_published() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
-        "assert(rawget(_G,'dropsecretaccess') == nil); assert(rawget(_G,'issecrettable') == nil)",
+        "assert(type(dropsecretaccess) == 'function'); assert(type(issecrettable) == 'function')",
     )
     .unwrap();
 }
