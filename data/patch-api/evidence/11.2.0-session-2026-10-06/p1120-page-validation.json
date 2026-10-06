@@ -1,0 +1,83 @@
+{
+  "result": "PASS",
+  "inventory_rows": 162,
+  "extract_rows": 82,
+  "unique_source_ids": 244,
+  "statuses": {
+    "audit-pending": 91,
+    "partial-development-green": 75,
+    "metadata-only": 21,
+    "bounded-coverage": 57
+  },
+  "inventory": {
+    "published": 75,
+    "superseded_ok": 4,
+    "strict_removals": 47,
+    "deprecated_aliases": 10
+  },
+  "scout_batches": {
+    "B01": 4,
+    "B02": 8,
+    "B03": 34,
+    "B04": 9,
+    "B05": 10
+  },
+  "isolated_sweeps": [
+    {
+      "name": "patch_11_2_0_publication_sweep",
+      "rows": 162,
+      "ok": 136,
+      "gaps": 26,
+      "exit_code": 0
+    },
+    {
+      "name": "patch_11_2_5_publication_sweep",
+      "rows": 163,
+      "ok": 118,
+      "gaps": 45,
+      "exit_code": 0
+    },
+    {
+      "name": "patch_11_2_7_publication_sweep",
+      "rows": 508,
+      "ok": 387,
+      "gaps": 121,
+      "exit_code": 0
+    },
+    {
+      "name": "patch_12_0_0_publication_sweep",
+      "rows": 1010,
+      "ok": 987,
+      "gaps": 23,
+      "exit_code": 0
+    },
+    {
+      "name": "patch_12_0_1_publication_sweep",
+      "rows": 225,
+      "ok": 222,
+      "gaps": 3,
+      "exit_code": 0
+    },
+    {
+      "name": "patch_12_0_5_publication_sweep",
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11,
+      "exit_code": 0
+    },
+    {
+      "name": "patch_12_0_7_publication_sweep",
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3,
+      "exit_code": 0
+    },
+    {
+      "name": "patch_12_1_0_publication_sweep",
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5,
+      "exit_code": 0
+    }
+  ]
+}
