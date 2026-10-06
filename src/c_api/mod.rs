@@ -53,6 +53,8 @@ pub(crate) mod c_battle_net_friend_search;
 pub(crate) mod c_battle_net_invite;
 pub mod c_catalog_shop;
 pub mod c_catalog_shop_products;
+#[cfg(feature = "retail-12-0-0")]
+pub mod c_challenge_mode;
 pub mod c_character_services;
 pub mod c_chat_bubbles;
 #[cfg(feature = "retail-12-0-5")]
@@ -94,6 +96,8 @@ pub mod c_intl;
 pub mod c_lfg_info;
 #[cfg(feature = "retail-12-0-0")]
 mod c_limited_input;
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) mod c_log;
 pub mod c_login;
 pub mod c_loot_history;
 pub mod c_major_factions;
@@ -138,6 +142,8 @@ pub mod c_social;
 pub mod c_sound;
 pub mod c_spec;
 pub mod c_spell;
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) mod c_spell_activation_overlay;
 pub mod c_spell_book;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_spell_classification;

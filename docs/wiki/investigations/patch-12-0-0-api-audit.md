@@ -12,6 +12,10 @@ B07 conflicts are falsified by real cached Game loading. The stale `PLAYER_INTER
 
 Deprecated retirement failures originate in explicit simulator legacy registrations, temporary wrappers and namespace autostub fabrication. Gate the legacy publishers at `retail-12-0-0`, including restoration paths; mark retired namespace keys to suppress fabrication. Late `C_TaskQuest`/`C_MythicPlus` registrations also need gates because they execute after the namespace retirement pass. No cached Blizzard Lua or successor producer was changed.
 
+### Retirement fallout follow-up
+
+The [successor contract](../../specs/retirement-successors.md) closes six retained gaps: spellbook subName, numeric spell textures, merchant inventory records, challenge completion snapshots, zero-result C_Log logging, and boolean proc membership. Native behavior and cached retirement tests now require zero successor gaps. Legacy-only tests are gated; cooldown, spellbook, map quest and relic model coverage uses current namespaces. Usability is separate from cooldown readiness. Removed weekly-reward API has no listed successor. Historical proof below is unchanged; current suite results are recorded separately.
+
 Current cache republishes none of this extract's old names. The test nevertheless validates frozen direct aliases against the established loaded-file scanner and raw/ordinary exact identity if such a mapping is ever deliberately added. Pending successor results and the master-reproduced historical compile blocker remain explicit in the report; exact-gap test success is not full behavioral closure.
 
 ## Wikitext supplement

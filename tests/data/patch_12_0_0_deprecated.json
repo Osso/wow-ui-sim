@@ -169,12 +169,5 @@
       "successor_source": "Blizzard_APIDocumentationGenerated/ItemSocketInfoDocumentation.lua:168"
     }
   },
-  "known_successor_gaps": {
-    "deprecated api-C_ChallengeMode-GetCompletionInfo-144": "C_ChallengeMode.GetChallengeCompletionInfo autostub returns nil, not non-nil ChallengeCompletionInfo. Successor producer excluded from this workstream.",
-    "deprecated api-ConsolePrint-153": "C_Log.LogMessage autostub returns one nil, not documented zero results. Logging producer excluded from this workstream.",
-    "deprecated api-GetMerchantItemInfo-143": "C_MerchantFrame.GetItemInfo autostub returns nil for seeded merchant item. Merchant producer excluded from this workstream.",
-    "deprecated api-GetSpellBookItemName-134": "C_SpellBook.GetSpellBookItemName returns one name, missing documented subName result. SpellBook producer excluded from this workstream.",
-    "deprecated api-GetSpellTexture-135": "C_Spell.GetSpellTexture returns path string as first result instead of documented fileID. Spell producer excluded from this workstream.",
-    "deprecated api-IsSpellOverlayed-157": "C_SpellActivationOverlay.IsSpellOverlayed autostub returns nil, not bool. Overlay producer excluded from this workstream."
-  }
+  "known_successor_gaps": {}
 }

@@ -377,17 +377,17 @@ fn fire_cursor_changed(state: &mut LuaState) {
 
 fn c_spell_book_get_spell_book_item_name(state: &mut LuaState) -> LuaResult<u32> {
     let slot = i32::from_stack(state, 1)?;
-    match spellbook_data::get_spell_at_slot(slot) {
-        Some((_, entry, _)) => {
-            let name = spells::get_spell(entry.spell_id)
-                .map(|spell| spell.name)
-                .unwrap_or("Unknown");
-            let name = create_string_static(state, name);
-            state.push(name);
-        }
-        None => state.push(Val::Nil),
-    }
-    Ok(1)
+    let Some((_, entry, _)) = spellbook_data::get_spell_at_slot(slot) else {
+        return Ok(0);
+    };
+    let Some(spell) = spells::get_spell(entry.spell_id) else {
+        return Ok(0);
+    };
+    let name = create_string_static(state, spell.name);
+    state.push(name);
+    let sub_name = create_string_static(state, spell.subtext);
+    state.push(sub_name);
+    Ok(2)
 }
 
 fn c_spell_book_get_spell_book_item_info(state: &mut LuaState) -> LuaResult<u32> {

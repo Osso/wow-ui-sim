@@ -1,3 +1,7 @@
+## [2026-10-05] investigation | Retirement successor fallout
+
+[Follow-up](investigations/patch-12-0-0-api-audit.md#retirement-fallout-follow-up) records all 17 reproduced failures and six reproduced successor gaps. Model tests use current APIs, legacy-only assertions retain epoch gates, and state-backed successors replace autostubs. [Contract](../specs/retirement-successors.md) defines scope; current proof follows after verification.
+
 ## [2026-10-05] investigation | Cast duration rounding
 
 [Investigation](investigations/cast-duration-rounding.md) records the captured one-ULP loss and deterministic RED. Cast state preserves configured spans; queries no longer recover duration from rounded deadlines. [Proof](investigations/cast-duration-rounding.md#verification--2026-10-05): targeted/module GREEN, 95 integration controls, three full parallel lib runs with only six known failures, startup `[]`, check/fmt pass. GC audit attribution updated.

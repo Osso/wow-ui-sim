@@ -1,3 +1,7 @@
+## [2026-10-05] investigation | Retirement successor fallout
+
+[Follow-up](investigations/patch-12-0-0-api-audit.md#retirement-fallout-follow-up) links six state-backed successor contracts and epoch-aware test migrations. Retired globals stay absent; zero-gap successor assertions replace exact-gap allowances.
+
 ## [2026-10-05] investigation | Cast duration precision
 
 [Captured flake and deterministic regression](investigations/cast-duration-rounding.md): subtracting rounded deadlines loses one ULP from a one-second cast. Store the configured span and derive deadlines; original completion assertions unchanged.

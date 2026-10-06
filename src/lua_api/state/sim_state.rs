@@ -309,6 +309,10 @@ pub struct SimState {
     pub spell_aura_durations: HashMap<u32, crate::c_api::aura_duration::SpellAuraDuration>,
     #[cfg(feature = "base-spell-relationships")]
     pub base_spell_relationships: crate::c_api::spell_base::BaseSpellRelationships,
+    #[cfg(feature = "retail-12-0-0")]
+    pub spell_activation_overlays: HashSet<u32>,
+    #[cfg(feature = "retail-12-0-0")]
+    pub challenge_completion: crate::c_api::c_challenge_mode::ChallengeCompletionInfo,
     pub spell_loss_of_control: HashMap<u32, LossOfControlInfo>,
     pub spell_flyouts: HashMap<u32, SpellFlyoutInfo>,
     pub action_profession_quality: HashMap<i32, ProfessionQualityInfo>,

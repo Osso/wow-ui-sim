@@ -6,7 +6,7 @@
 //! - `GetSpellCooldown(spellID)` → `SpellCooldownInfo` table from
 //!   `SimState.spell_cooldowns` (start/duration/isEnabled/isActive/modRate).
 //! - `GetSpellDescription(spellID)` → localized spell description, or empty.
-//! - `GetSpellTexture(spellID)` → `(fallbackTexturePath, fileDataID, conditionalIconID)`.
+//! - `GetSpellTexture(spellID)` → `(iconID, originalIconID, conditionalIconID)`.
 //! - `GetSpellPowerCost(spellID)` → `SpellPowerCostInfo[]` table or nil.
 //! - `GetSchoolString(mask)` → localized school name for a bitmask.
 //! - `PickupSpell(spellID)` → sets cursor to a spell and fires `CURSOR_CHANGED`.
@@ -269,13 +269,15 @@ fn get_spell_info(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn get_spell_texture(state: &mut LuaState) -> LuaResult<u32> {
-    let spell_id = u32::from_stack(state, 1)?;
-    let icon_id = spells::get_spell(spell_id)
-        .map(|spell| spell.icon_file_data_id)
-        .unwrap_or(136243);
-    let texture = create_string(state, "Interface\\ICONS\\INV_Misc_QuestionMark");
-    state.push(texture);
-    state.push(Val::Num(icon_id as f64));
+    let Some(spell_id) = numeric_spell_id(state, 1) else {
+        return Ok(0);
+    };
+    let Some(spell) = spells::get_spell(spell_id) else {
+        return Ok(0);
+    };
+    let icon_id = Val::Num(f64::from(spell.icon_file_data_id));
+    state.push(icon_id);
+    state.push(icon_id);
     #[cfg(feature = "retail-12-1-0")]
     {
         state.push(Val::Nil);

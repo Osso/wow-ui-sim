@@ -439,8 +439,9 @@ fn test_assisted_combat_is_available_shape() {
 #[test]
 fn test_spell_get_spell_texture() {
     let env = env();
-    let tex: String = env.eval("return C_Spell.GetSpellTexture(100)").unwrap();
-    assert!(!tex.is_empty(), "Spell texture path should be non-empty");
+    let (icon, original): (u32, u32) = env.eval("return C_Spell.GetSpellTexture(100)").unwrap();
+    assert_eq!(icon, wow_ui_sim::spells::get_spell(100).unwrap().icon_file_data_id);
+    assert_eq!(original, icon);
 }
 
 #[test]

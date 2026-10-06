@@ -3,7 +3,7 @@
 #![cfg(feature = "retail-12-0-0")]
 
 use serde::Deserialize;
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::BTreeMap;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[path = "common/publication_sweep.rs"]
@@ -28,6 +28,7 @@ fn read_data() -> Data {
     let data: Data =
         serde_json::from_str(include_str!("data/patch_12_0_0_deprecated.json")).unwrap();
     assert_eq!(data.rows.len(), 21);
+    assert!(data.known_successor_gaps.is_empty(), "all successors must be proven");
     assert_eq!(data.summary_id, "deprecated api-removal-summary-128");
     for (id, row) in &data.rows {
         assert_eq!(row.successor.is_some(), row.probe.is_some(), "{id}");
@@ -139,9 +140,7 @@ fn patch_12_0_0_deprecated_retirement_and_successors(env: &WowLuaEnv) {
         }
     }
     eprintln!("{}: retirement failures={retirement_failures:?}", data.summary_id);
-    let observed: BTreeSet<_> = failures.keys().collect();
-    let known: BTreeSet<_> = data.known_successor_gaps.keys().collect();
-    assert!(retirement_failures.is_empty() && observed == known,
+    assert!(retirement_failures.is_empty() && failures.is_empty(),
         "retirement failures={retirement_failures:?}; new or resolved successor gaps: {failures:#?}");
 }
 }

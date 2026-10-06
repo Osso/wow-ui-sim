@@ -565,6 +565,10 @@ macro_rules! build_empty_sim_state {
             voice_chat: VoiceChatState::default(),
             #[cfg(feature = "retail-12-0-5")]
             voice_chat_speak_requests: Vec::new(),
+            #[cfg(feature = "retail-12-0-0")]
+            spell_activation_overlays: ::std::collections::HashSet::new(),
+            #[cfg(feature = "retail-12-0-0")]
+            challenge_completion: Default::default(),
             known_spells: ::std::collections::HashSet::new(),
             harmful_spells: ::std::collections::HashSet::new(),
             helpful_spells: ::std::collections::HashSet::new(),

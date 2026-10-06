@@ -47,6 +47,8 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
 }
 
 pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-0")]
+    register_retirement_successors(state)?;
     #[cfg(feature = "client-wowforever")]
     super::addon_messages::register_chat(state)?;
     #[cfg(feature = "client-wowforever")]
@@ -89,6 +91,13 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     #[cfg(feature = "retail-12-1-0")]
     super::c_sound::register(state)?;
     c_player_interaction_manager::register_c_player_interaction_manager_surface(state)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn register_retirement_successors(state: &mut LuaState) -> LuaResult<()> {
+    super::c_challenge_mode::register(state)?;
+    super::c_log::register(state)?;
+    super::c_spell_activation_overlay::register(state)
 }
 
 pub(crate) fn register_map_prefix_tables(state: &mut LuaState) -> LuaResult<()> {
