@@ -1,0 +1,123 @@
+{
+  "revision": "89d0a9b011b34f8fbe32c8d9969254c2f5a7e923",
+  "passed": true,
+  "inventory_rows": 508,
+  "inventory_directions": {
+    "added": 498,
+    "removed": 9,
+    "changed": 1
+  },
+  "extract_rows": 19,
+  "unique_union": 527,
+  "statuses": {
+    "audit-pending": 131,
+    "partial-development-green": 328,
+    "metadata-only": 59,
+    "bounded-coverage": 9
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 299,
+      "parsed_count": 299
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 7,
+      "parsed_count": 7
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 117,
+      "parsed_count": 117
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 65,
+      "parsed_count": 65
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "commands",
+      "direction": "added",
+      "header_count": 10,
+      "parsed_count": 10
+    },
+    {
+      "section": "commands",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    }
+  ],
+  "superseded_rows": 51,
+  "superseded_ok": 50,
+  "reviewed_initial_gaps": 135,
+  "fixed_gaps": 14,
+  "retained_gaps": 121,
+  "unchanged_existing_ledgers": [
+    "12.0.0-page-coverage.json",
+    "12.0.1-page-coverage.json",
+    "12.0.5-page-coverage.json",
+    "12.0.7-page-coverage.json",
+    "12.1.0-page-coverage.json"
+  ],
+  "unchanged_later_baselines": 5,
+  "scout_assignments": 19,
+  "extractor_compatibility": [
+    {
+      "patch": "12.0.0",
+      "unchanged_generator_behavior": true,
+      "outcome": "output"
+    },
+    {
+      "patch": "12.0.1",
+      "unchanged_generator_behavior": true,
+      "outcome": "output"
+    },
+    {
+      "patch": "12.0.5",
+      "unchanged_generator_behavior": true,
+      "outcome": "output"
+    },
+    {
+      "patch": "12.0.7",
+      "unchanged_generator_behavior": true,
+      "outcome": "output"
+    },
+    {
+      "patch": "12.1.0",
+      "unchanged_generator_behavior": true,
+      "outcome": "error"
+    }
+  ],
+  "register_regeneration": "p1127-register-regeneration.json",
+  "manual_rust_readability": "Reviewed all changed production/test lines: no new warnings/suppressions, no deep control flow; file-level retail gating and classic-safe registration boundary."
+}

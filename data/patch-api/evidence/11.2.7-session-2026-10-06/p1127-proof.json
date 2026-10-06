@@ -23,7 +23,10 @@
       "gaps": 121,
       "result_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-sweep-result.json",
       "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-sweep.log",
-      "invalidated_by_later_changes": false
+      "invalidated_by_later_changes": false,
+      "environment": {
+        "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-page/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-sweep-result.json"
+      }
     },
     {
       "command": [
@@ -46,7 +49,10 @@
       "gaps": 23,
       "result_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1200-sweep-result.json",
       "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1200-sweep.log",
-      "invalidated_by_later_changes": false
+      "invalidated_by_later_changes": false,
+      "environment": {
+        "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-page/data/patch-api/evidence/11.2.7-session-2026-10-06/p1200-sweep-result.json"
+      }
     },
     {
       "command": [
@@ -69,7 +75,10 @@
       "gaps": 3,
       "result_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1201-sweep-result.json",
       "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1201-sweep.log",
-      "invalidated_by_later_changes": false
+      "invalidated_by_later_changes": false,
+      "environment": {
+        "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-page/data/patch-api/evidence/11.2.7-session-2026-10-06/p1201-sweep-result.json"
+      }
     },
     {
       "command": [
@@ -92,7 +101,10 @@
       "gaps": 11,
       "result_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1205-sweep-result.json",
       "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1205-sweep.log",
-      "invalidated_by_later_changes": false
+      "invalidated_by_later_changes": false,
+      "environment": {
+        "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-page/data/patch-api/evidence/11.2.7-session-2026-10-06/p1205-sweep-result.json"
+      }
     },
     {
       "command": [
@@ -115,7 +127,10 @@
       "gaps": 3,
       "result_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1207-sweep-result.json",
       "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1207-sweep.log",
-      "invalidated_by_later_changes": false
+      "invalidated_by_later_changes": false,
+      "environment": {
+        "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-page/data/patch-api/evidence/11.2.7-session-2026-10-06/p1207-sweep-result.json"
+      }
     },
     {
       "command": [
@@ -138,7 +153,10 @@
       "gaps": 5,
       "result_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1210-sweep-result.json",
       "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1210-sweep.log",
-      "invalidated_by_later_changes": false
+      "invalidated_by_later_changes": false,
+      "environment": {
+        "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-page/data/patch-api/evidence/11.2.7-session-2026-10-06/p1210-sweep-result.json"
+      }
     },
     {
       "revision": "9cc60a03dc2dc2b51ff2675b00f9e5688228b0e5",
@@ -165,7 +183,188 @@
         "wt-global-api-C_BattleNet.InstallHighResTextures-23"
       ],
       "exit_code": 101,
-      "passed": true
+      "passed": true,
+      "environment": {
+        "P1127_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p1127-page/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-negative-register.json",
+        "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1127-page/data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-negative-result.json"
+      }
+    },
+    {
+      "name": "fmt-check",
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-page/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "revision": "18c900f7435b01a2611ab92dc989388c4cde9b2f",
+      "exit_code": 0,
+      "warnings": [],
+      "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/fmt-check.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "name": "mists-check",
+      "command": [
+        "cargo",
+        "check",
+        "--manifest-path",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-page/Cargo.toml",
+        "--tests",
+        "--no-default-features",
+        "--features",
+        "sound gui casc client-mists"
+      ],
+      "revision": "18c900f7435b01a2611ab92dc989388c4cde9b2f",
+      "exit_code": 0,
+      "warnings": [
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+        "warning: `iced_wgpu` (manifest) generated 6 warnings"
+      ],
+      "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/mists-check.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "name": "retail-check",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--check"
+      ],
+      "revision": "18c900f7435b01a2611ab92dc989388c4cde9b2f",
+      "exit_code": 0,
+      "warnings": [
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+        "warning: `iced_wgpu` (manifest) generated 6 warnings"
+      ],
+      "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/retail-check.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "name": "startup-build",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-page/scripts/build-host.py",
+        "--build-host",
+        "local"
+      ],
+      "revision": "18c900f7435b01a2611ab92dc989388c4cde9b2f",
+      "exit_code": 0,
+      "warnings": [
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+        "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+        "warning: `iced_wgpu` (manifest) generated 6 warnings"
+      ],
+      "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/startup-build.log",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "name": "startup",
+      "command": [
+        "timeout",
+        "90",
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--no-build",
+        "--run",
+        "--",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "18c900f7435b01a2611ab92dc989388c4cde9b2f",
+      "exit_code": 0,
+      "stdout": "native artifact=/home/osso/.worktrees/wow-ui-sim-p1127-page/target/debug/wow-sim\n[]\n",
+      "stderr_tail": "ished patch_lfg_lock_list in 6.34\u00b5s\n[  3.609s] [Workarounds] starting patch_auction_house_browse_results_event\n[  3.609s] [Workarounds] finished patch_auction_house_browse_results_event in 64.36\u00b5s\n[  3.609s] [Workarounds] starting patch_auction_house_search_context_aliases\n[  3.609s] [Workarounds] finished patch_auction_house_search_context_aliases in 29.40\u00b5s\n[  3.609s] [Workarounds] starting patch_auth_challenge_frame_parent\n[  3.609s] [Workarounds] finished patch_auth_challenge_frame_parent in 43.96\u00b5s\n[  3.609s] [Workarounds] starting patch_settings_surface_defaults\n[  3.610s] [Workarounds] finished patch_settings_surface_defaults in 344.16\u00b5s\n[  3.610s] [Workarounds] starting patch_settings_canvas_layout_visibility\n[  3.610s] [Workarounds] finished patch_settings_canvas_layout_visibility in 111.92\u00b5s\n[  3.610s] [Startup] apply_post_load_workarounds: workarounds complete\n[  3.680s] [Startup] apply_post_load_workarounds: globals restored\n[  3.680s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored\n[  3.680s] [Startup] apply_post_load_workarounds: seterrorhandler restored\n[  3.681s] [Startup] post-load workarounds complete in 211.95ms\n[  3.681s] [Startup] restarting GC after bootstrap\n[  3.830s] [Startup] GC restart complete in 149.17ms\n=== Final observed Lua error summary ===\nStatus: CLEAN\nLua errors: 0 unique, 0 occurrence(s)\nAttributed owners: 0\nUnattributed Lua errors: 0 occurrence(s)\nDropping OutputStream, audio playing through this stream will stop\n",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "name": "register-parser-fixtures",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-page/tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "116325b8d",
+      "exit_code": 0,
+      "passed_tests": 2,
+      "proof": "Observed tool output; generator unchanged afterward."
+    },
+    {
+      "name": "extractor-fixtures",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-page/tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "89d0a9b01",
+      "exit_code": 0,
+      "passed_tests": 6,
+      "log_path": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-extractor-compat-green.log"
+    },
+    {
+      "name": "retirement-and-console-regressions",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_7_retirement",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "9cc60a03d",
+      "exit_code": 0,
+      "passed_tests": 2
+    },
+    {
+      "name": "battlefield-regressions",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1127-page/scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "battlefield_verbs",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "d939ccb5f",
+      "exit_code": 0,
+      "passed_tests": 9,
+      "later_changes_intersect_scope": false
+    },
+    {
+      "name": "artifact-validation",
+      "revision": "89d0a9b01",
+      "exit_code": 0,
+      "proof": "p1127-page-validation.json; exact union/hashes/header counts/baselines, every supersession expectation, every gap/scout assignment."
     }
-  ]
+  ],
+  "proof_policy": "Main-thread development only. Six isolated sweeps cover Rust/data revision 9cc60a03d. Subsequent documentation/evidence and extractor-only changes do not invalidate Rust, Mists or startup proof. No independent/native acceptance."
 }

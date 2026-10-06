@@ -33,7 +33,7 @@ Apply all five later registers, oldest first. The shared sweep stores latest lat
 
 ## Development proof
 
-At `9cc60a03d`, six isolated sweeps pass with exact baselines: 11.2.7 387/508 OK, 12.0.0 987/1010, 12.0.1 222/225, 12.0.5 352/363, 12.0.7 171/174, 12.1.0 773/778. All later baseline files remain unchanged. One unsuperseded `C_BattleNet.InstallHighResTextures` row flipped to removed yields exactly one new gap and one changed observation (121 → 122; expected exit 101). Final checks and startup results are retained in the proof ledger/spec.
+At `9cc60a03d`, six isolated sweeps pass with exact baselines: 11.2.7 387/508 OK, 12.0.0 987/1010, 12.0.1 222/225, 12.0.5 352/363, 12.0.7 171/174, 12.1.0 773/778. All later baseline files remain unchanged. One unsuperseded `C_BattleNet.InstallHighResTextures` row flipped to removed yields exactly one new gap and one changed observation (121 → 122; expected exit 101). Final formatting, retail check, Mists test check and startup pass; Mists has no non-vendor warnings and startup exits 0 with `[]`. Results are retained in the proof ledger/spec.
 
 No agents/models, push, merge, vendor edits, Blizzard monkey-patches or existing page-coverage edits. This is main-thread simulator evidence, not independent/native acceptance.
 

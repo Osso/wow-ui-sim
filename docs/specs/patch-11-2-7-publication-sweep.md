@@ -14,12 +14,12 @@ Earliest supported retail epoch is `retail-12-0-0`; no 11.x runtime exists. Defa
 
 ## Acceptance
 
-- [ ] Review every non-OK row; fix cheap root-cause publication defects and retain explicit model gaps.
-- [ ] Exact known-gap GREEN and one-row negative control.
-- [ ] Create unique inventory/extract source-ID ledger with publication-only credit.
-- [ ] Scout every non-inventory statement without claiming behavioral parity.
-- [ ] Run all six publication sweeps alone, local debug retail.
-- [ ] Formatting, default local check, warning-free non-vendor Mists test check, startup Lua errors `[]`.
+- [x] Review every non-OK row; fix cheap root-cause publication defects and retain explicit model gaps.
+- [x] Exact known-gap GREEN and one-row negative control.
+- [x] Create unique inventory/extract source-ID ledger with publication-only credit.
+- [x] Scout every non-inventory statement without claiming behavioral parity.
+- [x] Run all six publication sweeps alone, local debug retail.
+- [x] Formatting, default local check, warning-free non-vendor Mists test check, startup Lua errors `[]`.
 
 ## Sources
 
@@ -38,3 +38,28 @@ Ten missing 11.2.7 Command records are a catalog omission, not a missing executi
 ## Extract compatibility
 
 Validation exposed an unintended 12.0.7 extractor change: resuming at Structures on headed pages now parsed templates the old tool excluded. Restrict wikitable/Structures boundary handling to pages without a Global API heading; preserve all existing headed-page rendering, including pre-existing unsupported-template outcomes. New RED fixture proves the old headed inventory exclusion. This Python-only correction leaves Rust sweep/check/startup proof valid.
+
+## Final local proof — 2026-10-06
+
+Rust/data runtime revision `9cc60a03dc2dc2b51ff2675b00f9e5688228b0e5`; later evidence/docs and extractor-only changes do not invalidate it. No agents/models or independent/native acceptance.
+
+| Isolated sweep | Rows | OK | Exact gaps | Result |
+|---|---:|---:|---:|---|
+| 11.2.7 | 508 | 387 | 121 | PASS |
+| 12.0.0 | 1010 | 987 | 23 | PASS |
+| 12.0.1 | 225 | 222 | 3 | PASS |
+| 12.0.5 | 363 | 352 | 11 | PASS |
+| 12.0.7 | 174 | 171 | 3 | PASS |
+| 12.1.0 | 778 | 773 | 5 | PASS |
+
+All six use local debug retail, one filter per process, `--nocapture --test-threads=1`. All five later baseline files remain byte-identical to base `ba5170301`. Results and exact commands are in [proof ledger](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-proof.json).
+
+Initial 508-row sweep: 373 OK / 135 non-OK. Per-ID review closes four removal defects and ten catalog omissions; 121 retained gaps: 110 namespace members, six globals, two acquisition failures, two 3D method gaps, one later-superseded event removal. All nine source removals now observe baseline absence. Fifty-one effective expectations are superseded, 50 OK. No page CVar default mismatches were reported; this remains publication-only proof.
+
+Negative control flips `C_BattleNet.InstallHighResTextures` added → removed: 121 → 122 gaps, exactly one new ID and one changed observation; expected exit 101. Retirement/catalog regressions 2 PASS; battlefield regressions 9 PASS. Register-parser fixtures 2 PASS; extractor fixtures 6 PASS. Existing extractor outcomes match base for all five later pages, including the already unsupported 12.1.0 template outcome. Existing extracted files were never rewritten.
+
+Artifact validation PASS: 508 inventory + 19 extract = 527 unique IDs; ten header counts exact; source hashes, gap sets, all-later supersession expectations and all 19 scout assignments valid. Ledger: 328 partial-development-green / 9 bounded-coverage / 131 audit-pending / 59 metadata-only. All five existing coverage ledgers unchanged; all five existing registers regenerate byte-identically.
+
+`cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1127-page/Cargo.toml -- --check` PASS. Local helper `--check` PASS. `cargo check --tests --no-default-features --features "sound gui casc client-mists"` PASS, no errors or non-vendor warnings. Six pre-existing iced manifest-key deprecations plus their vendor summary match initial builds; no suppression/vendor edit. Changed Rust manually audited for readability/profile scope.
+
+Startup built separately with no timeout; `timeout 90 python3 /home/osso/.worktrees/wow-ui-sim-p1127-page/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors` exits 0, JSON `[]`, stderr CLEAN / zero unique and zero occurrences. Helper artifact announcement is separate from Lua-error JSON. No extra target directory or release build.
