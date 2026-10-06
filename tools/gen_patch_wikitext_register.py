@@ -21,6 +21,7 @@ SECTIONS = {
     "Widgets": "widgets",
     "Events": "events",
     "CVars": "cvars",
+    "Commands": "commands",
 }
 TEMPLATE = re.compile(r"\{\{(api|apilink|tlygo|apitooltip)\|([^{}]*)\}\}")
 LINK = re.compile(r"\[\[[^|\]]*\|([^\]]+)\]\]")
@@ -107,6 +108,11 @@ def split_sections(text):
             if current:
                 buckets[current] = []
             continue
+        if line.strip() == "==Consolidated changes==":
+            # Older pages start Global API directly, without a subsection heading.
+            current = "global-api"
+            buckets.setdefault(current, [])
+            continue
         if line.startswith("==") and not line.startswith("==="):
             current = None
         if current:
@@ -126,7 +132,11 @@ def main():
     buckets = split_sections(raw.decode("utf-8"))
     entries, counts = [], []
     for section in SECTIONS.values():
-        section_entries, section_counts = parse_section(section, buckets.get(section, []))
+        entry_section = "cvars" if section == "commands" else section
+        section_entries, section_counts = parse_section(entry_section, buckets.get(section, []))
+        if section == "commands":
+            for count in section_counts:
+                count["section"] = "commands"
         entries += section_entries
         counts += section_counts
     if args.inventory_only:

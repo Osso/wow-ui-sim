@@ -1,10 +1,27 @@
 """Behavior fixtures for raw consolidated inventories."""
 import unittest
 
-from gen_patch_wikitext_register import parse_section
+from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_unheaded_global_inventory_and_separate_commands(self):
+        raw = ('==Consolidated changes==\n'
+               '{| class="wikitable"\n'
+               '| valign="top" | <div>\n'
+               ': {{api|C_ActionBar.IsInterruptAction}}\n'
+               '</div>\n|}\n'
+               '===Commands===\n'
+               '| valign="top" | <div>\n'
+               ': {{apitooltip|type=command|name=NeighborhoodAddManager}}\n'
+               '</div>\n|}\n===Structures===\n DifficultyInfo\n')
+        buckets = split_sections(raw)
+        entries, _ = parse_section('global-api', buckets.get('global-api', []))
+        self.assertEqual([e['symbol'] for e in entries], ['C_ActionBar.IsInterruptAction'])
+        entries, _ = parse_section('cvars', buckets.get('commands', []))
+        self.assertEqual([(e['symbol'], e.get('kind')) for e in entries],
+                         [('NeighborhoodAddManager', 'command')])
+
     def test_uncollapsed_added_scriptobjects(self):
         entries, counts = parse_section("scriptobjects", [
             (1, '{| class="wikitable"'),
