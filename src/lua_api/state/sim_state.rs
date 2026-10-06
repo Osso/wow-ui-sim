@@ -677,6 +677,8 @@ pub struct SimState {
     pub can_replace_guild_master: bool,
     pub auto_decline_guild_invites: bool,
     pub auto_decline_neighborhood_invites: bool,
+    #[cfg(feature = "retail-12-0-0")]
+    pub dye_colors: crate::c_api::c_dye_color::DyeColorState,
     pub guild_roster_show_offline: bool,
     pub menu_open: bool,
     pub xp_disabled: bool,

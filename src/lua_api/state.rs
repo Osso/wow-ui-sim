@@ -596,6 +596,8 @@ macro_rules! build_empty_sim_state {
             auto_decline_guild_invites: false,
             // INFERRED simulator initial preference, not a native default.
             auto_decline_neighborhood_invites: false,
+            #[cfg(feature = "retail-12-0-0")]
+            dye_colors: Default::default(),
             guild_roster_show_offline: true,
             menu_open: false,
             xp_disabled: false,

@@ -82,6 +82,8 @@ pub mod c_death_recap;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;
+#[cfg(feature = "retail-12-0-0")]
+pub mod c_dye_color;
 #[cfg(feature = "client-wowforever")]
 mod c_edit_mode;
 #[cfg(feature = "retail-12-1-0")]
