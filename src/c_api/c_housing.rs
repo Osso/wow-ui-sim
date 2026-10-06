@@ -9,6 +9,8 @@
 
 mod basic_mode;
 pub mod catalog;
+#[cfg(feature = "retail-12-0-0")]
+pub mod editor;
 pub mod exterior;
 #[cfg(feature = "retail-12-0-5")]
 pub mod inspect_mode;
@@ -55,6 +57,8 @@ const BUDGET_TYPE_PET_DECOR: i32 = 2;
 pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
     // Replaces an unconditional temporary surface, including non-retail profiles.
     catalog::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    editor::register(state)?;
     exterior::register(state)?;
     basic_mode::register_pending(state)?;
     #[cfg(feature = "retail-12-0-0")]

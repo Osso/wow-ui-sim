@@ -71,3 +71,5 @@ Neighborhood invitation getters/setters reuse existing per-environment boolean s
 ModelSceneActorBase collision-bound preference methods are permanent 2D-scope compatibility: setter no-op, getter false even after setting true. Retail 12.0.0+ only. No 3D state or collision behavior claim. Behavioral RED observes missing actor method; post-commit GREEN pending.
 
 C_KeyBindings context activation/deactivation/query uses the existing keybinding state, with a per-environment set of documented context IDs. Cached Basic/Expert consumers require multiple simultaneous contexts. INFERRED idempotence and simulator integer validation. Binding routing/priority and turn/strafe migrations remain separate unmodeled boundaries.
+
+C_HouseEditor consumes explicit host status and per-mode availability. Enter/Activate return initial results and queue pending mode only; active mode changes after explicit host completion, with documented success/failure events. Leave clears pending state and transitions to None locally. INFERRED unconfigured GenericFailure, default BasicDecor, local leave and simulator validation. No remote eligibility or server service modeled.
