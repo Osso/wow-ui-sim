@@ -6,7 +6,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 fn p1127_invite_preference_is_per_environment_and_roundtrips() {
     let env = WowLuaEnv::new().unwrap();
     let other = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(GetAutoDeclineNeighborhoodInvites() == false)
         SetAutoDeclineNeighborhoodInvites(true)
         assert(GetAutoDeclineNeighborhoodInvites() == true)
@@ -15,7 +16,12 @@ fn p1127_invite_preference_is_per_environment_and_roundtrips() {
         SetAutoDeclineNeighborhoodInvites()
         assert(GetAutoDeclineNeighborhoodInvites() == false)
         SetAutoDeclineNeighborhoodInvites(true)
-    "#).unwrap();
-    other.exec("assert(GetAutoDeclineNeighborhoodInvites() == false)").unwrap();
-    env.exec("assert(GetAutoDeclineNeighborhoodInvites() == true)").unwrap();
+    "#,
+    )
+    .unwrap();
+    other
+        .exec("assert(GetAutoDeclineNeighborhoodInvites() == false)")
+        .unwrap();
+    env.exec("assert(GetAutoDeclineNeighborhoodInvites() == true)")
+        .unwrap();
 }

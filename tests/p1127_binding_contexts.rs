@@ -5,7 +5,8 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 fn p1127_binding_contexts_activate_independently_and_deactivate_idempotently() {
     let env = WowLuaEnv::new().unwrap();
     let other = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(C_KeyBindings.IsBindingContextActive(1) == false)
         C_KeyBindings.ActivateBindingContext(1)
         C_KeyBindings.ActivateBindingContext(2)
@@ -18,6 +19,10 @@ fn p1127_binding_contexts_activate_independently_and_deactivate_idempotently() {
         assert(C_KeyBindings.IsBindingContextActive(2) == true)
         assert(not pcall(C_KeyBindings.ActivateBindingContext, 10))
         assert(not pcall(C_KeyBindings.ActivateBindingContext, 1.5))
-    "#).unwrap();
-    other.exec("assert(C_KeyBindings.IsBindingContextActive(2) == false)").unwrap();
+    "#,
+    )
+    .unwrap();
+    other
+        .exec("assert(C_KeyBindings.IsBindingContextActive(2) == false)")
+        .unwrap();
 }

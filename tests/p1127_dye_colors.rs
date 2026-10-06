@@ -81,7 +81,7 @@ fn p1127_dye_colors_read_catalog_inventory_and_fresh_color_snapshots() {
         assert(r == 0.2 and g == 0.4 and b == 0.6)
         r, g, b = color.swatchColorEnd:GetRGB()
         assert(r == 0.8 and g == 0.6 and b == 0.4)
-        color.swatchColorStart:SetRGB(0, 0, 0)
+        color.swatchColorStart.r = 0
         category.name = 'Mutation'
         assert(C_DyeColor.GetDyeColorCategoryInfo(17).name == 'Warm')
         assert(C_DyeColor.GetDyeColorInfo(51).swatchColorStart:GetRGB() == 0.2)
