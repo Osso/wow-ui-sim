@@ -50,6 +50,19 @@ class ExtractTests(unittest.TestCase):
         self.assertEqual(rows[7]['source_id'], 'source-context-008')
         self.assertEqual(rows[7]['status'], 'metadata-only')
 
+    def test_11_2_0_resources_are_editorial_but_nested_contracts_are_pending(self):
+        rows = seed_rows('Patch 11.2.0 API changes\n== Breaking changes ==\n'
+                         '** Addons should use StaticPopup_ForEachShownDialog.\n'
+                         '== Resources ==\n** Deprecated_ChatInfo.lua\n'
+                         '** Blizzard_DeprecatedSpecialization\n'
+                         '== Consolidated changes ==\n'
+                         ': 11.1.7 (61559) → 11.2.0 (62438) Aug 5 2025\n',
+                         patch='11.2.0')
+        self.assertEqual(rows[2]['status'], 'audit-pending')
+        for index in (4, 5, 7):
+            self.assertEqual(rows[index]['status'], 'metadata-only')
+            self.assertEqual(rows[index]['source_id'], f'source-context-{index + 1:03}')
+
     def test_comparison_operators_are_not_html_tags(self):
         self.assertEqual(
             extract_text('* <code>currentCharges < maxCharges and startTime > 0</code>\n'),
