@@ -22,6 +22,53 @@
       "compiled_revision": "9cc60a03dc2dc2b51ff2675b00f9e5688228b0e5",
       "proof": "Six isolated GREEN sweeps; negative control adds exactly one gap. Main-thread development only.",
       "ledger": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-sweep-result.json"
+    },
+    {
+      "id": "gap-closures-11-2-7",
+      "symbols": [
+        "C_DyeColor.GetAllDyeColorCategories",
+        "C_DyeColor.GetAllDyeColors",
+        "C_DyeColor.GetDyeColorCategoryInfo",
+        "C_DyeColor.GetDyeColorInfo",
+        "C_DyeColor.GetDyeColorsInCategory",
+        "C_DyeColor.IsDyeColorOwned",
+        "C_HouseEditor.ActivateHouseEditorMode",
+        "C_HouseEditor.EnterHouseEditor",
+        "C_HouseEditor.GetHouseEditorAvailability",
+        "C_HouseEditor.GetHouseEditorModeAvailability",
+        "C_HouseEditor.IsHouseEditorActive",
+        "C_HouseEditor.IsHouseEditorModeActive",
+        "C_HouseEditor.IsHouseEditorStatusAvailable",
+        "C_HouseEditor.LeaveHouseEditor",
+        "C_Housing.GetCurrentNeighborhoodGUID",
+        "C_Housing.IsInsidePlot",
+        "C_Housing.IsOnNeighborhoodMap",
+        "C_Housing.SetTrackedHouseGuid",
+        "C_HousingDecor.IsHouseExteriorDoorHovered",
+        "C_HousingLayout.GetNumActiveRooms",
+        "C_KeyBindings.ActivateBindingContext",
+        "C_KeyBindings.DeactivateBindingContext",
+        "C_KeyBindings.IsBindingContextActive",
+        "GetAutoDeclineNeighborhoodInvites",
+        "ModelSceneActorBase:IsPreferringModelCollisionBounds",
+        "ModelSceneActorBase:SetPreferModelCollisionBounds",
+        "SetAutoDeclineNeighborhoodInvites"
+      ],
+      "scope": "27 of 121 reviewed publication gaps closed (25 modeled, 2 permanent no-op workarounds): dye catalog/consumable ownership, state-backed housing location/room queries, deferred HouseEditor requests, active binding contexts, neighborhood invite preference, actor collision-bound no-ops. 94 gaps retained with reasons. Bounded simulator behavior; no native parity.",
+      "spec": "docs/specs/patch-11-2-7-publication-sweep.md",
+      "tests": [
+        "tests/p1127_dye_colors.rs",
+        "tests/p1127_housing_queries.rs",
+        "tests/p1127_house_editor.rs",
+        "tests/p1127_binding_contexts.rs",
+        "tests/p1127_invite_preference.rs",
+        "tests/p1127_model_collision.rs",
+        "tests/patch_11_2_7_publication_sweep.rs"
+      ],
+      "implementation": "commits 7ad5de3f3..33527cc6c",
+      "compiled_revision": "33527cc6c",
+      "proof": "Sol worker GREEN; main-thread after merge on 33527cc6c: seven sweeps (11.2.5..12.1.0), dye_color 2, house_editor 8, housing 291, p1127 11, Mists cargo check --tests 0 non-vendor warnings; no independent review",
+      "ledger": "data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gap-outcomes.json"
     }
   ],
   "non_inventory_source": {
@@ -55,21 +102,27 @@
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetAllDyeColorCategories-25",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetAllDyeColors-26",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorForItemLocation-28",
@@ -89,21 +142,27 @@
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorInfo-30",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_DyeColor.IsDyeColorOwned-32",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit host category/color catalog, held/banked bag consumable counts, fresh documented DTOs and ColorMixin swatches. No native catalog population or item acquisition inferred."
     },
     {
       "source_id": "wt-global-api-C_EncounterJournal.StartArathiRPE-33",
@@ -159,15 +218,19 @@
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.ActivateHouseEditorMode-40",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.EnterHouseEditor-41",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.GetActiveHouseEditorMode-42",
@@ -179,39 +242,51 @@
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorAvailability-43",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorActive-45",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseEditor.LeaveHouseEditor-48",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Host availability/status, pending mode request and explicit completion boundary; initial request success does not invent server approval."
     },
     {
       "source_id": "wt-global-api-C_HouseExterior.CancelActiveExteriorEditing-49",
@@ -365,9 +440,11 @@
     },
     {
       "source_id": "wt-global-api-C_Housing.GetCurrentNeighborhoodGUID-70",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_Housing.GetHouseLevelFavorForLevel-71",
@@ -511,15 +588,19 @@
     },
     {
       "source_id": "wt-global-api-C_Housing.IsInsidePlot-90",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_Housing.IsOnNeighborhoodMap-91",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_Housing.LeaveHouse-92",
@@ -615,9 +696,11 @@
     },
     {
       "source_id": "wt-global-api-C_Housing.SetTrackedHouseGuid-107",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_Housing.StartTutorial-108",
@@ -1323,9 +1406,11 @@
     },
     {
       "source_id": "wt-global-api-C_HousingDecor.IsHouseExteriorDoorHovered-201",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_HousingDecor.IsHouseExteriorHovered-202",
@@ -1545,9 +1630,11 @@
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.GetNumActiveRooms-232",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Explicit current-location host snapshots, existing tracked-house/exterior hover and room-floor records. No owned/current neighborhood conflation, world hit testing or server transition."
     },
     {
       "source_id": "wt-global-api-C_HousingLayout.GetRoomPlacementBudget-233",
@@ -1985,15 +2072,19 @@
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.ActivateBindingContext-290",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Per-environment active context set; cached Basic/Expert modes activate specific and shared contexts. No context priority/routing claim."
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.DeactivateBindingContext-291",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Per-environment active context set; cached Basic/Expert modes activate specific and shared contexts. No context priority/routing claim."
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.GetBindingByKey-292",
@@ -2027,9 +2118,11 @@
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.IsBindingContextActive-296",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Per-environment active context set; cached Basic/Expert modes activate specific and shared contexts. No context priority/routing claim."
     },
     {
       "source_id": "wt-global-api-C_KeyBindings.SetTurnStrafeStyle-297",
@@ -2155,9 +2248,11 @@
     },
     {
       "source_id": "wt-global-api-GetAutoDeclineNeighborhoodInvites-315",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Existing per-environment preference producer was Forever-only; publish from earliest supported Retail epoch. No persistence/event claimed."
     },
     {
       "source_id": "wt-global-api-GetUpgradeExpansionLevel-316",
@@ -2175,9 +2270,11 @@
     },
     {
       "source_id": "wt-global-api-SetAutoDeclineNeighborhoodInvites-318",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Gap closed (modeled, bounded): Existing per-environment preference producer was Forever-only; publish from earliest supported Retail epoch. No persistence/event claimed."
     },
     {
       "source_id": "wt-global-api-SetCursorByMode-319",
@@ -2287,9 +2384,11 @@
     },
     {
       "source_id": "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Gap closed by permanent no-op workaround; no modeled behavior: 2D-only renderer intentionally does not support model collision-bound preferences; setter no-op, getter false."
     },
     {
       "source_id": "wt-widgets-ModelSceneActorBase:SetGradientMask-352",
@@ -2301,9 +2400,11 @@
     },
     {
       "source_id": "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Reviewed publication gap; see p1127-gap-review.json. No runtime parity credit."
+      "capabilities": [
+        "gap-closures-11-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Gap closed by permanent no-op workaround; no modeled behavior: 2D-only renderer intentionally does not support model collision-bound preferences; setter no-op, getter false."
     },
     {
       "source_id": "wt-events-ACCOUNT_STORE_FRONT_UPDATED-366",
