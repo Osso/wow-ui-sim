@@ -1,0 +1,28 @@
+{
+  "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+  "result": "PASS",
+  "inventory_rows": 225,
+  "extract_rows": 252,
+  "total_rows": 477,
+  "unique_ids": 477,
+  "inventory_headers_match": true,
+  "source_hashes_match": true,
+  "seed_rows_exact": true,
+  "scout_assignment_exact": true,
+  "old_ledgers_unchanged": [
+    "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/sources/12.0.0-page-coverage.json",
+    "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/sources/12.0.5-page-coverage.json",
+    "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/sources/12.0.7-page-coverage.json",
+    "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/sources/12.1.0-page-coverage.json"
+  ],
+  "statuses": {
+    "partial-development-green": 120,
+    "bounded-coverage": 38,
+    "metadata-only": 67,
+    "audit-pending": 252
+  },
+  "extract_statuses": {
+    "metadata-only": 51,
+    "audit-pending": 201
+  }
+}

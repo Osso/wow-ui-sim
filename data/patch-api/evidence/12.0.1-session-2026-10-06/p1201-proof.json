@@ -1,0 +1,278 @@
+{
+  "verified_revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+  "policy": "No agents/models, push, merge or deployment. Main-thread verification only. Runtime proof remains valid across subsequent data/docs-only commits. Default debug retail; no exact 12.0.1 epoch/runtime or broad compatibility claim.",
+  "proofs": [
+    {
+      "command": "gen_patch_wikitext_register.py for 12.0.0/12.0.5/12.0.7/12.1.0",
+      "revision": "b73c89a2b",
+      "result": "byte-identical, all four",
+      "scope": "existing generator and retained source registers",
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "local integration patch_12_0_1_publication_sweep",
+      "revision": "58617136d",
+      "scope": "225 source publication rows before fixes",
+      "result": 101,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-red.log",
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "local integration patch_12_0_1_publication_sweep",
+      "revision": "1d1b9e3c0e13a593fb3a881108d1bff240a2e7ea",
+      "scope": "225 publication rows after nameplate retirement, empty fixture",
+      "result": "expected baseline RED, nameplate two rows GREEN",
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-after-fix.log",
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "python3 tools/test_extract_patch_non_inventory.py",
+      "revision": "1d1b9e3c0 + new test",
+      "scope": "old plaintext and new Blue post templates",
+      "result": "RED: unhandled apisummary.header",
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/tools/test_extract_patch_non_inventory.py",
+      "revision": "cd70ba79f262cd2d80ba317f6b444d9192e76f16",
+      "scope": "extract parser and retained plaintext",
+      "result": 0,
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/tools/extract_patch_non_inventory.py --self-test",
+      "revision": "cd70ba79f262cd2d80ba317f6b444d9192e76f16",
+      "scope": "extract parser and retained plaintext",
+      "result": 0,
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/tools/extract_patch_non_inventory.py --patch 12.0.1 --text-only",
+      "revision": "cd70ba79f262cd2d80ba317f6b444d9192e76f16",
+      "scope": "extract parser and retained plaintext",
+      "result": 0,
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "python3 tools/test_extract_patch_non_inventory.py",
+      "revision": "cd70ba79f + comparison test",
+      "scope": "preserve comparison operators in code",
+      "result": "RED: HTML stripping removes < maxCharges and startTime >",
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "python3 tools/test_extract_patch_non_inventory.py",
+      "revision": "56367d29e775e92e3ca547fe793ab685144f7ccc",
+      "scope": "old plaintext, Blue post templates, operators",
+      "result": 0,
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "local integration patch_12_0_1_retirement",
+      "revision": "5f995027bc1f74ef30cffea532a34d217280ab10",
+      "scope": "retirement and live audio regression",
+      "result": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/patch_12_0_1_retirement.log",
+      "test_summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10722 filtered out; finished in 0.21s"
+      ],
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "local integration audio_",
+      "revision": "5f995027bc1f74ef30cffea532a34d217280ab10",
+      "scope": "retirement and live audio regression",
+      "result": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/audio_.log",
+      "test_summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10722 filtered out; finished in 4.75s",
+        "test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 10713 filtered out; finished in 6.24s"
+      ],
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "python3 tools/test_extract_patch_non_inventory.py",
+      "revision": "aab45bc6a + nested-contract fixture",
+      "scope": "Blue post nested bullet audit classification",
+      "result": "RED: contract incorrectly metadata-only",
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "python3 tools/test_extract_patch_non_inventory.py",
+      "revision": "3ddcc019cc0db948ae24ffe64c2837f547221e0f",
+      "scope": "old plaintext, Blue templates, operators, nested contracts",
+      "result": 0,
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --test --test integration patch_12_0_1_publication_sweep -- --nocapture --test-threads=1",
+      "revision": "3ddcc019cc0db948ae24ffe64c2837f547221e0f",
+      "scope": "12.0.1 exact baseline after four retirements",
+      "result": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-development.log",
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --test --test integration patch_12_0_1_publication_sweep -- --nocapture --test-threads=1 with P1201_SWEEP_REGISTER negative-register.json",
+      "revision": "3ddcc019cc0db948ae24ffe64c2837f547221e0f",
+      "scope": "single unsuperseded published row flipped removed",
+      "result": "expected FAIL; exactly one new gap and one changed observation",
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/negative.log",
+      "later_changes": "Historical development proof only"
+    },
+    {
+      "command": "artifact validation: hashes, ID union, exact seed/status rules, scout assignment, old ledgers, relative links",
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": "all captured data/ledger/scout artifacts",
+      "result": "PASS",
+      "later_changes": "Later evidence/documentation-only commits do not invalidate runtime proof"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --test --test integration patch_12_0_0_publication_sweep -- --nocapture --test-threads=1",
+      "environment": {
+        "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1200-sweep-result.json"
+      },
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": "12_0_0 inventory publication and exact fixture",
+      "result": 0,
+      "rows": 1010,
+      "ok": 983,
+      "gaps": 27,
+      "test_summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10722 filtered out; finished in 4.33s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1200-sweep.log",
+      "output": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1200-sweep-result.json",
+      "later_changes": "Later evidence/documentation-only commits do not invalidate runtime proof"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --test --test integration patch_12_0_1_publication_sweep -- --nocapture --test-threads=1",
+      "environment": {
+        "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-sweep-result.json"
+      },
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": "12_0_1 inventory publication and exact fixture",
+      "result": 0,
+      "rows": 225,
+      "ok": 174,
+      "gaps": 51,
+      "test_summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10722 filtered out; finished in 4.57s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-sweep.log",
+      "output": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-sweep-result.json",
+      "later_changes": "Later evidence/documentation-only commits do not invalidate runtime proof"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --test --test integration patch_12_0_5_publication_sweep -- --nocapture --test-threads=1",
+      "environment": {
+        "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1205-sweep-result.json"
+      },
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": "12_0_5 inventory publication and exact fixture",
+      "result": 0,
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11,
+      "test_summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10722 filtered out; finished in 6.11s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1205-sweep.log",
+      "output": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1205-sweep-result.json",
+      "later_changes": "Later evidence/documentation-only commits do not invalidate runtime proof"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --test --test integration patch_12_0_7_publication_sweep -- --nocapture --test-threads=1",
+      "environment": {
+        "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1207-sweep-result.json"
+      },
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": "12_0_7 inventory publication and exact fixture",
+      "result": 0,
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3,
+      "test_summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10722 filtered out; finished in 5.84s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1207-sweep.log",
+      "output": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1207-sweep-result.json",
+      "later_changes": "Later evidence/documentation-only commits do not invalidate runtime proof"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --test --test integration patch_12_1_0_publication_sweep -- --nocapture --test-threads=1",
+      "environment": {
+        "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1210-sweep-result.json"
+      },
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": "12_1_0 inventory publication and exact fixture",
+      "result": 0,
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5,
+      "test_summary": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10722 filtered out; finished in 7.81s"
+      ],
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1210-sweep.log",
+      "output": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/p1210-sweep-result.json",
+      "later_changes": "Later evidence/documentation-only commits do not invalidate runtime proof"
+    },
+    {
+      "command": "cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1201-page/Cargo.toml -- --check",
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": "fmt default debug retail",
+      "result": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/fmt.log",
+      "later_changes": "Later evidence/documentation-only commits do not invalidate runtime proof"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --check",
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": "check default debug retail",
+      "result": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/check.log",
+      "later_changes": "Later evidence/documentation-only commits do not invalidate runtime proof"
+    },
+    {
+      "command": "python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local",
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": "startup-build default debug retail",
+      "result": 0,
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/startup-build.log",
+      "later_changes": "Later evidence/documentation-only commits do not invalidate runtime proof"
+    },
+    {
+      "command": "timeout 90 python3 /home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors",
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": "startup Lua errors after separately built binary; runtime bounded to 90 seconds",
+      "result": 0,
+      "stdout": "native artifact=/home/osso/.worktrees/wow-ui-sim-p1201-page/target/debug/wow-sim\n[]\n",
+      "log": "/home/osso/.worktrees/wow-ui-sim-p1201-page/data/patch-api/evidence/12.0.1-session-2026-10-06/startup-lua-errors.log",
+      "parsed_lua_errors": [],
+      "stdout_envelope": "build-host native artifact announcement followed by Lua-error JSON",
+      "later_changes": "Later evidence/documentation-only commits do not invalidate runtime proof"
+    },
+    {
+      "command": "manual changed-Rust readability and diff scope audit",
+      "revision": "a69dcfd66b08b853452fbe273c52735c545ba6dd",
+      "scope": [
+        "src/c_api/c_combat_audio_alert.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/c_namespace_noop_replacements.rs",
+        "tests/patch_12_0_0_publication_sweep.rs",
+        "tests/patch_12_0_1_publication_sweep.rs",
+        "tests/patch_12_0_1_retirement.rs"
+      ],
+      "result": "PASS: changed functions/blocks shallow and named; no added warning suppression; no forbidden files",
+      "warnings": "Six pre-existing iced vendor manifest-key deprecations unchanged from first RED build"
+    }
+  ],
+  "unchanged_vendor_warnings": [
+    "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+    "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+    "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+    "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+    "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+    "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition"
+  ]
+}
