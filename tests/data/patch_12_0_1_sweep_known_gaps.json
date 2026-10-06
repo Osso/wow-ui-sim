@@ -1,11 +1,4 @@
 [
-  "wt-cvars-minimapTrackedInfov2-491",
-  "wt-cvars-nameplateLargerScale-493",
-  "wt-cvars-nameplatePlayerLargerScale-496",
-  "wt-cvars-nameplateSelfAlpha-497",
-  "wt-cvars-useCompactPartyFrames-501",
-  "wt-events-CHAT_MSG_ENCOUNTER_EVENT-405",
-  "wt-events-UNIT_ARENA_COOLDOWNS_UPDATE-402",
   "wt-global-api-C_BattleNet.SetAFK-222",
   "wt-global-api-C_BattleNet.SetDND-223",
   "wt-global-api-C_CatalogShop.BulkRefundDecors-224",
@@ -48,6 +41,5 @@
   "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalDamageAbsorbs-361",
   "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalHealAbsorbs-362",
   "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHeals-363",
-  "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer-364",
-  "wt-widgets-FrameScriptObject:SetPreventSecretValues-380"
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer-364"
 ]

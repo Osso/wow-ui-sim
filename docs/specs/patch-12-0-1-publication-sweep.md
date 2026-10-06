@@ -63,3 +63,7 @@ Six pre-existing `iced-wgpu-patched/Cargo.toml` deprecated manifest-key warnings
 - `data/patch-api/sources/12.0.1-wikitext-register.json`: inventory occurrences; all eight added/removed header counts match.
 - `tests/patch_12_0_1_publication_sweep.rs`: shared cached publication sweep.
 - [Shared sweep contract](patch-12-0-7-publication-sweep.md).
+
+## Removal follow-up — 2026-10-05
+
+Five removed CVars are filtered from defaults, overrides, registration and console enumeration from `retail-12-0-5`. Encounter chat registration is rejected; arena cooldown registration is accepted. `SetPreventSecretValues` is no longer registered in later retail epochs. Cached retail consumers contain none of these seven removed symbols. Strict 12.0.0 publishers remain gated separately. Security-query tests now inject host frame state instead of calling the retired setter. Eight publication IDs close; behavioral retirement regression covers case-insensitive resurrection attempts.

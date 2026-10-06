@@ -38,6 +38,7 @@ pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
         "CanBeAccessedInContext",
         can_be_accessed_in_context,
     )?;
+    #[cfg(not(feature = "retail-12-0-5"))]
     table_set_rust_fn_static(
         state,
         mt,
@@ -130,6 +131,7 @@ pub fn is_protected(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
+#[cfg(not(feature = "retail-12-0-5"))]
 pub fn set_prevent_secret_values(state: &mut LuaState) -> LuaResult<u32> {
     let id = frame_id_from_stack(state, 1)?;
     let prevent = bool::from_stack(state, 2)?;

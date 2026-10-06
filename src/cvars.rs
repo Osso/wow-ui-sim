@@ -272,6 +272,8 @@ fn remove_profile_cvars(
 ) {
     remove_cvar_defaults(defaults, original_names, PATCH_12_0_0_REMOVED_CVARS);
     #[cfg(feature = "retail-12-0-5")]
+    remove_cvar_defaults(defaults, original_names, PATCH_12_0_1_REMOVED_CVARS);
+    #[cfg(feature = "retail-12-0-5")]
     remove_cvar_defaults(defaults, original_names, PATCH_12_0_5_REMOVED_CVARS);
     #[cfg(feature = "retail-12-0-7")]
     remove_cvar_defaults(defaults, original_names, PATCH_12_0_7_REMOVED_CVARS);
@@ -320,6 +322,14 @@ fn is_profile_removed_cvar_key(key: &str) -> bool {
     }
 
     #[cfg(feature = "retail-12-0-5")]
+    if PATCH_12_0_1_REMOVED_CVARS
+        .iter()
+        .any(|removed| removed.eq_ignore_ascii_case(key))
+    {
+        return true;
+    }
+
+    #[cfg(feature = "retail-12-0-5")]
     if PATCH_12_0_5_REMOVED_CVARS
         .iter()
         .any(|removed| removed.eq_ignore_ascii_case(key))
@@ -360,6 +370,16 @@ const PATCH_12_0_0_REMOVED_CVARS: &[&str] = &[
     "NamePlateHorizontalScale",
     "NamePlateVerticalScale",
     "ShowClassColorInFriendlyNameplate",
+];
+
+// 12.0.5 is the first supported epoch after the 12.0.1 removal.
+#[cfg(feature = "retail-12-0-5")]
+const PATCH_12_0_1_REMOVED_CVARS: &[&str] = &[
+    "minimapTrackedInfov2",
+    "useCompactPartyFrames",
+    "nameplateLargerScale",
+    "nameplatePlayerLargerScale",
+    "nameplateSelfAlpha",
 ];
 
 // Only names cvars.yaml still carries; nameplateShowFriends and

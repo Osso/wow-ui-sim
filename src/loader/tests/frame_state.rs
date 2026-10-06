@@ -68,7 +68,23 @@ fn test_secret_and_protected_methods_reflect_frame_security_state() {
         assert(not SecretValuesFrame:IsAnchoringRestricted(), "new frame should not be anchoring restricted by default")
         assert(not SecretValuesFrame:HasSecretAspect(Enum.SecretAspect.FrameLevel), "unrelated secret aspect should stay false")
 
-        SecretValuesFrame:SetPreventSecretValues(true)
+        "#,
+    )
+    .unwrap();
+    let id = env
+        .state()
+        .borrow()
+        .widgets
+        .get_id_by_name("SecretValuesFrame")
+        .unwrap();
+    env.state()
+        .borrow_mut()
+        .widgets
+        .get_mut(id)
+        .unwrap()
+        .prevent_secret_values = true;
+    env.exec(
+        r#"
 
         assert(SecretValuesFrame:IsPreventingSecretValues(), "SetPreventSecretValues(true) should persist")
         assert(SecretValuesFrame:HasSecretValues(), "preventing secret values should mark the frame as having secret values")
@@ -77,7 +93,17 @@ fn test_secret_and_protected_methods_reflect_frame_security_state() {
         assert(SecretValuesFrame:IsAnchoringSecret(), "secret-valued frame should be anchoring secret")
         assert(not SecretValuesFrame:IsAnchoringRestricted(), "secret-valued frame should not become anchoring restricted")
 
-        SecretValuesFrame:SetPreventSecretValues(false)
+        "#,
+    )
+    .unwrap();
+    env.state()
+        .borrow_mut()
+        .widgets
+        .get_mut(id)
+        .unwrap()
+        .prevent_secret_values = false;
+    env.exec(
+        r#"
 
         assert(not SecretValuesFrame:IsPreventingSecretValues(), "SetPreventSecretValues(false) should clear")
         assert(not SecretValuesFrame:HasSecretValues(), "clearing prevention should clear secret values")

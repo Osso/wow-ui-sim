@@ -96,6 +96,15 @@ pub fn is_registerable_event(name: &str) -> bool {
     {
         return true;
     }
+    // 12.0.5 is the first supported epoch after the 12.0.1 change.
+    #[cfg(feature = "retail-12-0-5")]
+    if name == "CHAT_MSG_ENCOUNTER_EVENT" {
+        return false;
+    }
+    #[cfg(feature = "retail-12-0-5")]
+    if name == "UNIT_ARENA_COOLDOWNS_UPDATE" {
+        return true;
+    }
     #[cfg(feature = "retail-12-0-5")]
     if name == PATCH_12_0_5_REMOVED_REGISTERABLE_EVENT {
         return false;
