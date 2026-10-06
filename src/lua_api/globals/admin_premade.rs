@@ -22,6 +22,7 @@ pub(super) fn add_premade_listing(state: &mut LuaState) -> LuaResult<u32> {
     let mut st = borrow_state_mut(state)?;
     let id = st.world.premade_listings.len() as u32 + 1;
     st.world.premade_listings.push(PremadeListing {
+        metadata: Default::default(),
         search_result_id: id,
         name,
         comment,

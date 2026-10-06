@@ -604,6 +604,7 @@ fn premade_listing_from_seed((index, seed): (usize, &PremadeListingSeed)) -> Pre
     let search_result_id = index as u32 + 1;
 
     PremadeListing {
+        metadata: Default::default(),
         search_result_id,
         name: seed.name.to_string(),
         comment: seed.comment.to_string(),

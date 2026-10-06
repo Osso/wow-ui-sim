@@ -37,6 +37,16 @@ fn lfg_general_playstyle_roundtrip_and_parent_shapes() {
     {
         let state = env.state();
         let mut state = state.borrow_mut();
+        state.world.premade_listings[0].metadata = wow_ui_sim::c_api::c_lfg_list_search::SearchMetadata {
+            has_self: true,
+            dungeon_scores: vec![wow_ui_sim::c_api::c_lfg_list_search::DungeonScore {
+                map_score: 250.5, map_name: "Fixture dungeon".into(), best_run_level: 12,
+                finished_success: true, best_run_duration_ms: 900000.0, best_level_increment: 2,
+            }],
+            pvp_ratings: vec![wow_ui_sim::c_api::c_lfg_list_search::PvpRating {
+                bracket: 2, rating: 1700, activity_name: "Fixture arena".into(), tier: 3,
+            }],
+        };
         state.world.premade_listings[0].general_playstyle = 1;
         state.world.premade_listings[1].general_playstyle = 4;
         state.world.premade_listings[2].general_playstyle = 0;
@@ -45,6 +55,18 @@ fn lfg_general_playstyle_roundtrip_and_parent_shapes() {
     env.exec(r#"
         local first = C_LFGList.GetSearchResultInfo(1)
         local second = C_LFGList.GetSearchResultInfo(2)
+        assert(first.hasSelf == true and second.hasSelf == false)
+        assert(first.leaderDungeonScoreInfo[1].mapScore == 250.5)
+        assert(first.leaderDungeonScoreInfo[1].mapName == 'Fixture dungeon')
+        assert(first.leaderDungeonScoreInfo[1].bestRunLevel == 12)
+        assert(first.leaderDungeonScoreInfo[1].finishedSuccess == true)
+        assert(first.leaderDungeonScoreInfo[1].bestRunDurationMs == 900000)
+        assert(first.leaderDungeonScoreInfo[1].bestLevelIncrement == 2)
+        assert(first.leaderPvpRatingInfo[1].bracket == 2 and first.leaderPvpRatingInfo[1].rating == 1700)
+        assert(first.leaderPvpRatingInfo[1].activityName == 'Fixture arena' and first.leaderPvpRatingInfo[1].tier == 3)
+        assert(#second.leaderDungeonScoreInfo == 0 and #second.leaderPvpRatingInfo == 0)
+        first.leaderDungeonScoreInfo[1].mapName = 'mutation'
+        assert(C_LFGList.GetSearchResultInfo(1).leaderDungeonScoreInfo[1].mapName == 'Fixture dungeon')
         assert(first.generalPlaystyle == Enum.LFGEntryGeneralPlaystyle.Learning)
         assert(second.generalPlaystyle == Enum.LFGEntryGeneralPlaystyle.Expert)
         first.generalPlaystyle = 3

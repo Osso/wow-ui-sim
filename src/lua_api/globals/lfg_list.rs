@@ -112,6 +112,7 @@ fn build_search_result_info(state: &mut LuaState, listing: &PremadeListing) -> V
     set_search_result_size_fields(state, info, listing);
     set_search_result_social_fields(state, info, listing);
     set_search_result_requirement_fields(state, info);
+    crate::c_api::c_lfg_list_search::publish(state, info, &listing.metadata);
     info
 }
 

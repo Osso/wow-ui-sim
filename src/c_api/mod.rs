@@ -96,6 +96,7 @@ pub mod c_intl;
 pub mod c_lfg_info;
 pub(crate) mod c_lfg_list_active_entry;
 pub(crate) mod c_lfg_list_filter;
+pub mod c_lfg_list_search;
 #[cfg(feature = "retail-12-0-0")]
 mod c_limited_input;
 #[cfg(feature = "retail-12-0-0")]

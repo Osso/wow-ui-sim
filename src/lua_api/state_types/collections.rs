@@ -504,6 +504,7 @@ pub struct LfgActiveEntry {
 /// run off the end of its icon array.
 #[derive(Debug, Clone)]
 pub struct PremadeListing {
+    pub metadata: crate::c_api::c_lfg_list_search::SearchMetadata,
     pub search_result_id: u32,
     pub name: String,
     pub comment: String,
