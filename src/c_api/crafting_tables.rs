@@ -148,6 +148,8 @@ pub(crate) fn order(state: &mut LuaState, order: &CraftingOrder) -> Val {
 }
 fn populate_order_fields(state: &mut LuaState, table: Val, order: &CraftingOrder) {
     let request = &order.request;
+    // INFERRED: container lifecycle/economic fields below are local zero sentinels,
+    // not server order state. Only the nested reagent contracts are proven here.
     text(state, table, "orderID", &order.order_id.to_string());
     for (key, value) in [
         ("spellID", order.recipe_id),

@@ -147,6 +147,8 @@ impl Default for CraftingInputs {
 }
 
 /// Validate a complete allocation before any inventory/order mutation.
+/// INFERRED: required-slot quantities use the selected variant's configured
+/// requirement; partial required allocations fail, and over-allocation is allowed.
 pub(crate) fn validate_allocations(
     slots: &[ReagentSlotSchematic],
     allocations: &[CraftingReagentInfo],

@@ -4,11 +4,11 @@
 
 ## What it must do
 
-- [ ] Return item/currency identities, variable quantities, optional slot metadata and detached schematic/modification snapshots.
-- [ ] Consume nested CraftingReagentInfo through CraftRecipe; preflight item/currency quantities before mutation and publish nested resource returns.
-- [ ] Parse every NewCraftingOrderInfo field and RegularReagentInfo/CraftingReagentInfo entries; post local orders without retaining Lua tables and return CraftingOrderReagentInfo.
-- [ ] Reject invalid identities, quantities, unknown slots/abilities and old-only flattened inputs without partial mutation.
-- [ ] Preserve VM table-access policy and AllowedWhenUntainted input authentication, including nested identities; reject secret inputs from tainted callers without changing state/taint.
+- [x] Return item/currency identities, variable quantities, optional slot metadata and detached schematic/modification snapshots.
+- [x] Consume nested CraftingReagentInfo through CraftRecipe; preflight item/currency quantities before mutation and publish nested resource returns.
+- [x] Parse every NewCraftingOrderInfo field and RegularReagentInfo/CraftingReagentInfo entries; post local orders without retaining Lua tables and return CraftingOrderReagentInfo.
+- [x] Reject invalid identities, quantities, unknown slots/abilities and old-only flattened inputs without partial mutation.
+- [x] Preserve VM table-access policy and AllowedWhenUntainted input authentication, including nested identities; reject secret inputs from tainted callers without changing state/taint.
 
 ## How it works
 
@@ -31,8 +31,8 @@
 
 ## Known gaps (current cycle)
 
-- [ ] Execution and regression proof pending on current implementation.
+No unresolved B08 local model test failure. [Per-source outcomes and proof](../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-b8-prose-report.md) distinguish bounded current-cache structure proof from historical/native parity.
 
 ## Out of scope
 
-Native server placement, escrow, commission, order expiry/fulfillment and randomized resourcefulness are not inferred from structural declarations. Local order IDs and immediate resource-result event timing are explicitly INFERRED policy, not native parity. Existing CraftRecipe boolean return is retained; changing its legacy compatibility arity is outside this extract slice.
+Native server placement, escrow, commission, order expiry/fulfillment and randomized resourcefulness are not inferred from structural declarations. Exclusive identity variants, strict integral i32 input ranges, complete required allocations with permitted over-allocation, local order IDs/container lifecycle sentinels and immediate resource-result event timing are explicitly INFERRED policy, not native parity. Existing CraftRecipe boolean return is retained; changing its legacy compatibility arity is outside this extract slice.

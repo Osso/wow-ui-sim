@@ -19,6 +19,8 @@ pub(crate) fn read_array(state: &LuaState, value: Val) -> LuaResult<Vec<Val>> {
     let len = table.len(&state.gc.string_arena);
     Ok((1..=len).map(|index| table.get_int(index as i64)).collect())
 }
+// INFERRED: strict integral i32 inputs with caller-specified minimums;
+// cached number fields do not establish native coercions or numeric bounds.
 pub(crate) fn integer(value: Val, label: &str, min: i32) -> LuaResult<i32> {
     match value {
         Val::Num(value)
