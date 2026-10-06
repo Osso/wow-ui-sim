@@ -51,7 +51,7 @@ impl ReagentSlotSchematic {
             variable_quantities: vec![],
             quantity_required: quantity,
             slot_info: None,
-            data_slot_type: 0,
+            data_slot_type: 1,
             data_slot_index: index,
             slot_index: index,
             order_source: None,

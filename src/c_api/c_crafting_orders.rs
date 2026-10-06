@@ -3,7 +3,7 @@ use super::{crafting_input, crafting_reagents::*, crafting_tables};
 use crate::lua_api::methods::{borrow_state, borrow_state_mut};
 use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val, runtime_error};
+use rilua::{LuaResult, runtime_error};
 
 pub(super) fn register(state: &mut LuaState) -> LuaResult<()> {
     let trade = super::ensure_namespace(state, "C_TradeSkillUI")?;
