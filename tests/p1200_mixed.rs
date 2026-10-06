@@ -26,45 +26,60 @@ fn p1200_mixed_string_util_integer_formatting() {
 
 #[test]
 fn p1200_mixed_event_publication() {
+    // 12.0.1 removed CHAT_MSG_ENCOUNTER_EVENT again; withdrawn from the retail-12-0-5 epoch.
+    let withdrawn_in_12_0_1 = cfg!(feature = "retail-12-0-5");
     let env = WowLuaEnv::new().unwrap();
-    env.exec(
+    env.exec(&format!(
         r#"
         local f = CreateFrame('Frame')
-        for _, event in ipairs({
-            'CHAT_MSG_ENCOUNTER_EVENT', 'COMBAT_LOG_APPLY_FILTER_SETTINGS',
+        local encounterEvent = 'CHAT_MSG_ENCOUNTER_EVENT'
+        if {withdrawn_in_12_0_1} then
+            assert(not pcall(f.RegisterEvent, f, encounterEvent), encounterEvent)
+        else
+            assert(pcall(f.RegisterEvent, f, encounterEvent), encounterEvent)
+            f:UnregisterEvent(encounterEvent)
+        end
+        for _, event in ipairs({{
+            'COMBAT_LOG_APPLY_FILTER_SETTINGS',
             'COMBAT_LOG_EVENT_INTERNAL_UNFILTERED', 'COMBAT_LOG_REFILTER_ENTRIES',
             'TOOLTIP_SHOW_ITEM_COMPARISON',
-        }) do
+        }}) do
             assert(pcall(f.RegisterEvent, f, event), event)
             assert(f:IsEventRegistered(event), event)
             f:UnregisterEvent(event)
             assert(not f:IsEventRegistered(event), event)
         end
         -- Contradictory removed rows remain registerable for current consumers.
-        for _, event in ipairs({'HOUSE_LEVEL_CHANGED', 'SETTINGS_LOADED',
-            'TRANSMOG_OUTFITS_CHANGED', 'UNIT_SPELLCAST_SENT'}) do
+        for _, event in ipairs({{'HOUSE_LEVEL_CHANGED', 'SETTINGS_LOADED',
+            'TRANSMOG_OUTFITS_CHANGED', 'UNIT_SPELLCAST_SENT'}}) do
             assert(pcall(f.RegisterEvent, f, event), event)
         end
-    "#,
-    )
+    "#
+    ))
     .unwrap();
 }
 
 #[test]
 fn p1200_mixed_cvar_publication() {
+    // 12.0.1 removed both CVars again; withdrawn from the retail-12-0-5 epoch.
+    let withdrawn_in_12_0_1 = cfg!(feature = "retail-12-0-5");
     let env = WowLuaEnv::new().unwrap();
-    env.exec(
+    env.exec(&format!(
         r#"
-        for _, name in ipairs({'minimapTrackedInfov2', 'useCompactPartyFrames'}) do
-            assert(C_CVar.GetCVarDefault(name) == '0')
-            C_CVar.SetCVar(name, '1')
-            assert(C_CVar.GetCVar(name) == '1')
-            assert(C_CVar.GetCVarDefault(name) == '0')
+        for _, name in ipairs({{'minimapTrackedInfov2', 'useCompactPartyFrames'}}) do
+            if {withdrawn_in_12_0_1} then
+                assert(C_CVar.GetCVar(name) == nil and C_CVar.GetCVarDefault(name) == nil, name)
+            else
+                assert(C_CVar.GetCVarDefault(name) == '0')
+                C_CVar.SetCVar(name, '1')
+                assert(C_CVar.GetCVar(name) == '1')
+                assert(C_CVar.GetCVarDefault(name) == '0')
+            end
         end
         -- Case-insensitive identity: the Npcs row is published in this same patch.
         assert(C_CVar.GetCVarDefault('nameplateShowFriendlyNPCs') == '0')
-    "#,
-    )
+    "#
+    ))
     .unwrap();
 }
 
@@ -128,7 +143,8 @@ fn p1200_mixed_spell_loss_of_control_duration() {
 #[test]
 fn p1200_mixed_combat_audio_settings() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         assert(C_CombatAudioAlert.SetSpecSetting(0, 4.5) == true)
         assert(C_CombatAudioAlert.GetSpecSetting(0) == 4.5)
         assert(C_CombatAudioAlert.GetSpecSetting(1) == 0)
@@ -137,9 +153,13 @@ fn p1200_mixed_combat_audio_settings() {
         assert(C_CombatAudioAlert.GetThrottle(0) == 0)
         assert(not pcall(C_CombatAudioAlert.SetSpecSetting, 0, math.huge))
         assert(C_CombatAudioAlert.GetSpecSetting(0) == 4.5)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     env.state().borrow_mut().player.active_spec_index = 1;
     env.exec("assert(C_CombatAudioAlert.GetSpecSetting(0) == 0); assert(C_CombatAudioAlert.GetThrottle(1) == 2.75)").unwrap();
     let other = WowLuaEnv::new().unwrap();
-    other.exec("assert(C_CombatAudioAlert.GetThrottle(1) == 0)").unwrap();
+    other
+        .exec("assert(C_CombatAudioAlert.GetThrottle(1) == 0)")
+        .unwrap();
 }
