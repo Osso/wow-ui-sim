@@ -21,7 +21,7 @@ pub struct CatalogShopSectionInfo {
 
 pub(super) fn register(
     state: &mut LuaState,
-    namespace: rilua::vm::gc::GcRef<rilua::vm::table::Table>,
+    namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
 ) -> LuaResult<()> {
     table_set_rust_fn_static(state, namespace, "GetProductIDsForBundle", bundle_children)?;
     table_set_rust_fn_static(state, namespace, "GetCategorySectionInfo", section_info)
