@@ -30,3 +30,5 @@ Earliest supported retail epoch is `retail-12-0-0`; no 11.x runtime exists. Defa
 ## Retirement fixes
 
 Initial cached sweep exposes explicit global `JoinBattlefield` and fabricated lookup members `C_ReturningPlayerUI.AcceptPrompt` / `DeclinePrompt` after removal. Stop the legacy global publisher from `retail-12-0-0`; mark both namespace keys removed in the already retail-gated retirement module. Preserve classic publication and the existing state-backed `C_PvP.JoinBattlefield` queue producer. Regression asserts repeated raw/ordinary absence and concrete successor queue state. Existing queue tests use the live namespace successor rather than the retired global. No new backing model or fallback.
+
+The same fabricated-member defect affects removed `C_CharacterServices.RPEResetCharacter`. Extend the retirement list and repeated-lookup regression; no character reset behavior is invented. All four initial unsuperseded removal defects now have producer/lookup fixes.

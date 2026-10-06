@@ -11,6 +11,8 @@ fn patch_11_2_7_retirement_preserves_pvp_successor() {
         for attempt = 1, 2 do
             assert(rawget(_G, 'JoinBattlefield') == nil)
             assert(JoinBattlefield == nil)
+            assert(rawget(C_CharacterServices, 'RPEResetCharacter') == nil)
+            assert(C_CharacterServices.RPEResetCharacter == nil)
             for _, name in ipairs({'AcceptPrompt', 'DeclinePrompt'}) do
                 assert(rawget(C_ReturningPlayerUI, name) == nil)
                 assert(C_ReturningPlayerUI[name] == nil)

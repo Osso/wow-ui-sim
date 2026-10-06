@@ -6,8 +6,10 @@ use rilua::LuaResult;
 use rilua::vm::state::LuaState;
 
 // 11.2.7 predates every supported retail epoch; classic profiles do not load this module.
-const RETIRED_11_2_7_MEMBERS: &[(&str, &[&str])] =
-    &[("C_ReturningPlayerUI", &["AcceptPrompt", "DeclinePrompt"])];
+const RETIRED_11_2_7_MEMBERS: &[(&str, &[&str])] = &[
+    ("C_CharacterServices", &["RPEResetCharacter"]),
+    ("C_ReturningPlayerUI", &["AcceptPrompt", "DeclinePrompt"]),
+];
 
 const RETIRED_12_0_0_MEMBERS: &[(&str, &[&str])] = &[
     ("C_CatalogShop", &["OpenCatalogShopInteraction"]),
