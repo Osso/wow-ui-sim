@@ -594,8 +594,7 @@ macro_rules! build_empty_sim_state {
             consumable_items: ::std::collections::HashSet::new(),
             can_replace_guild_master: false,
             auto_decline_guild_invites: false,
-            // Simulator initial-state guess, not the documented setter argument default.
-            #[cfg(feature = "client-wowforever")]
+            // INFERRED simulator initial preference, not a native default.
             auto_decline_neighborhood_invites: false,
             guild_roster_show_offline: true,
             menu_open: false,

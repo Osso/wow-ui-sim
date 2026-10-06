@@ -676,7 +676,6 @@ pub struct SimState {
     pub consumable_items: ::std::collections::HashSet<u32>,
     pub can_replace_guild_master: bool,
     pub auto_decline_guild_invites: bool,
-    #[cfg(feature = "client-wowforever")]
     pub auto_decline_neighborhood_invites: bool,
     pub guild_roster_show_offline: bool,
     pub menu_open: bool,

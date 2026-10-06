@@ -63,3 +63,7 @@ Artifact validation PASS: 508 inventory + 19 extract = 527 unique IDs; ten heade
 `cargo fmt --manifest-path /home/osso/.worktrees/wow-ui-sim-p1127-page/Cargo.toml -- --check` PASS. Local helper `--check` PASS. `cargo check --tests --no-default-features --features "sound gui casc client-mists"` PASS, no errors or non-vendor warnings. Six pre-existing iced manifest-key deprecations plus their vendor summary match initial builds; no suppression/vendor edit. Changed Rust manually audited for readability/profile scope.
 
 Startup built separately with no timeout; `timeout 90 python3 /home/osso/.worktrees/wow-ui-sim-p1127-page/scripts/build-host.py --build-host local --no-build --run -- --no-addons --no-saved-vars lua-errors` exits 0, JSON `[]`, stderr CLEAN / zero unique and zero occurrences. Helper artifact announcement is separate from Lua-error JSON. No extra target directory or release build.
+
+## Gap closure follow-up — 2026-10-06
+
+Neighborhood invitation getters/setters reuse existing per-environment boolean state, now published on Retail 12.0.0+ as well as Forever. Classic publication unchanged. INFERRED initial false; documented omitted setter resets false. Behavioral RED: nil global. GREEN pending after commit. No persistence or notification event invented.

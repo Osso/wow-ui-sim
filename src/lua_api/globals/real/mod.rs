@@ -44,7 +44,7 @@ pub mod modifier_keys;
 pub mod mouse_probes;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod nameplate_display;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod neighborhood_invites;
 pub mod net_stats;
 #[cfg(feature = "retail-12-0-7")]
