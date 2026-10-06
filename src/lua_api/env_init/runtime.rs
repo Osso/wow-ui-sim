@@ -30,29 +30,6 @@ pub(crate) fn update_threshold_counters(rt: &mut AddonRuntimeMetrics, ms: f64) {
     }
 }
 
-/// Look up the addon folder name for a given owner_addon index.
-pub(crate) fn addon_taint_name(state: &Rc<RefCell<SimState>>, idx: Option<u16>) -> Option<String> {
-    idx.and_then(|i| {
-        state
-            .borrow()
-            .addons
-            .get(i as usize)
-            .map(|a| a.folder_name.clone())
-    })
-}
-
-/// Check whether an addon index refers to a Blizzard addon (runs secure).
-pub(crate) fn is_blizzard_addon(state: &Rc<RefCell<SimState>>, idx: Option<u16>) -> bool {
-    idx.map(|i| {
-        state
-            .borrow()
-            .addons
-            .get(i as usize)
-            .is_some_and(|a| crate::blizzard_ui_sync::is_builtin_addon_folder(&a.folder_name))
-    })
-    .unwrap_or(true)
-}
-
 /// Record per-addon timing from an Instant.
 pub(crate) fn record_addon_time(state: &Rc<RefCell<SimState>>, idx: Option<u16>, start: &Instant) {
     if let Some(i) = idx {

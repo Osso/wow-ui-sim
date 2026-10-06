@@ -29,9 +29,7 @@ const DISABLE_GLOBAL_SLOTS_ENV: &str = "WOW_SIM_DISABLE_GLOBAL_SLOTS";
 
 // Re-export public-within-crate symbols that env.rs and globals/ import.
 pub(crate) use frames::init_builtin_frames;
-pub(crate) use runtime::{
-    addon_taint_name, is_blizzard_addon, record_addon_time, update_threshold_counters,
-};
+pub(crate) use runtime::{record_addon_time, update_threshold_counters};
 
 // Re-export the three functions reused by the EnvironmentCleanup restore workaround.
 pub(crate) use bootstrap::init_runtime_surface_bootstrap;

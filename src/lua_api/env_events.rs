@@ -573,7 +573,7 @@ fn call_budgeted_widget_handler(
     handler_name: &str,
     handler: Val,
     args: &[Val],
-) -> Result<Vec<Val>, String> {
+) -> std::result::Result<Vec<Val>, String> {
     let event = if handler_name == "OnEvent" {
         args.get(1).and_then(|value| val_to_string(state, *value))
     } else {
