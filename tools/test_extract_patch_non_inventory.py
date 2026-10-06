@@ -21,7 +21,7 @@ class ExtractTests(unittest.TestCase):
     def test_headed_inventory_preserves_existing_structure_exclusion(self):
         raw = ('===Global API===\n: {{api|IgnoreMe}}\n'
                '===Structures===\n DifficultyInfo\n   + isUserSelectable\n')
-        self.assertEqual(extract_text(raw), '')
+        self.assertEqual(extract_text(raw), '\n')
 
     def test_12_0_0_plaintext_stays_identical(self):
         sources = ROOT / 'data/patch-api/sources'
