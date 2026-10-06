@@ -14,11 +14,28 @@ Require the exact observed non-OK ID set to equal `tests/data/patch_12_0_1_sweep
 
 ## Verification
 
-- [ ] Review every non-OK row and baseline exact IDs.
-- [ ] Fix cheap root-cause publication defects without fabricated successor behavior.
-- [ ] Prove one-row negative control.
+- [x] Review every non-OK row and baseline exact IDs.
+- [x] Fix cheap root-cause publication defects without fabricated successor behavior.
+- [x] Prove one-row negative control.
 - [ ] Run all five publication sweeps separately under debug retail, local build host.
 - [ ] Startup Lua errors `[]`; formatting and local check.
+
+## Reviewed outcomes — 2026-10-06
+
+Development sweep at `3ddcc019c`: 225 rows, 174 OK, 51 exact reviewed gaps. Initial sweep: 170 OK / 55 gaps; retirement closes four, with no fabricated successor publication. Sixteen OK rows carry later-patch supersession. [Per-ID review](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-gap-review.json) retains every non-OK observation.
+
+| Gap class | Rows | Remaining boundary |
+|---|---:|---|
+| Namespace members | 27 | Raw-absent lookup autostubs; backing models required |
+| Object methods | 13 | Twelve missing heal-prediction methods; one removed frame method still present |
+| CVars | 5 | Removed names still queryable, including case-insensitive aliases |
+| Plain globals | 3 | Totem count/duration and player spell target absent |
+| Events | 2 | Arena event unknown; encounter event remains registerable |
+| Unprobeable NamePlate | 1 | `CreateFrame('NamePlate')` unsupported; supported acquisition fixture required |
+
+The 12.0.0 baseline changes from 23 to 27 IDs: minimapTrackedInfov2, useCompactPartyFrames, CHAT_MSG_ENCOUNTER_EVENT and FrameScriptObject:SetPreventSecretValues now inherit 12.0.1 removal expectations and remain published. Two speaker-volume removal gaps exposed by supersession were fixed rather than baselined. No old page-coverage ledger is changed.
+
+Negative control flips unsuperseded `C_DamageMeter.GetSessionDurationSeconds` from added to removed: 51 → 52 gaps, exactly one new ID and exactly one changed observation; expected exit 101. [Control proof](../../data/patch-api/evidence/12.0.1-session-2026-10-06/p1201-negative-control.json).
 
 ## Inputs and tests
 

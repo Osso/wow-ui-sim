@@ -1,0 +1,110 @@
+{
+  "wt-cvars-minimapTrackedInfov2-925": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-minimapTrackedInfov2-491",
+      "symbol": "minimapTrackedInfov2"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": false
+  },
+  "wt-cvars-useCompactPartyFrames-962": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-useCompactPartyFrames-501",
+      "symbol": "useCompactPartyFrames"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": false
+  },
+  "wt-events-CHAT_MSG_ENCOUNTER_EVENT-739": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "wt-events-CHAT_MSG_ENCOUNTER_EVENT-405",
+      "symbol": "CHAT_MSG_ENCOUNTER_EVENT"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_CombatAudioAlert.GetSpeakerVolume-117": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_CombatAudioAlert.GetSpeakerVolume-306",
+      "symbol": "C_CombatAudioAlert.GetSpeakerVolume"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_CombatAudioAlert.SetSpeakerVolume-123": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_CombatAudioAlert.SetSpeakerVolume-307",
+      "symbol": "C_CombatAudioAlert.SetSpeakerVolume"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-FrameScriptObject:SetPreventSecretValues-691": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": "wt-widgets-FrameScriptObject:SetPreventSecretValues-380",
+      "symbol": "FrameScriptObject:SetPreventSecretValues"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "FrameScriptObject; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  }
+}

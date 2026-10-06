@@ -1,0 +1,29 @@
+{
+  "revision": "3ddcc019cc0db948ae24ffe64c2837f547221e0f",
+  "row_flipped": "wt-global-api-C_DamageMeter.GetSessionDurationSeconds-235",
+  "from": "added",
+  "to": "removed",
+  "exit_code": 101,
+  "baseline_gaps": 51,
+  "negative_gaps": 52,
+  "new_gaps": [
+    "wt-global-api-C_DamageMeter.GetSessionDurationSeconds-235"
+  ],
+  "changed_observations": [
+    "wt-global-api-C_DamageMeter.GetSessionDurationSeconds-235"
+  ],
+  "scratch_register": "/home/osso/.worktrees/wow-ui-sim-p1201-page/.p1201-scratch/negative-register.json",
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p1201-page/scripts/build-host.py",
+    "--build-host",
+    "local",
+    "--test",
+    "--test",
+    "integration",
+    "patch_12_0_1_publication_sweep",
+    "--",
+    "--nocapture",
+    "--test-threads=1"
+  ]
+}
