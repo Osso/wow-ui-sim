@@ -26,12 +26,19 @@ pub(crate) fn select_cooldown_duration_times(
     now: f64,
     ignore_gcd: bool,
 ) -> (f64, f64) {
-    if !ignore_gcd {
-        return spell_cooldown_times(sim, spell_id, now);
+    let (start, duration) = if ignore_gcd {
+        sim.spell_cooldowns
+            .get(&spell_id)
+            .filter(|cooldown| cooldown.start + cooldown.duration > now)
+            .map(|cooldown| (cooldown.start, cooldown.duration))
+            .unwrap_or((0.0, 0.0))
+    } else {
+        spell_cooldown_times(sim, spell_id, now)
+    };
+    let inactive = start <= 0.0 || duration <= 0.0;
+    if cfg!(feature = "retail-12-0-5") && inactive {
+        (0.0, 0.0)
+    } else {
+        (start, duration)
     }
-    sim.spell_cooldowns
-        .get(&spell_id)
-        .filter(|cooldown| cooldown.start + cooldown.duration > now)
-        .map(|cooldown| (cooldown.start, cooldown.duration))
-        .unwrap_or((0.0, 0.0))
 }

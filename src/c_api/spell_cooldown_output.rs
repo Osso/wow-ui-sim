@@ -11,7 +11,7 @@ pub(crate) struct SpellCooldownSnapshot {
 
 pub(crate) fn snapshot(sim: &SimState, spell_id: u32, now: f64) -> SpellCooldownSnapshot {
     let (start, duration) =
-        crate::lua_api::globals::action_bar_api::spell_cooldown_times(sim, spell_id, now);
+        super::cooldown_duration::select_cooldown_duration_times(sim, spell_id, now, false);
     let recovery_remaining = sim.gcd.and_then(|(gcd_start, gcd_duration)| {
         let remaining = gcd_start + gcd_duration - now;
         (remaining > 0.0).then_some(remaining)

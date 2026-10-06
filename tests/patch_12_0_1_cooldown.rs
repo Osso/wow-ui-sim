@@ -53,6 +53,24 @@ fn patch_12_0_1_cooldown_charge_formula_and_zero_span() {
 }
 
 #[test]
+fn patch_12_0_1_cooldown_nonpositive_intervals_are_inactive() {
+    let env = WowLuaEnv::new().unwrap();
+    env.state().borrow_mut().action_bars.insert(17, 19750);
+    for (start, duration) in [(0.0, 100.0), (-1.0, 100.0), (20.0, 0.0)] {
+        env.state().borrow_mut().spell_cooldowns.insert(19750,
+            wow_ui_sim::lua_api::state::SpellCooldownState { start, duration });
+        env.exec(r#"
+            for _, info in ipairs({C_Spell.GetSpellCooldown(19750), C_ActionBar.GetActionCooldown(17)}) do
+                assert(info.isActive == false, 'nonpositive interval must not render')
+            end
+            for _, object in ipairs({C_Spell.GetSpellCooldownDuration(19750), C_ActionBar.GetActionCooldownDuration(17)}) do
+                assert(object:IsZero() and object:GetTotalDuration() == 0)
+            end
+        "#).unwrap();
+    }
+}
+
+#[test]
 fn patch_12_0_1_cooldown_cast_expiry_transitions() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().action_bars.insert(17, 642);
