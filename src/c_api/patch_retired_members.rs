@@ -1,4 +1,4 @@
-//! Namespace members (and whole namespaces) the Patch 12.0.0 / 12.0.5 / 12.0.7
+//! Namespace members (and whole namespaces) the Patch 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
 //! consolidated API tables list as removed that no other module retires.
 //! Marking keeps the namespace `__index` autostub from fabricating them on
 //! ordinary lookup.
@@ -106,6 +106,14 @@ const RETIRED_12_0_0_MEMBERS: &[(&str, &[&str])] = &[
     ),
 ];
 
+// There is no 12.0.1 epoch. Retire at the first supported epoch after the
+// removal, preserving the documented 12.0.0 surface.
+#[cfg(feature = "retail-12-0-5")]
+const RETIRED_12_0_1_MEMBERS: &[(&str, &[&str])] = &[(
+    "C_NamePlate",
+    &["GetTargetClampingInsets", "SetTargetClampingInsets"],
+)];
+
 #[cfg(feature = "retail-12-0-5")]
 const RETIRED_12_0_5_MEMBERS: &[(&str, &[&str])] = &[
     (
@@ -131,6 +139,7 @@ pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
     mark_members(state, RETIRED_12_0_0_MEMBERS)?;
     #[cfg(feature = "retail-12-0-5")]
     {
+        mark_members(state, RETIRED_12_0_1_MEMBERS)?;
         mark_members(state, RETIRED_12_0_5_MEMBERS)?;
         mark_namespaces_absent(state, RETIRED_12_0_5_NAMESPACES)?;
     }

@@ -8,6 +8,10 @@ Use the shared classifier in `tests/common/publication_sweep.rs`, including exac
 
 Require the exact observed non-OK ID set to equal `tests/data/patch_12_0_1_sweep_known_gaps.json`. `P1201_SWEEP_OUT` writes every observation before assertion; `P1201_SWEEP_REGISTER` accepts a full scratch register with the same row count. One flipped unsuperseded row must introduce exactly one new gap.
 
+## Retirement epoch
+
+`Cargo.toml` and `src/client_profile.rs` expose 12.0.0, 12.0.5, 12.0.7 and later epochs; no 12.0.1 feature exists. The source explicitly compares 12.0.0 (65655) to 12.0.1 (66838). `C_NamePlate.GetTargetClampingInsets` and `SetTargetClampingInsets` were observed raw-absent but fabricated by ordinary namespace lookup. Mark them retired at `retail-12-0-5`, the first supported epoch after removal. A 12.0.0 gate would incorrectly retire APIs on the preceding surface. Earlier-epoch preservation is source-gate inspected, not runtime-proven under this retail-only task.
+
 ## Verification
 
 - [ ] Review every non-OK row and baseline exact IDs.
