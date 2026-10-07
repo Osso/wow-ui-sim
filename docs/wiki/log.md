@@ -228,3 +228,7 @@ Created [[patch-10-2-6-api-audit]]: page 582132 revision 6268742 exists; all 358
 ## 2026-10-07 — Patch 10.2.6 artifact validation
 
 Validated [[patch-10-2-6-api-audit]] at 7d8d11fff: pinned source hashes, all 358 unique IDs, seventeen chronological sweeps, exact retained gaps, default mismatch, negative control, command log hashes and 104 preserved inputs. Supplemental bare-token searches confirm RAF references use the namespace successor and camera references use the preserved global; no retired-API consumer found. Runtime checks not rerun for result/doc-only changes.
+
+## [2026-10-07] ingest | 10.0.7 API page
+
+Pinned revision 1063344; [audit](investigations/patch-10-0-7-api-audit.md) links all 2,284 source IDs, exact 26 gaps, eighteen unused retail retirements, parser/extractor RED/GREEN and 22 isolated sweep proofs. Final verification pending.

@@ -1,0 +1,469 @@
+{
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1007-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p1007-page/target",
+  "entries": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_*patch*.py"
+      ],
+      "revision": "21aa3ed93 + current behavioral fixtures",
+      "scope": "parser/extractor RED",
+      "exit": 1,
+      "log": "parser-red.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_*patch*.py"
+      ],
+      "revision": "1dd5ba84f",
+      "scope": "parser/extractor GREEN: 27 tests",
+      "exit": 0,
+      "log": "parser-green.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_0_7_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "1dd5ba84f",
+      "scope": "discovery:70 rows /44 gaps",
+      "exit": 101,
+      "log": "discovery-cargo.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_0_7_unused_members_stay_absent",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "1dd5ba84f + current retirement assertions",
+      "scope": "retirement RED",
+      "exit": 101,
+      "log": "retirement-red-cargo.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_0_7_unused_members_stay_absent",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "retirement GREEN",
+      "exit": 0,
+      "log": "patch_10_0_7_unused_members_stay_absent-cargo.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_0_7_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "70 rows /26 exact gaps",
+      "exit": 0,
+      "log": "patch_10_0_7_publication_sweep-cargo.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_10_0_7_cached_unused_member_retirements"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "cached Game retirements",
+      "exit": 0,
+      "log": "prefork-retirement-cargo.log"
+    },
+    {
+      "patch": "10.1.5",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_1_5_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_10_1_5_publication_sweep",
+      "log": "10.1.5-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "10.1.7",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_1_7_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_10_1_7_publication_sweep",
+      "log": "10.1.7-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "10.2.0",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_2_0_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_10_2_0_publication_sweep",
+      "log": "10.2.0-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "10.2.5",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_2_5_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_10_2_5_publication_sweep",
+      "log": "10.2.5-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "10.2.6",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_2_6_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_10_2_6_publication_sweep",
+      "log": "10.2.6-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "10.2.7",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_2_7_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_10_2_7_publication_sweep",
+      "log": "10.2.7-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "11.0.0",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_0_0_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_11_0_0_publication_sweep",
+      "log": "11.0.0-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "11.0.2",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_0_2_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_11_0_2_publication_sweep",
+      "log": "11.0.2-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "11.0.5",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_0_5_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_11_0_5_publication_sweep",
+      "log": "11.0.5-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "11.0.7",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_0_7_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_11_0_7_publication_sweep",
+      "log": "11.0.7-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "11.1.0",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_0_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_11_1_0_publication_sweep",
+      "log": "11.1.0-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "11.1.5",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_5_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_11_1_5_publication_sweep",
+      "log": "11.1.5-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "11.1.7",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_7_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_11_1_7_publication_sweep",
+      "log": "11.1.7-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "11.2.0",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_11_2_0_publication_sweep",
+      "log": "11.2.0-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "11.2.5",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_2_5_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_11_2_5_publication_sweep",
+      "log": "11.2.5-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "11.2.7",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_2_7_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_11_2_7_publication_sweep",
+      "log": "11.2.7-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "12.0.0",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_12_0_0_publication_sweep",
+      "log": "12.0.0-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "12.0.1",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_12_0_1_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_12_0_1_publication_sweep",
+      "log": "12.0.1-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "12.0.5",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_12_0_5_publication_sweep",
+      "log": "12.0.5-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "12.0.7",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_12_0_7_publication_sweep",
+      "log": "12.0.7-sweep-cargo.log",
+      "invalidated": false
+    },
+    {
+      "patch": "12.1.0",
+      "exit": 0,
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "484b786465adc61091b237995a2337f345e6189f",
+      "scope": "patch_12_1_0_publication_sweep",
+      "log": "12.1.0-sweep-cargo.log",
+      "invalidated": false
+    }
+  ]
+}

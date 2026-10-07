@@ -1,0 +1,34 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-86-			{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-87-				{ Name = "numDisplays", Type = "number", Nilable = true },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-88-			},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-89-		},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-90-		{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua:91:			Name = "GetNumPetsInJournal",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-92-			Type = "Function",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-93-			SecretArguments = "AllowedWhenUntainted",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-94-
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-95-			Arguments =
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-96-			{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-97-				{ Name = "creatureID", Type = "number", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-98-			},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-99-
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-100-			Returns =
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-101-			{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-102-				{ Name = "maxAllowed", Type = "number", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-103-				{ Name = "numPets", Type = "number", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-104-			},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-105-		},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-106-		{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-107-			Name = "GetOwnedPetIDs",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-108-			Type = "Function",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-109-
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-110-			Returns =
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-111-			{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-112-				{ Name = "ownedPetIDs", Type = "table", InnerType = "WOWGUID", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-113-			},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-114-		},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-115-		{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-116-			Name = "GetPetAbilityInfo",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-117-			Type = "Function",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-118-			MayReturnNothing = true,
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PetJournalInfoDocumentation.lua-119-			SecretArguments = "AllowedWhenUntainted",

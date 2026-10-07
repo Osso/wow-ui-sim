@@ -1,0 +1,9 @@
+{
+  "source": {
+    "path": "data/patch-api/sources/10.1.0-api-changes.wikitext",
+    "revid": 2236681,
+    "sha256": "9b22cad6805e68ffbdb9c723c8e23ff208bd644fd5b94fadcf0493f96241c8d2"
+  },
+  "intersections": [],
+  "note": "Read-only register comparison; integration must add 10.1.0 and recompute current fixtures. Runtime changes on sibling branch are not imported."
+}

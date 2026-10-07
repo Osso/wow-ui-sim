@@ -1,0 +1,266 @@
+[
+  {
+    "source_id": "wt-global-api-C_ChatInfo.GetChatLineSenderGUID-25",
+    "symbol": "C_ChatInfo.GetChatLineSenderGUID",
+    "outcome": "retained",
+    "reason": "Requires indexed chat-frame/line records with sender GUID identity; existing GetChatLineText is a nil temporary default, not a line producer."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.GetChatLineSenderName-26",
+    "symbol": "C_ChatInfo.GetChatLineSenderName",
+    "outcome": "retained",
+    "reason": "Requires indexed chat-frame/line sender names and native identity policy, not global chat transcript approximation."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.IsChatLineCensored-28",
+    "symbol": "C_ChatInfo.IsChatLineCensored",
+    "outcome": "retained",
+    "reason": "Requires per-line censor state and its relation to exemption CVars; no populated line-state producer registered."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.RequestCanLocalWhisperTarget-29",
+    "symbol": "C_ChatInfo.RequestCanLocalWhisperTarget",
+    "outcome": "retained",
+    "reason": "Requires deferred target permission resolution and CAN_LOCAL_WHISPER_TARGET_RESPONSE payload delivery; event registration alone is insufficient."
+  },
+  {
+    "source_id": "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByID-31",
+    "symbol": "C_ConsoleScriptCollection.GetCollectionDataByID",
+    "outcome": "retained",
+    "reason": "Requires actual console script collection catalog indexed by collection ID and populated collection DTO."
+  },
+  {
+    "source_id": "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByTag-32",
+    "symbol": "C_ConsoleScriptCollection.GetCollectionDataByTag",
+    "outcome": "retained",
+    "reason": "Requires catalog tag matching and ordering over real console script collections."
+  },
+  {
+    "source_id": "wt-global-api-C_ConsoleScriptCollection.GetElements-33",
+    "symbol": "C_ConsoleScriptCollection.GetElements",
+    "outcome": "retained",
+    "reason": "Requires collection element catalog, identifiers and populated element records, not an empty autostub."
+  },
+  {
+    "source_id": "wt-global-api-C_ConsoleScriptCollection.GetScriptData-34",
+    "symbol": "C_ConsoleScriptCollection.GetScriptData",
+    "outcome": "retained",
+    "reason": "Requires script data catalog and lookup contract; simulator console command registry is not this catalog."
+  },
+  {
+    "source_id": "wt-global-api-C_GossipInfo.SelectOptionByIndex-35",
+    "symbol": "C_GossipInfo.SelectOptionByIndex",
+    "outcome": "retained",
+    "reason": "Existing gossip getters expose options but no modeled option-selection producer; needs ordinal selection, nullable option IDs and resulting dialog/action transitions."
+  },
+  {
+    "source_id": "wt-global-api-C_PetJournal.GetNumPetsInJournal-36",
+    "symbol": "C_PetJournal.GetNumPetsInJournal",
+    "outcome": "retained",
+    "reason": "GetNumPets currently counts all world.pets and collected entries (pet_journal.rs:35-40), but GetNumPetsInJournal takes creatureID and returns maxAllowed,numPets in cached Blizzard API documentation. Requires creature-ID mapping and per-creature collection cap state; total-journal count alias would be incorrect."
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetAssignedSpecForBattlefieldQueue-38",
+    "symbol": "C_PvP.GetAssignedSpecForBattlefieldQueue",
+    "outcome": "retained",
+    "reason": "Requires per-queue assigned specialization state and concrete queue identity mapping."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestOffer.GetHideRequiredItems-39",
+    "symbol": "C_QuestOffer.GetHideRequiredItems",
+    "outcome": "retained",
+    "reason": "Requires quest-offer hide-required-items state and successor query semantics; retiring old name does not establish successor behavior."
+  },
+  {
+    "source_id": "wt-global-api-C_Texture.ClearTitleIconTexture-40",
+    "symbol": "C_Texture.ClearTitleIconTexture",
+    "outcome": "retained",
+    "reason": "Requires title-icon state lifecycle shared with Set/Get/readiness, not texture-widget state alone."
+  },
+  {
+    "source_id": "wt-global-api-C_Texture.GetTitleIconTexture-41",
+    "symbol": "C_Texture.GetTitleIconTexture",
+    "outcome": "retained",
+    "reason": "Requires populated title-icon query and native return contract; ordinary texture loading does not implement it."
+  },
+  {
+    "source_id": "wt-global-api-C_Texture.IsTitleIconTextureReady-42",
+    "symbol": "C_Texture.IsTitleIconTextureReady",
+    "outcome": "retained",
+    "reason": "Requires title-icon readiness state and its loading transitions."
+  },
+  {
+    "source_id": "wt-global-api-C_Texture.SetTitleIconTexture-43",
+    "symbol": "C_Texture.SetTitleIconTexture",
+    "outcome": "retained",
+    "reason": "Requires title-icon assignment/state lifecycle and native argument contract."
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.IsReadyForCommit-45",
+    "symbol": "C_Traits.IsReadyForCommit",
+    "outcome": "retained",
+    "reason": "Requires trait commit readiness policy over staged configuration, restrictions and pending validation."
+  },
+  {
+    "source_id": "wt-global-api-GetCurrentGraphicsAPI-46",
+    "symbol": "GetCurrentGraphicsAPI",
+    "outcome": "retained",
+    "reason": "Requires actual host graphics-backend reporting; returning a fixed renderer label would be a placeholder."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestOffer.GetHideRequiredItemsOnTurnIn-50",
+    "symbol": "C_QuestOffer.GetHideRequiredItemsOnTurnIn",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.GetLastAchievement-51",
+    "symbol": "C_Social.GetLastAchievement",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.GetLastItem-52",
+    "symbol": "C_Social.GetLastItem",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.GetLastScreenshotIndex-53",
+    "symbol": "C_Social.GetLastScreenshotIndex",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.GetMaxTweetLength-54",
+    "symbol": "C_Social.GetMaxTweetLength",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.GetScreenshotInfoByIndex-55",
+    "symbol": "C_Social.GetScreenshotInfoByIndex",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.GetTweetLength-56",
+    "symbol": "C_Social.GetTweetLength",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.IsSocialEnabled-57",
+    "symbol": "C_Social.IsSocialEnabled",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.RegisterSocialBrowser-58",
+    "symbol": "C_Social.RegisterSocialBrowser",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.SetTextureToScreenshot-59",
+    "symbol": "C_Social.SetTextureToScreenshot",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.TwitterCheckStatus-60",
+    "symbol": "C_Social.TwitterCheckStatus",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.TwitterConnect-61",
+    "symbol": "C_Social.TwitterConnect",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.TwitterDisconnect-62",
+    "symbol": "C_Social.TwitterDisconnect",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.TwitterGetMSTillCanPost-63",
+    "symbol": "C_Social.TwitterGetMSTillCanPost",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.TwitterPostAchievement-64",
+    "symbol": "C_Social.TwitterPostAchievement",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.TwitterPostItem-65",
+    "symbol": "C_Social.TwitterPostItem",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.TwitterPostMessage-66",
+    "symbol": "C_Social.TwitterPostMessage",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_Social.TwitterPostScreenshot-67",
+    "symbol": "C_Social.TwitterPostScreenshot",
+    "outcome": "closed",
+    "reason": "Unused member autostub retired under existing retail-only module gate; qualified and bare cached Lua searches have no matches; no runtime caller migration required."
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInteractionManager.InteractUnit-71",
+    "symbol": "C_PlayerInteractionManager.InteractUnit",
+    "outcome": "retained",
+    "reason": "Requires unit interaction routing and looseTargeting contract; existing interaction state does not register this producer."
+  },
+  {
+    "source_id": "wt-cvars-vrsValarEnvLuma-109",
+    "symbol": "vrsValarEnvLuma",
+    "outcome": "retained",
+    "reason": "Historical VALAR graphics CVar is absent from current registry; current graphics-policy/host backing and supported default are not established. Do not seed obsolete tuning solely to satisfy historical publication."
+  },
+  {
+    "source_id": "wt-cvars-vrsValarK-110",
+    "symbol": "vrsValarK",
+    "outcome": "retained",
+    "reason": "Historical VALAR graphics CVar is absent from current registry; current graphics-policy/host backing and supported default are not established. Do not seed obsolete tuning solely to satisfy historical publication."
+  },
+  {
+    "source_id": "wt-cvars-vrsValarSensitivityThreshold-111",
+    "symbol": "vrsValarSensitivityThreshold",
+    "outcome": "retained",
+    "reason": "Historical VALAR graphics CVar is absent from current registry; current graphics-policy/host backing and supported default are not established. Do not seed obsolete tuning solely to satisfy historical publication."
+  },
+  {
+    "source_id": "wt-cvars-vrsValarUseAsyncCompute-112",
+    "symbol": "vrsValarUseAsyncCompute",
+    "outcome": "retained",
+    "reason": "Historical VALAR graphics CVar is absent from current registry; current graphics-policy/host backing and supported default are not established. Do not seed obsolete tuning solely to satisfy historical publication."
+  },
+  {
+    "source_id": "wt-cvars-vrsValarUseMotionVectors-113",
+    "symbol": "vrsValarUseMotionVectors",
+    "outcome": "retained",
+    "reason": "Historical VALAR graphics CVar is absent from current registry; current graphics-policy/host backing and supported default are not established. Do not seed obsolete tuning solely to satisfy historical publication."
+  },
+  {
+    "source_id": "wt-cvars-vrsValarUseWeberFechner-114",
+    "symbol": "vrsValarUseWeberFechner",
+    "outcome": "retained",
+    "reason": "Historical VALAR graphics CVar is absent from current registry; current graphics-policy/host backing and supported default are not established. Do not seed obsolete tuning solely to satisfy historical publication."
+  },
+  {
+    "source_id": "wt-cvars-vrsValarWeberFechnerConstant-115",
+    "symbol": "vrsValarWeberFechnerConstant",
+    "outcome": "retained",
+    "reason": "Historical VALAR graphics CVar is absent from current registry; current graphics-policy/host backing and supported default are not established. Do not seed obsolete tuning solely to satisfy historical publication."
+  }
+]
