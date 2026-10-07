@@ -84,7 +84,12 @@ fn test_startup_bootstrap_namespaces_exist() {
         .unwrap();
 
     assert_eq!(chat_ty, "function");
-    assert_eq!(replaced_message, "{rt1} hello");
+    let expected_message = if cfg!(feature = "retail-12-0-5") {
+        "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:0|t hello"
+    } else {
+        "{rt1} hello"
+    };
+    assert_eq!(replaced_message, expected_message);
     assert!(!chat_restricted);
     assert_eq!(nav_ty, "function");
     assert_eq!(nav_distance, 0);

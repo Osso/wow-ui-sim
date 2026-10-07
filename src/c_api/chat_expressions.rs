@@ -48,18 +48,7 @@ pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
 }
 
 fn replace_expressions(state: &mut LuaState) -> LuaResult<u32> {
-    let flags = [stack_val(state, 2), stack_val(state, 3)];
-    // Check both original identities before defaults, text decoding or state lookup.
-    for (index, flag) in flags.iter().enumerate() {
-        if is_secret_value(state, *flag) {
-            return Err(runtime_error(format!(
-                "ReplaceIconAndGroupExpressions argument #{} must not be secret",
-                index + 2
-            )));
-        }
-    }
-    let no_icons = read_flag(flags[0])?;
-    let no_groups = read_flag(flags[1])?;
+    let (no_icons, no_groups) = read_replacement_flags(state)?;
     let vocabulary = borrow_state(state)?.chat_expression_inputs.clone();
     let input = stack_val(state, 1);
     let transform = |bytes: &[u8]| expand_expressions(bytes, &vocabulary, no_icons, no_groups);
@@ -82,6 +71,20 @@ fn replace_expressions(state: &mut LuaState) -> LuaResult<u32> {
     };
     state.push(output);
     Ok(1)
+}
+
+fn read_replacement_flags(state: &LuaState) -> LuaResult<(bool, bool)> {
+    let flags = [stack_val(state, 2), stack_val(state, 3)];
+    // Check both original identities before defaults, text decoding or state lookup.
+    for (index, flag) in flags.iter().enumerate() {
+        if is_secret_value(state, *flag) {
+            return Err(runtime_error(format!(
+                "ReplaceIconAndGroupExpressions argument #{} must not be secret",
+                index + 2
+            )));
+        }
+    }
+    Ok((read_flag(flags[0])?, read_flag(flags[1])?))
 }
 
 fn read_flag(value: Val) -> LuaResult<bool> {

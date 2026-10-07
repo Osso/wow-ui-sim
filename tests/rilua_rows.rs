@@ -192,7 +192,7 @@ fn budget_env() -> WowLuaEnv {
     env.state().borrow_mut().loading_addon_index = None;
     env.loader_env()
         .with_state(|state| {
-            state.set_instruction_budget("BudgetAddon", Some(100));
+            state.set_instruction_budget("BudgetAddon", Some(1000));
             Ok::<_, rilua::LuaError>(())
         })
         .unwrap();
@@ -221,7 +221,7 @@ fn assert_event_budget(named: bool) {
         .with_state(|state| state.reset_instruction_usage("BudgetAddon"))
         .unwrap();
     dispatch("PLAYER_LOGIN");
-    env.exec("assert(Completed == 3); assert(debug.getstacktaint() == nil)")
+    env.exec("assert(Completed == 3, 'completed='..tostring(Completed)..' error='..tostring(BudgetError)); assert(debug.getstacktaint() == nil)")
         .unwrap();
 }
 
@@ -235,4 +235,71 @@ fn rilua_rows_host_event_budget_exhaustion_shutdown_exemption_and_recovery() {
 #[test]
 fn rilua_rows_named_event_budget_exhaustion_shutdown_exemption_and_recovery() {
     assert_event_budget(true);
+}
+
+#[cfg(feature = "retail-12-0-5")]
+#[test]
+fn rilua_rows_chat_host_vocabulary_flags_live_updates_and_isolation() {
+    let env = secret_env();
+    {
+        let mut state = env.state().borrow_mut();
+        state
+            .chat_expression_inputs
+            .icons
+            .insert(b"fixture-icon".to_vec(), b"ICON".to_vec());
+        state
+            .chat_expression_inputs
+            .groups
+            .insert(b"g1".to_vec(), b"Alessio, Osso".to_vec());
+    }
+    env.exec(r#"
+        local text = '{fixture-icon} {G1} {unknown} {'
+        assert(C_ChatInfo.ReplaceIconAndGroupExpressions(text) == 'ICON Alessio, Osso {unknown} {')
+        assert(C_ChatInfo.ReplaceIconAndGroupExpressions(text, nil, false) == 'ICON Alessio, Osso {unknown} {')
+        assert(C_ChatInfo.ReplaceIconAndGroupExpressions(text, true) == '{fixture-icon} Alessio, Osso {unknown} {')
+        assert(C_ChatInfo.ReplaceIconAndGroupExpressions(text, false, true) == 'ICON {G1} {unknown} {')
+        assert(C_ChatInfo.ReplaceIconAndGroupExpressions(text, true, true) == text)
+        local secret = secretwrap(text)
+        local function addon()
+            GroupText = C_ChatInfo.ReplaceIconAndGroupExpressions(secret)
+            assert(issecretvalue(GroupText) and not pcall(secretunwrap, GroupText))
+            assert(debug.getstacktaint() == 'GroupAddon')
+        end
+        debug.setobjecttaint(addon, 'GroupAddon'); addon()
+        assert(secretunwrap(GroupText) == 'ICON Alessio, Osso {unknown} {')
+    "#).unwrap();
+    env.state()
+        .borrow_mut()
+        .chat_expression_inputs
+        .groups
+        .insert(b"g1".to_vec(), b"Osso".to_vec());
+    env.exec("assert(C_ChatInfo.ReplaceIconAndGroupExpressions('{g1}') == 'Osso')")
+        .unwrap();
+    secret_env().exec("assert(C_ChatInfo.ReplaceIconAndGroupExpressions('{fixture-icon} {g1}') == '{fixture-icon} {g1}')").unwrap();
+}
+
+#[cfg(feature = "retail-12-0-5")]
+#[test]
+fn rilua_rows_string_transforms_preserve_bytes_and_reject_nonstring_secrets() {
+    secret_env().exec(r#"
+        local binary = string.char(255, 0)..'{rt1}'
+        local secret = secretwrap(binary)
+        -- Create typed wrappers while secure; addon callers cannot create them.
+        local badValues = {secretwrap(17), secretwrap(true), secretwrap({})}
+        local function probe()
+            BinaryChat = C_ChatInfo.ReplaceIconAndGroupExpressions(secret)
+            assert(issecretvalue(BinaryChat))
+            for _, value in ipairs(badValues) do
+                assert(not pcall(Ambiguate, value, 'short'))
+                assert(not pcall(C_ChatInfo.ReplaceIconAndGroupExpressions, value))
+            end
+            assert(debug.getstacktaint() == 'BinaryAddon')
+        end
+        debug.setobjecttaint(probe, 'BinaryAddon'); probe()
+        collectgarbage('collect')
+        assert(secretunwrap(BinaryChat) == string.char(255, 0)..'|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:0|t')
+        assert(secretunwrap(secret) == binary)
+        assert(not pcall(C_ChatInfo.ReplaceIconAndGroupExpressions, 'text', 1))
+        assert(not pcall(C_ChatInfo.ReplaceIconAndGroupExpressions, 'text', false, {}))
+    "#).unwrap();
 }

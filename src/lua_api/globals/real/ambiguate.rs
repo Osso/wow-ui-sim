@@ -18,7 +18,7 @@ end
 #[cfg(feature = "retail-12-0-5")]
 fn ambiguate(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<u32> {
     use crate::lua_bridge::stack_val;
-    use rilua::table_security::{is_secret_value, transform_host_secret_string};
+    use rilua::table_security::is_secret_value;
     use rilua::{Val, runtime_error};
 
     let full_name = stack_val(state, 1);
@@ -34,6 +34,20 @@ fn ambiguate(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<u32> {
         .string_arena
         .get(context)
         .is_some_and(|s| s.data() == b"none");
+    let result = transform_name(state, full_name, keep_realm)?;
+    state.push(result);
+    Ok(1)
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn transform_name(
+    state: &mut rilua::vm::state::LuaState,
+    full_name: rilua::Val,
+    keep_realm: bool,
+) -> rilua::LuaResult<rilua::Val> {
+    use rilua::table_security::{is_secret_value, transform_host_secret_string};
+    use rilua::{Val, runtime_error};
+
     let result = if is_secret_value(state, full_name) {
         transform_host_secret_string(state, full_name, |bytes| {
             Ok(shorten_name(bytes, keep_realm))
@@ -46,8 +60,7 @@ fn ambiguate(state: &mut rilua::vm::state::LuaState) -> rilua::LuaResult<u32> {
         let output = shorten_name(bytes, keep_realm);
         Val::Str(state.gc.intern_string(&output))
     };
-    state.push(result);
-    Ok(1)
+    Ok(result)
 }
 
 #[cfg(feature = "retail-12-0-5")]
