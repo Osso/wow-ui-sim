@@ -1,0 +1,650 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "193441c1328c1666245b054fa703fe8d541bd209",
+    "exit_code": 101,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-discovery.log",
+    "scope": "10.2.7 discovery; empty exact gap fixture; own target",
+    "invalidated": true,
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "summary": [
+      "running 1 test",
+      "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10815 filtered out; finished in 10.43s",
+      "error: test failed, to rerun pass `--test integration`"
+    ],
+    "invalidated_reason": "Development discovery/RED or compile failure; superseded by current behavior/sweep proofs, not final runtime acceptance."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_7_publication_fixes",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "69038ab51bf6d128245e0c9f2c584eadb7a68c48",
+    "exit_code": 101,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-fixes-red.log",
+    "scope": "new migration tests RED",
+    "invalidated": true,
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "summary": [
+      "error[E0599]: no method named `clear` found for struct `EventQueue` in the current scope",
+      "error: could not compile `wow-ui-sim` (test \"integration\") due to 1 previous error"
+    ],
+    "invalidated_reason": "Development discovery/RED or compile failure; superseded by current behavior/sweep proofs, not final runtime acceptance."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_7_publication_fixes",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5cdb3894dfb7a28cadfc6794052e1ba37ec93745",
+    "exit_code": 101,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-fixes-red-behavior.log",
+    "scope": "new migration tests RED behavior",
+    "invalidated": true,
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "summary": [
+      "running 2 tests",
+      "test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 0.38s",
+      "error: test failed, to rerun pass `--test integration`"
+    ],
+    "invalidated_reason": "Development discovery/RED or compile failure; superseded by current behavior/sweep proofs, not final runtime acceptance."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_7_publication_fixes",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "1117a55a86ee0cff7a8ba43aad0cc2bbf54ce3a7",
+    "exit_code": 101,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-fixes-green.log",
+    "scope": "two bounded migration behavior tests",
+    "invalidated": true,
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "summary": [
+      "running 2 tests",
+      "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 0.87s"
+    ],
+    "invalidated_reason": "Development discovery/RED or compile failure; superseded by current behavior/sweep proofs, not final runtime acceptance."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_7_publication_fixes",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "b5f55a02eca01f68f49df0424b28438af7c163bc",
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-fixes-green.log",
+    "scope": "fixes-green",
+    "invalidated": false,
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "summary": [
+      "running 2 tests",
+      "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 0.87s"
+    ]
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "b5f55a02eca01f68f49df0424b28438af7c163bc",
+    "exit_code": 101,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-post-fix-discovery.log",
+    "scope": "post-fix-discovery",
+    "invalidated": true,
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "summary": [
+      "running 1 test",
+      "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10817 filtered out; finished in 26.99s",
+      "error: test failed, to rerun pass `--test integration`"
+    ],
+    "invalidated_reason": "Development discovery/RED or compile failure; superseded by current behavior/sweep proofs, not final runtime acceptance."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1027_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-sweep.log",
+    "scope": "isolated publication sweep 10.2.7",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 32.70s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1100-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1100-sweep.log",
+    "scope": "isolated publication sweep 11.0.0",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 29.79s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_2_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1102-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1102-sweep.log",
+    "scope": "isolated publication sweep 11.0.2",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 27.84s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1105_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1105-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1105-sweep.log",
+    "scope": "isolated publication sweep 11.0.5",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 28.52s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1107_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1107-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1107-sweep.log",
+    "scope": "isolated publication sweep 11.0.7",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 28.05s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1110_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1110-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1110-sweep.log",
+    "scope": "isolated publication sweep 11.1.0",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 25.95s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1115_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1115-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1115-sweep.log",
+    "scope": "isolated publication sweep 11.1.5",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 25.92s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1117_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1117-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1117-sweep.log",
+    "scope": "isolated publication sweep 11.1.7",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 25.93s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1120_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1120-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1120-sweep.log",
+    "scope": "isolated publication sweep 11.2.0",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 26.54s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1125-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1125-sweep.log",
+    "scope": "isolated publication sweep 11.2.5",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 26.42s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1127-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1127-sweep.log",
+    "scope": "isolated publication sweep 11.2.7",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 27.18s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1200-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1200-sweep.log",
+    "scope": "isolated publication sweep 12.0.0",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 29.91s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_1_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1201-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1201-sweep.log",
+    "scope": "isolated publication sweep 12.0.1",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 27.26s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1205-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1205-sweep.log",
+    "scope": "isolated publication sweep 12.0.5",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 25.97s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1207-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1207-sweep.log",
+    "scope": "isolated publication sweep 12.0.7",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 25.25s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_1_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1210-sweep-result.json"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1210-sweep.log",
+    "scope": "isolated publication sweep 12.1.0",
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 26.76s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target",
+      "P1027_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-negative-register.json",
+      "P1027_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-negative-result.json"
+    },
+    "exit_code": 101,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-negative.log",
+    "scope": "negative",
+    "invalidated": false,
+    "summary": [
+      "running 1 test",
+      "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 25.14s",
+      "error: test failed, to rerun pass `--test integration`"
+    ]
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_10_2_7_cached_stable_migration"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-prefork-stable.log",
+    "scope": "prefork-stable",
+    "invalidated": false,
+    "summary": [
+      "running 1 tests",
+      "test result: ok. 1 passed; 0 failed; 1 total"
+    ]
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "pvp_info_methods_use_seeded_world_and_locklist_state",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-pvp-successor.log",
+    "scope": "pvp-successor",
+    "invalidated": false,
+    "summary": [
+      "running 1 test",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 0.91s"
+    ]
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_*patch*.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "3b2ae8efc71cf6a3f26b359d3f4609497e1e2b05",
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-parser-fixtures.log",
+    "scope": "parser/extractor fixtures; unchanged tooling",
+    "invalidated": false,
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "summary": []
+  }
+]

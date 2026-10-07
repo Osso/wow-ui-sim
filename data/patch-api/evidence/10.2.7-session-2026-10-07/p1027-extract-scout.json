@@ -1,0 +1,886 @@
+[
+  {
+    "source_id": "source-context-001",
+    "statement": "Patch 10.2.7 API changes",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-003",
+    "statement": "== Summary ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-005",
+    "statement": "* The client now supports comma-delimited Interface versions, allowing addons to declare a TOC file as being compatible with multiple versions or flavors of the game at once.",
+    "group": "toc",
+    "proof": "audit-pending",
+    "decision": "Comma-list parser exists and test fixture uses 110107, 50500, 11507; historical cross-flavor load selection and full addon-load boundary remain unverified here.",
+    "implementation_candidates": [
+      "src/toc/mod.rs:328: pub fn interface_versions(&self) -> Vec<u32> {",
+      "src/toc/mod.rs:340: let versions = self.interface_versions();",
+      "src/toc/tests.rs:217: fn test_multiple_interface_versions() {",
+      "src/toc/tests.rs:245: /// `test_multiple_interface_versions` covers 50500 only as a list element)."
+    ]
+  },
+  {
+    "source_id": "prose-undated-006",
+    "statement": "* The C_ChatInfo.SendAddonMessage function now more aggressively throttles all addon traffic on a per-prefix level. See Addon messaging changes for more details.",
+    "group": "addon messaging",
+    "proof": "audit-pending",
+    "decision": "Retail prefix registration/throttled message producer absent. Need per-prefix allowance/refill and instance/whisper exception, not Forever outbound acceptance.",
+    "implementation_candidates": [
+      "src/c_api/addon_messages.rs:4: #[cfg(feature = \"client-wowforever\")]",
+      "src/c_api/addon_messages.rs:10: #[cfg(feature = \"client-wowforever\")]",
+      "src/c_api/addon_messages.rs:20: #[cfg(feature = \"client-wowforever\")]",
+      "src/c_api/addon_messages.rs:22: #[cfg(feature = \"client-wowforever\")]"
+    ]
+  },
+  {
+    "source_id": "prose-undated-007",
+    "statement": "* The TextStatusBar FrameXML utility has been converted to a mixin. Global functions are retained for compatibility, but will be removed in Patch 11.0.0.",
+    "group": "textstatusbar",
+    "proof": "audit-pending",
+    "decision": "Cached mixin/deprecated wrapper loading is a candidate; retained globals versus later 11.0.0 removal requires full cached handler/event tests. No Blizzard edit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-008",
+    "statement": "* The loading of deprecation scripts is now controlled by a new loadDeprecationFallbacks CVar. This CVar defaults to 1 (enabled), and will reset to the default state upon a client restart.",
+    "group": "deprecation cvar",
+    "proof": "audit-pending",
+    "decision": "Sweep proves default/publication only. Reset across client restart and load suppression with value 0 need process-lifetime/cache-load proof; cached wrappers remain untouched.",
+    "implementation_candidates": [
+      "src/cvars.yaml:902: loadDeprecationFallbacks: '1'"
+    ]
+  },
+  {
+    "source_id": "prose-undated-009",
+    "statement": "* The client now emits a Lua warning for a \"Duplicate File Load\" if an addon loads the same file multiple times in its TOC or XML files.",
+    "group": "duplicate loads",
+    "proof": "audit-pending",
+    "decision": "No Duplicate File Load warning producer found in simulator source. Requires repeat TOC/XML loads and observable diagnostic at the loader boundary.",
+    "implementation_candidates": [
+      "src/loader/addon.rs:141: load_addon_files(",
+      "src/loader/addon.rs:222: load_addon_files(",
+      "src/loader/addon.rs:473: fn load_addon_files(",
+      "src/loader/addon.rs:508: load_addon_file(env, &file_ctx, result, &file, pass);"
+    ]
+  },
+  {
+    "source_id": "prose-undated-010",
+    "statement": "* (May 16 2024) The C_AddOns.DisableAddOn function can no longer be used to disable secure Blizzard addons.",
+    "group": "secure addons",
+    "proof": "audit-pending",
+    "decision": "DisableAddOn protects only __BuiltIn by folder name; that is not a secure Blizzard addon classification/permission gate. Need explicit secure ownership/loading provenance and rejection tests.",
+    "implementation_candidates": [
+      "src/c_api/c_addons.rs:354: && addon.folder_name != \"__BuiltIn\"",
+      "src/c_api/c_addons.rs:370: if addon.folder_name != \"__BuiltIn\" {"
+    ]
+  },
+  {
+    "source_id": "source-context-012",
+    "statement": "== Resources ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-013",
+    "statement": "* TOC: 100207",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-014",
+    "statement": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-015",
+    "statement": "* Deprecated API: Blizzard_Deprecated",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-016",
+    "statement": "* Official patch notes: Dragonflight: Dark Heart Content Update Notes",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-018",
+    "statement": "== Breaking changes ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-019",
+    "statement": "* The pet stable has been overhauled. Some previously global API functions have moved to the C_StableInfo namespace, and others have been removed.",
+    "group": "stable migration",
+    "proof": "audit-pending",
+    "decision": "One stable-close namespace transition is behavior-proven; whole roster/favorites/cursor migration is not. Full source statement remains pending rather than crediting all stable APIs.",
+    "implementation_candidates": [
+      "src/c_api/c_stable_info.rs:22: table_set_rust_fn_static(state, stable_info, \"ClosePetStables\", close_pet_stables)?;",
+      "src/c_api/c_stable_info.rs:34: pub(crate) fn close_pet_stables(state: &mut LuaState) -> LuaResult<u32> {"
+    ]
+  },
+  {
+    "source_id": "prose-undated-020",
+    "statement": "* The FontInstance:SetJustifyH and FontInstance:SetJustifyV functions now more strictly validate inputs and will no longer permit \"MIDDLE\" to be used for horizontal justification, or \"CENTER\" for vertical.",
+    "group": "font validation",
+    "proof": "audit-pending",
+    "decision": "FontString interface publication is measurable after factory correction; generic widget justification and font-table setters accept strings without strict horizontal/vertical rejection. Invalid values and unchanged state need behavioral tests.",
+    "implementation_candidates": [
+      "src/lua_api/frame/methods/text_attribute_event/text/style.rs:292: let justify = crate::widget::TextJustify::from_wow_str(justification);",
+      "src/lua_api/globals/font_strings_collection/fonts.rs:206: fn font_set_justify_h(state: &mut LuaState) -> LuaResult<u32> {",
+      "src/lua_api/globals/font_strings_collection/fonts.rs:220: fn font_set_justify_v(state: &mut LuaState) -> LuaResult<u32> {",
+      "src/lua_api/globals/font_strings_collection/fonts.rs:247: table_set_rust_fn_static(state, font_ref, \"SetJustifyH\", font_set_justify_h)?;",
+      "src/lua_api/globals/font_strings_collection/fonts.rs:249: table_set_rust_fn_static(state, font_ref, \"SetJustifyV\", font_set_justify_v)?;"
+    ]
+  },
+  {
+    "source_id": "source-context-022",
+    "statement": "== Addon messaging changes ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-024",
+    "statement": "The C_ChatInfo.SendAddonMessage API and its logged variant now aggressively throttle traffic on all chat types, including whispers. The details of this restriction appear to match previously implemented changes for party and raid communications.",
+    "group": "addon messaging",
+    "proof": "audit-pending",
+    "decision": "All-chat/whisper throttle contract needs retail message producer, shared logged path and per-prefix bucket; Forever intent acceptance is not native throttle.",
+    "implementation_candidates": [
+      "src/c_api/addon_messages.rs:38: pub(super) fn register_chat(state: &mut LuaState) -> LuaResult<()> {"
+    ]
+  },
+  {
+    "source_id": "prose-undated-026",
+    "statement": "* Each registered prefix is given an allowance of 10 addon messages that can be sent.",
+    "group": "addon messaging",
+    "proof": "audit-pending",
+    "decision": "10-message capacity per registered prefix has no retail bucket state/test; declaration/enum existence does not establish capacity.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-027",
+    "statement": "* Each message sent on a prefix reduces this allowance by 1.",
+    "group": "addon messaging",
+    "proof": "audit-pending",
+    "decision": "Each send decrement requires registered-prefix bucket mutation and independent-prefix tests; no explicit retail send producer.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-028",
+    "statement": "* If the allowance reaches zero, further attempts to send messages on the same prefix will fail, returning Enum.SendAddonMessageResult.AddonMessageThrottle to the caller.",
+    "group": "addon messaging",
+    "proof": "audit-pending",
+    "decision": "Zero-allowance rejection must return exact AddonMessageThrottle enum. Enum publication alone does not establish throttled rejection.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:12470: AddonMessageThrottle = 3,"
+    ]
+  },
+  {
+    "source_id": "prose-undated-029",
+    "statement": "* Each prefix regains its allowance at a rate of 1 message per second, up to the original maximum of 10 messages.",
+    "group": "addon messaging",
+    "proof": "audit-pending",
+    "decision": "1-message/second refill capped at 10 needs deterministic clock and per-prefix tests; outbound logs have no native-rate parity claim.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-030",
+    "statement": "* This restriction does not apply to whispers outside of instanced content.",
+    "group": "addon messaging",
+    "proof": "audit-pending",
+    "decision": "Out-of-instance whisper exemption requires instance state/channel-sensitive policy and tests; no retail native-throttle producer.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-032",
+    "statement": "This restriction does not mean that the global communications throttle is removed. If too much data is being sent simultaneously on separate prefixes, then the client may still be disconnected. For this reason, it is strongly recommended to continue using ChatThrottleLib or AceComm-3.0.",
+    "group": "addon messaging",
+    "proof": "audit-pending",
+    "decision": "Global disconnect throttle is explicitly separate from per-prefix allowance; no simulated transport/disconnect policy. ChatThrottleLib/AceComm recommendation is retained source context, not implemented behavior.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-034",
+    "statement": "Due to the way that the deprecation wrapper for these APIs has been handled, the C APIs are replaced by Lua functions that shift the enum result to the second return position. A forward-compatible way to reliably access the enum return value is to use a negative select index to grab the last return value.",
+    "group": "addon messaging wrapper",
+    "proof": "audit-pending",
+    "decision": "Cached wrapper enum-return shifting needs exact first/second/last return tests with deprecation loading on/off; no retirement/deletion of wrapper. Negative select example is not a proof of C API behavior.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-037",
+    "statement": "local result = select(-1, C_ChatInfo.SendAddonMessage(...))",
+    "group": "addon messaging wrapper",
+    "proof": "audit-pending",
+    "decision": "Preserve example literally; select(-1, ...) last-return semantics do not establish a retail C_ChatInfo enum return producer or wrapper parity.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-040",
+    "statement": "== Consolidated changes ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-041",
+    "statement": "=== Enumerations ===",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-AuctionHouseFilter-042",
+    "statement": "Enum.AuctionHouseFilter",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.AuctionHouseFilter: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/state_types/auction_house.rs:157:    /// `Enum.AuctionHouseFilter` ids.",
+      "src/lua_api/globals/enum_data/missing_enums.lua:755:if not Enum.AuctionHouseFilter then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:756:  Enum.AuctionHouseFilter = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:774:if not Enum.AuctionHouseFilterCategory then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:775:  Enum.AuctionHouseFilterCategory = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-AuctionHouseFilter-043",
+    "statement": "+ CurrentExpansionOnly",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.AuctionHouseFilter / + CurrentExpansionOnly: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:759:    CurrentExpansionOnly = 3,"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-BattlePetSources-044",
+    "statement": "Enum.BattlePetSources",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.BattlePetSources: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:1339:if not Enum.BattlePetSources then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:1340:  Enum.BattlePetSources = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:1356:if not Enum.BattlePetSourcesMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:1357:  Enum.BattlePetSourcesMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-BattlePetSources-045",
+    "statement": "+ TradingPost",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.BattlePetSources / + TradingPost: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:1349:    TradingPost = 11,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:1670:    TradingPost = 1024,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:1690:    TradingPost = 6,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:14586:    TradingPost = 10,",
+      "src/lua_api/globals/missing_surface/player_info.rs:52:        \"IsTradingPostAvailable\","
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyDestroyReason-046",
+    "statement": "Enum.CurrencyDestroyReason",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencyDestroyReason: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs:28:    (\"CurrencyDestroyReason\", &[(\"CraftingOrderReagent\", 16)]),",
+      "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs:30:        \"CurrencyDestroyReasonMeta\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:4255:if not Enum.CurrencyDestroyReason then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:4256:  Enum.CurrencyDestroyReason = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:4277:if not Enum.CurrencyDestroyReasonMeta then"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyDestroyReason-047",
+    "statement": "+ Script",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencyDestroyReason / + Script: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/xml/types_support.rs:183:/// Scripts container.",
+      "src/xml/types_support.rs:185:pub struct ScriptsXml {",
+      "src/xml/types_support.rs:187:    pub on_load: Vec<ScriptBodyXml>,",
+      "src/xml/types_support.rs:189:    pub on_event: Vec<ScriptBodyXml>,",
+      "src/xml/types_support.rs:191:    pub on_update: Vec<ScriptBodyXml>,"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-048",
+    "statement": "Enum.CurrencyFlagsB",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencyFlagsB: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/c_api/patch_12_0_5_enums.rs:70:    (\"CurrencyFlagsB\", \"CurrencyBNoBonusXP\", 2048),",
+      "src/lua_api/globals/enum_data/missing_enums.lua:4330:if not Enum.CurrencyFlagsB then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:4331:  Enum.CurrencyFlagsB = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:4346:if not Enum.CurrencyFlagsBMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:4347:  Enum.CurrencyFlagsBMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-049",
+    "statement": "+ CurrencyBScaleMaxQuantityBySeasonWeeks",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencyFlagsB / + CurrencyBScaleMaxQuantityBySeasonWeeks: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:4337:    CurrencyBScaleMaxQuantityBySeasonWeeks = 64,"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyGainFlags-050",
+    "statement": "Enum.CurrencyGainFlags",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencyGainFlags: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:4362:if not Enum.CurrencyGainFlags then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:4363:  Enum.CurrencyGainFlags = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:4372:if not Enum.CurrencyGainFlagsMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:4373:  Enum.CurrencyGainFlagsMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyGainFlags-051",
+    "statement": "+ Autotracking",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencyGainFlags / + Autotracking: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:4364:    Autotracking = 8,"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-052",
+    "statement": "Enum.GossipNpcOption",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.GossipNpcOption: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:6355:if not Enum.GossipNpcOption then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:6356:  Enum.GossipNpcOption = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:6427:if not Enum.GossipNpcOptionDisplayFlags then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:6428:  Enum.GossipNpcOptionDisplayFlags = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:6433:if not Enum.GossipNpcOptionDisplayFlagsMeta then"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-053",
+    "statement": "+ ForgeMaster",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.GossipNpcOption / + ForgeMaster: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:6375:    ForgeMaster = 55,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:10891:    ForgeMaster = 66,",
+      "src/lua_api/globals/enum_data/game_system.rs:183:        \"ForgeMaster\","
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-ItemGemColor-054",
+    "statement": "Enum.ItemGemColor",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.ItemGemColor: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:8123:if not Enum.ItemGemColor then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8124:  Enum.ItemGemColor = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8159:if not Enum.ItemGemColorMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8160:  Enum.ItemGemColorMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-ItemGemColor-055",
+    "statement": "+ FutureUse",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.ItemGemColor / + FutureUse: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-ItemSocketType-056",
+    "statement": "Enum.ItemSocketType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.ItemSocketType: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:8485:if not Enum.ItemSocketType then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8486:  Enum.ItemSocketType = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8521:if not Enum.ItemSocketTypeMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8522:  Enum.ItemSocketTypeMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-ItemSocketType-057",
+    "statement": "+ FutureUse",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.ItemSocketType / + FutureUse: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-JournalInstanceFlags-058",
+    "statement": "Enum.JournalInstanceFlags",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.JournalInstanceFlags: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:8823:if not Enum.JournalInstanceFlags then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8824:  Enum.JournalInstanceFlags = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8831:if not Enum.JournalInstanceFlagsMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8832:  Enum.JournalInstanceFlagsMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-JournalInstanceFlags-059",
+    "statement": "+ DoNotDisplayInstance",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.JournalInstanceFlags / + DoNotDisplayInstance: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:8825:    DoNotDisplayInstance = 4,"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-LFGListFilter-060",
+    "statement": "Enum.LFGListFilter",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.LFGListFilter: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:8910:if not Enum.LFGListFilter then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8911:  Enum.LFGListFilter = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8923:if not Enum.LFGListFilterMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8924:  Enum.LFGListFilterMeta = {",
+      "src/lua_api/state_types/collections.rs:147:    /// Bitmask matching Enum.LFGListFilter values (PvE=1, PvP=2, etc.)."
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-LFGListFilter-061",
+    "statement": "+ Timerunning",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.LFGListFilter / + Timerunning: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/loader/mod.rs:780:            \"Blizzard_TimerunningCharacterCreate\",",
+      "src/lua_api/globals/utility_system_spell/spell_api.rs:579:        \"PlayerGetTimerunningSeasonID\",",
+      "src/lua_api/globals/utility_system_spell/spell_api.rs:584:        \"PlayerIsTimerunning\",",
+      "src/lua_api/globals/admin.rs:207:        .set_function(\"SetTimerunningSeasonID\", set_timerunning_season_id)?",
+      "src/loader/tests/wow_api_globals/housing_result.rs:113:    \"TimerunningNotAllowed\","
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-LFGListFilter-062",
+    "statement": "+ CurrentExpansion",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.LFGListFilter / + CurrentExpansion: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/game_system.rs:668:        (\"CurrentExpansion\", 64),",
+      "src/lua_api/globals/enum_data/missing_enums.lua:759:    CurrentExpansionOnly = 3,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:8912:    CurrentExpansion = 32,"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-LFGListFilter-063",
+    "statement": "+ CurrentSeason",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.LFGListFilter / + CurrentSeason: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:117:if rawget(PVPUtil, \"GetCurrentSeasonNumber\") == nil then",
+      "src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:118:    function PVPUtil.GetCurrentSeasonNumber()",
+      "src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:214:                if PVPUtil.GetCurrentSeasonNumber() ~= 0 then return \"season\" end",
+      "src/lua_api/globals/missing_surface/mythic_plus.rs:6://! - `GetCurrentSeason()` — returns the current season id number.",
+      "src/lua_api/globals/missing_surface/mythic_plus.rs:72:    table_set_rust_fn_static(state, ns, \"GetCurrentSeason\", get_current_season)?;"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-LFGListFilter-064",
+    "statement": "+ NotCurrentSeason",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.LFGListFilter / + NotCurrentSeason: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:8914:    NotCurrentSeason = 128,",
+      "src/lua_api/globals/enum_data/game_system.rs:667:        (\"NotCurrentSeason\", 32),"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-065",
+    "statement": "Enum.PlayerInteractionType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.PlayerInteractionType: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/c_api/c_player_interaction_manager.rs:7://!   `Enum.PlayerInteractionType` values whose corresponding NPC dialog is",
+      "src/c_api/c_player_interaction_manager.rs:23:/// `Enum.PlayerInteractionType.AlliedRaceDetailsGiver`. Sourced from",
+      "src/lua_api/globals/admin_interactions.rs:45:        .expect(\"PlayerInteractionType enum entry must exist\") as i32",
+      "src/lua_api/globals/enum_data/missing_enums.lua:10867:if not Enum.PlayerInteractionType then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:10868:  Enum.PlayerInteractionType = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-066",
+    "statement": "+ ForgeMaster",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.PlayerInteractionType / + ForgeMaster: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/game_system.rs:183:        \"ForgeMaster\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:6375:    ForgeMaster = 55,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:10891:    ForgeMaster = 66,"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-PowerType-067",
+    "statement": "Enum.PowerType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.PowerType: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/mists/compat_bootstrap.lua:1656:    local shadowOrbs = UnitPower(\"player\", Enum.PowerType.ShadowOrbs) or 0",
+      "src/bin/wow_cli/gen_spells_power.rs:74:/// PowerType(11), RequiredAuraSpellID(12), OptionalCost(13), SpellID(14)",
+      "src/bin/wow_cli/gen_spells.rs:8://!   - SpellPower.csv (ID, OrderIndex, ManaCost, PowerCostPct, PowerType,",
+      "src/c_api/secrets_queries.rs:28:    (\"GetPowerTypeSecrecy\", get_power_type_secrecy),",
+      "src/lua_api/state_types/character_world.rs:245:    /// Secondary power pools keyed by Enum.PowerType value (e.g. Holy Power)."
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-PowerType-068",
+    "statement": "+ Balance",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.PowerType / + Balance: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/env_init/runtime_surface_bootstrap.lua:547:  return __wow_store_state.confirmationProductID, \"Blizzard Balance\", nil, nil, 10, 0",
+      "src/lua_api/env_init/runtime_surface_bootstrap.lua:607:  confirmation_wallet_name = \"Blizzard Balance\",",
+      "src/lua_api/env_init/runtime_surface_bootstrap.lua:966:    __wow_store_secure_state.confirmation_wallet_name = \"Blizzard Balance\"",
+      "src/lua_api/env_init/runtime_surface_bootstrap.lua:1009:  __wow_store_secure_state.confirmation_wallet_name = \"Blizzard Balance\"",
+      "src/c_api/c_wowtoken_secure.rs:14:    (\"CanRedeemForBalance\", c_wowtoken_can_redeem_for_balance),"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-069",
+    "statement": "Enum.TooltipDataLineType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.TooltipDataLineType: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/ptr/tooltip_data_line_type.lua:2:Enum.TooltipDataLineType = {",
+      "src/ptr/tooltip_data_line_type.lua:56:Enum.TooltipDataLineTypeMeta = { MinValue = 0, MaxValue = 51, NumValues = 52 }",
+      "src/loader/tests/wow_api_tooltip_units.rs:69:                and playerNameLine.type == Enum.TooltipDataLineType.UnitName",
+      "src/loader/tests/wow_api_tooltip_units.rs:83:                and targetNameLine.type == Enum.TooltipDataLineType.UnitName",
+      "src/loader/tests/wow_api_tooltip_units.rs:123:                and nameLine.type == Enum.TooltipDataLineType.SpellName"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-070",
+    "statement": "+ GemSocketEnchantment",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.TooltipDataLineType / + GemSocketEnchantment: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/ptr/tooltip_data_line_type.lua:33:    GemSocketEnchantment = 30,",
+      "src/lua_api/env_init/enums.rs:131:    GemSocketEnchantment = 40,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:13339:    GemSocketEnchantment = 30,",
+      "src/loader/tests/wow_api_globals/patch_12_0_0_tooltip_data_line_type_enums.rs:54:                    GemSocketEnchantment = 40,"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-TransmogSource-071",
+    "statement": "Enum.TransmogSource",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.TransmogSource: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/missing_surface/transmog_collection.rs:34:    (\"GetNumTransmogSources\", get_num_transmog_sources),",
+      "src/lua_api/globals/missing_surface/transmog_collection.rs:133:            (\"IsValidTransmogSource\", is_valid_transmog_source),",
+      "src/lua_api/globals/enum_data/missing_enums.lua:14576:if not Enum.TransmogSource then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:14577:  Enum.TransmogSource = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:14592:if not Enum.TransmogSourceMeta then"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-TransmogSource-072",
+    "statement": "+ TradingPost",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.TransmogSource / + TradingPost: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:1349:    TradingPost = 11,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:1670:    TradingPost = 1024,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:1690:    TradingPost = 6,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:14586:    TradingPost = 10,",
+      "src/lua_api/globals/missing_surface/player_info.rs:52:        \"IsTradingPostAvailable\","
+    ]
+  },
+  {
+    "source_id": "source-context-074",
+    "statement": "=== Structures ===",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-BNetGameAccountInfo-075",
+    "statement": "BNetGameAccountInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "BNetGameAccountInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": [
+      "src/c_api/c_battle_net.rs:16://!   `BNetGameAccountInfo` table for the game account matching the given",
+      "src/c_api/c_battle_net.rs:620:/// Build a `BNetGameAccountInfo` Lua table from a `BnetGameAccount`."
+    ]
+  },
+  {
+    "source_id": "structures-BNetGameAccountInfo-076",
+    "statement": "+ timerunningSeasonID",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "BNetGameAccountInfo / + timerunningSeasonID: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": [
+      "src/c_api/c_battle_net.rs:685:        \"timerunningSeasonID\",",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:13:    CharacterSelect_SetSelectedCharacterName = function(name, timerunningSeasonID)",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:17:        return original(name, timerunningSeasonID)",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:38:            CharacterSelect_SetSelectedCharacterName = function(name, timerunningSeasonID)",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:41:                    timerunningSeasonID = timerunningSeasonID,"
+    ]
+  },
+  {
+    "source_id": "structures-BestDungeonScoreMapInfo-077",
+    "statement": "BestDungeonScoreMapInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "BestDungeonScoreMapInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-BestDungeonScoreMapInfo-078",
+    "statement": "+ bestRunDurationMs",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "BestDungeonScoreMapInfo / + bestRunDurationMs: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": [
+      "src/c_api/c_lfg_list_search.rs:46:            (\"bestRunDurationMs\", score.best_run_duration_ms),"
+    ]
+  },
+  {
+    "source_id": "structures-BestDungeonScoreMapInfo-079",
+    "statement": "+ bestLevelIncrement",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "BestDungeonScoreMapInfo / + bestLevelIncrement: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": [
+      "src/c_api/c_lfg_list_search.rs:47:            (\"bestLevelIncrement\", f64::from(score.best_level_increment)),"
+    ]
+  },
+  {
+    "source_id": "structures-ClubMemberInfo-080",
+    "statement": "ClubMemberInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "ClubMemberInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-ClubMemberInfo-081",
+    "statement": "+ timerunningSeasonID",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "ClubMemberInfo / + timerunningSeasonID: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": [
+      "src/c_api/c_battle_net.rs:685:        \"timerunningSeasonID\",",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:13:    CharacterSelect_SetSelectedCharacterName = function(name, timerunningSeasonID)",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:17:        return original(name, timerunningSeasonID)",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:38:            CharacterSelect_SetSelectedCharacterName = function(name, timerunningSeasonID)",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:41:                    timerunningSeasonID = timerunningSeasonID,"
+    ]
+  },
+  {
+    "source_id": "structures-DigSiteMapInfo-082",
+    "statement": "DigSiteMapInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "DigSiteMapInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-DigSiteMapInfo-083",
+    "statement": "+ poiBlobID",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "DigSiteMapInfo / + poiBlobID: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo-084",
+    "statement": "GroupFinderActivityInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "GroupFinderActivityInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo-085",
+    "statement": "+ isHeroicActivity",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "GroupFinderActivityInfo / + isHeroicActivity: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo-086",
+    "statement": "+ isNormalActivity",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "GroupFinderActivityInfo / + isNormalActivity: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-HTMLContentNode-087",
+    "statement": "HTMLContentNode",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "HTMLContentNode: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-HTMLContentNode-088",
+    "statement": "#: align, Type: TBFStyleFlags -> JustifyHorizontal",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "HTMLContentNode / #: align, Type: TBFStyleFlags -> JustifyHorizontal: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": [
+      "src/toc/mod.rs:24:    /// Files annotated with `[Bootstrap]`, aligned with `files`.",
+      "src/iced_app/message_frame_render.rs:12:/// Render stored messages for a MessageFrame, bottom-aligned within bounds.",
+      "src/iced_app/message_frame_render.rs:49:    // Render bottom-aligned: walk measured messages from oldest to newest",
+      "src/iced_app/message_frame_render.rs:165:        TextJustify::Left, // top-aligned within slot",
+      "src/widget/frame_types.rs:253:    /// Left/Top alignment."
+    ]
+  },
+  {
+    "source_id": "structures-LfgSearchResultData-089",
+    "statement": "LfgSearchResultData",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "LfgSearchResultData: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-LfgSearchResultData-090",
+    "statement": "+ leaderBestDungeonScoreInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "LfgSearchResultData / + leaderBestDungeonScoreInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo-091",
+    "statement": "PerksVendorItemInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "PerksVendorItemInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo-092",
+    "statement": "+ doesNotExpire",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "PerksVendorItemInfo / + doesNotExpire: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo-093",
+    "statement": "+ mountTypeName",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "PerksVendorItemInfo / + mountTypeName: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": [
+      "src/c_api/c_catalog_shop_products.rs:305:        (\"mountTypeName\", &record.mount_type_name),",
+      "src/lua_api/workarounds/temporary/housing_catalog_state.lua:162:    mountTypeName = \"\",",
+      "src/lua_api/workarounds/temporary/housing_catalog_state.lua:216:    mountTypeName = \"\",",
+      "src/lua_api/workarounds/temporary/housing_catalog_state.lua:269:    mountTypeName = \"\","
+    ]
+  },
+  {
+    "source_id": "structures-QuestInfo-094",
+    "statement": "QuestInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "QuestInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": [
+      "src/lua_api/sim_substates/quest_log.rs:28:    /// Optional spell objective shown in `QuestInfo_ShowSpecialObjectives`.",
+      "src/lua_api/mod.rs:87:    AddonEnableSnapshot, AddonInfo, AdventureMapInset, AdventureMapQuestInfo,",
+      "src/lua_api/globals/adventure_map.rs:7://! `GetQuestOfferInfo()`, `GetQuestInfo()`, `GetQuestPortraitInfo()`,",
+      "src/lua_api/globals/adventure_map.rs:36:    (\"GetQuestInfo\", get_quest_info),",
+      "src/loader/tests/wow_api.rs:468:        \"GetContainerItemQuestInfo\","
+    ]
+  },
+  {
+    "source_id": "structures-QuestInfo-095",
+    "statement": "+ isAbandonOnDisable",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "QuestInfo / + isAbandonOnDisable: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-WhoInfo-096",
+    "statement": "WhoInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "WhoInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": [
+      "src/lua_api/globals/missing_surface/friend_list.rs:72:    table_set_rust_fn_static(state, table_ref, \"GetWhoInfo\", get_who_info)?;"
+    ]
+  },
+  {
+    "source_id": "structures-WhoInfo-097",
+    "statement": "+ timerunningSeasonID",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "WhoInfo / + timerunningSeasonID: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions.",
+    "implementation_candidates": [
+      "src/c_api/c_battle_net.rs:685:        \"timerunningSeasonID\",",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:13:    CharacterSelect_SetSelectedCharacterName = function(name, timerunningSeasonID)",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:17:        return original(name, timerunningSeasonID)",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:38:            CharacterSelect_SetSelectedCharacterName = function(name, timerunningSeasonID)",
+      "src/lua_api/workarounds/temporary/character_select_selected_name.rs:41:                    timerunningSeasonID = timerunningSeasonID,"
+    ]
+  }
+]

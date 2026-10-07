@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StableUI/Blizzard_StableUI.lua:306:	C_StableInfo.ClosePetStables();

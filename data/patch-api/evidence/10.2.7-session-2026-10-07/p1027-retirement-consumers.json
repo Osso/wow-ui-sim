@@ -1,0 +1,69 @@
+[
+  {
+    "symbol": "ClosePetStables",
+    "kind": "global",
+    "command": [
+      "rg",
+      "-n",
+      "(^|[^A-Za-z0-9_.:])ClosePetStables\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--glob",
+      "*.lua"
+    ],
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/StableInfoDocumentation.lua:11:\t\t\tName = \"ClosePetStables\","
+    ],
+    "stderr": ""
+  },
+  {
+    "symbol": "ClosePetStables",
+    "kind": "qualified",
+    "command": [
+      "rg",
+      "-n",
+      "C_(StableInfo|PvP)\\.ClosePetStables\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--glob",
+      "*.lua"
+    ],
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StableUI/Blizzard_StableUI.lua:306:\tC_StableInfo.ClosePetStables();"
+    ],
+    "stderr": ""
+  },
+  {
+    "symbol": "GetWorldPVPAreaInfo",
+    "kind": "global",
+    "command": [
+      "rg",
+      "-n",
+      "(^|[^A-Za-z0-9_.:])GetWorldPVPAreaInfo\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--glob",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "symbol": "GetWorldPVPAreaInfo",
+    "kind": "qualified",
+    "command": [
+      "rg",
+      "-n",
+      "C_(StableInfo|PvP)\\.GetWorldPVPAreaInfo\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--glob",
+      "*.lua"
+    ],
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua:582:\t\t\t\tlocal worldPvpInfo = C_PvP.GetWorldPVPAreaInfo(index);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua:647:\t\t\tlocal worldPvpInfo = C_PvP.GetWorldPVPAreaInfo(index);"
+    ],
+    "stderr": ""
+  }
+]

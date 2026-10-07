@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 10.2.7 page audit
+
+[Audit](investigations/patch-10-2-7-api-audit.md) accounts for 104 inventory + 83 extract occurrences, three bounded runtime closures, four corrected interface probes and 36 exact gaps. Sixteen isolated sweeps, negative control, stable state/event and cached prefork proof pass; final build/startup gates pending. All later inputs preserved.
+
 ## [2026-10-07] evidence | 11.0.0 page audit
 
 [Audit](investigations/patch-11-0-0-api-audit.md) accounts for 495 inventory + 347 extract occurrences, nine bounded retirements and 166 exact publication gaps. Fifteen isolated sweeps, exact negative control, RED/GREEN, two one-case preforks, formatting, Mists check and startup `[]` pass. Artifact validation preserves every source ID/proof boundary and all later inputs.

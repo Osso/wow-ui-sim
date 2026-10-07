@@ -1,0 +1,903 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "10.2.7",
+  "source": {
+    "path": "data/patch-api/sources/10.2.7-api-changes.wikitext",
+    "revid": 6268738,
+    "sha256": "ccc82e24d9752949029abe27a38138463b304ef7f9ecfaf3b2767481bdf53182"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 43,
+      "parsed_count": 43
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 12,
+      "parsed_count": 12
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 11,
+      "parsed_count": 11
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 11,
+      "parsed_count": 11
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_ActionBar.GetSpell-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ActionBar.GetSpell",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_AreaPoiInfo.GetDragonridingRacesForMap-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AreaPoiInfo.GetDragonridingRacesForMap",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.IsTimerunningPlayer-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.IsTimerunningPlayer",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_Club.SetCommunityID-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Club.SetCommunityID",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_ClubFinder.IsCommunityFinderEnabled-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClubFinder.IsCommunityFinderEnabled",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_EncounterJournal.InitalizeSelectedTier-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EncounterJournal.InitalizeSelectedTier",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemGemID-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemGemID",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemInventorySlotKey-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemInventorySlotKey",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemLearnTransmogSet-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemLearnTransmogSet",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemNumAddedSockets-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemNumAddedSockets",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemNumSockets-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemNumSockets",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.CanPlayerUseScenarioFinder-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGInfo.CanPlayerUseScenarioFinder",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_LFGList.CanCreateScenarioGroup-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.CanCreateScenarioGroup",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_LFGList.CreateScenarioListing-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.CreateScenarioListing",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_LFGList.GetAdvancedFilter-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.GetAdvancedFilter",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_LFGList.GetApplicantBestDungeonScore-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.GetApplicantBestDungeonScore",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_LFGList.SaveAdvancedFilter-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.SaveAdvancedFilter",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_LFGList.SetSearchToScenarioID-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.SetSearchToScenarioID",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.IsAttackAnimToggleEnabled-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.IsAttackAnimToggleEnabled",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.IsMountSpecialAnimToggleEnabled-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.IsMountSpecialAnimToggleEnabled",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_PetInfo.PetAbandon-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetInfo.PetAbandon",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_PetInfo.PetRename-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetInfo.PetRename",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.IsQuestFromContentPush-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.IsQuestFromContentPush",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.UpdateCampaignHeaders-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.UpdateCampaignHeaders",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_Reincarnation.GetReincarnatingCharacter-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Reincarnation.GetReincarnatingCharacter",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_Reincarnation.IsReincarnating-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Reincarnation.IsReincarnating",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_Reincarnation.StartReincarnation-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Reincarnation.StartReincarnation",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_Reincarnation.StopReincarnation-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Reincarnation.StopReincarnation",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.ClosePetStables-77",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_StableInfo.ClosePetStables",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.GetActivePetList-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StableInfo.GetActivePetList",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.GetStabledPetList-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StableInfo.GetStabledPetList",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.GetStablePetFoodTypes-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StableInfo.GetStablePetFoodTypes",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.GetStablePetInfo-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StableInfo.GetStablePetInfo",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.IsAtStableMaster-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StableInfo.IsAtStableMaster",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.IsPetFavorite-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StableInfo.IsPetFavorite",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.PickupStablePet-84",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StableInfo.PickupStablePet",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.SetPetFavorite-85",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StableInfo.SetPetFavorite",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.SetPetSlot-86",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StableInfo.SetPetSlot",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-global-api-C_TooltipInfo.GetItemByItemModifiedAppearanceID-87",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TooltipInfo.GetItemByItemModifiedAppearanceID",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-global-api-C_Transmog.GetAllSetAppearancesByID-88",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Transmog.GetAllSetAppearancesByID",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-global-api-CanShowSetRoleButton-89",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanShowSetRoleButton",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-issecurevalue-90",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "issecurevalue",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-PlayerGetTimerunningSeasonID-91",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PlayerGetTimerunningSeasonID",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-ClosePetStables-94",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ClosePetStables",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-global-api-GetNumWorldPVPAreas-95",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumWorldPVPAreas",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-global-api-GetStablePetFoodTypes-96",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetStablePetFoodTypes",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-global-api-GetStablePetInfo-97",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetStablePetInfo",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-global-api-GetWorldPVPAreaInfo-98",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetWorldPVPAreaInfo",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-global-api-IsAtStableMaster-99",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsAtStableMaster",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-global-api-PetAbandon-100",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PetAbandon",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-global-api-PetCanBeRenamed-101",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PetCanBeRenamed",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-global-api-PetRename-102",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PetRename",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-global-api-PickupStablePet-103",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PickupStablePet",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-global-api-SetPetSlot-104",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetPetSlot",
+      "annotation": "",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-global-api-SetPetStablePaperdoll-105",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetPetStablePaperdoll",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-108",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_ChatInfo.RegisterAddonMessagePrefix",
+      "annotation": "# ret 1: successfulRequest -> result",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.SendAddonMessage-110",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_ChatInfo.SendAddonMessage",
+      "annotation": "# ret 1: success -> result",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.SendAddonMessageLogged-112",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_ChatInfo.SendAddonMessageLogged",
+      "annotation": "# ret 1: success -> result",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.CanChangeTalents-114",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_ClassTalents.CanChangeTalents",
+      "annotation": "# ret 3: changeError, Nilable: false -> true",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.LoadConfig-116",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_ClassTalents.LoadConfig",
+      "annotation": "# ret 2: changeError, Nilable: false -> true",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-C_LFGList.Search-118",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_LFGList.Search",
+      "annotation": "+ arg 6: advancedFilter",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.DoCountdown-120",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_PartyInfo.DoCountdown",
+      "annotation": "+ ret 1: success",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-global-api-C_WorldLootObject.IsWorldLootObject-122",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_WorldLootObject.IsWorldLootObject",
+      "annotation": "# arg 1: nameplateString -> unitToken",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-124",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_WorldLootObject.OnWorldLootObjectClick",
+      "annotation": "# arg 1: nameplateString -> unitToken",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-global-api-StartAttack-126",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "StartAttack",
+      "annotation": "# arg 1: name, Default: 0",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-global-api-UnitPosition-128",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitPosition",
+      "annotation": "# ret 1: x -> positionX\n# ret 2: y -> positionY\n# ret 3: z -> positionZ",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:CollapsesLayout-140",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScriptRegion:CollapsesLayout",
+      "annotation": "",
+      "wikitext_line": 140
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:IsCollapsed-141",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScriptRegion:IsCollapsed",
+      "annotation": "",
+      "wikitext_line": 141
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:SetCollapsesLayout-142",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScriptRegion:SetCollapsesLayout",
+      "annotation": "",
+      "wikitext_line": 142
+    },
+    {
+      "id": "wt-widgets-ModelSceneActor:DressPlayerSlot-143",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ModelSceneActor:DressPlayerSlot",
+      "annotation": "",
+      "wikitext_line": 143
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:SetProtected-146",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "ScriptRegion:SetProtected",
+      "annotation": "",
+      "wikitext_line": 146
+    },
+    {
+      "id": "wt-widgets-FontInstance:GetJustifyH-149",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "FontInstance:GetJustifyH",
+      "annotation": "# ret 1: justifyH, Type: TBFStyleFlags -> JustifyHorizontal",
+      "wikitext_line": 149
+    },
+    {
+      "id": "wt-widgets-FontInstance:GetJustifyV-151",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "FontInstance:GetJustifyV",
+      "annotation": "# ret 1: justifyV, Type: TBFStyleFlags -> JustifyVertical",
+      "wikitext_line": 151
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:GetPoint-153",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "ScriptRegion:GetPoint",
+      "annotation": "+ arg 2: resolveCollapsed",
+      "wikitext_line": 153
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:GetPointByName-155",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "ScriptRegion:GetPointByName",
+      "annotation": "+ arg 2: resolveCollapsed",
+      "wikitext_line": 155
+    },
+    {
+      "id": "wt-widgets-FontInstance:SetJustifyH-157",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "FontInstance:SetJustifyH",
+      "annotation": "# arg 1: justifyH, Type: TBFStyleFlags -> JustifyHorizontal",
+      "wikitext_line": 157
+    },
+    {
+      "id": "wt-widgets-FontInstance:SetJustifyV-159",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "FontInstance:SetJustifyV",
+      "annotation": "# arg 1: justifyV, Type: TBFStyleFlags -> JustifyVertical",
+      "wikitext_line": 159
+    },
+    {
+      "id": "wt-events-CANCEL_PLAYER_COUNTDOWN-169",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CANCEL_PLAYER_COUNTDOWN",
+      "annotation": "",
+      "wikitext_line": 169
+    },
+    {
+      "id": "wt-events-ECLIPSE_DIRECTION_CHANGE-170",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ECLIPSE_DIRECTION_CHANGE",
+      "annotation": "",
+      "wikitext_line": 170
+    },
+    {
+      "id": "wt-events-GAME_ENVIRONMENT_SWITCHED-171",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GAME_ENVIRONMENT_SWITCHED",
+      "annotation": "",
+      "wikitext_line": 171
+    },
+    {
+      "id": "wt-events-HARDCORE_DEATHS-172",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HARDCORE_DEATHS",
+      "annotation": "",
+      "wikitext_line": 172
+    },
+    {
+      "id": "wt-events-PET_INFO_UPDATE-173",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PET_INFO_UPDATE",
+      "annotation": "",
+      "wikitext_line": 173
+    },
+    {
+      "id": "wt-events-PET_STABLE_FAVORITES_UPDATED-174",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PET_STABLE_FAVORITES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 174
+    },
+    {
+      "id": "wt-events-SCRAPPING_MACHINE_ITEM_ADDED-175",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCRAPPING_MACHINE_ITEM_ADDED",
+      "annotation": "",
+      "wikitext_line": 175
+    },
+    {
+      "id": "wt-events-SCRAPPING_MACHINE_ITEM_REMOVED-176",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCRAPPING_MACHINE_ITEM_REMOVED",
+      "annotation": "",
+      "wikitext_line": 176
+    },
+    {
+      "id": "wt-events-START_PLAYER_COUNTDOWN-177",
+      "section": "events",
+      "direction": "added",
+      "symbol": "START_PLAYER_COUNTDOWN",
+      "annotation": "",
+      "wikitext_line": 177
+    },
+    {
+      "id": "wt-events-WORLD_LOOT_OBJECT_INFO_UPDATED-178",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WORLD_LOOT_OBJECT_INFO_UPDATED",
+      "annotation": "",
+      "wikitext_line": 178
+    },
+    {
+      "id": "wt-events-WORLD_LOOT_OBJECT_SWAP_INVENTORY_TYPE_UPDATED-179",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WORLD_LOOT_OBJECT_SWAP_INVENTORY_TYPE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 179
+    },
+    {
+      "id": "wt-events-PET_STABLE_UPDATE_PAPERDOLL-182",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PET_STABLE_UPDATE_PAPERDOLL",
+      "annotation": "",
+      "wikitext_line": 182
+    },
+    {
+      "id": "wt-events-SCRAPPING_MACHINE_ITEM_REMOVED_OR_CANCELLED-183",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "SCRAPPING_MACHINE_ITEM_REMOVED_OR_CANCELLED",
+      "annotation": "",
+      "wikitext_line": 183
+    },
+    {
+      "id": "wt-events-PET_FORCE_NAME_DECLENSION-186",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "PET_FORCE_NAME_DECLENSION",
+      "annotation": "+ petNumber",
+      "wikitext_line": 186
+    },
+    {
+      "id": "wt-events-TRADE_SKILL_FAVORITES_CHANGED-188",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "TRADE_SKILL_FAVORITES_CHANGED",
+      "annotation": "+ recipeSpellID",
+      "wikitext_line": 188
+    },
+    {
+      "id": "wt-cvars-addonLoadDebugging-198",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "addonLoadDebugging",
+      "annotation": "",
+      "wikitext_line": 198,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-disableUserAddonsByDefault-199",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "disableUserAddonsByDefault",
+      "annotation": "",
+      "wikitext_line": 199,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-dragonRidingRacesFilter-200",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "dragonRidingRacesFilter",
+      "annotation": "",
+      "wikitext_line": 200,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-lfgListAdvancedFilterMinRating-201",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lfgListAdvancedFilterMinRating",
+      "annotation": "",
+      "wikitext_line": 201,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-lfgListAdvancedFilters-202",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lfgListAdvancedFilters",
+      "annotation": "",
+      "wikitext_line": 202,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-lfgListAdvancedFiltersActivities-203",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lfgListAdvancedFiltersActivities",
+      "annotation": "",
+      "wikitext_line": 203
+    },
+    {
+      "id": "wt-cvars-loadDeprecationFallbacks-204",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "loadDeprecationFallbacks",
+      "annotation": "",
+      "wikitext_line": 204,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-petStableShowExoticOnly-205",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "petStableShowExoticOnly",
+      "annotation": "",
+      "wikitext_line": 205,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-petStableSort-206",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "petStableSort",
+      "annotation": "",
+      "wikitext_line": 206,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-seenTimerunningFirstLoginPopup-207",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "seenTimerunningFirstLoginPopup",
+      "annotation": "",
+      "wikitext_line": 207,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-GamePadPlunderstormDefaults-208",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadPlunderstormDefaults",
+      "annotation": "",
+      "wikitext_line": 208,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-minimapTrackedInfov2-211",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "minimapTrackedInfov2",
+      "annotation": "",
+      "wikitext_line": 211
+    }
+  ]
+}

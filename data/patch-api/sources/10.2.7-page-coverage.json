@@ -1,0 +1,1293 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "10.2.7",
+  "source_register": "data/patch-api/sources/10.2.7-wikitext-register.json",
+  "source_sha256": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045",
+  "audit_status": "in-progress",
+  "proof_policy": "Complete occurrence accounting against current retail 12.1.0; fifteen later registers supersede. Publication/absence/default/event registerability is not signatures, outputs, security or native parity. All substantive extract statements remain pending; candidates confer no runtime credit. Three bounded closures and four probe corrections are distinct. Local targeted proof only; no independent/native acceptance.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-10-2-7",
+      "symbols": [
+        "104 inventory occurrences"
+      ],
+      "scope": "68 OK / 36 retained exact gaps; stable-close model and two unused retail global retirements; four FontInstance probe corrections",
+      "spec": "docs/specs/patch-10-2-7-publication-sweep.md",
+      "tests": [
+        "tests/patch_10_2_7_publication_sweep.rs",
+        "tests/patch_10_2_7_publication_fixes.rs",
+        "tests/patch_10_2_7_cached_surfaces.rs"
+      ],
+      "compiled_revision": "3b2ae8efc",
+      "ledger": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-sweep-result.json",
+      "proof": "Sixteen isolated sweeps pass exact fixtures; two behavior tests RED/GREEN, one cached Game prefork and existing PvP successor test pass. One-row negative control adds only stable-close absence failure (36 to 37), expected exit 101. Format/Mists/startup final gates pending."
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/10.2.7-api-changes.txt",
+    "sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+    "wikitext_revid": 6268738,
+    "wikitext_sha256": "ccc82e24d9752949029abe27a38138463b304ef7f9ecfaf3b2767481bdf53182",
+    "extract_tool": "tools/extract_patch_non_inventory.py"
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_ActionBar.GetSpell-49",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AreaPoiInfo.GetDragonridingRacesForMap-50",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Dragonriding race POI classification/map membership needs host race records and explicit namespace filtering; generic POI lists do not establish this query."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.IsTimerunningPlayer-51",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.SetCommunityID-52",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Selected community ID requires club selection/lifetime state and observable consumer updates, not a getter table or inert setter."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.IsCommunityFinderEnabled-53",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.InitalizeSelectedTier-54",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetItemGemID-55",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Gem lookup requires concrete item-instance/link socket index and gem IDs; intrinsic item metadata is not instance socket contents."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetItemInventorySlotKey-56",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Inventory slot-key derivation requires the documented key contract for item locations/equipment; equipment type names do not establish a key."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetItemLearnTransmogSet-57",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Learning item-to-transmog-set mapping and spell/collection ownership need explicit data; item ID parsing alone cannot produce the set."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetItemNumAddedSockets-58",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Added sockets must be distinguished from base sockets using item-instance bonus/modification data; generated intrinsic metadata is insufficient."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetItemNumSockets-59",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Socket count needs intrinsic and item-instance socket metadata, including modifications; current generic item queries do not establish it."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.CanPlayerUseScenarioFinder-60",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Scenario finder availability needs level/account/queue access policy; generic dungeon state does not establish permission."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.CanCreateScenarioGroup-61",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.CreateScenarioListing-62",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Scenario listing creation needs scenario selection, validated host listing state and creation/event behavior; generic premade listing fields are not this producer."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetAdvancedFilter-63",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetApplicantBestDungeonScore-64",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Applicant-specific best dungeon score requires populated score history/DTO inputs and missing-applicant handling; generic applicant tables are not evidence."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.SaveAdvancedFilter-65",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.SetSearchToScenarioID-66",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Scenario ID search state and filter/result refresh need an explicit model; generic LFG search publication does not establish scenario binding."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.IsAttackAnimToggleEnabled-67",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Perks preview attack-animation toggle availability requires preview state; 3D visualization is intentionally unsupported. Do not add plausible booleans."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.IsMountSpecialAnimToggleEnabled-68",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Mount-special preview toggle availability requires mount/preview state; 3D visualization is intentionally unsupported. Do not add plausible booleans."
+    },
+    {
+      "source_id": "wt-global-api-C_PetInfo.PetAbandon-69",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Pet abandonment requires active owned-pet identity, removal and events; stable-open flag alone cannot implement ownership mutation."
+    },
+    {
+      "source_id": "wt-global-api-C_PetInfo.PetRename-70",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Pet rename requires selected owned-pet identity, rename permission/validation and notifications, not a string setter."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.IsQuestFromContentPush-71",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Content-push quest classification needs an explicit quest source flag/host records; ordinary quest membership is insufficient."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.UpdateCampaignHeaders-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Campaign header regrouping and events need populated campaign/quest grouping metadata; no-op refresh is not meaningful."
+    },
+    {
+      "source_id": "wt-global-api-C_Reincarnation.GetReincarnatingCharacter-73",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_Reincarnation.IsReincarnating-74",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_Reincarnation.StartReincarnation-75",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_Reincarnation.StopReincarnation-76",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.ClosePetStables-77",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Bounded stable close state/event behavior proven by new tests and cached Game prefork; not full pet stable or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.GetActivePetList-78",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Active stable pet slots require owned-pet slot/DTO records; existing open and bonus-slot booleans contain no pet roster."
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.GetStabledPetList-79",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Stored stable pet slots require owned-pet slot/DTO records; existing open and bonus-slot booleans contain no pet roster."
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.GetStablePetFoodTypes-80",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Selected pet diet needs creature-family/pet metadata; stable-open state is unrelated."
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.GetStablePetInfo-81",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Pet info requires populated identity/family/display/slot metadata and selected pet state; stable-open state is unrelated."
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.IsAtStableMaster-82",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Stable-master interaction requires current NPC interaction/access state, not just whether the stable UI is open. IsAtPetStable is not an established semantic alias."
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.IsPetFavorite-83",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Favorite lookup needs stable-owned-pet favorite state and valid identity handling; no roster/favorites model."
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.PickupStablePet-84",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Stable pet pickup requires cursor payload and active/stored slot ownership transitions; opening/closing the panel is insufficient."
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.SetPetFavorite-85",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Favorite mutation needs pet identity, persistence and PET_STABLE_FAVORITES_UPDATED notification; no roster/favorites model."
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.SetPetSlot-86",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Slot mutation needs owned-pet identity, valid active/stored slots and events; stable-open flag alone is not a slot model."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetItemByItemModifiedAppearanceID-87",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Modified appearance ID must resolve to concrete item tooltip data and source ownership; generic item tooltip renderer is not an appearance-to-item resolver."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.GetAllSetAppearancesByID-88",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-CanShowSetRoleButton-89",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-issecurevalue-90",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Secure-value taint classification is distinct from secret-value classification. Rilua stack/object taint APIs are candidates, but no public secure-value provenance contract is proven; do not alias issecretvalue."
+    },
+    {
+      "source_id": "wt-global-api-PlayerGetTimerunningSeasonID-91",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-ClosePetStables-94",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetNumWorldPVPAreas-95",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetStablePetFoodTypes-96",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetStablePetInfo-97",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetWorldPVPAreaInfo-98",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-IsAtStableMaster-99",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-PetAbandon-100",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-PetCanBeRenamed-101",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-PetRename-102",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-PickupStablePet-103",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SetPetSlot-104",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SetPetStablePaperdoll-105",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-108",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No retail prefix-registration producer: require prefix registry, enum return validation and registration limits. Outbound addon_messages chat producers are gated to client-wowforever, not retail."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.SendAddonMessage-110",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No explicit retail producer: need registered per-prefix token buckets (10 capacity, 1/second), instance/whisper exception and enum returns. Forever outbound intent records explicitly do not model native throttling."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.SendAddonMessageLogged-112",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Logged retail variant needs shared registered-prefix throttling and outbound log semantics; ordinary namespace autostub is not a logged-message producer."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.CanChangeTalents-114",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.LoadConfig-116",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.Search-118",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.DoCountdown-120",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.IsWorldLootObject-122",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Unit-token world loot identity/classification needs explicit loot-object state, not a nameplate string heuristic."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-124",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Unit-token loot interaction needs object identity, interaction state and resulting loot events; a no-op click would not model behavior."
+    },
+    {
+      "source_id": "wt-global-api-StartAttack-126",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Attack initiation needs target validation and autoattack state/event integration; absent global is not fixed with a no-op."
+    },
+    {
+      "source_id": "wt-global-api-UnitPosition-128",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:CollapsesLayout-140",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:IsCollapsed-141",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:SetCollapsesLayout-142",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:DressPlayerSlot-143",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Intentional unsupported 3D/model dressing scope; adding a placeholder method is not modeled behavior."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:SetProtected-146",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. ScriptRegion; lookup=nil"
+    },
+    {
+      "source_id": "wt-widgets-FontInstance:GetJustifyH-149",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-widgets-FontInstance:GetJustifyV-151",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:GetPoint-153",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:GetPointByName-155",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-widgets-FontInstance:SetJustifyH-157",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-widgets-FontInstance:SetJustifyV-159",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-CANCEL_PLAYER_COUNTDOWN-169",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-ECLIPSE_DIRECTION_CHANGE-170",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-GAME_ENVIRONMENT_SWITCHED-171",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"GAME_ENVIRONMENT_SWITCHED\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-HARDCORE_DEATHS-172",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-PET_INFO_UPDATE-173",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-PET_STABLE_FAVORITES_UPDATED-174",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-SCRAPPING_MACHINE_ITEM_ADDED-175",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-SCRAPPING_MACHINE_ITEM_REMOVED-176",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-START_PLAYER_COUNTDOWN-177",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-WORLD_LOOT_OBJECT_INFO_UPDATED-178",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-WORLD_LOOT_OBJECT_SWAP_INVENTORY_TYPE_UPDATED-179",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"WORLD_LOOT_OBJECT_SWAP_INVENTORY_TYPE_UPDATED\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-PET_STABLE_UPDATE_PAPERDOLL-182",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"PET_STABLE_UPDATE_PAPERDOLL\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-SCRAPPING_MACHINE_ITEM_REMOVED_OR_CANCELLED-183",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SCRAPPING_MACHINE_ITEM_REMOVED_OR_CANCELLED\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-PET_FORCE_NAME_DECLENSION-186",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-events-TRADE_SKILL_FAVORITES_CHANGED-188",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-addonLoadDebugging-198",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-disableUserAddonsByDefault-199",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-dragonRidingRacesFilter-200",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-lfgListAdvancedFilterMinRating-201",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-lfgListAdvancedFilters-202",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-lfgListAdvancedFiltersActivities-203",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-loadDeprecationFallbacks-204",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-petStableShowExoticOnly-205",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-petStableSort-206",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-seenTimerunningFirstLoginPopup-207",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/value/default/event registerability only; changed annotations, populated outputs, security and native behavior remain unproved. Explicit producer may be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-GamePadPlunderstormDefaults-208",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GamePad Plunderstorm preset command needs defined per-CVar assignments and reset policy; no console command record and no measured preset contract. Do not enable/change host hardware."
+    },
+    {
+      "source_id": "wt-cvars-minimapTrackedInfov2-211",
+      "capabilities": [
+        "publication-sweep-10-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence or cached deprecation fallback accepted by shared classifier; historical signatures/behavior remain unproved. value/default queried"
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Comma-list parser exists and test fixture uses 110107, 50500, 11507; historical cross-flavor load selection and full addon-load boundary remain unverified here."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail prefix registration/throttled message producer absent. Need per-prefix allowance/refill and instance/whisper exception, not Forever outbound acceptance."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached mixin/deprecated wrapper loading is a candidate; retained globals versus later 11.0.0 removal requires full cached handler/event tests. No Blizzard edit."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Sweep proves default/publication only. Reset across client restart and load suppression with value 0 need process-lifetime/cache-load proof; cached wrappers remain untouched."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No Duplicate File Load warning producer found in simulator source. Requires repeat TOC/XML loads and observable diagnostic at the loader boundary."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DisableAddOn protects only __BuiltIn by folder name; that is not a secure Blizzard addon classification/permission gate. Need explicit secure ownership/loading provenance and rejection tests."
+    },
+    {
+      "source_id": "source-context-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "One stable-close namespace transition is behavior-proven; whole roster/favorites/cursor migration is not. Full source statement remains pending rather than crediting all stable APIs."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "FontString interface publication is measurable after factory correction; generic widget justification and font-table setters accept strings without strict horizontal/vertical rejection. Invalid values and unchanged state need behavioral tests."
+    },
+    {
+      "source_id": "source-context-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "All-chat/whisper throttle contract needs retail message producer, shared logged path and per-prefix bucket; Forever intent acceptance is not native throttle."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "10-message capacity per registered prefix has no retail bucket state/test; declaration/enum existence does not establish capacity."
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Each send decrement requires registered-prefix bucket mutation and independent-prefix tests; no explicit retail send producer."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Zero-allowance rejection must return exact AddonMessageThrottle enum. Enum publication alone does not establish throttled rejection."
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "1-message/second refill capped at 10 needs deterministic clock and per-prefix tests; outbound logs have no native-rate parity claim."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Out-of-instance whisper exemption requires instance state/channel-sensitive policy and tests; no retail native-throttle producer."
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global disconnect throttle is explicitly separate from per-prefix allowance; no simulated transport/disconnect policy. ChatThrottleLib/AceComm recommendation is retained source context, not implemented behavior."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached wrapper enum-return shifting needs exact first/second/last return tests with deprecation loading on/off; no retirement/deletion of wrapper. Negative select example is not a proof of C API behavior."
+    },
+    {
+      "source_id": "prose-undated-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Preserve example literally; select(-1, ...) last-return semantics do not establish a retail C_ChatInfo enum return producer or wrapper parity."
+    },
+    {
+      "source_id": "source-context-040",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-041",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-AuctionHouseFilter-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.AuctionHouseFilter: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-AuctionHouseFilter-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.AuctionHouseFilter / + CurrentExpansionOnly: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-BattlePetSources-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.BattlePetSources: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-BattlePetSources-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.BattlePetSources / + TradingPost: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyDestroyReason-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencyDestroyReason: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyDestroyReason-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencyDestroyReason / + Script: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyFlagsB-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencyFlagsB: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyFlagsB-049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencyFlagsB / + CurrencyBScaleMaxQuantityBySeasonWeeks: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyGainFlags-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencyGainFlags: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyGainFlags-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencyGainFlags / + Autotracking: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-GossipNpcOption-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.GossipNpcOption: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-GossipNpcOption-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.GossipNpcOption / + ForgeMaster: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemGemColor-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.ItemGemColor: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemGemColor-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.ItemGemColor / + FutureUse: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemSocketType-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.ItemSocketType: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemSocketType-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.ItemSocketType / + FutureUse: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-JournalInstanceFlags-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.JournalInstanceFlags: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-JournalInstanceFlags-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.JournalInstanceFlags / + DoNotDisplayInstance: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-LFGListFilter-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.LFGListFilter: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-LFGListFilter-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.LFGListFilter / + Timerunning: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-LFGListFilter-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.LFGListFilter / + CurrentExpansion: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-LFGListFilter-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.LFGListFilter / + CurrentSeason: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-LFGListFilter-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.LFGListFilter / + NotCurrentSeason: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-PlayerInteractionType-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PlayerInteractionType: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-PlayerInteractionType-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PlayerInteractionType / + ForgeMaster: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-PowerType-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PowerType: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-PowerType-068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PowerType / + Balance: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.TooltipDataLineType: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.TooltipDataLineType / + GemSocketEnchantment: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TransmogSource-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.TransmogSource: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TransmogSource-072",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.TransmogSource / + TradingPost: exact numeric enum values and preserved preexisting members remain unverified; source/table declaration is not runtime/native enum behavior. No executed assertion for this source occurrence."
+    },
+    {
+      "source_id": "source-context-074",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-BNetGameAccountInfo-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "BNetGameAccountInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-BNetGameAccountInfo-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "BNetGameAccountInfo / + timerunningSeasonID: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-BestDungeonScoreMapInfo-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "BestDungeonScoreMapInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-BestDungeonScoreMapInfo-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "BestDungeonScoreMapInfo / + bestRunDurationMs: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-BestDungeonScoreMapInfo-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "BestDungeonScoreMapInfo / + bestLevelIncrement: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-ClubMemberInfo-080",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ClubMemberInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-ClubMemberInfo-081",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ClubMemberInfo / + timerunningSeasonID: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-DigSiteMapInfo-082",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DigSiteMapInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-DigSiteMapInfo-083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DigSiteMapInfo / + poiBlobID: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GroupFinderActivityInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo-085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GroupFinderActivityInfo / + isHeroicActivity: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GroupFinderActivityInfo / + isNormalActivity: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-HTMLContentNode-087",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "HTMLContentNode: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-HTMLContentNode-088",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "HTMLContentNode / #: align, Type: TBFStyleFlags -> JustifyHorizontal: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-089",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "LfgSearchResultData: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-090",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "LfgSearchResultData / + leaderBestDungeonScoreInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo-091",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksVendorItemInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo-092",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksVendorItemInfo / + doesNotExpire: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo-093",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksVendorItemInfo / + mountTypeName: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-QuestInfo-094",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "QuestInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-QuestInfo-095",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "QuestInfo / + isAbandonOnDisable: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-WhoInfo-096",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "WhoInfo: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    },
+    {
+      "source_id": "structures-WhoInfo-097",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "WhoInfo / + timerunningSeasonID: populated owning DTO output/type/absence behavior remains unverified. Same-name fields in other records or default/empty tables do not prove this occurrence; require concrete producer input and serialized result assertions."
+    }
+  ]
+}

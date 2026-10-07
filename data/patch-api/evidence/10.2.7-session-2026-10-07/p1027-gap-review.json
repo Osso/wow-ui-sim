@@ -1,0 +1,1094 @@
+[
+  {
+    "source_id": "wt-global-api-C_AreaPoiInfo.GetDragonridingRacesForMap-50",
+    "symbol": "C_AreaPoiInfo.GetDragonridingRacesForMap",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Dragonriding race POI classification/map membership needs host race records and explicit namespace filtering; generic POI lists do not establish this query.",
+    "implementation_candidates": [
+      "src/c_api/c_quest_hub.rs:71:    // matching the related GetDragonridingRacesForMap element type."
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_Club.SetCommunityID-52",
+    "symbol": "C_Club.SetCommunityID",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Selected community ID requires club selection/lifetime state and observable consumer updates, not a getter table or inert setter.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetItemGemID-55",
+    "symbol": "C_Item.GetItemGemID",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Gem lookup requires concrete item-instance/link socket index and gem IDs; intrinsic item metadata is not instance socket contents.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetItemInventorySlotKey-56",
+    "symbol": "C_Item.GetItemInventorySlotKey",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Inventory slot-key derivation requires the documented key contract for item locations/equipment; equipment type names do not establish a key.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetItemLearnTransmogSet-57",
+    "symbol": "C_Item.GetItemLearnTransmogSet",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Learning item-to-transmog-set mapping and spell/collection ownership need explicit data; item ID parsing alone cannot produce the set.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetItemNumAddedSockets-58",
+    "symbol": "C_Item.GetItemNumAddedSockets",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Added sockets must be distinguished from base sockets using item-instance bonus/modification data; generated intrinsic metadata is insufficient.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetItemNumSockets-59",
+    "symbol": "C_Item.GetItemNumSockets",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Socket count needs intrinsic and item-instance socket metadata, including modifications; current generic item queries do not establish it.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_LFGInfo.CanPlayerUseScenarioFinder-60",
+    "symbol": "C_LFGInfo.CanPlayerUseScenarioFinder",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Scenario finder availability needs level/account/queue access policy; generic dungeon state does not establish permission.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.CreateScenarioListing-62",
+    "symbol": "C_LFGList.CreateScenarioListing",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Scenario listing creation needs scenario selection, validated host listing state and creation/event behavior; generic premade listing fields are not this producer.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.GetApplicantBestDungeonScore-64",
+    "symbol": "C_LFGList.GetApplicantBestDungeonScore",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Applicant-specific best dungeon score requires populated score history/DTO inputs and missing-applicant handling; generic applicant tables are not evidence.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.SetSearchToScenarioID-66",
+    "symbol": "C_LFGList.SetSearchToScenarioID",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Scenario ID search state and filter/result refresh need an explicit model; generic LFG search publication does not establish scenario binding.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.IsAttackAnimToggleEnabled-67",
+    "symbol": "C_PerksProgram.IsAttackAnimToggleEnabled",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Perks preview attack-animation toggle availability requires preview state; 3D visualization is intentionally unsupported. Do not add plausible booleans.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.IsMountSpecialAnimToggleEnabled-68",
+    "symbol": "C_PerksProgram.IsMountSpecialAnimToggleEnabled",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Mount-special preview toggle availability requires mount/preview state; 3D visualization is intentionally unsupported. Do not add plausible booleans.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_PetInfo.PetAbandon-69",
+    "symbol": "C_PetInfo.PetAbandon",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Pet abandonment requires active owned-pet identity, removal and events; stable-open flag alone cannot implement ownership mutation.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_PetInfo.PetRename-70",
+    "symbol": "C_PetInfo.PetRename",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Pet rename requires selected owned-pet identity, rename permission/validation and notifications, not a string setter.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:12966:    PetRenamed = 16,"
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.IsQuestFromContentPush-71",
+    "symbol": "C_QuestLog.IsQuestFromContentPush",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Content-push quest classification needs an explicit quest source flag/host records; ordinary quest membership is insufficient.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.UpdateCampaignHeaders-72",
+    "symbol": "C_QuestLog.UpdateCampaignHeaders",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Campaign header regrouping and events need populated campaign/quest grouping metadata; no-op refresh is not meaningful.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_StableInfo.ClosePetStables-77",
+    "symbol": "C_StableInfo.ClosePetStables",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "closed",
+    "reason": "Explicit existing-state producer clears pet_stables_open and queues PET_STABLE_CLOSED with no arguments; concrete new environment and cached Game tests prove bounded behavior.",
+    "implementation_candidates": [
+      "src/c_api/c_stable_info.rs:22:    table_set_rust_fn_static(state, stable_info, \"ClosePetStables\", close_pet_stables)?;",
+      "src/lua_api/globals/close_frames.rs:16://! `ClosePetStables` is a classic-only wrapper for the `C_StableInfo` model.",
+      "src/lua_api/globals/close_frames.rs:78:        \"ClosePetStables\","
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_StableInfo.GetActivePetList-78",
+    "symbol": "C_StableInfo.GetActivePetList",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Active stable pet slots require owned-pet slot/DTO records; existing open and bonus-slot booleans contain no pet roster.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_StableInfo.GetStabledPetList-79",
+    "symbol": "C_StableInfo.GetStabledPetList",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Stored stable pet slots require owned-pet slot/DTO records; existing open and bonus-slot booleans contain no pet roster.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_StableInfo.GetStablePetFoodTypes-80",
+    "symbol": "C_StableInfo.GetStablePetFoodTypes",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Selected pet diet needs creature-family/pet metadata; stable-open state is unrelated.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_StableInfo.GetStablePetInfo-81",
+    "symbol": "C_StableInfo.GetStablePetInfo",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Pet info requires populated identity/family/display/slot metadata and selected pet state; stable-open state is unrelated.",
+    "implementation_candidates": [
+      "src/c_api/c_stable_info/forever.rs:66:    table_set_rust_fn_static(state, namespace, \"GetStablePetInfo\", get_stable_pet_info)"
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_StableInfo.IsAtStableMaster-82",
+    "symbol": "C_StableInfo.IsAtStableMaster",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Stable-master interaction requires current NPC interaction/access state, not just whether the stable UI is open. IsAtPetStable is not an established semantic alias.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_StableInfo.IsPetFavorite-83",
+    "symbol": "C_StableInfo.IsPetFavorite",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Favorite lookup needs stable-owned-pet favorite state and valid identity handling; no roster/favorites model.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_StableInfo.PickupStablePet-84",
+    "symbol": "C_StableInfo.PickupStablePet",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Stable pet pickup requires cursor payload and active/stored slot ownership transitions; opening/closing the panel is insufficient.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_StableInfo.SetPetFavorite-85",
+    "symbol": "C_StableInfo.SetPetFavorite",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Favorite mutation needs pet identity, persistence and PET_STABLE_FAVORITES_UPDATED notification; no roster/favorites model.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_StableInfo.SetPetSlot-86",
+    "symbol": "C_StableInfo.SetPetSlot",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Slot mutation needs owned-pet identity, valid active/stored slots and events; stable-open flag alone is not a slot model.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetItemByItemModifiedAppearanceID-87",
+    "symbol": "C_TooltipInfo.GetItemByItemModifiedAppearanceID",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Modified appearance ID must resolve to concrete item tooltip data and source ownership; generic item tooltip renderer is not an appearance-to-item resolver.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-issecurevalue-90",
+    "symbol": "issecurevalue",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Secure-value taint classification is distinct from secret-value classification. Rilua stack/object taint APIs are candidates, but no public secure-value provenance contract is proven; do not alias issecretvalue.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-ClosePetStables-94",
+    "symbol": "ClosePetStables",
+    "direction": "removed",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "closed",
+    "reason": "Removed legacy retail/PTR registration after current qualified/unqualified cached search found no Lua consumer. Namespace successor preserved; classic registration and Blizzard deprecation scripts untouched.",
+    "implementation_candidates": [
+      "src/lua_api/globals/close_frames.rs:16://! `ClosePetStables` is a classic-only wrapper for the `C_StableInfo` model.",
+      "src/lua_api/globals/close_frames.rs:78:        \"ClosePetStables\",",
+      "src/c_api/c_stable_info.rs:22:    table_set_rust_fn_static(state, stable_info, \"ClosePetStables\", close_pet_stables)?;"
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-GetWorldPVPAreaInfo-98",
+    "symbol": "GetWorldPVPAreaInfo",
+    "direction": "removed",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "closed",
+    "reason": "Removed legacy retail/PTR registration after current qualified/unqualified cached search found no Lua consumer. Namespace successor preserved; classic registration and Blizzard deprecation scripts untouched.",
+    "implementation_candidates": [
+      "src/lua_api/state_types/character_world.rs:529:    /// Seeded PvP battleground info returned by `C_PvP.GetWorldPVPAreaInfo()`.",
+      "src/lua_api/state_types/character_world.rs:644:/// Seeded `C_PvP.GetWorldPVPAreaInfo()` row.",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:118:        \"GetWorldPVPAreaInfo\",",
+      "src/lua_api/globals/pvp_probes.rs:13://! - `GetWorldPVPAreaInfo(idx)`  — seeded battleground info table.",
+      "src/lua_api/globals/pvp_probes.rs:528:    LuaApiMut::register_function(lua, \"GetWorldPVPAreaInfo\", get_world_pvp_area_info)?;"
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-108",
+    "symbol": "C_ChatInfo.RegisterAddonMessagePrefix",
+    "direction": "changed",
+    "annotation": "# ret 1: successfulRequest -> result",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "No retail prefix-registration producer: require prefix registry, enum return validation and registration limits. Outbound addon_messages chat producers are gated to client-wowforever, not retail.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:11906:if not Enum.RegisterAddonMessagePrefixResult then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:11907:  Enum.RegisterAddonMessagePrefixResult = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:11915:if not Enum.RegisterAddonMessagePrefixResultMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:11916:  Enum.RegisterAddonMessagePrefixResultMeta = {"
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.SendAddonMessage-110",
+    "symbol": "C_ChatInfo.SendAddonMessage",
+    "direction": "changed",
+    "annotation": "# ret 1: success -> result",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "No explicit retail producer: need registered per-prefix token buckets (10 capacity, 1/second), instance/whisper exception and enum returns. Forever outbound intent records explicitly do not model native throttling.",
+    "implementation_candidates": [
+      "src/c_api/addon_messages.rs:16:// Enum.SendAddonMessageResult values from pinned ChatConstantsDocumentation.",
+      "src/c_api/addon_messages.rs:40:    table_set_rust_fn_static(state, table, \"SendAddonMessage\", send_addon_message)?;",
+      "src/c_api/addon_messages.rs:44:        \"SendAddonMessageLogged\",",
+      "src/lua_api/sim_substates/mod.rs:292:/// `SendAddonMessage`.",
+      "src/lua_api/workarounds/temporary/inert_global_defaults.rs:71:if rawget(C_Commentator, \"SendAddonMessage\") == nil then",
+      "src/lua_api/workarounds/temporary/inert_global_defaults.rs:72:    function C_Commentator.SendAddonMessage(_prefix, _message, _channel)",
+      "src/lua_api/workarounds/temporary/inert_global_defaults.rs:73:        return Enum and Enum.SendAddonMessageResult and Enum.SendAddonMessageResult.Success or 0",
+      "src/lua_api/workarounds/temporary/inert_global_defaults.rs:82:-- 12.0.5 logged variant; mirrors SendAddonMessage until commentator comms are modeled."
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.SendAddonMessageLogged-112",
+    "symbol": "C_ChatInfo.SendAddonMessageLogged",
+    "direction": "changed",
+    "annotation": "# ret 1: success -> result",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Logged retail variant needs shared registered-prefix throttling and outbound log semantics; ordinary namespace autostub is not a logged-message producer.",
+    "implementation_candidates": [
+      "src/c_api/addon_messages.rs:44:        \"SendAddonMessageLogged\",",
+      "src/lua_api/workarounds/temporary/inert_global_defaults.rs:84:        and rawget(C_Commentator, \"SendAddonMessageLogged\") == nil then",
+      "src/lua_api/workarounds/temporary/inert_global_defaults.rs:85:    function C_Commentator.SendAddonMessageLogged(_prefix, _message, _chatType, _target)"
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_WorldLootObject.IsWorldLootObject-122",
+    "symbol": "C_WorldLootObject.IsWorldLootObject",
+    "direction": "changed",
+    "annotation": "# arg 1: nameplateString -> unitToken",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Unit-token world loot identity/classification needs explicit loot-object state, not a nameplate string heuristic.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-124",
+    "symbol": "C_WorldLootObject.OnWorldLootObjectClick",
+    "direction": "changed",
+    "annotation": "# arg 1: nameplateString -> unitToken",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Unit-token loot interaction needs object identity, interaction state and resulting loot events; a no-op click would not model behavior.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-StartAttack-126",
+    "symbol": "StartAttack",
+    "direction": "changed",
+    "annotation": "# arg 1: name, Default: 0",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Attack initiation needs target validation and autoattack state/event integration; absent global is not fixed with a no-op.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:DressPlayerSlot-143",
+    "symbol": "ModelSceneActor:DressPlayerSlot",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Intentional unsupported 3D/model dressing scope; adding a placeholder method is not modeled behavior.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  },
+  {
+    "source_id": "wt-widgets-FontInstance:GetJustifyH-149",
+    "symbol": "FontInstance:GetJustifyH",
+    "direction": "changed",
+    "annotation": "# ret 1: justifyH, Type: TBFStyleFlags -> JustifyHorizontal",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'FontInstance'",
+      "kind": "unprobeable",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "FontInstance; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "probe corrected",
+    "reason": "FontInstance is a text interface, not a CreateFrame kind. Probe a FontString implementing it; publication now measurable, changed type/strict-validation annotations remain unproved.",
+    "implementation_candidates": [
+      "src/lua_api/frame/methods/text_attribute_event/mod.rs:268:    table_set_rust_fn_static(state, table, \"GetJustifyH\", text::get_justify_h)?;",
+      "src/lua_api/globals/font_strings_collection/fonts.rs:248:    table_set_rust_fn_static(state, font_ref, \"GetJustifyH\", font_get_justify_h)?;"
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-widgets-FontInstance:GetJustifyV-151",
+    "symbol": "FontInstance:GetJustifyV",
+    "direction": "changed",
+    "annotation": "# ret 1: justifyV, Type: TBFStyleFlags -> JustifyVertical",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'FontInstance'",
+      "kind": "unprobeable",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "FontInstance; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "probe corrected",
+    "reason": "FontInstance is a text interface, not a CreateFrame kind. Probe a FontString implementing it; publication now measurable, changed type/strict-validation annotations remain unproved.",
+    "implementation_candidates": [
+      "src/lua_api/frame/methods/text_attribute_event/mod.rs:270:    table_set_rust_fn_static(state, table, \"GetJustifyV\", text::get_justify_v)?;",
+      "src/lua_api/globals/font_strings_collection/fonts.rs:250:    table_set_rust_fn_static(state, font_ref, \"GetJustifyV\", font_get_justify_v)?;"
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-widgets-FontInstance:SetJustifyH-157",
+    "symbol": "FontInstance:SetJustifyH",
+    "direction": "changed",
+    "annotation": "# arg 1: justifyH, Type: TBFStyleFlags -> JustifyHorizontal",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'FontInstance'",
+      "kind": "unprobeable",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "FontInstance; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "probe corrected",
+    "reason": "FontInstance is a text interface, not a CreateFrame kind. Probe a FontString implementing it; publication now measurable, changed type/strict-validation annotations remain unproved.",
+    "implementation_candidates": [
+      "src/loader/xml_fontstring.rs:30:            \"\\n        fs:SetJustifyH(\\\"{}\\\")\\n        \",",
+      "src/loader/xml_file.rs:557:{name}:SetJustifyH(\"{justify_h}\")",
+      "src/loader/xml_file.rs:639:        copy_code.push_str(&format!(\"{name}:SetJustifyH(\\\"{jh}\\\")\\n\"));",
+      "src/loader/xml_file.rs:651:{name}:SetJustifyH(\"CENTER\")",
+      "src/lua_api/frame/methods/text_attribute_event/mod.rs:267:    table_set_rust_fn_static(state, table, \"SetJustifyH\", text::set_justify_h)?;",
+      "src/lua_api/globals/font_strings_collection/fonts.rs:247:    table_set_rust_fn_static(state, font_ref, \"SetJustifyH\", font_set_justify_h)?;",
+      "src/loader/tests/xml_text_region_defaults.rs:126:                frame:SetJustifyH(\"RIGHT\")"
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-widgets-FontInstance:SetJustifyV-159",
+    "symbol": "FontInstance:SetJustifyV",
+    "direction": "changed",
+    "annotation": "# arg 1: justifyV, Type: TBFStyleFlags -> JustifyVertical",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'FontInstance'",
+      "kind": "unprobeable",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "FontInstance; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "probe corrected",
+    "reason": "FontInstance is a text interface, not a CreateFrame kind. Probe a FontString implementing it; publication now measurable, changed type/strict-validation annotations remain unproved.",
+    "implementation_candidates": [
+      "src/loader/xml_fontstring.rs:36:            \"\\n        fs:SetJustifyV(\\\"{}\\\")\\n        \",",
+      "src/loader/xml_file.rs:558:{name}:SetJustifyV(\"{justify_v}\")",
+      "src/loader/xml_file.rs:642:        copy_code.push_str(&format!(\"{name}:SetJustifyV(\\\"{jv}\\\")\\n\"));",
+      "src/loader/xml_file.rs:652:{name}:SetJustifyV(\"MIDDLE\")",
+      "src/loader/tests/xml_text_region_defaults.rs:127:                frame:SetJustifyV(\"BOTTOM\")",
+      "src/lua_api/frame/methods/text_attribute_event/mod.rs:269:    table_set_rust_fn_static(state, table, \"SetJustifyV\", text::set_justify_v)?;",
+      "src/lua_api/globals/font_strings_collection/fonts.rs:249:    table_set_rust_fn_static(state, font_ref, \"SetJustifyV\", font_set_justify_v)?;"
+    ],
+    "search_exit_code": 0
+  },
+  {
+    "source_id": "wt-cvars-GamePadPlunderstormDefaults-208",
+    "symbol": "GamePadPlunderstormDefaults",
+    "direction": "added",
+    "annotation": "",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "GamePad Plunderstorm preset command needs defined per-CVar assignments and reset policy; no console command record and no measured preset contract. Do not enable/change host hardware.",
+    "implementation_candidates": [],
+    "search_exit_code": 1
+  }
+]
