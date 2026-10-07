@@ -1,0 +1,132 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1017-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 6.90s
+     Running tests/prefork_full_ui.rs (target/debug/deps/prefork_full_ui-34a818a91c447c36)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.003s] [Startup] SimState::default complete in 2.80ms
+[  0.003s] [Startup] rilua VM created in 113.09µs
+[  0.003s] [Startup] builtin frames initialized in 76.46µs
+[  0.003s] [Startup] template registry cleared in 6.16µs
+[  0.003s] [Startup] intrinsic templates registered in 8.76µs
+[  0.003s] [Startup] initial app_data lua handle installed in 390.00ns
+[  0.175s] [Startup] init_lua_state complete in 172.11ms
+[  0.175s] [Startup] final app_data lua handle installed in 611.00ns
+[  0.175s] [Startup] initial screen globals installed in 172.14µs
+[  0.175s] [Startup] WowLuaEnv::new complete
+Lua error: Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:564: attempt to index local 'icon' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:564: in function 'Update'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:544: in function 'UpdateAction'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:526: in function 'OnAttributeChanged'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:1496: in function <Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:1495>
+	(tail call): ?
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	generated/template-attributes/0809ec3de34279a8:2: in main chunk
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function 'CreateFrame'
+	generated/loader-exec-no-global-slots/16ecc1c2eea62bb6:2: in main chunk
+Lua error: Lua Error: Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:564: attempt to index local 'icon' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:564: in function 'Update'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:544: in function 'UpdateAction'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:526: in function 'OnAttributeChanged'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:1496: in function <Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:1495>
+	(tail call): ?
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	generated/template-attributes/0809ec3de34279a8:2: in main chunk
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function 'CreateFrame'
+	generated/loader-exec-no-global-slots/16ecc1c2eea62bb6:2: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[generated/template-attributes/0809ec3de34279a8]:2: in main chunk
+=[C]:: in function '__wow_original_CreateFrame'
+=(string):85: in function 'originalCreateFrame'
+=(string):55: in function 'CreateFrame'
+[generated/loader-exec-no-global-slots/16ecc1c2eea62bb6]:2: in main chunk
+
+prefork_full_ui: setup failed: loading Blizzard addon `Blizzard_ActionBar` produced 2 Lua error(s):
+Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:564: attempt to index local 'icon' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:564: in function 'Update'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:544: in function 'UpdateAction'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:526: in function 'OnAttributeChanged'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:1496: in function <Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:1495>
+	(tail call): ?
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	generated/template-attributes/0809ec3de34279a8:2: in main chunk
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function 'CreateFrame'
+	generated/loader-exec-no-global-slots/16ecc1c2eea62bb6:2: in main chunk
+Lua Error: Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:564: attempt to index local 'icon' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:564: in function 'Update'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:544: in function 'UpdateAction'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:526: in function 'OnAttributeChanged'
+	Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:1496: in function <Interface/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:1495>
+	(tail call): ?
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	generated/template-attributes/0809ec3de34279a8:2: in main chunk
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function 'CreateFrame'
+	generated/loader-exec-no-global-slots/16ecc1c2eea62bb6:2: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[generated/template-attributes/0809ec3de34279a8]:2: in main chunk
+=[C]:: in function '__wow_original_CreateFrame'
+=(string):85: in function 'originalCreateFrame'
+=(string):55: in function 'CreateFrame'
+[generated/loader-exec-no-global-slots/16ecc1c2eea62bb6]:2: in main chunk
+
+error: test failed, to rerun pass `--test prefork_full_ui`
+
+Caused by:
+  process didn't exit successfully: `/home/osso/.worktrees/wow-ui-sim-p1017-page/target/debug/deps/prefork_full_ui-34a818a91c447c36 patch_10_1_7_cached_ping_receiver_attributes` (exit status: 1)

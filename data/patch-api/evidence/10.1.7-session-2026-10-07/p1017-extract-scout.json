@@ -156,8 +156,8 @@
   {
     "source_id": "prose-undated-028",
     "statement": "* PingReceiverAttributeTemplate",
-    "status": "audit-pending",
-    "reason": "Cached template attribute loading is separately tested; historical receiver selection, native input and ping delivery remain unproved.",
+    "status": "partial-development-green",
+    "reason": "Current cached XML attribute loading proven in full Game ordering; receiver hit testing, native input, historical semantics and ping delivery remain unproved.",
     "candidates": [
       "Blizzard_SharedXML/PingAttributes.xml",
       "tests/patch_10_1_7_cached_surfaces.rs"
@@ -166,8 +166,8 @@
   {
     "source_id": "prose-undated-029",
     "statement": "* PingTopLevelPassThroughAttributeTemplate",
-    "status": "audit-pending",
-    "reason": "Cached template attribute loading is separately tested; historical receiver selection, native input and ping delivery remain unproved.",
+    "status": "partial-development-green",
+    "reason": "Current cached XML attribute loading proven in full Game ordering; receiver hit testing, native input, historical semantics and ping delivery remain unproved.",
     "candidates": [
       "Blizzard_SharedXML/PingAttributes.xml",
       "tests/patch_10_1_7_cached_surfaces.rs"
@@ -505,8 +505,8 @@
   {
     "source_id": "prose-undated-073",
     "statement": "[References: Reflist]",
-    "status": "audit-pending",
-    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "status": "metadata-only",
+    "reason": "Editorial reference-list marker; linked sources not expanded and no runtime credit.",
     "candidates": [
       "src/c_api/c_ping_secure.rs",
       "Blizzard_PingUI/Blizzard_PingManager.lua"

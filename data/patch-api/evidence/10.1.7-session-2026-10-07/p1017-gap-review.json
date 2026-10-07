@@ -16,7 +16,7 @@
     "source_id": "wt-global-api-C_CharacterServices.CapitalizeCharName-72",
     "symbol": "C_CharacterServices.CapitalizeCharName",
     "decision": "retained-gap",
-    "reason": "Character-name capitalization requires locale-aware Unicode casing and native name-validation rules. Current cached consumers at Blizzard_GlueXML/Shared/CharacterServicesPaidNameChange.lua:3 and Blizzard_HousingBulletinBoard/Blizzard_HousingBulletinBoard.lua:655 do not establish that contract; ASCII title-case is not parity.",
+    "reason": "No character-name capitalization producer exists. Retained publication list does not specify Unicode/locale casing, separators or validation; current cached consumers at Blizzard_GlueXML/Shared/CharacterServicesPaidNameChange.lua:3 and Blizzard_HousingBulletinBoard/Blizzard_HousingBulletinBoard.lua:655 require an output but do not establish native casing rules. A guessed ASCII conversion is not native evidence.",
     "observed": {
       "default": null,
       "default_mismatch": false,

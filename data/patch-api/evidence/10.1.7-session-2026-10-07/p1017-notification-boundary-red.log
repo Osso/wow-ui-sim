@@ -1,0 +1,75 @@
+
+running 1 test
+test patch_10_1_7_template_attributes::patch_10_1_7_runtime_template_attributes_before_onload ... FAILED
+
+failures:
+
+failures:
+    patch_10_1_7_template_attributes::patch_10_1_7_runtime_template_attributes_before_onload
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10822 filtered out; finished in 0.27s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1017-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 50s
+     Running tests/integration.rs (target/debug/deps/integration-aef10a2b503e13d5)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.003s] [Startup] SimState::default complete in 3.25ms
+[  0.003s] [Startup] rilua VM created in 188.44µs
+[  0.004s] [Startup] builtin frames initialized in 113.69µs
+[  0.004s] [Startup] template registry cleared in 7.45µs
+[  0.004s] [Startup] intrinsic templates registered in 13.19µs
+[  0.004s] [Startup] initial app_data lua handle installed in 601.00ns
+[  0.255s] [Startup] init_lua_state complete in 251.49ms
+[  0.255s] [Startup] final app_data lua handle installed in 410.00ns
+[  0.255s] [Startup] initial screen globals installed in 146.68µs
+[  0.255s] [Startup] WowLuaEnv::new complete
+Lua error: attribute notification before OnLoad
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	[C]: in function 'assert'
+	(string):4: in function 'handler'
+	(string):13: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	generated/template-attributes/36ded2aac467a361:2: in main chunk
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function 'CreateFrame'
+	(string):2: in main chunk
+
+thread 'patch_10_1_7_template_attributes::patch_10_1_7_runtime_template_attributes_before_onload' (2815155) panicked at /home/osso/.worktrees/wow-ui-sim-p1017-page/tests/patch_10_1_7_template_attributes.rs:63:5:
+constructor emitted Lua errors
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Lua error suppressed 1 additional times: attribute notification before OnLoad
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	[C]: in function 'assert'
+	(string):4: in function 'handler'
+	(string):13: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	generated/template-attributes/36ded2aac467a361:2: in main chunk
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function 'CreateFrame'
+	(string):2: in main chunk
+error: test failed, to rerun pass `--test integration`

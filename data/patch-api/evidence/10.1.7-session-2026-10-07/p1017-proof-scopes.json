@@ -1,0 +1,21 @@
+{
+  "runtime_revision": "176f0f858",
+  "source_hashes": {
+    "tools/gen_patch_wikitext_register.py": "58c857f8f6b7efc09a23b05f4a5e395fd95af144be2ee9e884b44cb660e765e3",
+    "tools/extract_patch_non_inventory.py": "06629c22a8205536a2cb83f4609f35ac70dbf84f041a8c0ca44df55781a3e135",
+    "tools/test_gen_patch_wikitext_register.py": "e4ee4debd13c0e1160bc5634b5a57d072cb382451d761c1a343f7030ebebec7a",
+    "tools/test_extract_patch_non_inventory.py": "92998313d1a8c80841ad8e0293fdf37e7c2c290606bb7dc3bf071a69ca0db4b9",
+    "src/loader/mod.rs": "9adc6ef887929101f8631552a558a5075517a49844d99b47423c18b211c3e934",
+    "src/loader/xml_frame_codegen.rs": "ce46441fd04838f5a1e7935df1880cec5c2f6b684fb2d256dfa587790801bed7",
+    "src/lua_api/globals/create_frame/template_chain.rs": "afe923c4226ff58ea2c8235792c3b30ffa7cc71ef6d3b84c7a00cd622a855987",
+    "src/lua_api/globals/create_frame/template_chain/runtime.rs": "7874ac291f4adfc6651ea2f582c58d5c228d95a9dde51acf29b8b0d9a999b54d",
+    "src/lua_api/globals/create_frame/template_chain/attributes.rs": "d8f30074a0a5ef71b0dfa23c8598d44fe84cffe4ffb6a4322181c74d92688668",
+    "tests/patch_10_1_7_template_attributes.rs": "1a5ddf08ff21b98025b4fee3ce026b7c75a73928135a70c8b734e915f3e3a3f9",
+    "tests/patch_10_1_7_cached_surfaces.rs": "106f0a8e0a1ce976ea6af315a5396f276ea6d6a8b55ca99666779b96c77d77df",
+    "tests/patch_10_1_7_publication_sweep.rs": "700eb7fe588c17a61b7b11de066f34688ebe15f22c4a0f5183e686141f0e76e1",
+    "tests/common/publication_sweep.rs": "b76cc924618b0a2cc7477246492ee68e0fc7b07a98b05f87f3a1435053ef0f26",
+    "tests/common/prefork_full_ui_preload.rs": "2b705069fa59bde48c4ba46e97425e377e0ff6f24b9b72204b70047d68f693ae",
+    "tests/data/patch_10_1_7_sweep_known_gaps.json": "fcee43cd00197d470c455af52178cb439bb1fbc9c72949955baae367bc5acc5b"
+  },
+  "manual_readability": "Changed Rust reviewed: shared typed emitter, 26-line guarded initializer, additive application sites and bounded tests. No changed-line complexity/nesting/naming/warning-suppression violations. No independent acceptance."
+}

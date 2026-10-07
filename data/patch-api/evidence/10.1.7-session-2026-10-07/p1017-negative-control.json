@@ -1,0 +1,12 @@
+{
+  "changed_id": "wt-global-api-C_Item.GetItemIDForItemInfo-75",
+  "symbol": "C_Item.GetItemIDForItemInfo",
+  "change": "added -> removed",
+  "exit_code": 101,
+  "before_gaps": 14,
+  "after_gaps": 15,
+  "new_gaps": [
+    "wt-global-api-C_Item.GetItemIDForItemInfo-75"
+  ],
+  "resolved_gaps": []
+}

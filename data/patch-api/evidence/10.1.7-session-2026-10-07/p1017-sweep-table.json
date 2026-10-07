@@ -1,0 +1,154 @@
+[
+  {
+    "patch": "10.1.7",
+    "rows": 48,
+    "ok": 34,
+    "gaps": 14,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-sweep-result.json"
+  },
+  {
+    "patch": "10.2.5",
+    "rows": 59,
+    "ok": 45,
+    "gaps": 14,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-10.2.5.json"
+  },
+  {
+    "patch": "10.2.6",
+    "rows": 220,
+    "ok": 200,
+    "gaps": 20,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-10.2.6.json"
+  },
+  {
+    "patch": "10.2.7",
+    "rows": 104,
+    "ok": 68,
+    "gaps": 36,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-10.2.7.json"
+  },
+  {
+    "patch": "11.0.0",
+    "rows": 495,
+    "ok": 329,
+    "gaps": 166,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-11.0.0.json"
+  },
+  {
+    "patch": "11.0.2",
+    "rows": 34,
+    "ok": 22,
+    "gaps": 12,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-11.0.2.json"
+  },
+  {
+    "patch": "11.0.5",
+    "rows": 48,
+    "ok": 38,
+    "gaps": 10,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-11.0.5.json"
+  },
+  {
+    "patch": "11.0.7",
+    "rows": 98,
+    "ok": 70,
+    "gaps": 28,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-11.0.7.json"
+  },
+  {
+    "patch": "11.1.0",
+    "rows": 116,
+    "ok": 97,
+    "gaps": 19,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-11.1.0.json"
+  },
+  {
+    "patch": "11.1.5",
+    "rows": 125,
+    "ok": 89,
+    "gaps": 36,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-11.1.5.json"
+  },
+  {
+    "patch": "11.1.7",
+    "rows": 48,
+    "ok": 40,
+    "gaps": 8,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-11.1.7.json"
+  },
+  {
+    "patch": "11.2.0",
+    "rows": 162,
+    "ok": 135,
+    "gaps": 27,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-11.2.0.json"
+  },
+  {
+    "patch": "11.2.5",
+    "rows": 163,
+    "ok": 118,
+    "gaps": 45,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-11.2.5.json"
+  },
+  {
+    "patch": "11.2.7",
+    "rows": 508,
+    "ok": 414,
+    "gaps": 94,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-11.2.7.json"
+  },
+  {
+    "patch": "12.0.0",
+    "rows": 1010,
+    "ok": 989,
+    "gaps": 21,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-12.0.0.json"
+  },
+  {
+    "patch": "12.0.1",
+    "rows": 225,
+    "ok": 222,
+    "gaps": 3,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-12.0.1.json"
+  },
+  {
+    "patch": "12.0.5",
+    "rows": 363,
+    "ok": 352,
+    "gaps": 11,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-12.0.5.json"
+  },
+  {
+    "patch": "12.0.7",
+    "rows": 174,
+    "ok": 171,
+    "gaps": 3,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-12.0.7.json"
+  },
+  {
+    "patch": "12.1.0",
+    "rows": 778,
+    "ok": 773,
+    "gaps": 5,
+    "exit": 0,
+    "result": "data/patch-api/evidence/10.1.7-session-2026-10-07/sweep-12.1.0.json"
+  }
+]

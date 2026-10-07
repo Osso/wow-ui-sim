@@ -2,7 +2,7 @@
 
 ## [2026-10-07] evidence | 10.1.7 page audit
 
-[Audit](investigations/patch-10-1-7-api-audit.md) accounts for 48 inventory + 55 extract occurrences, stale header counts, fourteen retained publication gaps and omitted runtime XML template attributes. Targeted final proof pending.
+[Audit](investigations/patch-10-1-7-api-audit.md) accounts for 48 inventory + 55 extract occurrences, stale header counts, fourteen retained publication gaps and omitted runtime XML template attributes. Nineteen isolated sweeps, exact negative control, behavior/cached prefork, Mists tests check zero non-vendor warnings and exit-0 startup [] pass; 116 later inputs preserved.
 
 
 [Audit](investigations/patch-10-2-5-api-audit.md) retains revision 5993852, 59 inventory and 356 extract occurrences. Exact fourteen gaps reviewed; animation probe corrected without endpoint credit, verbatim Lua/XML retention added. Seventeen isolated sweeps, factory RED/GREEN, cached color-picker prefork, exact 14 → 15 negative control, Mists warning boundary and exit-0 startup `[]` pass. Artifact validation confirms all 415 IDs and 101 preserved later inputs. No runtime/vendor/classic changes; no predicted 10.2.6 gap supersession.

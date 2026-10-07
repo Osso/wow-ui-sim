@@ -1,0 +1,453 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "10.1.7",
+  "source": {
+    "path": "data/patch-api/sources/10.1.7-api-changes.wikitext",
+    "revid": 6473483,
+    "sha256": "065658e2e89ae0f2055c03c9e890a42321c1983165f1a33898747d7b0719b76a"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 19,
+      "parsed_count": 28
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 6,
+      "parsed_count": 6
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 8,
+      "parsed_count": 3
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 8,
+      "parsed_count": 8
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_CharacterServices.AssignNameChangeDistribution-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CharacterServices.AssignNameChangeDistribution",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_CharacterServices.CapitalizeCharName-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CharacterServices.CapitalizeCharName",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_Club.DoesAnyCommunityHaveUnreadMessages-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Club.DoesAnyCommunityHaveUnreadMessages",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_InterfaceFileManifest.GetInterfaceArtFiles-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_InterfaceFileManifest.GetInterfaceArtFiles",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemIDForItemInfo-75",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Item.GetItemIDForItemInfo",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.GetRestrictRaidPings-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.GetRestrictRaidPings",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.SetRestrictRaidPings-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.SetRestrictRaidPings",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_Ping.GetContextualPingTypeForUnit-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Ping.GetContextualPingTypeForUnit",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-C_Ping.SendMacroPing-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Ping.SendMacroPing",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-C_Ping.TogglePingListener-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Ping.TogglePingListener",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.ClearPendingPingInfo-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.ClearPendingPingInfo",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.CreateFrame-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.CreateFrame",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.DisplayError-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.DisplayError",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.GetTargetPingReceiver-84",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.GetTargetPingReceiver",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.GetTargetWorldPing-85",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.GetTargetWorldPing",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.GetTargetWorldPingAndSend-86",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.GetTargetWorldPingAndSend",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.SendPing-87",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.SendPing",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.SetPendingPingOffScreenCallback-88",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.SetPendingPingOffScreenCallback",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.SetPingCooldownStartedCallback-89",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.SetPingCooldownStartedCallback",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.SetPingPinFrameAddedCallback-90",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.SetPingPinFrameAddedCallback",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.SetPingPinFrameRemovedCallback-91",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.SetPingPinFrameRemovedCallback",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.SetPingPinFrameScreenClampStateUpdatedCallback-92",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.SetPingPinFrameScreenClampStateUpdatedCallback",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.SetPingRadialWheelCreatedCallback-93",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.SetPingRadialWheelCreatedCallback",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.SetSendMacroPingCallback-94",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.SetSendMacroPingCallback",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-global-api-C_PingSecure.SetTogglePingListenerCallback-95",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PingSecure.SetTogglePingListenerCallback",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CanStoreEnchantInItem-96",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CanStoreEnchantInItem",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-global-api-C_Traits.GenerateImportString-97",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GenerateImportString",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo-98",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:SetProtected-111",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScriptRegion:SetProtected",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-widgets-EditBox:IsAlphabeticOnly-112",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "EditBox:IsAlphabeticOnly",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-widgets-EditBox:IsNumericFullRange-113",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "EditBox:IsNumericFullRange",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-widgets-EditBox:ResetInputMode-114",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "EditBox:ResetInputMode",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-widgets-EditBox:SetAlphabeticOnly-115",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "EditBox:SetAlphabeticOnly",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-widgets-EditBox:SetNumericFullRange-116",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "EditBox:SetNumericFullRange",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-events-CHAT_MSG_PING-129",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_PING",
+      "annotation": "",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-events-PING_SYSTEM_ERROR-130",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PING_SYSTEM_ERROR",
+      "annotation": "",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-events-UPDATE_TRADESKILL_CAST_STOPPED-131",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_TRADESKILL_CAST_STOPPED",
+      "annotation": "",
+      "wikitext_line": 131
+    },
+    {
+      "id": "wt-events-UPDATE_TRADESKILL_CAST_COMPLETE-134",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "UPDATE_TRADESKILL_CAST_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 134
+    },
+    {
+      "id": "wt-events-UPDATE_TRADESKILL_RECAST-135",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "UPDATE_TRADESKILL_RECAST",
+      "annotation": "",
+      "wikitext_line": 135
+    },
+    {
+      "id": "wt-cvars-CameraFollowTargetCombat-146",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "CameraFollowTargetCombat",
+      "annotation": "",
+      "wikitext_line": 146,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-enablePings-147",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "enablePings",
+      "annotation": "",
+      "wikitext_line": 147,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-notifiedOfNewMail-148",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "notifiedOfNewMail",
+      "annotation": "",
+      "wikitext_line": 148,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-pingMode-149",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "pingMode",
+      "annotation": "",
+      "wikitext_line": 149,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-showPingsInChat-150",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "showPingsInChat",
+      "annotation": "",
+      "wikitext_line": 150,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-Sound_EnablePingSounds-151",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "Sound_EnablePingSounds",
+      "annotation": "",
+      "wikitext_line": 151,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-Sound_PingVolume-152",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "Sound_PingVolume",
+      "annotation": "",
+      "wikitext_line": 152,
+      "page_default": "1.0"
+    },
+    {
+      "id": "wt-cvars-useCommentatorSelectionCircles-153",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "useCommentatorSelectionCircles",
+      "annotation": "",
+      "wikitext_line": 153,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-useCompactPartyFrames-156",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "useCompactPartyFrames",
+      "annotation": "",
+      "wikitext_line": 156
+    }
+  ]
+}

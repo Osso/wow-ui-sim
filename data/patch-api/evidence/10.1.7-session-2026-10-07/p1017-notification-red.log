@@ -1,0 +1,65 @@
+
+running 1 test
+test patch_10_1_7_template_attributes::patch_10_1_7_runtime_template_attributes_before_onload ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10822 filtered out; finished in 0.21s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1017-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 04s
+     Running tests/integration.rs (target/debug/deps/integration-aef10a2b503e13d5)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.003s] [Startup] SimState::default complete in 2.62ms
+[  0.003s] [Startup] rilua VM created in 144.45µs
+[  0.003s] [Startup] builtin frames initialized in 110.31µs
+[  0.003s] [Startup] template registry cleared in 6.25µs
+[  0.003s] [Startup] intrinsic templates registered in 11.15µs
+[  0.003s] [Startup] initial app_data lua handle installed in 531.00ns
+[  0.198s] [Startup] init_lua_state complete in 195.38ms
+[  0.198s] [Startup] final app_data lua handle installed in 230.00ns
+[  0.199s] [Startup] initial screen globals installed in 162.39µs
+[  0.199s] [Startup] WowLuaEnv::new complete
+Lua error: attribute notification before OnLoad
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	[C]: in function 'assert'
+	(string):4: in function 'handler'
+	(string):13: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	generated/template-attributes/36ded2aac467a361:2: in main chunk
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function 'CreateFrame'
+	(string):2: in main chunk
+Lua error suppressed 1 additional times: attribute notification before OnLoad
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	[C]: in function 'assert'
+	(string):4: in function 'handler'
+	(string):13: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	generated/template-attributes/36ded2aac467a361:2: in main chunk
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function 'CreateFrame'
+	(string):2: in main chunk

@@ -4,7 +4,7 @@
   "source_register": "data/patch-api/sources/10.1.7-wikitext-register.json",
   "source_sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c",
   "audit_status": "in-progress",
-  "proof_policy": "Complete occurrence accounting against current retail 12.1.0 with eighteen later registers. Publication/absence is not native/historical behavior, signatures, populated DTOs or security. Fourteen precise gaps retained; no runtime closure. Header counts are stale and preserved, never used to invent missing rows. Local targeted proof only.",
+  "proof_policy": "Complete occurrence accounting against current retail 12.1.0 with eighteen later registers. Publication/absence is not native/historical behavior, signatures, populated DTOs or security. Fourteen precise gaps retained; no runtime closure. Header counts are stale and preserved, never used to invent missing rows. Local targeted proof only. Two template occurrences have partial current-cache attribute proof, not historical/native ping parity; reference-list marker classified editorial.",
   "capabilities": [
     {
       "id": "publication-sweep-10-1-7",
@@ -13,7 +13,24 @@
       "tests": [
         "tests/patch_10_1_7_publication_sweep.rs"
       ],
-      "ledger": "data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-sweep-result.json"
+      "ledger": "data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-sweep-result.json",
+      "compiled_revision": "176f0f858",
+      "proof": "Nineteen isolated sweeps exact fixtures; one-row negative control 14 -> 15; format/Mists tests check zero non-vendor warnings; startup exit 0 [] passes. Local development only."
+    },
+    {
+      "id": "runtime-template-attributes",
+      "symbols": [
+        "PingReceiverAttributeTemplate",
+        "PingTopLevelPassThroughAttributeTemplate"
+      ],
+      "scope": "Current cached typed attribute initialization only; no historical/native receiver or delivery parity. Runtime roots/children inherit boolean, number, string and nil overrides before OnLoad; initial values do not notify uninitialized handlers; ordinary mutation still notifies.",
+      "spec": "docs/specs/patch-10-1-7-publication-sweep.md",
+      "tests": [
+        "tests/patch_10_1_7_template_attributes.rs",
+        "tests/patch_10_1_7_cached_surfaces.rs"
+      ],
+      "compiled_revision": "176f0f858",
+      "proof": "RED/GREEN ordering and no-error boundary; full cached Game prefork GREEN. Local development only."
     }
   ],
   "non_inventory_source": {
@@ -35,7 +52,7 @@
       "source_id": "wt-global-api-C_CharacterServices.CapitalizeCharName-72",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Character-name capitalization requires locale-aware Unicode casing and native name-validation rules. Current cached consumers at Blizzard_GlueXML/Shared/CharacterServicesPaidNameChange.lua:3 and Blizzard_HousingBulletinBoard/Blizzard_HousingBulletinBoard.lua:655 do not establish that contract; ASCII title-case is not parity."
+      "note": "No character-name capitalization producer exists. Retained publication list does not specify Unicode/locale casing, separators or validation; current cached consumers at Blizzard_GlueXML/Shared/CharacterServicesPaidNameChange.lua:3 and Blizzard_HousingBulletinBoard/Blizzard_HousingBulletinBoard.lua:655 require an output but do not establish native casing rules. A guessed ASCII conversion is not native evidence."
     },
     {
       "source_id": "wt-global-api-C_Club.DoesAnyCommunityHaveUnreadMessages-73",
@@ -491,15 +508,19 @@
     },
     {
       "source_id": "prose-undated-028",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached template attribute loading is separately tested; historical receiver selection, native input and ping delivery remain unproved."
+      "capabilities": [
+        "runtime-template-attributes"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached XML attribute loading proven in full Game ordering; receiver hit testing, native input, historical semantics and ping delivery remain unproved."
     },
     {
       "source_id": "prose-undated-029",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Cached template attribute loading is separately tested; historical receiver selection, native input and ping delivery remain unproved."
+      "capabilities": [
+        "runtime-template-attributes"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached XML attribute loading proven in full Game ordering; receiver hit testing, native input, historical semantics and ping delivery remain unproved."
     },
     {
       "source_id": "prose-undated-031",
@@ -708,8 +729,8 @@
     {
       "source_id": "prose-undated-073",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+      "status": "metadata-only",
+      "note": "Editorial reference-list marker; linked sources not expanded and no runtime credit."
     }
   ]
 }
