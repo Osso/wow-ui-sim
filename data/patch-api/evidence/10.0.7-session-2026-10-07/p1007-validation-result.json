@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "source_ids": 2284,
+  "statuses": {
+    "partial-development-green": 16,
+    "audit-pending": 2229,
+    "bounded-coverage": 28,
+    "metadata-only": 11
+  },
+  "isolated_sweeps": 22,
+  "preserved_inputs": 134,
+  "validated_revision": "5c41dbb2a",
+  "command": [
+    "python3",
+    "data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-validate.py"
+  ],
+  "scope": "Accounting, chronological sweep expectations, exact fixtures, negative control, reproduction/preservation, source and proof-log hashes; local development evidence, not native or independent acceptance."
+}
