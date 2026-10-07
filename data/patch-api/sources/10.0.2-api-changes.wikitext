@@ -1,0 +1,674 @@
+{{apichanges|10.0.2|prev=10.0.0|next=10.0.5}}
+
+==Summary==
+* GameTooltip related APIs have been significantly overhauled. Refer to the [[#Tooltip Changes|Tooltip Changes]] section for more details.
+* Many bag container related APIs have been moved to the <code>C_Container</code> namespace. Additionally, some of these functions now return structured tables instead of multiple values.
+* A new general-purpose {{api|t=a|UnitTokenFromGUID(unitGUID)}} function has been added for mapping a [[GUID|unit GUID]] to a [[UnitId|unit token]].
+
+==Resources==
+* 10.0.2 TOC: <code>100002</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/10.0.0..10.0.2 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/10.0.0...10.0.2 BlizzardInterfaceResources]
+* Official patch notes: [https://worldofwarcraft.com/en-us/news/23874318/updated-nov-15-dragonflight-pre-expansion-phase-2-update-notes-now-live#item11 Dragonflight Pre-Expansion Phase 2 Update Notes]
+
+==Tooltip Changes==
+
+{{api|t=x|GameTooltip}} frames no longer expose native methods for retrieving or populating tooltip contents. Instead, a new C_TooltipInfo namespace has been added which provides APIs for retrieving structured data for use in tooltips and a new set of tooltip-related mixins have been added to populate tooltips from these APIs.
+
+===Custom Tooltip Frames===
+
+Any addons that are creating GameTooltip frames should now ensure they inherit [[GameTooltipTemplate]]. This template has been updated to include the new [https://github.com/Ketho/wow-ui-source-df/search?q=GameTooltipDataMixin GameTooltipDataMixin] mixin, which provides automatic updates of tooltip contents from the {{api|t=e|TOOLTIP_DATA_UPDATE}} event as well as a subset of backwards-compatible methods for retrieving or populating tooltip contents from the new C_TooltipInfo APIs.
+
+===Scanning Tooltips===
+The C_TooltipInfo functions can be used to replace existing tooltip scanning techniques, removing the need to create a tooltip frame. The following example will demonstrate extracting information for a unit tooltip on the player.
+
+<syntaxhighlight lang="lua">
+local tooltipData = C_TooltipInfo.GetUnit("player")
+
+TooltipUtil.SurfaceArgs(tooltipData)
+
+for _, line in ipairs(tooltipData.lines) do
+    TooltipUtil.SurfaceArgs(line)
+end
+
+-- The above SurfaceArgs calls are required to assign values to the
+-- 'type', 'guid', and 'leftText' fields seen below.
+
+print("Tooltip Type: ", tooltipData.type)
+print("Unit GUID: ", tooltipData.guid)
+print("Unit Name: ", tooltipData.lines[1].leftText)
+print("Unit Info: ", tooltipData.lines[2].leftText)
+print("Unit Faction: ", tooltipData.lines[3].leftText)
+
+DevTools_Dump({ tooltipData })
+</syntaxhighlight>
+
+ > Tooltip Type: 2 (Enum.TooltipDataType.Unit)
+ > Unit GUID: "Player-4184-00227A8F"
+ > Unit Name: "Sandse"
+ > Unit Info: "Level 70 Gnome Mage (Player)"
+ > Unit Faction: "Alliance"
+
+The <code>tooltipData</code> dump below has been significantly shortened to only show the fields written by [https://github.com/Ketho/wow-ui-source-df/search?q=SurfaceArgs TooltipUtil.SurfaceArgs].
+
+ tooltipData = {
+     type = 2,
+     lines = {
+         [1] = {
+             leftText = "Sandse",
+             leftColor = { r = 1, g = 0.81960791349411, b = 0 },
+             type = 2,
+             unitToken = "player",
+         },
+         [2] = {
+             leftColor = { r = 1, g = 1, b = 1 },
+             type = 0,
+             leftText = "Level 70 Gnome Mage (Player)",
+         },
+         [3] = {
+             leftColor = { r = 1, g = 1, b = 1 },
+             type = 0,
+             leftText = "Alliance",
+         },
+     },
+     guid = "Player-4184-00227A8F",
+     healthGUID = "Player-4184-00227A8F",
+ }
+
+===Tooltip Script Handlers===
+
+The following GameTooltip script handlers have been removed. This change will not be reflected in the UI XML schema definition until a future patch.
+
+* {{api|t=wh|OnTooltipAddMoney}}
+* {{api|t=wh|OnTooltipSetAchievement}}
+* {{api|t=wh|OnTooltipSetEquipmentSet}}
+* {{api|t=wh|OnTooltipSetItem}}
+* {{api|t=wh|OnTooltipSetQuest}}
+* {{api|t=wh|OnTooltipSetSpell}}
+* {{api|t=wh|OnTooltipSetUnit}}
+
+Usages of these script handlers should be replaced by registering callbacks with the new [https://github.com/Ketho/wow-ui-source-df/search?q=AddTooltipPostCall TooltipDataProcessor.AddTooltipPostCall] function. Note that callbacks registered with this mechanism are global and will be triggered for ''all'' tooltips which inherit from GameTooltipTemplate.
+
+<syntaxhighlight lang="lua">
+local function OnTooltipSetItem(tooltip, data)
+    if tooltip == GameTooltip then
+        print("OnTooltipSetItem", tooltip, data)
+    end
+end
+
+-- Replace 'Enum.TooltipDataType.Item' with an appropriate type for the tooltip
+-- data you are wanting to process; eg. use 'Enum.TooltipDataType.Spell' for
+-- replacing usage of OnTooltipSetSpell.
+--
+-- If you wish to respond to all tooltip data updates, you can instead replace
+-- the enum with 'TooltipDataProcessor.AllTypes' (or the string "ALL").
+
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, OnTooltipSetItem)
+</syntaxhighlight>
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ 10.0.0 (46366) &rarr; 10.0.2 (46924) Dec  1 2022
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(203)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(63)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_ActionBar.GetProfessionQuality}}
+: {{api|t=a|C_ArtifactUI.IsArtifactItem}}
+: {{api|t=a|C_BarberShop.GetCustomizationScope}}
+: {{api|t=a|C_ClassTalents.CanEditTalents}}
+: {{api|t=a|C_Container.ContainerIDToInventoryID}}
+: {{api|t=a|C_Container.ContainerRefundItemPurchase}}
+: {{api|t=a|C_Container.GetBackpackAutosortDisabled}}
+: {{api|t=a|C_Container.GetBagName}}
+: {{api|t=a|C_Container.GetBankAutosortDisabled}}
+: {{api|t=a|C_Container.GetContainerFreeSlots}}
+: {{api|t=a|C_Container.GetContainerItemCooldown}}
+: {{api|t=a|C_Container.GetContainerItemDurability}}
+: {{api|t=a|C_Container.GetContainerItemEquipmentSetInfo}}
+: {{api|t=a|C_Container.GetContainerItemID}}
+: {{api|t=a|C_Container.GetContainerItemInfo}}
+: {{api|t=a|C_Container.GetContainerItemLink}}
+: {{api|t=a|C_Container.GetContainerItemPurchaseCurrency}}
+: {{api|t=a|C_Container.GetContainerItemPurchaseInfo}}
+: {{api|t=a|C_Container.GetContainerItemPurchaseItem}}
+: {{api|t=a|C_Container.GetContainerItemQuestInfo}}
+: {{api|t=a|C_Container.GetContainerNumFreeSlots}}
+: {{api|t=a|C_Container.GetContainerNumSlots}}
+: {{api|t=a|C_Container.GetInsertItemsLeftToRight}}
+: {{api|t=a|C_Container.GetItemCooldown}}
+: {{api|t=a|C_Container.GetMaxArenaCurrency}}
+: {{api|t=a|C_Container.GetSortBagsRightToLeft}}
+: {{api|t=a|C_Container.IsBattlePayItem}}
+: {{api|t=a|C_Container.IsContainerFiltered}}
+: {{api|t=a|C_Container.PickupContainerItem}}
+: {{api|t=a|C_Container.PlayerHasHearthstone}}
+: {{api|t=a|C_Container.SetBackpackAutosortDisabled}}
+: {{api|t=a|C_Container.SetBagPortraitTexture}}
+: {{api|t=a|C_Container.SetBankAutosortDisabled}}
+: {{api|t=a|C_Container.SetInsertItemsLeftToRight}}
+: {{api|t=a|C_Container.SetItemSearch}}
+: {{api|t=a|C_Container.SetSortBagsRightToLeft}}
+: {{api|t=a|C_Container.ShowContainerSellCursor}}
+: {{api|t=a|C_Container.SocketContainerItem}}
+: {{api|t=a|C_Container.SortBags}}
+: {{api|t=a|C_Container.SortBankBags}}
+: {{api|t=a|C_Container.SortReagentBankBags}}
+: {{api|t=a|C_Container.SplitContainerItem}}
+: {{api|t=a|C_Container.UseContainerItem}}
+: {{api|t=a|C_Container.UseHearthstone}}
+: {{api|t=a|C_CraftingOrders.AreOrderNotesDisabled}}
+: {{api|t=a|C_CraftingOrders.CalculateCraftingOrderPostingFee}}
+: {{api|t=a|C_CraftingOrders.CancelOrder}}
+: {{api|t=a|C_CraftingOrders.CanOrderSkillAbility}}
+: {{api|t=a|C_CraftingOrders.ClaimOrder}}
+: {{api|t=a|C_CraftingOrders.CloseCrafterCraftingOrders}}
+: {{api|t=a|C_CraftingOrders.FulfillOrder}}
+: {{api|t=a|C_CraftingOrders.GetClaimedOrder}}
+: {{api|t=a|C_CraftingOrders.GetCrafterBuckets}}
+: {{api|t=a|C_CraftingOrders.GetCrafterOrders}}
+: {{api|t=a|C_CraftingOrders.GetCraftingOrderTime}}
+: {{api|t=a|C_CraftingOrders.GetCustomerOrders}}
+: {{api|t=a|C_CraftingOrders.GetDefaultOrdersSkillLine}}
+: {{api|t=a|C_CraftingOrders.GetMyOrders}}
+: {{api|t=a|C_CraftingOrders.GetOrderClaimInfo}}
+: {{api|t=a|C_CraftingOrders.ListMyOrders}}
+: {{api|t=a|C_CraftingOrders.OpenCrafterCraftingOrders}}
+: {{api|t=a|C_CraftingOrders.OpenCustomerCraftingOrders}}
+: {{api|t=a|C_CraftingOrders.OrderCanBeRecrafted}}
+: {{api|t=a|C_CraftingOrders.PlaceNewOrder}}
+: {{api|t=a|C_CraftingOrders.RejectOrder}}
+: {{api|t=a|C_CraftingOrders.ReleaseOrder}}
+: {{api|t=a|C_CraftingOrders.RequestCrafterOrders}}
+: {{api|t=a|C_CraftingOrders.RequestCustomerOrders}}
+: {{api|t=a|C_CraftingOrders.ShouldShowCraftingOrderTab}}
+: {{api|t=a|C_CraftingOrders.SkillLineHasOrders}}
+: {{api|t=a|C_CraftingOrders.UpdateIgnoreList}}
+: {{api|t=a|C_Item.GetItemLinkByGUID}}
+: {{api|t=a|C_Mail.GetCraftingOrderMailInfo}}
+: {{api|t=a|C_MythicPlus.GetEndOfRunGearSequenceLevel}}
+: {{api|t=a|C_PaperDollInfo.CanAutoEquipCursorItem}}
+: {{api|t=a|C_PaperDollInfo.CanCursorCanGoInSlot}}
+: {{api|t=a|C_PlayerInfo.HasVisibleInvSlot}}
+: {{api|t=a|C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer}}
+: {{api|t=a|C_ProfSpecs.GetCurrencyInfoForSkillLine}}
+: {{api|t=a|C_ProfSpecs.ShouldShowPointsReminderForSkillLine}}
+: {{api|t=a|C_ProfSpecs.ShouldShowPointsReminder}}
+: {{api|t=a|C_PvP.GetUIDisplaySeason}}
+: {{api|t=a|C_QuestLog.DoesQuestAwardReputationWithFaction}}
+: {{api|t=a|C_SpecializationInfo.GetPvpTalentInfo}}
+: {{api|t=a|C_SystemVisibilityManager.IsSystemVisible}}
+: {{api|t=a|C_Texture.GetCraftingReagentQualityChatIcon}}
+: {{api|t=a|C_TooltipComparison.GetItemComparisonDelta}}
+: {{api|t=a|C_TooltipComparison.GetItemComparisonInfo}}
+: {{api|t=a|C_TooltipInfo.GetAchievementByID}}
+: {{api|t=a|C_TooltipInfo.GetAction}}
+: {{api|t=a|C_TooltipInfo.GetArtifactItem}}
+: {{api|t=a|C_TooltipInfo.GetArtifactPowerByID}}
+: {{api|t=a|C_TooltipInfo.GetAzeriteEssenceSlot}}
+: {{api|t=a|C_TooltipInfo.GetAzeriteEssence}}
+: {{api|t=a|C_TooltipInfo.GetAzeritePower}}
+: {{api|t=a|C_TooltipInfo.GetBackpackToken}}
+: {{api|t=a|C_TooltipInfo.GetBagItemChild}}
+: {{api|t=a|C_TooltipInfo.GetBagItem}}
+: {{api|t=a|C_TooltipInfo.GetBuybackItem}}
+: {{api|t=a|C_TooltipInfo.GetCompanionPet}}
+: {{api|t=a|C_TooltipInfo.GetConduit}}
+: {{api|t=a|C_TooltipInfo.GetCurrencyByID}}
+: {{api|t=a|C_TooltipInfo.GetCurrencyToken}}
+: {{api|t=a|C_TooltipInfo.GetEnhancedConduit}}
+: {{api|t=a|C_TooltipInfo.GetEquipmentSet}}
+: {{api|t=a|C_TooltipInfo.GetExistingSocketGem}}
+: {{api|t=a|C_TooltipInfo.GetGuildBankItem}}
+: {{api|t=a|C_TooltipInfo.GetHeirloomByItemID}}
+: {{api|t=a|C_TooltipInfo.GetHyperlink}}
+: {{api|t=a|C_TooltipInfo.GetInboxItem}}
+: {{api|t=a|C_TooltipInfo.GetInstanceLockEncountersComplete}}
+: {{api|t=a|C_TooltipInfo.GetInventoryItemByID}}
+: {{api|t=a|C_TooltipInfo.GetInventoryItem}}
+: {{api|t=a|C_TooltipInfo.GetItemByGUID}}
+: {{api|t=a|C_TooltipInfo.GetItemByID}}
+: {{api|t=a|C_TooltipInfo.GetItemInteractionItem}}
+: {{api|t=a|C_TooltipInfo.GetItemKey}}
+: {{api|t=a|C_TooltipInfo.GetLFGDungeonReward}}
+: {{api|t=a|C_TooltipInfo.GetLFGDungeonShortageReward}}
+: {{api|t=a|C_TooltipInfo.GetLootCurrency}}
+: {{api|t=a|C_TooltipInfo.GetLootItem}}
+: {{api|t=a|C_TooltipInfo.GetLootRollItem}}
+: {{api|t=a|C_TooltipInfo.GetMerchantCostItem}}
+: {{api|t=a|C_TooltipInfo.GetMerchantItem}}
+: {{api|t=a|C_TooltipInfo.GetMinimapMouseover}}
+: {{api|t=a|C_TooltipInfo.GetMountBySpellID}}
+: {{api|t=a|C_TooltipInfo.GetOwnedItemByID}}
+: {{api|t=a|C_TooltipInfo.GetPetAction}}
+: {{api|t=a|C_TooltipInfo.GetPossession}}
+: {{api|t=a|C_TooltipInfo.GetPvpBrawl}}
+: {{api|t=a|C_TooltipInfo.GetPvpTalent}}
+: {{api|t=a|C_TooltipInfo.GetQuestCurrency}}
+: {{api|t=a|C_TooltipInfo.GetQuestItem}}
+: {{api|t=a|C_TooltipInfo.GetQuestLogCurrency}}
+: {{api|t=a|C_TooltipInfo.GetQuestLogItem}}
+: {{api|t=a|C_TooltipInfo.GetQuestLogRewardSpell}}
+: {{api|t=a|C_TooltipInfo.GetQuestLogSpecialItem}}
+: {{api|t=a|C_TooltipInfo.GetQuestPartyProgress}}
+: {{api|t=a|C_TooltipInfo.GetQuestRewardSpell}}
+: {{api|t=a|C_TooltipInfo.GetRecipeRankInfo}}
+: {{api|t=a|C_TooltipInfo.GetRecipeReagentItem}}
+: {{api|t=a|C_TooltipInfo.GetRecipeResultItemForOrder}}
+: {{api|t=a|C_TooltipInfo.GetRecipeResultItem}}
+: {{api|t=a|C_TooltipInfo.GetRuneforgeResultItem}}
+: {{api|t=a|C_TooltipInfo.GetSendMailItem}}
+: {{api|t=a|C_TooltipInfo.GetShapeshift}}
+: {{api|t=a|C_TooltipInfo.GetSlottedKeystone}}
+: {{api|t=a|C_TooltipInfo.GetSocketedItem}}
+: {{api|t=a|C_TooltipInfo.GetSocketedRelic}}
+: {{api|t=a|C_TooltipInfo.GetSocketGem}}
+: {{api|t=a|C_TooltipInfo.GetSpellBookItem}}
+: {{api|t=a|C_TooltipInfo.GetSpellByID}}
+: {{api|t=a|C_TooltipInfo.GetTalent}}
+: {{api|t=a|C_TooltipInfo.GetTotem}}
+: {{api|t=a|C_TooltipInfo.GetToyByItemID}}
+: {{api|t=a|C_TooltipInfo.GetTradePlayerItem}}
+: {{api|t=a|C_TooltipInfo.GetTradeTargetItem}}
+: {{api|t=a|C_TooltipInfo.GetTrainerService}}
+: {{api|t=a|C_TooltipInfo.GetTraitEntry}}
+: {{api|t=a|C_TooltipInfo.GetTransmogrifyItem}}
+: {{api|t=a|C_TooltipInfo.GetUnitAura}}
+: {{api|t=a|C_TooltipInfo.GetUnitBuffByAuraInstanceID}}
+: {{api|t=a|C_TooltipInfo.GetUnitBuff}}
+: {{api|t=a|C_TooltipInfo.GetUnitDebuffByAuraInstanceID}}
+: {{api|t=a|C_TooltipInfo.GetUnitDebuff}}
+: {{api|t=a|C_TooltipInfo.GetUnit}}
+: {{api|t=a|C_TooltipInfo.GetUpgradeItem}}
+: {{api|t=a|C_TooltipInfo.GetVoidDepositItem}}
+: {{api|t=a|C_TooltipInfo.GetVoidItem}}
+: {{api|t=a|C_TooltipInfo.GetVoidWithdrawalItem}}
+: {{api|t=a|C_TooltipInfo.GetWeeklyReward}}
+: {{api|t=a|C_TooltipInfo.GetWorldCursor}}
+: {{api|t=a|C_TradeSkillUI.GetCraftingOperationInfoForOrder}}
+: {{api|t=a|C_TradeSkillUI.GetCraftingTargetItems}}
+: {{api|t=a|C_TradeSkillUI.GetItemSlotModificationsForOrder}}
+: {{api|t=a|C_TradeSkillUI.GetProfessionByInventorySlot}}
+: {{api|t=a|C_TradeSkillUI.GetProfessionForCursorItem}}
+: {{api|t=a|C_TradeSkillUI.GetProfessionInventorySlots}}
+: {{api|t=a|C_TradeSkillUI.GetProfessionNameForSkillLineAbility}}
+: {{api|t=a|C_TradeSkillUI.GetQualitiesForRecipe}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeInfoForSkillLineAbility}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeQualityItemIDs}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeRequirements}}
+: {{api|t=a|C_TradeSkillUI.GetSkillLineForGear}}
+: {{api|t=a|C_TradeSkillUI.GetSourceTypeFilter}}
+: {{api|t=a|C_TradeSkillUI.HasFavoriteOrderRecipes}}
+: {{api|t=a|C_TradeSkillUI.IsNearProfessionSpellFocus}}
+: {{api|t=a|C_TradeSkillUI.IsRecipeInBaseSkillLine}}
+: {{api|t=a|C_TradeSkillUI.RecraftRecipeForOrder}}
+: {{api|t=a|C_TradeSkillUI.SetOnlyShowAvailableForOrders}}
+: {{api|t=a|C_TradeSkillUI.SetSourceTypeFilter}}
+: {{api|t=a|C_Traits.GetLoadoutSerializationVersion}}
+: {{api|t=a|C_Traits.GetTraitSystemWidgetSetID}}
+: {{api|t=a|C_UIWidgetManager.GetTextWithSubtextWidgetVisualizationInfo}}
+: {{api|t=a|C_WeeklyRewards.GetWeeklyRewardTextureKit}}
+: {{api|t=a|C_WeeklyRewards.ShouldShowFinalRetirementMessage}}
+: {{api|t=a|C_WeeklyRewards.ShouldShowRetirementMessage}}
+: {{api|t=a|ReplaceTradeskillEnchant}}
+: {{api|t=a|UnitPercentHealthFromGUID}}
+: {{api|t=a|UnitTokenFromGUID}}
+
+: {{api|t=a|C_TradeSkillUI.IsRecraftItemEquipped}}
+: {{api|t=a|C_TradeSkillUI.RecraftLimitCategoryValid}}
+: {{api|t=a|UnitPartialPower}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_ChallengeMode.SetKeystoneTooltip}}
+: {{api|t=a|C_ItemInteraction.SetCorruptionReforgerItemTooltip}}
+: {{api|t=a|C_ItemInteraction.SetItemConversionOutputTooltip}}
+: {{api|t=a|C_MajorFactions.IsMajorFaction}}
+: {{api|t=a|C_ProfSpecs.GetUnspentPointsForSkillLine}}
+: {{api|t=a|C_TradeSkillUI.CancelCraftingOrder}}
+: {{api|t=a|C_TradeSkillUI.CompleteCraftingOrder}}
+: {{api|t=a|C_TradeSkillUI.DeclineCraftingOrder}}
+: {{api|t=a|C_TradeSkillUI.GetCraftingOrders}}
+: {{api|t=a|C_TradeSkillUI.GetCurrentOrder}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeTools}}
+: {{api|t=a|C_TradeSkillUI.HasCraftingOrderFavorites}}
+: {{api|t=a|C_TradeSkillUI.HasMaxCraftingOrderFavorites}}
+: {{api|t=a|C_TradeSkillUI.IsCraftingOrderFavorite}}
+: {{api|t=a|C_TradeSkillUI.ListCraftingOrder}}
+: {{api|t=a|C_TradeSkillUI.QueryCraftingOrdersFavorites}}
+: {{api|t=a|C_TradeSkillUI.QueryCraftingOrders}}
+: {{api|t=a|C_TradeSkillUI.RecipeCanBeRecrafted}}
+: {{api|t=a|C_TradeSkillUI.SetCraftingOrderFavorite}}
+: {{api|t=a|C_TradeSkillUI.SetTooltipRecipeResultItem}}
+: {{api|t=a|C_TradeSkillUI.StartCraftingOrder}}
+: {{api|t=a|ContainerIDToInventoryID}}
+: {{api|t=a|ContainerRefundItemPurchase}}
+: {{api|t=a|CursorCanGoInSlot}}
+: {{api|t=a|GetBackpackAutosortDisabled}}
+: {{api|t=a|GetBagName}}
+: {{api|t=a|GetBankAutosortDisabled}}
+: {{api|t=a|GetContainerFreeSlots}}
+: {{api|t=a|GetContainerItemCooldown}}
+: {{api|t=a|GetContainerItemDurability}}
+: {{api|t=a|GetContainerItemEquipmentSetInfo}}
+: {{api|t=a|GetContainerItemID}}
+: {{api|t=a|GetContainerItemInfo}}
+: {{api|t=a|GetContainerItemLink}}
+: {{api|t=a|GetContainerItemPurchaseCurrency}}
+: {{api|t=a|GetContainerItemPurchaseInfo}}
+: {{api|t=a|GetContainerItemPurchaseItem}}
+: {{api|t=a|GetContainerItemQuestInfo}}
+: {{api|t=a|GetContainerNumFreeSlots}}
+: {{api|t=a|GetContainerNumSlots}}
+: {{api|t=a|GetInsertItemsLeftToRight}}
+: {{api|t=a|GetMaxArenaCurrency}}
+: {{api|t=a|GetSortBagsRightToLeft}}
+: {{api|t=a|IsBattlePayItem}}
+: {{api|t=a|IsContainerFiltered}}
+: {{api|t=a|IsContainerItemAnUpgrade}}
+: {{api|t=a|IsInventoryItemAnUpgrade}}
+: {{api|t=a|PickupContainerItem}}
+: {{api|t=a|PlayerHasHearthstone}}
+: {{api|t=a|SetBackpackAutosortDisabled}}
+: {{api|t=a|SetBagPortraitTexture}}
+: {{api|t=a|SetBankAutosortDisabled}}
+: {{api|t=a|SetInsertItemsLeftToRight}}
+: {{api|t=a|SetItemSearch}}
+: {{api|t=a|SetSortBagsRightToLeft}}
+: {{api|t=a|ShowContainerSellCursor}}
+: {{api|t=a|SocketContainerItem}}
+: {{api|t=a|SortBags}}
+: {{api|t=a|SortBankBags}}
+: {{api|t=a|SortReagentBankBags}}
+: {{api|t=a|SplitContainerItem}}
+: {{api|t=a|UseContainerItem}}
+: {{api|t=a|UseHearthstone}}
+</div>
+|}
+ {{api|t=a|C_ProfSpecs.GetPerksForPath}}
+   + ret 1: <font color="#00b400">perkInfos</font>
+   - ret 1: <font color="#ff6767">perkIDs</font>
+ {{api|t=a|C_QuestLog.GetBountySetInfoForMapID}}
+   + ret 4: <font color="#00b400">isActivitySet</font>
+ {{api|t=a|C_TradeSkillUI.CraftRecipe}}
+   + arg 5: <font color="#00b400">orderID</font>
+ {{api|t=a|C_TradeSkillUI.GetHideUnownedFlags}}
+   + ret 2: <font color="#00b400">alwaysShowUnowned</font>
+   - ret 2: <font color="#ff6767">alwaysHideUnowned</font>
+ {{api|t=a|C_TradeSkillUI.GetOriginalCraftRecipeID}}
+   + ret 2: <font color="#00b400">skillLineAbilityID</font>
+ {{api|t=a|C_TradeSkillUI.GetReagentSlotStatus}}
+   + arg 3: <font color="#00b400">skillLineAbilityID</font>
+ {{api|t=a|C_TradeSkillUI.GetRecipeOutputItemData}}
+   + arg 4: <font color="#00b400">overrideQualityID</font>
+ {{api|t=a|C_TradeSkillUI.GetRecraftItems}}
+   # arg 1: <font color="#ecbc2a">recipeID</font>, Nilable: false -> true
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(7)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(100)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|GameTooltip:SetObjectTooltipPosition}}
+: {{api|t=w|DressUpModel:IsGeoReady}}
+: {{api|t=w|DressUpModel:IsSlotAllowed}}
+: {{api|t=w|DressUpModel:IsSlotVisible}}
+: {{api|t=w|ModelSceneActor:IsGeoReady}}
+: {{api|t=w|ModelSceneActor:IsSlotAllowed}}
+: {{api|t=w|ModelSceneActor:IsSlotVisible}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|FogOfWarFrame:OnTooltipAddMoney}}
+: {{api|t=w|FogOfWarFrame:OnTooltipSetAchievement}}
+: {{api|t=w|GameTooltip:OnTooltipSetEquipmentSet}}
+: {{api|t=w|GameTooltip:OnTooltipSetItem}}
+: {{api|t=w|GameTooltip:OnTooltipSetQuest}}
+: {{api|t=w|GameTooltip:OnTooltipSetSpell}}
+: {{api|t=w|GameTooltip:OnTooltipSetUnit}}
+: {{api|t=w|GameTooltip:AddSpellByID}}
+: {{api|t=w|GameTooltip:AddTraitEntry}}
+: {{api|t=w|GameTooltip:AdvanceSecondaryCompareItem}}
+: {{api|t=w|GameTooltip:GetAzeritePowerID}}
+: {{api|t=w|GameTooltip:GetItem}}
+: {{api|t=w|GameTooltip:GetSpell}}
+: {{api|t=w|GameTooltip:GetUnit}}
+: {{api|t=w|GameTooltip:IsEquippedItem}}
+: {{api|t=w|GameTooltip:IsUnit}}
+: {{api|t=w|GameTooltip:ResetSecondaryCompareItem}}
+: {{api|t=w|GameTooltip:SetAchievementByID}}
+: {{api|t=w|GameTooltip:SetAction}}
+: {{api|t=w|GameTooltip:SetArtifactItem}}
+: {{api|t=w|GameTooltip:SetArtifactPowerByID}}
+: {{api|t=w|GameTooltip:SetAzeriteEssence}}
+: {{api|t=w|GameTooltip:SetAzeriteEssenceSlot}}
+: {{api|t=w|GameTooltip:SetAzeritePower}}
+: {{api|t=w|GameTooltip:SetBackpackToken}}
+: {{api|t=w|GameTooltip:SetBagItem}}
+: {{api|t=w|GameTooltip:SetBagItemChild}}
+: {{api|t=w|GameTooltip:SetBuybackItem}}
+: {{api|t=w|GameTooltip:SetCompanionPet}}
+: {{api|t=w|GameTooltip:SetCompareAzeritePower}}
+: {{api|t=w|GameTooltip:SetCompareItem}}
+: {{api|t=w|GameTooltip:SetConduit}}
+: {{api|t=w|GameTooltip:SetCurrencyByID}}
+: {{api|t=w|GameTooltip:SetCurrencyToken}}
+: {{api|t=w|GameTooltip:SetCurrencyTokenByID}}
+: {{api|t=w|GameTooltip:SetEnhancedConduit}}
+: {{api|t=w|GameTooltip:SetEquipmentSet}}
+: {{api|t=w|GameTooltip:SetExistingSocketGem}}
+: {{api|t=w|GameTooltip:SetGuildBankItem}}
+: {{api|t=w|GameTooltip:SetHeirloomByItemID}}
+: {{api|t=w|GameTooltip:SetHyperlink}}
+: {{api|t=w|GameTooltip:SetInboxItem}}
+: {{api|t=w|GameTooltip:SetInstanceLockEncountersComplete}}
+: {{api|t=w|GameTooltip:SetInventoryItem}}
+: {{api|t=w|GameTooltip:SetInventoryItemByID}}
+: {{api|t=w|GameTooltip:SetItemByGUID}}
+: {{api|t=w|GameTooltip:SetItemByID}}
+: {{api|t=w|GameTooltip:SetItemByIDWithQuality}}
+: {{api|t=w|GameTooltip:SetItemKey}}
+: {{api|t=w|GameTooltip:SetLFGDungeonReward}}
+: {{api|t=w|GameTooltip:SetLFGDungeonShortageReward}}
+: {{api|t=w|GameTooltip:SetLootCurrency}}
+: {{api|t=w|GameTooltip:SetLootItem}}
+: {{api|t=w|GameTooltip:SetLootRollItem}}
+: {{api|t=w|GameTooltip:SetMerchantCostItem}}
+: {{api|t=w|GameTooltip:SetMerchantItem}}
+: {{api|t=w|GameTooltip:SetMountBySpellID}}
+: {{api|t=w|GameTooltip:SetOwnedItemByID}}
+: {{api|t=w|GameTooltip:SetPetAction}}
+: {{api|t=w|GameTooltip:SetPossession}}
+: {{api|t=w|GameTooltip:SetPvpBrawl}}
+: {{api|t=w|GameTooltip:SetPvpTalent}}
+: {{api|t=w|GameTooltip:SetQualityReagentSlotItemByID}}
+: {{api|t=w|GameTooltip:SetQuestCurrency}}
+: {{api|t=w|GameTooltip:SetQuestItem}}
+: {{api|t=w|GameTooltip:SetQuestLogCurrency}}
+: {{api|t=w|GameTooltip:SetQuestLogItem}}
+: {{api|t=w|GameTooltip:SetQuestLogRewardSpell}}
+: {{api|t=w|GameTooltip:SetQuestLogSpecialItem}}
+: {{api|t=w|GameTooltip:SetQuestPartyProgress}}
+: {{api|t=w|GameTooltip:SetQuestRewardSpell}}
+: {{api|t=w|GameTooltip:SetRecipeRankInfo}}
+: {{api|t=w|GameTooltip:SetRecipeReagentItem}}
+: {{api|t=w|GameTooltip:SetRuneforgeResultItem}}
+: {{api|t=w|GameTooltip:SetSendMailItem}}
+: {{api|t=w|GameTooltip:SetShapeshift}}
+: {{api|t=w|GameTooltip:SetSocketGem}}
+: {{api|t=w|GameTooltip:SetSocketedItem}}
+: {{api|t=w|GameTooltip:SetSocketedRelic}}
+: {{api|t=w|GameTooltip:SetSpecialPvpBrawl}}
+: {{api|t=w|GameTooltip:SetSpellBookItem}}
+: {{api|t=w|GameTooltip:SetSpellByID}}
+: {{api|t=w|GameTooltip:SetTalent}}
+: {{api|t=w|GameTooltip:SetTotem}}
+: {{api|t=w|GameTooltip:SetToyByItemID}}
+: {{api|t=w|GameTooltip:SetTradePlayerItem}}
+: {{api|t=w|GameTooltip:SetTradeTargetItem}}
+: {{api|t=w|GameTooltip:SetTrainerService}}
+: {{api|t=w|GameTooltip:SetTransmogrifyItem}}
+: {{api|t=w|GameTooltip:SetUnit}}
+: {{api|t=w|GameTooltip:SetUnitAura}}
+: {{api|t=w|GameTooltip:SetUnitBuff}}
+: {{api|t=w|GameTooltip:SetUnitBuffByAuraInstanceID}}
+: {{api|t=w|GameTooltip:SetUnitDebuff}}
+: {{api|t=w|GameTooltip:SetUnitDebuffByAuraInstanceID}}
+: {{api|t=w|GameTooltip:SetUpgradeItem}}
+: {{api|t=w|GameTooltip:SetVoidDepositItem}}
+: {{api|t=w|GameTooltip:SetVoidItem}}
+: {{api|t=w|GameTooltip:SetVoidWithdrawalItem}}
+: {{api|t=w|GameTooltip:SetWeeklyReward}}
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(23)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CRAFTING_HOUSE_DISABLED}}
+: {{api|t=e|CRAFTINGORDERS_CAN_REQUEST}}
+: {{api|t=e|CRAFTINGORDERS_CLAIM_ORDER_RESPONSE}}
+: {{api|t=e|CRAFTINGORDERS_CLAIMED_ORDER_ADDED}}
+: {{api|t=e|CRAFTINGORDERS_CLAIMED_ORDER_REMOVED}}
+: {{api|t=e|CRAFTINGORDERS_CLAIMED_ORDER_UPDATED}}
+: {{api|t=e|CRAFTINGORDERS_FULFILL_ORDER_RESPONSE}}
+: {{api|t=e|CRAFTINGORDERS_ORDER_CANCEL_RESPONSE}}
+: {{api|t=e|CRAFTINGORDERS_ORDER_PLACEMENT_RESPONSE}}
+: {{api|t=e|CRAFTINGORDERS_REJECT_ORDER_RESPONSE}}
+: {{api|t=e|CRAFTINGORDERS_RELEASE_ORDER_RESPONSE}}
+: {{api|t=e|CRAFTINGORDERS_UPDATE_CUSTOMER_NAME}}
+: {{api|t=e|CRAFTINGORDERS_UPDATE_ORDER_COUNT}}
+: {{api|t=e|GENERIC_WIDGET_DISPLAY_SHOW}}
+: {{api|t=e|HIDE_HYPERLINK_TOOLTIP}}
+: {{api|t=e|PLAYER_SOFT_TARGET_INTERACTION}}
+: {{api|t=e|REPLACE_TRADESKILL_ENCHANT}}
+: {{api|t=e|SHOW_HYPERLINK_TOOLTIP}}
+: {{api|t=e|STOP_TIMER_OF_TYPE}}
+: {{api|t=e|SYSTEM_VISIBILITY_CHANGED}}
+: {{api|t=e|TOOLTIP_DATA_UPDATE}}
+: {{api|t=e|TRADE_SKILL_FAVORITES_CHANGED}}
+: {{api|t=e|WORLD_CURSOR_TOOLTIP_UPDATE}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|t=e|PROFESSION_EQUIPMENT_CHANGED}}
+   + 2: <font color="#00b400">isTool</font>
+ {{api|t=e|PVP_ROLE_POPUP_HIDE}}
+   + 1: <font color="#00b400">readyCheckInfo</font>
+   - 1: <font color="#ff6767">roleQueueInfo</font>
+ {{api|t=e|PVP_ROLE_POPUP_SHOW}}
+   + 1: <font color="#00b400">readyCheckInfo</font>
+   - 1: <font color="#ff6767">roleQueueInfo</font>
+ {{api|t=e|UPDATE_TRADESKILL_CAST_COMPLETE}}
+   + 1: <font color="#00b400">isScrapping</font>
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(7)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=EJSelectedTier|default=0|scope=Character|cat=4|desc=Stores the last manually selected journal tier in the encounter journal}}
+: {{apitooltip|type=cvar|name=interactKeyWarningTutorial|default=0|cat=4|desc=Has the player seen the interact key warning tutorial since they have logged in}}
+: {{apitooltip|type=cvar|name=professionAccessorySlotsExampleShown|default=0|scope=Character|cat=4|desc=If the profession gear slots example has been shown}}
+: {{apitooltip|type=cvar|name=professionToolSlotsExampleShown|default=0|scope=Character|cat=4|desc=If the profession gear slots example has been shown}}
+: {{apitooltip|type=cvar|name=softTargetInteractionTutorialTotalInteractions|default=0|cat=4|desc=total interactions that the player has used in soft targetting}}
+: {{apitooltip|type=cvar|name=unlockedExpansionLandingPages|scope=Character|cat=4|desc=Bitfield for which expansion landing pages have been unlocked/seen by the user}}
+: {{apitooltip|type=cvar|name=unlockedMajorFactions|scope=Character|cat=4|desc=Internal cvar for tracking unlocked Major Factions. Used to play a toast when a new faction has been unlocked.}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: professionGearSlotsExampleShown
+</div>
+|}
+
+==Enums==
+ Enum.BattlePetSpeciesFlags
+   + 17: <font color="#00b400">NoWildPetAddsAllowed</font>
+ Enum.BattlepetDbFlags
+   + 11: <font color="#00b400">AcquiredViaLicense</font>
+ Enum.CurrencyDestroyReason
+   + 12: <font color="#00b400">FulfillCraftingOrder</font>
+ Enum.CurrencySource
+   + 57: <font color="#00b400">CraftingOrder</font>
+   + 58: <font color="#00b400">CatalystBalancing</font>
+   + 59: <font color="#00b400">CatalystCraft</font>
+   + 60: <font color="#00b400">ProfessionInitialAward</font>
+   + 61: <font color="#00b400">PlayerTraitRefund</font>
+ Enum.GraphicsValidationResult
+   + 30: <font color="#00b400">LegacyUnsupported</font>
+   + 31: <font color="#00b400">Dx11Unsupported</font>
+   + 33: <font color="#00b400">RemoteDesktopUnsupported</font>
+ Enum.NavigationState
+   + 4: <font color="#00b400">Disabled</font>
+ Enum.ProfTraitPerkNodeFlags
+   + 2: <font color="#00b400">IsMajorBonus</font>
+ Enum.UIItemInteractionFlags
+   + 5: <font color="#00b400">AddCurrency</font>
+   + 6: <font color="#00b400">UsesCharges</font>
+ Enum.UIWidgetTextSizeType
+   + 1: <font color="#00b400">Small12Pt</font>
+   + 2: <font color="#00b400">Medium16Pt</font>
+   + 3: <font color="#00b400">Large24Pt</font>
+   + 4: <font color="#00b400">Huge27Pt</font>
+   + 5: <font color="#00b400">Standard14Pt</font>
+   + 6: <font color="#00b400">Small10Pt</font>
+   + 7: <font color="#00b400">Small11Pt</font>
+   + 8: <font color="#00b400">Medium18Pt</font>
+   + 9: <font color="#00b400">Large20Pt</font>
+   - 1: <font color="#ff6767">Small</font>
+   - 2: <font color="#ff6767">Medium</font>
+   - 3: <font color="#ff6767">Large</font>
+   - 4: <font color="#ff6767">Huge</font>
+   - 5: <font color="#ff6767">Standard</font>
+ Enum.UIWidgetVisualizationType
+  + 26: <font color="#00b400">TextWithSubtext</font>
+
+==Structures==
+ AreaPOIInfo ({{api|C_AreaPoiInfo.GetAreaPOIInfo}})
+   + 10: <font color="#00b400">factionID</font>
+   + 11: <font color="#00b400">isPrimaryMapForPOI</font>
+   + 12: <font color="#00b400">isAlwaysOnFlightmap</font>
+ CharCustomizationChoice ({{api|C_BarberShop.GetAvailableCustomizations}})
+   + 7: <font color="#00b400">isLocked</font>
+   + 8: <font color="#00b400">lockedText</font>
+   - 7: <font color="#ff6767">showLocked</font>
+   - 8: <font color="#ff6767">lockedTooltip</font>
+ CraftingCurrencyResultData ({{api|t=e|TRADE_SKILL_CURRENCY_REWARD_RESULT}})
+   + 3: <font color="#00b400">operationID</font>
+   + 4: <font color="#00b400">firstCraftReward</font>
+   + 5: <font color="#00b400">showCurrencyText</font>
+   - 3: <font color="#ff6767">associatedItemGUID</font>
+ CraftingItemResultData ({{api|t=e|TRADE_SKILL_ITEM_CRAFTED_RESULT}})
+   + 12: <font color="#00b400">operationID</font>
+   + 13: <font color="#00b400">firstCraftReward</font>
+   - 12: <font color="#ff6767">associatedItemGUID</font>
+ CraftingOperationInfo ({{api|C_TradeSkillUI.GetCraftingOperationInfo}})
+   + 13: <font color="#00b400">guaranteedCraftingQualityID</font>
+ CraftingOrderCustomerOptionInfo ({{api|C_CraftingOrders.GetCustomerOptions}})
+   + 9: <font color="#00b400">qualityIlvlBonuses</font>
+   + 10: <font color="#00b400">craftingQualityIDs</font>
+   # 13: <font color="#ecbc2a">level</font>, Nilable: false -> true
+ CraftingReagentSlotSchematic ({{api|C_TradeSkillUI.GetRecipeSchematic}})
+   + 8: <font color="#00b400">orderSource</font>
+ EncounterJournalItemInfo ({{api|C_EncounterJournal.GetLootInfo}})
+   + 13: <font color="#00b400">displayAsVeryRare</font>
+   + 14: <font color="#00b400">displayAsExtremelyRare</font>
+ ItemInteractionFrameInfo ({{api|C_ItemInteraction.GetItemInteractionInfo}})
+   + 12: <font color="#00b400">slotTooltip</font>
+ MajorFactionData ({{api|C_MajorFactions.GetMajorFactionData}})
+   + 6: <font color="#00b400">unlockDescription</font>
+   + 7: <font color="#00b400">unlockOrder</font>
+ QuestInfo ({{api|C_QuestLog.GetInfo}})
+   + 10: <font color="#00b400">useMinimalHeader</font>
+ TextureAndTextRowVisualizationInfo ({{api|C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo}})
+   # 3: <font color="#ecbc2a">textSizeType</font>, Type: UIWidgetTextSizeType -> UIWidgetTextureAndTextSizeType
+ TradeSkillRecipeInfo ({{api|C_TradeSkillUI.GetRecipeInfo}})
+   + 18: <font color="#00b400">skillLineAbilityID</font>
+ TraitDefinitionInfo ({{api|C_Traits.GetDefinitionInfo}})
+   + 7: <font color="#00b400">subType</font>

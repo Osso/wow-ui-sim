@@ -45,7 +45,10 @@ def parse_symbol(text):
 
 
 def make_entry(section, direction, line_no, text):
-    symbol, params = parse_symbol(text)
+    if section == "cvars" and re.fullmatch(r":\s+[A-Za-z_][A-Za-z0-9_]*", text):
+        symbol, params = text[1:].strip(), {}
+    else:
+        symbol, params = parse_symbol(text)
     entry = {
         "id": f"wt-{section}-{symbol}-{line_no}",
         "section": section,

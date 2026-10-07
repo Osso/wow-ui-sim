@@ -84,6 +84,20 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual([(e['symbol'], e.get('kind')) for e in entries],
                          [('OnMovieHideSubtitle', 'widget-script')])
 
+    def test_plain_removed_cvar_preserves_identity_and_source_line(self):
+        entries, counts = parse_section('cvars', [
+            (1, '! Added <small>(0)</small>'),
+            (2, '! Removed <small>(1)</small>'),
+            (3, '| valign="top" | <div>'),
+            (4, '</div>'),
+            (5, '| valign="top" | <div>'),
+            (6, ': professionGearSlotsExampleShown'),
+        ])
+        self.assertEqual([(e['symbol'], e['direction'], e['wikitext_line'])
+                          for e in entries],
+                         [('professionGearSlotsExampleShown', 'removed', 6)])
+        self.assertEqual(counts[1]['parsed_count'], 1)
+
     def test_uncollapsed_added_scriptobjects(self):
         entries, counts = parse_section("scriptobjects", [
             (1, '{| class="wikitable"'),
