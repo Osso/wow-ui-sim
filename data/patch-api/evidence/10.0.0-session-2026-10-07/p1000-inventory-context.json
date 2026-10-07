@@ -1,0 +1,34 @@
+[
+  {
+    "source_id": "wt-context-220",
+    "wikitext_line": 220,
+    "literal": "|+ 9.2.7 (45114) &rarr; 10.0.0 (46366) Oct 27 2022",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Build transition caption; no runtime credit."
+  },
+  {
+    "source_id": "wt-context-594",
+    "wikitext_line": 594,
+    "literal": "* <code>Frame:SetMinResize</code> and similar changed to {{api|t=w|Frame:SetResizeBounds}}.",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Inventory-section prose excluded by shared extractor; retained literally here. Successor migration behavior remains unproved."
+  },
+  {
+    "source_id": "wt-context-595",
+    "wikitext_line": 595,
+    "literal": "* <code>Scale:GetFromScale</code> changed to <code>Scale:GetScaleFrom</code>, etc.",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Inventory-section prose excluded by shared extractor; retained literally here. Successor migration behavior remains unproved."
+  },
+  {
+    "source_id": "wt-context-596",
+    "wikitext_line": 596,
+    "literal": "* {{api|t=w|Texture:SetGradientAlpha}} merged into {{api|t=w|TextureBase:SetGradient}}.",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Inventory-section prose excluded by shared extractor; retained literally here. Successor migration behavior remains unproved."
+  }
+]

@@ -1,0 +1,1422 @@
+{
+  "wt-cvars-LogFps-904": {
+    "symbol": "LogFps",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-cvars-WriteCustomizationOptions-905": {
+    "symbol": "WriteCustomizationOptions",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-cvars-luaErrorExceptions-835": {
+    "symbol": "luaErrorExceptions",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-cvars-minimapTrackedInfov3-837": {
+    "symbol": "minimapTrackedInfov3",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-events-SETTINGS_LOADED-731": {
+    "symbol": "SETTINGS_LOADED",
+    "exit": 0,
+    "matches": [
+      "src/event/valid_events_c.rs-116-    \"SEND_MAIL_MONEY_CHANGED\",",
+      "src/event/valid_events_c.rs-117-    \"SESSION_TIME_ALERT\",",
+      "src/event/valid_events_c.rs:118:    \"SETTINGS_LOADED\",",
+      "src/event/valid_events_c.rs-119-    \"SETTINGS_PANEL_OPEN\",",
+      "src/event/valid_events_c.rs-120-    \"SET_DEBUG_TOOL_VISIBLE\","
+    ]
+  },
+  "wt-global-api-C_AchievementInfo.IsGuildAchievement-226": {
+    "symbol": "C_AchievementInfo.IsGuildAchievement",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_AlliedRaces.ClearAlliedRaceDetailsGiver-506": {
+    "symbol": "C_AlliedRaces.ClearAlliedRaceDetailsGiver",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec-507": {
+    "symbol": "C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec",
+    "exit": 0,
+    "matches": [
+      "src/c_api/c_azerite_empowered_item.rs-4-//!",
+      "src/c_api/c_azerite_empowered_item.rs-5-//! Respec-flow methods:",
+      "src/c_api/c_azerite_empowered_item.rs:6://! - `CloseAzeriteEmpoweredItemRespec(itemLocation?)` \u2014 fires",
+      "src/c_api/c_azerite_empowered_item.rs-7-//!   `AZERITE_EMPOWERED_ITEM_RESPEC_CLOSE` so the panel can hide via",
+      "src/c_api/c_azerite_empowered_item.rs-8-//!   `UIPanelWindows.showFailedFunc`.",
+      "--",
+      "src/c_api/c_azerite_empowered_item.rs-53-const AZERITE_EMPOWERED_METHODS: &[(&str, AzeriteEmpoweredMethod)] = &[",
+      "src/c_api/c_azerite_empowered_item.rs-54-    (",
+      "src/c_api/c_azerite_empowered_item.rs:55:        \"CloseAzeriteEmpoweredItemRespec\",",
+      "src/c_api/c_azerite_empowered_item.rs-56-        close_azerite_empowered_item_respec,",
+      "src/c_api/c_azerite_empowered_item.rs-57-    ),",
+      "--",
+      "src/c_api/c_azerite_empowered_item.rs-234-/// `ItemLocationMixin` (or its test-friendly cousin `{itemID}`) into the",
+      "src/c_api/c_azerite_empowered_item.rs-235-/// simulator's `ItemLocationData`. Returns `None` when the slot is",
+      "src/c_api/c_azerite_empowered_item.rs:236:/// missing/nil \u2014 `CloseAzeriteEmpoweredItemRespec` calls in via",
+      "src/c_api/c_azerite_empowered_item.rs-237-/// `UIPanelWindows.showFailedFunc` with no argument.",
+      "src/c_api/c_azerite_empowered_item.rs-238-fn read_optional_location(state: &mut LuaState, slot: i32) -> Option<ItemLocationData> {",
+      "--",
+      "src/lua_api/state/support_types.rs-437-    pub empowered_items: HashSet<i32>,",
+      "src/lua_api/state/support_types.rs-438-    /// Last `itemLocation` argument seen by",
+      "src/lua_api/state/support_types.rs:439:    /// `CloseAzeriteEmpoweredItemRespec`. Recorded for tests that want",
+      "src/lua_api/state/support_types.rs-440-    /// to assert close was called with a specific shape; the addon",
+      "src/lua_api/state/support_types.rs-441-    /// itself passes none (it's the `UIPanelWindows.showFailedFunc`"
+    ]
+  },
+  "wt-global-api-C_CampaignInfo.SortAsNormalQuest-231": {
+    "symbol": "C_CampaignInfo.SortAsNormalQuest",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ClassTalents.CanCreateNewConfig-233": {
+    "symbol": "C_ClassTalents.CanCreateNewConfig",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ClassTalents.CommitConfig-234": {
+    "symbol": "C_ClassTalents.CommitConfig",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ClassTalents.DeleteConfig-235": {
+    "symbol": "C_ClassTalents.DeleteConfig",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ClassTalents.ImportLoadout-243": {
+    "symbol": "C_ClassTalents.ImportLoadout",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ClassTalents.IsConfigPopulated-244": {
+    "symbol": "C_ClassTalents.IsConfigPopulated",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ClassTalents.RenameConfig-246": {
+    "symbol": "C_ClassTalents.RenameConfig",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ClassTalents.RequestNewConfig-247": {
+    "symbol": "C_ClassTalents.RequestNewConfig",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ClassTalents.SaveConfig-248": {
+    "symbol": "C_ClassTalents.SaveConfig",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ClassTalents.SetUsesSharedActionBars-250": {
+    "symbol": "C_ClassTalents.SetUsesSharedActionBars",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_CraftingOrders.CloseCustomerCraftingOrders-254": {
+    "symbol": "C_CraftingOrders.CloseCustomerCraftingOrders",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_CraftingOrders.GetCustomerCategories-255": {
+    "symbol": "C_CraftingOrders.GetCustomerCategories",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_CraftingOrders.GetCustomerOptions-256": {
+    "symbol": "C_CraftingOrders.GetCustomerOptions",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_CraftingOrders.HasFavoriteCustomerOptions-257": {
+    "symbol": "C_CraftingOrders.HasFavoriteCustomerOptions",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_CraftingOrders.IsCustomerOptionFavorited-258": {
+    "symbol": "C_CraftingOrders.IsCustomerOptionFavorited",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_CraftingOrders.ParseCustomerOptions-259": {
+    "symbol": "C_CraftingOrders.ParseCustomerOptions",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_CraftingOrders.SetCustomerOptionFavorited-260": {
+    "symbol": "C_CraftingOrders.SetCustomerOptionFavorited",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_CurrencyInfo.GetCurrencyDescription-261": {
+    "symbol": "C_CurrencyInfo.GetCurrencyDescription",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_EditMode.ConvertLayoutInfoToString-263": {
+    "symbol": "C_EditMode.ConvertLayoutInfoToString",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_EditMode.ConvertStringToLayoutInfo-264": {
+    "symbol": "C_EditMode.ConvertStringToLayoutInfo",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_EditMode.OnEditModeExit-267": {
+    "symbol": "C_EditMode.OnEditModeExit",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua-26-                self.registeredSystemFrames,",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua-27-                function(_, f)",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua:28:                    if f.OnEditModeExit then",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua:29:                        pcall(f.OnEditModeExit, f)",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua-30-                    end",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua-31-                end",
+      "--",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua-33-        end)",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua-34-        if self.AccountSettings",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua:35:            and self.AccountSettings.OnEditModeExit then",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua-36-            pcall(",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua:37:                self.AccountSettings.OnEditModeExit,",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua-38-                self.AccountSettings",
+      "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua-39-            )"
+    ]
+  },
+  "wt-global-api-C_EditMode.OnLayoutAdded-268": {
+    "symbol": "C_EditMode.OnLayoutAdded",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_EditMode.OnLayoutDeleted-269": {
+    "symbol": "C_EditMode.OnLayoutDeleted",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_GossipInfo.GetNumOptions-508": {
+    "symbol": "C_GossipInfo.GetNumOptions",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Item.GetItemIDByGUID-278": {
+    "symbol": "C_Item.GetItemIDByGUID",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Item.GetItemLocation-279": {
+    "symbol": "C_Item.GetItemLocation",
+    "exit": 0,
+    "matches": [
+      "src/c_api/item_spell/c_equipment_set.rs-51-    (\"GetIgnoredSlots\", c_get_ignored_slots),",
+      "src/c_api/item_spell/c_equipment_set.rs-52-    (\"GetItemIDs\", c_get_item_ids),",
+      "src/c_api/item_spell/c_equipment_set.rs:53:    (\"GetItemLocations\", c_get_item_locations),",
+      "src/c_api/item_spell/c_equipment_set.rs-54-    (\"IgnoreSlotForSave\", c_ignore_slot_for_save),",
+      "src/c_api/item_spell/c_equipment_set.rs-55-    (\"UnignoreSlotForSave\", c_unignore_slot_for_save),",
+      "--",
+      "src/c_api/item_spell/c_equipment_set.rs-110-        // Pack location: slot id stored verbatim \u2014 the real client uses",
+      "src/c_api/item_spell/c_equipment_set.rs-111-        // `EquipmentManager_PackLocation` but the pane only consumes",
+      "src/c_api/item_spell/c_equipment_set.rs:112:        // this opaquely via `GetItemLocations` (loop body iterates and",
+      "src/c_api/item_spell/c_equipment_set.rs-113-        // passes each value back into `EquipmentManager_*` helpers).",
+      "src/c_api/item_spell/c_equipment_set.rs-114-        locations.insert(*slot, *slot as i64);",
+      "--",
+      "src/loader/tests/wow_api_equipment_set.rs-25-        \"GetIgnoredSlots\",",
+      "src/loader/tests/wow_api_equipment_set.rs-26-        \"GetItemIDs\",",
+      "src/loader/tests/wow_api_equipment_set.rs:27:        \"GetItemLocations\",",
+      "src/loader/tests/wow_api_equipment_set.rs-28-        \"IgnoreSlotForSave\",",
+      "src/loader/tests/wow_api_equipment_set.rs-29-        \"UnignoreSlotForSave\","
+    ]
+  },
+  "wt-global-api-C_Item.IsItemGUIDInInventory-282": {
+    "symbol": "C_Item.IsItemGUIDInInventory",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_LegendaryCrafting.GetRuneforgeModifierInfo-581": {
+    "symbol": "C_LegendaryCrafting.GetRuneforgeModifierInfo",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_MajorFactions.IsMajorFaction-293": {
+    "symbol": "C_MajorFactions.IsMajorFaction",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/globals/faction_probes.rs-259-        reputation_set_watched_faction_by_id,",
+      "src/lua_api/globals/faction_probes.rs-260-    ),",
+      "src/lua_api/globals/faction_probes.rs:261:    (\"IsMajorFaction\", reputation_is_major_faction),",
+      "src/lua_api/globals/faction_probes.rs-262-    (",
+      "src/lua_api/globals/faction_probes.rs-263-        \"IsAccountWideReputation\",",
+      "--",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-212-end",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-213-",
+      "src/lua_api/workarounds/temporary/reputation_state.rs:214:if C_Reputation.IsMajorFaction == nil then",
+      "src/lua_api/workarounds/temporary/reputation_state.rs:215:    C_Reputation.IsMajorFaction = function()",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-216-        return false",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-217-    end",
+      "--",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-310-                if type(C_Reputation.IsFactionParagonForCurrentPlayer) ~= \"function\"",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-311-                    or type(C_Reputation.IsFactionParagon) ~= \"function\"",
+      "src/lua_api/workarounds/temporary/reputation_state.rs:312:                    or type(C_Reputation.IsMajorFaction) ~= \"function\"",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-313-                    or type(C_Reputation.GetFactionParagonInfo) ~= \"function\" then",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-314-                    return \"missing_existing_reputation_methods\"",
+      "--",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs-8-C_MajorFactions = C_MajorFactions or __wow_namespace()",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs-9-",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs:10:if rawget(C_MajorFactions, \"IsMajorFactionHiddenFromExpansionPage\") == nil then",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs:11:    function C_MajorFactions.IsMajorFactionHiddenFromExpansionPage(_factionID)",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs-12-        return false",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs-13-    end",
+      "--",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs-61-            .eval(",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs-62-                r#\"",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs:63:                return C_MajorFactions.IsMajorFactionHiddenFromExpansionPage(2507),",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs-64-                       C_MajorFactions.ShouldDisplayMajorFactionAsJourney(2507),",
+      "src/lua_api/workarounds/temporary/major_faction_display_defaults.rs-65-                       C_MajorFactions.HasMaximumRenown(2507),"
+    ]
+  },
+  "wt-global-api-C_MajorFactions.IsWeeklyRenownCapped-295": {
+    "symbol": "C_MajorFactions.IsWeeklyRenownCapped",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Minimap.CanTrackBattlePets-297": {
+    "symbol": "C_Minimap.CanTrackBattlePets",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Minimap.GetNumQuestPOIWorldEffects-299": {
+    "symbol": "C_Minimap.GetNumQuestPOIWorldEffects",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Minimap.GetPOITextureCoords-302": {
+    "symbol": "C_Minimap.GetPOITextureCoords",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Minimap.IsFilteredOut-305": {
+    "symbol": "C_Minimap.IsFilteredOut",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Minimap.IsTrackingBattlePets-306": {
+    "symbol": "C_Minimap.IsTrackingBattlePets",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Minimap.IsTrackingHiddenQuests-307": {
+    "symbol": "C_Minimap.IsTrackingHiddenQuests",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_MountJournal.GetCollectedDragonridingMounts-309": {
+    "symbol": "C_MountJournal.GetCollectedDragonridingMounts",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_MythicPlus.GetCurrentUIDisplaySeason-312": {
+    "symbol": "C_MythicPlus.GetCurrentUIDisplaySeason",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PaperDollInfo.GetInspectRatedSoloShuffleData-313": {
+    "symbol": "C_PaperDollInfo.GetInspectRatedSoloShuffleData",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-509": {
+    "symbol": "C_PlayerInfo.IsPlayerInGuildFromGUID",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PlayerInteractionManager.ConfirmationInteraction-317": {
+    "symbol": "C_PlayerInteractionManager.ConfirmationInteraction",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PlayerInteractionManager.InteractUnit-318": {
+    "symbol": "C_PlayerInteractionManager.InteractUnit",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/globals/stubs/global_stubs.rs-186-    // instance_info.rs, not stubs.",
+      "src/lua_api/globals/stubs/global_stubs.rs-187-    // GetMouseFocus is SimState-backed in mouse_probes.rs, not a stub.",
+      "src/lua_api/globals/stubs/global_stubs.rs:188:    \"GetNextInteractUnit\",",
+      "src/lua_api/globals/stubs/global_stubs.rs-189-    // GetNumAuctionItems is SimState-backed in inventory_counts.rs, not a stub.",
+      "src/lua_api/globals/stubs/global_stubs.rs-190-    // GetNumBattlegroundEntries is SimState-backed in"
+    ]
+  },
+  "wt-global-api-C_PlayerInteractionManager.IsInteractingWithNpcOfType-319": {
+    "symbol": "C_PlayerInteractionManager.IsInteractingWithNpcOfType",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PlayerInteractionManager.IsReplacingUnit-320": {
+    "symbol": "C_PlayerInteractionManager.IsReplacingUnit",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PlayerInteractionManager.IsValidNPCInteraction-321": {
+    "symbol": "C_PlayerInteractionManager.IsValidNPCInteraction",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PlayerInteractionManager.ReopenInteraction-322": {
+    "symbol": "C_PlayerInteractionManager.ReopenInteraction",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.CanRefundPath-323": {
+    "symbol": "C_ProfSpecs.CanRefundPath",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.CanUnlockTab-324": {
+    "symbol": "C_ProfSpecs.CanUnlockTab",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetChildrenForPath-325": {
+    "symbol": "C_ProfSpecs.GetChildrenForPath",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetDescriptionForPath-328": {
+    "symbol": "C_ProfSpecs.GetDescriptionForPath",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetDescriptionForPerk-329": {
+    "symbol": "C_ProfSpecs.GetDescriptionForPerk",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetEntryIDForPerk-330": {
+    "symbol": "C_ProfSpecs.GetEntryIDForPerk",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetPerksForPath-331": {
+    "symbol": "C_ProfSpecs.GetPerksForPath",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetRootPathForTab-332": {
+    "symbol": "C_ProfSpecs.GetRootPathForTab",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetSourceTextForPath-333": {
+    "symbol": "C_ProfSpecs.GetSourceTextForPath",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetSpendCurrencyForPath-336": {
+    "symbol": "C_ProfSpecs.GetSpendCurrencyForPath",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetSpendEntryForPath-337": {
+    "symbol": "C_ProfSpecs.GetSpendEntryForPath",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetStateForPath-338": {
+    "symbol": "C_ProfSpecs.GetStateForPath",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetStateForPerk-339": {
+    "symbol": "C_ProfSpecs.GetStateForPerk",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetStateForTab-340": {
+    "symbol": "C_ProfSpecs.GetStateForTab",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetUnlockEntryForPath-342": {
+    "symbol": "C_ProfSpecs.GetUnlockEntryForPath",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_ProfSpecs.GetUnlockRankForPerk-343": {
+    "symbol": "C_ProfSpecs.GetUnlockRankForPerk",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PvP.GetPersonalRatedSoloShuffleSpecStats-347": {
+    "symbol": "C_PvP.GetPersonalRatedSoloShuffleSpecStats",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PvP.GetRatedSoloShuffleMinItemLevel-348": {
+    "symbol": "C_PvP.GetRatedSoloShuffleMinItemLevel",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PvP.GetRatedSoloShuffleRewards-349": {
+    "symbol": "C_PvP.GetRatedSoloShuffleRewards",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_PvP.IsBrawlSoloShuffle-350": {
+    "symbol": "C_PvP.IsBrawlSoloShuffle",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_QuestItemUse.CanUseQuestItemOnObject-352": {
+    "symbol": "C_QuestItemUse.CanUseQuestItemOnObject",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-353": {
+    "symbol": "C_QuestLog.GetQuestLogMajorFactionReputationRewards",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_QuestLog.UnitIsRelatedToActiveQuest-354": {
+    "symbol": "C_QuestLog.UnitIsRelatedToActiveQuest",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-356": {
+    "symbol": "C_QuestOffer.GetQuestOfferMajorFactionReputationRewards",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Reputation.SetWatchedFaction-358": {
+    "symbol": "C_Reputation.SetWatchedFaction",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/globals/faction_probes.rs-11-//! - `SetSelectedFaction(index)`     \u2192 write it back + fire",
+      "src/lua_api/globals/faction_probes.rs-12-//!   `UPDATE_FACTION`.",
+      "src/lua_api/globals/faction_probes.rs:13://! - `SetWatchedFaction(index)`      \u2192 write",
+      "src/lua_api/globals/faction_probes.rs-14-//!   `SimState.watched_faction_index` and flip the matching entry's",
+      "src/lua_api/globals/faction_probes.rs-15-//!   `is_watched` flag; fires `UPDATE_FACTION`.",
+      "--",
+      "src/lua_api/globals/faction_probes.rs-128-}",
+      "src/lua_api/globals/faction_probes.rs-129-",
+      "src/lua_api/globals/faction_probes.rs:130:/// `SetWatchedFaction(index)` \u2014 show the faction on the XP bar and",
+      "src/lua_api/globals/faction_probes.rs-131-/// clear the previous watch flag. `index == 0` stops watching.",
+      "src/lua_api/globals/faction_probes.rs-132-fn set_watched_faction(state: &mut LuaState) -> LuaResult<u32> {",
+      "--",
+      "src/lua_api/globals/faction_probes.rs-256-    (\"GetWatchedFactionData\", reputation_get_watched_faction_data),",
+      "src/lua_api/globals/faction_probes.rs-257-    (",
+      "src/lua_api/globals/faction_probes.rs:258:        \"SetWatchedFactionByID\",",
+      "src/lua_api/globals/faction_probes.rs-259-        reputation_set_watched_faction_by_id,",
+      "src/lua_api/globals/faction_probes.rs-260-    ),",
+      "--",
+      "src/lua_api/globals/faction_probes.rs-380-    LuaApiMut::register_function(lua, \"GetSelectedFaction\", get_selected_faction)?;",
+      "src/lua_api/globals/faction_probes.rs-381-    LuaApiMut::register_function(lua, \"SetSelectedFaction\", set_selected_faction)?;",
+      "src/lua_api/globals/faction_probes.rs:382:    LuaApiMut::register_function(lua, \"SetWatchedFaction\", set_watched_faction)?;",
+      "src/lua_api/globals/faction_probes.rs-383-    LuaApiMut::register_function(lua, \"GetWatchedFactionInfo\", get_watched_faction_info)?;",
+      "src/lua_api/globals/faction_probes.rs-384-    register_reputation_namespace(lua)?;",
+      "--",
+      "src/lua_api/globals/stubs/global_stubs.rs-73-    \"SetUnitCritterKillCount\",",
+      "src/lua_api/globals/stubs/global_stubs.rs-74-    \"SetView\",",
+      "src/lua_api/globals/stubs/global_stubs.rs:75:    // SetWatchedFaction is SimState-backed in faction_probes.rs, not a stub.",
+      "src/lua_api/globals/stubs/global_stubs.rs-76-    \"ShowingCinematic\",",
+      "src/lua_api/globals/stubs/global_stubs.rs-77-    \"ShowUIPanel\",",
+      "--",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-125-end",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-126-",
+      "src/lua_api/workarounds/temporary/reputation_state.rs:127:C_Reputation.SetWatchedFactionByIndex = function(index)",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-128-    local faction = FindVisible(index)",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-129-    state.watchedFactionID = faction and faction.factionID or 0",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-130-end",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-131-",
+      "src/lua_api/workarounds/temporary/reputation_state.rs:132:C_Reputation.SetWatchedFactionByID = function(factionID)",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-133-    state.watchedFactionID = tonumber(factionID) or 0",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-134-end",
+      "--",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-270-                    return \"bad_default_watch\"",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-271-                end",
+      "src/lua_api/workarounds/temporary/reputation_state.rs:272:                C_Reputation.SetWatchedFactionByID(72)",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-273-                if C_Reputation.GetWatchedFactionData().name ~= \"Stormwind\" then",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-274-                    return \"bad_watch_id\"",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-275-                end",
+      "src/lua_api/workarounds/temporary/reputation_state.rs:276:                C_Reputation.SetWatchedFactionByIndex(3)",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-277-                if C_Reputation.GetWatchedFactionData().factionID ~= 2570 then",
+      "src/lua_api/workarounds/temporary/reputation_state.rs-278-                    return \"bad_watch_index\""
+    ]
+  },
+  "wt-global-api-C_ScrappingMachineUI.SetScrappingMachine-510": {
+    "symbol": "C_ScrappingMachineUI.SetScrappingMachine",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-364": {
+    "symbol": "C_SpellBook.GetDeadlyDebuffInfo",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_SpellBook.GetOverrideSpell-365": {
+    "symbol": "C_SpellBook.GetOverrideSpell",
+    "exit": 0,
+    "matches": [
+      "src/c_api/c_spell_book.rs-252-        state,",
+      "src/c_api/c_spell_book.rs-253-        table_ref,",
+      "src/c_api/c_spell_book.rs:254:        \"GetOverrideSpell\",",
+      "src/c_api/c_spell_book.rs-255-        c_spell_book_get_override_spell,",
+      "src/c_api/c_spell_book.rs-256-    )?;",
+      "--",
+      "src/mists/compat_bootstrap.lua-992-end",
+      "src/mists/compat_bootstrap.lua-993-",
+      "src/mists/compat_bootstrap.lua:994:if rawget(_G, \"GetOverrideSpellPowerByAP\") == nil then",
+      "src/mists/compat_bootstrap.lua:995:  function GetOverrideSpellPowerByAP() return 0 end",
+      "src/mists/compat_bootstrap.lua-996-end",
+      "src/mists/compat_bootstrap.lua-997-",
+      "--",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-12-C_Spell = C_Spell or __wow_namespace()",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-13-",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs:14:if rawget(C_Spell, \"GetOverrideSpell\") == nil then",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs:15:    function C_Spell.GetOverrideSpell(spellID)",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-16-        return spellID",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-17-    end",
+      "--",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-56-                r#\"",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-57-                local charges = C_Spell.GetSpellCharges(116)",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs:58:                return C_Spell.GetOverrideSpell(116),",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-59-                       C_Spell.GetMawPowerBorderAtlasBySpellID(116) == nil,",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-60-                       charges == nil",
+      "--",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-72-        env.exec(",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-73-            r#\"",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs:74:            assert(C_Spell.GetOverrideSpell(116) == 116)",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-75-            assert(rawget(C_Spell, \"GetMawPowerBorderAtlasBySpellID\") == nil)",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-76-            assert(C_Spell.GetSpellCharges(116) == nil)",
+      "--",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-87-            C_Spell = C_Spell or __wow_namespace()",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-88-",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs:89:            function C_Spell.GetOverrideSpell(_spellID)",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-90-                return 999",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-91-            end",
+      "--",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-103-            .eval(",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-104-                r#\"",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs:105:                return C_Spell.GetOverrideSpell(116),",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-106-                       C_Spell.GetMawPowerBorderAtlasBySpellID(116)",
+      "src/lua_api/workarounds/temporary/spell_static_defaults.rs-107-                \"#,",
+      "--",
+      "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs-8-C_SpellBook = C_SpellBook or __wow_namespace()",
+      "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs-9-",
+      "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs:10:if rawget(C_SpellBook, \"GetOverrideSpell\") == nil then",
+      "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs:11:    function C_SpellBook.GetOverrideSpell(spellID)",
+      "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs-12-        return spellID",
+      "src/lua_api/workarounds/temporary/spell_book_static_defaults.rs-13-    end",
+      "--",
+      "src/lua_api/globals/real/combat_stats/retail_inputs.rs-103-    LuaApiMut::register_function(",
+      "src/lua_api/globals/real/combat_stats/retail_inputs.rs-104-        lua,",
+      "src/lua_api/globals/real/combat_stats/retail_inputs.rs:105:        \"GetOverrideSpellPowerByAP\",",
+      "src/lua_api/globals/real/combat_stats/retail_inputs.rs-106-        get_override_spell_power_by_ap,",
+      "src/lua_api/globals/real/combat_stats/retail_inputs.rs-107-    )?;",
+      "--",
+      "src/lua_api/globals/real/combat_stats.rs-398-    (\"GetOverrideAPBySpellPower\", get_override_ap_by_spell_power),",
+      "src/lua_api/globals/real/combat_stats.rs-399-    #[cfg(feature = \"client-wowforever\")]",
+      "src/lua_api/globals/real/combat_stats.rs:400:    (\"GetOverrideSpellPowerByAP\", get_override_spell_power_by_ap),",
+      "src/lua_api/globals/real/combat_stats.rs-401-    #[cfg(feature = \"client-wowforever\")]",
+      "src/lua_api/globals/real/combat_stats.rs-402-    (\"IsDualWielding\", is_dual_wielding),"
+    ]
+  },
+  "wt-global-api-C_Texture.GetFilenameFromFileDataID-367": {
+    "symbol": "C_Texture.GetFilenameFromFileDataID",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-7-const TEXTURE_FILE_DATA_DEFAULTS_LUA: &str = r#\"",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-8-C_Texture = C_Texture or __wow_namespace()",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs:9:if rawget(C_Texture, \"GetFilenameFromFileDataID\") == nil then",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs:10:    function C_Texture.GetFilenameFromFileDataID(_fileDataID)",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-11-    end",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-12-end",
+      "--",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-27-",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-28-        let result: bool = env",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs:29:            .eval(\"return C_Texture.GetFilenameFromFileDataID(12345) == nil\")",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-30-            .expect(\"file data lookup default should be callable\");",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-31-",
+      "--",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-38-        env.exec(",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-39-            r#\"",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs:40:            function C_Texture.GetFilenameFromFileDataID()",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-41-                return \"Interface\\\\Icons\\\\INV_Misc_QuestionMark\"",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-42-            end",
+      "--",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-48-",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-49-        let result: String = env",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs:50:            .eval(\"return C_Texture.GetFilenameFromFileDataID(12345)\")",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-51-            .expect(\"existing file data lookup should remain callable\");",
+      "src/lua_api/workarounds/temporary/texture_file_data_defaults.rs-52-"
+    ]
+  },
+  "wt-global-api-C_TradeSkillUI.CraftEnchant-373": {
+    "symbol": "C_TradeSkillUI.CraftEnchant",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.CraftSalvage-374": {
+    "symbol": "C_TradeSkillUI.CraftSalvage",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.DoesRecraftingRecipeAcceptItem-376": {
+    "symbol": "C_TradeSkillUI.DoesRecraftingRecipeAcceptItem",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-382": {
+    "symbol": "C_TradeSkillUI.GetCraftingOperationInfo",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetCraftingReagentBonusText-384": {
+    "symbol": "C_TradeSkillUI.GetCraftingReagentBonusText",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetEnchantItems-386": {
+    "symbol": "C_TradeSkillUI.GetEnchantItems",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetGatheringOperationInfo-389": {
+    "symbol": "C_TradeSkillUI.GetGatheringOperationInfo",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetHideUnownedFlags-390": {
+    "symbol": "C_TradeSkillUI.GetHideUnownedFlags",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetItemCraftedQualityByItemInfo-391": {
+    "symbol": "C_TradeSkillUI.GetItemCraftedQualityByItemInfo",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetItemReagentQualityByItemInfo-392": {
+    "symbol": "C_TradeSkillUI.GetItemReagentQualityByItemInfo",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetOnlyShowFirstCraftRecipes-394": {
+    "symbol": "C_TradeSkillUI.GetOnlyShowFirstCraftRecipes",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511": {
+    "symbol": "C_TradeSkillUI.GetOnlyShowLearnedRecipes",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512": {
+    "symbol": "C_TradeSkillUI.GetOnlyShowUnlearnedRecipes",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetOptionalReagentBonusText-513": {
+    "symbol": "C_TradeSkillUI.GetOptionalReagentBonusText",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetOptionalReagentInfo-514": {
+    "symbol": "C_TradeSkillUI.GetOptionalReagentInfo",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetOriginalCraftRecipeID-395": {
+    "symbol": "C_TradeSkillUI.GetOriginalCraftRecipeID",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetProfessionChildSkillLineID-396": {
+    "symbol": "C_TradeSkillUI.GetProfessionChildSkillLineID",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetProfessionInfoBySkillLineID-397": {
+    "symbol": "C_TradeSkillUI.GetProfessionInfoBySkillLineID",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetProfessionSpells-400": {
+    "symbol": "C_TradeSkillUI.GetProfessionSpells",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetReagentDifficultyText-401": {
+    "symbol": "C_TradeSkillUI.GetReagentDifficultyText",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetReagentSlotStatus-402": {
+    "symbol": "C_TradeSkillUI.GetReagentSlotStatus",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515": {
+    "symbol": "C_TradeSkillUI.GetRecipeNumItemsProduced",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516": {
+    "symbol": "C_TradeSkillUI.GetRecipeNumReagents",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/globals/stubs/namespace_stubs.rs-112-    (\"C_TradeSkillUI\", \"GetRecipeInfo\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs-113-    (\"C_TradeSkillUI\", \"GetRecipeItemLink\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:114:    (\"C_TradeSkillUI\", \"GetRecipeNumReagents\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs-115-    (\"C_TradeSkillUI\", \"GetRecipeReagentInfo\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs-116-    (\"C_TradeSkillUI\", \"GetRecipeReagentItemLink\", stub_nil),",
+      "--",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-113-    (\"GetRecipeQualityItemIDs\", stub_empty_table),",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-114-    (",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs:115:        \"GetRecipeNumReagents\",",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-116-        c_trade_skill_ui_get_recipe_num_reagents,",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-117-    ),"
+    ]
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517": {
+    "symbol": "C_TradeSkillUI.GetRecipeReagentInfo",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/globals/stubs/namespace_stubs.rs-113-    (\"C_TradeSkillUI\", \"GetRecipeItemLink\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs-114-    (\"C_TradeSkillUI\", \"GetRecipeNumReagents\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:115:    (\"C_TradeSkillUI\", \"GetRecipeReagentInfo\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs-116-    (\"C_TradeSkillUI\", \"GetRecipeReagentItemLink\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs-117-    (\"C_TradeSkillUI\", \"GetRecipeSchematic\", stub_nil),",
+      "--",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-118-    (\"GetRecipeRequirements\", stub_empty_table),",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-119-    (",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs:120:        \"GetRecipeReagentInfo\",",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-121-        c_trade_skill_ui_get_recipe_reagent_info,",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-122-    ),"
+    ]
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518": {
+    "symbol": "C_TradeSkillUI.GetRecipeReagentItemLink",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/globals/stubs/namespace_stubs.rs-114-    (\"C_TradeSkillUI\", \"GetRecipeNumReagents\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs-115-    (\"C_TradeSkillUI\", \"GetRecipeReagentInfo\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:116:    (\"C_TradeSkillUI\", \"GetRecipeReagentItemLink\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs-117-    (\"C_TradeSkillUI\", \"GetRecipeSchematic\", stub_nil),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs-118-    (\"C_TradeSkillUI\", \"GetTradeSkillListLink\", stub_nil),",
+      "--",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-122-    ),",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-123-    (",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs:124:        \"GetRecipeReagentItemLink\",",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-125-        c_trade_skill_ui_get_recipe_reagent_item_link,",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-126-    ),"
+    ]
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecraftItems-408": {
+    "symbol": "C_TradeSkillUI.GetRecraftItems",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetSalvagableItemIDs-409": {
+    "symbol": "C_TradeSkillUI.GetSalvagableItemIDs",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetShowLearned-410": {
+    "symbol": "C_TradeSkillUI.GetShowLearned",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetShowUnlearned-411": {
+    "symbol": "C_TradeSkillUI.GetShowUnlearned",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520": {
+    "symbol": "C_TradeSkillUI.GetTradeSkillLine",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/globals/missing_surface/professions_legacy_trade_skill.rs-23-    (\"GetNumTradeSkills\", get_num_trade_skills),",
+      "src/lua_api/globals/missing_surface/professions_legacy_trade_skill.rs-24-    (\"GetTradeskillRepeatCount\", get_tradeskill_repeat_count),",
+      "src/lua_api/globals/missing_surface/professions_legacy_trade_skill.rs:25:    (\"GetTradeSkillLine\", get_trade_skill_line),",
+      "src/lua_api/globals/missing_surface/professions_legacy_trade_skill.rs-26-    (",
+      "src/lua_api/globals/missing_surface/professions_legacy_trade_skill.rs-27-        \"GetTradeSkillSelectionIndex\",",
+      "--",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-131-        c_trade_skill_ui_get_trade_skill_display_name,",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-132-    ),",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs:133:    (\"GetTradeSkillLine\", c_trade_skill_ui_get_trade_skill_line),",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-134-    (",
+      "src/lua_api/globals/missing_surface/professions/professions_registration.rs-135-        \"GetTradeSkillListLink\","
+    ]
+  },
+  "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-519": {
+    "symbol": "C_TradeSkillUI.GetTradeSkillLineInfoByID",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.IsEmptySkillLineCategory-521": {
+    "symbol": "C_TradeSkillUI.IsEmptySkillLineCategory",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.IsOriginalCraftRecipeLearned-416": {
+    "symbol": "C_TradeSkillUI.IsOriginalCraftRecipeLearned",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.IsRecipeProfessionLearned-418": {
+    "symbol": "C_TradeSkillUI.IsRecipeProfessionLearned",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.OpenRecipe-422": {
+    "symbol": "C_TradeSkillUI.OpenRecipe",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.RecraftRecipe-426": {
+    "symbol": "C_TradeSkillUI.RecraftRecipe",
+    "exit": 0,
+    "matches": [
+      "src/cvars.yaml-1495-trackedPerksActivities: ''",
+      "src/cvars.yaml-1496-trackedProfessionRecipes: ''",
+      "src/cvars.yaml:1497:trackedProfessionRecraftRecipes: ''",
+      "src/cvars.yaml-1498-trackedQuests: ''",
+      "src/cvars.yaml-1499-trackedWorldQuests: ''"
+    ]
+  },
+  "wt-global-api-C_TradeSkillUI.SetOnlyShowFirstCraftRecipes-428": {
+    "symbol": "C_TradeSkillUI.SetOnlyShowFirstCraftRecipes",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522": {
+    "symbol": "C_TradeSkillUI.SetOnlyShowLearnedRecipes",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523": {
+    "symbol": "C_TradeSkillUI.SetOnlyShowUnlearnedRecipes",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524": {
+    "symbol": "C_TradeSkillUI.SetRecipeRepeatCount",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.SetShowLearned-431": {
+    "symbol": "C_TradeSkillUI.SetShowLearned",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_TradeSkillUI.SetShowUnlearned-432": {
+    "symbol": "C_TradeSkillUI.SetShowUnlearned",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.CanRefundRank-436": {
+    "symbol": "C_Traits.CanRefundRank",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.CascadeRepurchaseRanks-437": {
+    "symbol": "C_Traits.CascadeRepurchaseRanks",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.ClearCascadeRepurchaseHistory-438": {
+    "symbol": "C_Traits.ClearCascadeRepurchaseHistory",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.CloseTraitSystemInteraction-439": {
+    "symbol": "C_Traits.CloseTraitSystemInteraction",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.CommitConfig-440": {
+    "symbol": "C_Traits.CommitConfig",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.GetConfigsByType-446": {
+    "symbol": "C_Traits.GetConfigsByType",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.HasValidInspectData-459": {
+    "symbol": "C_Traits.HasValidInspectData",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.RefundAllRanks-461": {
+    "symbol": "C_Traits.RefundAllRanks",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.ResetTree-463": {
+    "symbol": "C_Traits.ResetTree",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.RollbackConfig-464": {
+    "symbol": "C_Traits.RollbackConfig",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.StageConfig-466": {
+    "symbol": "C_Traits.StageConfig",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_Traits.TalentTestUnlearnSpells-467": {
+    "symbol": "C_Traits.TalentTestUnlearnSpells",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_UIWidgetManager.GetFillUpFramesWidgetVisualizationInfo-469": {
+    "symbol": "C_UIWidgetManager.GetFillUpFramesWidgetVisualizationInfo",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_WeeklyRewards.IsWeeklyChestRetired-481": {
+    "symbol": "C_WeeklyRewards.IsWeeklyChestRetired",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-C_XMLUtil.GetTemplates-483": {
+    "symbol": "C_XMLUtil.GetTemplates",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-CheckTalentMasterDist-528": {
+    "symbol": "CheckTalentMasterDist",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-GetGraphicsCVarValueForQualityLevel-485": {
+    "symbol": "GetGraphicsCVarValueForQualityLevel",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-GetPlayerAuraBySpellID-546": {
+    "symbol": "GetPlayerAuraBySpellID",
+    "exit": 0,
+    "matches": [
+      "src/c_api/c_unit_aura_spell_queries.rs-12-        state,",
+      "src/c_api/c_unit_aura_spell_queries.rs-13-        namespace,",
+      "src/c_api/c_unit_aura_spell_queries.rs:14:        \"GetPlayerAuraBySpellID\",",
+      "src/c_api/c_unit_aura_spell_queries.rs-15-        get_player_aura_by_spell_id,",
+      "src/c_api/c_unit_aura_spell_queries.rs-16-    )?;",
+      "--",
+      "src/lua_api/globals/auras.rs-112-            (\"GetBuffDataByIndex\", get_buff_data_by_index),",
+      "src/lua_api/globals/auras.rs-113-            (\"GetDebuffDataByIndex\", get_debuff_data_by_index),",
+      "src/lua_api/globals/auras.rs:114:            (\"GetPlayerAuraBySpellID\", get_player_aura_by_spell_id),",
+      "src/lua_api/globals/auras.rs-115-        ],",
+      "src/lua_api/globals/auras.rs-116-    );",
+      "--",
+      "src/lua_api/globals/auras.rs-119-fn install_legacy_aura_globals(state: &mut LuaState) {",
+      "src/lua_api/globals/auras.rs-120-    let legacy_globals: &[(&'static str, RustFn)] = &[",
+      "src/lua_api/globals/auras.rs:121:        (\"GetPlayerAuraBySpellID\", get_player_aura_by_spell_id),",
+      "src/lua_api/globals/auras.rs-122-        (\"UnitBuff\", unit_buff),",
+      "src/lua_api/globals/auras.rs-123-        (\"UnitDebuff\", unit_debuff),"
+    ]
+  },
+  "wt-global-api-GetUnitEmpowerMinHoldTime-487": {
+    "symbol": "GetUnitEmpowerMinHoldTime",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-IsGraphicsCVarValueSupported-489": {
+    "symbol": "IsGraphicsCVarValueSupported",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-IsGraphicsSettingValueSupported-490": {
+    "symbol": "IsGraphicsSettingValueSupported",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-IsPlayerInGuildFromGUID-491": {
+    "symbol": "IsPlayerInGuildFromGUID",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-IsPressHoldReleaseSpell-492": {
+    "symbol": "IsPressHoldReleaseSpell",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/workarounds/temporary/spell_metadata_defaults.rs-20-installSpellDefault(\"IsSpellPassive\", returnFalse)",
+      "src/lua_api/workarounds/temporary/spell_metadata_defaults.rs-21-installSpellDefault(\"IsRangedAutoAttackSpell\", returnFalse)",
+      "src/lua_api/workarounds/temporary/spell_metadata_defaults.rs:22:installSpellDefault(\"IsPressHoldReleaseSpell\", returnFalse)",
+      "src/lua_api/workarounds/temporary/spell_metadata_defaults.rs-23-",
+      "src/lua_api/workarounds/temporary/spell_metadata_defaults.rs-24-installSpellDefault(\"IsPriorityAura\", returnFalse)",
+      "--",
+      "src/lua_api/workarounds/temporary/spell_metadata_defaults.rs-67-                return C_Spell.IsSpellPassive(116),",
+      "src/lua_api/workarounds/temporary/spell_metadata_defaults.rs-68-                    C_Spell.IsRangedAutoAttackSpell(116),",
+      "src/lua_api/workarounds/temporary/spell_metadata_defaults.rs:69:                    C_Spell.IsPressHoldReleaseSpell(116),",
+      "src/lua_api/workarounds/temporary/spell_metadata_defaults.rs-70-                    C_Spell.GetSpellCastCount(116),",
+      "src/lua_api/workarounds/temporary/spell_metadata_defaults.rs-71-                    C_Spell.IsPriorityAura(116)",
+      "--",
+      "src/lua_api/globals/action_bar_api/registration.rs-42-    (\"IsHelpfulAction\", is_helpful_action),",
+      "src/lua_api/globals/action_bar_api/registration.rs-43-    (\"IsHarmfulAction\", is_harmful_action),",
+      "src/lua_api/globals/action_bar_api/registration.rs:44:    (\"IsPressHoldReleaseSpell\", is_press_hold_release_spell),",
+      "src/lua_api/globals/action_bar_api/registration.rs-45-];",
+      "src/lua_api/globals/action_bar_api/registration.rs-46-",
+      "--",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-70-    end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-71-end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs:72:if IsPressHoldReleaseSpell == nil and C_Spell ~= nil then",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs:73:    function IsPressHoldReleaseSpell(...)",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs:74:        return C_Spell.IsPressHoldReleaseSpell(...)",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-75-    end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-76-end",
+      "--",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-122-                if type(GetSpellTexture) ~= \"function\" then return \"spell_texture\" end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-123-                if IsPassiveSpell(116) ~= false then return \"passive\" end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs:124:                if type(IsPressHoldReleaseSpell) ~= \"function\" then return \"press_hold_type\" end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs:125:                if IsPressHoldReleaseSpell(116) ~= false then return \"press_hold_value\" end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-126-                if IsSelectedSpellBookItem(1, \"player\") ~= false then return \"selected_spellbook\" end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-127-                if SpellBook_GetSpellBookSlot(3, 20) ~= 3 then return \"slot\" end",
+      "--",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-144-            GetSpellInfo = function() return \"existing\" end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-145-            IsPassiveSpell = function() return true end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs:146:            IsPressHoldReleaseSpell = function() return true end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-147-            IsSelectedSpellBookItem = function() return true end",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-148-            C_Spell = {",
+      "--",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-150-                    return { name = \"new\" }",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-151-                end,",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs:152:                IsPressHoldReleaseSpell = function()",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-153-                    return false",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-154-                end,",
+      "--",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-165-        let (spell_name, passive, press_hold, selected): (String, bool, bool, bool) = env",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-166-            .eval(",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs:167:                \"return GetSpellInfo(1), IsPassiveSpell(1), IsPressHoldReleaseSpell(1), IsSelectedSpellBookItem(1)\",",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-168-            )",
+      "src/lua_api/workarounds/temporary/legacy_spell_globals.rs-169-            .expect(\"legacy spell preservation probe should run\");"
+    ]
+  },
+  "wt-global-api-IsSpecializationActivateSpell-493": {
+    "symbol": "IsSpecializationActivateSpell",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-JoinRatedSoloShuffle-495": {
+    "symbol": "JoinRatedSoloShuffle",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-ReleaseAction-496": {
+    "symbol": "ReleaseAction",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-SetUnitCursorTexture-497": {
+    "symbol": "SetUnitCursorTexture",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-TargetToggle-498": {
+    "symbol": "TargetToggle",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-global-api-UnitIsInteractable-501": {
+    "symbol": "UnitIsInteractable",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/globals/real/unit_interaction.rs-12-        LuaApiMut::register_function(state, \"UnitHasLootInteraction\", has_loot)?;",
+      "src/lua_api/globals/real/unit_interaction.rs-13-        LuaApiMut::register_function(state, \"UnitIsInInteractRange\", in_range)?;",
+      "src/lua_api/globals/real/unit_interaction.rs:14:        LuaApiMut::register_function(state, \"UnitIsInteractable\", interactable)?;",
+      "src/lua_api/globals/real/unit_interaction.rs-15-    }",
+      "src/lua_api/globals/real/unit_interaction.rs-16-    Ok(())"
+    ]
+  },
+  "wt-widgets-Browser:NavigateTo-634": {
+    "symbol": "Browser:NavigateTo",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/frame/methods/widgets/browser.rs-12-pub(super) fn register_browser(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {",
+      "src/lua_api/frame/methods/widgets/browser.rs-13-    table_set_rust_fn_static(state, mt, \"NavigateHome\", navigate)?;",
+      "src/lua_api/frame/methods/widgets/browser.rs:14:    // The 11.2.0 page lists NavigateTo as removed, but current retail",
+      "src/lua_api/frame/methods/widgets/browser.rs-15-    // Blizzard_PhotoSharingBrowser.lua:66,73 still calls it; keep it published.",
+      "src/lua_api/frame/methods/widgets/browser.rs:16:    table_set_rust_fn_static(state, mt, \"NavigateTo\", navigate)?;",
+      "src/lua_api/frame/methods/widgets/browser.rs-17-    Ok(())",
+      "src/lua_api/frame/methods/widgets/browser.rs-18-}"
+    ]
+  },
+  "wt-widgets-Button:SetHighlightLocked-639": {
+    "symbol": "Button:SetHighlightLocked",
+    "exit": 0,
+    "matches": [
+      "src/loader/tests/frame_state.rs-290-        assert(not MiscStateGrandchildTexture:IsDesaturated(), \"grandchild texture should default not desaturated\")",
+      "src/loader/tests/frame_state.rs-291-",
+      "src/loader/tests/frame_state.rs:292:        MiscStateRootFrame:SetHighlightLocked(true)",
+      "src/loader/tests/frame_state.rs-293-        MiscStateRootFrame:SetIgnoringChildrenForBounds(true)",
+      "src/loader/tests/frame_state.rs-294-        MiscStateRootFrame:DesaturateHierarchy(1, true)",
+      "--",
+      "src/loader/tests/frame_state.rs-299-        assert(MiscStateGrandchildTexture:IsDesaturated(), \"desaturate hierarchy should affect descendant textures\")",
+      "src/loader/tests/frame_state.rs-300-",
+      "src/loader/tests/frame_state.rs:301:        MiscStateRootFrame:SetHighlightLocked(false)",
+      "src/loader/tests/frame_state.rs-302-        MiscStateRootFrame:SetIgnoringChildrenForBounds(false)",
+      "src/loader/tests/frame_state.rs-303-        MiscStateRootFrame:DesaturateHierarchy(0)",
+      "--",
+      "src/lua_api/frame/methods/misc/highlight.rs-19-        is_ignoring_children_for_bounds,",
+      "src/lua_api/frame/methods/misc/highlight.rs-20-    )?;",
+      "src/lua_api/frame/methods/misc/highlight.rs:21:    table_set_rust_fn_static(state, mt, \"SetHighlightLocked\", set_highlight_locked)?;",
+      "src/lua_api/frame/methods/misc/highlight.rs-22-    table_set_rust_fn_static(",
+      "src/lua_api/frame/methods/misc/highlight.rs-23-        state,"
+    ]
+  },
+  "wt-widgets-Frame:SetMaxResize-684": {
+    "symbol": "Frame:SetMaxResize",
+    "exit": 0,
+    "matches": [
+      "src/loader/tests/frame_state.rs-240-        assert(maxWidth == nil and maxHeight == nil, \"SetMinResize should not invent maximum bounds\")",
+      "src/loader/tests/frame_state.rs-241-",
+      "src/loader/tests/frame_state.rs:242:        ResizeStateFrame:SetMaxResize(480, 360)",
+      "src/loader/tests/frame_state.rs-243-        minWidth, minHeight, maxWidth, maxHeight = ResizeStateFrame:GetResizeBounds()",
+      "src/loader/tests/frame_state.rs:244:        assert(maxWidth == 480 and maxHeight == 360, \"SetMaxResize should persist maximum resize bounds\")",
+      "src/loader/tests/frame_state.rs:245:        assert(minWidth == 120 and minHeight == 80, \"SetMaxResize should preserve existing minimum resize bounds\")",
+      "src/loader/tests/frame_state.rs-246-",
+      "src/loader/tests/frame_state.rs-247-        ResizeStateFrame:SetResizeBounds(160, 90, 640, 480)",
+      "--",
+      "src/lua_api/frame/methods/misc/bounds.rs-17-    table_set_rust_fn_static(state, mt, \"SetClampRectInsets\", set_clamp_rect_insets)?;",
+      "src/lua_api/frame/methods/misc/bounds.rs-18-    table_set_rust_fn_static(state, mt, \"SetMinResize\", set_min_resize)?;",
+      "src/lua_api/frame/methods/misc/bounds.rs:19:    table_set_rust_fn_static(state, mt, \"SetMaxResize\", set_max_resize)?;",
+      "src/lua_api/frame/methods/misc/bounds.rs-20-    table_set_rust_fn_static(state, mt, \"SetResizeBounds\", set_resize_bounds)?;",
+      "src/lua_api/frame/methods/misc/bounds.rs-21-    table_set_rust_fn_static(state, mt, \"SetPointsOffset\", set_points_offset)?;"
+    ]
+  },
+  "wt-widgets-Frame:SetMinResize-685": {
+    "symbol": "Frame:SetMinResize",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/frame/methods/misc/bounds.rs-16-    table_set_rust_fn_static(state, mt, \"GetResizeBounds\", get_resize_bounds)?;",
+      "src/lua_api/frame/methods/misc/bounds.rs-17-    table_set_rust_fn_static(state, mt, \"SetClampRectInsets\", set_clamp_rect_insets)?;",
+      "src/lua_api/frame/methods/misc/bounds.rs:18:    table_set_rust_fn_static(state, mt, \"SetMinResize\", set_min_resize)?;",
+      "src/lua_api/frame/methods/misc/bounds.rs-19-    table_set_rust_fn_static(state, mt, \"SetMaxResize\", set_max_resize)?;",
+      "src/lua_api/frame/methods/misc/bounds.rs-20-    table_set_rust_fn_static(state, mt, \"SetResizeBounds\", set_resize_bounds)?;",
+      "--",
+      "src/loader/tests/frame_state.rs-235-        assert(not ResizeStateFrame:IsUserPlaced(), \"frames should default to userPlaced=false\")",
+      "src/loader/tests/frame_state.rs-236-",
+      "src/loader/tests/frame_state.rs:237:        ResizeStateFrame:SetMinResize(120, 80)",
+      "src/loader/tests/frame_state.rs-238-        minWidth, minHeight, maxWidth, maxHeight = ResizeStateFrame:GetResizeBounds()",
+      "src/loader/tests/frame_state.rs:239:        assert(minWidth == 120 and minHeight == 80, \"SetMinResize should persist minimum resize bounds\")",
+      "src/loader/tests/frame_state.rs:240:        assert(maxWidth == nil and maxHeight == nil, \"SetMinResize should not invent maximum bounds\")",
+      "src/loader/tests/frame_state.rs-241-",
+      "src/loader/tests/frame_state.rs-242-        ResizeStateFrame:SetMaxResize(480, 360)"
+    ]
+  },
+  "wt-widgets-GameTooltip:SetUnitBuffByAuraInstanceID-647": {
+    "symbol": "GameTooltip:SetUnitBuffByAuraInstanceID",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/frame/methods/widgets/tooltip.rs-70-    (\"SetUnitBuff\", set_unit_buff),",
+      "src/lua_api/frame/methods/widgets/tooltip.rs-71-    (",
+      "src/lua_api/frame/methods/widgets/tooltip.rs:72:        \"SetUnitBuffByAuraInstanceID\",",
+      "src/lua_api/frame/methods/widgets/tooltip.rs-73-        set_unit_buff_by_aura_instance_id,",
+      "src/lua_api/frame/methods/widgets/tooltip.rs-74-    ),"
+    ]
+  },
+  "wt-widgets-GameTooltip:SetUnitDebuffByAuraInstanceID-648": {
+    "symbol": "GameTooltip:SetUnitDebuffByAuraInstanceID",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/frame/methods/widgets/tooltip.rs-75-    (\"SetUnitDebuff\", set_unit_debuff),",
+      "src/lua_api/frame/methods/widgets/tooltip.rs-76-    (",
+      "src/lua_api/frame/methods/widgets/tooltip.rs:77:        \"SetUnitDebuffByAuraInstanceID\",",
+      "src/lua_api/frame/methods/widgets/tooltip.rs-78-        set_unit_debuff_by_aura_instance_id,",
+      "src/lua_api/frame/methods/widgets/tooltip.rs-79-    ),"
+    ]
+  },
+  "wt-widgets-ModelSceneActor:SetModelByHyperlink-657": {
+    "symbol": "ModelSceneActor:SetModelByHyperlink",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-widgets-MovieFrame:StartMovieByName-649": {
+    "symbol": "MovieFrame:StartMovieByName",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-widgets-OffScreenFrame:TestPrintToFile-650": {
+    "symbol": "OffScreenFrame:TestPrintToFile",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-widgets-Path:GetCurveType-618": {
+    "symbol": "Path:GetCurveType",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-widgets-Path:GetMaxControlPointOrder-619": {
+    "symbol": "Path:GetMaxControlPointOrder",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-widgets-Path:SetCurveType-620": {
+    "symbol": "Path:SetCurveType",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-widgets-Scale:GetScaleFrom-614": {
+    "symbol": "Scale:GetScaleFrom",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-widgets-Scale:GetScaleTo-615": {
+    "symbol": "Scale:GetScaleTo",
+    "exit": 1,
+    "matches": []
+  },
+  "wt-widgets-Texture:GetRotation-664": {
+    "symbol": "Texture:GetRotation",
+    "exit": 0,
+    "matches": [
+      "src/loader/tests/frame_interaction.rs-77-",
+      "src/loader/tests/frame_interaction.rs-78-        frame:RotateTextures(math.pi / 2)",
+      "src/loader/tests/frame_interaction.rs:79:        assert(math.abs(first:GetRotation() - (math.pi / 2)) < 0.001, \"first child texture should rotate\")",
+      "src/loader/tests/frame_interaction.rs:80:        assert(math.abs(second:GetRotation() - (math.pi / 2)) < 0.001, \"second child texture should rotate\")",
+      "src/loader/tests/frame_interaction.rs-81-",
+      "src/loader/tests/frame_interaction.rs-82-        frame:SetIsFrameBuffer(false)",
+      "--",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-59-    (\"SetRotation\", rotation_mask::set_rotation),",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-60-    (\"SetRadians\", rotation_mask::set_rotation),",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs:61:    (\"GetRotation\", rotation_mask::get_rotation),",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-62-    // Mask",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-63-    (\"SetMask\", rotation_mask::set_mask),",
+      "--",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs-66-    (\"GetActionSpell\", c_assisted_combat_get_action_spell),",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs-67-    (\"GetNextCastSpell\", c_assisted_combat_get_next_cast_spell),",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:68:    (\"GetRotationSpells\", c_assisted_combat_get_rotation_spells),",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs-69-    (\"IsAvailable\", c_assisted_combat_is_available),",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs-70-];"
+    ]
+  },
+  "wt-widgets-Texture:GetVertexColor-665": {
+    "symbol": "Texture:GetVertexColor",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-50-        color::set_vertex_color_from_boolean,",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-51-    ),",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs:52:    (\"GetVertexColor\", color::get_vertex_color),",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-53-    (\"SetBlendMode\", coords::set_blend_mode),",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-54-    (\"GetBlendMode\", coords::get_blend_mode),",
+      "--",
+      "src/loader/tests/wow_api.rs-189-            local texture = UIParent:CreateTexture()",
+      "src/loader/tests/wow_api.rs-190-            texture:SetVertexColor(DEBUFF_TYPE_MAGIC_COLOR:GetRGBA())",
+      "src/loader/tests/wow_api.rs:191:            local r, g, b, a = texture:GetVertexColor()",
+      "src/loader/tests/wow_api.rs-192-            return math.abs(r - 0.2) < 0.0001",
+      "src/loader/tests/wow_api.rs-193-                and math.abs(g - 0.6) < 0.0001",
+      "--",
+      "src/lua_api/workarounds/temporary/item_button_helper_defaults.rs-189-                SetItemButtonNormalTextureVertexColor(button, 0.4, 0.5, 0.6)",
+      "src/lua_api/workarounds/temporary/item_button_helper_defaults.rs-190-",
+      "src/lua_api/workarounds/temporary/item_button_helper_defaults.rs:191:                local ir, ig, ib = button.icon:GetVertexColor()",
+      "src/lua_api/workarounds/temporary/item_button_helper_defaults.rs:192:                local nr, ng, nb = button.normalTexture:GetVertexColor()",
+      "src/lua_api/workarounds/temporary/item_button_helper_defaults.rs-193-                return button.icon:GetTexture(),",
+      "src/lua_api/workarounds/temporary/item_button_helper_defaults.rs-194-                       button.Count:GetText(),"
+    ]
+  },
+  "wt-widgets-Texture:SetRotation-668": {
+    "symbol": "Texture:SetRotation",
+    "exit": 0,
+    "matches": [
+      "src/widget/frame.rs-345-    /// Mask texture IDs applied to this texture (for circular clipping etc.).",
+      "src/widget/frame.rs-346-    pub mask_textures: Vec<u64>,",
+      "src/widget/frame.rs:347:    /// Texture rotation in radians (for SetRotation on Texture widgets).",
+      "src/widget/frame.rs-348-    pub rotation: f32,",
+      "src/widget/frame.rs-349-    /// Lazily allocated model, actor, scene, and player-model state.",
+      "--",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs-32-if type(SetClampedTextureRotation) ~= \"function\" then",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs-33-  function SetClampedTextureRotation(texture, rotation)",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs:34:    if texture and type(texture.SetRotation) == \"function\" then",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs:35:      texture:SetRotation(rotation or 0)",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs-36-    end",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs-37-  end",
+      "--",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs-181-                if GetMicroIconForRole(\"TANK\") ~= \"roleicon-tank\" then return \"role_icon\" end",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs-182-                local rotated = 0",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs:183:                SetClampedTextureRotation({ SetRotation = function(_, value) rotated = value end }, 90)",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs-184-                if rotated ~= 90 then return \"rotation\" end",
+      "src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs-185-                PingSystemInitializer({})",
+      "--",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-57-    (\"SetCenterColor\", color::set_center_color),",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-58-    // Rotation",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs:59:    (\"SetRotation\", rotation_mask::set_rotation),",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-60-    (\"SetRadians\", rotation_mask::set_rotation),",
+      "src/lua_api/frame/methods/widgets/texture/mod.rs-61-    (\"GetRotation\", rotation_mask::get_rotation),",
+      "--",
+      "src/lua_api/frame/methods/widgets/model.rs-638-    (\"SetFacing\", set_facing),",
+      "src/lua_api/frame/methods/widgets/model.rs-639-    (\"GetFacing\", get_facing),",
+      "src/lua_api/frame/methods/widgets/model.rs:640:    (\"SetRotation\", set_rotation),",
+      "src/lua_api/frame/methods/widgets/model.rs-641-    // Animation / display info",
+      "src/lua_api/frame/methods/widgets/model.rs-642-    (\"SetAnimation\", set_animation),"
+    ]
+  },
+  "wt-widgets-WorldFrame:OnModelCleared-656": {
+    "symbol": "WorldFrame:OnModelCleared",
+    "exit": 0,
+    "matches": [
+      "src/event/mod.rs-157-    // Model / PlayerModel",
+      "src/event/mod.rs-158-    OnModelLoaded,",
+      "src/event/mod.rs:159:    OnModelCleared,",
+      "src/event/mod.rs-160-    OnDressModel,",
+      "src/event/mod.rs-161-    // Tooltip extras",
+      "--",
+      "src/event/mod.rs-254-    (\"OnGamepadStick\", ScriptHandler::OnGamePadStick),",
+      "src/event/mod.rs-255-    (\"OnModelLoaded\", ScriptHandler::OnModelLoaded),",
+      "src/event/mod.rs:256:    (\"OnModelCleared\", ScriptHandler::OnModelCleared),",
+      "src/event/mod.rs-257-    (\"OnDressModel\", ScriptHandler::OnDressModel),",
+      "src/event/mod.rs-258-    (",
+      "--",
+      "src/lua_api/frame/methods/text_attribute_event/events.rs-424-        | \"OnTooltipSetUnit\"",
+      "src/lua_api/frame/methods/text_attribute_event/events.rs-425-        | \"OnTooltipSetFramestack\" => widget_type == WidgetType::GameTooltip,",
+      "src/lua_api/frame/methods/text_attribute_event/events.rs:426:        \"OnModelLoaded\" | \"OnModelCleared\" | \"OnDressModel\" => {",
+      "src/lua_api/frame/methods/text_attribute_event/events.rs-427-            supports_model_script_handler(widget_type, object_type_name)",
+      "src/lua_api/frame/methods/text_attribute_event/events.rs-428-        }"
+    ]
+  },
+  "wt-global-api-C_GossipInfo.SelectOption-575": {
+    "symbol": "C_GossipInfo.SelectOption",
+    "exit": 0,
+    "matches": [
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-42-ensureState()",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-43-",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs:44:if rawget(C_PrototypeDialog, \"SelectOption\") == nil then",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs:45:    function C_PrototypeDialog.SelectOption(dialogID, optionID)",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-46-        dialogID = numberArgument(dialogID)",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-47-        if dialogID == nil then",
+      "--",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-113-                       type(C_PrototypeDialog._removedDialogs) == \"table\",",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-114-                       type(C_PrototypeDialog._transitionHistory) == \"table\",",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs:115:                       type(C_PrototypeDialog.SelectOption)",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-116-                \"#,",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-117-            )",
+      "--",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-128-            .eval(",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-129-                r#\"",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs:130:                local selected = C_PrototypeDialog.SelectOption(10, 2)",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-131-                local first = C_PrototypeDialog._activeDialogs[10]",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-132-                local removed = C_PrototypeDialog.EnsureRemoved(10)",
+      "--",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-166-            C_PrototypeDialog.ExistingMember = \"kept\"",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-167-",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs:168:            function C_PrototypeDialog.SelectOption(_dialogID, _optionID)",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-169-                return \"existing\"",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-170-            end",
+      "--",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-178-            .eval(",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-179-                r#\"",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs:180:                return C_PrototypeDialog.SelectOption(1, 2),",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-181-                       C_PrototypeDialog.ExistingMember,",
+      "src/lua_api/workarounds/temporary/prototype_dialog_state.rs-182-                       type(C_PrototypeDialog._activeDialogs) == \"table\""
+    ]
+  }
+}

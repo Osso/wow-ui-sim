@@ -31,6 +31,7 @@
   "wt-global-api-C_EditMode.OnLayoutAdded-268",
   "wt-global-api-C_EditMode.OnLayoutDeleted-269",
   "wt-global-api-C_GossipInfo.GetNumOptions-508",
+  "wt-global-api-C_GossipInfo.SelectOption-575",
   "wt-global-api-C_Item.GetItemIDByGUID-278",
   "wt-global-api-C_Item.GetItemLocation-279",
   "wt-global-api-C_Item.IsItemGUIDInInventory-282",

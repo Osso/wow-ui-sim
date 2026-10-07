@@ -1,0 +1,27 @@
+F
+======================================================================
+FAIL: test_underscore_handler_link_keeps_owner_label (test_gen_patch_wikitext_register.InventoryTests.test_underscore_handler_link_keeps_owner_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1000-page/tools/test_gen_patch_wikitext_register.py", line 105, in test_underscore_handler_link_keeps_owner_label
+    self.assertEqual([(e['symbol'], e.get('kind')) for e in entries],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [('ModelSceneActor OnModelCleared', 'widget-script')])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [('ModelSceneActor OnModelCleared', None)] != [('ModelSceneActor OnModelCleared', 'widget-script')]
+
+First differing element 0:
+('ModelSceneActor OnModelCleared', None)
+('ModelSceneActor OnModelCleared', 'widget-script')
+
+- [('ModelSceneActor OnModelCleared', None)]
+?                                     ^^^
+
++ [('ModelSceneActor OnModelCleared', 'widget-script')]
+?                                     ^^^^^ +++++++++
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

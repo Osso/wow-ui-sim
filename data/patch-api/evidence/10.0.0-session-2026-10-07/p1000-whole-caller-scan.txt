@@ -1,0 +1,504 @@
+src/widget/frame.rs:347:    /// Texture rotation in radians (for SetRotation on Texture widgets).
+tests/patch_10_0_0_publication_sweep.rs:51:        "Scale:GetScaleFrom",
+tests/patch_10_0_0_publication_sweep.rs:52:        "Path:GetCurveType",
+tests/admin_buff_api.rs:10:// AddBuff / GetPlayerAuraBySpellID
+tests/admin_buff_api.rs:20:            local aura = C_UnitAuras.GetPlayerAuraBySpellID(99001)
+tests/admin_buff_api.rs:27:        "AddBuff should make the aura findable via GetPlayerAuraBySpellID"
+tests/admin_buff_api.rs:38:            local aura = C_UnitAuras.GetPlayerAuraBySpellID(99001)
+tests/admin_buff_api.rs:53:            local aura = C_UnitAuras.GetPlayerAuraBySpellID(99002)
+tests/admin_buff_api.rs:68:            local aura = C_UnitAuras.GetPlayerAuraBySpellID(99003)
+tests/admin_buff_api.rs:83:            local aura = C_UnitAuras.GetPlayerAuraBySpellID(99004)
+tests/admin_buff_api.rs:102:            local aura = C_UnitAuras.GetPlayerAuraBySpellID(99005)
+tests/admin_buff_api.rs:119:            local aura = C_UnitAuras.GetPlayerAuraBySpellID(99006)
+tests/admin_buff_api.rs:134:            return C_UnitAuras.GetPlayerAuraBySpellID(99999) == nil
+tests/admin_buff_api.rs:149:            local a1 = C_UnitAuras.GetPlayerAuraBySpellID(80001)
+tests/admin_buff_api.rs:150:            local a2 = C_UnitAuras.GetPlayerAuraBySpellID(80002)
+tests/admin_buff_api.rs:171:            return C_UnitAuras.GetPlayerAuraBySpellID(77001) == nil
+tests/admin_buff_api.rs:190:            return C_UnitAuras.GetPlayerAuraBySpellID(77002) == nil,
+tests/admin_buff_api.rs:191:                   C_UnitAuras.GetPlayerAuraBySpellID(77003) ~= nil
+tests/admin_buff_api.rs:226:            return C_UnitAuras.GetPlayerAuraBySpellID(88001) == nil,
+tests/admin_buff_api.rs:227:                   C_UnitAuras.GetPlayerAuraBySpellID(88002) == nil
+tests/admin_buff_api.rs:264:            return C_UnitAuras.GetPlayerAuraBySpellID(88005) ~= nil
+tests/admin_buff_api.rs:287:// GetPlayerAuraBySpellID via global and C_UnitAuras namespace
+tests/admin_buff_api.rs:297:            local aura = GetPlayerAuraBySpellID(55001)
+tests/admin_buff_api.rs:313:            local aura = C_UnitAuras.GetPlayerAuraBySpellID(55002)
+src/c_api/c_azerite_empowered_item.rs:6://! - `CloseAzeriteEmpoweredItemRespec(itemLocation?)` — fires
+src/c_api/c_azerite_empowered_item.rs:55:        "CloseAzeriteEmpoweredItemRespec",
+src/c_api/c_azerite_empowered_item.rs:236:/// missing/nil — `CloseAzeriteEmpoweredItemRespec` calls in via
+tests/aura_spell_classification_identifiers.rs:310:    env.exec("assert(C_UnitAuras.GetPlayerAuraBySpellID(101).auraInstanceID == 777); CheckClassification(101, false, false); CheckClassification(202, false, false); assert(C_UnitAuras.GetPlayerAuraBySpellID(101).auraInstanceID == 777)").unwrap();
+tests/aura_api.rs:101:// GetPlayerAuraBySpellID
+tests/aura_api.rs:108:        .eval("return GetPlayerAuraBySpellID(99999) == nil")
+tests/aura_api.rs:122:            local data = GetPlayerAuraBySpellID(spellId)
+tests/aura_api.rs:127:    assert!(found, "GetPlayerAuraBySpellID should find an active buff");
+tests/aura_api.rs:138:            local d = GetPlayerAuraBySpellID(spellId)
+tests/aura_api.rs:175:                   type(GetPlayerAuraBySpellID),
+tests/aura_api.rs:395:            local found = C_UnitAuras.GetPlayerAuraBySpellID(data.spellId)
+tests/aura_api.rs:400:    assert!(ok, "C_UnitAuras.GetPlayerAuraBySpellID should find buff");
+src/lua_api/workarounds/temporary/texture_file_data_defaults.rs:9:if rawget(C_Texture, "GetFilenameFromFileDataID") == nil then
+src/lua_api/workarounds/temporary/texture_file_data_defaults.rs:10:    function C_Texture.GetFilenameFromFileDataID(_fileDataID)
+src/lua_api/workarounds/temporary/texture_file_data_defaults.rs:29:            .eval("return C_Texture.GetFilenameFromFileDataID(12345) == nil")
+src/lua_api/workarounds/temporary/texture_file_data_defaults.rs:40:            function C_Texture.GetFilenameFromFileDataID()
+src/lua_api/workarounds/temporary/texture_file_data_defaults.rs:50:            .eval("return C_Texture.GetFilenameFromFileDataID(12345)")
+tests/aura_spell_identifier.rs:75:        local aura, extra = C_UnitAuras.GetPlayerAuraBySpellID(99001)
+tests/aura_spell_identifier.rs:84:        assert(C_UnitAuras.GetPlayerAuraBySpellID(99999) == nil)
+tests/aura_spell_identifier.rs:96:        assert(C_UnitAuras.GetPlayerAuraBySpellID(99001).auraInstanceID == 101)
+tests/aura_spell_identifier.rs:97:        assert(C_UnitAuras.GetPlayerAuraBySpellID(99002) == nil)
+tests/aura_spell_identifier.rs:98:        assert(GetPlayerAuraBySpellID(99001).auraInstanceID == 101)
+tests/aura_spell_identifier.rs:99:        assert(GetPlayerAuraBySpellID(99002) == nil)
+tests/aura_spell_identifier.rs:115:        assert(GetPlayerAuraBySpellID().auraInstanceID == 103)
+tests/aura_spell_identifier.rs:116:        assert(GetPlayerAuraBySpellID(nil).auraInstanceID == 103)
+tests/aura_spell_identifier.rs:117:        assert(GetPlayerAuraBySpellID(99001).auraInstanceID == 101)
+tests/aura_spell_identifier.rs:118:        assert(GetPlayerAuraBySpellID(99001.9).auraInstanceID == 101)
+tests/aura_spell_identifier.rs:132:        local player = C_UnitAuras.GetPlayerAuraBySpellID('FIXTURE Player Label')
+tests/aura_spell_identifier.rs:156:        assert(C_UnitAuras.GetPlayerAuraBySpellID(99001).auraInstanceID == 104)
+tests/aura_spell_identifier.rs:158:        assert(C_UnitAuras.GetPlayerAuraBySpellID('99001').auraInstanceID == 104)
+tests/aura_spell_identifier.rs:159:        assert(GetPlayerAuraBySpellID(99001).auraInstanceID == 101)
+tests/aura_spell_identifier.rs:178:        assert(C_UnitAuras.GetPlayerAuraBySpellID(99002) == nil)
+tests/aura_spell_identifier.rs:252:            assert(C_UnitAuras.GetPlayerAuraBySpellID(identifier) == nil)
+tests/aura_spell_identifier.rs:273:        reject(C_UnitAuras.GetPlayerAuraBySpellID)
+tests/aura_spell_identifier.rs:274:        reject(C_UnitAuras.GetPlayerAuraBySpellID, nil)
+tests/aura_spell_identifier.rs:278:            reject(C_UnitAuras.GetPlayerAuraBySpellID, identifier)
+tests/aura_spell_identifier.rs:282:        assert(C_UnitAuras.GetPlayerAuraBySpellID(99001).auraInstanceID == 101)
+tests/aura_spell_identifier.rs:318:        assert(C_UnitAuras.GetPlayerAuraBySpellID('fixture player label') == nil)
+tests/aura_spell_identifier.rs:326:        assert(C_UnitAuras.GetPlayerAuraBySpellID('fixture player label').auraInstanceID == 101)
+tests/aura_spell_identifier.rs:351:                function() return C_UnitAuras.GetPlayerAuraBySpellID(SecretAuraIdentifier) end,
+tests/aura_spell_identifier.rs:361:            local aura = C_UnitAuras.GetPlayerAuraBySpellID(99001)
+src/lua_api/workarounds/temporary/spell_static_defaults.rs:14:if rawget(C_Spell, "GetOverrideSpell") == nil then
+src/lua_api/workarounds/temporary/spell_static_defaults.rs:15:    function C_Spell.GetOverrideSpell(spellID)
+src/lua_api/workarounds/temporary/spell_static_defaults.rs:58:                return C_Spell.GetOverrideSpell(116),
+src/lua_api/workarounds/temporary/spell_static_defaults.rs:74:            assert(C_Spell.GetOverrideSpell(116) == 116)
+src/lua_api/workarounds/temporary/spell_static_defaults.rs:89:            function C_Spell.GetOverrideSpell(_spellID)
+src/lua_api/workarounds/temporary/spell_static_defaults.rs:105:                return C_Spell.GetOverrideSpell(116),
+src/lua_api/workarounds/temporary/spell_metadata_defaults.rs:22:installSpellDefault("IsPressHoldReleaseSpell", returnFalse)
+src/lua_api/workarounds/temporary/spell_metadata_defaults.rs:69:                    C_Spell.IsPressHoldReleaseSpell(116),
+tests/blizzard_azerite_essence_ui_dependency_lines_drawn.rs:79:    local red, green, blue = line.FillScroll1:GetVertexColor()
+src/lua_api/workarounds/temporary/spell_book_static_defaults.rs:10:if rawget(C_SpellBook, "GetOverrideSpell") == nil then
+src/lua_api/workarounds/temporary/spell_book_static_defaults.rs:11:    function C_SpellBook.GetOverrideSpell(spellID)
+tests/blizzard_azerite_respec_ui_uipanel_registration.rs:34:                            entry and entry.showFailedFunc == C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec or false
+tests/blizzard_azerite_respec_ui_uipanel_registration.rs:48:                    "showFailedFunc should resolve to C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec"
+tests/blizzard_azerite_respec_ui_show_failed_func_routes.rs:49:                    "`{ROOT}` showFailedFunc should call CloseAzeriteEmpoweredItemRespec with no item location"
+src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs:34:    if texture and type(texture.SetRotation) == "function" then
+src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs:35:      texture:SetRotation(rotation or 0)
+src/lua_api/workarounds/temporary/shared_xml_utility_defaults.rs:183:                SetClampedTextureRotation({ SetRotation = function(_, value) rotated = value end }, 90)
+tests/wowforever_unit_interactions.rs:126:        SetUnitCursorTexture = function() return false end
+tests/wowforever_unit_interactions.rs:143:            assert(UnitIsInteractable(unit) == false)
+tests/wowforever_unit_interactions.rs:204:    env.exec("assert(UnitExists('softinteract')); assert(UnitIsInteractable('softinteract'))")
+tests/wowforever_unit_interactions.rs:261:            assert(UnitIsInteractable(token) and UnitIsInInteractRange(token))
+tests/wowforever_unit_interactions.rs:263:        assert(not UnitIsGameObject(nil) and not UnitIsInteractable(nil))
+tests/blizzard_covenant_renown_loads.rs:195:         CURRENT based on C_CovenantSanctumUI.HasMaximumRenown / IsWeeklyRenownCapped / \
+tests/wowforever_preferred_interact.rs:24:        SetUnitCursorTexture = function() return false end
+tests/blizzard_deprecated_spell_book_loads.rs:157:         c_spell_book.rs:180 backed by the GetOverrideSpell impl); FindBaseSpellByID (calls \
+src/event/valid_events_c.rs:118:    "SETTINGS_LOADED",
+tests/blizzard_encounter_timeline_loads.rs:222:         ENCOUNTER_STATE_CHANGED, ENCOUNTER_TIMELINE_STATE_UPDATED, SETTINGS_LOADED events plus \
+src/event/mod.rs:159:    OnModelCleared,
+src/event/mod.rs:256:    ("OnModelCleared", ScriptHandler::OnModelCleared),
+src/lua_api/workarounds/temporary/reputation_state.rs:214:if C_Reputation.IsMajorFaction == nil then
+src/lua_api/workarounds/temporary/reputation_state.rs:215:    C_Reputation.IsMajorFaction = function()
+src/lua_api/workarounds/temporary/reputation_state.rs:312:                    or type(C_Reputation.IsMajorFaction) ~= "function"
+src/c_api/c_unit_aura_spell_queries.rs:14:        "GetPlayerAuraBySpellID",
+tests/blizzard_main_menu_bar_bag_buttons_loads.rs:92:const BAG_BAR_EXPAND_TOGGLE_METHODS: &[&str] = &["OnClick", "GetRotation", "UpdateOrientation"];
+tests/blizzard_main_menu_bar_bag_buttons_loads.rs:489:         vertical) via OnClick + GetRotation + UpdateOrientation"
+src/lua_api/workarounds/temporary/prototype_dialog_state.rs:44:if rawget(C_PrototypeDialog, "SelectOption") == nil then
+src/lua_api/workarounds/temporary/prototype_dialog_state.rs:45:    function C_PrototypeDialog.SelectOption(dialogID, optionID)
+src/lua_api/workarounds/temporary/prototype_dialog_state.rs:115:                       type(C_PrototypeDialog.SelectOption)
+src/lua_api/workarounds/temporary/prototype_dialog_state.rs:130:                local selected = C_PrototypeDialog.SelectOption(10, 2)
+src/lua_api/workarounds/temporary/prototype_dialog_state.rs:168:            function C_PrototypeDialog.SelectOption(_dialogID, _optionID)
+src/lua_api/workarounds/temporary/prototype_dialog_state.rs:180:                return C_PrototypeDialog.SelectOption(1, 2),
+tests/blizzard_housing_tutorials_loads.rs:161:         tail call calls UpdateHousingTutorials() and registers the SETTINGS_LOADED EventRegistry \
+tests/blizzard_housing_tutorials_loads.rs:379:         on the SETTINGS_LOADED EventRegistry callback registered by HousingTutorialManager:Init"
+src/lua_api/globals/stubs/namespace_stubs.rs:114:    ("C_TradeSkillUI", "GetRecipeNumReagents", stub_nil),
+src/lua_api/globals/stubs/namespace_stubs.rs:115:    ("C_TradeSkillUI", "GetRecipeReagentInfo", stub_nil),
+src/lua_api/globals/stubs/namespace_stubs.rs:116:    ("C_TradeSkillUI", "GetRecipeReagentItemLink", stub_nil),
+tests/widget_methods_colorselect.rs:15:            local r, g, b, a = region:GetVertexColor()
+src/lua_api/globals/action_bar_api/registration.rs:44:    ("IsPressHoldReleaseSpell", is_press_hold_release_spell),
+src/lua_api/globals/stubs/global_stubs.rs:75:    // SetWatchedFaction is SimState-backed in faction_probes.rs, not a stub.
+tests/blizzard_item_interaction_ui_loads.rs:31:    "GetItemLocation",
+tests/blizzard_item_button_loads.rs:67:    "GetItemLocation",
+tests/blizzard_item_button_loads.rs:120:    "GetItemLocation",
+tests/blizzard_item_button_loads.rs:466:             GetItemLocation(), and SetItemLocationCallback / GetItemLocation are the \
+tests/blizzard_photo_sharing_loads.rs:417:            local navigateToResult = PhotoSharingBrowserPopup:NavigateTo("https://example.invalid")
+tests/blizzard_photo_sharing_loads.rs:419:            return type(PhotoSharingBrowserPopup.NavigateTo),
+tests/blizzard_photo_sharing_loads.rs:428:        "Browser:NavigateTo and Browser:NavigateHome must be callable no-result methods. \
+src/c_api/c_spell_book.rs:254:        "GetOverrideSpell",
+src/lua_api/frame/methods/widgets/tooltip.rs:72:        "SetUnitBuffByAuraInstanceID",
+src/lua_api/frame/methods/widgets/tooltip.rs:77:        "SetUnitDebuffByAuraInstanceID",
+src/lua_api/frame/methods/widgets/texture/mod.rs:52:    ("GetVertexColor", color::get_vertex_color),
+src/lua_api/frame/methods/widgets/texture/mod.rs:59:    ("SetRotation", rotation_mask::set_rotation),
+src/lua_api/frame/methods/widgets/texture/mod.rs:61:    ("GetRotation", rotation_mask::get_rotation),
+src/lua_api/workarounds/temporary/legacy_spell_globals.rs:72:if IsPressHoldReleaseSpell == nil and C_Spell ~= nil then
+src/lua_api/workarounds/temporary/legacy_spell_globals.rs:73:    function IsPressHoldReleaseSpell(...)
+src/lua_api/workarounds/temporary/legacy_spell_globals.rs:74:        return C_Spell.IsPressHoldReleaseSpell(...)
+src/lua_api/workarounds/temporary/legacy_spell_globals.rs:124:                if type(IsPressHoldReleaseSpell) ~= "function" then return "press_hold_type" end
+src/lua_api/workarounds/temporary/legacy_spell_globals.rs:125:                if IsPressHoldReleaseSpell(116) ~= false then return "press_hold_value" end
+src/lua_api/workarounds/temporary/legacy_spell_globals.rs:146:            IsPressHoldReleaseSpell = function() return true end
+src/lua_api/workarounds/temporary/legacy_spell_globals.rs:152:                IsPressHoldReleaseSpell = function()
+src/lua_api/workarounds/temporary/legacy_spell_globals.rs:167:                "return GetSpellInfo(1), IsPassiveSpell(1), IsPressHoldReleaseSpell(1), IsSelectedSpellBookItem(1)",
+src/lua_api/globals/real/unit_interaction.rs:14:        LuaApiMut::register_function(state, "UnitIsInteractable", interactable)?;
+src/lua_api/workarounds/temporary/item_button_helper_defaults.rs:191:                local ir, ig, ib = button.icon:GetVertexColor()
+src/lua_api/workarounds/temporary/item_button_helper_defaults.rs:192:                local nr, ng, nb = button.normalTexture:GetVertexColor()
+tests/c_function_diff_coverage.rs:51:        "C_PrototypeDialog.SelectOption",
+tests/c_function_diff_coverage.rs:84:                { "C_PrototypeDialog", "SelectOption" },
+tests/c_function_diff_coverage.rs:130:        "C_TradeSkillUI.GetTradeSkillLine",
+src/lua_api/frame/methods/widgets/model.rs:640:    ("SetRotation", set_rotation),
+tests/button_xml_atlas.rs:6://! OnLoad code that does `self:GetNormalTexture():SetRotation(...)` errors.
+tests/c_namespace_diff_coverage.rs:85:                { "C_PrototypeDialog", "SelectOption" },
+tests/c_namespace_diff_coverage.rs:88:                { "C_TradeSkillUI", "GetTradeSkillLine" },
+tests/button_state_textures.rs:329:    env.exec("TestLockButton:SetHighlightLocked(true)").unwrap();
+tests/button_state_textures.rs:333:        "SetHighlightLocked also renders when not hovered"
+tests/button_state_textures.rs:338:        "SetHighlightLocked hover emits once"
+tests/button_state_textures.rs:351:    env.exec("TestLockParent:Show(); TestLockButton:SetHighlightLocked(false)")
+tests/tooltip_item_spell.rs:266:        r#"GameTooltip:SetUnitDebuffByAuraInstanceID("player", {aura_instance_id}, "HARMFUL")"#
+tests/tooltip_item_spell.rs:273:        "SetUnitDebuffByAuraInstanceID should leave the tooltip empty for helpful-only player buffs"
+tests/tooltip_item_spell.rs:291:        r#"GameTooltip:SetUnitBuffByAuraInstanceID("target", {aura_instance_id})"#
+tests/tooltip_item_spell.rs:298:        "SetUnitBuffByAuraInstanceID should not read player buffs when asked for another unit"
+src/lua_api/frame/methods/text_attribute_event/events.rs:426:        "OnModelLoaded" | "OnModelCleared" | "OnDressModel" => {
+tests/c_azerite_empowered_item.rs:15:        .eval("return type(C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec)")
+tests/c_azerite_empowered_item.rs:164:        C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec({equipmentSlotIndex = 7})
+tests/c_azerite_empowered_item.rs:410:        C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec()
+src/lua_api/frame/methods/widgets/browser.rs:14:    // The 11.2.0 page lists NavigateTo as removed, but current retail
+src/lua_api/frame/methods/widgets/browser.rs:16:    table_set_rust_fn_static(state, mt, "NavigateTo", navigate)?;
+tests/c_major_factions_globals.rs:2://! (`src/c_api/c_major_factions.rs`) plus the `C_Reputation.IsMajorFaction`
+tests/c_major_factions_globals.rs:312:        .eval("return C_Reputation.IsMajorFaction(2507)")
+tests/c_major_factions_globals.rs:325:        .eval("return C_Reputation.IsMajorFaction(2507)")
+tests/c_major_factions_globals.rs:329:        .eval("return C_Reputation.IsMajorFaction(2511)")
+src/loader/tests/frame_state.rs:237:        ResizeStateFrame:SetMinResize(120, 80)
+src/loader/tests/frame_state.rs:239:        assert(minWidth == 120 and minHeight == 80, "SetMinResize should persist minimum resize bounds")
+src/loader/tests/frame_state.rs:240:        assert(maxWidth == nil and maxHeight == nil, "SetMinResize should not invent maximum bounds")
+src/loader/tests/frame_state.rs:242:        ResizeStateFrame:SetMaxResize(480, 360)
+src/loader/tests/frame_state.rs:244:        assert(maxWidth == 480 and maxHeight == 360, "SetMaxResize should persist maximum resize bounds")
+src/loader/tests/frame_state.rs:245:        assert(minWidth == 120 and minHeight == 80, "SetMaxResize should preserve existing minimum resize bounds")
+src/loader/tests/frame_state.rs:292:        MiscStateRootFrame:SetHighlightLocked(true)
+src/loader/tests/frame_state.rs:301:        MiscStateRootFrame:SetHighlightLocked(false)
+src/loader/tests/frame_interaction.rs:79:        assert(math.abs(first:GetRotation() - (math.pi / 2)) < 0.001, "first child texture should rotate")
+src/loader/tests/frame_interaction.rs:80:        assert(math.abs(second:GetRotation() - (math.pi / 2)) < 0.001, "second child texture should rotate")
+src/lua_api/frame/methods/misc/highlight.rs:21:    table_set_rust_fn_static(state, mt, "SetHighlightLocked", set_highlight_locked)?;
+tests/c_spell_probes.rs:418:                    C_Spell.IsPressHoldReleaseSpell(116)",
+tests/texture_methods_port.rs:132:// 4. SetRotation / GetRotation
+tests/texture_methods_port.rs:143:            tex:SetRotation(math.pi / 2)
+tests/texture_methods_port.rs:144:            return tex:GetRotation()
+tests/texture_methods_port.rs:160:            return tex:GetRotation()
+tests/texture_methods_port.rs:174:            return tex:GetRotation()
+src/lua_api/globals/auras.rs:114:            ("GetPlayerAuraBySpellID", get_player_aura_by_spell_id),
+src/lua_api/globals/auras.rs:121:        ("GetPlayerAuraBySpellID", get_player_aura_by_spell_id),
+src/lua_api/frame/methods/misc/bounds.rs:18:    table_set_rust_fn_static(state, mt, "SetMinResize", set_min_resize)?;
+src/lua_api/frame/methods/misc/bounds.rs:19:    table_set_rust_fn_static(state, mt, "SetMaxResize", set_max_resize)?;
+tests/c_spell_static_fallbacks.rs:17:             return C_Spell.GetOverrideSpell(116),
+tests/c_system_api.rs:328:        .eval("return C_Texture.GetFilenameFromFileDataID(12345) == nil")
+tests/chat_frame.rs:468:            .eval("return ChatFrame1Background:GetVertexColor()")
+tests/chat_frame.rs:469:            .expect("ChatFrame1Background:GetVertexColor failed");
+tests/test_showuipanel_professions_crafting.rs:64:            -- Reagent details: GetRecipeReagentInfo is the per-row
+tests/test_showuipanel_professions_crafting.rs:66:            local r1 = C_TradeSkillUI.GetRecipeReagentInfo(100001, 1)
+tests/test_showuipanel_professions_crafting.rs:67:            local r2 = C_TradeSkillUI.GetRecipeReagentInfo(100001, 2)
+tests/test_showuipanel_professions_crafting.rs:74:            if C_TradeSkillUI.GetRecipeNumReagents(100001) ~= 2 then
+tests/test_showuipanel_professions_crafting.rs:75:                return "reagent_count=" .. tostring(C_TradeSkillUI.GetRecipeNumReagents(100001))
+src/lua_api/globals/missing_surface/professions_legacy_trade_skill.rs:25:    ("GetTradeSkillLine", get_trade_skill_line),
+src/loader/tests/wow_api.rs:191:            local r, g, b, a = texture:GetVertexColor()
+tests/test_showuipanel_lod.rs:553:            local children = C_ProfSpecs.GetChildrenForPath(rootNodeID)
+src/lua_api/globals/missing_surface/professions/professions_registration.rs:115:        "GetRecipeNumReagents",
+src/lua_api/globals/missing_surface/professions/professions_registration.rs:120:        "GetRecipeReagentInfo",
+src/lua_api/globals/missing_surface/professions/professions_registration.rs:124:        "GetRecipeReagentItemLink",
+src/lua_api/globals/missing_surface/professions/professions_registration.rs:133:    ("GetTradeSkillLine", c_trade_skill_ui_get_trade_skill_line),
+src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua:28:                    if f.OnEditModeExit then
+src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua:29:                        pcall(f.OnEditModeExit, f)
+src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua:35:            and self.AccountSettings.OnEditModeExit then
+src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua:37:                self.AccountSettings.OnEditModeExit,
+tests/cooldown_aura_spell_identifiers.rs:257:    env.exec("assert(C_UnitAuras.GetPlayerAuraBySpellID(101).auraInstanceID == 777); CheckCooldown(101, nil)")
+tests/faction_probes.rs:176:// ── SetWatchedFaction ─────────────────────────────────────────────────────────
+tests/faction_probes.rs:182:    env.exec("SetWatchedFaction(1)").unwrap();
+tests/faction_probes.rs:198:    env.exec("SetWatchedFaction(0)").unwrap();
+tests/faction_probes.rs:208:    env.exec("SetWatchedFaction(2)").unwrap();
+tests/blizzard_ui/blizzard_animadiversionui/behavior_pin_set_visual_state_dims_unavailable_only.rs:24:local disabledR, disabledG, disabledB, disabledA = pin.IconDisabledOverlay:GetVertexColor()
+tests/data/patch_10_1_5_sweep_known_gaps.json:29:  "wt-global-api-C_PvP.GetRatedSoloShuffleRewards-86",
+tests/data/patch_10_1_0_sweep_known_gaps.json:29:  "wt-global-api-C_TradeSkillUI.RecraftRecipe-331",
+tests/data/patch_10_0_7_sweep_known_gaps.json:19:  "wt-global-api-C_PlayerInteractionManager.InteractUnit-71",
+src/lua_api/state/support_types.rs:439:    /// `CloseAzeriteEmpoweredItemRespec`. Recorded for tests that want
+tests/blizzard_ui/blizzard_animadiversionui/behavior_connection_setup_anchors_origin_and_rotates.rs:86:local rotationMatches = math.abs(temporaryConnection.AnimaLink1:GetRotation() - expectedAngle) < 0.001
+tests/blizzard_ui/blizzard_animadiversionui/behavior_connection_setup_anchors_origin_and_rotates.rs:87:    and math.abs(temporaryConnection.AnimaLink2:GetRotation() - expectedAngle) < 0.001
+tests/blizzard_ui/blizzard_animadiversionui/behavior_connection_setup_anchors_origin_and_rotates.rs:88:    and math.abs(temporaryConnection.AnimaLinkBlack:GetRotation() - expectedAngle) < 0.001
+tests/data/patch_10_0_5_sweep_known_gaps.json:3:  "wt-global-api-C_EditMode.OnLayoutAdded-82",
+tests/data/patch_10_2_0_sweep_known_gaps.json:19:  "wt-global-api-C_Traits.CascadeRepurchaseRanks-166",
+tests/data/patch_10_2_0_sweep_known_gaps.json:26:  "wt-widgets-Button:SetHighlightLocked-198",
+tests/data/patch_10_2_6_sweep_known_gaps.json:21:  "wt-global-api-CheckTalentMasterDist-139"
+tests/data/patch_12_0_0_sweep_known_gaps.json:4:  "wt-events-SETTINGS_LOADED-816",
+tests/data/patch_12_0_0_sweep_known_gaps.json:20:  "wt-global-api-C_TradeSkillUI.GetEnchantItems-643",
+tests/data/patch_11_2_5_sweep_known_gaps.json:4:  "wt-global-api-C_ClassTalents.ImportLoadout-135",
+tests/data/patch_11_2_0_sweep_known_gaps.json:28:  "wt-widgets-Browser:NavigateTo-173"
+src/lua_api/globals/faction_probes.rs:13://! - `SetWatchedFaction(index)`      → write
+src/lua_api/globals/faction_probes.rs:130:/// `SetWatchedFaction(index)` — show the faction on the XP bar and
+src/lua_api/globals/faction_probes.rs:261:    ("IsMajorFaction", reputation_is_major_faction),
+src/lua_api/globals/faction_probes.rs:382:    LuaApiMut::register_function(lua, "SetWatchedFaction", set_watched_faction)?;
+tests/data/patch_11_0_0_sweep_known_gaps.json:73:  "wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-526",
+tests/data/patch_11_0_0_sweep_known_gaps.json:77:  "wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-528",
+tests/data/patch_11_0_0_sweep_known_gaps.json:81:  "wt-global-api-C_Reputation.SetWatchedFaction-403",
+tests/data/patch_11_0_0_sweep_known_gaps.json:87:  "wt-global-api-C_Spell.GetDeadlyDebuffInfo-282",
+tests/data/patch_11_0_0_sweep_known_gaps.json:100:  "wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-406",
+tests/data/patch_11_0_0_sweep_known_gaps.json:101:  "wt-global-api-C_SpellBook.GetOverrideSpell-407",
+tests/data/patch_11_0_0_sweep_known_gaps.json:126:  "wt-global-api-C_TradeSkillUI.CraftEnchant-545",
+tests/data/patch_11_0_0_sweep_known_gaps.json:127:  "wt-global-api-C_TradeSkillUI.CraftSalvage-549",
+tests/data/patch_11_0_0_sweep_known_gaps.json:128:  "wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-552",
+tests/data/patch_11_0_0_sweep_known_gaps.json:130:  "wt-global-api-C_TradeSkillUI.RecraftRecipe-556",
+tests/data/patch_11_0_0_sweep_known_gaps.json:162:  "wt-global-api-IsPressHoldReleaseSpell-464",
+tests/data/patch_10_0_2_sweep_known_gaps.json:38:  "wt-global-api-C_MajorFactions.IsMajorFaction-325",
+tests/data/patch_10_0_2_sweep_known_gaps.json:43:  "wt-global-api-C_ProfSpecs.GetPerksForPath-387",
+tests/data/patch_10_0_2_sweep_known_gaps.json:82:  "wt-global-api-C_TradeSkillUI.GetHideUnownedFlags-394",
+tests/data/patch_10_0_2_sweep_known_gaps.json:83:  "wt-global-api-C_TradeSkillUI.GetOriginalCraftRecipeID-397",
+tests/data/patch_10_0_2_sweep_known_gaps.json:87:  "wt-global-api-C_TradeSkillUI.GetReagentSlotStatus-399",
+tests/data/patch_10_0_2_sweep_known_gaps.json:89:  "wt-global-api-C_TradeSkillUI.GetRecraftItems-403",
+tests/data/patch_10_0_2_sweep_known_gaps.json:147:  "wt-widgets-GameTooltip:SetUnitBuffByAuraInstanceID-514",
+tests/data/patch_10_0_2_sweep_known_gaps.json:149:  "wt-widgets-GameTooltip:SetUnitDebuffByAuraInstanceID-516",
+tests/global_function_diff_coverage.rs:21:    "GetPlayerAuraBySpellID",
+tests/forever_forbidden_consumers.rs:89:             assert(C_UnitAuras.GetPlayerAuraBySpellID(19750) == nil); \
+tests/forever_forbidden_consumers.rs:152:            "A_Admin.RemoveBuff(19750); assert(C_UnitAuras.GetPlayerAuraBySpellID(19750) == nil)",
+tests/micro_menu.rs:786:            local r, g, b = MainMenuMicroButton.MainMenuBarPerformanceBar:GetVertexColor()
+tests/methods_texture.rs:3://! Covers: SetTexture, GetTexture, SetTexCoord, SetVertexColor, GetVertexColor,
+tests/methods_texture.rs:218:// SetVertexColor / GetVertexColor
+tests/methods_texture.rs:227:            "{tex}:SetVertexColor(0.5, 0.6, 0.7, 0.8); return {tex}:GetVertexColor()"
+tests/methods_texture.rs:242:            "{tex}:SetVertexColor(0.1, 0.2, 0.3); return {tex}:GetVertexColor()"
+tests/methods_texture.rs:257:            "{tex}:SetVertexColor(CreateColor(0.9, 0.8, 0.7, 0.6)); return {tex}:GetVertexColor()"
+tests/methods_texture.rs:275:            return {tex}:GetVertexColor()
+tests/methods_texture.rs:290:        env.eval(&format!("return {tex}:GetVertexColor()")).unwrap();
+tests/mists_trade_skill_api.rs:27:            local lineName, rank, maxRank = GetTradeSkillLine()
+tests/mists_spellbook_panel.rs:190:local beforeLineName = GetTradeSkillLine()
+tests/mists_spellbook_panel.rs:196:local lineName = GetTradeSkillLine()
+tests/p1200_mixed.rs:53:        for _, event in ipairs({{'HOUSE_LEVEL_CHANGED', 'SETTINGS_LOADED',
+tests/blizzard_ui/blizzard_actionbarcontroller/surface_events.rs:24:    "SETTINGS_LOADED",
+tests/spell_casting.rs:535:                local aura = C_UnitAuras.GetPlayerAuraBySpellID(465)
+tests/spell_casting.rs:561:                local devotion = C_UnitAuras.GetPlayerAuraBySpellID(465) ~= nil
+tests/spell_casting.rs:562:                local crusader = C_UnitAuras.GetPlayerAuraBySpellID(32223)
+tests/spell_casting.rs:597:                local aura = C_UnitAuras.GetPlayerAuraBySpellID(465)
+tests/patch_12_1_0_managed_aura_buttons.rs:36:        local r, g, b = region:GetVertexColor()
+tests/patch_11_2_0_publication_fixes.rs:67:        assert(type(browser.NavigateTo) == 'function')
+tests/patch_11_2_0_publication_fixes.rs:68:        assert(select('#', browser:NavigateTo('https://example.invalid')) == 0)
+tests/patch_12_0_1_extract2.rs:106:                local aura = C_UnitAuras.GetPlayerAuraBySpellID(spell)
+tests/patch_12_0_1_extract2.rs:122:            assert(C_UnitAuras.GetPlayerAuraBySpellID(35395) == nil)
+tests/patch_12_0_5_navigation_aura_entry.rs:89:        assert(C_UnitAuras.GetPlayerAuraBySpellID(19750).auraInstanceID == helpfulSlot)
+tests/patch_12_1_0_aura_secret_context.rs:128:            local mark = C_UnitAuras.GetPlayerAuraBySpellID(1126)
+tests/patch_12_1_0_aura_secret_context.rs:139:        assert(not issecretvalue(C_UnitAuras.GetPlayerAuraBySpellID(1126)))
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:37:            -- frame events (SETTINGS_LOADED) through EventRegistry:TriggerEvent.
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:53:        .expect("pre-SETTINGS_LOADED ACTIONBAR_SHOW_BOTTOMLEFT dispatch must run cleanly");
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:62:            .expect("pre-SETTINGS_LOADED probe must run cleanly");
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:66:            "ACTIONBAR_SHOW_BOTTOMLEFT before SETTINGS_LOADED must register one deferred callback"
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:70:            "ACTIONBAR_SHOW_BOTTOMLEFT before SETTINGS_LOADED must not set the bar setting yet"
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:76:            FireEvent("SETTINGS_LOADED")
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:79:        .expect("SETTINGS_LOADED dispatch must run cleanly");
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:83:            .expect("post-SETTINGS_LOADED setting probe must run cleanly");
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:87:            "SETTINGS_LOADED must run the deferred ShowBottomLeftBar callback"
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:98:        .expect("post-SETTINGS_LOADED ACTIONBAR_SHOW_BOTTOMLEFT dispatch must run cleanly");
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:107:            .expect("post-SETTINGS_LOADED immediate probe must run cleanly");
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:111:            "ACTIONBAR_SHOW_BOTTOMLEFT after SETTINGS_LOADED must not register another deferred callback"
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:115:            "ACTIONBAR_SHOW_BOTTOMLEFT after SETTINGS_LOADED must set the bar setting immediately"
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_settings_loaded_registers_callbacks.rs:1://! Behavior pin: SETTINGS_LOADED wires action bar setting callbacks.
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_settings_loaded_registers_callbacks.rs:46:                "SETTINGS_LOADED"
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_settings_loaded_registers_callbacks.rs:50:        .expect("SETTINGS_LOADED dispatch must run cleanly");
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_settings_loaded_registers_callbacks.rs:75:            .expect("SETTINGS_LOADED callback registration probe must run cleanly");
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_settings_loaded_registers_callbacks.rs:79:            "SETTINGS_LOADED must register callbacks for PROXY_SHOW_ACTIONBAR_2 through _8"
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_settings_loaded_registers_callbacks.rs:83:            "SETTINGS_LOADED must run the action bar update once immediately"
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_settings_loaded_registers_callbacks.rs:87:            "SETTINGS_LOADED must fire ActionBarShownSettingUpdated once immediately"
+tests/spell_api.rs:251:    let id: i32 = env.eval("return C_SpellBook.GetOverrideSpell(42)").unwrap();
+tests/spell_api.rs:252:    assert_eq!(id, 42, "GetOverrideSpell should return the same ID");
+tests/spell_api.rs:388:    let id: i32 = env.eval("return C_Spell.GetOverrideSpell(55)").unwrap();
+tests/player_facing.rs:59:        Arrow.texture:SetRotation(0)
+tests/player_facing.rs:64:                self.texture:SetRotation(facing)
+tests/player_facing.rs:72:    env.exec("assert(Arrow.texture:GetRotation() == 0)")
+tests/player_facing.rs:78:        let observed: f64 = env.eval("return Arrow.texture:GetRotation()").unwrap();
+tests/player_facing.rs:84:        env.eval::<f64>("return Arrow.texture:GetRotation()")
+tests/prototype_dialog.rs:13:            local ok = C_PrototypeDialog.SelectOption(10, 2)
+tests/prototype_dialog.rs:20:    assert!(ok, "SelectOption should succeed for valid inputs");
+tests/prototype_dialog.rs:40:            C_PrototypeDialog.SelectOption(20, 1)
+tests/prototype_dialog.rs:72:            C_PrototypeDialog.SelectOption(30, 4)
+tests/prototype_dialog.rs:74:            local ok = C_PrototypeDialog.SelectOption(30, 7)
+tests/prototype_dialog.rs:82:    assert!(ok, "SelectOption should reopen a previously removed dialog");
+tests/prototype_dialog.rs:103:            local selectBadDialog = C_PrototypeDialog.SelectOption({}, 1)
+tests/prototype_dialog.rs:104:            local selectBadOption = C_PrototypeDialog.SelectOption(40, {})
+tests/runtime_bootstrap_boundaries.rs:41:        !bootstrap.contains("IsPressHoldReleaseSpell"),
+tests/secrets_publication_queries.rs:97:                local public = C_UnitAuras.GetPlayerAuraBySpellID(1126)
+tests/secrets_publication_queries.rs:99:                assert((C_UnitAuras.GetPlayerAuraBySpellID(9072) == nil) == {restricted})
+tests/secrets_publication_queries.rs:101:            assert(issecretvalue(C_UnitAuras.GetPlayerAuraBySpellID(9072)) == {restricted})
+tests/blizzard_ui/blizzard_actionbar/behavior_button_range_check.rs:56:            local r, g, b = ActionButton1.HotKey:GetVertexColor()
+tests/blizzard_ui/blizzard_actionbar/behavior_button_range_check.rs:73:            local r, g, b = ActionButton1.HotKey:GetVertexColor()
+tests/professions_api.rs:411:                if C_TradeSkillUI.GetRecipeNumReagents(recipeID) == 0 then
+tests/professions_api.rs:415:                local reagent = C_TradeSkillUI.GetRecipeReagentInfo(recipeID, 1)
+tests/professions_api.rs:426:                local link = C_TradeSkillUI.GetRecipeReagentItemLink(recipeID, 1)
+tests/professions_api.rs:587:            if C_TradeSkillUI.GetRecipeNumReagents(100005) ~= 3 then
+tests/professions_api.rs:588:                return "count=" .. tostring(C_TradeSkillUI.GetRecipeNumReagents(100005))
+tests/professions_api.rs:591:            local reagent = C_TradeSkillUI.GetRecipeReagentInfo(100005, 2)
+tests/professions_api.rs:596:            local link = C_TradeSkillUI.GetRecipeReagentItemLink(100005, 2)
+tests/recent_runtime_bootstrap_boundaries.rs:320:        ("function GetPlayerAuraBySpellID", "Rust aura owner"),
+tests/data/patch_10_0_0_sweep_known_gaps.json:2:  "wt-cvars-LogFps-904",
+tests/data/patch_10_0_0_sweep_known_gaps.json:3:  "wt-cvars-WriteCustomizationOptions-905",
+tests/data/patch_10_0_0_sweep_known_gaps.json:4:  "wt-cvars-luaErrorExceptions-835",
+tests/data/patch_10_0_0_sweep_known_gaps.json:5:  "wt-cvars-minimapTrackedInfov3-837",
+tests/data/patch_10_0_0_sweep_known_gaps.json:6:  "wt-events-SETTINGS_LOADED-731",
+tests/data/patch_10_0_0_sweep_known_gaps.json:7:  "wt-global-api-C_AchievementInfo.IsGuildAchievement-226",
+tests/data/patch_10_0_0_sweep_known_gaps.json:8:  "wt-global-api-C_AlliedRaces.ClearAlliedRaceDetailsGiver-506",
+tests/data/patch_10_0_0_sweep_known_gaps.json:9:  "wt-global-api-C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec-507",
+tests/data/patch_10_0_0_sweep_known_gaps.json:10:  "wt-global-api-C_CampaignInfo.SortAsNormalQuest-231",
+tests/data/patch_10_0_0_sweep_known_gaps.json:11:  "wt-global-api-C_ClassTalents.CanCreateNewConfig-233",
+tests/data/patch_10_0_0_sweep_known_gaps.json:12:  "wt-global-api-C_ClassTalents.CommitConfig-234",
+tests/data/patch_10_0_0_sweep_known_gaps.json:13:  "wt-global-api-C_ClassTalents.DeleteConfig-235",
+tests/data/patch_10_0_0_sweep_known_gaps.json:14:  "wt-global-api-C_ClassTalents.ImportLoadout-243",
+tests/data/patch_10_0_0_sweep_known_gaps.json:15:  "wt-global-api-C_ClassTalents.IsConfigPopulated-244",
+tests/data/patch_10_0_0_sweep_known_gaps.json:16:  "wt-global-api-C_ClassTalents.RenameConfig-246",
+tests/data/patch_10_0_0_sweep_known_gaps.json:17:  "wt-global-api-C_ClassTalents.RequestNewConfig-247",
+tests/data/patch_10_0_0_sweep_known_gaps.json:18:  "wt-global-api-C_ClassTalents.SaveConfig-248",
+tests/data/patch_10_0_0_sweep_known_gaps.json:19:  "wt-global-api-C_ClassTalents.SetUsesSharedActionBars-250",
+tests/data/patch_10_0_0_sweep_known_gaps.json:20:  "wt-global-api-C_CraftingOrders.CloseCustomerCraftingOrders-254",
+tests/data/patch_10_0_0_sweep_known_gaps.json:21:  "wt-global-api-C_CraftingOrders.GetCustomerCategories-255",
+tests/data/patch_10_0_0_sweep_known_gaps.json:22:  "wt-global-api-C_CraftingOrders.GetCustomerOptions-256",
+tests/data/patch_10_0_0_sweep_known_gaps.json:23:  "wt-global-api-C_CraftingOrders.HasFavoriteCustomerOptions-257",
+tests/data/patch_10_0_0_sweep_known_gaps.json:24:  "wt-global-api-C_CraftingOrders.IsCustomerOptionFavorited-258",
+tests/data/patch_10_0_0_sweep_known_gaps.json:25:  "wt-global-api-C_CraftingOrders.ParseCustomerOptions-259",
+tests/data/patch_10_0_0_sweep_known_gaps.json:26:  "wt-global-api-C_CraftingOrders.SetCustomerOptionFavorited-260",
+tests/data/patch_10_0_0_sweep_known_gaps.json:27:  "wt-global-api-C_CurrencyInfo.GetCurrencyDescription-261",
+tests/data/patch_10_0_0_sweep_known_gaps.json:28:  "wt-global-api-C_EditMode.ConvertLayoutInfoToString-263",
+tests/data/patch_10_0_0_sweep_known_gaps.json:29:  "wt-global-api-C_EditMode.ConvertStringToLayoutInfo-264",
+tests/data/patch_10_0_0_sweep_known_gaps.json:30:  "wt-global-api-C_EditMode.OnEditModeExit-267",
+tests/data/patch_10_0_0_sweep_known_gaps.json:31:  "wt-global-api-C_EditMode.OnLayoutAdded-268",
+tests/data/patch_10_0_0_sweep_known_gaps.json:32:  "wt-global-api-C_EditMode.OnLayoutDeleted-269",
+tests/data/patch_10_0_0_sweep_known_gaps.json:33:  "wt-global-api-C_GossipInfo.GetNumOptions-508",
+tests/data/patch_10_0_0_sweep_known_gaps.json:34:  "wt-global-api-C_GossipInfo.SelectOption-575",
+tests/data/patch_10_0_0_sweep_known_gaps.json:35:  "wt-global-api-C_Item.GetItemIDByGUID-278",
+tests/data/patch_10_0_0_sweep_known_gaps.json:36:  "wt-global-api-C_Item.GetItemLocation-279",
+tests/data/patch_10_0_0_sweep_known_gaps.json:37:  "wt-global-api-C_Item.IsItemGUIDInInventory-282",
+tests/data/patch_10_0_0_sweep_known_gaps.json:38:  "wt-global-api-C_LegendaryCrafting.GetRuneforgeModifierInfo-581",
+tests/data/patch_10_0_0_sweep_known_gaps.json:39:  "wt-global-api-C_MajorFactions.IsMajorFaction-293",
+tests/data/patch_10_0_0_sweep_known_gaps.json:40:  "wt-global-api-C_MajorFactions.IsWeeklyRenownCapped-295",
+tests/data/patch_10_0_0_sweep_known_gaps.json:41:  "wt-global-api-C_Minimap.CanTrackBattlePets-297",
+tests/data/patch_10_0_0_sweep_known_gaps.json:42:  "wt-global-api-C_Minimap.GetNumQuestPOIWorldEffects-299",
+tests/data/patch_10_0_0_sweep_known_gaps.json:43:  "wt-global-api-C_Minimap.GetPOITextureCoords-302",
+tests/data/patch_10_0_0_sweep_known_gaps.json:44:  "wt-global-api-C_Minimap.IsFilteredOut-305",
+tests/data/patch_10_0_0_sweep_known_gaps.json:45:  "wt-global-api-C_Minimap.IsTrackingBattlePets-306",
+tests/data/patch_10_0_0_sweep_known_gaps.json:46:  "wt-global-api-C_Minimap.IsTrackingHiddenQuests-307",
+tests/data/patch_10_0_0_sweep_known_gaps.json:47:  "wt-global-api-C_MountJournal.GetCollectedDragonridingMounts-309",
+tests/data/patch_10_0_0_sweep_known_gaps.json:48:  "wt-global-api-C_MythicPlus.GetCurrentUIDisplaySeason-312",
+tests/data/patch_10_0_0_sweep_known_gaps.json:49:  "wt-global-api-C_PaperDollInfo.GetInspectRatedSoloShuffleData-313",
+tests/data/patch_10_0_0_sweep_known_gaps.json:50:  "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-509",
+tests/data/patch_10_0_0_sweep_known_gaps.json:51:  "wt-global-api-C_PlayerInteractionManager.ConfirmationInteraction-317",
+tests/data/patch_10_0_0_sweep_known_gaps.json:52:  "wt-global-api-C_PlayerInteractionManager.InteractUnit-318",
+tests/data/patch_10_0_0_sweep_known_gaps.json:53:  "wt-global-api-C_PlayerInteractionManager.IsInteractingWithNpcOfType-319",
+tests/data/patch_10_0_0_sweep_known_gaps.json:54:  "wt-global-api-C_PlayerInteractionManager.IsReplacingUnit-320",
+tests/data/patch_10_0_0_sweep_known_gaps.json:55:  "wt-global-api-C_PlayerInteractionManager.IsValidNPCInteraction-321",
+tests/data/patch_10_0_0_sweep_known_gaps.json:56:  "wt-global-api-C_PlayerInteractionManager.ReopenInteraction-322",
+tests/data/patch_10_0_0_sweep_known_gaps.json:57:  "wt-global-api-C_ProfSpecs.CanRefundPath-323",
+tests/data/patch_10_0_0_sweep_known_gaps.json:58:  "wt-global-api-C_ProfSpecs.CanUnlockTab-324",
+tests/data/patch_10_0_0_sweep_known_gaps.json:59:  "wt-global-api-C_ProfSpecs.GetChildrenForPath-325",
+tests/data/patch_10_0_0_sweep_known_gaps.json:60:  "wt-global-api-C_ProfSpecs.GetDescriptionForPath-328",
+tests/data/patch_10_0_0_sweep_known_gaps.json:61:  "wt-global-api-C_ProfSpecs.GetDescriptionForPerk-329",
+tests/data/patch_10_0_0_sweep_known_gaps.json:62:  "wt-global-api-C_ProfSpecs.GetEntryIDForPerk-330",
+tests/data/patch_10_0_0_sweep_known_gaps.json:63:  "wt-global-api-C_ProfSpecs.GetPerksForPath-331",
+tests/data/patch_10_0_0_sweep_known_gaps.json:64:  "wt-global-api-C_ProfSpecs.GetRootPathForTab-332",
+tests/data/patch_10_0_0_sweep_known_gaps.json:65:  "wt-global-api-C_ProfSpecs.GetSourceTextForPath-333",
+tests/data/patch_10_0_0_sweep_known_gaps.json:66:  "wt-global-api-C_ProfSpecs.GetSpendCurrencyForPath-336",
+tests/data/patch_10_0_0_sweep_known_gaps.json:67:  "wt-global-api-C_ProfSpecs.GetSpendEntryForPath-337",
+tests/data/patch_10_0_0_sweep_known_gaps.json:68:  "wt-global-api-C_ProfSpecs.GetStateForPath-338",
+tests/data/patch_10_0_0_sweep_known_gaps.json:69:  "wt-global-api-C_ProfSpecs.GetStateForPerk-339",
+tests/data/patch_10_0_0_sweep_known_gaps.json:70:  "wt-global-api-C_ProfSpecs.GetStateForTab-340",
+tests/data/patch_10_0_0_sweep_known_gaps.json:71:  "wt-global-api-C_ProfSpecs.GetUnlockEntryForPath-342",
+tests/data/patch_10_0_0_sweep_known_gaps.json:72:  "wt-global-api-C_ProfSpecs.GetUnlockRankForPerk-343",
+tests/data/patch_10_0_0_sweep_known_gaps.json:73:  "wt-global-api-C_PvP.GetPersonalRatedSoloShuffleSpecStats-347",
+tests/data/patch_10_0_0_sweep_known_gaps.json:74:  "wt-global-api-C_PvP.GetRatedSoloShuffleMinItemLevel-348",
+tests/data/patch_10_0_0_sweep_known_gaps.json:75:  "wt-global-api-C_PvP.GetRatedSoloShuffleRewards-349",
+tests/data/patch_10_0_0_sweep_known_gaps.json:76:  "wt-global-api-C_PvP.IsBrawlSoloShuffle-350",
+tests/data/patch_10_0_0_sweep_known_gaps.json:77:  "wt-global-api-C_QuestItemUse.CanUseQuestItemOnObject-352",
+tests/data/patch_10_0_0_sweep_known_gaps.json:78:  "wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-353",
+tests/data/patch_10_0_0_sweep_known_gaps.json:79:  "wt-global-api-C_QuestLog.UnitIsRelatedToActiveQuest-354",
+tests/data/patch_10_0_0_sweep_known_gaps.json:80:  "wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-356",
+tests/data/patch_10_0_0_sweep_known_gaps.json:81:  "wt-global-api-C_Reputation.SetWatchedFaction-358",
+tests/data/patch_10_0_0_sweep_known_gaps.json:82:  "wt-global-api-C_ScrappingMachineUI.SetScrappingMachine-510",
+tests/data/patch_10_0_0_sweep_known_gaps.json:83:  "wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-364",
+tests/data/patch_10_0_0_sweep_known_gaps.json:84:  "wt-global-api-C_SpellBook.GetOverrideSpell-365",
+tests/data/patch_10_0_0_sweep_known_gaps.json:85:  "wt-global-api-C_Texture.GetFilenameFromFileDataID-367",
+tests/data/patch_10_0_0_sweep_known_gaps.json:86:  "wt-global-api-C_TradeSkillUI.CraftEnchant-373",
+tests/data/patch_10_0_0_sweep_known_gaps.json:87:  "wt-global-api-C_TradeSkillUI.CraftSalvage-374",
+tests/data/patch_10_0_0_sweep_known_gaps.json:88:  "wt-global-api-C_TradeSkillUI.DoesRecraftingRecipeAcceptItem-376",
+tests/data/patch_10_0_0_sweep_known_gaps.json:89:  "wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-382",
+tests/data/patch_10_0_0_sweep_known_gaps.json:90:  "wt-global-api-C_TradeSkillUI.GetCraftingReagentBonusText-384",
+tests/data/patch_10_0_0_sweep_known_gaps.json:91:  "wt-global-api-C_TradeSkillUI.GetEnchantItems-386",
+tests/data/patch_10_0_0_sweep_known_gaps.json:92:  "wt-global-api-C_TradeSkillUI.GetGatheringOperationInfo-389",
+tests/data/patch_10_0_0_sweep_known_gaps.json:93:  "wt-global-api-C_TradeSkillUI.GetHideUnownedFlags-390",
+tests/data/patch_10_0_0_sweep_known_gaps.json:94:  "wt-global-api-C_TradeSkillUI.GetItemCraftedQualityByItemInfo-391",
+tests/data/patch_10_0_0_sweep_known_gaps.json:95:  "wt-global-api-C_TradeSkillUI.GetItemReagentQualityByItemInfo-392",
+tests/data/patch_10_0_0_sweep_known_gaps.json:96:  "wt-global-api-C_TradeSkillUI.GetOnlyShowFirstCraftRecipes-394",
+tests/data/patch_10_0_0_sweep_known_gaps.json:97:  "wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511",
+tests/data/patch_10_0_0_sweep_known_gaps.json:98:  "wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512",
+tests/data/patch_10_0_0_sweep_known_gaps.json:99:  "wt-global-api-C_TradeSkillUI.GetOptionalReagentBonusText-513",
+tests/data/patch_10_0_0_sweep_known_gaps.json:100:  "wt-global-api-C_TradeSkillUI.GetOptionalReagentInfo-514",
+tests/data/patch_10_0_0_sweep_known_gaps.json:101:  "wt-global-api-C_TradeSkillUI.GetOriginalCraftRecipeID-395",
+tests/data/patch_10_0_0_sweep_known_gaps.json:102:  "wt-global-api-C_TradeSkillUI.GetProfessionChildSkillLineID-396",
+tests/data/patch_10_0_0_sweep_known_gaps.json:103:  "wt-global-api-C_TradeSkillUI.GetProfessionInfoBySkillLineID-397",
+tests/data/patch_10_0_0_sweep_known_gaps.json:104:  "wt-global-api-C_TradeSkillUI.GetProfessionSpells-400",
+tests/data/patch_10_0_0_sweep_known_gaps.json:105:  "wt-global-api-C_TradeSkillUI.GetReagentDifficultyText-401",
+tests/data/patch_10_0_0_sweep_known_gaps.json:106:  "wt-global-api-C_TradeSkillUI.GetReagentSlotStatus-402",
+tests/data/patch_10_0_0_sweep_known_gaps.json:107:  "wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515",
+tests/data/patch_10_0_0_sweep_known_gaps.json:108:  "wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516",
+tests/data/patch_10_0_0_sweep_known_gaps.json:109:  "wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517",
+tests/data/patch_10_0_0_sweep_known_gaps.json:110:  "wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518",
+tests/data/patch_10_0_0_sweep_known_gaps.json:111:  "wt-global-api-C_TradeSkillUI.GetRecraftItems-408",
+tests/data/patch_10_0_0_sweep_known_gaps.json:112:  "wt-global-api-C_TradeSkillUI.GetSalvagableItemIDs-409",
+tests/data/patch_10_0_0_sweep_known_gaps.json:113:  "wt-global-api-C_TradeSkillUI.GetShowLearned-410",
+tests/data/patch_10_0_0_sweep_known_gaps.json:114:  "wt-global-api-C_TradeSkillUI.GetShowUnlearned-411",
+tests/data/patch_10_0_0_sweep_known_gaps.json:115:  "wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520",
+tests/data/patch_10_0_0_sweep_known_gaps.json:116:  "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-519",
+tests/data/patch_10_0_0_sweep_known_gaps.json:117:  "wt-global-api-C_TradeSkillUI.IsEmptySkillLineCategory-521",
+tests/data/patch_10_0_0_sweep_known_gaps.json:118:  "wt-global-api-C_TradeSkillUI.IsOriginalCraftRecipeLearned-416",
+tests/data/patch_10_0_0_sweep_known_gaps.json:119:  "wt-global-api-C_TradeSkillUI.IsRecipeProfessionLearned-418",
+tests/data/patch_10_0_0_sweep_known_gaps.json:120:  "wt-global-api-C_TradeSkillUI.OpenRecipe-422",
+tests/data/patch_10_0_0_sweep_known_gaps.json:121:  "wt-global-api-C_TradeSkillUI.RecraftRecipe-426",
+tests/data/patch_10_0_0_sweep_known_gaps.json:122:  "wt-global-api-C_TradeSkillUI.SetOnlyShowFirstCraftRecipes-428",
+tests/data/patch_10_0_0_sweep_known_gaps.json:123:  "wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522",
+tests/data/patch_10_0_0_sweep_known_gaps.json:124:  "wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523",
+tests/data/patch_10_0_0_sweep_known_gaps.json:125:  "wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524",
+tests/data/patch_10_0_0_sweep_known_gaps.json:126:  "wt-global-api-C_TradeSkillUI.SetShowLearned-431",
+tests/data/patch_10_0_0_sweep_known_gaps.json:127:  "wt-global-api-C_TradeSkillUI.SetShowUnlearned-432",
+tests/data/patch_10_0_0_sweep_known_gaps.json:128:  "wt-global-api-C_Traits.CanRefundRank-436",
+tests/data/patch_10_0_0_sweep_known_gaps.json:129:  "wt-global-api-C_Traits.CascadeRepurchaseRanks-437",
+tests/data/patch_10_0_0_sweep_known_gaps.json:130:  "wt-global-api-C_Traits.ClearCascadeRepurchaseHistory-438",
+tests/data/patch_10_0_0_sweep_known_gaps.json:131:  "wt-global-api-C_Traits.CloseTraitSystemInteraction-439",
+tests/data/patch_10_0_0_sweep_known_gaps.json:132:  "wt-global-api-C_Traits.CommitConfig-440",
+tests/data/patch_10_0_0_sweep_known_gaps.json:133:  "wt-global-api-C_Traits.GetConfigsByType-446",
+tests/data/patch_10_0_0_sweep_known_gaps.json:134:  "wt-global-api-C_Traits.HasValidInspectData-459",
+tests/data/patch_10_0_0_sweep_known_gaps.json:135:  "wt-global-api-C_Traits.RefundAllRanks-461",
+tests/data/patch_10_0_0_sweep_known_gaps.json:136:  "wt-global-api-C_Traits.ResetTree-463",
+tests/data/patch_10_0_0_sweep_known_gaps.json:137:  "wt-global-api-C_Traits.RollbackConfig-464",
+tests/data/patch_10_0_0_sweep_known_gaps.json:138:  "wt-global-api-C_Traits.StageConfig-466",
+tests/data/patch_10_0_0_sweep_known_gaps.json:139:  "wt-global-api-C_Traits.TalentTestUnlearnSpells-467",
+tests/data/patch_10_0_0_sweep_known_gaps.json:140:  "wt-global-api-C_UIWidgetManager.GetFillUpFramesWidgetVisualizationInfo-469",
+tests/data/patch_10_0_0_sweep_known_gaps.json:141:  "wt-global-api-C_WeeklyRewards.IsWeeklyChestRetired-481",
+tests/data/patch_10_0_0_sweep_known_gaps.json:142:  "wt-global-api-C_XMLUtil.GetTemplates-483",
+tests/data/patch_10_0_0_sweep_known_gaps.json:143:  "wt-global-api-CheckTalentMasterDist-528",
+tests/data/patch_10_0_0_sweep_known_gaps.json:144:  "wt-global-api-GetGraphicsCVarValueForQualityLevel-485",
+tests/data/patch_10_0_0_sweep_known_gaps.json:145:  "wt-global-api-GetPlayerAuraBySpellID-546",
+tests/data/patch_10_0_0_sweep_known_gaps.json:146:  "wt-global-api-GetUnitEmpowerMinHoldTime-487",
+tests/data/patch_10_0_0_sweep_known_gaps.json:147:  "wt-global-api-IsGraphicsCVarValueSupported-489",
+tests/data/patch_10_0_0_sweep_known_gaps.json:148:  "wt-global-api-IsGraphicsSettingValueSupported-490",
+tests/data/patch_10_0_0_sweep_known_gaps.json:149:  "wt-global-api-IsPlayerInGuildFromGUID-491",
+tests/data/patch_10_0_0_sweep_known_gaps.json:150:  "wt-global-api-IsPressHoldReleaseSpell-492",
+tests/data/patch_10_0_0_sweep_known_gaps.json:151:  "wt-global-api-IsSpecializationActivateSpell-493",
+tests/data/patch_10_0_0_sweep_known_gaps.json:152:  "wt-global-api-JoinRatedSoloShuffle-495",
+tests/data/patch_10_0_0_sweep_known_gaps.json:153:  "wt-global-api-ReleaseAction-496",
+tests/data/patch_10_0_0_sweep_known_gaps.json:154:  "wt-global-api-SetUnitCursorTexture-497",
+tests/data/patch_10_0_0_sweep_known_gaps.json:155:  "wt-global-api-TargetToggle-498",
+tests/data/patch_10_0_0_sweep_known_gaps.json:156:  "wt-global-api-UnitIsInteractable-501",
+tests/data/patch_10_0_0_sweep_known_gaps.json:157:  "wt-widgets-Browser:NavigateTo-634",
+tests/data/patch_10_0_0_sweep_known_gaps.json:158:  "wt-widgets-Button:SetHighlightLocked-639",
+tests/data/patch_10_0_0_sweep_known_gaps.json:159:  "wt-widgets-Frame:SetMaxResize-684",
+tests/data/patch_10_0_0_sweep_known_gaps.json:160:  "wt-widgets-Frame:SetMinResize-685",
+tests/data/patch_10_0_0_sweep_known_gaps.json:161:  "wt-widgets-GameTooltip:SetUnitBuffByAuraInstanceID-647",
+tests/data/patch_10_0_0_sweep_known_gaps.json:162:  "wt-widgets-GameTooltip:SetUnitDebuffByAuraInstanceID-648",
+tests/data/patch_10_0_0_sweep_known_gaps.json:163:  "wt-widgets-ModelSceneActor:SetModelByHyperlink-657",
+tests/data/patch_10_0_0_sweep_known_gaps.json:164:  "wt-widgets-MovieFrame:StartMovieByName-649",
+tests/data/patch_10_0_0_sweep_known_gaps.json:165:  "wt-widgets-OffScreenFrame:TestPrintToFile-650",
+tests/data/patch_10_0_0_sweep_known_gaps.json:166:  "wt-widgets-Path:GetCurveType-618",
+tests/data/patch_10_0_0_sweep_known_gaps.json:167:  "wt-widgets-Path:GetMaxControlPointOrder-619",
+tests/data/patch_10_0_0_sweep_known_gaps.json:168:  "wt-widgets-Path:SetCurveType-620",
+tests/data/patch_10_0_0_sweep_known_gaps.json:169:  "wt-widgets-Scale:GetScaleFrom-614",
+tests/data/patch_10_0_0_sweep_known_gaps.json:170:  "wt-widgets-Scale:GetScaleTo-615",
+tests/data/patch_10_0_0_sweep_known_gaps.json:171:  "wt-widgets-Texture:GetRotation-664",
+tests/data/patch_10_0_0_sweep_known_gaps.json:172:  "wt-widgets-Texture:GetVertexColor-665",
+tests/data/patch_10_0_0_sweep_known_gaps.json:173:  "wt-widgets-Texture:SetRotation-668",
+tests/data/patch_10_0_0_sweep_known_gaps.json:174:  "wt-widgets-WorldFrame:OnModelCleared-656"
+tests/blizzard_ui/blizzard_actionbar/behavior_reputation_bar_update.rs:12://!    `C_Reputation.IsMajorFaction(factionID)` is true, the bar shows
+tests/blizzard_ui/blizzard_actionbar/behavior_reputation_bar_update.rs:39://! - `C_Reputation.IsMajorFaction(factionID)` — gates the major-faction
+tests/blizzard_ui/blizzard_actionbar/behavior_reputation_bar_update.rs:112://! if-elseif chain, and the `elseif IsMajorFaction(factionID)` arm
+tests/blizzard_ui/blizzard_actionbar/behavior_reputation_bar_update.rs:151://! - The `IsFactionParagonForCurrentPlayer → IsMajorFaction → else`
+tests/blizzard_ui/blizzard_actionbar/behavior_reputation_bar_update.rs:153://! - `C_Reputation.IsMajorFaction` regresses to read the wrong state

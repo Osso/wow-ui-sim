@@ -1,0 +1,34 @@
+F
+======================================================================
+FAIL: test_changed_line_accounts_for_every_api_and_shared_annotation (test_gen_patch_wikitext_register.InventoryTests.test_changed_line_accounts_for_every_api_and_shared_annotation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1000-page/tools/test_gen_patch_wikitext_register.py", line 109, in test_changed_line_accounts_for_every_api_and_shared_annotation
+    self.assertEqual([(e['symbol'], e['wikitext_line'], e['annotation']) for e in entries], [
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ('C_GossipInfo.SelectActiveQuest', 2, '+ arg 1: optionID\n- arg 1: index'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        ('C_Item.GetItemGUID', 5, '+ ret 1: itemGUID'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ])
+    ^^
+AssertionError: Lists differ: [('C_[71 chars] ('C_Item.GetItemGUID', 5, '+ ret 1: itemGUID')] != [('C_[71 chars] ('C_GossipInfo.SelectAvailableQuest', 2, '+ a[147 chars]ID')]
+
+First differing element 1:
+('C_Item.GetItemGUID', 5, '+ ret 1: itemGUID')
+('C_GossipInfo.SelectAvailableQuest', 2, '+ arg 1: optionID\n- arg 1: index')
+
+Second list contains 2 additional elements.
+First extra element 2:
+('C_GossipInfo.SelectOption', 2, '+ arg 1: optionID\n- arg 1: index')
+
+  [('C_GossipInfo.SelectActiveQuest', 2, '+ arg 1: optionID\n- arg 1: index'),
++  ('C_GossipInfo.SelectAvailableQuest', 2, '+ arg 1: optionID\n- arg 1: index'),
++  ('C_GossipInfo.SelectOption', 2, '+ arg 1: optionID\n- arg 1: index'),
+   ('C_Item.GetItemGUID', 5, '+ ret 1: itemGUID')]
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

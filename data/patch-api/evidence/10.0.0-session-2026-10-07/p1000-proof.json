@@ -1,0 +1,45 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "da3bcb3f95b9465db9241ba61ea6148f925181f4",
+    "env": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target",
+      "P1000_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.0.0-sweep.json",
+      "P1002_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.0.2-sweep.json",
+      "P1005_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.0.5-sweep.json",
+      "P1007_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.0.7-sweep.json",
+      "P1010_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.1.0-sweep.json",
+      "P1015_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.1.5-sweep.json",
+      "P1017_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.1.7-sweep.json",
+      "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.2.0-sweep.json",
+      "P1025_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.2.5-sweep.json",
+      "P1026_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.2.6-sweep.json",
+      "P1027_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/10.2.7-sweep.json",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/11.0.0-sweep.json",
+      "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/11.0.2-sweep.json",
+      "P1105_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/11.0.5-sweep.json",
+      "P1107_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/11.0.7-sweep.json",
+      "P1110_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/11.1.0-sweep.json",
+      "P1115_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/11.1.5-sweep.json",
+      "P1117_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/11.1.7-sweep.json",
+      "P1120_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/11.2.0-sweep.json",
+      "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/11.2.5-sweep.json",
+      "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/11.2.7-sweep.json",
+      "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/12.0.0-sweep.json",
+      "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/12.0.1-sweep.json",
+      "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/12.0.5-sweep.json",
+      "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/12.0.7-sweep.json",
+      "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/12.1.0-sweep.json"
+    },
+    "exit": 1,
+    "log": "p1000-all-publication-sweeps.txt"
+  }
+]

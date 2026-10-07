@@ -1,0 +1,40 @@
+EE
+======================================================================
+ERROR: test_inline_plain_commands_do_not_turn_removed_cvars_into_commands (test_gen_patch_wikitext_register.InventoryTests.test_inline_plain_commands_do_not_turn_removed_cvars_into_commands)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1000-page/tools/test_gen_patch_wikitext_register.py", line 9, in test_inline_plain_commands_do_not_turn_removed_cvars_into_commands
+    entries, counts = parse_section('cvars', [
+                      ~~~~~~~~~~~~~^^^^^^^^^^^
+        (1, '! Added <small>(3)</small>'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        (10, ': bspcache'),
+        ^^^^^^^^^^^^^^^^^^^
+    ])
+    ^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1000-page/tools/gen_patch_wikitext_register.py", line 91, in parse_section
+    entries.append(make_entry(section, mode, line_no, text))
+                   ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1000-page/tools/gen_patch_wikitext_register.py", line 51, in make_entry
+    symbol, params = parse_symbol(text)
+                     ~~~~~~~~~~~~^^^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1000-page/tools/gen_patch_wikitext_register.py", line 44, in parse_symbol
+    raise ValueError(f"no symbol reference in: {text!r}")
+ValueError: no symbol reference in: ": '''Commands'''"
+
+======================================================================
+ERROR: test_layout_clear_template_is_editorial_and_keeps_examples (test_extract_patch_non_inventory.ExtractTests.test_layout_clear_template_is_editorial_and_keeps_examples)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1000-page/tools/test_extract_patch_non_inventory.py", line 29, in test_layout_clear_template_is_editorial_and_keeps_examples
+    self.assertEqual(extract_text(raw, preserve_examples=True),
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1000-page/tools/extract_patch_non_inventory.py", line 104, in extract_text
+    raise ValueError(f"unhandled template: {line}")
+ValueError: unhandled template: {{clrr}}
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (errors=2)
