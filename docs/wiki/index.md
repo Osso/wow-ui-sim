@@ -4,7 +4,7 @@
 
 ## [2026-10-07] evidence | 10.2.5 page audit
 
-[Audit](investigations/patch-10-2-5-api-audit.md) retains revision 5993852, 59 inventory and 356 extract occurrences. Exact fourteen gaps reviewed; animation probe corrected without endpoint credit, verbatim Lua/XML retention added. Targeted proof pending; no runtime/vendor/classic changes.
+[Audit](investigations/patch-10-2-5-api-audit.md) retains revision 5993852, 59 inventory and 356 extract occurrences. Exact fourteen gaps reviewed; animation probe corrected without endpoint credit, verbatim Lua/XML retention added. Seventeen isolated sweeps, factory RED/GREEN, cached color-picker prefork, exact 14 → 15 negative control, Mists warning boundary and exit-0 startup `[]` pass. All 415 IDs accounted for; 101 later inputs preserved. No runtime/vendor/classic changes; no predicted 10.2.6 gap supersession.
 
 ## [2026-10-07] evidence | 10.2.7 page audit
 

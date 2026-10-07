@@ -1,0 +1,39 @@
+
+running 1 test
+test patch_10_2_5_probe_factory::patch_10_2_5_vertex_color_probe_reaches_missing_endpoint_methods ... FAILED
+
+failures:
+
+failures:
+    patch_10_2_5_probe_factory::patch_10_2_5_vertex_color_probe_reaches_missing_endpoint_methods
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10818 filtered out; finished in 0.34s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1025-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 00s
+     Running tests/integration.rs (target/debug/deps/integration-aef10a2b503e13d5)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.006s] [Startup] SimState::default complete in 5.76ms
+[  0.006s] [Startup] rilua VM created in 221.88µs
+[  0.006s] [Startup] builtin frames initialized in 155.72µs
+[  0.006s] [Startup] template registry cleared in 9.77µs
+[  0.006s] [Startup] intrinsic templates registered in 14.71µs
+[  0.006s] [Startup] initial app_data lua handle installed in 891.00ns
+[  0.328s] [Startup] init_lua_state complete in 321.68ms
+[  0.328s] [Startup] final app_data lua handle installed in 481.00ns
+[  0.328s] [Startup] initial screen globals installed in 210.06µs
+[  0.328s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_10_2_5_probe_factory::patch_10_2_5_vertex_color_probe_reaches_missing_endpoint_methods' (2610001) panicked at /home/osso/.worktrees/wow-ui-sim-p1025-page/tests/patch_10_2_5_probe_factory.rs:26:5:
+assertion `left == right` failed
+  left: "unprobeable"
+ right: "object-method"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test integration`

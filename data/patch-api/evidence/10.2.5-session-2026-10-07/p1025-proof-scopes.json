@@ -1,0 +1,19 @@
+{
+  "test_revision": "92cbdbfc1",
+  "factory_revision": "bc83465e5",
+  "source_hashes": {
+    "tests/patch_10_2_5_publication_sweep.rs": "4a8841481f3f9db2a3780c2eb5b896c33e3a2ff401b7a8867cba8dd82682b444",
+    "tests/patch_10_2_5_probe_factory.rs": "8a6344245b8ecd85bd9f14fcdb05a5bc07a4782bc9d0ba7a952c11babfd9d0bb",
+    "tests/patch_10_2_5_cached_surfaces.rs": "83b933b041d0b6d672456bee078af4944bc1bd4535c21a0da268a2aef632ce5f",
+    "tests/common/publication_sweep.rs": "b76cc924618b0a2cc7477246492ee68e0fc7b07a98b05f87f3a1435053ef0f26",
+    "tools/extract_patch_non_inventory.py": "34c476034d78833adc2f606ecf4740ab7ad0393772713c685f9a95aeec0e71ef",
+    "tools/test_extract_patch_non_inventory.py": "c1529c0397773a4a395d5ecdbb4286e9078d8476ccff3e6f08d897d27cbfa1c5",
+    "tools/gen_patch_wikitext_register.py": "519c419edcb91c2071aed5b7b7d498345b46eff1eec65900bad7da94c9ab44e9",
+    "tests/data/patch_10_2_5_sweep_known_gaps.json": "2df48e1d3d7e92d81cbeeff946070e444a8cb6560da5f66a1b01e33b6753fbe7",
+    "data/patch-api/sources/10.2.5-api-changes.wikitext": "c2becc09182863ffce8ad75c3209159afdecea6223f4985d0bf3c6f6e89ef9db",
+    "data/patch-api/sources/10.2.5-api-changes.txt": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+    "data/patch-api/sources/10.2.5-wikitext-register.json": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8"
+  },
+  "proof_policy": "Source hashes cover current relevant code/data. Factory GREEN at bc83465e5 remains valid: only independent cached-prefork assertion casing changed afterward. Final gates at 92cbdbfc1; subsequent accounting/evidence/docs edits do not change their source scope. No native or independent acceptance.",
+  "readability": "Manual changed-Rust audit: three-line animation factory and straight-line concrete test assertions; no added suppressions, deep nesting or hidden side effects."
+}

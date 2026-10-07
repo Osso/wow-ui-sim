@@ -10,6 +10,13 @@
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
+    },
+    "final_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
     }
   },
   {
@@ -18,6 +25,13 @@
     "decision": "retained-gap",
     "reason": "No explicit producer: namespace lookup fabricates a function. Concrete item-link stat tokens, effective stat scaling and populated output-table mutation need a stat data provider; intrinsic item info is insufficient.",
     "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observation": {
       "default": null,
       "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
@@ -36,6 +50,13 @@
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
+    },
+    "final_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
     }
   },
   {
@@ -44,6 +65,13 @@
     "decision": "retained-gap",
     "reason": "No explicit producer. Ping cooldown time/capacity/refill and ping dispatch are not modeled; C_PingSecure retains inert callbacks, not a cooldown model.",
     "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observation": {
       "default": null,
       "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
@@ -62,6 +90,13 @@
       "detail": "raw=nil; lookup=function",
       "kind": "member",
       "value": null
+    },
+    "final_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
     }
   },
   {
@@ -70,6 +105,13 @@
     "decision": "retained-gap",
     "reason": "No explicit producer. Transcription channel/session activity and speech-provider lifecycle are not modeled. A constant false is not an activity query.",
     "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observation": {
       "default": null,
       "default_mismatch": false,
       "detail": "raw=nil; lookup=function",
@@ -88,6 +130,13 @@
       "detail": "raw=nil; lookup=nil",
       "kind": "global",
       "value": null
+    },
+    "final_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
     }
   },
   {
@@ -96,6 +145,13 @@
     "decision": "retained-gap",
     "reason": "Retained simulator legacy producer, not a cached deprecation wrapper. Qualified cached searches find no actual retail global consumer. Retirement needs migration of simulator-owned admin_buffs and legacy aura API tests while preserving classic behavior; this is not an isolated registration deletion. src/lua_api/globals/auras.rs:120-124; src/lua_api/globals/admin_buffs.rs:116. No native/publication absence credit.",
     "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "final_observation": {
       "default": null,
       "default_mismatch": false,
       "detail": "raw=function; lookup=function",
@@ -114,6 +170,13 @@
       "detail": "raw=function; lookup=function",
       "kind": "global",
       "value": null
+    },
+    "final_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
     }
   },
   {
@@ -122,6 +185,13 @@
     "decision": "retained-gap",
     "reason": "Retained simulator legacy producer, not a cached deprecation wrapper. Qualified cached searches find no actual retail global consumer. Simulator-owned Admin uses UnitDebuff (src/lua_api/globals/admin_buffs.rs:116). Shared classic/test consumers require coordinated retirement; no cache or wrapper deletion.",
     "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "final_observation": {
       "default": null,
       "default_mismatch": false,
       "detail": "raw=function; lookup=function",
@@ -140,6 +210,13 @@
       "detail": "factory: unknown frame type 'VertexColor'",
       "kind": "unprobeable",
       "value": null
+    },
+    "final_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "VertexColor; lookup=nil",
+      "kind": "object-method",
+      "value": null
     }
   },
   {
@@ -152,6 +229,13 @@
       "default_mismatch": false,
       "detail": "factory: unknown frame type 'VertexColor'",
       "kind": "unprobeable",
+      "value": null
+    },
+    "final_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "VertexColor; lookup=nil",
+      "kind": "object-method",
       "value": null
     }
   },
@@ -166,6 +250,13 @@
       "detail": "factory: unknown frame type 'VertexColor'",
       "kind": "unprobeable",
       "value": null
+    },
+    "final_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "VertexColor; lookup=nil",
+      "kind": "object-method",
+      "value": null
     }
   },
   {
@@ -178,6 +269,13 @@
       "default_mismatch": false,
       "detail": "factory: unknown frame type 'VertexColor'",
       "kind": "unprobeable",
+      "value": null
+    },
+    "final_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "VertexColor; lookup=nil",
+      "kind": "object-method",
       "value": null
     }
   }

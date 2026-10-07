@@ -4,11 +4,11 @@ Account for Warcraft Wiki page 564286, revision 5993852 (2024-03-24T16:20:32Z), 
 
 ## What it must do
 
-- [ ] Probe all 59 inventory occurrences in isolated cached Game UI; failures exactly equal the reviewed gap fixture.
-- [ ] Apply sixteen later registers (10.2.7 through 12.1.0) chronologically. Adding independent 10.2.6 requires one include before 10.2.7.
-- [ ] Construct VertexColor as a texture animation, not an invented frame kind; missing endpoint methods remain gaps.
-- [ ] Retain all 356 extract occurrences, including verbatim Lua/XML examples; account for all 415 source IDs exactly once. Documentary backfill gives no runtime credit.
-- [ ] Negative control changes one published, unsuperseded API to removed and produces exactly one additional gap.
+- [x] Probe all 59 inventory occurrences in isolated cached Game UI; failures exactly equal the reviewed gap fixture.
+- [x] Apply sixteen later registers (10.2.7 through 12.1.0) chronologically. Adding independent 10.2.6 requires one include before 10.2.7.
+- [x] Construct VertexColor as a texture animation, not an invented frame kind; missing endpoint methods remain gaps.
+- [x] Retain all 356 extract occurrences, including verbatim Lua/XML examples; account for all 415 source IDs exactly once. Documentary backfill gives no runtime credit.
+- [x] Negative control changes one published, unsuperseded API to removed and produces exactly one additional gap.
 
 ## How it works
 
@@ -41,4 +41,25 @@ Historical epoch reconstruction, native parity, expanded linked pages, fabricate
 
 ## Local proof
 
-Pending targeted gates. Commands/revisions/results recorded in `data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-proof.json`.
+Targeted proof at `92cbdbfc1`; factory GREEN at unchanged relevant scope `bc83465e5`. Seventeen isolated sweeps, factory behavior, cached color-picker prefork, exact 14 → 15 negative control, format/Mists check (zero non-vendor warnings), nineteen parser/extractor fixtures, seventeen byte-identical registers, extract reproduction and exit-0 startup `[]` pass. [Proof ledger](../../data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-proof.json) retains failed discovery/factory/casing attempts; no native or independent acceptance.
+
+| Patch | Rows | OK | Gaps | Exit |
+|---|---:|---:|---:|---:|
+| 10.2.5 | 59 | 45 | 14 | 0 |
+| 10.2.7 | 104 | 68 | 36 | 0 |
+| 11.0.0 | 495 | 329 | 166 | 0 |
+| 11.0.2 | 34 | 22 | 12 | 0 |
+| 11.0.5 | 48 | 38 | 10 | 0 |
+| 11.0.7 | 98 | 70 | 28 | 0 |
+| 11.1.0 | 116 | 97 | 19 | 0 |
+| 11.1.5 | 125 | 89 | 36 | 0 |
+| 11.1.7 | 48 | 40 | 8 | 0 |
+| 11.2.0 | 162 | 135 | 27 | 0 |
+| 11.2.5 | 163 | 118 | 45 | 0 |
+| 11.2.7 | 508 | 414 | 94 | 0 |
+| 12.0.0 | 1010 | 989 | 21 | 0 |
+| 12.0.1 | 225 | 222 | 3 | 0 |
+| 12.0.5 | 363 | 352 | 11 | 0 |
+| 12.0.7 | 174 | 171 | 3 | 0 |
+| 12.1.0 | 778 | 773 | 5 | 0 |
+

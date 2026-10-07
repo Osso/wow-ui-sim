@@ -1,0 +1,10 @@
+{
+  "changed_id": "wt-global-api-C_LFGInfo.IsInLFGFollowerDungeon-90",
+  "before": 14,
+  "after": 15,
+  "new_gaps": [
+    "wt-global-api-C_LFGInfo.IsInLFGFollowerDungeon-90"
+  ],
+  "resolved_gaps": [],
+  "exit_code": 101
+}

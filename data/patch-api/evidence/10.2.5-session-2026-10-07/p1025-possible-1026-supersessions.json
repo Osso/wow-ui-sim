@@ -1,0 +1,7 @@
+{
+  "read_only_path": "/home/osso/.worktrees/wow-ui-sim-p1026-page/data/patch-api/sources/10.2.6-wikitext-register.json",
+  "register_sha256": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772",
+  "revision": 6268742,
+  "matches": [],
+  "note": "No matching gap symbols. Independent register excluded from sweep; integration must insert one include before 10.2.7 and rerun exact fixture discovery."
+}

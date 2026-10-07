@@ -4,7 +4,7 @@
   "source_register": "data/patch-api/sources/10.2.5-wikitext-register.json",
   "source_sha256": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8",
   "audit_status": "in-progress",
-  "proof_policy": "Complete occurrence accounting against current retail 12.1.0. Sixteen later registers on branch base supersede chronologically; independent 10.2.6 excluded pending merge. Publication/absence is not output/signature/security/native parity. All substantive extract contracts pending; historical documentation backfill is metadata-only. No runtime closure or native/independent acceptance. Final proof pending.",
+  "proof_policy": "Complete occurrence accounting against current retail 12.1.0. Sixteen later registers on branch base supersede chronologically; independent 10.2.6 excluded pending merge. Publication/absence is not output/signature/security/native parity. All substantive extract contracts pending; historical documentation backfill is metadata-only. No runtime closure or native/independent acceptance. Seventeen isolated exact sweeps, factory RED/GREEN, cached color-picker prefork, one-row negative control, parser/extract/register reproduction, format/Mists warning boundary and exit-0 startup [] are local targeted proof. All substantive extract rows remain pending; color-picker consumer success is narrower than historical migration/native parity.",
   "capabilities": [
     {
       "id": "publication-sweep-10-2-5",
@@ -18,7 +18,8 @@
         "tests/patch_10_2_5_probe_factory.rs"
       ],
       "ledger": "data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-sweep-result.json",
-      "proof": "Discovery retained; final exact fixture/proof pending."
+      "proof": "45 OK / 14 exact gaps. Seventeen isolated sweeps pass; four VertexColor probes reach missing endpoints after factory RED/GREEN. Negative control adds one exact failure (14 to 15), expected exit 101. Cached Game color-picker hex/callback interaction passes; uppercase test expectation corrected, not runtime. Nineteen parser/extractor fixtures, seventeen byte-identical register regenerations, code-preserving extract, format and Mists tests check pass with zero non-vendor warnings. Separate retail build and bounded startup exit 0 with []. No runtime closures or native/independent acceptance.",
+      "compiled_revision": "92cbdbfc1"
     }
   ],
   "non_inventory_source": {

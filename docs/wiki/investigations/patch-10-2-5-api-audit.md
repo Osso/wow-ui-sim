@@ -22,7 +22,7 @@ UnitAura, UnitBuff and UnitDebuff remain simulator-native legacy functions, not 
 
 ## Verification
 
-Requested targeted gates pending. [Proof ledger](../../../data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-proof.json) retains command, exact revision, scope, results and invalidated RED runs. [Contract](../../specs/patch-10-2-5-publication-sweep.md) lists required tests. No native or independent acceptance claim.
+At `92cbdbfc1`, seventeen isolated sweeps pass exact fixtures; [table](../../specs/patch-10-2-5-publication-sweep.md#local-proof). Factory regression fails before correction and passes afterward at unchanged relevant scope `bc83465e5`. One-row negative control changes C_LFGInfo.IsInLFGFollowerDungeon added → removed: exactly one new failure, no resolved failure, 14 → 15 and expected exit 101. Full cached Game color-picker setup/hex/callback prefork passes. Initial test expected lowercase; unchanged cached CreateColor:GenerateHexColorNoAlpha uses uppercase, so test corrected without runtime changes. Nineteen parser/extractor fixtures pass; all seventeen registers regenerate byte-identically and all 101 existing later source/register/coverage/fixture inputs match branch-base Git blobs. Formatting and Mists tests check pass with zero non-vendor warnings; six iced vendor manifest deprecations and summary remain unsuppressed. Separate retail binary build passes; bounded startup exits 0 with JSON `[]`. Changed Rust audited manually with no readability violations. [Proof ledger](../../../data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-proof.json) retains command, exact revision, scope, results and invalidated RED runs. [Contract](../../specs/patch-10-2-5-publication-sweep.md) lists required tests. No native or independent acceptance claim.
 
 Every command uses explicit cwd p1025-page and own target. Worktree creation used prescribed canonical Git metadata operation with cwd in empty destination. No canonical working files, sibling worktrees, cache/vendor Lua or Wowless modified; no full suite, agents/models, push or merge.
 
@@ -33,6 +33,8 @@ Every command uses explicit cwd p1025-page and own target. Worktree creation use
 - [Publication contract](../../specs/patch-10-2-5-publication-sweep.md).
 - [Register](../../../data/patch-api/sources/10.2.5-wikitext-register.json).
 - [Verbatim-code extract](../../../data/patch-api/sources/10.2.5-api-changes.txt).
+- [Artifact validator](../../../data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-validate.py) — source hashes, all 415 IDs, exact chronological sweeps/gaps, negative control, proof scopes and 101 retained inputs.
+- [10.2.6 comparison](../../../data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-possible-1026-supersessions.json) — read-only register fingerprint, no matching gap symbols.
 
 ## See Also
 
