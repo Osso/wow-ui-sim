@@ -77,7 +77,7 @@ def extract_text(raw, *, preserve_examples=False):
                 continue
         if line in ("===Global API===", "==Global API==") or (unheaded and line.startswith('{| class="wikitable"')):
             inventory = True
-        if level_two and line in ("==Enums==", "==References=="):
+        if level_two and line in ("==Enums==", "==Structures==", "==References=="):
             inventory = False
             if line == "==Enums==":
                 line = "== Enumerations =="

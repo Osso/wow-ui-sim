@@ -221,3 +221,108 @@ The following templates have been deprecated and will be removed in a future pat
 
 The ScrollFrame_OnLoad function was renamed to UIPanelScrollFrame_OnLoad, however the old function name was reused and now refers to an entirely new and different function. If you are having issues with multiple scrollbars appearing on a scroll frame, renaming these function calls may be a solution.
 
+== Structures ==
+ Enum.BattlepetDeletedReason
+   + TradingPost = 6
+ Enum.CraftingReagentType
+   # Optional -> Modifying = 0
+   + Automatic = 3
+ Enum.CurrencySource
+   + AccountHwmUpdate = 61
+ Enum.Cursormode
+   + QuestLegendaryCursor = 28
+   + QuestLegendaryTurninCursor = 29
+   + QuestLegendaryErrorCursor = 61
+   + QuestLegendaryTurninErrorCursor = 62
+ Enum.EditModeAccountSetting
+   # ShowBuffFrame -> ShowBuffsAndDebuffs = 10
+   # ShowDebuffFrame -> DeprecatedShowDebuffFrame = 11
+   # ShowReputationBar -> ShowStatusTrackingBar2 = 20
+   + EnableAdvancedOptions = 23
+   + ShowPetFrame = 24
+ Enum.EditModeCastBarSetting
+   + ShowCastTime = 2
+ Enum.EditModeLayoutType
+   + Override = 3
+ Enum.EditModeMicroMenuSetting
+   + EyeSize = 3
+ Enum.EditModeMinimapSetting
+   + Size = 2
+ Enum.EditModeObjectiveTrackerSetting
+   + Opacity = 1
+ Enum.EditModeStatusTrackingBarSystemIndices
+   # ExperienceBar -> StatusTrackingBar1 = 1
+   # ReputationBar -> StatusTrackingBar2 = 2
+ Enum.EditModeUnitFrameSystemIndices
+   + Pet = 8
+ Enum.InventoryType
+   # IndexEquipablespellMobilityType -> IndexEquipablespellWeaponType = 34
+ Enum.PointsModifierSourceType
+   + CreatureHealthMod = 64
+ Enum.PowerType
+   + AlternateQuest = 23
+   + AlternateEncounter = 24
+   + AlternateMount = 25
+ Enum.TooltipDataLineType
+   + Separator = 30
+ Enum.UIMapFlag
+   + AlwaysAllowTaxiPathing = 0x20000
+ Enum.UIWidgetVisualizationType
+   + WorldLootObject = 26
+   + ItemDisplay = 27
+ Enum.VignetteType
+   + FyrakkFlight = 4
+ Enum.WidgetEnabledState
+   # Enabled -> Yellow = 1
+   # Gold -> Artifact = 5
+
+ Constants.TraitConsts
+   + VIEW_TRAIT_CONFIG_ID = -3
+
+ AreaPOIInfo
+   + 13: addPaddingAboveWidgets
+ CharCustomizationChoice
+   + 7: soundKit
+ CraftingReagentSlotSchematic
+   + 9: required
+ GenericWidgetDisplayFrameInfo
+   + 6: extraButtonText
+   + 7: closeButtonText
+ ItemUpgradeCurrencyCost
+   + 3: discountInfo
+ ItemUpgradeItemCost
+   + 3: discountInfo
+ ItemUpgradeItemInfo
+   + 5: highWatermarkSlot
+   + 8: minItemLevel
+   + 9: maxItemLevel
+   + 11: customUpgradeString
+   + 12: upgradeCostTypesForSeason
+ MatchPVPStatColumn
+   + 5: tooltipTitle
+ PVPScoreInfo
+   + 17: postmatchMMR
+ PartyPoseInfo
+   + 8: uiTextureKit
+   + 9: titleText
+ PerksActivitiesInfo
+   + 3: secondsRemaining
+ PerksActivityInfo
+   + 7: supersedes
+   + 8: uiPriority
+ ProfessionInfo
+   + 3: sourceCounter
+ QuestInfo
+   + 23: isLegendarySort
+ StatusBarWidgetVisualizationInfo
+   + 17: textEnabledState
+   + 18: textFontType
+   + 19: textSizeType
+ TaxiNodeInfo
+   + 9: isMapLayerTransition
+ UIWidgetSpellInfo
+   # 5: iconSizeType, Type: SpellDisplayIconSizeType -> WidgetIconSizeType
+ UiMapDetails
+   # 5: flags, Type: number -> UIMapFlag
+ VignetteInfo
+   + 16: addPaddingAboveWidgets
