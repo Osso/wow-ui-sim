@@ -372,6 +372,53 @@
       "exit_code": 0,
       "stdout": "[]\n",
       "log_path": "startup.log"
+    },
+    {
+      "name": "parser-green",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_gen_patch_wikitext_register.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1110-page",
+      "revision": "4ae1e0387",
+      "exit_code": 0,
+      "tests": 3,
+      "scope": "Captured tool output; no log artifact retained. Later Python change only touches separate extractor."
+    },
+    {
+      "name": "extract-green",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_extract_patch_non_inventory.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1110-page",
+      "revision": "c4e903dac",
+      "exit_code": 0,
+      "tests": 12,
+      "scope": "Captured tool output; no log artifact retained. Extractor unchanged afterward."
+    },
+    {
+      "name": "artifact-validation",
+      "command": [
+        "python3",
+        "data/patch-api/evidence/11.1.0-session-2026-10-06/p1110-validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1110-page",
+      "revision": "34c8f0c0a",
+      "exit_code": 0,
+      "scope": "All retained hashes, ledger IDs/statuses, exact fixtures, chronological expectations, negative control, preserved inputs and eleven result maps."
     }
   ],
   "runtime_test_revision": "3859f45665c808b9905780bef95e5ec6f4a26d1d",

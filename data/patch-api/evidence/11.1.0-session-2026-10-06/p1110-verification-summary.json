@@ -1,0 +1,32 @@
+{
+  "proof_scope": "Local development only; retained producer/behavior/native gaps remain. No independent/model review authorized.",
+  "artifact_validation_revision": "34c8f0c0a",
+  "artifact_validation_exit_code": 0,
+  "runtime_tests_unchanged_after": "3859f4566",
+  "ledger_counts": {
+    "partial-development-green": 71,
+    "bounded-coverage": 18,
+    "audit-pending": 106,
+    "metadata-only": 21
+  },
+  "sweeps_passed": 11,
+  "behavior_tests_passed": 2,
+  "prefork_cases_passed": 2,
+  "python_fixtures_passed": 15,
+  "negative_control": {
+    "expected_exit_code": 101,
+    "exact_new_gaps": 1,
+    "resolved_gaps": 0
+  },
+  "startup": {
+    "exit_code": 0,
+    "stdout": "[]"
+  },
+  "mists": {
+    "exit_code": 0,
+    "non_vendor_warnings": 0,
+    "existing_vendor_manifest_warnings": 6
+  },
+  "later_inputs_preserved": 40,
+  "path_exception": "p1110-build-cache-incident.json"
+}
