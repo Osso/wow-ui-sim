@@ -1,0 +1,73 @@
+Patch 10.1.7 API changes
+== Summary ==
+* Added a new Ping system.
+* Fixed an issue where ScrollingFontTemplate could allow scrolling out-of-bounds or clip its contents if the frame size or font were modifiedWoWUIBugs#450 https://github.com/Stanzilla/WoWUIBugs/issues/450.
+
+== Resources ==
+* TOC: 100107
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: Dragonflight: Fury Incarnate Content Update Notes
+
+== Ping system ==
+The ping system can be used to communicate contextual notifications to group members visualized via through a UI frame anchored in the game world.
+
+This can be activated by pressing and holding the Ping hotkey (default G). Clicking the game world, units, or unit frames will send a contextual ping, where the type of the ping sent will be automatically inferred based upon what was clicked. Dragging the mouse while clicking will open a ping wheel to manually select the type of ping to send.
+
+The API functions for sending pings are forbidden and may not directly be called by addons. Additionally, the frames used for displaying pings in the game world are forbidden objects and cannot be customized.
+
+=== Ping receivers ===
+Insecure frames can opt-in to be ping receivers. This permits a ping to be automatically sent when a receiver frame is clicked during a ping interaction, with the target and type of the ping customizable by overriding two methods on the frame itself. Ping receivers can also be used to block ping interactions, preventing pings being sent if the frame is clicked.
+
+To become a ping receiver a frame must meet either of the following conditions, with further details found in the documentation for  C_PingSecure.GetTargetPingReceiver.
+
+# The frame must be marked as top level (Frame:SetToplevel) and not have the ping-top-level-pass-through attribute set.
+# The frame must have the ping-receiver attribute set.
+
+For convenience, two templates are provided in FrameXML to apply these attributes.
+
+* PingReceiverAttributeTemplate
+* PingTopLevelPassThroughAttributeTemplate
+
+The example below will create an icon in the middle of the screen that sends an "Attack" ping for your current target when clicked with the ping hotkey held.
+
+```lua
+local PingReceiver = CreateFrame("Frame", nil, UIParent, "PingReceiverAttributeTemplate")
+PingReceiver:SetPoint("CENTER")
+PingReceiver:SetSize(64, 64)
+
+local PingReceiverIcon = PingReceiver:CreateTexture()
+PingReceiverIcon:SetAllPoints(PingReceiver)
+PingReceiverIcon:SetTexture([[interface\icons\spell_magic_polymorphrabbit]])
+
+-- This mixin is required to add an additional required "IsPingable" field to the frame.
+--
+-- If this field is not present, the frame will intercept and block pings leading to a
+-- "Can't ping this." message being displayed in the UI errors frame.
+Mixin(PingReceiver, PingableTypeMixin)
+
+-- When contextually pinging, the default ping type for the ping we should send.
+-- This will not be called if the user clicks and drags to open the ping wheel.
+function PingReceiver:GetContextualPingType()
+    return Enum.PingSubjectType.Attack
+end
+
+-- The target that a UI ping redirects to, if the ping should be located over something (or nothing).
+function PingReceiver:GetTargetPingGUID()
+    return UnitGUID("target")
+end
+```
+
+For unit frames, a convenience mixin is also provided (PingableType_UnitFrameMixin) that will provide default implementations of the above functions to automatically ping the unit token stored in the unit field on the frame, and with an appropriate context based upon whether the unit is friendly or hostile.
+
+== Enumerations ==
+ Enum.CurrencyFlagsB
+   + FutureCurrencyFlag = 0x10
+   + CurrencyBDontDisplayIfZero = 0x20
+ Enum.PingSubjectType
+   + OnMyWay = 3
+   + AlertThreat = 4
+   + AlertNotThreat = 5
+   - GroupHere
+
+== References ==
+[References: Reflist]
