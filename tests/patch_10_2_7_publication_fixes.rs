@@ -24,7 +24,7 @@ fn patch_10_2_7_retired_globals_preserve_namespace_successors() {
 fn patch_10_2_7_stable_close_clears_state_and_emits_event() {
     let env = WowLuaEnv::new().unwrap();
     env.state().borrow_mut().pet_stables_open = true;
-    env.state().borrow_mut().events.clear();
+    env.state().borrow_mut().events.drain();
     env.exec(r#"
         assert(type(rawget(C_StableInfo, 'ClosePetStables')) == 'function')
         assert(C_StableInfo.IsAtPetStable())
