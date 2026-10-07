@@ -1,1 +1,16 @@
-[]
+[
+  "wt-global-api-C_Item.GetItemStatDelta-87",
+  "wt-global-api-C_Item.GetItemStats-88",
+  "wt-global-api-C_Item.GetSetBonusesForSpecializationByItemID-89",
+  "wt-global-api-C_Ping.GetCooldownInfo-94",
+  "wt-global-api-C_Ping.GetTextureKitForType-96",
+  "wt-global-api-C_VoiceChat.IsTranscribing-102",
+  "wt-global-api-UnitAura-121",
+  "wt-global-api-UnitBuff-122",
+  "wt-global-api-UnitDebuff-123",
+  "wt-global-api-UnitSetRoleEnum-109",
+  "wt-widgets-VertexColor:GetEndColor-141",
+  "wt-widgets-VertexColor:GetStartColor-142",
+  "wt-widgets-VertexColor:SetEndColor-143",
+  "wt-widgets-VertexColor:SetStartColor-144"
+]

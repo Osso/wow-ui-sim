@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-10-2-6-api-audit.md) accounts for 220 inventory + 138 extract occurrences, three unused retail retirements, twenty exact publication gaps and one historical CVar default mismatch. Seventeen isolated sweeps, negative control, repeated lookup and cached prefork pass; format, Mists check (zero non-vendor warnings), retail build and exit-0 startup `[]` pass. All 104 later inputs preserved; substantive extract behavior remains pending.
 
+## [2026-10-07] evidence | 10.2.5 page audit
+
+[Audit](investigations/patch-10-2-5-api-audit.md) retains revision 5993852, 59 inventory and 356 extract occurrences. Exact fourteen gaps reviewed; animation probe corrected without endpoint credit, verbatim Lua/XML retention added. Targeted proof pending; no runtime/vendor/classic changes.
+
 ## [2026-10-07] evidence | 10.2.7 page audit
 
 [Audit](investigations/patch-10-2-7-api-audit.md) accounts for 104 inventory + 83 extract occurrences, three bounded runtime closures, four corrected interface probes and 36 exact gaps. Sixteen isolated sweeps, negative control, stable state/event and cached prefork proof pass; formatting, Mists check (zero non-vendor warnings), retail build and exit-0 startup `[]` pass. Artifact validation passes; all 98 later inputs preserved.

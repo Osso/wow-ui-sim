@@ -1,0 +1,2850 @@
+[
+  {
+    "source_id": "source-context-001",
+    "line": 1,
+    "statement": "Patch 10.2.5 API changes",
+    "section": "context",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "line": 3,
+    "statement": "== Summary ==",
+    "section": "summary",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "line": 4,
+    "statement": "* Added a new animation type for animating changes to texture vertex colors. See Vertex color animations.",
+    "section": "summary",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "line": 5,
+    "statement": "* The color picker frame has been reworked. See Color picker changes.",
+    "section": "summary",
+    "status": "audit-pending",
+    "reason": "Current cached SetupColorPickerAndShow/HexBox have existing candidate behavior tests; full Game consumer test added. Historical old-to-new identical-parameter migration and all optional controls/native policy not established; no row credit yet."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "line": 6,
+    "statement": "* The ping system has had a convenience template added for making pingable unit frames, and a few API restrictions relaxed. See Ping system changes.",
+    "section": "summary",
+    "status": "audit-pending",
+    "reason": "PingableUnitFrameTemplate unit-attribute routing and insecure-call permissions need actual ping dispatch/security tests; inert secure callbacks and namespace autostubs do not implement this contract."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "line": 7,
+    "statement": "* Various functions for querying buffs and debuffs have been deprecated and will be removed in the following expansion. Notably, this includes UnitAura, UnitBuff, and UnitDebuff.",
+    "section": "summary",
+    "status": "audit-pending",
+    "reason": "Historical future-deprecation prose is distinct from immediate consolidated removal; cached wrapper/native chronology and legacy tuple behavior remain unproved. Legacy globals are retained exact gaps."
+  },
+  {
+    "source_id": "source-context-009",
+    "line": 9,
+    "statement": "== Resources ==",
+    "section": "resources",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-010",
+    "line": 10,
+    "statement": "* TOC: 100205",
+    "section": "resources",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-011",
+    "line": 11,
+    "statement": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "section": "resources",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-012",
+    "line": 12,
+    "statement": "* Official patch notes: Dragonflight: Seeds of Renewal Content Update Notes",
+    "section": "resources",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-013",
+    "line": 13,
+    "statement": "* Deprecated API: Blizzard_Deprecated",
+    "section": "resources",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-015",
+    "line": 15,
+    "statement": "== Vertex color animations ==",
+    "section": "vertex color animations",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-017",
+    "line": 17,
+    "statement": "A new VertexColor animation type has been added that can be used to animate changes to vertex colors on textures. This appears to be implemented as a simple linear interpolation of the individual RGBA color components without any translation to an alternative color space.",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-019",
+    "line": 19,
+    "statement": "The example below demonstrates a two second looping animation that will transition the vertex color from red to blue and then back again.",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-021",
+    "line": 21,
+    "statement": "```lua",
+    "section": "vertex color animations",
+    "status": "metadata-only",
+    "reason": "Code delimiter or editorial author comment; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-022",
+    "line": 22,
+    "statement": "local Texture = UIParent:CreateTexture()",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-023",
+    "line": 23,
+    "statement": "Texture:SetTexture([[Interface\\Buttons\\White8x8]])",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-024",
+    "line": 24,
+    "statement": "Texture:SetPoint(\"CENTER\")",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-025",
+    "line": 25,
+    "statement": "Texture:SetSize(128, 128)",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-027",
+    "line": 27,
+    "statement": "local AnimationGroup = Texture:CreateAnimationGroup()",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-028",
+    "line": 28,
+    "statement": "AnimationGroup:SetLooping(\"BOUNCE\")",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-030",
+    "line": 30,
+    "statement": "local VertexColor = AnimationGroup:CreateAnimation(\"VertexColor\")",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-031",
+    "line": 31,
+    "statement": "VertexColor:SetStartColor(CreateColor(1, 0, 0))",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-032",
+    "line": 32,
+    "statement": "VertexColor:SetEndColor(CreateColor(0, 0, 1))",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-033",
+    "line": 33,
+    "statement": "VertexColor:SetDuration(2)",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-035",
+    "line": 35,
+    "statement": "AnimationGroup:Play()",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-036",
+    "line": 36,
+    "statement": "```",
+    "section": "vertex color animations",
+    "status": "metadata-only",
+    "reason": "Code delimiter or editorial author comment; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-038",
+    "line": 38,
+    "statement": "For usages from XML, refer to the elements shown below.",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-040",
+    "line": 40,
+    "statement": "```xml",
+    "section": "vertex color animations",
+    "status": "metadata-only",
+    "reason": "Code delimiter or editorial author comment; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-041",
+    "line": 41,
+    "statement": "<AnimationGroup looping=\"BOUNCE\">",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-042",
+    "line": 42,
+    "statement": "    <VertexColor duration=\"2\">",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-043",
+    "line": 43,
+    "statement": "        <StartColor r=\"1\" g=\"0\" b=\"0\"/>",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-044",
+    "line": 44,
+    "statement": "        <EndColor r=\"0\" g=\"0\" b=\"1\"/>",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-045",
+    "line": 45,
+    "statement": "    </VertexColor>",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-046",
+    "line": 46,
+    "statement": "</AnimationGroup>",
+    "section": "vertex color animations",
+    "status": "audit-pending",
+    "reason": "VertexColor kind exists but endpoint methods/RGBA state/interpolation and XML initialization are missing. Example line retained verbatim; two-second BOUNCE interpolation, endpoints and restoration require animation/runtime proof."
+  },
+  {
+    "source_id": "prose-undated-047",
+    "line": 47,
+    "statement": "```",
+    "section": "vertex color animations",
+    "status": "metadata-only",
+    "reason": "Code delimiter or editorial author comment; no runtime credit."
+  },
+  {
+    "source_id": "source-context-049",
+    "line": 49,
+    "statement": "== Color picker changes ==",
+    "section": "color picker changes",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-051",
+    "line": 51,
+    "statement": "The global color picker frame (ColorPickerFrame) has been overhauled and now includes a hex color input field.",
+    "section": "color picker changes",
+    "status": "audit-pending",
+    "reason": "Current cached SetupColorPickerAndShow/HexBox have existing candidate behavior tests; full Game consumer test added. Historical old-to-new identical-parameter migration and all optional controls/native policy not established; no row credit yet."
+  },
+  {
+    "source_id": "prose-undated-053",
+    "line": 53,
+    "statement": "<!-- Would like to use a tlgo link for the new function, but that can't be done just yet. -->",
+    "section": "color picker changes",
+    "status": "metadata-only",
+    "reason": "Code delimiter or editorial author comment; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-054",
+    "line": 54,
+    "statement": "One notable breaking change is that the OpenColorPicker global function has been relocated to ColorPickerFrame:SetupColorPickerAndShow. This function still accepts exactly the same parameters as before, so addons will only need to rename this reference and should otherwise continue to work.",
+    "section": "color picker changes",
+    "status": "audit-pending",
+    "reason": "Current cached SetupColorPickerAndShow/HexBox have existing candidate behavior tests; full Game consumer test added. Historical old-to-new identical-parameter migration and all optional controls/native policy not established; no row credit yet."
+  },
+  {
+    "source_id": "source-context-056",
+    "line": 56,
+    "statement": "== Ping system changes ==",
+    "section": "ping system changes",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-057",
+    "line": 57,
+    "statement": "A new convenience template has been added to make it easier to opt unit frames into being ping receivers.",
+    "section": "ping system changes",
+    "status": "audit-pending",
+    "reason": "PingableUnitFrameTemplate unit-attribute routing and insecure-call permissions need actual ping dispatch/security tests; inert secure callbacks and namespace autostubs do not implement this contract."
+  },
+  {
+    "source_id": "prose-undated-059",
+    "line": 59,
+    "statement": "Inheriting from PingableUnitFrameTemplate will now cause intercepted pings to be directed to a unit token controllable via the \"unit\" attribute on the frame. This change should make it easier for custom unit frames - particularly those created by secure headers - to handle ping interactions correctly without any additional manual setup.",
+    "section": "ping system changes",
+    "status": "audit-pending",
+    "reason": "PingableUnitFrameTemplate unit-attribute routing and insecure-call permissions need actual ping dispatch/security tests; inert secure callbacks and namespace autostubs do not implement this contract."
+  },
+  {
+    "source_id": "prose-undated-061",
+    "line": 61,
+    "statement": "Additionally, the following APIs have been relocated from the C_PingSecure namespace to C_Ping and are now callable by insecure code.",
+    "section": "ping system changes",
+    "status": "audit-pending",
+    "reason": "PingableUnitFrameTemplate unit-attribute routing and insecure-call permissions need actual ping dispatch/security tests; inert secure callbacks and namespace autostubs do not implement this contract."
+  },
+  {
+    "source_id": "prose-undated-063",
+    "line": 63,
+    "statement": "* C_Ping.GetCooldownInfo",
+    "section": "ping system changes",
+    "status": "audit-pending",
+    "reason": "PingableUnitFrameTemplate unit-attribute routing and insecure-call permissions need actual ping dispatch/security tests; inert secure callbacks and namespace autostubs do not implement this contract."
+  },
+  {
+    "source_id": "prose-undated-064",
+    "line": 64,
+    "statement": "* C_Ping.GetDefaultPingOptions",
+    "section": "ping system changes",
+    "status": "audit-pending",
+    "reason": "PingableUnitFrameTemplate unit-attribute routing and insecure-call permissions need actual ping dispatch/security tests; inert secure callbacks and namespace autostubs do not implement this contract."
+  },
+  {
+    "source_id": "prose-undated-065",
+    "line": 65,
+    "statement": "* C_Ping.GetTextureKitForType",
+    "section": "ping system changes",
+    "status": "audit-pending",
+    "reason": "PingableUnitFrameTemplate unit-attribute routing and insecure-call permissions need actual ping dispatch/security tests; inert secure callbacks and namespace autostubs do not implement this contract."
+  },
+  {
+    "source_id": "source-context-067",
+    "line": 67,
+    "statement": "== Hotfixes ==",
+    "section": "hotfixes",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-068",
+    "line": 68,
+    "statement": "In build 10.2.5 (53441) on 2024-02-23 the following CVars were made secure.",
+    "section": "hotfixes",
+    "status": "audit-pending",
+    "reason": "Hotfix security/removal statement 'In build 10.2.5 (53441) on 2024-02-23 the following CVars were made secure.' needs secure-CVar mutation permissions or exact removed-CVar absence tests. Publication defaults are not write/security/restart behavior; no hotfix/native credit."
+  },
+  {
+    "source_id": "prose-undated-069",
+    "line": 69,
+    "statement": " autoStand",
+    "section": "hotfixes",
+    "status": "audit-pending",
+    "reason": "Hotfix security/removal statement 'autoStand' needs secure-CVar mutation permissions or exact removed-CVar absence tests. Publication defaults are not write/security/restart behavior; no hotfix/native credit."
+  },
+  {
+    "source_id": "prose-undated-070",
+    "line": 70,
+    "statement": " autoUnshift",
+    "section": "hotfixes",
+    "status": "audit-pending",
+    "reason": "Hotfix security/removal statement 'autoUnshift' needs secure-CVar mutation permissions or exact removed-CVar absence tests. Publication defaults are not write/security/restart behavior; no hotfix/native credit."
+  },
+  {
+    "source_id": "prose-undated-071",
+    "line": 71,
+    "statement": " SoftTargetEnemy",
+    "section": "hotfixes",
+    "status": "audit-pending",
+    "reason": "Hotfix security/removal statement 'SoftTargetEnemy' needs secure-CVar mutation permissions or exact removed-CVar absence tests. Publication defaults are not write/security/restart behavior; no hotfix/native credit."
+  },
+  {
+    "source_id": "prose-undated-072",
+    "line": 72,
+    "statement": " SoftTargetEnemyRange",
+    "section": "hotfixes",
+    "status": "audit-pending",
+    "reason": "Hotfix security/removal statement 'SoftTargetEnemyRange' needs secure-CVar mutation permissions or exact removed-CVar absence tests. Publication defaults are not write/security/restart behavior; no hotfix/native credit."
+  },
+  {
+    "source_id": "prose-undated-073",
+    "line": 73,
+    "statement": " SoftTargetForce",
+    "section": "hotfixes",
+    "status": "audit-pending",
+    "reason": "Hotfix security/removal statement 'SoftTargetForce' needs secure-CVar mutation permissions or exact removed-CVar absence tests. Publication defaults are not write/security/restart behavior; no hotfix/native credit."
+  },
+  {
+    "source_id": "prose-undated-074",
+    "line": 74,
+    "statement": " SoftTargetInteract",
+    "section": "hotfixes",
+    "status": "audit-pending",
+    "reason": "Hotfix security/removal statement 'SoftTargetInteract' needs secure-CVar mutation permissions or exact removed-CVar absence tests. Publication defaults are not write/security/restart behavior; no hotfix/native credit."
+  },
+  {
+    "source_id": "prose-undated-075",
+    "line": 75,
+    "statement": " SoftTargetInteractRange",
+    "section": "hotfixes",
+    "status": "audit-pending",
+    "reason": "Hotfix security/removal statement 'SoftTargetInteractRange' needs secure-CVar mutation permissions or exact removed-CVar absence tests. Publication defaults are not write/security/restart behavior; no hotfix/native credit."
+  },
+  {
+    "source_id": "prose-undated-076",
+    "line": 76,
+    "statement": "The synchronizeMacros and synchronizeSettings CVars were removed.",
+    "section": "hotfixes",
+    "status": "audit-pending",
+    "reason": "Hotfix security/removal statement 'The synchronizeMacros and synchronizeSettings CVars were removed.' needs secure-CVar mutation permissions or exact removed-CVar absence tests. Publication defaults are not write/security/restart behavior; no hotfix/native credit."
+  },
+  {
+    "source_id": "source-context-078",
+    "line": 78,
+    "statement": "== Diffs ==",
+    "section": "diffs",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-079",
+    "line": 79,
+    "statement": "=== Enumerations ===",
+    "section": "enumerations",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "enumerations-Enum-AccountStateFlags-080",
+    "line": 80,
+    "statement": " Enum.AccountStateFlags",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Published enumeration change 'Enum.AccountStateFlags' needs current literal value/old-name absence evidence; inventory sweep does not probe enum data. Retained audit gap; no enum/native credit."
+  },
+  {
+    "source_id": "enumerations-Enum-AccountStateFlags-081",
+    "line": 81,
+    "statement": "   # PerkTablesLoaded -> PerksPastRewardsLoaded = 0x0000000000020000",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Published enumeration change '# PerkTablesLoaded -> PerksPastRewardsLoaded = 0x0000000000020000' needs current literal value/old-name absence evidence; inventory sweep does not probe enum data. Retained audit gap; no enum/native credit."
+  },
+  {
+    "source_id": "enumerations-Enum-AccountStateFlags-082",
+    "line": 82,
+    "statement": "   + PerksHeldItemLoaded = 0x0000000400000000",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Published enumeration change '+ PerksHeldItemLoaded = 0x0000000400000000' needs current literal value/old-name absence evidence; inventory sweep does not probe enum data. Retained audit gap; no enum/native credit."
+  },
+  {
+    "source_id": "enumerations-Enum-AccountStateFlags-083",
+    "line": 83,
+    "statement": "   + PerksPendingRewardsLoaded = 0x0000000800000000",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Published enumeration change '+ PerksPendingRewardsLoaded = 0x0000000800000000' needs current literal value/old-name absence evidence; inventory sweep does not probe enum data. Retained audit gap; no enum/native credit."
+  },
+  {
+    "source_id": "enumerations-Enum-AccountStateFlags-084",
+    "line": 84,
+    "statement": "   + PerksRefundsLoaded = 0x0000002000000000",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Published enumeration change '+ PerksRefundsLoaded = 0x0000002000000000' needs current literal value/old-name absence evidence; inventory sweep does not probe enum data. Retained audit gap; no enum/native credit."
+  },
+  {
+    "source_id": "enumerations-Enum-AccountStateFlags-085",
+    "line": 85,
+    "statement": "   + BitVectorsLoaded = 0x0000004000000000",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Published enumeration change '+ BitVectorsLoaded = 0x0000004000000000' needs current literal value/old-name absence evidence; inventory sweep does not probe enum data. Retained audit gap; no enum/native credit."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-086",
+    "line": 86,
+    "statement": " Enum.CurrencySource",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Published enumeration change 'Enum.CurrencySource' needs current literal value/old-name absence evidence; inventory sweep does not probe enum data. Retained audit gap; no enum/native credit."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-087",
+    "line": 87,
+    "statement": "   # PhBuffer_64 -> SpellSkipLinkedCurrency = 64",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Published enumeration change '# PhBuffer_64 -> SpellSkipLinkedCurrency = 64' needs current literal value/old-name absence evidence; inventory sweep does not probe enum data. Retained audit gap; no enum/native credit."
+  },
+  {
+    "source_id": "enumerations-Enum-UIMapFlag-088",
+    "line": 88,
+    "statement": " Enum.UIMapFlag",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Published enumeration change 'Enum.UIMapFlag' needs current literal value/old-name absence evidence; inventory sweep does not probe enum data. Retained audit gap; no enum/native credit."
+  },
+  {
+    "source_id": "enumerations-Enum-UIMapFlag-089",
+    "line": 89,
+    "statement": "   # Deprecated -> DoNotTranslateBranches = 0x200",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Published enumeration change '# Deprecated -> DoNotTranslateBranches = 0x200' needs current literal value/old-name absence evidence; inventory sweep does not probe enum data. Retained audit gap; no enum/native credit."
+  },
+  {
+    "source_id": "source-context-091",
+    "line": 91,
+    "statement": "=== Structures ===",
+    "section": "structures",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "structures-EventToastInfo (C_EventToastManager-GetNextToastToDisplay, C_EventToastManager-GetLevelUpDisplayToastsFromLevel)-092",
+    "line": 92,
+    "statement": " EventToastInfo (C_EventToastManager.GetNextToastToDisplay, C_EventToastManager.GetLevelUpDisplayToastsFromLevel)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent 'EventToastInfo (C_EventToastManager.GetNextToastToDisplay, C_EventToastManager.GetLevelUpDisplayToastsFromLevel)' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-EventToastInfo (C_EventToastManager-GetNextToastToDisplay, C_EventToastManager-GetLevelUpDisplayToastsFromLevel)-093",
+    "line": 93,
+    "statement": "   + flags",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ flags' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksActivityInfo (C_PerksActivities-GetPerksActivityInfo, C_PerksActivities-GetPerksActivitiesInfo)-094",
+    "line": 94,
+    "statement": " PerksActivityInfo (C_PerksActivities.GetPerksActivityInfo, C_PerksActivities.GetPerksActivitiesInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent 'PerksActivityInfo (C_PerksActivities.GetPerksActivityInfo, C_PerksActivities.GetPerksActivitiesInfo)' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksActivityInfo (C_PerksActivities-GetPerksActivityInfo, C_PerksActivities-GetPerksActivitiesInfo)-095",
+    "line": 95,
+    "statement": "   + inProgress",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ inProgress' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksActivityInfo (C_PerksActivities-GetPerksActivityInfo, C_PerksActivities-GetPerksActivitiesInfo)-096",
+    "line": 96,
+    "statement": "   + areAllConditionsMet",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ areAllConditionsMet' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksActivityInfo (C_PerksActivities-GetPerksActivityInfo, C_PerksActivities-GetPerksActivitiesInfo)-097",
+    "line": 97,
+    "statement": "   + conditions",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ conditions' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksActivityInfo (C_PerksActivities-GetPerksActivityInfo, C_PerksActivities-GetPerksActivitiesInfo)-098",
+    "line": 98,
+    "statement": "   + eventName",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ eventName' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksProgramItemDisplayInfo (C_PerksProgram-GetPerksProgramItemDisplayInfo)-099",
+    "line": 99,
+    "statement": " PerksProgramItemDisplayInfo (C_PerksProgram.GetPerksProgramItemDisplayInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent 'PerksProgramItemDisplayInfo (C_PerksProgram.GetPerksProgramItemDisplayInfo)' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksProgramItemDisplayInfo (C_PerksProgram-GetPerksProgramItemDisplayInfo)-100",
+    "line": 100,
+    "statement": "   + mainHandItemModifiedAppearanceID",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ mainHandItemModifiedAppearanceID' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksProgramItemDisplayInfo (C_PerksProgram-GetPerksProgramItemDisplayInfo)-101",
+    "line": 101,
+    "statement": "   + offHandItemModifiedAppearanceID",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ offHandItemModifiedAppearanceID' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo (C_PerksProgram-GetVendorItemInfo, C_PerksProgram-GetFrozenPerksVendorItemInfo)-102",
+    "line": 102,
+    "statement": " PerksVendorItemInfo (C_PerksProgram.GetVendorItemInfo, C_PerksProgram.GetFrozenPerksVendorItemInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent 'PerksVendorItemInfo (C_PerksProgram.GetVendorItemInfo, C_PerksProgram.GetFrozenPerksVendorItemInfo)' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo (C_PerksProgram-GetVendorItemInfo, C_PerksProgram-GetFrozenPerksVendorItemInfo)-103",
+    "line": 103,
+    "statement": "   + subItemsLoaded",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ subItemsLoaded' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo (C_PerksProgram-GetVendorItemInfo, C_PerksProgram-GetFrozenPerksVendorItemInfo)-104",
+    "line": 104,
+    "statement": "   + subItems",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ subItems' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-TugOfWarWidgetVisualizationInfo (C_UIWidgetManager-GetTugOfWarWidgetVisualizationInfo)-105",
+    "line": 105,
+    "statement": " TugOfWarWidgetVisualizationInfo (C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent 'TugOfWarWidgetVisualizationInfo (C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo)' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-TugOfWarWidgetVisualizationInfo (C_UIWidgetManager-GetTugOfWarWidgetVisualizationInfo)-106",
+    "line": 106,
+    "statement": "   + neutralFillStyle",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ neutralFillStyle' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-TugOfWarWidgetVisualizationInfo (C_UIWidgetManager-GetTugOfWarWidgetVisualizationInfo)-107",
+    "line": 107,
+    "statement": "   + markerArrowShownState",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ markerArrowShownState' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-UIWidgetItemInfo (C_UIWidgetManager-GetItemDisplayVisualizationInfo)-108",
+    "line": 108,
+    "statement": " UIWidgetItemInfo (C_UIWidgetManager.GetItemDisplayVisualizationInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent 'UIWidgetItemInfo (C_UIWidgetManager.GetItemDisplayVisualizationInfo)' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-UIWidgetItemInfo (C_UIWidgetManager-GetItemDisplayVisualizationInfo)-109",
+    "line": 109,
+    "statement": "   + itemNameTextFontType",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ itemNameTextFontType' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-UIWidgetItemInfo (C_UIWidgetManager-GetItemDisplayVisualizationInfo)-110",
+    "line": 110,
+    "statement": "   + itemNameTextSizeType",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ itemNameTextSizeType' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-UIWidgetItemInfo (C_UIWidgetManager-GetItemDisplayVisualizationInfo)-111",
+    "line": 111,
+    "statement": "   + infoTextFontType",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ infoTextFontType' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "structures-UIWidgetItemInfo (C_UIWidgetManager-GetItemDisplayVisualizationInfo)-112",
+    "line": 112,
+    "statement": "   + infoTextSizeType",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Populated DTO field/parent '+ infoTextSizeType' requires explicit nonempty host records and concrete consumer assertions; function publication or empty outputs do not establish field presence/types."
+  },
+  {
+    "source_id": "source-context-114",
+    "line": 114,
+    "statement": "== Deprecated API ==",
+    "section": "deprecated api",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-115",
+    "line": 115,
+    "statement": "These are functions that were deprecated and will be removed in the future.",
+    "section": "deprecated api",
+    "status": "audit-pending",
+    "reason": "Deprecation statement 'These are functions that were deprecated and will be removed in the future.' is not immediate absence. Cached wrappers and tuple/output translation require separate behavioral tests; namespace successor publication alone cannot credit legacy alias semantics."
+  },
+  {
+    "source_id": "source-context-117",
+    "line": 117,
+    "statement": "Deprecated_10_2_5.lua",
+    "section": "deprecated api",
+    "status": "metadata-only",
+    "reason": "Deprecated-source heading/context; no runtime credit."
+  },
+  {
+    "source_id": "deprecated api-FillLocalizedClassList-118",
+    "line": 118,
+    "statement": ": FillLocalizedClassList \u2192 LocalizedClassList",
+    "section": "deprecated api",
+    "status": "audit-pending",
+    "reason": "Deprecation statement ': FillLocalizedClassList \u2192 LocalizedClassList' is not immediate absence. Cached wrappers and tuple/output translation require separate behavioral tests; namespace successor publication alone cannot credit legacy alias semantics."
+  },
+  {
+    "source_id": "deprecated api-GetSetBonusesForSpecializationByItemID-119",
+    "line": 119,
+    "statement": ": GetSetBonusesForSpecializationByItemID \u2192 C_Item.GetSetBonusesForSpecializationByItemID",
+    "section": "deprecated api",
+    "status": "audit-pending",
+    "reason": "Deprecation statement ': GetSetBonusesForSpecializationByItemID \u2192 C_Item.GetSetBonusesForSpecializationByItemID' is not immediate absence. Cached wrappers and tuple/output translation require separate behavioral tests; namespace successor publication alone cannot credit legacy alias semantics."
+  },
+  {
+    "source_id": "deprecated api-GetItemStats-120",
+    "line": 120,
+    "statement": ": GetItemStats \u2192 C_Item.GetItemStats",
+    "section": "deprecated api",
+    "status": "audit-pending",
+    "reason": "Deprecation statement ': GetItemStats \u2192 C_Item.GetItemStats' is not immediate absence. Cached wrappers and tuple/output translation require separate behavioral tests; namespace successor publication alone cannot credit legacy alias semantics."
+  },
+  {
+    "source_id": "deprecated api-GetItemStatDelta-121",
+    "line": 121,
+    "statement": ": GetItemStatDelta \u2192  C_Item.GetItemStatDelta",
+    "section": "deprecated api",
+    "status": "audit-pending",
+    "reason": "Deprecation statement ': GetItemStatDelta \u2192  C_Item.GetItemStatDelta' is not immediate absence. Cached wrappers and tuple/output translation require separate behavioral tests; namespace successor publication alone cannot credit legacy alias semantics."
+  },
+  {
+    "source_id": "deprecated api-UnitAura-122",
+    "line": 122,
+    "statement": ": UnitAura \u2192 C_UnitAuras.GetAuraDataByIndex",
+    "section": "deprecated api",
+    "status": "audit-pending",
+    "reason": "Deprecation statement ': UnitAura \u2192 C_UnitAuras.GetAuraDataByIndex' is not immediate absence. Cached wrappers and tuple/output translation require separate behavioral tests; namespace successor publication alone cannot credit legacy alias semantics."
+  },
+  {
+    "source_id": "deprecated api-UnitBuff-123",
+    "line": 123,
+    "statement": ": UnitBuff \u2192 C_UnitAuras.GetBuffDataByIndex",
+    "section": "deprecated api",
+    "status": "audit-pending",
+    "reason": "Deprecation statement ': UnitBuff \u2192 C_UnitAuras.GetBuffDataByIndex' is not immediate absence. Cached wrappers and tuple/output translation require separate behavioral tests; namespace successor publication alone cannot credit legacy alias semantics."
+  },
+  {
+    "source_id": "deprecated api-UnitDebuff-124",
+    "line": 124,
+    "statement": ": UnitDebuff \u2192 C_UnitAuras.GetDebuffDataByIndex",
+    "section": "deprecated api",
+    "status": "audit-pending",
+    "reason": "Deprecation statement ': UnitDebuff \u2192 C_UnitAuras.GetDebuffDataByIndex' is not immediate absence. Cached wrappers and tuple/output translation require separate behavioral tests; namespace successor publication alone cannot credit legacy alias semantics."
+  },
+  {
+    "source_id": "deprecated api-UnitAuraBySlot-125",
+    "line": 125,
+    "statement": ": UnitAuraBySlot \u2192 C_UnitAuras.GetAuraDataBySlot",
+    "section": "deprecated api",
+    "status": "audit-pending",
+    "reason": "Deprecation statement ': UnitAuraBySlot \u2192 C_UnitAuras.GetAuraDataBySlot' is not immediate absence. Cached wrappers and tuple/output translation require separate behavioral tests; namespace successor publication alone cannot credit legacy alias semantics."
+  },
+  {
+    "source_id": "deprecated api-UnitAuraSlots-126",
+    "line": 126,
+    "statement": ": UnitAuraSlots \u2192 C_UnitAuras.GetAuraSlots",
+    "section": "deprecated api",
+    "status": "audit-pending",
+    "reason": "Deprecation statement ': UnitAuraSlots \u2192 C_UnitAuras.GetAuraSlots' is not immediate absence. Cached wrappers and tuple/output translation require separate behavioral tests; namespace successor publication alone cannot credit legacy alias semantics."
+  },
+  {
+    "source_id": "source-context-128",
+    "line": 128,
+    "statement": "== Blizzard Docs ==",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-129",
+    "line": 129,
+    "statement": "The following APIs are now backfilled in Blizzard_APIDocumentationGenerated.",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-130",
+    "line": 130,
+    "statement": " AcceptGuild",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-131",
+    "line": 131,
+    "statement": " AcceptResurrect",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-132",
+    "line": 132,
+    "statement": " AssistUnit",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-133",
+    "line": 133,
+    "statement": " AttackTarget",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-134",
+    "line": 134,
+    "statement": " AutoEquipCursorItem",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-135",
+    "line": 135,
+    "statement": " C_MacOptions.AreOSShortcutsDisabled",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-136",
+    "line": 136,
+    "statement": " C_MacOptions.GetGameBundleName",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-137",
+    "line": 137,
+    "statement": " C_MacOptions.HasNewStyleInputMonitoring",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-138",
+    "line": 138,
+    "statement": " C_MacOptions.IsInputMonitoringEnabled",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-139",
+    "line": 139,
+    "statement": " C_MacOptions.IsMicrophoneEnabled",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-140",
+    "line": 140,
+    "statement": " C_MacOptions.IsUniversalAccessEnabled",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-141",
+    "line": 141,
+    "statement": " C_MacOptions.OpenInputMonitoring",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-142",
+    "line": 142,
+    "statement": " C_MacOptions.OpenMicrophoneRequestDialogue",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-143",
+    "line": 143,
+    "statement": " C_MacOptions.OpenUniversalAccess",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-144",
+    "line": 144,
+    "statement": " C_MacOptions.SetOSShortcutsDisabled",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-145",
+    "line": 145,
+    "statement": " CanEjectPassengerFromSeat",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-146",
+    "line": 146,
+    "statement": " CanSwitchVehicleSeat",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-147",
+    "line": 147,
+    "statement": " CaseAccentInsensitiveParse",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-148",
+    "line": 148,
+    "statement": " ClearTarget",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-149",
+    "line": 149,
+    "statement": " ClosestGameObjectPosition",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-150",
+    "line": 150,
+    "statement": " ClosestUnitPosition",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-151",
+    "line": 151,
+    "statement": " ConfirmTalentWipe",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-152",
+    "line": 152,
+    "statement": " DeclineGuild",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-153",
+    "line": 153,
+    "statement": " DeclineResurrect",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-154",
+    "line": 154,
+    "statement": " Dismount",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-155",
+    "line": 155,
+    "statement": " EjectPassengerFromSeat",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-156",
+    "line": 156,
+    "statement": " FocusUnit",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-157",
+    "line": 157,
+    "statement": " GetAllowLowLevelRaid",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-158",
+    "line": 158,
+    "statement": " GetAttackPowerForStat",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-159",
+    "line": 159,
+    "statement": " GetAutoDeclineGuildInvites",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-160",
+    "line": 160,
+    "statement": " GetAvoidance",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-161",
+    "line": 161,
+    "statement": " GetBlockChance",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-162",
+    "line": 162,
+    "statement": " GetCombatRating",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-163",
+    "line": 163,
+    "statement": " GetCombatRatingBonus",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-164",
+    "line": 164,
+    "statement": " GetCombatRatingBonusForCombatRatingValue",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-165",
+    "line": 165,
+    "statement": " GetComboPoints",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-166",
+    "line": 166,
+    "statement": " GetCorruption",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-167",
+    "line": 167,
+    "statement": " GetCorruptionResistance",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-168",
+    "line": 168,
+    "statement": " GetCritChance",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-169",
+    "line": 169,
+    "statement": " GetCritChanceProvidesParryEffect",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-170",
+    "line": 170,
+    "statement": " GetDebugAnimationStats",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-171",
+    "line": 171,
+    "statement": " GetDebugPerf",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-172",
+    "line": 172,
+    "statement": " GetDebugSpellEffects",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-173",
+    "line": 173,
+    "statement": " GetDebugStats",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-174",
+    "line": 174,
+    "statement": " GetDebugTargetCustomizationInfo",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-175",
+    "line": 175,
+    "statement": " GetDebugUnitInfo",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-176",
+    "line": 176,
+    "statement": " GetDodgeChance",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-177",
+    "line": 177,
+    "statement": " GetDodgeChanceFromAttribute",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-178",
+    "line": 178,
+    "statement": " GetExpertise",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-179",
+    "line": 179,
+    "statement": " GetHaste",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-180",
+    "line": 180,
+    "statement": " GetHitModifier",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-181",
+    "line": 181,
+    "statement": " GetJailersTowerLevel",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-182",
+    "line": 182,
+    "statement": " GetLifesteal",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-183",
+    "line": 183,
+    "statement": " GetManaRegen",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-184",
+    "line": 184,
+    "statement": " GetMastery",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-185",
+    "line": 185,
+    "statement": " GetMasteryEffect",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-186",
+    "line": 186,
+    "statement": " GetMaxCombatRatingBonus",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-187",
+    "line": 187,
+    "statement": " GetMaxPlayerLevel",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-188",
+    "line": 188,
+    "statement": " GetMeleeHaste",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-189",
+    "line": 189,
+    "statement": " GetModResilienceDamageReduction",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-190",
+    "line": 190,
+    "statement": " GetMoney",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-191",
+    "line": 191,
+    "statement": " GetNormalizedRealmName",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-192",
+    "line": 192,
+    "statement": " GetOverrideAPBySpellPower",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-193",
+    "line": 193,
+    "statement": " GetOverrideSpellPowerByAP",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-194",
+    "line": 194,
+    "statement": " GetPVPDesired",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-195",
+    "line": 195,
+    "statement": " GetPVPGearStatRules",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-196",
+    "line": 196,
+    "statement": " GetPVPLifetimeStats",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-197",
+    "line": 197,
+    "statement": " GetPVPSessionStats",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-198",
+    "line": 198,
+    "statement": " GetPVPTimer",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-199",
+    "line": 199,
+    "statement": " GetPVPYesterdayStats",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-200",
+    "line": 200,
+    "statement": " GetParryChance",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-201",
+    "line": 201,
+    "statement": " GetParryChanceFromAttribute",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-202",
+    "line": 202,
+    "statement": " GetPetMeleeHaste",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-203",
+    "line": 203,
+    "statement": " GetPetSpellBonusDamage",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-204",
+    "line": 204,
+    "statement": " GetPlayerFacing",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-205",
+    "line": 205,
+    "statement": " GetPlayerInfoByGUID",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-206",
+    "line": 206,
+    "statement": " GetPowerRegen",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-207",
+    "line": 207,
+    "statement": " GetPowerRegenForPowerType",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-208",
+    "line": 208,
+    "statement": " GetPvpPowerDamage",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-209",
+    "line": 209,
+    "statement": " GetPvpPowerHealing",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-210",
+    "line": 210,
+    "statement": " GetRangedCritChance",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-211",
+    "line": 211,
+    "statement": " GetRangedHaste",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-212",
+    "line": 212,
+    "statement": " GetResSicknessDuration",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-213",
+    "line": 213,
+    "statement": " GetRestState",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-214",
+    "line": 214,
+    "statement": " GetRuneCooldown",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-215",
+    "line": 215,
+    "statement": " GetRuneCount",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-216",
+    "line": 216,
+    "statement": " GetSheathState",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-217",
+    "line": 217,
+    "statement": " GetShieldBlock",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-218",
+    "line": 218,
+    "statement": " GetSpeed",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-219",
+    "line": 219,
+    "statement": " GetSpellBonusDamage",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-220",
+    "line": 220,
+    "statement": " GetSpellBonusHealing",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-221",
+    "line": 221,
+    "statement": " GetSpellCritChance",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-222",
+    "line": 222,
+    "statement": " GetSpellHitModifier",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-223",
+    "line": 223,
+    "statement": " GetSpellPenetration",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-224",
+    "line": 224,
+    "statement": " GetSturdiness",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-225",
+    "line": 225,
+    "statement": " GetTaxiBenchmarkMode",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-226",
+    "line": 226,
+    "statement": " GetUnitHealthModifier",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-227",
+    "line": 227,
+    "statement": " GetUnitMaxHealthModifier",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-228",
+    "line": 228,
+    "statement": " GetUnitPowerModifier",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-229",
+    "line": 229,
+    "statement": " GetUnitSpeed",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-230",
+    "line": 230,
+    "statement": " GetVehicleUIIndicator",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-231",
+    "line": 231,
+    "statement": " GetVehicleUIIndicatorSeat",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-232",
+    "line": 232,
+    "statement": " GetVersatilityBonus",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-233",
+    "line": 233,
+    "statement": " GetXPExhaustion",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-234",
+    "line": 234,
+    "statement": " HasAPEffectsSpellPower",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-235",
+    "line": 235,
+    "statement": " HasDualWieldPenalty",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-236",
+    "line": 236,
+    "statement": " HasFullControl",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-237",
+    "line": 237,
+    "statement": " HasNoReleaseAura",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-238",
+    "line": 238,
+    "statement": " HasSPEffectsAttackPower",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-239",
+    "line": 239,
+    "statement": " InitiateRolePoll",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-240",
+    "line": 240,
+    "statement": " IsAccountSecured",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-241",
+    "line": 241,
+    "statement": " IsAdvancedFlyableArea",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-242",
+    "line": 242,
+    "statement": " IsDebugBuild",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-243",
+    "line": 243,
+    "statement": " IsDualWielding",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-244",
+    "line": 244,
+    "statement": " IsFalling",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-245",
+    "line": 245,
+    "statement": " IsFlyableArea",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-246",
+    "line": 246,
+    "statement": " IsFlying",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-247",
+    "line": 247,
+    "statement": " IsGuildLeader",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-248",
+    "line": 248,
+    "statement": " IsInGuild",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-249",
+    "line": 249,
+    "statement": " IsInJailersTower",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-250",
+    "line": 250,
+    "statement": " IsIndoors",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-251",
+    "line": 251,
+    "statement": " IsInsane",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-252",
+    "line": 252,
+    "statement": " IsJailersTowerLayerTimeLocked",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-253",
+    "line": 253,
+    "statement": " IsLoggedIn",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-254",
+    "line": 254,
+    "statement": " IsMounted",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-255",
+    "line": 255,
+    "statement": " IsOnGroundFloorInJailersTower",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-256",
+    "line": 256,
+    "statement": " IsOutOfBounds",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-257",
+    "line": 257,
+    "statement": " IsOutdoors",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-258",
+    "line": 258,
+    "statement": " IsPVPTimerRunning",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-259",
+    "line": 259,
+    "statement": " IsRangedWeapon",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-260",
+    "line": 260,
+    "statement": " IsResting",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-261",
+    "line": 261,
+    "statement": " IsStealthed",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-262",
+    "line": 262,
+    "statement": " IsSubmerged",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-263",
+    "line": 263,
+    "statement": " IsSwimming",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-264",
+    "line": 264,
+    "statement": " IsTargetLoose",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-265",
+    "line": 265,
+    "statement": " IsXPUserDisabled",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-266",
+    "line": 266,
+    "statement": " NoPlayTime",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-267",
+    "line": 267,
+    "statement": " PartialPlayTime",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-268",
+    "line": 268,
+    "statement": " PlayerCanTeleport",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-269",
+    "line": 269,
+    "statement": " PlayerEffectiveAttackPower",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-270",
+    "line": 270,
+    "statement": " PlayerIsPVPInactive",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-271",
+    "line": 271,
+    "statement": " RepopMe",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-272",
+    "line": 272,
+    "statement": " ReportPlayerIsPVPAFK",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-273",
+    "line": 273,
+    "statement": " ResistancePercent",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-274",
+    "line": 274,
+    "statement": " RespondInstanceLock",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-275",
+    "line": 275,
+    "statement": " RetrieveCorpse",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-276",
+    "line": 276,
+    "statement": " SelectedRealmName",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-277",
+    "line": 277,
+    "statement": " SetAllowLowLevelRaid",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-278",
+    "line": 278,
+    "statement": " SetAutoDeclineGuildInvites",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-279",
+    "line": 279,
+    "statement": " SetTaxiBenchmarkMode",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-280",
+    "line": 280,
+    "statement": " ShowBossFrameWhenUninteractable",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-281",
+    "line": 281,
+    "statement": " TargetDirectionEnemy",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-282",
+    "line": 282,
+    "statement": " TargetDirectionFinished",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-283",
+    "line": 283,
+    "statement": " TargetDirectionFriend",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-284",
+    "line": 284,
+    "statement": " TargetLastEnemy",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-285",
+    "line": 285,
+    "statement": " TargetLastFriend",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-286",
+    "line": 286,
+    "statement": " TargetLastTarget",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-287",
+    "line": 287,
+    "statement": " TargetNearest",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-288",
+    "line": 288,
+    "statement": " TargetNearestEnemy",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-289",
+    "line": 289,
+    "statement": " TargetNearestEnemyPlayer",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-290",
+    "line": 290,
+    "statement": " TargetNearestFriend",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-291",
+    "line": 291,
+    "statement": " TargetNearestFriendPlayer",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-292",
+    "line": 292,
+    "statement": " TargetNearestPartyMember",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-293",
+    "line": 293,
+    "statement": " TargetNearestRaidMember",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-294",
+    "line": 294,
+    "statement": " TargetPriorityHighlightEnd",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-295",
+    "line": 295,
+    "statement": " TargetPriorityHighlightStart",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-296",
+    "line": 296,
+    "statement": " TargetToggle",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-297",
+    "line": 297,
+    "statement": " TargetUnit",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-298",
+    "line": 298,
+    "statement": " TimeoutResurrect",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-299",
+    "line": 299,
+    "statement": " ToggleCollision",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-300",
+    "line": 300,
+    "statement": " ToggleCollisionDisplay",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-301",
+    "line": 301,
+    "statement": " ToggleGravity",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-302",
+    "line": 302,
+    "statement": " TogglePlayerBounds",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-303",
+    "line": 303,
+    "statement": " TogglePortals",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-304",
+    "line": 304,
+    "statement": " ToggleSheath",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-305",
+    "line": 305,
+    "statement": " ToggleTris",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-306",
+    "line": 306,
+    "statement": " UnitAffectingCombat",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-307",
+    "line": 307,
+    "statement": " UnitArmor",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-308",
+    "line": 308,
+    "statement": " UnitAttackPower",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-309",
+    "line": 309,
+    "statement": " UnitAttackSpeed",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-310",
+    "line": 310,
+    "statement": " UnitCastingInfo",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-311",
+    "line": 311,
+    "statement": " UnitChannelInfo",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-312",
+    "line": 312,
+    "statement": " UnitClassification",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-313",
+    "line": 313,
+    "statement": " UnitControllingVehicle",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-314",
+    "line": 314,
+    "statement": " UnitCreatureFamily",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-315",
+    "line": 315,
+    "statement": " UnitCreatureType",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-316",
+    "line": 316,
+    "statement": " UnitDamage",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-317",
+    "line": 317,
+    "statement": " UnitDetailedThreatSituation",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-318",
+    "line": 318,
+    "statement": " UnitEffectiveLevel",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-319",
+    "line": 319,
+    "statement": " UnitFullName",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-320",
+    "line": 320,
+    "statement": " UnitGUID",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-321",
+    "line": 321,
+    "statement": " UnitGetIncomingHeals",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-322",
+    "line": 322,
+    "statement": " UnitGetTotalAbsorbs",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-323",
+    "line": 323,
+    "statement": " UnitGetTotalHealAbsorbs",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-324",
+    "line": 324,
+    "statement": " UnitHPPerStamina",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-325",
+    "line": 325,
+    "statement": " UnitHasRelicSlot",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-326",
+    "line": 326,
+    "statement": " UnitHasVehiclePlayerFrameUI",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-327",
+    "line": 327,
+    "statement": " UnitHasVehicleUI",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-328",
+    "line": 328,
+    "statement": " UnitHealth",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-329",
+    "line": 329,
+    "statement": " UnitHealthMax",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-330",
+    "line": 330,
+    "statement": " UnitHonor",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-331",
+    "line": 331,
+    "statement": " UnitHonorLevel",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-332",
+    "line": 332,
+    "statement": " UnitHonorMax",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-333",
+    "line": 333,
+    "statement": " UnitInVehicle",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-334",
+    "line": 334,
+    "statement": " UnitInVehicleControlSeat",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-335",
+    "line": 335,
+    "statement": " UnitInVehicleHidesPetFrame",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-336",
+    "line": 336,
+    "statement": " UnitIsBossMob",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-337",
+    "line": 337,
+    "statement": " UnitIsControlling",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-338",
+    "line": 338,
+    "statement": " UnitIsDead",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-339",
+    "line": 339,
+    "statement": " UnitIsDeadOrGhost",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-340",
+    "line": 340,
+    "statement": " UnitIsFeignDeath",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-341",
+    "line": 341,
+    "statement": " UnitIsGhost",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-342",
+    "line": 342,
+    "statement": " UnitIsMercenary",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-343",
+    "line": 343,
+    "statement": " UnitIsQuestBoss",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-344",
+    "line": 344,
+    "statement": " UnitIsSameServer",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-345",
+    "line": 345,
+    "statement": " UnitIsTapDenied",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-346",
+    "line": 346,
+    "statement": " UnitIsTrivial",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-347",
+    "line": 347,
+    "statement": " UnitIsUnconscious",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-348",
+    "line": 348,
+    "statement": " UnitLevel",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-349",
+    "line": 349,
+    "statement": " UnitName",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-350",
+    "line": 350,
+    "statement": " UnitNameUnmodified",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-351",
+    "line": 351,
+    "statement": " UnitNumPowerBarTimers",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-352",
+    "line": 352,
+    "statement": " UnitOnTaxi",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-353",
+    "line": 353,
+    "statement": " UnitPVPName",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-354",
+    "line": 354,
+    "statement": " UnitPosition",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-355",
+    "line": 355,
+    "statement": " UnitPowerBarTimerInfo",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-356",
+    "line": 356,
+    "statement": " UnitPowerType",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-357",
+    "line": 357,
+    "statement": " UnitRace",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-358",
+    "line": 358,
+    "statement": " UnitRangedAttackPower",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-359",
+    "line": 359,
+    "statement": " UnitRangedDamage",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-360",
+    "line": 360,
+    "statement": " UnitRealmRelationship",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-361",
+    "line": 361,
+    "statement": " UnitSelectionColor",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-362",
+    "line": 362,
+    "statement": " UnitSelectionType",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-363",
+    "line": 363,
+    "statement": " UnitSetRole",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-364",
+    "line": 364,
+    "statement": " UnitShouldDisplayName",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-365",
+    "line": 365,
+    "statement": " UnitSpellHaste",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-366",
+    "line": 366,
+    "statement": " UnitStagger",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-367",
+    "line": 367,
+    "statement": " UnitStat",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-368",
+    "line": 368,
+    "statement": " UnitSwitchToVehicleSeat",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-369",
+    "line": 369,
+    "statement": " UnitTargetsVehicleInRaidUI",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-370",
+    "line": 370,
+    "statement": " UnitThreatPercentageOfLead",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-371",
+    "line": 371,
+    "statement": " UnitThreatSituation",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-372",
+    "line": 372,
+    "statement": " UnitTrialXP",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-373",
+    "line": 373,
+    "statement": " UnitUsingVehicle",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-374",
+    "line": 374,
+    "statement": " UnitVehicleSeatCount",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-375",
+    "line": 375,
+    "statement": " UnitVehicleSeatInfo",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-376",
+    "line": 376,
+    "statement": " UnitVehicleSkin",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-377",
+    "line": 377,
+    "statement": " UnitWeaponAttackPower",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-378",
+    "line": 378,
+    "statement": " UnitXP",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-379",
+    "line": 379,
+    "statement": " UnitXPMax",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  },
+  {
+    "source_id": "prose-undated-380",
+    "line": 380,
+    "statement": " WorldLootObjectExists",
+    "section": "blizzard docs",
+    "status": "metadata-only",
+    "reason": "Historical Blizzard_APIDocumentationGenerated backfill inventory: documentation placement, not a newly added runtime API. Literal listed identity retained; no publication/signature/behavior credit."
+  }
+]

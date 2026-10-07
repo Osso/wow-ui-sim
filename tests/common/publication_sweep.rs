@@ -148,6 +148,9 @@ local function create_object(owner)
         VectorGraphics = function() return frame:CreateVectorGraphics() end,
         AnimationGroup = function() return frame:CreateAnimationGroup() end,
         Animation = function() return frame:CreateAnimationGroup():CreateAnimation() end,
+        VertexColor = function()
+            return frame:CreateTexture():CreateAnimationGroup():CreateAnimation('VertexColor')
+        end,
         RadialProgress = function()
             local animation = frame:CreateAnimationGroup():CreateAnimation('RadialProgress')
             if animation:GetObjectType() ~= 'RadialProgress' then

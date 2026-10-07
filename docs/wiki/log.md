@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 10.2.5 page audit
+
+[Audit](investigations/patch-10-2-5-api-audit.md) retains revision 5993852, 59 inventory and 356 extract occurrences. Exact fourteen gaps reviewed; animation probe corrected without endpoint credit, verbatim Lua/XML retention added. Targeted proof pending; no runtime/vendor/classic changes.
+
 ## [2026-10-07] evidence | 11.0.0 page audit
 
 [Audit](investigations/patch-11-0-0-api-audit.md) retains revision 6726780 and all 842 source IDs. Nine namespace retirements close bounded absence gaps; 166 publication gaps and 328 substantive extract occurrences retain exact contract/proof boundaries. Fifteen isolated sweeps, RED/GREEN, full cached Game retirement prefork and 166 → 167 negative control recorded. Final format/Mists test check (zero non-vendor warnings), existing one-case major-faction prefork, eighteen parser/extractor fixtures and exit-0 startup `[]` pass at accounting revision 2636acc12. Artifact validation passes at e1e3a63bf; source hashes, 842 unique IDs, chronological expectations, fifteen exact sweeps, 92 preserved inputs and portable proof validated. Subsequent result/doc-only edits preserve these scopes. Later registers/ledgers unchanged; no vendor edits, sibling target reuse, agents/models, full suite, push or merge.

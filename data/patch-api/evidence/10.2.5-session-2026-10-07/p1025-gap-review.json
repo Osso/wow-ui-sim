@@ -1,0 +1,184 @@
+[
+  {
+    "source_id": "wt-global-api-C_Item.GetItemStatDelta-87",
+    "symbol": "C_Item.GetItemStatDelta",
+    "decision": "retained-gap",
+    "reason": "No explicit producer: namespace lookup fabricates a function. Item-instance effective stat/bonus scaling and comparison metadata are not modeled; an empty delta would be a placeholder.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetItemStats-88",
+    "symbol": "C_Item.GetItemStats",
+    "decision": "retained-gap",
+    "reason": "No explicit producer: namespace lookup fabricates a function. Concrete item-link stat tokens, effective stat scaling and populated output-table mutation need a stat data provider; intrinsic item info is insufficient.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetSetBonusesForSpecializationByItemID-89",
+    "symbol": "C_Item.GetSetBonusesForSpecializationByItemID",
+    "decision": "retained-gap",
+    "reason": "No explicit producer. Requires item-to-set membership, bonus spell/threshold metadata and specialization filtering; no such backing relation exists.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_Ping.GetCooldownInfo-94",
+    "symbol": "C_Ping.GetCooldownInfo",
+    "decision": "retained-gap",
+    "reason": "No explicit producer. Ping cooldown time/capacity/refill and ping dispatch are not modeled; C_PingSecure retains inert callbacks, not a cooldown model.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_Ping.GetTextureKitForType-96",
+    "symbol": "C_Ping.GetTextureKitForType",
+    "decision": "retained-gap",
+    "reason": "No explicit producer. Requires measured ping-type-to-texture-kit data; API documentation supplies only the string return type, not kit values. Invented names would be placeholders.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.IsTranscribing-102",
+    "symbol": "C_VoiceChat.IsTranscribing",
+    "decision": "retained-gap",
+    "reason": "No explicit producer. Transcription channel/session activity and speech-provider lifecycle are not modeled. A constant false is not an activity query.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-UnitSetRoleEnum-109",
+    "symbol": "UnitSetRoleEnum",
+    "decision": "retained-gap",
+    "reason": "Absent global. UnitGroupRolesAssignedEnum is a placeholder (-1), not assigned group-role state. Requires enum validation, group membership/authority and observable role/event updates; isolated enum conversion would conceal the missing model.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-UnitAura-121",
+    "symbol": "UnitAura",
+    "decision": "retained-gap",
+    "reason": "Retained simulator legacy producer, not a cached deprecation wrapper. Qualified cached searches find no actual retail global consumer. Retirement needs migration of simulator-owned admin_buffs and legacy aura API tests while preserving classic behavior; this is not an isolated registration deletion. src/lua_api/globals/auras.rs:120-124; src/lua_api/globals/admin_buffs.rs:116. No native/publication absence credit.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-UnitBuff-122",
+    "symbol": "UnitBuff",
+    "decision": "retained-gap",
+    "reason": "Retained simulator legacy producer, not a cached deprecation wrapper. Qualified cached searches find no actual retail global consumer. Retail retirement requires migrating shared legacy aura consumers/tests and profile gating without breaking classic aura wrappers (src/mists/compat_bootstrap.lua:853-855); deferred instead of a partial migration.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-UnitDebuff-123",
+    "symbol": "UnitDebuff",
+    "decision": "retained-gap",
+    "reason": "Retained simulator legacy producer, not a cached deprecation wrapper. Qualified cached searches find no actual retail global consumer. Simulator-owned Admin uses UnitDebuff (src/lua_api/globals/admin_buffs.rs:116). Shared classic/test consumers require coordinated retirement; no cache or wrapper deletion.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-VertexColor:GetEndColor-141",
+    "symbol": "VertexColor:GetEndColor",
+    "decision": "retained-gap",
+    "reason": "Constructible VertexColor animation lacks this endpoint method. AnimState has alpha/radial endpoints, but no RGBA endpoints or vertex-color interpolation/restoration. Correct animation factory replaces the invalid frame factory; method absence remains a real gap. Full XML/Lua animation support cannot be claimed from AnimationType::VertexColor alone.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'VertexColor'",
+      "kind": "unprobeable",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-VertexColor:GetStartColor-142",
+    "symbol": "VertexColor:GetStartColor",
+    "decision": "retained-gap",
+    "reason": "Constructible VertexColor animation lacks this endpoint method. AnimState has alpha/radial endpoints, but no RGBA endpoints or vertex-color interpolation/restoration. Correct animation factory replaces the invalid frame factory; method absence remains a real gap. Full XML/Lua animation support cannot be claimed from AnimationType::VertexColor alone.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'VertexColor'",
+      "kind": "unprobeable",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-VertexColor:SetEndColor-143",
+    "symbol": "VertexColor:SetEndColor",
+    "decision": "retained-gap",
+    "reason": "Constructible VertexColor animation lacks this endpoint method. AnimState has alpha/radial endpoints, but no RGBA endpoints or vertex-color interpolation/restoration. Correct animation factory replaces the invalid frame factory; method absence remains a real gap. Full XML/Lua animation support cannot be claimed from AnimationType::VertexColor alone.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'VertexColor'",
+      "kind": "unprobeable",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-VertexColor:SetStartColor-144",
+    "symbol": "VertexColor:SetStartColor",
+    "decision": "retained-gap",
+    "reason": "Constructible VertexColor animation lacks this endpoint method. AnimState has alpha/radial endpoints, but no RGBA endpoints or vertex-color interpolation/restoration. Correct animation factory replaces the invalid frame factory; method absence remains a real gap. Full XML/Lua animation support cannot be claimed from AnimationType::VertexColor alone.",
+    "discovery_observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'VertexColor'",
+      "kind": "unprobeable",
+      "value": null
+    }
+  }
+]

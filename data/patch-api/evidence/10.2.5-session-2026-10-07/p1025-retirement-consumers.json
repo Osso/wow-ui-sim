@@ -1,0 +1,113 @@
+[
+  {
+    "id": "wt-global-api-FillLocalizedClassList-112",
+    "symbol": "FillLocalizedClassList",
+    "pattern": "(^|[^A-Za-z0-9_.:])FillLocalizedClassList\\s*\\(",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/Mists/Constants.lua:64:FillLocalizedClassList(LOCALIZED_CLASS_NAMES_MALE, false);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/Mists/Constants.lua:65:FillLocalizedClassList(LOCALIZED_CLASS_NAMES_FEMALE, true);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/Cata/Constants.lua:64:FillLocalizedClassList(LOCALIZED_CLASS_NAMES_MALE, false);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/Cata/Constants.lua:65:FillLocalizedClassList(LOCALIZED_CLASS_NAMES_FEMALE, true);"
+    ],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-GetItemStatDelta-113",
+    "symbol": "GetItemStatDelta",
+    "pattern": "(^|[^A-Za-z0-9_.:])GetItemStatDelta\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-GetItemStats-114",
+    "symbol": "GetItemStats",
+    "pattern": "(^|[^A-Za-z0-9_.:])GetItemStats\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-GetSetBonusesForSpecializationByItemID-115",
+    "symbol": "GetSetBonusesForSpecializationByItemID",
+    "pattern": "(^|[^A-Za-z0-9_.:])GetSetBonusesForSpecializationByItemID\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-GetTimeToWellRested-116",
+    "symbol": "GetTimeToWellRested",
+    "pattern": "(^|[^A-Za-z0-9_.:])GetTimeToWellRested\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-IsArenaTeamCaptain-117",
+    "symbol": "IsArenaTeamCaptain",
+    "pattern": "(^|[^A-Za-z0-9_.:])IsArenaTeamCaptain\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-IsInArenaTeam-118",
+    "symbol": "IsInArenaTeam",
+    "pattern": "(^|[^A-Za-z0-9_.:])IsInArenaTeam\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-UnitAuraBySlot-119",
+    "symbol": "UnitAuraBySlot",
+    "pattern": "(^|[^A-Za-z0-9_.:])UnitAuraBySlot\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-UnitAuraSlots-120",
+    "symbol": "UnitAuraSlots",
+    "pattern": "(^|[^A-Za-z0-9_.:])UnitAuraSlots\\s*\\(",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLUtil/AuraUtil.lua:93:\t\t-- continuationToken is the first return value of UnitAuraSlots()"
+    ],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-UnitAura-121",
+    "symbol": "UnitAura",
+    "pattern": "(^|[^A-Za-z0-9_.:])UnitAura\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-UnitBuff-122",
+    "symbol": "UnitBuff",
+    "pattern": "(^|[^A-Za-z0-9_.:])UnitBuff\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "id": "wt-global-api-UnitDebuff-123",
+    "symbol": "UnitDebuff",
+    "pattern": "(^|[^A-Za-z0-9_.:])UnitDebuff\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "id": "wt-cvars-fullDump-186",
+    "symbol": "fullDump",
+    "pattern": "(^|[^A-Za-z0-9_.:])fullDump\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  }
+]
