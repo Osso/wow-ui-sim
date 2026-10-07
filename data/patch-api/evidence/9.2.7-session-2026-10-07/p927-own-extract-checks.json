@@ -1,0 +1,20 @@
+[
+  {
+    "command": "python3 tools/extract_patch_non_inventory.py --patch 9.2.7 --check --text-only",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "revision": "082aa9d13",
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.2.7\", \"rows\": 23, \"statuses\": {\"metadata-only\": 8, \"audit-pending\": 15}}\n",
+    "stderr": "",
+    "preserve_examples": false
+  },
+  {
+    "command": "python3 tools/extract_patch_non_inventory.py --patch 9.2.7 --check --text-only --preserve-examples",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "revision": "082aa9d13",
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.2.7\", \"rows\": 23, \"statuses\": {\"metadata-only\": 8, \"audit-pending\": 15}}\n",
+    "stderr": "",
+    "preserve_examples": true
+  }
+]

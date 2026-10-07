@@ -121,5 +121,41 @@
     "output_sha256": {
       "p927-test_gen_patch_wikitext_register.py.log": "34a82a30511a2175a5286cff0751874e9220ce5fb08cab87b09cc04e220f6b31"
     }
+  },
+  {
+    "command": "python3 tools/extract_patch_non_inventory.py --patch 9.2.7 --check --text-only",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "revision": "082aa9d13",
+    "exit": 0,
+    "output": "p927-own-extract-checks.json",
+    "output_sha256": {
+      "p927-own-extract-checks.json": "5d8459645fead66b7f20c92eb22e7db4ead8ce9c035d13cdd20627dea04f8308"
+    },
+    "scope": "9.2.7 extraction reproduction in the specified mode",
+    "invalidated": false
+  },
+  {
+    "command": "python3 tools/extract_patch_non_inventory.py --patch 9.2.7 --check --text-only --preserve-examples",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "revision": "082aa9d13",
+    "exit": 0,
+    "output": "p927-own-extract-checks.json",
+    "output_sha256": {
+      "p927-own-extract-checks.json": "5d8459645fead66b7f20c92eb22e7db4ead8ce9c035d13cdd20627dea04f8308"
+    },
+    "scope": "9.2.7 extraction reproduction in the specified mode",
+    "invalidated": false
+  },
+  {
+    "command": "python3 data/patch-api/evidence/9.2.7-session-2026-10-07/validate.py",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "revision": "082aa9d13",
+    "exit": 0,
+    "output": "p927-validation.json",
+    "output_sha256": {
+      "p927-validation.json": "5e32c82c9a233afca2c86ee7f19b6b31da563df53d811ea65f37e1a7d82fa320"
+    },
+    "scope": "27 ledger IDs, exact source/fixture/negative-control observations, 138 preserved hashes, 52 preserved extraction outcomes, 27 sweep receipts and Mists warning boundary",
+    "invalidated": false
   }
 ]
