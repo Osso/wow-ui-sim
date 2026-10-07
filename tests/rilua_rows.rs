@@ -9,7 +9,8 @@ fn secret_env() -> WowLuaEnv {
     let loader = env.loader_env();
     let mut lua = loader.rilua_mut();
     rilua::table_security::register_table_security(&mut lua).unwrap();
-    let secret = rilua::table_security::wrap_host_secret_string(lua.state_mut(), "Alessio-Silvermoon");
+    let secret =
+        rilua::table_security::wrap_host_secret_string(lua.state_mut(), "Alessio-Silvermoon");
     lua.state_mut().push(secret);
     lua.set_global_val("SecretName", secret).unwrap();
     lua.state_mut().pop();
@@ -19,7 +20,9 @@ fn secret_env() -> WowLuaEnv {
 
 #[test]
 fn rilua_rows_drop_access_denies_descendants_without_taint_and_recovers() {
-    secret_env().exec(r#"
+    secret_env()
+        .exec(
+            r#"
         local function denied()
             assert(canaccesssecrets() and issecure())
             assert(secretunwrap(SecretName) == 'Alessio-Silvermoon')
@@ -53,12 +56,16 @@ fn rilua_rows_drop_access_denies_descendants_without_taint_and_recovers() {
         end
         assert(not pcall(fail))
         assert(canaccesssecrets())
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
 }
 
 #[test]
 fn rilua_rows_secret_table_predicate_classifies_metadata_in_both_callers() {
-    secret_env().exec(r#"
+    secret_env()
+        .exec(
+            r#"
         local ordinary = {value = secretwrap(17)}
         local wrapped = secretwrap({value = 17})
         local contents = {value = 17}
@@ -78,13 +85,17 @@ fn rilua_rows_secret_table_predicate_classifies_metadata_in_both_callers() {
         local function revoked() dropsecretaccess(); probe() end
         revoked()
         assert(canaccesssecrets())
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
 }
 
 #[cfg(feature = "retail-12-0-5")]
 #[test]
 fn rilua_rows_ambiguate_transforms_secret_names_without_revealing_or_changing_taint() {
-    secret_env().exec(r#"
+    secret_env()
+        .exec(
+            r#"
         local function probe()
             local before = debug.getstacktaint()
             ShortName = Ambiguate(SecretName, 'short')
@@ -105,7 +116,9 @@ fn rilua_rows_ambiguate_transforms_secret_names_without_revealing_or_changing_ta
         collectgarbage('collect')
         assert(secretunwrap(ShortName) == 'Alessio')
         assert(debug.getstacktaint() == nil)
-    "#).unwrap();
+    "#,
+        )
+        .unwrap();
 }
 
 #[cfg(feature = "retail-12-0-5")]
@@ -149,10 +162,14 @@ fn budget_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     {
         let mut sim = env.state().borrow_mut();
-        sim.addons.push(AddonInfo { folder_name: "BudgetAddon".into(), ..Default::default() });
+        sim.addons.push(AddonInfo {
+            folder_name: "BudgetAddon".into(),
+            ..Default::default()
+        });
         sim.loading_addon_index = Some(0);
     }
-    env.exec(r#"
+    env.exec(
+        r#"
         BudgetFrame = CreateFrame('Frame', 'BudgetFrame')
         BudgetFrame:RegisterEvent('PLAYER_LOGOUT')
         BudgetFrame:RegisterEvent('ADDONS_UNLOADING')
@@ -168,12 +185,16 @@ fn budget_env() -> WowLuaEnv {
         end
         debug.setobjecttaint(handler, 'BudgetAddon')
         BudgetFrame:SetScript('OnEvent', handler)
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
     env.state().borrow_mut().loading_addon_index = None;
-    env.loader_env().with_state(|state| {
-        state.set_instruction_budget("BudgetAddon", Some(100));
-        Ok::<_, rilua::LuaError>(())
-    }).unwrap();
+    env.loader_env()
+        .with_state(|state| {
+            state.set_instruction_budget("BudgetAddon", Some(100));
+            Ok::<_, rilua::LuaError>(())
+        })
+        .unwrap();
     env
 }
 
@@ -181,19 +202,26 @@ fn budget_env() -> WowLuaEnv {
 fn assert_event_budget(named: bool) {
     let env = budget_env();
     let dispatch = |event| {
-        if named { env.loader_env().fire_event_with_args(event, &[]) }
-        else { env.fire_event(event) }.unwrap();
+        if named {
+            env.loader_env().fire_event_with_args(event, &[])
+        } else {
+            env.fire_event(event)
+        }
+        .unwrap();
     };
     dispatch("PLAYER_LOGIN");
-    env.exec("assert(Completed == 0); assert(string.find(BudgetError, 'instruction budget exhausted', 1, true))").unwrap();
+    env.exec("assert(Completed == 0, 'completed='..tostring(Completed)..' error='..tostring(BudgetError)); assert(string.find(BudgetError, 'instruction budget exhausted', 1, true), tostring(BudgetError))").unwrap();
     dispatch("PLAYER_LOGOUT");
     dispatch("ADDONS_UNLOADING");
     env.exec("assert(Completed == 2)").unwrap();
     dispatch("PLAYER_LOGIN");
     env.exec("assert(Completed == 2); Iterations = 1").unwrap();
-    env.loader_env().with_state(|state| state.reset_instruction_usage("BudgetAddon")).unwrap();
+    env.loader_env()
+        .with_state(|state| state.reset_instruction_usage("BudgetAddon"))
+        .unwrap();
     dispatch("PLAYER_LOGIN");
-    env.exec("assert(Completed == 3); assert(debug.getstacktaint() == nil)").unwrap();
+    env.exec("assert(Completed == 3); assert(debug.getstacktaint() == nil)")
+        .unwrap();
 }
 
 #[cfg(feature = "retail-12-0-5")]
