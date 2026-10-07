@@ -33,6 +33,12 @@ end
 assert(type(ConsoleGetFontHeight) == 'function')
 assert(type(ConsoleSetFontHeight) == 'function')
 assert(type(ConsoleGetAllCommands) == 'function')
+for _, name in ipairs({'GetNumAddOns', 'IsAddOnLoaded', 'GetAddOnEnableState', 'IsAddOnLoadOnDemand', 'LoadAddOn'}) do
+    assert(rawget(_G, name) == nil)
+    assert(_G[name] == nil)
+    assert(type(C_AddOns[name]) == 'function')
+end
+assert(type(GetAddOnMetadata) == 'function')
 "#;
 
 #[test]
