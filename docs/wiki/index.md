@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 10.0.2 page audit
+
+[Audit](investigations/patch-10-0-2-api-audit.md) accounts for revision 2926754, 416 inventory + 167 extract occurrences, twenty unused retail namespace retirements and 149 exact retained gaps. Plain CVar parser fixture, 25 isolated sweeps, exact negative control, bare/cached/Mists behavior, warning-clean non-vendor checks and exit-0 startup `[]` pass. All 583 IDs accounted; 152 prior inputs and every extract-mode outcome preserved. Substantive extract behavior remains pending.
+
 ## [2026-10-07] evidence | 10.1.0 page audit
 
 [Audit](investigations/patch-10-1-0-api-audit.md) accounts for revision 2236681, 129 inventory + 287 extract occurrences, ten unused retail-only namespace retirements and 36 exact publication gaps. Level-two Structures extraction omission reproduced and fixed; all prior extraction-mode results preserved. Twenty-two isolated sweeps, exact 36 → 37 negative control, behavior/cached-prefork proof, format/default/Mists checks and exit-0 startup `[]` pass. All 416 IDs accounted; 134 prior inputs preserved. Substantive extract contracts remain pending; no vendor/classic/canonical working-file changes or sibling target reuse.

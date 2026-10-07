@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 10.0.2 page audit
+
+[Audit](investigations/patch-10-0-2-api-audit.md): 583 unique IDs, 267/416 publication OK, twenty bounded retirements, 149 exact gaps, 156 substantive extract rows pending. All 25 isolated sweeps, negative control, cached prefork, Mists preservation/check and startup `[]` pass; prior inputs and extract outcomes unchanged.
+
 ## [2026-10-07] evidence | 10.1.0 page audit
 
 [Audit](investigations/patch-10-1-0-api-audit.md) accounts for revision 2236681, 129 inventory + 287 extract occurrences, ten unused retail-only namespace retirements and 36 exact publication gaps. Level-two Structures extraction omission reproduced and fixed; all prior extraction-mode results preserved. Twenty-two isolated sweeps, exact 36 → 37 negative control, behavior/cached-prefork proof, format/default/Mists checks and exit-0 startup `[]` pass. All 416 IDs accounted; 134 prior inputs preserved. Substantive extract contracts remain pending; no vendor/classic/canonical working-file changes or sibling target reuse.

@@ -1,0 +1,28 @@
+tests/patch_10_0_2_classic_surfaces.rs:8:for _, name in ipairs({'SetKeystoneTooltip'}) do
+tests/patch_10_0_2_classic_surfaces.rs:11:for _, name in ipairs({'SetCorruptionReforgerItemTooltip', 'SetItemConversionOutputTooltip'}) do
+tests/patch_10_0_2_classic_surfaces.rs:14:for _, name in ipairs({'GetUnspentPointsForSkillLine'}) do
+tests/patch_10_0_2_classic_surfaces.rs:17:for _, name in ipairs({'CancelCraftingOrder', 'CompleteCraftingOrder', 'DeclineCraftingOrder', 'GetCraftingOrders', 'GetCurrentOrder', 'GetRecipeTools', 'HasCraftingOrderFavorites', 'HasMaxCraftingOrderFavorites', 'IsCraftingOrderFavorite', 'ListCraftingOrder', 'QueryCraftingOrdersFavorites', 'QueryCraftingOrders', 'RecipeCanBeRecrafted', 'SetCraftingOrderFavorite', 'SetTooltipRecipeResultItem', 'StartCraftingOrder'}) do
+tests/patch_10_0_2_publication_fixes.rs:5:for _, name in ipairs({'SetKeystoneTooltip'}) do
+tests/patch_10_0_2_publication_fixes.rs:10:for _, name in ipairs({'SetCorruptionReforgerItemTooltip', 'SetItemConversionOutputTooltip'}) do
+tests/patch_10_0_2_publication_fixes.rs:15:for _, name in ipairs({'GetUnspentPointsForSkillLine'}) do
+tests/patch_10_0_2_publication_fixes.rs:20:for _, name in ipairs({'CancelCraftingOrder', 'CompleteCraftingOrder', 'DeclineCraftingOrder', 'GetCraftingOrders', 'GetCurrentOrder', 'GetRecipeTools', 'HasCraftingOrderFavorites', 'HasMaxCraftingOrderFavorites', 'IsCraftingOrderFavorite', 'ListCraftingOrder', 'QueryCraftingOrdersFavorites', 'QueryCraftingOrders', 'RecipeCanBeRecrafted', 'SetCraftingOrderFavorite', 'SetTooltipRecipeResultItem', 'StartCraftingOrder'}) do
+src/c_api/patch_retired_members.rs:21:    ("C_ChallengeMode", &["SetKeystoneTooltip"]),
+src/c_api/patch_retired_members.rs:25:            "SetCorruptionReforgerItemTooltip",
+src/c_api/patch_retired_members.rs:26:            "SetItemConversionOutputTooltip",
+src/c_api/patch_retired_members.rs:29:    ("C_ProfSpecs", &["GetUnspentPointsForSkillLine"]),
+src/c_api/patch_retired_members.rs:33:            "CancelCraftingOrder",
+src/c_api/patch_retired_members.rs:34:            "CompleteCraftingOrder",
+src/c_api/patch_retired_members.rs:35:            "DeclineCraftingOrder",
+src/c_api/patch_retired_members.rs:36:            "GetCraftingOrders",
+src/c_api/patch_retired_members.rs:37:            "GetCurrentOrder",
+src/c_api/patch_retired_members.rs:38:            "GetRecipeTools",
+src/c_api/patch_retired_members.rs:39:            "HasCraftingOrderFavorites",
+src/c_api/patch_retired_members.rs:40:            "HasMaxCraftingOrderFavorites",
+src/c_api/patch_retired_members.rs:41:            "IsCraftingOrderFavorite",
+src/c_api/patch_retired_members.rs:42:            "ListCraftingOrder",
+src/c_api/patch_retired_members.rs:43:            "QueryCraftingOrdersFavorites",
+src/c_api/patch_retired_members.rs:44:            "QueryCraftingOrders",
+src/c_api/patch_retired_members.rs:45:            "RecipeCanBeRecrafted",
+src/c_api/patch_retired_members.rs:46:            "SetCraftingOrderFavorite",
+src/c_api/patch_retired_members.rs:47:            "SetTooltipRecipeResultItem",
+src/c_api/patch_retired_members.rs:48:            "StartCraftingOrder",

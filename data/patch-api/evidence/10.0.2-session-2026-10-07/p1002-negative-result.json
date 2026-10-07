@@ -1,0 +1,10 @@
+{
+  "exit": 101,
+  "control_id": "wt-global-api-UnitTokenFromGUID-315",
+  "base_gaps": 149,
+  "negative_gaps": 150,
+  "new_gaps": [
+    "wt-global-api-UnitTokenFromGUID-315"
+  ],
+  "resolved_gaps": []
+}

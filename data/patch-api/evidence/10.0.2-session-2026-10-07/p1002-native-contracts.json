@@ -1,0 +1,1578 @@
+[
+  {
+    "source_id": "wt-global-api-C_ActionBar.GetProfessionQuality-116",
+    "symbol": "C_ActionBar.GetProfessionQuality",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ActionBarFrameDocumentation.lua",
+        "line": 394,
+        "namespace": "C_ActionBar",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionQuality\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"actionID\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"quality\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionQualityInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"actionID\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"CraftingQualityInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSpell\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"actionID\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_ArtifactUI.IsArtifactItem-117",
+    "symbol": "C_ArtifactUI.IsArtifactItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ArtifactUIDocumentation.lua",
+        "line": 702,
+        "namespace": "C_ArtifactUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"IsArtifactItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemLocation\", Type = \"ItemLocation\", Mixin = \"ItemLocationMixin\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isArtifact\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsAtForge\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isAtForge\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsEquippedArtifactDisabled\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"artifactDisabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsEquippedArtifactMaxed\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"artifactMaxed\", Type = \"bool\", Nilable = false },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.ContainerRefundItemPurchase-121",
+    "symbol": "C_Container.ContainerRefundItemPurchase",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 36,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"ContainerRefundItemPurchase\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"isEquipped\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetBackpackAutosortDisabled\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isDisabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetBackpackSellJunkDisabled\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isDisabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetBagName\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"bagIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.GetBankAutosortDisabled-124",
+    "symbol": "C_Container.GetBankAutosortDisabled",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 97,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetBankAutosortDisabled\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isDisabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerFreeSlots\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"freeSlots\", Type = \"table\", InnerType = \"luaIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemCooldown\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"startTime\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"duration\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"enable\", Type = \"number\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.GetContainerItemDurability-127",
+    "symbol": "C_Container.GetContainerItemDurability",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 140,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemDurability\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"durability\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"maxDurability\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemEquipmentSetInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"inSet\", Type = \"bool\", Nilable = false },\n\t\t\t\t{ Name = \"setList\", Type = \"string\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.GetContainerItemEquipmentSetInfo-128",
+    "symbol": "C_Container.GetContainerItemEquipmentSetInfo",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 158,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemEquipmentSetInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"inSet\", Type = \"bool\", Nilable = false },\n\t\t\t\t{ Name = \"setList\", Type = \"string\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"containerID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemInfo\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.GetContainerItemPurchaseCurrency-132",
+    "symbol": "C_Container.GetContainerItemPurchaseCurrency",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 225,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemPurchaseCurrency\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"itemIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"isEquipped\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"currencyInfo\", Type = \"ItemPurchaseCurrency\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemPurchaseInfo\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"isEquipped\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"ItemPurchaseInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemPurchaseItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.GetContainerItemPurchaseItem-134",
+    "symbol": "C_Container.GetContainerItemPurchaseItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 262,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemPurchaseItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"itemIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"isEquipped\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"itemInfo\", Type = \"ItemPurchaseItem\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemQuestInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"questInfo\", Type = \"ItemQuestInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerNumFreeSlots\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.GetInsertItemsLeftToRight-138",
+    "symbol": "C_Container.GetInsertItemsLeftToRight",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 328,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetInsertItemsLeftToRight\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetItemCooldown\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"startTime\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"duration\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"enable\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetMaxArenaCurrency\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"maxCurrency\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSortBagsRightToLeft\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.GetMaxArenaCurrency-140",
+    "symbol": "C_Container.GetMaxArenaCurrency",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 355,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetMaxArenaCurrency\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"maxCurrency\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSortBagsRightToLeft\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"HasContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasItem\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsBattlePayItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.GetSortBagsRightToLeft-141",
+    "symbol": "C_Container.GetSortBagsRightToLeft",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 364,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetSortBagsRightToLeft\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"HasContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasItem\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsBattlePayItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isBattlePayItem\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.PlayerHasHearthstone-145",
+    "symbol": "C_Container.PlayerHasHearthstone",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 431,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"PlayerHasHearthstone\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBackpackAutosortDisabled\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"disable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBackpackSellJunkDisabled\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"disable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBagPortraitTexture\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"texture\", Type = \"SimpleTexture\", Nilable = false },\n\t\t\t\t{ Name = \"bagIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.SetBackpackAutosortDisabled-146",
+    "symbol": "C_Container.SetBackpackAutosortDisabled",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 440,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SetBackpackAutosortDisabled\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"disable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBackpackSellJunkDisabled\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"disable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBagPortraitTexture\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"texture\", Type = \"SimpleTexture\", Nilable = false },\n\t\t\t\t{ Name = \"bagIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBagSlotFlag\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"bagIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"flag\", Type = \"BagSlotFlags\", Nilable = false },\n\t\t\t\t{ Name = \"isSet\", Type = \"bool\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.SetBankAutosortDisabled-148",
+    "symbol": "C_Container.SetBankAutosortDisabled",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 483,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SetBankAutosortDisabled\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"disable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetInsertItemsLeftToRight\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"enable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetItemSearch\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"searchString\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetSortBagsRightToLeft\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"enable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.SetInsertItemsLeftToRight-149",
+    "symbol": "C_Container.SetInsertItemsLeftToRight",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 493,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SetInsertItemsLeftToRight\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"enable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetItemSearch\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"searchString\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetSortBagsRightToLeft\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"enable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ShowContainerSellCursor\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.SetItemSearch-150",
+    "symbol": "C_Container.SetItemSearch",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 503,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SetItemSearch\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"searchString\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetSortBagsRightToLeft\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"enable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ShowContainerSellCursor\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SocketContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.SetSortBagsRightToLeft-151",
+    "symbol": "C_Container.SetSortBagsRightToLeft",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 513,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SetSortBagsRightToLeft\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"enable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ShowContainerSellCursor\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SocketContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"success\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SortAccountBankBags\",\n\t\t\tType = \"Function\",\n\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.ShowContainerSellCursor-152",
+    "symbol": "C_Container.ShowContainerSellCursor",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 523,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"ShowContainerSellCursor\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SocketContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"success\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SortAccountBankBags\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"SortBags\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"SortBank\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.SocketContainerItem-153",
+    "symbol": "C_Container.SocketContainerItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 534,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SocketContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"success\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SortAccountBankBags\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"SortBags\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"SortBank\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"bankType\", Type = \"BankType\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SortBankBags\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"SplitContainerItem\",\n\t\t\tType = \"Function\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.SortBags-154",
+    "symbol": "C_Container.SortBags",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 554,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SortBags\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"SortBank\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"bankType\", Type = \"BankType\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SortBankBags\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"SplitContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"amount\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"UseContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"unitToken\", Type = \"UnitToken\", Nilable = true },\n\t\t\t\t{ Name = \"bankType\", Type = \"BankType\", Nilable = true },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.SortBankBags-155",
+    "symbol": "C_Container.SortBankBags",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 568,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SortBankBags\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"SplitContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"amount\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"UseContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"unitToken\", Type = \"UnitToken\", Nilable = true },\n\t\t\t\t{ Name = \"bankType\", Type = \"BankType\", Nilable = true },\n\t\t\t\t{ Name = \"reagentBankOpen\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"UseHearthstone\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"used\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t},\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Container.UseHearthstone-159",
+    "symbol": "C_Container.UseHearthstone",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 598,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"UseHearthstone\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"used\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t},\n\n\tEvents =\n\t{\n\t\t{\n\t\t\tName = \"BagClosed\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"BAG_CLOSED\",\n\t\t\tSynchronousEvent = true,\n\t\t\tPayload =\n\t\t\t{\n\t\t\t\t{ Name = \"bagID\", Type = \"BagIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"BagContainerUpdate\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"BAG_CONTAINER_UPDATE\",\n\t\t\tSynchronousEvent = true,\n\t\t},\n\t\t{\n\t\t\tName = \"BagNewItemsUpdated\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"BAG_NEW_ITEMS_UPDATED\",\n\t\t\tSynchronousEvent = true,\n\t\t},\n\t\t{\n\t\t\tName = \"BagOpen\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"BAG_OPEN\",\n\t\t\tSynchronousEvent = true,\n\t\t\tPayload ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.CalculateCraftingOrderPostingFee-161",
+    "symbol": "C_CraftingOrders.CalculateCraftingOrderPostingFee",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 20,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"CalculateCraftingOrderPostingFee\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineAbilityID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"orderType\", Type = \"CraftingOrderType\", Nilable = false },\n\t\t\t\t{ Name = \"orderDuration\", Type = \"CraftingOrderDuration\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"deposit\", Type = \"WOWMONEY\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"CanOrderSkillAbility\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineAbilityID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"canOrder\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"CancelOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.CancelOrder-162",
+    "symbol": "C_CraftingOrders.CancelOrder",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 52,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"CancelOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ClaimOrder\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"CloseCrafterCraftingOrders\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"CloseCustomerCraftingOrders\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"FulfillOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t\t{ Name = \"crafterNote\", Type = \"string\", Nilable = false },\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.ClaimOrder-164",
+    "symbol": "C_CraftingOrders.ClaimOrder",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 62,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"ClaimOrder\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"CloseCrafterCraftingOrders\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"CloseCustomerCraftingOrders\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"FulfillOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t\t{ Name = \"crafterNote\", Type = \"string\", Nilable = false },\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetClaimedOrder\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"order\", Type = \"CraftingOrderInfo\", Nilable = true },\n\t\t\t},\n\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.FulfillOrder-166",
+    "symbol": "C_CraftingOrders.FulfillOrder",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 82,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"FulfillOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t\t{ Name = \"crafterNote\", Type = \"string\", Nilable = false },\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetClaimedOrder\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"order\", Type = \"CraftingOrderInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetCrafterBuckets\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"buckets\", Type = \"table\", InnerType = \"CraftingOrderBucketInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetCrafterOrders\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"orders\", Type = \"table\", InnerType = \"CraftingOrderInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetCraftingOrderTime\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.GetCustomerOrders-171",
+    "symbol": "C_CraftingOrders.GetCustomerOrders",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 154,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetCustomerOrders\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"customerOrders\", Type = \"table\", InnerType = \"CraftingOrderInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetDefaultOrdersSkillLine\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetMyOrders\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"myOrders\", Type = \"table\", InnerType = \"CraftingOrderInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetNumFavoriteCustomerOptions\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"numFavorites\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetOrderClaimInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.GetDefaultOrdersSkillLine-172",
+    "symbol": "C_CraftingOrders.GetDefaultOrdersSkillLine",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 163,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetDefaultOrdersSkillLine\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetMyOrders\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"myOrders\", Type = \"table\", InnerType = \"CraftingOrderInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetNumFavoriteCustomerOptions\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"numFavorites\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetOrderClaimInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"claimInfo\", Type = \"CraftingOrderClaimsRemainingInfo\", Nilable = false },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.ListMyOrders-175",
+    "symbol": "C_CraftingOrders.ListMyOrders",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 238,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"ListMyOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"request\", Type = \"CraftingOrderRequestMyOrdersInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"OpenCrafterCraftingOrders\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"OpenCustomerCraftingOrders\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"OrderCanBeRecrafted\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"recraftable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ParseCustomerOptions\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"PlaceNewOrder\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.OpenCustomerCraftingOrders-177",
+    "symbol": "C_CraftingOrders.OpenCustomerCraftingOrders",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 252,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"OpenCustomerCraftingOrders\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"OrderCanBeRecrafted\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"recraftable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ParseCustomerOptions\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"PlaceNewOrder\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderInfo\", Type = \"NewCraftingOrderInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"RejectOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.RejectOrder-180",
+    "symbol": "C_CraftingOrders.RejectOrder",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 286,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"RejectOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t\t{ Name = \"crafterNote\", Type = \"string\", Nilable = false },\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ReleaseOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"RequestCrafterOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"request\", Type = \"CraftingOrderRequestInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"RequestCustomerOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"request\", Type = \"CraftingOrderRequestInfo\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.ReleaseOrder-181",
+    "symbol": "C_CraftingOrders.ReleaseOrder",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 298,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"ReleaseOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"RequestCrafterOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"request\", Type = \"CraftingOrderRequestInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"RequestCustomerOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"request\", Type = \"CraftingOrderRequestInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetCustomerOptionFavorited\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"favorited\", Type = \"bool\", Nilable = false },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.RequestCrafterOrders-182",
+    "symbol": "C_CraftingOrders.RequestCrafterOrders",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 309,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"RequestCrafterOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"request\", Type = \"CraftingOrderRequestInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"RequestCustomerOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"request\", Type = \"CraftingOrderRequestInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetCustomerOptionFavorited\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"favorited\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ShouldShowCraftingOrderTab\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"showTab\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.RequestCustomerOrders-183",
+    "symbol": "C_CraftingOrders.RequestCustomerOrders",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+        "line": 319,
+        "namespace": "C_CraftingOrders",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"RequestCustomerOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"request\", Type = \"CraftingOrderRequestInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetCustomerOptionFavorited\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"favorited\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ShouldShowCraftingOrderTab\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"showTab\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SkillLineHasOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetItemLinkByGUID-187",
+    "symbol": "C_Item.GetItemLinkByGUID",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemDocumentation.lua",
+        "line": 749,
+        "namespace": "C_Item",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetItemLinkByGUID\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"itemLink\", Type = \"string\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetItemLocation\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"itemLocation\", Type = \"ItemLocation\", Mixin = \"ItemLocationMixin\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetItemMaxStackSize\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemLocation\", Type = \"ItemLocation\", Mixin = \"ItemLocationMixin\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Mail.GetCraftingOrderMailInfo-188",
+    "symbol": "C_Mail.GetCraftingOrderMailInfo",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/MailInfoDocumentation.lua",
+        "line": 21,
+        "namespace": "C_Mail",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetCraftingOrderMailInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"inboxIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"CraftingOrderMailInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"HasInboxMoney\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"inboxIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"inboxItemHasMoneyAttached\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsCommandPending\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isCommandPending\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetOpeningAll\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_MythicPlus.GetEndOfRunGearSequenceLevel-189",
+    "symbol": "C_MythicPlus.GetEndOfRunGearSequenceLevel",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/MythicPlusInfoDocumentation.lua",
+        "line": 50,
+        "namespace": "C_MythicPlus",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetEndOfRunGearSequenceLevel\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"keystoneLevel\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"sequenceLevel\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLastWeeklyBestInformation\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"challengeMapId\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"level\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetOwnedKeystoneChallengeMapID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"challengeMapID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetOwnedKeystoneLevel\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_PaperDollInfo.CanAutoEquipCursorItem-190",
+    "symbol": "C_PaperDollInfo.CanAutoEquipCursorItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PaperDollInfoDocumentation.lua",
+        "line": 11,
+        "namespace": "C_PaperDollInfo",
+        "excerpt": "\t{\n\t\t{\n\t\t\tName = \"CanAutoEquipCursorItem\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"canAutoEquip\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"CanCursorCanGoInSlot\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"canOccupySlot\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"CancelTemporaryEnchantment\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Cancels active temporary enchantments on inventory slot items.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"LuaInventorySlot\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetArmorEffectiveness\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_PaperDollInfo.CanCursorCanGoInSlot-191",
+    "symbol": "C_PaperDollInfo.CanCursorCanGoInSlot",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PaperDollInfoDocumentation.lua",
+        "line": 20,
+        "namespace": "C_PaperDollInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"CanCursorCanGoInSlot\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"canOccupySlot\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"CancelTemporaryEnchantment\",\n\t\t\tType = \"Function\",\n\t\t\tHasRestrictions = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Cancels active temporary enchantments on inventory slot items.\" },\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"LuaInventorySlot\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetArmorEffectiveness\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"armor\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"attackerLevel\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"effectiveness\", Type = \"number\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.HasVisibleInvSlot-192",
+    "symbol": "C_PlayerInfo.HasVisibleInvSlot",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerInfoDocumentation.lua",
+        "line": 191,
+        "namespace": "C_PlayerInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"HasVisibleInvSlot\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isVisible\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsAccountBankEnabled\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isAccountBankEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsCharacterBankEnabled\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isCharacterBankEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsDisplayRaceNative\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isDisplayRaceNative\", Type = \"bool\", Nilable = false },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_ProfSpecs.ShouldShowPointsReminderForSkillLine-195",
+    "symbol": "C_ProfSpecs.ShouldShowPointsReminderForSkillLine",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ProfessionSpecUIDocumentation.lua",
+        "line": 353,
+        "namespace": "C_ProfSpecs",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"ShouldShowPointsReminderForSkillLine\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"showReminder\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ShouldShowSpecTab\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"showSpecTab\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SkillLineHasSpecialization\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasSpecialization\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t},\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetUIDisplaySeason-197",
+    "symbol": "C_PvP.GetUIDisplaySeason",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua",
+        "line": 776,
+        "namespace": "C_PvP",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetUIDisplaySeason\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"uiDisplaySeason\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetWarModeRewardBonus\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"rewardBonus\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetWarModeRewardBonusDefault\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"defaultBonus\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetWeeklyChestInfo\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"rewardAchieved\", Type = \"bool\", Nilable = false },\n\t\t\t\t{ Name = \"lastWeekRewardAchieved\", Type = \"bool\", Nilable = false },\n\t\t\t\t{ Name = \"lastWeekRewardClaimed\", Type = \"bool\", Nilable = false },\n\t\t\t\t{ Name = \"pvpTierMaxFromWins\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetZonePVPInfo\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.DoesQuestAwardReputationWithFaction-198",
+    "symbol": "C_QuestLog.DoesQuestAwardReputationWithFaction",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua",
+        "line": 61,
+        "namespace": "C_QuestLog",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"DoesQuestAwardReputationWithFaction\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"questID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"targetFactionID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"awardsReputation\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetAbandonQuest\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"questID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetAbandonQuestItems\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"itemIDs\", Type = \"table\", InnerType = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetActivePreyQuest\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_SystemVisibilityManager.IsSystemVisible-200",
+    "symbol": "C_SystemVisibilityManager.IsSystemVisible",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UISystemVisibilityManagerDocumentation.lua",
+        "line": 11,
+        "namespace": "C_SystemVisibilityManager",
+        "excerpt": "\t{\n\t\t{\n\t\t\tName = \"IsSystemVisible\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"system\", Type = \"UISystemType\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"visible\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t},\n\n\tEvents =\n\t{\n\t\t{\n\t\t\tName = \"SystemVisibilityChanged\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"SYSTEM_VISIBILITY_CHANGED\",\n\t\t\tUniqueEvent = true,\n\t\t},\n\t},\n\n\tTables =\n\t{\n\t\t{\n\t\t\tName = \"UISystemType\",\n\t\t\tType = \"Enumeration\",\n\t\t\tNumValues = 1,\n\t\t\tMinValue = 0,\n\t\t\tMaxValue = 0,\n\t\t\tFields =\n\t\t\t{\n\t\t\t\t{ Name = \"InGameNavigation\", Type = \"UISystemType\", EnumValue = 0 },\n\t\t\t},\n\t\t},\n\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipComparison.GetItemComparisonDelta-202",
+    "symbol": "C_TooltipComparison.GetItemComparisonDelta",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipComparisonDocumentation.lua",
+        "line": 24,
+        "namespace": "C_TooltipComparison",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetItemComparisonDelta\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"comparisonItem\", Type = \"TooltipComparisonItem\", Nilable = false },\n\t\t\t\t{ Name = \"equippedItem\", Type = \"TooltipComparisonItem\", Nilable = false },\n\t\t\t\t{ Name = \"pairedItem\", Type = \"TooltipComparisonItem\", Nilable = true },\n\t\t\t\t{ Name = \"addPairedStats\", Type = \"bool\", Nilable = true, Documentation = { \"Whether the paired item's stats are added or subtracted\" } },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"lines\", Type = \"table\", InnerType = \"string\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetItemComparisonInfo\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"comparisonItem\", Type = \"TooltipComparisonItem\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"TooltipItemComparisonInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t},\n\n\tEvents =\n\t{\n\t\t{\n\t\t\tName = \"TooltipShowItemComparison\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipComparison.GetItemComparisonInfo-203",
+    "symbol": "C_TooltipComparison.GetItemComparisonInfo",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipComparisonDocumentation.lua",
+        "line": 43,
+        "namespace": "C_TooltipComparison",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetItemComparisonInfo\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"comparisonItem\", Type = \"TooltipComparisonItem\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"TooltipItemComparisonInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t},\n\n\tEvents =\n\t{\n\t\t{\n\t\t\tName = \"TooltipShowItemComparison\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"TOOLTIP_SHOW_ITEM_COMPARISON\",\n\t\t\tCallbackEvent = true,\n\t\t\tPayload =\n\t\t\t{\n\t\t\t\t{ Name = \"comparisonItem\", Type = \"TooltipComparisonItem\", Nilable = false },\n\t\t\t\t{ Name = \"tooltip\", Type = \"Tooltip\", Nilable = false },\n\t\t\t\t{ Name = \"anchorFrame\", Type = \"SimpleFrame\", Nilable = true },\n\t\t\t},\n\t\t},\n\t},\n\n\tTables =\n\t{\n\t\t{\n\t\t\tName = \"TooltipComparisonMethod\",\n\t\t\tType = \"Enumeration\",\n\t\t\tNumValues = 4,\n\t\t\tMinValue = 0,"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetArtifactItem-206",
+    "symbol": "C_TooltipInfo.GetArtifactItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 43,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetArtifactItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetArtifactPowerByID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"powerID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetAzeriteEssence\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"essenceID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"rank\", Type = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetArtifactPowerByID-207",
+    "symbol": "C_TooltipInfo.GetArtifactPowerByID",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 53,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetArtifactPowerByID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"powerID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetAzeriteEssence\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"essenceID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"rank\", Type = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetAzeriteEssenceSlot\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetAzeriteEssenceSlot-208",
+    "symbol": "C_TooltipInfo.GetAzeriteEssenceSlot",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 86,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetAzeriteEssenceSlot\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"AzeriteEssenceSlot\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetAzeritePower\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"itemLevel\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"powerID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"owningItemLink\", Type = \"cstring\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetBackpackToken\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetAzeriteEssence-209",
+    "symbol": "C_TooltipInfo.GetAzeriteEssence",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 69,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetAzeriteEssence\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"essenceID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"rank\", Type = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetAzeriteEssenceSlot\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"AzeriteEssenceSlot\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetAzeritePower\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetAzeritePower-210",
+    "symbol": "C_TooltipInfo.GetAzeritePower",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 102,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetAzeritePower\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"itemLevel\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"powerID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"owningItemLink\", Type = \"cstring\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetBackpackToken\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"index\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetBagItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetBagItemChild-212",
+    "symbol": "C_TooltipInfo.GetBagItemChild",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 154,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetBagItemChild\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"bagIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"equipSlotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetBuybackItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"index\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetCompanionPet\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetBuybackItem-214",
+    "symbol": "C_TooltipInfo.GetBuybackItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 172,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetBuybackItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"index\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetCompanionPet\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"petGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetConduit\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"conduitID\", Type = \"number\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetConduit-216",
+    "symbol": "C_TooltipInfo.GetConduit",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 204,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetConduit\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"conduitID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"conduitRank\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetCurrencyByID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"currencyID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"amount\", Type = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetCurrencyToken\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetEnhancedConduit-219",
+    "symbol": "C_TooltipInfo.GetEnhancedConduit",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 254,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetEnhancedConduit\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"conduitID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"rank\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetEquipmentSet\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"setID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetExistingSocketGem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetEquipmentSet-220",
+    "symbol": "C_TooltipInfo.GetEquipmentSet",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 271,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetEquipmentSet\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"setID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetExistingSocketGem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"index\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"toDestroy\", Type = \"bool\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetGuildBankItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetInventoryItemByID-227",
+    "symbol": "C_TooltipInfo.GetInventoryItemByID",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 407,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetInventoryItemByID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetItemByGUID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"guid\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetItemByID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetItemInteractionItem-231",
+    "symbol": "C_TooltipInfo.GetItemInteractionItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 474,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetItemInteractionItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetItemKey\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"itemLevel\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"itemSuffix\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"requiredLevel\", Type = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLFGDungeonReward\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"dungeonID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"lootIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetItemKey-232",
+    "symbol": "C_TooltipInfo.GetItemKey",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 484,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetItemKey\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"itemLevel\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"itemSuffix\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"requiredLevel\", Type = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLFGDungeonReward\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"dungeonID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"lootIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLFGDungeonShortageReward\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetLFGDungeonReward-233",
+    "symbol": "C_TooltipInfo.GetLFGDungeonReward",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 503,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetLFGDungeonReward\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"dungeonID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"lootIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLFGDungeonShortageReward\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"dungeonID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"shortageSeverity\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"lootIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLootCurrency\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetLFGDungeonShortageReward-234",
+    "symbol": "C_TooltipInfo.GetLFGDungeonShortageReward",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 520,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetLFGDungeonShortageReward\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"dungeonID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"shortageSeverity\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"lootIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLootCurrency\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLootItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetLootCurrency-235",
+    "symbol": "C_TooltipInfo.GetLootCurrency",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 538,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetLootCurrency\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLootItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLootRollItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"id\", Type = \"number\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetLootItem-236",
+    "symbol": "C_TooltipInfo.GetLootItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 554,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetLootItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetLootRollItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"id\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetMerchantCostItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetLootRollItem-237",
+    "symbol": "C_TooltipInfo.GetLootRollItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 570,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetLootRollItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"id\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetMerchantCostItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"costIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetMerchantItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetMerchantCostItem-238",
+    "symbol": "C_TooltipInfo.GetMerchantCostItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 586,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetMerchantCostItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"costIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetMerchantItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetMinimapMouseover\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetPossession-244",
+    "symbol": "C_TooltipInfo.GetPossession",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 694,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetPossession\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetPvpBrawl\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"isSpecial\", Type = \"bool\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetPvpTalent\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"talentID\", Type = \"number\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetPvpBrawl-245",
+    "symbol": "C_TooltipInfo.GetPvpBrawl",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 710,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetPvpBrawl\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"isSpecial\", Type = \"bool\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetPvpTalent\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"talentID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"isInspect\", Type = \"bool\", Nilable = true },\n\t\t\t\t{ Name = \"groupIndex\", Type = \"luaIndex\", Nilable = true },\n\t\t\t\t{ Name = \"talentIndex\", Type = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetQuestCurrency\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetPvpTalent-246",
+    "symbol": "C_TooltipInfo.GetPvpTalent",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 726,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetPvpTalent\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"talentID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"isInspect\", Type = \"bool\", Nilable = true },\n\t\t\t\t{ Name = \"groupIndex\", Type = \"luaIndex\", Nilable = true },\n\t\t\t\t{ Name = \"talentIndex\", Type = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetQuestCurrency\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"type\", Type = \"cstring\", Nilable = false },\n\t\t\t\t{ Name = \"currencyIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetQuestItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetQuestLogSpecialItem-252",
+    "symbol": "C_TooltipInfo.GetQuestLogSpecialItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 817,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetQuestLogSpecialItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"questIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetQuestPartyProgress\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"questID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"omitTitle\", Type = \"bool\", Nilable = true },\n\t\t\t\t{ Name = \"ignoreActivePlayer\", Type = \"bool\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeRankInfo\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetQuestPartyProgress-253",
+    "symbol": "C_TooltipInfo.GetQuestPartyProgress",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 833,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetQuestPartyProgress\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"questID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"omitTitle\", Type = \"bool\", Nilable = true },\n\t\t\t\t{ Name = \"ignoreActivePlayer\", Type = \"bool\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeRankInfo\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"rank\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeReagentItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetRecipeRankInfo-255",
+    "symbol": "C_TooltipInfo.GetRecipeRankInfo",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 851,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeRankInfo\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"rank\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeReagentItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeSpellID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"dataSlotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeResultItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetRuneforgeResultItem-259",
+    "symbol": "C_TooltipInfo.GetRuneforgeResultItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 925,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetRuneforgeResultItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"itemLevel\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"powerID\", Type = \"number\", Nilable = true },\n\t\t\t\t{ Name = \"modifiers\", Type = \"table\", InnerType = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSendMailItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"attachmentIndex\", Type = \"luaIndex\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetShapeshift\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetSlottedKeystone-262",
+    "symbol": "C_TooltipInfo.GetSlottedKeystone",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 976,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetSlottedKeystone\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSocketGem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"index\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSocketedItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSocketedRelic\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetSocketedRelic-264",
+    "symbol": "C_TooltipInfo.GetSocketedRelic",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 1012,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetSocketedRelic\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSpellBookItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"spellBookItemSlotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"spellBookItemSpellBank\", Type = \"SpellBookSpellBank\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSpellByID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenTainted\",\n\n\t\t\tArguments =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetTotem-269",
+    "symbol": "C_TooltipInfo.GetTotem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 1084,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetTotem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetToyByItemID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetTradePlayerItem\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetWeeklyReward-286",
+    "symbol": "C_TooltipInfo.GetWeeklyReward",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 1329,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetWeeklyReward\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemDBID\", Type = \"WeeklyRewardItemDBID\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetWorldCursor\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetWorldLootObject\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unitTokenString\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetCraftingOperationInfoForOrder-288",
+    "symbol": "C_TradeSkillUI.GetCraftingOperationInfoForOrder",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 191,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetCraftingOperationInfoForOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"craftingReagents\", Type = \"table\", InnerType = \"CraftingReagentInfo\", Nilable = false },\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t\t{ Name = \"applyConcentration\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"CraftingOperationInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetCraftingReagentBonusText\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeSpellID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"craftingReagentIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"craftingReagents\", Type = \"table\", InnerType = \"CraftingReagentInfo\", Nilable = false },\n\t\t\t\t{ Name = \"allocationItemGUID\", Type = \"WOWGUID\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"bonusText\", Type = \"table\", InnerType = \"string\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetCraftingTargetItems\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetCraftingTargetItems-289",
+    "symbol": "C_TradeSkillUI.GetCraftingTargetItems",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 227,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetCraftingTargetItems\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemIDs\", Type = \"table\", InnerType = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"items\", Type = \"table\", InnerType = \"CraftingTargetItem\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetDependentReagents\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"reagent\", Type = \"CraftingReagent\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"reagents\", Type = \"table\", InnerType = \"CraftingReagent\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetEnchantItems\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"craftingReagents\", Type = \"table\", InnerType = \"CraftingReagentInfo\", Nilable = true },\n\t\t\t},\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetProfessionForCursorItem-292",
+    "symbol": "C_TradeSkillUI.GetProfessionForCursorItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 449,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionForCursorItem\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionInfoByRecipeID\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"ProfessionInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionInfoBySkillLineID\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"ProfessionInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionInventorySlots\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetProfessionNameForSkillLineAbility-294",
+    "symbol": "C_TradeSkillUI.GetProfessionNameForSkillLineAbility",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 497,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionNameForSkillLineAbility\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineAbilityID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"professionNmae\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionSkillLineID\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionSlots\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetQualitiesForRecipe-295",
+    "symbol": "C_TradeSkillUI.GetQualitiesForRecipe",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 558,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetQualitiesForRecipe\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"qualityIDs\", Type = \"table\", InnerType = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetReagentDifficultyText\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"craftingReagentIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"craftingReagents\", Type = \"table\", InnerType = \"CraftingReagentInfo\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"bonusText\", Type = \"string\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetReagentSlotStatus\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"mcrSlotID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"recipeSpellID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"skillLineAbilityID\", Type = \"number\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeInfoForSkillLineAbility-296",
+    "symbol": "C_TradeSkillUI.GetRecipeInfoForSkillLineAbility",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 640,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeInfoForSkillLineAbility\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineAbilityID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"recipeLevel\", Type = \"luaIndex\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeInfo\", Type = \"TradeSkillRecipeInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeItemQualityInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"quality\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"info\", Type = \"CraftingQualityInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeOutputItemData\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeSpellID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"reagents\", Type = \"table\", InnerType = \"CraftingReagentInfo\", Nilable = true },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetSkillLineForGear-299",
+    "symbol": "C_TradeSkillUI.GetSkillLineForGear",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 843,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetSkillLineForGear\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemInfo\", Type = \"ItemInfo\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSourceTypeFilter\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"sourceTypeFilter\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetTradeSkillDisplayName\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"professionDisplayName\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"HasFavoriteOrderRecipes\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetSourceTypeFilter-300",
+    "symbol": "C_TradeSkillUI.GetSourceTypeFilter",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 858,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetSourceTypeFilter\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"sourceTypeFilter\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetTradeSkillDisplayName\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"professionDisplayName\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"HasFavoriteOrderRecipes\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasFavorites\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsEnchantTargetValid\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.HasFavoriteOrderRecipes-301",
+    "symbol": "C_TradeSkillUI.HasFavoriteOrderRecipes",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 882,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"HasFavoriteOrderRecipes\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"hasFavorites\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsEnchantTargetValid\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"itemGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"craftingReagents\", Type = \"table\", InnerType = \"CraftingReagentInfo\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"valid\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsGuildTradeSkillsEnabled\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"enabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsNPCCrafting\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsNearProfessionSpellFocus-302",
+    "symbol": "C_TradeSkillUI.IsNearProfessionSpellFocus",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 926,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"IsNearProfessionSpellFocus\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"nearFocus\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsOriginalCraftRecipeLearned\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"learned\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsRecipeFirstCraft\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeInBaseSkillLine-303",
+    "symbol": "C_TradeSkillUI.IsRecipeInBaseSkillLine",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 971,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"IsRecipeInBaseSkillLine\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsRecipeInSkillLine\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsRecipeProfessionLearned\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t},\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.RecraftRecipeForOrder-304",
+    "symbol": "C_TradeSkillUI.RecraftRecipeForOrder",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 1131,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"RecraftRecipeForOrder\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"orderID\", Type = \"BigUInteger\", Nilable = false },\n\t\t\t\t{ Name = \"itemGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"craftingReagents\", Type = \"table\", InnerType = \"CraftingReagentInfo\", Nilable = true },\n\t\t\t\t{ Name = \"removedModifications\", Type = \"table\", InnerType = \"CraftingItemSlotModification\", Nilable = true },\n\t\t\t\t{ Name = \"applyConcentration\", Type = \"bool\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetOnlyShowAvailableForOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"flag\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetProfessionChildSkillLineID\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetRecipeTracked\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowAvailableForOrders-305",
+    "symbol": "C_TradeSkillUI.SetOnlyShowAvailableForOrders",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 1150,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SetOnlyShowAvailableForOrders\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"flag\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetProfessionChildSkillLineID\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetRecipeTracked\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"tracked\", Type = \"bool\", Nilable = false },\n\t\t\t\t{ Name = \"isRecraft\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetShowLearned\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"flag\", Type = \"bool\", Nilable = false },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetSourceTypeFilter-306",
+    "symbol": "C_TradeSkillUI.SetSourceTypeFilter",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 1202,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SetSourceTypeFilter\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"sourceTypeFilter\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t},\n\n\tEvents =\n\t{\n\t\t{\n\t\t\tName = \"CraftingDetailsUpdate\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"CRAFTING_DETAILS_UPDATE\",\n\t\t\tSynchronousEvent = true,\n\t\t},\n\t\t{\n\t\t\tName = \"NewRecipeLearned\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"NEW_RECIPE_LEARNED\",\n\t\t\tSynchronousEvent = true,\n\t\t\tPayload =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"recipeLevel\", Type = \"luaIndex\", Nilable = true },\n\t\t\t\t{ Name = \"baseRecipeID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ObliterumForgePendingItemChanged\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"OBLITERUM_FORGE_PENDING_ITEM_CHANGED\",\n\t\t\tSynchronousEvent = true,\n\t\t},\n\t\t{\n\t\t\tName = \"OpenRecipeResponse\",\n\t\t\tType = \"Event\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.GetTraitSystemWidgetSetID-308",
+    "symbol": "C_Traits.GetTraitSystemWidgetSetID",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SharedTraitsDocumentation.lua",
+        "line": 458,
+        "namespace": "C_Traits",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetTraitSystemWidgetSetID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"configID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"uiWidgetSetID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetTreeCurrencyInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"configID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"treeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"excludeStagedChanges\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"treeCurrencyInfo\", Type = \"table\", InnerType = \"TreeCurrencyInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetTreeHash\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"treeID\", Type = \"number\", Nilable = false },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetTextWithSubtextWidgetVisualizationInfo-309",
+    "symbol": "C_UIWidgetManager.GetTextWithSubtextWidgetVisualizationInfo",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UIWidgetManagerDocumentation.lua",
+        "line": 428,
+        "namespace": "C_UIWidgetManager",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetTextWithSubtextWidgetVisualizationInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"widgetID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"widgetInfo\", Type = \"TextWithSubtextWidgetVisualizationInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetTextureAndTextRowVisualizationInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"widgetID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"widgetInfo\", Type = \"TextureAndTextRowVisualizationInfo\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetTextureAndTextVisualizationInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"widgetID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.ShouldShowFinalRetirementMessage-311",
+    "symbol": "C_WeeklyRewards.ShouldShowFinalRetirementMessage",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/WeeklyRewardsDocumentation.lua",
+        "line": 236,
+        "namespace": "C_WeeklyRewards",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"ShouldShowFinalRetirementMessage\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"showRetirementMessage\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ShouldShowRetirementMessage\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"showRetirementMessage\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t},\n\n\tEvents =\n\t{\n\t\t{\n\t\t\tName = \"WeeklyRewardsItemChanged\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"WEEKLY_REWARDS_ITEM_CHANGED\",\n\t\t\tSynchronousEvent = true,\n\t\t},\n\t\t{\n\t\t\tName = \"WeeklyRewardsUpdate\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"WEEKLY_REWARDS_UPDATE\",\n\t\t\tSynchronousEvent = true,\n\t\t},\n\t},\n\n\tTables =\n\t{\n\t\t{\n\t\t\tName = \"ConquestProgressBarDisplayType\",\n\t\t\tType = \"Enumeration\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.ShouldShowRetirementMessage-312",
+    "symbol": "C_WeeklyRewards.ShouldShowRetirementMessage",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/WeeklyRewardsDocumentation.lua",
+        "line": 245,
+        "namespace": "C_WeeklyRewards",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"ShouldShowRetirementMessage\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"showRetirementMessage\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t},\n\n\tEvents =\n\t{\n\t\t{\n\t\t\tName = \"WeeklyRewardsItemChanged\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"WEEKLY_REWARDS_ITEM_CHANGED\",\n\t\t\tSynchronousEvent = true,\n\t\t},\n\t\t{\n\t\t\tName = \"WeeklyRewardsUpdate\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"WEEKLY_REWARDS_UPDATE\",\n\t\t\tSynchronousEvent = true,\n\t\t},\n\t},\n\n\tTables =\n\t{\n\t\t{\n\t\t\tName = \"ConquestProgressBarDisplayType\",\n\t\t\tType = \"Enumeration\",\n\t\t\tNumValues = 3,\n\t\t\tMinValue = 0,\n\t\t\tMaxValue = 2,\n\t\t\tFields =\n\t\t\t{\n\t\t\t\t{ Name = \"FirstChest\", Type = \"ConquestProgressBarDisplayType\", EnumValue = 0 },\n\t\t\t\t{ Name = \"AdditionalChest\", Type = \"ConquestProgressBarDisplayType\", EnumValue = 1 },\n\t\t\t\t{ Name = \"Seasonal\", Type = \"ConquestProgressBarDisplayType\", EnumValue = 2 },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-UnitPercentHealthFromGUID-314",
+    "symbol": "UnitPercentHealthFromGUID",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitDocumentation.lua",
+        "line": 2546,
+        "namespace": null,
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"UnitPercentHealthFromGUID\",\n\t\t\tType = \"Function\",\n\t\t\tSecretReturns = true,\n\t\t\tSecretArguments = \"AllowedWhenTainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unitGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"percentHealth\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"UnitPhaseReason\",\n\t\t\tType = \"Function\",\n\t\t\tSecretWhenUnitIdentityRestricted = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unit\", Type = \"UnitToken\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"reason\", Type = \"PhaseReason\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"UnitPlayerControlled\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unit\", Type = \"UnitToken\", Nilable = true },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-UnitPartialPower-319",
+    "symbol": "UnitPartialPower",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitDocumentation.lua",
+        "line": 2528,
+        "namespace": null,
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"UnitPartialPower\",\n\t\t\tType = \"Function\",\n\t\t\tSecretWhenUnitPowerRestricted = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unitToken\", Type = \"UnitTokenPvPRestrictedForAddOns\", Nilable = false },\n\t\t\t\t{ Name = \"powerType\", Type = \"PowerType\", Nilable = true },\n\t\t\t\t{ Name = \"unmodified\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"partialPower\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"UnitPercentHealthFromGUID\",\n\t\t\tType = \"Function\",\n\t\t\tSecretReturns = true,\n\t\t\tSecretArguments = \"AllowedWhenTainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unitGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"percentHealth\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"UnitPhaseReason\",\n\t\t\tType = \"Function\",\n\t\t\tSecretWhenUnitIdentityRestricted = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_MajorFactions.IsMajorFaction-325",
+    "symbol": "C_MajorFactions.IsMajorFaction",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-global-api-GetContainerItemID-353",
+    "symbol": "GetContainerItemID",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 175,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"containerID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemInfo\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"containerInfo\", Type = \"ContainerItemInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemLink\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetContainerItemInfo-354",
+    "symbol": "GetContainerItemInfo",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 192,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemInfo\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"containerInfo\", Type = \"ContainerItemInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemLink\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"itemLink\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemPurchaseCurrency\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetContainerItemLink-355",
+    "symbol": "GetContainerItemLink",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 209,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemLink\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"itemLink\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemPurchaseCurrency\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"itemIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"isEquipped\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"currencyInfo\", Type = \"ItemPurchaseCurrency\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerItemPurchaseInfo\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetContainerNumFreeSlots-360",
+    "symbol": "GetContainerNumFreeSlots",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 297,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetContainerNumFreeSlots\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"bagIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"numFreeSlots\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"bagFamily\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetContainerNumSlots\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"numSlots\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetInsertItemsLeftToRight\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetContainerNumSlots-361",
+    "symbol": "GetContainerNumSlots",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 313,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetContainerNumSlots\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"numSlots\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetInsertItemsLeftToRight\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"isEnabled\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetItemCooldown\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"startTime\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"duration\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"enable\", Type = \"number\", Nilable = false },\n\t\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-PickupContainerItem-369",
+    "symbol": "PickupContainerItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 420,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"PickupContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"PlayerHasHearthstone\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBackpackAutosortDisabled\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"disable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBackpackSellJunkDisabled\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"disable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-PlayerHasHearthstone-370",
+    "symbol": "PlayerHasHearthstone",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 431,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"PlayerHasHearthstone\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBackpackAutosortDisabled\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"disable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBackpackSellJunkDisabled\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"disable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetBagPortraitTexture\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"texture\", Type = \"SimpleTexture\", Nilable = false },\n\t\t\t\t{ Name = \"bagIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-SetInsertItemsLeftToRight-374",
+    "symbol": "SetInsertItemsLeftToRight",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 493,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SetInsertItemsLeftToRight\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"enable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetItemSearch\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"searchString\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetSortBagsRightToLeft\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"enable\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ShowContainerSellCursor\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\t\t},"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-SortBags-379",
+    "symbol": "SortBags",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 554,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SortBags\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"SortBank\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"bankType\", Type = \"BankType\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SortBankBags\",\n\t\t\tType = \"Function\",\n\t\t},\n\t\t{\n\t\t\tName = \"SplitContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"amount\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"UseContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"unitToken\", Type = \"UnitToken\", Nilable = true },\n\t\t\t\t{ Name = \"bankType\", Type = \"BankType\", Nilable = true },"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-UseContainerItem-383",
+    "symbol": "UseContainerItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+        "line": 584,
+        "namespace": "C_Container",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"UseContainerItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"containerIndex\", Type = \"BagIndex\", Nilable = false },\n\t\t\t\t{ Name = \"slotIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"unitToken\", Type = \"UnitToken\", Nilable = true },\n\t\t\t\t{ Name = \"bankType\", Type = \"BankType\", Nilable = true },\n\t\t\t\t{ Name = \"reagentBankOpen\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"UseHearthstone\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"used\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t},\n\n\tEvents =\n\t{\n\t\t{\n\t\t\tName = \"BagClosed\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"BAG_CLOSED\",\n\t\t\tSynchronousEvent = true,\n\t\t\tPayload =\n\t\t\t{\n\t\t\t\t{ Name = \"bagID\", Type = \"BagIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"BagContainerUpdate\",\n\t\t\tType = \"Event\",\n\t\t\tLiteralName = \"BAG_CONTAINER_UPDATE\","
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_ProfSpecs.GetPerksForPath-387",
+    "symbol": "C_ProfSpecs.GetPerksForPath",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ProfessionSpecUIDocumentation.lua",
+        "line": 151,
+        "namespace": "C_ProfSpecs",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetPerksForPath\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"pathID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"perkInfos\", Type = \"table\", InnerType = \"SpecPerkInfo\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRootPathForTab\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"tabTreeID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"rootPathID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetSourceTextForPath\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"pathID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"configID\", Type = \"number\", Nilable = false },\n\t\t\t},\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetHideUnownedFlags-394",
+    "symbol": "C_TradeSkillUI.GetHideUnownedFlags",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 303,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetHideUnownedFlags\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"cannotModifyHideUnowned\", Type = \"bool\", Nilable = false },\n\t\t\t\t{ Name = \"alwaysShowUnowned\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetItemCraftedQualityByItemInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemInfo\", Type = \"ItemInfo\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"quality\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetItemCraftedQualityInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemInfo\", Type = \"ItemInfo\", Nilable = false },\n\t\t\t},\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetOriginalCraftRecipeID-397",
+    "symbol": "C_TradeSkillUI.GetOriginalCraftRecipeID",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 409,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetOriginalCraftRecipeID\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = true },\n\t\t\t\t{ Name = \"skillLineAbilityID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionByInventorySlot\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"profession\", Type = \"Profession\", Nilable = true },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetProfessionChildSkillLineID\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"skillLineID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetReagentSlotStatus-399",
+    "symbol": "C_TradeSkillUI.GetReagentSlotStatus",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 589,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetReagentSlotStatus\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"mcrSlotID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"recipeSpellID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"skillLineAbilityID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"locked\", Type = \"bool\", Nilable = false },\n\t\t\t\t{ Name = \"lockedReason\", Type = \"string\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeDescription\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n\t\t\t\t{ Name = \"craftingReagents\", Type = \"table\", InnerType = \"CraftingReagentInfo\", Nilable = false },\n\t\t\t\t{ Name = \"allocationItemGUID\", Type = \"WOWGUID\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"description\", Type = \"string\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRecipeInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecraftItems-403",
+    "symbol": "C_TradeSkillUI.GetRecraftItems",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+        "line": 770,
+        "namespace": "C_TradeSkillUI",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetRecraftItems\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"items\", Type = \"table\", InnerType = \"WOWGUID\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRecraftRemovalWarnings\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemGUID\", Type = \"WOWGUID\", Nilable = false },\n\t\t\t\t{ Name = \"replacedReagents\", Type = \"table\", InnerType = \"CraftingReagent\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"warnings\", Type = \"table\", InnerType = \"cstring\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetRemainingRecasts\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"remaining\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-DressUpModel:IsSlotVisible-416",
+    "symbol": "DressUpModel:IsSlotVisible",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/FrameAPIDressUpModelDocumentation.lua",
+        "line": 140,
+        "namespace": null,
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"IsSlotVisible\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"visible\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetAutoDress\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"enabled\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetItemTransmogInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemTransmogInfo\", Type = \"ItemTransmogInfo\", Mixin = \"ItemTransmogInfoMixin\", Nilable = false },\n\t\t\t\t{ Name = \"inventorySlot\", Type = \"luaIndex\", Nilable = true },\n\t\t\t\t{ Name = \"ignoreChildItems\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"ItemTryOnReason\", Nilable = false },\n\t\t\t},"
+      },
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/FrameAPIModelSceneFrameActorDocumentation.lua",
+        "line": 211,
+        "namespace": null,
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"IsSlotVisible\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"inventorySlots\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"visible\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ReleaseFrontEndCharacterDisplays\",\n\t\t\tType = \"Function\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"success\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ResetNextHandSlot\",\n\t\t\tType = \"Function\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetAutoDress\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:IsSlotVisible-419",
+    "symbol": "ModelSceneActor:IsSlotVisible",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/FrameAPIDressUpModelDocumentation.lua",
+        "line": 140,
+        "namespace": null,
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"IsSlotVisible\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"slot\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"visible\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetAutoDress\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"enabled\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetItemTransmogInfo\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemTransmogInfo\", Type = \"ItemTransmogInfo\", Mixin = \"ItemTransmogInfoMixin\", Nilable = false },\n\t\t\t\t{ Name = \"inventorySlot\", Type = \"luaIndex\", Nilable = true },\n\t\t\t\t{ Name = \"ignoreChildItems\", Type = \"bool\", Nilable = false, Default = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"ItemTryOnReason\", Nilable = false },\n\t\t\t},"
+      },
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/FrameAPIModelSceneFrameActorDocumentation.lua",
+        "line": 211,
+        "namespace": null,
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"IsSlotVisible\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"inventorySlots\", Type = \"number\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"visible\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ReleaseFrontEndCharacterDisplays\",\n\t\t\tType = \"Function\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"success\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ResetNextHandSlot\",\n\t\t\tType = \"Function\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"SetAutoDress\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:AdvanceSecondaryCompareItem-431",
+    "symbol": "GameTooltip:AdvanceSecondaryCompareItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:GetItem-433",
+    "symbol": "GameTooltip:GetItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:GetSpell-434",
+    "symbol": "GameTooltip:GetSpell",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ActionBarFrameDocumentation.lua",
+        "line": 424,
+        "namespace": "C_ActionBar",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetSpell\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"actionID\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"spellID\", Type = \"number\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetTempShapeshiftBarIndex\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"tempShapeshiftBarIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetVehicleBarIndex\",\n\t\t\tType = \"Function\",\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"vehicleBarIndex\", Type = \"luaIndex\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"HasAction\",\n\t\t\tType = \"Function\",\n\t\t\tRequiresValidActionSlot = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\t\t\tDocumentation = { \"Returns true if an actionbar slot is populated with an action.\" },\n\n\t\t\tArguments ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:GetUnit-435",
+    "symbol": "GameTooltip:GetUnit",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua",
+        "line": 1181,
+        "namespace": "C_TooltipInfo",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"GetUnit\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unit\", Type = \"UnitTokenPvPRestrictedForAddOns\", Nilable = false },\n\t\t\t\t{ Name = \"hideStatus\", Type = \"bool\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetUnitAura\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,\n\t\t\tRequiresUnitAuraAccess = true,\n\t\t\tSecretWhenUnitAuraRestricted = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unitToken\", Type = \"UnitTokenRestrictedForAddOns\", Nilable = false, NeverSecret = true },\n\t\t\t\t{ Name = \"index\", Type = \"luaIndex\", Nilable = false },\n\t\t\t\t{ Name = \"filter\", Type = \"AuraFilters\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"data\", Type = \"TooltipData\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"GetUnitAuraByAuraInstanceID\",\n\t\t\tType = \"Function\",\n\t\t\tMayReturnNothing = true,"
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:IsEquippedItem-436",
+    "symbol": "GameTooltip:IsEquippedItem",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemDocumentation.lua",
+        "line": 1302,
+        "namespace": "C_Item",
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"IsEquippedItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemInfo\", Type = \"ItemInfo\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsEquippedItemType\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"type\", Type = \"cstring\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"result\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"IsHarmfulItem\",\n\t\t\tType = \"Function\",\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"itemInfo\", Type = \"ItemInfo\", Nilable = false },\n\t\t\t},\n\n\t\t\tReturns ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:ResetSecondaryCompareItem-438",
+    "symbol": "GameTooltip:ResetSecondaryCompareItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetAction-440",
+    "symbol": "GameTooltip:SetAction",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetBackpackToken-446",
+    "symbol": "GameTooltip:SetBackpackToken",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetBagItem-447",
+    "symbol": "GameTooltip:SetBagItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetCompanionPet-450",
+    "symbol": "GameTooltip:SetCompanionPet",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetCompareItem-452",
+    "symbol": "GameTooltip:SetCompareItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetCurrencyToken-455",
+    "symbol": "GameTooltip:SetCurrencyToken",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetExistingSocketGem-459",
+    "symbol": "GameTooltip:SetExistingSocketGem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetHeirloomByItemID-461",
+    "symbol": "GameTooltip:SetHeirloomByItemID",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetHyperlink-462",
+    "symbol": "GameTooltip:SetHyperlink",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetInboxItem-463",
+    "symbol": "GameTooltip:SetInboxItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetInventoryItem-465",
+    "symbol": "GameTooltip:SetInventoryItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetItemByID-468",
+    "symbol": "GameTooltip:SetItemByID",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetMountBySpellID-478",
+    "symbol": "GameTooltip:SetMountBySpellID",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetSendMailItem-496",
+    "symbol": "GameTooltip:SetSendMailItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetShapeshift-497",
+    "symbol": "GameTooltip:SetShapeshift",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetSocketGem-498",
+    "symbol": "GameTooltip:SetSocketGem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetSocketedItem-499",
+    "symbol": "GameTooltip:SetSocketedItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetSpellBookItem-502",
+    "symbol": "GameTooltip:SetSpellBookItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetSpellByID-503",
+    "symbol": "GameTooltip:SetSpellByID",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetTalent-504",
+    "symbol": "GameTooltip:SetTalent",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetToyByItemID-506",
+    "symbol": "GameTooltip:SetToyByItemID",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetTradePlayerItem-507",
+    "symbol": "GameTooltip:SetTradePlayerItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetTradeTargetItem-508",
+    "symbol": "GameTooltip:SetTradeTargetItem",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetUnit-511",
+    "symbol": "GameTooltip:SetUnit",
+    "declarations": [
+      {
+        "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/FrameAPICharacterModelBaseDocumentation.lua",
+        "line": 240,
+        "namespace": null,
+        "excerpt": "\t\t},\n\t\t{\n\t\t\tName = \"SetUnit\",\n\t\t\tType = \"Function\",\n\t\t\tRequiresDeclassifiedUnitIdentity = true,\n\t\t\tSecretArguments = \"AllowedWhenUntainted\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t\t{ Name = \"unit\", Type = \"UnitToken\", Nilable = false },\n\t\t\t\t{ Name = \"blend\", Type = \"bool\", Nilable = false, Default = true },\n\t\t\t\t{ Name = \"useNativeForm\", Type = \"bool\", Nilable = true },\n\t\t\t},\n\n\t\t\tReturns =\n\t\t\t{\n\t\t\t\t{ Name = \"success\", Type = \"bool\", Nilable = false },\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"StopAnimKit\",\n\t\t\tType = \"Function\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\tName = \"ZeroCachedCenterXY\",\n\t\t\tType = \"Function\",\n\n\t\t\tArguments =\n\t\t\t{\n\t\t\t},\n\t\t},\n\t},\n\n\tEvents =\n\t{\n\t},\n\n\tTables ="
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetUnitAura-512",
+    "symbol": "GameTooltip:SetUnitAura",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetUnitBuff-513",
+    "symbol": "GameTooltip:SetUnitBuff",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetUnitBuffByAuraInstanceID-514",
+    "symbol": "GameTooltip:SetUnitBuffByAuraInstanceID",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetUnitDebuff-515",
+    "symbol": "GameTooltip:SetUnitDebuff",
+    "declarations": []
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetUnitDebuffByAuraInstanceID-516",
+    "symbol": "GameTooltip:SetUnitDebuffByAuraInstanceID",
+    "declarations": []
+  }
+]

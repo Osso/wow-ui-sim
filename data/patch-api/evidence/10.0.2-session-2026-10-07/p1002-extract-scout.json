@@ -1,0 +1,1171 @@
+[
+  {
+    "source_id": "source-context-001",
+    "line": 1,
+    "literal": "Patch 10.0.2 API changes",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "line": 3,
+    "literal": "== Summary ==",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "line": 4,
+    "literal": "* GameTooltip related APIs have been significantly overhauled. Refer to the Tooltip Changes section for more details.",
+    "status": "audit-pending",
+    "proof_boundary": "Tooltip native-to-mixin migration, container tuple-to-table behavior or GUID-to-token mapping in this literal needs occurrence-specific runtime proof; sweep publication is insufficient."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "line": 5,
+    "literal": "* Many bag container related APIs have been moved to the C_Container namespace. Additionally, some of these functions now return structured tables instead of multiple values.",
+    "status": "audit-pending",
+    "proof_boundary": "Tooltip native-to-mixin migration, container tuple-to-table behavior or GUID-to-token mapping in this literal needs occurrence-specific runtime proof; sweep publication is insufficient."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "line": 6,
+    "literal": "* A new general-purpose UnitTokenFromGUID(unitGUID) function has been added for mapping a unit GUID to a unit token.",
+    "status": "audit-pending",
+    "proof_boundary": "Tooltip native-to-mixin migration, container tuple-to-table behavior or GUID-to-token mapping in this literal needs occurrence-specific runtime proof; sweep publication is insufficient."
+  },
+  {
+    "source_id": "source-context-008",
+    "line": 8,
+    "literal": "== Resources ==",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "line": 9,
+    "literal": "* 10.0.2 TOC: 100002",
+    "status": "audit-pending",
+    "proof_boundary": "Tooltip native-to-mixin migration, container tuple-to-table behavior or GUID-to-token mapping in this literal needs occurrence-specific runtime proof; sweep publication is insufficient."
+  },
+  {
+    "source_id": "source-context-010",
+    "line": 10,
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-011",
+    "line": 11,
+    "literal": "* Official patch notes: Dragonflight Pre-Expansion Phase 2 Update Notes",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-013",
+    "line": 13,
+    "literal": "== Tooltip Changes ==",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-015",
+    "line": 15,
+    "literal": "GameTooltip frames no longer expose native methods for retrieving or populating tooltip contents. Instead, a new C_TooltipInfo namespace has been added which provides APIs for retrieving structured data for use in tooltips and a new set of tooltip-related mixins have been added to populate tooltips from these APIs.",
+    "status": "audit-pending",
+    "proof_boundary": "Tooltip native-to-mixin migration, container tuple-to-table behavior or GUID-to-token mapping in this literal needs occurrence-specific runtime proof; sweep publication is insufficient."
+  },
+  {
+    "source_id": "source-context-017",
+    "line": 17,
+    "literal": "=== Custom Tooltip Frames ===",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-019",
+    "line": 19,
+    "literal": "Any addons that are creating GameTooltip frames should now ensure they inherit GameTooltipTemplate. This template has been updated to include the new GameTooltipDataMixin mixin, which provides automatic updates of tooltip contents from the TOOLTIP_DATA_UPDATE event as well as a subset of backwards-compatible methods for retrieving or populating tooltip contents from the new C_TooltipInfo APIs.",
+    "status": "audit-pending",
+    "proof_boundary": "Tooltip native-to-mixin migration, container tuple-to-table behavior or GUID-to-token mapping in this literal needs occurrence-specific runtime proof; sweep publication is insufficient."
+  },
+  {
+    "source_id": "source-context-021",
+    "line": 21,
+    "literal": "=== Scanning Tooltips ===",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-022",
+    "line": 22,
+    "literal": "The C_TooltipInfo functions can be used to replace existing tooltip scanning techniques, removing the need to create a tooltip frame. The following example will demonstrate extracting information for a unit tooltip on the player.",
+    "status": "audit-pending",
+    "proof_boundary": "Tooltip native-to-mixin migration, container tuple-to-table behavior or GUID-to-token mapping in this literal needs occurrence-specific runtime proof; sweep publication is insufficient."
+  },
+  {
+    "source_id": "prose-undated-024",
+    "line": 24,
+    "literal": "```lua",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-025",
+    "line": 25,
+    "literal": "local tooltipData = C_TooltipInfo.GetUnit(\"player\")",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-027",
+    "line": 27,
+    "literal": "TooltipUtil.SurfaceArgs(tooltipData)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-029",
+    "line": 29,
+    "literal": "for _, line in ipairs(tooltipData.lines) do",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-030",
+    "line": 30,
+    "literal": "    TooltipUtil.SurfaceArgs(line)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-031",
+    "line": 31,
+    "literal": "end",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-033",
+    "line": 33,
+    "literal": "-- The above SurfaceArgs calls are required to assign values to the",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-034",
+    "line": 34,
+    "literal": "-- 'type', 'guid', and 'leftText' fields seen below.",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-036",
+    "line": 36,
+    "literal": "print(\"Tooltip Type: \", tooltipData.type)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-037",
+    "line": 37,
+    "literal": "print(\"Unit GUID: \", tooltipData.guid)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-038",
+    "line": 38,
+    "literal": "print(\"Unit Name: \", tooltipData.lines[1].leftText)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-039",
+    "line": 39,
+    "literal": "print(\"Unit Info: \", tooltipData.lines[2].leftText)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-040",
+    "line": 40,
+    "literal": "print(\"Unit Faction: \", tooltipData.lines[3].leftText)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-042",
+    "line": 42,
+    "literal": "DevTools_Dump({ tooltipData })",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-043",
+    "line": 43,
+    "literal": "```",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-045",
+    "line": 45,
+    "literal": " > Tooltip Type: 2 (Enum.TooltipDataType.Unit)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-046",
+    "line": 46,
+    "literal": " > Unit GUID: \"Player-4184-00227A8F\"",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-047",
+    "line": 47,
+    "literal": " > Unit Name: \"Sandse\"",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-048",
+    "line": 48,
+    "literal": " > Unit Info: \"Level 70 Gnome Mage (Player)\"",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-049",
+    "line": 49,
+    "literal": " > Unit Faction: \"Alliance\"",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-051",
+    "line": 51,
+    "literal": "The tooltipData dump below has been significantly shortened to only show the fields written by TooltipUtil.SurfaceArgs.",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-053",
+    "line": 53,
+    "literal": " tooltipData = {",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-054",
+    "line": 54,
+    "literal": "     type = 2,",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-055",
+    "line": 55,
+    "literal": "     lines = {",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-056",
+    "line": 56,
+    "literal": "         [1] = {",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-057",
+    "line": 57,
+    "literal": "             leftText = \"Sandse\",",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-058",
+    "line": 58,
+    "literal": "             leftColor = { r = 1, g = 0.81960791349411, b = 0 },",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-059",
+    "line": 59,
+    "literal": "             type = 2,",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-060",
+    "line": 60,
+    "literal": "             unitToken = \"player\",",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-061",
+    "line": 61,
+    "literal": "         },",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-062",
+    "line": 62,
+    "literal": "         [2] = {",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-063",
+    "line": 63,
+    "literal": "             leftColor = { r = 1, g = 1, b = 1 },",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-064",
+    "line": 64,
+    "literal": "             type = 0,",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-065",
+    "line": 65,
+    "literal": "             leftText = \"Level 70 Gnome Mage (Player)\",",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-066",
+    "line": 66,
+    "literal": "         },",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-067",
+    "line": 67,
+    "literal": "         [3] = {",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-068",
+    "line": 68,
+    "literal": "             leftColor = { r = 1, g = 1, b = 1 },",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-069",
+    "line": 69,
+    "literal": "             type = 0,",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-070",
+    "line": 70,
+    "literal": "             leftText = \"Alliance\",",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-071",
+    "line": 71,
+    "literal": "         },",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-072",
+    "line": 72,
+    "literal": "     },",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-073",
+    "line": 73,
+    "literal": "     guid = \"Player-4184-00227A8F\",",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-074",
+    "line": 74,
+    "literal": "     healthGUID = \"Player-4184-00227A8F\",",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "prose-undated-075",
+    "line": 75,
+    "literal": " }",
+    "status": "audit-pending",
+    "proof_boundary": "Literal player tooltip code/output/DTO example is retained; SurfaceArgs, line order/colors, GUID fields and populated identity behavior are not tested against this example."
+  },
+  {
+    "source_id": "source-context-077",
+    "line": 77,
+    "literal": "=== Tooltip Script Handlers ===",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-079",
+    "line": 79,
+    "literal": "The following GameTooltip script handlers have been removed. This change will not be reflected in the UI XML schema definition until a future patch.",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-081",
+    "line": 81,
+    "literal": "* OnTooltipAddMoney",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-082",
+    "line": 82,
+    "literal": "* OnTooltipSetAchievement",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-083",
+    "line": 83,
+    "literal": "* OnTooltipSetEquipmentSet",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-084",
+    "line": 84,
+    "literal": "* OnTooltipSetItem",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-085",
+    "line": 85,
+    "literal": "* OnTooltipSetQuest",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-086",
+    "line": 86,
+    "literal": "* OnTooltipSetSpell",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-087",
+    "line": 87,
+    "literal": "* OnTooltipSetUnit",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-089",
+    "line": 89,
+    "literal": "Usages of these script handlers should be replaced by registering callbacks with the new TooltipDataProcessor.AddTooltipPostCall function. Note that callbacks registered with this mechanism are global and will be triggered for all tooltips which inherit from GameTooltipTemplate.",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-091",
+    "line": 91,
+    "literal": "```lua",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-092",
+    "line": 92,
+    "literal": "local function OnTooltipSetItem(tooltip, data)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-093",
+    "line": 93,
+    "literal": "    if tooltip == GameTooltip then",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-094",
+    "line": 94,
+    "literal": "        print(\"OnTooltipSetItem\", tooltip, data)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-095",
+    "line": 95,
+    "literal": "    end",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-096",
+    "line": 96,
+    "literal": "end",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-098",
+    "line": 98,
+    "literal": "-- Replace 'Enum.TooltipDataType.Item' with an appropriate type for the tooltip",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-099",
+    "line": 99,
+    "literal": "-- data you are wanting to process; eg. use 'Enum.TooltipDataType.Spell' for",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-100",
+    "line": 100,
+    "literal": "-- replacing usage of OnTooltipSetSpell.",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-101",
+    "line": 101,
+    "literal": "--",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-102",
+    "line": 102,
+    "literal": "-- If you wish to respond to all tooltip data updates, you can instead replace",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-103",
+    "line": 103,
+    "literal": "-- the enum with 'TooltipDataProcessor.AllTypes' (or the string \"ALL\").",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-105",
+    "line": 105,
+    "literal": "TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, OnTooltipSetItem)",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "prose-undated-106",
+    "line": 106,
+    "literal": "```",
+    "status": "audit-pending",
+    "proof_boundary": "Literal removed tooltip script or replacement global TooltipDataProcessor callback/example remains unproved; global callback fan-out and GameTooltipTemplate inheritance are not credited by publication."
+  },
+  {
+    "source_id": "source-context-108",
+    "line": 108,
+    "literal": "== Enumerations ==",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "enumerations-Enum-BattlePetSpeciesFlags-109",
+    "line": 109,
+    "literal": " Enum.BattlePetSpeciesFlags",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-BattlePetSpeciesFlags-110",
+    "line": 110,
+    "literal": "   + 17: NoWildPetAddsAllowed",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-BattlepetDbFlags-111",
+    "line": 111,
+    "literal": " Enum.BattlepetDbFlags",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-BattlepetDbFlags-112",
+    "line": 112,
+    "literal": "   + 11: AcquiredViaLicense",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyDestroyReason-113",
+    "line": 113,
+    "literal": " Enum.CurrencyDestroyReason",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyDestroyReason-114",
+    "line": 114,
+    "literal": "   + 12: FulfillCraftingOrder",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-115",
+    "line": 115,
+    "literal": " Enum.CurrencySource",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-116",
+    "line": 116,
+    "literal": "   + 57: CraftingOrder",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-117",
+    "line": 117,
+    "literal": "   + 58: CatalystBalancing",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-118",
+    "line": 118,
+    "literal": "   + 59: CatalystCraft",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-119",
+    "line": 119,
+    "literal": "   + 60: ProfessionInitialAward",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-120",
+    "line": 120,
+    "literal": "   + 61: PlayerTraitRefund",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-GraphicsValidationResult-121",
+    "line": 121,
+    "literal": " Enum.GraphicsValidationResult",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-GraphicsValidationResult-122",
+    "line": 122,
+    "literal": "   + 30: LegacyUnsupported",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-GraphicsValidationResult-123",
+    "line": 123,
+    "literal": "   + 31: Dx11Unsupported",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-GraphicsValidationResult-124",
+    "line": 124,
+    "literal": "   + 33: RemoteDesktopUnsupported",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-NavigationState-125",
+    "line": 125,
+    "literal": " Enum.NavigationState",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-NavigationState-126",
+    "line": 126,
+    "literal": "   + 4: Disabled",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-ProfTraitPerkNodeFlags-127",
+    "line": 127,
+    "literal": " Enum.ProfTraitPerkNodeFlags",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-ProfTraitPerkNodeFlags-128",
+    "line": 128,
+    "literal": "   + 2: IsMajorBonus",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIItemInteractionFlags-129",
+    "line": 129,
+    "literal": " Enum.UIItemInteractionFlags",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIItemInteractionFlags-130",
+    "line": 130,
+    "literal": "   + 5: AddCurrency",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIItemInteractionFlags-131",
+    "line": 131,
+    "literal": "   + 6: UsesCharges",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-132",
+    "line": 132,
+    "literal": " Enum.UIWidgetTextSizeType",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-133",
+    "line": 133,
+    "literal": "   + 1: Small12Pt",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-134",
+    "line": 134,
+    "literal": "   + 2: Medium16Pt",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-135",
+    "line": 135,
+    "literal": "   + 3: Large24Pt",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-136",
+    "line": 136,
+    "literal": "   + 4: Huge27Pt",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-137",
+    "line": 137,
+    "literal": "   + 5: Standard14Pt",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-138",
+    "line": 138,
+    "literal": "   + 6: Small10Pt",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-139",
+    "line": 139,
+    "literal": "   + 7: Small11Pt",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-140",
+    "line": 140,
+    "literal": "   + 8: Medium18Pt",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-141",
+    "line": 141,
+    "literal": "   + 9: Large20Pt",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-142",
+    "line": 142,
+    "literal": "   - 1: Small",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-143",
+    "line": 143,
+    "literal": "   - 2: Medium",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-144",
+    "line": 144,
+    "literal": "   - 3: Large",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-145",
+    "line": 145,
+    "literal": "   - 4: Huge",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextSizeType-146",
+    "line": 146,
+    "literal": "   - 5: Standard",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetVisualizationType-147",
+    "line": 147,
+    "literal": " Enum.UIWidgetVisualizationType",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetVisualizationType-148",
+    "line": 148,
+    "literal": "  + 26: TextWithSubtext",
+    "status": "audit-pending",
+    "proof_boundary": "Exact enum member/value/flag identity and removals in this literal remain unproved; no registration test credited as value parity."
+  },
+  {
+    "source_id": "source-context-150",
+    "line": 150,
+    "literal": "== Structures ==",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "structures-AreaPOIInfo (C_AreaPoiInfo-GetAreaPOIInfo)-151",
+    "line": 151,
+    "literal": " AreaPOIInfo (C_AreaPoiInfo.GetAreaPOIInfo)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-AreaPOIInfo (C_AreaPoiInfo-GetAreaPOIInfo)-152",
+    "line": 152,
+    "literal": "   + 10: factionID",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-AreaPOIInfo (C_AreaPoiInfo-GetAreaPOIInfo)-153",
+    "line": 153,
+    "literal": "   + 11: isPrimaryMapForPOI",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-AreaPOIInfo (C_AreaPoiInfo-GetAreaPOIInfo)-154",
+    "line": 154,
+    "literal": "   + 12: isAlwaysOnFlightmap",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CharCustomizationChoice (C_BarberShop-GetAvailableCustomizations)-155",
+    "line": 155,
+    "literal": " CharCustomizationChoice (C_BarberShop.GetAvailableCustomizations)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CharCustomizationChoice (C_BarberShop-GetAvailableCustomizations)-156",
+    "line": 156,
+    "literal": "   + 7: isLocked",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CharCustomizationChoice (C_BarberShop-GetAvailableCustomizations)-157",
+    "line": 157,
+    "literal": "   + 8: lockedText",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CharCustomizationChoice (C_BarberShop-GetAvailableCustomizations)-158",
+    "line": 158,
+    "literal": "   - 7: showLocked",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CharCustomizationChoice (C_BarberShop-GetAvailableCustomizations)-159",
+    "line": 159,
+    "literal": "   - 8: lockedTooltip",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingCurrencyResultData (TRADE_SKILL_CURRENCY_REWARD_RESULT)-160",
+    "line": 160,
+    "literal": " CraftingCurrencyResultData (TRADE_SKILL_CURRENCY_REWARD_RESULT)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingCurrencyResultData (TRADE_SKILL_CURRENCY_REWARD_RESULT)-161",
+    "line": 161,
+    "literal": "   + 3: operationID",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingCurrencyResultData (TRADE_SKILL_CURRENCY_REWARD_RESULT)-162",
+    "line": 162,
+    "literal": "   + 4: firstCraftReward",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingCurrencyResultData (TRADE_SKILL_CURRENCY_REWARD_RESULT)-163",
+    "line": 163,
+    "literal": "   + 5: showCurrencyText",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingCurrencyResultData (TRADE_SKILL_CURRENCY_REWARD_RESULT)-164",
+    "line": 164,
+    "literal": "   - 3: associatedItemGUID",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData (TRADE_SKILL_ITEM_CRAFTED_RESULT)-165",
+    "line": 165,
+    "literal": " CraftingItemResultData (TRADE_SKILL_ITEM_CRAFTED_RESULT)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData (TRADE_SKILL_ITEM_CRAFTED_RESULT)-166",
+    "line": 166,
+    "literal": "   + 12: operationID",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData (TRADE_SKILL_ITEM_CRAFTED_RESULT)-167",
+    "line": 167,
+    "literal": "   + 13: firstCraftReward",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData (TRADE_SKILL_ITEM_CRAFTED_RESULT)-168",
+    "line": 168,
+    "literal": "   - 12: associatedItemGUID",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingOperationInfo (C_TradeSkillUI-GetCraftingOperationInfo)-169",
+    "line": 169,
+    "literal": " CraftingOperationInfo (C_TradeSkillUI.GetCraftingOperationInfo)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingOperationInfo (C_TradeSkillUI-GetCraftingOperationInfo)-170",
+    "line": 170,
+    "literal": "   + 13: guaranteedCraftingQualityID",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerOptionInfo (C_CraftingOrders-GetCustomerOptions)-171",
+    "line": 171,
+    "literal": " CraftingOrderCustomerOptionInfo (C_CraftingOrders.GetCustomerOptions)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerOptionInfo (C_CraftingOrders-GetCustomerOptions)-172",
+    "line": 172,
+    "literal": "   + 9: qualityIlvlBonuses",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerOptionInfo (C_CraftingOrders-GetCustomerOptions)-173",
+    "line": 173,
+    "literal": "   + 10: craftingQualityIDs",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerOptionInfo (C_CraftingOrders-GetCustomerOptions)-174",
+    "line": 174,
+    "literal": "   # 13: level, Nilable: false -> true",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingReagentSlotSchematic (C_TradeSkillUI-GetRecipeSchematic)-175",
+    "line": 175,
+    "literal": " CraftingReagentSlotSchematic (C_TradeSkillUI.GetRecipeSchematic)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-CraftingReagentSlotSchematic (C_TradeSkillUI-GetRecipeSchematic)-176",
+    "line": 176,
+    "literal": "   + 8: orderSource",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-EncounterJournalItemInfo (C_EncounterJournal-GetLootInfo)-177",
+    "line": 177,
+    "literal": " EncounterJournalItemInfo (C_EncounterJournal.GetLootInfo)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-EncounterJournalItemInfo (C_EncounterJournal-GetLootInfo)-178",
+    "line": 178,
+    "literal": "   + 13: displayAsVeryRare",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-EncounterJournalItemInfo (C_EncounterJournal-GetLootInfo)-179",
+    "line": 179,
+    "literal": "   + 14: displayAsExtremelyRare",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-ItemInteractionFrameInfo (C_ItemInteraction-GetItemInteractionInfo)-180",
+    "line": 180,
+    "literal": " ItemInteractionFrameInfo (C_ItemInteraction.GetItemInteractionInfo)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-ItemInteractionFrameInfo (C_ItemInteraction-GetItemInteractionInfo)-181",
+    "line": 181,
+    "literal": "   + 12: slotTooltip",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-MajorFactionData (C_MajorFactions-GetMajorFactionData)-182",
+    "line": 182,
+    "literal": " MajorFactionData (C_MajorFactions.GetMajorFactionData)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-MajorFactionData (C_MajorFactions-GetMajorFactionData)-183",
+    "line": 183,
+    "literal": "   + 6: unlockDescription",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-MajorFactionData (C_MajorFactions-GetMajorFactionData)-184",
+    "line": 184,
+    "literal": "   + 7: unlockOrder",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-QuestInfo (C_QuestLog-GetInfo)-185",
+    "line": 185,
+    "literal": " QuestInfo (C_QuestLog.GetInfo)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-QuestInfo (C_QuestLog-GetInfo)-186",
+    "line": 186,
+    "literal": "   + 10: useMinimalHeader",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-TextureAndTextRowVisualizationInfo (C_UIWidgetManager-GetTextureAndTextRowVisualizationInfo)-187",
+    "line": 187,
+    "literal": " TextureAndTextRowVisualizationInfo (C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-TextureAndTextRowVisualizationInfo (C_UIWidgetManager-GetTextureAndTextRowVisualizationInfo)-188",
+    "line": 188,
+    "literal": "   # 3: textSizeType, Type: UIWidgetTextSizeType -> UIWidgetTextureAndTextSizeType",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-TradeSkillRecipeInfo (C_TradeSkillUI-GetRecipeInfo)-189",
+    "line": 189,
+    "literal": " TradeSkillRecipeInfo (C_TradeSkillUI.GetRecipeInfo)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-TradeSkillRecipeInfo (C_TradeSkillUI-GetRecipeInfo)-190",
+    "line": 190,
+    "literal": "   + 18: skillLineAbilityID",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-TraitDefinitionInfo (C_Traits-GetDefinitionInfo)-191",
+    "line": 191,
+    "literal": " TraitDefinitionInfo (C_Traits.GetDefinitionInfo)",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  },
+  {
+    "source_id": "structures-TraitDefinitionInfo (C_Traits-GetDefinitionInfo)-192",
+    "line": 192,
+    "literal": "   + 7: subType",
+    "status": "audit-pending",
+    "proof_boundary": "Populated DTO field/type/nilability or event payload in this literal remains unproved; empty/default results and API publication receive no DTO credit."
+  }
+]
