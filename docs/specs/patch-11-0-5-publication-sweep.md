@@ -10,7 +10,7 @@ Probe retained Warcraft Wiki page 601519, revision 6726778, against unmodified c
 - [x] C_BarberShop.HasAlteredForm returns whether the current host character snapshot contains an alternate-form race. Viewing selection does not change availability. Missing snapshot or missing alternate race returns false. This is a bounded simulator policy, not native form-eligibility parity.
 - [x] ChromaEffectsEnable and ChromaEffectsFactionColor have registry default `1`, mutable case-insensitive values, and immutable defaults through global and C_CVar queries. This models configuration storage only, not physical peripheral lighting.
 - [x] Retain ten exact known gaps and account for all 48 inventory / 34 extract source rows.
-- [ ] Run each of thirteen publication sweeps alone, new behavior tests, one-row negative control, relevant isolated prefork cases, formatting, Mists test check with zero non-vendor warnings, and bounded startup returning [].
+- [x] Run each of thirteen publication sweeps alone, new behavior tests, one-row negative control, relevant isolated prefork cases, formatting, Mists test check with zero non-vendor warnings, and bounded startup returning [].
 
 ## Tests asserting this spec
 
@@ -48,5 +48,7 @@ Historical 11.0.5 emulation, 11.x epoch features, native signature/output/securi
 | 12.1.0 | 778 | 773 | 5 | PASS |
 
 Every sweep ran alone through `cargo test --test integration <filter> -- --nocapture --test-threads=1`. Negative control changes only C_BarberShop.HasAlteredForm added → removed: exactly one new gap, none resolved, 10 → 11, expected exit 101. Three behavior tests GREEN after RED; three isolated prefork cases GREEN (cached new surfaces, deprecated Glue boolean, specialization alias identity). Seventeen extractor/register fixtures pass. Mists test check passes with zero non-vendor warnings; six existing iced manifest deprecations plus vendor summary unsuppressed. Separate retail build and bounded exit-0 startup return `[]`.
+
+`cargo fmt` / `cargo fmt --check`, deterministic extract reproduction, all thirteen byte-identical register regenerations and portable artifact validation pass at `2bf022deb` with newly generated reproduction/proof inputs. Later docs/evidence records do not change validated capability/source scopes. Changed Rust lines manually reviewed for readability. Local ignored Cargo logs are not required by the portable validator; tracked summaries retain test outcomes and warning boundaries.
 
 82 IDs: 30 partial-development-green, eight bounded-coverage, 34 audit-pending, ten metadata-only. Seven strict removals and one cached alias acceptance; no effective supersession reversal. Page ledger stays in-progress. No full suite, agents/models, push or merge.

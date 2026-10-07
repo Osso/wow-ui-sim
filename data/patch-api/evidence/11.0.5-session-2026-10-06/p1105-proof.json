@@ -1022,6 +1022,61 @@
         "test_summary": []
       },
       "invalidated": false
+    },
+    {
+      "name": "fmt-check",
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1105-page",
+      "revision": "2bf022deb98a436c37fa6f05b53be1c2478e337d",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1105-page/target"
+      },
+      "exit_code": 0,
+      "log_path": "fmt-check.log",
+      "summary": {
+        "stdout": "",
+        "stderr": ""
+      },
+      "invalidated": false
+    },
+    {
+      "name": "extract-reproduction",
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.0.5",
+        "--text-only",
+        "--check"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1105-page",
+      "revision": "2bf022deb98a436c37fa6f05b53be1c2478e337d",
+      "exit_code": 0,
+      "summary": {
+        "stdout": "{\"patch\": \"11.0.5\", \"rows\": 34, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 24}}\n",
+        "stderr": ""
+      },
+      "invalidated": false
+    },
+    {
+      "name": "artifact-validation",
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p1105-page/data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1105-page",
+      "revision": "2bf022deb98a436c37fa6f05b53be1c2478e337d",
+      "exit_code": 0,
+      "summary": {
+        "stdout": "PASS: 82 unique source IDs; 48 inventory + 34 extract; 13 exact sweeps; hashes, reproduction, preserved inputs, negative control and portable proof\n",
+        "stderr": ""
+      },
+      "invalidated": false,
+      "scope": "Tracked validator at 2bf022deb with newly generated reproduction/proof inputs. Later result records and docs do not change validated capability/source scopes."
     }
   ],
   "scope_policy": "Each result covers its named command/revision and input scope. Later evidence/docs edits do not invalidate runtime proof. Twelve later sweeps at b3113d0f7 remain applicable after 5fb610fa3 adds only Chroma CVar entries/tests/11.0.5 fixture: neither CVar occurs in later registers. Main-thread local proof only; no independent/native acceptance."
