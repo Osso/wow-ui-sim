@@ -8,6 +8,18 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_11_0_7_profiler_transclusion_is_retained_without_expansion(self):
+        text = extract_text('==Addon Profiling API==\n'
+                            '{{:Enum.AddOnProfilerMetric}}\n'
+                            ': 11.0.5 (57212) → 11.0.7 (58238) Dec 19 2024\n')
+        self.assertEqual(text, '== Addon Profiling API ==\n'
+                         '[Transcluded source: Enum.AddOnProfilerMetric; not expanded]\n'
+                         ': 11.0.5 (57212) → 11.0.7 (58238) Dec 19 2024\n')
+        rows = seed_rows(text, patch='11.0.7')
+        self.assertEqual(rows[1]['status'], 'audit-pending')
+        self.assertEqual(rows[1]['source_id'], 'prose-undated-002')
+        self.assertEqual(rows[2]['status'], 'metadata-only')
+
     def test_11_1_0_build_context_preserves_category_contract(self):
         rows = seed_rows('Patch 11.1.0 API changes\n'
                          '## Category-deDE: Dies ist ein Test\n'

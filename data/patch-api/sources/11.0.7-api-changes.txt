@@ -1,0 +1,96 @@
+Patch 11.0.7 API changes
+
+== Summary ==
+* A new addon profiling API has been added.
+
+== Resources ==
+* TOC: 110007
+* Official patch notes: Siren Isle Update Notes
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Blizzard_Deprecated
+
+== Addon Profiling API ==
+
+A new C_AddOnProfiler namespace has been added with functions for querying CPU performance metrics associated with addons.
+
+The measurements recorded by this new profiler are always enabled and do not require the scriptProfile CVar to be enabled. As with existing profiling functions, these APIs only return values for user-installed addons and cannot be used to query the performance of secure Blizzard addons, nor can they be used to measure the performance of macro commands such as /run. Metrics are reset with UI reloads.
+
+* C_AddOnProfiler.GetAddOnMetric(name, metric) : result - Returns a time value measured in milliseconds.
+* C_AddOnProfiler.GetOverallMetric(metric) : result - As above, but returned value is the sum across all loaded addons.
+* C_AddOnProfiler.IsEnabled() : enabled - Currently this function always returns true.
+
+The metric parameter in the listed APIs corresponds to entries in Enum.AddOnProfilerMetric, listed below.
+
+[Transcluded source: Enum.AddOnProfilerMetric; not expanded]
+
+=== Details ===
+See C_AddOnProfiler.GetAddOnMetric for implementation details, including how profiling blame is attributed.
+
+== C_LFGList ==
+* C_LFGList.GetSearchResultInfo(searchResultID) - Changed activityID return field to activityIDs.
+
+== Consolidated changes ==
+: 11.0.5 (57212) → 11.0.7 (58238) Dec 19 2024
+
+=== Enumerations ===
+ Enum.AccountTransType
+   + AccountStore
+   + WarbandGroups
+   + Mapping
+   + CharacterItems
+   + CurrencyTransferLog
+   + LgVendorPurchase
+   - PerkRecentPurchases
+ Enum.BattlepetDbFlags
+   + AccountStore
+ Enum.BattlepetDeletedReason
+   + AccountStore
+ Enum.Cursormode
+   + StablemasterCursor
+   + StablemasterErrorCursor
+ Enum.EventRealmQueues
+   + PlunderstormTraining
+ Enum.GameRuleFlags
+   + RequiresDefault
+ Enum.ItemGemColor
+   + SingingThunder
+   + SingingSea
+   + SingingWind
+ Enum.ItemSocketType
+   + SingingThunder
+   + SingingSea
+   + SingingWind
+ Enum.ReportMinorCategory
+   + Disruption
+ Enum.TooltipDataItemBinding
+   + BindToAccountUntilEquipped
+
+=== Structures ===
+ AdvancedFilterOptions
+   # activities, Documentation
+ FontScriptInfo
+   + fontObject
+ GroupFinderActivityInfo
+   + minLevelSuggestion
+   + maxLevelSuggestion
+   + mapID
+   + difficultyID
+   + redirectedDifficultyID
+ LfgEntryData
+   + activityID -> activityIDs
+   + newPlayerFriendly
+ LfgSearchResultData
+   # activityID -> activityIDs
+   # leaderDungeonScoreInfo, Type: BestDungeonScoreMapInfo -> table, InnerType: BestDungeonScoreMapInfo, Nilable: true -> false
+   # leaderPvpRatingInfo, Type: PvpRatingInfo -> table, InnerType: PvpRatingInfo, Nilable: true -> false
+   + newPlayerFriendly
+ PerksVendorItemInfo
+   + originalPrice
+   + showSaleBanner
+ PvpBrawlInfo
+   + crossFactionAllowed
+ QuestLineInfo
+   + startMapID
+ VignetteInfo
+   + mapPin
+   + objectiveType
