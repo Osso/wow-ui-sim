@@ -1,0 +1,103 @@
+Patch 10.1.5 API changes
+
+== Summary ==
+* Various API changes have been made to optimize range checks for actions and units.
+* The following widget API functions are now restricted and may not be called by insecure code while in combat:
+** Frame:SetPropagateKeyboardInput
+** ScriptRegion:SetPassThroughButtons
+
+== Resources ==
+* TOC: 100105
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: Dragonflight: Fractures in Time Content Update Notes
+
+== Enumerations ==
+ Enum.ChatWhisperTargetStatus
+   + CanWhisperGuild = 1
+ Enum.ClickBindingType
+   + PetAction = 4
+ Enum.CraftingOrderItemType
+   + RemoveReagent = 3
+ Enum.ContentTrackingTargetType
+   + Quest = 4
+ Enum.Cursormode
+   + QuestImportantCursor = 30
+   + QuestImportantTurninCursor = 31
+   + QuestImportantErrorCursor = 65
+   + QuestImportantTurninErrorCursor = 66
+ Enum.EditModeAccountSetting
+   + ShowTimerBars = 25
+   + ShowVehicleSeatIndicator = 26
+   + ShowArchaeologyBar = 27
+ Enum.EditModeSystem
+   + TimerBars = 17
+   + VehicleSeatIndicator = 18
+   + ArchaeologyBar = 19
+ Enum.EditModeUnitFrameSetting
+   + ViewArenaSize = 17
+ Enum.PvPMatchState
+   + Waiting = 1
+   + StartUp = 2
+   + Engaged = 3
+   + PostRound = 4
+   - Active
+ Enum.SuperTrackingType
+   + Content = 4
+ Enum.TooltipDataLineType
+   + ToyName = 31
+   + ToyText = 32
+   + ToyEffect = 33
+   + ToyDuration = 34
+   + RestrictedArena = 35
+   + RestrictedBg = 36
+   + ToyFlavorText = 37
+   + ToyDescription = 38
+   + ToySource = 39
+ Enum.ReportType
+   + CraftingOrder = 16
+ Enum.TrackedSpellCategory
+   + None = 0
+   - Count
+ Enum.UIMapFlag
+   + ForceAllowMapLinks = 0x40000
+
+== Constants ==
+ ContentTrackingConsts
+   + MaxTrackedAchievements = 10
+   + MaxTrackedCollectableSources = 15
+
+== Structures ==
+ BattlefieldRewards
+   + roleShortageBonus
+ CampaignInfo (C_CampaignInfo.GetCampaignInfo)
+   + usesNormalQuestIcons
+   + isContainerCampaign
+ CharCustomizationCategory (C_BarberShop.GetAvailableCustomizations)
+   + needsNativeFormCategory
+ ChromieTimeExpansionInfo (C_ChromieTime.GetChromieTimeExpansionOption, C_ChromieTime.GetChromieTimeExpansionOptions)
+   + recommended
+   + sortPriority
+ ContainerItemInfo (C_Container.GetContainerItemInfo)
+   + itemName
+ CraftingOrderClaimsRemainingInfo (C_CraftingOrders.GetOrderClaimInfo)
+   # hoursToRecharge -> secondsToRecharge
+ CraftingOrderReagentInfo (C_CraftingOrders.GetCrafterOrders, ...)
+   # reagentSlot -> slotIndex
+ DeadlyDebuffInfo (C_SpellBook.GetDeadlyDebuffInfo)
+   + criticalTimeRemainingMs
+   + criticalStacks
+   - overrideCriticalTimeRemaining
+ GossipQuestUIInfo (C_GossipInfo.GetActiveQuests, C_GossipInfo.GetAvailableQuests)
+   + isImportant
+ LossOfControlData (C_LossOfControl.GetActiveLossOfControlData)
+   + auraInstanceID
+ PerksProgramItemDisplayInfo (C_PerksProgram.GetPerksProgramItemDisplayInfo)
+   + creatureDisplayInfoID
+ PerksVendorItemInfo (C_PerksProgram.GetVendorItemInfo, C_PerksProgram.GetFrozenPerksVendorItemInfo)
+   + pending
+ QuestLineInfo (C_QuestLine.GetQuestLineInfo, C_QuestLine.GetAvailableQuestLines)
+   + isImportant
+ ScenarioInformation (C_ScenarioInfo.GetScenarioInfo)
+   + scenarioID
+ TradeSkillRecipeInfo (C_TradeSkillUI.GetRecipeInfo, C_TradeSkillUI.GetRecipeInfoForSkillLineAbility)
+   + alwaysUsesLowestQuality

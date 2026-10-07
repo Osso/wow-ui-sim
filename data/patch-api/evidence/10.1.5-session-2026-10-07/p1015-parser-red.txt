@@ -1,0 +1,54 @@
+..............F....F...
+======================================================================
+FAIL: test_level_two_inventory_preserves_enum_constant_and_structure_rows (test_extract_patch_non_inventory.ExtractTests.test_level_two_inventory_preserves_enum_constant_and_structure_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1015-page/tools/test_extract_patch_non_inventory.py", line 102, in test_level_two_inventory_preserves_enum_constant_and_structure_rows
+    self.assertEqual(extract_text(raw), '== Summary ==\n* Range checks changed.\n'
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '== Enumerations ==\n Enum.PvPMatchState\n   + Waiting = 1\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '== Constants ==\n ContentTrackingConsts\n   + MaxTrackedAchievements = 10\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '== Structures ==\n BattlefieldRewards\n   + roleShortageBonus\n')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '== S[34 chars]\n== Global API ==\n' != '== S[34 chars]\n== Enumerations ==\n Enum.PvPMatchState\n   [149 chars]us\n'
+  == Summary ==
+  * Range checks changed.
+- == Global API ==
++ == Enumerations ==
++  Enum.PvPMatchState
++    + Waiting = 1
++ == Constants ==
++  ContentTrackingConsts
++    + MaxTrackedAchievements = 10
++ == Structures ==
++  BattlefieldRewards
++    + roleShortageBonus
+
+
+======================================================================
+FAIL: test_level_two_inventory_headings (test_gen_patch_wikitext_register.InventoryTests.test_level_two_inventory_headings)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1015-page/tools/test_gen_patch_wikitext_register.py", line 34, in test_level_two_inventory_headings
+    self.assertEqual([(e['symbol'], e['direction'], e['annotation']) for e in entries], [
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ('C_ActionBar.EnableActionRangeCheck', 'added', ''),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ('C_PvP.GetArenaRewards', 'changed', '+ ret 5: roleShortageBonus')])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('C_ActionBar.EnableActionRangeCheck', 'a[74 chars]us')]
+
+Second list contains 2 additional elements.
+First extra element 0:
+('C_ActionBar.EnableActionRangeCheck', 'added', '')
+
+- []
++ [('C_ActionBar.EnableActionRangeCheck', 'added', ''),
++  ('C_PvP.GetArenaRewards', 'changed', '+ ret 5: roleShortageBonus')]
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.009s
+
+FAILED (failures=2)

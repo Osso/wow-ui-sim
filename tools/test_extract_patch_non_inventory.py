@@ -105,6 +105,18 @@ class ExtractTests(unittest.TestCase):
         self.assertEqual(rows[2]['status'], 'metadata-only')
         self.assertEqual(rows[2]['source_id'], 'source-context-003')
 
+    def test_level_two_inventory_preserves_enum_constant_and_structure_rows(self):
+        raw = ('==Summary==\n* Range checks changed.\n'
+               '==Global API==\n{| class="wikitable"\n: {{api|IgnoreMe}}\n|}\n'
+               '==Widgets==\n: {{api|Frame:AbortDrag}}\n'
+               '==Enums==\n Enum.PvPMatchState\n   + Waiting = 1\n'
+               '==Constants==\n ContentTrackingConsts\n   + MaxTrackedAchievements = 10\n'
+               '==Structures==\n BattlefieldRewards\n   + roleShortageBonus\n')
+        self.assertEqual(extract_text(raw), '== Summary ==\n* Range checks changed.\n'
+                         '== Enumerations ==\n Enum.PvPMatchState\n   + Waiting = 1\n'
+                         '== Constants ==\n ContentTrackingConsts\n   + MaxTrackedAchievements = 10\n'
+                         '== Structures ==\n BattlefieldRewards\n   + roleShortageBonus\n')
+
     def test_unheaded_inventory_stops_at_structures(self):
         raw = ('==Consolidated changes==\n: 11.2.5 → 11.2.7\n'
                '{| class="wikitable"\n: {{api|IgnoreMe}}\n|}\n'

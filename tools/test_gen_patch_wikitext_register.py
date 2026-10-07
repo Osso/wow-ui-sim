@@ -38,6 +38,21 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual([(e['symbol'], e.get('kind')) for e in entries],
                          [('NeighborhoodAddManager', 'command')])
 
+    def test_level_two_inventory_headings(self):
+        raw = ('==Global API==\n| valign="top" | <div>\n'
+               ': {{api|C_ActionBar.EnableActionRangeCheck}}\n</div>\n|}\n'
+               ' {{api|C_PvP.GetArenaRewards}}\n   + ret 5: roleShortageBonus\n'
+               '==Widgets==\n| valign="top" | <div>\n'
+               ': {{api|Frame:AbortDrag}}\n</div>\n|}\n'
+               '==Enums==\n Enum.X\n   + New = 1\n')
+        buckets = split_sections(raw)
+        entries, _ = parse_section('global-api', buckets.get('global-api', []))
+        self.assertEqual([(e['symbol'], e['direction'], e['annotation']) for e in entries], [
+            ('C_ActionBar.EnableActionRangeCheck', 'added', ''),
+            ('C_PvP.GetArenaRewards', 'changed', '+ ret 5: roleShortageBonus')])
+        entries, _ = parse_section('widgets', buckets.get('widgets', []))
+        self.assertEqual([e['symbol'] for e in entries], ['Frame:AbortDrag'])
+
     def test_changed_entries_accept_multiple_indentation_spaces(self):
         entries, _ = parse_section('global-api', [
             (1, '|}'),
