@@ -132,6 +132,16 @@ class ExtractTests(unittest.TestCase):
                '===Structures===\n DifficultyInfo\n   + isUserSelectable\n')
         self.assertEqual(extract_text(raw), '\n')
 
+    def test_level_two_structure_section_ends_inventory(self):
+        raw = ('==Global API==\n: {{api|IgnoreMe}}\n'
+               '==Structures==\n Enum.PowerType\n'
+               '   + <font color="green">AlternateQuest</font> = 23\n'
+               ' AreaPOIInfo\n   + 13: addPaddingAboveWidgets\n')
+        self.assertEqual(extract_text(raw),
+                         '== Structures ==\n Enum.PowerType\n'
+                         '   + AlternateQuest = 23\n'
+                         ' AreaPOIInfo\n   + 13: addPaddingAboveWidgets\n')
+
     def test_12_0_0_plaintext_stays_identical(self):
         sources = ROOT / 'data/patch-api/sources'
         self.assertEqual(
