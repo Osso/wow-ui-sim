@@ -203,3 +203,7 @@ Validated [[patch-10-2-7-api-audit]] at facc0076f: source hashes, all 187 IDs, s
 ## 2026-10-07 — Patch 10.2.6 page audit
 
 Created [[patch-10-2-6-api-audit]]: page 582132 revision 6268742 exists; all 358 inventory/extract IDs accounted. Three unused retail retirements close bounded absence gaps; twenty exact publication gaps, one historical CVar default mismatch and 121 substantive extract occurrences remain explicit. Seventeen isolated sweeps, exact 20 → 21 negative control, retirement RED/GREEN, one cached Game prefork, eighteen parser/extractor fixtures, formatting, Mists tests check with zero non-vendor warnings, separate retail build and exit-0 startup `[]` pass at 1ef2ed7b4. All sixteen existing registers regenerate byte-identically; 104 later inputs preserved. No vendor edits, sibling targets, agents/models, full suite, push or merge.
+
+## 2026-10-07 — Patch 10.2.6 artifact validation
+
+Validated [[patch-10-2-6-api-audit]] at 7d8d11fff: pinned source hashes, all 358 unique IDs, seventeen chronological sweeps, exact retained gaps, default mismatch, negative control, command log hashes and 104 preserved inputs. Supplemental bare-token searches confirm RAF references use the namespace successor and camera references use the preserved global; no retired-API consumer found. Runtime checks not rerun for result/doc-only changes.

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/10.2.6-session-2026-10-07/p1026-validate.py"
+  ],
+  "revision": "7d8d11fffca4a291158f145597f3ee9da72ed449",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1026-page",
+  "exit_code": 0,
+  "stdout": "{\"result\": \"PASS\", \"inventory_rows\": 220, \"extract_rows\": 138, \"unique_ids\": 358, \"isolated_sweeps\": 17, \"runtime_closures\": 3, \"retained_publication_gaps\": 20, \"default_mismatches\": 1, \"preserved_inputs\": 104, \"proof\": \"local targeted only; no native parity\"}\n",
+  "stderr": "",
+  "proof": "local artifact validation only"
+}

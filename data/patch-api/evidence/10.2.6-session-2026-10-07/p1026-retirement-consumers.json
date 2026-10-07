@@ -24,5 +24,33 @@
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua:69:\t\tlocal setting, initializer = Settings.SetupCVarCheckbox(category, \"profanityFilter\", PROFANITY_FILTER, OPTION_TOOLTIP_PROFANITY_FILTER);"
     ],
     "stderr": ""
+  },
+  {
+    "pattern": "\\bCanSummonFriend\\b",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua:1231:\tlocal canSummon, reason = C_RecruitAFriend.CanSummonFriend(self.friendGUID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:139:\t\treturn true, C_RecruitAFriend.CanSummonFriend(info.guid);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/RecruitAFriendDocumentation.lua:11:\t\t\tName = \"CanSummonFriend\","
+    ],
+    "stderr": "",
+    "scope": "bare-token disambiguation; namespace successors and global camera defaults are not retired"
+  },
+  {
+    "pattern": "\\bGetUIWidgetSetIDFromQuestID\\b",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": "",
+    "scope": "bare-token disambiguation; namespace successors and global camera defaults are not retired"
+  },
+  {
+    "pattern": "\\bGetCameraFOVDefaults\\b",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:1060:\t\t\tlocal _, minValue, maxValue = GetCameraFOVDefaults();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CameraDocumentation.lua:10:\t\t\tName = \"GetCameraFOVDefaults\","
+    ],
+    "stderr": "",
+    "scope": "bare-token disambiguation; namespace successors and global camera defaults are not retired"
   }
 ]
