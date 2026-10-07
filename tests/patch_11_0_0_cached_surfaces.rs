@@ -1,5 +1,6 @@
 //! Unmodified cached Game load must preserve current retail retirements.
-use super::common::prelude::*;
+#![cfg(feature = "client-retail")]
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 prefork_full_ui_case! {
     fn patch_11_0_0_cached_retirements(env: &WowLuaEnv) {
