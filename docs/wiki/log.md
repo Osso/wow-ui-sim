@@ -4,7 +4,7 @@
 
 ## [2026-10-06] investigation | DamageMeter panel fixture
 
-[Bisect](investigations/damage-meter-panel-fixture.md) identifies `1a9fcd1ec`; `d1a2a0250` also fails alone, parent `97f7edd2d` passes. Explicit test input replaces reliance on removed synthetic sessions. Original assertions and runtime empty defaults preserved; temporary bisect worktree removed.
+[Bisect](investigations/damage-meter-panel-fixture.md) identifies `1a9fcd1ec`; `d1a2a0250` also fails alone, parent `97f7edd2d` passes. Explicit test input replaces reliance on removed synthetic sessions. Original assertions and runtime empty defaults preserved; temporary bisect worktree removed. At `51b8b5322`: isolated test 1 PASS, DamageMeter 16 PASS, LoD 20 PASS / 8 existing ignores; fmt/check clean, Mists tests compile with zero non-vendor warnings. Publication behavior unchanged.
 
 ## [2026-10-06] evidence | 11.2.7 producer follow-up
 

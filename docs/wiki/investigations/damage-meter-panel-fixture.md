@@ -21,7 +21,17 @@ The repaired test explicitly supplies availability, Overall/Current bindings, a 
 
 ## Verification
 
-RED and bisect logs live in the task scratchpad. Required post-commit checks: isolated panel test, `damage_meter`, `test_showuipanel_lod`, formatting and Mists tests compilation. No publication behavior changed; publication sweep is not affected. Execution results are recorded below after verification.
+Post-commit proof at `51b8b5322fc027bce5084cb5fd920d9dbf8b94a1` (saved once per command in the task scratchpad):
+
+| Command/scope | Result | Proof limit |
+| --- | --- | --- |
+| `cargo test --test integration test_showuipanel_lod::damage_meter_loads_and_populates_primary_session_window` | 1 passed, 0 failed | Real cached Blizzard aggregate and source windows, outside combat |
+| `cargo test --test integration damage_meter` | 16 passed, 0 failed | Includes empty-default, snapshots, selector rejection and bounded combat block |
+| `cargo test --test integration test_showuipanel_lod` | 20 passed, 0 failed, 8 ignored | Existing ignored cases unchanged |
+| `cargo fmt`, `cargo fmt --check` | Exit 0 | Changed Rust manually audited for readability; no violations |
+| `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` | Exit 0; zero non-vendor warnings | Six existing `iced_wgpu` vendor-manifest lint deprecation warnings; Mists compilation, not runtime |
+
+No publication behavior or fixture changed, so no publication sweep is affected. Combat disclosure/native secrecy remains deliberately unsupported by this fix. Later changes here are documentation-only and do not invalidate these code-scoped results. RED, bisect and command logs are retained under `/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/`; `proof-ledger.txt` records revisions and exit codes.
 
 ## Sources
 
