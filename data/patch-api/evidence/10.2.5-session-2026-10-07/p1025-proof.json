@@ -582,5 +582,20 @@
     "log": "data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-extract-reproduction.log",
     "scope": "verbatim-code source reproduction",
     "invalidated": false
+  },
+  {
+    "command": [
+      "python3",
+      "data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-validate.py"
+    ],
+    "revision": "9fd2144e6cc4cb72628046565c98af9a1890a4c0",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1025-page",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1025-page/target"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-validation.log",
+    "scope": "artifact verification: sources, 415 IDs, seventeen exact sweeps and 101 preserved inputs",
+    "invalidated": false
   }
 ]

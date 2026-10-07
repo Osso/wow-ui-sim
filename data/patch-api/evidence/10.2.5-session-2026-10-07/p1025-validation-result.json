@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/10.2.5-session-2026-10-07/p1025-validate.py"
+  ],
+  "revision": "9fd2144e6cc4cb72628046565c98af9a1890a4c0",
+  "exit_code": 0,
+  "stdout": {
+    "source_ids": 415,
+    "inventory": 59,
+    "extract": 356,
+    "isolated_sweeps": 17,
+    "retained_gaps": 14,
+    "preserved_inputs": 101,
+    "result": "PASS"
+  },
+  "validated_scope": "Committed accounting/proof at 9fd2144e6. Subsequent changes retain validator result/proof and documentation only; runtime/test/parser hashes unchanged.",
+  "log_sha256": "a332d8fe68fceb6696e37c46a1f555ddb76a5a79a7ddb50e55ccfa0f11852dba"
+}
