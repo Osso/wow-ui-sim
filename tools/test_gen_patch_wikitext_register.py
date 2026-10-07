@@ -25,6 +25,27 @@ class InventoryTests(unittest.TestCase):
         widgets, _ = parse_section('widgets', buckets['widgets'])
         self.assertEqual([e['symbol'] for e in widgets], ['Region:GetSourceLocation'])
 
+    def test_html_cvar_defaults_and_unbolded_command_label(self):
+        entries, counts = parse_section('cvars', [
+            (1, '! Added <small>(2)</small>'),
+            (2, '! Removed <small>(0)</small>'),
+            (3, '| valign="top" | <div>'),
+            (4, ': <span>[[CVar NotchedDisplayMode|NotchedDisplayMode]]</span>'
+                '<span style="display:none">Default: <code><span class="apitype">1</span></code></span>'),
+            (5, ': Commands'),
+            (6, ': <span>[[CVar spectate|spectate]]</span><span style="display:none"><small>Spectate <CharName-Realm></small></span>'),
+            (7, '</div>'),
+            (8, '| valign="top" | <div>'),
+            (9, ': RemovedCvar'),
+        ])
+        self.assertEqual([(e['symbol'], e.get('page_default'), e.get('kind'), e['direction'])
+                          for e in entries], [
+            ('NotchedDisplayMode', '1', None, 'added'),
+            ('spectate', None, 'command', 'added'),
+            ('RemovedCvar', None, None, 'removed'),
+        ])
+        self.assertEqual(counts[0]['parsed_count'], 2)
+
     def test_inline_plain_commands_do_not_turn_removed_cvars_into_commands(self):
         entries, counts = parse_section('cvars', [
             (1, '! Added <small>(3)</small>'),

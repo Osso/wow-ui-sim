@@ -64,6 +64,10 @@ def make_entry(section, direction, line_no, text):
         entry["kind"] = "command"
     if section == "cvars" and "default" in params:
         entry["page_default"] = params["default"]
+    elif section == "cvars":
+        default = re.search(r'Default: <code><span class="apitype">([^<]*)</span></code>', text)
+        if default:
+            entry["page_default"] = default.group(1)
     if "{{test-inline}}" in text.lower():
         entry["test_inline"] = True
     return entry
@@ -87,7 +91,7 @@ def parse_section(section, lines, *, expand_shared_changes=False, capture_span_d
             mode = None
         elif text.startswith("|}") or "'''Changed'''" in text:
             mode = "changed"
-        elif section == "cvars" and text.strip() == ": '''Commands'''":
+        elif section == "cvars" and text.strip() in (": '''Commands'''", ": Commands"):
             inline_commands = True
         elif section == "widgets" and text.strip() == ": Widget Scripts":
             continue  # Category label, not an API occurrence.

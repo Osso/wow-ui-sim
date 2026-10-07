@@ -1,0 +1,44 @@
+..F.........
+======================================================================
+FAIL: test_html_cvar_defaults_and_unbolded_command_label (test_gen_patch_wikitext_register.InventoryTests.test_html_cvar_defaults_and_unbolded_command_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p920-page/tools/test_gen_patch_wikitext_register.py", line 21, in test_html_cvar_defaults_and_unbolded_command_label
+    self.assertEqual([(e['symbol'], e.get('page_default'), e.get('kind'), e['direction'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                      for e in entries], [
+                      ^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        ('RemovedCvar', None, None, 'removed'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ])
+    ^^
+AssertionError: Lists differ: [('No[14 chars]de', None, None, 'added'), ('Commands', None, [85 chars]ed')] != [('No[14 chars]de', '1', None, 'added'), ('spectate', None, '[54 chars]ed')]
+
+First differing element 0:
+('NotchedDisplayMode', None, None, 'added')
+('NotchedDisplayMode', '1', None, 'added')
+
+First list contains 1 additional elements.
+First extra element 3:
+('RemovedCvar', None, None, 'removed')
+
+- [('NotchedDisplayMode', None, None, 'added'),
+?                              ------
+
++ [('NotchedDisplayMode', '1', None, 'added'),
+?                         +++++
+
+-  ('Commands', None, None, 'added'),
+-  ('spectate', None, None, 'added'),
+?                     ^  ^
+
++  ('spectate', None, 'command', 'added'),
+?                     ^^ +++ ^^
+
+   ('RemovedCvar', None, None, 'removed')]
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.002s
+
+FAILED (failures=1)
