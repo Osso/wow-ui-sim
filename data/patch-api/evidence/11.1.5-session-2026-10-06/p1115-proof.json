@@ -427,6 +427,20 @@
       "revision": "fd6117247",
       "scope": "Executed immediately before fd6117247 commit; formatted changes. Tool returned exit 0. Later fmt-final independently confirms current Rust formatting.",
       "exit_code": 0
+    },
+    {
+      "name": "extract-reproduce",
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.1.5",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "bb58ff04e72b310699ff90beef156a2f8f4c2fd7",
+      "exit_code": 0,
+      "scope": "Exact retained plaintext reproduction; 99 seeded rows: 14 metadata-only, 85 audit-pending. Output recorded in tool result."
     }
   ],
   "revision_scope_note": "Runtime/Rust code unchanged since fd6117247; fixture finalized at 1fb6571e1. Subsequent changes affect only extract tooling/tests, data, evidence and docs; cargo/runtime proof is not invalidated."

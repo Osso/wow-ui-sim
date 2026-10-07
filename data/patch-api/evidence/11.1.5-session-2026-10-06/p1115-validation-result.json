@@ -1,0 +1,24 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-validate.py"
+  ],
+  "revision": "bb58ff04e72b310699ff90beef156a2f8f4c2fd7",
+  "exit_code": 0,
+  "json": {
+    "rows": 224,
+    "statuses": {
+      "audit-pending": 121,
+      "partial-development-green": 73,
+      "bounded-coverage": 15,
+      "metadata-only": 15
+    },
+    "sweeps": 10,
+    "initial_gaps": 44,
+    "closed": 8,
+    "retained": 36,
+    "negative_control_gaps": 37,
+    "result": "PASS"
+  },
+  "scope": "Retained page/register/ledger/result/negative-control/proof-summary/preservation artifacts; no native or independent acceptance."
+}
