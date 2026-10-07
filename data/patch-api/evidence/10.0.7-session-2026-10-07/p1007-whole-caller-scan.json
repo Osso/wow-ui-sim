@@ -1,0 +1,128 @@
+[
+  {
+    "symbol": "C_QuestOffer.GetHideRequiredItemsOnTurnIn",
+    "needle": "GetHideRequiredItemsOnTurnIn",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetLastAchievement",
+    "needle": "GetLastAchievement",
+    "exit": 0,
+    "stdout": "tests/data/patch_11_0_0_sweep_known_gaps.json:84:  \"wt-global-api-C_Social.GetLastAchievement-530\",\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetLastItem",
+    "needle": "GetLastItem",
+    "exit": 0,
+    "stdout": "tests/data/patch_11_0_0_sweep_known_gaps.json:85:  \"wt-global-api-C_Social.GetLastItem-532\",\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetLastScreenshotIndex",
+    "needle": "GetLastScreenshotIndex",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetMaxTweetLength",
+    "needle": "GetMaxTweetLength",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetScreenshotInfoByIndex",
+    "needle": "GetScreenshotInfoByIndex",
+    "exit": 0,
+    "stdout": "tests/data/patch_11_0_0_sweep_known_gaps.json:86:  \"wt-global-api-C_Social.GetScreenshotInfoByIndex-534\",\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetTweetLength",
+    "needle": "GetTweetLength",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.IsSocialEnabled",
+    "needle": "IsSocialEnabled",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.RegisterSocialBrowser",
+    "needle": "RegisterSocialBrowser",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.SetTextureToScreenshot",
+    "needle": "SetTextureToScreenshot",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterCheckStatus",
+    "needle": "TwitterCheckStatus",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterConnect",
+    "needle": "TwitterConnect",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterDisconnect",
+    "needle": "TwitterDisconnect",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterGetMSTillCanPost",
+    "needle": "TwitterGetMSTillCanPost",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterPostAchievement",
+    "needle": "TwitterPostAchievement",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterPostItem",
+    "needle": "TwitterPostItem",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterPostMessage",
+    "needle": "TwitterPostMessage",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterPostScreenshot",
+    "needle": "TwitterPostScreenshot",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+]

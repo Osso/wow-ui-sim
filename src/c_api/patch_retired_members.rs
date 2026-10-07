@@ -34,6 +34,33 @@ const RETIRED_10_1_0_MEMBERS: &[(&str, &[&str])] = &[
         &["GetQuestLogRewardSpell", "GetQuestRewardSpell"],
     ),
 ];
+
+// Qualified and bare-name cached retail Lua scans find no 10.0.7 consumers.
+const RETIRED_10_0_7_MEMBERS: &[(&str, &[&str])] = &[
+    ("C_QuestOffer", &["GetHideRequiredItemsOnTurnIn"]),
+    (
+        "C_Social",
+        &[
+            "GetLastAchievement",
+            "GetLastItem",
+            "GetLastScreenshotIndex",
+            "GetMaxTweetLength",
+            "GetScreenshotInfoByIndex",
+            "GetTweetLength",
+            "IsSocialEnabled",
+            "RegisterSocialBrowser",
+            "SetTextureToScreenshot",
+            "TwitterCheckStatus",
+            "TwitterConnect",
+            "TwitterDisconnect",
+            "TwitterGetMSTillCanPost",
+            "TwitterPostAchievement",
+            "TwitterPostItem",
+            "TwitterPostMessage",
+            "TwitterPostScreenshot",
+        ],
+    ),
+];
 const RETIRED_10_1_5_MEMBERS: &[(&str, &[&str])] = &[("C_CampaignInfo", &["UsesNormalQuestIcons"])];
 const RETIRED_10_2_0_MEMBERS: &[(&str, &[&str])] = &[(
     "C_Console",
@@ -262,6 +289,7 @@ const RETIRED_12_0_7_MEMBERS: &[(&str, &[&str])] = &[
 
 pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
     mark_members(state, RETIRED_10_1_0_MEMBERS)?;
+    mark_members(state, RETIRED_10_0_7_MEMBERS)?;
     mark_members(state, RETIRED_10_1_5_MEMBERS)?;
     mark_members(state, RETIRED_10_2_0_MEMBERS)?;
     mark_members(state, RETIRED_10_2_6_MEMBERS)?;
