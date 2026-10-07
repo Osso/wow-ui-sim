@@ -2,6 +2,10 @@
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
+use wow_ui_sim::c_api::c_housing::catalog::{
+    HousingCatalogCategoryRecord, HousingCatalogEntryID, HousingCatalogEntryRecord,
+    HousingCatalogSubcategoryRecord,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
@@ -106,71 +110,77 @@ fn blizzard_deprecated_housing_catalog_seeds_entry_subtype_enum(env: &WowLuaEnv)
 }
 
 prefork_full_ui_case! {
-fn blizzard_deprecated_housing_catalog_wraps_get_catalog_entry_info_with_legacy_fields(env: &WowLuaEnv) {
-
-    let has_legacy_fields: bool = env
-        .eval(
-            "do \
-                local info = C_HousingCatalog.GetCatalogEntryInfoByRecordID(1, 1001, true) \
-                if not info then return false end \
-                return type(info.entryID) == 'table' \
-                    and info.entryID.entrySubtype == Enum.HousingCatalogEntrySubtype.Unowned \
-                    and info.entryID.subtypeIdentifier == 0 \
-                    and info.entryID.variantIdentifier == 0 \
-                    and info.quantity == info.totalNumStored \
-                    and info.numPlaced == info.totalNumPlaced \
-                    and type(info.showQuantity) == 'boolean' \
-                    and type(info.dyeSlots) == 'table' \
-            end",
-        )
-        .expect("GetCatalogEntryInfoByRecordID legacy-fields query should succeed");
-    assert!(
-        has_legacy_fields,
-        "Deprecated_HousingCatalog.lua line 130-133 wraps `C_HousingCatalog.\
-         GetCatalogEntryInfoByRecordID` so the returned info table carries all 5 \
-         backward-compat fields populated by `AddBackwardCompatEntryInfoFields` at \
-         line 76-91: `entryID` (compound table with entrySubtype=Enum.\
-         HousingCatalogEntrySubtype.Unowned + subtypeIdentifier=0 + variantIdentifier=0), \
-         `quantity` (mirroring totalNumStored), `numPlaced` (mirroring totalNumPlaced), \
-         `showQuantity` (boolean), `dyeSlots` (empty table)"
-    );
+fn blizzard_housing_catalog_entry_info_preserves_current_fields(env: &WowLuaEnv) {
+    let entry_type: i32 = env.eval("return Enum.HousingCatalogEntryType.Decor").unwrap();
+    let id = HousingCatalogEntryID { record_id: 1001, entry_type };
+    env.state().borrow_mut().housing.catalog.entries.insert(id, HousingCatalogEntryRecord {
+        item_id: Some(6948),
+        name: "Full UI catalog chair".into(),
+        is_unique_trophy: false,
+        total_num_stored: Some(7),
+        total_num_placed: Some(3),
+    });
+    env.exec(r#"
+        assert(GetCVarBool('loadDeprecationFallbacks'))
+        local info = C_HousingCatalog.GetCatalogEntryInfoByRecordID(Enum.HousingCatalogEntryType.Decor, 1001, true)
+        assert(info, 'explicit entry must survive full UI startup')
+        assert(info.recordID == 1001 and info.entryType == Enum.HousingCatalogEntryType.Decor)
+        assert(info.itemID == 6948 and info.name == 'Full UI catalog chair')
+        assert(info.totalNumStored == 7 and info.totalNumPlaced == 3)
+        assert(info.isUniqueTrophy == false)
+        for _, field in ipairs({'entryID', 'quantity', 'numPlaced', 'showQuantity', 'dyeSlots'}) do
+            assert(rawget(info, field) == nil, 'removed housing wrapper field: '..field)
+        end
+        info.totalNumStored = 999
+        assert(C_HousingCatalog.GetCatalogEntryInfoByRecordID(Enum.HousingCatalogEntryType.Decor, 1001).totalNumStored == 7)
+    "#).expect("current entry DTO must not regain removed legacy wrapper fields");
+    env.state().borrow_mut().housing.catalog.entries.remove(&id);
+    env.exec("assert(C_HousingCatalog.GetCatalogEntryInfoByRecordID(Enum.HousingCatalogEntryType.Decor, 1001) == nil)")
+        .expect("removed host entry must not fall back to seeded catalog data");
 }
 }
 
 prefork_full_ui_case! {
-fn blizzard_deprecated_housing_catalog_wraps_category_info_with_legacy_field(env: &WowLuaEnv) {
-
-    let any_owned_mirrors: bool = env
-        .eval(
-            "do \
-                local info = C_HousingCatalog.GetCatalogCategoryInfo(101) \
-                if not info then return false end \
-                return info.anyOwnedEntries == info.anyStoredEntries \
-            end",
-        )
-        .expect("GetCatalogCategoryInfo legacy-field query should succeed");
-    assert!(
-        any_owned_mirrors,
-        "Deprecated_HousingCatalog.lua line 184-187 wraps `C_HousingCatalog.\
-         GetCatalogCategoryInfo` to mirror the new `anyStoredEntries` field onto the legacy \
-         `anyOwnedEntries` field via `AddBackwardCompatCategoryInfoFields` (line 96-101)"
-    );
-
-    let subcategory_any_owned_mirrors: bool = env
-        .eval(
-            "do \
-                local info = C_HousingCatalog.GetCatalogSubcategoryInfo(1001) \
-                if not info then return false end \
-                return info.anyOwnedEntries == info.anyStoredEntries \
-            end",
-        )
-        .expect("GetCatalogSubcategoryInfo legacy-field query should succeed");
-    assert!(
-        subcategory_any_owned_mirrors,
-        "Deprecated_HousingCatalog.lua line 191-194 wraps `C_HousingCatalog.\
-         GetCatalogSubcategoryInfo` similarly via `AddBackwardCompatSubcategoryInfoFields` \
-         (line 106-111)"
-    );
+fn blizzard_housing_catalog_category_info_preserves_current_fields(env: &WowLuaEnv) {
+    for any_stored_entries in [true, false] {
+        env.state().borrow_mut().housing.catalog.categories.insert(101, HousingCatalogCategoryRecord {
+            order_index: 4,
+            name: Some("Full UI category".into()),
+            icon: None,
+            subcategory_ids: vec![1001],
+            any_stored_entries,
+            editor_mode_contexts: vec![],
+        });
+        env.state().borrow_mut().housing.catalog.subcategories.insert(1001, HousingCatalogSubcategoryRecord {
+            order_index: 2,
+            parent_category_id: 101,
+            name: Some("Full UI subcategory".into()),
+            icon: None,
+            any_stored_entries,
+            editor_mode_contexts: vec![],
+        });
+        let (category_stored, subcategory_stored): (bool, bool) = env.eval(r#"
+            assert(GetCVarBool('loadDeprecationFallbacks'))
+            local category = C_HousingCatalog.GetCatalogCategoryInfo(101)
+            local subcategory = C_HousingCatalog.GetCatalogSubcategoryInfo(1001)
+            assert(category and subcategory, 'explicit category records must survive full UI startup')
+            assert(category.ID == 101 and category.name == 'Full UI category' and category.orderIndex == 4)
+            assert(#category.subcategoryIDs == 1 and category.subcategoryIDs[1] == 1001)
+            assert(subcategory.ID == 1001 and subcategory.parentCategoryID == 101)
+            assert(subcategory.name == 'Full UI subcategory' and subcategory.orderIndex == 2)
+            assert(rawget(category, 'anyOwnedEntries') == nil and rawget(subcategory, 'anyOwnedEntries') == nil)
+            return category.anyStoredEntries, subcategory.anyStoredEntries
+        "#).expect("current category DTOs must not regain removed legacy wrapper fields");
+        assert_eq!(category_stored, any_stored_entries);
+        assert_eq!(subcategory_stored, any_stored_entries);
+    }
+    {
+        let mut state = env.state().borrow_mut();
+        state.housing.catalog.categories.remove(&101);
+        state.housing.catalog.subcategories.remove(&1001);
+    }
+    env.exec("assert(C_HousingCatalog.GetCatalogCategoryInfo(101) == nil); assert(C_HousingCatalog.GetCatalogSubcategoryInfo(1001) == nil)")
+        .expect("removed host categories must not fall back to seeded catalog data");
 }
 }
 
