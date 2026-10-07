@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-validate.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+  "revision": "0ac5d47d8e3039595c7c15fb43059e1cd0769060",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-validate.py\", line 148, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-validate.py\", line 140, in main\n    validate_proof()\n    ~~~~~~~~~~~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1027-page/data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-validate.py\", line 121, in validate_proof\n    assert scope in successful\n           ^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}

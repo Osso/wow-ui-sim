@@ -116,9 +116,9 @@ def validate_proof():
     for patch in PATCHES:
         row = successful[f'isolated publication sweep {patch}']
         assert any('1 passed; 0 failed' in line for line in row['summary'])
-    for scope in ('fixes-green', 'prefork-stable', 'pvp-successor', 'parser/extractor fixtures',
+    for scope in ('fixes-green', 'prefork-stable', 'pvp-successor', 'parser/extractor fixtures; unchanged tooling',
                   'fmt-check', 'mists-check', 'retail-build', 'startup'):
-        assert scope in successful
+        assert scope in successful, f'missing successful proof scope: {scope}'
     assert successful['startup']['stdout'].strip() == '[]'
     assert load(SESSION / 'p1027-startup-stdout.json') == []
     mists = successful['mists-check']
