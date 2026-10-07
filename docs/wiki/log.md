@@ -195,3 +195,7 @@ Created [[patch-10-2-7-api-audit]]: revision 6268738, exhaustive 187-ID accounti
 ## 2026-10-07 — Patch 10.2.7 targeted gates
 
 Updated [[patch-10-2-7-api-audit]]: formatting, Mists tests check with zero non-vendor warnings, retail binary build and bounded exit-0 startup `[]` pass at f837ecf18. Added portable artifact validator; retained failures as development-only evidence. No broad suite rerun.
+
+## 2026-10-07 — Patch 10.2.7 artifact validation
+
+Validated [[patch-10-2-7-api-audit]] at facc0076f: source hashes, all 187 IDs, sixteen exact chronological sweeps, three runtime closures, four interface-probe corrections, 36 gaps and 98 preserved later inputs. Native behavior remains explicitly unclaimed. Corrected validator proof-scope label; runtime checks not rerun.

@@ -1,6 +1,6 @@
 ## [2026-10-07] evidence | 10.2.7 page audit
 
-[Audit](investigations/patch-10-2-7-api-audit.md) accounts for 104 inventory + 83 extract occurrences, three bounded runtime closures, four corrected interface probes and 36 exact gaps. Sixteen isolated sweeps, negative control, stable state/event and cached prefork proof pass; formatting, Mists check (zero non-vendor warnings), retail build and exit-0 startup `[]` pass. All later inputs preserved.
+[Audit](investigations/patch-10-2-7-api-audit.md) accounts for 104 inventory + 83 extract occurrences, three bounded runtime closures, four corrected interface probes and 36 exact gaps. Sixteen isolated sweeps, negative control, stable state/event and cached prefork proof pass; formatting, Mists check (zero non-vendor warnings), retail build and exit-0 startup `[]` pass. Artifact validation passes; all 98 later inputs preserved.
 
 ## [2026-10-07] evidence | 11.0.0 page audit
 
