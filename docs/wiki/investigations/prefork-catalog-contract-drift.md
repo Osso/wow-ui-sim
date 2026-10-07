@@ -22,6 +22,22 @@ Raw integration coverage checks a redeemable count of 13 independent of zero sto
 
 The separate [section enumeration regression](patch-12-0-1-api-audit.md#catalog-section-enumeration-regression) remains fixed by `46e83785f`; current population tests must now explicitly supply sections as well as products. No cache/vendor edits or Blizzard monkey-patches.
 
+## Verification
+
+Fixes: `c5e930fdd` supplies housing fixtures and the redeemable producer; `c2db360a6` supplies storefront host fixtures. All commands below ran locally in the fix worktree at `c2db360a6`; later changes only record documentation. Every test command was captured once to a scratchpad log and inspected. Temporary bisect worktree removed; no push or merge.
+
+| Command / scope | Result |
+| --- | --- |
+| `cargo test --test prefork_full_ui -- <each original exact case name above>` (three separate runs) | 1/1 each |
+| `cargo test --test prefork_full_ui -- catalog` | 27/27 |
+| `cargo test --test prefork_full_ui -- housing` | 203/203 |
+| `cargo test --test integration catalog_shop` | 24/24 |
+| `cargo test --test integration housing` | 292/292, including independent redeemable snapshot regression |
+| `cargo fmt`, post-commit `cargo fmt --check`, `git diff --check` | exit 0 |
+| `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` | exit 0; zero non-vendor warnings, six existing iced vendor-manifest deprecations |
+
+Changed-line readability audit found no new violations. Serializer cognitive/cyclomatic complexity is 4/4; new raw snapshot test is 0/1. Full-UI macro bodies are manually reviewed because the metrics parser does not expand their contents. Proof ledger/logs are under the task's session scratchpad; no native-client, full-project-suite or complete metadata-parity claim.
+
 ## Sources
 
 - [Housing aggregate and redeemable contract](../../specs/housing-catalog-aggregates.md)

@@ -1,6 +1,6 @@
 ## [2026-10-06] investigation | Prefork catalog contract drift
 
-[Investigation](investigations/prefork-catalog-contract-drift.md) records first-bad category/base-selector/product migrations, retained cached wrappers, explicit full-UI fixtures and independent redeemable-count producer. No vendor changes or runtime seed restoration.
+[Investigation](investigations/prefork-catalog-contract-drift.md) records first-bad category/base-selector/product migrations, retained cached wrappers, explicit full-UI fixtures and independent redeemable-count producer. [Proof](investigations/prefork-catalog-contract-drift.md#verification): all requested filters, formatting and Mists check pass, zero non-vendor warnings. No vendor changes or runtime seed restoration.
 
 ## [2026-10-06] evidence | 11.2.7 producer follow-up
 
