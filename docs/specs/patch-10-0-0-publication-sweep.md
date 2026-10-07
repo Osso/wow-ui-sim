@@ -4,7 +4,7 @@ Account for Warcraft Wiki page 530068, revision 6789768 (2026-07-31T04:32:53Z), 
 
 ## What it must do
 
-- [ ] Probe all 635 inventory occurrences using all 25 chronological later registers, 10.0.2 through 12.1.0, with an exact reviewed gap fixture.
+- [ ] Probe all 639 inventory occurrences using all 25 chronological later registers, 10.0.2 through 12.1.0, with an exact reviewed gap fixture.
 - [ ] Account for all 439 nonblank extract occurrences; preserve Lua/XML examples and distinguish pending contracts from publication proof.
 - [ ] Construct Scale, Path and FlipBook through animation owners; recognize owner-qualified widget-script links without changing their source identity.
 - [ ] Detect an exact single-row negative control without changing IDs or count.

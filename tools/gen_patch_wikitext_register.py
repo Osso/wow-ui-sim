@@ -69,7 +69,7 @@ def make_entry(section, direction, line_no, text):
     return entry
 
 
-def parse_section(section, lines):
+def parse_section(section, lines, *, expand_shared_changes=False):
     """lines: [(line_no, text)] between this heading and the next."""
     entries, headers, columns = [], [], 0
     mode = None
@@ -98,12 +98,19 @@ def parse_section(section, lines):
             entries.append(entry)
         # Changed entries may carry a documentation-system label (" PlayerScript {{api|...}}").
         elif mode == "changed" and re.match(r"^\s+(\w+ )?(\{\{|\[\[)", text):
-            entries.append(make_entry(section, "changed", line_no, text))
+            references = [match.group(0) for match in TEMPLATE.finditer(text)]
+            source_refs = references if expand_shared_changes and references else [text]
+            entries.extend(make_entry(section, "changed", line_no, ref) for ref in source_refs)
         # Annotations are operator lines or bare colored renames ("   <font ...>A -> B</font>").
         elif mode == "changed" and re.match(r"^\s+([#+-] |<font)", text):
             note = FONT.sub("", text).strip()
             last = entries[-1]
-            last["annotation"] = f"{last['annotation']}\n{note}".lstrip("\n")
+            group = [last]
+            if expand_shared_changes:
+                group = [entry for entry in entries
+                         if entry["wikitext_line"] == last["wikitext_line"]]
+            for entry in group:
+                entry["annotation"] = f"{entry['annotation']}\n{note}".lstrip("\n")
     counts = []
     for direction, header in zip(("added", "removed"), headers):
         parsed = sum(1 for e in entries if e["direction"] == direction)
@@ -142,6 +149,8 @@ def main():
         parser.add_argument(name)
     parser.add_argument("--inventory-only", action="store_true",
                         help="Omit optional metadata for legacy inventory-only registers")
+    parser.add_argument("--expand-shared-changes", action="store_true",
+                        help="Account for every API on shared changed lines; opt-in preserves prior registers")
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -149,7 +158,9 @@ def main():
     entries, counts = [], []
     for section in SECTIONS.values():
         entry_section = "cvars" if section == "commands" else section
-        section_entries, section_counts = parse_section(entry_section, buckets.get(section, []))
+        section_entries, section_counts = parse_section(
+            entry_section, buckets.get(section, []),
+            expand_shared_changes=args.expand_shared_changes)
         if section == "commands":
             for count in section_counts:
                 count["section"] = "commands"

@@ -2810,6 +2810,22 @@
       "wikitext_line": 575
     },
     {
+      "id": "wt-global-api-C_GossipInfo.SelectAvailableQuest-575",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_GossipInfo.SelectAvailableQuest",
+      "annotation": "+ arg 1: optionID\n- arg 1: index",
+      "wikitext_line": 575
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.SelectOption-575",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_GossipInfo.SelectOption",
+      "annotation": "+ arg 1: optionID\n- arg 1: index",
+      "wikitext_line": 575
+    },
+    {
       "id": "wt-global-api-C_Item.GetItemGUID-578",
       "section": "global-api",
       "direction": "changed",
@@ -2830,6 +2846,14 @@
       "section": "global-api",
       "direction": "changed",
       "symbol": "C_MountJournal.GetMountInfoByID",
+      "annotation": "+ ret 13: isForDragonriding",
+      "wikitext_line": 583
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetDisplayedMountInfo-583",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_MountJournal.GetDisplayedMountInfo",
       "annotation": "+ ret 13: isForDragonriding",
       "wikitext_line": 583
     },
@@ -4239,6 +4263,14 @@
       "section": "events",
       "direction": "changed",
       "symbol": "GOSSIP_CONFIRM",
+      "annotation": "+ 1: gossipID\n- 1: gossipIndex",
+      "wikitext_line": 792
+    },
+    {
+      "id": "wt-events-GOSSIP_ENTER_CODE-792",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "GOSSIP_ENTER_CODE",
       "annotation": "+ 1: gossipID\n- 1: gossipIndex",
       "wikitext_line": 792
     },

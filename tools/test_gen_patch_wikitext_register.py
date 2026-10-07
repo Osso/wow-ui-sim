@@ -97,6 +97,22 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual([(e['symbol'], e['annotation']) for e in entries], [
             ('C_PlayerInfo.GetSex', '# ret 1: sex, Type: number -> UnitSex')])
 
+    def test_changed_line_accounts_for_every_api_and_shared_annotation(self):
+        entries, _ = parse_section('global-api', [
+            (1, '|}'),
+            (2, ' {{api|C_GossipInfo.SelectActiveQuest}}, {{api|C_GossipInfo.SelectAvailableQuest}}, {{api|C_GossipInfo.SelectOption}}'),
+            (3, '   + arg 1: optionID'),
+            (4, '   - arg 1: index'),
+            (5, ' {{api|C_Item.GetItemGUID}}'),
+            (6, '   + ret 1: itemGUID'),
+        ], expand_shared_changes=True)
+        self.assertEqual([(e['symbol'], e['wikitext_line'], e['annotation']) for e in entries], [
+            ('C_GossipInfo.SelectActiveQuest', 2, '+ arg 1: optionID\n- arg 1: index'),
+            ('C_GossipInfo.SelectAvailableQuest', 2, '+ arg 1: optionID\n- arg 1: index'),
+            ('C_GossipInfo.SelectOption', 2, '+ arg 1: optionID\n- arg 1: index'),
+            ('C_Item.GetItemGUID', 5, '+ ret 1: itemGUID'),
+        ])
+
     def test_underscore_handler_link_keeps_owner_label(self):
         entries, _ = parse_section('widgets', [
             (1, '| valign="top" | <div>'),

@@ -11,7 +11,7 @@ fn patch_10_0_0_publication_sweep(env: &WowLuaEnv) {
     sweep::run_publication_sweep(env, &sweep::SweepSpec {
         register: include_str!("../data/patch-api/sources/10.0.0-wikitext-register.json"),
         known_gaps: include_str!("data/patch_10_0_0_sweep_known_gaps.json"),
-        row_count: 635,
+        row_count: 639,
         register_env: "P1000_SWEEP_REGISTER",
         out_env: "P1000_SWEEP_OUT",
         later_registers: &[
