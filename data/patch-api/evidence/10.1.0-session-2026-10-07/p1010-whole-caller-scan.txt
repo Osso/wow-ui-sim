@@ -1,0 +1,1 @@
+src/mists/compat_bootstrap.lua:618:    CanMasterLoot = function() return false end,
