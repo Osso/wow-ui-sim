@@ -1,0 +1,52 @@
+................F......F...
+======================================================================
+FAIL: test_level_two_structures_end_inventory_before_type_changes (test_extract_patch_non_inventory.ExtractTests.test_level_two_structures_end_inventory_before_type_changes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1007-page/tools/test_extract_patch_non_inventory.py", line 18, in test_level_two_structures_end_inventory_before_type_changes
+    self.assertEqual(extract_text(raw), '== Structures ==\n Enum.ItemGemColor\n   + Primordial\n'
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '== Type Changes ==\n=== Functions ===\n C_AccountInfo.GetIDFromBattleNetAccountGUID\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '   # arg 1: guid, Type: string -> WOWGUID\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '=== Events ===\n ACHIEVEMENT_EARNED\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '   # arg 1: achievementID, Type: number -> AchievementID\n')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '\n' != '== Structures ==\n Enum.ItemGemColor\n   [233 chars]ID\n'
+- 
++ == Structures ==
++  Enum.ItemGemColor
++    + Primordial
++ == Type Changes ==
++ === Functions ===
++  C_AccountInfo.GetIDFromBattleNetAccountGUID
++    # arg 1: guid, Type: string -> WOWGUID
++ === Events ===
++  ACHIEVEMENT_EARNED
++    # arg 1: achievementID, Type: number -> AchievementID
+
+
+======================================================================
+FAIL: test_type_change_events_do_not_replace_publication_inventory (test_gen_patch_wikitext_register.InventoryTests.test_type_change_events_do_not_replace_publication_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1007-page/tools/test_gen_patch_wikitext_register.py", line 17, in test_type_change_events_do_not_replace_publication_inventory
+    self.assertEqual([(e['symbol'], e['direction']) for e in entries],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [('CAN_PLAYER_SPEAK_LANGUAGE_CHANGED', 'added')])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('CAN_PLAYER_SPEAK_LANGUAGE_CHANGED', 'added')]
+
+Second list contains 1 additional elements.
+First extra element 0:
+('CAN_PLAYER_SPEAK_LANGUAGE_CHANGED', 'added')
+
+- []
++ [('CAN_PLAYER_SPEAK_LANGUAGE_CHANGED', 'added')]
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.004s
+
+FAILED (failures=2)

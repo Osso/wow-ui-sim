@@ -16,7 +16,9 @@
       "revision": "21aa3ed93 + current behavioral fixtures",
       "scope": "parser/extractor RED",
       "exit": 1,
-      "log": "parser-red.log"
+      "log": "parser-red.log",
+      "invalidated": false,
+      "log_sha256": "b379285bd11ccc57c2a00588738f7f1239c0576b614628cca18f7d34201f9844"
     },
     {
       "command": [
@@ -32,7 +34,9 @@
       "revision": "1dd5ba84f",
       "scope": "parser/extractor GREEN: 27 tests",
       "exit": 0,
-      "log": "parser-green.log"
+      "log": "parser-green.log",
+      "invalidated": false,
+      "log_sha256": "33f1994ac245e9f1b7cec896c07d61917cc5e40a29417c7337d3a50c524852e7"
     },
     {
       "command": [
@@ -47,7 +51,9 @@
       "revision": "1dd5ba84f",
       "scope": "discovery:70 rows /44 gaps",
       "exit": 101,
-      "log": "discovery-cargo.log"
+      "log": "discovery-cargo.log",
+      "invalidated": false,
+      "log_sha256": "70fcdc34a6e76ed9d032f8018f96069cd070fdbcb0318c407bdaf9e67cff2b10"
     },
     {
       "command": [
@@ -62,7 +68,9 @@
       "revision": "1dd5ba84f + current retirement assertions",
       "scope": "retirement RED",
       "exit": 101,
-      "log": "retirement-red-cargo.log"
+      "log": "retirement-red-cargo.log",
+      "invalidated": false,
+      "log_sha256": "30bb5e60c992f5c7e912c6ac8a3662373adda6b974c56c4c7cf5d4652156d98a"
     },
     {
       "command": [
@@ -77,7 +85,9 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "retirement GREEN",
       "exit": 0,
-      "log": "patch_10_0_7_unused_members_stay_absent-cargo.log"
+      "log": "patch_10_0_7_unused_members_stay_absent-cargo.log",
+      "invalidated": false,
+      "log_sha256": "2f0c51c1b4ad13c36153853ec5e4d701498c263efac5c65b1440806179e08725"
     },
     {
       "command": [
@@ -92,7 +102,9 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "70 rows /26 exact gaps",
       "exit": 0,
-      "log": "patch_10_0_7_publication_sweep-cargo.log"
+      "log": "patch_10_0_7_publication_sweep-cargo.log",
+      "invalidated": false,
+      "log_sha256": "c143e65a8c998ad5d3c1ff8c6410482c6bada48f076ba82a45fb2db94771342d"
     },
     {
       "command": [
@@ -106,7 +118,9 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "cached Game retirements",
       "exit": 0,
-      "log": "prefork-retirement-cargo.log"
+      "log": "prefork-retirement-cargo.log",
+      "invalidated": false,
+      "log_sha256": "0c2af127672b833ce26b80ff9cb681bc3f12688b537039889d765b72153a6562"
     },
     {
       "patch": "10.1.5",
@@ -123,7 +137,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_10_1_5_publication_sweep",
       "log": "10.1.5-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "323acaaf73325ad312f76ee3d51cbd0367446830ac0dd5b7a7061378ba5f50cf"
     },
     {
       "patch": "10.1.7",
@@ -140,7 +155,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_10_1_7_publication_sweep",
       "log": "10.1.7-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "531643e6a71480fc8b43a6f5ad10d4a24aa783454e09f07fbfa31c3398fc9b85"
     },
     {
       "patch": "10.2.0",
@@ -157,7 +173,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_10_2_0_publication_sweep",
       "log": "10.2.0-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "77a637f971d65f56cfff970a08e2c60a991549503150f69ded6ec6307144a65d"
     },
     {
       "patch": "10.2.5",
@@ -174,7 +191,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_10_2_5_publication_sweep",
       "log": "10.2.5-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "26382ccf4da01fc2d25d735539d3e8dce32264ca322f6ba3877ba79bf9d82c8d"
     },
     {
       "patch": "10.2.6",
@@ -191,7 +209,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_10_2_6_publication_sweep",
       "log": "10.2.6-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "4e70ad323999ad63d8d9be8feb50b3ef13174412e2629ed3590cdae98c5cc1aa"
     },
     {
       "patch": "10.2.7",
@@ -208,7 +227,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_10_2_7_publication_sweep",
       "log": "10.2.7-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "f1708f60689bbb11f8d19f874293261a8cc55f114f502ec86f5ae14e8f8dea80"
     },
     {
       "patch": "11.0.0",
@@ -225,7 +245,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_11_0_0_publication_sweep",
       "log": "11.0.0-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "d3440c1426a9d02d817daa0943de2ad574025a28a84c817f7b5b976308bab755"
     },
     {
       "patch": "11.0.2",
@@ -242,7 +263,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_11_0_2_publication_sweep",
       "log": "11.0.2-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "f4417f50b583da0fdfc045052e1a58581fcb9e101610f87e6ffe76bfecaaa0d1"
     },
     {
       "patch": "11.0.5",
@@ -259,7 +281,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_11_0_5_publication_sweep",
       "log": "11.0.5-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "46ecc82cbca6887ab1af56c53ae7bc65888d28b044b35da33532d20da0b386f4"
     },
     {
       "patch": "11.0.7",
@@ -276,7 +299,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_11_0_7_publication_sweep",
       "log": "11.0.7-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "cd9a57e1cce6553b0eba1ba58dcc78a5e575a0622ee0fe9391328126eecbe81a"
     },
     {
       "patch": "11.1.0",
@@ -293,7 +317,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_11_1_0_publication_sweep",
       "log": "11.1.0-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "7245bd8522ef94142f00f20414b117ce216c97e8f3f0d5dd891d75bb50ab4d9d"
     },
     {
       "patch": "11.1.5",
@@ -310,7 +335,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_11_1_5_publication_sweep",
       "log": "11.1.5-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "006c3ac4be053e524e53da06895868e57e5cb123994c21c67c86ff580d7ffa96"
     },
     {
       "patch": "11.1.7",
@@ -327,7 +353,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_11_1_7_publication_sweep",
       "log": "11.1.7-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "5d84e025bc495e8003f2cf7bc802f78c0ef87af72d921a474b4dc208e02560dc"
     },
     {
       "patch": "11.2.0",
@@ -344,7 +371,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_11_2_0_publication_sweep",
       "log": "11.2.0-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "15e39507982ad71c0d575f9a46255daf5ee06ce6a22707ed72551c5e30ff59ed"
     },
     {
       "patch": "11.2.5",
@@ -361,7 +389,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_11_2_5_publication_sweep",
       "log": "11.2.5-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "21ef146cbace8639ec03825ce1bcf9d44dfb905871cab4150f8829c6a2484f43"
     },
     {
       "patch": "11.2.7",
@@ -378,7 +407,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_11_2_7_publication_sweep",
       "log": "11.2.7-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "2504cb0681dd13dd77d6bfaf6d21c5d9abbd8f029281769bed2bde357133fe42"
     },
     {
       "patch": "12.0.0",
@@ -395,7 +425,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_12_0_0_publication_sweep",
       "log": "12.0.0-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "c6c433e6cda17e6a79a4d5c750ab0cc1b5845019ef40ff050bd4f2d41590d49d"
     },
     {
       "patch": "12.0.1",
@@ -412,7 +443,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_12_0_1_publication_sweep",
       "log": "12.0.1-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "3524fbdbf9881a0f51e87820ed605462ec4c0e0674664a52c5fcdfa0f88f5bea"
     },
     {
       "patch": "12.0.5",
@@ -429,7 +461,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_12_0_5_publication_sweep",
       "log": "12.0.5-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "7e0731a3f098522b6f12c770774734ea9638f003a4c13056ae3b299b19f1b014"
     },
     {
       "patch": "12.0.7",
@@ -446,7 +479,8 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_12_0_7_publication_sweep",
       "log": "12.0.7-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "e17ea85981c700dbec360e5bb275e4ab3d3c08ea4263e9df39d070167097edb7"
     },
     {
       "patch": "12.1.0",
@@ -463,7 +497,171 @@
       "revision": "484b786465adc61091b237995a2337f345e6189f",
       "scope": "patch_12_1_0_publication_sweep",
       "log": "12.1.0-sweep-cargo.log",
-      "invalidated": false
+      "invalidated": false,
+      "log_sha256": "6a7d9c28454edaadbd38a4194f2dd94ba845574fe4ee70555cbdb6cfe74307ae"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_10_0_7_publication_sweep",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "06a934acd273555527de742763bd09259024f241",
+      "scope": "negative control one IsAdvancedFlyableArea direction mutation",
+      "exit": 101,
+      "log": "negative-cargo.log",
+      "env": {
+        "P1007_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p1007-page/data/patch-api/evidence/10.0.7-session-2026-10-07/negative-register.json",
+        "P1007_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1007-page/data/patch-api/evidence/10.0.7-session-2026-10-07/negative-results.json"
+      },
+      "invalidated": false,
+      "log_sha256": "5dfc6206d9138fb00ea965231714b839e37a4a9e3cb4644b81841de458bf13e3"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "c_social_probes::",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "06a934acd273555527de742763bd09259024f241",
+      "scope": "c_social_probes::",
+      "exit": 0,
+      "log": "social-probes-cargo.log",
+      "invalidated": false,
+      "log_sha256": "eba5ae5d2a7a0d96b5710b0f420bf4dda7fffeb1cc223e685e189895ecbb2ccd"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "lua_api_boundary::modeled_c_social_returns_friend_status_defaults",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "06a934acd273555527de742763bd09259024f241",
+      "scope": "lua_api_boundary::modeled_c_social_returns_friend_status_defaults",
+      "exit": 0,
+      "log": "social-boundary-cargo.log",
+      "invalidated": false,
+      "log_sha256": "615823aa4ee8380e8fd1819a59d8d1c882153b180a04720db2ba5917668fdc70"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "revision": "06a934acd273555527de742763bd09259024f241",
+      "scope": "fmt-check",
+      "exit": 0,
+      "log": "fmt-check-cargo.log",
+      "invalidated": false,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "check"
+      ],
+      "revision": "06a934acd273555527de742763bd09259024f241",
+      "scope": "default-check",
+      "exit": 0,
+      "log": "default-check-cargo.log",
+      "invalidated": false,
+      "log_sha256": "ba0a5237bd217608172e55936a7318f34cfea5ba9bfbff50e59f3fe8ba2e9a75"
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "06a934acd273555527de742763bd09259024f241",
+      "scope": "retail-build",
+      "exit": 0,
+      "log": "retail-build-cargo.log",
+      "invalidated": false,
+      "log_sha256": "9ba4223fc8a9b65652f9dcb6cbfc5f9db3bd75eb9d68f8afab966816bf27ba14"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "06a934acd273555527de742763bd09259024f241",
+      "scope": "mists-check",
+      "exit": 0,
+      "log": "mists-check-cargo.log",
+      "invalidated": false,
+      "log_sha256": "e99c220e39c276b5b561aba7ad7cb33864ce888b9baa3469e4ded990ece0618b"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--test",
+        "integration",
+        "patch_10_0_7_mists_preserves_legacy_namespace_lookup",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "06a934acd273555527de742763bd09259024f241",
+      "scope": "mists-preservation",
+      "exit": 0,
+      "log": "mists-preservation-cargo.log",
+      "invalidated": false,
+      "log_sha256": "588c56e159dc5a397bb88d9893d6e1fcc4cb4b0df1b251828290cb3fb515626e"
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "06a934acd273555527de742763bd09259024f241",
+      "scope": "restore retail runtime artifact after Mists test profile activation",
+      "exit": 0,
+      "log": "retail-runtime-build-cargo.log",
+      "reason": "Mists integration test activates another feature profile and can overwrite target/debug/wow-sim.",
+      "invalidated": false,
+      "log_sha256": "7c8d5b66a76e8c94b8e2f6b9ece2dc412792d62ec13320d7bed4052d52f7379c"
+    },
+    {
+      "command": [
+        "timeout",
+        "90",
+        "target/debug/wow-sim",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "06a934acd273555527de742763bd09259024f241",
+      "scope": "current retail startup",
+      "exit": 0,
+      "log": "startup.stderr.log",
+      "stdout": "startup.stdout.json",
+      "binary_sha256": "963677a51ad193f218f5ec54b8c67d9af610ffb98d936ac1bb89220208f68d62",
+      "invalidated": false,
+      "log_sha256": "83a197d9e13eec010c2e6f8a6efc213051af42c5810ce3d18d84efd2ae86d0af"
     }
   ]
 }

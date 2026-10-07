@@ -19,7 +19,7 @@ Discovery 26 OK / 44 gaps. Final 44 OK / 26 gaps. Eighteen unused namespace auto
 
 [Qualified and bare cached Lua searches](../../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-removal-consumers.json) find no matches for any retired member. [Whole src/tests caller scan](../../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-whole-caller-scan.json) finds only three existing 11.0.0 gap-ID references, not callers; embedded Lua, function references and guards are included. No existing callers require migration and no existing prefork cases call these names. C_Social.GetFriends/GetFriendInfo remain published. Three historical 11.0.0 changed-member rows remain exact gaps; their changed-row expectations do not assert absence.
 
-Repeated bare-environment lookup and one unmodified cached Game prefork prove absence. No Blizzard deprecation wrapper was deleted or rewritten. Classic exclusion remains at the existing module gate; Mists preservation assertions await execution.
+Repeated bare-environment lookup and one unmodified cached Game prefork prove absence. No Blizzard deprecation wrapper was deleted or rewritten. Classic exclusion remains at the existing module gate; Mists behavior assertions preserve all eighteen legacy lookup members.
 
 ## Retained gaps
 
@@ -33,7 +33,11 @@ GetNumPetsInJournal is not a GetNumPets alias: cached `Blizzard_APIDocumentation
 
 ## Verification
 
-Runtime revision `484b78646`. Twenty-two isolated publication sweeps, repeated retirement RED/GREEN and one cached Game prefork pass. Parser/extractor: 27 GREEN after two observed RED failures. Remaining requested checks and artifact verification are pending; [proof ledger](../../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-proof.json) tracks exact commands, revisions/scopes and saved outputs.
+Runtime revision `484b78646`; classic assurance test revision `06a934acd`. Twenty-two isolated publication sweeps, repeated retirement RED/GREEN and one cached Game prefork pass. Eight retained social-query regressions, one social default-shape regression and the Mists legacy lookup test pass. Parser/extractor: 27 GREEN after two observed RED failures.
+
+Negative control flips only IsAdvancedFlyableArea added to removed: one new failure, no resolved failures, 26 → 27, expected exit 101. All twenty-two registers regenerate byte-identically; all 134 pre-existing source/register/ledger/gap inputs remain unchanged. Every prior extract check result is unchanged under both modes; examples on earlier pages require their existing capture mode. The pre-existing 12.0.5/12.0.7/12.1.0 capture failures remain unchanged, not labeled reproducible. Own extract reproduces under both modes.
+
+Cargo fmt and fmt --check, default cargo check, Mists test check and separate retail build pass. Mists has zero non-vendor warnings; six iced manifest deprecations and their summary remain unsuppressed. After Mists profile verification, retail runtime artifact is rebuilt before startup. Bounded startup exits zero and returns `[]`. Artifact validation is recorded separately; [proof ledger](../../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-proof.json) tracks exact commands, revisions/scopes and saved outputs.
 
 | Patch | Rows | OK | Gaps | Isolated exit |
 |---|---:|---:|---:|---:|
@@ -60,7 +64,9 @@ Runtime revision `484b78646`. Twenty-two isolated publication sweeps, repeated r
 | 12.0.7 | 174 | 171 | 3 | 0 |
 | 12.1.0 | 778 | 773 | 5 | 0 |
 
-Changed Rust manually audited: flat retirement data, one registration call and bounded lookup assertions; no changed-line readability violations. No full suite, agents/model CLIs, push, merge, sibling target reuse or canonical working-file/vendor/cache changes. Every command uses explicit cwd `p1007-page` and its own target; worktree creation performed only the prescribed canonical Git metadata operation with cwd in the empty destination.
+Changed Rust manually audited: flat retirement data, one registration call and bounded lookup assertions; no changed-line readability violations. [Final whole-tree caller scan](../../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-final-whole-caller-scan.json) retains all matches without truncation; only new retirement/profile assertions, the marker list and three old gap-ID references mention removed names. No caller migration is needed.
+
+[Preservation](../../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-preservation.json), [register reproduction](../../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-register-reproduction.json) and [after extraction checks](../../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-extract-after.json) preserve explicit input and capture-mode boundaries. Proof logs are retained with hashes; later documentation/data-only changes do not invalidate runtime proof. Local targeted evidence is not native or independent acceptance. No full suite, agents/model CLIs, push, merge, sibling target reuse or canonical working-file/vendor/cache changes. Every command uses explicit cwd `p1007-page` and its own target; worktree creation performed only the prescribed canonical Git metadata operation with cwd in the empty destination.
 
 ## Sources
 

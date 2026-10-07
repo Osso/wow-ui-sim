@@ -1,0 +1,622 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "10.0.7",
+  "source": {
+    "path": "data/patch-api/sources/10.0.7-api-changes.wikitext",
+    "revid": 1063344,
+    "sha256": "b4175ca8755de168ade2800555c5576f452111b8de2b48be81a639516d584689"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 28,
+      "parsed_count": 28
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 18,
+      "parsed_count": 18
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 6,
+      "parsed_count": 6
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 11,
+      "parsed_count": 11
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_AccountServices.IsAccountLockedPostSave-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AccountServices.IsAccountLockedPostSave",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-C_AccountServices.IsAccountSaveEnabled-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AccountServices.IsAccountSaveEnabled",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-C_AccountServices.IsAccountSaveInProgress-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AccountServices.IsAccountSaveInProgress",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_AccountServices.SaveAccountData-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AccountServices.SaveAccountData",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.CanPlayerSpeakLanguage-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.CanPlayerSpeakLanguage",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.GetChatLineSenderGUID-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.GetChatLineSenderGUID",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.GetChatLineSenderName-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.GetChatLineSenderName",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.GetChatLineText-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.GetChatLineText",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.IsChatLineCensored-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.IsChatLineCensored",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.RequestCanLocalWhisperTarget-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.RequestCanLocalWhisperTarget",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.UncensorChatLine-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.UncensorChatLine",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByID-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ConsoleScriptCollection.GetCollectionDataByID",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByTag-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ConsoleScriptCollection.GetCollectionDataByTag",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_ConsoleScriptCollection.GetElements-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ConsoleScriptCollection.GetElements",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_ConsoleScriptCollection.GetScriptData-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ConsoleScriptCollection.GetScriptData",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.SelectOptionByIndex-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GossipInfo.SelectOptionByIndex",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.GetNumPetsInJournal-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.GetNumPetsInJournal",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_ProfSpecs.GetNewSpecReminderProfName-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProfSpecs.GetNewSpecReminderProfName",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetAssignedSpecForBattlefieldQueue-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetAssignedSpecForBattlefieldQueue",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_QuestOffer.GetHideRequiredItems-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestOffer.GetHideRequiredItems",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_Texture.ClearTitleIconTexture-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Texture.ClearTitleIconTexture",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_Texture.GetTitleIconTexture-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Texture.GetTitleIconTexture",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_Texture.IsTitleIconTextureReady-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Texture.IsTitleIconTextureReady",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_Texture.SetTitleIconTexture-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Texture.SetTitleIconTexture",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_Traits.GetTraitSystemFlags-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GetTraitSystemFlags",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_Traits.IsReadyForCommit-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.IsReadyForCommit",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-GetCurrentGraphicsAPI-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrentGraphicsAPI",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-IsAdvancedFlyableArea-47",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsAdvancedFlyableArea",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_QuestOffer.GetHideRequiredItemsOnTurnIn-50",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_QuestOffer.GetHideRequiredItemsOnTurnIn",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_Social.GetLastAchievement-51",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.GetLastAchievement",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_Social.GetLastItem-52",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.GetLastItem",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_Social.GetLastScreenshotIndex-53",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.GetLastScreenshotIndex",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_Social.GetMaxTweetLength-54",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.GetMaxTweetLength",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_Social.GetScreenshotInfoByIndex-55",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.GetScreenshotInfoByIndex",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_Social.GetTweetLength-56",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.GetTweetLength",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_Social.IsSocialEnabled-57",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.IsSocialEnabled",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_Social.RegisterSocialBrowser-58",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.RegisterSocialBrowser",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_Social.SetTextureToScreenshot-59",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.SetTextureToScreenshot",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_Social.TwitterCheckStatus-60",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.TwitterCheckStatus",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_Social.TwitterConnect-61",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.TwitterConnect",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_Social.TwitterDisconnect-62",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.TwitterDisconnect",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_Social.TwitterGetMSTillCanPost-63",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.TwitterGetMSTillCanPost",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_Social.TwitterPostAchievement-64",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.TwitterPostAchievement",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_Social.TwitterPostItem-65",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.TwitterPostItem",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_Social.TwitterPostMessage-66",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.TwitterPostMessage",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_Social.TwitterPostScreenshot-67",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.TwitterPostScreenshot",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_PlayerInteractionManager.InteractUnit-71",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_PlayerInteractionManager.InteractUnit",
+      "annotation": "+ arg 3: looseTargeting",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-events-CAN_LOCAL_WHISPER_TARGET_RESPONSE-84",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CAN_LOCAL_WHISPER_TARGET_RESPONSE",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-events-CAN_PLAYER_SPEAK_LANGUAGE_CHANGED-85",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CAN_PLAYER_SPEAK_LANGUAGE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_DISPLAY_CRAFTER_FULFILLED_MSG-86",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_DISPLAY_CRAFTER_FULFILLED_MSG",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-events-RAF_REWARD_CLAIM_FAILED-87",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RAF_REWARD_CLAIM_FAILED",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-events-SELECTED_LOADOUT_CHANGED-88",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SELECTED_LOADOUT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-events-SKILL_LINE_SPECS_RANKS_CHANGED-89",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SKILL_LINE_SPECS_RANKS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-events-SOCIAL_ITEM_RECEIVED-92",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "SOCIAL_ITEM_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-events-TWITTER_LINK_RESULT-93",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "TWITTER_LINK_RESULT",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-events-TWITTER_POST_RESULT-94",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "TWITTER_POST_RESULT",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-events-TWITTER_STATUS_UPDATE-95",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "TWITTER_STATUS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-cvars-excludedCensorSources-106",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "excludedCensorSources",
+      "annotation": "",
+      "wikitext_line": 106,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-GxFrameEndMode-107",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GxFrameEndMode",
+      "annotation": "",
+      "wikitext_line": 107,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-nameplateShowOnlyNames-108",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "nameplateShowOnlyNames",
+      "annotation": "",
+      "wikitext_line": 108,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-vrsValarEnvLuma-109",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "vrsValarEnvLuma",
+      "annotation": "",
+      "wikitext_line": 109,
+      "page_default": "0.05"
+    },
+    {
+      "id": "wt-cvars-vrsValarK-110",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "vrsValarK",
+      "annotation": "",
+      "wikitext_line": 110,
+      "page_default": "2.13"
+    },
+    {
+      "id": "wt-cvars-vrsValarSensitivityThreshold-111",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "vrsValarSensitivityThreshold",
+      "annotation": "",
+      "wikitext_line": 111,
+      "page_default": "0.31"
+    },
+    {
+      "id": "wt-cvars-vrsValarUseAsyncCompute-112",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "vrsValarUseAsyncCompute",
+      "annotation": "",
+      "wikitext_line": 112,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-vrsValarUseMotionVectors-113",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "vrsValarUseMotionVectors",
+      "annotation": "",
+      "wikitext_line": 113,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-vrsValarUseWeberFechner-114",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "vrsValarUseWeberFechner",
+      "annotation": "",
+      "wikitext_line": 114,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-vrsValarWeberFechnerConstant-115",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "vrsValarWeberFechnerConstant",
+      "annotation": "",
+      "wikitext_line": 115,
+      "page_default": "1.0"
+    },
+    {
+      "id": "wt-cvars-vrsValar-116",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "vrsValar",
+      "annotation": "",
+      "wikitext_line": 116,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-displayFreeBagSlots-119",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "displayFreeBagSlots",
+      "annotation": "",
+      "wikitext_line": 119,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-DynamicVRSSensitivityThreshold-120",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "DynamicVRSSensitivityThreshold",
+      "annotation": "",
+      "wikitext_line": 120,
+      "page_default": "0"
+    }
+  ]
+}

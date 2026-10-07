@@ -20,7 +20,7 @@
       ],
       "compiled_revision": "484b78646",
       "ledger": "data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-proof.json",
-      "proof": "22 isolated exact sweeps; retirement RED/GREEN and cached Game prefork. Remaining requested checks recorded in proof ledger when run."
+      "proof": "22 isolated exact sweeps, retirement RED/GREEN, one cached Game prefork, nine social regressions, Mists preservation, exact negative control 26 to 27, parser/extractor RED/GREEN, formatting, default and Mists checks with zero non-vendor warnings, retail build and exit-0 startup []. Artifact verification recorded separately; local development evidence only."
     }
   ],
   "non_inventory_source": {

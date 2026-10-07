@@ -4,7 +4,7 @@
 
 ## [2026-10-07] evidence | 10.0.7 page audit
 
-[Audit](investigations/patch-10-0-7-api-audit.md) accounts for 70 inventory + 2,214 extract occurrences, two source-loss boundaries, eighteen bounded retail retirements and 26 exact retained publication gaps. Twenty-two isolated sweeps and cached retirement prefork pass; final verification pending.
+[Audit](investigations/patch-10-0-7-api-audit.md) accounts for 70 inventory + 2,214 extract occurrences, two source-loss boundaries, eighteen bounded retail retirements and 26 exact retained publication gaps. Twenty-two isolated sweeps, cached retirement prefork, exact negative control, Mists legacy preservation/check (zero non-vendor warnings) and exit-0 retail startup `[]` pass; all 134 prior inputs preserved.
 
 ## [2026-10-07] evidence | 10.1.5 page audit
 

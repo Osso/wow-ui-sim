@@ -1,0 +1,254 @@
+[
+  {
+    "symbol": "C_QuestOffer.GetHideRequiredItemsOnTurnIn",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "GetHideRequiredItemsOnTurnIn",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "tests/patch_10_0_7_classic_surfaces.rs:9:        assert(type(C_QuestOffer.GetHideRequiredItemsOnTurnIn) == 'function')\ntests/patch_10_0_7_publication_fixes.rs:5:assert(rawget(C_QuestOffer, 'GetHideRequiredItemsOnTurnIn') == nil)\ntests/patch_10_0_7_publication_fixes.rs:6:assert(C_QuestOffer.GetHideRequiredItemsOnTurnIn == nil)\ntests/patch_10_0_7_publication_fixes.rs:7:assert(C_QuestOffer.GetHideRequiredItemsOnTurnIn == nil)\nsrc/c_api/patch_retired_members.rs:19:    (\"C_QuestOffer\", &[\"GetHideRequiredItemsOnTurnIn\"]),\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetLastAchievement",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "GetLastAchievement",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:23:            \"GetLastAchievement\",\ntests/data/patch_11_0_0_sweep_known_gaps.json:84:  \"wt-global-api-C_Social.GetLastAchievement-530\",\ntests/patch_10_0_7_classic_surfaces.rs:11:            'GetLastAchievement', 'GetLastItem', 'GetLastScreenshotIndex',\ntests/patch_10_0_7_publication_fixes.rs:8:assert(rawget(C_Social, 'GetLastAchievement') == nil)\ntests/patch_10_0_7_publication_fixes.rs:9:assert(C_Social.GetLastAchievement == nil)\ntests/patch_10_0_7_publication_fixes.rs:10:assert(C_Social.GetLastAchievement == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetLastItem",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "GetLastItem",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:24:            \"GetLastItem\",\ntests/data/patch_11_0_0_sweep_known_gaps.json:85:  \"wt-global-api-C_Social.GetLastItem-532\",\ntests/patch_10_0_7_classic_surfaces.rs:11:            'GetLastAchievement', 'GetLastItem', 'GetLastScreenshotIndex',\ntests/patch_10_0_7_publication_fixes.rs:11:assert(rawget(C_Social, 'GetLastItem') == nil)\ntests/patch_10_0_7_publication_fixes.rs:12:assert(C_Social.GetLastItem == nil)\ntests/patch_10_0_7_publication_fixes.rs:13:assert(C_Social.GetLastItem == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetLastScreenshotIndex",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "GetLastScreenshotIndex",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:25:            \"GetLastScreenshotIndex\",\ntests/patch_10_0_7_classic_surfaces.rs:11:            'GetLastAchievement', 'GetLastItem', 'GetLastScreenshotIndex',\ntests/patch_10_0_7_publication_fixes.rs:14:assert(rawget(C_Social, 'GetLastScreenshotIndex') == nil)\ntests/patch_10_0_7_publication_fixes.rs:15:assert(C_Social.GetLastScreenshotIndex == nil)\ntests/patch_10_0_7_publication_fixes.rs:16:assert(C_Social.GetLastScreenshotIndex == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetMaxTweetLength",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "GetMaxTweetLength",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:26:            \"GetMaxTweetLength\",\ntests/patch_10_0_7_classic_surfaces.rs:12:            'GetMaxTweetLength', 'GetScreenshotInfoByIndex', 'GetTweetLength',\ntests/patch_10_0_7_publication_fixes.rs:17:assert(rawget(C_Social, 'GetMaxTweetLength') == nil)\ntests/patch_10_0_7_publication_fixes.rs:18:assert(C_Social.GetMaxTweetLength == nil)\ntests/patch_10_0_7_publication_fixes.rs:19:assert(C_Social.GetMaxTweetLength == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetScreenshotInfoByIndex",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "GetScreenshotInfoByIndex",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:27:            \"GetScreenshotInfoByIndex\",\ntests/data/patch_11_0_0_sweep_known_gaps.json:86:  \"wt-global-api-C_Social.GetScreenshotInfoByIndex-534\",\ntests/patch_10_0_7_classic_surfaces.rs:12:            'GetMaxTweetLength', 'GetScreenshotInfoByIndex', 'GetTweetLength',\ntests/patch_10_0_7_publication_fixes.rs:20:assert(rawget(C_Social, 'GetScreenshotInfoByIndex') == nil)\ntests/patch_10_0_7_publication_fixes.rs:21:assert(C_Social.GetScreenshotInfoByIndex == nil)\ntests/patch_10_0_7_publication_fixes.rs:22:assert(C_Social.GetScreenshotInfoByIndex == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.GetTweetLength",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "GetTweetLength",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:28:            \"GetTweetLength\",\ntests/patch_10_0_7_classic_surfaces.rs:12:            'GetMaxTweetLength', 'GetScreenshotInfoByIndex', 'GetTweetLength',\ntests/patch_10_0_7_publication_fixes.rs:23:assert(rawget(C_Social, 'GetTweetLength') == nil)\ntests/patch_10_0_7_publication_fixes.rs:24:assert(C_Social.GetTweetLength == nil)\ntests/patch_10_0_7_publication_fixes.rs:25:assert(C_Social.GetTweetLength == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.IsSocialEnabled",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "IsSocialEnabled",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:29:            \"IsSocialEnabled\",\ntests/patch_10_0_7_classic_surfaces.rs:13:            'IsSocialEnabled', 'RegisterSocialBrowser', 'SetTextureToScreenshot',\ntests/patch_10_0_7_publication_fixes.rs:26:assert(rawget(C_Social, 'IsSocialEnabled') == nil)\ntests/patch_10_0_7_publication_fixes.rs:27:assert(C_Social.IsSocialEnabled == nil)\ntests/patch_10_0_7_publication_fixes.rs:28:assert(C_Social.IsSocialEnabled == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.RegisterSocialBrowser",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "RegisterSocialBrowser",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:30:            \"RegisterSocialBrowser\",\ntests/patch_10_0_7_classic_surfaces.rs:13:            'IsSocialEnabled', 'RegisterSocialBrowser', 'SetTextureToScreenshot',\ntests/patch_10_0_7_publication_fixes.rs:29:assert(rawget(C_Social, 'RegisterSocialBrowser') == nil)\ntests/patch_10_0_7_publication_fixes.rs:30:assert(C_Social.RegisterSocialBrowser == nil)\ntests/patch_10_0_7_publication_fixes.rs:31:assert(C_Social.RegisterSocialBrowser == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.SetTextureToScreenshot",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "SetTextureToScreenshot",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:31:            \"SetTextureToScreenshot\",\ntests/patch_10_0_7_classic_surfaces.rs:13:            'IsSocialEnabled', 'RegisterSocialBrowser', 'SetTextureToScreenshot',\ntests/patch_10_0_7_publication_fixes.rs:32:assert(rawget(C_Social, 'SetTextureToScreenshot') == nil)\ntests/patch_10_0_7_publication_fixes.rs:33:assert(C_Social.SetTextureToScreenshot == nil)\ntests/patch_10_0_7_publication_fixes.rs:34:assert(C_Social.SetTextureToScreenshot == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterCheckStatus",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "TwitterCheckStatus",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:32:            \"TwitterCheckStatus\",\ntests/patch_10_0_7_classic_surfaces.rs:14:            'TwitterCheckStatus', 'TwitterConnect', 'TwitterDisconnect',\ntests/patch_10_0_7_publication_fixes.rs:35:assert(rawget(C_Social, 'TwitterCheckStatus') == nil)\ntests/patch_10_0_7_publication_fixes.rs:36:assert(C_Social.TwitterCheckStatus == nil)\ntests/patch_10_0_7_publication_fixes.rs:37:assert(C_Social.TwitterCheckStatus == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterConnect",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "TwitterConnect",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:33:            \"TwitterConnect\",\ntests/patch_10_0_7_classic_surfaces.rs:14:            'TwitterCheckStatus', 'TwitterConnect', 'TwitterDisconnect',\ntests/patch_10_0_7_publication_fixes.rs:38:assert(rawget(C_Social, 'TwitterConnect') == nil)\ntests/patch_10_0_7_publication_fixes.rs:39:assert(C_Social.TwitterConnect == nil)\ntests/patch_10_0_7_publication_fixes.rs:40:assert(C_Social.TwitterConnect == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterDisconnect",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "TwitterDisconnect",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:34:            \"TwitterDisconnect\",\ntests/patch_10_0_7_classic_surfaces.rs:14:            'TwitterCheckStatus', 'TwitterConnect', 'TwitterDisconnect',\ntests/patch_10_0_7_publication_fixes.rs:41:assert(rawget(C_Social, 'TwitterDisconnect') == nil)\ntests/patch_10_0_7_publication_fixes.rs:42:assert(C_Social.TwitterDisconnect == nil)\ntests/patch_10_0_7_publication_fixes.rs:43:assert(C_Social.TwitterDisconnect == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterGetMSTillCanPost",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "TwitterGetMSTillCanPost",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:35:            \"TwitterGetMSTillCanPost\",\ntests/patch_10_0_7_classic_surfaces.rs:15:            'TwitterGetMSTillCanPost', 'TwitterPostAchievement', 'TwitterPostItem',\ntests/patch_10_0_7_publication_fixes.rs:44:assert(rawget(C_Social, 'TwitterGetMSTillCanPost') == nil)\ntests/patch_10_0_7_publication_fixes.rs:45:assert(C_Social.TwitterGetMSTillCanPost == nil)\ntests/patch_10_0_7_publication_fixes.rs:46:assert(C_Social.TwitterGetMSTillCanPost == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterPostAchievement",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "TwitterPostAchievement",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:36:            \"TwitterPostAchievement\",\ntests/patch_10_0_7_classic_surfaces.rs:15:            'TwitterGetMSTillCanPost', 'TwitterPostAchievement', 'TwitterPostItem',\ntests/patch_10_0_7_publication_fixes.rs:47:assert(rawget(C_Social, 'TwitterPostAchievement') == nil)\ntests/patch_10_0_7_publication_fixes.rs:48:assert(C_Social.TwitterPostAchievement == nil)\ntests/patch_10_0_7_publication_fixes.rs:49:assert(C_Social.TwitterPostAchievement == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterPostItem",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "TwitterPostItem",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:37:            \"TwitterPostItem\",\ntests/patch_10_0_7_classic_surfaces.rs:15:            'TwitterGetMSTillCanPost', 'TwitterPostAchievement', 'TwitterPostItem',\ntests/patch_10_0_7_publication_fixes.rs:50:assert(rawget(C_Social, 'TwitterPostItem') == nil)\ntests/patch_10_0_7_publication_fixes.rs:51:assert(C_Social.TwitterPostItem == nil)\ntests/patch_10_0_7_publication_fixes.rs:52:assert(C_Social.TwitterPostItem == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterPostMessage",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "TwitterPostMessage",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:38:            \"TwitterPostMessage\",\ntests/patch_10_0_7_classic_surfaces.rs:16:            'TwitterPostMessage', 'TwitterPostScreenshot',\ntests/patch_10_0_7_publication_fixes.rs:53:assert(rawget(C_Social, 'TwitterPostMessage') == nil)\ntests/patch_10_0_7_publication_fixes.rs:54:assert(C_Social.TwitterPostMessage == nil)\ntests/patch_10_0_7_publication_fixes.rs:55:assert(C_Social.TwitterPostMessage == nil)\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_Social.TwitterPostScreenshot",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "TwitterPostScreenshot",
+      "tests",
+      "src"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:39:            \"TwitterPostScreenshot\",\ntests/patch_10_0_7_classic_surfaces.rs:16:            'TwitterPostMessage', 'TwitterPostScreenshot',\ntests/patch_10_0_7_publication_fixes.rs:56:assert(rawget(C_Social, 'TwitterPostScreenshot') == nil)\ntests/patch_10_0_7_publication_fixes.rs:57:assert(C_Social.TwitterPostScreenshot == nil)\ntests/patch_10_0_7_publication_fixes.rs:58:assert(C_Social.TwitterPostScreenshot == nil)\n",
+    "stderr": ""
+  }
+]

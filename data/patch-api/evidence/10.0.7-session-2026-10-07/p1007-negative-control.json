@@ -1,0 +1,9 @@
+{
+  "exit": 101,
+  "old_gaps": 26,
+  "new_gaps": 27,
+  "added": [
+    "wt-global-api-IsAdvancedFlyableArea-47"
+  ],
+  "resolved": []
+}

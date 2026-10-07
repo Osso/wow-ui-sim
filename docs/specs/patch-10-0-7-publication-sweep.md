@@ -8,8 +8,8 @@ Account for Warcraft Wiki page 108565, revision 1063344 (2023-05-09T20:31:43Z), 
 - [x] Apply twenty-one chronological later registers from master, 10.1.5 through 12.1.0; reserve 10.1.0 at the list start without depending on its unmerged branch.
 - [x] Require exactly 26 reviewed publication gaps. Publication, absence and event registration do not establish signatures, populated outputs, security, event payloads or native/historical parity.
 - [x] Prevent repeated ordinary lookup from fabricating eighteen removed, unused retail namespace members; preserve C_Social.GetFriends/GetFriendInfo and unmodified Blizzard deprecation wrappers.
-- [ ] Preserve classic legacy lookup independently of retail retirement; existing module gate excludes classic profiles and a Mists behavior test awaits execution.
-- [ ] Preserve all prior registers, sources, ledgers and gap fixtures byte-identically; retain every previous extract-check result under both example modes. Artifact verification pending.
+- [x] Preserve classic legacy lookup independently of retail retirement; existing module gate excludes classic profiles and Mists behavior assertions pass.
+- [x] Preserve all prior registers, sources, ledgers and gap fixtures byte-identically; retain every previous extract-check result under both example modes. Twenty-two registers regenerate byte-identically; all 134 prior inputs remain unchanged.
 
 ## How it works
 

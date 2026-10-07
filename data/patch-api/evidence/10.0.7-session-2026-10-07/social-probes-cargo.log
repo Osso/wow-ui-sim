@@ -1,0 +1,110 @@
+
+running 8 tests
+test c_social_probes::social_friends_reflect_sim_state_mutation ... ok
+test c_social_probes::get_friend_info_offline_friend ... ok
+test c_social_probes::get_friend_info_returns_nil_for_out_of_range_index ... ok
+test c_social_probes::get_friend_info_returns_table_for_valid_index ... ok
+test c_social_probes::get_friends_returns_array_of_tables ... ok
+test c_social_probes::get_friend_info_returns_nil_for_index_zero ... ok
+test c_social_probes::get_friend_info_returns_seeded_count_via_get_friends ... ok
+test c_social_probes::get_friends_entries_have_guid_field ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 10819 filtered out; finished in 0.53s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 3.63s
+     Running tests/integration.rs (target/debug/deps/integration-aef10a2b503e13d5)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.006s] [Startup] SimState::default complete in 5.65ms
+[  0.006s] [Startup] SimState::default complete in 5.67ms
+[  0.006s] [Startup] SimState::default complete in 5.67ms
+[  0.006s] [Startup] SimState::default complete in 5.67ms
+[  0.006s] [Startup] SimState::default complete in 5.90ms
+[  0.006s] [Startup] SimState::default complete in 5.92ms
+[  0.006s] [Startup] rilua VM created in 196.52µs
+[  0.006s] [Startup] rilua VM created in 373.92µs
+[  0.006s] [Startup] rilua VM created in 344.82µs
+[  0.006s] [Startup] rilua VM created in 331.92µs
+[  0.006s] [Startup] rilua VM created in 316.14µs
+[  0.006s] [Startup] builtin frames initialized in 234.85µs
+[  0.006s] [Startup] builtin frames initialized in 266.69µs
+[  0.007s] [Startup] builtin frames initialized in 262.76µs
+[  0.007s] [Startup] template registry cleared in 17.16µs
+[  0.007s] [Startup] template registry cleared in 31.88µs
+[  0.007s] [Startup] template registry cleared in 27.56µs
+[  0.007s] [Startup] intrinsic templates registered in 39.89µs
+[  0.007s] [Startup] intrinsic templates registered in 36.23µs
+[  0.007s] [Startup] intrinsic templates registered in 37.37µs
+[  0.007s] [Startup] initial app_data lua handle installed in 902.00ns
+[  0.007s] [Startup] initial app_data lua handle installed in 8.72µs
+[  0.007s] [Startup] initial app_data lua handle installed in 7.44µs
+[  0.007s] [Startup] builtin frames initialized in 210.34µs
+[  0.007s] [Startup] template registry cleared in 19.09µs
+[  0.007s] [Startup] intrinsic templates registered in 23.45µs
+[  0.007s] [Startup] initial app_data lua handle installed in 1.53µs
+[  0.007s] [Startup] rilua VM created in 875.13µs
+[  0.007s] [Startup] builtin frames initialized in 554.36µs
+[  0.007s] [Startup] template registry cleared in 6.17µs
+[  0.007s] [Startup] intrinsic templates registered in 8.35µs
+[  0.007s] [Startup] initial app_data lua handle installed in 391.00ns
+[  0.007s] [Startup] SimState::default complete in 6.63ms
+[  0.007s] [Startup] builtin frames initialized in 178.78µs
+[  0.007s] [Startup] template registry cleared in 3.38µs
+[  0.007s] [Startup] intrinsic templates registered in 7.19µs
+[  0.007s] [Startup] initial app_data lua handle installed in 270.00ns
+[  0.007s] [Startup] rilua VM created in 189.81µs
+[  0.007s] [Startup] builtin frames initialized in 173.09µs
+[  0.007s] [Startup] template registry cleared in 3.30µs
+[  0.007s] [Startup] intrinsic templates registered in 6.61µs
+[  0.007s] [Startup] initial app_data lua handle installed in 310.00ns
+[  0.008s] [Startup] SimState::default complete in 7.49ms
+[  0.008s] [Startup] rilua VM created in 373.47µs
+[  0.008s] [Startup] builtin frames initialized in 163.97µs
+[  0.008s] [Startup] template registry cleared in 3.07µs
+[  0.008s] [Startup] intrinsic templates registered in 5.75µs
+[  0.008s] [Startup] initial app_data lua handle installed in 270.00ns
+[  0.471s] [Startup] init_lua_state complete in 464.90ms
+[  0.472s] [Startup] final app_data lua handle installed in 852.00ns
+[  0.472s] [Startup] initial screen globals installed in 411.85µs
+[  0.472s] [Startup] WowLuaEnv::new complete
+[  0.476s] [Startup] init_lua_state complete in 469.08ms
+[  0.476s] [Startup] final app_data lua handle installed in 521.00ns
+[  0.477s] [Startup] initial screen globals installed in 407.08µs
+[  0.477s] [Startup] WowLuaEnv::new complete
+[  0.480s] [Startup] init_lua_state complete in 473.40ms
+[  0.480s] [Startup] final app_data lua handle installed in 801.00ns
+[  0.481s] [Startup] initial screen globals installed in 537.83µs
+[  0.481s] [Startup] WowLuaEnv::new complete
+[  0.482s] [Startup] init_lua_state complete in 474.93ms
+[  0.482s] [Startup] final app_data lua handle installed in 531.00ns
+[  0.482s] [Startup] initial screen globals installed in 288.55µs
+[  0.482s] [Startup] WowLuaEnv::new complete
+[  0.482s] [Startup] init_lua_state complete in 475.43ms
+[  0.482s] [Startup] final app_data lua handle installed in 501.00ns
+[  0.482s] [Startup] initial screen globals installed in 260.95µs
+[  0.482s] [Startup] WowLuaEnv::new complete
+[  0.483s] [Startup] init_lua_state complete in 476.08ms
+[  0.483s] [Startup] final app_data lua handle installed in 421.00ns
+[  0.483s] [Startup] initial screen globals installed in 301.46µs
+[  0.483s] [Startup] WowLuaEnv::new complete
+[  0.504s] [Startup] init_lua_state complete in 497.42ms
+[  0.504s] [Startup] final app_data lua handle installed in 792.00ns
+[  0.505s] [Startup] init_lua_state complete in 496.37ms
+[  0.505s] [Startup] final app_data lua handle installed in 461.00ns
+[  0.505s] [Startup] initial screen globals installed in 499.13µs
+[  0.505s] [Startup] WowLuaEnv::new complete
+[  0.505s] [Startup] initial screen globals installed in 421.92µs
+[  0.505s] [Startup] WowLuaEnv::new complete

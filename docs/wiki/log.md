@@ -231,4 +231,4 @@ Validated [[patch-10-2-6-api-audit]] at 7d8d11fff: pinned source hashes, all 358
 
 ## [2026-10-07] ingest | 10.0.7 API page
 
-Pinned revision 1063344; [audit](investigations/patch-10-0-7-api-audit.md) links all 2,284 source IDs, exact 26 gaps, eighteen unused retail retirements, parser/extractor RED/GREEN and 22 isolated sweep proofs. Final verification pending.
+Pinned revision 1063344; [audit](investigations/patch-10-0-7-api-audit.md) links all 2,284 source IDs, exact 26 gaps, eighteen unused retail retirements, parser/extractor RED/GREEN and 22 isolated sweep proofs. Targeted verification passes: exact 26 → 27 negative control, cached prefork, retained social regressions, Mists preservation/check with zero non-vendor warnings, format/default check and exit-0 retail startup `[]`. All 134 prior inputs and prior extract-mode results preserved.
