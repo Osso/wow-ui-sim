@@ -1,0 +1,324 @@
+[
+  {
+    "patch": "10.0.0",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [
+          "--expand-shared-changes"
+        ],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "10.0.2",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "10.0.5",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "10.0.7",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "10.1.0",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "10.1.5",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "10.1.7",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "10.2.0",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "10.2.5",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "10.2.6",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "10.2.7",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "11.0.0",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "11.0.2",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "11.0.5",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "11.0.7",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "11.1.0",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "11.1.5",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "11.1.7",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "11.2.0",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "11.2.5",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "11.2.7",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "12.0.0",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "12.0.1",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "12.0.5",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "12.0.7",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "patch": "12.1.0",
+    "reproduced": true,
+    "attempts": [
+      {
+        "flags": [],
+        "exit": 0,
+        "equal": false,
+        "stderr": ""
+      },
+      {
+        "flags": [
+          "--inventory-only"
+        ],
+        "exit": 0,
+        "equal": true,
+        "stderr": ""
+      }
+    ]
+  }
+]

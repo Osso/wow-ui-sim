@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 10.0.0 page audit
+
+[Audit](investigations/patch-10-0-0-api-audit.md) accounts for revision 6789768: 639 inventory, 439 extract and four context rows; 466 publication OK and 173 exact retained gaps. Fixture-backed markup/shared-reference parsing and animation/script probe corrections preserve prior registers. All 26 sweeps have passing current-scope evidence; negative control, six helper regressions, Mists warning boundary and startup `[]` pass. Ledger covers all 1,082 IDs; 158 prior inputs and 50 extract-mode outcomes preserved. No runtime API fixes or retirements.
+
 ## [2026-10-07] investigation | Test-suite performance
 
 [Test-suite performance](investigations/test-suite-performance.md): isolated nextest baseline (integration 45 min on 4 workers; 78% of test time in ~1.7k tests taking >=1s), ranked deletion candidates (source-shape fluff ~1.7s total), publication sweeps moved to the prefork harness (128.8s -> 18.1s, identical results), unapproved sharded CI design kept on branch `test-perf`.

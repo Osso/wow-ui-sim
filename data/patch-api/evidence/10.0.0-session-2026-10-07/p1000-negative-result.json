@@ -1,0 +1,9 @@
+{
+  "base_gaps": 173,
+  "negative_gaps": 174,
+  "new_gaps": [
+    "wt-global-api-GetUnitEmpowerHoldAtMaxTime-486"
+  ],
+  "resolved_gaps": [],
+  "exit": 1
+}

@@ -16,6 +16,8 @@
       "tests": [
         "tests/patch_10_0_0_publication_sweep.rs"
       ],
+      "compiled_revision": "aa860f1d5",
+      "proof": "26 current-scope sweeps, factory regression, exact negative control, helper regressions, format/default/Mists checks and exit-0 startup [].",
       "ledger": "data/patch-api/evidence/10.0.0-session-2026-10-07/p1000-proof.json"
     }
   ],
@@ -2141,7 +2143,7 @@
       "source_id": "wt-global-api-CheckTalentMasterDist-528",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Historical changed row requests publication after later supersession; talent-master distance needs NPC/range interaction state."
+      "note": "Current expectation requests publication after later supersession; talent-master distance needs NPC/range interaction state."
     },
     {
       "source_id": "wt-global-api-ClearAllTracking-529",
@@ -3023,7 +3025,7 @@
       "source_id": "wt-widgets-Texture:SetRotation-668",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Current cached Lua contains exact qualified references listed below; retained, not retired. References may be declarations/deprecation wrappers or profile-specific files; a textual match alone is not proof of a loaded retail caller. Preserve vendor wrappers and current callers."
+      "note": "No exact namespace/owner-qualified cache match; bare-name references listed below require successor/deprecation/profile attribution. Do not describe bare matches as old API consumers. Deferred outside a zero-match retirement batch."
     },
     {
       "source_id": "wt-widgets-Scale:GetFromScale-669",

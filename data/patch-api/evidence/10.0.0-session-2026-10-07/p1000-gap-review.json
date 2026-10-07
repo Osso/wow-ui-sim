@@ -21,7 +21,8 @@
     "outcome": "retained-gap",
     "reason": "Guild-achievement metadata is not provided by the achievement ID/count surface.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_AchievementInfo.IsGuildAchievement-226"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_AchievementInfo.IsGuildAchievement-226",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_AchievementInfo.IsGuildAchievement-226"
   },
   {
     "source_id": "wt-global-api-C_CampaignInfo.SortAsNormalQuest-231",
@@ -45,7 +46,8 @@
     "outcome": "retained-gap",
     "reason": "Requires campaign quest icon/sorting policy, not a constant quest visibility flag.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CampaignInfo.SortAsNormalQuest-231"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CampaignInfo.SortAsNormalQuest-231",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_CampaignInfo.SortAsNormalQuest-231"
   },
   {
     "source_id": "wt-global-api-C_ClassTalents.CanCreateNewConfig-233",
@@ -69,7 +71,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config creation/import/commit/rename/delete state, capacity constraints and shared-action-bar persistence; existing talent queries are not this lifecycle.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.CanCreateNewConfig-233"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.CanCreateNewConfig-233",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ClassTalents.CanCreateNewConfig-233"
   },
   {
     "source_id": "wt-global-api-C_ClassTalents.CommitConfig-234",
@@ -93,7 +96,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config creation/import/commit/rename/delete state, capacity constraints and shared-action-bar persistence; existing talent queries are not this lifecycle.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.CommitConfig-234"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.CommitConfig-234",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ClassTalents.CommitConfig-234"
   },
   {
     "source_id": "wt-global-api-C_ClassTalents.DeleteConfig-235",
@@ -117,7 +121,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config creation/import/commit/rename/delete state, capacity constraints and shared-action-bar persistence; existing talent queries are not this lifecycle.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.DeleteConfig-235"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.DeleteConfig-235",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ClassTalents.DeleteConfig-235"
   },
   {
     "source_id": "wt-global-api-C_ClassTalents.ImportLoadout-243",
@@ -141,7 +146,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config creation/import/commit/rename/delete state, capacity constraints and shared-action-bar persistence; existing talent queries are not this lifecycle.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.ImportLoadout-243"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.ImportLoadout-243",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ClassTalents.ImportLoadout-243"
   },
   {
     "source_id": "wt-global-api-C_ClassTalents.IsConfigPopulated-244",
@@ -165,7 +171,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config creation/import/commit/rename/delete state, capacity constraints and shared-action-bar persistence; existing talent queries are not this lifecycle.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.IsConfigPopulated-244"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.IsConfigPopulated-244",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ClassTalents.IsConfigPopulated-244"
   },
   {
     "source_id": "wt-global-api-C_ClassTalents.RenameConfig-246",
@@ -189,7 +196,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config creation/import/commit/rename/delete state, capacity constraints and shared-action-bar persistence; existing talent queries are not this lifecycle.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.RenameConfig-246"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.RenameConfig-246",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ClassTalents.RenameConfig-246"
   },
   {
     "source_id": "wt-global-api-C_ClassTalents.RequestNewConfig-247",
@@ -213,7 +221,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config creation/import/commit/rename/delete state, capacity constraints and shared-action-bar persistence; existing talent queries are not this lifecycle.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.RequestNewConfig-247"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.RequestNewConfig-247",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ClassTalents.RequestNewConfig-247"
   },
   {
     "source_id": "wt-global-api-C_ClassTalents.SaveConfig-248",
@@ -237,7 +246,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config creation/import/commit/rename/delete state, capacity constraints and shared-action-bar persistence; existing talent queries are not this lifecycle.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.SaveConfig-248"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.SaveConfig-248",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ClassTalents.SaveConfig-248"
   },
   {
     "source_id": "wt-global-api-C_ClassTalents.SetUsesSharedActionBars-250",
@@ -261,7 +271,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config creation/import/commit/rename/delete state, capacity constraints and shared-action-bar persistence; existing talent queries are not this lifecycle.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.SetUsesSharedActionBars-250"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ClassTalents.SetUsesSharedActionBars-250",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ClassTalents.SetUsesSharedActionBars-250"
   },
   {
     "source_id": "wt-global-api-C_CraftingOrders.CloseCustomerCraftingOrders-254",
@@ -285,7 +296,8 @@
     "outcome": "retained-gap",
     "reason": "Requires customer catalog/options/favorite state and customer interaction lifecycle; existing local order records do not supply these contracts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.CloseCustomerCraftingOrders-254"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.CloseCustomerCraftingOrders-254",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_CraftingOrders.CloseCustomerCraftingOrders-254"
   },
   {
     "source_id": "wt-global-api-C_CraftingOrders.GetCustomerCategories-255",
@@ -309,7 +321,8 @@
     "outcome": "retained-gap",
     "reason": "Requires customer catalog/options/favorite state and customer interaction lifecycle; existing local order records do not supply these contracts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.GetCustomerCategories-255"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.GetCustomerCategories-255",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_CraftingOrders.GetCustomerCategories-255"
   },
   {
     "source_id": "wt-global-api-C_CraftingOrders.GetCustomerOptions-256",
@@ -333,7 +346,8 @@
     "outcome": "retained-gap",
     "reason": "Requires customer catalog/options/favorite state and customer interaction lifecycle; existing local order records do not supply these contracts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.GetCustomerOptions-256"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.GetCustomerOptions-256",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_CraftingOrders.GetCustomerOptions-256"
   },
   {
     "source_id": "wt-global-api-C_CraftingOrders.HasFavoriteCustomerOptions-257",
@@ -357,7 +371,8 @@
     "outcome": "retained-gap",
     "reason": "Requires customer catalog/options/favorite state and customer interaction lifecycle; existing local order records do not supply these contracts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.HasFavoriteCustomerOptions-257"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.HasFavoriteCustomerOptions-257",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_CraftingOrders.HasFavoriteCustomerOptions-257"
   },
   {
     "source_id": "wt-global-api-C_CraftingOrders.IsCustomerOptionFavorited-258",
@@ -381,7 +396,8 @@
     "outcome": "retained-gap",
     "reason": "Requires customer catalog/options/favorite state and customer interaction lifecycle; existing local order records do not supply these contracts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.IsCustomerOptionFavorited-258"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.IsCustomerOptionFavorited-258",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_CraftingOrders.IsCustomerOptionFavorited-258"
   },
   {
     "source_id": "wt-global-api-C_CraftingOrders.ParseCustomerOptions-259",
@@ -405,7 +421,8 @@
     "outcome": "retained-gap",
     "reason": "Requires customer catalog/options/favorite state and customer interaction lifecycle; existing local order records do not supply these contracts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.ParseCustomerOptions-259"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.ParseCustomerOptions-259",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_CraftingOrders.ParseCustomerOptions-259"
   },
   {
     "source_id": "wt-global-api-C_CraftingOrders.SetCustomerOptionFavorited-260",
@@ -429,7 +446,8 @@
     "outcome": "retained-gap",
     "reason": "Requires customer catalog/options/favorite state and customer interaction lifecycle; existing local order records do not supply these contracts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.SetCustomerOptionFavorited-260"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CraftingOrders.SetCustomerOptionFavorited-260",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_CraftingOrders.SetCustomerOptionFavorited-260"
   },
   {
     "source_id": "wt-global-api-C_CurrencyInfo.GetCurrencyDescription-261",
@@ -453,7 +471,8 @@
     "outcome": "retained-gap",
     "reason": "Requires currency description metadata, distinct from count/name/quantity publication.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CurrencyInfo.GetCurrencyDescription-261"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_CurrencyInfo.GetCurrencyDescription-261",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_CurrencyInfo.GetCurrencyDescription-261"
   },
   {
     "source_id": "wt-global-api-C_EditMode.ConvertLayoutInfoToString-263",
@@ -477,7 +496,8 @@
     "outcome": "retained-gap",
     "reason": "Requires a documented layout serialization format and layout add/delete/exit lifecycle; current anchors are not serialized layouts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_EditMode.ConvertLayoutInfoToString-263"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_EditMode.ConvertLayoutInfoToString-263",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_EditMode.ConvertLayoutInfoToString-263"
   },
   {
     "source_id": "wt-global-api-C_EditMode.ConvertStringToLayoutInfo-264",
@@ -501,7 +521,8 @@
     "outcome": "retained-gap",
     "reason": "Requires a documented layout serialization format and layout add/delete/exit lifecycle; current anchors are not serialized layouts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_EditMode.ConvertStringToLayoutInfo-264"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_EditMode.ConvertStringToLayoutInfo-264",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_EditMode.ConvertStringToLayoutInfo-264"
   },
   {
     "source_id": "wt-global-api-C_EditMode.OnEditModeExit-267",
@@ -525,7 +546,8 @@
     "outcome": "retained-gap",
     "reason": "Requires a documented layout serialization format and layout add/delete/exit lifecycle; current anchors are not serialized layouts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_EditMode.OnEditModeExit-267"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_EditMode.OnEditModeExit-267",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_EditMode.OnEditModeExit-267"
   },
   {
     "source_id": "wt-global-api-C_EditMode.OnLayoutAdded-268",
@@ -549,7 +571,8 @@
     "outcome": "retained-gap",
     "reason": "Requires a documented layout serialization format and layout add/delete/exit lifecycle; current anchors are not serialized layouts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_EditMode.OnLayoutAdded-268"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_EditMode.OnLayoutAdded-268",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_EditMode.OnLayoutAdded-268"
   },
   {
     "source_id": "wt-global-api-C_EditMode.OnLayoutDeleted-269",
@@ -573,7 +596,8 @@
     "outcome": "retained-gap",
     "reason": "Requires a documented layout serialization format and layout add/delete/exit lifecycle; current anchors are not serialized layouts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_EditMode.OnLayoutDeleted-269"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_EditMode.OnLayoutDeleted-269",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_EditMode.OnLayoutDeleted-269"
   },
   {
     "source_id": "wt-global-api-C_Item.GetItemIDByGUID-278",
@@ -597,7 +621,8 @@
     "outcome": "retained-gap",
     "reason": "Requires inventory GUID identity and location resolution shared with real item inputs, not a made-up GUID decoder.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Item.GetItemIDByGUID-278"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Item.GetItemIDByGUID-278",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Item.GetItemIDByGUID-278"
   },
   {
     "source_id": "wt-global-api-C_Item.GetItemLocation-279",
@@ -621,7 +646,8 @@
     "outcome": "retained-gap",
     "reason": "Requires inventory GUID identity and location resolution shared with real item inputs, not a made-up GUID decoder.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Item.GetItemLocation-279"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Item.GetItemLocation-279",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Item.GetItemLocation-279"
   },
   {
     "source_id": "wt-global-api-C_Item.IsItemGUIDInInventory-282",
@@ -645,7 +671,8 @@
     "outcome": "retained-gap",
     "reason": "Requires inventory GUID identity and location resolution shared with real item inputs, not a made-up GUID decoder.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Item.IsItemGUIDInInventory-282"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Item.IsItemGUIDInInventory-282",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Item.IsItemGUIDInInventory-282"
   },
   {
     "source_id": "wt-global-api-C_MajorFactions.IsMajorFaction-293",
@@ -675,14 +702,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_MajorFactions\\.IsMajorFaction\\b",
+          "(?<![\\w.:])C_MajorFactions\\.IsMajorFaction(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -709,7 +738,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_MajorFactions.IsMajorFaction-293"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_MajorFactions.IsMajorFaction-293",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_MajorFactions.IsMajorFaction-293"
   },
   {
     "source_id": "wt-global-api-C_MajorFactions.IsWeeklyRenownCapped-295",
@@ -733,7 +763,8 @@
     "outcome": "retained-gap",
     "reason": "Requires weekly renown cap policy and character progress inputs, distinct from faction identity.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_MajorFactions.IsWeeklyRenownCapped-295"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_MajorFactions.IsWeeklyRenownCapped-295",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_MajorFactions.IsWeeklyRenownCapped-295"
   },
   {
     "source_id": "wt-global-api-C_Minimap.CanTrackBattlePets-297",
@@ -757,7 +788,8 @@
     "outcome": "retained-gap",
     "reason": "Requires tracking/filter state, battle-pet/hidden-quest capability inputs and POI world-effect/texture metadata.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.CanTrackBattlePets-297"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.CanTrackBattlePets-297",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Minimap.CanTrackBattlePets-297"
   },
   {
     "source_id": "wt-global-api-C_Minimap.GetNumQuestPOIWorldEffects-299",
@@ -781,7 +813,8 @@
     "outcome": "retained-gap",
     "reason": "Requires tracking/filter state, battle-pet/hidden-quest capability inputs and POI world-effect/texture metadata.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.GetNumQuestPOIWorldEffects-299"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.GetNumQuestPOIWorldEffects-299",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Minimap.GetNumQuestPOIWorldEffects-299"
   },
   {
     "source_id": "wt-global-api-C_Minimap.GetPOITextureCoords-302",
@@ -805,7 +838,8 @@
     "outcome": "retained-gap",
     "reason": "Requires tracking/filter state, battle-pet/hidden-quest capability inputs and POI world-effect/texture metadata.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.GetPOITextureCoords-302"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.GetPOITextureCoords-302",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Minimap.GetPOITextureCoords-302"
   },
   {
     "source_id": "wt-global-api-C_Minimap.IsFilteredOut-305",
@@ -829,7 +863,8 @@
     "outcome": "retained-gap",
     "reason": "Requires tracking/filter state, battle-pet/hidden-quest capability inputs and POI world-effect/texture metadata.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.IsFilteredOut-305"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.IsFilteredOut-305",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Minimap.IsFilteredOut-305"
   },
   {
     "source_id": "wt-global-api-C_Minimap.IsTrackingBattlePets-306",
@@ -853,7 +888,8 @@
     "outcome": "retained-gap",
     "reason": "Requires tracking/filter state, battle-pet/hidden-quest capability inputs and POI world-effect/texture metadata.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.IsTrackingBattlePets-306"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.IsTrackingBattlePets-306",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Minimap.IsTrackingBattlePets-306"
   },
   {
     "source_id": "wt-global-api-C_Minimap.IsTrackingHiddenQuests-307",
@@ -877,7 +913,8 @@
     "outcome": "retained-gap",
     "reason": "Requires tracking/filter state, battle-pet/hidden-quest capability inputs and POI world-effect/texture metadata.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.IsTrackingHiddenQuests-307"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Minimap.IsTrackingHiddenQuests-307",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Minimap.IsTrackingHiddenQuests-307"
   },
   {
     "source_id": "wt-global-api-C_MountJournal.GetCollectedDragonridingMounts-309",
@@ -901,7 +938,8 @@
     "outcome": "retained-gap",
     "reason": "Requires dragonriding classification of the collected mount inventory, not all collected mounts.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_MountJournal.GetCollectedDragonridingMounts-309"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_MountJournal.GetCollectedDragonridingMounts-309",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_MountJournal.GetCollectedDragonridingMounts-309"
   },
   {
     "source_id": "wt-global-api-C_MythicPlus.GetCurrentUIDisplaySeason-312",
@@ -925,7 +963,8 @@
     "outcome": "retained-gap",
     "reason": "Requires display-season identity inputs distinct from a generic season number.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_MythicPlus.GetCurrentUIDisplaySeason-312"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_MythicPlus.GetCurrentUIDisplaySeason-312",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_MythicPlus.GetCurrentUIDisplaySeason-312"
   },
   {
     "source_id": "wt-global-api-C_PaperDollInfo.GetInspectRatedSoloShuffleData-313",
@@ -949,7 +988,8 @@
     "outcome": "retained-gap",
     "reason": "Requires inspected player rated-solo-shuffle DTOs, not local-player stats.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PaperDollInfo.GetInspectRatedSoloShuffleData-313"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PaperDollInfo.GetInspectRatedSoloShuffleData-313",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PaperDollInfo.GetInspectRatedSoloShuffleData-313"
   },
   {
     "source_id": "wt-global-api-C_PlayerInteractionManager.ConfirmationInteraction-317",
@@ -973,7 +1013,8 @@
     "outcome": "retained-gap",
     "reason": "Requires NPC interaction validation, confirmation, replacement and reopening transitions tied to unit/NPC state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.ConfirmationInteraction-317"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.ConfirmationInteraction-317",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PlayerInteractionManager.ConfirmationInteraction-317"
   },
   {
     "source_id": "wt-global-api-C_PlayerInteractionManager.InteractUnit-318",
@@ -997,7 +1038,8 @@
     "outcome": "retained-gap",
     "reason": "Requires NPC interaction validation, confirmation, replacement and reopening transitions tied to unit/NPC state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.InteractUnit-318"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.InteractUnit-318",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PlayerInteractionManager.InteractUnit-318"
   },
   {
     "source_id": "wt-global-api-C_PlayerInteractionManager.IsInteractingWithNpcOfType-319",
@@ -1021,7 +1063,8 @@
     "outcome": "retained-gap",
     "reason": "Requires NPC interaction validation, confirmation, replacement and reopening transitions tied to unit/NPC state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.IsInteractingWithNpcOfType-319"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.IsInteractingWithNpcOfType-319",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PlayerInteractionManager.IsInteractingWithNpcOfType-319"
   },
   {
     "source_id": "wt-global-api-C_PlayerInteractionManager.IsReplacingUnit-320",
@@ -1045,7 +1088,8 @@
     "outcome": "retained-gap",
     "reason": "Requires NPC interaction validation, confirmation, replacement and reopening transitions tied to unit/NPC state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.IsReplacingUnit-320"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.IsReplacingUnit-320",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PlayerInteractionManager.IsReplacingUnit-320"
   },
   {
     "source_id": "wt-global-api-C_PlayerInteractionManager.IsValidNPCInteraction-321",
@@ -1069,7 +1113,8 @@
     "outcome": "retained-gap",
     "reason": "Requires NPC interaction validation, confirmation, replacement and reopening transitions tied to unit/NPC state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.IsValidNPCInteraction-321"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.IsValidNPCInteraction-321",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PlayerInteractionManager.IsValidNPCInteraction-321"
   },
   {
     "source_id": "wt-global-api-C_PlayerInteractionManager.ReopenInteraction-322",
@@ -1093,7 +1138,8 @@
     "outcome": "retained-gap",
     "reason": "Requires NPC interaction validation, confirmation, replacement and reopening transitions tied to unit/NPC state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.ReopenInteraction-322"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInteractionManager.ReopenInteraction-322",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PlayerInteractionManager.ReopenInteraction-322"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.CanRefundPath-323",
@@ -1117,7 +1163,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.CanRefundPath-323"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.CanRefundPath-323",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.CanRefundPath-323"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.CanUnlockTab-324",
@@ -1141,7 +1188,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.CanUnlockTab-324"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.CanUnlockTab-324",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.CanUnlockTab-324"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetChildrenForPath-325",
@@ -1165,7 +1213,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetChildrenForPath-325"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetChildrenForPath-325",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetChildrenForPath-325"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetDescriptionForPath-328",
@@ -1189,7 +1238,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetDescriptionForPath-328"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetDescriptionForPath-328",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetDescriptionForPath-328"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetDescriptionForPerk-329",
@@ -1213,7 +1263,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetDescriptionForPerk-329"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetDescriptionForPerk-329",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetDescriptionForPerk-329"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetEntryIDForPerk-330",
@@ -1237,7 +1288,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetEntryIDForPerk-330"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetEntryIDForPerk-330",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetEntryIDForPerk-330"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetPerksForPath-331",
@@ -1261,7 +1313,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetPerksForPath-331"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetPerksForPath-331",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetPerksForPath-331"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetRootPathForTab-332",
@@ -1285,7 +1338,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetRootPathForTab-332"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetRootPathForTab-332",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetRootPathForTab-332"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetSourceTextForPath-333",
@@ -1309,7 +1363,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetSourceTextForPath-333"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetSourceTextForPath-333",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetSourceTextForPath-333"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetSpendCurrencyForPath-336",
@@ -1333,7 +1388,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetSpendCurrencyForPath-336"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetSpendCurrencyForPath-336",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetSpendCurrencyForPath-336"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetSpendEntryForPath-337",
@@ -1357,7 +1413,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetSpendEntryForPath-337"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetSpendEntryForPath-337",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetSpendEntryForPath-337"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetStateForPath-338",
@@ -1381,7 +1438,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetStateForPath-338"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetStateForPath-338",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetStateForPath-338"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetStateForPerk-339",
@@ -1405,7 +1463,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetStateForPerk-339"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetStateForPerk-339",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetStateForPerk-339"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetStateForTab-340",
@@ -1429,7 +1488,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetStateForTab-340"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetStateForTab-340",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetStateForTab-340"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetUnlockEntryForPath-342",
@@ -1453,7 +1513,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetUnlockEntryForPath-342"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetUnlockEntryForPath-342",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetUnlockEntryForPath-342"
   },
   {
     "source_id": "wt-global-api-C_ProfSpecs.GetUnlockRankForPerk-343",
@@ -1477,7 +1538,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession specialization path/perk/tab graph, entries/currencies/ranks and refund/unlock eligibility state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetUnlockRankForPerk-343"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ProfSpecs.GetUnlockRankForPerk-343",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ProfSpecs.GetUnlockRankForPerk-343"
   },
   {
     "source_id": "wt-global-api-C_PvP.GetPersonalRatedSoloShuffleSpecStats-347",
@@ -1501,7 +1563,8 @@
     "outcome": "retained-gap",
     "reason": "Requires solo-shuffle per-spec rating/reward/minimum-item-level/brawl inputs and policies.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PvP.GetPersonalRatedSoloShuffleSpecStats-347"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PvP.GetPersonalRatedSoloShuffleSpecStats-347",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PvP.GetPersonalRatedSoloShuffleSpecStats-347"
   },
   {
     "source_id": "wt-global-api-C_PvP.GetRatedSoloShuffleMinItemLevel-348",
@@ -1525,7 +1588,8 @@
     "outcome": "retained-gap",
     "reason": "Requires solo-shuffle per-spec rating/reward/minimum-item-level/brawl inputs and policies.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PvP.GetRatedSoloShuffleMinItemLevel-348"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PvP.GetRatedSoloShuffleMinItemLevel-348",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PvP.GetRatedSoloShuffleMinItemLevel-348"
   },
   {
     "source_id": "wt-global-api-C_PvP.GetRatedSoloShuffleRewards-349",
@@ -1549,7 +1613,8 @@
     "outcome": "retained-gap",
     "reason": "Requires solo-shuffle per-spec rating/reward/minimum-item-level/brawl inputs and policies.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PvP.GetRatedSoloShuffleRewards-349"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PvP.GetRatedSoloShuffleRewards-349",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PvP.GetRatedSoloShuffleRewards-349"
   },
   {
     "source_id": "wt-global-api-C_PvP.IsBrawlSoloShuffle-350",
@@ -1573,7 +1638,8 @@
     "outcome": "retained-gap",
     "reason": "Requires solo-shuffle per-spec rating/reward/minimum-item-level/brawl inputs and policies.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PvP.IsBrawlSoloShuffle-350"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PvP.IsBrawlSoloShuffle-350",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PvP.IsBrawlSoloShuffle-350"
   },
   {
     "source_id": "wt-global-api-C_QuestItemUse.CanUseQuestItemOnObject-352",
@@ -1597,7 +1663,8 @@
     "outcome": "retained-gap",
     "reason": "Requires quest-item/object eligibility derived from quest and object inputs, not unconditional permission.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_QuestItemUse.CanUseQuestItemOnObject-352"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_QuestItemUse.CanUseQuestItemOnObject-352",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_QuestItemUse.CanUseQuestItemOnObject-352"
   },
   {
     "source_id": "wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-353",
@@ -1621,7 +1688,8 @@
     "outcome": "retained-gap",
     "reason": "Requires quest-to-unit relationship and major-faction reputation reward metadata.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-353"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-353",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-353"
   },
   {
     "source_id": "wt-global-api-C_QuestLog.UnitIsRelatedToActiveQuest-354",
@@ -1645,7 +1713,8 @@
     "outcome": "retained-gap",
     "reason": "Requires quest-to-unit relationship and major-faction reputation reward metadata.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_QuestLog.UnitIsRelatedToActiveQuest-354"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_QuestLog.UnitIsRelatedToActiveQuest-354",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_QuestLog.UnitIsRelatedToActiveQuest-354"
   },
   {
     "source_id": "wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-356",
@@ -1669,7 +1738,8 @@
     "outcome": "retained-gap",
     "reason": "Requires offered-quest major-faction reputation reward DTOs.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-356"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-356",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-356"
   },
   {
     "source_id": "wt-global-api-C_Reputation.SetWatchedFaction-358",
@@ -1699,14 +1769,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_Reputation\\.SetWatchedFaction\\b",
+          "(?<![\\w.:])C_Reputation\\.SetWatchedFaction(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -1724,7 +1796,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Reputation.SetWatchedFaction-358"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Reputation.SetWatchedFaction-358",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Reputation.SetWatchedFaction-358"
   },
   {
     "source_id": "wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-364",
@@ -1754,16 +1827,18 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_SpellBook\\.GetDeadlyDebuffInfo\\b",
+          "(?<![\\w.:])C_SpellBook\\.GetDeadlyDebuffInfo(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 0,
         "matches": [
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:140:C_SpellBook.GetDeadlyDebuffInfo = C_Spell.GetDeadlyDebuffInfo"
-        ]
+        ],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -1785,7 +1860,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-364"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-364",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-364"
   },
   {
     "source_id": "wt-global-api-C_SpellBook.GetOverrideSpell-365",
@@ -1815,16 +1891,18 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_SpellBook\\.GetOverrideSpell\\b",
+          "(?<![\\w.:])C_SpellBook\\.GetOverrideSpell(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 0,
         "matches": [
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:142:C_SpellBook.GetOverrideSpell = C_Spell.GetOverrideSpell"
-        ]
+        ],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -1849,7 +1927,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_SpellBook.GetOverrideSpell-365"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_SpellBook.GetOverrideSpell-365",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_SpellBook.GetOverrideSpell-365"
   },
   {
     "source_id": "wt-global-api-C_Texture.GetFilenameFromFileDataID-367",
@@ -1873,7 +1952,8 @@
     "outcome": "retained-gap",
     "reason": "Requires fileDataID-to-filename metadata, not forward asset resolution or invented paths.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Texture.GetFilenameFromFileDataID-367"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Texture.GetFilenameFromFileDataID-367",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Texture.GetFilenameFromFileDataID-367"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.CraftEnchant-373",
@@ -1897,7 +1977,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.CraftEnchant-373"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.CraftEnchant-373",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.CraftEnchant-373"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.CraftSalvage-374",
@@ -1921,7 +2002,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.CraftSalvage-374"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.CraftSalvage-374",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.CraftSalvage-374"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.DoesRecraftingRecipeAcceptItem-376",
@@ -1945,7 +2027,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.DoesRecraftingRecipeAcceptItem-376"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.DoesRecraftingRecipeAcceptItem-376",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.DoesRecraftingRecipeAcceptItem-376"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-382",
@@ -1969,7 +2052,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-382"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-382",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-382"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetCraftingReagentBonusText-384",
@@ -1993,7 +2077,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetCraftingReagentBonusText-384"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetCraftingReagentBonusText-384",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetCraftingReagentBonusText-384"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetEnchantItems-386",
@@ -2017,7 +2102,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetEnchantItems-386"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetEnchantItems-386",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetEnchantItems-386"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetGatheringOperationInfo-389",
@@ -2041,7 +2127,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetGatheringOperationInfo-389"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetGatheringOperationInfo-389",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetGatheringOperationInfo-389"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetHideUnownedFlags-390",
@@ -2065,7 +2152,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetHideUnownedFlags-390"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetHideUnownedFlags-390",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetHideUnownedFlags-390"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetItemCraftedQualityByItemInfo-391",
@@ -2089,7 +2177,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetItemCraftedQualityByItemInfo-391"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetItemCraftedQualityByItemInfo-391",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetItemCraftedQualityByItemInfo-391"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetItemReagentQualityByItemInfo-392",
@@ -2113,7 +2202,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetItemReagentQualityByItemInfo-392"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetItemReagentQualityByItemInfo-392",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetItemReagentQualityByItemInfo-392"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowFirstCraftRecipes-394",
@@ -2137,7 +2227,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOnlyShowFirstCraftRecipes-394"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOnlyShowFirstCraftRecipes-394",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetOnlyShowFirstCraftRecipes-394"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetOriginalCraftRecipeID-395",
@@ -2161,7 +2252,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOriginalCraftRecipeID-395"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOriginalCraftRecipeID-395",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetOriginalCraftRecipeID-395"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetProfessionChildSkillLineID-396",
@@ -2185,7 +2277,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetProfessionChildSkillLineID-396"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetProfessionChildSkillLineID-396",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetProfessionChildSkillLineID-396"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetProfessionInfoBySkillLineID-397",
@@ -2209,7 +2302,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetProfessionInfoBySkillLineID-397"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetProfessionInfoBySkillLineID-397",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetProfessionInfoBySkillLineID-397"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetProfessionSpells-400",
@@ -2233,7 +2327,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetProfessionSpells-400"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetProfessionSpells-400",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetProfessionSpells-400"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetReagentDifficultyText-401",
@@ -2257,7 +2352,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetReagentDifficultyText-401"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetReagentDifficultyText-401",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetReagentDifficultyText-401"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetReagentSlotStatus-402",
@@ -2281,7 +2377,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetReagentSlotStatus-402"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetReagentSlotStatus-402",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetReagentSlotStatus-402"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetRecraftItems-408",
@@ -2305,7 +2402,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetRecraftItems-408"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetRecraftItems-408",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetRecraftItems-408"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetSalvagableItemIDs-409",
@@ -2329,7 +2427,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetSalvagableItemIDs-409"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetSalvagableItemIDs-409",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetSalvagableItemIDs-409"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetShowLearned-410",
@@ -2353,7 +2452,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetShowLearned-410"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetShowLearned-410",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetShowLearned-410"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetShowUnlearned-411",
@@ -2377,7 +2477,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetShowUnlearned-411"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetShowUnlearned-411",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetShowUnlearned-411"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.IsOriginalCraftRecipeLearned-416",
@@ -2401,7 +2502,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.IsOriginalCraftRecipeLearned-416"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.IsOriginalCraftRecipeLearned-416",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.IsOriginalCraftRecipeLearned-416"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeProfessionLearned-418",
@@ -2425,7 +2527,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.IsRecipeProfessionLearned-418"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.IsRecipeProfessionLearned-418",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.IsRecipeProfessionLearned-418"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.OpenRecipe-422",
@@ -2449,7 +2552,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.OpenRecipe-422"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.OpenRecipe-422",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.OpenRecipe-422"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.RecraftRecipe-426",
@@ -2473,7 +2577,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.RecraftRecipe-426"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.RecraftRecipe-426",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.RecraftRecipe-426"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowFirstCraftRecipes-428",
@@ -2497,7 +2602,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetOnlyShowFirstCraftRecipes-428"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetOnlyShowFirstCraftRecipes-428",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.SetOnlyShowFirstCraftRecipes-428"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.SetShowLearned-431",
@@ -2521,7 +2627,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetShowLearned-431"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetShowLearned-431",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.SetShowLearned-431"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.SetShowUnlearned-432",
@@ -2545,7 +2652,8 @@
     "outcome": "retained-gap",
     "reason": "Requires profession recipe/reagent quality, operation/recraft/salvage/enchant catalogs or learned/unlearned/first-craft filter state specific to this endpoint; existing recipe publication is insufficient.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetShowUnlearned-432"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetShowUnlearned-432",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.SetShowUnlearned-432"
   },
   {
     "source_id": "wt-global-api-C_Traits.CanRefundRank-436",
@@ -2569,7 +2677,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.CanRefundRank-436"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.CanRefundRank-436",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.CanRefundRank-436"
   },
   {
     "source_id": "wt-global-api-C_Traits.CascadeRepurchaseRanks-437",
@@ -2593,7 +2702,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.CascadeRepurchaseRanks-437"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.CascadeRepurchaseRanks-437",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.CascadeRepurchaseRanks-437"
   },
   {
     "source_id": "wt-global-api-C_Traits.ClearCascadeRepurchaseHistory-438",
@@ -2617,7 +2727,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.ClearCascadeRepurchaseHistory-438"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.ClearCascadeRepurchaseHistory-438",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.ClearCascadeRepurchaseHistory-438"
   },
   {
     "source_id": "wt-global-api-C_Traits.CloseTraitSystemInteraction-439",
@@ -2641,7 +2752,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.CloseTraitSystemInteraction-439"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.CloseTraitSystemInteraction-439",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.CloseTraitSystemInteraction-439"
   },
   {
     "source_id": "wt-global-api-C_Traits.CommitConfig-440",
@@ -2665,7 +2777,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.CommitConfig-440"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.CommitConfig-440",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.CommitConfig-440"
   },
   {
     "source_id": "wt-global-api-C_Traits.GetConfigsByType-446",
@@ -2689,7 +2802,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.GetConfigsByType-446"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.GetConfigsByType-446",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.GetConfigsByType-446"
   },
   {
     "source_id": "wt-global-api-C_Traits.HasValidInspectData-459",
@@ -2713,7 +2827,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.HasValidInspectData-459"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.HasValidInspectData-459",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.HasValidInspectData-459"
   },
   {
     "source_id": "wt-global-api-C_Traits.RefundAllRanks-461",
@@ -2737,7 +2852,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.RefundAllRanks-461"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.RefundAllRanks-461",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.RefundAllRanks-461"
   },
   {
     "source_id": "wt-global-api-C_Traits.ResetTree-463",
@@ -2761,7 +2877,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.ResetTree-463"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.ResetTree-463",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.ResetTree-463"
   },
   {
     "source_id": "wt-global-api-C_Traits.RollbackConfig-464",
@@ -2785,7 +2902,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.RollbackConfig-464"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.RollbackConfig-464",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.RollbackConfig-464"
   },
   {
     "source_id": "wt-global-api-C_Traits.StageConfig-466",
@@ -2809,7 +2927,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.StageConfig-466"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.StageConfig-466",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.StageConfig-466"
   },
   {
     "source_id": "wt-global-api-C_Traits.TalentTestUnlearnSpells-467",
@@ -2833,7 +2952,8 @@
     "outcome": "retained-gap",
     "reason": "Requires config staging/commit/rollback, refund/repurchase history and inspect/talent-test state transitions; current read-only trait records do not implement these operations.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.TalentTestUnlearnSpells-467"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_Traits.TalentTestUnlearnSpells-467",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_Traits.TalentTestUnlearnSpells-467"
   },
   {
     "source_id": "wt-global-api-C_UIWidgetManager.GetFillUpFramesWidgetVisualizationInfo-469",
@@ -2857,7 +2977,8 @@
     "outcome": "retained-gap",
     "reason": "Requires populated FillUpFrames visualization DTOs and their owner widget inputs.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_UIWidgetManager.GetFillUpFramesWidgetVisualizationInfo-469"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_UIWidgetManager.GetFillUpFramesWidgetVisualizationInfo-469",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_UIWidgetManager.GetFillUpFramesWidgetVisualizationInfo-469"
   },
   {
     "source_id": "wt-global-api-C_WeeklyRewards.IsWeeklyChestRetired-481",
@@ -2881,7 +3002,8 @@
     "outcome": "retained-gap",
     "reason": "Requires weekly chest retirement policy/season inputs, not a generic vault reward count.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_WeeklyRewards.IsWeeklyChestRetired-481"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_WeeklyRewards.IsWeeklyChestRetired-481",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_WeeklyRewards.IsWeeklyChestRetired-481"
   },
   {
     "source_id": "wt-global-api-C_XMLUtil.GetTemplates-483",
@@ -2905,7 +3027,8 @@
     "outcome": "retained-gap",
     "reason": "Requires enumeration of runtime XML template identities, not a hardcoded empty list.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_XMLUtil.GetTemplates-483"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_XMLUtil.GetTemplates-483",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_XMLUtil.GetTemplates-483"
   },
   {
     "source_id": "wt-global-api-GetGraphicsCVarValueForQualityLevel-485",
@@ -2929,7 +3052,8 @@
     "outcome": "retained-gap",
     "reason": "Requires graphics quality-level profiles and CVar value mapping; renderer defaults do not supply these profiles.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-GetGraphicsCVarValueForQualityLevel-485"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-GetGraphicsCVarValueForQualityLevel-485",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-GetGraphicsCVarValueForQualityLevel-485"
   },
   {
     "source_id": "wt-global-api-GetUnitEmpowerMinHoldTime-487",
@@ -2953,7 +3077,8 @@
     "outcome": "retained-gap",
     "reason": "Requires empower minimum-hold timing from the unit spell cast state.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-GetUnitEmpowerMinHoldTime-487"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-GetUnitEmpowerMinHoldTime-487",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-GetUnitEmpowerMinHoldTime-487"
   },
   {
     "source_id": "wt-global-api-IsGraphicsCVarValueSupported-489",
@@ -2977,7 +3102,8 @@
     "outcome": "retained-gap",
     "reason": "Requires device/profile-specific graphics CVar value capability validation.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-IsGraphicsCVarValueSupported-489"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-IsGraphicsCVarValueSupported-489",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-IsGraphicsCVarValueSupported-489"
   },
   {
     "source_id": "wt-global-api-IsGraphicsSettingValueSupported-490",
@@ -3001,7 +3127,8 @@
     "outcome": "retained-gap",
     "reason": "Requires device/profile-specific graphics setting capability validation.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-IsGraphicsSettingValueSupported-490"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-IsGraphicsSettingValueSupported-490",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-IsGraphicsSettingValueSupported-490"
   },
   {
     "source_id": "wt-global-api-IsPlayerInGuildFromGUID-491",
@@ -3025,7 +3152,8 @@
     "outcome": "retained-gap",
     "reason": "Requires GUID-to-guild membership resolution, not local-player guild membership.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-IsPlayerInGuildFromGUID-491"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-IsPlayerInGuildFromGUID-491",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-IsPlayerInGuildFromGUID-491"
   },
   {
     "source_id": "wt-global-api-IsPressHoldReleaseSpell-492",
@@ -3055,21 +3183,19 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bIsPressHoldReleaseSpell\\b",
+          "(?<![\\w.:])(?:_G\\.)?IsPressHoldReleaseSpell(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 0,
         "matches": [
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:116:IsPressHoldReleaseSpell(spellID/name) = C_Spell.IsPressHoldReleaseSpell(spellIdentifier)",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua:113:\t\t\tself.pressAndHoldAction = C_Spell.IsPressHoldReleaseSpell(id);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua:117:\t\t\t\tself.pressAndHoldAction = C_Spell.IsPressHoldReleaseSpell(spellID);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:517:\t\t\tpressAndHoldAction = C_Spell.IsPressHoldReleaseSpell(id);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:704:\t\t\tName = \"IsPressHoldReleaseSpell\",",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua:156:ENV.IsPressHoldReleaseSpell = C_Spell.IsPressHoldReleaseSpell;"
-        ]
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:704:\t\t\tName = \"IsPressHoldReleaseSpell\","
+        ],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3094,7 +3220,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-IsPressHoldReleaseSpell-492"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-IsPressHoldReleaseSpell-492",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-IsPressHoldReleaseSpell-492"
   },
   {
     "source_id": "wt-global-api-IsSpecializationActivateSpell-493",
@@ -3118,7 +3245,8 @@
     "outcome": "retained-gap",
     "reason": "Requires spell-to-specialization activation metadata.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-IsSpecializationActivateSpell-493"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-IsSpecializationActivateSpell-493",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-IsSpecializationActivateSpell-493"
   },
   {
     "source_id": "wt-global-api-JoinRatedSoloShuffle-495",
@@ -3142,7 +3270,8 @@
     "outcome": "retained-gap",
     "reason": "Requires a rated solo-shuffle queue admission/state model, not a no-op join.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-JoinRatedSoloShuffle-495"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-JoinRatedSoloShuffle-495",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-JoinRatedSoloShuffle-495"
   },
   {
     "source_id": "wt-global-api-ReleaseAction-496",
@@ -3166,7 +3295,8 @@
     "outcome": "retained-gap",
     "reason": "Requires action key press/release state and execution semantics.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-ReleaseAction-496"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-ReleaseAction-496",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-ReleaseAction-496"
   },
   {
     "source_id": "wt-global-api-SetUnitCursorTexture-497",
@@ -3190,7 +3320,8 @@
     "outcome": "retained-gap",
     "reason": "Requires unit cursor texture state consumed by cursor rendering.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-SetUnitCursorTexture-497"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-SetUnitCursorTexture-497",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-SetUnitCursorTexture-497"
   },
   {
     "source_id": "wt-global-api-TargetToggle-498",
@@ -3214,7 +3345,8 @@
     "outcome": "retained-gap",
     "reason": "Requires target toggle selection semantics and associated state/events.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-TargetToggle-498"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-TargetToggle-498",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-TargetToggle-498"
   },
   {
     "source_id": "wt-global-api-UnitIsInteractable-501",
@@ -3238,7 +3370,8 @@
     "outcome": "retained-gap",
     "reason": "Requires unit interaction eligibility inputs and range/restriction policy.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-UnitIsInteractable-501"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-UnitIsInteractable-501",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-UnitIsInteractable-501"
   },
   {
     "source_id": "wt-global-api-C_AlliedRaces.ClearAlliedRaceDetailsGiver-506",
@@ -3268,14 +3401,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_AlliedRaces\\.ClearAlliedRaceDetailsGiver\\b",
+          "(?<![\\w.:])C_AlliedRaces\\.ClearAlliedRaceDetailsGiver(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3293,7 +3428,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_AlliedRaces.ClearAlliedRaceDetailsGiver-506"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_AlliedRaces.ClearAlliedRaceDetailsGiver-506",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_AlliedRaces.ClearAlliedRaceDetailsGiver-506"
   },
   {
     "source_id": "wt-global-api-C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec-507",
@@ -3323,16 +3459,18 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_AzeriteEmpoweredItem\\.CloseAzeriteEmpoweredItemRespec\\b",
+          "(?<![\\w.:])C_AzeriteEmpoweredItem\\.CloseAzeriteEmpoweredItemRespec(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 0,
         "matches": [
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AzeriteRespecUI/Blizzard_AzeriteRespecUI.lua:1:UIPanelWindows[\"AzeriteRespecFrame\"] = {area = \"left\", pushable = 3, showFailedFunc = C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec, };"
-        ]
+        ],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3352,7 +3490,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec-507"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec-507",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec-507"
   },
   {
     "source_id": "wt-global-api-C_GossipInfo.GetNumOptions-508",
@@ -3382,14 +3521,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_GossipInfo\\.GetNumOptions\\b",
+          "(?<![\\w.:])C_GossipInfo\\.GetNumOptions(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3407,7 +3548,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_GossipInfo.GetNumOptions-508"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_GossipInfo.GetNumOptions-508",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_GossipInfo.GetNumOptions-508"
   },
   {
     "source_id": "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-509",
@@ -3437,14 +3579,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_PlayerInfo\\.IsPlayerInGuildFromGUID\\b",
+          "(?<![\\w.:])C_PlayerInfo\\.IsPlayerInGuildFromGUID(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3465,7 +3609,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-509"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-509",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-509"
   },
   {
     "source_id": "wt-global-api-C_ScrappingMachineUI.SetScrappingMachine-510",
@@ -3495,14 +3640,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_ScrappingMachineUI\\.SetScrappingMachine\\b",
+          "(?<![\\w.:])C_ScrappingMachineUI\\.SetScrappingMachine(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3520,7 +3667,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ScrappingMachineUI.SetScrappingMachine-510"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_ScrappingMachineUI.SetScrappingMachine-510",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_ScrappingMachineUI.SetScrappingMachine-510"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511",
@@ -3550,14 +3698,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.GetOnlyShowLearnedRecipes\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.GetOnlyShowLearnedRecipes(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3575,7 +3725,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512",
@@ -3605,14 +3756,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.GetOnlyShowUnlearnedRecipes\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.GetOnlyShowUnlearnedRecipes(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3630,7 +3783,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetOptionalReagentBonusText-513",
@@ -3660,14 +3814,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.GetOptionalReagentBonusText\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.GetOptionalReagentBonusText(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3685,7 +3841,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOptionalReagentBonusText-513"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOptionalReagentBonusText-513",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetOptionalReagentBonusText-513"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetOptionalReagentInfo-514",
@@ -3715,14 +3872,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.GetOptionalReagentInfo\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.GetOptionalReagentInfo(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3740,7 +3899,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOptionalReagentInfo-514"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetOptionalReagentInfo-514",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetOptionalReagentInfo-514"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515",
@@ -3770,14 +3930,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.GetRecipeNumItemsProduced\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.GetRecipeNumItemsProduced(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3795,7 +3957,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516",
@@ -3825,14 +3988,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.GetRecipeNumReagents\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.GetRecipeNumReagents(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3850,7 +4015,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517",
@@ -3880,14 +4046,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.GetRecipeReagentInfo\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.GetRecipeReagentInfo(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3905,7 +4073,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518",
@@ -3935,16 +4104,18 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.GetRecipeReagentItemLink\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.GetRecipeReagentItemLink(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 0,
         "matches": [
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Tooltips.lua:76:\t\t   --            id = C_TradeSkillUI.GetRecipeReagentItemLink(selectedRecipe, i):match(\"item:(%d+):\") or nil"
-        ]
+        ],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -3964,7 +4135,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-519",
@@ -3994,14 +4166,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.GetTradeSkillLineInfoByID\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.GetTradeSkillLineInfoByID(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4019,7 +4193,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-519"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-519",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-519"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520",
@@ -4049,14 +4224,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.GetTradeSkillLine\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.GetTradeSkillLine(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4074,7 +4251,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.IsEmptySkillLineCategory-521",
@@ -4104,14 +4282,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.IsEmptySkillLineCategory\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.IsEmptySkillLineCategory(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4129,7 +4309,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.IsEmptySkillLineCategory-521"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.IsEmptySkillLineCategory-521",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.IsEmptySkillLineCategory-521"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522",
@@ -4159,14 +4340,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.SetOnlyShowLearnedRecipes\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.SetOnlyShowLearnedRecipes(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4184,7 +4367,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523",
@@ -4214,14 +4398,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.SetOnlyShowUnlearnedRecipes\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.SetOnlyShowUnlearnedRecipes(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4239,7 +4425,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523"
   },
   {
     "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524",
@@ -4269,14 +4456,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bC_TradeSkillUI\\.SetRecipeRepeatCount\\b",
+          "(?<![\\w.:])C_TradeSkillUI\\.SetRecipeRepeatCount(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4294,7 +4483,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524"
   },
   {
     "source_id": "wt-global-api-CheckTalentMasterDist-528",
@@ -4316,7 +4506,7 @@
       "value": null
     },
     "outcome": "retained-gap",
-    "reason": "Historical changed row requests publication after later supersession; talent-master distance needs NPC/range interaction state.",
+    "reason": "Current expectation requests publication after later supersession; talent-master distance needs NPC/range interaction state.",
     "cached_references": {
       "qualified": {
         "command": [
@@ -4324,17 +4514,19 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bCheckTalentMasterDist\\b",
+          "(?<![\\w.:])(?:_G\\.)?CheckTalentMasterDist(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 0,
         "matches": [
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua:121:\t\t\tName = \"CheckTalentMasterDist\",",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:2365:\t\tif ( not CheckTalentMasterDist() ) then"
-        ]
+        ],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4355,7 +4547,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-CheckTalentMasterDist-528"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-CheckTalentMasterDist-528",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-CheckTalentMasterDist-528"
   },
   {
     "source_id": "wt-global-api-GetPlayerAuraBySpellID-546",
@@ -4385,26 +4578,18 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bGetPlayerAuraBySpellID\\b",
+          "(?<![\\w.:])(?:_G\\.)?GetPlayerAuraBySpellID(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 0,
         "matches": [
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/EvokerEbonMightBar.lua:65:\tlocal auraInfo = C_UnitAuras.GetPlayerAuraBySpellID(EbonMightSelfAuraSpellID);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/DevourerFuryBar.lua:62:\tlocal inVoidMetamorphosis = C_UnitAuras.GetPlayerAuraBySpellID(Constants.UnitPowerSpellIDs.VOID_METAMORPHOSIS_SPELL_ID) ~= nil;",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/DemonHunterSoulFragmentsBar.lua:77:\tlocal inVoidMetamorphosis = C_UnitAuras.GetPlayerAuraBySpellID(Constants.UnitPowerSpellIDs.VOID_METAMORPHOSIS_SPELL_ID) ~= nil;",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/DemonHunterSoulFragmentsBar.lua:154:\t\tlocal silenceTheWhispersAura = C_UnitAuras.GetPlayerAuraBySpellID(Constants.UnitPowerSpellIDs.SILENCE_THE_WHISPERS_SPELL_ID);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/DemonHunterSoulFragmentsBar.lua:159:\t\tlocal darkHeartAura = C_UnitAuras.GetPlayerAuraBySpellID(Constants.UnitPowerSpellIDs.DARK_HEART_SPELL_ID);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua:375:\t\t\tName = \"GetPlayerAuraBySpellID\",",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_Reports.lua:97:\t\tif (C_UnitAuras.GetPlayerAuraBySpellID(1213439)) then",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PersonalResourceDisplay/AlternatePowerBars/EvokerAlternatePower.lua:63:\tlocal auraInfo = C_UnitAuras.GetPlayerAuraBySpellID(EBON_MIGHT_SELF_AURA_SPELL_ID);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PersonalResourceDisplay/AlternatePowerBars/DemonHunterAlternatePower.lua:50:\tlocal inVoidMetamorphosis = C_UnitAuras.GetPlayerAuraBySpellID(Constants.UnitPowerSpellIDs.VOID_METAMORPHOSIS_SPELL_ID);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PersonalResourceDisplay/AlternatePowerBars/DemonHunterAlternatePower.lua:62:\t\tlocal silenceTheWhispersAura = C_UnitAuras.GetPlayerAuraBySpellID(Constants.UnitPowerSpellIDs.SILENCE_THE_WHISPERS_SPELL_ID);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PersonalResourceDisplay/AlternatePowerBars/DemonHunterAlternatePower.lua:67:\t\tlocal darkHeartAura = C_UnitAuras.GetPlayerAuraBySpellID(Constants.UnitPowerSpellIDs.DARK_HEART_SPELL_ID);"
-        ]
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitAuraDocumentation.lua:375:\t\t\tName = \"GetPlayerAuraBySpellID\","
+        ],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4434,7 +4619,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-GetPlayerAuraBySpellID-546"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-GetPlayerAuraBySpellID-546",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-GetPlayerAuraBySpellID-546"
   },
   {
     "source_id": "wt-global-api-C_GossipInfo.SelectOption-575",
@@ -4458,7 +4644,8 @@
     "outcome": "retained-gap",
     "reason": "Requires optionID-based gossip selection and its resulting interaction/quest transition, not a no-op selector.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_GossipInfo.SelectOption-575"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_GossipInfo.SelectOption-575",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_GossipInfo.SelectOption-575"
   },
   {
     "source_id": "wt-global-api-C_LegendaryCrafting.GetRuneforgeModifierInfo-581",
@@ -4482,7 +4669,8 @@
     "outcome": "retained-gap",
     "reason": "Requires populated Runeforge modifier DTO metadata; a nil/empty tuple is not the changed description-table contract.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_LegendaryCrafting.GetRuneforgeModifierInfo-581"
+    "source_evidence": "p1000-gap-source-scans.json#wt-global-api-C_LegendaryCrafting.GetRuneforgeModifierInfo-581",
+    "current_metadata_context": "p1000-native-contracts.json#wt-global-api-C_LegendaryCrafting.GetRuneforgeModifierInfo-581"
   },
   {
     "source_id": "wt-widgets-Scale:GetScaleFrom-614",
@@ -4506,7 +4694,8 @@
     "outcome": "retained-gap",
     "reason": "Animation owner constructs successfully; new getter absent despite existing setter. Shared scale axis/time semantics require a separate behavioral regression before implementation.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Scale:GetScaleFrom-614"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Scale:GetScaleFrom-614",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Scale:GetScaleFrom-614"
   },
   {
     "source_id": "wt-widgets-Scale:GetScaleTo-615",
@@ -4530,7 +4719,8 @@
     "outcome": "retained-gap",
     "reason": "Animation owner constructs successfully; new getter absent despite existing setter. Shared scale axis/time semantics require a separate behavioral regression before implementation.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Scale:GetScaleTo-615"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Scale:GetScaleTo-615",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Scale:GetScaleTo-615"
   },
   {
     "source_id": "wt-widgets-Path:GetCurveType-618",
@@ -4554,7 +4744,8 @@
     "outcome": "retained-gap",
     "reason": "Animation owner constructs successfully, but curve-type query is absent; path curve state/contract is not established by generic animation fields.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Path:GetCurveType-618"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Path:GetCurveType-618",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Path:GetCurveType-618"
   },
   {
     "source_id": "wt-widgets-Path:GetMaxControlPointOrder-619",
@@ -4578,7 +4769,8 @@
     "outcome": "retained-gap",
     "reason": "Animation owner constructs successfully, but ordered control-point limit query is absent; control-point contract requires behavioral work.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Path:GetMaxControlPointOrder-619"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Path:GetMaxControlPointOrder-619",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Path:GetMaxControlPointOrder-619"
   },
   {
     "source_id": "wt-widgets-Path:SetCurveType-620",
@@ -4602,7 +4794,8 @@
     "outcome": "retained-gap",
     "reason": "Animation owner constructs successfully, but curve-type mutation is absent; requires interpolation semantics, not an ignored setter.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Path:SetCurveType-620"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Path:SetCurveType-620",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Path:SetCurveType-620"
   },
   {
     "source_id": "wt-widgets-Browser:NavigateTo-634",
@@ -4632,14 +4825,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bBrowser:NavigateTo\\b",
+          "(?<![\\w.:])Browser:NavigateTo(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4660,7 +4855,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Browser:NavigateTo-634"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Browser:NavigateTo-634",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Browser:NavigateTo-634"
   },
   {
     "source_id": "wt-widgets-Button:SetHighlightLocked-639",
@@ -4690,14 +4886,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bButton:SetHighlightLocked\\b",
+          "(?<![\\w.:])Button:SetHighlightLocked(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4730,7 +4928,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Button:SetHighlightLocked-639"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Button:SetHighlightLocked-639",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Button:SetHighlightLocked-639"
   },
   {
     "source_id": "wt-widgets-GameTooltip:SetUnitBuffByAuraInstanceID-647",
@@ -4760,10 +4959,11 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bGameTooltip:SetUnitBuffByAuraInstanceID\\b",
+          "(?<![\\w.:])GameTooltip:SetUnitBuffByAuraInstanceID(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 0,
@@ -4772,7 +4972,8 @@
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/PartyMemberFrame.lua:204:\t\tGameTooltip:SetUnitBuffByAuraInstanceID(self.unit, self.auraInstanceID, self.filter);",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/CompactUnitFrame.lua:2154:\t\tGameTooltip:SetUnitBuffByAuraInstanceID(self:GetParent().displayedUnit, self.auraInstanceID, self.filter);",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/CompactUnitFrame.lua:2163:\tGameTooltip:SetUnitBuffByAuraInstanceID(self:GetParent().displayedUnit, self.auraInstanceID, self.filter);"
-        ]
+        ],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4796,7 +4997,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-GameTooltip:SetUnitBuffByAuraInstanceID-647"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-GameTooltip:SetUnitBuffByAuraInstanceID-647",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-GameTooltip:SetUnitBuffByAuraInstanceID-647"
   },
   {
     "source_id": "wt-widgets-GameTooltip:SetUnitDebuffByAuraInstanceID-648",
@@ -4826,21 +5028,23 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bGameTooltip:SetUnitDebuffByAuraInstanceID\\b",
+          "(?<![\\w.:])GameTooltip:SetUnitDebuffByAuraInstanceID(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 0,
         "matches": [
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/PartyMemberFrame.lua:206:\t\tGameTooltip:SetUnitDebuffByAuraInstanceID(self.unit, self.auraInstanceID, self.filter);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/CompactUnitFrame.lua:2156:\t\tGameTooltip:SetUnitDebuffByAuraInstanceID(self:GetParent().displayedUnit, self.auraInstanceID, self.filter);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/CompactArenaFrame.lua:483:\tGameTooltip:SetUnitDebuffByAuraInstanceID(self.unitToken, self.auraData.auraInstanceID, nil);",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua:903:\t\tGameTooltip:SetUnitDebuffByAuraInstanceID(PlayerFrame.unit, self.deadlyInstanceID, self:GetFilter());",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua:978:\t\t\t\tGameTooltip:SetUnitDebuffByAuraInstanceID(PlayerFrame.unit, self.deadlyInstanceID, self:GetFilter());",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua:1096:\t\t\tGameTooltip:SetUnitDebuffByAuraInstanceID(self.unit, self.deadlyInstanceID, self:GetFilter());"
-        ]
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua:1096:\t\t\tGameTooltip:SetUnitDebuffByAuraInstanceID(self.unit, self.deadlyInstanceID, self:GetFilter());",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/PartyMemberFrame.lua:206:\t\tGameTooltip:SetUnitDebuffByAuraInstanceID(self.unit, self.auraInstanceID, self.filter);",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/CompactUnitFrame.lua:2156:\t\tGameTooltip:SetUnitDebuffByAuraInstanceID(self:GetParent().displayedUnit, self.auraInstanceID, self.filter);",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/CompactArenaFrame.lua:483:\tGameTooltip:SetUnitDebuffByAuraInstanceID(self.unitToken, self.auraData.auraInstanceID, nil);"
+        ],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -4867,7 +5071,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-GameTooltip:SetUnitDebuffByAuraInstanceID-648"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-GameTooltip:SetUnitDebuffByAuraInstanceID-648",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-GameTooltip:SetUnitDebuffByAuraInstanceID-648"
   },
   {
     "source_id": "wt-widgets-MovieFrame:StartMovieByName-649",
@@ -4891,7 +5096,8 @@
     "outcome": "retained-gap",
     "reason": "Requires named movie lookup/playback and completion behavior; publication cannot be fabricated.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-MovieFrame:StartMovieByName-649"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-MovieFrame:StartMovieByName-649",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-MovieFrame:StartMovieByName-649"
   },
   {
     "source_id": "wt-widgets-OffScreenFrame:TestPrintToFile-650",
@@ -4915,7 +5121,8 @@
     "outcome": "retained-gap",
     "reason": "Native offscreen diagnostic/file-output contract is not modeled and must not silently perform filesystem writes.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-OffScreenFrame:TestPrintToFile-650"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-OffScreenFrame:TestPrintToFile-650",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-OffScreenFrame:TestPrintToFile-650"
   },
   {
     "source_id": "wt-widgets-WorldFrame:OnModelCleared-656",
@@ -4939,7 +5146,8 @@
     "outcome": "retained-gap",
     "reason": "Existing WorldFrame lookup is nil; page presents a method-like widget row, distinct from the separately proven actor HasScript row. Do not turn a callback into a callable stub.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-WorldFrame:OnModelCleared-656"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-WorldFrame:OnModelCleared-656",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-WorldFrame:OnModelCleared-656"
   },
   {
     "source_id": "wt-widgets-ModelSceneActor:SetModelByHyperlink-657",
@@ -4963,7 +5171,8 @@
     "outcome": "retained-gap",
     "reason": "Hyperlink-to-3D-model loading belongs to the intentionally unsupported 3D domain; no new permanent stub is credited.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-ModelSceneActor:SetModelByHyperlink-657"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-ModelSceneActor:SetModelByHyperlink-657",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-ModelSceneActor:SetModelByHyperlink-657"
   },
   {
     "source_id": "wt-widgets-Texture:GetRotation-664",
@@ -4993,14 +5202,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bTexture:GetRotation\\b",
+          "(?<![\\w.:])Texture:GetRotation(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -5027,7 +5238,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Texture:GetRotation-664"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Texture:GetRotation-664",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Texture:GetRotation-664"
   },
   {
     "source_id": "wt-widgets-Texture:GetVertexColor-665",
@@ -5057,14 +5269,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bTexture:GetVertexColor\\b",
+          "(?<![\\w.:])Texture:GetVertexColor(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -5094,7 +5308,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Texture:GetVertexColor-665"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Texture:GetVertexColor-665",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Texture:GetVertexColor-665"
   },
   {
     "source_id": "wt-widgets-Texture:SetRotation-668",
@@ -5116,7 +5331,7 @@
       "value": null
     },
     "outcome": "retained-gap",
-    "reason": "Current cached Lua contains exact qualified references listed below; retained, not retired. References may be declarations/deprecation wrappers or profile-specific files; a textual match alone is not proof of a loaded retail caller. Preserve vendor wrappers and current callers.",
+    "reason": "No exact namespace/owner-qualified cache match; bare-name references listed below require successor/deprecation/profile attribution. Do not describe bare matches as old API consumers. Deferred outside a zero-match retirement batch.",
     "cached_references": {
       "qualified": {
         "command": [
@@ -5124,17 +5339,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bTexture:SetRotation\\b",
+          "(?<![\\w.:])Texture:SetRotation(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
-        "exit": 0,
-        "matches": [
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedMapDataProviders/VehicleDataProvider.lua:59:\tself.Texture:SetRotation(vehicleInfo.facing);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedMapDataProviders/VehicleDataProvider.lua:76:\t\tself.Texture:SetRotation(vehicleInfo.facing);"
-        ]
+        "exit": 1,
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -5219,7 +5433,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Texture:SetRotation-668"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Texture:SetRotation-668",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Texture:SetRotation-668"
   },
   {
     "source_id": "wt-widgets-Frame:SetMaxResize-684",
@@ -5249,14 +5464,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bFrame:SetMaxResize\\b",
+          "(?<![\\w.:])Frame:SetMaxResize(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -5274,7 +5491,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Frame:SetMaxResize-684"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Frame:SetMaxResize-684",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Frame:SetMaxResize-684"
   },
   {
     "source_id": "wt-widgets-Frame:SetMinResize-685",
@@ -5304,14 +5522,16 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bFrame:SetMinResize\\b",
+          "(?<![\\w.:])Frame:SetMinResize(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 1,
-        "matches": []
+        "matches": [],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -5329,7 +5549,8 @@
         "matches": []
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Frame:SetMinResize-685"
+    "source_evidence": "p1000-gap-source-scans.json#wt-widgets-Frame:SetMinResize-685",
+    "current_metadata_context": "p1000-native-contracts.json#wt-widgets-Frame:SetMinResize-685"
   },
   {
     "source_id": "wt-events-SETTINGS_LOADED-731",
@@ -5359,10 +5580,11 @@
           "--hidden",
           "--no-ignore",
           "-n",
+          "-P",
           "--glob",
           "*.lua",
           "-e",
-          "\\bSETTINGS_LOADED\\b",
+          "(?<![\\w.:])(?:_G\\.)?SETTINGS_LOADED(?!\\w)",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
         ],
         "exit": 0,
@@ -5370,23 +5592,24 @@
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBarController/ActionBarController.lua:44:\tself:RegisterEvent(\"SETTINGS_LOADED\");",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBarController/ActionBarController.lua:104:\t\t\tEventUtil.ContinueAfterAllEvents(ShowBottomLeftBar, \"SETTINGS_LOADED\");",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBarController/ActionBarController.lua:117:\tif event == \"SETTINGS_LOADED\" then",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/TBC/EventRouting.lua:15:\t[\"SETTINGS_LOADED\"] = function(...) GameEvent.HandleSettingsLoaded(...) end,",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua:9:\tself:RegisterEvent(\"SETTINGS_LOADED\");",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua:101:\telseif ( event == \"SETTINGS_LOADED\" ) then",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SettingsUtilDocumentation.lua:33:\t\t\tLiteralName = \"SETTINGS_LOADED\",",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventRouting.lua:94:\t[\"SETTINGS_LOADED\"] = function(...) GameEvent.HandleSettingsLoaded(...) end,",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventRouting.lua:127:\t-- SETTINGS_LOADED is emitted only after VARIABLES_LOADED and PLAYER_ENTERING_WORLD have both completed,",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventRouting.lua:129:\tEventUtil.RegisterOnceFrameEventAndCallback(\"SETTINGS_LOADED\", Callback);",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimeline.lua:27:\tself:RegisterEvent(\"SETTINGS_LOADED\");",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimeline.lua:66:\telseif event == \"SETTINGS_LOADED\" then",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/SpellActivationOverlay.lua:13:\tself:RegisterEvent(\"SETTINGS_LOADED\");",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/SpellActivationOverlay.lua:36:\telseif event == \"SETTINGS_LOADED\" then",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/TBC/EventRouting.lua:15:\t[\"SETTINGS_LOADED\"] = function(...) GameEvent.HandleSettingsLoaded(...) end,",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TutorialManager/Blizzard_TutorialManager.lua:6:\tEventRegistry:RegisterFrameEventAndCallback(\"SETTINGS_LOADED\", self.OnSettingsLoaded, self);",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventRouting.lua:94:\t[\"SETTINGS_LOADED\"] = function(...) GameEvent.HandleSettingsLoaded(...) end,",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventRouting.lua:127:\t-- SETTINGS_LOADED is emitted only after VARIABLES_LOADED and PLAYER_ENTERING_WORLD have both completed,",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventRouting.lua:129:\tEventUtil.RegisterOnceFrameEventAndCallback(\"SETTINGS_LOADED\", Callback);",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingTutorials/Blizzard_HousingTutorialsInit.lua:63:\tEventRegistry:RegisterFrameEventAndCallback(\"SETTINGS_LOADED\", self.OnSettingsLoaded, self);",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:372:\tself:RegisterEvent(\"SETTINGS_LOADED\");",
           "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:395:\tif event == \"SETTINGS_LOADED\" then",
-          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Settings.lua:663:-- Alternative to listening for the SETTINGS_LOADED event."
-        ]
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Settings.lua:663:-- Alternative to listening for the SETTINGS_LOADED event.",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SettingsUtilDocumentation.lua:33:\t\t\tLiteralName = \"SETTINGS_LOADED\",",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TutorialManager/Blizzard_TutorialManager.lua:6:\tEventRegistry:RegisterFrameEventAndCallback(\"SETTINGS_LOADED\", self.OnSettingsLoaded, self);"
+        ],
+        "scope": "Exact qualified identity; bare globals exclude successor namespace/member matches; cache references still need declaration/comment/profile attribution."
       },
       "bare": {
         "command": [
@@ -5424,7 +5647,8 @@
         ]
       }
     },
-    "source_evidence": "p1000-gap-source-scans.json#wt-events-SETTINGS_LOADED-731"
+    "source_evidence": "p1000-gap-source-scans.json#wt-events-SETTINGS_LOADED-731",
+    "current_metadata_context": "p1000-native-contracts.json#wt-events-SETTINGS_LOADED-731"
   },
   {
     "source_id": "wt-cvars-luaErrorExceptions-835",
@@ -5448,7 +5672,8 @@
     "outcome": "retained-gap",
     "reason": "Historical CVar is absent from current value/default registry; current retail publication policy/default provenance needs establishing before registering an obsolete variable.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-cvars-luaErrorExceptions-835"
+    "source_evidence": "p1000-gap-source-scans.json#wt-cvars-luaErrorExceptions-835",
+    "current_metadata_context": "p1000-native-contracts.json#wt-cvars-luaErrorExceptions-835"
   },
   {
     "source_id": "wt-cvars-minimapTrackedInfov3-837",
@@ -5472,7 +5697,8 @@
     "outcome": "retained-gap",
     "reason": "Historical CVar is absent from current value/default registry; current retail publication policy/default provenance needs establishing before registering an obsolete variable.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-cvars-minimapTrackedInfov3-837"
+    "source_evidence": "p1000-gap-source-scans.json#wt-cvars-minimapTrackedInfov3-837",
+    "current_metadata_context": "p1000-native-contracts.json#wt-cvars-minimapTrackedInfov3-837"
   },
   {
     "source_id": "wt-cvars-LogFps-904",
@@ -5496,7 +5722,8 @@
     "outcome": "retained-gap",
     "reason": "Console Command catalog lacks this native diagnostic operation; requires meaningful FPS logging/customization export behavior, not a fabricated catalog record.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-cvars-LogFps-904"
+    "source_evidence": "p1000-gap-source-scans.json#wt-cvars-LogFps-904",
+    "current_metadata_context": "p1000-native-contracts.json#wt-cvars-LogFps-904"
   },
   {
     "source_id": "wt-cvars-WriteCustomizationOptions-905",
@@ -5520,6 +5747,7 @@
     "outcome": "retained-gap",
     "reason": "Console Command catalog lacks this native diagnostic operation; requires meaningful FPS logging/customization export behavior, not a fabricated catalog record.",
     "cached_references": {},
-    "source_evidence": "p1000-gap-source-scans.json#wt-cvars-WriteCustomizationOptions-905"
+    "source_evidence": "p1000-gap-source-scans.json#wt-cvars-WriteCustomizationOptions-905",
+    "current_metadata_context": "p1000-native-contracts.json#wt-cvars-WriteCustomizationOptions-905"
   }
 ]

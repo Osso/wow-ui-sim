@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 10.0.0 page audit
+
+[Audit](investigations/patch-10-0-0-api-audit.md): 1,082 unique IDs, 466/639 publication OK, 173 precise retained gaps and all extract behavior pending. Corrected markup/shared-reference/factory boundaries; 26 current-scope sweep proofs, exact 173 → 174 negative control, helper regressions, format/default/Mists checks and exit-0 startup `[]`. Prior sources/registers/ledgers/gaps and extraction outcomes unchanged; no runtime/vendor/classic/canonical edits.
+
 ## [2026-10-07] investigation | Test-suite performance
 
 [Test-suite performance](investigations/test-suite-performance.md): isolated nextest baseline (integration 45 min on 4 workers; 78% of test time in ~1.7k tests taking >=1s), ranked deletion candidates (source-shape fluff ~1.7s total), publication sweeps moved to the prefork harness (128.8s -> 18.1s, identical results), unapproved sharded CI design kept on branch `test-perf`.

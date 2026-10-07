@@ -40,6 +40,234 @@
       "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/12.1.0-sweep.json"
     },
     "exit": 1,
-    "log": "p1000-all-publication-sweeps.txt"
+    "log": "p1000-all-publication-sweeps.txt",
+    "log_sha256": "8026e494fa6f87081ba149a5177c8233e1c62ef100b31d35a6dc75c8748f8ba8",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "expected_exit": 1,
+    "acceptance": false,
+    "scope": "25 unchanged later sweeps and factory case PASS; 10.0.0 diagnostic RED exposed recovered SelectOption; superseded for own sweep by final targeted acceptance."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_10_0_0_publication_sweep"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-final-sweep.txt",
+    "scope": "639 occurrences/exact173 fixture plus animation factory; later25 sweep scope already passed unchanged",
+    "log_sha256": "5ab182754d32123cdb3c880d69b2a7f4e5a91bb99e748c8e40d92d02dfef52b2",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "env": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_10_0_0_publication_sweep"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 1,
+    "log": "p1000-negative-cargo.txt",
+    "scope": "expected RED exact173 to174 negative control",
+    "env": {
+      "P1000_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/p1000-negative-register.json",
+      "P1000_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1000-page/data/patch-api/evidence/10.0.0-session-2026-10-07/p1000-negative.json",
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target"
+    },
+    "log_sha256": "17d8961cbe256b14b9d5fb5f042e3d9335f6b8b21cc9663bff41dcab8d1bd777",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "expected_exit": 1,
+    "acceptance": false
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-fmt-check.txt",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "env": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "check"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-default-check.txt",
+    "log_sha256": "7aaf60b5e745eb7b16452f00194af4936ca02059923d5ba6d4ea6d258601331a",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "env": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-mists-check.txt",
+    "log_sha256": "cb27590232faf2c0d0f81d6531eeecf3f744784da9878b944d638372ba0fdb62",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "env": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-retail-build.txt",
+    "log_sha256": "79136c546a6ad579e217af7bc320012434091d4c66df230a404d4bc99edccd81",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "env": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/home/osso/.worktrees/wow-ui-sim-p1000-page/target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-startup-stderr.txt",
+    "stdout_log": "p1000-startup-stdout.json",
+    "log_sha256": "4fb8e141198cdccbcab7f30dc480987627b0caeaea3921da42b12f27b1f490f0",
+    "stdout_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision."
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_*patch*.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-parser-final.txt",
+    "log_sha256": "194f2656e769feb67d886b67dcd929625f6edb877d26bcae66c64ed55fa245f1",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "patch_10_2_0_publication_fixes"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-interface-regressions.txt",
+    "log_sha256": "7de0fbb0e3a8d6007ec38f5ee050e8107d832e5dd8e2da66a55f3553c68ebd76",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "env": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "patch_10_2_5_probe_factory"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-vertex-regression.txt",
+    "log_sha256": "c58f438596cb253bfb11352a7e09b0fab6e314ac034462ae9dd259371cfde30c",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "env": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "publication_deprecated_alias"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-alias-regression.txt",
+    "log_sha256": "331aeada6b6207238d73351320354864dc4d2178e8032c8d9b1723360a643788",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "env": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_12_0_0_deprecated"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1000-page",
+    "revision": "aa860f1d5a41606ad9fcd85e562d3f00cb5b7f77",
+    "exit": 0,
+    "log": "p1000-cached-deprecation-regression.txt",
+    "log_sha256": "d5cf5a8a147d26020213f44115d775787df1db3e8fbd7ee717a1e31bad5470dc",
+    "scope_valid_after": "Documentation, metadata-context and reason-only follow-ups; no relevant Rust/input change after stated proof revision.",
+    "env": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1000-page/target"
+    }
   }
 ]

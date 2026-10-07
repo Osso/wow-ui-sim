@@ -48,7 +48,7 @@ MODEL_BOUNDARIES = {
     'C_XMLUtil': 'Requires enumeration of runtime XML template identities, not a hardcoded empty list.',
 }
 GLOBAL_BOUNDARIES = {
-    'CheckTalentMasterDist': 'Historical changed row requests publication after later supersession; talent-master distance needs NPC/range interaction state.',
+    'CheckTalentMasterDist': 'Current expectation requests publication after later supersession; talent-master distance needs NPC/range interaction state.',
     'GetGraphicsCVarValueForQualityLevel': 'Requires graphics quality-level profiles and CVar value mapping; renderer defaults do not supply these profiles.',
     'GetUnitEmpowerMinHoldTime': 'Requires empower minimum-hold timing from the unit spell cast state.',
     'IsGraphicsCVarValueSupported': 'Requires device/profile-specific graphics CVar value capability validation.',
@@ -102,13 +102,14 @@ def review_gap(entry, observation, consumer):
             'expectation': observation['expected'], 'observed': observation['observed'],
             'outcome': 'retained-gap', 'reason': reason,
             'cached_references': consumer['scans'] if consumer else {},
-            'source_evidence': 'p1000-gap-source-scans.json#' + entry['id']}
+            'source_evidence': 'p1000-gap-source-scans.json#' + entry['id'],
+            'current_metadata_context': 'p1000-native-contracts.json#' + entry['id']}
 
 
 def main():
     register = read_json(SOURCES / '10.0.0-wikitext-register.json')
     observations = read_json(EVIDENCE / '10.0.0-sweep.json')
-    consumers = read_json(EVIDENCE / 'p1000-removal-consumers.json')
+    consumers = read_json(EVIDENCE / 'p1000-exact-removal-consumers.json')
     gaps = {key: value for key, value in observations.items() if not value['ok']}
     assert set(observations) == {entry['id'] for entry in register['entries']}
     review = [review_gap(entry, observations[entry['id']], consumers.get(entry['id']))
@@ -165,6 +166,8 @@ def main():
                                   'scope': 'Current cached publication/absence/event registration/CVar queries only.',
                                   'spec': 'docs/specs/patch-10-0-0-publication-sweep.md',
                                   'tests': ['tests/patch_10_0_0_publication_sweep.rs'],
+                                  'compiled_revision': 'aa860f1d5',
+                                  'proof': '26 current-scope sweeps, factory regression, exact negative control, helper regressions, format/default/Mists checks and exit-0 startup [].',
                                   'ledger': 'data/patch-api/evidence/10.0.0-session-2026-10-07/p1000-proof.json'}],
                 'non_inventory_source': {'path': str(text_path.relative_to(ROOT)),
                                          'sha256': hashlib.sha256(text_path.read_bytes()).hexdigest(),
