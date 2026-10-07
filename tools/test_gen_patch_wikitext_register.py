@@ -5,6 +5,22 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_level_two_inventory_headings_preserve_source_lines_and_count_drift(self):
+        raw = ('==Global API==\n'
+               '! Added <small>(19)</small>\n! Removed <small>(0)</small>\n'
+               '| valign="top" | <div>\n: {{api|C_Ping.SendMacroPing}}\n</div>\n|}\n'
+               '==Widgets==\n| valign="top" | <div>\n'
+               ': {{api|t=w|EditBox:ResetInputMode}}\n</div>\n|}\n'
+               '==Enums==\n Enum.PingSubjectType\n')
+        buckets = split_sections(raw)
+        entries, counts = parse_section('global-api', buckets.get('global-api', []))
+        self.assertEqual([(e['symbol'], e['wikitext_line']) for e in entries],
+                         [('C_Ping.SendMacroPing', 5)])
+        self.assertEqual(counts[0]['header_count'], 19)
+        self.assertEqual(counts[0]['parsed_count'], 1)
+        widgets, _ = parse_section('widgets', buckets.get('widgets', []))
+        self.assertEqual([e['symbol'] for e in widgets], ['EditBox:ResetInputMode'])
+
     def test_unheaded_global_inventory_and_separate_commands(self):
         raw = ('==Consolidated changes==\n'
                '{| class="wikitable"\n'

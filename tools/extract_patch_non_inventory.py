@@ -37,6 +37,7 @@ def render_line(line):
                         '[Transcluded source: Enum.AddOnProfilerMetric; not expanded]')
     # Retain the TOC example's symbolic interface, not today's expanded version.
     line = line.replace('{{API LatestInterface}}', '[API LatestInterface]')
+    line = re.sub(r"\{\{keypress\|([^{}]+)\}\}", r"\1", line)
     line = re.sub(r"\{\{(?:g|tlygo|api.inline|apisummary.title)\|([^{}]+)\}\}",
                   r"\1", line)
     line = re.sub(r"\{\{api.system\|[^|{}]+\|([^{}]+)\}\}", r"\1", line)
@@ -59,6 +60,7 @@ def extract_text(raw, *, preserve_examples=False):
     in_example = False
     xml_example = False
     unheaded = "===Global API===" not in raw.splitlines()
+    level_two = "==Global API==" in raw.splitlines()
     for line in raw.splitlines():
         if preserve_examples:
             opening = re.fullmatch(r'<syntaxhighlight lang="(lua|xml)">', line)
@@ -73,8 +75,12 @@ def extract_text(raw, *, preserve_examples=False):
                 else:
                     lines.append(line)
                 continue
-        if line == "===Global API===" or (unheaded and line.startswith('{| class="wikitable"')):
+        if line in ("===Global API===", "==Global API==") or (unheaded and line.startswith('{| class="wikitable"')):
             inventory = True
+        if level_two and line in ("==Enums==", "==References=="):
+            inventory = False
+            if line == "==Enums==":
+                line = "== Enumerations =="
         if line == "===Enums===" or (unheaded and line == "===Structures==="):
             inventory = False
             if line == "===Enums===":

@@ -31,6 +31,19 @@ class ExtractTests(unittest.TestCase):
                          '    <TextureSliceMode mode="Tiled"/>\n'
                          '</Texture>\n[References list; not expanded]\n')
 
+    def test_level_two_inventory_and_ping_key_preserve_prose_and_enums(self):
+        raw = ('==Ping system==\nPress {{keypress|G}}.\n'
+               '==Global API==\n'
+               '{{api ambox|border=red|image=x|size=48|The listed changes are out of date.}}\n'
+               '{| class="wikitable"\n: {{api|C_Ping.SendMacroPing}}\n|}\n'
+               '==Widgets==\n{| class="wikitable"\n: {{api|EditBox:ResetInputMode}}\n|}\n'
+               '==Enums==\n Enum.PingSubjectType\n   + OnMyWay = 3\n'
+               '==References==\n{{Reflist}}\n')
+        self.assertEqual(extract_text(raw, preserve_examples=True),
+                         '== Ping system ==\nPress G.\n'
+                         '== Enumerations ==\n Enum.PingSubjectType\n   + OnMyWay = 3\n'
+                         '== References ==\n[References list; not expanded]\n')
+
     def test_11_0_2_settings_transclusion_and_transition_are_editorial(self):
         text = extract_text('{{:Settings_API}}\n'
                             ': 11.0.0 (55818) → 11.0.2 (56819) Sep 27 2024\n'

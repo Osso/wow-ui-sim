@@ -106,9 +106,9 @@ def parse_section(section, lines):
 def split_sections(text):
     current, buckets = None, {}
     for line_no, line in enumerate(text.split("\n"), start=1):
-        heading = re.match(r"^===([^=]+)===\s*$", line)
+        heading = re.match(r"^(={2,3})([^=]+)\1\s*$", line)
         if heading:
-            current = SECTIONS.get(heading.group(1).strip())
+            current = SECTIONS.get(heading.group(2).strip())
             if current:
                 buckets[current] = []
             continue

@@ -1,0 +1,34 @@
+.F................E..
+======================================================================
+ERROR: test_level_two_inventory_and_ping_key_preserve_prose_and_enums (tools.test_extract_patch_non_inventory.ExtractTests.test_level_two_inventory_and_ping_key_preserve_prose_and_enums)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1017-page/tools/test_extract_patch_non_inventory.py", line 33, in test_level_two_inventory_and_ping_key_preserve_prose_and_enums
+    self.assertEqual(extract_text(raw, preserve_examples=True),
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1017-page/tools/extract_patch_non_inventory.py", line 90, in extract_text
+    raise ValueError(f"unhandled template: {line}")
+ValueError: unhandled template: Press {{keypress|G}}.
+
+======================================================================
+FAIL: test_level_two_inventory_headings_preserve_source_lines_and_count_drift (tools.test_gen_patch_wikitext_register.InventoryTests.test_level_two_inventory_headings_preserve_source_lines_and_count_drift)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1017-page/tools/test_gen_patch_wikitext_register.py", line 17, in test_level_two_inventory_headings_preserve_source_lines_and_count_drift
+    self.assertEqual([(e['symbol'], e['wikitext_line']) for e in entries],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [('C_Ping.SendMacroPing', 5)])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('C_Ping.SendMacroPing', 5)]
+
+Second list contains 1 additional elements.
+First extra element 0:
+('C_Ping.SendMacroPing', 5)
+
+- []
++ [('C_Ping.SendMacroPing', 5)]
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.004s
+
+FAILED (failures=1, errors=1)
