@@ -1,0 +1,155 @@
+{
+  "result": "PASS",
+  "source_ids": 416,
+  "ledger_statuses": {
+    "partial-development-green": 52,
+    "bounded-coverage": 41,
+    "audit-pending": 274,
+    "metadata-only": 49
+  },
+  "sweeps": [
+    {
+      "patch": "10.1.0",
+      "rows": 129,
+      "ok": 93,
+      "exit": 0
+    },
+    {
+      "patch": "10.1.5",
+      "rows": 101,
+      "ok": 69,
+      "exit": 0
+    },
+    {
+      "patch": "10.1.7",
+      "rows": 48,
+      "ok": 34,
+      "exit": 0
+    },
+    {
+      "patch": "10.2.0",
+      "rows": 150,
+      "ok": 120,
+      "exit": 0
+    },
+    {
+      "patch": "10.2.5",
+      "rows": 59,
+      "ok": 45,
+      "exit": 0
+    },
+    {
+      "patch": "10.2.6",
+      "rows": 220,
+      "ok": 200,
+      "exit": 0
+    },
+    {
+      "patch": "10.2.7",
+      "rows": 104,
+      "ok": 68,
+      "exit": 0
+    },
+    {
+      "patch": "11.0.0",
+      "rows": 495,
+      "ok": 329,
+      "exit": 0
+    },
+    {
+      "patch": "11.0.2",
+      "rows": 34,
+      "ok": 22,
+      "exit": 0
+    },
+    {
+      "patch": "11.0.5",
+      "rows": 48,
+      "ok": 38,
+      "exit": 0
+    },
+    {
+      "patch": "11.0.7",
+      "rows": 98,
+      "ok": 70,
+      "exit": 0
+    },
+    {
+      "patch": "11.1.0",
+      "rows": 116,
+      "ok": 97,
+      "exit": 0
+    },
+    {
+      "patch": "11.1.5",
+      "rows": 125,
+      "ok": 89,
+      "exit": 0
+    },
+    {
+      "patch": "11.1.7",
+      "rows": 48,
+      "ok": 40,
+      "exit": 0
+    },
+    {
+      "patch": "11.2.0",
+      "rows": 162,
+      "ok": 135,
+      "exit": 0
+    },
+    {
+      "patch": "11.2.5",
+      "rows": 163,
+      "ok": 118,
+      "exit": 0
+    },
+    {
+      "patch": "11.2.7",
+      "rows": 508,
+      "ok": 414,
+      "exit": 0
+    },
+    {
+      "patch": "12.0.0",
+      "rows": 1010,
+      "ok": 989,
+      "exit": 0
+    },
+    {
+      "patch": "12.0.1",
+      "rows": 225,
+      "ok": 222,
+      "exit": 0
+    },
+    {
+      "patch": "12.0.5",
+      "rows": 363,
+      "ok": 352,
+      "exit": 0
+    },
+    {
+      "patch": "12.0.7",
+      "rows": 174,
+      "ok": 171,
+      "exit": 0
+    },
+    {
+      "patch": "12.1.0",
+      "rows": 778,
+      "ok": 773,
+      "exit": 0
+    }
+  ],
+  "closed_publication_gaps": 10,
+  "remaining_publication_gaps": 36,
+  "preserved_inputs": 134,
+  "reproduced_registers": 22,
+  "proof_entries": 36,
+  "validated_revision": "a487dc9824bc400e199b1b3676b5361138b21e7b",
+  "command": [
+    "python3",
+    "data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-validate.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1010-page"
+}

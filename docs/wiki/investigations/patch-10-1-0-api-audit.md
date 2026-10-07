@@ -65,6 +65,8 @@ Cargo fmt and fmt --check, default cargo check, Mists `--tests` check and separa
 | 12.0.7 | 174 | 171 | 3 | 0 |
 | 12.1.0 | 778 | 773 | 5 | 0 |
 
+Artifact validator passes at `a487dc982`: [result](../../../data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-validation-result.json). It verifies all 416 source IDs/hashes, exact discovery/closure/gap sets, every chronological expectation, all 22 isolated fixtures, negative control, proof-log hashes, extraction-mode boundaries and 134 preserved inputs. Subsequent result/documentation-only changes preserve these scopes.
+
 ## Sources
 
 - [Provenance](../../../data/patch-api/sources/10.1.0-api-changes.provenance.json)
