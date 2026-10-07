@@ -1,0 +1,35 @@
+tests/addon_list_scroll.rs:127:        .eval(r#"return C_AddOns.GetAddOnMetadata("FakeTestAddon", "Group") or "" "#)
+tests/addon_api.rs:247:// C_AddOns.GetAddOnMetadata
+tests/addon_api.rs:254:        .eval("return C_AddOns.GetAddOnMetadata('MyAddon', 'Title')")
+tests/addon_api.rs:259:        .eval("return C_AddOns.GetAddOnMetadata('MyAddon', 'Notes')")
+tests/addon_api.rs:264:        .eval("return C_AddOns.GetAddOnMetadata('MyAddon', 'Version')")
+tests/addon_api.rs:269:        .eval("return C_AddOns.GetAddOnMetadata('MyAddon', 'version')")
+tests/addon_api.rs:274:        .eval("return C_AddOns.GetAddOnMetadata('MyAddon', 'X-Prefix')")
+tests/addon_api.rs:279:        .eval("return C_AddOns.GetAddOnMetadata('MyAddon', 'X-Acronym')")
+tests/addon_api.rs:284:        .eval("return C_AddOns.GetAddOnMetadata('MyAddon', 'X-oUF')")
+tests/addon_api.rs:294:        .eval("return C_AddOns.GetAddOnMetadata('Unknown', 'Title')")
+tests/addon_api.rs:422:        .eval("return GetAddOnMetadata('MyAddon', 'Title')")
+tests/addon_api.rs:427:        .eval("return GetAddOnMetadata('MyAddon', 'version')")
+src/lua_api/state_types/runtime.rs:133:    /// Raw TOC metadata exposed through `C_AddOns.GetAddOnMetadata`.
+src/lua_api/workarounds/temporary/source_patches.rs:144:            from: "local group = C_AddOns.GetAddOnMetadata(i, \"Group\");",
+src/lua_api/workarounds/temporary/source_patches.rs:145:            to: "local group = C_AddOns.GetAddOnMetadata(i, \"Group\");\n\t\tif type(group) ~= \"string\" or group == \"\" then\n\t\t\tgroup = C_AddOns.GetAddOnName(i);\n\t\tend",
+tests/blizzard_shared.rs:209:            local original = C_AddOns.GetAddOnMetadata
+tests/blizzard_shared.rs:210:            C_AddOns.GetAddOnMetadata = function(addon, field)
+src/c_api/c_addons_registration.rs:13:    ("GetAddOnMetadata", c_addons_get_addon_metadata),
+src/c_api/c_addons.rs:57:        "GetAddOnMetadata",
+src/bin/wow_sim/addon_loading/tests.rs:373:                if C_AddOns.GetAddOnMetadata(i, "X-BugGrabber-Display") == "LaterDisplay" then
+tests/blizzard_ui/blizzard_addonlist/behavior_search_with_invalid_group_falls_back_to_root.rs:17:                local originalGetAddOnMetadata = C_AddOns.GetAddOnMetadata
+tests/blizzard_ui/blizzard_addonlist/behavior_search_with_invalid_group_falls_back_to_root.rs:18:                C_AddOns.GetAddOnMetadata = function(addonIndex, field)
+tests/blizzard_ui/blizzard_addonlist/behavior_search_with_invalid_group_falls_back_to_root.rs:23:                    return originalGetAddOnMetadata(addonIndex, field)
+tests/blizzard_ui/blizzard_addonlist/behavior_search_with_invalid_group_falls_back_to_root.rs:42:                C_AddOns.GetAddOnMetadata = originalGetAddOnMetadata
+tests/blizzard_ui/blizzard_addonlist/behavior_pending_children_attach_when_parent_loaded.rs:18:                local originalGetAddOnMetadata = C_AddOns.GetAddOnMetadata
+tests/blizzard_ui/blizzard_addonlist/behavior_pending_children_attach_when_parent_loaded.rs:19:                C_AddOns.GetAddOnMetadata = function(addonIndex, field)
+tests/blizzard_ui/blizzard_addonlist/behavior_pending_children_attach_when_parent_loaded.rs:24:                    return originalGetAddOnMetadata(addonIndex, field)
+tests/blizzard_ui/blizzard_addonlist/behavior_pending_children_attach_when_parent_loaded.rs:48:                C_AddOns.GetAddOnMetadata = originalGetAddOnMetadata
+tests/blizzard_ui/blizzard_addonlist/behavior_category_collapse_persists_to_saved_var.rs:26:                local getAddOnMetadata = C_AddOns.GetAddOnMetadata
+tests/blizzard_ui/blizzard_addonlist/behavior_category_collapse_persists_to_saved_var.rs:27:                C_AddOns.GetAddOnMetadata = function(addonIndex, field)
+tests/data/patch_10_1_0_sweep_known_gaps.json:33:  "wt-global-api-GetAddOnMetadata-310",
+tests/globals_legacy.rs:427:        "GetAddOnMetadata", // addon_api
+tests/patch_10_2_0_publication_fixes.rs:41:assert(type(GetAddOnMetadata) == 'function')
+tests/unit_frame_layer_probe.rs:26:        C_AddOns.GetAddOnMetadata = function(_, key)
+tests/unit_frame_layer_probe.rs:214:        C_AddOns.GetAddOnMetadata = function() error('metadata refused') end

@@ -1,0 +1,476 @@
+tests/account_store.rs:601:        .eval(r#"return C_AccountStore.GetItemInfo(99999) and 1 or nil"#)
+tests/account_store.rs:623:            local info = C_AccountStore.GetItemInfo(420555)
+tests/account_store.rs:638:            local info = C_AccountStore.GetItemInfo(420555)
+tests/account_store.rs:651:            local info = C_AccountStore.GetItemInfo(420555)
+tests/account_store.rs:685:            local info = C_AccountStore.GetItemInfo(700)
+tests/account_store.rs:705:            local info = C_AccountStore.GetItemInfo(700)
+src/mists/compat_bootstrap.lua:51:if C_Item.GetItemStats == nil then
+src/mists/compat_bootstrap.lua:52:  function C_Item.GetItemStats()
+src/mists/compat_bootstrap.lua:573:-- C_Item.GetItemQualityColor: mists's UIParent.lua iterates qualities 0..8
+src/mists/compat_bootstrap.lua:594:  function C_Item.GetItemQualityColor(quality)
+src/mists/compat_bootstrap.lua:599:  -- Flat global GetItemQualityColor: simulator's nil-stub returns nothing;
+src/mists/compat_bootstrap.lua:601:  function GetItemQualityColor(quality)
+src/mists/compat_bootstrap.lua:613:    GetItem = function() return nil end,
+src/mists/compat_bootstrap.lua:614:    GetNumItems = function() return 0 end,
+src/mists/compat_bootstrap.lua:615:    GetPlayerInfo = function() return nil end,
+src/mists/compat_bootstrap.lua:616:    GiveMasterLoot = function() end,
+src/mists/compat_bootstrap.lua:617:    SetExpiration = function() end,
+src/mists/compat_bootstrap.lua:618:    CanMasterLoot = function() return false end,
+tests/blizzard_auction_house_mixin_methods.rs:24:    "GetItemSellList",
+tests/blizzard_auction_house_item_search.rs:48:local first = C_AuctionHouse.GetItemSearchResultInfo(key, 1)
+tests/blizzard_auction_house_item_key_roundtrip.rs:39:local info = C_AuctionHouse.GetItemKeyInfo(key)
+tests/blizzard_auction_house_item_key_roundtrip.rs:40:expect(type(info) == "table", "GetItemKeyInfo must return a table")
+src/loader/tests/wow_api_tooltip_helpers.rs:134:        tooltipShapeOk(C_TooltipInfo.GetItemByID(211992), Enum.TooltipDataType.Item, false),
+src/loader/tests/wow_api_tooltip_helpers.rs:135:        tooltipShapeOk(C_TooltipInfo.GetItemByGUID(C_Item.GetItemGUID({ bagID = 0, slotIndex = 1 })), Enum.TooltipDataType.Item, false),
+src/loader/tests/wow_api_tooltip.rs:77:            local tooltip = C_TooltipInfo.GetItemByID(229181)
+src/loader/tests/wow_api_tooltip.rs:130:        "C_TooltipInfo.GetItemByID should expose colored item-level and binding lines",
+src/loader/tests/wow_api_tooltip.rs:139:        "C_TooltipInfo.GetItemByID(211992)",
+src/loader/tests/wow_api_tooltip.rs:142:        "C_TooltipInfo.GetItemByID should expose item, item-level, and equip-slot lines",
+src/loader/tests/wow_api_tooltip.rs:152:            local tooltip = C_TooltipInfo.GetItemByID(211995)
+src/loader/tests/wow_api_tooltip.rs:182:        "C_TooltipInfo.GetItemByID should include green-colored stat lines for equippable armor",
+src/loader/tests/wow_api_tooltip.rs:192:            local guid = C_Item.GetItemGUID({ bagID = 0, slotIndex = 1 })
+src/loader/tests/wow_api_tooltip.rs:193:            local tooltip = C_TooltipInfo.GetItemByGUID(guid)
+src/loader/tests/wow_api_tooltip.rs:217:        "C_TooltipInfo.GetItemByGUID should return bag-item tooltip data and preserve the GUID",
+src/loader/tests/wow_api_item.rs:9:        .eval("return C_Item.GetItemSubClassInfo(Enum.ItemClass.Tradegoods, 4)")
+src/loader/tests/wow_api_item.rs:18:        .eval("return C_Item.GetItemSubClassInfo(Enum.ItemClass.Tradegoods, 999) == nil")
+src/loader/tests/wow_api_item.rs:27:        "GetItemIconByID",
+src/loader/tests/wow_api_item.rs:29:        "GetItemInfoInstant",
+src/loader/tests/wow_api_item.rs:30:        "GetItemInfo",
+src/loader/tests/wow_api_item.rs:41:    // GetItemInfo returns 17 values. Item 6948 = Hearthstone.
+src/loader/tests/wow_api_item.rs:43:        .eval("local n = C_Item.GetItemInfo(6948); return n")
+src/loader/tests/wow_api_item.rs:48:        .eval("local _,_,q = C_Item.GetItemInfo(6948); return q")
+src/loader/tests/wow_api_item.rs:53:        .eval("return select(14, C_Item.GetItemInfo(6948))")
+src/loader/tests/wow_api_item.rs:67:                local name, link, quality = GetItemInfo(query)
+src/loader/tests/wow_api_item.rs:68:                out[#out + 1] = tostring(name) .. "|" .. tostring(quality) .. "|" .. tostring(link == select(2, GetItemInfo(6948)))
+src/loader/tests/wow_api_item.rs:84:            return C_Item.GetItemSubClassInfo(Enum.ItemClass.Tradegoods, 2),
+src/loader/tests/wow_api_item.rs:85:                C_Item.GetItemSubClassInfo(Enum.ItemClass.Tradegoods, 3)
+src/loader/tests/wow_api_item.rs:109:                if C_Item.GetItemSubClassInfo(Enum.ItemClass.Consumable, subclassID) ~= expectedName then
+src/loader/tests/wow_api_item.rs:125:        .eval("return C_Item.GetItemClassInfo(Enum.ItemClass.Tradegoods)")
+src/loader/tests/wow_api_item.rs:135:        .eval("return C_Item.GetItemClassInfo(Enum.ItemClass.Tradegoods)")
+src/loader/tests/wow_api_item.rs:167:            if C_Item.GetItemSubClassInfo(entry[1], entry[2]):lower() ~= entry[3] then
+tests/blizzard_azerite_essence_ui_dependency_lines_drawn.rs:20:            GetItemIcon = function()
+tests/blizzard_azerite_essence_ui_dependency_lines_drawn.rs:23:            GetItemName = function()
+src/bin/wow_cli/audit_api/gap/gap_tests.rs:230:    let _ = t.get::<Value>("GetItem");
+src/bin/wow_cli/audit_api/gap/gap_tests.rs:254:            "GetItem".to_string(),
+tests/blizzard_azerite_essence_ui_refresh_power_level.rs:42:                                GetItemIcon = function()
+tests/blizzard_azerite_essence_ui_refresh_power_level.rs:45:                                GetItemName = function()
+tests/blizzard_black_market_ui_loads.rs:52:             and type(C_BlackMarket.GetNumItems) == 'function' \
+tests/blizzard_black_market_ui_loads.rs:54:             and type(C_BlackMarket.GetItemInfoByID) == 'function' \
+tests/blizzard_black_market_ui_loads.rs:55:             and type(C_BlackMarket.GetItemInfoByIndex) == 'function'",
+tests/blizzard_black_market_ui_loads.rs:93:        .eval("return C_BlackMarket.GetNumItems()")
+tests/blizzard_black_market_ui_loads.rs:94:        .expect("GetNumItems should return a number");
+tests/blizzard_black_market_ui_loads.rs:95:    assert_eq!(num_items, 0.0, "GetNumItems default should report 0");
+tests/blizzard_azerite_respec_ui_confirm_clears_selection.rs:81:                                    GetItemIcon = function()
+tests/blizzard_azerite_respec_ui_set_respec_item_validates.rs:64:                                    GetItemIcon = function()
+tests/blizzard_azerite_respec_ui_azerite_respec_item_dispatches_popup.rs:40:                                    GetItemLink = function()
+src/loader/tests/wow_api_equipment_set.rs:26:        "GetItemIDs",
+src/loader/tests/wow_api_equipment_set.rs:27:        "GetItemLocations",
+src/loader/tests/wow_api_globals/global_functions.rs:215:            return GetPlayerInfoByGUID(UnitGUID("player"))
+tests/blizzard_deprecated_item_script_loads.rs:51:         item-script globals (GetItemQualityColor / GetItemInfoInstant / IsArtifactPowerItem / \
+tests/blizzard_deprecated_item_script_loads.rs:131:            "return type(GetItemQualityColor) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:132:                and type(GetItemInfoInstant) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:133:                and type(GetItemSetInfo) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:134:                and type(GetItemChildInfo) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:136:                and type(GetItemGem) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:137:                and type(GetItemCreationContext) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:138:                and type(GetItemIcon) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:139:                and type(GetItemFamily) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:140:                and type(GetItemSpell) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:152:                and type(GetItemClassInfo) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:153:                and type(GetItemInventorySlotInfo) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:164:                and type(GetItemInfo) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:166:                and type(GetItemSpecInfo) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:167:                and type(GetItemUniqueness) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:168:                and type(GetItemCount) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:170:                and type(GetItemSubClassInfo) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:174:                and type(GetItemCooldown) == 'function' \
+tests/blizzard_deprecated_item_script_loads.rs:184:         GetItemInfoInstant, GetItemIcon (registered as GetItemIconByID under that name), \
+tests/blizzard_deprecated_item_script_loads.rs:185:         GetItemInfo, GetItemCount, GetItemCooldown, IsConsumableItem, IsEquippableItem, \
+tests/blizzard_deprecated_item_script_loads.rs:187:         (IsArtifactPowerItem, GetItemQualityColor, BindEnchant, etc.) resolve via the \
+tests/blizzard_deprecated_item_script_loads.rs:202:        .eval("return GetItemIcon == C_Item.GetItemIconByID")
+tests/blizzard_deprecated_item_script_loads.rs:203:        .expect("GetItemIcon == C_Item.GetItemIconByID query should succeed");
+tests/blizzard_deprecated_item_script_loads.rs:206:        "Deprecated_ItemScript.lua line 16 reads `GetItemIcon = C_Item.GetItemIconByID;` — \
+tests/blizzard_deprecated_item_script_loads.rs:207:         note the RENAMED right-hand side: legacy global `GetItemIcon` is bound to the new \
+tests/blizzard_deprecated_item_script_loads.rs:208:         API name `C_Item.GetItemIconByID`, not `C_Item.GetItemIcon`. This is the only \
+tests/blizzard_deprecated_item_script_loads.rs:220:            "return GetItemQualityColor == C_Item.GetItemQualityColor \
+tests/blizzard_deprecated_item_script_loads.rs:221:                and GetItemInfoInstant == C_Item.GetItemInfoInstant \
+tests/blizzard_deprecated_item_script_loads.rs:222:                and GetItemSetInfo == C_Item.GetItemSetInfo \
+tests/blizzard_deprecated_item_script_loads.rs:227:                and GetItemSpell == C_Item.GetItemSpell \
+tests/blizzard_deprecated_item_script_loads.rs:230:                and GetItemCooldown == C_Item.GetItemCooldown \
+tests/blizzard_deprecated_item_script_loads.rs:232:                and GetItemInfo == C_Item.GetItemInfo \
+tests/blizzard_deprecated_item_script_loads.rs:233:                and GetItemCount == C_Item.GetItemCount",
+tests/blizzard_deprecated_item_script_loads.rs:242:         GetItemInfoInstant), both sides see the same Rust-bound function value"
+tests/blizzard_deprecated_item_script_loads.rs:271:         legacy item / inventory / equipment addons calling GetItemInfo / IsEquippableItem / \
+src/loader/tests/wow_api_globals/startup_globals.rs:1485:            local itemInfo = C_MerchantFrame.GetItemInfo(1)
+tests/blizzard_generic_shopping_cart_loads.rs:280:                    type(ShoppingCartDataManagerMixin.GetNumItemsInCart) == 'function'",
+tests/blizzard_generic_shopping_cart_loads.rs:299:         GetNumItemsInCart driving the underlying cartList) + ShoppingCartClearCartServiceMixin \
+tests/blizzard_generic_shopping_cart_loads.rs:512:                    mgr:GetNumItemsInCart()",
+tests/blizzard_generic_shopping_cart_loads.rs:523:         ShoppingCartDataServices) — the GetNumItemsInCart accessor must return 0 from a \
+tests/blizzard_generic_shopping_cart_loads.rs:541:             local afterAdd = mgr:GetNumItemsInCart(); \
+tests/blizzard_generic_shopping_cart_loads.rs:543:             local afterRemove = mgr:GetNumItemsInCart(); \
+tests/blizzard_generic_shopping_cart_loads.rs:545:             local afterClear = mgr:GetNumItemsInCart(); \
+tests/blizzard_generic_shopping_cart_loads.rs:561:        "ClearCart must wipe the cartList back to {{}} and GetNumItemsInCart must return 0"
+tests/blizzard_frame_xml_util_loads.rs:214:         panel addon: ItemUtil (ItemUtil.lua — GetItemDetails / GetItemHyperlink / \
+tests/blizzard_frame_xml_util_loads.rs:216:         (ItemUtil.lua — Event registry, ItemContextEnum, GetItemContext / \
+tests/blizzard_game_tooltip_loads.rs:311:         RefreshDataNextUpdate/OnEvent/SetWorldCursor and the GetItem/GetSpell/GetUnit \
+src/lua_api/workarounds/temporary/black_market_defaults.rs:27:if rawget(C_BlackMarket, "GetNumItems") == nil then
+src/lua_api/workarounds/temporary/black_market_defaults.rs:28:    function C_BlackMarket.GetNumItems()
+src/lua_api/workarounds/temporary/black_market_defaults.rs:36:if rawget(C_BlackMarket, "GetItemInfoByID") == nil then
+src/lua_api/workarounds/temporary/black_market_defaults.rs:37:    function C_BlackMarket.GetItemInfoByID(_marketID)
+src/lua_api/workarounds/temporary/black_market_defaults.rs:40:if rawget(C_BlackMarket, "GetItemInfoByIndex") == nil then
+src/lua_api/workarounds/temporary/black_market_defaults.rs:41:    function C_BlackMarket.GetItemInfoByIndex(_index)
+src/lua_api/workarounds/temporary/black_market_defaults.rs:63:                if C_BlackMarket.GetNumItems() ~= 0 then return "num-items" end
+src/lua_api/workarounds/temporary/black_market_defaults.rs:65:                if C_BlackMarket.GetItemInfoByID(1) ~= nil then return "by-id" end
+src/lua_api/workarounds/temporary/black_market_defaults.rs:66:                if C_BlackMarket.GetItemInfoByIndex(1) ~= nil then return "by-index" end
+src/lua_api/workarounds/temporary/black_market_defaults.rs:83:            function C_BlackMarket.GetNumItems()
+src/lua_api/workarounds/temporary/black_market_defaults.rs:98:                return tostring(C_BlackMarket.IsViewOnly()) .. ":" .. C_BlackMarket.GetNumItems()
+src/lua_api/globals/action_bar_api/registration.rs:64:        "GetItemActionOnEquipSpellID",
+src/lua_api/globals/stubs/namespace_stubs.rs:61:    // C_Item GetItemIconByID / GetItemNameByID / GetItemQualityByID
+src/lua_api/globals/stubs/global_stubs.rs:181:    "GetItemQualityColor",
+src/lua_api/state_types/character_world.rs:758:    /// Inventory-slot → item id snapshot consumed by `GetItemIDs`.
+src/lua_api/state_types/auction_house.rs:64:/// `GetItemSearchResultInfo` family. `has_full_results == false`
+src/c_api/patch_retired_members.rs:19:    ("C_CharacterServices", &["AssignPFCDistribution"]),
+src/c_api/patch_retired_members.rs:23:            "CanMasterLoot",
+src/c_api/patch_retired_members.rs:24:            "GetExpiration",
+src/c_api/patch_retired_members.rs:25:            "GetItem",
+src/c_api/patch_retired_members.rs:26:            "GetNumItems",
+src/c_api/patch_retired_members.rs:27:            "GetPlayerInfo",
+src/c_api/patch_retired_members.rs:28:            "GiveMasterLoot",
+src/c_api/patch_retired_members.rs:29:            "SetExpiration",
+src/c_api/patch_retired_members.rs:34:        &["GetQuestLogRewardSpell", "GetQuestRewardSpell"],
+src/c_api/patch_retired_members.rs:215:            "GetItemTransmogInfoListFromOutfitHyperlink",
+src/lua_api/frame/methods/widgets/tooltip/content.rs:272:        populate_tooltip_from_method(state, tooltip_id, "GetItemByID", &[item_id], None)?;
+src/lua_api/frame/methods/widgets/tooltip/content.rs:450:            "GetItemByID",
+src/lua_api/frame/methods/widgets/tooltip.rs:45:    ("GetItem", get_item),
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:196:if GetItemLevelColor == nil then
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:197:    function GetItemLevelColor()
+src/c_api/item_spell/c_item.rs:99:            ("GetItemID", c_item_get_item_id),
+src/c_api/item_spell/c_item.rs:102:            ("GetItemIDForItemInfo", c_item_get_item_id_for_item_info),
+src/c_api/item_spell/c_item.rs:115:            ("GetItemIcon", c_item_get_item_icon),
+src/c_api/item_spell/c_item.rs:116:            ("GetItemName", c_item_get_item_name),
+src/c_api/item_spell/c_item.rs:117:            ("GetItemIconByID", c_item_get_item_icon_by_id),
+src/c_api/item_spell/c_item.rs:118:            ("GetItemNameByID", c_item_get_item_name_by_id),
+src/c_api/item_spell/c_item.rs:119:            ("GetItemQualityByID", c_item_get_item_quality_by_id),
+src/c_api/item_spell/c_item.rs:120:            ("GetItemQuality", c_item_get_item_quality),
+src/c_api/item_spell/c_item.rs:129:                "GetItemMaxStackSizeByID",
+src/c_api/item_spell/c_item.rs:132:            ("GetItemMaxStackSize", c_item_get_item_max_stack_size),
+src/c_api/item_spell/c_item.rs:133:            ("GetItemInfoInstant", c_item_get_item_info_instant),
+src/c_api/item_spell/c_item.rs:134:            ("GetItemInfo", c_item_get_item_info),
+src/c_api/item_spell/c_item.rs:140:            ("GetItemSubClassInfo", c_item_get_item_sub_class_info),
+src/c_api/item_spell/c_item.rs:141:            ("GetItemClassInfo", c_item_get_item_class_info),
+src/c_api/item_spell/c_item.rs:154:            ("GetItemCount", c_item_get_item_count),
+src/c_api/item_spell/c_item.rs:156:            ("GetItemLink", c_item_get_item_link),
+src/c_api/item_spell/c_item.rs:157:            ("GetItemCooldown", c_item_get_item_cooldown),
+src/c_api/item_spell/c_item.rs:158:            ("GetItemGUID", c_item_get_item_guid),
+src/c_api/item_spell/c_item.rs:165:                "GetItemInventorySlotInfo",
+src/c_api/item_spell/c_equipment_set.rs:52:    ("GetItemIDs", c_get_item_ids),
+src/c_api/item_spell/c_equipment_set.rs:53:    ("GetItemLocations", c_get_item_locations),
+src/c_api/item_spell/c_equipment_set.rs:112:        // this opaquely via `GetItemLocations` (loop body iterates and
+src/c_api/item_spell/c_container.rs:79:            ("GetItemCooldown", c_container_get_item_cooldown),
+src/c_api/c_crafting_orders.rs:10:    table_set_rust_fn_static(state, trade, "GetItemSlotModifications", item_modifications)?;
+src/c_api/c_crafting_orders.rs:14:        "GetItemSlotModificationsForOrder",
+tests/blizzard_main_menu_bar_bag_buttons_loads.rs:59:    "GetItemContextMatchResult",
+tests/blizzard_mail_frame_loads.rs:69:    "OpenMail_GetItemCounts",
+src/lua_api/workarounds/temporary/merchant_raid_defaults.rs:54:            function C_MerchantFrame.GetItemInfo(_index)
+src/lua_api/workarounds/temporary/merchant_raid_defaults.rs:72:                local item = C_MerchantFrame.GetItemInfo(1)
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:9:if rawget(C_LootJournal, "GetItemSets") == nil then
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:10:    function C_LootJournal.GetItemSets(_classID, _specID)
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:14:if rawget(C_LootJournal, "GetItemSetItems") == nil then
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:15:    function C_LootJournal.GetItemSetItems(_itemSetID)
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:37:                if #C_LootJournal.GetItemSets(1, 1) ~= 0 then return "sets" end
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:38:                if #C_LootJournal.GetItemSetItems(1) ~= 0 then return "items" end
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:52:            function C_LootJournal.GetItemSets()
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:55:            function C_LootJournal.GetItemSetItems()
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:67:                return C_LootJournal.GetItemSets()[1] .. ":" .. C_LootJournal.GetItemSetItems()[1]
+tests/blizzard_housing_market_cart_loads.rs:274:            "GetNumItemsInCart",
+tests/blizzard_housing_market_cart_loads.rs:290:         GetTotalPrice), per-row queries (GetNumItemsInCart / AddItemToList / RemoveItemFromList \
+tests/blizzard_housing_market_cart_loads.rs:305:            "GetNumItemsInCart",
+tests/blizzard_housing_market_cart_loads.rs:325:         ShoppingCartDataManagerMixin): Init, query helpers (GetNumItemsInCart / IsBundleInCart \
+tests/blizzard_item_upgrade_ui_loads.rs:74:    "GetItemUpgradeItemsCallBack",
+tests/blizzard_item_upgrade_ui_loads.rs:193:         (C_ItemUpgrade.GetItemUpgradeItemInfo / GetItemHyperlink / GetUpgradeCostInfo) and \
+tests/blizzard_item_upgrade_ui_loads.rs:444:             tooltip via ProcessInfo / GetItemByID with synthetic stat bonuses applied, \
+tests/blizzard_item_upgrade_ui_loads.rs:464:             GetItemUpgradeItemsCallBack walks the player's bag/equipped to populate the flyout \
+tests/blizzard_item_upgrade_ui_loads.rs:531:             ProcessInfo with CreateBaseTooltipInfo('GetItemByID', itemID) for item costs, \
+tests/blizzard_item_interaction_ui_loads.rs:31:    "GetItemLocation",
+tests/blizzard_item_interaction_ui_loads.rs:171:         driven (C_ItemInteraction.GetItemInteractionInfo / GetChargeInfo) and resets every time \
+src/c_api/c_merchant_frame.rs:25:    table_set_rust_fn_static(state, merchant, "GetItemInfo", get_item_info)?;
+src/c_api/c_item_interaction.rs:29:    table_set_rust_fn_static(state, ns, "GetItemInteractionInfo", get_info)
+tests/blizzard_item_button_loads.rs:55:    "GetItemContextOverlayMode",
+tests/blizzard_item_button_loads.rs:63:    "GetItemInfo",
+tests/blizzard_item_button_loads.rs:64:    "GetItemID",
+tests/blizzard_item_button_loads.rs:65:    "GetItem",
+tests/blizzard_item_button_loads.rs:66:    "GetItemLink",
+tests/blizzard_item_button_loads.rs:67:    "GetItemLocation",
+tests/blizzard_item_button_loads.rs:71:    "GetItemButtonCount",
+tests/blizzard_item_button_loads.rs:78:    "GetItemButtonIconTexture",
+tests/blizzard_item_button_loads.rs:86:    "GetItemButtonBackgroundTexture",
+tests/blizzard_item_button_loads.rs:92:    "GetItemButtonCount",
+tests/blizzard_item_button_loads.rs:94:    "GetItemButtonBackgroundTexture",
+tests/blizzard_item_button_loads.rs:120:    "GetItemLocation",
+tests/blizzard_item_button_loads.rs:252:         loads FIRST (publishes ItemButtonMixin + ItemButtonConstants + GetItemButtonIconTexture \
+tests/blizzard_item_button_loads.rs:337:         declares it at file scope so GetItemContextOverlayMode / UpdateItemContextOverlayTextures \
+tests/blizzard_item_button_loads.rs:402:             SetItemButtonQuality, SetItemButtonBorderVertexColor, GetItemButtonBackgroundTexture) \
+tests/blizzard_item_button_loads.rs:466:             GetItemLocation(), and SetItemLocationCallback / GetItemLocation are the \
+src/lua_api/globals/real/player_identity.rs:103:    LuaApiMut::register_function(lua, "GetPlayerInfoByGUID", get_player_info_by_guid)?;
+src/c_api/c_tooltip_info_item_context.rs:15:const API_NAME: &str = "C_TooltipInfo.GetItemByID";
+src/c_api/c_tooltip_info_item_context.rs:19:    table_set_rust_fn_static(state, namespace, "GetItemByID", get_item_by_id)
+src/c_api/c_transmog_collection.rs:97:            "GetItemTransmogInfoListFromCustomSetHyperlink",
+tests/blizzard_object_api_loads.rs:390:             instance methods. ItemMixin owns ContinueOnLoad / GetItemID / GetItemName / \
+tests/blizzard_object_api_loads.rs:391:             GetItemQuality / IsItemEmpty / etc. (Item.lua); SpellMixin owns SetSpellID / \
+src/c_api/c_transmog_outfit_info/slots.rs:122:            "GetItemModifiedAppearanceEffectiveCategory",
+src/lua_api/globals/real/item_legacy.rs:3://! `GetItemID` is the plain global wrapper for `C_Item.GetItemID`. Register it
+src/lua_api/globals/real/item_legacy.rs:14:        "GetItemID",
+tests/blizzard_static_popup_game_loads.rs:52:    "GetItemFrame",
+tests/blizzard_static_popup_game_loads.rs:322:         (eg GetDefaultExpirationText bound to dialogInfo.GetExpirationText)"
+tests/blizzard_transmog_shared_loads.rs:42:    "GetItemLocationFromTransmogLocation",
+src/lua_api/globals/missing_surface/tooltip_info/mod.rs:150:            ("GetItem", c_tooltip_get_item),
+src/lua_api/globals/missing_surface/tooltip_info/mod.rs:152:            ("GetItemByID", c_tooltip_get_item_by_id),
+src/lua_api/globals/missing_surface/tooltip_info/mod.rs:153:            ("GetItemByGUID", c_tooltip_get_item_by_guid),
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/base_card.rs:43:         C_AccountStore.GetItemInfo, drives Name / OwnedCheckmark / New / BuyButton state from \
+src/lua_api/globals/missing_surface/pet_battles.rs:13://! - `GetPlayerInfo(owner)` — returns owner index (pass-through numeric stub).
+src/lua_api/globals/missing_surface/pet_battles.rs:45:    table_set_rust_fn_static(state, ns, "GetPlayerInfo", get_player_info)?;
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:7://! `C_AccountStore.GetItemInfo` for the affected itemID): the plan
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:42://!    `C_AccountStore.GetItemInfo` calls by the visible card count.
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:46://!    `local itemInfo = C_AccountStore.GetItemInfo(itemID)` — the
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:47://!    PLAN's "re-reads C_AccountStore.GetItemInfo" claim is correct
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:85://!   replaces `C_AccountStore.GetItemInfo` with a tracker that
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:294:             multiplying GetItemInfo calls by the visible card count)."
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:323:            .expect("GetItemInfo tracker readout must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:327:            "Expected exactly ONE `C_AccountStore.GetItemInfo` call after a direct invocation \
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:330:             `local itemInfo = C_AccountStore.GetItemInfo(itemID)` as the first executable \
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:338:            "Expected the captured itemID arg to `C_AccountStore.GetItemInfo` to equal \
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:389:        _G.__behavior_item_info_updated_original_get_item_info = C_AccountStore.GetItemInfo
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:390:        C_AccountStore.GetItemInfo = function(item_id)
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:399:    .expect("seeding C_AccountStore.GetItemInfo tracker must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:424:            C_AccountStore.GetItemInfo =
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:433:    .expect("GetItemInfo tracker tear-down must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:44://!    `C_AccountStore.GetItemInfo(itemID)`. Real callers
+tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:335:             with an id that GetItemInfo doesn't recognize — at lines 131-134 the body returns \
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:7://! `GetItemInfo`). Three claims diverge from the actual source at
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:17://! 2. **`UpdateCardDisplay` does NOT call `C_AccountStore.GetItemInfo`.**
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:24://!        local itemInfo = C_AccountStore.GetItemInfo(itemID);
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:31://!    238, 247). The PLAN's "values returned by GetItemInfo" framing
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:186:            .expect("GetItemInfo call-count readout must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:190:            "Expected ZERO `C_AccountStore.GetItemInfo` calls during UpdateCardDisplay — the \
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:195:             returned by GetItemInfo\" framing came true (the override started fetching \
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:457:            C_AccountStore.GetItemInfo
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:458:        C_AccountStore.GetItemInfo = function(_item_id)
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:466:    .expect("seeding GetItemInfo tracker must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:472:        C_AccountStore.GetItemInfo =
+tests/blizzard_ui/blizzard_accountstore/behavior_card_creature_display.rs:479:    .expect("GetItemInfo tracker tear-down must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_refund_timer.rs:4://! Spec/source mismatch finding (PLAN.md task: when `GetItemInfo` reports
+tests/blizzard_ui/blizzard_accountstore/behavior_refund_timer.rs:57://!    (lines 198-212) re-reads `C_AccountStore.GetItemInfo(self.itemID)`
+tests/blizzard_ui/blizzard_accountstore/behavior_refund_timer.rs:61://!    behavior is at-most-once-per-second AND only when GetItemInfo
+src/lua_api/globals/mail_probes.rs:300:    table_set_rust_fn_static(state, table_ref, "GetNumItems", get_num_items)?;
+src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:21:    ("GetItemKeyInfo", c_auction_house_get_item_key_info),
+src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:23:        "GetItemKeyRequiredLevel",
+src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:81:    ("GetItemKeyFromItem", c_auction_house_get_item_key_from_item),
+src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:101:        "GetItemCommodityStatus",
+src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:113:        "GetItemSearchResultInfo",
+src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:117:        "GetItemSearchResultsQuantity",
+tests/c_auction_house_item_search.rs:134:            local info = C_AuctionHouse.GetItemSearchResultInfo(key, 1)
+tests/c_auction_house_item_search.rs:164:            return select('#', C_AuctionHouse.GetItemSearchResultInfo(key, 99)),
+tests/c_auction_house_item_search.rs:165:                   select('#', C_AuctionHouse.GetItemSearchResultInfo(key, 0)),
+tests/c_auction_house_item_search.rs:166:                   select('#', C_AuctionHouse.GetItemSearchResultInfo(key, -1))
+tests/c_auction_house_item_search.rs:183:            return C_AuctionHouse.GetItemSearchResultInfo(key, 1).bidder == nil
+tests/c_auction_house_item_search.rs:206:            return C_AuctionHouse.GetItemSearchResultsQuantity(key)
+tests/c_auction_house_item_search.rs:220:            return C_AuctionHouse.GetItemSearchResultsQuantity(key)
+tests/c_auction_house_item_search.rs:461:            return C_AuctionHouse.GetItemSearchResultsQuantity(lowKey),
+tests/c_auction_house_item_search.rs:462:                   C_AuctionHouse.GetItemSearchResultsQuantity(highKey)
+tests/c_auction_house_probes.rs:250:            local info = C_AuctionHouse.GetItemKeyInfo(key)
+tests/c_auction_house_probes.rs:266:            local key = C_AuctionHouse.GetItemKeyFromItem({ itemID = 210935 })
+tests/c_auction_house_probes.rs:279:        .eval("return C_AuctionHouse.GetItemKeyFromItem({}) == nil")
+tests/c_auction_house_probes.rs:454:            return C_AuctionHouse.GetItemCommodityStatus({ itemID = 210935 }),
+tests/c_auction_house_probes.rs:455:                   C_AuctionHouse.GetItemCommodityStatus({ itemID = 211988 }),
+tests/c_auction_house_probes.rs:456:                   C_AuctionHouse.GetItemCommodityStatus({})
+tests/c_item_api/c_container.rs:202:        .eval("return C_Container.GetItemCooldown(6948)")
+tests/c_item_api/c_container.rs:322:        env.eval("return C_Item.GetItemCooldown(6948)").unwrap();
+tests/c_item_api/globals_and_inventory.rs:35:    let name: String = env.eval("return GetItemInfo(1)").unwrap();
+tests/c_item_api/globals_and_inventory.rs:43:        .eval(r#"return GetItemID("|cffffffff|Hitem:777::::::::80:::::|h[X]|h|r")"#)
+tests/c_item_api/globals_and_inventory.rs:51:    let is_nil: bool = env.eval("return GetItemID(nil) == nil").unwrap();
+tests/c_item_api/globals_and_inventory.rs:58:    let name: String = env.eval("return GetItemClassInfo(4)").unwrap();
+tests/c_journal_defaults_probes.rs:13:            if #C_LootJournal.GetItemSets(1, 1) ~= 0 then return "sets" end
+tests/c_journal_defaults_probes.rs:14:            if #C_LootJournal.GetItemSetItems(1) ~= 0 then return "items" end
+tests/c_item_api/c_item.rs:14:                "GetItemID",
+tests/c_item_api/c_item.rs:17:                "GetItemIDForItemInfo",
+tests/c_item_api/c_item.rs:18:                "GetItemIcon",
+tests/c_item_api/c_item.rs:19:                "GetItemName",
+tests/c_item_api/c_item.rs:20:                "GetItemIconByID",
+tests/c_item_api/c_item.rs:21:                "GetItemNameByID",
+tests/c_item_api/c_item.rs:22:                "GetItemQualityByID",
+tests/c_item_api/c_item.rs:23:                "GetItemMaxStackSizeByID",
+tests/c_item_api/c_item.rs:24:                "GetItemMaxStackSize",
+tests/c_item_api/c_item.rs:25:                "GetItemInfoInstant",
+tests/c_item_api/c_item.rs:26:                "GetItemInfo",
+tests/c_item_api/c_item.rs:28:                "GetItemSubClassInfo",
+tests/c_item_api/c_item.rs:29:                "GetItemClassInfo",
+tests/c_item_api/c_item.rs:30:                "GetItemCount",
+tests/c_item_api/c_item.rs:31:                "GetItemLink",
+tests/c_item_api/c_item.rs:32:                "GetItemCooldown",
+tests/c_item_api/c_item.rs:33:                "GetItemGUID",
+tests/c_item_api/c_item.rs:36:                "GetItemInventorySlotInfo",
+tests/c_item_api/c_item.rs:56:    let item_name: String = env.eval("return C_Item.GetItemInfo(42)").unwrap();
+tests/c_item_api/c_item.rs:74:    let name: String = env.eval("return C_Item.GetItemInfo(6948)").unwrap();
+tests/c_item_api/c_item.rs:82:        env.eval("return C_Item.GetItemInfoInstant(12345)").unwrap();
+tests/c_item_api/c_item.rs:106:        .eval(r#"return C_Item.GetItemInfoInstant("|cffffffff|Hitem:54321::::::::80:::::|h[Test]|h|r")"#)
+tests/c_item_api/c_item.rs:115:        .eval("return select('#', C_Item.GetItemInfoInstant(nil))")
+tests/c_item_api/c_item.rs:123:    let id: i64 = env.eval("return C_Item.GetItemIDForItemInfo(999)").unwrap();
+tests/c_item_api/c_item.rs:132:            r#"return C_Item.GetItemIDForItemInfo("|cffffffff|Hitem:42::::::::80:::::|h[X]|h|r")"#,
+tests/c_item_api/c_item.rs:142:        .eval(r#"return C_Item.GetItemIDForItemInfo("not a link") == nil"#)
+tests/c_item_api/c_item.rs:150:    let icon: i32 = env.eval("return C_Item.GetItemIconByID(1)").unwrap();
+tests/c_item_api/c_item.rs:157:    let quality: i32 = env.eval("return C_Item.GetItemQualityByID(1)").unwrap();
+tests/c_item_api/c_item.rs:165:        .eval("return C_Item.GetItemMaxStackSizeByID(6948)")
+tests/c_item_api/c_item.rs:174:        .eval("return C_Item.GetItemMaxStackSizeByID(999999999)")
+tests/c_item_api/c_item.rs:183:        .eval("return C_Item.GetItemMaxStackSizeByID(nil)")
+tests/c_item_api/c_item.rs:192:        .eval("return C_Item.GetItemMaxStackSizeByID('not an item') > 1")
+tests/c_item_api/c_item.rs:201:        .eval("return C_Item.GetItemMaxStackSize('|Hitem:6948::::::::80:70:::::::::|h[Hearthstone]|h')")
+tests/c_item_api/c_item.rs:209:    let link: String = env.eval("return C_Item.GetItemLink(6948)").unwrap();
+tests/c_item_api/c_item.rs:229:                return C_Item.GetItemLink(itemLocation)
+tests/c_item_api/c_item.rs:232:            return C_Item.GetItemID(itemLocation),
+tests/c_item_api/c_item.rs:233:                C_Item.GetItemIcon(itemLocation),
+tests/c_item_api/c_item.rs:234:                C_Item.GetItemIconByID(6948),
+tests/c_item_api/c_item.rs:235:                C_Item.GetItemName(itemLocation),
+tests/c_item_api/c_item.rs:245:        "The seeded backpack hearthstone should resolve through C_Item.GetItemID(ItemLocation)"
+tests/c_item_api/c_item.rs:250:        "The seeded backpack hearthstone should resolve through C_Item.GetItemIcon(ItemLocation)"
+tests/c_item_api/c_item.rs:254:        "The seeded backpack hearthstone should resolve through C_Item.GetItemName(ItemLocation)"
+tests/c_item_api/c_item.rs:258:        "C_Item.GetItemLink(ItemLocation) should not error: {link_or_err}"
+tests/c_item_api/c_item.rs:262:        "C_Item.GetItemLink(ItemLocation) should return the seeded backpack hearthstone link: {link_or_err}"
+tests/c_item_api/c_item.rs:279:            "return C_Item.GetItemID({ equipmentSlotIndex = 18 }), \
+tests/c_item_api/c_item.rs:281:         C_Item.GetItemLink({ equipmentSlotIndex = 18 }), \
+tests/c_item_api/c_item.rs:282:         C_Item.GetItemID({ equipmentSlotIndex = 17 }), \
+tests/c_item_api/c_item.rs:284:         C_Item.GetItemLink({ equipmentSlotIndex = 17 })",
+tests/c_item_api/c_item.rs:291:        env.eval::<Option<String>>("return C_Item.GetItemLink(6948)")
+tests/c_item_api/c_item.rs:312:        "return C_Item.GetItemLink({ bagID = 5, slotIndex = 8 }), C_Container.GetContainerItemLink(5, 8)"
+tests/c_item_api/c_item.rs:335:            "return C_Item.GetItemID({ equipmentSlotIndex = 25 }), \
+tests/c_item_api/c_item.rs:337:         C_Item.GetItemLink({ equipmentSlotIndex = 25 })",
+tests/c_item_api/c_item.rs:358:            "return C_Item.GetItemID({ bagID = 0, slotIndex = 5 }), \
+tests/c_item_api/c_item.rs:360:         C_Item.GetItemLink({ bagID = 0, slotIndex = 5 }), \
+tests/c_item_api/c_item.rs:361:         C_Item.GetItemID({ bagID = 0, slotIndex = 6 }), \
+tests/c_item_api/c_item.rs:363:         C_Item.GetItemLink({ bagID = 0, slotIndex = 6 })",
+tests/c_item_api/c_item.rs:377:    let name: String = env.eval("return C_Item.GetItemNameByID(6948)").unwrap();
+tests/c_item_api/c_item.rs:384:    let name: String = env.eval("return C_Item.GetItemNameByID(42)").unwrap();
+tests/c_item_api/c_item.rs:391:    let name: String = env.eval("return C_Item.GetItemSubClassInfo(2, 7)").unwrap();
+tests/c_item_api/c_item.rs:398:    let name: String = env.eval("return C_Item.GetItemSubClassInfo(4, 4)").unwrap();
+tests/c_item_api/c_item.rs:406:        .eval("return C_Item.GetItemSubClassInfo(0, 11)")
+tests/c_item_api/c_item.rs:433:                "return C_Item.GetItemSubClassInfo(19, {subclass})"
+tests/c_item_api/c_item.rs:443:        .eval("return C_Item.GetItemSubClassInfo(19, 14)")
+tests/c_item_api/c_item.rs:490:                    local actual = C_Item.GetItemSubClassInfo(classID, subclassID)
+tests/c_item_api/c_item.rs:514:        .eval("return C_Item.GetItemSubClassInfo(99, 99)")
+tests/c_item_api/c_item.rs:522:    let name: String = env.eval("return C_Item.GetItemClassInfo(2)").unwrap();
+tests/c_item_api/c_item.rs:529:    let name: String = env.eval("return C_Item.GetItemClassInfo(7)").unwrap();
+tests/c_item_api/c_item.rs:536:    let name: String = env.eval("return C_Item.GetItemClassInfo(17)").unwrap();
+tests/c_item_api/c_item.rs:572:        .eval("return C_Item.GetItemQuality({ bagID = 0, slotIndex = 5 }), C_Item.GetStackCount({ bagID = 0, slotIndex = 5 })")
+tests/c_item_api/c_item.rs:622:    let count: i32 = env.eval("return C_Item.GetItemCount(12345)").unwrap();
+tests/c_item_api/c_item.rs:630:        .eval("return C_Item.DoesItemExistByID(2852), C_Item.GetItemNameByID(2852)")
+tests/c_item_probes.rs:4://! - `C_Item.GetItemIconByID(itemID)` — returns the icon fileDataID
+tests/c_item_probes.rs:6://! - `C_Item.GetItemNameByID(itemID)` — returns the item name or
+tests/c_item_probes.rs:8://! - `C_Item.GetItemQualityByID(itemID)` — returns the quality index
+tests/c_item_probes.rs:29:        .eval(&format!("return C_Item.GetItemNameByID({KNOWN_ITEM_ID})"))
+tests/c_item_probes.rs:38:        .eval("return C_Item.GetItemNameByID(999999999)")
+tests/c_item_probes.rs:77:            local name, link, quality = C_Item.GetItemInfo(999999999)
+tests/c_item_probes.rs:119:            "return C_Item.GetItemQualityByID({KNOWN_ITEM_ID})"
+tests/c_item_probes.rs:130:        .eval("return C_Item.GetItemQualityByID(999999999)")
+tests/c_item_probes.rs:140:        .eval(&format!("return C_Item.GetItemIconByID({KNOWN_ITEM_ID})"))
+tests/c_item_probes.rs:149:        .eval("return C_Item.GetItemIconByID(999999999)")
+tests/c_item_probes.rs:161:            return C_Item.GetItemNameByID(link), C_Item.GetItemQualityByID(link)
+tests/c_transmog_heirloom_api.rs:167:        .eval("return C_TransmogCollection.GetItemInfo(1) == nil")
+src/lua_api/globals/missing_surface/account_store.rs:40:    table_set_rust_fn_static(state, table_ref, "GetItemInfo", get_item_info)?;
+src/lua_api/globals/missing_surface.rs:109:    LuaApiMut::register_function(lua, "GetItemInfo", get_item_info_global)?;
+src/lua_api/globals/missing_surface.rs:110:    LuaApiMut::register_function(lua, "GetItemClassInfo", get_item_class_info_global)?;
+tests/global_function_diff_coverage.rs:20:    "GetItemID",
+tests/data/patch_10_2_7_sweep_known_gaps.json:8:  "wt-global-api-C_Item.GetItemGemID-55",
+tests/data/patch_10_2_7_sweep_known_gaps.json:9:  "wt-global-api-C_Item.GetItemInventorySlotKey-56",
+tests/data/patch_10_2_7_sweep_known_gaps.json:10:  "wt-global-api-C_Item.GetItemLearnTransmogSet-57",
+tests/data/patch_10_2_7_sweep_known_gaps.json:11:  "wt-global-api-C_Item.GetItemNumAddedSockets-58",
+tests/data/patch_10_2_7_sweep_known_gaps.json:12:  "wt-global-api-C_Item.GetItemNumSockets-59",
+tests/data/patch_10_2_7_sweep_known_gaps.json:32:  "wt-global-api-C_TooltipInfo.GetItemByItemModifiedAppearanceID-87",
+tests/data/patch_10_1_0_sweep_known_gaps.json:21:  "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpellInfo-270",
+tests/data/patch_10_1_0_sweep_known_gaps.json:22:  "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpells-271",
+tests/data/patch_10_1_0_sweep_known_gaps.json:31:  "wt-global-api-C_UIWidgetManager.GetItemDisplayVisualizationInfo-282",
+tests/data/patch_10_2_5_sweep_known_gaps.json:2:  "wt-global-api-C_Item.GetItemStatDelta-87",
+tests/data/patch_10_2_5_sweep_known_gaps.json:3:  "wt-global-api-C_Item.GetItemStats-88",
+tests/blizzard_ui/blizzard_animadiversionui/surface_globals.rs:52:       type(channel and channel.GetExpirationText),
+tests/blizzard_ui/blizzard_animadiversionui/surface_globals.rs:61:       type(reinforce and reinforce.GetExpirationText)
+tests/blizzard_ui/blizzard_animadiversionui/surface_globals.rs:187:        "channel popup must expose `GetExpirationText`"
+tests/blizzard_ui/blizzard_animadiversionui/surface_globals.rs:196:        "reinforce popup must not expose `GetExpirationText`"
+tests/data/patch_11_1_5_sweep_known_gaps.json:18:  "wt-global-api-C_Item.GetItemUpgradeInfo-111",
+tests/data/patch_12_0_0_deprecated.json:94:      "successor": "C_MerchantFrame.GetItemInfo",
+tests/data/patch_12_0_0_deprecated.json:96:      "probe": "assert(select('#',C_MerchantFrame.GetItemInfo(1))==1); local info=C_MerchantFrame.GetItemInfo(1); assert(type(info)=='table' and info.name=='Hearthstone' and type(info.texture)=='number'); assert(C_MerchantFrame.GetItemInfo(9999)==nil)",
+tests/data/patch_11_2_7_sweep_known_gaps.json:89:  "wt-global-api-C_Spell.GetItemModifiedAppearancesApplied-309",
+tests/item_legacy_boundary.rs:9:        !c_item.contains("state.global, \"GetItemID\""),
+tests/item_legacy_boundary.rs:10:        "legacy GetItemID global should not be registered from c_api::item_spell::c_item"
+tests/item_legacy_boundary.rs:14:        "legacy GetItemID global should be registered from the Lua globals layer"
+tests/item_legacy_boundary.rs:25:            return type(GetItemID), type(C_Item.GetItemID), GetItemID(link), C_Item.GetItemID(link)
+tests/merchant_junk_count.rs:106:        assert(C_Item.GetItemInfo(2840) == 'Copper Bar')
+tests/merchant_junk_count.rs:107:        assert(select(3, C_Item.GetItemInfo(2840)) == 1)
+tests/mists_collections_panel.rs:159:            local beforeCount = GetItemCount(heirloomID)
+tests/mists_collections_panel.rs:161:            if GetItemCount(heirloomID) <= beforeCount then
+tests/p1200_rest_item_binding.rs:10:        assert(C_Item.GetItemInfo(253451) ~= nil)
+tests/patch_11_2_0_publication_fixes.rs:54:        assert(type(C_TooltipInfo.GetItemByID) == 'function')
+tests/patch_12_0_0_crafting_shapes.rs:245:        local mods = C_TradeSkillUI.GetItemSlotModifications('Item-1-42')
+tests/patch_12_0_0_crafting_shapes.rs:250:        assert(#C_TradeSkillUI.GetItemSlotModifications('Item-unknown') == 0)
+tests/patch_12_0_0_crafting_shapes.rs:263:        assert(C_TradeSkillUI.GetItemSlotModifications('Item-1-42')[1].reagent.currencyID == 2803)
+tests/patch_12_0_0_crafting_shapes.rs:302:        CheckCraftingShape('CraftingItemSlotModification', C_TradeSkillUI.GetItemSlotModificationsForOrder(first.orderID)[1])
+tests/patch_12_0_0_crafting_shapes.rs:337:        local mods=C_TradeSkillUI.GetItemSlotModifications('Item-1-42')
+tests/patch_12_0_0_crafting_shapes.rs:344:        assert(result.itemGUID == C_Item.GetItemGUID({bagID=0,slotIndex=2}))
+tests/patch_12_0_0_state_dtos.rs:57:    env.exec("assert(C_ItemInteraction.GetItemInteractionInfo() == nil)")
+tests/patch_12_0_0_state_dtos.rs:73:    env.exec(r#"local a, b = C_ItemInteraction.GetItemInteractionInfo(), C_ItemInteraction.GetItemInteractionInfo()
+tests/patch_12_0_0_state_dtos.rs:75:        a.flags = 0; assert(b.flags == 17 and C_ItemInteraction.GetItemInteractionInfo().flags == 17)
+tests/patch_12_0_0_state_dtos.rs:82:        "return C_ItemInteraction.GetItemInteractionInfo()",
+tests/patch_12_0_0_state_dtos.rs:92:        local second = C_ItemInteraction.GetItemInteractionInfo()
+tests/patch_12_0_0_state_dtos.rs:98:    env.exec("assert(C_ItemInteraction.GetItemInteractionInfo() == nil); assert(OldInteraction.flags == 17)").unwrap();
+tests/recent_runtime_bootstrap_boundaries.rs:308:        ("function GetItemID", "Rust C_Item owner"),
+tests/runtime_bootstrap_boundaries.rs:532:        "GetItemLevelColor",
+tests/retirement_successors.rs:34:        local info = C_MerchantFrame.GetItemInfo(1)
+tests/retirement_successors.rs:36:        assert(info.texture == C_Item.GetItemIconByID(6948))
+tests/retirement_successors.rs:41:        assert(C_MerchantFrame.GetItemInfo(0) == nil)
+tests/retirement_successors.rs:42:        assert(C_MerchantFrame.GetItemInfo(2) == nil)
+tests/retirement_successors.rs:45:    env.exec("assert(C_MerchantFrame.GetItemInfo(1) == nil)").unwrap();
+tests/test_showuipanel_lod.rs:87:            if C_Mail.GetNumItems() ~= 2 then
+tests/test_showuipanel_lod.rs:88:                return "c_mail_count=" .. tostring(C_Mail.GetNumItems())
+tests/test_mail.rs:402:            local count = C_Mail.GetNumItems()
+tests/test_mail.rs:405:            local cleared = C_Mail.GetNumItems()
+tests/test_mail.rs:413:        "C_Mail.GetNumItems should follow the seeded inbox state: {result}"
+tests/startup_targeted_regressions.rs:236:                    || record.message.contains("GetItemLevelColor")
+tests/startup_targeted_regressions.rs:272:                local r, g, b = GetItemLevelColor()
+tests/startup_targeted_regressions.rs:275:                    select("#", GetItemLevelColor()),
+tests/startup_targeted_regressions.rs:319:        assert_eq!(color_count, 3, "GetItemLevelColor should return three values");
+tests/tooltip_item_context.rs:40:    ITAPI = 'C_TooltipInfo.GetItemByID'
+tests/tooltip_item_context.rs:85:        local data = ITData(C_TooltipInfo.GetItemByID(...))
+tests/tooltip_item_context.rs:93:        local data = ITData(C_TooltipInfo.GetItemByID(...))
+tests/tooltip_item_context.rs:147:        local ok,err = pcall(C_TooltipInfo.GetItemByID, ...)
+tests/tooltip_item_context.rs:249:    env.exec(script).expect("actual GetItemByID contract");
+tests/tooltip_hover.rs:94:                getterName = "GetItemByID",
+tests/tooltip_hover.rs:328:            local guid = C_Item.GetItemGUID({ bagID = 0, slotIndex = 1 })
+tests/tooltip_hover.rs:345:        "TooltipComparisonManager should resolve GUID-backed comparison items through C_TooltipInfo.GetItemByGUID",
+tests/tooltip_socket.rs:24:            local baseline = C_TooltipInfo.GetItemByID(6948)
+tests/tooltip_merchant.rs:15:            local baselineOne = C_TooltipInfo.GetItemByID(6948)
+tests/tooltip_merchant.rs:16:            local baselineTwo = C_TooltipInfo.GetItemByID(229181)
+tests/tooltip_trade_skill.rs:37:            local baselineResult = C_TooltipInfo.GetItemByID(229181)
+tests/tooltip_trade_skill.rs:38:            local baselineReagent = C_TooltipInfo.GetItemByID(210934)
+tests/tooltip_mail.rs:24:            local baseline = C_TooltipInfo.GetItemByID(6948)
+tests/tooltip_trade.rs:24:            local baseline = C_TooltipInfo.GetItemByID(6948)
+tests/tooltip_item_sources.rs:118:        local item = C_TooltipInfo.GetItemByID(6948)
+tests/tooltip_item_sources.rs:137:            local baseline = C_TooltipInfo.GetItemByID(6948)
+tests/tooltip_item_sources.rs:139:            local viaBagLocation = C_TooltipInfo.GetItem({ bagID = 0, slotIndex = 1 })
+tests/tooltip_item_sources.rs:140:            local viaItemId = C_TooltipInfo.GetItem(6948)
+tests/tooltip_item_sources.rs:144:            local viaEquipmentLocation = C_TooltipInfo.GetItem({ equipmentSlotIndex = 1 })
+tests/workarounds_bags.rs:268:                bag and bag:GetItemContextOverlayMode() == nil or false,
+tests/workarounds_bags.rs:269:                MainMenuBarBackpackButton:GetItemContextOverlayMode() == nil
+tests/patch_10_1_0_publication_fixes.rs:6:    { C_CharacterServices, 'AssignPFCDistribution' },
+tests/patch_10_1_0_publication_fixes.rs:7:    { C_LootHistory, 'CanMasterLoot' },
+tests/patch_10_1_0_publication_fixes.rs:8:    { C_LootHistory, 'GetExpiration' },
+tests/patch_10_1_0_publication_fixes.rs:9:    { C_LootHistory, 'GetItem' },
+tests/patch_10_1_0_publication_fixes.rs:10:    { C_LootHistory, 'GetNumItems' },
+tests/patch_10_1_0_publication_fixes.rs:11:    { C_LootHistory, 'GetPlayerInfo' },
+tests/patch_10_1_0_publication_fixes.rs:12:    { C_LootHistory, 'GiveMasterLoot' },
+tests/patch_10_1_0_publication_fixes.rs:13:    { C_LootHistory, 'SetExpiration' },
+tests/patch_10_1_0_publication_fixes.rs:14:    { C_TooltipInfo, 'GetQuestLogRewardSpell' },
+tests/patch_10_1_0_publication_fixes.rs:15:    { C_TooltipInfo, 'GetQuestRewardSpell' },
+tests/transmog_outfit_world_sources.rs:18:        assert(api.GetItemModifiedAppearanceEffectiveCategory(source.sourceID) == source.categoryID)
+tests/transmog_outfit_transactions.rs:27:        assert(api.GetItemModifiedAppearanceEffectiveCategory(190001) == 1)
+tests/transmog_outfit_transactions.rs:28:        assert(api.GetItemModifiedAppearanceEffectiveCategory(999999) == 0)
+tests/transmog_outfit_transactions.rs:43:        local decoded = api.GetItemTransmogInfoListFromCustomSetHyperlink(link)
+tests/transmog_outfit_transactions.rs:47:        assert(api.GetItemTransmogInfoListFromCustomSetHyperlink('item:190001') == nil)
+tests/transmog_outfit_transactions.rs:48:        assert(api.GetItemTransmogInfoListFromCustomSetHyperlink('|Htransmogset:1:bad|h[X]|h') == nil)
+tests/wowforever_inventory_slots.rs:35:            assert(type(button.GetItemLocationCallback) == "function")

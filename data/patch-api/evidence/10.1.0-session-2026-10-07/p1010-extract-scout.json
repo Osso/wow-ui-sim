@@ -1,0 +1,2298 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "section": "",
+    "literal": "Patch 10.1.0 API changes",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "section": "Summary",
+    "literal": "== Summary ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "section": "Summary",
+    "literal": "* A new Private Auras system has been added to display buffs and debuffs applied to units without exposing information about the aura to addons.",
+    "status": "audit-pending",
+    "reason": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "section": "Summary",
+    "literal": "* A new addon link type has been added for local addon-only chat links.",
+    "status": "audit-pending",
+    "reason": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "section": "Summary",
+    "literal": "* A new talentbuild link type has been added for inspecting loadouts.",
+    "status": "audit-pending",
+    "reason": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "section": "Summary",
+    "literal": "* A new ScrollFrame template has been added as a replacement for various other templates which are now deprecated.",
+    "status": "audit-pending",
+    "reason": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "extract_line": 8,
+    "section": "Summary",
+    "literal": "* A new set of TOC metadata fields have been added to control the display of an icon in the addon list.",
+    "status": "audit-pending",
+    "reason": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "extract_line": 9,
+    "section": "Summary",
+    "literal": "* A new set of TOC metadata fields have been added to automatically register dropdown entries into the minimap Addon compartment.",
+    "status": "audit-pending",
+    "reason": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "section": "Summary",
+    "literal": "* The addon list no longer displays addons out-of-order if their names contain UI escape sequences.",
+    "status": "audit-pending",
+    "reason": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+  },
+  {
+    "source_id": "prose-undated-011",
+    "extract_line": 11,
+    "section": "Summary",
+    "literal": "* The C_TooltipInfo APIs now return data with all data and line arguments surfaced, removing the need to call TooltipUtil.SurfaceArgs().",
+    "status": "audit-pending",
+    "reason": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "extract_line": 12,
+    "section": "Summary",
+    "literal": "* The TOOLTIP_DATA_UPDATE event now has an additional dataInstanceID argument. This can be correlated with a field of the same name on tables returned by the C_TooltipInfo APIs to more accurately process data update events.",
+    "status": "audit-pending",
+    "reason": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+  },
+  {
+    "source_id": "source-context-014",
+    "extract_line": 14,
+    "section": "Resources",
+    "literal": "== Resources ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "source-context-015",
+    "extract_line": 15,
+    "section": "Resources",
+    "literal": "* TOC: 100100",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "source-context-016",
+    "extract_line": 16,
+    "section": "Resources",
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "source-context-017",
+    "extract_line": 17,
+    "section": "Resources",
+    "literal": "* Official patch notes: Dragonflight: Embers of Neltharion Content Update Notes",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "source-context-019",
+    "extract_line": 19,
+    "section": "Private Auras",
+    "literal": "== Private Auras ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-021",
+    "extract_line": 21,
+    "section": "Private Auras",
+    "literal": "A new private aura system has been added through which the UI can display buffs and debuffs active on units without exposing information on the auras to addons. This works as a separate system to the existing buff and debuff display and must be configured through a set of new APIs.",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-023",
+    "extract_line": 23,
+    "section": "Private Auras",
+    "literal": "The following example configures a private aura anchor in the center of the screen for the first private aura applied to the player. A cooldown frame is configured to represent the duration, and the icon is displayed in the center of the frame. A textual duration will be displayed in a fontstring below the icon.",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-025",
+    "extract_line": 25,
+    "section": "Private Auras",
+    "literal": "Multiple anchors for a single aura can be created by addons with their own independent settings. The C_UnitAuras.AddPrivateAuraAnchor function returns an ID which can be later supplied to C_UnitAuras.RemovePrivateAuraAnchor to remove the aura display from the UI.",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-027",
+    "extract_line": 27,
+    "section": "Private Auras",
+    "literal": "```lua",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-028",
+    "extract_line": 28,
+    "section": "Private Auras",
+    "literal": "local PrivateAuraFrame1 = CreateFrame(\"Frame\", UIParent)",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-029",
+    "extract_line": 29,
+    "section": "Private Auras",
+    "literal": "PrivateAuraFrame1:SetPoint(\"CENTER\")",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-030",
+    "extract_line": 30,
+    "section": "Private Auras",
+    "literal": "PrivateAuraFrame1:SetSize(32, 32)",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-032",
+    "extract_line": 32,
+    "section": "Private Auras",
+    "literal": "local auraAnchorID = C_UnitAuras.AddPrivateAuraAnchor({",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-033",
+    "extract_line": 33,
+    "section": "Private Auras",
+    "literal": "    unitToken = \"player\",",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-034",
+    "extract_line": 34,
+    "section": "Private Auras",
+    "literal": "    auraIndex = 1,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-035",
+    "extract_line": 35,
+    "section": "Private Auras",
+    "literal": "    parent = PrivateAuraFrame1,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-036",
+    "extract_line": 36,
+    "section": "Private Auras",
+    "literal": "    showCountdownFrame = true,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-037",
+    "extract_line": 37,
+    "section": "Private Auras",
+    "literal": "    showCountdownNumbers = true,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-038",
+    "extract_line": 38,
+    "section": "Private Auras",
+    "literal": "    iconInfo = {",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-039",
+    "extract_line": 39,
+    "section": "Private Auras",
+    "literal": "        iconWidth = 32,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-040",
+    "extract_line": 40,
+    "section": "Private Auras",
+    "literal": "        iconHeight = 32,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-041",
+    "extract_line": 41,
+    "section": "Private Auras",
+    "literal": "        iconAnchor = {",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-042",
+    "extract_line": 42,
+    "section": "Private Auras",
+    "literal": "            point = \"CENTER\",",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-043",
+    "extract_line": 43,
+    "section": "Private Auras",
+    "literal": "            relativeTo = PrivateAuraFrame1,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-044",
+    "extract_line": 44,
+    "section": "Private Auras",
+    "literal": "            relativePoint = \"CENTER\",",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-045",
+    "extract_line": 45,
+    "section": "Private Auras",
+    "literal": "            offsetX = 0,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-046",
+    "extract_line": 46,
+    "section": "Private Auras",
+    "literal": "            offsetY = 0,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-047",
+    "extract_line": 47,
+    "section": "Private Auras",
+    "literal": "        },",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-048",
+    "extract_line": 48,
+    "section": "Private Auras",
+    "literal": "    },",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-049",
+    "extract_line": 49,
+    "section": "Private Auras",
+    "literal": "    durationAnchor = {",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-050",
+    "extract_line": 50,
+    "section": "Private Auras",
+    "literal": "        point = \"TOP\",",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-051",
+    "extract_line": 51,
+    "section": "Private Auras",
+    "literal": "        relativeTo = PrivateAuraFrame1,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-052",
+    "extract_line": 52,
+    "section": "Private Auras",
+    "literal": "        relativePoint = \"BOTTOM\",",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-053",
+    "extract_line": 53,
+    "section": "Private Auras",
+    "literal": "        offsetX = 0,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-054",
+    "extract_line": 54,
+    "section": "Private Auras",
+    "literal": "        offsetY = 0,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-055",
+    "extract_line": 55,
+    "section": "Private Auras",
+    "literal": "    },",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-056",
+    "extract_line": 56,
+    "section": "Private Auras",
+    "literal": "})",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-057",
+    "extract_line": 57,
+    "section": "Private Auras",
+    "literal": "```",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-059",
+    "extract_line": 59,
+    "section": "Private Auras",
+    "literal": "A sound alert can be configured to be played upon application of an aura. This works through spell IDs rather than aura indices.  The C_UnitAuras.AddPrivateAuraAppliedSound function returns an ID which can be later supplied to C_UnitAuras.RemovePrivateAuraAppliedSound to disable the sound effect being played.",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-061",
+    "extract_line": 61,
+    "section": "Private Auras",
+    "literal": "```lua",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-062",
+    "extract_line": 62,
+    "section": "Private Auras",
+    "literal": "local auraSoundID = C_UnitAuras.AddPrivateAuraAppliedSound({",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-063",
+    "extract_line": 63,
+    "section": "Private Auras",
+    "literal": "    unitToken = \"player\",",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-064",
+    "extract_line": 64,
+    "section": "Private Auras",
+    "literal": "    spellID = 12345,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-065",
+    "extract_line": 65,
+    "section": "Private Auras",
+    "literal": "    soundFileName = \"Interface\\\\AddOns\\\\MyAddOn\\\\Alert.ogg\",",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-066",
+    "extract_line": 66,
+    "section": "Private Auras",
+    "literal": "    outputChannel = \"SFX\",",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-067",
+    "extract_line": 67,
+    "section": "Private Auras",
+    "literal": "})",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-068",
+    "extract_line": 68,
+    "section": "Private Auras",
+    "literal": "```",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-070",
+    "extract_line": 70,
+    "section": "Private Auras",
+    "literal": "Finally, a raid message style alert can be configured to display text when a private aura is applied. Unlike the previous APIs this is a global resource; individual addons cannot configure their own raid message displays for private auras.",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-072",
+    "extract_line": 72,
+    "section": "Private Auras",
+    "literal": "```lua",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-073",
+    "extract_line": 73,
+    "section": "Private Auras",
+    "literal": "C_UnitAuras.SetPrivateWarningTextAnchor(UIParent, {",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-074",
+    "extract_line": 74,
+    "section": "Private Auras",
+    "literal": "    point = \"CENTER\",",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-075",
+    "extract_line": 75,
+    "section": "Private Auras",
+    "literal": "    relativeTo = UIParent,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-076",
+    "extract_line": 76,
+    "section": "Private Auras",
+    "literal": "    relativePoint = \"CENTER\",",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-077",
+    "extract_line": 77,
+    "section": "Private Auras",
+    "literal": "    offsetX = 0,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-078",
+    "extract_line": 78,
+    "section": "Private Auras",
+    "literal": "    offsetY = 0,",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-079",
+    "extract_line": 79,
+    "section": "Private Auras",
+    "literal": "})",
+    "status": "audit-pending",
+    "reason": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+  },
+  {
+    "source_id": "prose-undated-080",
+    "extract_line": 80,
+    "section": "Private Auras",
+    "literal": "```",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "source-context-082",
+    "extract_line": 82,
+    "section": "Addon Compartment Changes",
+    "literal": "== Addon Compartment Changes ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-084",
+    "extract_line": 84,
+    "section": "Addon Compartment Changes",
+    "literal": "The Addon compartment has been updated to support automatically registering dropdown entries for addons from TOC fields. The following TOC fields have been added.",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-086",
+    "extract_line": 86,
+    "section": "Addon Compartment Changes",
+    "literal": "{| class=\"darktable zebra\"",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-087",
+    "extract_line": 87,
+    "section": "Addon Compartment Changes",
+    "literal": "|+",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-088",
+    "extract_line": 88,
+    "section": "Addon Compartment Changes",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-089",
+    "extract_line": 89,
+    "section": "Addon Compartment Changes",
+    "literal": "! Field Name !! Example Value !! Description",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-090",
+    "extract_line": 90,
+    "section": "Addon Compartment Changes",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-091",
+    "extract_line": 91,
+    "section": "Addon Compartment Changes",
+    "literal": "| AddonCompartmentFunc || MyAddOn_OnAddonCompartmentClick || The name of a global function to be executed when the compartment dropdown entry is clicked. This field is required.",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-092",
+    "extract_line": 92,
+    "section": "Addon Compartment Changes",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-093",
+    "extract_line": 93,
+    "section": "Addon Compartment Changes",
+    "literal": "| AddonCompartmentFuncOnEnter || MyAddOn_OnAddonCompartmentEnter || The name of a global function to be executed when the compartment dropdown entry is highlighted. Optional.",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-094",
+    "extract_line": 94,
+    "section": "Addon Compartment Changes",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-095",
+    "extract_line": 95,
+    "section": "Addon Compartment Changes",
+    "literal": "| AddonCompartmentFuncOnLeave || MyAddOn_OnAddonCompartmentLeave || The name of a global function to be executed when the compartment dropdown entry is no longer highlighted. Optional.",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-096",
+    "extract_line": 96,
+    "section": "Addon Compartment Changes",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-097",
+    "extract_line": 97,
+    "section": "Addon Compartment Changes",
+    "literal": "| IconTexture || Interface\\Icons\\TEMP.blp || The full path to a texture file or a file ID to show as an icon in both the addon list and compartment dropdown. Optional.",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-098",
+    "extract_line": 98,
+    "section": "Addon Compartment Changes",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-099",
+    "extract_line": 99,
+    "section": "Addon Compartment Changes",
+    "literal": "| IconAtlas || TaskPOI-Icon|| The name of a texture atlas to use as the icon in both the addon list and compartment dropdown. Optional, and is only used if the IconTexture field has not been set.",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-101",
+    "extract_line": 101,
+    "section": "Addon Compartment Changes",
+    "literal": "The example below demonstrates the use of these TOC fields.",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-103",
+    "extract_line": 103,
+    "section": "Addon Compartment Changes",
+    "literal": "MyAddOn.toc",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-104",
+    "extract_line": 104,
+    "section": "Addon Compartment Changes",
+    "literal": " ## Interface: [API LatestInterface]",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-105",
+    "extract_line": 105,
+    "section": "Addon Compartment Changes",
+    "literal": " ## Title: My Addon",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-106",
+    "extract_line": 106,
+    "section": "Addon Compartment Changes",
+    "literal": " ## Notes: Does something neat",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-107",
+    "extract_line": 107,
+    "section": "Addon Compartment Changes",
+    "literal": " ## Author: Your Name",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-108",
+    "extract_line": 108,
+    "section": "Addon Compartment Changes",
+    "literal": " ## AddonCompartmentFunc: MyAddOn_OnAddonCompartmentClick",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-109",
+    "extract_line": 109,
+    "section": "Addon Compartment Changes",
+    "literal": " ## IconTexture: Interface\\Icons\\TEMP.blp",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-111",
+    "extract_line": 111,
+    "section": "Addon Compartment Changes",
+    "literal": " MyAddOn.lua",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-113",
+    "extract_line": 113,
+    "section": "Addon Compartment Changes",
+    "literal": "MyAddOn.lua",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-114",
+    "extract_line": 114,
+    "section": "Addon Compartment Changes",
+    "literal": "```lua",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-115",
+    "extract_line": 115,
+    "section": "Addon Compartment Changes",
+    "literal": " function MyAddOn_OnAddonCompartmentClick(addonName, buttonName)",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-116",
+    "extract_line": 116,
+    "section": "Addon Compartment Changes",
+    "literal": "     print(\"Hello from the addon compartment!\")",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-117",
+    "extract_line": 117,
+    "section": "Addon Compartment Changes",
+    "literal": " end",
+    "status": "audit-pending",
+    "reason": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+  },
+  {
+    "source_id": "prose-undated-118",
+    "extract_line": 118,
+    "section": "Addon Compartment Changes",
+    "literal": "```",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "source-context-120",
+    "extract_line": 120,
+    "section": "Addon Chat Links",
+    "literal": "== Addon Chat Links ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-122",
+    "extract_line": 122,
+    "section": "Addon Chat Links",
+    "literal": "A new addon link type has been added to the chat frame infrastructure to better support addon-created chat links. This new link type is local-only and cannot be sent in chat messages. This serves as a replacement for garrmission links without needing to rely on their current implementation details to avoid taint.",
+    "status": "audit-pending",
+    "reason": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+  },
+  {
+    "source_id": "prose-undated-124",
+    "extract_line": 124,
+    "section": "Addon Chat Links",
+    "literal": "```lua",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-125",
+    "extract_line": 125,
+    "section": "Addon Chat Links",
+    "literal": "EventRegistry:RegisterCallback(\"SetItemRef\", function(_, link, text, button, chatFrame)",
+    "status": "audit-pending",
+    "reason": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+  },
+  {
+    "source_id": "prose-undated-126",
+    "extract_line": 126,
+    "section": "Addon Chat Links",
+    "literal": "    local linkType, addonName, linkData = string.split(\":\", link, 3)",
+    "status": "audit-pending",
+    "reason": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+  },
+  {
+    "source_id": "prose-undated-128",
+    "extract_line": 128,
+    "section": "Addon Chat Links",
+    "literal": "    if linkType == \"addon\" and addonName == \"SomeAddon\" then",
+    "status": "audit-pending",
+    "reason": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+  },
+  {
+    "source_id": "prose-undated-129",
+    "extract_line": 129,
+    "section": "Addon Chat Links",
+    "literal": "        print(\"Link clicked: \", linkData)",
+    "status": "audit-pending",
+    "reason": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+  },
+  {
+    "source_id": "prose-undated-130",
+    "extract_line": 130,
+    "section": "Addon Chat Links",
+    "literal": "    end",
+    "status": "audit-pending",
+    "reason": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+  },
+  {
+    "source_id": "prose-undated-131",
+    "extract_line": 131,
+    "section": "Addon Chat Links",
+    "literal": "end)",
+    "status": "audit-pending",
+    "reason": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+  },
+  {
+    "source_id": "prose-undated-133",
+    "extract_line": 133,
+    "section": "Addon Chat Links",
+    "literal": "ChatFrame1:AddMessage(\"|cFFFFFF00|Haddon:SomeAddon:hidden-data|h[Some Clickable Message]|h|r\")",
+    "status": "audit-pending",
+    "reason": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+  },
+  {
+    "source_id": "prose-undated-134",
+    "extract_line": 134,
+    "section": "Addon Chat Links",
+    "literal": "```",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "source-context-136",
+    "extract_line": 136,
+    "section": "Scroll Templates",
+    "literal": "== Scroll Templates ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-138",
+    "extract_line": 138,
+    "section": "Scroll Templates",
+    "literal": "A new ScrollFrame template named ScrollFrameTemplate has been added. This serves as a replacement for many old scrolling related templates that are now deprecated as of this patch. This template can be used as a simpler alternative to ScrollBox views, and automatically creates and configures a scrollbar for use with the frame. An Lua example can be found below to demonstrate the use of this new template.",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-140",
+    "extract_line": 140,
+    "section": "Scroll Templates",
+    "literal": "```lua",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-141",
+    "extract_line": 141,
+    "section": "Scroll Templates",
+    "literal": "local ScrollFrame = CreateFrame(\"ScrollFrame\", nil, UIParent, \"ScrollFrameTemplate\")",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-142",
+    "extract_line": 142,
+    "section": "Scroll Templates",
+    "literal": "ScrollFrame:SetSize(300, 300)",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-143",
+    "extract_line": 143,
+    "section": "Scroll Templates",
+    "literal": "ScrollFrame:SetPoint(\"CENTER\")",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-145",
+    "extract_line": 145,
+    "section": "Scroll Templates",
+    "literal": "local ScrollChild = CreateFrame(\"Frame\")",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-146",
+    "extract_line": 146,
+    "section": "Scroll Templates",
+    "literal": "ScrollChild:SetSize(300, 600)",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-148",
+    "extract_line": 148,
+    "section": "Scroll Templates",
+    "literal": "local ScrollTexture = ScrollChild:CreateTexture(nil, \"OVERLAY\")",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-149",
+    "extract_line": 149,
+    "section": "Scroll Templates",
+    "literal": "ScrollTexture:SetAllPoints(ScrollChild)",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-150",
+    "extract_line": 150,
+    "section": "Scroll Templates",
+    "literal": "ScrollTexture:SetColorTexture(1, 0, 0, 1)",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-151",
+    "extract_line": 151,
+    "section": "Scroll Templates",
+    "literal": "ScrollTexture:SetGradient(\"VERTICAL\", CreateColor(1, 0, 0, 1), CreateColor(0, 0, 0, 1))",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-153",
+    "extract_line": 153,
+    "section": "Scroll Templates",
+    "literal": "ScrollFrame:SetScrollChild(ScrollChild)",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-154",
+    "extract_line": 154,
+    "section": "Scroll Templates",
+    "literal": "```",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-156",
+    "extract_line": 156,
+    "section": "Scroll Templates",
+    "literal": "For XML use cases, refer to the following example.",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-158",
+    "extract_line": 158,
+    "section": "Scroll Templates",
+    "literal": "```xml",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-159",
+    "extract_line": 159,
+    "section": "Scroll Templates",
+    "literal": "<ScrollFrame name=\"MyAddon_ScrollFrame\" inherits=\"ScrollFrameTemplate\" parent=\"UIParent\">",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-160",
+    "extract_line": 160,
+    "section": "Scroll Templates",
+    "literal": "    <Size x=\"300\" y=\"300\"/>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-161",
+    "extract_line": 161,
+    "section": "Scroll Templates",
+    "literal": "    <Anchors>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-162",
+    "extract_line": 162,
+    "section": "Scroll Templates",
+    "literal": "        <Anchor point=\"CENTER\"/>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-163",
+    "extract_line": 163,
+    "section": "Scroll Templates",
+    "literal": "    </Anchors>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-164",
+    "extract_line": 164,
+    "section": "Scroll Templates",
+    "literal": "    <ScrollChild>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-165",
+    "extract_line": 165,
+    "section": "Scroll Templates",
+    "literal": "        <Frame>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-166",
+    "extract_line": 166,
+    "section": "Scroll Templates",
+    "literal": "            <Size x=\"300\" y=\"600\"/>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-167",
+    "extract_line": 167,
+    "section": "Scroll Templates",
+    "literal": "            <Layers>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-168",
+    "extract_line": 168,
+    "section": "Scroll Templates",
+    "literal": "                <Layer level=\"OVERLAY\">",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-169",
+    "extract_line": 169,
+    "section": "Scroll Templates",
+    "literal": "                    <Texture setAllPoints=\"true\">",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-170",
+    "extract_line": 170,
+    "section": "Scroll Templates",
+    "literal": "                        <Color r=\"1\"/>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-171",
+    "extract_line": 171,
+    "section": "Scroll Templates",
+    "literal": "                        <Gradient orientation=\"VERTICAL\">",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-172",
+    "extract_line": 172,
+    "section": "Scroll Templates",
+    "literal": "                            <MinColor r=\"1\"/>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-173",
+    "extract_line": 173,
+    "section": "Scroll Templates",
+    "literal": "                            <MaxColor r=\"0\"/>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-174",
+    "extract_line": 174,
+    "section": "Scroll Templates",
+    "literal": "                        </Gradient>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-175",
+    "extract_line": 175,
+    "section": "Scroll Templates",
+    "literal": "                    </Texture>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-176",
+    "extract_line": 176,
+    "section": "Scroll Templates",
+    "literal": "                </Layer>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-177",
+    "extract_line": 177,
+    "section": "Scroll Templates",
+    "literal": "            </Layers>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-178",
+    "extract_line": 178,
+    "section": "Scroll Templates",
+    "literal": "        </Frame>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-179",
+    "extract_line": 179,
+    "section": "Scroll Templates",
+    "literal": "    </ScrollChild>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-180",
+    "extract_line": 180,
+    "section": "Scroll Templates",
+    "literal": "</ScrollFrame>",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-181",
+    "extract_line": 181,
+    "section": "Scroll Templates",
+    "literal": "```",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-183",
+    "extract_line": 183,
+    "section": "Scroll Templates",
+    "literal": "The following key values pairs can be assigned via XML to customize the creation of the scrollbar.",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-185",
+    "extract_line": 185,
+    "section": "Scroll Templates",
+    "literal": "{| class=\"darktable zebra\"",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-186",
+    "extract_line": 186,
+    "section": "Scroll Templates",
+    "literal": "|+",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-187",
+    "extract_line": 187,
+    "section": "Scroll Templates",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-188",
+    "extract_line": 188,
+    "section": "Scroll Templates",
+    "literal": "! Key !! Description",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-189",
+    "extract_line": 189,
+    "section": "Scroll Templates",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-190",
+    "extract_line": 190,
+    "section": "Scroll Templates",
+    "literal": "| noScrollBar || If true, don't create a scrollbar when the template is loaded.",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-191",
+    "extract_line": 191,
+    "section": "Scroll Templates",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-192",
+    "extract_line": 192,
+    "section": "Scroll Templates",
+    "literal": "| scrollBarBottomY || Bottom anchor offest for the scroll bar.",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-193",
+    "extract_line": 193,
+    "section": "Scroll Templates",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-194",
+    "extract_line": 194,
+    "section": "Scroll Templates",
+    "literal": "| scrollBarHideIfUnscrollable || If true, hide the scrollbar automatically if the scrollframe contents cannot be scrolled.",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-195",
+    "extract_line": 195,
+    "section": "Scroll Templates",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-196",
+    "extract_line": 196,
+    "section": "Scroll Templates",
+    "literal": "| scrollBarHideTrackIfThumbExceedsTrack || If true, hide the scrollbar track and thumb if the thumb would be too large to fit in the scrollbar.",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-197",
+    "extract_line": 197,
+    "section": "Scroll Templates",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-198",
+    "extract_line": 198,
+    "section": "Scroll Templates",
+    "literal": "| scrollBarTemplate || The name of a template to instantiate for the scrollbar. Defaults to MinimalScrollBar.",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-199",
+    "extract_line": 199,
+    "section": "Scroll Templates",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-200",
+    "extract_line": 200,
+    "section": "Scroll Templates",
+    "literal": "| scrollBarTopY || Top anchor Vertical offset for the scroll bar.",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "prose-undated-201",
+    "extract_line": 201,
+    "section": "Scroll Templates",
+    "literal": "|-",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "prose-undated-202",
+    "extract_line": 202,
+    "section": "Scroll Templates",
+    "literal": "| scrollBarX || Left anchor offset for the scroll bar. ||",
+    "status": "audit-pending",
+    "reason": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+  },
+  {
+    "source_id": "source-context-204",
+    "extract_line": 204,
+    "section": "Deprecated Templates",
+    "literal": "== Deprecated Templates ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-206",
+    "extract_line": 206,
+    "section": "Deprecated Templates",
+    "literal": "The following templates have been deprecated and will be removed in a future patch. Many of these can be replaced by ScrollFrameTemplate with minimal changes required.",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-208",
+    "extract_line": 208,
+    "section": "Deprecated Templates",
+    "literal": "* FauxScrollFrameTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-209",
+    "extract_line": 209,
+    "section": "Deprecated Templates",
+    "literal": "* FauxScrollFrameTemplateLight",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-210",
+    "extract_line": 210,
+    "section": "Deprecated Templates",
+    "literal": "* ListScrollFrameTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-211",
+    "extract_line": 211,
+    "section": "Deprecated Templates",
+    "literal": "* MinimalScrollBarTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-212",
+    "extract_line": 212,
+    "section": "Deprecated Templates",
+    "literal": "* MinimalScrollBarWithBorderTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-213",
+    "extract_line": 213,
+    "section": "Deprecated Templates",
+    "literal": "* MinimalScrollFrameTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-214",
+    "extract_line": 214,
+    "section": "Deprecated Templates",
+    "literal": "* UIPanelInputScrollFrameTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-215",
+    "extract_line": 215,
+    "section": "Deprecated Templates",
+    "literal": "* UIPanelScrollBarTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-216",
+    "extract_line": 216,
+    "section": "Deprecated Templates",
+    "literal": "* UIPanelScrollBarTemplateLightBorder",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-217",
+    "extract_line": 217,
+    "section": "Deprecated Templates",
+    "literal": "* UIPanelScrollBarTrimTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-218",
+    "extract_line": 218,
+    "section": "Deprecated Templates",
+    "literal": "* UIPanelScrollFrameCodeTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-219",
+    "extract_line": 219,
+    "section": "Deprecated Templates",
+    "literal": "* UIPanelScrollFrameTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-220",
+    "extract_line": 220,
+    "section": "Deprecated Templates",
+    "literal": "* UIPanelStretchableArtScrollBarTemplate",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-222",
+    "extract_line": 222,
+    "section": "Deprecated Templates",
+    "literal": "The ScrollFrame_OnLoad function was renamed to UIPanelScrollFrame_OnLoad, however the old function name was reused and now refers to an entirely new and different function. If you are having issues with multiple scrollbars appearing on a scroll frame, renaming these function calls may be a solution.",
+    "status": "audit-pending",
+    "reason": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+  },
+  {
+    "source_id": "source-context-224",
+    "extract_line": 224,
+    "section": "Structures",
+    "literal": "== Structures ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+  },
+  {
+    "source_id": "structures-Enum-BattlepetDeletedReason-225",
+    "extract_line": 225,
+    "section": "Structures",
+    "literal": " Enum.BattlepetDeletedReason",
+    "status": "audit-pending",
+    "reason": "Enum.BattlepetDeletedReason: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-BattlepetDeletedReason-226",
+    "extract_line": 226,
+    "section": "Structures",
+    "literal": "   + TradingPost = 6",
+    "status": "audit-pending",
+    "reason": "Enum.BattlepetDeletedReason: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-CraftingReagentType-227",
+    "extract_line": 227,
+    "section": "Structures",
+    "literal": " Enum.CraftingReagentType",
+    "status": "audit-pending",
+    "reason": "Enum.CraftingReagentType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-CraftingReagentType-228",
+    "extract_line": 228,
+    "section": "Structures",
+    "literal": "   # Optional -> Modifying = 0",
+    "status": "audit-pending",
+    "reason": "Enum.CraftingReagentType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-CraftingReagentType-229",
+    "extract_line": 229,
+    "section": "Structures",
+    "literal": "   + Automatic = 3",
+    "status": "audit-pending",
+    "reason": "Enum.CraftingReagentType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-CurrencySource-230",
+    "extract_line": 230,
+    "section": "Structures",
+    "literal": " Enum.CurrencySource",
+    "status": "audit-pending",
+    "reason": "Enum.CurrencySource: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-CurrencySource-231",
+    "extract_line": 231,
+    "section": "Structures",
+    "literal": "   + AccountHwmUpdate = 61",
+    "status": "audit-pending",
+    "reason": "Enum.CurrencySource: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-Cursormode-232",
+    "extract_line": 232,
+    "section": "Structures",
+    "literal": " Enum.Cursormode",
+    "status": "audit-pending",
+    "reason": "Enum.Cursormode: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-Cursormode-233",
+    "extract_line": 233,
+    "section": "Structures",
+    "literal": "   + QuestLegendaryCursor = 28",
+    "status": "audit-pending",
+    "reason": "Enum.Cursormode: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-Cursormode-234",
+    "extract_line": 234,
+    "section": "Structures",
+    "literal": "   + QuestLegendaryTurninCursor = 29",
+    "status": "audit-pending",
+    "reason": "Enum.Cursormode: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-Cursormode-235",
+    "extract_line": 235,
+    "section": "Structures",
+    "literal": "   + QuestLegendaryErrorCursor = 61",
+    "status": "audit-pending",
+    "reason": "Enum.Cursormode: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-Cursormode-236",
+    "extract_line": 236,
+    "section": "Structures",
+    "literal": "   + QuestLegendaryTurninErrorCursor = 62",
+    "status": "audit-pending",
+    "reason": "Enum.Cursormode: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAccountSetting-237",
+    "extract_line": 237,
+    "section": "Structures",
+    "literal": " Enum.EditModeAccountSetting",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAccountSetting-238",
+    "extract_line": 238,
+    "section": "Structures",
+    "literal": "   # ShowBuffFrame -> ShowBuffsAndDebuffs = 10",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAccountSetting-239",
+    "extract_line": 239,
+    "section": "Structures",
+    "literal": "   # ShowDebuffFrame -> DeprecatedShowDebuffFrame = 11",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAccountSetting-240",
+    "extract_line": 240,
+    "section": "Structures",
+    "literal": "   # ShowReputationBar -> ShowStatusTrackingBar2 = 20",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAccountSetting-241",
+    "extract_line": 241,
+    "section": "Structures",
+    "literal": "   + EnableAdvancedOptions = 23",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAccountSetting-242",
+    "extract_line": 242,
+    "section": "Structures",
+    "literal": "   + ShowPetFrame = 24",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeCastBarSetting-243",
+    "extract_line": 243,
+    "section": "Structures",
+    "literal": " Enum.EditModeCastBarSetting",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeCastBarSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeCastBarSetting-244",
+    "extract_line": 244,
+    "section": "Structures",
+    "literal": "   + ShowCastTime = 2",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeCastBarSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeLayoutType-245",
+    "extract_line": 245,
+    "section": "Structures",
+    "literal": " Enum.EditModeLayoutType",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeLayoutType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeLayoutType-246",
+    "extract_line": 246,
+    "section": "Structures",
+    "literal": "   + Override = 3",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeLayoutType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeMicroMenuSetting-247",
+    "extract_line": 247,
+    "section": "Structures",
+    "literal": " Enum.EditModeMicroMenuSetting",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeMicroMenuSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeMicroMenuSetting-248",
+    "extract_line": 248,
+    "section": "Structures",
+    "literal": "   + EyeSize = 3",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeMicroMenuSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeMinimapSetting-249",
+    "extract_line": 249,
+    "section": "Structures",
+    "literal": " Enum.EditModeMinimapSetting",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeMinimapSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeMinimapSetting-250",
+    "extract_line": 250,
+    "section": "Structures",
+    "literal": "   + Size = 2",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeMinimapSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeObjectiveTrackerSetting-251",
+    "extract_line": 251,
+    "section": "Structures",
+    "literal": " Enum.EditModeObjectiveTrackerSetting",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeObjectiveTrackerSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeObjectiveTrackerSetting-252",
+    "extract_line": 252,
+    "section": "Structures",
+    "literal": "   + Opacity = 1",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeObjectiveTrackerSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeStatusTrackingBarSystemIndices-253",
+    "extract_line": 253,
+    "section": "Structures",
+    "literal": " Enum.EditModeStatusTrackingBarSystemIndices",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeStatusTrackingBarSystemIndices: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeStatusTrackingBarSystemIndices-254",
+    "extract_line": 254,
+    "section": "Structures",
+    "literal": "   # ExperienceBar -> StatusTrackingBar1 = 1",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeStatusTrackingBarSystemIndices: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeStatusTrackingBarSystemIndices-255",
+    "extract_line": 255,
+    "section": "Structures",
+    "literal": "   # ReputationBar -> StatusTrackingBar2 = 2",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeStatusTrackingBarSystemIndices: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeUnitFrameSystemIndices-256",
+    "extract_line": 256,
+    "section": "Structures",
+    "literal": " Enum.EditModeUnitFrameSystemIndices",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeUnitFrameSystemIndices: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-EditModeUnitFrameSystemIndices-257",
+    "extract_line": 257,
+    "section": "Structures",
+    "literal": "   + Pet = 8",
+    "status": "audit-pending",
+    "reason": "Enum.EditModeUnitFrameSystemIndices: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-InventoryType-258",
+    "extract_line": 258,
+    "section": "Structures",
+    "literal": " Enum.InventoryType",
+    "status": "audit-pending",
+    "reason": "Enum.InventoryType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-InventoryType-259",
+    "extract_line": 259,
+    "section": "Structures",
+    "literal": "   # IndexEquipablespellMobilityType -> IndexEquipablespellWeaponType = 34",
+    "status": "audit-pending",
+    "reason": "Enum.InventoryType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-PointsModifierSourceType-260",
+    "extract_line": 260,
+    "section": "Structures",
+    "literal": " Enum.PointsModifierSourceType",
+    "status": "audit-pending",
+    "reason": "Enum.PointsModifierSourceType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-PointsModifierSourceType-261",
+    "extract_line": 261,
+    "section": "Structures",
+    "literal": "   + CreatureHealthMod = 64",
+    "status": "audit-pending",
+    "reason": "Enum.PointsModifierSourceType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-PowerType-262",
+    "extract_line": 262,
+    "section": "Structures",
+    "literal": " Enum.PowerType",
+    "status": "audit-pending",
+    "reason": "Enum.PowerType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-PowerType-263",
+    "extract_line": 263,
+    "section": "Structures",
+    "literal": "   + AlternateQuest = 23",
+    "status": "audit-pending",
+    "reason": "Enum.PowerType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-PowerType-264",
+    "extract_line": 264,
+    "section": "Structures",
+    "literal": "   + AlternateEncounter = 24",
+    "status": "audit-pending",
+    "reason": "Enum.PowerType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-PowerType-265",
+    "extract_line": 265,
+    "section": "Structures",
+    "literal": "   + AlternateMount = 25",
+    "status": "audit-pending",
+    "reason": "Enum.PowerType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-266",
+    "extract_line": 266,
+    "section": "Structures",
+    "literal": " Enum.TooltipDataLineType",
+    "status": "audit-pending",
+    "reason": "Enum.TooltipDataLineType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-267",
+    "extract_line": 267,
+    "section": "Structures",
+    "literal": "   + Separator = 30",
+    "status": "audit-pending",
+    "reason": "Enum.TooltipDataLineType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-UIMapFlag-268",
+    "extract_line": 268,
+    "section": "Structures",
+    "literal": " Enum.UIMapFlag",
+    "status": "audit-pending",
+    "reason": "Enum.UIMapFlag: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-UIMapFlag-269",
+    "extract_line": 269,
+    "section": "Structures",
+    "literal": "   + AlwaysAllowTaxiPathing = 0x20000",
+    "status": "audit-pending",
+    "reason": "Enum.UIMapFlag: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-UIWidgetVisualizationType-270",
+    "extract_line": 270,
+    "section": "Structures",
+    "literal": " Enum.UIWidgetVisualizationType",
+    "status": "audit-pending",
+    "reason": "Enum.UIWidgetVisualizationType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-UIWidgetVisualizationType-271",
+    "extract_line": 271,
+    "section": "Structures",
+    "literal": "   + WorldLootObject = 26",
+    "status": "audit-pending",
+    "reason": "Enum.UIWidgetVisualizationType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-UIWidgetVisualizationType-272",
+    "extract_line": 272,
+    "section": "Structures",
+    "literal": "   + ItemDisplay = 27",
+    "status": "audit-pending",
+    "reason": "Enum.UIWidgetVisualizationType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-VignetteType-273",
+    "extract_line": 273,
+    "section": "Structures",
+    "literal": " Enum.VignetteType",
+    "status": "audit-pending",
+    "reason": "Enum.VignetteType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-VignetteType-274",
+    "extract_line": 274,
+    "section": "Structures",
+    "literal": "   + FyrakkFlight = 4",
+    "status": "audit-pending",
+    "reason": "Enum.VignetteType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-WidgetEnabledState-275",
+    "extract_line": 275,
+    "section": "Structures",
+    "literal": " Enum.WidgetEnabledState",
+    "status": "audit-pending",
+    "reason": "Enum.WidgetEnabledState: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-WidgetEnabledState-276",
+    "extract_line": 276,
+    "section": "Structures",
+    "literal": "   # Enabled -> Yellow = 1",
+    "status": "audit-pending",
+    "reason": "Enum.WidgetEnabledState: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Enum-WidgetEnabledState-277",
+    "extract_line": 277,
+    "section": "Structures",
+    "literal": "   # Gold -> Artifact = 5",
+    "status": "audit-pending",
+    "reason": "Enum.WidgetEnabledState: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+  },
+  {
+    "source_id": "structures-Constants-TraitConsts-279",
+    "extract_line": 279,
+    "section": "Structures",
+    "literal": " Constants.TraitConsts",
+    "status": "audit-pending",
+    "reason": "Constants.TraitConsts: exact constant identity and view-trait-config semantics need concrete assertions; no constant-value credit from inventory sweep."
+  },
+  {
+    "source_id": "structures-Constants-TraitConsts-280",
+    "extract_line": 280,
+    "section": "Structures",
+    "literal": "   + VIEW_TRAIT_CONFIG_ID = -3",
+    "status": "audit-pending",
+    "reason": "Constants.TraitConsts: exact constant identity and view-trait-config semantics need concrete assertions; no constant-value credit from inventory sweep."
+  },
+  {
+    "source_id": "structures-AreaPOIInfo-282",
+    "extract_line": 282,
+    "section": "Structures",
+    "literal": " AreaPOIInfo",
+    "status": "audit-pending",
+    "reason": "AreaPOIInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-AreaPOIInfo-283",
+    "extract_line": 283,
+    "section": "Structures",
+    "literal": "   + 13: addPaddingAboveWidgets",
+    "status": "audit-pending",
+    "reason": "AreaPOIInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-CharCustomizationChoice-284",
+    "extract_line": 284,
+    "section": "Structures",
+    "literal": " CharCustomizationChoice",
+    "status": "audit-pending",
+    "reason": "CharCustomizationChoice: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-CharCustomizationChoice-285",
+    "extract_line": 285,
+    "section": "Structures",
+    "literal": "   + 7: soundKit",
+    "status": "audit-pending",
+    "reason": "CharCustomizationChoice: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-CraftingReagentSlotSchematic-286",
+    "extract_line": 286,
+    "section": "Structures",
+    "literal": " CraftingReagentSlotSchematic",
+    "status": "audit-pending",
+    "reason": "CraftingReagentSlotSchematic: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-CraftingReagentSlotSchematic-287",
+    "extract_line": 287,
+    "section": "Structures",
+    "literal": "   + 9: required",
+    "status": "audit-pending",
+    "reason": "CraftingReagentSlotSchematic: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-GenericWidgetDisplayFrameInfo-288",
+    "extract_line": 288,
+    "section": "Structures",
+    "literal": " GenericWidgetDisplayFrameInfo",
+    "status": "audit-pending",
+    "reason": "GenericWidgetDisplayFrameInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-GenericWidgetDisplayFrameInfo-289",
+    "extract_line": 289,
+    "section": "Structures",
+    "literal": "   + 6: extraButtonText",
+    "status": "audit-pending",
+    "reason": "GenericWidgetDisplayFrameInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-GenericWidgetDisplayFrameInfo-290",
+    "extract_line": 290,
+    "section": "Structures",
+    "literal": "   + 7: closeButtonText",
+    "status": "audit-pending",
+    "reason": "GenericWidgetDisplayFrameInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ItemUpgradeCurrencyCost-291",
+    "extract_line": 291,
+    "section": "Structures",
+    "literal": " ItemUpgradeCurrencyCost",
+    "status": "audit-pending",
+    "reason": "ItemUpgradeCurrencyCost: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ItemUpgradeCurrencyCost-292",
+    "extract_line": 292,
+    "section": "Structures",
+    "literal": "   + 3: discountInfo",
+    "status": "audit-pending",
+    "reason": "ItemUpgradeCurrencyCost: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ItemUpgradeItemCost-293",
+    "extract_line": 293,
+    "section": "Structures",
+    "literal": " ItemUpgradeItemCost",
+    "status": "audit-pending",
+    "reason": "ItemUpgradeItemCost: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ItemUpgradeItemCost-294",
+    "extract_line": 294,
+    "section": "Structures",
+    "literal": "   + 3: discountInfo",
+    "status": "audit-pending",
+    "reason": "ItemUpgradeItemCost: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ItemUpgradeItemInfo-295",
+    "extract_line": 295,
+    "section": "Structures",
+    "literal": " ItemUpgradeItemInfo",
+    "status": "audit-pending",
+    "reason": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ItemUpgradeItemInfo-296",
+    "extract_line": 296,
+    "section": "Structures",
+    "literal": "   + 5: highWatermarkSlot",
+    "status": "audit-pending",
+    "reason": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ItemUpgradeItemInfo-297",
+    "extract_line": 297,
+    "section": "Structures",
+    "literal": "   + 8: minItemLevel",
+    "status": "audit-pending",
+    "reason": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ItemUpgradeItemInfo-298",
+    "extract_line": 298,
+    "section": "Structures",
+    "literal": "   + 9: maxItemLevel",
+    "status": "audit-pending",
+    "reason": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ItemUpgradeItemInfo-299",
+    "extract_line": 299,
+    "section": "Structures",
+    "literal": "   + 11: customUpgradeString",
+    "status": "audit-pending",
+    "reason": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ItemUpgradeItemInfo-300",
+    "extract_line": 300,
+    "section": "Structures",
+    "literal": "   + 12: upgradeCostTypesForSeason",
+    "status": "audit-pending",
+    "reason": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-MatchPVPStatColumn-301",
+    "extract_line": 301,
+    "section": "Structures",
+    "literal": " MatchPVPStatColumn",
+    "status": "audit-pending",
+    "reason": "MatchPVPStatColumn: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-MatchPVPStatColumn-302",
+    "extract_line": 302,
+    "section": "Structures",
+    "literal": "   + 5: tooltipTitle",
+    "status": "audit-pending",
+    "reason": "MatchPVPStatColumn: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-PVPScoreInfo-303",
+    "extract_line": 303,
+    "section": "Structures",
+    "literal": " PVPScoreInfo",
+    "status": "audit-pending",
+    "reason": "PVPScoreInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-PVPScoreInfo-304",
+    "extract_line": 304,
+    "section": "Structures",
+    "literal": "   + 17: postmatchMMR",
+    "status": "audit-pending",
+    "reason": "PVPScoreInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-PartyPoseInfo-305",
+    "extract_line": 305,
+    "section": "Structures",
+    "literal": " PartyPoseInfo",
+    "status": "audit-pending",
+    "reason": "PartyPoseInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-PartyPoseInfo-306",
+    "extract_line": 306,
+    "section": "Structures",
+    "literal": "   + 8: uiTextureKit",
+    "status": "audit-pending",
+    "reason": "PartyPoseInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-PartyPoseInfo-307",
+    "extract_line": 307,
+    "section": "Structures",
+    "literal": "   + 9: titleText",
+    "status": "audit-pending",
+    "reason": "PartyPoseInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-PerksActivitiesInfo-308",
+    "extract_line": 308,
+    "section": "Structures",
+    "literal": " PerksActivitiesInfo",
+    "status": "audit-pending",
+    "reason": "PerksActivitiesInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-PerksActivitiesInfo-309",
+    "extract_line": 309,
+    "section": "Structures",
+    "literal": "   + 3: secondsRemaining",
+    "status": "audit-pending",
+    "reason": "PerksActivitiesInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-PerksActivityInfo-310",
+    "extract_line": 310,
+    "section": "Structures",
+    "literal": " PerksActivityInfo",
+    "status": "audit-pending",
+    "reason": "PerksActivityInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-PerksActivityInfo-311",
+    "extract_line": 311,
+    "section": "Structures",
+    "literal": "   + 7: supersedes",
+    "status": "audit-pending",
+    "reason": "PerksActivityInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-PerksActivityInfo-312",
+    "extract_line": 312,
+    "section": "Structures",
+    "literal": "   + 8: uiPriority",
+    "status": "audit-pending",
+    "reason": "PerksActivityInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ProfessionInfo-313",
+    "extract_line": 313,
+    "section": "Structures",
+    "literal": " ProfessionInfo",
+    "status": "audit-pending",
+    "reason": "ProfessionInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-ProfessionInfo-314",
+    "extract_line": 314,
+    "section": "Structures",
+    "literal": "   + 3: sourceCounter",
+    "status": "audit-pending",
+    "reason": "ProfessionInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-QuestInfo-315",
+    "extract_line": 315,
+    "section": "Structures",
+    "literal": " QuestInfo",
+    "status": "audit-pending",
+    "reason": "QuestInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-QuestInfo-316",
+    "extract_line": 316,
+    "section": "Structures",
+    "literal": "   + 23: isLegendarySort",
+    "status": "audit-pending",
+    "reason": "QuestInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-StatusBarWidgetVisualizationInfo-317",
+    "extract_line": 317,
+    "section": "Structures",
+    "literal": " StatusBarWidgetVisualizationInfo",
+    "status": "audit-pending",
+    "reason": "StatusBarWidgetVisualizationInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-StatusBarWidgetVisualizationInfo-318",
+    "extract_line": 318,
+    "section": "Structures",
+    "literal": "   + 17: textEnabledState",
+    "status": "audit-pending",
+    "reason": "StatusBarWidgetVisualizationInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-StatusBarWidgetVisualizationInfo-319",
+    "extract_line": 319,
+    "section": "Structures",
+    "literal": "   + 18: textFontType",
+    "status": "audit-pending",
+    "reason": "StatusBarWidgetVisualizationInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-StatusBarWidgetVisualizationInfo-320",
+    "extract_line": 320,
+    "section": "Structures",
+    "literal": "   + 19: textSizeType",
+    "status": "audit-pending",
+    "reason": "StatusBarWidgetVisualizationInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-TaxiNodeInfo-321",
+    "extract_line": 321,
+    "section": "Structures",
+    "literal": " TaxiNodeInfo",
+    "status": "audit-pending",
+    "reason": "TaxiNodeInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-TaxiNodeInfo-322",
+    "extract_line": 322,
+    "section": "Structures",
+    "literal": "   + 9: isMapLayerTransition",
+    "status": "audit-pending",
+    "reason": "TaxiNodeInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo-323",
+    "extract_line": 323,
+    "section": "Structures",
+    "literal": " UIWidgetSpellInfo",
+    "status": "audit-pending",
+    "reason": "UIWidgetSpellInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo-324",
+    "extract_line": 324,
+    "section": "Structures",
+    "literal": "   # 5: iconSizeType, Type: SpellDisplayIconSizeType -> WidgetIconSizeType",
+    "status": "audit-pending",
+    "reason": "UIWidgetSpellInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-UiMapDetails-325",
+    "extract_line": 325,
+    "section": "Structures",
+    "literal": " UiMapDetails",
+    "status": "audit-pending",
+    "reason": "UiMapDetails: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-UiMapDetails-326",
+    "extract_line": 326,
+    "section": "Structures",
+    "literal": "   # 5: flags, Type: number -> UIMapFlag",
+    "status": "audit-pending",
+    "reason": "UiMapDetails: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-VignetteInfo-327",
+    "extract_line": 327,
+    "section": "Structures",
+    "literal": " VignetteInfo",
+    "status": "audit-pending",
+    "reason": "VignetteInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  },
+  {
+    "source_id": "structures-VignetteInfo-328",
+    "extract_line": 328,
+    "section": "Structures",
+    "literal": "   + 16: addPaddingAboveWidgets",
+    "status": "audit-pending",
+    "reason": "VignetteInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+  }
+]

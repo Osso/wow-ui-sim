@@ -1,0 +1,2718 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "10.1.0",
+  "source_register": "data/patch-api/sources/10.1.0-wikitext-register.json",
+  "source_sha256": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76",
+  "audit_status": "in-progress",
+  "proof_policy": "Complete occurrence accounting against current retail 12.1.0, using twenty-one chronological later registers. Ten unused namespace retirements; 36 exact publication gaps. Published functions/events do not prove signatures, populated outputs, security, historical or native parity. Substantive extracts remain audit-pending; local targeted proof is not native/independent acceptance.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-10-1-0",
+      "symbols": [
+        "129 inventory occurrences"
+      ],
+      "scope": "Publication/absence/event registration only; 93 OK / 36 exact gaps. Numeric-equivalent CVar default string difference is not default parity.",
+      "spec": "docs/specs/patch-10-1-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_10_1_0_publication_sweep.rs",
+        "tests/patch_10_1_0_publication_fixes.rs",
+        "tests/patch_10_1_0_cached_surfaces.rs"
+      ],
+      "compiled_revision": "338075b03",
+      "ledger": "data/patch-api/evidence/10.1.0-session-2026-10-07/p1010-proof.json",
+      "proof": "Twenty-two isolated sweeps, bare retirement RED/GREEN, cached Game prefork, loot successor shape, exact one-row negative control, format, default/Mists check and exit-0 startup []."
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/10.1.0-api-changes.txt",
+    "sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+    "wikitext_revid": 2236681,
+    "wikitext_sha256": "9b22cad6805e68ffbdb9c723c8e23ff208bd644fd5b94fadcf0493f96241c8d2",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "preserve_examples": true
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnMetadata-234",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.AcknowledgeCallout-235",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.HideCallout-236",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.HideWorldLootObjectCallout-237",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID-238",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.SwapWorldLootObjectCallout-239",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteItem.IsUnlimitedLevelingUnlocked-240",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_CharacterServices.AssignRaceOrFactionChangeDistribution-241",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires account distribution assignment and race/faction service transition; successor is not actually registered."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetColorForChatType-242",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires chat-type color lookup and the documented return representation; no raw modeled query is registered."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.GetTraitTreeForSpec-243",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.InitializeViewLoadout-244",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.ViewLoadout-245",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires remote loadout viewing, import validation and view-config lifecycle, not merely InitializeViewLoadout publication."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.AdjustTimeByMonths-246",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires calendar month/year rollover, day handling and return DTO contract; calendar transformation is not registered."
+    },
+    {
+      "source_id": "wt-global-api-C_Debug.ViewInDebugWindow-247",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.OnClose-248",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.OnOpen-249",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.SetTab-250",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ExpansionTrial.OnTrialLevelUpDialogClicked-251",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires trial level-up dialog acknowledgment/entitlement state and downstream actions; namespace autostub is not a producer."
+    },
+    {
+      "source_id": "wt-global-api-C_ExpansionTrial.OnTrialLevelUpDialogShown-252",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires trial level-up dialog shown state and entitlement policy; namespace autostub is not a producer."
+    },
+    {
+      "source_id": "wt-global-api-C_GenericWidgetDisplay.Acknowledge-253",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires active generic-widget identity and acknowledgment state/events, not an inert registration."
+    },
+    {
+      "source_id": "wt-global-api-C_GenericWidgetDisplay.Close-254",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires active generic-widget close state and lifecycle/events, not an inert registration."
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.MemberExistsByName-255",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires guild roster name/realm matching and roster availability contract; fallback lookup is not a registered modeled query."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.DoesItemMatchTrackJump-256",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires item upgrade-track relation and jump-target validation, not a fixed boolean."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetHighWatermarkForItem-257",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires item identity to account high-watermark mapping and discount context."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetHighWatermarkForSlot-258",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires per-equipment-slot account high-watermark state."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetHighWatermarkSlotForItem-259",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires item equipment classification and high-watermark slot mapping."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.IsItemBound-260",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual item binding state/eligibility contract, not a fixed boolean."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.GetAllEncounterInfos-261",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.GetInfoForEncounter-262",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.GetLootHistoryTime-263",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.GetSortedDropsForEncounter-264",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.GetSortedInfoForDrop-265",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapHighlightPulseInfo-266",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated map highlight pulse metadata and map relation/state."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyPose.ExtraAction-267",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires party-pose session identity and extra-action state transition."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyPose.GetPartyPoseInfoByID-268",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated pose records keyed by pose ID, including texture kit/title fields."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyPose.HasExtraAction-269",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires party-pose session/action availability, not a fixed boolean."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpellInfo-270",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires quest reward spell metadata keyed by quest/spell identity and populated outputs."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpells-271",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires per-quest ordered reward spell IDs and availability policy."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestShouldToastCompletion-272",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires quest completion notification policy and state, not a fixed boolean."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.HasQuestRewardSpells-273",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires reward spell producer shared with quest reward queries."
+    },
+    {
+      "source_id": "wt-global-api-C_SpectatingUI.IsSpectating-274",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires spectating session state and lifecycle; namespace autostub is not modeled publication."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.TargetSpellJumpsUpgradeTrack-275",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetWorldLootObject-276",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetProfessionInfoByRecipeID-277",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetReagentRequirementItemIDs-278",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecraftRemovalWarnings-279",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsEnchantTargetValid-280",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires target-item enchanting restrictions and reagent-aware validation; shared gap with the 10.1.5 audit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsRecraftReagentValid-281",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires recraft target/recipe/modification/reagent relation validation."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetItemDisplayVisualizationInfo-282",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated ItemDisplay visualization DTOs keyed by widget ID."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.AddPrivateAuraAnchor-283",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.AddPrivateAuraAppliedSound-284",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.AuraIsPrivate-285",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.RemovePrivateAuraAnchor-286",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.RemovePrivateAuraAppliedSound-287",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_UnitAuras.SetPrivateWarningTextAnchor-288",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetButtonMetatable-289",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetClassIDFromSpecID-290",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetEditBoxMetatable-291",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetFontStringMetatable-292",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetFrameMetatable-293",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetSoundEntryCount-294",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires sound-entry catalog identity/count query; missing global cannot be replaced by an arbitrary zero."
+    },
+    {
+      "source_id": "wt-global-api-IsWorldLootObject-295",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-pcallwithenv-296",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires VM call-environment replacement/restoration and protected-call results/error semantics; no Lua wrapper or VM change fabricated."
+    },
+    {
+      "source_id": "wt-global-api-StripHyperlinks-297",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_CharacterServices.AssignPFCDistribution-300",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.CanMasterLoot-301",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.GetExpiration-302",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.GetItem-303",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.GetNumItems-304",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.GetPlayerInfo-305",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.GiveMasterLoot-306",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_LootHistory.SetExpiration-307",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetQuestLogRewardSpell-308",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TooltipInfo.GetQuestRewardSpell-309",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetAddOnMetadata-310",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy modeled global remains registered; tests/addon_api.rs:422,427 and tests/patch_10_2_0_publication_fixes.rs:41 explicitly consume/require it. Retiring requires coordinated profile gating and legacy-caller migration rather than unused-autostub removal. Cached matches are C_AddOns successor consumers; they do not establish old-global use."
+    },
+    {
+      "source_id": "wt-global-api-GetEventCPUUsage-311",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetFunctionCPUUsage-312",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetMouseClickFocus-313",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetMouseMotionFocus-314",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetNumFrames-315",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetNumQuestLogRewardSpells-316",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetNumRewardSpells-317",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogRewardSpell-318",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogSpellLink-319",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestSpellLink-320",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetRewardSpell-321",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetScriptCPUUsage-322",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AreaPoiInfo.IsAreaPOITimed-325",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires real timed-POI state and hideTimerInTooltip return value; ordinary lookup only fabricates an autostub."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapInfoAtPosition-327",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-329",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later register supersedes this changed occurrence to absent; ordinary namespace lookup still fabricates it. Existing transition-alias retirement policy in src/c_api/patch_retired_members.rs:13 deliberately retains SpellBook aliases. Further alias/caller migration not included in bounded unused-member retirement."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.RecraftRecipe-331",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires recraft transaction, removed-modification argument, item/reagent consumption and resulting events."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.RecraftRecipeForOrder-333",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires order-scoped recraft transaction and removed-modification argument with order ownership/state."
+    },
+    {
+      "source_id": "wt-global-api-C_VignetteInfo.GetVignettePosition-335",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires world vignette position/facing projection and non-nil position contract, not a fabricated function."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:EnableMouseMotion-346",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:IsMouseMotionFocus-347",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-widgets-AnimationGroup:GetElapsed-348",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetCustomWordWrapMinWidth-349",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:ReleaseFrontEndCharacterDisplays-350",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Front-end 3D character-display lifecycle is intentionally unsupported; permanent 3D scope boundary, not a modeled 2D behavior."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:SetFrontEndLobbyModelFromDefaultCharacterDisplay-351",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Front-end 3D character-display/model selection is intentionally unsupported; permanent 3D scope boundary, not a modeled 2D behavior."
+    },
+    {
+      "source_id": "wt-events-LOOT_HISTORY_CLEAR_HISTORY-364",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-LOOT_HISTORY_GO_TO_ENCOUNTER-365",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-LOOT_HISTORY_UPDATE_DROP-366",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-LOOT_HISTORY_UPDATE_ENCOUNTER-367",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-NEW_MATCHMAKING_PARTY_INVITE-368",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PLAYER_JOINED_PVP_MATCH-369",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-REJECTED_MATCHMAKING_PARTY_INVITE-370",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-SHOW_PARTY_POSE_UI-371",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-LOOT_HISTORY_AUTO_SHOW-374",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-LOOT_HISTORY_FULL_UPDATE-375",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-LOOT_HISTORY_ROLL_CHANGED-376",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-LOOT_HISTORY_ROLL_COMPLETE-377",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PVP_ROLE_POPUP_JOINED_MATCH-378",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-ADDON_LOADED-381",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-TOOLTIP_DATA_UPDATE-383",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-acknowledgedArrowCallouts-393",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-dnMTUpdate-394",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-EnableAirlockLogging-395",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-friendInvitesCollapsed_WowLabs-396",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-frontendMatchingModes_WowLabs-397",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-locateViewerMaxJobs-398",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-minimapTrackedInfov2-399",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-nameplateGameObjectMaxDistance-400",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved. Page default 30 versus current string 30.000000: serialization difference, equal numeric values; no historical default-parity claim."
+    },
+    {
+      "source_id": "wt-cvars-partyInvitesCollapsed_WowLabs-401",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-pendingInviteInfoShown_WowLabs-402",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-RAIDshadowBlendCascades-403",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-shadowBlendCascades-404",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-WalkableSurfacesValidationLog-405",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-worldIntersectMaxJobs-406",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-wowLabsClosedTutorials-407",
+      "capabilities": [
+        "publication-sweep-10-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; signatures, populated outputs, security, historical and native parity remain unproved."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Summary claim requires corresponding state/output/security or cached-UI behavioral proof; publication probes alone do not establish it."
+    },
+    {
+      "source_id": "source-context-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "source-context-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "source-context-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "source-context-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "source-context-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-057",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-061",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-068",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-072",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Private aura example/contract requires unit-scoped anchor attachment/removal, opaque IDs, display durations/icons, applied-sound routing or shared warning-text behavior without exposing aura identity. This page example has not been executed; later aura-system tests are not occurrence-specific proof."
+    },
+    {
+      "source_id": "prose-undated-080",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "source-context-082",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-086",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-087",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-088",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-089",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-090",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-091",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-092",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-093",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-094",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-095",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-096",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-097",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-098",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-099",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-103",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-104",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-105",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-106",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-107",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-108",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-109",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-111",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-113",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-114",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-115",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-116",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-117",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires loading a real TOC with named callbacks, callback resolution and enter/leave/click behavior; verify icon texture/atlas precedence and addon-list ordering through the actual cached UI. TOC retention alone proves none of those contracts."
+    },
+    {
+      "source_id": "prose-undated-118",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "source-context-120",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-122",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+    },
+    {
+      "source_id": "prose-undated-124",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-125",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+    },
+    {
+      "source_id": "prose-undated-126",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+    },
+    {
+      "source_id": "prose-undated-128",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+    },
+    {
+      "source_id": "prose-undated-129",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+    },
+    {
+      "source_id": "prose-undated-130",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+    },
+    {
+      "source_id": "prose-undated-131",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+    },
+    {
+      "source_id": "prose-undated-133",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires cached chat-frame rendering and SetItemRef dispatch for a local-only addon link, preserving callback payload and preventing outgoing chat transmission; example has not been executed."
+    },
+    {
+      "source_id": "prose-undated-134",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "source-context-136",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-138",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-140",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-141",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-142",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-143",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-145",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-146",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-148",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-149",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-150",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-151",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-153",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-154",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-156",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-158",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-159",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-160",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-161",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-162",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-163",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-164",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-165",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-166",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-167",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-168",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-169",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-170",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-171",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-172",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-173",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-174",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-175",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-176",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-177",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-178",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-179",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-180",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-181",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-183",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-185",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-186",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-187",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-188",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-189",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-190",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-191",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-192",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-193",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-194",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-195",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-196",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-197",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-198",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-199",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-200",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "prose-undated-201",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "prose-undated-202",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires actual ScrollFrameTemplate Lua/XML loading, ScrollChild/gradient layout and scrollbar customization/state; no cached-UI example or template-key behavior credited by the inventory sweep."
+    },
+    {
+      "source_id": "source-context-204",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-206",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-208",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-209",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-210",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-211",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-212",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-213",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-214",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-215",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-216",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-217",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-218",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-219",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-220",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-222",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation is not current absence. Requires current template loading/renamed-handler ownership and duplicate-scrollbar behavior; do not delete vendor templates based on this notice."
+    },
+    {
+      "source_id": "source-context-224",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, source/resource context, filename, example fence or table scaffolding; retained without runtime credit."
+    },
+    {
+      "source_id": "structures-Enum-BattlepetDeletedReason-225",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.BattlepetDeletedReason: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-BattlepetDeletedReason-226",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.BattlepetDeletedReason: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-CraftingReagentType-227",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CraftingReagentType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-CraftingReagentType-228",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CraftingReagentType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-CraftingReagentType-229",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CraftingReagentType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-CurrencySource-230",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencySource: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-CurrencySource-231",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencySource: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-Cursormode-232",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.Cursormode: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-Cursormode-233",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.Cursormode: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-Cursormode-234",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.Cursormode: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-Cursormode-235",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.Cursormode: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-Cursormode-236",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.Cursormode: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAccountSetting-237",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAccountSetting-238",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAccountSetting-239",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAccountSetting-240",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAccountSetting-241",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAccountSetting-242",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeAccountSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeCastBarSetting-243",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeCastBarSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeCastBarSetting-244",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeCastBarSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeLayoutType-245",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeLayoutType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeLayoutType-246",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeLayoutType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeMicroMenuSetting-247",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeMicroMenuSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeMicroMenuSetting-248",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeMicroMenuSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeMinimapSetting-249",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeMinimapSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeMinimapSetting-250",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeMinimapSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeObjectiveTrackerSetting-251",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeObjectiveTrackerSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeObjectiveTrackerSetting-252",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeObjectiveTrackerSetting: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeStatusTrackingBarSystemIndices-253",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeStatusTrackingBarSystemIndices: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeStatusTrackingBarSystemIndices-254",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeStatusTrackingBarSystemIndices: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeStatusTrackingBarSystemIndices-255",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeStatusTrackingBarSystemIndices: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeUnitFrameSystemIndices-256",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeUnitFrameSystemIndices: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-EditModeUnitFrameSystemIndices-257",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EditModeUnitFrameSystemIndices: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-InventoryType-258",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.InventoryType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-InventoryType-259",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.InventoryType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-PointsModifierSourceType-260",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PointsModifierSourceType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-PointsModifierSourceType-261",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PointsModifierSourceType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-PowerType-262",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PowerType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-PowerType-263",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PowerType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-PowerType-264",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PowerType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-PowerType-265",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PowerType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-266",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.TooltipDataLineType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-267",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.TooltipDataLineType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-UIMapFlag-268",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.UIMapFlag: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-UIMapFlag-269",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.UIMapFlag: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-UIWidgetVisualizationType-270",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.UIWidgetVisualizationType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-UIWidgetVisualizationType-271",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.UIWidgetVisualizationType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-UIWidgetVisualizationType-272",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.UIWidgetVisualizationType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-VignetteType-273",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.VignetteType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-VignetteType-274",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.VignetteType: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-WidgetEnabledState-275",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.WidgetEnabledState: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-WidgetEnabledState-276",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.WidgetEnabledState: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Enum-WidgetEnabledState-277",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.WidgetEnabledState: exact numeric identity/rename/absence needs behavioral assertions against current supersession; publication of a namespace grants no member-value proof."
+    },
+    {
+      "source_id": "structures-Constants-TraitConsts-279",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Constants.TraitConsts: exact constant identity and view-trait-config semantics need concrete assertions; no constant-value credit from inventory sweep."
+    },
+    {
+      "source_id": "structures-Constants-TraitConsts-280",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Constants.TraitConsts: exact constant identity and view-trait-config semantics need concrete assertions; no constant-value credit from inventory sweep."
+    },
+    {
+      "source_id": "structures-AreaPOIInfo-282",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AreaPOIInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-AreaPOIInfo-283",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AreaPOIInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-CharCustomizationChoice-284",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CharCustomizationChoice: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-CharCustomizationChoice-285",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CharCustomizationChoice: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-CraftingReagentSlotSchematic-286",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CraftingReagentSlotSchematic: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-CraftingReagentSlotSchematic-287",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CraftingReagentSlotSchematic: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-GenericWidgetDisplayFrameInfo-288",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GenericWidgetDisplayFrameInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-GenericWidgetDisplayFrameInfo-289",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GenericWidgetDisplayFrameInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-GenericWidgetDisplayFrameInfo-290",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GenericWidgetDisplayFrameInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ItemUpgradeCurrencyCost-291",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeCurrencyCost: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ItemUpgradeCurrencyCost-292",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeCurrencyCost: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ItemUpgradeItemCost-293",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeItemCost: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ItemUpgradeItemCost-294",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeItemCost: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ItemUpgradeItemInfo-295",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ItemUpgradeItemInfo-296",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ItemUpgradeItemInfo-297",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ItemUpgradeItemInfo-298",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ItemUpgradeItemInfo-299",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ItemUpgradeItemInfo-300",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeItemInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-MatchPVPStatColumn-301",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "MatchPVPStatColumn: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-MatchPVPStatColumn-302",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "MatchPVPStatColumn: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-PVPScoreInfo-303",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PVPScoreInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-PVPScoreInfo-304",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PVPScoreInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-PartyPoseInfo-305",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PartyPoseInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-PartyPoseInfo-306",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PartyPoseInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-PartyPoseInfo-307",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PartyPoseInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-PerksActivitiesInfo-308",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksActivitiesInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-PerksActivitiesInfo-309",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksActivitiesInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-PerksActivityInfo-310",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksActivityInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-PerksActivityInfo-311",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksActivityInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-PerksActivityInfo-312",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksActivityInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ProfessionInfo-313",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ProfessionInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-ProfessionInfo-314",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ProfessionInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-QuestInfo-315",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "QuestInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-QuestInfo-316",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "QuestInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-StatusBarWidgetVisualizationInfo-317",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "StatusBarWidgetVisualizationInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-StatusBarWidgetVisualizationInfo-318",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "StatusBarWidgetVisualizationInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-StatusBarWidgetVisualizationInfo-319",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "StatusBarWidgetVisualizationInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-StatusBarWidgetVisualizationInfo-320",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "StatusBarWidgetVisualizationInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-TaxiNodeInfo-321",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "TaxiNodeInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-TaxiNodeInfo-322",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "TaxiNodeInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-UIWidgetSpellInfo-323",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UIWidgetSpellInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-UIWidgetSpellInfo-324",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UIWidgetSpellInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-UiMapDetails-325",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UiMapDetails: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-UiMapDetails-326",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UiMapDetails: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-VignetteInfo-327",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "VignetteInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    },
+    {
+      "source_id": "structures-VignetteInfo-328",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "VignetteInfo: populated DTO field/order/type/rename requires concrete producer inputs and serialized outputs; empty/nil defaults and method publication do not prove this statement."
+    }
+  ]
+}

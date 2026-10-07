@@ -1,0 +1,311 @@
+[
+  {
+    "patch": "10.1.0",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "10.1.0",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/10.1.0-api-changes.wikitext",
+      "2236681",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/10.1.0-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "10.1.5",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "10.1.5",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/10.1.5-api-changes.wikitext",
+      "3807695",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/10.1.5-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "10.1.7",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "10.1.7",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/10.1.7-api-changes.wikitext",
+      "6473483",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/10.1.7-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "10.2.0",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "10.2.0",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/10.2.0-api-changes.wikitext",
+      "6473470",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/10.2.0-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "10.2.5",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "10.2.5",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/10.2.5-api-changes.wikitext",
+      "5993852",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/10.2.5-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "10.2.6",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "10.2.6",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/10.2.6-api-changes.wikitext",
+      "6268742",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/10.2.6-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "10.2.7",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "10.2.7",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/10.2.7-api-changes.wikitext",
+      "6268738",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/10.2.7-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "11.0.0",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "11.0.0",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/11.0.0-api-changes.wikitext",
+      "6726780",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/11.0.0-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "11.0.2",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "11.0.2",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/11.0.2-api-changes.wikitext",
+      "6862982",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/11.0.2-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "11.0.5",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "11.0.5",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/11.0.5-api-changes.wikitext",
+      "6726778",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/11.0.5-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "11.0.7",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "11.0.7",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/11.0.7-api-changes.wikitext",
+      "6726777",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/11.0.7-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "11.1.0",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "11.1.0",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/11.1.0-api-changes.wikitext",
+      "6726776",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/11.1.0-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "11.1.5",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "11.1.5",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/11.1.5-api-changes.wikitext",
+      "6726775",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/11.1.5-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "11.1.7",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "11.1.7",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/11.1.7-api-changes.wikitext",
+      "6726774",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/11.1.7-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "11.2.0",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "11.2.0",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/11.2.0-api-changes.wikitext",
+      "6726773",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/11.2.0-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "11.2.5",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "11.2.5",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/11.2.5-api-changes.wikitext",
+      "6726772",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/11.2.5-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "11.2.7",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "11.2.7",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/11.2.7-api-changes.wikitext",
+      "6726771",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/11.2.7-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "12.0.0",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "12.0.0",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/12.0.0-api-changes.wikitext",
+      "6747189",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/12.0.0-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "12.0.1",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "12.0.1",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/12.0.1-api-changes.wikitext",
+      "6747895",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/12.0.1-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "12.0.5",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "12.0.5",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/12.0.5-api-changes.wikitext",
+      "6747894",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/12.0.5-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "12.0.7",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "12.0.7",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/12.0.7-api-changes.wikitext",
+      "6794100",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/12.0.7-regenerated.json"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  },
+  {
+    "patch": "12.1.0",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "12.1.0",
+      "/home/osso/.worktrees/wow-ui-sim-p1010-page/data/patch-api/sources/12.1.0-api-changes.wikitext",
+      "6886719",
+      "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/12.1.0-regenerated.json",
+      "--inventory-only"
+    ],
+    "exit": 0,
+    "byte_identical": true,
+    "stderr": ""
+  }
+]

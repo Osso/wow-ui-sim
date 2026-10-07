@@ -1,0 +1,1152 @@
+[
+  {
+    "source_id": "wt-global-api-C_CharacterServices.AssignRaceOrFactionChangeDistribution-241",
+    "symbol": "C_CharacterServices.AssignRaceOrFactionChangeDistribution",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires account distribution assignment and race/faction service transition; successor is not actually registered.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_CharacterServices.AssignRaceOrFactionChangeDistribution"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.GetColorForChatType-242",
+    "symbol": "C_ChatInfo.GetColorForChatType",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires chat-type color lookup and the documented return representation; no raw modeled query is registered.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ChatInfo.GetColorForChatType"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ClassTalents.ViewLoadout-245",
+    "symbol": "C_ClassTalents.ViewLoadout",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires remote loadout viewing, import validation and view-config lifecycle, not merely InitializeViewLoadout publication.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ClassTalents.ViewLoadout"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_DateAndTime.AdjustTimeByMonths-246",
+    "symbol": "C_DateAndTime.AdjustTimeByMonths",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires calendar month/year rollover, day handling and return DTO contract; calendar transformation is not registered.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_DateAndTime.AdjustTimeByMonths"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ExpansionTrial.OnTrialLevelUpDialogClicked-251",
+    "symbol": "C_ExpansionTrial.OnTrialLevelUpDialogClicked",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires trial level-up dialog acknowledgment/entitlement state and downstream actions; namespace autostub is not a producer.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ExpansionTrial.OnTrialLevelUpDialogClicked"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ExpansionTrial.OnTrialLevelUpDialogShown-252",
+    "symbol": "C_ExpansionTrial.OnTrialLevelUpDialogShown",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires trial level-up dialog shown state and entitlement policy; namespace autostub is not a producer.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ExpansionTrial.OnTrialLevelUpDialogShown"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_GenericWidgetDisplay.Acknowledge-253",
+    "symbol": "C_GenericWidgetDisplay.Acknowledge",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires active generic-widget identity and acknowledgment state/events, not an inert registration.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_GenericWidgetDisplay.Acknowledge"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_GenericWidgetDisplay.Close-254",
+    "symbol": "C_GenericWidgetDisplay.Close",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires active generic-widget close state and lifecycle/events, not an inert registration.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_GenericWidgetDisplay.Close"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_GuildInfo.MemberExistsByName-255",
+    "symbol": "C_GuildInfo.MemberExistsByName",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires guild roster name/realm matching and roster availability contract; fallback lookup is not a registered modeled query.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_GuildInfo.MemberExistsByName"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_Item.DoesItemMatchTrackJump-256",
+    "symbol": "C_Item.DoesItemMatchTrackJump",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires item upgrade-track relation and jump-target validation, not a fixed boolean.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Item.DoesItemMatchTrackJump"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetHighWatermarkForItem-257",
+    "symbol": "C_ItemUpgrade.GetHighWatermarkForItem",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires item identity to account high-watermark mapping and discount context.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ItemUpgrade.GetHighWatermarkForItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetHighWatermarkForSlot-258",
+    "symbol": "C_ItemUpgrade.GetHighWatermarkForSlot",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires per-equipment-slot account high-watermark state.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ItemUpgrade.GetHighWatermarkForSlot"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetHighWatermarkSlotForItem-259",
+    "symbol": "C_ItemUpgrade.GetHighWatermarkSlotForItem",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires item equipment classification and high-watermark slot mapping.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ItemUpgrade.GetHighWatermarkSlotForItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.IsItemBound-260",
+    "symbol": "C_ItemUpgrade.IsItemBound",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires actual item binding state/eligibility contract, not a fixed boolean.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ItemUpgrade.IsItemBound"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_Map.GetMapHighlightPulseInfo-266",
+    "symbol": "C_Map.GetMapHighlightPulseInfo",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires populated map highlight pulse metadata and map relation/state.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Map.GetMapHighlightPulseInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PartyPose.ExtraAction-267",
+    "symbol": "C_PartyPose.ExtraAction",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires party-pose session identity and extra-action state transition.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PartyPose.ExtraAction"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PartyPose.GetPartyPoseInfoByID-268",
+    "symbol": "C_PartyPose.GetPartyPoseInfoByID",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires populated pose records keyed by pose ID, including texture kit/title fields.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PartyPose.GetPartyPoseInfoByID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PartyPose.HasExtraAction-269",
+    "symbol": "C_PartyPose.HasExtraAction",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires party-pose session/action availability, not a fixed boolean.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PartyPose.HasExtraAction"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpellInfo-270",
+    "symbol": "C_QuestInfoSystem.GetQuestRewardSpellInfo",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires quest reward spell metadata keyed by quest/spell identity and populated outputs.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_QuestInfoSystem.GetQuestRewardSpellInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpells-271",
+    "symbol": "C_QuestInfoSystem.GetQuestRewardSpells",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires per-quest ordered reward spell IDs and availability policy.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_QuestInfoSystem.GetQuestRewardSpells"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestShouldToastCompletion-272",
+    "symbol": "C_QuestInfoSystem.GetQuestShouldToastCompletion",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires quest completion notification policy and state, not a fixed boolean.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_QuestInfoSystem.GetQuestShouldToastCompletion"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_QuestInfoSystem.HasQuestRewardSpells-273",
+    "symbol": "C_QuestInfoSystem.HasQuestRewardSpells",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires reward spell producer shared with quest reward queries.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_QuestInfoSystem.HasQuestRewardSpells"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_SpectatingUI.IsSpectating-274",
+    "symbol": "C_SpectatingUI.IsSpectating",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires spectating session state and lifecycle; namespace autostub is not modeled publication.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_SpectatingUI.IsSpectating"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsEnchantTargetValid-280",
+    "symbol": "C_TradeSkillUI.IsEnchantTargetValid",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires target-item enchanting restrictions and reagent-aware validation; shared gap with the 10.1.5 audit.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.IsEnchantTargetValid"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsRecraftReagentValid-281",
+    "symbol": "C_TradeSkillUI.IsRecraftReagentValid",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires recraft target/recipe/modification/reagent relation validation.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.IsRecraftReagentValid"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetItemDisplayVisualizationInfo-282",
+    "symbol": "C_UIWidgetManager.GetItemDisplayVisualizationInfo",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires populated ItemDisplay visualization DTOs keyed by widget ID.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_UIWidgetManager.GetItemDisplayVisualizationInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetSoundEntryCount-294",
+    "symbol": "GetSoundEntryCount",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires sound-entry catalog identity/count query; missing global cannot be replaced by an arbitrary zero.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetSoundEntryCount"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-pcallwithenv-296",
+    "symbol": "pcallwithenv",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Requires VM call-environment replacement/restoration and protected-call results/error semantics; no Lua wrapper or VM change fabricated.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "pcallwithenv"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_CharacterServices.AssignPFCDistribution-300",
+    "symbol": "C_CharacterServices.AssignPFCDistribution",
+    "direction": "removed",
+    "outcome": "closed-unused-retirement",
+    "reason": "No qualified cached retail consumer; bare matches are unrelated APIs. Existing retail-only namespace retirement prevents repeated autostub fabrication without modifying classic or cached wrappers.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_CharacterServices.AssignPFCDistribution"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_LootHistory.CanMasterLoot-301",
+    "symbol": "C_LootHistory.CanMasterLoot",
+    "direction": "removed",
+    "outcome": "closed-unused-retirement",
+    "reason": "No qualified cached retail consumer; bare matches are unrelated APIs. Existing retail-only namespace retirement prevents repeated autostub fabrication without modifying classic or cached wrappers.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LootHistory.CanMasterLoot"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_LootHistory.GetExpiration-302",
+    "symbol": "C_LootHistory.GetExpiration",
+    "direction": "removed",
+    "outcome": "closed-unused-retirement",
+    "reason": "No qualified cached retail consumer; bare matches are unrelated APIs. Existing retail-only namespace retirement prevents repeated autostub fabrication without modifying classic or cached wrappers.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LootHistory.GetExpiration"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_LootHistory.GetItem-303",
+    "symbol": "C_LootHistory.GetItem",
+    "direction": "removed",
+    "outcome": "closed-unused-retirement",
+    "reason": "No qualified cached retail consumer; bare matches are unrelated APIs. Existing retail-only namespace retirement prevents repeated autostub fabrication without modifying classic or cached wrappers.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LootHistory.GetItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_LootHistory.GetNumItems-304",
+    "symbol": "C_LootHistory.GetNumItems",
+    "direction": "removed",
+    "outcome": "closed-unused-retirement",
+    "reason": "No qualified cached retail consumer; bare matches are unrelated APIs. Existing retail-only namespace retirement prevents repeated autostub fabrication without modifying classic or cached wrappers.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LootHistory.GetNumItems"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_LootHistory.GetPlayerInfo-305",
+    "symbol": "C_LootHistory.GetPlayerInfo",
+    "direction": "removed",
+    "outcome": "closed-unused-retirement",
+    "reason": "No qualified cached retail consumer; bare matches are unrelated APIs. Existing retail-only namespace retirement prevents repeated autostub fabrication without modifying classic or cached wrappers.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LootHistory.GetPlayerInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_LootHistory.GiveMasterLoot-306",
+    "symbol": "C_LootHistory.GiveMasterLoot",
+    "direction": "removed",
+    "outcome": "closed-unused-retirement",
+    "reason": "No qualified cached retail consumer; bare matches are unrelated APIs. Existing retail-only namespace retirement prevents repeated autostub fabrication without modifying classic or cached wrappers.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LootHistory.GiveMasterLoot"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_LootHistory.SetExpiration-307",
+    "symbol": "C_LootHistory.SetExpiration",
+    "direction": "removed",
+    "outcome": "closed-unused-retirement",
+    "reason": "No qualified cached retail consumer; bare matches are unrelated APIs. Existing retail-only namespace retirement prevents repeated autostub fabrication without modifying classic or cached wrappers.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LootHistory.SetExpiration"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetQuestLogRewardSpell-308",
+    "symbol": "C_TooltipInfo.GetQuestLogRewardSpell",
+    "direction": "removed",
+    "outcome": "closed-unused-retirement",
+    "reason": "No qualified cached retail consumer; bare matches are unrelated APIs. Existing retail-only namespace retirement prevents repeated autostub fabrication without modifying classic or cached wrappers.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TooltipInfo.GetQuestLogRewardSpell"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TooltipInfo.GetQuestRewardSpell-309",
+    "symbol": "C_TooltipInfo.GetQuestRewardSpell",
+    "direction": "removed",
+    "outcome": "closed-unused-retirement",
+    "reason": "No qualified cached retail consumer; bare matches are unrelated APIs. Existing retail-only namespace retirement prevents repeated autostub fabrication without modifying classic or cached wrappers.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TooltipInfo.GetQuestRewardSpell"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetAddOnMetadata-310",
+    "symbol": "GetAddOnMetadata",
+    "direction": "removed",
+    "outcome": "retained-gap",
+    "reason": "Legacy modeled global remains registered; tests/addon_api.rs:422,427 and tests/patch_10_2_0_publication_fixes.rs:41 explicitly consume/require it. Retiring requires coordinated profile gating and legacy-caller migration rather than unused-autostub removal. Cached matches are C_AddOns successor consumers; they do not establish old-global use.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetAddOnMetadata"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_AreaPoiInfo.IsAreaPOITimed-325",
+    "symbol": "C_AreaPoiInfo.IsAreaPOITimed",
+    "direction": "changed",
+    "outcome": "retained-gap",
+    "reason": "Requires real timed-POI state and hideTimerInTooltip return value; ordinary lookup only fabricates an autostub.",
+    "observed": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_AreaPoiInfo.IsAreaPOITimed"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-329",
+    "symbol": "C_SpellBook.GetSpellLinkFromSpellID",
+    "direction": "changed",
+    "outcome": "retained-gap",
+    "reason": "Later register supersedes this changed occurrence to absent; ordinary namespace lookup still fabricates it. Existing transition-alias retirement policy in src/c_api/patch_retired_members.rs:13 deliberately retains SpellBook aliases. Further alias/caller migration not included in bounded unused-member retirement.",
+    "observed": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-409",
+        "symbol": "C_SpellBook.GetSpellLinkFromSpellID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.RecraftRecipe-331",
+    "symbol": "C_TradeSkillUI.RecraftRecipe",
+    "direction": "changed",
+    "outcome": "retained-gap",
+    "reason": "Requires recraft transaction, removed-modification argument, item/reagent consumption and resulting events.",
+    "observed": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.RecraftRecipe"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.RecraftRecipeForOrder-333",
+    "symbol": "C_TradeSkillUI.RecraftRecipeForOrder",
+    "direction": "changed",
+    "outcome": "retained-gap",
+    "reason": "Requires order-scoped recraft transaction and removed-modification argument with order ownership/state.",
+    "observed": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.RecraftRecipeForOrder"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_VignetteInfo.GetVignettePosition-335",
+    "symbol": "C_VignetteInfo.GetVignettePosition",
+    "direction": "changed",
+    "outcome": "retained-gap",
+    "reason": "Requires world vignette position/facing projection and non-nil position contract, not a fabricated function.",
+    "observed": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_VignetteInfo.GetVignettePosition"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:ReleaseFrontEndCharacterDisplays-350",
+    "symbol": "ModelSceneActor:ReleaseFrontEndCharacterDisplays",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Front-end 3D character-display lifecycle is intentionally unsupported; permanent 3D scope boundary, not a modeled 2D behavior.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "ModelSceneActor:ReleaseFrontEndCharacterDisplays"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "ModelSceneActor; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:SetFrontEndLobbyModelFromDefaultCharacterDisplay-351",
+    "symbol": "ModelSceneActor:SetFrontEndLobbyModelFromDefaultCharacterDisplay",
+    "direction": "added",
+    "outcome": "retained-gap",
+    "reason": "Front-end 3D character-display/model selection is intentionally unsupported; permanent 3D scope boundary, not a modeled 2D behavior.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "ModelSceneActor:SetFrontEndLobbyModelFromDefaultCharacterDisplay"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "ModelSceneActor; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  }
+]
