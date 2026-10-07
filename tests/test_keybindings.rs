@@ -502,7 +502,7 @@ fn game_screen_runtime_loadaddon_rejects_glueparent() {
             .eval(
                 r#"
                 local before = UIParent and UIParent.GetName and UIParent:GetName() or tostring(UIParent)
-                local loaded, reason = LoadAddOn("Blizzard_GlueParent")
+                local loaded, reason = C_AddOns.LoadAddOn("Blizzard_GlueParent")
                 local after = UIParent and UIParent.GetName and UIParent:GetName() or tostring(UIParent)
                 return string.format(
                     "loaded=%s reason=%s before=%s after=%s isLoaded=%s",

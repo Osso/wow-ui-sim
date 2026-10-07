@@ -47,7 +47,7 @@ fn blizzard_battlefield_map_loads_without_errors(env: &WowLuaEnv) {
     }
 
     let (loaded, reason): (bool, Option<String>) = env
-        .eval("return LoadAddOn('Blizzard_BattlefieldMap')")
+        .eval("return C_AddOns.LoadAddOn('Blizzard_BattlefieldMap')")
         .expect("LoadAddOn('Blizzard_BattlefieldMap') should return");
     assert!(
         loaded,
@@ -87,7 +87,7 @@ prefork_full_ui_case! {
 fn battlefield_map_show_runs_without_errors(env: &WowLuaEnv) {
 
     let (loaded, _): (bool, Option<String>) = env
-        .eval("return LoadAddOn('Blizzard_BattlefieldMap')")
+        .eval("return C_AddOns.LoadAddOn('Blizzard_BattlefieldMap')")
         .expect("LoadAddOn return");
     assert!(loaded);
 
@@ -114,7 +114,7 @@ prefork_full_ui_case! {
 fn battlefield_map_options_persist_after_addon_loaded_event(env: &WowLuaEnv) {
 
     let (loaded, _): (bool, Option<String>) = env
-        .eval("return LoadAddOn('Blizzard_BattlefieldMap')")
+        .eval("return C_AddOns.LoadAddOn('Blizzard_BattlefieldMap')")
         .expect("LoadAddOn return");
     assert!(loaded);
 

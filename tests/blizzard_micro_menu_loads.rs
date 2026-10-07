@@ -265,7 +265,7 @@ fn blizzard_micro_menu_loads_without_addon_specific_lua_errors(env: &WowLuaEnv) 
 prefork_full_ui_case! {
 fn blizzard_micro_menu_is_addon_loaded_after_game_startup(env: &WowLuaEnv) {
     let loaded: bool = env
-        .eval("return IsAddOnLoaded('Blizzard_MicroMenu')")
+        .eval("return C_AddOns.IsAddOnLoaded('Blizzard_MicroMenu')")
         .expect("IsAddOnLoaded eval");
     assert!(
         loaded,

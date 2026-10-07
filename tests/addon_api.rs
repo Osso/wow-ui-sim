@@ -399,6 +399,7 @@ fn test_save_reset_addons_restores_version_check_state() {
 // ============================================================================
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
 fn test_legacy_get_num_addons() {
     let env = env_with_addons();
     // 2 test addons + 1 __BuiltIn
@@ -407,6 +408,7 @@ fn test_legacy_get_num_addons() {
 }
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
 fn test_legacy_is_addon_loaded() {
     let env = env_with_addons();
     let loaded: bool = env.eval("return IsAddOnLoaded('MyAddon')").unwrap();
@@ -440,11 +442,35 @@ fn test_addon_actions_blocked_table() {
     assert!(is_table);
 }
 
+/// 10.2.0 moved these five globals to C_AddOns; current retail Blizzard Lua has
+/// no bare callers or deprecation aliases, so retail publishes only C_AddOns.
+#[test]
+#[cfg(any(feature = "client-retail", feature = "client-ptr"))]
+fn test_retail_omits_legacy_addon_globals_but_keeps_c_addons() {
+    let env = env_with_addons();
+    let missing: bool = env
+        .eval(
+            "return GetNumAddOns == nil and IsAddOnLoaded == nil and GetAddOnEnableState == nil \
+             and IsAddOnLoadOnDemand == nil and LoadAddOn == nil",
+        )
+        .unwrap();
+    assert!(missing, "retail must not publish the 10.2.0 legacy addon globals");
+    let count: i32 = env.eval("return C_AddOns.GetNumAddOns()").unwrap();
+    assert_eq!(count, 3);
+    let loaded: bool = env.eval("return C_AddOns.IsAddOnLoaded('MyAddon')").unwrap();
+    assert!(loaded);
+    let lod: bool = env
+        .eval("return C_AddOns.IsAddOnLoadOnDemand('LODAddon')")
+        .unwrap();
+    assert!(lod);
+}
+
 // ============================================================================
 // Legacy GetAddOnEnableState (always returns 2)
 // ============================================================================
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
 fn test_legacy_get_addon_enable_state_always_returns_2() {
     let env = env_with_addons();
     // Even for disabled addons, legacy GetAddOnEnableState always returns 2
@@ -462,6 +488,7 @@ fn test_legacy_get_addon_enable_state_always_returns_2() {
 // ============================================================================
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
 fn test_legacy_is_addon_load_on_demand() {
     let env = env_with_addons();
     let lod: bool = env.eval("return IsAddOnLoadOnDemand('LODAddon')").unwrap();
