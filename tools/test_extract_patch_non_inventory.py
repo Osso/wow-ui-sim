@@ -63,6 +63,17 @@ class ExtractTests(unittest.TestCase):
             self.assertEqual(rows[index]['status'], 'metadata-only')
             self.assertEqual(rows[index]['source_id'], f'source-context-{index + 1:03}')
 
+    def test_11_1_7_summary_contracts_are_pending_but_build_transition_is_editorial(self):
+        rows = seed_rows('Patch 11.1.7 API changes\n== Summary ==\n'
+                         '* Added table.create(arraySizeHint[, nodeSizeHint]).\n'
+                         '== Consolidated changes ==\n'
+                         ': 11.1.5 (61265) → 11.1.7 (61559) Jun 17 2025\n',
+                         patch='11.1.7')
+        self.assertEqual(rows[2]['status'], 'audit-pending')
+        self.assertEqual(rows[2]['source_id'], 'prose-undated-003')
+        self.assertEqual(rows[4]['status'], 'metadata-only')
+        self.assertEqual(rows[4]['source_id'], 'source-context-005')
+
     def test_comparison_operators_are_not_html_tags(self):
         self.assertEqual(
             extract_text('* <code>currentCharges < maxCharges and startTime > 0</code>\n'),

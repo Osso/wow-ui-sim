@@ -1,1 +1,10 @@
-[]
+[
+  "wt-global-api-C_ActionBar.FindAssistedCombatActionButtons-23",
+  "wt-global-api-C_AddOnProfiler.AddMeasuredCallEvent-27",
+  "wt-global-api-C_AddOnProfiler.GetTicksPerSecond-28",
+  "wt-global-api-C_AddOnProfiler.MeasureCall-29",
+  "wt-global-api-C_AddOns.GetAddOnLocalTable-30",
+  "wt-global-api-C_CooldownViewer.IsCooldownViewerAvailable-45",
+  "wt-global-api-C_CurrencyInfo.IsCurrencyTransferInProgress-35",
+  "wt-global-api-C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo-37"
+]

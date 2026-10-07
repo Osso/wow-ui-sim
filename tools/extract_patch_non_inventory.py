@@ -73,6 +73,8 @@ def extract_text(raw):
 def is_source_context(value, number, patch):
     if number == 1 or value.startswith(('* TOC:', '* Official', '* Diffs:', '* Deprecated')):
         return True
+    if patch == '11.1.7':
+        return value.startswith(': 11.1.5')
     if patch == '11.2.0':
         return value.startswith(('** Deprecated_', '** Blizzard_Deprecated', ': 11.1.7'))
     if patch == '11.2.5':

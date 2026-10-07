@@ -1,0 +1,31 @@
+Patch 11.1.7 API changes
+
+== Summary ==
+* Added a new C_AddOnProfiler.MeasureCall(func, ...) API for profiling individual function calls.
+* Added a new C_AddOns.GetAddOnLocalTable(name) API that can retrieve the namespace table of an addon that opts-in to sharing it via a new AllowAddOnTableAccess TOC directive.
+* Added a new table.create(arraySizeHint[, nodeSizeHint]) API that preallocates a table with a specified internal size.
+
+== Resources ==
+* TOC: 110107
+* Official patch notes: Legacy of Arathor Update Notes
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Blizzard_Deprecated
+
+== Consolidated changes ==
+: 11.1.5 (61265) → 11.1.7 (61559) Jun 17 2025
+=== Enumerations ===
+ Enum.AccountCurrencyTransferResult
+   + CurrencyTransferDisabled
+ Enum.ReportMinorCategory
+   + TerroristAndViolentExtremistContent
+   + ChildSexualExploitationAndAbuse
+ Enum.UIWidgetVisualizationType
+   + ButtonHeader
+
+=== Structures ===
+ BattlemasterListInfo
+   # instanceType -> matchmakingType
+ PlayerChoiceOptionButtonInfo
+   + selected
+ TransmogCategoryAppearanceInfo
+   - restrictedSlotID
