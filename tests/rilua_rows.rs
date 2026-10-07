@@ -221,7 +221,7 @@ fn assert_event_budget(named: bool) {
         .with_state(|state| state.reset_instruction_usage("BudgetAddon"))
         .unwrap();
     dispatch("PLAYER_LOGIN");
-    env.exec("assert(Completed == 3, 'completed='..tostring(Completed)..' error='..tostring(BudgetError)); assert(debug.getstacktaint() == nil)")
+    env.exec("assert(debug.getstacktaint() == nil); assert(Completed == 3, 'completed='..tostring(Completed)..' error='..tostring(BudgetError))")
         .unwrap();
 }
 
@@ -266,8 +266,8 @@ fn rilua_rows_chat_host_vocabulary_flags_live_updates_and_isolation() {
             assert(debug.getstacktaint() == 'GroupAddon')
         end
         debug.setobjecttaint(addon, 'GroupAddon'); addon()
-        assert(secretunwrap(GroupText) == 'ICON Alessio, Osso {unknown} {')
     "#).unwrap();
+    assert_secret_bytes(&env, "GroupText", b"ICON Alessio, Osso {unknown} {");
     env.state()
         .borrow_mut()
         .chat_expression_inputs
@@ -281,7 +281,9 @@ fn rilua_rows_chat_host_vocabulary_flags_live_updates_and_isolation() {
 #[cfg(feature = "retail-12-0-5")]
 #[test]
 fn rilua_rows_string_transforms_preserve_bytes_and_reject_nonstring_secrets() {
-    secret_env().exec(r#"
+    let env = secret_env();
+    env.exec(
+        r#"
         local binary = string.char(255, 0)..'{rt1}'
         local secret = secretwrap(binary)
         -- Create typed wrappers while secure; addon callers cannot create them.
@@ -297,9 +299,36 @@ fn rilua_rows_string_transforms_preserve_bytes_and_reject_nonstring_secrets() {
         end
         debug.setobjecttaint(probe, 'BinaryAddon'); probe()
         collectgarbage('collect')
-        assert(secretunwrap(BinaryChat) == string.char(255, 0)..'|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:0|t')
         assert(secretunwrap(secret) == binary)
         assert(not pcall(C_ChatInfo.ReplaceIconAndGroupExpressions, 'text', 1))
         assert(not pcall(C_ChatInfo.ReplaceIconAndGroupExpressions, 'text', false, {}))
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
+    assert_secret_bytes(
+        &env,
+        "BinaryChat",
+        b"\xff\0|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:0|t",
+    );
+}
+
+#[cfg(feature = "retail-12-0-5")]
+fn assert_secret_bytes(env: &WowLuaEnv, global: &str, expected: &[u8]) {
+    // Reading an addon-created global from Lua taints that observer. Inspect the
+    // result from the trusted host instead; never clear or override caller taint.
+    let loader = env.loader_env();
+    let mut lua = loader.rilua_mut();
+    let value = lua.get_global_val(global);
+    assert!(rilua::table_security::is_secret_value(
+        lua.state_mut(),
+        value
+    ));
+    let payload = rilua::table_security::unwrap_secret(lua.state_mut(), value).unwrap();
+    let rilua::Val::Str(string) = payload else {
+        panic!("expected secret string result")
+    };
+    assert_eq!(
+        lua.state_mut().gc.string_arena.get(string).unwrap().data(),
+        expected
+    );
 }
