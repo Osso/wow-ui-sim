@@ -8,6 +8,20 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_code_examples_preserve_xml_and_lua_literals_when_requested(self):
+        raw = ('==Example==\n<syntaxhighlight lang="lua">\n'
+               'Texture:SetTexture([[Interface\\Buttons\\White8x8]])\n'
+               '</syntaxhighlight>\n<syntaxhighlight lang="xml">\n'
+               '<VertexColor duration="2">\n'
+               '  <StartColor r="1" g="0" b="0"/>\n'
+               '</VertexColor>\n</syntaxhighlight>\n')
+        self.assertEqual(extract_text(raw, preserve_examples=True),
+                         '== Example ==\n```lua\n'
+                         'Texture:SetTexture([[Interface\\Buttons\\White8x8]])\n'
+                         '```\n```xml\n<VertexColor duration="2">\n'
+                         '  <StartColor r="1" g="0" b="0"/>\n'
+                         '</VertexColor>\n```\n')
+
     def test_11_0_2_settings_transclusion_and_transition_are_editorial(self):
         text = extract_text('{{:Settings_API}}\n'
                             ': 11.0.0 (55818) → 11.0.2 (56819) Sep 27 2024\n'

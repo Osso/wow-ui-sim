@@ -1,0 +1,491 @@
+{{apichanges|10.2.5|prev=10.2.0|next=10.2.6}}
+
+==Summary==
+* Added a new animation type for animating changes to texture vertex colors. See [[#Vertex color animations|Vertex color animations]].
+* The color picker frame has been reworked. See [[#Color picker changes|Color picker changes]].
+* The ping system has had a convenience template added for making pingable unit frames, and a few API restrictions relaxed. See [[#Ping system changes|Ping system changes]].
+* Various functions for querying buffs and debuffs have been deprecated and will be removed in the following expansion. Notably, this includes {{api|UnitAura}}, {{api|UnitBuff}}, and {{api|UnitDebuff}}.
+
+==Resources==
+* TOC: <code>100205</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/10.2.0..10.2.5 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/10.2.0..10.2.5 BlizzardInterfaceResources]
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24052633/dragonflight-seeds-of-renewal-content-update-notes#item14 Dragonflight: Seeds of Renewal Content Update Notes]
+* Deprecated API: [https://github.com/Gethe/wow-ui-source/blob/10.2.5/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_2_5.lua Blizzard_Deprecated]
+
+==Vertex color animations==
+
+A new [[UIOBJECT VertexColor|VertexColor]] animation type has been added that can be used to animate changes to vertex colors on textures. This appears to be implemented as a simple linear interpolation of the individual RGBA color components without any translation to an alternative color space.
+
+The example below demonstrates a two second looping animation that will transition the vertex color from red to blue and then back again.
+
+<syntaxhighlight lang="lua">
+local Texture = UIParent:CreateTexture()
+Texture:SetTexture([[Interface\Buttons\White8x8]])
+Texture:SetPoint("CENTER")
+Texture:SetSize(128, 128)
+
+local AnimationGroup = Texture:CreateAnimationGroup()
+AnimationGroup:SetLooping("BOUNCE")
+
+local VertexColor = AnimationGroup:CreateAnimation("VertexColor")
+VertexColor:SetStartColor(CreateColor(1, 0, 0))
+VertexColor:SetEndColor(CreateColor(0, 0, 1))
+VertexColor:SetDuration(2)
+
+AnimationGroup:Play()
+</syntaxhighlight>
+
+For usages from XML, refer to the elements shown below.
+
+<syntaxhighlight lang="xml">
+<AnimationGroup looping="BOUNCE">
+    <VertexColor duration="2">
+        <StartColor r="1" g="0" b="0"/>
+        <EndColor r="0" g="0" b="1"/>
+    </VertexColor>
+</AnimationGroup>
+</syntaxhighlight>
+
+==Color picker changes==
+
+The global color picker frame (<code>ColorPickerFrame</code>) has been overhauled and now includes a hex color input field.
+
+<!-- Would like to use a tlgo link for the new function, but that can't be done just yet. -->
+One notable breaking change is that the [https://www.townlong-yak.com/framexml/52148/go/OpenColorPicker OpenColorPicker] global function has been relocated to {{api|ColorPickerFrame:SetupColorPickerAndShow}}. This function still accepts exactly the same parameters as before, so addons will only need to rename this reference and should otherwise continue to work.
+
+==Ping system changes==
+A new convenience template has been added to make it easier to opt unit frames into being ping receivers.
+
+Inheriting from PingableUnitFrameTemplate will now cause intercepted pings to be directed to a unit token controllable via the "unit" attribute on the frame. This change should make it easier for custom unit frames - particularly those created by secure headers - to handle ping interactions correctly without any additional manual setup.
+
+Additionally, the following APIs have been relocated from the C_PingSecure namespace to C_Ping and are now callable by insecure code.
+
+* {{api|C_Ping.GetCooldownInfo}}
+* {{api|C_Ping.GetDefaultPingOptions}}
+* {{api|C_Ping.GetTextureKitForType}}
+
+==Hotfixes==
+In build 10.2.5 (53441) on 2024-02-23 the following CVars were made secure.
+ autoStand
+ autoUnshift
+ SoftTargetEnemy
+ SoftTargetEnemyRange
+ SoftTargetForce
+ SoftTargetInteract
+ SoftTargetInteractRange
+The <code>synchronizeMacros</code> and <code>synchronizeSettings</code> CVars were removed.
+
+==Diffs==
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|+ 10.2.0 (52106) &rarr; 10.2.5 (52902) Jan 11 2024
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(23)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(12)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_Item.GetItemStatDelta}}
+: {{api|t=a|C_Item.GetItemStats}}
+: {{api|t=a|C_Item.GetSetBonusesForSpecializationByItemID}}
+: {{api|t=a|C_LFGInfo.IsInLFGFollowerDungeon}}
+: {{api|t=a|C_LFGInfo.IsLFGFollowerDungeon}}
+: {{api|t=a|C_PetJournal.ClearHoveredBattlePet}}
+: {{api|t=a|C_PetJournal.SetHoveredBattlePet}}
+: {{api|t=a|C_Ping.GetCooldownInfo}}
+: {{api|t=a|C_Ping.GetDefaultPingOptions}}
+: {{api|t=a|C_Ping.GetTextureKitForType}}
+: {{api|t=a|C_UnitAuras.GetAuraDataByIndex}}
+: {{api|t=a|C_UnitAuras.GetAuraDataBySpellName}}
+: {{api|t=a|C_UnitAuras.GetAuraSlots}}
+: {{api|t=a|C_UnitAuras.GetBuffDataByIndex}}
+: {{api|t=a|C_UnitAuras.GetDebuffDataByIndex}}
+: {{api|t=a|C_VoiceChat.IsTranscribing}}
+: {{api|t=a|C_ZoneAbility.GetZoneAbilityIcon}}
+: {{api|t=a|GetSpecializationRoleEnum}}
+: {{api|t=a|GetSpecializationRoleEnumByID}}
+: {{api|t=a|LocalizedClassList}}
+: {{api|t=a|UnitGroupRolesAssignedEnum}}
+: {{api|t=a|UnitInPartyIsAI}}
+: {{api|t=a|UnitSetRoleEnum}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|FillLocalizedClassList}}
+: {{api|t=a|GetItemStatDelta}}
+: {{api|t=a|GetItemStats}}
+: {{api|t=a|GetSetBonusesForSpecializationByItemID}}
+: {{api|t=a|GetTimeToWellRested}}
+: {{api|t=a|IsArenaTeamCaptain}}
+: {{api|t=a|IsInArenaTeam}}
+: {{api|t=a|UnitAuraBySlot}}
+: {{api|t=a|UnitAuraSlots}}
+: {{api|t=a|UnitAura}}
+: {{api|t=a|UnitBuff}}
+: {{api|t=a|UnitDebuff}}
+</div>
+|}
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(11)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|ColorSelect:GetColorAlpha}}
+: {{api|t=w|ColorSelect:GetColorAlphaTexture}}
+: {{api|t=w|ColorSelect:GetColorAlphaThumbTexture}}
+: {{api|t=w|ColorSelect:SetColorAlpha}}
+: {{api|t=w|ColorSelect:SetColorAlphaTexture}}
+: {{api|t=w|ColorSelect:SetColorAlphaThumbTexture}}
+: {{api|t=w|Frame:GetRaisedFrameLevel}}
+: {{api|t=w|VertexColor:GetEndColor}}
+: {{api|t=w|VertexColor:GetStartColor}}
+: {{api|t=w|VertexColor:SetEndColor}}
+: {{api|t=w|VertexColor:SetStartColor}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(7)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|COMMODITY_SEARCH_RESULTS_RECEIVED}}
+: {{api|t=e|LFG_ENABLED_STATE_CHANGED}}
+: {{api|t=e|LOOT_HISTORY_ONE_HUNDRED_ROLL}}
+: {{api|t=e|PERKS_PROGRAM_RESULT_ERROR}}
+: {{api|t=e|PLAYER_IMPULSE_APPLIED}}
+: {{api|t=e|PLAYER_IS_GLIDING_CHANGED}}
+: {{api|t=e|TRANSMOG_COLLECTION_ITEM_FAVORITE_UPDATE}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|t=e|PERKS_ACTIVITIES_TRACKED_UPDATED}}
+  - <font color="#ff6767">trackedPerksActivities</font>
+ {{api|t=e|PERKS_ACTIVITIES_UPDATED}}
+  - <font color="#ff6767">info</font>
+ {{api|t=e|TRADE_SKILL_FAVORITES_CHANGED}}
+  + <font color="#00b400">isFavorite</font>
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(2)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=DisableAdvancedFlyingFullScreenEffects|default=0|scope=Account|cat=4|desc=Disable the advanced flying full screen effects}}
+: {{apitooltip|type=cvar|name=UnitVisibility|default=0}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=fullDump|default=0|cat=0|desc=When you crash, generate a full memory dump}}
+</div>
+|}
+
+===Enums===
+ Enum.AccountStateFlags
+   # <font color="#ff6767">PerkTablesLoaded</font> -> <font color="#00b400">PerksPastRewardsLoaded</font> = 0x0000000000020000
+   + <font color="#00b400">PerksHeldItemLoaded</font> = 0x0000000400000000
+   + <font color="#00b400">PerksPendingRewardsLoaded</font> = 0x0000000800000000
+   + <font color="#00b400">PerksRefundsLoaded</font> = 0x0000002000000000
+   + <font color="#00b400">BitVectorsLoaded</font> = 0x0000004000000000
+ Enum.CurrencySource
+   # <font color="#ff6767">PhBuffer_64</font> -> <font color="#00b400">SpellSkipLinkedCurrency</font> = 64
+ Enum.UIMapFlag
+   # <font color="#ff6767">Deprecated</font> -> <font color="#00b400">DoNotTranslateBranches</font> = 0x200
+
+===Structures===
+ EventToastInfo <small>({{api|t=a|C_EventToastManager.GetNextToastToDisplay}}, {{api|t=a|C_EventToastManager.GetLevelUpDisplayToastsFromLevel}})</small>
+   + <font color="#00b400">flags</font>
+ PerksActivityInfo <small>({{api|t=a|C_PerksActivities.GetPerksActivityInfo}}, {{api|t=a|C_PerksActivities.GetPerksActivitiesInfo}})</small>
+   + <font color="#00b400">inProgress</font>
+   + <font color="#00b400">areAllConditionsMet</font>
+   + <font color="#00b400">conditions</font>
+   + <font color="#00b400">eventName</font>
+ PerksProgramItemDisplayInfo <small>({{api|t=a|C_PerksProgram.GetPerksProgramItemDisplayInfo}})</small>
+   + <font color="#00b400">mainHandItemModifiedAppearanceID</font>
+   + <font color="#00b400">offHandItemModifiedAppearanceID</font>
+ PerksVendorItemInfo <small>({{api|t=a|C_PerksProgram.GetVendorItemInfo}}, {{api|t=a|C_PerksProgram.GetFrozenPerksVendorItemInfo}})</small>
+   + <font color="#00b400">subItemsLoaded</font>
+   + <font color="#00b400">subItems</font>
+ TugOfWarWidgetVisualizationInfo <small>({{api|t=a|C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo}})</small>
+   + <font color="#00b400">neutralFillStyle</font>
+   + <font color="#00b400">markerArrowShownState</font>
+ UIWidgetItemInfo <small>({{api|t=a|C_UIWidgetManager.GetItemDisplayVisualizationInfo}})</small>
+   + <font color="#00b400">itemNameTextFontType</font>
+   + <font color="#00b400">itemNameTextSizeType</font>
+   + <font color="#00b400">infoTextFontType</font>
+   + <font color="#00b400">infoTextSizeType</font>
+
+==Deprecated API==
+These are functions that were deprecated and will be removed in the future.
+
+<big>[https://github.com/Gethe/wow-ui-source/blob/10.2.5/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_2_5.lua Deprecated_10_2_5.lua]</big>
+: {{api|FillLocalizedClassList}} → {{api|LocalizedClassList}}
+: {{api|GetSetBonusesForSpecializationByItemID}} → {{api|C_Item.GetSetBonusesForSpecializationByItemID}}
+: {{api|GetItemStats}} → {{api|C_Item.GetItemStats}}
+: {{api|GetItemStatDelta}} → {{api| C_Item.GetItemStatDelta}}
+: {{api|UnitAura}} → {{api|C_UnitAuras.GetAuraDataByIndex}}
+: {{api|UnitBuff}} → {{api|C_UnitAuras.GetBuffDataByIndex}}
+: {{api|UnitDebuff}} → {{api|C_UnitAuras.GetDebuffDataByIndex}}
+: {{api|UnitAuraBySlot}} → {{api|C_UnitAuras.GetAuraDataBySlot}}
+: {{api|UnitAuraSlots}} → {{api|C_UnitAuras.GetAuraSlots}}
+
+==Blizzard Docs==
+The following APIs are now backfilled in '''Blizzard_APIDocumentationGenerated'''.
+ {{api|t=a|AcceptGuild}}
+ {{api|t=a|AcceptResurrect}}
+ {{api|t=a|AssistUnit}}
+ {{api|t=a|AttackTarget}}
+ {{api|t=a|AutoEquipCursorItem}}
+ {{api|t=a|C_MacOptions.AreOSShortcutsDisabled}}
+ {{api|t=a|C_MacOptions.GetGameBundleName}}
+ {{api|t=a|C_MacOptions.HasNewStyleInputMonitoring}}
+ {{api|t=a|C_MacOptions.IsInputMonitoringEnabled}}
+ {{api|t=a|C_MacOptions.IsMicrophoneEnabled}}
+ {{api|t=a|C_MacOptions.IsUniversalAccessEnabled}}
+ {{api|t=a|C_MacOptions.OpenInputMonitoring}}
+ {{api|t=a|C_MacOptions.OpenMicrophoneRequestDialogue}}
+ {{api|t=a|C_MacOptions.OpenUniversalAccess}}
+ {{api|t=a|C_MacOptions.SetOSShortcutsDisabled}}
+ {{api|t=a|CanEjectPassengerFromSeat}}
+ {{api|t=a|CanSwitchVehicleSeat}}
+ {{api|t=a|CaseAccentInsensitiveParse}}
+ {{api|t=a|ClearTarget}}
+ {{api|t=a|ClosestGameObjectPosition}}
+ {{api|t=a|ClosestUnitPosition}}
+ {{api|t=a|ConfirmTalentWipe}}
+ {{api|t=a|DeclineGuild}}
+ {{api|t=a|DeclineResurrect}}
+ {{api|t=a|Dismount}}
+ {{api|t=a|EjectPassengerFromSeat}}
+ {{api|t=a|FocusUnit}}
+ {{api|t=a|GetAllowLowLevelRaid}}
+ {{api|t=a|GetAttackPowerForStat}}
+ {{api|t=a|GetAutoDeclineGuildInvites}}
+ {{api|t=a|GetAvoidance}}
+ {{api|t=a|GetBlockChance}}
+ {{api|t=a|GetCombatRating}}
+ {{api|t=a|GetCombatRatingBonus}}
+ {{api|t=a|GetCombatRatingBonusForCombatRatingValue}}
+ {{api|t=a|GetComboPoints}}
+ {{api|t=a|GetCorruption}}
+ {{api|t=a|GetCorruptionResistance}}
+ {{api|t=a|GetCritChance}}
+ {{api|t=a|GetCritChanceProvidesParryEffect}}
+ {{api|t=a|GetDebugAnimationStats}}
+ {{api|t=a|GetDebugPerf}}
+ {{api|t=a|GetDebugSpellEffects}}
+ {{api|t=a|GetDebugStats}}
+ {{api|t=a|GetDebugTargetCustomizationInfo}}
+ {{api|t=a|GetDebugUnitInfo}}
+ {{api|t=a|GetDodgeChance}}
+ {{api|t=a|GetDodgeChanceFromAttribute}}
+ {{api|t=a|GetExpertise}}
+ {{api|t=a|GetHaste}}
+ {{api|t=a|GetHitModifier}}
+ {{api|t=a|GetJailersTowerLevel}}
+ {{api|t=a|GetLifesteal}}
+ {{api|t=a|GetManaRegen}}
+ {{api|t=a|GetMastery}}
+ {{api|t=a|GetMasteryEffect}}
+ {{api|t=a|GetMaxCombatRatingBonus}}
+ {{api|t=a|GetMaxPlayerLevel}}
+ {{api|t=a|GetMeleeHaste}}
+ {{api|t=a|GetModResilienceDamageReduction}}
+ {{api|t=a|GetMoney}}
+ {{api|t=a|GetNormalizedRealmName}}
+ {{api|t=a|GetOverrideAPBySpellPower}}
+ {{api|t=a|GetOverrideSpellPowerByAP}}
+ {{api|t=a|GetPVPDesired}}
+ {{api|t=a|GetPVPGearStatRules}}
+ {{api|t=a|GetPVPLifetimeStats}}
+ {{api|t=a|GetPVPSessionStats}}
+ {{api|t=a|GetPVPTimer}}
+ {{api|t=a|GetPVPYesterdayStats}}
+ {{api|t=a|GetParryChance}}
+ {{api|t=a|GetParryChanceFromAttribute}}
+ {{api|t=a|GetPetMeleeHaste}}
+ {{api|t=a|GetPetSpellBonusDamage}}
+ {{api|t=a|GetPlayerFacing}}
+ {{api|t=a|GetPlayerInfoByGUID}}
+ {{api|t=a|GetPowerRegen}}
+ {{api|t=a|GetPowerRegenForPowerType}}
+ {{api|t=a|GetPvpPowerDamage}}
+ {{api|t=a|GetPvpPowerHealing}}
+ {{api|t=a|GetRangedCritChance}}
+ {{api|t=a|GetRangedHaste}}
+ {{api|t=a|GetResSicknessDuration}}
+ {{api|t=a|GetRestState}}
+ {{api|t=a|GetRuneCooldown}}
+ {{api|t=a|GetRuneCount}}
+ {{api|t=a|GetSheathState}}
+ {{api|t=a|GetShieldBlock}}
+ {{api|t=a|GetSpeed}}
+ {{api|t=a|GetSpellBonusDamage}}
+ {{api|t=a|GetSpellBonusHealing}}
+ {{api|t=a|GetSpellCritChance}}
+ {{api|t=a|GetSpellHitModifier}}
+ {{api|t=a|GetSpellPenetration}}
+ {{api|t=a|GetSturdiness}}
+ {{api|t=a|GetTaxiBenchmarkMode}}
+ {{api|t=a|GetUnitHealthModifier}}
+ {{api|t=a|GetUnitMaxHealthModifier}}
+ {{api|t=a|GetUnitPowerModifier}}
+ {{api|t=a|GetUnitSpeed}}
+ {{api|t=a|GetVehicleUIIndicator}}
+ {{api|t=a|GetVehicleUIIndicatorSeat}}
+ {{api|t=a|GetVersatilityBonus}}
+ {{api|t=a|GetXPExhaustion}}
+ {{api|t=a|HasAPEffectsSpellPower}}
+ {{api|t=a|HasDualWieldPenalty}}
+ {{api|t=a|HasFullControl}}
+ {{api|t=a|HasNoReleaseAura}}
+ {{api|t=a|HasSPEffectsAttackPower}}
+ {{api|t=a|InitiateRolePoll}}
+ {{api|t=a|IsAccountSecured}}
+ {{api|t=a|IsAdvancedFlyableArea}}
+ {{api|t=a|IsDebugBuild}}
+ {{api|t=a|IsDualWielding}}
+ {{api|t=a|IsFalling}}
+ {{api|t=a|IsFlyableArea}}
+ {{api|t=a|IsFlying}}
+ {{api|t=a|IsGuildLeader}}
+ {{api|t=a|IsInGuild}}
+ {{api|t=a|IsInJailersTower}}
+ {{api|t=a|IsIndoors}}
+ {{api|t=a|IsInsane}}
+ {{api|t=a|IsJailersTowerLayerTimeLocked}}
+ {{api|t=a|IsLoggedIn}}
+ {{api|t=a|IsMounted}}
+ {{api|t=a|IsOnGroundFloorInJailersTower}}
+ {{api|t=a|IsOutOfBounds}}
+ {{api|t=a|IsOutdoors}}
+ {{api|t=a|IsPVPTimerRunning}}
+ {{api|t=a|IsRangedWeapon}}
+ {{api|t=a|IsResting}}
+ {{api|t=a|IsStealthed}}
+ {{api|t=a|IsSubmerged}}
+ {{api|t=a|IsSwimming}}
+ {{api|t=a|IsTargetLoose}}
+ {{api|t=a|IsXPUserDisabled}}
+ {{api|t=a|NoPlayTime}}
+ {{api|t=a|PartialPlayTime}}
+ {{api|t=a|PlayerCanTeleport}}
+ {{api|t=a|PlayerEffectiveAttackPower}}
+ {{api|t=a|PlayerIsPVPInactive}}
+ {{api|t=a|RepopMe}}
+ {{api|t=a|ReportPlayerIsPVPAFK}}
+ {{api|t=a|ResistancePercent}}
+ {{api|t=a|RespondInstanceLock}}
+ {{api|t=a|RetrieveCorpse}}
+ {{api|t=a|SelectedRealmName}}
+ {{api|t=a|SetAllowLowLevelRaid}}
+ {{api|t=a|SetAutoDeclineGuildInvites}}
+ {{api|t=a|SetTaxiBenchmarkMode}}
+ {{api|t=a|ShowBossFrameWhenUninteractable}}
+ {{api|t=a|TargetDirectionEnemy}}
+ {{api|t=a|TargetDirectionFinished}}
+ {{api|t=a|TargetDirectionFriend}}
+ {{api|t=a|TargetLastEnemy}}
+ {{api|t=a|TargetLastFriend}}
+ {{api|t=a|TargetLastTarget}}
+ {{api|t=a|TargetNearest}}
+ {{api|t=a|TargetNearestEnemy}}
+ {{api|t=a|TargetNearestEnemyPlayer}}
+ {{api|t=a|TargetNearestFriend}}
+ {{api|t=a|TargetNearestFriendPlayer}}
+ {{api|t=a|TargetNearestPartyMember}}
+ {{api|t=a|TargetNearestRaidMember}}
+ {{api|t=a|TargetPriorityHighlightEnd}}
+ {{api|t=a|TargetPriorityHighlightStart}}
+ {{api|t=a|TargetToggle}}
+ {{api|t=a|TargetUnit}}
+ {{api|t=a|TimeoutResurrect}}
+ {{api|t=a|ToggleCollision}}
+ {{api|t=a|ToggleCollisionDisplay}}
+ {{api|t=a|ToggleGravity}}
+ {{api|t=a|TogglePlayerBounds}}
+ {{api|t=a|TogglePortals}}
+ {{api|t=a|ToggleSheath}}
+ {{api|t=a|ToggleTris}}
+ {{api|t=a|UnitAffectingCombat}}
+ {{api|t=a|UnitArmor}}
+ {{api|t=a|UnitAttackPower}}
+ {{api|t=a|UnitAttackSpeed}}
+ {{api|t=a|UnitCastingInfo}}
+ {{api|t=a|UnitChannelInfo}}
+ {{api|t=a|UnitClassification}}
+ {{api|t=a|UnitControllingVehicle}}
+ {{api|t=a|UnitCreatureFamily}}
+ {{api|t=a|UnitCreatureType}}
+ {{api|t=a|UnitDamage}}
+ {{api|t=a|UnitDetailedThreatSituation}}
+ {{api|t=a|UnitEffectiveLevel}}
+ {{api|t=a|UnitFullName}}
+ {{api|t=a|UnitGUID}}
+ {{api|t=a|UnitGetIncomingHeals}}
+ {{api|t=a|UnitGetTotalAbsorbs}}
+ {{api|t=a|UnitGetTotalHealAbsorbs}}
+ {{api|t=a|UnitHPPerStamina}}
+ {{api|t=a|UnitHasRelicSlot}}
+ {{api|t=a|UnitHasVehiclePlayerFrameUI}}
+ {{api|t=a|UnitHasVehicleUI}}
+ {{api|t=a|UnitHealth}}
+ {{api|t=a|UnitHealthMax}}
+ {{api|t=a|UnitHonor}}
+ {{api|t=a|UnitHonorLevel}}
+ {{api|t=a|UnitHonorMax}}
+ {{api|t=a|UnitInVehicle}}
+ {{api|t=a|UnitInVehicleControlSeat}}
+ {{api|t=a|UnitInVehicleHidesPetFrame}}
+ {{api|t=a|UnitIsBossMob}}
+ {{api|t=a|UnitIsControlling}}
+ {{api|t=a|UnitIsDead}}
+ {{api|t=a|UnitIsDeadOrGhost}}
+ {{api|t=a|UnitIsFeignDeath}}
+ {{api|t=a|UnitIsGhost}}
+ {{api|t=a|UnitIsMercenary}}
+ {{api|t=a|UnitIsQuestBoss}}
+ {{api|t=a|UnitIsSameServer}}
+ {{api|t=a|UnitIsTapDenied}}
+ {{api|t=a|UnitIsTrivial}}
+ {{api|t=a|UnitIsUnconscious}}
+ {{api|t=a|UnitLevel}}
+ {{api|t=a|UnitName}}
+ {{api|t=a|UnitNameUnmodified}}
+ {{api|t=a|UnitNumPowerBarTimers}}
+ {{api|t=a|UnitOnTaxi}}
+ {{api|t=a|UnitPVPName}}
+ {{api|t=a|UnitPosition}}
+ {{api|t=a|UnitPowerBarTimerInfo}}
+ {{api|t=a|UnitPowerType}}
+ {{api|t=a|UnitRace}}
+ {{api|t=a|UnitRangedAttackPower}}
+ {{api|t=a|UnitRangedDamage}}
+ {{api|t=a|UnitRealmRelationship}}
+ {{api|t=a|UnitSelectionColor}}
+ {{api|t=a|UnitSelectionType}}
+ {{api|t=a|UnitSetRole}}
+ {{api|t=a|UnitShouldDisplayName}}
+ {{api|t=a|UnitSpellHaste}}
+ {{api|t=a|UnitStagger}}
+ {{api|t=a|UnitStat}}
+ {{api|t=a|UnitSwitchToVehicleSeat}}
+ {{api|t=a|UnitTargetsVehicleInRaidUI}}
+ {{api|t=a|UnitThreatPercentageOfLead}}
+ {{api|t=a|UnitThreatSituation}}
+ {{api|t=a|UnitTrialXP}}
+ {{api|t=a|UnitUsingVehicle}}
+ {{api|t=a|UnitVehicleSeatCount}}
+ {{api|t=a|UnitVehicleSeatInfo}}
+ {{api|t=a|UnitVehicleSkin}}
+ {{api|t=a|UnitWeaponAttackPower}}
+ {{api|t=a|UnitXP}}
+ {{api|t=a|UnitXPMax}}
+ {{api|t=a|WorldLootObjectExists}}
