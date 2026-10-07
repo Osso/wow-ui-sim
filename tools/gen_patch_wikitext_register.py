@@ -83,7 +83,7 @@ def parse_section(section, lines):
         elif mode in ("added", "removed") and text.startswith(":"):
             entries.append(make_entry(section, mode, line_no, text))
         # Changed entries may carry a documentation-system label (" PlayerScript {{api|...}}").
-        elif mode == "changed" and re.match(r"^ (\w+ )?(\{\{|\[\[)", text):
+        elif mode == "changed" and re.match(r"^\s+(\w+ )?(\{\{|\[\[)", text):
             entries.append(make_entry(section, "changed", line_no, text))
         # Annotations are operator lines or bare colored renames ("   <font ...>A -> B</font>").
         elif mode == "changed" and re.match(r"^\s+([#+-] |<font)", text):

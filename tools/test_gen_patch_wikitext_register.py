@@ -22,6 +22,15 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual([(e['symbol'], e.get('kind')) for e in entries],
                          [('NeighborhoodAddManager', 'command')])
 
+    def test_changed_entries_accept_multiple_indentation_spaces(self):
+        entries, _ = parse_section('global-api', [
+            (1, '|}'),
+            (2, '  {{api|t=a|C_PlayerInfo.GetSex}}'),
+            (3, '   # ret 1: sex, Type: number -> UnitSex'),
+        ])
+        self.assertEqual([(e['symbol'], e['annotation']) for e in entries], [
+            ('C_PlayerInfo.GetSex', '# ret 1: sex, Type: number -> UnitSex')])
+
     def test_uncollapsed_added_scriptobjects(self):
         entries, counts = parse_section("scriptobjects", [
             (1, '{| class="wikitable"'),

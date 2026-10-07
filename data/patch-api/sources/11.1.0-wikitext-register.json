@@ -502,8 +502,16 @@
       "section": "global-api",
       "direction": "changed",
       "symbol": "C_MountJournal.GetMountInfoByID",
-      "annotation": "# ret 9: faction, Type: number -> PvPFaction\n# ret 1: sex, Type: number -> UnitSex",
+      "annotation": "# ret 9: faction, Type: number -> PvPFaction",
       "wikitext_line": 114
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.GetSex-116",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_PlayerInfo.GetSex",
+      "annotation": "# ret 1: sex, Type: number -> UnitSex",
+      "wikitext_line": 116
     },
     {
       "id": "wt-global-api-CreateWindow-118",
