@@ -1,3 +1,7 @@
+## [2026-10-07] investigation | 9.2.7 page audit
+
+[Audit](investigations/patch-9-2-7-api-audit.md) retains revision 5227425, three event inventory occurrences and restores event-only enum/structure extraction. Targeted proof pending.
+
 ## [2026-10-07] evidence | 10.0.0 page audit
 
 [Audit](investigations/patch-10-0-0-api-audit.md) accounts for revision 6789768: 639 inventory, 439 extract and four context rows; 466 publication OK and 173 exact retained gaps. Fixture-backed markup/shared-reference parsing and animation/script probe corrections preserve prior registers. All 26 sweeps have passing current-scope evidence; negative control, six helper regressions, Mists warning boundary and startup `[]` pass. Ledger covers all 1,082 IDs; 158 prior inputs and 50 extract-mode outcomes preserved. No runtime API fixes or retirements.

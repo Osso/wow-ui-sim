@@ -1,0 +1,34 @@
+.............F.........
+======================================================================
+FAIL: test_event_only_inventory_preserves_enum_and_structure_contracts (__main__.ExtractTests.test_event_only_inventory_preserves_enum_and_structure_contracts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p927-page/tools/test_extract_patch_non_inventory.py", line 151, in test_event_only_inventory_preserves_enum_and_structure_contracts
+    self.assertEqual(extract_text(raw), '== Summary ==\n* Documentation moved.\n'
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '== Enumerations ==\n + Enum.GamePadPowerLevel\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     ' # Enum.ReportType\n   + PvPScoreboard\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '== Structures ==\n # ItemKeyInfo (C_AuctionHouse.GetItemKeyInfo)\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '   + itemID\n   + battlePetSpeciesID\n')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '== S[34 chars]n== Events ==\n' != '== S[34 chars]n== Enumerations ==\n + Enum.GamePadPowerLevel[142 chars]ID\n'
+  == Summary ==
+  * Documentation moved.
+- == Events ==
++ == Enumerations ==
++  + Enum.GamePadPowerLevel
++  # Enum.ReportType
++    + PvPScoreboard
++ == Structures ==
++  # ItemKeyInfo (C_AuctionHouse.GetItemKeyInfo)
++    + itemID
++    + battlePetSpeciesID
+
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.004s
+
+FAILED (failures=1)

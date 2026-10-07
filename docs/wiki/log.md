@@ -1,3 +1,7 @@
+## [2026-10-07] investigation | 9.2.7 API audit
+
+Retained revision 5227425 and reproduced event-only section loss; fixture-backed extraction restores enum/structure contracts without prior-input changes. [Audit](investigations/patch-9-2-7-api-audit.md).
+
 ## [2026-10-07] evidence | 10.0.0 page audit
 
 [Audit](investigations/patch-10-0-0-api-audit.md): 1,082 unique IDs, 466/639 publication OK, 173 precise retained gaps and all extract behavior pending. Corrected markup/shared-reference/factory boundaries; 26 current-scope sweep proofs, exact 173 → 174 negative control, helper regressions, format/default/Mists checks and exit-0 startup `[]`. Prior sources/registers/ledgers/gaps and extraction outcomes unchanged; no runtime/vendor/classic/canonical edits.

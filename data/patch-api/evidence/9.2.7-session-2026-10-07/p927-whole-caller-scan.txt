@@ -1,0 +1,43 @@
+src/event/valid_events_a.rs:114:    "AUCTION_HOUSE_PURCHASE_COMPLETED",
+src/event/valid_events_a.rs:119:    "AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION",
+src/lua_api/globals/enum_data/missing_enums.lua:704:    DoubleBid = 23,
+src/lua_api/globals/enum_data/missing_enums.lua:706:    FavoritesMaxed = 24,
+src/lua_api/globals/enum_data/missing_enums.lua:713:    ItemNotAvailable = 25,
+src/lua_api/globals/enum_data/missing_enums.lua:5808:if not Enum.GamePadPowerLevel then
+src/lua_api/globals/enum_data/missing_enums.lua:5809:  Enum.GamePadPowerLevel = {
+src/lua_api/globals/enum_data/missing_enums.lua:5819:if not Enum.GamePadPowerLevelMeta then
+src/lua_api/globals/enum_data/missing_enums.lua:5820:  Enum.GamePadPowerLevelMeta = {
+src/lua_api/globals/enum_data/missing_enums.lua:8123:if not Enum.ItemGemColor then
+src/lua_api/globals/enum_data/missing_enums.lua:8124:  Enum.ItemGemColor = {
+src/lua_api/globals/enum_data/missing_enums.lua:8159:if not Enum.ItemGemColorMeta then
+src/lua_api/globals/enum_data/missing_enums.lua:8160:  Enum.ItemGemColorMeta = {
+src/lua_api/globals/enum_data/missing_enums.lua:8485:if not Enum.ItemSocketType then
+src/lua_api/globals/enum_data/missing_enums.lua:8486:  Enum.ItemSocketType = {
+src/lua_api/globals/enum_data/missing_enums.lua:8521:if not Enum.ItemSocketTypeMeta then
+src/lua_api/globals/enum_data/missing_enums.lua:8522:  Enum.ItemSocketTypeMeta = {
+src/lua_api/globals/enum_data/missing_enums.lua:8546:if not Enum.ItemSubclassDisplay then
+src/lua_api/globals/enum_data/missing_enums.lua:8547:  Enum.ItemSubclassDisplay = {
+src/lua_api/globals/enum_data/missing_enums.lua:8554:if not Enum.ItemSubclassDisplayMeta then
+src/lua_api/globals/enum_data/missing_enums.lua:8555:  Enum.ItemSubclassDisplayMeta = {
+src/lua_api/globals/enum_data/missing_enums.lua:8562:if not Enum.ItemSubclassFlag then
+src/lua_api/globals/enum_data/missing_enums.lua:8563:  Enum.ItemSubclassFlag = {
+src/lua_api/globals/enum_data/missing_enums.lua:8578:if not Enum.ItemSubclassFlagMeta then
+src/lua_api/globals/enum_data/missing_enums.lua:8579:  Enum.ItemSubclassFlagMeta = {
+src/lua_api/globals/enum_data/missing_enums.lua:12105:    PvPScoreboard = 14,
+src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:21:    ("GetItemKeyInfo", c_auction_house_get_item_key_info),
+src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:535:    table_set_static(state, item_key, "battlePetSpeciesID", Val::Num(0.0));
+src/lua_api/globals/missing_surface/auction_house/item_search.rs:41:        "battlePetSpeciesID",
+src/lua_api/globals/missing_surface/auction_house/item_search.rs:219:    table_set_static(state, item_key, "battlePetSpeciesID", Val::Num(0.0));
+src/lua_api/globals/missing_surface/auction_house/item_search.rs:375:            ("battlePetSpeciesID", Val::Num(species as f64)),
+src/lua_api/globals/missing_surface/auction_house/item_search.rs:463:/// battlePetSpeciesID)` from a Lua `ItemKey` table. Returns `None` when
+src/lua_api/globals/missing_surface/auction_house/item_search.rs:472:    let species_key = state.gc.intern_string_static(b"battlePetSpeciesID");
+tests/blizzard_auction_house_item_key_roundtrip.rs:26:expect(key.battlePetSpeciesID == 0, "battlePetSpeciesID must default to 0")
+tests/blizzard_auction_house_item_key_roundtrip.rs:34:           fieldName == "battlePetSpeciesID",
+tests/blizzard_auction_house_item_key_roundtrip.rs:39:local info = C_AuctionHouse.GetItemKeyInfo(key)
+tests/blizzard_auction_house_item_key_roundtrip.rs:40:expect(type(info) == "table", "GetItemKeyInfo must return a table")
+src/lua_api/state_types/auction_house.rs:56:/// battlePetSpeciesID)`. Used as the lookup key for
+tests/c_auction_house_probes.rs:134:            return rows[1].itemKey.itemSuffix, rows[1].itemKey.battlePetSpeciesID
+tests/c_auction_house_probes.rs:216:            return key.itemID, key.itemLevel, key.itemSuffix, key.battlePetSpeciesID
+tests/c_auction_house_probes.rs:233:            return key.itemID, key.itemLevel, key.itemSuffix, key.battlePetSpeciesID
+tests/c_auction_house_probes.rs:250:            local info = C_AuctionHouse.GetItemKeyInfo(key)
+tests/c_auction_house_item_search.rs:4://! `(itemID, itemLevel, itemSuffix, battlePetSpeciesID)` tuple. The 9

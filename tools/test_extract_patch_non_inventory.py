@@ -140,6 +140,23 @@ class ExtractTests(unittest.TestCase):
                          '== Constants ==\n ContentTrackingConsts\n   + MaxTrackedAchievements = 10\n'
                          '== Structures ==\n BattlefieldRewards\n   + roleShortageBonus\n')
 
+    def test_event_only_inventory_preserves_enum_and_structure_contracts(self):
+        raw = ('==Summary==\n* Documentation moved.\n'
+               '==Events==\n{| class="wikitable"\n: {{api|t=e|NEW_EVENT}}\n|}\n'
+               ' {{api|t=e|CHANGED_EVENT}}\n   + auctionID\n'
+               '==Enums==\n + Enum.GamePadPowerLevel\n'
+               ' # Enum.ReportType\n   + PvPScoreboard\n'
+               '==Structures==\n # ItemKeyInfo ({{api|C_AuctionHouse.GetItemKeyInfo}})\n'
+               '   + itemID\n   + battlePetSpeciesID\n')
+        self.assertEqual(extract_text(raw), '== Summary ==\n* Documentation moved.\n'
+                         '== Enumerations ==\n + Enum.GamePadPowerLevel\n'
+                         ' # Enum.ReportType\n   + PvPScoreboard\n'
+                         '== Structures ==\n # ItemKeyInfo (C_AuctionHouse.GetItemKeyInfo)\n'
+                         '   + itemID\n   + battlePetSpeciesID\n')
+        rows = seed_rows(extract_text(raw), patch='9.2.7')
+        self.assertEqual(len(rows), 10)
+        self.assertEqual(sum(row['status'] == 'audit-pending' for row in rows), 7)
+
     def test_unheaded_inventory_stops_at_structures(self):
         raw = ('==Consolidated changes==\n: 11.2.5 → 11.2.7\n'
                '{| class="wikitable"\n: {{api|IgnoreMe}}\n|}\n'

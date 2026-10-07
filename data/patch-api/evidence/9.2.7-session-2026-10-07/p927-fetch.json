@@ -1,0 +1,32 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "normalized": [
+      {
+        "from": "Patch_9.2.7/API_changes",
+        "to": "Patch 9.2.7/API changes"
+      }
+    ],
+    "pages": {
+      "542130": {
+        "pageid": 542130,
+        "ns": 0,
+        "title": "Patch 9.2.7/API changes",
+        "revisions": [
+          {
+            "revid": 5227425,
+            "parentid": 5227423,
+            "timestamp": "2022-09-04T12:19:59Z",
+            "slots": {
+              "main": {
+                "contentmodel": "wikitext",
+                "contentformat": "text/x-wiki",
+                "*": "{{apichanges|9.2.7|prev=9.2.5|next=10.0.0}}\n\n==Summary==\n* Blizzard API documentation was moved to [https://github.com/Gethe/wow-ui-source/tree/live/Interface/Addons/Blizzard_APIDocumentationGenerated Blizzard_APIDocumentationGenerated].\n\n==Resources==\n* TOC: <code>90207</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/9.2.5..9.2.7 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/9.2.5..9.2.7 BlizzardInterfaceResources]\n* Official patch notes: [https://worldofwarcraft.com/en-us/news/23833174/shadowlands-927-update-notes-now-live User Interface and Accessibility]\n\n==Events==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ 9.2.5 (44730) &rarr; 9.2.7 (45114) Aug 13 2022\n|- class=\"mw-customtoggle-events\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(2)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-events\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=e|AUCTION_HOUSE_PURCHASE_COMPLETED}}\n: {{api|t=e|AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n</div>\n|}\n {{api|t=e|AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION}}\n   + <font color=\"#00b400\">auctionID</font>\n\n==Enums==\n + <font color=\"#00b400\">Enum.GamePadPowerLevel</font>\n + <font color=\"#00b400\">Enum.ItemGemColor</font>\n + <font color=\"#00b400\">Enum.ItemSocketType</font>\n + <font color=\"#00b400\">Enum.ItemSubclassDisplay</font>\n + <font color=\"#00b400\">Enum.ItemSubclassFlag</font>\n # Enum.AuctionHouseError\n   + <font color=\"#00b400\">DoubleBid</font>\n   + <font color=\"#00b400\">FavoritesMaxed</font>\n   + <font color=\"#00b400\">ItemNotAvailable</font>\n # Enum.ReportType\n   + <font color=\"#00b400\">PvPScoreboard</font>\n\n==Structures==\n # ItemKeyInfo ({{api|C_AuctionHouse.GetItemKeyInfo}})\n   + <font color=\"#00b400\">itemID</font>\n   + <font color=\"#00b400\">battlePetSpeciesID</font>"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

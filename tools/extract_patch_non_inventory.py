@@ -61,7 +61,8 @@ def extract_text(raw, *, preserve_examples=False):
     in_example = False
     xml_example = False
     unheaded = "===Global API===" not in raw.splitlines()
-    level_two = "==Global API==" in raw.splitlines()
+    level_two = any(heading in raw.splitlines() for heading in (
+        "==Global API==", "==Events=="))
     for line in raw.splitlines():
         if preserve_examples:
             opening = re.fullmatch(r'<syntaxhighlight lang="(lua|xml)">', line)
@@ -76,7 +77,7 @@ def extract_text(raw, *, preserve_examples=False):
                 else:
                     lines.append(line)
                 continue
-        if line in ("===Global API===", "==Global API==") or (unheaded and line.startswith('{| class="wikitable"')):
+        if line in ("===Global API===", "==Global API==", "==Events==") or (unheaded and line.startswith('{| class="wikitable"')):
             inventory = True
         if level_two and line in ("==Enums==", "==Structures==", "==References=="):
             inventory = False

@@ -1,0 +1,128 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseUtil.lua:474:	local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseUtil.lua:643:	[Enum.AuctionHouseError.DoubleBid] = ERR_AUCTION_DOUBLE_BID,
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua:1294:	return Enum.ReportType.PvPScoreboard;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseTableBuilder.lua:52:	local itemKeyInfo = itemKey and C_AuctionHouse.GetItemKeyInfo(itemKey, self.restrictQualityToFilter) or nil;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseTableBuilder.lua:648:	local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(rowData.itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseEnumsDocumentation.lua:48:				{ Name = "DoubleBid", Type = "AuctionHouseError", EnumValue = 23 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseEnumsDocumentation.lua:49:				{ Name = "FavoritesMaxed", Type = "AuctionHouseError", EnumValue = 24 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseEnumsDocumentation.lua:50:				{ Name = "ItemNotAvailable", Type = "AuctionHouseError", EnumValue = 25 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseDocumentation.lua:326:			Name = "GetItemKeyInfo",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseDocumentation.lua:827:				{ Name = "battlePetSpeciesID", Type = "number", Nilable = false, Default = 0 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseDocumentation.lua:1205:			LiteralName = "AUCTION_HOUSE_PURCHASE_COMPLETED",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseDocumentation.lua:1248:			LiteralName = "AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseDocumentation.lua:1628:				{ Name = "battlePetSpeciesID", Type = "number", Nilable = false, Default = 0 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseDocumentation.lua:1637:				{ Name = "battlePetSpeciesID", Type = "number", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSharedTemplates.lua:88:			local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(self.itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSharedTemplates.lua:153:				local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSharedTemplates.lua:165:				local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSharedTemplates.lua:210:	local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSharedTemplates.lua:318:		local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(self.itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSellFrame.lua:382:	local itemKeyInfo = itemKey and C_AuctionHouse.GetItemKeyInfo(itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseItemSellFrame.lua:153:	local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(self.listDisplayedItemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseItemSellFrame.lua:188:	local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(self.listDisplayedItemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseItemSellFrame.lua:368:		itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Mainline/Blizzard_AuctionHouseUtil.lua:62:		local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(rowData.itemKey, restrictQualityToFilter);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GamePadDocumentation.lua:209:				{ Name = "powerLevel", Type = "GamePadPowerLevel", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GamePadDocumentation.lua:311:				{ Name = "powerLevel", Type = "GamePadPowerLevel", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GamePadConstDocumentation.lua:6:			Name = "GamePadPowerLevel",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GamePadConstDocumentation.lua:13:				{ Name = "Critical", Type = "GamePadPowerLevel", EnumValue = 0 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GamePadConstDocumentation.lua:14:				{ Name = "Low", Type = "GamePadPowerLevel", EnumValue = 1 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GamePadConstDocumentation.lua:15:				{ Name = "Medium", Type = "GamePadPowerLevel", EnumValue = 2 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GamePadConstDocumentation.lua:16:				{ Name = "High", Type = "GamePadPowerLevel", EnumValue = 3 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GamePadConstDocumentation.lua:17:				{ Name = "Wired", Type = "GamePadPowerLevel", EnumValue = 4 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GamePadConstDocumentation.lua:18:				{ Name = "Unknown", Type = "GamePadPowerLevel", EnumValue = 5 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Mainline/Blizzard_AuctionHouseSharedTemplates.lua:23:			local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(self.itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseFrame.lua:15:	if event == "AUCTION_HOUSE_PURCHASE_COMPLETED" then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseFrame.lua:31:	OnAccept = GenerateClosure(StaticPopup_OnAcceptWithSpinner, BuyoutDialogOnAccept, BuyoutDialogOnEvent, {"AUCTION_HOUSE_PURCHASE_COMPLETED", "AUCTION_HOUSE_SHOW_ERROR"}, 2),
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseFrame.lua:685:	local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseFrame.lua:830:		local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:264:			Name = "ItemGemColor",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:271:				{ Name = "Meta", Type = "ItemGemColor", EnumValue = 1 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:272:				{ Name = "Red", Type = "ItemGemColor", EnumValue = 2 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:273:				{ Name = "Yellow", Type = "ItemGemColor", EnumValue = 4 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:274:				{ Name = "Blue", Type = "ItemGemColor", EnumValue = 8 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:275:				{ Name = "Hydraulic", Type = "ItemGemColor", EnumValue = 16 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:276:				{ Name = "Cogwheel", Type = "ItemGemColor", EnumValue = 32 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:277:				{ Name = "Iron", Type = "ItemGemColor", EnumValue = 64 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:278:				{ Name = "Blood", Type = "ItemGemColor", EnumValue = 128 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:279:				{ Name = "Shadow", Type = "ItemGemColor", EnumValue = 256 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:280:				{ Name = "Fel", Type = "ItemGemColor", EnumValue = 512 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:281:				{ Name = "Arcane", Type = "ItemGemColor", EnumValue = 1024 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:282:				{ Name = "Frost", Type = "ItemGemColor", EnumValue = 2048 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:283:				{ Name = "Fire", Type = "ItemGemColor", EnumValue = 4096 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:284:				{ Name = "Water", Type = "ItemGemColor", EnumValue = 8192 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:285:				{ Name = "Life", Type = "ItemGemColor", EnumValue = 16384 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:286:				{ Name = "Wind", Type = "ItemGemColor", EnumValue = 32768 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:287:				{ Name = "Holy", Type = "ItemGemColor", EnumValue = 65536 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:288:				{ Name = "PunchcardRed", Type = "ItemGemColor", EnumValue = 131072 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:289:				{ Name = "PunchcardYellow", Type = "ItemGemColor", EnumValue = 262144 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:290:				{ Name = "PunchcardBlue", Type = "ItemGemColor", EnumValue = 524288 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:291:				{ Name = "DominationBlood", Type = "ItemGemColor", EnumValue = 1048576 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:292:				{ Name = "DominationFrost", Type = "ItemGemColor", EnumValue = 2097152 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:293:				{ Name = "DominationUnholy", Type = "ItemGemColor", EnumValue = 4194304 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:294:				{ Name = "Cypher", Type = "ItemGemColor", EnumValue = 8388608 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:295:				{ Name = "Tinker", Type = "ItemGemColor", EnumValue = 16777216 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:296:				{ Name = "Primordial", Type = "ItemGemColor", EnumValue = 33554432 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:297:				{ Name = "Fragrance", Type = "ItemGemColor", EnumValue = 67108864 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:298:				{ Name = "SingingThunder", Type = "ItemGemColor", EnumValue = 134217728 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:299:				{ Name = "SingingSea", Type = "ItemGemColor", EnumValue = 268435456 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:300:				{ Name = "SingingWind", Type = "ItemGemColor", EnumValue = 536870912 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:301:				{ Name = "Fiber", Type = "ItemGemColor", EnumValue = 1073741824 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:397:			Name = "ItemSocketType",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:404:				{ Name = "None", Type = "ItemSocketType", EnumValue = 0 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:405:				{ Name = "Meta", Type = "ItemSocketType", EnumValue = 1 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:406:				{ Name = "Red", Type = "ItemSocketType", EnumValue = 2 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:407:				{ Name = "Yellow", Type = "ItemSocketType", EnumValue = 3 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:408:				{ Name = "Blue", Type = "ItemSocketType", EnumValue = 4 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:409:				{ Name = "Hydraulic", Type = "ItemSocketType", EnumValue = 5 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:410:				{ Name = "Cogwheel", Type = "ItemSocketType", EnumValue = 6 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:411:				{ Name = "Prismatic", Type = "ItemSocketType", EnumValue = 7 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:412:				{ Name = "Iron", Type = "ItemSocketType", EnumValue = 8 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:413:				{ Name = "Blood", Type = "ItemSocketType", EnumValue = 9 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:414:				{ Name = "Shadow", Type = "ItemSocketType", EnumValue = 10 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:415:				{ Name = "Fel", Type = "ItemSocketType", EnumValue = 11 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:416:				{ Name = "Arcane", Type = "ItemSocketType", EnumValue = 12 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:417:				{ Name = "Frost", Type = "ItemSocketType", EnumValue = 13 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:418:				{ Name = "Fire", Type = "ItemSocketType", EnumValue = 14 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:419:				{ Name = "Water", Type = "ItemSocketType", EnumValue = 15 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:420:				{ Name = "Life", Type = "ItemSocketType", EnumValue = 16 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:421:				{ Name = "Wind", Type = "ItemSocketType", EnumValue = 17 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:422:				{ Name = "Holy", Type = "ItemSocketType", EnumValue = 18 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:423:				{ Name = "PunchcardRed", Type = "ItemSocketType", EnumValue = 19 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:424:				{ Name = "PunchcardYellow", Type = "ItemSocketType", EnumValue = 20 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:425:				{ Name = "PunchcardBlue", Type = "ItemSocketType", EnumValue = 21 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:426:				{ Name = "Domination", Type = "ItemSocketType", EnumValue = 22 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:427:				{ Name = "Cypher", Type = "ItemSocketType", EnumValue = 23 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:428:				{ Name = "Tinker", Type = "ItemSocketType", EnumValue = 24 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:429:				{ Name = "Primordial", Type = "ItemSocketType", EnumValue = 25 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:430:				{ Name = "Fragrance", Type = "ItemSocketType", EnumValue = 26 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:431:				{ Name = "SingingThunder", Type = "ItemSocketType", EnumValue = 27 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:432:				{ Name = "SingingSea", Type = "ItemSocketType", EnumValue = 28 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:433:				{ Name = "SingingWind", Type = "ItemSocketType", EnumValue = 29 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:434:				{ Name = "Fiber", Type = "ItemSocketType", EnumValue = 30 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:438:			Name = "ItemSubclassDisplay",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:445:				{ Name = "HideSubclassInTooltips", Type = "ItemSubclassDisplay", EnumValue = 1 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:446:				{ Name = "HideSubclassInAuction", Type = "ItemSubclassDisplay", EnumValue = 2 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:447:				{ Name = "ShowItemCount", Type = "ItemSubclassDisplay", EnumValue = 4 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:451:			Name = "ItemSubclassFlag",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:458:				{ Name = "WeaponsubclassCanparry", Type = "ItemSubclassFlag", EnumValue = 1 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:459:				{ Name = "WeaponsubclassSetfingerseq", Type = "ItemSubclassFlag", EnumValue = 2 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:460:				{ Name = "WeaponsubclassIsunarmed", Type = "ItemSubclassFlag", EnumValue = 4 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:461:				{ Name = "WeaponsubclassIsrifle", Type = "ItemSubclassFlag", EnumValue = 8 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:462:				{ Name = "WeaponsubclassIsthrown", Type = "ItemSubclassFlag", EnumValue = 16 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:463:				{ Name = "WeaponsubclassRighthandRanged", Type = "ItemSubclassFlag", EnumValue = 32 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:464:				{ Name = "ItemsubclassQuivernotrequired", Type = "ItemSubclassFlag", EnumValue = 64 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:465:				{ Name = "WeaponsubclassRanged", Type = "ItemSubclassFlag", EnumValue = 128 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:466:				{ Name = "WeaponsubclassDeprecatedReuseMe", Type = "ItemSubclassFlag", EnumValue = 256 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:467:				{ Name = "ItemsubclassUsesInvtype", Type = "ItemSubclassFlag", EnumValue = 512 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:468:				{ Name = "ArmorsubclassLfgscalingarmor", Type = "ItemSubclassFlag", EnumValue = 1024 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Classic/Blizzard_AuctionHouseUtil.lua:55:		local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(rowData.itemKey, restrictQualityToFilter);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Classic/Blizzard_AuctionHouseSharedTemplates.lua:24:			local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(self.itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseBrowseResultsFrame.lua:157:			local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(browseResult.itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseAuctionsFrame.lua:70:		local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseAuctionsFrame.lua:435:	local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(itemKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ReportSystemConstantsDocumentation.lua:112:				{ Name = "PvPScoreboard", Type = "ReportType", EnumValue = 14 },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Vanilla/EventRouting.lua:2:	["AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION"] = function(...) GameEvent.HandleAuctionHouseNotification(...) end,
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventRouting.lua:15:	["AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION"] = function(...) GameEvent.HandleAuctionHouseNotification(...) end,
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLGame/Tooltip/TooltipDataRules.lua:180:	local battlePetSpeciesID = tooltipData.battlePetSpeciesID;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLGame/Tooltip/TooltipDataRules.lua:187:	BattlePetToolTip_Show(battlePetSpeciesID, level, breedQuality, maxHealth, power, speed, name);

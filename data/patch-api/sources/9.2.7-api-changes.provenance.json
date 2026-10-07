@@ -1,0 +1,11 @@
+{
+  "pageid": 542130,
+  "title": "Patch 9.2.7/API changes",
+  "revid": 5227425,
+  "timestamp": "2022-09-04T12:19:59Z",
+  "retrieved": "2026-10-07",
+  "method": "MediaWiki revisions API via browser-cli; direct HTTP returned 403; response retained in evidence/p927-fetch.json",
+  "wikitext_sha256": "882bb3907d301a9213b6aefa636ae7b2daa0818ed5f14013845d3e09626f5157",
+  "register_generator": "python3 tools/gen_patch_wikitext_register.py 9.2.7 data/patch-api/sources/9.2.7-api-changes.wikitext 5227425 data/patch-api/sources/9.2.7-wikitext-register.json --expand-shared-changes",
+  "extract_generator": "python3 tools/extract_patch_non_inventory.py --patch 9.2.7 --text-only --preserve-examples"
+}
