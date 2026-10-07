@@ -1,0 +1,390 @@
+Patch 11.0.0 API changes
+
+== Summary ==
+
+* A new menuing system has been implemented, intended to serve as a replacement for UIDropDownMenu going forward. See New menu system for details.
+* Regions can now be configured to propagate mouse input to other obscured regions. See Mouse input propagation.
+* Hero Talent Trees are introduced into the C_ClassTalents and C_Traits APIs. See Dragonflight Talent System - Hero Talent Trees.
+
+== Resources ==
+* TOC: 110000
+* Official patch notes: The War Within Pre-Expansion Content Update Notes
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Blizzard_Deprecated
+
+== Breaking changes ==
+
+* The GetMouseFocus function has been replaced by GetMouseFoci.
+** This new function returns a table that potentially contains multiple regions based upon the state of mouse input propagation.
+** For the common use case of checking if a region has focus, the ScriptRegion:IsMouseMotionFocus() function can be used. This API exists on all client flavors.
+
+* Updated Spell/SpellBook APIs post-SpellBook-UI-revamp.
+** Most functions have simply been moved under the C_SpellBook or C_Spell namespaces, but some changes/conversions are less obvious.
+** Important Function Parameter changes
+*** SpellBook "bookType" string parameters have been replaced by "spellBank" Enum.SpellBookSpellBank parameters
+**** "spell" / BOOKTYPE_SPELL = Enum.SpellBookSpellBank.Player
+**** "pet" / BOOKTYPE_PET = Enum.SpellBookSpellBank.Pet
+**** (Any other bookType values passed were being treated as "spell" so just use Enum.SpellBookSpellBank.Player for anything else)
+*** New "spellIdentifier" parameter type accepts a Spell ID, name, name(subtext), or link
+
+== New menu system ==
+
+A replacement menuing system has been implemented that serves as a replacement for the existing UIDropDownMenu framework.
+
+* All Blizzard defined menus have been migrated to the new menu system.
+* Documentation and examples have been provided by Blizzard in the 11.0.0 Menu Implementation Guide script in the user interface code export. Simplified examples for common use cases are provided below.
+* The new menu system may eventually make its way into Classic, but this isn't expected to be the case for potentially quite some time.
+* UIDropDownMenu has been retained for addon compatibility only, and is otherwise considered deprecated.
+** Utilities built around UIDropDownMenu such as EasyMenu have however been removed.
+
+=== Dropdown menus ===
+
+Dropdown menus can be created via the new DropdownButton intrinsic frame type. The following example sets up a basic dropdown in the middle of the screen that when clicked will open a menu with a non-interactive title, and three clickable buttons.
+
+
+local Dropdown = CreateFrame("DropdownButton", nil, UIParent, "WowStyle1DropdownTemplate")
+Dropdown:SetDefaultText("Default Text")
+Dropdown:SetPoint("CENTER")
+Dropdown:SetupMenu(function(dropdown, rootDescription)
+    rootDescription:CreateTitle("Test Menu")
+    rootDescription:CreateButton("Button 1", function() print("Clicked button 1") end)
+    rootDescription:CreateButton("Button 2", function() print("Clicked button 2") end)
+    rootDescription:CreateButton("Button 3", function() print("Clicked button 3") end)
+end)
+
+
+=== Context menus ===
+
+Context menus can be spawned via the new MenuUtil.CreateContextMenu(ownerRegion, generator) function that should typically be called within an OnMouseDown handler on a button. When invoked, the context menu will be immediately populated and opened at the location of the mouse cursor. There is at present no support for explicitly anchoring a context menu to a region.
+
+
+MenuUtil.CreateContextMenu(UIParent, function(ownerRegion, rootDescription)
+    rootDescription:CreateTitle("Test Menu")
+    rootDescription:CreateButton("Button 1", function() print("Clicked button 1") end)
+    rootDescription:CreateButton("Button 2", function() print("Clicked button 2") end)
+    rootDescription:CreateButton("Button 3", function() print("Clicked button 3") end)
+end)
+
+
+=== Basic menu factories ===
+
+For basic menus that only consist of a list of elements that each share the same type, the following utility functions can be used to generate a menu description from a table of values. These may serve as suitable replacements for some usages of the now removed EasyMenu functionality.
+
+* MenuUtil.CreateButtonMenu(dropdown, ...)
+* MenuUtil.CreateButtonContextMenu(ownerRegion, ...)
+* MenuUtil.CreateCheckboxMenu(dropdown, isSelected, setSelected, ...)
+* MenuUtil.CreateCheckboxContextMenu(ownerRegion, isSelected, setSelected, ...)
+* MenuUtil.CreateRadioMenu(dropdown, isSelected, setSelected, ...)
+* MenuUtil.CreateRadioContextMenu(ownerRegion, isSelected, setSelected, ...)
+
+The following example creates a dropdown menu button that when clicked will open up to a list of three radio buttons.
+
+
+local RadioDropdown = CreateFrame("DropdownButton", nil, UIParent, "WowStyle1DropdownTemplate")
+RadioDropdown:SetDefaultText("No selection")
+RadioDropdown:SetPoint("CENTER")
+
+local selectedValue = nil
+
+local function IsSelected(value)
+    return value == selectedValue
+end
+
+local function SetSelected(value)
+    selectedValue = value
+end
+
+MenuUtil.CreateRadioMenu(RadioDropdown,
+    IsSelected,
+    SetSelected,
+    {"Radio 1", 1},
+    {"Radio 2", 2},
+    {"Radio 3", 3},
+)
+
+
+=== Hooking menus ===
+
+Menus can be tagged with an arbitrary identifier for hooking. The Menu.ModifyMenu("tag", callback) function can be used to run a callback whenever the menu with the specified tag is shown.
+
+* Blizzard have pre-tagged many menus in the client, allowing them to be hooked immediately.
+* The menu modification callback may additionally receive a table of menu-specific contextual data as the third parameter.
+** In the case of unit popup menus, this contextual data includes attributes such as the unit token and the "which" parameter.
+
+The following example demonstrates this by modifying the players' unit popup menu and inserting buttons into its root description.
+
+
+Menu.ModifyMenu("MENU_UNIT_SELF", function(ownerRegion, rootDescription, contextData)
+    -- Append a new section to the end of the menu.
+    rootDescription:CreateDivider()
+    rootDescription:CreateTitle(addonName)
+    rootDescription:CreateButton("Appended button", function() print("Clicked the appended button!") end)
+
+    -- Insert a new section at the start of the menu.
+    local title = MenuUtil.CreateTitle(addonName)
+    rootDescription:Insert(title, 1)
+    local button = MenuUtil.CreateButton("Inserted button", function() print("Clicked the inserted button!") end)
+    rootDescription:Insert(button, 2)
+    local divider = MenuUtil.CreateDivider()
+    rootDescription:Insert(divider, 3)
+end)
+
+
+== Mouse input propagation ==
+Support has been added to allow configuring a region to propagate mouse click and mouse motion events to other regions in the mouse focus stack. See the linked pages for further details.
+
+* ScriptRegion:SetPropagateMouseClicks(propagate) - Configures the propagation of OnMouseDown and OnMouseDown events.
+* ScriptRegion:SetPropagateMouseMotion(propagate) - Configures the propagation of OnEnter and OnLeave events.
+* GetMouseFoci() - This is the replacement API for GetMouseFocus. It returns a table of regions capable of receiving mouse input ordered top-to-bottom.
+
+== Consolidated changes ==
+=== Enumerations ===
+ Enum.AccountData
+   + CharacterListOrder
+ Enum.AuctionHouseError
+   + ItemBoundToAccountUntilEquip
+ Enum.BagIndex
+   + Accountbanktab
+   + AccountBankTab_1
+   + AccountBankTab_2
+   + AccountBankTab_3
+   + AccountBankTab_4
+   + AccountBankTab_5
+ Enum.BagSlotFlags
+   # PriorityEquipment -> ClassEquipment
+   # PriorityConsumables -> ClassConsumables
+   # PriorityTradeGoods -> ClassProfessionGoods
+   # PriorityJunk -> ClassJunk
+   # PriorityQuestItems -> ClassQuestItems
+   + ClassReagents
+   + ExpansionCurrent
+   + ExpansionLegacy
+   - BagSlotValidFlagsAll
+   - BagSlotPriorityFlagsAll
+ Enum.CalendarInviteBits
+   + None
+ Enum.ChrCustomizationOptionType
+   # SelectionPopout -> Dropdown
+ Enum.CraftingOrderItemType
+   + NpcProvided
+ Enum.CraftingOrderResult
+   + InvalidRecraftItem
+   + NoAccountItems
+ Enum.CraftingOrderType
+   + Npc
+ Enum.CurrencyDestroyReason
+   + ConcentrationCast
+   + AccountTransfer
+   - Last
+ Enum.CurrencyFlagsB
+   + CurrencyBScaleMaxQuantityByWeeksSinceStart
+ Enum.CurrencySource
+   + AccountTransfer
+   - Last
+ Enum.Cursormode
+   + QuestMetaCursor
+   + QuestMetaTurninCursor
+   + QuestRecurringCursor
+   + QuestRecurringTurninCursor
+   + EnchantCursor
+   + QuestMetaErrorCursor
+   + QuestMetaTurninErrorCursor
+   + QuestRecurringErrorCursor
+   + QuestRecurringTurninErrorCursor
+   + EnchantErrorCursor
+ Enum.Damageclass
+   - NumClasses
+ Enum.EditModeObjectiveTrackerSetting
+   + TextSize
+ Enum.EventToastDisplayType
+   + FlightpointDiscovered
+   + CapstoneUnlocked
+ Enum.EventToastEventType
+   + FlightpointDiscovered
+ Enum.ExpansionLandingPageType
+   + WarWithin
+ Enum.GossipNpcOption
+   + CharacterBanker
+   + AccountBanker
+ Enum.GraphicsValidationResult
+   + CompatMode
+ Enum.ItemBind
+   + ToWoWAccount
+   + ToBnetAccount
+   + ToBnetAccountUntilEquipped
+ Enum.ItemConsumableSubclass
+   + Flasksphials
+   + VantusRune
+   + UtilityCurio
+   + CombatCurio
+ Enum.ItemGemColor
+   # FutureUse -> Fragrance
+ Enum.ItemSocketType
+   # FutureUse -> Fragrance
+ Enum.JournalEncounterFlags
+   + DoNotDisplayEncounter
+ Enum.MinimapTrackingFilter
+   + AccountCompletedQuests
+   + AccountBanker
+ Enum.NodeOpFailureReason
+   + AccountDataNoMatch
+ Enum.PetJournalError
+   - InvalidCovenant
+ Enum.PlayerInteractionType
+   + CharacterBanker
+   + AccountBanker
+ Enum.PointsModifierSourceType
+   + PointsModifierSet
+ Enum.PowerType
+   - HealthCost
+   - None
+   - NumPowerTypes
+ Enum.ProfessionEffect
+   + StatIngenuity
+   + ModConcentration
+   + Tokenizer
+   + ModIngenuity
+   + ConcentrationRefund
+ Enum.ProfessionRating
+   # Unused_1 -> Ingenuity
+ Enum.QuestCompleteSpellType
+   + QuestlineUnlock
+   + QuestlineReward
+   + QuestlineUnlockPart
+ Enum.QuestFrequency
+   + ResetByScheduler
+ Enum.QuestTag
+   + Delve
+ Enum.QuestTagType
+   + Capstone
+   + WorldBoss
+ Enum.ReportMinorCategory
+   + HarmfulToMinors
+ Enum.SlotRegion
+   + PlayerBags
+   + AccountBank
+ Enum.SuperTrackingType
+   + MapPin
+   + Vignette
+ Enum.TimeEventFlag
+   + WeeklyReset
+   + GlobalLaunch
+ Enum.TraitNodeType
+   + SubTreeSelection
+ Enum.TransmogUseErrorType
+   + Reputation
+   + Class
+   + Race
+   + ItemProficiency
+ Enum.UIMapFlag
+   + IsCityMap
+ Enum.ViewArenaSize
+   - Five
+
+=== Structures ===
+ AppearanceSourceInfo
+   + playerCanCollect
+   + isValidSourceForPlayer
+ AreaPOIInfo
+   + linkedUiMapID
+   + isCurrentEvent
+ ArtifactInfo
+   # tier, Type: luaIndex -> ArtifactTiers
+ CraftingItemResultData
+   + hasIngenuityProc
+   + concentrationCurrencyID
+   + concentrationSpent
+   + ingenuityRefund
+ CraftingOperationInfo
+   + concentrationCurrencyID
+   + concentrationCost
+   + ingenuityRefund
+ CraftingOrderCustomerOptionInfo
+   + expansionID
+ CraftingOrderCustomerSearchParams
+   + currentExpansionOnly
+ CraftingOrderInfo
+   + npcCustomerCreatureID
+   + npcOrderRewards
+   + npcCraftingOrderSetID
+   + npcTreasureID
+ CurrencyInfo
+   + currencyID
+   + currencyListDepth
+   + isAccountWide
+   + isAccountTransferable
+   + transferPercentage
+   + rechargingCycleDurationMS
+   + rechargingAmountPerCycle
+ GossipOptionUIInfo
+   + failureDescription
+ GossipQuestUIInfo
+   + isMeta
+ ImportLoadoutEntryInfo
+   + ranksGranted
+ LfgSearchResultData
+   + partyGUID
+ MajorFactionRenownRewardInfo
+   + isAccountUnlock
+ MapTaxiNodeInfo
+   + isUndiscovered
+ MinimapScriptTrackingInfo
+   # textureFileID -> texture
+ MountInfo
+   # isForDragonriding -> isSteadyFlight
+ PartyPoseInfo
+   + flags
+ QuestInfo
+   + headerSortKey
+ QuestLineInfo
+   + isLocalStory
+   + isAccountCompleted
+   + isCombatAllyQuest
+   + isMeta
+   + inProgress
+   + isQuestStart
+ RecruitingClubInfo
+   + realmName
+ SpellInfo
+   + originalIconID
+ SplashScreenInfo
+   + gameMenuRequest
+ TaskPOIData
+   + isMeta
+ TextureAndTextRowVisualizationInfo
+   + groupAlignment
+ TraitCondInfo
+   + traitCondAccountElementID
+ TraitEntryInfo
+   # definitionID, Nilable: false -> true
+   + subTreeID
+ TraitNodeInfo
+   + subTreeID
+   + subTreeActive
+ TraitNodeInfoPartial
+   + subTreeActive
+ TransmogAppearanceInfoBySourceData
+   + canDisplayOnPlayer
+   + isAnySourceValidForPlayer
+ TransmogCategoryAppearanceInfo
+   + canDisplayOnPlayer
+ TransmogSetInfo
+   + validForCharacter
+ UIWidgetSpellInfo
+   + tint
+   - isLootObject
+
+== Deprecated API ==
+These API functions have been deprecated and will be removed in patch 11.0.2
+Deprecated_11_0_0.lua
+: GetSpellInfo → C_Spell.GetSpellInfo
+: GetNumSpellTabs → C_SpellBook.GetNumSpellBookSkillLines
+: GetSpellTabInfo → C_SpellBook.GetSpellBookSkillLineInfo
+: GetSpellCooldown → C_Spell.GetSpellCooldown
+: GetSpellBookItemName → C_SpellBook.GetSpellBookItemName
+: GetSpellTexture → C_Spell.GetSpellTexture
+: GetSpellCharges → C_Spell.GetSpellCharges
+: GetSpellDescription → C_Spell.GetSpellDescription
+: GetSpellCount → C_Spell.GetSpellCastCount
+: IsUsableSpell → C_Spell.IsSpellUsable
+There is no deprecation for GetSpellLink
