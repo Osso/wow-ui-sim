@@ -1,3 +1,7 @@
+## [2026-10-07] investigation | Test-suite performance
+
+[Test-suite performance](investigations/test-suite-performance.md): isolated nextest baseline (integration 45 min on 4 workers; 78% of test time in ~1.7k tests taking >=1s), ranked deletion candidates (source-shape fluff ~1.7s total), publication sweeps moved to the prefork harness (128.8s -> 18.1s, identical results), unapproved sharded CI design kept on branch `test-perf`.
+
 ## [2026-10-07] evidence | 10.0.2 page audit
 
 [Audit](investigations/patch-10-0-2-api-audit.md) accounts for revision 2926754, 416 inventory + 167 extract occurrences, twenty unused retail namespace retirements and 149 exact retained gaps. Plain CVar parser fixture, 25 isolated sweeps, exact negative control, bare/cached/Mists behavior, warning-clean non-vendor checks and exit-0 startup `[]` pass. All 583 IDs accounted; 152 prior inputs and every extract-mode outcome preserved. Substantive extract behavior remains pending.

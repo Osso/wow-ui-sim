@@ -1,0 +1,34 @@
+# Per-test process isolation avoids cumulative VM/bytecode-cache state.
+# Run prefork_full_ui separately with cargo test: harness=false is not nextest-compatible.
+[profile.default]
+fail-fast = false
+retries = 0
+test-threads = 4
+
+# Use on hosts with at least 8 CPUs and sufficient memory for concurrent VMs.
+[profile.local]
+test-threads = 8
+
+[profile.local.junit]
+path = "integration.xml"
+store-success-output = false
+store-failure-output = true
+
+# Partition on separate runners; gates remain shared by processes on one host.
+[profile.ci]
+test-threads = 4
+
+[profile.ci.junit]
+path = "integration.xml"
+store-success-output = false
+store-failure-output = true
+
+[profile.measure]
+fail-fast = false
+retries = 0
+test-threads = 4
+
+[profile.measure.junit]
+path = "integration.xml"
+store-success-output = false
+store-failure-output = true

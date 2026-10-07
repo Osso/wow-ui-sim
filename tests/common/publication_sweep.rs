@@ -7,10 +7,6 @@ use serde::Deserialize;
 use serde_json::{Value, json};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-// Reuse the real cached Game preload, not the panel fixture's stubbed environment.
-#[path = "prefork_full_ui_preload.rs"]
-mod full_ui;
-
 /// One patch's sweep inputs. Env var names select a scratch register / results file.
 pub(crate) struct SweepSpec {
     pub register: &'static str,
@@ -469,26 +465,23 @@ fn parse_deprecated_alias(line: &str, source: &str) -> Option<(String, (String, 
 
 /// Probe every register row in one cached Game environment and require the non-ok
 /// ID set to equal the reviewed known-gap set exactly.
-pub(crate) fn run_publication_sweep(spec: &SweepSpec) {
+pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
     let register = read_register(spec);
     let later = later_publication(spec);
     let known: BTreeSet<String> =
         serde_json::from_str(spec.known_gaps).expect("parse known-gap IDs");
-    let results = crate::common::with_exclusive_workload(|| {
-        let env = full_ui::preload_full_game_ui().expect("load the full cached Game UI");
-        let aliases = read_deprecated_aliases(&env);
-        register
-            .entries
-            .iter()
-            .map(|entry| {
-                let expectation = expectation_for(entry, &later);
-                (
-                    entry.id.clone(),
-                    classify_entry(&env, entry, &expectation, &aliases),
-                )
-            })
-            .collect::<BTreeMap<_, _>>()
-    });
+    let aliases = read_deprecated_aliases(env);
+    let results = register
+        .entries
+        .iter()
+        .map(|entry| {
+            let expectation = expectation_for(entry, &later);
+            (
+                entry.id.clone(),
+                classify_entry(env, entry, &expectation, &aliases),
+            )
+        })
+        .collect::<BTreeMap<_, _>>();
     // Persist every result before the mismatch assertion, including the first RED run.
     write_results_if_requested(spec.out_env, &results);
     let non_ok: BTreeSet<String> = results

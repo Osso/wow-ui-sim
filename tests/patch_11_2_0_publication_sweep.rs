@@ -4,9 +4,11 @@
 #[path = "common/publication_sweep.rs"]
 mod sweep;
 
-#[test]
-fn patch_11_2_0_publication_sweep() {
-    sweep::run_publication_sweep(&sweep::SweepSpec {
+use wow_ui_sim::lua_api::WowLuaEnv;
+
+prefork_full_ui_case! {
+fn patch_11_2_0_publication_sweep(env: &WowLuaEnv) {
+    sweep::run_publication_sweep(env, &sweep::SweepSpec {
         register: include_str!("../data/patch-api/sources/11.2.0-wikitext-register.json"),
         known_gaps: include_str!("data/patch_11_2_0_sweep_known_gaps.json"),
         row_count: 162,
@@ -22,4 +24,5 @@ fn patch_11_2_0_publication_sweep() {
             include_str!("../data/patch-api/sources/12.1.0-wikitext-register.json"),
         ],
     });
+}
 }

@@ -1,0 +1,614 @@
+{
+ "date": "2026-10-07",
+ "revision": "44e91b8fccb5a6ad1f206a9fccf1b8d9c4ccea34",
+ "command": "cargo nextest run --test integration --no-fail-fast --profile measure --target-dir target",
+ "threads": 4,
+ "count": 10808,
+ "passed": 10784,
+ "failed": 24,
+ "skipped": 19,
+ "test_seconds": 10800.306,
+ "duration_buckets": {
+  "0 <= seconds < 0.1": 1649,
+  "0.1 <= seconds < 1": 7477,
+  "1 <= seconds < 5": 1267,
+  "5 <= seconds < 20": 352,
+  "20 <= seconds < 60": 52,
+  "60 <= seconds < inf": 11
+ },
+ "integration_wall_seconds": 2717.323313782923,
+ "top_modules": [
+  {
+   "module": "addon_coverage_lod",
+   "seconds": 668.812,
+   "count": 24,
+   "failed": 0
+  },
+  {
+   "module": "addon_loading_perf",
+   "seconds": 258.144,
+   "count": 4,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_garrison_ui_loads",
+   "seconds": 223.139,
+   "count": 15,
+   "failed": 1
+  },
+  {
+   "module": "spellbook",
+   "seconds": 159.845,
+   "count": 6,
+   "failed": 0
+  },
+  {
+   "module": "spellbook_layout",
+   "seconds": 129.082,
+   "count": 8,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_static_popup_game_loads",
+   "seconds": 90.86200000000004,
+   "count": 27,
+   "failed": 0
+  },
+  {
+   "module": "world_map_onupdate_inventory",
+   "seconds": 80.728,
+   "count": 1,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_player_spells_loads",
+   "seconds": 75.30099999999999,
+   "count": 20,
+   "failed": 0
+  },
+  {
+   "module": "patch_10_2_0_publication_sweep",
+   "seconds": 70.518,
+   "count": 1,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_static_popup_loads",
+   "seconds": 70.34,
+   "count": 24,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_cooldown_broadcaster_loads",
+   "seconds": 66.179,
+   "count": 7,
+   "failed": 0
+  },
+  {
+   "module": "test_showuipanel_toggles",
+   "seconds": 65.06700000000001,
+   "count": 16,
+   "failed": 0
+  },
+  {
+   "module": "world_map_voice_button_order",
+   "seconds": 62.22,
+   "count": 1,
+   "failed": 0
+  },
+  {
+   "module": "patch_10_1_7_publication_sweep",
+   "seconds": 60.71,
+   "count": 1,
+   "failed": 0
+  },
+  {
+   "module": "patch_10_2_5_publication_sweep",
+   "seconds": 60.021,
+   "count": 1,
+   "failed": 0
+  },
+  {
+   "module": "startup_targeted_regressions::late",
+   "seconds": 59.81699999999999,
+   "count": 12,
+   "failed": 0
+  },
+  {
+   "module": "layout_perf",
+   "seconds": 59.445,
+   "count": 6,
+   "failed": 0
+  },
+  {
+   "module": "action_bar",
+   "seconds": 59.061,
+   "count": 11,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_game_mode_select_loads",
+   "seconds": 59.009,
+   "count": 13,
+   "failed": 0
+  },
+  {
+   "module": "timeout_reexec",
+   "seconds": 57.702,
+   "count": 7,
+   "failed": 0
+  },
+  {
+   "module": "test_keybindings_panels",
+   "seconds": 57.244,
+   "count": 14,
+   "failed": 0
+  },
+  {
+   "module": "test_guild_panel",
+   "seconds": 52.12300000000001,
+   "count": 17,
+   "failed": 0
+  },
+  {
+   "module": "spell_casting",
+   "seconds": 49.422999999999995,
+   "count": 19,
+   "failed": 0
+  },
+  {
+   "module": "test_showuipanel",
+   "seconds": 48.009,
+   "count": 11,
+   "failed": 0
+  },
+  {
+   "module": "patch_10_2_6_publication_sweep",
+   "seconds": 47.934,
+   "count": 1,
+   "failed": 0
+  },
+  {
+   "module": "patch_10_1_5_publication_sweep",
+   "seconds": 46.983,
+   "count": 1,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_simple_checkout_loads",
+   "seconds": 46.54099999999999,
+   "count": 19,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_social_toast_loads",
+   "seconds": 46.18300000000001,
+   "count": 17,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_spell_diminish_ui_loads",
+   "seconds": 45.88099999999999,
+   "count": 17,
+   "failed": 0
+  },
+  {
+   "module": "test_keybindings_spellbook_talents",
+   "seconds": 44.11500000000001,
+   "count": 13,
+   "failed": 0
+  },
+  {
+   "module": "click_targeting",
+   "seconds": 43.886,
+   "count": 20,
+   "failed": 0
+  },
+  {
+   "module": "xml_templates::basic_creation",
+   "seconds": 43.403000000000006,
+   "count": 23,
+   "failed": 0
+  },
+  {
+   "module": "bags",
+   "seconds": 41.887,
+   "count": 11,
+   "failed": 0
+  },
+  {
+   "module": "startup_warnings::late",
+   "seconds": 40.24200000000001,
+   "count": 17,
+   "failed": 0
+  },
+  {
+   "module": "achievement_panel_layout",
+   "seconds": 39.436,
+   "count": 3,
+   "failed": 0
+  },
+  {
+   "module": "test_showuipanel_lod_player_spells",
+   "seconds": 38.777,
+   "count": 9,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_ui_blizzard_accountstore::behavior_card_creature_display",
+   "seconds": 38.685,
+   "count": 8,
+   "failed": 0
+  },
+  {
+   "module": "secure_aura_header_helpers",
+   "seconds": 38.653999999999996,
+   "count": 6,
+   "failed": 0
+  },
+  {
+   "module": "patch_10_2_7_publication_sweep",
+   "seconds": 37.934,
+   "count": 1,
+   "failed": 0
+  },
+  {
+   "module": "blizzard_ui_blizzard_archaeology_ui::surface_globals",
+   "seconds": 36.507,
+   "count": 3,
+   "failed": 0
+  }
+ ],
+ "top_50": [
+  {
+   "name": "addon_coverage_lod::load_on_demand_blizzard_addons_shard_13_stays_within_known_error_baseline_after_startup",
+   "module": "addon_coverage_lod",
+   "seconds": 99.473,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "world_map_onupdate_inventory::world_map_open_visible_onupdate_handlers_stay_within_initial_inventory_ceiling",
+   "module": "world_map_onupdate_inventory",
+   "seconds": 80.728,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_loading_perf::loading_phase_breakdown_stays_within_budgets",
+   "module": "addon_loading_perf",
+   "seconds": 78.798,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_loading_perf::heaviest_blizzard_addons_stay_within_per_addon_load_budgets",
+   "module": "addon_loading_perf",
+   "seconds": 72.611,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_loading_perf::blizzard_addon_loading_reports_phase_breakdown_under_budget",
+   "module": "addon_loading_perf",
+   "seconds": 72.006,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_10_2_0_publication_sweep::patch_10_2_0_publication_sweep",
+   "module": "patch_10_2_0_publication_sweep",
+   "seconds": 70.518,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_coverage_lod::load_on_demand_blizzard_addons_shard_12_stays_within_known_error_baseline_after_startup",
+   "module": "addon_coverage_lod",
+   "seconds": 67.101,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "world_map_voice_button_order::chat_frame_voice_button_renders_below_overlapping_world_map_widgets",
+   "module": "world_map_voice_button_order",
+   "seconds": 62.22,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_10_1_7_publication_sweep::patch_10_1_7_publication_sweep",
+   "module": "patch_10_1_7_publication_sweep",
+   "seconds": 60.71,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_coverage_lod::shard_14_runtime_load_survives_prior_runtime_shards_in_process",
+   "module": "addon_coverage_lod",
+   "seconds": 60.095,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_10_2_5_publication_sweep::patch_10_2_5_publication_sweep",
+   "module": "patch_10_2_5_publication_sweep",
+   "seconds": 60.021,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_coverage_lod::load_on_demand_blizzard_addons_shard_1_stays_within_known_error_baseline_after_startup",
+   "module": "addon_coverage_lod",
+   "seconds": 54.872,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_coverage_lod::load_on_demand_blizzard_addons_shard_15_stays_within_known_error_baseline_after_startup",
+   "module": "addon_coverage_lod",
+   "seconds": 54.036,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_coverage_lod::generic_trait_ui_runtime_load_survives_prior_force_load_process_state",
+   "module": "addon_coverage_lod",
+   "seconds": 53.993,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_coverage_lod::load_on_demand_blizzard_addons_shard_10_stays_within_known_error_baseline_after_startup",
+   "module": "addon_coverage_lod",
+   "seconds": 48.545,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_10_2_6_publication_sweep::patch_10_2_6_publication_sweep",
+   "module": "patch_10_2_6_publication_sweep",
+   "seconds": 47.934,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_10_1_5_publication_sweep::patch_10_1_5_publication_sweep",
+   "module": "patch_10_1_5_publication_sweep",
+   "seconds": 46.983,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "spellbook::native_raised_spellbook_shares_positive_level_without_raising_unit_overlay",
+   "module": "spellbook",
+   "seconds": 44.383,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "timeout_reexec::timeout_fixtures_can_run_concurrently",
+   "module": "timeout_reexec",
+   "seconds": 39.333,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_10_2_7_publication_sweep::patch_10_2_7_publication_sweep",
+   "module": "patch_10_2_7_publication_sweep",
+   "seconds": 37.934,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_coverage_lod::load_on_demand_blizzard_addons_shard_14_stays_within_known_error_baseline_after_startup",
+   "module": "addon_coverage_lod",
+   "seconds": 36.033,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "spellbook::spellbook_first_visible_item_emits_icon_mask_quad_on_first_open",
+   "module": "spellbook",
+   "seconds": 35.574,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_loading_perf::no_saved_vars_loader_hotspots_stay_within_budgets",
+   "module": "addon_loading_perf",
+   "seconds": 34.729,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_cooldown_broadcaster_loads::blizzard_cooldown_broadcaster_warrior_specs_include_base_and_interrupt_orders",
+   "module": "blizzard_cooldown_broadcaster_loads",
+   "seconds": 34.42,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_damage_meter_loads::blizzard_damage_meter_xml_templates_are_registered",
+   "module": "blizzard_damage_meter_loads",
+   "seconds": 31.29,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_coverage_lod::load_on_demand_blizzard_addons_shard_16_stays_within_known_error_baseline_after_startup",
+   "module": "addon_coverage_lod",
+   "seconds": 30.617,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_11_0_0_publication_sweep::patch_11_0_0_publication_sweep",
+   "module": "patch_11_0_0_publication_sweep",
+   "seconds": 30.425,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_garrison_ui_loads::blizzard_garrison_ui_landing_page_parents_uiparent_and_is_hidden_by_default",
+   "module": "blizzard_garrison_ui_loads",
+   "seconds": 29.83,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_garrison_ui_loads::blizzard_garrison_ui_is_addon_loaded_returns_true_after_explicit_load",
+   "module": "blizzard_garrison_ui_loads",
+   "seconds": 28.876,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_10_1_0_publication_sweep::patch_10_1_0_publication_sweep",
+   "module": "patch_10_1_0_publication_sweep",
+   "seconds": 28.803,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors",
+   "module": "blizzard_garrison_ui_loads",
+   "seconds": 28.499,
+   "result": "failed",
+   "failure": "thread 'blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors' (3372547) panicked at /home/osso/.worktrees/wow-ui-sim-test-perf/tests/blizzard_garrison_ui_loads.rs:270:5"
+  },
+  {
+   "name": "blizzard_garrison_ui_loads::blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent",
+   "module": "blizzard_garrison_ui_loads",
+   "seconds": 26.925,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_11_0_7_publication_sweep::patch_11_0_7_publication_sweep",
+   "module": "patch_11_0_7_publication_sweep",
+   "seconds": 26.767,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_auction_house_item_search::auction_house_item_search_query_returns_seeded_rows",
+   "module": "blizzard_auction_house_item_search",
+   "seconds": 26.229,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_11_1_0_publication_sweep::patch_11_1_0_publication_sweep",
+   "module": "patch_11_1_0_publication_sweep",
+   "seconds": 25.948,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_11_1_5_publication_sweep::patch_11_1_5_publication_sweep",
+   "module": "patch_11_1_5_publication_sweep",
+   "seconds": 25.941,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_auction_house_globals::auction_house_public_globals_exist_after_load",
+   "module": "blizzard_auction_house_globals",
+   "seconds": 25.928,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_11_0_5_publication_sweep::patch_11_0_5_publication_sweep",
+   "module": "patch_11_0_5_publication_sweep",
+   "seconds": 25.409,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "spellbook_layout::spellbook_first_open_is_stable_with_real_tutorial_logic_restored",
+   "module": "spellbook_layout",
+   "seconds": 24.835,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_auction_house_place_bid::auction_house_place_bid_adds_bid_fires_events_and_deducts_money",
+   "module": "blizzard_auction_house_place_bid",
+   "seconds": 24.832,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "full_ui_preload_bootstrap::full_game_preload_publishes_lod_bootstrap_helpers_without_loading_the_addon",
+   "module": "full_ui_preload_bootstrap",
+   "seconds": 24.796,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_11_2_5_publication_sweep::patch_11_2_5_publication_sweep",
+   "module": "patch_11_2_5_publication_sweep",
+   "seconds": 24.705,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_12_0_1_secure_delegate::patch_12_0_1_cached_secure_delegate_removed",
+   "module": "patch_12_0_1_secure_delegate",
+   "seconds": 24.574,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_11_1_7_publication_sweep::patch_11_1_7_publication_sweep",
+   "module": "patch_11_1_7_publication_sweep",
+   "seconds": 24.195,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "addon_coverage_lod::load_on_demand_blizzard_addons_shard_7_stays_within_known_error_baseline_after_startup",
+   "module": "addon_coverage_lod",
+   "seconds": 23.996,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_garrison_ui_loads::blizzard_garrison_ui_publishes_landing_page_and_support_frames",
+   "module": "blizzard_garrison_ui_loads",
+   "seconds": 23.503,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_garrison_ui_loads::blizzard_garrison_ui_publishes_building_and_recruiter_helpers",
+   "module": "blizzard_garrison_ui_loads",
+   "seconds": 23.25,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_11_2_7_publication_sweep::patch_11_2_7_publication_sweep",
+   "module": "patch_11_2_7_publication_sweep",
+   "seconds": 23.229,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "blizzard_auction_house_saved_vars::auction_house_saved_variables_exist_with_onload_defaults",
+   "module": "blizzard_auction_house_saved_vars",
+   "seconds": 23.193,
+   "result": "passed",
+   "failure": null
+  },
+  {
+   "name": "patch_11_0_2_publication_sweep::patch_11_0_2_publication_sweep",
+   "module": "patch_11_0_2_publication_sweep",
+   "seconds": 23.093,
+   "result": "passed",
+   "failure": null
+  }
+ ]
+}
