@@ -1,6 +1,6 @@
-## [2026-10-07] investigation | 9.2.7 page audit
+## [2026-10-07] evidence | 9.2.7 page audit
 
-[Audit](investigations/patch-9-2-7-api-audit.md) retains revision 5227425, three event inventory occurrences and restores event-only enum/structure extraction. Targeted proof pending.
+[Audit](investigations/patch-9-2-7-api-audit.md) accounts for revision 5227425: three event inventory, 23 extract and one context row. Event-only extraction loss fixed; all 27 sweeps, exact negative control, 34 fixtures, format/default/Mists checks and startup `[]` pass. Zero publication gaps; fourteen substantive extract targets and payload parity remain pending. All 138 prior inputs and 52 extraction-mode outcomes preserved; no runtime/classic/vendor changes.
 
 ## [2026-10-07] evidence | 10.0.0 page audit
 

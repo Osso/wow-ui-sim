@@ -1,0 +1,205 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "9.2.7",
+  "source_register": "data/patch-api/sources/9.2.7-wikitext-register.json",
+  "source_sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7",
+  "audit_status": "in-progress",
+  "proof_policy": "Complete publication occurrence accounting, not complete compatibility. Current retail 12.1.0 with all 26 later registers. Event registration/absence only; pending enum identities, flags, populated DTOs and payloads have no behavioral credit. No production API changes or independent agents/models.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-9-2-7",
+      "symbols": [
+        "AUCTION_HOUSE_PURCHASE_COMPLETED",
+        "AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE",
+        "AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION"
+      ],
+      "scope": "Current cached event registration/absence only, with 10.1.5 supersession.",
+      "spec": "docs/specs/patch-9-2-7-publication-sweep.md",
+      "tests": [
+        "tests/patch_9_2_7_publication_sweep.rs"
+      ],
+      "compiled_revision": "cbc762757",
+      "proof": "All 27 publication sweeps and existing factory regression pass; exact single-row negative control, fixtures, format/default/Mists checks and exit-0 startup [].",
+      "ledger": "data/patch-api/evidence/9.2.7-session-2026-10-07/p927-proof.json"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/9.2.7-api-changes.txt",
+    "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+    "wikitext_revid": 5227425,
+    "wikitext_sha256": "882bb3907d301a9213b6aefa636ae7b2daa0818ed5f14013845d3e09626f5157",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "preserve_examples": true
+  },
+  "inventory_context_source": "data/patch-api/evidence/9.2.7-session-2026-10-07/p927-inventory-context.json",
+  "source_rows": [
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_PURCHASE_COMPLETED-19",
+      "capabilities": [
+        "publication-sweep-9-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached event registration only. Auction lifecycle and auctionID payload production/semantics remain unproved; accepting arbitrary caller-injected payloads would not prove a native producer."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE-20",
+      "capabilities": [
+        "publication-sweep-9-2-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by 10.1.5 removal; RegisterEvent rejects this unknown event. Historical delivery behavior is not reconstructed."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION-25",
+      "capabilities": [
+        "publication-sweep-9-2-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached event registration only. Auction lifecycle and auctionID payload production/semantics remain unproved; accepting arbitrary caller-injected payloads would not prove a native producer."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Documentation path relocation; source metadata, not a new callable API or runtime behavior."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations--012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "enumerations--013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "enumerations--014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "enumerations--015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "enumerations--016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "enumerations--017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "enumerations--018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "enumerations--019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "enumerations--020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "enumerations--021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "enumerations--022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+    },
+    {
+      "source_id": "source-context-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures--025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetItemKeyInfo is published, but populated itemID/battlePetSpeciesID contract remains missing in the serializer at src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:539-553. Existing tests assert name/icon/quality, not these fields."
+    },
+    {
+      "source_id": "structures--026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemKeyInfo.itemID is absent from registry_and_rows.rs:539-553. ItemKey.itemID round-trip tests do not exercise this output field; no occurrence-specific behavior proof or implementation added."
+    },
+    {
+      "source_id": "structures--027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemKeyInfo.battlePetSpeciesID is not serialized at registry_and_rows.rs:539-553; pet-aware item-key resolution and populated DTO proof are required. ItemKey.battlePetSpeciesID is a different structure and provides no credit."
+    },
+    {
+      "source_id": "wt-context-events-build-13",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical event comparison build caption; no runtime credit. Retained separately because inventory extraction intentionally excludes it."
+    }
+  ]
+}

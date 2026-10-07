@@ -1,0 +1,186 @@
+[
+  {
+    "source_id": "source-context-001",
+    "plaintext_line": 1,
+    "wikitext_line": 1,
+    "literal": "Patch 9.2.7 API changes",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "plaintext_line": 3,
+    "wikitext_line": 3,
+    "literal": "== Summary ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "plaintext_line": 4,
+    "wikitext_line": 4,
+    "literal": "* Blizzard API documentation was moved to Blizzard_APIDocumentationGenerated.",
+    "status": "metadata-only",
+    "reason": "Documentation path relocation; source metadata, not a new callable API or runtime behavior."
+  },
+  {
+    "source_id": "source-context-006",
+    "plaintext_line": 6,
+    "wikitext_line": 6,
+    "literal": "== Resources ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-007",
+    "plaintext_line": 7,
+    "wikitext_line": 7,
+    "literal": "* TOC: 90207",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-008",
+    "plaintext_line": 8,
+    "wikitext_line": 8,
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-009",
+    "plaintext_line": 9,
+    "wikitext_line": 9,
+    "literal": "* Official patch notes: User Interface and Accessibility",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-011",
+    "plaintext_line": 11,
+    "wikitext_line": 28,
+    "literal": "== Enumerations ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "enumerations--012",
+    "plaintext_line": 12,
+    "wikitext_line": 29,
+    "literal": " + Enum.GamePadPowerLevel",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "enumerations--013",
+    "plaintext_line": 13,
+    "wikitext_line": 30,
+    "literal": " + Enum.ItemGemColor",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "enumerations--014",
+    "plaintext_line": 14,
+    "wikitext_line": 31,
+    "literal": " + Enum.ItemSocketType",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "enumerations--015",
+    "plaintext_line": 15,
+    "wikitext_line": 32,
+    "literal": " + Enum.ItemSubclassDisplay",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "enumerations--016",
+    "plaintext_line": 16,
+    "wikitext_line": 33,
+    "literal": " + Enum.ItemSubclassFlag",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "enumerations--017",
+    "plaintext_line": 17,
+    "wikitext_line": 34,
+    "literal": " # Enum.AuctionHouseError",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "enumerations--018",
+    "plaintext_line": 18,
+    "wikitext_line": 35,
+    "literal": "   + DoubleBid",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "enumerations--019",
+    "plaintext_line": 19,
+    "wikitext_line": 36,
+    "literal": "   + FavoritesMaxed",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "enumerations--020",
+    "plaintext_line": 20,
+    "wikitext_line": 37,
+    "literal": "   + ItemNotAvailable",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "enumerations--021",
+    "plaintext_line": 21,
+    "wikitext_line": 38,
+    "literal": " # Enum.ReportType",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "enumerations--022",
+    "plaintext_line": 22,
+    "wikitext_line": 39,
+    "literal": "   + PvPScoreboard",
+    "status": "audit-pending",
+    "reason": "Current enum constants exist in src/lua_api/globals/enum_data/missing_enums.lua; table/member publication alone does not prove complete enumerator identities, numeric values or flag behavior. No occurrence-specific runtime assertion is credited."
+  },
+  {
+    "source_id": "source-context-024",
+    "plaintext_line": 24,
+    "wikitext_line": 41,
+    "literal": "== Structures ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "structures--025",
+    "plaintext_line": 25,
+    "wikitext_line": 42,
+    "literal": " # ItemKeyInfo (C_AuctionHouse.GetItemKeyInfo)",
+    "status": "audit-pending",
+    "reason": "GetItemKeyInfo is published, but populated itemID/battlePetSpeciesID contract remains missing in the serializer at src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:539-553. Existing tests assert name/icon/quality, not these fields."
+  },
+  {
+    "source_id": "structures--026",
+    "plaintext_line": 26,
+    "wikitext_line": 43,
+    "literal": "   + itemID",
+    "status": "audit-pending",
+    "reason": "ItemKeyInfo.itemID is absent from registry_and_rows.rs:539-553. ItemKey.itemID round-trip tests do not exercise this output field; no occurrence-specific behavior proof or implementation added."
+  },
+  {
+    "source_id": "structures--027",
+    "plaintext_line": 27,
+    "wikitext_line": 44,
+    "literal": "   + battlePetSpeciesID",
+    "status": "audit-pending",
+    "reason": "ItemKeyInfo.battlePetSpeciesID is not serialized at registry_and_rows.rs:539-553; pet-aware item-key resolution and populated DTO proof are required. ItemKey.battlePetSpeciesID is a different structure and provides no credit."
+  }
+]

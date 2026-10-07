@@ -1,0 +1,125 @@
+[
+  {
+    "command": "cargo test --test prefork_full_ui -- publication_sweep",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p927-page/target",
+    "revision": "cbc762757c4c6b63b0aa843433819fe0bab1410f",
+    "exit": 0,
+    "duration_seconds": 500.98,
+    "output": "p927-publication-sweeps.log",
+    "scope": "all 27 publication sweeps plus existing animation factory; source/test revision cbc762757",
+    "invalidated": false,
+    "output_sha256": {
+      "p927-publication-sweeps.log": "105f8bd52a4611c9406eb74e0546354d4583c9d065438fd04d1b0ae937d19cb1"
+    }
+  },
+  {
+    "command": "cargo test --test prefork_full_ui -- patch_9_2_7_publication_sweep (P927_SWEEP_REGISTER=negative)",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "revision": "cbc762757",
+    "exit": 1,
+    "expected_exit": "nonzero; exactly one new gap",
+    "scope": "single mutated inventory direction; unchanged row IDs",
+    "duration_seconds": 6.04,
+    "output": "p927-negative.log",
+    "invalidated": false,
+    "output_sha256": {
+      "p927-negative.log": "81875481d0e53dc325a04e72db9419d4b8b300014d30f81e52f9c8a690ed0ef5"
+    }
+  },
+  {
+    "command": "cargo check --no-default-features --features sound,gui,casc,client-mists --tests",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p927-page/target",
+    "revision": "cbc762757",
+    "exit": 0,
+    "duration_seconds": 99.44,
+    "output": "p927-mists-check.log",
+    "scope": "Mists compile all test modules; no classic registration changes",
+    "invalidated": false,
+    "output_sha256": {
+      "p927-mists-check.log": "c53acba4748fcaa26bc08f5e9b4ef097c3f203b6f57ea995a011c6346910db43"
+    }
+  },
+  {
+    "command": "cargo fmt --check",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p927-page/target",
+    "revision": "cbc762757c4c6b63b0aa843433819fe0bab1410f",
+    "exit": 0,
+    "duration_seconds": 13.82,
+    "output": "p927-fmt-check.log",
+    "scope": "current formatted source/default retail compile/separate retail executable build",
+    "invalidated": false,
+    "output_sha256": {
+      "p927-fmt-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "command": "cargo check",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p927-page/target",
+    "revision": "cbc762757c4c6b63b0aa843433819fe0bab1410f",
+    "exit": 0,
+    "duration_seconds": 35.69,
+    "output": "p927-default-check.log",
+    "scope": "current formatted source/default retail compile/separate retail executable build",
+    "invalidated": false,
+    "output_sha256": {
+      "p927-default-check.log": "18480c3a5fbb7cb85a79eae0b7b02fc43157847abce1e8c9a7b792a495fe73b9"
+    }
+  },
+  {
+    "command": "cargo build --bin wow-sim",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p927-page/target",
+    "revision": "cbc762757c4c6b63b0aa843433819fe0bab1410f",
+    "exit": 0,
+    "duration_seconds": 0.23,
+    "output": "p927-retail-build.log",
+    "scope": "current formatted source/default retail compile/separate retail executable build",
+    "invalidated": false,
+    "output_sha256": {
+      "p927-retail-build.log": "d43997d630d3d792ac2b7b1c0f941ae6d1e5285a48f2470a3f8a5a1c39871ff1"
+    }
+  },
+  {
+    "command": "timeout 90 target/debug/wow-sim --no-addons --no-saved-vars lua-errors",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "revision": "cbc762757",
+    "exit": 0,
+    "duration_seconds": 5.51,
+    "stdout": "[]\n",
+    "output": "p927-lua-errors.stdout / p927-lua-errors.stderr",
+    "scope": "unmodified cached full retail startup",
+    "invalidated": false,
+    "output_sha256": {
+      "p927-lua-errors.stdout": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "p927-lua-errors.stderr": "c24e59c0c12f55aceae734daf5ded97ac68bd86749f1031fdd873971e5be0037"
+    }
+  },
+  {
+    "command": "python3 tools/test_extract_patch_non_inventory.py",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "revision": "cbc762757",
+    "exit": 0,
+    "output": "p927-test_extract_patch_non_inventory.py.log",
+    "scope": "all extractor/register behavioral fixtures",
+    "invalidated": false,
+    "output_sha256": {
+      "p927-test_extract_patch_non_inventory.py.log": "b49756cee14f663e8bd05c7e6aa053c286ade10e6262f58e6ab4b4a4bfb2caac"
+    }
+  },
+  {
+    "command": "python3 tools/test_gen_patch_wikitext_register.py",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p927-page",
+    "revision": "cbc762757",
+    "exit": 0,
+    "output": "p927-test_gen_patch_wikitext_register.py.log",
+    "scope": "all extractor/register behavioral fixtures",
+    "invalidated": false,
+    "output_sha256": {
+      "p927-test_gen_patch_wikitext_register.py.log": "34a82a30511a2175a5286cff0751874e9220ce5fb08cab87b09cc04e220f6b31"
+    }
+  }
+]

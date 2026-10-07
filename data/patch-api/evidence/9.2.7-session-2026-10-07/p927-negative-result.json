@@ -1,0 +1,12 @@
+{
+  "exit": 1,
+  "positive_gaps": [],
+  "negative_gaps": [
+    "wt-events-AUCTION_HOUSE_PURCHASE_COMPLETED-19"
+  ],
+  "new_gaps": [
+    "wt-events-AUCTION_HOUSE_PURCHASE_COMPLETED-19"
+  ],
+  "resolved_gaps": [],
+  "row_ids_unchanged": true
+}

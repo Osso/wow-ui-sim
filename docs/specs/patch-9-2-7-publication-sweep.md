@@ -7,9 +7,9 @@ Account for Warcraft Wiki page 542130, revision 5227425 (2022-09-04T12:19:59Z), 
 - [x] Retain revision-pinned wikitext, provenance, reproducible extract and register.
 - [x] Probe all three event inventory occurrences using all 26 chronological later registers, 10.0.0 through 12.1.0, with an exact known-gap fixture.
 - [x] Recover event-only pages' level-two enumeration and structure sections with a behavioral extractor fixture; preserve existing inputs and both extraction-mode outcomes.
-- [ ] Record every source occurrence and its precise proof boundary in the page ledger.
-- [ ] Detect an exact single-row added-to-removed event negative control.
-- [ ] Verify all publication sweeps, parser/extractor fixtures, formatting, Mists tests check and exit-0 retail startup `[]`.
+- [x] Record all 27 source IDs and precise proof boundaries: three inventory, 23 extract, one build-caption context.
+- [x] Detect exact AUCTION_HOUSE_PURCHASE_COMPLETED added-to-removed negative control: zero → one gap, unchanged IDs.
+- [x] Verify all 27 publication sweeps plus factory regression, 34 parser/extractor fixtures, formatting, default/Mists checks and exit-0 retail startup `[]`.
 
 ## Implementation inventory
 

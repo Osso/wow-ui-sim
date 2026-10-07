@@ -1,0 +1,10 @@
+[
+  {
+    "source_id": "wt-context-events-build-13",
+    "wikitext_line": 13,
+    "literal": "|+ 9.2.5 (44730) &rarr; 9.2.7 (45114) Aug 13 2022",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Historical event comparison build caption; no runtime credit. Retained separately because inventory extraction intentionally excludes it."
+  }
+]
