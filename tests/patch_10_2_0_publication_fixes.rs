@@ -24,6 +24,23 @@ texture:ClearParentKey()
 assert(parent.Texture == nil and texture:GetParentKey() == nil)
 "#;
 
+pub(crate) const RETIREMENT_ASSERTIONS: &str = r#"
+for _, name in ipairs({'GetFontHeight', 'PrintAllMatchingCommands', 'SetFontHeight'}) do
+    assert(rawget(C_Console, name) == nil)
+    assert(C_Console[name] == nil)
+    assert(C_Console[name] == nil)
+end
+assert(type(ConsoleGetFontHeight) == 'function')
+assert(type(ConsoleSetFontHeight) == 'function')
+assert(type(ConsoleGetAllCommands) == 'function')
+"#;
+
+#[test]
+fn patch_10_2_0_unused_console_members_are_absent() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    env.exec(RETIREMENT_ASSERTIONS).unwrap();
+}
+
 #[test]
 fn patch_10_2_0_clear_parent_key_updates_lua_and_widget_state() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
@@ -46,5 +63,7 @@ fn patch_10_2_0_interface_and_script_probes_do_not_use_invalid_frame_types() {
     assert!(sweep::probe_entry(&env, &object, false, &aliases).2);
     let script = entry("OnMovieHideSubtitle", Some("widget-script"));
     let result = sweep::probe_entry(&env, &script, true, &aliases);
-    assert!(!result.2, "unsupported movie factory is not proof of script absence");
+    assert_eq!(result.0, "widget-script");
+    assert_eq!(result.1, "MovieFrame HasScript=false");
+    assert!(result.2);
 }
