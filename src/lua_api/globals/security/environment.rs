@@ -1,5 +1,7 @@
 //! Real secure/global environment helpers exposed by the WoW client.
 
+use rilua::{LuaApiMut, LuaResult, Val, vm::state::LuaState};
+
 const ENVIRONMENT_HELPERS_LUA: &str = r#"
 if GetGlobalEnvironment == nil then
   function GetGlobalEnvironment()
@@ -13,12 +15,6 @@ if GetCurrentEnvironment == nil then
   end
 end
 
-if IsInGlobalEnvironment == nil then
-  function IsInGlobalEnvironment()
-    return getfenv(2) == _G
-  end
-end
-
 if SwapToGlobalEnvironment == nil then
   function SwapToGlobalEnvironment()
     setfenv(2, _G)
@@ -27,8 +23,27 @@ if SwapToGlobalEnvironment == nil then
 end
 "#;
 
-pub(crate) fn register_environment_helpers(lua: &mut rilua::Lua) -> rilua::LuaResult<()> {
+pub(crate) fn register_environment_helpers(lua: &mut rilua::Lua) -> LuaResult<()> {
+    LuaApiMut::register_function(lua, "IsInGlobalEnvironment", is_in_global_environment)?;
     lua.exec(ENVIRONMENT_HELPERS_LUA)
+}
+
+fn is_in_global_environment(state: &mut LuaState) -> LuaResult<u32> {
+    // A Rust primitive observes the caller before Lua tail-call frame replacement.
+    let caller_environment = state.call_stack[..=state.ci]
+        .iter()
+        .rev()
+        .find_map(|frame| {
+            let Val::Function(function) = state.stack_get(frame.func) else {
+                return None;
+            };
+            match state.gc.closures.get(function) {
+                Some(rilua::vm::closure::Closure::Lua(closure)) => Some(closure.env),
+                _ => None,
+            }
+        });
+    state.push(Val::Bool(caller_environment == Some(state.global)));
+    Ok(1)
 }
 
 #[cfg(test)]
